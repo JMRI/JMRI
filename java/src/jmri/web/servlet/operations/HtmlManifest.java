@@ -494,7 +494,12 @@ public class HtmlManifest extends HtmlTrainCommon {
             return TrainManifestHeaderText.getStringHeader_Last_Train() +
                     SPACE +
                     getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
+        } else if (attribute.equals(JsonOperations.LAST_LOCATION)) {
+            return TrainManifestHeaderText.getStringHeader_Last_Location() +
+                    SPACE +
+                    getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
         }
+        
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
 

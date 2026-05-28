@@ -48,6 +48,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     protected int _blockingOrder = 0;
     protected String _comment = NONE;
     protected Color _commentColor = Color.black;
+    protected boolean _bold = false; // when true bold text
 
     protected int _carMoves = 0; // number of moves at this location
     protected int _trainWeight = 0; // total car weight departing this location
@@ -164,9 +165,21 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public Color getCommentColor() {
         return _commentColor;
     }
+    
+    public boolean isCommentBoldEnabled() {
+        return _bold;
+    }
+    
+    public void setCommentBoldEnabled(boolean enabled) {
+        boolean old = _bold;
+        _bold = enabled;
+        if (old != _bold) {
+            setDirtyAndFirePropertyChange("RouteLocationBoldText", old, enabled); // NOI18N
+        }
+    }
 
     public String getCommentWithColor() {
-        return TrainCommon.formatColorString(getComment(), getCommentColor());
+        return TrainCommon.formatColorString(getComment(), getCommentColor(), isCommentBoldEnabled());
     }
 
     public void setCommentTextColor(String color) {
@@ -678,7 +691,9 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         if ((a = e.getAttribute(Xml.COMMENT_COLOR)) != null) {
             setCommentTextColor(a.getValue());
         }
-
+        if ((a = e.getAttribute(Xml.COMMENT_BOLD)) != null) {
+            _bold = a.getValue().equals(Xml.YES);
+        }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = a.getValue();
         }
@@ -712,7 +727,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         e.setAttribute(Xml.TRAIN_ICON_Y, Integer.toString(getTrainIconY()));
         e.setAttribute(Xml.COMMENT_COLOR, getCommentTextColor());
         e.setAttribute(Xml.COMMENT, getComment());
-
+        e.setAttribute(Xml.COMMENT_BOLD, isCommentBoldEnabled() ? Xml.YES : Xml.NO);
         return e;
     }
 

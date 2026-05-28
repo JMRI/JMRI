@@ -3265,7 +3265,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                             }
                         }
 
-                        if (selectedObject != null) {
+                        // Background objects (level 0 and level 1) are deferred until after the shape objects.
+                        if (selectedObject != null && !((PositionableLabel) selectedObject).isBackground()) {
                             selectedHitPointType = HitPointType.LAYOUT_POS_LABEL;
                             startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
                             if (selectedObject instanceof MemoryIcon) {
@@ -3286,28 +3287,34 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 }
                             }
 
-                        } else {
-                            // Still nothing found, look for background objects and then shape objects.
-                            selectedObject = checkBackgroundPopUps(dLoc);
 
-                            if (selectedObject != null) {
-                                selectedHitPointType = HitPointType.LAYOUT_POS_LABEL;
-                                startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
-                            } else {
-                                // dragging a shape?
-                                ListIterator<LayoutShape> listIterator = layoutShapes.listIterator(layoutShapes.size());
-                                // hit test in front to back order (reverse order of list)
-                                while (listIterator.hasPrevious()) {
-                                    LayoutShape ls = listIterator.previous();
-                                    selectedHitPointType = ls.findHitPointType(dLoc, true);
-                                    if (LayoutShape.isShapeHitPointType(selectedHitPointType)) {
-                                        // log.warn("drag selectedObject: ", lt);
-                                        selectedObject = ls;    // found one!
-                                        beginLocation = dLoc;
-                                        currentLocation = beginLocation;
-                                        startDelta = MathUtil.zeroPoint2D;
-                                        break;
-                                    }
+                        } else {
+                            // Still nothing found, look for shape objects and then background objects.
+                            var dragShape = false;
+
+                            ListIterator<LayoutShape> listIterator = layoutShapes.listIterator(layoutShapes.size());
+                            // hit test in front to back order (reverse order of list)
+                            while (listIterator.hasPrevious()) {
+                                LayoutShape ls = listIterator.previous();
+                                selectedHitPointType = ls.findHitPointType(dLoc, true);
+                                if (LayoutShape.isShapeHitPointType(selectedHitPointType)) {
+                                    // log.warn("drag selectedObject: ", lt);
+                                    selectedObject = ls;    // found one!
+                                    beginLocation = dLoc;
+                                    currentLocation = beginLocation;
+                                    startDelta = MathUtil.zeroPoint2D;
+                                    dragShape = true;
+                                    break;
+                                }
+                            }
+
+                            if (!dragShape) {
+                                // Finally, check for background objects.
+                                selectedObject = checkBackgroundPopUps(dLoc);
+
+                                if (selectedObject != null) {
+                                    selectedHitPointType = HitPointType.LAYOUT_POS_LABEL;
+                                    startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
                                 }
                             }
                         }
@@ -4277,6 +4284,12 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                     break;
                 }
 
+                LayoutShape ls = checkLayoutShapePopUps(dLoc);
+                if (ls != null) {
+                    ls.showShapePopUp(event, selectedHitPointType);
+                    break;
+                }
+
                 PositionableLabel lb = checkLabelImagePopUps(dLoc);
                 if (lb != null) {
                     showPopUp(lb, event);
@@ -4298,11 +4311,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 SignalMastIcon sm = checkSignalMastIconPopUps(dLoc);
                 if (sm != null) {
                     showPopUp(sm, event);
-                    break;
-                }
-                LayoutShape ls = checkLayoutShapePopUps(dLoc);
-                if (ls != null) {
-                    ls.showShapePopUp(event, selectedHitPointType);
                     break;
                 }
             } while (false);

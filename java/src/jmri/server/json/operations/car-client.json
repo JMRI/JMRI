@@ -198,6 +198,10 @@
         "last moved": {
             "type": "string",
             "description": "date the car was last moved"
+        },
+        "last location": {
+            "type": "string",
+            "description": "The car's last location"
         }
     },
     "additionalProperties": false,
