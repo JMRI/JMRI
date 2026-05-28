@@ -42,4 +42,5 @@
 <!ATTLIST location comment			CDATA #IMPLIED>
 <!ATTLIST location randomControl	CDATA #IMPLIED>
 <!ATTLIST location commentColor		CDATA #IMPLIED>
+<!ATTLIST location commentBold		(yes | no) "no">
 

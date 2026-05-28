@@ -494,6 +494,8 @@
         <ul>
             <li>Improved the layout of the edit tools to reduce the need for
                 vertical scrolling when they're at the top or bottom of the window.</li>
+            <li>Handle mouse down events, drag and popup menus, on shapes before background objects
+            (level 0 and level 1).</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

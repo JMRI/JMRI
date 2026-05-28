@@ -75,6 +75,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JCheckBox routeLocationCheckBox = new JCheckBox(Bundle.getMessage("RouteLocation"));
     JCheckBox groupCarMovesCheckBox = new JCheckBox(Bundle.getMessage("GroupCarMoves"));
     JCheckBox printLocoLastCheckBox = new JCheckBox(Bundle.getMessage("PrintLocoLast"));
+    JCheckBox boldCheckBox = new JCheckBox();
 
     // text field
     JTextField pickupEngPrefix = new JTextField(10);
@@ -88,9 +89,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JTextField hazardousTextField = new JTextField(20);
 
     // text area
-    JTextArea commentTextArea = new JTextArea(4, 90);
+    JTextArea miaCommentTextArea = new JTextArea(4, 90);
 
-    JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+    JScrollPane commentScroller = new JScrollPane(miaCommentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // combo boxes
@@ -221,15 +222,15 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pColor.setLayout(new BoxLayout(pColor, BoxLayout.X_AXIS));
         pColor.add(
                 getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupEngineColor"), Setup.getPickupEngineColor(),
-                pickupEngineColorChooser));
+                        pickupEngineColorChooser, null));
         pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropEngineColor"), Setup.getDropEngineColor(),
-                dropEngineColorChooser));
+                dropEngineColorChooser, null));
         pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupColor"), Setup.getPickupColor(),
-                pickupColorChooser));
+                pickupColorChooser, null));
         pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropColor"), Setup.getDropColor(),
-                dropColorChooser));
+                dropColorChooser, null));
         pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutLocalColor"), Setup.getLocalColor(),
-                localColorChooser));
+                localColorChooser, null));
 
         // load all of the message combo boxes, rows 2 through 5
         loadFormatComboBox();
@@ -318,7 +319,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pCommentMia.setLayout(new GridBagLayout());
         pCommentMia.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutCommentOptions")));
         addItem(pCommentMia, commentScroller, 0, 0);
-        addItem(pCommentMia, getColorChooserPanel(Setup.getMiaComment(), missingCarColorChooser), 2, 0);
+        addItem(pCommentMia, getColorChooserPanel(Setup.getMiaComment(), missingCarColorChooser, boldCheckBox), 2, 0);
 
         pManifest.add(p1);
         pManifest.add(pColor);
@@ -375,7 +376,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         groupCarMovesCheckBox.setSelected(Setup.isGroupCarMovesEnabled());
         printLocoLastCheckBox.setSelected(Setup.isPrintLocoLastEnabled());
 
-        commentTextArea.setText(TrainCommon.getTextColorString(Setup.getMiaComment()));
+        miaCommentTextArea.setText(TrainCommon.getOnlyText(Setup.getMiaComment()));
         hazardousTextField.setText(Setup.getHazardousMsg());
 
         setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
@@ -738,7 +739,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         }
         fontComboBox.setSelectedItem(Setup.getFontName());
     }
-    
+
     private void loadDuplexSidesComboBox() {
         printDuplexComboBox.addItem(Sides.ONE_SIDED);
         printDuplexComboBox.addItem(Sides.TWO_SIDED_LONG_EDGE);
@@ -842,7 +843,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         Setup.setHazardousMsg(hazardousTextField.getText());
         // misplaced car comment
         Setup.setMiaComment(
-                TrainCommon.formatColorString(commentTextArea.getText(), missingCarColorChooser.getColor()));
+                TrainCommon.formatColorString(miaCommentTextArea.getText(), missingCarColorChooser.getColor(),
+                        boldCheckBox.isSelected()));
         Setup.setSwitchListFormatSameAsManifest(formatSwitchListCheckBox.isSelected());
         Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
         Setup.setPrintRouteCommentsEnabled(printRouteCommentsCheckBox.isSelected());
@@ -892,8 +894,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 !Setup.getPickupColor().equals(pickupColorChooser.getColor()) ||
                 !Setup.getLocalColor().equals(localColorChooser.getColor()) ||
                 !Setup.getHazardousMsg().equals(hazardousTextField.getText()) ||
-                !Setup.getMiaComment().equals(
-                        TrainCommon.formatColorString(commentTextArea.getText(), missingCarColorChooser.getColor())) ||
+                !Setup.getMiaComment()
+                        .equals(TrainCommon.formatColorString(miaCommentTextArea.getText(),
+                                missingCarColorChooser.getColor(), boldCheckBox.isSelected())) ||
                 Setup.isSwitchListFormatSameAsManifest() != formatSwitchListCheckBox.isSelected() ||
                 Setup.isPrintLocationCommentsEnabled() != printLocCommentsCheckBox.isSelected() ||
                 Setup.isPrintRouteCommentsEnabled() != printRouteCommentsCheckBox.isSelected() ||
