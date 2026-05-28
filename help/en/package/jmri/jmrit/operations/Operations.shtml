@@ -2184,8 +2184,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
         the color change by placing &lt;/FONT&gt; at the end of the line.</p>
 
-      <p>If you want your text in bold, at the start of the text add &lt;b&gt; and &lt;/b&gt;
-        at the end of the text.
+      <p>If you want your text in bold, at the start of the text add &lt;b&gt; and &lt;/b&gt; at
+        the end of the text. If you use both bold and color controls for a sentence, the entire
+        sentence will be bold and in color. Note that only when using a monospaced font and no
+        color, that it's possible to selectively bold words in a sentence.</p>
 
       <h3 id="ManifestDayNameMapping">Edit Day to Name Mapping</h3>
 

@@ -86,7 +86,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals( 40, data.size(), "Number of properties in Car");
+        assertEquals( 41, data.size(), "Number of properties in Car");
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -155,7 +155,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals( 40, data.size(), "Number of properties in Car");
+        assertEquals( 41, data.size(), "Number of properties in Car");
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -265,7 +265,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
         // rename not always present
-        assertEquals( 41, data.size(), "Number of properties in Car");
+        assertEquals( 42, data.size(), "Number of properties in Car");
         // TODO: verify against car and known values
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
