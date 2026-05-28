@@ -225,6 +225,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
+    private JCheckBoxMenuItem disableLocoMarkerPopupMenuItem;
+
     public final LayoutEditorViewContext gContext = new LayoutEditorViewContext(); // public for now, as things work access changes
 
     @Nonnull
@@ -623,7 +625,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         // editToolBarScroll.getViewport().addChangeListener(e -> {
         // log.warn("scrollbars visible: " + editToolBarScroll.getHorizontalScrollBar().isVisible());
         //});
-        
+
         editToolBarContainerPanel.setMinimumSize(new Dimension(toolbarWidth, toolbarHeight));
         editToolBarContainerPanel.setPreferredSize(new Dimension(toolbarWidth, toolbarHeight));
 
@@ -2456,6 +2458,25 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 removeMarkers();
             }
         });
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
+            markerMenu.addSeparator();
+            disableLocoMarkerPopupMenuItem = new JCheckBoxMenuItem(
+                    new AbstractAction(Bundle.getMessage("DisableLocoMarkerPopup")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            enableDisableLocoMarkerPopups();
+                        }
+            });
+            disableLocoMarkerPopupMenuItem.setSelected(isLocoMarkerPopupDisabled());
+            markerMenu.add(disableLocoMarkerPopupMenuItem);
+        });
+    }
+
+    private void enableDisableLocoMarkerPopups() {
+        if (disableLocoMarkerPopupMenuItem != null) {
+            boolean enabled = disableLocoMarkerPopupMenuItem.isSelected();
+            setLocoMarkerPopupDisabled(enabled);
+        }
     }
 
     private void setupDispatcherMenu(@Nonnull JMenuBar menuBar) {

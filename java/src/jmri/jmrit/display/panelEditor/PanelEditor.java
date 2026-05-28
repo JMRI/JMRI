@@ -39,9 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
-import jmri.CatalogTreeManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -122,6 +120,7 @@ public class PanelEditor extends Editor implements ItemListener {
     private final JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
     private final JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
     private final JComboBox<String> scrollableComboBox = new JComboBox<>();
+    private JCheckBoxMenuItem disableLocoMarkerPopupMenuItem;
 
     private final JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
     private final JTextField nextLabel = new JTextField(10);
@@ -546,6 +545,18 @@ public class PanelEditor extends Editor implements ItemListener {
                 removeMarkers();
             }
         });
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
+            markerMenu.addSeparator();
+            disableLocoMarkerPopupMenuItem = new JCheckBoxMenuItem(
+                    new AbstractAction(Bundle.getMessage("DisableLocoMarkerPopup")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            enableDisableLocoMarkerPopups();
+                        }
+            });
+            disableLocoMarkerPopupMenuItem.setSelected(isLocoMarkerPopupDisabled());
+            markerMenu.add(disableLocoMarkerPopupMenuItem);
+        });
 
         JMenu warrantMenu = jmri.jmrit.logix.WarrantTableAction.getDefault().makeWarrantMenu(isEditable());
         if (warrantMenu != null) {
@@ -554,6 +565,13 @@ public class PanelEditor extends Editor implements ItemListener {
 
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
         return targetFrame;
+    }
+
+    private void enableDisableLocoMarkerPopups() {
+        if (disableLocoMarkerPopupMenuItem != null) {
+            boolean enabled = disableLocoMarkerPopupMenuItem.isSelected();
+            setLocoMarkerPopupDisabled(enabled);
+        }
     }
 
     /*

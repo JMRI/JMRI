@@ -242,6 +242,26 @@ public abstract class Editor extends JmriJFrameWithPermissions
         return _newIcon;
     }
 
+    private String getDisableLocoMarkerPopupRef() {
+        return "DisableLocoMarkerPopup__"+getWindowFrameRef();
+    }
+
+    public void setLocoMarkerPopupDisabled(boolean value) {
+        var prefsMgr = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
+        if (prefsMgr.isPresent()) {
+            prefsMgr.get().setCheckboxPreferenceState(getDisableLocoMarkerPopupRef(), value);
+        }
+    }
+
+    public boolean isLocoMarkerPopupDisabled() {
+        var prefsMgr = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
+        if (prefsMgr.isPresent()) {
+            return prefsMgr.get().getCheckboxPreferenceState(getDisableLocoMarkerPopupRef(), false);
+        } else {
+            return false;
+        }
+    }
+
     public class UrlErrorDialog extends JDialog {
 
         private final JTextField _urlField;
