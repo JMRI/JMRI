@@ -802,6 +802,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
+        Other than a <a href="#SwitcherService">local switcher</a>, the program when building trains
+        doesn't normally create car movement from one track to another at the same location. If you
+        want to create local car movement, you will need to use <a href="#Schedules">schedules</a>,
+        and optionally <a href="#EditCarLoads">custom loads</a>. You can control if a train or a
+        route can perform a local move. See <a href="#TrainLocalMoveOption">Allow local moves
+          when a car has a custom load or FD</a> and <a href="#PullsAndSpots">Pick ups? Set outs?
+          and Local moves?</a> for more information.
+      </p>
+
+      <p>
         You should now be well on your way with regards to JMRI operations. Each window in
         OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section
         in this document that covers that window's capabilities. Many of the OperationsPro&trade;

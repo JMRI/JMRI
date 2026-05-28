@@ -337,8 +337,8 @@ public class TrainBuilder extends TrainBuilderCars {
                         continue;
                     }
                     addLine(FIVE,
-                            Bundle.getMessage("mbuildFoundCar", car.getTypeName(), car.getRoadName(), car.getLoadName(),
-                                    car.getLocationName(), car.getTrackName()));
+                            Bundle.getMessage("mbuildFoundCar", car.getTypeName(), car.getTypeExtensions(),
+                                    car.getRoadName(), car.getLoadName(), car.getLocationName(), car.getTrackName()));
                     // there could be a an optional destination
                     car.setFinalDestination(mbi.getDestination());
                     car.setFinalDestinationTrack(mbi.getDestinationTrack());
