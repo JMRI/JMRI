@@ -468,7 +468,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug were DecoderPro was include the height of 
+                non-visible columns in the row height calculation.</li>
         </ul>
 
    <h3>Dispatcher</h3>

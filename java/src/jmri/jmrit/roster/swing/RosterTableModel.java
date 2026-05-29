@@ -326,14 +326,25 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     int findMaxLines(int row, RosterEntry re) {
-        int lines = countLinesIn(re.getComment());
+        int lines = 1;   
 
+        var columnModel = (jmri.util.swing.XTableColumnModel) associatedTable.getColumnModel();
+        boolean visible = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.COMMENT));
+        if (visible) {
+            lines = Math.max(lines, countLinesIn(re.getComment()));
+        }
+        
         String[] auxAttributeNames = getModelAttributeKeyColumnNames();
         for (String attributeKey : auxAttributeNames) {
             String value = re.getAttribute(attributeKey);
             if (value != null) {
+                int index = getAttributeColumn(attributeKey);
+                visible = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(index));
+
                 int count = countLinesIn(value);
-                lines = Math.max(lines, count);
+                if (visible) {
+                    lines = Math.max(lines, count);
+                }
             }
         }
         return lines;
@@ -494,6 +505,16 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         return attributeKeys;
     }
 
+    private int getAttributeColumn(String attr) {
+        var names = getModelAttributeKeyColumnNames();
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equals(attr)) {
+                return i + NUMCOL;
+            }
+        }
+        return 0;
+    }
+    
     private String getAttributeKey(int col) {
         if ( col >= NUMCOL && col < getColumnCount() ) {
             return getModelAttributeKeyColumnNames()[col - NUMCOL ];
