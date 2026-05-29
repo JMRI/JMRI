@@ -1057,7 +1057,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                           // destination set
         }
         addLine(FIVE,
-                Bundle.getMessage("buildSearchForSpur", car.toString(), car.getTypeName(),
+                Bundle.getMessage("buildSearchForSpur", car.toString(), car.getTypeName(), car.getTypeExtensions(),
                         car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
                         car.getTrackName()));
         if (car.getKernel() != null) {
@@ -1670,9 +1670,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         if (routeIndex + 1 == routeEnd) {
             log.debug("Car ({}) is at the last location in the train's route", car.toString());
         }
-        addLine(FIVE, Bundle.getMessage("buildFindDestinationForCar", car.toString(), car.getTypeName(),
-                car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
-                car.getTrackName()));
+        addLine(FIVE,
+                Bundle.getMessage("buildFindDestinationForCar", car.toString(), car.getTypeName(),
+                        car.getTypeExtensions(), car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(),
+                        car.getLocationName(), car.getTrackName()));
         if (car.getKernel() != null) {
             addLine(SEVEN, Bundle.getMessage("buildCarLeadKernel", car.toString(), car.getKernelName(),
                     car.getKernel().getSize(), car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
