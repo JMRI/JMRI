@@ -4349,12 +4349,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                     break;
                 }
 
-                LayoutShape ls = checkLayoutShapePopUps(dLoc);
-                if (ls != null) {
-                    ls.showShapePopUp(event, selectedHitPointType);
-                    break;
-                }
-
                 Positionable factPos = checkPositionablePopUps(dLoc);
                 if (factPos != null) {
                     showPopUp(factPos, event);
