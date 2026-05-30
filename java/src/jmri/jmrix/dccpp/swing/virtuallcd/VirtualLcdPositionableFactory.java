@@ -62,7 +62,7 @@ public class VirtualLcdPositionableFactory implements PositionableFactory {
             this.closeDialog(editor);
         }
 
-        addPositionableFrame = new ConfigureVirtualLCD(editor, this::closeDialog, doAfter);
+        addPositionableFrame = new ConfigureVirtualLCD(editor, null, this::closeDialog, doAfter);
         addPositionableFrame.initComponents();
     }
 

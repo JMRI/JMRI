@@ -76,11 +76,7 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
     }
 
     public void reset() {
-        for (List<JLabel> list : linesMap.values()) {
-            for (JLabel label : list) {
-                label.getParent().remove(label);
-            }
-        }
+        this.removeAll();
         linesMap.clear();
     }
 
