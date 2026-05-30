@@ -12,7 +12,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.*;
+import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -297,7 +298,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     /**
-     *
      * @param isPreview true if print preview
      * @param isChanged true if only print changes was requested
      * @param isPrint   true if printing or preview
@@ -405,12 +405,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     /**
-     * Creates custom switch lists using an external program like MS Excel. Switch
-     * lists are created for locations that have switch lists enabled.
+     * Creates custom switch lists using an external program like MS Excel.
+     * Switch lists are created for locations that have switch lists enabled.
      * 
      * @param isChanged when true, only create custom switch list for enabled
-     *                  locations that have changes. When isChanged is false, create
-     *                  custom switch lists for all enabled locations.
+     *                  locations that have changes. When isChanged is false,
+     *                  create custom switch lists for all enabled locations.
      */
     private void runCustomSwitchLists(boolean isChanged) {
         if (!Setup.isGenerateCsvSwitchListEnabled()) {
@@ -443,7 +443,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("LoadDirectoryNameFileName",
                             InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryPathName(),
-                                    InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()),
+                            InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()),
                     Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -606,6 +606,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         Dimension minScrollerDim = new Dimension(1200, 500);
+        JCheckBox boldCheckBox = new JCheckBox();
 
         // text color chooser
         JColorChooser commentColorChooser = new JColorChooser();
@@ -630,10 +631,13 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             pC.setLayout(new GridBagLayout());
             commentScroller.setMinimumSize(minScrollerDim);
             addItem(pC, commentScroller, 1, 0);
-            addItem(pC, OperationsPanel.getColorChooserPanel(location.getSwitchListCommentWithColor(), commentColorChooser), 2, 0);
+            addItem(pC,
+                    getColorChooserPanel(location.getSwitchListCommentWithColor(), commentColorChooser, boldCheckBox),
+                    2, 0);
             JScrollPane panelPane = new JScrollPane(pC);
 
-            commentTextArea.setText(TrainCommon.getTextColorString(location.getSwitchListCommentWithColor()));
+            commentTextArea.setText(TrainCommon.getOnlyText(location.getSwitchListCommentWithColor()));
+            boldCheckBox.setSelected(TrainCommon.isTextBold(location.getSwitchListCommentWithColor()));
 
             JPanel pB = new JPanel();
             pB.setLayout(new GridBagLayout());
@@ -655,7 +659,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
             if (ae.getSource() == saveButton) {
                 _location.setSwitchListComment(
-                        TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
+                        TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor(),
+                                boldCheckBox.isSelected()));
                 // save location file
                 OperationsXml.save();
                 if (Setup.isCloseWindowOnSaveEnabled()) {

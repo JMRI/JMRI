@@ -71,6 +71,14 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         networkController = p;
     }
 
+    /** Starts a new receive thread after a reconnect. */
+    public void restartRcvThread() {
+        rcvThread = jmri.util.ThreadingUtil.newThread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread.setDaemon(true);
+        rcvThread.setPriority(Thread.MAX_PRIORITY);
+        rcvThread.start();
+    }
+
     /**
      * Break connection to existing LnPortnetworkController object. Once broken,
      * attempts to send via "message" member will fail.
@@ -122,7 +130,10 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         return;
                     }
                     if (rxLine == null) {
-                        log.warn("run: input stream returned null, exiting loop");
+                        log.info("run: server closed connection, attempting recovery");
+                        if (trafficController.networkController != null) {
+                            trafficController.networkController.recover();
+                        }
                         return;
                     }
 
@@ -270,6 +281,10 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         }
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString());
+                        // write failed; connection likely dropped
+                        if (networkController != null) {
+                            networkController.recover();
+                        }
                     }
                 } catch (InterruptedException ie) {
                     return; // ending the thread
