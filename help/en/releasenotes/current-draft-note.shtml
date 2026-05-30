@@ -446,7 +446,11 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>The option <strong>Disable loco marker popup menus</strong> has been added
+                to the <strong>Marker</strong> menu. If it's selected, it's possible to
+                move around loco markers but it's not possible to open the popup menu for
+                loco markers. This is useful for dispatcher that wants to move
+                the loco markers but doesn't want to edit the loco markers.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -496,6 +500,11 @@
                 vertical scrolling when they're at the top or bottom of the window.</li>
             <li>Handle mouse down events, drag and popup menus, on shapes before background objects
             (level 0 and level 1).</li>
+            <li>The option <strong>Disable loco marker popup menus</strong> has been added
+                to the <strong>Marker</strong> menu. If it's selected, it's possible to
+                move around loco markers but it's not possible to open the popup menu for
+                loco markers. This is useful for dispatcher that wants to move
+                the loco markers but doesn't want to edit the loco markers.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -549,7 +558,11 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The option <strong>Disable loco marker popup menus</strong> has been added
+                to the <strong>Marker</strong> menu. If it's selected, it's possible to
+                move around loco markers but it's not possible to open the popup menu for
+                loco markers. This is useful for dispatcher that wants to move
+                the loco markers but doesn't want to edit the loco markers.</li>
         </ul>
 
     <h3>Permissions</h3>
