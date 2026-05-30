@@ -156,16 +156,10 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
                     lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
                     if (_positionable != null) {
                         var d = this.getPreferredSize();
-
-                        if (size.width < d.width) {
-                            size.width = d.width;
-                        }
-                        if (size.height < d.height) {
-                            size.height = d.height;
-                        }
-
-                        this.setSize(size.width, size.height);
-                        _positionable.setSize(size.width, size.height);
+                        this.setSize(d);
+                        _positionable.setSize(d);
+                    } else {
+                        _frame.pack();
                     }
                 } else {
                     log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}",

@@ -313,6 +313,8 @@ public interface Positionable extends Cloneable, InlineLogixNG {
 
     void setSize(int width, int height);
 
+    void setSize(Dimension d);
+
     void setVisible(boolean b);
 
     int getWidth();
