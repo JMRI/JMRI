@@ -30,7 +30,6 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
     private DCCppSystemConnectionMemo _memo;
     private int _displayNo;
     private final PropertyChangeListener _listener;
-    private final Dimension size = new Dimension(0,0);
     private Font font;
 
     static final int TOTALLINES = 64;
