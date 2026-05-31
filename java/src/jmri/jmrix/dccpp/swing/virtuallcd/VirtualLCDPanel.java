@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.List;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.swing.*;
 
 import jmri.jmrit.display.Positionable;
@@ -36,6 +37,7 @@ public class VirtualLCDPanel extends JPanel
     private int _minDisplayNo;
     private int _maxDisplayNo;
     private final Set<Integer> _selectedDisplays = new HashSet<>();
+    private Dimension lcdSize;
 
     static final int TOTALLINES = 64;
     private final Map<Integer, List<JLabel>> linesMap = new HashMap<>();
@@ -160,6 +162,18 @@ public class VirtualLCDPanel extends JPanel
         return _selectedDisplays;
     }
 
+    @Override
+    public void setLCDSize(@CheckForNull Dimension d) {
+        lcdSize = d;
+        reset();
+    }
+
+    @CheckForNull
+    @Override
+    public Dimension getLCDSize() {
+        return lcdSize;
+    }
+
     public String getNameString() {
         switch (_displayConfig) {
             case ConfigureVirtualLCD_AllDisplays:
@@ -210,6 +224,9 @@ public class VirtualLCDPanel extends JPanel
         // initialize the list of display lines
         for (int i = 0; i<TOTALLINES; i++) {
             var label = new JLabel();
+            if (lcdSize != null && lines.size() < lcdSize.height) {
+                label.setText(cutIfNeeded(""));
+            }
             if (font != null) label.setFont(font);
             label.setOpaque(true);
             label.setBackground(Color.BLACK);
@@ -244,6 +261,18 @@ public class VirtualLCDPanel extends JPanel
         }
     }
 
+    private String cutIfNeeded(String s) {
+        if (lcdSize != null) {
+            while (s.length() < lcdSize.width) {
+                s += " ";
+            }
+            if (s.length() > lcdSize.width) {
+                s = s.substring(0, lcdSize.width);
+            }
+        }
+        return s;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -255,18 +284,20 @@ public class VirtualLCDPanel extends JPanel
             if (showDisplay(displayNumber)) {
                 var lines = linesMap.computeIfAbsent(displayNumber, display -> createNewDisplay());
                 int lineNumber = msg.getLCDLineNumInt();
-                if (lineNumber < TOTALLINES) {
-                    lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
-                    if (_positionable != null) {
-                        var d = this.getPreferredSize();
-                        this.setSize(d);
-                        _positionable.setSize(d);
+                if (lcdSize == null || lineNumber < lcdSize.height) {
+                    if (lineNumber < TOTALLINES) {
+                        lines.get(lineNumber).setText(cutIfNeeded(msg.getLCDTextString()+"   ")); // padding for appearance
+                        if (_positionable != null) {
+                            var d = this.getPreferredSize();
+                            this.setSize(d);
+                            _positionable.setSize(d);
+                        } else {
+                            _frame.pack();
+                        }
                     } else {
-                        _frame.pack();
+                        log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}",
+                                    lineNumber, TOTALLINES-1);
                     }
-                } else {
-                    log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}",
-                                lineNumber, TOTALLINES-1);
                 }
                 log.debug("Received LCD message for display# {}.", displayNumber);
             }

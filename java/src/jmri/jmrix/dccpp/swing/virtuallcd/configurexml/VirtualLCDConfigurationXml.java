@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.swing.virtuallcd.configurexml;
 
+import java.awt.Dimension;
 import java.util.*;
 
 import jmri.configurexml.JmriConfigureXmlException;
@@ -24,6 +25,13 @@ public class VirtualLCDConfigurationXml {
         if (p.getMemo() != null) {
             element.addContent(new Element("systemConnection")
                     .addContent(p.getMemo().getSystemPrefix()));
+        }
+        Dimension lcdSize = p.getLCDSize();
+        if (lcdSize != null) {
+            element.addContent(new Element("numColumns")
+                    .addContent(Integer.toString(lcdSize.width)));
+            element.addContent(new Element("numRows")
+                    .addContent(Integer.toString(lcdSize.height)));
         }
         element.addContent(new Element("displayConfig")
                 .addContent(p.getDisplayConfig().name()));
@@ -73,6 +81,14 @@ public class VirtualLCDConfigurationXml {
         }
 
         p.setMemo(memo);
+
+        Element numColumnsElement = element.getChild("numColumns");
+        Element numRowsElement = element.getChild("numRows");
+        if (numColumnsElement != null && numRowsElement != null) {
+            int numColumns = Integer.parseInt(numColumnsElement.getTextTrim());
+            int numRows = Integer.parseInt(numRowsElement.getTextTrim());
+            p.setLCDSize(new Dimension(numColumns, numRows));
+        }
 
         String displayConfigName = element.getChild("displayConfig").getTextTrim();
         p.setDisplayConfig(DisplayConfig.valueOf(displayConfigName));

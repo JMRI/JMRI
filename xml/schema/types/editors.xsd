@@ -1407,6 +1407,8 @@
           <xs:complexType>
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
               <xs:element name="systemConnection"  type="xs:string" minOccurs="1" maxOccurs="1" />
+              <xs:element name="numColumns"  type="xs:int" minOccurs="0" maxOccurs="1" />
+              <xs:element name="numRows"  type="xs:int" minOccurs="0" maxOccurs="1" />
               <xs:element name="displayConfig" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">

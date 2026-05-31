@@ -1,6 +1,9 @@
 package jmri.jmrix.dccpp.swing.virtuallcd;
 
+import java.awt.Dimension;
 import java.util.Set;
+
+import javax.annotation.CheckForNull;
 
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 
@@ -52,5 +55,18 @@ public interface VirtualLCDConfiguration {
     void setSelectedDisplays(Set<Integer> selectedDisplays);
 
     Set<Integer> getSelectedDisplays();
+
+    /**
+     * Set the size of the LCD display.
+     * @param d the size or null if dynamic size
+     */
+    void setLCDSize(@CheckForNull Dimension d);
+
+    /**
+     * Get the size of the LCD display.
+     * @return the size or null if dynamic size
+     */
+    @CheckForNull
+    Dimension getLCDSize();
 
 }
