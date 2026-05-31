@@ -120,9 +120,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>LocoNet-over-TCP connections now automatically reconnect if the server 
-                    goes away and comes back. Detection relies on a clean TCP close 
-                    from the server; hard disconnects (network drop with no TCP FIN) 
+                <li>LocoNet-over-TCP connections now automatically reconnect if the server
+                    goes away and comes back. Detection relies on a clean TCP close
+                    from the server; hard disconnects (network drop with no TCP FIN)
                     are only detected when JMRI next tries to send a message.</li>
             </ul>
 
@@ -163,8 +163,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a bug which could cause the Event Table to 
-                    refresh too often, which annoyingly caused it to 
+                <li>Fixed a bug which could cause the Event Table to
+                    refresh too often, which annoyingly caused it to
                     lose your current selected row.</li>
             </ul>
 
@@ -477,7 +477,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixed a bug were DecoderPro was include the height of 
+            <li>Fixed a bug were DecoderPro was include the height of
                 non-visible columns in the row height calculation.</li>
         </ul>
 
@@ -511,6 +511,10 @@
                 move around loco markers but it's not possible to open the popup menu for
                 loco markers. This is useful for dispatcher that wants to move
                 the loco markers but doesn't want to edit the loco markers.</li>
+            <li>Prevent a possible <strong>ClassCastException</strong> introduced by PR #14492
+            and PR #14928 to support signals on turntables and traversers. The exception occurs when
+            Entry/Exit is used and a panel has a turntable and/or a traverser. The added logic
+            did not consider that the <strong>bean</strong> might be an Entry/Exit sensor.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

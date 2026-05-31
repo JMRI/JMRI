@@ -1491,7 +1491,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     public NamedBean getFacingBean(@CheckForNull Block facingBlock,
             @CheckForNull Block protectedBlock,
             @CheckForNull LayoutEditor panel, Class< ?> T) {
-        //check input        
+        //check input
         if ((facingBlock == null) || (protectedBlock == null)) {
             log.error("null block in call to getFacingSignalMast");
             return null;
@@ -1999,7 +1999,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         // Check for turntable approach masts first, as they are a special case.
         for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
-            if (turntable.isApproachMast((SignalMast) bean)) {
+            if (bean instanceof SignalMast && turntable.isApproachMast((SignalMast) bean)) {
                 if (turntable.getLayoutBlock() != null) {
                     protectingBlocks.add(turntable.getLayoutBlock());
                     return protectingBlocks;
@@ -2020,7 +2020,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         // Check for traverser approach masts first, as they are a special case.
         for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
-            if (traverser.isApproachMast((SignalMast) bean)) {
+            if (bean instanceof SignalMast && traverser.isApproachMast((SignalMast) bean)) {
                 if (traverser.getLayoutBlock() != null) {
                     protectingBlocks.add(traverser.getLayoutBlock());
                     return protectingBlocks;
@@ -2331,7 +2331,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (bean.equals(turntable.getExitSignalMast())) {
                 return turntable.getLayoutBlock();
             }
-            if (turntable.isApproachMast((SignalMast) bean)) {
+            if (bean instanceof SignalMast && turntable.isApproachMast((SignalMast) bean)) {
                 for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
                     if (bean.equals(ray.getApproachMast())) {
                         TrackSegment connectedTrack = ray.getConnect();
@@ -2350,7 +2350,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if (bean.equals(traverser.getExitSignalMast())) {
                 return traverser.getLayoutBlock();
             }
-            if (traverser.isApproachMast((SignalMast) bean)) {
+            if (bean instanceof SignalMast && traverser.isApproachMast((SignalMast) bean)) {
                 for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
                     if (bean.equals(slot.getApproachMast())) {
                         TrackSegment connectedTrack = slot.getConnect();
