@@ -105,7 +105,8 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.gridy = 1;
         for (DisplayConfig dc : DisplayConfig.values()) {
             displayConfigComboBox.addItem(dc);
-            if (dc == virtualLCDConfiguration.getDisplayConfig()) {
+            if (virtualLCDConfiguration != null
+                    && dc == virtualLCDConfiguration.getDisplayConfig()) {
                 displayConfigComboBox.setSelectedItem(dc);
             }
         }
@@ -143,7 +144,6 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         cards.add(oneDisplay, DisplayConfig.ConfigureVirtualLCD_OneDisplay.name());
         cards.add(intervalDisplays, DisplayConfig.ConfigureVirtualLCD_IntervalDisplay.name());
         cards.add(selectedDisplays, DisplayConfig.ConfigureVirtualLCD_SelectedDisplays.name());
-        cardLayout.show(cards, virtualLCDConfiguration.getDisplayConfig().name());
         contentPane.add(cards);
 
         displayConfigComboBox.addItemListener(evt -> {
@@ -159,7 +159,10 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         cancel.addActionListener((e) -> closeDialog.closeDialog(editor));
         cancel.setToolTipText(Bundle.getMessage("CancelButtonHint"));
 
-        if (virtualLCDConfiguration != null) {
+        if (virtualLCDConfiguration != null) {  // Edit configuration
+
+            cardLayout.show(cards, virtualLCDConfiguration.getDisplayConfig().name());
+
             JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
             panel5.add(ok);
             ok.addActionListener((e) -> {
@@ -176,7 +179,9 @@ public class ConfigureVirtualLCD extends JmriJFrame {
                 }
             });
             ok.setToolTipText(Bundle.getMessage("CreateButtonHint"));
-        } else {
+
+        } else {    // Create new VirtualLCD icon on a panel
+            
             JButton create = new JButton(Bundle.getMessage("ButtonCreate"));
             panel5.add(create);
             create.addActionListener((e) -> {
