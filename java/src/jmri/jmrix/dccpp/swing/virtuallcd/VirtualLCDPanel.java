@@ -11,6 +11,11 @@ import javax.swing.*;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.*;
+import jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig;
+import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_AllDisplays;
+import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_IntervalDisplay;
+import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_OneDisplay;
+import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_SelectedDisplays;
 import jmri.util.JmriJFrame;
 
 /**
@@ -22,37 +27,37 @@ import jmri.util.JmriJFrame;
  * @author M Steve Todd      Copyright (C) 2023
  * @author Daniel Bergqvist  Copyright (C) 2026
  */
-public class VirtualLCDPanel extends JPanel implements DCCppListener  {
+public class VirtualLCDPanel extends JPanel
+        implements DCCppListener, VirtualLCDConfiguration  {
 
     private final JmriJFrame _frame;
     private final Positionable _positionable;
     private DCCppTrafficController _tc;
-    private DCCppSystemConnectionMemo _memo;
-    private int _displayNo;
     private final PropertyChangeListener _listener;
     private Font font;
+    private DCCppSystemConnectionMemo _memo;
+    private DisplayConfig _displayConfig = DisplayConfig.ConfigureVirtualLCD_AllDisplays;
+    private int displayNo = -1;
+    private int _minDisplayNo;
+    private int _maxDisplayNo;
+    private final Set<Integer> _selectedDisplays = new HashSet<>();
 
     static final int TOTALLINES = 64;
     private final Map<Integer, List<JLabel>> linesMap = new HashMap<>();
 
-    public VirtualLCDPanel(JmriJFrame frame, DCCppSystemConnectionMemo memo) {
-        this(frame, null, memo, -1);
+    public VirtualLCDPanel(JmriJFrame frame) {
+        this(frame, null);
     }
 
     public VirtualLCDPanel(
             JmriJFrame frame,
-            Positionable pos,
-            DCCppSystemConnectionMemo memo,
-            int displayNo) {
+            Positionable pos) {
 
         _frame = frame;
         _positionable = pos;
-        _memo = memo;
-        _displayNo = displayNo;
 
         _listener = evt -> {
-            if (ConnectionStatus.CONNECTION_UP.equals(
-                    ConnectionStatus.instance().getConnectionState(memo))) {
+            if (ConnectionStatus.CONNECTION_UP.equals(ConnectionStatus.instance().getConnectionState(_memo))) {
                 _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
             }
         };
@@ -85,6 +90,7 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
         ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
     }
 
+    @Override
     public void setMemo(DCCppSystemConnectionMemo memo) {
         ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
         if (_tc != null) {
@@ -98,9 +104,95 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
         reset();
     }
 
-    public void setDisplayNo(int displayNo) {
-        _displayNo = displayNo;
+    @Override
+    public DCCppSystemConnectionMemo getMemo() {
+        return _memo;
+    }
+
+    @Override
+    public void setDisplayConfig(DisplayConfig displayConfig) {
+        this._displayConfig = displayConfig;
         reset();
+    }
+
+    @Override
+    public DisplayConfig getDisplayConfig() {
+        return _displayConfig;
+    }
+
+    @Override
+    public void setDisplayNo(int displayNo) {
+        this.displayNo = displayNo;
+        reset();
+    }
+
+    @Override
+    public int getDisplayNo() {
+        return displayNo;
+    }
+
+    @Override
+    public void setMinDisplayNo(int minDisplayNo) {
+        this._minDisplayNo = minDisplayNo;
+        reset();
+    }
+
+    @Override
+    public int getMinDisplayNo() {
+        return _minDisplayNo;
+    }
+
+    @Override
+    public void setMaxDisplayNo(int maxDisplayNo) {
+        this._maxDisplayNo = maxDisplayNo;
+        reset();
+    }
+
+    @Override
+    public int getMaxDisplayNo() {
+        return _maxDisplayNo;
+    }
+
+    @Override
+    public void setSelectedDisplays(Set<Integer> displays) {
+        _selectedDisplays.clear();
+        _selectedDisplays.addAll(displays);
+        reset();
+    }
+
+    @Override
+    public Set<Integer> getSelectedDisplays() {
+        return _selectedDisplays;
+    }
+
+    public String getNameString() {
+        switch (_displayConfig) {
+            case ConfigureVirtualLCD_AllDisplays:
+                return Bundle.getMessage("VirtualLcdPositionable_AllDisplays");
+
+            case ConfigureVirtualLCD_OneDisplay:
+                return Bundle.getMessage(
+                        "VirtualLcdPositionable_OneDisplay", displayNo);
+
+            case ConfigureVirtualLCD_IntervalDisplay:
+                return Bundle.getMessage(
+                        "VirtualLcdPositionable_IntervalDisplay",
+                        _minDisplayNo, _maxDisplayNo);
+
+            case ConfigureVirtualLCD_SelectedDisplays:
+                StringBuilder sb = new StringBuilder();
+                for (int i : _selectedDisplays) {
+                    if (!sb.isEmpty()) {
+                        sb.append(",");
+                    }
+                    sb.append(i);
+                }
+                return Bundle.getMessage(
+                        "VirtualLcdPositionable_SelectedDisplays", sb.toString());
+
+            default:
+                throw new IllegalArgumentException("Unknown displayConfig: "+_displayConfig.name());
+        }
     }
 
     /**
@@ -138,6 +230,25 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
         return lines;
     }
 
+    private boolean showDisplay(int displayNumber) {
+        switch (_displayConfig) {
+            case ConfigureVirtualLCD_AllDisplays:
+                return true;
+
+            case ConfigureVirtualLCD_OneDisplay:
+                return displayNo == displayNumber;
+
+            case ConfigureVirtualLCD_IntervalDisplay:
+                return _minDisplayNo <= displayNumber && displayNumber <= _maxDisplayNo;
+
+            case ConfigureVirtualLCD_SelectedDisplays:
+                return _selectedDisplays.contains(displayNumber);
+
+            default:
+                throw new IllegalArgumentException("Unknown displayConfig: "+_displayConfig.name());
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -146,8 +257,7 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
         if (msg.isLCDTextReply()) { // <@ display# line# "message text">
             int displayNumber = msg.getLCDDisplayNumInt();
 
-            // displayNo == -1 means every display
-            if (_displayNo == -1 || _displayNo == displayNumber) {
+            if (showDisplay(displayNumber)) {
                 var lines = linesMap.computeIfAbsent(displayNumber, display -> createNewDisplay());
                 int lineNumber = msg.getLCDLineNumInt();
                 if (lineNumber < TOTALLINES) {

@@ -181,7 +181,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
             ok.setToolTipText(Bundle.getMessage("CreateButtonHint"));
 
         } else {    // Create new VirtualLCD icon on a panel
-            
+
             JButton create = new JButton(Bundle.getMessage("ButtonCreate"));
             panel5.add(create);
             create.addActionListener((e) -> {
@@ -273,7 +273,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
     private void addVirtualLCD(DCCppSystemConnectionMemo memo) {
 
         VirtualLcdPositionable virtLcdPositionable = new VirtualLcdPositionable(editor);
-        updateVirtualLCD(memo, virtLcdPositionable);
+        updateVirtualLCD(memo, virtLcdPositionable.getVirtualLCDPanel());
         virtLcdPositionable.initComponents();
         virtLcdPositionable.setDisplayLevel(ICONS);
         editor.setNextLocation(virtLcdPositionable);

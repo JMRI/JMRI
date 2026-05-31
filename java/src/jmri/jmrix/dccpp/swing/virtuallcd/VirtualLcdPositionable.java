@@ -1,15 +1,12 @@
 package jmri.jmrix.dccpp.swing.virtuallcd;
 
 import java.awt.event.ActionEvent;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 
 import jmri.jmrit.display.*;
-import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.util.JmriJFrame;
 
 /**
@@ -17,23 +14,14 @@ import jmri.util.JmriJFrame;
  *
  * @author Daniel Bergqvist (C) 2026
  */
-public class VirtualLcdPositionable extends PositionableJComponent
-        implements VirtualLCDConfiguration {
+public class VirtualLcdPositionable extends PositionableJComponent {
 
     private final VirtualLCDPanel virtualLCDPanel;
     private JmriJFrame editPositionableFrame = null;
-    private DCCppSystemConnectionMemo memo;
-    private DisplayConfig displayConfig = DisplayConfig.ConfigureVirtualLCD_AllDisplays;
-    private int displayNo;
-    private int minDisplayNo;
-    private int maxDisplayNo;
-    private final Set<Integer> selectedDisplays = new HashSet<>();
 
     public VirtualLcdPositionable(Editor editor) {
-
         super(editor);
-
-        virtualLCDPanel = new VirtualLCDPanel(editor, this, memo, displayNo);
+        virtualLCDPanel = new VirtualLCDPanel(editor, this);
     }
 
     public void initComponents() {
@@ -46,12 +34,12 @@ public class VirtualLcdPositionable extends PositionableJComponent
     @Override
     public Positionable deepClone() {
         VirtualLcdPositionable pos = new VirtualLcdPositionable(_editor);
-        pos.setMemo(memo);
-        pos.setDisplayConfig(displayConfig);
-        pos.setDisplayNo(displayNo);
-        pos.setMinDisplayNo(minDisplayNo);
-        pos.setMaxDisplayNo(maxDisplayNo);
-        pos.setSelectedDisplays(selectedDisplays);
+        pos.virtualLCDPanel.setMemo(virtualLCDPanel.getMemo());
+        pos.virtualLCDPanel.setDisplayConfig(virtualLCDPanel.getDisplayConfig());
+        pos.virtualLCDPanel.setDisplayNo(virtualLCDPanel.getDisplayNo());
+        pos.virtualLCDPanel.setMinDisplayNo(virtualLCDPanel.getMinDisplayNo());
+        pos.virtualLCDPanel.setMaxDisplayNo(virtualLCDPanel.getMaxDisplayNo());
+        pos.virtualLCDPanel.setSelectedDisplays(virtualLCDPanel.getSelectedDisplays());
         pos.initComponents();
         return finishClone(pos);
     }
@@ -60,68 +48,8 @@ public class VirtualLcdPositionable extends PositionableJComponent
         return super.finishClone(pos);
     }
 */
-
-    @Override
-    public void setMemo(DCCppSystemConnectionMemo memo) {
-        this.memo = memo;
-        virtualLCDPanel.setMemo(memo);
-    }
-
-    @Override
-    public DCCppSystemConnectionMemo getMemo() {
-        return memo;
-    }
-
-    @Override
-    public void setDisplayConfig(DisplayConfig displayConfig) {
-        this.displayConfig = displayConfig;
-    }
-
-    @Override
-    public DisplayConfig getDisplayConfig() {
-        return displayConfig;
-    }
-
-    @Override
-    public void setDisplayNo(int displayNo) {
-        this.displayNo = displayNo;
-        virtualLCDPanel.setDisplayNo(displayNo);
-    }
-
-    @Override
-    public int getDisplayNo() {
-        return displayNo;
-    }
-
-    @Override
-    public void setMinDisplayNo(int minDisplayNo) {
-        this.minDisplayNo = minDisplayNo;
-    }
-
-    @Override
-    public int getMinDisplayNo() {
-        return minDisplayNo;
-    }
-
-    @Override
-    public void setMaxDisplayNo(int maxDisplayNo) {
-        this.maxDisplayNo = maxDisplayNo;
-    }
-
-    @Override
-    public int getMaxDisplayNo() {
-        return maxDisplayNo;
-    }
-
-    @Override
-    public void setSelectedDisplays(Set<Integer> displays) {
-        selectedDisplays.clear();
-        selectedDisplays.addAll(displays);
-    }
-
-    @Override
-    public Set<Integer> getSelectedDisplays() {
-        return selectedDisplays;
+    public VirtualLCDPanel getVirtualLCDPanel() {
+        return virtualLCDPanel;
     }
 
     /**
@@ -140,7 +68,7 @@ public class VirtualLcdPositionable extends PositionableJComponent
                         closeDialog(getEditor());
                     }
                     editPositionableFrame = new ConfigureVirtualLCD(
-                            getEditor(), VirtualLcdPositionable.this,
+                            getEditor(), virtualLCDPanel,
                             VirtualLcdPositionable.this::closeDialog);
                     editPositionableFrame.initComponents();
                 }
@@ -164,7 +92,7 @@ public class VirtualLcdPositionable extends PositionableJComponent
 
     @Override
     public String getNameString() {
-        return Bundle.getMessage("VirtualLcdPositionable", displayNo);
+        return virtualLCDPanel.getNameString();
     }
 
     public void dispose() {

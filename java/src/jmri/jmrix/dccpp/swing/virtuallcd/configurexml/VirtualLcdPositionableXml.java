@@ -37,7 +37,7 @@ public class VirtualLcdPositionableXml
 
         Element element = new Element("dccex_virtual_lcd");
 
-        element.addContent(VirtualLCDConfigurationXml.store(p));
+        element.addContent(VirtualLCDConfigurationXml.store(p.getVirtualLCDPanel()));
 
         // include contents
         if (p.getId() != null) element.setAttribute("id", p.getId());
@@ -72,7 +72,7 @@ public class VirtualLcdPositionableXml
 
         VirtualLcdPositionable l = new VirtualLcdPositionable(ed);
 
-        VirtualLCDConfigurationXml.load(l, element);
+        VirtualLCDConfigurationXml.load(l.getVirtualLCDPanel(), element);
 
         l.initComponents();
 
