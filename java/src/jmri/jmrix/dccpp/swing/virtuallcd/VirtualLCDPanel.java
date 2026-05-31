@@ -182,7 +182,7 @@ public class VirtualLCDPanel extends JPanel
             case ConfigureVirtualLCD_SelectedDisplays:
                 StringBuilder sb = new StringBuilder();
                 for (int i : _selectedDisplays) {
-                    if (!sb.isEmpty()) {
+                    if (sb.length() > 0) {
                         sb.append(",");
                     }
                     sb.append(i);
