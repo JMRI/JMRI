@@ -7,6 +7,7 @@ import static jmri.jmrit.display.Editor.ICONS;
 
 import java.util.List;
 
+import javax.annotation.CheckForNull;
 import javax.swing.*;
 
 import jmri.jmrit.display.*;
@@ -345,7 +346,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
 
 
     public interface CloseDialog {
-        void closeDialog(Editor editor);
+        void closeDialog(@CheckForNull Editor editor);
     }
 
 

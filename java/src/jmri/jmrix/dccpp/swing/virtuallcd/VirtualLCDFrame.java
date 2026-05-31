@@ -2,7 +2,7 @@ package jmri.jmrix.dccpp.swing.virtuallcd;
 
 import java.awt.event.*;
 
-import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -86,7 +86,7 @@ public class VirtualLCDFrame extends JmriJFrame  {
         pack();
     }
 
-    private void closeDialog(@Nonnull Editor editor) {
+    private void closeDialog(@CheckForNull Editor editor) {
         ConfigureVirtualLCD.editPositionableFrame.setVisible(false);
         ConfigureVirtualLCD.editPositionableFrame.dispose();
         ConfigureVirtualLCD.editPositionableFrame = null;
