@@ -7,7 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 
 import jmri.jmrit.display.*;
-import jmri.util.JmriJFrame;
 
 /**
  * A VirtualLCD that can be put on a panel.
@@ -17,7 +16,6 @@ import jmri.util.JmriJFrame;
 public class VirtualLcdPositionable extends PositionableJComponent {
 
     private final VirtualLCDPanel virtualLCDPanel;
-    private JmriJFrame editPositionableFrame = null;
 
     public VirtualLcdPositionable(Editor editor) {
         super(editor);
@@ -64,13 +62,13 @@ public class VirtualLcdPositionable extends PositionableJComponent {
             popup.add(new AbstractAction(Bundle.getMessage("EditVirtualLCD")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (editPositionableFrame != null) {
+                    if (ConfigureVirtualLCD.editPositionableFrame != null) {
                         closeDialog(getEditor());
                     }
-                    editPositionableFrame = new ConfigureVirtualLCD(
+                    ConfigureVirtualLCD.editPositionableFrame = new ConfigureVirtualLCD(
                             getEditor(), virtualLCDPanel,
                             VirtualLcdPositionable.this::closeDialog);
-                    editPositionableFrame.initComponents();
+                    ConfigureVirtualLCD.editPositionableFrame.initComponents();
                 }
             });
         }
@@ -78,9 +76,9 @@ public class VirtualLcdPositionable extends PositionableJComponent {
     }
 
     private void closeDialog(@Nonnull Editor editor) {
-        editPositionableFrame.setVisible(false);
-        editPositionableFrame.dispose();
-        editPositionableFrame = null;
+        ConfigureVirtualLCD.editPositionableFrame.setVisible(false);
+        ConfigureVirtualLCD.editPositionableFrame.dispose();
+        ConfigureVirtualLCD.editPositionableFrame = null;
         editor.setVisible(true);
     }
 

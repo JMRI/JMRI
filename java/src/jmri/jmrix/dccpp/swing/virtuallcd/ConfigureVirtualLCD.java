@@ -23,6 +23,8 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class ConfigureVirtualLCD extends JmriJFrame {
 
+    public static volatile ConfigureVirtualLCD editPositionableFrame;
+
     private final Editor editor;
     private final VirtualLCDConfiguration virtualLCDConfiguration;
     private final CloseDialog closeDialog;
