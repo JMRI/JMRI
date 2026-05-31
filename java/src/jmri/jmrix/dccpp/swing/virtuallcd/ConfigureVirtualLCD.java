@@ -104,7 +104,8 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        if (virtualLCDConfiguration.isMemoEditable()) {
+        if (virtualLCDConfiguration != null
+                && virtualLCDConfiguration.isMemoEditable()) {
             p.add(memoLabel, c);
             memoLabel.setLabelFor(_memoComboBox);
         }
@@ -127,7 +128,8 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.anchor = java.awt.GridBagConstraints.WEST;
         c.weightx = 1.0;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        if (virtualLCDConfiguration.isMemoEditable()) {
+        if (virtualLCDConfiguration != null
+                && virtualLCDConfiguration.isMemoEditable()) {
             p.add(_memoComboBox, c);
         }
         c.gridy = 1;
