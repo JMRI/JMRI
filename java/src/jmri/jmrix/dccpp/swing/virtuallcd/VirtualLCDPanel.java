@@ -11,7 +11,6 @@ import javax.swing.*;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.*;
-import jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig;
 import jmri.util.JmriJFrame;
 
 /**
