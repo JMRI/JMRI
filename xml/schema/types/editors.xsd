@@ -1402,9 +1402,34 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="systemConnection"  type="xs:string" minOccurs="1" maxOccurs="1" />
-        <xs:element name="displayNo"  type="xs:int" minOccurs="1" maxOccurs="1" />
+      <xs:sequence minOccurs="1" maxOccurs="1">
+        <xs:element name="virtual_lcd_config" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="systemConnection"  type="xs:string" minOccurs="1" maxOccurs="1" />
+              <xs:element name="displayConfig" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="ConfigureVirtualLCD_AllDisplays"></xs:enumeration>
+                    <xs:enumeration value="ConfigureVirtualLCD_OneDisplay"></xs:enumeration>
+                    <xs:enumeration value="ConfigureVirtualLCD_IntervalDisplay"></xs:enumeration>
+                    <xs:enumeration value="ConfigureVirtualLCD_SelectedDisplays"></xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="displayNo"  type="xs:int" minOccurs="1" maxOccurs="1" />
+              <xs:element name="minDisplayNo"  type="xs:int" minOccurs="1" maxOccurs="1" />
+              <xs:element name="maxDisplayNo"  type="xs:int" minOccurs="1" maxOccurs="1" />
+              <xs:element name="selectedDisplays" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="displayNo"  type="xs:int" minOccurs="0" maxOccurs="unbounded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 

@@ -47,10 +47,8 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
 
         _frame = frame;
         _positionable = pos;
-        _tc = memo.getDCCppTrafficController();
         _memo = memo;
         _displayNo = displayNo;
-        _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
 
         _listener = evt -> {
             if (ConnectionStatus.CONNECTION_UP.equals(
@@ -58,11 +56,14 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
                 _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
             }
         };
-        ConnectionStatus.instance().addPropertyChangeListener(_memo, _listener);
     }
 
     public void initComponents() {
+        _tc = _memo.getDCCppTrafficController();
         _tc.addDCCppListener(DCCppInterface.CS_INFO, this);
+
+        _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
+        ConnectionStatus.instance().addPropertyChangeListener(_memo, _listener);
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
@@ -86,7 +87,9 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
 
     public void setMemo(DCCppSystemConnectionMemo memo) {
         ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
-        _tc.removeDCCppListener(DCCppInterface.CS_INFO, this);
+        if (_tc != null) {
+            _tc.removeDCCppListener(DCCppInterface.CS_INFO, this);
+        }
         _memo = memo;
         _tc = memo.getDCCppTrafficController();
         _tc.addDCCppListener(DCCppInterface.CS_INFO, this);

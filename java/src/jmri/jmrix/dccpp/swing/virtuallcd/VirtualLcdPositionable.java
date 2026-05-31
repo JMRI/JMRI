@@ -27,18 +27,16 @@ public class VirtualLcdPositionable extends PositionableJComponent
     private int displayNo;
     private int minDisplayNo;
     private int maxDisplayNo;
-    private Set<Integer> selectedDisplays = new HashSet<>();
+    private final Set<Integer> selectedDisplays = new HashSet<>();
 
-    public VirtualLcdPositionable(
-            Editor editor,
-            DCCppSystemConnectionMemo memo,
-            int displayNo) {
+    public VirtualLcdPositionable(Editor editor) {
 
         super(editor);
-        this.memo = memo;
-        this.displayNo = displayNo;
 
         virtualLCDPanel = new VirtualLCDPanel(editor, this, memo, displayNo);
+    }
+
+    public void initComponents() {
         virtualLCDPanel.initComponents();
         this.setSize(100,20);
         virtualLCDPanel.setSize(100,20);
@@ -47,8 +45,14 @@ public class VirtualLcdPositionable extends PositionableJComponent
 
     @Override
     public Positionable deepClone() {
-        VirtualLcdPositionable pos =
-                new VirtualLcdPositionable(_editor, memo, displayNo);
+        VirtualLcdPositionable pos = new VirtualLcdPositionable(_editor);
+        pos.setMemo(memo);
+        pos.setDisplayConfig(displayConfig);
+        pos.setDisplayNo(displayNo);
+        pos.setMinDisplayNo(minDisplayNo);
+        pos.setMaxDisplayNo(maxDisplayNo);
+        pos.setSelectedDisplays(selectedDisplays);
+        pos.initComponents();
         return finishClone(pos);
     }
 /*

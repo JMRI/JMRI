@@ -2,19 +2,15 @@ package jmri.jmrix.dccpp.swing.virtuallcd.configurexml;
 
 import jmri.jmrit.display.configurexml.*;
 
-import java.util.List;
 
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.display.*;
 import jmri.jmrix.dccpp.swing.virtuallcd.VirtualLcdPositionable;
-import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Handle configuration for display.VirtualLcdPositionable objects.
+ * Handle configuration for VirtualLcdPositionable objects.
  *
  * @author Howard G. Penny  Copyright (c) 2005
  * @author Daniel Bergqvist Copyright (c) 2026
@@ -28,7 +24,7 @@ public class VirtualLcdPositionableXml
     /**
      * Default implementation for storing the contents of an VirtualLcdPositionable
      *
-     * @param o Object to store, of type TurnoutIcon
+     * @param o Object to store, of type VirtualLcdPositionable
      * @return Element containing the complete info
      */
     @Override
@@ -41,12 +37,7 @@ public class VirtualLcdPositionableXml
 
         Element element = new Element("dccex_virtual_lcd");
 
-        if (p.getMemo() != null) {
-            element.addContent(new Element("systemConnection")
-                    .addContent(p.getMemo().getSystemPrefix()));
-        }
-        element.addContent(new Element("displayNo")
-                .addContent(Integer.toString(p.getDisplayNo())));
+        element.addContent(VirtualLCDConfigurationXml.store(p));
 
         // include contents
         if (p.getId() != null) element.setAttribute("id", p.getId());
@@ -78,33 +69,12 @@ public class VirtualLcdPositionableXml
     public void load(Element element, Object o) throws JmriConfigureXmlException {
         // get object class and create the clock object
         Editor ed = (Editor) o;
-        DCCppSystemConnectionMemo memo = null;
 
-        List<DCCppSystemConnectionMemo> systemConnections =
-                jmri.InstanceManager.getList(DCCppSystemConnectionMemo.class);
+        VirtualLcdPositionable l = new VirtualLcdPositionable(ed);
 
-        String systemConnectionName = "Unknown connection";
+        VirtualLCDConfigurationXml.load(l, element);
 
-        Element systemConnection = element.getChild("systemConnection");
-        if (systemConnection != null) {
-            systemConnectionName = systemConnection.getTextTrim();
-
-            for (DCCppSystemConnectionMemo m : systemConnections) {
-                if (m.getSystemPrefix().equals(systemConnectionName)) {
-                    memo = m;
-                    break;
-                }
-            }
-        }
-
-        if (memo == null) {
-            throw new JmriConfigureXmlException("Cannot find connection: " + systemConnectionName);
-        }
-
-        Element displayNoElement = element.getChild("displayNo");
-        int displayNo = Integer.parseInt(displayNoElement.getTextTrim());
-
-        VirtualLcdPositionable l = new VirtualLcdPositionable(ed, memo, displayNo);
+        l.initComponents();
 
         // find coordinates
         int x = 0;
@@ -136,5 +106,5 @@ public class VirtualLcdPositionableXml
         loadLogixNG_Data(l, element);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VirtualLcdPositionableXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualLcdPositionableXml.class);
 }

@@ -29,11 +29,12 @@ public class ConfigureVirtualLCD extends JmriJFrame {
     private final DoAfter doAfter;
     private final Map<DCCppSystemConnectionMemo, Integer> highestDisplayNoMap = new HashMap<>();
 
-    JComboBox<DisplayConfig> displayNoComboBox;
-    private JPanel selectedDisplays;
-    private JComboBox<Integer> minDisplayNoComboBox = new JComboBox<>();
-    private JComboBox<Integer> maxDisplayNoComboBox = new JComboBox<>();
-    private List<JCheckBox> selectDisplayNoCheckBox = new ArrayList<>();
+    private final JComboBox<DisplayConfig> displayConfigComboBox = new JComboBox<>();
+    private final JPanel selectedDisplays = new JPanel();
+    private final JComboBox<Integer> displayNoComboBox = new JComboBox<>();
+    private final JComboBox<Integer> minDisplayNoComboBox = new JComboBox<>();
+    private final JComboBox<Integer> maxDisplayNoComboBox = new JComboBox<>();
+    private final Map<Integer, JCheckBox> selectDisplayNoCheckBox = new HashMap<>();
 
     public ConfigureVirtualLCD(
             Editor editor,
@@ -78,12 +79,6 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         }
         _memoComboBox.setToolTipText(Bundle.getMessage("ConnectionHint"));
 
-        JTextField displayNoTextField = new JTextField(4);
-        if (virtualLCDConfiguration != null) {
-            displayNoTextField.setText(Integer.toString(virtualLCDConfiguration.getDisplayNo()));
-        } else {
-            displayNoTextField.setText("0");
-        }
         JLabel memoLabel = new JLabel(Bundle.getMessage("Connection"));
         JLabel displayNoLabel = new JLabel(Bundle.getMessage("DisplayNo"));
 
@@ -100,7 +95,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         memoLabel.setLabelFor(_memoComboBox);
         c.gridy = 1;
         p.add(displayNoLabel, c);
-        displayNoLabel.setLabelFor(displayNoTextField);
+        displayNoLabel.setLabelFor(displayNoComboBox);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -108,14 +103,13 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         p.add(_memoComboBox, c);
         c.gridy = 1;
-        displayNoComboBox = new JComboBox<>();
         for (DisplayConfig dc : DisplayConfig.values()) {
-            displayNoComboBox.addItem(dc);
+            displayConfigComboBox.addItem(dc);
             if (dc == virtualLCDConfiguration.getDisplayConfig()) {
-                displayNoComboBox.setSelectedItem(dc);
+                displayConfigComboBox.setSelectedItem(dc);
             }
         }
-        p.add(displayNoComboBox, c);
+        p.add(displayConfigComboBox, c);
         c.gridx = 2;
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -131,7 +125,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
 
         JPanel oneDisplay = new JPanel();
         oneDisplay.add(new JLabel(Bundle.getMessage("DisplayNo")));
-        oneDisplay.add(displayNoTextField);
+        oneDisplay.add(displayNoComboBox);
 
         JPanel intervalDisplays = new JPanel();
         intervalDisplays.add(new JLabel(Bundle.getMessage("DisplayNo")));
@@ -139,12 +133,12 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         intervalDisplays.add(new JLabel(" - "));
         intervalDisplays.add(maxDisplayNoComboBox);
 
-        selectedDisplays = new JPanel();
         selectedDisplays.setLayout(new BoxLayout(selectedDisplays, BoxLayout.Y_AXIS));
 
         JPanel cards;   // A panel that uses CardLayout
         CardLayout cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);   // Create the panel that contains the "cards".
+        cards.setBorder(BorderFactory.createLineBorder(Color.black));
         cards.add(allDisplays, DisplayConfig.ConfigureVirtualLCD_AllDisplays.name());
         cards.add(oneDisplay, DisplayConfig.ConfigureVirtualLCD_OneDisplay.name());
         cards.add(intervalDisplays, DisplayConfig.ConfigureVirtualLCD_IntervalDisplay.name());
@@ -152,7 +146,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         cardLayout.show(cards, virtualLCDConfiguration.getDisplayConfig().name());
         contentPane.add(cards);
 
-        displayNoComboBox.addItemListener(evt -> {
+        displayConfigComboBox.addItemListener(evt -> {
             cardLayout.show(cards, ((DisplayConfig) evt.getItem()).name());
         });
 
@@ -171,8 +165,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
             ok.addActionListener((e) -> {
                 var memo = _memoComboBox.getItemAt(_memoComboBox.getSelectedIndex())._memo;
                 try {
-                    int displayNo = Integer.parseInt(displayNoTextField.getText());
-                    updateVirtualLCD(memo, displayNo);
+                    updateVirtualLCD(memo);
                     closeDialog.closeDialog(editor);
                 } catch (NumberFormatException ex) {
                     JmriJOptionPane.showMessageDialog(
@@ -189,8 +182,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
             create.addActionListener((e) -> {
                 var memo = _memoComboBox.getItemAt(_memoComboBox.getSelectedIndex())._memo;
                 try {
-                    int displayNo = Integer.parseInt(displayNoTextField.getText());
-                    addVirtualLCD(memo, displayNo);
+                    addVirtualLCD(memo);
                     closeDialog.closeDialog(editor);
                 } catch (NumberFormatException ex) {
                     JmriJOptionPane.showMessageDialog(
@@ -244,22 +236,40 @@ public class ConfigureVirtualLCD extends JmriJFrame {
 
     private void configureDisplaySelection(DCCppSystemConnectionMemo memo) {
         selectedDisplays.removeAll();
+        displayNoComboBox.removeAllItems();
         minDisplayNoComboBox.removeAllItems();
         maxDisplayNoComboBox.removeAllItems();
         for (int i=0; i < highestDisplayNoMap.getOrDefault(memo,0); i++) {
+            displayNoComboBox.addItem(i);
+            if (i == virtualLCDConfiguration.getDisplayNo()) {
+                displayNoComboBox.setSelectedItem(i);
+            }
+
             minDisplayNoComboBox.addItem(i);
+            if (i == virtualLCDConfiguration.getMinDisplayNo()) {
+                minDisplayNoComboBox.setSelectedItem(i);
+            }
+
             maxDisplayNoComboBox.addItem(i);
+            if (i == virtualLCDConfiguration.getMaxDisplayNo()) {
+                maxDisplayNoComboBox.setSelectedItem(i);
+            }
+
             JCheckBox cb = new JCheckBox(Bundle.getMessage("ConfigureVirtualLCD_SelectedDisplays_CheckBox", i));
-            selectDisplayNoCheckBox.add(cb);
+            if (virtualLCDConfiguration.getSelectedDisplays().contains(i)) {
+                cb.setSelected(true);
+            }
+            selectDisplayNoCheckBox.put(i, cb);
             selectedDisplays.add(cb);
         }
         this.pack();
     }
 
-    private void addVirtualLCD(DCCppSystemConnectionMemo memo, int displayNo) {
+    private void addVirtualLCD(DCCppSystemConnectionMemo memo) {
 
-        VirtualLcdPositionable virtLcdPositionable =
-                new VirtualLcdPositionable(editor, memo, displayNo);
+        VirtualLcdPositionable virtLcdPositionable = new VirtualLcdPositionable(editor);
+        updateVirtualLCD(memo, virtLcdPositionable);
+        virtLcdPositionable.initComponents();
         virtLcdPositionable.setDisplayLevel(ICONS);
         editor.setNextLocation(virtLcdPositionable);
         try {
@@ -273,12 +283,23 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         }
     }
 
-    private void updateVirtualLCD(DCCppSystemConnectionMemo memo, int displayNo) {
+    private void updateVirtualLCD(DCCppSystemConnectionMemo memo) {
+        updateVirtualLCD(memo, virtualLCDConfiguration);
+    }
 
-        virtualLCDConfiguration.setMemo(memo);
-        virtualLCDConfiguration.setDisplayConfig(
-                displayNoComboBox.getItemAt(displayNoComboBox.getSelectedIndex()));
-        virtualLCDConfiguration.setDisplayNo(displayNo);
+    private void updateVirtualLCD(DCCppSystemConnectionMemo memo, VirtualLCDConfiguration virtLCDConfig) {
+        virtLCDConfig.setMemo(memo);
+        virtLCDConfig.setDisplayConfig(displayConfigComboBox.getItemAt(displayConfigComboBox.getSelectedIndex()));
+        virtLCDConfig.setDisplayNo(displayNoComboBox.getItemAt(displayNoComboBox.getSelectedIndex()));
+        virtLCDConfig.setMinDisplayNo(minDisplayNoComboBox.getItemAt(minDisplayNoComboBox.getSelectedIndex()));
+        virtLCDConfig.setMaxDisplayNo(maxDisplayNoComboBox.getItemAt(maxDisplayNoComboBox.getSelectedIndex()));
+        Set<Integer> selectedDisplaysSet = new HashSet<>();
+        for (var entry : selectDisplayNoCheckBox.entrySet()) {
+            if (entry.getValue().isSelected()) {
+                selectedDisplaysSet.add(entry.getKey());
+            }
+        }
+        virtLCDConfig.setSelectedDisplays(selectedDisplaysSet);
     }
 
 

@@ -23,6 +23,7 @@ public interface VirtualLCDConfiguration {
             this.descr = Bundle.getMessage(property);
         }
 
+        @Override
         public String toString() {
             return descr;
         }
