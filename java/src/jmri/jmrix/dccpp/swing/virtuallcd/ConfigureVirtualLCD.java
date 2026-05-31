@@ -96,8 +96,10 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(memoLabel, c);
-        memoLabel.setLabelFor(_memoComboBox);
+        if (virtualLCDConfiguration.isMemoEditable()) {
+            p.add(memoLabel, c);
+            memoLabel.setLabelFor(_memoComboBox);
+        }
         c.gridy = 1;
         p.add(new JLabel(Bundle.getMessage("ConfigureVirtualLCD_NumColumns")), c);
         displayNoLabel.setLabelFor(_numColumnsTextField);
@@ -117,7 +119,9 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.anchor = java.awt.GridBagConstraints.WEST;
         c.weightx = 1.0;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        p.add(_memoComboBox, c);
+        if (virtualLCDConfiguration.isMemoEditable()) {
+            p.add(_memoComboBox, c);
+        }
         c.gridy = 1;
         c.fill = java.awt.GridBagConstraints.NONE;  // text field will expand
         _numColumnsTextField.setColumns(5);

@@ -26,6 +26,7 @@ import jmri.util.JmriJFrame;
 public class VirtualLCDPanel extends JPanel
         implements DCCppListener, VirtualLCDConfiguration  {
 
+    private final boolean _isMemoEditable;
     private final JmriJFrame _frame;
     private final Positionable _positionable;
     private DCCppTrafficController _tc;
@@ -42,14 +43,13 @@ public class VirtualLCDPanel extends JPanel
     static final int TOTALLINES = 64;
     private final Map<Integer, List<JLabel>> linesMap = new HashMap<>();
 
-    public VirtualLCDPanel(JmriJFrame frame) {
-        this(frame, null);
+    public VirtualLCDPanel(JmriJFrame frame, boolean isMemoEditable) {
+        this(frame, null, isMemoEditable);
     }
 
-    public VirtualLCDPanel(
-            JmriJFrame frame,
-            Positionable pos) {
+    public VirtualLCDPanel(JmriJFrame frame, Positionable pos, boolean isMemoEditable) {
 
+        _isMemoEditable = isMemoEditable;
         _frame = frame;
         _positionable = pos;
 
@@ -104,6 +104,11 @@ public class VirtualLCDPanel extends JPanel
     @Override
     public DCCppSystemConnectionMemo getMemo() {
         return _memo;
+    }
+
+    @Override
+    public boolean isMemoEditable() {
+        return _isMemoEditable;
     }
 
     @Override

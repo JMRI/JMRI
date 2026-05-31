@@ -36,6 +36,8 @@ public interface VirtualLCDConfiguration {
 
     DCCppSystemConnectionMemo getMemo();
 
+    public boolean isMemoEditable();
+
     void setDisplayConfig(DisplayConfig displayConfig);
 
     DisplayConfig getDisplayConfig();

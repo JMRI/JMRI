@@ -26,7 +26,7 @@ public class VirtualLCDFrame extends JmriJFrame  {
     public VirtualLCDFrame(DCCppSystemConnectionMemo memo) {
         super(false, true); // Save window position but not window size
         _memo = memo;
-        _virtualLCDPanel = new VirtualLCDPanel(this);
+        _virtualLCDPanel = new VirtualLCDPanel(this, false);
         _virtualLCDPanel.setMemo(memo);
     }
 

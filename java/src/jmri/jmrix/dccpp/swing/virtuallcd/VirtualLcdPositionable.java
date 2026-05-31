@@ -20,7 +20,7 @@ public class VirtualLcdPositionable extends PositionableJComponent {
 
     public VirtualLcdPositionable(Editor editor) {
         super(editor);
-        virtualLCDPanel = new VirtualLCDPanel(editor, this);
+        virtualLCDPanel = new VirtualLCDPanel(editor, this, true);
     }
 
     public void initComponents() {
