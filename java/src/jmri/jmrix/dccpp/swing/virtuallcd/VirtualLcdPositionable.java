@@ -63,13 +63,15 @@ public class VirtualLcdPositionable extends PositionableJComponent {
             popup.add(new AbstractAction(Bundle.getMessage("EditVirtualLCD")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (ConfigureVirtualLCD.editPositionableFrame != null) {
+                    if (ConfigureVirtualLCD.getEditPositionableFrame() != null) {
                         closeDialog(getEditor());
                     }
-                    ConfigureVirtualLCD.editPositionableFrame = new ConfigureVirtualLCD(
+                    ConfigureVirtualLCD editPositionableFrame = new ConfigureVirtualLCD(
                             getEditor(), virtualLCDPanel,
                             VirtualLcdPositionable.this::closeDialog);
-                    ConfigureVirtualLCD.editPositionableFrame.initComponents();
+
+                    editPositionableFrame.initComponents();
+                    ConfigureVirtualLCD.setEditPositionableFrame(editPositionableFrame);
                 }
             });
         }
@@ -77,9 +79,12 @@ public class VirtualLcdPositionable extends PositionableJComponent {
     }
 
     private void closeDialog(@CheckForNull Editor editor) {
-        ConfigureVirtualLCD.editPositionableFrame.setVisible(false);
-        ConfigureVirtualLCD.editPositionableFrame.dispose();
-        ConfigureVirtualLCD.editPositionableFrame = null;
+        ConfigureVirtualLCD editPositionableFrame =
+                ConfigureVirtualLCD.getEditPositionableFrame();
+        editPositionableFrame.setVisible(false);
+        editPositionableFrame.dispose();
+        ConfigureVirtualLCD.setEditPositionableFrame(null);
+
         if (editor != null) {
             editor.setVisible(true);
         }

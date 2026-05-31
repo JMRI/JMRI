@@ -24,7 +24,7 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class ConfigureVirtualLCD extends JmriJFrame {
 
-    public static volatile ConfigureVirtualLCD editPositionableFrame;
+    private static ConfigureVirtualLCD editPositionableFrame;
 
     private final Editor editor;
     private final VirtualLCDConfiguration virtualLCDConfiguration;
@@ -40,6 +40,14 @@ public class ConfigureVirtualLCD extends JmriJFrame {
     private final JComboBox<Integer> minDisplayNoComboBox = new JComboBox<>();
     private final JComboBox<Integer> maxDisplayNoComboBox = new JComboBox<>();
     private final Map<Integer, JCheckBox> selectDisplayNoCheckBox = new HashMap<>();
+
+    public static void setEditPositionableFrame(ConfigureVirtualLCD frame) {
+        editPositionableFrame = frame;
+    }
+
+    public static ConfigureVirtualLCD getEditPositionableFrame() {
+        return editPositionableFrame;
+    }
 
     public ConfigureVirtualLCD(
             Editor editor,
