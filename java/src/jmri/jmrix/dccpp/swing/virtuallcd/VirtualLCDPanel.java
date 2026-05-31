@@ -12,10 +12,6 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.*;
 import jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig;
-import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_AllDisplays;
-import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_IntervalDisplay;
-import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_OneDisplay;
-import static jmri.jmrix.dccpp.swing.virtuallcd.VirtualLCDConfiguration.DisplayConfig.ConfigureVirtualLCD_SelectedDisplays;
 import jmri.util.JmriJFrame;
 
 /**
