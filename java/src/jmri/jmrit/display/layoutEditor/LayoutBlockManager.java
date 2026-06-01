@@ -1997,7 +1997,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull LayoutEditor panel) {
         List<LayoutBlock> protectingBlocks = new ArrayList<>();
 
-        // Check for turntable approach masts first, as they are a special case.
+        // Check for turntable approach masts first, as they are a special case. Ignore NX sensor beans.
         for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
             if (bean instanceof SignalMast && turntable.isApproachMast((SignalMast) bean)) {
                 if (turntable.getLayoutBlock() != null) {
@@ -2018,7 +2018,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
-        // Check for traverser approach masts first, as they are a special case.
+        // Check for traverser approach masts first, as they are a special case. Ignore NX sensor beans.
         for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
             if (bean instanceof SignalMast && traverser.isApproachMast((SignalMast) bean)) {
                 if (traverser.getLayoutBlock() != null) {
@@ -2323,7 +2323,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     private LayoutBlock getFacingBlockByBeanByPanel(
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
-        // Check for turntable masts first, as they are a special case.
+        // Check for turntable masts first, as they are a special case. Ignore NX sensor beans.
         for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
             if (bean.equals(turntable.getBufferMast())) {
                 return turntable.getLayoutBlock();
@@ -2342,7 +2342,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
         }
-        // Check for traverser masts, as they are a special case.
+        // Check for traverser masts, as they are a special case. Ignore NX sensor beans.
         for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
             if (bean.equals(traverser.getBufferMast())) {
                 return traverser.getLayoutBlock();
