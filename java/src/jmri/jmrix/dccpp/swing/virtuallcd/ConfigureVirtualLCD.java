@@ -353,9 +353,15 @@ public class ConfigureVirtualLCD extends JmriJFrame {
             virtLCDConfig.setLCDSize(null);
         }
         virtLCDConfig.setDisplayConfig(displayConfigComboBox.getItemAt(displayConfigComboBox.getSelectedIndex()));
-        virtLCDConfig.setDisplayNo(displayNoComboBox.getItemAt(displayNoComboBox.getSelectedIndex()));
-        virtLCDConfig.setMinDisplayNo(minDisplayNoComboBox.getItemAt(minDisplayNoComboBox.getSelectedIndex()));
-        virtLCDConfig.setMaxDisplayNo(maxDisplayNoComboBox.getItemAt(maxDisplayNoComboBox.getSelectedIndex()));
+        if (displayNoComboBox.getSelectedIndex() >= 0) {
+            virtLCDConfig.setDisplayNo(displayNoComboBox.getItemAt(displayNoComboBox.getSelectedIndex()));
+        }
+        if (minDisplayNoComboBox.getSelectedIndex() >= 0) {
+            virtLCDConfig.setMinDisplayNo(minDisplayNoComboBox.getItemAt(minDisplayNoComboBox.getSelectedIndex()));
+        }
+        if (maxDisplayNoComboBox.getSelectedIndex() >= 0) {
+            virtLCDConfig.setMaxDisplayNo(maxDisplayNoComboBox.getItemAt(maxDisplayNoComboBox.getSelectedIndex()));
+        }
         Set<Integer> selectedDisplaysSet = new HashSet<>();
         for (var entry : selectDisplayNoCheckBox.entrySet()) {
             if (entry.getValue().isSelected()) {
