@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 import jmri.jmrit.display.*;
 // import static jmri.jmrit.display.Editor.CLOCK;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
-import jmri.util.JmriJFrame;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -21,9 +20,6 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @ServiceProvider(service = PositionableFactory.class)
 public class VirtualLcdPositionableFactory implements PositionableFactory {
-
-    private JmriJFrame addPositionableFrame = null;
-
 
     public VirtualLcdPositionableFactory() {
     }
