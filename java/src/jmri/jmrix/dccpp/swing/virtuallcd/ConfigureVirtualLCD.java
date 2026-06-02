@@ -28,7 +28,6 @@ public class ConfigureVirtualLCD extends JmriJFrame {
 
     private final Editor editor;
     private final VirtualLCDConfiguration virtualLCDConfiguration;
-    private final CloseDialog closeDialog;
     private final DoAfter doAfter;
     private final Map<DCCppSystemConnectionMemo, Integer> highestDisplayNoMap = new HashMap<>();
 
@@ -45,28 +44,42 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         editPositionableFrame = frame;
     }
 
-    public static ConfigureVirtualLCD getEditPositionableFrame() {
-        return editPositionableFrame;
+    public static void createConfigureVirtualLCD(Editor editor, DoAfter doAfter) {
+        editPositionableFrame = new ConfigureVirtualLCD(editor, null, doAfter);
+        editPositionableFrame.initComponents();
     }
 
-    public ConfigureVirtualLCD(
-            Editor editor,
-            VirtualLCDConfiguration virtualLCDConfiguration,
-            CloseDialog closeDialog) {
+    public static void editConfigureVirtualLCD(
+            Editor editor, VirtualLCDConfiguration virtualLCDConfiguration) {
 
-        this(editor, virtualLCDConfiguration, closeDialog, null);
+        closeDialog(null);
+
+        editPositionableFrame = new ConfigureVirtualLCD(
+                editor, virtualLCDConfiguration, null);
+        editPositionableFrame.initComponents();
+        ConfigureVirtualLCD.setEditPositionableFrame(editPositionableFrame);
     }
 
-    public ConfigureVirtualLCD(
+    private static void closeDialog(@CheckForNull Editor editor) {
+        if (editPositionableFrame != null) {
+            editPositionableFrame.setVisible(false);
+            editPositionableFrame.dispose();
+            ConfigureVirtualLCD.setEditPositionableFrame(null);
+
+            if (editor != null) {
+                editor.setVisible(true);
+            }
+        }
+    }
+
+    private ConfigureVirtualLCD(
             Editor editor,
             VirtualLCDConfiguration virtualLCDConfiguration,
-            CloseDialog closeDialog,
             DoAfter doAfter) {
 
         super(Bundle.getMessage("AddVirtualLcdPositionable"), false, false);
         this.editor = editor;
         this.virtualLCDConfiguration = virtualLCDConfiguration;
-        this.closeDialog = closeDialog;
         this.doAfter = doAfter;
     }
 
@@ -194,7 +207,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         // Cancel
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         panel5.add(cancel);
-        cancel.addActionListener((e) -> closeDialog.closeDialog(editor));
+        cancel.addActionListener((e) -> closeDialog(editor));
         cancel.setToolTipText(Bundle.getMessage("CancelButtonHint"));
 
         if (virtualLCDConfiguration != null) {  // Edit configuration
@@ -213,7 +226,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
                 var memo = _memoComboBox.getItemAt(_memoComboBox.getSelectedIndex())._memo;
                 try {
                     updateVirtualLCD(memo);
-                    closeDialog.closeDialog(editor);
+                    closeDialog(editor);
                 } catch (NumberFormatException ex) {
                     JmriJOptionPane.showMessageDialog(
                             editor,
@@ -232,7 +245,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
                 var memo = _memoComboBox.getItemAt(_memoComboBox.getSelectedIndex())._memo;
                 try {
                     addVirtualLCD(memo);
-                    closeDialog.closeDialog(editor);
+                    closeDialog(editor);
                 } catch (NumberFormatException ex) {
                     JmriJOptionPane.showMessageDialog(
                             editor,
@@ -247,7 +260,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                closeDialog.closeDialog(editor);
+                closeDialog(editor);
             }
         });
 
@@ -356,11 +369,6 @@ public class ConfigureVirtualLCD extends JmriJFrame {
             }
         }
         virtLCDConfig.setSelectedDisplays(selectedDisplaysSet);
-    }
-
-
-    public interface CloseDialog {
-        void closeDialog(@CheckForNull Editor editor);
     }
 
 

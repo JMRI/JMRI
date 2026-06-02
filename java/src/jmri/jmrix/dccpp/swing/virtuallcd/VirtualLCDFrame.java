@@ -2,11 +2,9 @@ package jmri.jmrix.dccpp.swing.virtuallcd;
 
 import java.awt.event.*;
 
-import javax.annotation.CheckForNull;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import jmri.jmrit.display.Editor;
 import jmri.jmrix.dccpp.*;
 import jmri.util.JmriJFrame;
 
@@ -52,15 +50,7 @@ public class VirtualLCDFrame extends JmriJFrame  {
         popup = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("EditVirtualLCD"));
         menuItem.addActionListener(evt -> {
-            if (ConfigureVirtualLCD.getEditPositionableFrame() != null) {
-                closeDialog(null);
-            }
-            ConfigureVirtualLCD editPositionableFrame = new ConfigureVirtualLCD(
-                    null, _virtualLCDPanel,
-                    VirtualLCDFrame.this::closeDialog);
-
-            editPositionableFrame.initComponents();
-            ConfigureVirtualLCD.setEditPositionableFrame(editPositionableFrame);
+            ConfigureVirtualLCD.editConfigureVirtualLCD(null, _virtualLCDPanel);
         });
         popup.add(menuItem);
 
@@ -86,15 +76,6 @@ public class VirtualLCDFrame extends JmriJFrame  {
 
         // pack to layout display
         pack();
-    }
-
-    private void closeDialog(@CheckForNull Editor editor) {
-        ConfigureVirtualLCD editPositionableFrame =
-                ConfigureVirtualLCD.getEditPositionableFrame();
-        editPositionableFrame.setVisible(false);
-        editPositionableFrame.dispose();
-        ConfigureVirtualLCD.setEditPositionableFrame(null);
-        setVisible(true);
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualLCDFrame.class);

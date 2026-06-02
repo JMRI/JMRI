@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp.swing.virtuallcd;
 
 import java.awt.event.ActionEvent;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
@@ -63,31 +62,12 @@ public class VirtualLcdPositionable extends PositionableJComponent {
             popup.add(new AbstractAction(Bundle.getMessage("EditVirtualLCD")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (ConfigureVirtualLCD.getEditPositionableFrame() != null) {
-                        closeDialog(getEditor());
-                    }
-                    ConfigureVirtualLCD editPositionableFrame = new ConfigureVirtualLCD(
-                            getEditor(), virtualLCDPanel,
-                            VirtualLcdPositionable.this::closeDialog);
-
-                    editPositionableFrame.initComponents();
-                    ConfigureVirtualLCD.setEditPositionableFrame(editPositionableFrame);
+                    ConfigureVirtualLCD.editConfigureVirtualLCD(
+                            getEditor(), virtualLCDPanel);
                 }
             });
         }
         return true;
-    }
-
-    private void closeDialog(@CheckForNull Editor editor) {
-        ConfigureVirtualLCD editPositionableFrame =
-                ConfigureVirtualLCD.getEditPositionableFrame();
-        editPositionableFrame.setVisible(false);
-        editPositionableFrame.dispose();
-        ConfigureVirtualLCD.setEditPositionableFrame(null);
-
-        if (editor != null) {
-            editor.setVisible(true);
-        }
     }
 
     @Override
