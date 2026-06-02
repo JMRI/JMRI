@@ -40,10 +40,6 @@ public class ConfigureVirtualLCD extends JmriJFrame {
     private final JComboBox<Integer> maxDisplayNoComboBox = new JComboBox<>();
     private final Map<Integer, JCheckBox> selectDisplayNoCheckBox = new HashMap<>();
 
-    public static void setEditPositionableFrame(ConfigureVirtualLCD frame) {
-        editPositionableFrame = frame;
-    }
-
     public static void createConfigureVirtualLCD(Editor editor, DoAfter doAfter) {
         editPositionableFrame = new ConfigureVirtualLCD(editor, null, doAfter);
         editPositionableFrame.initComponents();
@@ -57,14 +53,12 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         editPositionableFrame = new ConfigureVirtualLCD(
                 editor, virtualLCDConfiguration, null);
         editPositionableFrame.initComponents();
-        ConfigureVirtualLCD.setEditPositionableFrame(editPositionableFrame);
     }
 
     private static void closeDialog(@CheckForNull Editor editor) {
         if (editPositionableFrame != null) {
             editPositionableFrame.setVisible(false);
             editPositionableFrame.dispose();
-            ConfigureVirtualLCD.setEditPositionableFrame(null);
 
             if (editor != null) {
                 editor.setVisible(true);

@@ -58,20 +58,8 @@ public class VirtualLcdPositionableFactory implements PositionableFactory {
 
     @Override
     public void addPositionable(@Nonnull Editor editor, DoAfter doAfter) {
-        if (addPositionableFrame != null) {
-            this.closeDialog(editor);
-        }
-
         ConfigureVirtualLCD.createConfigureVirtualLCD(editor, doAfter);
     }
-
-    private void closeDialog(@Nonnull Editor editor) {
-        addPositionableFrame.setVisible(false);
-        addPositionableFrame.dispose();
-        addPositionableFrame = null;
-        editor.setVisible(true);
-    }
-
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualLcdPositionableFactory.class);
 }
