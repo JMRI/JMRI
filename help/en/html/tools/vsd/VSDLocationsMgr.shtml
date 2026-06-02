@@ -266,9 +266,7 @@
       <p>To use another panel do also change the panel title in the VSDGeoData.xml.</p>
 
       <p>Routes, Signals and Dispatcher are not tested.</p>
-      <p><em>Note 1:</em> To hear the surround sound, at least two speakers are required.</p>
-      <p><em>Note 2:</em> A turntable must have a ray track at a 180 degree offset for each ray
-      track. The turntable support started with JMRI Test Release 5.5.2.</p>
+      <p><em>Note:</em> To hear the surround sound, at least two speakers are required.</p>
  
       <p><strong>And here is the old setup version of Advanced Location Following.</strong></p>
 
