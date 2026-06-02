@@ -1375,7 +1375,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       This option when selected makes the departure track in staging available for other trains
       immediately after the departing train is built. For trains that return to the same staging
       location, this option allows the train to use the same track it departed on. This option is
-      only available when using the <a href="#BuildOptions">Aggressive</a> mode for building trains.
+      not available when using the <a href="#BuildOptions">Normal</a> mode for building trains.
 
       <h4 id="AllowCarsToReturnToStaging">Allow cars to return to staging</h4>
       When a train departs and returns to the same staging location, it is regarded as a turn by the
@@ -1961,11 +1961,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="PrintOrientation">Orientation and Paper Size</h3>
-      There are four options, Portrait, Landscape, 4.25 x 11 and 3.25 x 11. Paper size ("Letter" or
-      "A4") is determined by the JMRI locale in use. To access the JMRI locale, from the main menu
-      bar under "Edit" select "Preferences..." then "Display" and then select the "Locale" tab. Some
-      printers require the English (United States) locale in order to print out a Manifest or switch
-      list with the correct number of lines for paper size "Letter".
+      There are five options, Portrait, Landscape, 4.25 x 11, 3.25 x 11 and 2.25 x 11. Paper size
+      ("Letter" or "A4") is determined by the JMRI locale in use. To access the JMRI locale, from
+      the main menu bar under "Edit" select "Preferences..." then "Display" and then select the
+      "Locale" tab. Some printers require the English (United States) locale in order to print out a
+      Manifest or switch list with the correct number of lines for paper size "Letter".
 
       <h3 id="PrintSides">Print on One or Two Sides</h3>
       You have the option of printing your Manifest or switch lists on one side of the paper or
