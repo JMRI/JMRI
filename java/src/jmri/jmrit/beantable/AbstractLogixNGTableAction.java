@@ -54,7 +54,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      */
     public AbstractLogixNGTableAction(String s) {
         super(s);
-        super.setEnabled(false);
     }
 
     protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableDataModel<E> m, String sName);
