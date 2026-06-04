@@ -2659,7 +2659,7 @@ public class TrainBuilderBase extends TrainCommon {
         if (checkForPickUps(car, rl, false)) {
             addLine(SEVEN, Bundle.getMessage("buildNoPickupLaterTrack", car.toString(), rld.getName(),
                     car.getTrackName(), rld.getId(), car.getTrack().getLength() - car.getTrack().getUsedLength(),
-                    Setup.getLengthUnit().toLowerCase()));
+                    Setup.getLengthUnit().toLowerCase(), car.getTrackName()));
             return false;
         }
         // are there any other cars being pull from the same track, route location, and train?

@@ -24,20 +24,14 @@ public class TrainManualBuildEditFrame extends OperationsFrame {
 
     TrainManualBuildTableModel manualBuildModel = new TrainManualBuildTableModel();
     JTable manualBuildTable = new JTable(manualBuildModel);
-    JScrollPane manualBuildPane;
 
     TrainManualBuildManager manualBuildManager;
-
     TrainManualBuild _manualBuild = null;
 
-    // labels
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("AddCar"));
     JButton saveManualBuildButton = new JButton(Bundle.getMessage("SaveManualBuild"));
     JButton deleteManualBuildButton = new JButton(Bundle.getMessage("DeleteManualBuild"));
-
-    // check boxes
-    JCheckBox checkBox;
 
     // radio buttons
     JRadioButton addLocAtTop = new JRadioButton(Bundle.getMessage("Top"));
@@ -57,7 +51,7 @@ public class TrainManualBuildEditFrame extends OperationsFrame {
         _manualBuild = manualBuildManager.newManualBuild(trainId);
 
         // Set up the jtable in a Scroll Pane..
-        manualBuildPane = new JScrollPane(manualBuildTable);
+        JScrollPane manualBuildPane = new JScrollPane(manualBuildTable);
         manualBuildPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         manualBuildModel.initTable(this, manualBuildTable, _manualBuild);
@@ -73,6 +67,7 @@ public class TrainManualBuildEditFrame extends OperationsFrame {
         p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 
         p1Pane.setMaximumSize(new Dimension(2000, 200));
+        p1Pane.setMinimumSize(new Dimension(200, 40));
 
         // row 1a name
         JPanel pName = new JPanel();
@@ -90,34 +85,33 @@ public class TrainManualBuildEditFrame extends OperationsFrame {
         p1.add(pC);
 
         // row 2
-        JPanel p3 = new JPanel();
-        p3.setLayout(new GridBagLayout());
-        p3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AddCar")));
-        addItem(p3, addButton, 1, 1);
-        addItem(p3, addLocAtTop, 2, 1);
-        addItem(p3, addLocAtMiddle, 3, 1);
-        addItem(p3, addLocAtBottom, 4, 1);
+        JPanel p2 = new JPanel();
+        p2.setLayout(new GridBagLayout());
+        p2.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AddCar")));
+        addItem(p2, addButton, 1, 1);
+        addItem(p2, addLocAtTop, 2, 1);
+        addItem(p2, addLocAtMiddle, 3, 1);
+        addItem(p2, addLocAtBottom, 4, 1);
         ButtonGroup group = new ButtonGroup();
         group.add(addLocAtTop);
         group.add(addLocAtMiddle);
         group.add(addLocAtBottom);
         addLocAtBottom.setSelected(true);
 
-        p3.setMaximumSize(new Dimension(2000, 200));
+        p2.setMaximumSize(new Dimension(2000, 200));
 
-        // row 11 buttons
+        // row 3 buttons
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
         pB.setBorder(BorderFactory.createTitledBorder(""));
         pB.setMaximumSize(new Dimension(2000, 200));
 
-        // row 13
         addItem(pB, deleteManualBuildButton, 0, 0);
         addItem(pB, saveManualBuildButton, 1, 0);
 
         getContentPane().add(p1Pane);
         getContentPane().add(manualBuildPane);
-        getContentPane().add(p3);
+        getContentPane().add(p2);
         getContentPane().add(pB);
 
         // set up buttons
@@ -206,5 +200,4 @@ public class TrainManualBuildEditFrame extends OperationsFrame {
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainManualBuildEditFrame.class);
-
 }

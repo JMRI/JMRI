@@ -120,7 +120,10 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>LocoNet-over-TCP connections now automatically reconnect if the server goes away and comes back. Detection relies on a clean TCP close from the server; hard disconnects (network drop with no TCP FIN) are only detected when JMRI next tries to send a message.</li>
+                <li>LocoNet-over-TCP connections now automatically reconnect if the server
+                    goes away and comes back. Detection relies on a clean TCP close
+                    from the server; hard disconnects (network drop with no TCP FIN)
+                    are only detected when JMRI next tries to send a message.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -160,7 +163,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed a bug which could cause the Event Table to
+                    refresh too often, which annoyingly caused it to
+                    lose your current selected row.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -446,7 +451,11 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>The option <strong>Disable loco marker popup menus</strong> has been added
+                to the <strong>Marker</strong> menu. If it's selected, it's possible to
+                move around loco markers but it's not possible to open the popup menu for
+                loco markers. This is useful for dispatcher that wants to move
+                the loco markers but doesn't want to edit the loco markers.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -468,7 +477,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug were DecoderPro was include the height of
+                non-visible columns in the row height calculation.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -496,11 +506,20 @@
                 vertical scrolling when they're at the top or bottom of the window.</li>
             <li>Handle mouse down events, drag and popup menus, on shapes before background objects
             (level 0 and level 1).</li>
+            <li>The option <strong>Disable loco marker popup menus</strong> has been added
+                to the <strong>Marker</strong> menu. If it's selected, it's possible to
+                move around loco markers but it's not possible to open the popup menu for
+                loco markers. This is useful for dispatcher that wants to move
+                the loco markers but doesn't want to edit the loco markers.</li>
+            <li>Prevent a possible <strong>ClassCastException</strong> introduced by PR #14492
+            and PR #14928 to support signals on turntables and traversers. The exception occurs when
+            Entry/Exit is used and a panel has a turntable and/or a traverser. The added logic
+            did not consider that the <strong>bean</strong> might be an Entry/Exit sensor.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Fix an incomplete route cancel cleanup which leaves the protected block allocated.</li>
             </ul>
 
     <h3>LccPro</h3>
@@ -549,7 +568,11 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The option <strong>Disable loco marker popup menus</strong> has been added
+                to the <strong>Marker</strong> menu. If it's selected, it's possible to
+                move around loco markers but it's not possible to open the popup menu for
+                loco markers. This is useful for dispatcher that wants to move
+                the loco markers but doesn't want to edit the loco markers.</li>
         </ul>
 
     <h3>Permissions</h3>
@@ -716,7 +739,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>The restriction on Turntable using only an even number of rays has been lifted.</li>
         </ul>
 
    <h3>Z21 Server</h3>
@@ -733,6 +756,6 @@
                 instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
             <li>Reading and writing of the user-interface.xml preferences file has been made more efficient.  This shouldn't have
                 any effect on users.</li>
-            <li>Fixed the bug <strong>"Premature end of file" in user-interface.xml</strong>.</li>
+            <li>Fixed the bug causing the <strong>"Premature end of file" in user-interface.xml</strong>.</li>
         </ul>
 
