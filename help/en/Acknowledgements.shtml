@@ -340,6 +340,11 @@
         <li>Andrew Deak<!-- adeak1rr -->
          who added the CPMEGA C/MRI option.</li>
 
+        <li>Mike Dean<!-- mdean77a -->
+         who created the 
+         <a href="https://github.com/mdean77a/JMRI/blob/master/python_code/README.md">pyjmri</a>
+         async Python interface to the JMRI web server.</li>
+
         <li>Fred Decker<!-- FrightRisk -->
          who improved the Walthers Diesel Soundtraxx decoder.</li>
 
