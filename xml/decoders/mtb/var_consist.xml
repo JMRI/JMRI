@@ -21,16 +21,22 @@
             <authorinitials>PS</authorinitials>
             <revremark>Initial version</revremark>
         </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2026-06-01</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Firmware 1.1</revremark>
+        </revision>
     </revhistory>
 
         <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" >
-            <decVal max="99"/>
+            <splitVal highCV="20" upperMask="VVVVVVVV" max="10239"/>
             <label>Consist Address</label>
             <label xml:lang="cs">Adresa soupravy</label>
             <tooltip>&lt;html&gt;Address of the locomotive in consist.&lt;br&gt;Address 0 means that the locomotive is not in consist.&lt;br&gt;Allowed addresses in consist are 1 - 99.&lt;/html&gt;</tooltip>
             <tooltip xml:lang="cs">&lt;html&gt;Adresa lokomotivy v soupravě.&lt;br&gt;Adresa 0 znamená že lokomotiva v soupravě není.&lt;br&gt;Povolené adresy v soupravě jsou 1 – 99.&lt;/html&gt;</tooltip>
         </variable>
-        
+
         <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" >
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
             <label>Locomotive Direction In Consist</label>

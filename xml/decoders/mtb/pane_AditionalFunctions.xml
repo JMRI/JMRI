@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - Petr Sidlo 2026-05-20 -->
+<!-- version 2 - Petr Sidlo 2026-06-01 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 
     <name>Additional Functions</name>
@@ -16,119 +17,128 @@
             </griditem>
             <griditem gridx="1" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>Povoleno</text>
                 </label>
             </griditem>
             <griditem gridx="2" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>F0f</text>
                 </label>
             </griditem>
             <griditem gridx="3" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>F0r</text>
                 </label>
             </griditem>
             <griditem gridx="4" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX1</text>
                 </label>
             </griditem>
             <griditem gridx="5" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX2</text>
                 </label>
             </griditem>
             <griditem gridx="6" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX3</text>
                 </label>
             </griditem>
             <griditem gridx="7" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX4</text>
                 </label>
             </griditem>
             <griditem gridx="8" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX5</text>
                 </label>
             </griditem>
             <griditem gridx="9" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX6</text>
                 </label>
             </griditem>
             <griditem gridx="10" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX7</text>
                 </label>
             </griditem>
             <griditem gridx="11" gridy="0">
                 <label>
-                    <text> </text>
+                    <text>AUX8</text>
                 </label>
             </griditem>
 
-            <griditem gridx="0" gridy="1">
-                <label>
-                    <text> </text>
-                </label>
-            </griditem>
-            <griditem gridx="1" gridy="1">
-                <label>
-                    <text>Povoleno</text>
-                </label>
-            </griditem>
-            <griditem gridx="2" gridy="1">
-                <label>
-                    <text>F1</text>
-                </label>
-            </griditem>
-            <griditem gridx="3" gridy="1">
-                <label>
-                    <text>F2</text>
-                </label>
-            </griditem>
-            <griditem gridx="4" gridy="1">
-                <label>
-                    <text>F3</text>
-                </label>
-            </griditem>
-            <griditem gridx="5" gridy="1">
-                <label>
-                    <text>F4</text>
-                </label>
-            </griditem>
-            <griditem gridx="6" gridy="1">
-                <label>
-                    <text>F5</text>
-                </label>
-            </griditem>
-            <griditem gridx="7" gridy="1">
-                <label>
-                    <text>F6</text>
-                </label>
-            </griditem>
-            <griditem gridx="8" gridy="1">
-                <label>
-                    <text>F7</text>
-                </label>
-            </griditem>
-            <griditem gridx="9" gridy="1">
-                <label>
-                    <text>F8</text>
-                </label>
-            </griditem>
-
-            <griditem gridx="0" gridy="2" anchor="LINE_START">
+            <griditem gridx="0" gridy="1" anchor="LINE_START">
                 <label>
                     <text>Additiona masking functions global enabled</text>
                     <text xml:lang="cs">Dodatečné funkce maskování globální povolení</text>
                 </label>
             </griditem>
-            <griditem gridx="1" gridy="2">
+            <griditem gridx="1" gridy="1">
                 <display item="Additional functions global enable" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="2" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="3" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="4" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="5" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="6" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="7" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="8" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="9" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="10" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="11" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+
+            <griditem gridx="0" gridy="2" anchor="LINE_START">
+                <label>
+                    <text>Enabled masking while direction forward</text>
+                    <text xml:lang="cs">Povolené maskování při směru vpřed</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Mask forward reverse" label="" format="checkbox" />
             </griditem>
             <griditem gridx="2" gridy="2">
                 <label>
@@ -141,207 +151,289 @@
                 </label>
             </griditem>
             <griditem gridx="4" gridy="2">
-                <label>
-                    <text> </text>
-                </label>
+                <display item="Mask forward AUX1" label="" format="checkbox" />
             </griditem>
             <griditem gridx="5" gridy="2">
-                <label>
-                    <text> </text>
-                </label>
+                <display item="Mask forward AUX2" label="" format="checkbox" />
             </griditem>
             <griditem gridx="6" gridy="2">
-                <label>
-                    <text> </text>
-                </label>
+                <display item="Mask forward AUX3" label="" format="checkbox" />
             </griditem>
             <griditem gridx="7" gridy="2">
-                <label>
-                    <text> </text>
-                </label>
+                <display item="Mask forward AUX4" label="" format="checkbox" />
             </griditem>
             <griditem gridx="8" gridy="2">
-                <label>
-                    <text> </text>
-                </label>
+                <display item="Mask forward AUX5" label="" format="checkbox" />
             </griditem>
             <griditem gridx="9" gridy="2">
-                <label>
-                    <text> </text>
-                </label>
+                <display item="Mask forward AUX6" label="" format="checkbox" />
             </griditem>
+            <griditem gridx="10" gridy="2">
+                <display item="Mask forward AUX7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="11" gridy="2">
+                <display item="Mask forward AUX8" label="" format="checkbox" />
+            </griditem>
+
 
             <griditem gridx="0" gridy="3" anchor="LINE_START">
-                <label>
-                    <text>Enabled masking while direction forward</text>
-                    <text xml:lang="cs">Povolené maskování při směru vpřed</text>
-                </label>
-            </griditem>
-            <griditem gridx="1" gridy="3">
-                <display item="Mask forward reverse" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="2" gridy="3">
-                <display item="Mask forward F1" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="3" gridy="3">
-                <display item="Mask forward F2" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="4" gridy="3">
-                <display item="Mask forward F3" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="5" gridy="3">
-                <display item="Mask forward F4" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="6" gridy="3">
-                <display item="Mask forward F5" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="7" gridy="3">
-                <display item="Mask forward F6" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="8" gridy="3">
-                <display item="Mask forward F7" label="" format="checkbox" />
-            </griditem>
-            <griditem gridx="9" gridy="3">
-                <display item="Mask forward F8" label="" format="checkbox" />
-            </griditem>
-
-
-            <griditem gridx="0" gridy="4" anchor="LINE_START">
                 <label>
                     <text>and reverse</text>
                     <text xml:lang="cs">a vzad</text>
                 </label>
             </griditem>
-            <griditem gridx="1" gridy="4">
+            <griditem gridx="1" gridy="3">
                 <label>
                     <text> </text>
                 </label>
             </griditem>
-            <griditem gridx="2" gridy="4">
-                <display item="Mask reverse F1" label="" format="checkbox" />
+            <griditem gridx="2" gridy="3">
+                <label>
+                    <text> </text>
+                </label>
             </griditem>
-            <griditem gridx="3" gridy="4">
-                <display item="Mask reverse F2" label="" format="checkbox" />
+            <griditem gridx="3" gridy="3">
+                <label>
+                    <text> </text>
+                </label>
             </griditem>
-            <griditem gridx="4" gridy="4">
-                <display item="Mask reverse F3" label="" format="checkbox" />
+            <griditem gridx="4" gridy="3">
+                <display item="Mask reverse AUX1" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="5" gridy="4">
-                <display item="Mask reverse F4" label="" format="checkbox" />
+            <griditem gridx="5" gridy="3">
+                <display item="Mask reverse AUX2" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="6" gridy="4">
-                <display item="Mask reverse F5" label="" format="checkbox" />
+            <griditem gridx="6" gridy="3">
+                <display item="Mask reverse AUX3" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="7" gridy="4">
-                <display item="Mask reverse F6" label="" format="checkbox" />
+            <griditem gridx="7" gridy="3">
+                <display item="Mask reverse AUX4" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="8" gridy="4">
-                <display item="Mask reverse F7" label="" format="checkbox" />
+            <griditem gridx="8" gridy="3">
+                <display item="Mask reverse AUX5" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="9" gridy="4">
-                <display item="Mask reverse F8" label="" format="checkbox" />
+            <griditem gridx="9" gridy="3">
+                <display item="Mask reverse AUX6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="10" gridy="3">
+                <display item="Mask reverse AUX7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="11" gridy="3">
+                <display item="Mask reverse AUX8" label="" format="checkbox" />
             </griditem>
 
-            <griditem gridx="0" gridy="5" anchor="LINE_START" >
+            <griditem gridx="0" gridy="4" anchor="LINE_START" >
                 <label>
                     <text>Masking enabled when moving only</text>
                     <text xml:lang="cs">Povolené maskování při pouze pohybu</text>
                 </label>
             </griditem>
-            <griditem gridx="1" gridy="5">
+            <griditem gridx="1" gridy="4">
                 <display item="Mask moving" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="2" gridy="5">
-                <display item="Mask moving F1" label="" format="checkbox" />
+            <griditem gridx="2" gridy="4">
+                <label>
+                    <text> </text>
+                </label>
             </griditem>
-            <griditem gridx="3" gridy="5">
-                <display item="Mask moving F2" label="" format="checkbox" />
+            <griditem gridx="3" gridy="4">
+                <label>
+                    <text> </text>
+                </label>
             </griditem>
-            <griditem gridx="4" gridy="5">
-                <display item="Mask moving F3" label="" format="checkbox" />
+            <griditem gridx="4" gridy="4">
+                <display item="Mask moving AUX1" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="5" gridy="5">
-                <display item="Mask moving F4" label="" format="checkbox" />
+            <griditem gridx="5" gridy="4">
+                <display item="Mask moving AUX2" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="6" gridy="5">
-                <display item="Mask moving F5" label="" format="checkbox" />
+            <griditem gridx="6" gridy="4">
+                <display item="Mask moving AUX3" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="7" gridy="5">
-                <display item="Mask moving F6" label="" format="checkbox" />
+            <griditem gridx="7" gridy="4">
+                <display item="Mask moving AUX4" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="8" gridy="5">
-                <display item="Mask moving F7" label="" format="checkbox" />
+            <griditem gridx="8" gridy="4">
+                <display item="Mask moving AUX5" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="9" gridy="5">
-                <display item="Mask moving F8" label="" format="checkbox" />
+            <griditem gridx="9" gridy="4">
+                <display item="Mask moving AUX6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="10" gridy="4">
+                <display item="Mask moving AUX7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="11" gridy="4">
+                <display item="Mask moving AUX8" label="" format="checkbox" />
             </griditem>
 
-            <griditem gridx="0" gridy="6" anchor="LINE_START" >
+            <griditem gridx="0" gridy="5" anchor="LINE_START" >
                 <label>
                     <text>Masking enabled when moving plus Delay Time</text>
                     <text xml:lang="cs">Povolené maskování při pohybu plus Čas prodlevy</text>
                 </label>
             </griditem>
-            <griditem gridx="1" gridy="6">
+            <griditem gridx="1" gridy="5">
                 <display item="Mask moving and delay" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="2" gridy="6">
-                <display item="Mask moving and delay F1" label="" format="checkbox" />
+            <griditem gridx="2" gridy="5">
+                <label>
+                    <text> </text>
+                </label>
             </griditem>
-            <griditem gridx="3" gridy="6">
-                <display item="Mask moving and delay F2" label="" format="checkbox" />
+            <griditem gridx="3" gridy="5">
+                <label>
+                    <text> </text>
+                </label>
             </griditem>
-            <griditem gridx="4" gridy="6">
-                <display item="Mask moving and delay F3" label="" format="checkbox" />
+            <griditem gridx="4" gridy="5">
+                <display item="Mask moving and delay AUX1" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="5" gridy="6">
-                <display item="Mask moving and delay F4" label="" format="checkbox" />
+            <griditem gridx="5" gridy="5">
+                <display item="Mask moving and delay AUX2" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="6" gridy="6">
-                <display item="Mask moving and delay F5" label="" format="checkbox" />
+            <griditem gridx="6" gridy="5">
+                <display item="Mask moving and delay AUX3" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="7" gridy="6">
-                <display item="Mask moving and delay F6" label="" format="checkbox" />
+            <griditem gridx="7" gridy="5">
+                <display item="Mask moving and delay AUX4" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="8" gridy="6">
-                <display item="Mask moving and delay F7" label="" format="checkbox" />
+            <griditem gridx="8" gridy="5">
+                <display item="Mask moving and delay AUX5" label="" format="checkbox" />
             </griditem>
-            <griditem gridx="9" gridy="6">
-                <display item="Mask moving and delay F8" label="" format="checkbox" />
+            <griditem gridx="9" gridy="5">
+                <display item="Mask moving and delay AUX6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="10" gridy="5">
+                <display item="Mask moving and delay AUX7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="11" gridy="5">
+                <display item="Mask moving and delay AUX8" label="" format="checkbox" />
             </griditem>
 
-            <griditem gridx="0" gridy="7" anchor="LINE_START" >
+            <griditem gridx="0" gridy="6" anchor="LINE_START" >
                 <label>
                     <text>Allowed masking while standing plus Delay Time</text>
                     <text xml:lang="cs">Povolené maskování při stání plus Čas prodlevy</text>
                 </label>
             </griditem>
-            <griditem gridx="1" gridy="7">
+            <griditem gridx="1" gridy="6">
                 <display item="Mask stop and delay" label="" format="checkbox" />
             </griditem>
+            <griditem gridx="2" gridy="6">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="3" gridy="6">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="4" gridy="6">
+                <display item="Mask stop and delay AUX1" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="5" gridy="6">
+                <display item="Mask stop and delay AUX2" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="6" gridy="6">
+                <display item="Mask stop and delay AUX3" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="7" gridy="6">
+                <display item="Mask stop and delay AUX4" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="8" gridy="6">
+                <display item="Mask stop and delay AUX5" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="9" gridy="6">
+                <display item="Mask stop and delay AUX6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="10" gridy="6">
+                <display item="Mask stop and delay AUX7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="11" gridy="6">
+                <display item="Mask stop and delay AUX8" label="" format="checkbox" />
+            </griditem>
+
+            <griditem gridx="0" gridy="7" anchor="LINE_START" >
+                <label>
+                    <text>Directive reset bit in maneuvering mode</text>
+                    <text xml:lang="cs">Direktivní nulování bitu v režimu Posun</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="7">
+                <display item="Mask while maneuvering" label="" format="checkbox" />
+            </griditem>
             <griditem gridx="2" gridy="7">
-                <display item="Mask stop and delay F1" label="" format="checkbox" />
+                <display item="Directive reset bit F0f" label="" format="checkbox" />
             </griditem>
             <griditem gridx="3" gridy="7">
-                <display item="Mask stop and delay F2" label="" format="checkbox" />
+                <display item="Directive reset bit F0r" label="" format="checkbox" />
             </griditem>
             <griditem gridx="4" gridy="7">
-                <display item="Mask stop and delay F3" label="" format="checkbox" />
+                <display item="Directive reset bit AUX1" label="" format="checkbox" />
             </griditem>
             <griditem gridx="5" gridy="7">
-                <display item="Mask stop and delay F4" label="" format="checkbox" />
+                <display item="Directive reset bit AUX2" label="" format="checkbox" />
             </griditem>
             <griditem gridx="6" gridy="7">
-                <display item="Mask stop and delay F5" label="" format="checkbox" />
+                <display item="Directive reset bit AUX3" label="" format="checkbox" />
             </griditem>
             <griditem gridx="7" gridy="7">
-                <display item="Mask stop and delay F6" label="" format="checkbox" />
+                <display item="Directive reset bit AUX4" label="" format="checkbox" />
             </griditem>
             <griditem gridx="8" gridy="7">
-                <display item="Mask stop and delay F7" label="" format="checkbox" />
+                <display item="Directive reset bit AUX5" label="" format="checkbox" />
             </griditem>
             <griditem gridx="9" gridy="7">
-                <display item="Mask stop and delay F8" label="" format="checkbox" />
+                <display item="Directive reset bit AUX6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="10" gridy="7">
+                <display item="Directive reset bit AUX7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="11" gridy="7">
+                <display item="Directive reset bit AUX8" label="" format="checkbox" />
+            </griditem>
+
+            <griditem gridx="0" gridy="8" anchor="LINE_START" >
+                <label>
+                    <text>and set bit</text>
+                    <text xml:lang="cs">a nastavení bitu</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="8">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="2" gridy="8">
+                <display item="Directive set bit F0f" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="3" gridy="8">
+                <display item="Directive set bit F0r" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="4" gridy="8">
+                <display item="Directive set bit AUX1" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="5" gridy="8">
+                <display item="Directive set bit AUX2" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="6" gridy="8">
+                <display item="Directive set bit AUX3" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="7" gridy="8">
+                <display item="Directive set bit AUX4" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="8" gridy="8">
+                <display item="Directive set bit AUX5" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="9" gridy="8">
+                <display item="Directive set bit AUX6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="10" gridy="8">
+                <display item="Directive set bit AUX7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="11" gridy="8">
+                <display item="Directive set bit AUX8" label="" format="checkbox" />
             </griditem>
 
 
@@ -449,6 +541,29 @@
                 <label>
                 <text>and enable it while driving and after stopping for the duration of the time delay.</text>
                 <text xml:lang="cs">a povolit při jízdě a po zastavení po dobu uplynutí časové prodlevy.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="14" anchor="LINE_START" >
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="15" anchor="LINE_START" >
+                <label>
+                <text>Directive bit reset in maneuvering mode uses the AND function.</text>
+                <text xml:lang="cs">Direktivní nulování bitu v režimu Posun se použije funkce AND.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="16" anchor="LINE_START" >
+                <label>
+                <text>Directive bit set in maneuvering mode uses the OR function.</text>
+                <text xml:lang="cs">Direktivní nastavení bitu v režimu Posun se použije funkce OR.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="17" anchor="LINE_START" >
+                <label>
+                <text>The function does not apply outside maneuvering mode.</text>
+                <text xml:lang="cs">Mimo režim Posun se funkce neaplikuje.</text>
                 </label>
             </griditem>
         </grid>

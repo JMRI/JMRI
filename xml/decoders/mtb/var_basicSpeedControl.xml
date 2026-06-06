@@ -39,7 +39,7 @@
             <tooltip xml:lang="cs">&lt;html&gt;Hodnota 255 odpovídá 100 %.&lt;br&gt;Povolené minimum je 50 %, tj. 128.&lt;/html&gt;</tooltip>
         </variable>
 
-        <variable item="Vmid" CV="6" default="0" readOnly="yes" >
+        <variable item="Vmid" CV="6" default="128" readOnly="yes" >
             <decVal min="0" max="255" />
             <label>Vmid</label>
             <label xml:lang="cs">Střední rychlost</label>

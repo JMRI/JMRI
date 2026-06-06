@@ -10,41 +10,88 @@
             <column>
                 <grid ipadx="10" ipady="2">
                     <!-- default padding for all grid items -->
-                    <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+                    <griditem gridx="0" gridy="0" anchor="LINE_END">
                         <display item="Vstart" >
                             <tooltip>&lt;html&gt;Sets the starting voltage at throttle speed step 1.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 25%, i.e. 64.&lt;/html&gt;</tooltip>
                             <tooltip xml:lang="cs">&lt;html&gt;Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, max. povoleno 25 %, tj. 64".&lt;/html&gt;</tooltip>
                         </display>
                     </griditem>
-                    <griditem gridx="1" gridy="0" weightx="1" anchor="LINE_END">
+                    <griditem gridx="1" gridy="0" gridwidth="2" anchor="LINE_START">
                         <display item="Vstart" format="hslider" label="" >
                             <tooltip>&lt;html&gt;Sets the starting voltage at throttle speed step 1.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 25%, i.e. 64.&lt;/html&gt;</tooltip>
                             <tooltip xml:lang="cs">&lt;html&gt;Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, max. povoleno 25 %, tj. 64.&lt;/html&gt;</tooltip>
                         </display>
                     </griditem>
+                    <griditem gridx="3" gridy="0" anchor="LINE_START">
+                        <label>
+                            <text> </text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="4" gridy="0" anchor="LINE_START">
+                        <label>
+                            <text> </text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="5" gridy="0" anchor="LINE_START">
+                        <label>
+                            <text> </text>
+                        </label>
+                    </griditem>
 
-                    <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
+                    <griditem gridx="0" gridy="1" anchor="LINE_END">
                         <display item="Vmid" >
                             <tooltip>&lt;html&gt;Sets the voltage at mid throttle.&lt;br&gt;Not used.&lt;/html&gt;</tooltip>
                             <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro střední rychlostní krok ovladače.&lt;br&gt;Nepoužito.&lt;/html&gt;</tooltip>
                         </display>
                     </griditem>
-                    <griditem gridx="1" gridy="1" weightx="1" anchor="LINE_END">
-                        <!--
-                        <display item="Vmid" format="hslider" label="" >
-                            <tooltip>&lt;html&gt;Sets the voltage at mid throttle.&lt;br&gt;Not used.&lt;/html&gt;</tooltip>
-                            <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro střední rychlostní krok ovladače.&lt;br&gt;Nepoužito.&lt;/html&gt;</tooltip>
-                        </display>
-                        -->
+                    <griditem gridx="1" gridy="1" anchor="LINE_START">
+                        <label>
+                            <text>0 %</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="2" gridy="1" anchor="LINE_END">
+                        <label>
+                            <text>25 %</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="3" gridy="1" anchor="LINE_START">
+                        <label>
+                            <text>&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="4" gridy="1" anchor="LINE_START">
+                        <label>
+                            <text>50 %</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="5" gridy="1" anchor="LINE_END">
+                        <label>
+                            <text>100 %</text>
+                        </label>
                     </griditem>
 
-                    <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
+                    <griditem gridx="0" gridy="2" anchor="LINE_END">
                         <display item="Vhigh" >
                             <tooltip>&lt;html&gt;Sets the maximum voltage at full throttle.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 50%, i.e. 128.&lt;/html&gt;</tooltip>
                             <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro poslední rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, min. povoleno 50 %, tj. 128.&lt;/html&gt;</tooltip>
                         </display>
                     </griditem>
-                    <griditem gridx="1" gridy="2" weightx="1" anchor="LINE_END">
+                    <griditem gridx="1" gridy="2" anchor="LINE_START">
+                        <label>
+                            <text> </text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="2" gridy="2" anchor="LINE_START">
+                        <label>
+                            <text> </text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="3" gridy="2" anchor="LINE_START">
+                        <label>
+                            <text> </text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="4" gridy="2" gridwidth="2" anchor="LINE_START">
                         <display item="Vhigh" format="hslider" label="" >
                             <tooltip>&lt;html&gt;Sets the maximum voltage at full throttle.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 50%, i.e. 128.&lt;/html&gt;</tooltip>
                             <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro poslední rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, min. povoleno 50 %, tj. 128.&lt;/html&gt;</tooltip>

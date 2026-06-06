@@ -21,6 +21,12 @@
             <authorinitials>PS</authorinitials>
             <revremark>Initial version</revremark>
         </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2026-06-02</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Firmware 1.1</revremark>
+        </revision>
     </revhistory>
     
     
@@ -107,8 +113,8 @@
         <tooltip>F1 controls output AUX2</tooltip>
         <tooltip xml:lang="cs">F1 řídí výstup AUX2</tooltip>
     </variable>
-    <variable item="F1 controls output AUX3" CV="35" mask="XXXXXVXX" minFn="1" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+    <variable item="F1 controls output AUX3" CV="35" mask="XXXXXVXX" minFn="1"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F1 controls special features</variableref>
                 <relation>eq</relation>
@@ -118,8 +124,8 @@
         <tooltip>F1 controls output AUX3</tooltip>
         <tooltip xml:lang="cs">F1 řídí výstup AUX3</tooltip>
     </variable>
-    <variable item="F1 controls output AUX4" CV="35" mask="XXXXVXXX" minFn="1" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+    <variable item="F1 controls output AUX4" CV="35" mask="XXXXVXXX" minFn="1"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F1 controls special features</variableref>
                 <relation>eq</relation>
@@ -129,8 +135,8 @@
         <tooltip>F1 controls output AUX4</tooltip>
         <tooltip xml:lang="cs">F1 řídí výstup AUX4</tooltip>
     </variable>
-    <variable item="F1 controls output AUX5" CV="35" mask="XXXVXXXX" minFn="1" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+    <variable item="F1 controls output AUX5" CV="35" mask="XXXVXXXX" minFn="1"
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F1 controls special features</variableref>
                 <relation>eq</relation>
@@ -140,8 +146,8 @@
         <tooltip>F1 controls output AUX5</tooltip>
         <tooltip xml:lang="cs">F1 řídí výstup AUX5</tooltip>
     </variable>
-    <variable item="F1 controls output AUX6" CV="35" mask="XXVXXXXX" minFn="1" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+    <variable item="F1 controls output AUX6" CV="35" mask="XXVXXXXX" minFn="1"
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F1 controls special features</variableref>
                 <relation>eq</relation>
@@ -184,8 +190,8 @@
         <tooltip>F2 controls output AUX2</tooltip>
         <tooltip xml:lang="cs">F2 řídí výstup AUX2</tooltip>
     </variable>
-    <variable item="F2 controls output AUX3" CV="36" mask="XXXXXVXX" minFn="2" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+    <variable item="F2 controls output AUX3" CV="36" mask="XXXXXVXX" minFn="2"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F2 controls special features</variableref>
                 <relation>eq</relation>
@@ -195,8 +201,8 @@
         <tooltip>F2 controls output AUX3</tooltip>
         <tooltip xml:lang="cs">F2 řídí výstup AUX3</tooltip>
     </variable>
-    <variable item="F2 controls output AUX4" CV="36" mask="XXXXVXXX" minFn="2" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+    <variable item="F2 controls output AUX4" CV="36" mask="XXXXVXXX" minFn="2"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F2 controls special features</variableref>
                 <relation>eq</relation>
@@ -207,7 +213,7 @@
         <tooltip xml:lang="cs">F2 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F2 controls output AUX5" CV="36" mask="XXXVXXXX" minFn="2" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F2 controls special features</variableref>
                 <relation>eq</relation>
@@ -218,7 +224,7 @@
         <tooltip xml:lang="cs">F2 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F2 controls output AUX6" CV="36" mask="XXVXXXXX" minFn="2" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F2 controls special features</variableref>
                 <relation>eq</relation>
@@ -262,7 +268,7 @@
         <tooltip xml:lang="cs">F3 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F3 controls output AUX3" CV="37" mask="XXXXXVXX" minFn="3" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F3 controls special features</variableref>
                 <relation>eq</relation>
@@ -273,7 +279,7 @@
         <tooltip xml:lang="cs">F3 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F3 controls output AUX4" CV="37" mask="XXXXVXXX" minFn="3" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F3 controls special features</variableref>
                 <relation>eq</relation>
@@ -284,7 +290,7 @@
         <tooltip xml:lang="cs">F3 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F3 controls output AUX5" CV="37" mask="XXXVXXXX" minFn="3" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F3 controls special features</variableref>
                 <relation>eq</relation>
@@ -295,7 +301,7 @@
         <tooltip xml:lang="cs">F3 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F3 controls output AUX6" CV="37" mask="XXVXXXXX" minFn="3" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F3 controls special features</variableref>
                 <relation>eq</relation>
@@ -339,7 +345,7 @@
         <tooltip xml:lang="cs">F4 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F4 controls output AUX3" CV="38" mask="XXXXXVXX" minFn="4" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F4 controls special features</variableref>
                 <relation>eq</relation>
@@ -350,7 +356,7 @@
         <tooltip xml:lang="cs">F4 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F4 controls output AUX4" CV="38" mask="XXXXVXXX" minFn="4" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F4 controls special features</variableref>
                 <relation>eq</relation>
@@ -361,7 +367,7 @@
         <tooltip xml:lang="cs">F4 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F4 controls output AUX5" CV="38" mask="XXXVXXXX" minFn="4" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F4 controls special features</variableref>
                 <relation>eq</relation>
@@ -372,7 +378,7 @@
         <tooltip xml:lang="cs">F4 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F4 controls output AUX6" CV="38" mask="XXVXXXXX" minFn="4" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F4 controls special features</variableref>
                 <relation>eq</relation>
@@ -416,7 +422,7 @@
         <tooltip xml:lang="cs">F5 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F5 controls output AUX3" CV="39" mask="XXXXXVXX" minFn="5" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F5 controls special features</variableref>
                 <relation>eq</relation>
@@ -427,7 +433,7 @@
         <tooltip xml:lang="cs">F5 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F5 controls output AUX4" CV="39" mask="XXXXVXXX" minFn="5" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F5 controls special features</variableref>
                 <relation>eq</relation>
@@ -438,7 +444,7 @@
         <tooltip xml:lang="cs">F5 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F5 controls output AUX5" CV="39" mask="XXXVXXXX" minFn="5" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F5 controls special features</variableref>
                 <relation>eq</relation>
@@ -449,7 +455,7 @@
         <tooltip xml:lang="cs">F5 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F5 controls output AUX6" CV="39" mask="XXVXXXXX" minFn="5" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F5 controls special features</variableref>
                 <relation>eq</relation>
@@ -493,7 +499,7 @@
         <tooltip xml:lang="cs">F6 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F6 controls output AUX3" CV="40" mask="XXXXXVXX" minFn="6" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F6 controls special features</variableref>
                 <relation>eq</relation>
@@ -504,7 +510,7 @@
         <tooltip xml:lang="cs">F6 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F6 controls output AUX4" CV="40" mask="XXXXVXXX" minFn="6" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F6 controls special features</variableref>
                 <relation>eq</relation>
@@ -515,7 +521,7 @@
         <tooltip xml:lang="cs">F6 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F6 controls output AUX5" CV="40" mask="XXXVXXXX" minFn="6" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F6 controls special features</variableref>
                 <relation>eq</relation>
@@ -526,7 +532,7 @@
         <tooltip xml:lang="cs">F6 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F6 controls output AUX6" CV="40" mask="XXVXXXXX" minFn="6" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F6 controls special features</variableref>
                 <relation>eq</relation>
@@ -570,7 +576,7 @@
         <tooltip xml:lang="cs">F7 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F7 controls output AUX3" CV="41" mask="XXXXXVXX" minFn="7" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F7 controls special features</variableref>
                 <relation>eq</relation>
@@ -581,7 +587,7 @@
         <tooltip xml:lang="cs">F7 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F7 controls output AUX4" CV="41" mask="XXXXVXXX" minFn="7" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F7 controls special features</variableref>
                 <relation>eq</relation>
@@ -592,7 +598,7 @@
         <tooltip xml:lang="cs">F7 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F7 controls output AUX5" CV="41" mask="XXXVXXXX" minFn="7" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F7 controls special features</variableref>
                 <relation>eq</relation>
@@ -603,7 +609,7 @@
         <tooltip xml:lang="cs">F7 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F7 controls output AUX6" CV="41" mask="XXVXXXXX" minFn="7" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F7 controls special features</variableref>
                 <relation>eq</relation>
@@ -647,7 +653,7 @@
         <tooltip xml:lang="cs">F8 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F8 controls output AUX3" CV="42" mask="XXXXXVXX" minFn="8" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F8 controls special features</variableref>
                 <relation>eq</relation>
@@ -658,7 +664,7 @@
         <tooltip xml:lang="cs">F8 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F8 controls output AUX4" CV="42" mask="XXXXVXXX" minFn="8" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F8 controls special features</variableref>
                 <relation>eq</relation>
@@ -669,7 +675,7 @@
         <tooltip xml:lang="cs">F8 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F8 controls output AUX5" CV="42" mask="XXXVXXXX" minFn="8" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F8 controls special features</variableref>
                 <relation>eq</relation>
@@ -680,7 +686,7 @@
         <tooltip xml:lang="cs">F8 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F8 controls output AUX6" CV="42" mask="XXVXXXXX" minFn="8" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F8 controls special features</variableref>
                 <relation>eq</relation>
@@ -724,7 +730,7 @@
         <tooltip xml:lang="cs">F9 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F9 controls output AUX3" CV="43" mask="XXXXXVXX" minFn="9" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F9 controls special features</variableref>
                 <relation>eq</relation>
@@ -735,7 +741,7 @@
         <tooltip xml:lang="cs">F9 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F9 controls output AUX4" CV="43" mask="XXXXVXXX" minFn="9" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F9 controls special features</variableref>
                 <relation>eq</relation>
@@ -746,7 +752,7 @@
         <tooltip xml:lang="cs">F9 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F9 controls output AUX5" CV="43" mask="XXXVXXXX" minFn="9" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F9 controls special features</variableref>
                 <relation>eq</relation>
@@ -757,7 +763,7 @@
         <tooltip xml:lang="cs">F9 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F9 controls output AUX6" CV="43" mask="XXVXXXXX" minFn="9" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F9 controls special features</variableref>
                 <relation>eq</relation>
@@ -801,7 +807,7 @@
         <tooltip xml:lang="cs">F10 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F10 controls output AUX3" CV="44" mask="XXXXXVXX" minFn="10" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F10 controls special features</variableref>
                 <relation>eq</relation>
@@ -812,7 +818,7 @@
         <tooltip xml:lang="cs">F10 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F10 controls output AUX4" CV="44" mask="XXXXVXXX" minFn="10" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F10 controls special features</variableref>
                 <relation>eq</relation>
@@ -823,7 +829,7 @@
         <tooltip xml:lang="cs">F10 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F10 controls output AUX5" CV="44" mask="XXXVXXXX" minFn="10" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F10 controls special features</variableref>
                 <relation>eq</relation>
@@ -834,7 +840,7 @@
         <tooltip xml:lang="cs">F10 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F10 controls output AUX6" CV="44" mask="XXVXXXXX" minFn="10" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F10 controls special features</variableref>
                 <relation>eq</relation>
@@ -878,7 +884,7 @@
         <tooltip xml:lang="cs">F11 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F11 controls output AUX3" CV="45" mask="XXXXXVXX" minFn="11" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F11 controls special features</variableref>
                 <relation>eq</relation>
@@ -889,7 +895,7 @@
         <tooltip xml:lang="cs">F11 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F11 controls output AUX4" CV="45" mask="XXXXVXXX" minFn="11" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F11 controls special features</variableref>
                 <relation>eq</relation>
@@ -900,7 +906,7 @@
         <tooltip xml:lang="cs">F11 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F11 controls output AUX5" CV="45" mask="XXXVXXXX" minFn="11" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F11 controls special features</variableref>
                 <relation>eq</relation>
@@ -911,7 +917,7 @@
         <tooltip xml:lang="cs">F11 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F11 controls output AUX6" CV="45" mask="XXVXXXXX" minFn="11" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F11 controls special features</variableref>
                 <relation>eq</relation>
@@ -955,7 +961,7 @@
         <tooltip xml:lang="cs">F12 řídí výstup AUX2</tooltip>
     </variable>
     <variable item="F12 controls output AUX3" CV="46" mask="XXXXXVXX" minFn="12" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F12 controls special features</variableref>
                 <relation>eq</relation>
@@ -966,7 +972,7 @@
         <tooltip xml:lang="cs">F12 řídí výstup AUX3</tooltip>
     </variable>
     <variable item="F12 controls output AUX4" CV="46" mask="XXXXVXXX" minFn="12" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <qualifier>
             <variableref>F12 controls special features</variableref>
                 <relation>eq</relation>
@@ -977,7 +983,7 @@
         <tooltip xml:lang="cs">F12 řídí výstup AUX4</tooltip>
     </variable>
     <variable item="F12 controls output AUX5" CV="46" mask="XXXVXXXX" minFn="12" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F12 controls special features</variableref>
                 <relation>eq</relation>
@@ -988,7 +994,7 @@
         <tooltip xml:lang="cs">F12 řídí výstup AUX5</tooltip>
     </variable>
     <variable item="F12 controls output AUX6" CV="46" mask="XXVXXXXX" minFn="12" 
-              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <qualifier>
             <variableref>F12 controls special features</variableref>
                 <relation>eq</relation>
