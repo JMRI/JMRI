@@ -6,7 +6,6 @@ import java.awt.dnd.DragSource;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.activation.DataHandler;
 import javax.swing.*;
 
 import jmri.jmrit.roster.RosterEntry;
@@ -37,41 +36,23 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottlesTableTransferHandler extends TransferHandler {
 
-    private boolean dropDone = false;
-
-    private final DataFlavor throttleFrameObjectFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=" + ThrottleFrame.class.getName(), "JMRI Throttle Controller UI");
-    private final DataFlavor throttleSimplePanelObjectFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=" + SimpleThrottlePanel.class.getName(), "JMRI Throttle Controller UI");
-
     private JTable table = null;
 
     public ThrottlesTableTransferHandler(JTable throttleControllers) {
-        this.table = throttleControllers;
+        table = throttleControllers;
     }
 
     @Override
     protected Transferable createTransferable(JComponent c) {
         assert (c == table);
-        ThrottleControllerUI tf = ((ThrottlesTableModel) table.getModel()).getValueAt(table.getSelectedRow(), table.getSelectedColumn());
-        if (tf instanceof ThrottleFrame) {
-            return new DataHandler(tf, throttleFrameObjectFlavor.getMimeType());
-        }
-        if (tf instanceof SimpleThrottlePanel) {
-            return new DataHandler(tf, throttleSimplePanelObjectFlavor.getMimeType());
-        }
-        return null;
+        return new ThrottleUITransferable(((ThrottlesTableModel) table.getModel()).getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
     }
 
     @Override
     public boolean canImport(TransferHandler.TransferSupport info) {
-        if (dropDone) { //  if the drop is done, then reset the cursor and return false.
-            dropDone = false;
-            table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            return false;
-        }
-
         boolean b = info.getComponent() == table && info.isDrop() &&
-                ( info.isDataFlavorSupported(throttleFrameObjectFlavor) || 
-                  info.isDataFlavorSupported(throttleSimplePanelObjectFlavor) || 
+                ( info.isDataFlavorSupported(ThrottleUITransferable.ThrottleFrameObjectFlavor) || 
+                  info.isDataFlavorSupported(ThrottleUITransferable.ThrottleSimplePanelObjectFlavor) || 
                   info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor) );
 
         table.setCursor(b ? DragSource.DefaultMoveDrop : DragSource.DefaultMoveNoDrop);
@@ -80,7 +61,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
 
     @Override
     public int getSourceActions(JComponent c) {
-        return TransferHandler.MOVE;
+        return TransferHandler.COPY_OR_MOVE;
     }
 
     @Override
@@ -89,22 +70,24 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
             JTable target = (JTable) info.getComponent();
             JTable.DropLocation dl = (JTable.DropLocation) info.getDropLocation();            
             target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            if (info.isDataFlavorSupported(throttleFrameObjectFlavor)) {
+            if (info.isDataFlavorSupported(ThrottleUITransferable.ThrottleFrameObjectFlavor)) {
                 try {
-                    ThrottleFrame tf = (ThrottleFrame) info.getTransferable().getTransferData(throttleFrameObjectFlavor);
+                    ThrottleFrame tf = (ThrottleFrame) info.getTransferable().getTransferData(ThrottleUITransferable.ThrottleFrameObjectFlavor);
                     if (tf != null) {
                         return ((ThrottlesTableModel) table.getModel()).moveThrottleController(tf, dl.getRow(), dl.getColumn());                        
                     }
+                    return true;
                 } catch ( UnsupportedFlavorException | IOException e) {
                     log.error("Could not drag'n drop throttle frame.", e);
                 }
             }
-            if (info.isDataFlavorSupported(throttleSimplePanelObjectFlavor)) {
+            if (info.isDataFlavorSupported(ThrottleUITransferable.ThrottleSimplePanelObjectFlavor)) {
                 try {
-                    SimpleThrottlePanel tf = (SimpleThrottlePanel) info.getTransferable().getTransferData(throttleSimplePanelObjectFlavor);
+                    SimpleThrottlePanel tf = (SimpleThrottlePanel) info.getTransferable().getTransferData(ThrottleUITransferable.ThrottleSimplePanelObjectFlavor);
                     if (tf != null) {
                         return ((ThrottlesTableModel) table.getModel()).moveThrottleController(tf, dl.getRow(), dl.getColumn());                        
                     }
+                    return true;
                 } catch ( UnsupportedFlavorException | IOException e) {
                     log.error("Could not drag'n drop throttle frame.", e);
                 }
@@ -134,7 +117,6 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
     @Override
     protected void exportDone(JComponent c, Transferable t, int act) {
         table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        dropDone = true;
     }
 
    private static final Logger log = LoggerFactory.getLogger(ThrottlesTableTransferHandler.class);
