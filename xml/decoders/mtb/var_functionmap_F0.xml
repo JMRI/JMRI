@@ -21,6 +21,12 @@
             <authorinitials>PS</authorinitials>
             <revremark>Initial version</revremark>
         </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2026-06-02</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Firmware 1.1</revremark>
+        </revision>
     </revhistory>
 
     <variable item="FL(f) controls F0f" CV="33" mask="XXXXXXXV" minOut="1">
@@ -43,22 +49,26 @@
         <tooltip>FL(f) controls AUX2</tooltip>
         <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX2</tooltip>
     </variable>
-    <variable item="FL(f) controls AUX3" CV="33" mask="XXXVXXXX" minOut="5">
+    <variable item="FL(f) controls AUX3" CV="33" mask="XXXVXXXX" minOut="5"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(f) controls AUX3</tooltip>
         <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX3</tooltip>
     </variable>
-    <variable item="FL(f) controls AUX4" CV="33" mask="XXVXXXXX" minOut="6">
+    <variable item="FL(f) controls AUX4" CV="33" mask="XXVXXXXX" minOut="6"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(f) controls AUX4</tooltip>
         <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX4</tooltip>
     </variable>
-    <variable item="FL(f) controls AUX5" CV="33" mask="XVXXXXXX" minOut="7">
+    <variable item="FL(f) controls AUX5" CV="33" mask="XVXXXXXX" minOut="7"
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(f) controls AUX5</tooltip>
         <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX5</tooltip>
     </variable>
-    <variable item="FL(f) controls AUX6" CV="33" mask="VXXXXXXX" minOut="8">
+    <variable item="FL(f) controls AUX6" CV="33" mask="VXXXXXXX" minOut="8"
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(f) controls AUX6</tooltip>
         <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX6</tooltip>
@@ -83,22 +93,26 @@
         <tooltip>FL(r) controls AUX2</tooltip>
         <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX2</tooltip>
     </variable>
-    <variable item="FL(r) controls AUX3" CV="34" mask="XXXVXXXX" minOut="5">
+    <variable item="FL(r) controls AUX3" CV="34" mask="XXXVXXXX" minOut="5"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(r) controls AUX3</tooltip>
         <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX3</tooltip>
     </variable>
-    <variable item="FL(r) controls AUX4" CV="34" mask="XXVXXXXX" minOut="6">
+    <variable item="FL(r) controls AUX4" CV="34" mask="XXVXXXXX" minOut="6"
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">  
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(r) controls AUX4</tooltip>
         <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX4</tooltip>
     </variable>
-    <variable item="FL(r) controls AUX5" CV="34" mask="XVXXXXXX" minOut="7">
+    <variable item="FL(r) controls AUX5" CV="34" mask="XVXXXXXX" minOut="7"
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(r) controls AUX5</tooltip>
         <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX5</tooltip>
     </variable>
-    <variable item="FL(r) controls AUX6" CV="34" mask="VXXXXXXX" minOut="8">
+    <variable item="FL(r) controls AUX6" CV="34" mask="VXXXXXXX" minOut="8"
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <tooltip>FL(r) controls AUX6</tooltip>
         <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX6</tooltip>
