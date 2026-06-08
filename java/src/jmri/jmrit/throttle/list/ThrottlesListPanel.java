@@ -139,7 +139,9 @@ public class ThrottlesListPanel extends JPanel implements PropertyChangeListener
     public Element getXml() {
         Element me = new Element("ThrottlesListPanel");
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
-        children.add(WindowPreferences.getPreferences(this.getTopLevelAncestor()));
+        if (this.getTopLevelAncestor() != null) {
+            children.add(WindowPreferences.getPreferences(this.getTopLevelAncestor()));
+        }
         me.setContent(children);
         return me;
     }

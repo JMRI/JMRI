@@ -36,7 +36,7 @@
 
   <xs:complexType name="ThrottlesListPanelType">
     <xs:sequence>
-      <xs:element type="windowType" name="window"/>
+      <xs:element type="windowType" name="window" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 

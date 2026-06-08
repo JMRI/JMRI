@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.throttle.implementation.SimpleThrottlePanel;
-import jmri.jmrit.throttle.implementation.ThrottleFrame;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.util.datatransfer.RosterEntrySelection;
@@ -51,8 +49,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
     @Override
     public boolean canImport(TransferHandler.TransferSupport info) {
         boolean b = info.getComponent() == table && info.isDrop() &&
-                ( info.isDataFlavorSupported(ThrottleUITransferable.ThrottleFrameObjectFlavor) || 
-                  info.isDataFlavorSupported(ThrottleUITransferable.ThrottleSimplePanelObjectFlavor) || 
+                ( info.isDataFlavorSupported(ThrottleUITransferable.ThrottleControllerUIObjectFlavor) || 
                   info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor) );
 
         table.setCursor(b ? DragSource.DefaultMoveDrop : DragSource.DefaultMoveNoDrop);
@@ -70,28 +67,17 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
             JTable target = (JTable) info.getComponent();
             JTable.DropLocation dl = (JTable.DropLocation) info.getDropLocation();            
             target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            if (info.isDataFlavorSupported(ThrottleUITransferable.ThrottleFrameObjectFlavor)) {
+            if (info.isDataFlavorSupported(ThrottleUITransferable.ThrottleControllerUIObjectFlavor)) {
                 try {
-                    ThrottleFrame tf = (ThrottleFrame) info.getTransferable().getTransferData(ThrottleUITransferable.ThrottleFrameObjectFlavor);
-                    if (tf != null) {
-                        return ((ThrottlesTableModel) table.getModel()).moveThrottleController(tf, dl.getRow(), dl.getColumn());                        
+                    ThrottleControllerUI tcui = (ThrottleControllerUI) info.getTransferable().getTransferData(ThrottleUITransferable.ThrottleControllerUIObjectFlavor);
+                    if (tcui != null) {
+                        return ((ThrottlesTableModel) table.getModel()).moveThrottleController(tcui, dl.getRow(), dl.getColumn());                        
                     }
                     return true;
                 } catch ( UnsupportedFlavorException | IOException e) {
                     log.error("Could not drag'n drop throttle frame.", e);
                 }
-            }
-            if (info.isDataFlavorSupported(ThrottleUITransferable.ThrottleSimplePanelObjectFlavor)) {
-                try {
-                    SimpleThrottlePanel tf = (SimpleThrottlePanel) info.getTransferable().getTransferData(ThrottleUITransferable.ThrottleSimplePanelObjectFlavor);
-                    if (tf != null) {
-                        return ((ThrottlesTableModel) table.getModel()).moveThrottleController(tf, dl.getRow(), dl.getColumn());                        
-                    }
-                    return true;
-                } catch ( UnsupportedFlavorException | IOException e) {
-                    log.error("Could not drag'n drop throttle frame.", e);
-                }
-            }            
+            }          
             if (info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor)) {
                 try {
                     ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(info.getTransferable());
