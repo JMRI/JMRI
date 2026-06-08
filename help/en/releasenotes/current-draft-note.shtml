@@ -71,6 +71,10 @@
                 registered as bogus turnouts.</li>
                 <li>DCC-EX Traffic Monitor: the display limit has been raised from 500 to 2000
                 lines, sufficient for large layouts that enumerate many turnouts on startup.</li>
+                <li>DCC-EX: broadcast messages (&lt;* ... *&gt;) containing angle brackets
+                in the body are now parsed correctly. Previously the first &gt; inside the
+                body terminated the frame early, which could leave the programmer stuck
+                waiting for a reply that never arrived.</li>
             </ul>
 
         <h4>DCC4pc</h4>
