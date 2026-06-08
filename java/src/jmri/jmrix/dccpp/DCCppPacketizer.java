@@ -166,8 +166,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
             ch = readByteProtected(istream);
             if (broadcast) {
                 if (prevStar && ch == '>') {
-                    body.setLength(body.length() - 1); // drop the trailing * before >
-                    return body.toString();
+                    return body.toString(); // drop > only; trailing * stays in body for parseDCCppReply
                 }
                 prevStar = (ch == '*');
             } else {
