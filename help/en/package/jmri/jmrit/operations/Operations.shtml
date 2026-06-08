@@ -52,7 +52,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         OperationsPro&trade; lets you create realistic prototypical car movements through the
         optional use of <a href="#LocationDivision">railroad divisions</a>. Cars are returned to
         their <a href="#HomeDivision">home division</a> when their loads are removed, or when a new
-        load is provided by an industry in a foreign division.
+        load is provided by an industry in a foreign division. Two advanced features, <a
+          href="#InterchangeQuickService">Quick Service</a> and <a href="#BuildOptions">On Time</a>
+        allow cars and locomotives to travel on two or more trains during a single session.
       </p>
 
       <p>OperationsPro&trade; is included in the JMRI suite of Tools and can be found under the
@@ -1261,11 +1263,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       On Time is an advanced mode of operations that was introduced in January of 2026. On Time mode
       is an extension of Aggressive mode that allows cars and locomotives to travel on several
-      trains during a session. On Time mode requires the use of a real or fast clock to dictate
-      train movement since cars and locomotives can be assigned to more than one train. To use On
-      Time, your trains must run on schedule. They should depart at the correct departure time, and
-      they should complete their work reasonably close to the times provided on the train Manifests.
-      When running OperationsPro in On Time mode, tracks that have
+      trains during a session. When using On Time mode the use of a real or fast clock to dictate
+      train movement is recommended since cars and locomotives can be assigned to more than one
+      train. To use On Time, your trains must run on schedule, departing in the same order they were
+      built. Trains should depart at the correct departure time, and they should complete their work
+      reasonably close to the times provided on the train Manifests. When running OperationsPro in
+      On Time mode, tracks that have
       <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused based on when cars
       are set out and picked up. Cars and locomotives can travel on multiple trains with train
       departure times up to 31 days. Therefore you can create sessions that span days, weeks, or
@@ -1287,8 +1290,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         See <a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick
           Service</a> to modify your tracks for quick service. Only tracks enabled for quick service are
         reused based on train timing when using the On Time mode. If a track isn't configured for
-        quick service, a car spotted there during the build isn't available for other trains until the
-        train delivering the car is terminated.
+        quick service, a car spotted there during the build isn't available for other trains until
+        the train delivering the car is terminated. Therefore, you can be selective to which tracks
+        can be used to create multiple movements of the same car. One good choice would be to only
+        use <a href="#InterchangeQuickService">Quick Service</a> for your interchange tracks.
       </p>
 
       <p>
@@ -1303,8 +1308,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the later train.
       </p>
 
-      <p>One restriction when using On Time mode, is that trains must be built and terminated in
-        chronological order. If you need to reset your trains, reset the last built trains first, or
+      <p>
+        One restriction when using On Time mode, is that trains must be built, run and terminated in
+        chronological order. You can always run a single train to completion without conflict as
+        long as the train departs in the order built. This is a good way to confirm how long it
+        takes a train to complete its run. Make adjustments to the train <a href="#Settings">switch
+          time, travel time</a>, or to the train's <a href="#EditRoute">route</a> to increase or
+        decrease travel times. The closer the printed Manifest times are to the actual times the
+        better. Having accurate times will help avoid conflicts with track space and car exchanges
+        between trains.
+      </p>
+
+      <p>Also note that If you need to reset your trains, reset the last built trains first, or
         use the reset all trains button.</p>
 
       <p>
