@@ -52,6 +52,7 @@
             <xs:attribute name="minIntensity" type="xs:string" />
             <xs:attribute name="maxIntensity" type="xs:string" />
             <xs:attribute name="transitionTime" type="xs:string" />
+            <xs:attribute name="mode" type="xs:string" />
           </xs:complexType>
         </xs:element>
             

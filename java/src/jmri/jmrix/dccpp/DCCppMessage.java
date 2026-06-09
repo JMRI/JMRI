@@ -1799,7 +1799,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.READ_CS_STATUS:
             case DCCppConstants.READ_MAXNUMSLOTS:
             case DCCppConstants.OUTPUT_CMD:
-            case DCCppConstants.OUTPUT_CMD_LC:
             case DCCppConstants.LIST_REGISTER_CONTENTS:
                 retv = true;
                 break;
