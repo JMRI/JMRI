@@ -822,7 +822,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void checkMarkerMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuMarker"));
         assertNotNull( jmo, "Marker Menu Exists");
-        assertEquals( 3, jmo.getItemCount(), "Menu Item Count");
+        assertEquals( 5, jmo.getItemCount(), "Menu Item Count");
     }
 
     @Test

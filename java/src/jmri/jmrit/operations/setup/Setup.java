@@ -162,6 +162,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
     public static final String LAST_TRAIN = Bundle.getMessage("LastTrain");
     public static final String LAST_MOVED = Bundle.getMessage("LastMoved");
+    public static final String LAST_LOCATION = Bundle.getMessage("LastLocation");
     public static final String BLANK = " "; // blank has be a character or a space
     public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
     public static final String TAB2 = Bundle.getMessage("Tab2");
@@ -188,10 +189,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     private static final String[] CAR_ATTRIBUTES = { ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS,
             COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
-            BLOCKING_ORDER, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN, LAST_MOVED};
+            BLOCKING_ORDER, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
     
     private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER,
-            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS, LAST_TRAIN, LAST_MOVED};
+            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
     /*
      * The print Manifest and switch list user selectable options are stored in the
      * xml file using the English translations.
@@ -199,7 +200,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
             "HP", "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
             "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "Blocking_Order", "RWE", "Comment",
-            "SetOut_Msg", "PickUp_Msg", "Hazardous", "LastTrain", "LastMoved", "Tab", "Tab2", "Tab3"};
+            "SetOut_Msg", "PickUp_Msg", "Hazardous", "LastTrain", "LastMoved", "LastLocation", "Tab", "Tab2", "Tab3"};
 
     private int scale = HO_SCALE; // Default scale
     private int ratio = HO_RATIO;

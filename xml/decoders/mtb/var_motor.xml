@@ -44,7 +44,7 @@
             <tooltip xml:lang="cs">Při zapnutém režimu EMF se ignoruje Rozjezdová rychlost.</tooltip>
         </variable>
 
-        <variable item="Power failure timeout" CV="11" default="100">
+        <variable item="Power failure timeout" CV="11" default="200">
             <decVal/>
             <label>Power Failure Timeout</label>
             <label xml:lang="cs">Časový limit výpadku napájení</label>
