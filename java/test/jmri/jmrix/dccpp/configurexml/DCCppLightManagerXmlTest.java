@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test for the DCCppLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
- * @author   Chad Francis  Copyright (C) 2026
  */
 public class DCCppLightManagerXmlTest {
 

@@ -71,6 +71,11 @@
                 registered as bogus turnouts.</li>
                 <li>DCC-EX Traffic Monitor: the display limit has been raised from 500 to 2000
                 lines, sufficient for large layouts that enumerate many turnouts on startup.</li>
+                <li>DCC-EX turnouts and lights now support a <strong>CS VPIN</strong> mode that
+                drives a VPIN directly via the &lt;z&gt; command (DCC-EX v4.2.35+), with no
+                pre-configuration required on the command station. Set the hardware address to
+                the VPIN number and select "CS VPIN" as the feedback mode (turnouts) or output
+                mode (lights). Requires EX-CommandStation firmware v4.2.35 or later.</li>
             </ul>
 
         <h4>DCC4pc</h4>
