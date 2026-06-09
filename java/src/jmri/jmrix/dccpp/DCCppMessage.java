@@ -1909,7 +1909,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Build a lower-case pin control command <z vpin> (HIGH) or <z -vpin> (LOW).
+     * Build a lower-case pin control command {@code <z vpin>} (HIGH) or {@code <z -vpin>} (LOW).
      * Requires no pre-definition on the command station; added in DCC-EX v4.2.35.
      *
      * @param vpin  the virtual pin number (uint16)
