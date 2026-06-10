@@ -137,43 +137,46 @@ public class DCCppPacketizer extends DCCppTrafficController {
     // TODO: Can this method be folded back up into the parent DCCppTrafficController class?
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
-        int i;
-        StringBuilder m = new StringBuilder();
         log.trace("loading characters from port");
-
         if (!(msg instanceof DCCppReply)) {
-            log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
+            log.error("loadChars called on non-DCCppReply msg!");
             return;
         }
-
         byte char1 = readByteProtected(istream);
         while (char1 != '<') {
-            // Spin waiting for '<'
             char1 = readByteProtected(istream);
-            if (char1 != '<') {
-                log.trace("skipping char: ({})", (char) char1);
-            }
+            if (char1 != '<') log.trace("skipping char: ({})", (char) char1);
         }
         log.trace("Message started");
-        // Read until '>'; ignore '>' inside quoted strings (e.g. captions).
+        String body = readFrameBody(istream, msg.maxSize());
+        log.debug("Received: '{}'", body);
+        ((DCCppReply) msg).parseReply(body);
+    }
+
+    /** Reads one frame body after {@code <}: broadcast ({@code <* *>}) or regular up to {@code >}. */
+    String readFrameBody(java.io.DataInputStream istream, int maxSize) throws java.io.IOException {
+        StringBuilder body = new StringBuilder();
+        byte ch = readByteProtected(istream);
+        body.append((char) ch);
+        boolean broadcast = (ch == '*');
+        boolean prevStar = broadcast;
         boolean inQuotes = false;
-        for (i = 0; i < msg.maxSize(); i++) {
-            char1 = readByteProtected(istream);
-            if (char1 == '"') {
-                inQuotes = !inQuotes;
-                m.append((char) char1);
-            } else if (char1 == '>' && !inQuotes) {
-                log.debug("Received: '{}'", m);
-                // NOTE: Cast is OK because we checked runtime type of msg above.
-                ((DCCppReply) msg).parseReply(m.toString());
-                return;
+
+        while (body.length() < maxSize) {
+            ch = readByteProtected(istream);
+            if (broadcast) {
+                if (prevStar && ch == '>') {
+                    return body.toString(); // drop > only; trailing * stays in body for parseDCCppReply
+                }
+                prevStar = (ch == '*');
             } else {
-                m.append((char) char1);
-                log.trace("msg char[{}]: {} ({})", i, char1, (char) char1);
+                if (ch == '"') inQuotes = !inQuotes;
+                else if (ch == '>' && !inQuotes) return body.toString();
             }
+            body.append((char) ch);
         }
-        log.warn("msg size {} exceeded before end of msg char '>' encountered.", msg.maxSize());
-        log.warn("msg truncated to: '{}'", m);
+        log.warn("msg size {} exceeded before end of msg encountered.", maxSize);
+        return body.toString();
     }
 
     private static final Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
