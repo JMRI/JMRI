@@ -529,13 +529,18 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());
+            Train t = trainManager.getTrainBuiltAfter(train);
             // check to see if departure track was reused
             if (train.checkDepartureTrack()) {
                 log.debug("Train is departing staging that already has inbound cars");
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("StagingTrackUsed",
                                 train.getDepartureTrack().getName()),
-                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.WARNING_MESSAGE);
+            } else if (Setup.isBuildOnTime() && t != null) {
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("TrainAfterBuilt", t, train), Bundle.getMessage("CanNotResetTrain"),
+                        JmriJOptionPane.WARNING_MESSAGE);
             } else if (!train.reset()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("TrainIsInRoute",

@@ -506,6 +506,24 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         }
         return null;
     }
+    
+    /**
+     * Used to determine if there's a train build after the train in question.
+     * @param train the train to be checked
+     * @return null or a train built after the train in question.
+     */
+    public Train getTrainBuiltAfter(Train train) {
+        List<Train> trains = getTrainsByReverseTimeList();
+        for (Train t : trains) {
+            if (train == t || train.getDepartTimeMinutes() == t.getDepartTimeMinutes()) {
+                break;
+            }
+            if (t.isBuilt()) {
+                return t;
+            }
+        }
+        return null;
+    }
 
     /**
      * @param car         The car looking for a train.
