@@ -826,7 +826,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param end   last row changed; -1 means entire table (not used yet)
          */
         void handleTableUpdate(int start, int end) {
-            log.trace("handleTableUpdated");
+            if (log.isTraceEnabled()) { // check logging level to avoid processing irrelevant traceback
+                log.trace("handleTableUpdated", jmri.util.LoggingUtil.shortenStacktrace(new Exception("traceback")));
+            }
+            
             final int DELAY = 500;
 
             if (!pending) {
@@ -846,8 +849,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * @param eventID Observed event
          * @param nodeID  Node that is known to produce the event
          * @param rangeSuffix the range mask string or "" for single events
+         * @param pcer true if this Producer was inferred from a PCER message, false if from a Producer Identified message
          */
-        void recordProducer(EventID eventID, NodeID nodeID, String rangeSuffix) {
+        void recordProducer(EventID eventID, NodeID nodeID, String rangeSuffix, boolean pcer) {
             log.debug("recordProducer of {} in {}", eventID, nodeID);
 
             // update if the model has been cleared
@@ -878,12 +882,23 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals(rangeSuffix) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.producer)) {
-                        // might be 2nd EventTablePane to process the data,
+                        // The node ID is already registered (hence appearing in table)
+                        // for this producer.
+                        //
+                        // This might be the 2nd EventTablePane to process the data,
                         // hence memos would already have been processed. To
                         // handle that, need to fire a change to the table.
+                        //
                         // On the other hand, this rapidly erases the
                         // popcorn display, so we disable it for that.
-                        if (!popcornModeActive) {
+                        //
+                        // We also disable it if this call was from a PCER message,
+                        // as those are routine and should have been preceeded
+                        // by a Producer Identified. Leaving this in results in
+                        // excessive refreshes and e.g. frustrating loss of 
+                        // cell selections.
+                        //
+                        if (! (popcornModeActive | pcer) ) {
                             handleTableUpdate(i, i);
                         }
                         return;
@@ -1157,7 +1172,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             ThreadingUtil.runOnGUIEventually(()->{
                 var nodeID = msg.getSourceNodeID();
                 var eventID = msg.getEventID();
-                model.recordProducer(eventID, nodeID, "");
+                model.recordProducer(eventID, nodeID, "", true);
                 model.highlightProducer(eventID, nodeID);
             });
         }
@@ -1186,7 +1201,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             ThreadingUtil.runOnGUIEventually(()->{
                 var nodeID = msg.getSourceNodeID();
                 var eventID = msg.getEventID();
-                model.recordProducer(eventID, nodeID, "");
+                model.recordProducer(eventID, nodeID, "", false);
             });
         }
 
@@ -1214,7 +1229,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 // have to set low part of event ID to 0's as it might be 1's
                 EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
                 
-                model.recordProducer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+                model.recordProducer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString(), false);
             });
         }
 
