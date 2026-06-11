@@ -8,7 +8,6 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.dccpp.*;
-import jmri.jmrix.dccpp.swing.virtuallcd.Bundle;
 import jmri.jmrix.dccpp.swing.virtuallcd.configurexml.VirtualLCDConfigurationXml;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.*;
