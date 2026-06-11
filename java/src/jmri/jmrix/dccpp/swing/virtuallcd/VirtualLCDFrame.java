@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp.swing.virtuallcd;
 
-import java.awt.event.*;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -9,8 +8,10 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.dccpp.*;
+import jmri.jmrix.dccpp.swing.virtuallcd.Bundle;
 import jmri.jmrix.dccpp.swing.virtuallcd.configurexml.VirtualLCDConfigurationXml;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
 
 import org.jdom2.Element;
 
@@ -70,24 +71,24 @@ public class VirtualLCDFrame extends JmriJFrame  {
         popup.add(menuItem);
 
         //Add listener to components that can bring up popup menus.
-        MouseListener popupListener = new MouseAdapter() {
+        JmriMouseListener popupListener = new JmriMouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(JmriMouseEvent e) {
                 maybeShowPopup(e);
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {
+            public void mouseReleased(JmriMouseEvent e) {
                 maybeShowPopup(e);
             }
 
-            private void maybeShowPopup(MouseEvent e) {
+            private void maybeShowPopup(JmriMouseEvent e) {
                 if (e.isPopupTrigger()) {
                     popup.show(e.getComponent(), e.getX(), e.getY());
                 }
             }
         };
-        addMouseListener(popupListener);
+        addMouseListener(JmriMouseListener.adapt(popupListener));
 
         // pack to layout display
         pack();
