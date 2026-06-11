@@ -52,7 +52,7 @@ public class VirtualLCDConfigurationXml {
         return element;
     }
 
-    public static void load(VirtualLCDConfiguration p, Element elem)
+    public static void load(VirtualLCDConfiguration p, Element elem, boolean ignoreMemo)
             throws JmriConfigureXmlException {
 
         Element element = elem.getChild("virtual_lcd_config");
@@ -64,23 +64,25 @@ public class VirtualLCDConfigurationXml {
 
         String systemConnectionName = "Unknown connection";
 
-        Element systemConnection = element.getChild("systemConnection");
-        if (systemConnection != null) {
-            systemConnectionName = systemConnection.getTextTrim();
+        if (!ignoreMemo) {
+            Element systemConnection = element.getChild("systemConnection");
+            if (systemConnection != null) {
+                systemConnectionName = systemConnection.getTextTrim();
 
-            for (DCCppSystemConnectionMemo m : systemConnections) {
-                if (m.getSystemPrefix().equals(systemConnectionName)) {
-                    memo = m;
-                    break;
+                for (DCCppSystemConnectionMemo m : systemConnections) {
+                    if (m.getSystemPrefix().equals(systemConnectionName)) {
+                        memo = m;
+                        break;
+                    }
                 }
             }
-        }
 
-        if (memo == null) {
-            throw new JmriConfigureXmlException("Cannot find connection: " + systemConnectionName);
-        }
+            if (memo == null) {
+                throw new JmriConfigureXmlException("Cannot find connection: " + systemConnectionName);
+            }
 
-        p.setMemo(memo);
+            p.setMemo(memo);
+        }
 
         Element numColumnsElement = element.getChild("numColumns");
         Element numRowsElement = element.getChild("numRows");

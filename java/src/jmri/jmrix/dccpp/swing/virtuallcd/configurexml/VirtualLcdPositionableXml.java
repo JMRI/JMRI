@@ -72,7 +72,7 @@ public class VirtualLcdPositionableXml
 
         VirtualLcdPositionable l = new VirtualLcdPositionable(ed);
 
-        VirtualLCDConfigurationXml.load(l.getVirtualLCDPanel(), element);
+        VirtualLCDConfigurationXml.load(l.getVirtualLCDPanel(), element, false);
 
         l.initComponents();
 
