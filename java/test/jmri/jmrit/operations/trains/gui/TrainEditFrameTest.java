@@ -524,6 +524,34 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(trainEditFrame);
     }
+    
+    /**
+     * Test that you can't delete a built train
+     */
+    @Test
+    public void testTrainEditDeleteBuilt() {
+        JUnitOperationsUtil.initOperationsData();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.getTrainById("1");
+        Assert.assertNotNull(train);
+
+        TrainEditFrame trainEditFrame = new TrainEditFrame(train);
+        trainEditFrame.setTitle("Test Delete Train Built");
+        
+        train.build();
+        Assert.assertTrue("Train built", train.isBuilt());
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.deleteTrainButton);
+        // warning dialog
+        JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("CanNotDeleteTrain"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(trainEditFrame);
+
+        train = tmanager.getTrainById("1");
+        Assert.assertNotNull("train not deleted", train);
+
+        JUnitUtil.dispose(trainEditFrame);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     /**
      * Test the reset train button

@@ -640,9 +640,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         railroad, select the scale that you're modeling, and decide of you're are going to use <a
           href="#CarTypes">descriptive names</a> or AAR codes for your rolling stock. You can also
         optionally select which <a href="#LocationServiceDirection">directions</a> your railroad
-        travels. You also have the option to add the OperationsPro&trade; menu to the main window.
+        travels. You also have the option to add the OperationsPro menu to the main window.
         Select "Add Operations Menu to Main Menu" if you want this option. The next time you start
-        PanelPro the OperationsPro&trade; menu will appear. Leave the rest of the fields in the <a
+        PanelPro the OperationsPro menu will appear. Leave the rest of the fields in the <a
           href="#Settings">Settings</a> window alone for now, you can always come back and change
         them later. Now press the "Save" button in the lower right corner and close the window by
         pressing the "X" in the upper right corner.
@@ -820,7 +820,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         buttons and controls have popup tool tips, just hover your mouse pointer over the button to
         see the tool tip. Detailed step by step <a
           href="https://www.jmri.org/manual/howtooperations/">JMRI Operations How-To
-          Instructions</a> are available on the JMRI.org site. There's also OperationsPro <a
+          Instructions</a> are available on the JMRI.org site. There's also OperationsPro&trade; <a
           href="https://groups.io/g/jmriusers/wiki/30126">Wiki</a> that contains some useful
         information and insight into how the program works.
       </p>
@@ -1178,7 +1178,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="Restore">Restore</h3>
       The program will automatically load the necessary operations files when one of the six major
-      windows under OperationsPro is selected. If you wish to override the latest files use the <a
+      windows under OperationsPro&trade; is selected. If you wish to override the latest files use the <a
         href="#Settings">Settings</a> "Restore" button, or under "Tools" <a href="#RestoreDirectory">Restore</a>.
 
       <p>Note that restoring a Backup Set will overwrite the current operations files, therefore
@@ -1247,17 +1247,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the second train before the first, the second train would try and deliver cars to the track
         that still has cars sitting on it.</p>
 
-      <p>To avoid overloading in Aggressive mode, you also need to build, run, and terminate
-        your trains in the same order. And do not use the train reset after you've built or
-        terminated other trains! However, if you need to reset a train, you should also reset all of
-        the trains built after the train that you want to reset, or live with possible track
-        overloading. And never reset a train built before a train that you've already terminated.
-        Normal mode will never overload a track, so you might consider using this mode if you find
-        yourself having to reset trains or you want to build and run your trains in any order. The
-        recommendation is not to use train reset in Aggressive mode once you've built or terminated
-        additional trains. And if you do reset a train, there isn't a guarantee that building the
-        train again will pull the same cars, each train build can be different depending on the car
-        movements created by the other trains.</p>
+      <p>
+        To avoid overloading in Aggressive mode, you also need to build, run, and terminate your
+        trains in the same order. And do not use the train reset after you've built or terminated
+        other trains! However, if you need to reset a train, you should also <a href="#Trains">reset
+          all</a> of the trains built after the train that you want to reset, or live with possible
+        track overloading. And never reset a train built before a train that you've already
+        terminated. Normal mode will never overload a track, so you might consider using this mode
+        if you find yourself having to reset trains or you want to build and run your trains in any
+        order. The recommendation is not to use train reset in Aggressive mode once you've built or
+        terminated additional trains. And if you do reset a train, there isn't a guarantee that
+        building the train again will pull the same cars, each train build can be different
+        depending on the car movements created by the other trains.
+      </p>
 
       <h4>On Time</h4>
 
@@ -1267,7 +1269,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       train movement is recommended since cars and locomotives can be assigned to more than one
       train. To use On Time, your trains must run on schedule, departing in the same order they were
       built. Trains should depart at the correct departure time, and they should complete their work
-      reasonably close to the times provided on the train Manifests. When running OperationsPro in
+      reasonably close to the times provided on the train Manifests. When running OperationsPro&trade; in
       On Time mode, tracks that have
       <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused based on when cars
       are set out and picked up. Cars and locomotives can travel on multiple trains with train
@@ -1320,7 +1322,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>Also note that If you need to reset your trains, reset the last built trains first, or
-        use the reset all trains button.</p>
+        use the <a href="#Trains">reset all</a> trains button.</p>
 
       <p>
         When selecting On Time mode, a new column named "Done" in the <a href="#Trains">Trains</a>
@@ -3260,7 +3262,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        OperationsPro allows you sort cars to C/I tracks by any combination of destination, arrival
+        OperationsPro&trade; allows you sort cars to C/I tracks by any combination of destination, arrival
         train, departure train, arrival route, departure route, departure direction, road, type,
         load, and <a href="#PickUpCarOrder">arrival order</a>. In the above image, only two road
         names are accepted by the C/I track, and only train BB is allowed to spot cars onto the
@@ -3783,7 +3785,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         For a <a href="#TrainTurnRoute">turn</a>, on the outbound leg of the train's route,
-        OperationsPro will drop off the car to the spur. On the inbound leg of the train's route the
+        OperationsPro&trade; will drop off the car to the spur. On the inbound leg of the train's route the
         car will be pulled and eventually dropped off by the train to the car's destination and
         track. The Manifest below shows boxcars APOX 554 and 556 being dropped off at Bedford
         Packaging on the eastbound leg, and later pulled on the westbound leg of the train's route.
@@ -5600,7 +5602,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           Schedules</a> tool. You can if you wish build each train independently by pressing the "Build"
         button under the "Function" column for a train. After a train is built the button becomes
         "Print" or "Preview" depending on the function "Preview" checkbox located at the bottom of
-        the Trains window.
+        the Trains window. And finally the "Reset" button at the bottom of the Trains window will
+        reset all built trains that haven't departed their origin.
       </p>
 
       <p>
@@ -6041,7 +6044,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Train&rArr;Tools&rArr;Manifest Options" to set these options.
 
       <h4 id="TrainManualBuild">Train Manual Build</h4>
-      OperationsPro gives you two methods to manually assign cars to a train. The
+      OperationsPro&trade; gives you two methods to manually assign cars to a train. The
       <a href="#CarsSet">Set Car</a> window allows you to select a specific car and assign it to a
       train. You can do this before or after building a train.
 
@@ -6479,7 +6482,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h5>Counter</h5>
       This action will increment a count starting from zero. The counter isn't saved when
-      OperationsPro is shutdown, and will restart at zero the next time the program is run. To reset
+      OperationsPro&trade; is shutdown, and will restart at zero the next time the program is run. To reset
       the count to zero without restarting OperationsPro, reselect the action "Counter", or under
       tools use "Reset Automation".
 

@@ -452,6 +452,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             if (train == null) {
                 return;
             }
+            if (train.isBuilt()) {
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("BuiltTrain"),
+                        Bundle.getMessage("CanNotDeleteTrain"), JmriJOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (!_train.reset()) {
                 JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("TrainIsInRoute",
@@ -504,7 +510,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         return;
                     }
                 }
-                if (!_train.reset()) {
+                Train t = trainManager.getTrainBuiltAfter(train);
+                if (Setup.isBuildOnTime() && t != null) {
+                    JmriJOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("TrainAfterBuilt", t, train), Bundle.getMessage("CanNotResetTrain"),
+                            JmriJOptionPane.WARNING_MESSAGE);
+                } else if (!_train.reset()) {
                     JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("TrainIsInRoute",
                                     _train.getTrainTerminatesName()),
