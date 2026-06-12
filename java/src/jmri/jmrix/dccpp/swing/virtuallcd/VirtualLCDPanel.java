@@ -169,7 +169,11 @@ public class VirtualLCDPanel extends JPanel
 
     @Override
     public void setLCDSize(@CheckForNull Dimension d) {
-        lcdSize = d;
+        if (d != null && d.width > 0 && d.height > 0) {
+            lcdSize = d;
+        } else {
+            lcdSize = null;
+        }
         reset();
     }
 
