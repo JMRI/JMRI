@@ -31,6 +31,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
     private final DoAfter doAfter;
     private final Map<DCCppSystemConnectionMemo, Integer> highestDisplayNoMap = new HashMap<>();
 
+    private final JComboBox<DCCppConnection> _memoComboBox = new JComboBox<>();
     private final JTextField _numColumnsTextField = new JTextField();
     private final JTextField _numRowsTextField = new JTextField();
     private final JComboBox<DisplayConfig> displayConfigComboBox = new JComboBox<>();
@@ -84,7 +85,6 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        JComboBox<DCCppConnection> _memoComboBox = new JComboBox<>();
         List<DCCppSystemConnectionMemo> systemConnections =
                 jmri.InstanceManager.getList(DCCppSystemConnectionMemo.class);
         for (DCCppSystemConnectionMemo connection : systemConnections) {
@@ -270,7 +270,9 @@ public class ConfigureVirtualLCD extends JmriJFrame {
                         int highestDisplayNo = highestDisplayNoMap.getOrDefault(memo,0);
                         if (displayNumber > highestDisplayNo) {
                             highestDisplayNoMap.put(memo, displayNumber);
-                            configureDisplaySelection(memo);
+                            if (memo == _memoComboBox.getItemAt(_memoComboBox.getSelectedIndex())._memo) {
+                                configureDisplaySelection(memo);
+                            }
 //                            System.out.format("Higest display: %s:%d%n", memo.getUserName(), displayNumber);
                         }
                     }
@@ -295,7 +297,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         displayNoComboBox.removeAllItems();
         minDisplayNoComboBox.removeAllItems();
         maxDisplayNoComboBox.removeAllItems();
-        for (int i=0; i < highestDisplayNoMap.getOrDefault(memo,0); i++) {
+        for (int i=0; i <= highestDisplayNoMap.getOrDefault(memo,0); i++) {
             displayNoComboBox.addItem(i);
             if (i == virtualLCDConfiguration.getDisplayNo()) {
                 displayNoComboBox.setSelectedItem(i);
