@@ -102,8 +102,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         JLabel memoLabel = new JLabel(Bundle.getMessage("Connection"));
         JLabel displayNoLabel = new JLabel(Bundle.getMessage("DisplayNo"));
 
-        JPanel p;
-        p = new JPanel();
+        JPanel p = new JPanel();
         p.setLayout(new java.awt.GridBagLayout());
         java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
         c.gridwidth = 1;
@@ -124,10 +123,14 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         displayNoLabel.setLabelFor(_numRowsTextField);
         c.gridy = 3;
         c.gridwidth = 2;
+        c.anchor = java.awt.GridBagConstraints.WEST;
         p.add(new JLabel(Bundle.getMessage("ConfigureVirtualLCD_ColumsRowsHelp")), c);
         displayNoLabel.setLabelFor(displayNoComboBox);
         c.gridwidth = 1;
         c.gridy = 4;
+        p.add(Box.createVerticalStrut(8), c);
+        c.gridy = 5;
+        c.anchor = java.awt.GridBagConstraints.EAST;
         p.add(displayNoLabel, c);
         displayNoLabel.setLabelFor(displayNoComboBox);
         c.gridx = 1;
@@ -146,7 +149,7 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.gridy = 2;
         _numRowsTextField.setColumns(5);
         p.add(_numRowsTextField, c);
-        c.gridy = 4;
+        c.gridy = 5;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         for (DisplayConfig dc : DisplayConfig.values()) {
             displayConfigComboBox.addItem(dc);
@@ -163,7 +166,6 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
 //        displayNoTextField.setToolTipText(Bundle.getMessage("DisplayNoHint"));
-        contentPane.add(p);
 
 
         JPanel allDisplays = new JPanel();
@@ -189,11 +191,22 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         cards.add(oneDisplay, DisplayConfig.ConfigureVirtualLCD_OneDisplay.name());
         cards.add(intervalDisplays, DisplayConfig.ConfigureVirtualLCD_IntervalDisplay.name());
         cards.add(selectedDisplays, DisplayConfig.ConfigureVirtualLCD_SelectedDisplays.name());
-        contentPane.add(cards);
 
         displayConfigComboBox.addItemListener(evt -> {
             cardLayout.show(cards, ((DisplayConfig) evt.getItem()).name());
         });
+
+        c.gridwidth = 2;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 6;
+        c.anchor = java.awt.GridBagConstraints.EAST;
+        p.add(cards, c);
+
+        c.gridy = 7;
+        p.add(new JLabel(Bundle.getMessage("VirtualLcdPositionable_DialogTakesTime")), c);
+
+        contentPane.add(p);
 
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
