@@ -42,6 +42,7 @@ public class VirtualLCDPanel extends JPanel
 
     static final int TOTALLINES = 64;
     private final Map<Integer, List<JLabel>> linesMap = new HashMap<>();
+    private final JLabel noVisibleDisplays = new JLabel(Bundle.getMessage("VirtualLcdNoVisibleDisplays"));
 
     public VirtualLCDPanel(JmriJFrame frame, boolean isMemoEditable) {
         this(frame, null, isMemoEditable);
@@ -76,10 +77,19 @@ public class VirtualLCDPanel extends JPanel
         } catch (IOException e1) { log.error("failed to find or open font file");
         } catch (FontFormatException e2) { log.error("font file not valid");
         }
+
+        noVisibleDisplays.setOpaque(true);
+        noVisibleDisplays.setBackground(Color.BLACK);
+        noVisibleDisplays.setForeground(new Color(255,63,63));    // Red
+        if (font != null) noVisibleDisplays.setFont(font);
+        add(noVisibleDisplays);
+        packOrResize();
     }
 
     public void reset() {
         this.removeAll();
+        add(noVisibleDisplays);
+        packOrResize();
         linesMap.clear();
     }
 
@@ -221,6 +231,9 @@ public class VirtualLCDPanel extends JPanel
     }
 
     private List<JLabel> createNewDisplay() {
+        // noVisibleDisplays is shown until at least one display is added.
+        this.remove(noVisibleDisplays);
+
         // Add space between displays if this is not the first display
         if (getComponentCount() > 0) {
             Component c = Box.createHorizontalStrut(10);
@@ -247,7 +260,7 @@ public class VirtualLCDPanel extends JPanel
         pane.setBackground(Color.BLACK);
         pane.setAlignmentY(Component.TOP_ALIGNMENT);
         this.add(pane);
-        _frame.pack();
+        packOrResize();
         return lines;
     }
 
@@ -282,6 +295,16 @@ public class VirtualLCDPanel extends JPanel
         return s;
     }
 
+    private void packOrResize() {
+        if (_positionable != null) {
+            var d = this.getPreferredSize();
+            this.setSize(d);
+            _positionable.setSize(d);
+        } else {
+            _frame.pack();
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -296,13 +319,7 @@ public class VirtualLCDPanel extends JPanel
                 if (lcdSize == null || lineNumber < lcdSize.height) {
                     if (lineNumber < TOTALLINES) {
                         lines.get(lineNumber).setText(cutIfNeeded(msg.getLCDTextString()+"   ")); // padding for appearance
-                        if (_positionable != null) {
-                            var d = this.getPreferredSize();
-                            this.setSize(d);
-                            _positionable.setSize(d);
-                        } else {
-                            _frame.pack();
-                        }
+                        packOrResize();
                     } else {
                         log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}",
                                     lineNumber, TOTALLINES-1);
