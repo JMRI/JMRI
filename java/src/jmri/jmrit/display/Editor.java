@@ -22,6 +22,8 @@ import javax.swing.event.ListSelectionEvent;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import javax.annotation.CheckForNull;
+
 import jmri.*;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
@@ -1917,6 +1919,12 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     public void putItem(@Nonnull Positionable l) throws Positionable.DuplicateIdException {
+        putItem(l, false);
+    }
+
+    public void putItem(@Nonnull Positionable l, boolean factoryPositionable)
+            throws Positionable.DuplicateIdException {
+
         ThreadingUtil.runOnGUI( () -> {
             l.invalidate();
             l.setPositionable(true);
@@ -2031,6 +2039,10 @@ public abstract class Editor extends JmriJFrameWithPermissions
 
     public IconAdder getIconEditor(String name) {
         return _iconEditorFrame.get(name).getEditor();
+    }
+
+    public void putIconEditor(String name, Editor.JFrameItem frame) {
+        _iconEditorFrame.put(name, frame);
     }
 
     /**
@@ -2939,7 +2951,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      * @param editor parent frame of the image frame
      * @return JFrame connected to the editor,  to be filled with icons
      */
-    protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
+    public JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
         log.debug("makeAddIconFrame for {}, add= {}, table= {}", name, add, table);
         String txt;
         String bundleName;
@@ -3689,7 +3701,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      *
      * @param obj the object to locate
      */
-    protected abstract void setNextLocation(Positionable obj);
+    public abstract void setNextLocation(Positionable obj);
 
     /**
      * After construction, initialize all the widgets to their saved config
@@ -3703,6 +3715,12 @@ public abstract class Editor extends JmriJFrameWithPermissions
      * @param p the item to copy
      */
     protected abstract void copyItem(Positionable p);
+
+    @CheckForNull
+    public Rectangle2D resizePanelBounds(boolean forceFlag) {
+        // Do nothing. This method is overridden by LayoutEditor.
+        return null;
+    }
 
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();

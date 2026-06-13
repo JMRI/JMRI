@@ -62,6 +62,7 @@
                     more than one display. Each display is shown in a single
                     row in the <strong>Virtual LCD</strong> window, with
                     the first display at the left.</li>
+                <li><strong>Virtual LCD</strong> can now be added to Panel Editor and Layout Editor.</li>
                 <li>Change default DCCppOverTCP port from 1235 to 2560 to match DCC-EX default.</li>
                 <li>DCC-EX: turnout details are now fetched one at a time after startup rather than
                 all at once, preventing the command station's WiFi buffer from being overwhelmed
@@ -513,6 +514,9 @@
         <ul>
             <li>Improved the layout of the edit tools to reduce the need for
                 vertical scrolling when they're at the top or bottom of the window.</li>
+            <li>Fixed a bug where the panel bounds wasn't updated when
+                an icon was moved using the popup menu item
+                <strong>Set Location</strong>.</li>
             <li>Handle mouse down events, drag and popup menus, on shapes before background objects
             (level 0 and level 1).</li>
             <li>The option <strong>Disable loco marker popup menus</strong> has been added
