@@ -102,7 +102,30 @@ public interface SerialPort {
 
     void closePort();
 
+    /**
+     * Check if the serial port is currently open.
+     *
+     * @return true if the port is open, false otherwise
+     */
+    boolean isOpen();
+
     String getDescriptivePortName();
+
+    /**
+     * Get the description of the port from the operating system.
+     * This typically includes hardware information like "USB Serial Port".
+     *
+     * @return the port description string
+     */
+    String getPortDescription();
+
+    /**
+     * Get the physical location of the port on the system.
+     * For USB devices, this typically returns a USB path like "USB VID:PID=10C4:EA60".
+     *
+     * @return the port location string or empty string if not available
+     */
+    String getPortLocation();
 
     @Override
     String toString();
