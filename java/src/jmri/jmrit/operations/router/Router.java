@@ -1251,8 +1251,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      * @return true if car's destination was set to alternate track
      */
     private boolean redirectToAlternate(Car car, Track track) {
-        if (car.getTrack().isSpur() &&
-                car.getTrack().getAlternateTrack() != null &&
+        if (car.getTrack().getAlternateTrack() != null &&
                 _nextLocationTracks.indexOf(track) == _nextLocationTracks.size() - 1) {
             // try redirecting car to the alternate track
             Car ts = clone(car);

@@ -2431,24 +2431,24 @@ public class TrainBuilderBase extends TrainCommon {
      * Checks to see if track has an alternate and can be used
      * 
      * @param car       the car being dropped
-     * @param testTrack the destination track
+     * @param track the destination track
      * @return true if track has an alternate and can be used
      */
-    protected boolean checkForAlternate(Car car, Track testTrack) {
-        if (testTrack.getAlternateTrack() != null &&
-                car.getTrack() != testTrack.getAlternateTrack() &&
-                checkTrainCanDrop(car, testTrack.getAlternateTrack())) {
+    protected boolean checkForAlternate(Car car, Track track) {
+        if (track.getAlternateTrack() != null &&
+                car.getTrack() != track.getAlternateTrack() &&
+                checkTrainCanDrop(car, track.getAlternateTrack())) {
             addLine(SEVEN,
-                    Bundle.getMessage("buildTrackFullHasAlternate", testTrack.getLocation().getName(),
-                            testTrack.getName(), testTrack.getAlternateTrack().getName()));
-            String status = car.checkDestination(testTrack.getLocation(), testTrack.getAlternateTrack());
+                    Bundle.getMessage("buildTrackFullHasAlternate", track.getLocation().getName(),
+                            track.getName(), track.getAlternateTrack().getName()));
+            String status = car.checkDestination(track.getLocation(), track.getAlternateTrack());
             if (status.equals(Track.OKAY)) {
                 return true;
             }
             addLine(SEVEN,
                     Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
-                            testTrack.getAlternateTrack().getTrackTypeName(),
-                            testTrack.getLocation().getName(), testTrack.getAlternateTrack().getName(),
+                            track.getAlternateTrack().getTrackTypeName(),
+                            track.getLocation().getName(), track.getAlternateTrack().getName(),
                             status));
         }
         return false;
