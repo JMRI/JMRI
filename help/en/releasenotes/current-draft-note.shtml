@@ -623,7 +623,10 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>The web Control Panel now draws shapes and other positionables in
+                their display "level" (z-order), matching the desktop Control
+                Panel Editor. Previously elements were sent in list order, so
+                overlapping items could be stacked incorrectly in the browser.</li>
         </ul>
 
     <h3>Where Used</h3>
