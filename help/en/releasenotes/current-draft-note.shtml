@@ -740,7 +740,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Improve how window is sized so you don't have to manually resize it so often.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
