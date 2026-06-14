@@ -312,22 +312,26 @@ public class ConfigureVirtualLCD extends JmriJFrame {
         maxDisplayNoComboBox.removeAllItems();
         for (int i=0; i <= highestDisplayNoMap.getOrDefault(memo,0); i++) {
             displayNoComboBox.addItem(i);
-            if (i == virtualLCDConfiguration.getDisplayNo()) {
+            if (virtualLCDConfiguration != null
+                    && i == virtualLCDConfiguration.getDisplayNo()) {
                 displayNoComboBox.setSelectedItem(i);
             }
 
             minDisplayNoComboBox.addItem(i);
-            if (i == virtualLCDConfiguration.getMinDisplayNo()) {
+            if (virtualLCDConfiguration != null
+                    && i == virtualLCDConfiguration.getMinDisplayNo()) {
                 minDisplayNoComboBox.setSelectedItem(i);
             }
 
             maxDisplayNoComboBox.addItem(i);
-            if (i == virtualLCDConfiguration.getMaxDisplayNo()) {
+            if (virtualLCDConfiguration != null
+                    && i == virtualLCDConfiguration.getMaxDisplayNo()) {
                 maxDisplayNoComboBox.setSelectedItem(i);
             }
 
             JCheckBox cb = new JCheckBox(Bundle.getMessage("ConfigureVirtualLCD_SelectedDisplays_CheckBox", i));
-            if (virtualLCDConfiguration.getSelectedDisplays().contains(i)) {
+            if (virtualLCDConfiguration != null
+                    && virtualLCDConfiguration.getSelectedDisplays().contains(i)) {
                 cb.setSelected(true);
             }
             selectDisplayNoCheckBox.put(i, cb);
