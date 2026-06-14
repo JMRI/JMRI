@@ -136,7 +136,15 @@
         <pathelement location="${libdir}/jSerialComm-2.11.4.jar"/>
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
-        <pathelement location="${libdir}/gluegen-rt.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0-natives-android-x86_64.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0-natives-freebsd-amd64.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0-natives-linux-aarch64.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0-natives-linux-amd64.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0-natives-linux-armv6hf.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0-natives-macosx-universal.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-2.6.0-natives-windows-amd64.jar"/>
+        <pathelement location="${libdir}/gluegen-rt-main-2.6.0.jar"/>
         <pathelement location="${libdir}/commons-csv-1.9.0.jar"/>
         <pathelement location="${libdir}/jdom2-2.0.6.1.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
@@ -145,7 +153,14 @@
         <pathelement location="${libdir}/jmdns-3.5.5.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
-        <pathelement location="${libdir}/joal.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0-natives-android-x86_64.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0-natives-freebsd-amd64.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0-natives-linux-aarch64.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0-natives-linux-amd64.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0-natives-linux-armv6hf.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0-natives-macosx-universal.jar"/>
+        <pathelement location="${libdir}/joal-2.6.0-natives-windows-amd64.jar"/>
         
         <pathelement location="${libdir}/jython-standalone-2.7.4.jar"/>
 
