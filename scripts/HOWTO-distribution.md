@@ -99,6 +99,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 ```
   ./scripts/update-HOWTO.sh 5.15.8 5.15.9 5.15.10
 ```
+
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
 
@@ -337,13 +338,13 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.15.6-SNAPSHOT/5.15.8-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.15.7-SNAPSHOT/5.15.8-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=6/release.build=7/g release.properties
+        sed -i.bak s/release.build=7/release.build=8/g release.properties
         head -10 release.properties
 ```
  - Check that both those edits left 5.15.8 defined in the two files
@@ -424,7 +425,7 @@ If you're developing any additional (post-5.15.8) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.15.8 release name at the top. Enter the 5.15.8 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.15.8 release name at the top. Enter the 5.15.7 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -469,7 +470,11 @@ This should be done on a machine with only one display.
 
 ```
 "First 5.15.8 files available":
+```
 
+(You have to update the tag part of the direction links)
+
+```
 First JMRI 5.15.8 files are available in the usual way at:
 
 https://builds.jmri.org/jenkins/job/testreleases/job/5.15.8/
@@ -607,9 +612,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.15.8+R380e60fa42.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.8/JMRI.5.15.8+R380e60fa42.dmg) | be51bc7fca92f8b1b7d03cd0288a2cb5a8dcd5509f06b59575c1b414ef1563fb
-[JMRI.5.15.8+R380e60fa42.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.8/JMRI.5.15.8+R380e60fa42.exe) | 959c920e2dee1fca0fbd2d9c84ac1d583d798a9f401d242c467b879f60480b78
-[JMRI.5.15.8+R380e60fa42.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.8/JMRI.5.15.8+R380e60fa42.tgz) | 02ae1b38c9595ae84125407b131a13f9a18521070af95a8c27af206e834c9a48
+[JMRI.5.15.8+R0f6e5379d8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.8/JMRI.5.15.8+R0f6e5379d8.dmg) | b769fdcf9e183a2ba18f954ec0ec520cb7df38f18ca0730e0da2784ab638f33d
+[JMRI.5.15.8+R0f6e5379d8.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.8/JMRI.5.15.8+R0f6e5379d8.exe) | 7c73245b306376cd067cce61fdd519d493341ba9151e5e22983f415fdb53d09a
+[JMRI.5.15.8+R0f6e5379d8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.8/JMRI.5.15.8+R0f6e5379d8.tgz) | 3ef3354ea0a621652dffcf209e94e6e54a982202d5faa4ee1114b8aa237cf142
 
 ```
 
@@ -659,11 +664,10 @@ If there are any changes in other files, do both of:
 
 ## Update GitHub Status items
 
-- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.15.9". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
+- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.15.9". Add the 5.15.9 release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
 This is the next release in the 5.16 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
-- Add the 5.15.9 milestone to the issue.
 
 - Confirm that the tag for the current release (v5.15.8 for release 5.15.8) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-5.15.8) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
