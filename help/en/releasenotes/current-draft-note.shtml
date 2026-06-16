@@ -116,7 +116,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Added a sample script showing how to send and receive NCE messages.</li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -535,7 +535,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added a sample script showing how to send and receive NCE messages.</li>
         </ul>
 
     <h3>Signals</h3>
