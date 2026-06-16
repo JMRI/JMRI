@@ -955,6 +955,7 @@ public class RouterTest extends OperationsTestCase {
 
         // disable the use of yard tracks for routing
         Setup.setCarRoutingViaYardsEnabled(false);
+        Setup.setForwardToYardEnabled(false);
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(chelmsford); // the final destination for the car
         // both interchange tracks are too short, so there isn't a route
@@ -968,12 +969,18 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("c4 consumes all of the interchange track", Track.OKAY,
                 c4.setLocation(actonInterchange1.getLocation(), actonInterchange1));
         // Track AI is long enough, but c4 is consuming all of the track, but
-        // there is a
-        // route!
+        // there is a route!
         Assert.assertTrue("Try routing three trains to yard track, option disabled",
                 router.setDestination(c3, actonTrain2, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
+        
+        // Test forwarding to yard track if the interchange track is full
+        Setup.setForwardToYardEnabled(true);
+        Assert.assertTrue("Try routing three trains to yard track, option disabled",
+                router.setDestination(c3, actonTrain2, null));
+        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+        Assert.assertEquals("Check car's destination track", "Acton Yard 1", c3.getDestinationTrackName());
 
         // restore track length
         actonInterchange1.setLength(500);
@@ -2043,6 +2050,7 @@ public class RouterTest extends OperationsTestCase {
 
         // only use interchange tracks for this test
         Setup.setCarRoutingViaYardsEnabled(false);
+        Setup.setForwardToYardEnabled(false);
 
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -2717,6 +2725,7 @@ public class RouterTest extends OperationsTestCase {
 
         // disable the use of yard tracks for routing
         Setup.setCarRoutingViaYardsEnabled(false);
+        Setup.setForwardToYardEnabled(false);
         c3.setDestination(null, null); // clear previous destination
         Assert.assertEquals("car still has final destination", foxboro, c3.getFinalDestination());
         // both interchange tracks are not available, but there still a route
