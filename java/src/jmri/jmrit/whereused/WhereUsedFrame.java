@@ -62,6 +62,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         // Build an empty where used listing
         JScrollPane scrollPane;
         buildWhereUsedListing(ItemType.NONE, null);
+        _scrolltext.setLayout(new BoxLayout(_scrolltext, BoxLayout.Y_AXIS));
         scrollPane = new JScrollPane(_scrolltext);
         contentPane.add(scrollPane);
 

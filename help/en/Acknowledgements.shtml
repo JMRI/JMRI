@@ -578,6 +578,9 @@
 
         <li>Michael Homscheidt, who worked on the KPF-Zeller speedometer support.</li>
 
+        <li><a href="https://github.com/JMRI/JMRI/pulls/mvanhorn">Matt Van Horn</a>,
+        who fixed the shape level (z-order) of items on a web panel.</li>
+
         <li>Hornby Hobbys, who provided a full set of TTS manuals plus information regarding
         various CVs.</li>
 

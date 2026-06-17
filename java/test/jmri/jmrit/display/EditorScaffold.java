@@ -91,7 +91,7 @@ public class EditorScaffold extends Editor {
      *
      */
     @Override
-    protected void setNextLocation(Positionable obj){
+    public void setNextLocation(Positionable obj){
     }
 
     /**

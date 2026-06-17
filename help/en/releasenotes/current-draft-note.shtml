@@ -1,10 +1,7 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li>The list of ports on a connection configuration page is now updated
-            event time to click on it to open it.  This lets you e.g. pull out your
-            command station port, note the list of remaining ones, then reconnect
-            your command station and select the new port that just appeared.</li>
+          <li></li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -125,10 +122,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>LocoNet-over-TCP connections now automatically reconnect if the server
-                    goes away and comes back. Detection relies on a clean TCP close
-                    from the server; hard disconnects (network drop with no TCP FIN)
-                    are only detected when JMRI next tries to send a message.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -168,9 +162,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a bug which could cause the Event Table to
-                    refresh too often, which annoyingly caused it to
-                    lose your current selected row.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -456,11 +448,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>The option <strong>Disable loco marker popup menus</strong> has been added
-                to the <strong>Marker</strong> menu. If it's selected, it's possible to
-                move around loco markers but it's not possible to open the popup menu for
-                loco markers. This is useful for dispatcher that wants to move
-                the loco markers but doesn't want to edit the loco markers.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -482,8 +470,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixed a bug were DecoderPro was include the height of
-                non-visible columns in the row height calculation.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -507,24 +494,12 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved the layout of the edit tools to reduce the need for
-                vertical scrolling when they're at the top or bottom of the window.</li>
-            <li>Handle mouse down events, drag and popup menus, on shapes before background objects
-            (level 0 and level 1).</li>
-            <li>The option <strong>Disable loco marker popup menus</strong> has been added
-                to the <strong>Marker</strong> menu. If it's selected, it's possible to
-                move around loco markers but it's not possible to open the popup menu for
-                loco markers. This is useful for dispatcher that wants to move
-                the loco markers but doesn't want to edit the loco markers.</li>
-            <li>Prevent a possible <strong>ClassCastException</strong> introduced by PR #14492
-            and PR #14928 to support signals on turntables and traversers. The exception occurs when
-            Entry/Exit is used and a panel has a turntable and/or a traverser. The added logic
-            did not consider that the <strong>bean</strong> might be an Entry/Exit sensor.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li>Fix an incomplete route cancel cleanup which leaves the protected block allocated.</li>
+                <li></li>
             </ul>
 
     <h3>LccPro</h3>
@@ -542,13 +517,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The LogixNG function <strong>regex()</strong> has been
-              added. It lets you use a regular expression to extract
-              information from a string.<br/>
-              For more information about regular expressions, see the
-              Java class
-              <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html"></a>Pattern</li>.
-          <li>Update the Turnout Lock action description.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -560,24 +529,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-          <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
-          <li>New feature, manual build for a train. See the OperationsPro help for more information.</li>
-          <li>Operations tests now use an isolated <code>NullProfile</code> per test via <code>@TempDir</code>,
-              preventing intermittent <code>RosterConfigManager</code> failures on machines with real JMRI profile data.</li>
-          <li>New feature, Manifest and switch lists can now display rolling stock last moved date & time.</li>
-          <li>Changed switch lists to now list trains arrivals by time, including turns. Previously a turns work was listed consecutively.</li>
-          <li>You can now bold a Manifest or switch list word or line. At the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text.</li>
-          <li>Manifest and switch list can now show the rolling stocks last location.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>The option <strong>Disable loco marker popup menus</strong> has been added
-                to the <strong>Marker</strong> menu. If it's selected, it's possible to
-                move around loco markers but it's not possible to open the popup menu for
-                loco markers. This is useful for dispatcher that wants to move
-                the loco markers but doesn't want to edit the loco markers.</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -601,15 +559,9 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>The Continue/Quit dialog shown at startup when the configured roster
-            location is unavailable now treats dismissing the dialog (the close button)
-            as Quit, matching the behavior of the profile chooser. Previously the close
-            button fell through to Continue (<a href="https://github.com/JMRI/JMRI/issues/15148">issue #15148</a>).</li>
+            <li></li>
         </ul>
-        <ul>
-            <li>Roster Speed Profiling has been updated to allow profiling from either
-            High to Low or Low to High and should now work for both NMRA and non NMRA speed steps.</li>
-        </ul>
+
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
@@ -619,8 +571,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Update the debugging section of Getting Started with Scripting to include the
-            process to get the script line number from the Java exception report.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -696,25 +647,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Fixed intermittent CI failures in linked/looped warrant tests caused by race conditions and test isolation issues:
-                <ul>
-                    <li><code>stopWarrant()</code> now captures <code>_idxCurrentOrder</code> before
-                        dispatching <code>deAllocate</code> asynchronously, so looped warrants correctly
-                        report <code>warrantComplete</code> rather than <code>warrantEnd</code>.</li>
-                    <li>Fixed a missed-wakeup race in the Engineer block-sync wait: the block entry
-                        check is now re-evaluated inside the <code>synchronized</code> block, so a sensor
-                        that fires between the outer check and <code>wait()</code> can no longer leave the
-                        engineer stuck indefinitely.</li>
-                    <li>Warrant tests now wait for <code>PROPERTY_WARRANT_START</code> before firing
-                        block sensors for the next leg, ensuring sensors are not delivered before the
-                        new leg's engineer has started.</li>
-                    <li><code>IndicatorTrackPaths</code> now skips paint callbacks on disposed editor panels.</li>
-                    <li>Six logix test classes now use an isolated <code>NullProfile</code> per test
-                        rather than the shared <code>./temp/</code> directory, preventing
-                        <code>RosterConfigManager</code> failures on developer machines with real profile data.</li>
-                    <li>The changes above are done in <a href="https://github.com/JMRI/JMRI/pull/15151">PR #15151</a></li>
-                </ul>
-            </li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -726,7 +659,10 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>The web Control Panel now draws shapes and other positionables in
+                their display "level" (z-order), matching the desktop Control
+                Panel Editor. Previously elements were sent in list order, so
+                overlapping items could be stacked incorrectly in the browser.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -744,7 +680,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>The restriction on Turntable using only an even number of rays has been lifted.</li>
+            <li></li>
         </ul>
 
    <h3>Z21 Server</h3>
@@ -756,11 +692,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The class <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionStatus.html">jmri.jmrix.ConnectionStatus</a>
-                has been refactorized to use <a href="https://www.jmri.org/JavaDoc/doc/jmri/SystemConnectionMemo.html">SystemConnectionMemo</a>
-                instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
-            <li>Reading and writing of the user-interface.xml preferences file has been made more efficient.  This shouldn't have
-                any effect on users.</li>
-            <li>Fixed the bug causing the <strong>"Premature end of file" in user-interface.xml</strong>.</li>
+            <li></li>
         </ul>
 
