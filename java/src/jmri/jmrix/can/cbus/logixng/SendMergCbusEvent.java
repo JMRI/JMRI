@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusEvent;
+import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -111,17 +112,30 @@ public class SendMergCbusEvent extends AbstractDigitalAction
 
     @Override
     public String getShortDescription(Locale locale) {
+        // SendCbusEvent_Short is a short description, NOT Short / Device Event.
         return Bundle.getMessage(locale, "SendCbusEvent_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        String nodeNumber = _selectNodeNumber.getDescription(locale);
-        String eventNumber = _selectEventNumber.getDescription(locale);
-        String eventType = _selectEventType.getDescription(locale);
 
-        return Bundle.getMessage(locale, "SendCbusEvent_Long", eventNumber, eventType, nodeNumber,
-                _memo != null ? _memo.getUserName() : Bundle.getMessage("MemoNotSet"));
+        String eventType = _selectEventType.getDescription(locale);
+        String memoName = _memo != null ? _memo.getUserName() : Bundle.getMessage("MemoNotSet");
+
+        if (_selectNodeNumber.isDirectAddressing() && _selectEventNumber.isDirectAddressing()) {
+            int nodeNumber = _selectNodeNumber.getValue();
+            int eventNumber = _selectEventNumber.getValue();
+            String eventString = new CbusNameService(_memo).getEventNodeString(nodeNumber, eventNumber);
+            // SendCbusEvent_Long is a long description, NOT Long Event.
+            return Bundle.getMessage(locale, "SendCbusEvent_Long_WithoutSpace", eventString, eventType,
+                memoName);
+        } else { // int values unavailable, use descriptor
+            String nodeNumber = _selectNodeNumber.getDescription(locale);
+            String eventNumber = _selectEventNumber.getDescription(locale);
+            // SendCbusEvent_Long is a long description, NOT Long Event.
+            return Bundle.getMessage(locale, "SendCbusEvent_Long", nodeNumber, eventNumber, eventType,
+                memoName);
+        }
     }
 
     /** {@inheritDoc} */

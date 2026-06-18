@@ -94,6 +94,12 @@ public class LogixNG_SelectInteger implements VetoableChangeListener {
         _value = value;
     }
 
+    /**
+     * Get the Integer value.
+     * Value valid only when #isDirectAddressing returns true.
+     * If this returns false use #getDescription(locale) for a String representation.
+     * @return the integer value.
+     */
     public int getValue() {
         return _value;
     }
