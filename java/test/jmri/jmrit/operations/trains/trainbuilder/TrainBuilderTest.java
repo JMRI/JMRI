@@ -19553,6 +19553,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // force the program to use interchange tracks.
         Setup.setCarRoutingViaYardsEnabled(false);
+        // don't allow the use of yard tracks for temporary storage
+        Setup.setForwardToYardEnabled(false);
 
         // eliminate two train route 
         acton.deleteTrack(actonInterchange1);
@@ -20315,6 +20317,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location acton = lmanager.getLocationByName("Acton");
         Track actonSpur2 = acton.getTrackByName("Acton Spur 2", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
         Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
 
         Location boston = lmanager.getLocationByName("Boston");
@@ -20423,9 +20426,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         // make Acton yard 2 full
         JUnitOperationsUtil.createAndPlaceCar("A", "6", "Boxcar", "40", "DAB", "1958", actonYard2, 0);
 
+        // this should forward the car to the yard track
         Assert.assertTrue(tb.build(abTrain));
-        Assert.assertEquals("Train assignment", null, c1.getTrain());
-        Assert.assertEquals("car c1 destination track", null, c1.getDestinationTrack());
+        Assert.assertEquals("Train assignment", abTrain, c1.getTrain());
+        Assert.assertEquals("car c1 destination track", actonYard1, c1.getDestinationTrack());
         abTrain.reset();
 
         Assert.assertEquals("FD", danvers, c1.getFinalDestination());

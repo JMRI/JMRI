@@ -225,6 +225,9 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
+    // Factory generated positionables
+    private List<Positionable> factoryPositionables = new ArrayList<>();
+
     private JCheckBoxMenuItem disableLocoMarkerPopupMenuItem;
 
     public final LayoutEditorViewContext gContext = new LayoutEditorViewContext(); // public for now, as things work access changes
@@ -1305,6 +1308,20 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             redrawPanel();
         });
 
+        for (var positionableFactory : ServiceLoader.load(PositionableFactory.class)) {
+
+            JMenuItem item = new JMenuItem(Bundle.getMessage("AddItem", positionableFactory.getDescription()));
+            optionsAddMenu.add(item);
+            item.addActionListener((ActionEvent event) -> {
+
+                positionableFactory.addPositionable(this, (p) -> {
+                    unionToPanelBounds(p.getBounds());
+                    setDirty();
+                    redrawPanel();
+                });
+            });
+        }
+
         //
         // location coordinates format menu
         //
@@ -2315,7 +2332,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         Rectangle2D result = new Rectangle2D.Double();
 
         // combine all (onscreen) Components into a list of list of Components
-        List<List<? extends Component>> listOfListsOfComponents = new ArrayList<>();
+        List<List<? extends Positionable>> listOfListsOfComponents = new ArrayList<>();
         listOfListsOfComponents.add(backgroundImage);
         listOfListsOfComponents.add(sensorImage);
         listOfListsOfComponents.add(turnoutImage);
@@ -2333,9 +2350,10 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(turnoutList);
         listOfListsOfComponents.add(signalMastList);
+        listOfListsOfComponents.add(factoryPositionables);
         // combine their bounds
-        for (List<? extends Component> listOfComponents : listOfListsOfComponents) {
-            for (Component o : listOfComponents) {
+        for (List<? extends Positionable> listOfComponents : listOfListsOfComponents) {
+            for (Positionable o : listOfComponents) {
                 if (result.isEmpty()) {
                     result = o.getBounds();
                 } else {
@@ -2372,7 +2390,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param forceFlag if false only grow bigger
      * @return the new (?) panel bounds
      */
-    private Rectangle2D resizePanelBounds(boolean forceFlag) {
+    @Override
+    public Rectangle2D resizePanelBounds(boolean forceFlag) {
         Rectangle2D panelBounds = getPanelBounds();
         Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
 
@@ -3824,6 +3843,22 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         return result;
     }
 
+    private Positionable checkPositionablePopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
+        Positionable result = null;
+        // check factory generated positionables, if any
+        for (int i = factoryPositionables.size() - 1; i >= 0; i--) {
+            Positionable s = factoryPositionables.get(i);
+            Rectangle2D r = s.getBounds();
+            if (r.contains(loc)) {
+                result = s;
+                break;
+            }
+        }
+        return result;
+    }
+
     /**
      * Get the coordinates for the connection type of the specified LayoutTrack
      * or subtype.
@@ -4313,6 +4348,13 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                     showPopUp(sm, event);
                     break;
                 }
+
+                Positionable factPos = checkPositionablePopUps(dLoc);
+                if (factPos != null) {
+                    showPopUp(factPos, event);
+                    break;
+                }
+
             } while (false);
         }
     }
@@ -6319,7 +6361,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param s the object to remove
      * @return true if found
      */
-    private boolean remove(@Nonnull Object s) {
+    private boolean remove(@Nonnull Positionable s) {
         boolean found = false;
 
         if (backgroundImage.contains(s)) {
@@ -6410,7 +6452,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
-        super.removeFromContents((Positionable) s);
+        super.removeFromContents(s);
 
         if (found) {
             setDirty();
@@ -7472,7 +7514,14 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public void putItem(@Nonnull Positionable l) throws Positionable.DuplicateIdException {
-        super.putItem(l);
+        putItem(l, false);
+    }
+
+    @Override
+    public void putItem(@Nonnull Positionable l, boolean factoryPositionable)
+            throws Positionable.DuplicateIdException {
+
+        super.putItem(l, factoryPositionable);
 
         if (l instanceof SensorIcon) {
             sensorImage.add((SensorIcon) l);
@@ -7501,6 +7550,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             clocks.add((AnalogClock2Display) l);
         } else if (l instanceof MultiSensorIcon) {
             multiSensors.add((MultiSensorIcon) l);
+        } else if (factoryPositionable) {
+            factoryPositionables.add(l);
         }
 
         if (l instanceof PositionableLabel) {

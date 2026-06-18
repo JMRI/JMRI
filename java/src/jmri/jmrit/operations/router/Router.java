@@ -403,16 +403,14 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                 track.getName());
                         continue;
                     }
-                    addLine(Bundle.getMessage("RouterSendCarToYard",
-                            car.toString(), dest.getName(), track.getName(), dest.getName()));
+                    addLine(Bundle.getMessage("RouterSendCarToYard", car.toString(), dest.getName(), track.getName()));
                     return true; // car is going to a yard
                 } else {
-                    addLine(Bundle.getMessage("RouterCanNotUseYard",
-                            track.getLocation().getName(), track.getName(), status));
+                    addLine(Bundle.getMessage("RouterCanNotUseYard", track.getLocation().getName(), track.getName(),
+                            status));
                 }
             }
-            addLine(Bundle.getMessage("RouterNoYardTracks",
-                    dest.getName(), car.toString()));
+            addLine(Bundle.getMessage("RouterNoYardTracks", dest.getName(), car.toString()));
         }
         car.setDestination(null, null);
         if (car.getTrack().isStaging()) {
@@ -444,9 +442,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         _excludeTrains = trainManager.getExcludeTrainListForCar(car, _buildReport);
     }
-    
+
     /*
-     * No routing through alternate tracks.  List them.
+     * No routing through alternate tracks. List them.
      */
     private void excludeTracks() {
         if (_addtoReportVeryDetailed) {
@@ -886,6 +884,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 }
             }
         }
+        if (foundRoute) {
+            tryRedirectToAlternateOrYard(car);
+        }
         return foundRoute;
     }
 
@@ -934,6 +935,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                                      // stop in the route
                 }
             }
+        }
+        if (foundRoute) {
+            tryRedirectToAlternateOrYard(car);
         }
         return foundRoute;
     }
@@ -995,6 +999,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     }
                 }
             }
+        }
+        if (foundRoute) {
+            tryRedirectToAlternateOrYard(car);
         }
         return foundRoute;
     }
@@ -1062,6 +1069,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 }
             }
         }
+        if (foundRoute) {
+            tryRedirectToAlternateOrYard(car);
+        }
         return foundRoute;
     }
 
@@ -1127,6 +1137,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     }
                 }
             }
+        }
+        if (foundRoute) {
+            tryRedirectToAlternateOrYard(car);
         }
         return foundRoute;
     }
@@ -1233,43 +1246,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (!_status.equals(Track.OKAY)) {
             addLine(Bundle.getMessage("RouterCanNotDeliverCar", car.toString(),
                     track.getLocation().getName(), track.getName(), _status, track.getTrackTypeName()));
-            if (_status.startsWith(Track.LENGTH) && !redirectToAlternate(car, track)) {
-                return false;
-            }
+            return false;
         }
         return true;
-    }
-
-    /**
-     * Used when the 1st hop interchanges and yards are full. Will attempt to
-     * use a spur's alternate track when pulling a car from the spur. This will
-     * create a local move. Code checks to see if local move by the train being
-     * used is allowed. Will only use the alternate track if all possible 1st
-     * hop tracks were tested.
-     * 
-     * @param car the car being redirected
-     * @return true if car's destination was set to alternate track
-     */
-    private boolean redirectToAlternate(Car car, Track track) {
-        if (car.getTrack().isSpur() &&
-                car.getTrack().getAlternateTrack() != null &&
-                _nextLocationTracks.indexOf(track) == _nextLocationTracks.size() - 1) {
-            // try redirecting car to the alternate track
-            Car ts = clone(car);
-            ts.setDestinationTrack(car.getTrack().getAlternateTrack());
-            String specified = canSpecifiedTrainService(ts);
-            if (specified.equals(YES)) {
-                _status = car.setDestination(car.getTrack().getAlternateTrack().getLocation(),
-                        car.getTrack().getAlternateTrack());
-                if (_status.equals(Track.OKAY)) {
-                    addLine(Bundle.getMessage("RouterSendCarToAlternative",
-                            car.toString(), car.getTrack().getAlternateTrack().getName(),
-                            car.getTrack().getAlternateTrack().getLocation().getName()));
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     // sets clone car destination to final destination and track
@@ -1360,6 +1339,61 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             return NOT_NOW; // the issue is route moves or train length
         }
         return NO;
+    }
+
+    /**
+     * Used when the 1st hop interchanges and yards are full. Will attempt to
+     * use a spur's alternate track when pulling a car from the spur. This will
+     * create a local move. Code checks to see if local move by the train being
+     * used is allowed. If alternate track isn't available, then try yard
+     * tracks.
+     * 
+     * @param car the car being redirected
+     * @return true if car's destination was set to alternate track
+     */
+    private boolean tryRedirectToAlternateOrYard(Car car) {
+        if (car.getTrack().getAlternateTrack() != null) {
+            // try redirecting car to the alternate track
+            Car ts = clone(car);
+            ts.setDestinationTrack(car.getTrack().getAlternateTrack());
+            String specified = canSpecifiedTrainService(ts);
+            if (specified.equals(YES)) {
+                String status = car.setDestination(car.getTrack().getAlternateTrack().getLocation(),
+                        car.getTrack().getAlternateTrack());
+                if (status.equals(Track.OKAY)) {
+                    addLine(Bundle.getMessage("RouterSendCarToAlternative",
+                            car.toString(), car.getTrack().getAlternateTrack().getName(),
+                            car.getTrack().getAlternateTrack().getLocation().getName()));
+                    return true;
+                } else {
+                    addLine(Bundle.getMessage("RouterAlternateFailed",
+                            car.getTrack().getAlternateTrack().getName(), status));
+                }
+            }
+        }
+        // try moving the car to yard tracks
+        if (!car.getTrack().getTrackType().equals(Track.YARD) && Setup.isForwardToYardEnabled()) {
+            Car ts = clone(car);
+            List<Track> yards = car.getLocation().getTracksByMoves(Track.YARD);
+            log.debug("Found {} yard(s) at location ({})", yards.size(), car.getLocationName());
+            for (Track track : yards) {
+                ts.setDestinationTrack(track);
+                String specified = canSpecifiedTrainService(ts);
+                if (specified.equals(YES)) {
+                    String status = car.setDestination(track.getLocation(), track);
+                    if (status.equals(Track.OKAY)) {
+                        addLine(Bundle.getMessage("RouterSendCarToYard", car.toString(), track.getLocation().getName(),
+                                track.getName()));
+                        return true; // car is going to a yard
+                    } else {
+                        addLine(Bundle.getMessage("RouterCanNotUseYard", track.getLocation().getName(), track.getName(),
+                                status));
+                    }
+                }
+            }
+            addLine(Bundle.getMessage("RouterNoYardTracks", car.getLocationName(), car.toString()));
+        }
+        return false;
     }
 
     private static final Logger log = LoggerFactory.getLogger(Router.class);

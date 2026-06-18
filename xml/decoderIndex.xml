@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.15.6plus+jake+20260508T1153Z+R3425e5bb3e9 on Fri May 08 07:53:53 EDT 2026-->
-  <decoderIndex version="709">
+  <!--Written by JMRI version 5.15.7plus+jake+20260614T0743Z+Rb4d47165e11 on Sun Jun 14 03:44:00 EDT 2026-->
+  <decoderIndex version="711">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -16126,6 +16126,47 @@
       </family>
       <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sounder1909.xml">
         <model model="Diesel Sound Decoder 1909 EMD 567/645/645E/710 Alco 244/539T" numOuts="2" numFns="28" />
+      </family>
+      <family name="Locomotive Decoders" mfg="MTB Model" file="MTB_MND25.xml">
+        <model model="MND25-P22" lowVersionID="30" highVersionID="30" numOuts="9">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="AUX1" />
+          <output name="4" label="AUX2" />
+          <output name="5" label="AUX3" />
+          <output name="6" label="AUX4" />
+          <output name="7" label="AUX5" />
+          <output name="8" label="AUX6" />
+          <output name="9" label="AUX7" />
+          <power continuousTotalCurrent="1.0" continuousMotorCurrent="0.4" maxInputVolts="24.0" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="MND25-P16" lowVersionID="31" highVersionID="31" numOuts="6">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="AUX1" />
+          <output name="4" label="AUX2" />
+          <output name="5" label="AUX5" />
+          <output name="6" label="AUX6" />
+          <power continuousTotalCurrent="1.0" continuousMotorCurrent="0.4" maxInputVolts="24.0" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="MND25-N18" lowVersionID="32" highVersionID="32" numOuts="6">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="AUX1" />
+          <output name="4" label="AUX2" />
+          <output name="5" label="AUX3" />
+          <output name="6" label="AUX4" />
+          <power continuousTotalCurrent="1.0" continuousMotorCurrent="0.4" maxInputVolts="24.0" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
       </family>
       <family name="Function Decoders" mfg="MTB Model" file="MTB_PCB_16.xml">
         <model model="PCB-16" lowVersionID="16" highVersionID="16" />
