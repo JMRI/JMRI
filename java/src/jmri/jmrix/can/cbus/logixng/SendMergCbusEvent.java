@@ -119,14 +119,23 @@ public class SendMergCbusEvent extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
 
-        int nodeNumber = _selectNodeNumber.getValue();
-        int eventNumber = _selectEventNumber.getValue();
-        String eventString = new CbusNameService(_memo).getEventNodeString(nodeNumber, eventNumber);
         String eventType = _selectEventType.getDescription(locale);
+        String memoName = _memo != null ? _memo.getUserName() : Bundle.getMessage("MemoNotSet");
 
-        // SendCbusEvent_Long is a long description, NOT Long Event.
-        return Bundle.getMessage(locale, "SendCbusEvent_Long", eventString, eventType,
-                _memo != null ? _memo.getUserName() : Bundle.getMessage("MemoNotSet"));
+        if (_selectNodeNumber.isDirectAddressing() && _selectEventNumber.isDirectAddressing()) {
+            int nodeNumber = _selectNodeNumber.getValue();
+            int eventNumber = _selectEventNumber.getValue();
+            String eventString = new CbusNameService(_memo).getEventNodeString(nodeNumber, eventNumber);
+            // SendCbusEvent_Long is a long description, NOT Long Event.
+            return Bundle.getMessage(locale, "SendCbusEvent_Long_WithoutSpace", eventString, eventType,
+                memoName);
+        } else { // int values unavailable, use descriptor
+            String nodeNumber = _selectNodeNumber.getDescription(locale);
+            String eventNumber = _selectEventNumber.getDescription(locale);
+            // SendCbusEvent_Long is a long description, NOT Long Event.
+            return Bundle.getMessage(locale, "SendCbusEvent_Long", nodeNumber, eventNumber, eventType,
+                memoName);
+        }
     }
 
     /** {@inheritDoc} */
