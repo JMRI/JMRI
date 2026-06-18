@@ -129,7 +129,7 @@ public class DCCppLightManager extends AbstractLightManager {
                 DCCppLight.MODE_NAMES[0]) {
             @Override
             public String getColumnHeaderText() {
-                return Bundle.getMessage("ColumnLightMode");
+                return "Mode";
             }
             @Override
             public boolean isEditable(NamedBean bean) {
