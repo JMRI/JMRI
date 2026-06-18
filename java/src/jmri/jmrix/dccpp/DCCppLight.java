@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008-2010
  * @author Mark Underwood Copyright (C) 2015
- * @author Chad Francis Copyright (C) 2026
  */
 public class DCCppLight extends AbstractLight implements DCCppListener {
 
@@ -82,8 +81,6 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     static final int OFFSENT = 1;
     static final int COMMANDSENT = 2;
     static final int IDLE = 0;
-
-    // --- Light state ---
 
     /**
      * Set the current state of this Light.

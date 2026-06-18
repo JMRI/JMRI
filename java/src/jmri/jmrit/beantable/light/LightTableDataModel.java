@@ -275,14 +275,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
         super.doDelete(bean);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void configureTable(JTable table) {
-        super.configureTable(table);
-    }
-
     // all properties update for now
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
