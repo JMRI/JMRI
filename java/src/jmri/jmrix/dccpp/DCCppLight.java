@@ -39,6 +39,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         super(systemName);
         this.tc = tc;
         this.lm = lm;
+        // Initialize the Light
         initializeLight(systemName);
     }
 
@@ -56,6 +57,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         super(systemName, userName);
         this.tc = tc;
         this.lm = lm;
+        // Initialize the Light
         initializeLight(systemName);
     }
 
@@ -72,11 +74,24 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
      * Initialize the light object's parameters.
      */
     private synchronized void initializeLight(String systemName) {
+        // Extract the Bit from the name
         mAddress = lm.getBitFromSystemName(systemName);
+        // Set initial state
         setState(OFF);
+        // At construction, register for messages
         tc.addDCCppListener(DCCppInterface.FEEDBACK | DCCppInterface.COMMINFO | DCCppInterface.CS_INFO, this);
     }
 
+    /**
+     * Sets up system dependent instance variables and set system independent
+     * instance variables to default values.
+     * <p>
+     * Note: most instance variables are in AbstractLight.java
+     */
+
+    /**
+     * System dependent instance variables
+     */
     int mAddress = 0;            // accessory output address
 
     /* Internal State Machine states. */
@@ -91,12 +106,14 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     @Override
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
+            // Unsupported state
             log.warn("Unsupported state {} requested for light {}", newState, getSystemName());
             return;
         }
 
         log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
 
+        // get the right packet
         if (mAddress > 0) {
             boolean state = (newState == jmri.Light.ON);
             DCCppMessage msg;
@@ -115,6 +132,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
             if (newState != mState) {
                 int oldState = mState;
                 mState = newState;
+                // notify listeners, if any
                 firePropertyChange("KnownState", oldState, newState);
             }
         }

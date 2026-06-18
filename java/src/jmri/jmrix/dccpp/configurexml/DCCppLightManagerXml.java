@@ -26,6 +26,7 @@ public class DCCppLightManagerXml extends jmri.managers.configurexml.AbstractLig
 
     @Override
     public boolean load(Element lights) {
+        // load individual lights
         return loadLights(lights);
     }
 
