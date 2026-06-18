@@ -34,7 +34,7 @@
                 <li></li>
             </ul>
 
-        <h4>DCC++ and DCC-EX</h4>
+        <h4>DCC-EX</h4>
             <ul>
                 <li>DCC-EX turnouts and lights now support a <strong>CS VPIN</strong> mode that
                 drives a VPIN directly via the &lt;z&gt; command (DCC-EX v4.2.35+), with no
