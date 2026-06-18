@@ -21,6 +21,8 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
             justification = "Public for access by manager, tests, and SelectionPropertyDescriptor")
     public static final String[] MODE_NAMES = {"Accessory Decoder", "CS VPIN"}; // NOI18N
 
+    public static final String CS_VPIN_MODE = MODE_NAMES[1];
+
     private DCCppTrafficController tc = null;
     private DCCppLightManager lm = null;
 
@@ -98,10 +100,14 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         if (mAddress > 0) {
             boolean state = (newState == jmri.Light.ON);
             DCCppMessage msg;
-            if (MODE_NAMES[1].equals(getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY))) {
+            Object modeProperty = getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY);
+            if (CS_VPIN_MODE.equals(modeProperty)) {
                 // CS VPIN: HIGH = ON, LOW = OFF
                 msg = DCCppMessage.makeOutputCmdMsgLC(mAddress, state);
             } else {
+                if (modeProperty != null && !MODE_NAMES[0].equals(modeProperty)) {
+                    log.warn("Unknown light mode '{}' for {}, using Accessory Decoder", modeProperty, getSystemName());
+                }
                 msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
             }
             tc.sendDCCppMessage(msg, this);

@@ -36,38 +36,6 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCC-EX Traffic Monitor: controls now wrap onto additional rows when the
-                window is narrowed and the controls area grows upward to keep everything visible,
-                rather than clipping checkboxes off the bottom
-                (<a href="https://github.com/JMRI/JMRI/issues/15134">#15134</a>).
-                The window title and menu action label also now read &quot;DCC-EX&quot; rather
-                than &quot;DCC++&quot;.</li>
-                <li>DCC-EX Traffic Monitor: traffic lines now show an explicit &quot;TX:&quot; or
-                &quot;RX:&quot; direction marker regardless of whether the translated text or raw
-                form is displayed, and the raw form is wrapped in &lt;&hellip;&gt; rather than
-                [&hellip;] to match DCC-EX's native command syntax.</li>
-                <li>A new <strong>EXRAIL Automations</strong> window (under the DCC-EX menu)
-                lists your CommandStation's Routes and Automations and lets you trigger them.
-                Entry details are fetched sequentially for reliability on hardware with small
-                WiFi buffers (Mega+WiFi)
-                (<a href="https://github.com/JMRI/JMRI/pull/15160">PR #15160</a>).</li>
-                <li>The <strong>EXRAIL Automations</strong> window now remembers the last loco
-                address you entered during the session - the prompt pre-fills it the next time
-                you trigger an automation. The dialog also validates the address (1-10293)
-                and re-prompts if the input is out of range or not a number.</li>
-                <li>The <strong>Virtual LCD</strong> window now supports
-                    more than one display. Each display is shown in a single
-                    row in the <strong>Virtual LCD</strong> window, with
-                    the first display at the left.</li>
-                <li>Change default DCCppOverTCP port from 1235 to 2560 to match DCC-EX default.</li>
-                <li>DCC-EX: turnout details are now fetched one at a time after startup rather than
-                all at once, preventing the command station's WiFi buffer from being overwhelmed
-                on layouts with many turnouts.</li>
-                <li>DCC-EX: out-of-range turnout IDs in the &lt;jT&gt; response (caused by WiFi
-                buffer overflow on Mega+WiFi) are now ignored with a warning rather than being
-                registered as bogus turnouts.</li>
-                <li>DCC-EX Traffic Monitor: the display limit has been raised from 500 to 2000
-                lines, sufficient for large layouts that enumerate many turnouts on startup.</li>
                 <li>DCC-EX turnouts and lights now support a <strong>CS VPIN</strong> mode that
                 drives a VPIN directly via the &lt;z&gt; command (DCC-EX v4.2.35+), with no
                 pre-configuration required on the command station. Set the hardware address to
