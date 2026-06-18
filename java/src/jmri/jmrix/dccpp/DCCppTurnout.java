@@ -87,7 +87,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         // Note DIRECT, ONESENSOR and TWOSENSOR are already OR'ed in.
         _validFeedbackTypes |= MONITORING;   // uses the Turnout command <T...>
         _validFeedbackTypes |= EXACT;        // uses the Output command <Z...>
-        _validFeedbackTypes |= DIRECTPIN;    // uses the pin control command <z...>
+        _validFeedbackTypes |= CS_VPIN;    // uses the pin control command <z...>
         
         // Default feedback mode is DIRECT
         _activeFeedbackType = DIRECT;
@@ -126,7 +126,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             modeNames[feedbackNames.length+1] = "BSOUTPUT";
             modeValues[feedbackNames.length+1] = EXACT;
             modeNames[feedbackNames.length+2] = "CS VPIN";
-            modeValues[feedbackNames.length+2] = DIRECTPIN;
+            modeValues[feedbackNames.length+2] = CS_VPIN;
         }
     }
 
@@ -160,8 +160,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             synchronized (this) {
                 newKnownState(INCONSISTENT);
             }
-        } else if (_activeFeedbackType == DIRECT || _activeFeedbackType == DIRECTPIN) {
-            // DIRECTPIN: no guaranteed reply from <z>; update optimistically.
+        } else if (_activeFeedbackType == DIRECT || _activeFeedbackType == CS_VPIN) {
+            // CS_VPIN: no guaranteed reply from <z>; update optimistically.
             // An EXRAIL-broadcast <Y> reply may also update KnownState later.
             synchronized (this) {
                 newKnownState(s);
@@ -197,7 +197,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 msg = DCCppMessage.makeOutputCmdMsg(mNumber, !newState);
                 internalState = COMMANDSENT;
                 break;
-            case DIRECTPIN: // Use <z vpin> / <z -vpin> pin control command
+            case CS_VPIN: // Use <z vpin> / <z -vpin> pin control command
                 // mNumber is the DCC-EX vpin number; no pre-definition required.
                 // Polarity matches EXACT: LOW = THROWN, HIGH = CLOSED — invert newState.
                 msg = DCCppMessage.makeOutputCmdMsgLC(mNumber, !newState);

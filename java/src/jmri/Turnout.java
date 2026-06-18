@@ -149,12 +149,13 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
     static final int LNALTERNATE = 256;
 
     /**
-     * Constant representing "direct pin feedback method". The command station
-     * drives a general-purpose pin directly with no pre-definition required.
-     * The known state is updated optimistically on send; an out-of-band reply
-     * (e.g. broadcast by an automation) may also update it.
+     * Constant representing "CS VPIN output mode". The command station drives a
+     * VPIN directly via the {@code <z>} command with no pre-definition required
+     * in the CS output table. Differs from {@link #DIRECT} (which sends a DCC
+     * accessory packet); this sends a VPIN pin-control command resolved by the
+     * CS HAL layer at runtime. The known state is updated optimistically on send.
      */
-    static final int DIRECTPIN = 512;
+    static final int CS_VPIN = 512;
 
     /**
      * Constant representing turnout lockout cab commands

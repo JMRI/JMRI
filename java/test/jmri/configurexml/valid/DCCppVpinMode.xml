@@ -20,8 +20,14 @@
     </turnout>
   </turnouts>
   <lights class="jmri.jmrix.dccpp.configurexml.DCCppLightManagerXml">
-    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0" mode="CS VPIN">
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
       <systemName>DL26</systemName>
+      <properties>
+        <property>
+          <key class="java.lang.String">LightMode</key>
+          <value class="java.lang.String">CS VPIN</value>
+        </property>
+      </properties>
     </light>
   </lights>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">

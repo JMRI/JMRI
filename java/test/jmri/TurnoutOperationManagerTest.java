@@ -38,12 +38,12 @@ public class TurnoutOperationManagerTest {
 
     @Test
     public void testDefaultTooltipNullWhenNoMatchingOperation() {
-        // DIRECTPIN (512) has no matching TurnoutOperation; getTooltipForOperator
+        // CS_VPIN (512) has no matching TurnoutOperation; getTooltipForOperator
         // must return null rather than NPE when getMatchingOperationAlways returns null
         TurnoutOperationManager t = new TurnoutOperationManager();
         DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppTurnout turnout = new DCCppTurnout("DCCPP", 42, xnis);
-        turnout.setFeedbackMode(Turnout.DIRECTPIN);
+        turnout.setFeedbackMode(Turnout.CS_VPIN);
         assertNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationDefault"), turnout));
         xnis.terminateThreads();
     }

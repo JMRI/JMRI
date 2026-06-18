@@ -1,6 +1,6 @@
 package jmri.jmrix.dccpp;
 
-import jmri.HasLightMode;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.implementation.AbstractLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +16,11 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2015
  * @author Chad Francis Copyright (C) 2026
  */
-public class DCCppLight extends AbstractLight implements DCCppListener, HasLightMode {
+public class DCCppLight extends AbstractLight implements DCCppListener {
 
-    /** Sends an accessory decoder command {@code <a>} (default). */
-    public static final int STANDARD = 0;
-
-    /** Sends a CS VPIN pin control command {@code <z vpin>} (DCC-EX v4.2.35+). */
-    public static final int CS_VPIN = 1;
-
-    private static final String[] MODE_NAMES = {"Accessory Decoder", "CS VPIN"};
-    private static final int[] MODE_VALUES = {STANDARD, CS_VPIN};
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",
+            justification = "Public for access by manager, tests, and SelectionPropertyDescriptor")
+    public static final String[] MODE_NAMES = {"Accessory Decoder", "CS VPIN"}; // NOI18N
 
     private DCCppTrafficController tc = null;
     private DCCppLightManager lm = null;
@@ -88,56 +83,6 @@ public class DCCppLight extends AbstractLight implements DCCppListener, HasLight
     static final int COMMANDSENT = 2;
     static final int IDLE = 0;
 
-    // --- HasLightMode ---
-
-    private int mMode = STANDARD;
-
-    /** {@inheritDoc} */
-    @Override
-    public int getMode() {
-        return mMode;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getModeName() {
-        return MODE_NAMES[mMode];
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String[] getValidModeNames() {
-        return MODE_NAMES.clone();
-    }
-
-    /**
-     * {@inheritDoc}
-     * Silently ignores unknown mode names.
-     */
-    @Override
-    public void setModeByName(String modeName) {
-        for (int i = 0; i < MODE_NAMES.length; i++) {
-            if (MODE_NAMES[i].equals(modeName)) {
-                setMode(MODE_VALUES[i]);
-                return;
-            }
-        }
-        log.warn("Unknown light mode '{}' for {}", modeName, getSystemName());
-    }
-
-    /**
-     * Set the output mode for this Light.
-     *
-     * @param mode {@link #STANDARD} or {@link #CS_VPIN}
-     */
-    public void setMode(int mode) {
-        int oldMode = mMode;
-        mMode = mode;
-        if (oldMode != mode) {
-            firePropertyChange("Mode", oldMode, mode);
-        }
-    }
-
     // --- Light state ---
 
     /**
@@ -156,7 +101,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener, HasLight
         if (mAddress > 0) {
             boolean state = (newState == jmri.Light.ON);
             DCCppMessage msg;
-            if (mMode == CS_VPIN) {
+            if (MODE_NAMES[1].equals(getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY))) {
                 // CS VPIN: HIGH = ON, LOW = OFF
                 msg = DCCppMessage.makeOutputCmdMsgLC(mAddress, state);
             } else {

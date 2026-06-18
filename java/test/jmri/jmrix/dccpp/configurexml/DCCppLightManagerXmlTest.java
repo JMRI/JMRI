@@ -1,7 +1,5 @@
 package jmri.jmrix.dccpp.configurexml;
 
-import java.util.List;
-
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
@@ -24,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test for the DCCppLightManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
+ * @author   Chad Francis  Copyright (C) 2026
  */
 public class DCCppLightManagerXmlTest {
 
@@ -37,49 +36,24 @@ public class DCCppLightManagerXmlTest {
     }
 
     @Test
-    public void testStoreModeAttribute() {
+    public void testRoundTrip() {
         Light light = lm.provide("DL26");
-        ((DCCppLight) light).setMode(DCCppLight.CS_VPIN);
-
-        DCCppLightManagerXml xml = new DCCppLightManagerXml();
-        Element e = xml.store(lm);
-        assertNotNull(e, "store returns element");
-
-        List<Element> lights = e.getChildren("light");
-        assertEquals(1, lights.size(), "one light element");
-        assertEquals("CS VPIN", lights.get(0).getAttributeValue("mode"), "mode attribute stored");
-    }
-
-    @Test
-    public void testStoreNoModeAttributeForStandard() {
-        lm.provide("DL26");
-
-        DCCppLightManagerXml xml = new DCCppLightManagerXml();
-        Element e = xml.store(lm);
-        assertNotNull(e);
-
-        List<Element> lights = e.getChildren("light");
-        assertEquals(1, lights.size());
-        assertNull(lights.get(0).getAttributeValue("mode"), "no mode attribute for STANDARD");
-    }
-
-    @Test
-    public void testLoadModeAttributeRoundTrip() {
-        Light light = lm.provide("DL26");
-        ((DCCppLight) light).setMode(DCCppLight.CS_VPIN);
+        light.setProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY, DCCppLight.MODE_NAMES[1]);
 
         DCCppLightManagerXml xml = new DCCppLightManagerXml();
         Element stored = xml.store(lm);
+        assertNotNull(stored, "store returns element");
 
-        // deregister so loadLights re-creates it
         lm.deregister(light);
-        assertNull(lm.getBySystemName("DL26"), "light gone before load");
+        assertNull(lm.getBySystemName("DL26"), "light deregistered");
 
-        xml.loadLights(stored);
+        xml.load(stored, null);
 
         Light loaded = lm.getBySystemName("DL26");
         assertNotNull(loaded, "light restored after load");
-        assertEquals(DCCppLight.CS_VPIN, ((DCCppLight) loaded).getMode(), "CS_VPIN mode preserved");
+        assertEquals(DCCppLight.MODE_NAMES[1],
+                loaded.getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY),
+                "CS VPIN mode preserved through store/load");
     }
 
     @BeforeEach

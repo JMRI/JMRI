@@ -62,31 +62,33 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
     @Test
     public void testDefaultModeIsStandard() {
         DCCppLight light = (DCCppLight) t;
-        Assertions.assertEquals(DCCppLight.STANDARD, light.getMode(), "default mode is STANDARD");
-        Assertions.assertEquals("Accessory Decoder", light.getModeName(), "default mode name");
+        Assertions.assertNull(light.getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY),
+                "default mode property is null (Accessory Decoder)");
     }
 
     @Test
-    public void testSetModeByConstant() {
+    public void testSetModeCsVpin() {
         DCCppLight light = (DCCppLight) t;
-        light.setMode(DCCppLight.CS_VPIN);
-        Assertions.assertEquals(DCCppLight.CS_VPIN, light.getMode(), "mode is CS_VPIN after setMode");
-        Assertions.assertEquals("CS VPIN", light.getModeName(), "mode name is CS VPIN");
+        light.setProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY, DCCppLight.MODE_NAMES[1]);
+        Assertions.assertEquals(DCCppLight.MODE_NAMES[1],
+                light.getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY), "mode is CS VPIN");
     }
 
     @Test
     public void testSetModeByName() {
         DCCppLight light = (DCCppLight) t;
-        light.setModeByName("CS VPIN");
-        Assertions.assertEquals(DCCppLight.CS_VPIN, light.getMode(), "mode is CS_VPIN after setModeByName");
-        light.setModeByName("Accessory Decoder");
-        Assertions.assertEquals(DCCppLight.STANDARD, light.getMode(), "mode reverts to STANDARD");
+        light.setProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY, "CS VPIN");
+        Assertions.assertEquals("CS VPIN",
+                light.getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY), "mode is CS VPIN");
+        light.setProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY, "Accessory Decoder");
+        Assertions.assertEquals("Accessory Decoder",
+                light.getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY), "mode reverts to Accessory Decoder");
     }
 
     @Test
     public void testVpinModeOnSendsHighCommand() {
         DCCppLight light = (DCCppLight) t;
-        light.setMode(DCCppLight.CS_VPIN);
+        light.setProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY, DCCppLight.MODE_NAMES[1]);
         light.setState(jmri.Light.ON);
         String msg = xnis.outbound.elementAt(xnis.outbound.size() - 1).toString();
         // <z 21> drives pin HIGH (ON)
@@ -97,7 +99,7 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
     @Test
     public void testVpinModeOffSendsLowCommand() {
         DCCppLight light = (DCCppLight) t;
-        light.setMode(DCCppLight.CS_VPIN);
+        light.setProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY, DCCppLight.MODE_NAMES[1]);
         light.setState(jmri.Light.ON);  // set to ON first
         light.setState(jmri.Light.OFF);
         String msg = xnis.outbound.elementAt(xnis.outbound.size() - 1).toString();
@@ -107,9 +109,8 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
     }
 
     @Test
-    public void testValidModeNames() {
-        DCCppLight light = (DCCppLight) t;
-        String[] names = light.getValidModeNames();
+    public void testModeNames() {
+        String[] names = DCCppLight.MODE_NAMES;
         Assertions.assertEquals(2, names.length, "two valid mode names");
         Assertions.assertEquals("Accessory Decoder", names[0], "first mode name");
         Assertions.assertEquals("CS VPIN", names[1], "second mode name");

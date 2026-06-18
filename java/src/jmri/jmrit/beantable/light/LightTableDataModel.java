@@ -12,12 +12,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import static jmri.jmrit.beantable.LightTableAction.getDescriptionText;
-import jmri.util.swing.XTableColumnModel;
 
 /**
  * Data model for a Light Table.
@@ -33,7 +31,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
     public static final int INTENSITYCOL = ENABLECOL + 1;
     public static final int EDITCOL = INTENSITYCOL + 1;
     public static final int CONTROLCOL = EDITCOL + 1;
-    public static final int MODECOL = CONTROLCOL + 1;
 
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
@@ -97,7 +94,7 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
      */
     @Override
     public int getColumnCount() {
-        return MODECOL + 1 + getPropertyColumnCount();
+        return CONTROLCOL + 1 + getPropertyColumnCount();
     }
 
     /**
@@ -114,8 +111,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
                 return Bundle.getMessage("ColumnHeadEnabled");
             case CONTROLCOL:
                 return Bundle.getMessage("LightControllerTitlePlural");
-            case MODECOL:
-                return Bundle.getMessage("ColumnLightMode");
             default:
                 return super.getColumnName(col);
         }
@@ -135,8 +130,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
                 return Boolean.class;
             case CONTROLCOL:
                 return String.class;
-            case MODECOL:
-                return JComboBox.class;
             case VALUECOL:  // may use an image to show light state
                 return ( _graphicState ? JLabel.class : JButton.class );
             default:
@@ -158,8 +151,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
             case INTENSITYCOL:
             case ENABLECOL:
                 return new JTextField(6).getPreferredSize().width;
-            case MODECOL:
-                return new JTextField(14).getPreferredSize().width;
             default:
                 return super.getPreferredWidth(col);
         }
@@ -173,8 +164,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
         switch (col) {
             case INTENSITYCOL:
                 return getValueAt(row, SYSNAMECOL) instanceof VariableLight;
-            case MODECOL:
-                return getValueAt(row, SYSNAMECOL) instanceof HasLightMode;
             case EDITCOL:
             case ENABLECOL:
                 return true;
@@ -221,14 +210,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
                     sb.append(" ");
                 }
                 return sb.toString();
-            case MODECOL:
-                if (l instanceof HasLightMode) {
-                    HasLightMode ml = (HasLightMode) l;
-                    JComboBox<String> c = new JComboBox<>(ml.getValidModeNames());
-                    c.setSelectedItem(ml.getModeName());
-                    return c;
-                }
-                return new JComboBox<String>();
             default:
                 return super.getValueAt(row, col);
         }
@@ -267,13 +248,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
             case ENABLECOL:
                 l.setEnabled(!l.getEnabled());
                 break;
-            case MODECOL:
-                if (l instanceof HasLightMode) {
-                    @SuppressWarnings("unchecked")
-                    String modeName = (String) ((JComboBox<String>) value).getSelectedItem();
-                    ((HasLightMode) l).setModeByName(modeName);
-                }
-                break;
             case VALUECOL:
                 clickOn(l);
                 fireTableRowsUpdated(row, row);
@@ -303,13 +277,9 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
 
     /**
      * {@inheritDoc}
-     * Hides the Mode column by default; users can show it via the column menu.
      */
     @Override
     public void configureTable(JTable table) {
-        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
-        TableColumn modeColumn = columnModel.getColumnByModelIndex(MODECOL);
-        columnModel.setColumnVisible(modeColumn, false);
         super.configureTable(table);
     }
 

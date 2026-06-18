@@ -53,7 +53,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         assertEquals(7, vals.length);
         assertEquals(Turnout.MONITORING, vals[4]);
         assertEquals(Turnout.EXACT, vals[5]);
-        assertEquals(Turnout.DIRECTPIN, vals[6]);
+        assertEquals(Turnout.CS_VPIN, vals[6]);
 
         String[] names = DCCppTurnout.getModeNames();
         assertEquals(7, names.length);
