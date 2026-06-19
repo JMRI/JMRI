@@ -884,10 +884,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 }
             }
         }
-        if (foundRoute) {
-            tryRedirectToAlternateOrYard(car);
-        }
-        return foundRoute;
+        return tryRedirectToAlternateOrYard(foundRoute, car);
     }
 
     private boolean routeUsing4Trains(Car car) {
@@ -936,10 +933,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 }
             }
         }
-        if (foundRoute) {
-            tryRedirectToAlternateOrYard(car);
-        }
-        return foundRoute;
+        return tryRedirectToAlternateOrYard(foundRoute, car);
     }
 
     private boolean routeUsing5Trains(Car car) {
@@ -1000,10 +994,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 }
             }
         }
-        if (foundRoute) {
-            tryRedirectToAlternateOrYard(car);
-        }
-        return foundRoute;
+        return tryRedirectToAlternateOrYard(foundRoute, car);
     }
 
     private boolean routeUsing6Trains(Car car) {
@@ -1069,10 +1060,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 }
             }
         }
-        if (foundRoute) {
-            tryRedirectToAlternateOrYard(car);
-        }
-        return foundRoute;
+        return tryRedirectToAlternateOrYard(foundRoute, car);
     }
 
     private boolean routeUsing7Trains(Car car) {
@@ -1138,10 +1126,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 }
             }
         }
-        if (foundRoute) {
-            tryRedirectToAlternateOrYard(car);
-        }
-        return foundRoute;
+        return tryRedirectToAlternateOrYard(foundRoute, car);
     }
 
     /**
@@ -1351,49 +1336,53 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      * @param car the car being redirected
      * @return true if car's destination was set to alternate track
      */
-    private boolean tryRedirectToAlternateOrYard(Car car) {
-        if (car.getTrack().getAlternateTrack() != null) {
-            // try redirecting car to the alternate track
-            Car ts = clone(car);
-            ts.setDestinationTrack(car.getTrack().getAlternateTrack());
-            String specified = canSpecifiedTrainService(ts);
-            if (specified.equals(YES)) {
-                String status = car.setDestination(car.getTrack().getAlternateTrack().getLocation(),
-                        car.getTrack().getAlternateTrack());
-                if (status.equals(Track.OKAY)) {
-                    addLine(Bundle.getMessage("RouterSendCarToAlternative",
-                            car.toString(), car.getTrack().getAlternateTrack().getName(),
-                            car.getTrack().getAlternateTrack().getLocation().getName()));
-                    return true;
-                } else {
-                    addLine(Bundle.getMessage("RouterAlternateFailed",
-                            car.getTrack().getAlternateTrack().getName(), status));
-                }
-            }
-        }
-        // try moving the car to yard tracks
-        if (!car.getTrack().getTrackType().equals(Track.YARD) && Setup.isForwardToYardEnabled()) {
-            Car ts = clone(car);
-            List<Track> yards = car.getLocation().getTracksByMoves(Track.YARD);
-            log.debug("Found {} yard(s) at location ({})", yards.size(), car.getLocationName());
-            for (Track track : yards) {
-                ts.setDestinationTrack(track);
+    private boolean tryRedirectToAlternateOrYard(boolean foundRoute, Car car) {
+        if (foundRoute) {
+            if (car.getTrack().getAlternateTrack() != null) {
+                // try redirecting car to the alternate track
+                Car ts = clone(car);
+                ts.setDestinationTrack(car.getTrack().getAlternateTrack());
                 String specified = canSpecifiedTrainService(ts);
                 if (specified.equals(YES)) {
-                    String status = car.setDestination(track.getLocation(), track);
+                    String status = car.setDestination(car.getTrack().getAlternateTrack().getLocation(),
+                            car.getTrack().getAlternateTrack());
                     if (status.equals(Track.OKAY)) {
-                        addLine(Bundle.getMessage("RouterSendCarToYard", car.toString(), track.getLocation().getName(),
-                                track.getName()));
-                        return true; // car is going to a yard
+                        addLine(Bundle.getMessage("RouterSendCarToAlternative",
+                                car.toString(), car.getTrack().getAlternateTrack().getName(),
+                                car.getTrack().getAlternateTrack().getLocation().getName()));
+                        return true;
                     } else {
-                        addLine(Bundle.getMessage("RouterCanNotUseYard", track.getLocation().getName(), track.getName(),
-                                status));
+                        addLine(Bundle.getMessage("RouterAlternateFailed",
+                                car.getTrack().getAlternateTrack().getName(), status));
                     }
                 }
             }
-            addLine(Bundle.getMessage("RouterNoYardTracks", car.getLocationName(), car.toString()));
+            // try moving the car to yard tracks
+            if (!car.getTrack().getTrackType().equals(Track.YARD) && Setup.isForwardToYardEnabled()) {
+                Car ts = clone(car);
+                List<Track> yards = car.getLocation().getTracksByMoves(Track.YARD);
+                log.debug("Found {} yard(s) at location ({})", yards.size(), car.getLocationName());
+                for (Track track : yards) {
+                    ts.setDestinationTrack(track);
+                    String specified = canSpecifiedTrainService(ts);
+                    if (specified.equals(YES)) {
+                        String status = car.setDestination(track.getLocation(), track);
+                        if (status.equals(Track.OKAY)) {
+                            addLine(Bundle.getMessage("RouterSendCarToYard", car.toString(),
+                                    track.getLocation().getName(),
+                                    track.getName()));
+                            return true; // car is going to a yard
+                        } else {
+                            addLine(Bundle.getMessage("RouterCanNotUseYard", track.getLocation().getName(),
+                                    track.getName(),
+                                    status));
+                        }
+                    }
+                }
+                addLine(Bundle.getMessage("RouterNoYardTracks", car.getLocationName(), car.toString()));
+            }
         }
-        return false;
+        return foundRoute;
     }
 
     private static final Logger log = LoggerFactory.getLogger(Router.class);

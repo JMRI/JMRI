@@ -123,6 +123,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#HazardousComment">Hazardous Comment</a></li>
                     <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a>
                       <ul>
+                      
+                        <li><a href="#MorePrintOptions">More Print Options</a></li>
                         <li><a href="#EditManifestHeaderText">Edit Manifest Header Text</a></li>
                         <li><a href="#EditManifestHeaderText">Edit Manifest Text</a></li>
                         <li><a href="#EditManifestHeaderText">Edit Switch List Text</a></li>
@@ -2193,7 +2195,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The menu bar of the "Manifest Print Options" provides additional features that can be found
       under "Tools".
 
-      <h3>More Print Options</h3>
+      <h3 id="MorePrintOptions">More Print Options</h3>
       The tool "More Print Options" allows you to adjust the length of the tab characters when using
       the <a href="#PrintFormat">Tabular</a> feature.
 
