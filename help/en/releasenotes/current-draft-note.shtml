@@ -523,7 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Roster file saves are now atomic: the roster index is written to a temporary file and then moved into place, so an interrupted or failed write can no longer truncate or corrupt <code>roster.xml</code>. (PR #15228)</li>
         </ul>
 
     <h3>Routes</h3>
