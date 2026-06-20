@@ -1280,6 +1280,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             }
             moveTempFile(temp, target);
         } catch (IOException ex) {
+            setDirty(true);
             deleteTempFile(temp, ex);
             throw ex;
         }
