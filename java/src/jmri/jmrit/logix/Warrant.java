@@ -112,6 +112,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      */
     public static final String PROPERTY_OCCUPY_OVERRUN = "OccupyOverrun";
 
+    /**
+     * String constant for running message.
+     */
+    public static final String PROPERTY_RUNNING_MESSAGE = "RunningMessage";
+
     // permanent members.
     private List<BlockOrder> _orders;
     private BlockOrder _viaOrder;
@@ -674,9 +679,22 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return msg;
     }
 
+    /**
+     * Get the running message.
+     * It's possible to listen to this message by the property {@link #PROPERTY_RUNNING_MESSAGE}.
+     * @return the message
+     */
+    protected final synchronized String getRunningMessage() {
+        // Note that this method is final. To override it, you need
+        // to override the method getRunningMessagePrim().
+        String msg = getRunningMessagePrim();
+        firePropertyChange(PROPERTY_RUNNING_MESSAGE, null, msg);
+        return msg;
+    }
+
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
-    protected synchronized String getRunningMessage() {
+    protected synchronized String getRunningMessagePrim() {
         if (_delayStart) {
             return Bundle.getMessage("waitForDelayStart", _trainName, getBlockAt(0).getDisplayName());
         }
