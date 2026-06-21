@@ -21,6 +21,7 @@ import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
 import org.jdom2.JDOMException;
@@ -317,6 +318,7 @@ public class RosterTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testWriteRosterPreservesOriginalWhenTempWriteFails(@TempDir File folder) throws IOException {
         File rosterDir = new File(folder, "roster");
         FileUtil.createDirectory(rosterDir);
