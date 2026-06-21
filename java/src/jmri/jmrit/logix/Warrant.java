@@ -692,6 +692,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return msg;
     }
 
+    /**
+     * Get the running message.
+     * This is a primitive method for the {@link #getRunningMessage()} method.
+     * It creates the message so that the method {@link #getRunningMessage()}
+     * can notify its listeners about the message.
+     * @return the message
+     */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     protected synchronized String getRunningMessagePrim() {
