@@ -1144,6 +1144,10 @@
         </li>
 
         <li>Keith Usher, who provided a medium icon set</li>
+        
+        <li>Matt Van Horn, <!-- mvanhorn -->
+        who improved the way the web clients handle Z-nesting and
+        how the roster index is written.
 
         <li>Darryl Van Nort, who provided a definition for an MRC decoder</li>
 
