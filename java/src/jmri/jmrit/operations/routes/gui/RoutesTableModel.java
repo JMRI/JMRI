@@ -13,9 +13,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -231,20 +228,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         log.debug("Edit route");
         if (ref != null) {
             ref.dispose();
-        }
-        Route route = sysList.get(row);
-        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
-            // list the built trains for this route
-            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
-            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
-                if (train.getRoute() == route && train.isBuilt()) {
-                    buf.append(NEW_LINE +
-                            Bundle.getMessage("TrainIsBuilt",
-                                    train.getName(), route.getName()));
-                }
-            }
-            JmriJOptionPane.showMessageDialog(null, buf.toString(), Bundle.getMessage("TrainBuilt"),
-                    JmriJOptionPane.WARNING_MESSAGE);
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(() -> {

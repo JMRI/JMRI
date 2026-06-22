@@ -1048,25 +1048,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         ref = new RouteEditFrame();
         setChildFrame(ref);
-        Route route = null;
-        Object selected = routeBox.getSelectedItem();
-        if (selected != null) {
-            route = (Route) selected;
-        }
-        // warn user if train is built that they shouldn't edit the train's route
-        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
-            // list the built trains for this route
-            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
-            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
-                if (train.getRoute() == route && train.isBuilt()) {
-                    buf.append(NEW_LINE +
-                            Bundle.getMessage("TrainIsBuilt",
-                                    train.getName(), route.getName()));
-                }
-            }
-            JmriJOptionPane.showMessageDialog(this, buf.toString(), Bundle.getMessage("BuiltTrain"),
-                    JmriJOptionPane.WARNING_MESSAGE);
-        }
+        Route route = (Route) routeBox.getSelectedItem();
         ref.initComponents(route, _train);
     }
 

@@ -16,6 +16,7 @@ import jmri.jmrit.operations.routes.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -87,6 +88,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             commentTextField.setText(_route.getComment());
             enableButtons(!route.getStatus().equals(Route.TRAIN_BUILT)); // do not allow user to modify a built train
             addRouteButton.setEnabled(false); // override and disable
+            checkTrainBuilt(_route);
         } else {
             setTitle(Bundle.getMessage("TitleRouteAdd"));
             enableButtons(false);
@@ -410,6 +412,21 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void updateComboBoxes() {
         InstanceManager.getDefault(LocationManager.class).updateComboBox(locationBox);
+    }
+    
+    // warn user if train is built that they shouldn't edit the train's route
+    private void checkTrainBuilt(Route route) {
+        if (route.getStatus().equals(Route.TRAIN_BUILT)) {
+            // list the built trains for this route
+            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
+            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+                if (train.getRoute() == route && train.isBuilt()) {
+                    buf.append(NEW_LINE + Bundle.getMessage("TrainIsBuilt", train.getName(), route.getName()));
+                }
+            }
+            JmriJOptionPane.showMessageDialog(this, buf.toString(), Bundle.getMessage("TrainBuilt"),
+                    JmriJOptionPane.WARNING_MESSAGE);
+        }
     }
 
     @Override

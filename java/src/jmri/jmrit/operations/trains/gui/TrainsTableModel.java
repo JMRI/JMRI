@@ -7,8 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
+import javax.swing.table.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
@@ -160,6 +159,11 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
             tcm.getColumn(i).setPreferredWidth(_tableColumnWidths[i]);
         }
         _frame.loadTableDetails(_table);
+        
+        // don't allow sorting for Time or Done columns
+        TableRowSorter<? extends TableModel> sorter = (TableRowSorter<? extends TableModel>) _table.getRowSorter();
+        sorter.setSortable(TIME_COLUMN, false);
+        sorter.setSortable(DONE_COLUMN, false);
 
         // turn off column
         updateColumnVisible();
