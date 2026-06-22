@@ -7,6 +7,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1108,13 +1112,12 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Store the roster in the default place, including making a backup if
      * needed.
      * <p>
-     * Uses writeFile(String), a protected method that can write to a specific
-     * location.
+     * Writes to a temporary file first, then backs up and replaces the roster
+     * index only after the temporary write succeeds.
      */
     public void writeRoster() {
-        this.makeBackupFile(this.getRosterIndexPath());
         try {
-            this.writeFile(this.getRosterIndexPath());
+            this.writeFileAtomic(this.getRosterIndexPath());
         } catch (IOException e) {
             log.error("Exception while writing the new roster file, may not be complete", e);
             try {
@@ -1212,13 +1215,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             }
         }
 
-        log.debug("Making backup roster index file");
-        this.makeBackupFile(this.getRosterIndexPath());
         try {
             log.debug("Writing new index file");
-            roster.writeFile(this.getRosterIndexPath());
+            roster.writeFileAtomic(this.getRosterIndexPath());
         } catch (IOException ex) {
-            // TODO: error dialog, copy backup back to roster.xml
             log.error("Exception while writing the new roster file, may not be complete", ex);
         }
         log.debug("Reloading resulting roster index");
@@ -1255,6 +1255,51 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     public String getRosterIndexPath() {
         return this.getRosterLocation() + this.getRosterIndexFileName();
+    }
+
+    private void writeFileAtomic(String name) throws IOException {
+        File file = findFile(name);
+        if (file == null) {
+            file = new File(name);
+        }
+
+        Path target = file.toPath();
+        Path temp = target.resolveSibling(file.getName() + ".new"); // NOI18N
+
+        try {
+            writeFile(temp.toFile());
+        } catch (IOException ex) {
+            deleteTempFile(temp, ex);
+            throw ex;
+        }
+
+        try {
+            if (Files.exists(target)) {
+                Files.copy(target, new File(backupFileName(file.getAbsolutePath())).toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
+            moveTempFile(temp, target);
+        } catch (IOException ex) {
+            setDirty(true);
+            deleteTempFile(temp, ex);
+            throw ex;
+        }
+    }
+
+    private void moveTempFile(Path temp, Path target) throws IOException {
+        try {
+            Files.move(temp, target, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+        } catch (AtomicMoveNotSupportedException ex) {
+            Files.move(temp, target, StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
+    private void deleteTempFile(Path temp, IOException originalException) {
+        try {
+            Files.deleteIfExists(temp);
+        } catch (IOException ex) {
+            originalException.addSuppressed(ex);
+        }
     }
 
     /*
