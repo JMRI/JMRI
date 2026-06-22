@@ -164,7 +164,7 @@ public class ClientActions {
                         final jmri.jmrix.openlcb.swing.NamedEventIdTextField mevt2 = evt2;
                     });
                     if (!haveButtons) {
-                        log.debug("create Make Turnout/Sensor buttons, starting with ", desc.getText());
+                        log.debug("create Make Turnout/Sensor buttons, starting with {}", desc.getText());
                         log.debug("events {} {}", evt1.getText(), evt2.getText());
                         
                         haveButtons = true;
