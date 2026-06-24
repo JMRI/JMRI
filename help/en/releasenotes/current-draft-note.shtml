@@ -472,7 +472,9 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+          <li>If you have reordered the columns in the main LccPro window and
+              you export to a CSV file, the columns will now be in that order
+              and properly labeled in the file.</li>
         </ul>
 
     <h3>Logix</h3>
