@@ -311,6 +311,7 @@
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
         <pathelement location="${libdir}/spotbugs-annotations-4.9.8.jar"/>
+        <pathelement location="${libdir}/org.eclipse.jdt.annotation_2.3.100.v20241001-0914.jar"/>
     </path>
 
     <!-- path to run regular executables -->
