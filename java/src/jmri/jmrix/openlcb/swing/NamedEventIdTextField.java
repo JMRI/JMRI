@@ -9,6 +9,7 @@ import javax.swing.*;
 import jmri.util.swing.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbAddress;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 
 import org.openlcb.EventID;
 import org.openlcb.swing.EventIdTextField;
@@ -77,6 +78,27 @@ public class NamedEventIdTextField extends OvertypeTextArea {
                 });
             }
         });
+        // add a custom operator to set an event name
+        menuItem = new JMenuItem("Name This Event");
+        popup.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = JmriJOptionPane.showInputDialog(
+                    self,
+                    "Enter a Name for the Event ID",
+                    "" )        ;
+                   
+                if (name == null || name.isEmpty() ) return; // no new name entered
+                        
+                memo.get(OlcbEventNameStore.class).addMatch(getEventID(), name);
+                // and update the NEITF object to get name displayed
+                self.setText(name);
+                self.repaint();
+            }
+        });
+       
+        // and set the updated popup menu
         this.setComponentPopupMenu(popup);
     }
 

@@ -118,7 +118,11 @@ public class ClientActions {
 
             @Override
             public void handleGroupPaneEnd(JPanel pane) {
-                if (gpane != null && evt1 != null && evt2 != null && desc != null) {
+                if (gpane != null 
+                        && evt1 != null && !evt1.getText().isEmpty() 
+                        && evt2 != null && !evt2.getText().isEmpty()
+                        && desc != null) {
+                    log.debug("handleGroupPaneEnd for {}", desc.getText());
                     JPanel p = new JPanel();
                     p.setLayout(new WrapLayout());
                     p.setAlignmentX(-1.0f);
@@ -156,10 +160,13 @@ public class ClientActions {
                         }
 
                         final JTextField mdesc = desc;
-                        final JTextComponent mevt1 = evt1;
-                        final JTextComponent mevt2 = evt2;
+                        final jmri.jmrix.openlcb.swing.NamedEventIdTextField mevt1 = evt1;
+                        final jmri.jmrix.openlcb.swing.NamedEventIdTextField mevt2 = evt2;
                     });
                     if (!haveButtons) {
+                        log.debug("create Make Turnout/Sensor buttons, starting with {}", desc.getText());
+                        log.debug("events {} {}", evt1.getText(), evt2.getText());
+                        
                         haveButtons = true;
                         cdiPanel.addButtonToFooter(buttonForList(sensorButtonList, Bundle.getMessage("CdiPanelMakeAllSensors")));
                         cdiPanel.addButtonToFooter(buttonForList(turnoutButtonList, Bundle.getMessage("CdiPanelMakeAllTurnouts")));
@@ -199,6 +206,7 @@ public class ClientActions {
              * {@inheritDoc}
              */
             public void makeSensor(String ev, String mdesc) {
+                log.debug("MakeSensor() invoked for {}",mdesc, new Exception("for traceback"));
                 jmri.Sensor sensor =
                         jmri.InstanceManager.sensorManagerInstance()
                                 .provideSensor(memo.getSystemPrefix() + "S" + ev);
@@ -210,8 +218,8 @@ public class ClientActions {
 
             JPanel gpane = null;
             JTextField desc = null;
-            JTextComponent evt1 = null;
-            JTextComponent evt2 = null;
+            jmri.jmrix.openlcb.swing.NamedEventIdTextField evt1 = null;
+            jmri.jmrix.openlcb.swing.NamedEventIdTextField evt2 = null;
         };
         ConfigRepresentation rep = iface.getConfigForNode(destNode);
         rep.eventNameStore = memo.get(OlcbEventNameStore.class);
