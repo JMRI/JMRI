@@ -9350,7 +9350,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      * {@inheritDoc}
      * <p>
      * This implementation is temporary, using the on-screen points from the
-     * LayoutTrackViews via @{link LayoutEditor#getCoords}.
+     * LayoutTrackViews via {@link LayoutEditor#getCoords}.
      */
     @Override
     public int computeDirection(LayoutTrack trk1, HitPointType h1, LayoutTrack trk2, HitPointType h2) {
