@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend AbstractReporter for IdTag reporters
  * <p>
- * This file is based on @{link jmri.jmrix.rfid.RfidReporter}
+ * This file is based on {@link jmri.jmrix.rfid.RfidReporter}
  *
  * @author Matthew Harris Copyright (c) 2011
  * @author Paul Bender Copyright (c) 2016, 2019
