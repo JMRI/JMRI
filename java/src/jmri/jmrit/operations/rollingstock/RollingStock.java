@@ -1201,7 +1201,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets the last date when this rolling stock was moved. This method is used
      * only for loading data from a file. Use setLastDate(Date) instead.
      *
-     * @param date yyyy/MM/dd HH:mm:ss, MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
+     * @param date MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
      *             or MM/dd/yyyy HH:mm
      */
     public void setLastDate(String date) {
@@ -1402,10 +1402,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      */
     protected void destroyCloneReset(RollingStock rs) {
         rs.setLocation(getLocation(), getTrack(), RollingStock.FORCE);
-        rs.setRouteDestination(null); // clear rd
+        rs.setRouteDestination(null);
         rs.setLastTrain(getLastTrain());
         rs.setLastRouteId(getLastRouteId());
         rs.setLastDate(getLastDate());
+        rs.setLastLocationId(getLastLocationId());
+        rs.setLastTrackId(getLastTrackId());
         rs.setMoves(getMoves());
     }
 

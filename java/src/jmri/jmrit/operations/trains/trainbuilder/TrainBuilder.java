@@ -102,11 +102,11 @@ public class TrainBuilder extends TrainBuilderCars {
         sortCarsOnFifoLifoTracks(); // sort cars on FIFO or LIFO tracks
         saveCarFinalDestinations(); // save car's final dest and schedule id
         addCabooseOrFredToTrain(); // caboose and FRED changes
+        manualBuild(); // adds cars to train based on user's requests
         removeCaboosesAndCarsWithFred(); // done with cabooses and FRED
         blockCarsFromStaging(); // block cars from staging
         showTracksNotQuickService(); // list tracks that aren't using quick service
-
-        manualBuild(); // adds cars to train based on user's requests
+        
         addCarsToTrain(); // finds and adds cars to the train (main routine)
 
         checkStuckCarsInStaging(); // determine if cars are stuck in staging
@@ -320,6 +320,7 @@ public class TrainBuilder extends TrainBuilderCars {
         if (manualBuild == null) {
             return;
         }
+        addLine(ONE, BLANK_LINE);
         addLine(ONE, Bundle.getMessage("mbuildFound", getTrain().getName()));
         for (TrainManualBuildItem mbi : manualBuild.getItemsBySequenceList()) {
             addLine(THREE,
@@ -395,7 +396,6 @@ public class TrainBuilder extends TrainBuilderCars {
             }
         }
         addLine(ONE, Bundle.getMessage("mbuildDone"));
-        addLine(ONE, BLANK_LINE); // end of manual build
     }
 
     /*
@@ -476,6 +476,7 @@ public class TrainBuilder extends TrainBuilderCars {
      * @throws BuildFailedException
      */
     private void addCarsToTrain() throws BuildFailedException {
+        addLine(THREE, BLANK_LINE);
         addLine(THREE,
                 Bundle.getMessage("buildTrain", getTrain().getNumberCarsRequested(), getTrain().getName(),
                         getCarList().size()));
