@@ -22710,6 +22710,97 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    @Test
+    public void testManualBuildQuickService() {
+        // build two sets of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+        // disable routing through yard
+        Setup.setCarRoutingViaYardsEnabled(false);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonInterchange1 = acton.getTrackByName("Acton Interchange 1", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordInterchange1 = chelmsford.getTrackByName("Chelmsford Interchange 1", null);
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Location essex = lmanager.getLocationByName("Essex");
+        Location gulf = lmanager.getLocationByName("Gulf");
+        Track gulfYard2 = gulf.getTrackByName("Gulf Yard 2", null);
+
+        // Create the turn Acton-Chelmsford-Boston-Acton
+        Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
+        acbaRoute.addLocation(acton);
+        acbaRoute.addLocation(chelmsford);
+        acbaRoute.addLocation(boston);
+        acbaRoute.addLocation(acton);
+        Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
+        acbaTrain.setRoute(acbaRoute);
+
+        // cars from Boston need to be routed through Acton interchange
+        actonInterchange1.setPickupOption(Track.TRAINS);
+        actonInterchange1.addPickupId(acbaTrain.getId());
+        
+        // put interchanges into quick service mode
+        actonInterchange1.setQuickServiceEnabled(true);
+        chelmsfordInterchange1.setQuickServiceEnabled(true);
+
+        // Create Chelmsford-Davers-Gulf-Essex
+        Route fgefRoute = rmanager.newRoute("Chelmsford-Danvers-Gulf-Essex");
+        fgefRoute.addLocation(chelmsford);
+        fgefRoute.addLocation(danvers);
+        fgefRoute.addLocation(gulf);
+        fgefRoute.addLocation(essex);
+        Train fgefTrain = tmanager.newTrain("Chelmsford-Danvers-Gulf-Essex");
+        fgefTrain.setRoute(fgefRoute);
+
+        // place cars
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Coilcar", "40", "DAB", "1958", actonSpur1, 1);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("AB", "2", "Boxcar", "40", "DAB", "1958", actonSpur1, 2);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", "DAB", "1958", bostonSpur1, 5);
+        Car c7 = JUnitOperationsUtil.createAndPlaceCar("AB", "7", "Coilcar", "40", "DAB", "1958", bostonSpur1, 7);
+
+        // create the manual build
+        TrainManualBuild manualBuild =
+                InstanceManager.getDefault(TrainManualBuildManager.class).newManualBuild(acbaTrain.getId());
+        TrainManualBuildItem tmbi = manualBuild.addItem();
+        tmbi.setDestination(gulf);
+        tmbi.setDestinationTrack(gulfYard2);
+        tmbi.setCount(8);
+
+        TrainBuilder tb = new TrainBuilder();
+        tb.build(acbaTrain);
+
+        // confirm that all cars have a final destination and track
+        Assert.assertEquals("final destination", gulf, c1.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c2.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c5.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c7.getFinalDestination());
+
+        Assert.assertEquals("final destination track", gulfYard2, c1.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", gulfYard2, c2.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", gulfYard2, c5.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", gulfYard2, c7.getFinalDestinationTrack());
+        
+        // interchanges in quick service mode
+        Assert.assertEquals("final destination", chelmsford, c1.getLocation());
+        Assert.assertEquals("final destination", chelmsford, c2.getLocation());
+        Assert.assertEquals("final destination", acton, c5.getLocation());
+        Assert.assertEquals("final destination", acton, c7.getLocation());
+        
+        Assert.assertEquals("final destination", chelmsfordInterchange1, c1.getTrack());
+        Assert.assertEquals("final destination", chelmsfordInterchange1, c2.getTrack());
+        Assert.assertEquals("final destination", actonInterchange1, c5.getTrack());
+        Assert.assertEquals("final destination", actonInterchange1, c7.getTrack());
+        
+        // the program should create 4 clones
+        Assert.assertEquals("should be 4 cars", 4, acbaTrain.getNumberCarsWorked());
+        Assert.assertEquals("should be 8 cars", 8, cmanager.getNumEntries());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     private void setupCustomCarLoad() {
 

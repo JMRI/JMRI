@@ -343,22 +343,23 @@ public class TrainBuilder extends TrainBuilderCars {
                     // there could be a an optional destination
                     car.setFinalDestination(mbi.getDestination());
                     car.setFinalDestinationTrack(mbi.getDestinationTrack());
+                    boolean carAdded = false;
                     // case where the user specified a route location
                     if (mbi.getRouteLocation() != null) {
-                        findDestinationForCar(mbi.getRouteLocation(), car);
+                        carAdded = findDestinationForCar(mbi.getRouteLocation(), car);
                     } else {
                         for (RouteLocation rl : getRouteList()) {
                             // start looking at car's location
                             if (rl.getLocation() == car.getLocation()) {
-                                findDestinationForCar(rl, car);
+                                carAdded = findDestinationForCar(rl, car);
                             }
-                            if (car.getTrain() != null) {
+                            if (carAdded) {
                                 break; // done
                             }
                         }
                     }
                     // if not assigned to train, clear final destination
-                    if (car.getTrain() == null) {
+                    if (!carAdded) {
                         car.setFinalDestination(null);
                         car.setFinalDestinationTrack(null);
                     } else {
@@ -448,7 +449,12 @@ public class TrainBuilder extends TrainBuilderCars {
             addLine(ONE, BLANK_LINE);
             return false;
         }
+        // if car is sent to quick service track, moves for car is bumped
+        int moves = car.getMoves();
         findDestinationsFromLocation(rl, car, false);
+        if (car.getTrain() == null && moves == car.getMoves()) {
+            return false;
+        }
         return true;
     }
 
