@@ -466,8 +466,6 @@ This should be done on a machine with only one display.
 
 ## Put Files Out For Checking
 
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](https://builds.jmri.org/jenkins/job/website/job/website-repository/) button). Confirm [visible on web](https://www.jmri.org/releasenotes/jmri5.15.9.shtml).
-
 - Announce the file set via [email to jmri@jmri-developers.groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%205.15.9%20files%20available) with a subject line
 
 
@@ -609,15 +607,17 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
 ```
 
+
 [Release notes](https://jmri.org/releasenotes/jmri5.15.9.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.15.9+R0f6e5379d8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.9/JMRI.5.15.9+R0f6e5379d8.dmg) | b769fdcf9e183a2ba18f954ec0ec520cb7df38f18ca0730e0da2784ab638f33d
-[JMRI.5.15.9+R0f6e5379d8.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.9/JMRI.5.15.9+R0f6e5379d8.exe) | 7c73245b306376cd067cce61fdd519d493341ba9151e5e22983f415fdb53d09a
-[JMRI.5.15.9+R0f6e5379d8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.9/JMRI.5.15.9+R0f6e5379d8.tgz) | 3ef3354ea0a621652dffcf209e94e6e54a982202d5faa4ee1114b8aa237cf142
+[JMRI.5.15.9+R1cad2d78d8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.9/JMRI.5.15.9+R1cad2d78d8.dmg) | e4add02eb16595d09e00d0800ebc235bb20848254811df7519fbe47a7f10e52a
+[JMRI.5.15.9+R1cad2d78d8.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.9/JMRI.5.15.9+R1cad2d78d8.exe) | ea0451786a8fa199e51ba66e2bd6d5ae6fc97b0753ecd32e1c32e6e980518926
+[JMRI.5.15.9+R1cad2d78d8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.9/JMRI.5.15.9+R1cad2d78d8.tgz) | dac02802420df1ea52bde9e3f70d41395834af2dbe18f1be4f509186e8dc2761
+
 
 ```
 
@@ -669,7 +669,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.17.1". Add the 5.17.1 release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 5.16 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 5.18 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 
 - Confirm that the tag for the current release (v5.15.9 for release 5.15.9) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-5.15.9) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
