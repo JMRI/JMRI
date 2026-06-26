@@ -220,7 +220,6 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(ONE, BLANK_LINE);
             addLine(ONE, Setup.getComment());
         }
-        addLine(ONE, BLANK_LINE);
     }
 
     protected void setUpRoute() throws BuildFailedException {
@@ -252,6 +251,7 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showTrainBuildOptions() {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+        addLine(FIVE, BLANK_LINE);
         addLine(FIVE, Bundle.getMessage("MenuItemBuildOptions") + ":");
         if (Setup.isBuildAggressive()) {
             if (Setup.isBuildOnTime()) {
@@ -349,16 +349,17 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(FIVE, Bundle.getMessage("CheckCarDestination"));
             }
         }
-        addLine(FIVE, BLANK_LINE);
     }
 
     /*
      * Show the enabled and disabled build options for this train.
      */
     protected void showSpecificTrainBuildOptions() {
+        addLine(FIVE, BLANK_LINE);
         addLine(FIVE,
                 Bundle.getMessage("buildOptionsForTrain", getTrain().getName()));
         showSpecificTrainBuildOptions(true);
+        addLine(FIVE, BLANK_LINE);
         addLine(FIVE, Bundle.getMessage("buildDisabledOptionsForTrain", getTrain().getName()));
         showSpecificTrainBuildOptions(false);
     }
@@ -398,7 +399,6 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(SEVEN, Bundle.getMessage("BuildConsistHPT", Setup.getHorsePowerPerTon()));
             }
         }
-        addLine(FIVE, BLANK_LINE);
     }
 
     /**
@@ -443,7 +443,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected void showAndInitializeTrainRoute() throws BuildFailedException {
         int requestedCarMoves = 0; // how many cars were asked to be moved
         // TODO: DAB control minimal build by each train
-
+        addLine(ONE, BLANK_LINE);
         addLine(THREE,
                 Bundle.getMessage("buildTrainRoute", getTrain().getName(), getTrain().getRoute().getName()));
 
@@ -545,7 +545,6 @@ public class TrainBuilderBase extends TrainCommon {
 
         getTrain().setNumberCarsRequested(requestedCarMoves); // save number of car
         // moves requested
-        addLine(ONE, BLANK_LINE);
     }
 
     /**
@@ -553,9 +552,9 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showIfLocalSwitcher() {
         if (getTrain().isLocalSwitcher()) {
+            addLine(THREE, BLANK_LINE);
             addLine(THREE, Bundle.getMessage("buildTrainIsSwitcher", getTrain().getName(),
                     TrainCommon.splitString(getTrain().getTrainDepartsName())));
-            addLine(THREE, BLANK_LINE);
         }
     }
 
@@ -568,6 +567,7 @@ public class TrainBuilderBase extends TrainCommon {
      * changes in the route.
      */
     protected void showTrainRequirements() {
+        addLine(ONE, BLANK_LINE);
         addLine(ONE, Bundle.getMessage("TrainRequirements"));
         if (getTrain().isBuildConsistEnabled() && Setup.getHorsePowerPerTon() > 0) {
             addLine(ONE,
@@ -654,7 +654,6 @@ public class TrainBuilderBase extends TrainCommon {
                     Bundle.getMessage("buildTrainRequiresFRED", getTrain().getTrainDepartsName(),
                             getTrain().getCabooseRoad()));
         }
-        addLine(ONE, BLANK_LINE);
     }
 
     protected void showTrainCarRoads() {
@@ -784,7 +783,6 @@ public class TrainBuilderBase extends TrainCommon {
                 remove(car); // remove this car from the list
             }
         }
-        addLine(SEVEN, BLANK_LINE);
     }
 
     /**
@@ -3049,6 +3047,7 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showTracksNotQuickService() {
         if (Setup.isBuildOnTime()) {
+            addLine(FIVE, BLANK_LINE);
             addLine(FIVE, Bundle.getMessage("buildTracksNotQuickService"));
             for (Track track : locationManager.getTracks(null)) {
                 if (!track.isQuickServiceEnabled()) {
@@ -3057,7 +3056,6 @@ public class TrainBuilderBase extends TrainCommon {
                             track.getName()));
                 }
             }
-            addLine(FIVE, BLANK_LINE);
         }
     }
     
