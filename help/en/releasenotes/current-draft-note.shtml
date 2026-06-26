@@ -116,7 +116,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li>Added a sample script showing how to send and receive NCE messages.</li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -126,10 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Suppress the 'Make Turnouts' and 'Make Sensors' buttons in the configuration
-                    window when they aren't going to do any adds.</li>
-                <li>Add option to the popup menu in eventID-entry fields that lets you
-                    name the event ID right there.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -466,15 +463,13 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li>Fix route selection when the layout does not have signal masts paired with NX sensors.</li>
+                <li></li>
             </ul>
 
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li>If you have reordered the columns in the main LccPro window and
-              you export to a CSV file, the columns will now be in that order
-              and properly labeled in the file.</li>
+          <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -498,7 +493,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Users can now modify the missing car message format.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -528,7 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Roster file saves are now atomic: the roster index is written to a temporary file and then moved into place, so an interrupted or failed write can no longer truncate or corrupt <code>roster.xml</code>. (PR #15228)</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -540,7 +535,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Added a sample script showing how to send and receive NCE messages.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -628,10 +623,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>The web Control Panel now draws shapes and other positionables in
-                their display "level" (z-order), matching the desktop Control
-                Panel Editor. Previously elements were sent in list order, so
-                overlapping items could be stacked incorrectly in the browser.</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
