@@ -129,7 +129,7 @@ This is the next release in the 5.15 cycle. It's intended to be created from the
         git pull
 ```
 
- - Make sure `git status` shows "up to date", not "ahead".
+- Make sure `git status` shows "up to date", not "ahead".
 
 - If it's a new year, update through-now copyright dates (done for 2026):
 
@@ -147,7 +147,9 @@ This is the next release in the 5.15 cycle. It's intended to be created from the
     * Help.html
     * (grep -r for the previous year in the web site, xml; don't change initial copyright notices!)
 
-- Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls). This includes PRs that have passed CI and have been approved, but have not yet reached the 24 hold time. PRs that have not passed CI and/or have not been approved should not be included. Do not merge PRs that are marked WIP or have an “After Next Test Release” label. If you do merge any, pull the master branch back to your local repository to include them in the build.
+- Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls). This includes PRs that have passed CI and have been approved, but have not yet reached the 24 hold time. PRs that have not passed CI and/or have not been approved should not be included. Do not merge PRs that are marked WIP or have an “After Next Test Release” label. 
+
+  If you do merge any PRs, pull the master branch back to your local repository to include them in the build.
 
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
 
@@ -267,9 +269,10 @@ This section describes in detail the process for creating the release note for a
         $EDITOR jmri5.17.1.shtml
 ```
 
-(edit the new release note accordingly)
- - change numbers throughout
- - remove old-version change notes
+- Edit the new release note accordingly:
+
+  - change numbers throughout
+  - remove old-version change notes
 
 ```
         git add jmri5.17.1.shtml
@@ -284,7 +287,7 @@ This section describes in detail the process for creating the release note for a
         diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri5.15-master.shtml | grep '<h'
 ```
 
-   If there were, update the master copy
+ - If there were new headings, update the master copy
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
 ```
@@ -328,7 +331,7 @@ This section describes in detail the process for creating the release note for a
 ```
         open 'https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2022-05-24+'
 ```
-For each, if it doesn't have the right milestone set, add the current milestone which you’ll find under the ‘closed’ tab.
+- For each, if it doesn't have the right milestone set, add the current milestone which you’ll find under the ‘closed’ tab.
 
 ====================================================================================
 
