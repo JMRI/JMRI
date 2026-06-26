@@ -466,7 +466,7 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Fix route selection when the layout does not have signal masts paired with NX sensors.</li>
             </ul>
 
     <h3>LccPro</h3>
