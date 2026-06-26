@@ -123,6 +123,8 @@ This is the next release in the 5.15 cycle. It's intended to be created from the
 
 ## Update Content (Test Release Only)
 
+- Disable the [Jenkins Packages job](https://builds.jmri.org/jenkins/job/development/job/packages/) to prevent any hybrid development releases
+
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 ```
         git checkout master
@@ -341,13 +343,13 @@ This section describes in detail the process for creating the release note for a
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.15.7-SNAPSHOT/5.15.9-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.15.8-SNAPSHOT/5.15.9-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=7/release.build=8/g release.properties
+        sed -i.bak s/release.build=8/release.build=9/g release.properties
         head -10 release.properties
 ```
  - Check that both those edits left 5.15.9 defined in the two files
@@ -369,8 +371,6 @@ This section describes in detail the process for creating the release note for a
 ================================================================================
 
 ## Create the Release Branch
-
-- Disable the [Jenkins Packages job](https://builds.jmri.org/jenkins/job/development/job/packages/) to prevent any hybrid development releases
 
 - Do one more check that everything is committed (you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere)
 
