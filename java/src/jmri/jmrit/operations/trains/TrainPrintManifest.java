@@ -172,11 +172,17 @@ public class TrainPrintManifest extends TrainCommon {
     private static int getNumberOfLines(List<String> lines) {
         int numberLines = lines.size();
         for (String line : lines) {
+            boolean foundHorizontalLine = false;
             for (char c : line.toCharArray()) {
                 if (c == HORIZONTAL_LINE_CHAR) {
-                    numberLines--;
-                    break;
+                    foundHorizontalLine = true;
+                } else {
+                    foundHorizontalLine = false;
+                    break; // all characters need to be horizontal char
                 }
+            }
+            if (foundHorizontalLine) {
+                numberLines--; 
             }
         }
         return numberLines;
