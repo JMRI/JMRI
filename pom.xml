@@ -25,6 +25,7 @@
         <jackson-core.version>2.22.0</jackson-core.version>
         <jackson-databind.version>2.22.0</jackson-databind.version>
         <jackson-annotations.version>2.22</jackson-annotations.version>
+        <jackson-datatype-jsr310.version>2.22.0</jackson-datatype-jsr310.version>
         <jogamp.version>2.5.0</jogamp.version>
         <openlcb.version>0.8.6</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
@@ -1393,6 +1394,12 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson-annotations.version}</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
