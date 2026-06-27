@@ -40,9 +40,9 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     private final ObjectMapper mapper = new ObjectMapper();
 
     public JsonSchemaServiceCache() {
-        try {
+        try (var resourceStream = JsonSchemaServiceCache.class.getResourceAsStream("/jmri/server/json/schema-map.json")) {
             for (JsonNode mapping : mapper
-                    .readTree(JsonSchemaServiceCache.class.getResourceAsStream("/jmri/server/json/schema-map.json"))) {
+                    .readTree(resourceStream)) {
                 schemaMappings.put(mapping.get("publicURL").asText(),
                         mapping.get("localURL").asText());
             }
