@@ -177,7 +177,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - see <jdom.org>
 - from Maven Central https://mvnrepository.com/artifact/org.jdom/jdom2/2.0.6.1
 
-##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
+##### jackson-annotations-2.22.jar, jackson-core-2.22.0.jar, jackson-databind-2.22.0.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
