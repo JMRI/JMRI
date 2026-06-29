@@ -66,7 +66,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-        int columns = 40;
+        int columns = 41;
         if (memo.getSlotManager().getLoconetProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
             columns=20;
         }

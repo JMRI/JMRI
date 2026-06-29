@@ -1463,6 +1463,7 @@ public class LocoNetSlot {
     private int _pcmd;  // hold pcmd and pstat for programmer
 
     private long lastUpdateTime; // Time of last update for detecting stale slots
+    private long slowScanStartedAt; // Time slow scan started if zero no slow scan running
 
     // data members to hold contact with the slot listeners
     private final List<SlotListener> slotListeners = new ArrayList<>();
@@ -1498,6 +1499,27 @@ public class LocoNetSlot {
      */
     public long getLastUpdateTime() {
         return lastUpdateTime;
+    }
+
+    /**
+     * Returns the timestamp when this LocoNetSlot started to be slowscan
+     * due to lack of sure and certain status.
+     * Returns Zero if slow scan not active.
+     *
+     * @return timestamp when slow scan started, 0 if not active
+     */
+    public long getSlowScanStartedAt() {
+        return slowScanStartedAt;
+    }
+
+    /**
+     * sets the timestamp when this LocoNetSlot started to be slowscan
+     * due to lack of sure and certain status.
+     *
+     * @param timestamp when slow scan started, 0 to deactivate
+     */
+    public void setSlowScanStartedAt(long v) {
+        slowScanStartedAt = v;
     }
 
     /**

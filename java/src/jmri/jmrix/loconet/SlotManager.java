@@ -54,6 +54,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
 
+    /**
+     * The interval between slow scans when checking a InUse or Common slot
+     * that has not been updated within this interval IN SECONDS.
+     * A value of Zero or less disables Slow Scanning.
+     */
+    public double slowScanInterval =  90.0;
+
     public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
 
     public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests.
@@ -316,22 +323,30 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * This is intended to be called from the staleSlotCheckTimer
      */
     private void checkStaleSlots() {
-        long staleTimeout = System.currentTimeMillis() - 90000; // 90 seconds ago
-        LocoNetSlot slot;
+        if (slowScanInterval > 0) {
+            long staleTimeout = System.currentTimeMillis() - ((long) (slowScanInterval * 1000)); // 90 seconds ago
+            LocoNetSlot slot;
 
-        // We will just check the normal loco slots 1 to numSlots exclude systemslots
-        for (int i = 1; i < numSlots; i++) {
-            slot = _slots[i];
-            if (!slot.isSystemSlot()) {
-                if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
-                    && (slot.getLastUpdateTime() <= staleTimeout)) {
-                    sendReadSlot(i);
-                    break; // only send the first one found
+            // We will just check the normal loco slots 1 to numSlots exclude systemslots
+            for (int i = 1; i < numSlots; i++) {
+                slot = _slots[i];
+                if (!slot.isSystemSlot()) {
+                    if ((slot.slotStatus() == LnConstants.LOCO_IN_USE ||
+                            slot.slotStatus() == LnConstants.LOCO_COMMON) &&
+                            (slot.getLastUpdateTime() <= staleTimeout ) &&
+                            slot.consistStatus() == LnConstants.CONSIST_NO) {
+                        if (slot.getSlowScanStartedAt() == 0) {
+                            slot.setSlowScanStartedAt(System.currentTimeMillis());
+                        }
+                        sendReadSlot(i);
+                        break; // only send the first one found
+                    } else {
+                        slot.setSlowScanStartedAt(0);
+                    }
                 }
             }
         }
     }
-
 
     java.util.TimerTask slot250Task = null;
     /**
