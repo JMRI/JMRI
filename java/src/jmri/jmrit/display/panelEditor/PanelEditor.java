@@ -983,7 +983,7 @@ public class PanelEditor extends Editor implements ItemListener {
         } else {
             _currentSelection = null;
             if (event.isPopupTrigger()) {
-                if (_multiItemCopyGroup == null) {
+                if (_multiItemCopyGroup != null) {
                     pasteItemPopUp(event);
                 } else {
                     backgroundPopUp(event);
