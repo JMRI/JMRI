@@ -535,7 +535,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added two scripts to show how to start logging of an LCC or LocoNet 
+                connection as the program starts up</li>
         </ul>
 
     <h3>Signals</h3>
