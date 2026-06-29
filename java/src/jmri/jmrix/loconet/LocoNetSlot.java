@@ -1518,8 +1518,8 @@ public class LocoNetSlot {
      *
      * @param timestamp when slow scan started, 0 to deactivate
      */
-    public void setSlowScanStartedAt(long v) {
-        slowScanStartedAt = v;
+    public void setSlowScanStartedAt(long timestamp) {
+        slowScanStartedAt = timestamp;
     }
 
     /**
