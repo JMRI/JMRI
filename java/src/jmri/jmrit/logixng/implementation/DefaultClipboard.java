@@ -335,7 +335,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
 
         @Override
-        public Class getMaleSocketClass() {
+        public Class<ClipboardManySocket> getMaleSocketClass() {
             throw new UnsupportedOperationException("Not supported");
         }
 
