@@ -175,6 +175,14 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
             try {
                 ObjectNode data = connection.getObjectMapper().createObjectNode();
                 if (evt.getPropertyName().equals(Roster.ADD)) {
+                    // There is a mismatch here.  This code handles the RosterEntry that comes with the 
+                    // passed event, and only that roster entry.  But jmri.jmrit.roster.Roster
+                    // only passes _one- RosterEntry ADD event when importing an entire Roster backup.
+                    // See Roster#readFile.  This will need to be handled at some point; the
+                    // workaround is to restart the program after loading an entire roster, which
+                    // apparently most people do anyway.
+                    log.warn("If you have just imported a complete Roster, please restart the program so the web server will see the new contents");
+                    
                     data.set(ADD,
                             service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue(), 0));
                     ((PropertyChangeProvider) evt.getNewValue()).addPropertyChangeListener(rosterEntryListener);
