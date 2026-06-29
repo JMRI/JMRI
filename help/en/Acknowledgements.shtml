@@ -394,6 +394,9 @@
         <li>Joe Ellis provided the DecoderPro configuration files for the Lenz LE077XF decoder and
         has done a fantastic job on the manual</li>
 
+        <li>Peter Ely and the PMRRM,
+        who helped with a number of LocoNet and LCC feature improvements.</li>
+        
         <li>Wayne Eric, who provided the MRC AD370 decoder definition</li>
 
         <li>Max Ettinger, who made JMRI work with the QSI Quantum Programmer on Windows and wrote
