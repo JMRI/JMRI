@@ -50,7 +50,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     @Override
     public ObjectNode doGet(Block block, String name, String type, JsonRequest request) throws JsonException {
         ObjectNode root = this.getNamedBean(block, name, getType(), request);
-        ObjectNode data = root.with(JSON.DATA);
+        ObjectNode data = root.withObject(JSON.DATA);
         switch (block.getState()) {
             case Block.UNDETECTED:
             case NamedBean.UNKNOWN:
