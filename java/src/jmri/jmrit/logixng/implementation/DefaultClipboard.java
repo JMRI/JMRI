@@ -180,12 +180,12 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported");
+        return _clipboardItems.getChild(index);
     }
 
     @Override
     public int getChildCount() {
-        throw new UnsupportedOperationException("Not supported");
+        return _clipboardItems.getChildCount();
     }
 
     @Override
@@ -194,7 +194,11 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     }
 
 
-    private class MaleRootSocket extends AbstractMaleSocket {
+    private interface ClipboardManySocket extends NamedBean, MaleSocket {
+    }
+
+
+    private class MaleRootSocket extends AbstractMaleSocket implements ClipboardManySocket {
 
         public MaleRootSocket(BaseManager<? extends NamedBean> manager) {
             super(manager, _clipboardItems);
@@ -255,13 +259,58 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             throw new UnsupportedOperationException("Not supported");
         }
 
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public String describeState(int state) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setProperty(String key, Object value) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Object getProperty(String key) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void removeProperty(String key) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Set<String> getPropertyKeys() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public String getBeanType() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
     }
 
 
-    private static class MaleRootManager extends AbstractBaseManager {
+    private static class MaleRootManager extends AbstractBaseManager<ClipboardManySocket> {
 
         @Override
-        protected NamedBean castBean(MaleSocket maleSocket) {
+        protected ClipboardManySocket castBean(MaleSocket maleSocket) {
             throw new UnsupportedOperationException("Not supported");
         }
 
@@ -271,8 +320,8 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
 
         @Override
-        public Class getNamedBeanClass() {
-            return MaleRootSocket.class;
+        public Class<ClipboardManySocket> getNamedBeanClass() {
+            return ClipboardManySocket.class;
         }
 
         @Override
