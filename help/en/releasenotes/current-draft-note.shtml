@@ -525,7 +525,7 @@
         <ul>
             <li>Fixed a crash that would occur if you imported an entire-roster backup
                 while the web server was active. Note that you should restart the 
-                program after doing the entire-roster backup to make sure
+                program after importing the entire-roster backup to make sure
                 all parts of the program are aware of the new entries.</li>
         </ul>
 

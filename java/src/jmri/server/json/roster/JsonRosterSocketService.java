@@ -177,7 +177,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                 if (evt.getPropertyName().equals(Roster.ADD)) {
                     // There is a mismatch here.  This code handles the RosterEntry that comes with the 
                     // passed event, and only that roster entry.  But jmri.jmrit.roster.Roster
-                    // only passes _one- RosterEntry ADD event when importing an entire Roster backup.
+                    // only passes _one_ RosterEntry ADD event when importing an entire Roster backup.
                     // See Roster#readFile.  This will need to be handled at some point; the
                     // workaround is to restart the program after loading an entire roster, which
                     // apparently most people do anyway.
