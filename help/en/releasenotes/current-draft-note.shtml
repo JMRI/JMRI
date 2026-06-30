@@ -499,7 +499,8 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that caused copy-paste not work in Panel
+                Editor on Windows.</li>
         </ul>
 
     <h3>Permissions</h3>
