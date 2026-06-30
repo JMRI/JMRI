@@ -475,7 +475,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                 String formattedDateTime = dateTime.format(formatter);
                 if (s.getSlowScanStartedAt() != 0) {
-                    formattedDateTime=formattedDateTime.concat("\n SlowScan");
+                    formattedDateTime=Bundle.getMessage("LastUpdateSlowScan",formattedDateTime);
                 }
                 return formattedDateTime;
             default:

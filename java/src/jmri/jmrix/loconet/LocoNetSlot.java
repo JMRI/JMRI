@@ -1520,6 +1520,7 @@ public class LocoNetSlot {
      */
     public void setSlowScanStartedAt(long timestamp) {
         slowScanStartedAt = timestamp;
+        notifySlotListeners();
     }
 
     /**
