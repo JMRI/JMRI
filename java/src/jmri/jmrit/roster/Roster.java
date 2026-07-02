@@ -1036,16 +1036,27 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("roster") != null) { // NOI18N
             List<Element> l = root.getChild("roster").getChildren("locomotive"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("readFile sees {} children", l.size());
+            log.debug("readFile sees {} children", l.size());
+
+            RosterEntry firstRosterEntry = null;
+            for (Element e : l) {  // can't be forEach because we need definitive order and non-final variable
+                // Create a RosterEntry from this element and add to Roster.
+                // Do not notify UI on each, notify once when all are done
+                var thisRosterEntry = new RosterEntry(e);
+                addEntryNoNotify(thisRosterEntry);
+                if (firstRosterEntry == null) {
+                    firstRosterEntry = thisRosterEntry;
+                }
             }
-            l.forEach((e) -> {
-                // do not notify UI on each, notify once when all are done
-                addEntryNoNotify(new RosterEntry(e));
-            });
-            // Only fire one notification: the table will redraw all entries
-            if (!l.isEmpty()) {
-                firePropertyChange(ADD, null, l.get(0));
+            // Fire one notification, the table will redraw all entries anyway
+            //
+            // This works well with e.g. the Roster Table, which knows to 
+            // handle an ADD event by doing a redraw-all.  But the JsonRosterSocketService
+            // only handles the individual roster entries that are brought to its
+            // attention via an ADD event.  So there's a mismatch here that 
+            // will need to be resolved at some point.
+            if (firstRosterEntry != null) {
+                firePropertyChange(ADD, null, firstRosterEntry);
             }
 
             //Scan the object to check the Comment and Decoder Comment fields for
