@@ -499,8 +499,7 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Fixed a bug that caused copy-paste not work in Panel
-                Editor on Windows.</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -524,10 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Fixed a crash that would occur if you imported an entire-roster backup
-                while the web server was active. Note that you should restart the 
-                program after importing the entire-roster backup to make sure
-                all parts of the program are aware of the new entries.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
