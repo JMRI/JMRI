@@ -2094,7 +2094,8 @@ public class TreeEditor extends TreeViewer {
             _maleSocket.getListenerRefsIncludingChildren(listenerRefs);
             int count = listenerRefs.size();
             log.debug("Delete with {}", count);
-            if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
+            if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()
+                    && _deleteQuestion == null) {
                 doDelete();
             } else {
                 final JDialog dialog = new JDialog();
