@@ -473,20 +473,20 @@ This should be done on a machine with only one display.
 "First 5.15.10 files available":
 ```
 
-(You have to update the tag part of the direction links)
+(You have to update the tag part of the direction links below)
 
 ```
 First JMRI 5.15.10 files are available in the usual way at:
 
 https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/
 
-The Jenkins machine is currently getting a heavy load of web-spider requests, and you may get errors accessing that page.  I'm sorry about that, but I don't know what else to do about that. Please try again in that case.
+The Jenkins machine is currently getting a heavy load of web-spider requests, and you may get errors accessing that page.  I'm sorry about that, but I don't know what else to do about it. Please try again in that case.
 
 If you want to pick the files up directly with curl, wget or another tool, the links are
 
-https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Redb35646a6.dmg
-https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Redb35646a6.exe
-https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Redb35646a6.tgz
+https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Re5fcc00c8a.dmg
+https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Re5fcc00c8a.exe
+https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Re5fcc00c8a.tgz
 
 Feedback appreciated! I would like to release this later today or tomorrow morning if the files are OK on macOS, Linux and Windows.
 
@@ -607,17 +607,15 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
 ```
 
-
 [Release notes](https://jmri.org/releasenotes/jmri5.15.10.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.15.10+R1cad2d78d8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+R1cad2d78d8.dmg) | e4add02eb16595d09e00d0800ebc235bb20848254811df7519fbe47a7f10e52a
-[JMRI.5.15.10+R1cad2d78d8.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+R1cad2d78d8.exe) | ea0451786a8fa199e51ba66e2bd6d5ae6fc97b0753ecd32e1c32e6e980518926
-[JMRI.5.15.10+R1cad2d78d8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+R1cad2d78d8.tgz) | dac02802420df1ea52bde9e3f70d41395834af2dbe18f1be4f509186e8dc2761
-
+[JMRI.5.15.10+Re5fcc00c8a.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+Re5fcc00c8a.dmg) | 34cf69171548c39a1aa384d8c55832bdbbb84711b30ea9b427bcb0832833fada
+[JMRI.5.15.10+Re5fcc00c8a.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+Re5fcc00c8a.exe) | 84f40affcd428decb4482a6d138fbcb887656a9c7a9db381c6fd3fbf01d6b873
+[JMRI.5.15.10+Re5fcc00c8a.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+Re5fcc00c8a.tgz) | 8456572b8782ef0c95ee439f1c0da38a894b05bc1e43d20842d745e43354ad28
 
 ```
 
