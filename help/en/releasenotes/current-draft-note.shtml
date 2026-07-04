@@ -536,7 +536,7 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Added a "ClearBlockValues.py" sample script for clearing block contents.  See
-            comments within in for more info on how to use it.</li>
+            comments within it for more info on how to use it.</li>
         </ul>
 
     <h3>Signals</h3>
