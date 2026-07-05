@@ -17,7 +17,7 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.WrapLayout;;
+import jmri.util.swing.WrapLayout;
 
 /**
  * Create a where used report based on the selected bean.  The selection combo box is
