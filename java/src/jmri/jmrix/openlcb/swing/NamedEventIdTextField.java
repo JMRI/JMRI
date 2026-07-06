@@ -116,5 +116,9 @@ public class NamedEventIdTextField extends OvertypeTextArea {
         return new EventID(new OlcbAddress(getText(), memo).toDottedString());
     }
     
+    public String getEventIDAsDottedString() {
+        return new OlcbAddress(getText(), memo).toDottedString();
+    }
+    
     // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedEventIdTextField.class);
 }
