@@ -653,6 +653,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The standard SortedProperties class has been put in place
+                of the custom jmri.util.OrderedProperties class, which in
+                turn has been deprecated for removal.</li>
         </ul>
 

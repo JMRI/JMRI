@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
+
 /**
  * {@link java.util.Properties} implementation that enumerates properties sorted
  * by key.
@@ -15,6 +16,7 @@ import java.util.TreeSet;
  *
  * @author Randall Wood
  */
+@Deprecated (since="5.17.1",forRemoval=true) // replaced by org.apache.commons.collections4.properties.SortedProperties
 public class OrderedProperties extends Properties {
 
     @Override
