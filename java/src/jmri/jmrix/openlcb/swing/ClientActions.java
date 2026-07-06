@@ -176,7 +176,7 @@ public class ClientActions {
             }
             
             @Override
-            public void handleManualPaneEnd(JPanel pane) {
+            public void handleManualEnd(JPanel pane) {
                 installButtonsOnEndOfGroup(pane, false);
             }
 
