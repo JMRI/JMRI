@@ -98,6 +98,7 @@ public class Car extends RollingStock {
         car.setCaboose(isCaboose());
         car.setFred(hasFred());
         car.setPassenger(isPassenger());
+        car.setUtility(isUtility());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
         car.loaded = true;
         return car;
