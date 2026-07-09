@@ -653,6 +653,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improve caching of user preferences files when node-specific profile info is present.</li>
         </ul>
 
