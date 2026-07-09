@@ -1,15 +1,14 @@
 package jmri.jmrit.throttle.buttons;
 
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.CheckForNull;
 import javax.swing.JButton;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -28,38 +27,40 @@ import org.slf4j.LoggerFactory;
  *
  */
 
-public abstract class PowerManagerButton extends JButton implements PropertyChangeListener {
+public abstract class PowerManagerButton extends JButton {
 
-    private final PropertyChangeListener listener;
-    private Boolean fullText = true;
+    private final transient PropertyChangeListener listener;
+    private final PowerManager powerMgr;
+    private boolean fullText = true;
     private NamedIcon powerUnknownIcon;
     private NamedIcon powerOffIcon;
     private NamedIcon powerOnIcon;
-    private static final Logger log = LoggerFactory.getLogger(PowerManagerButton.class);
+    private NamedIcon powerIdleIcon;
 
     public PowerManagerButton() {
         this(true);
     }
 
     public PowerManagerButton(Boolean fullText) {
+        this(fullText, InstanceManager.getNullableDefault(PowerManager.class));
+    }
+
+    PowerManagerButton(boolean fullText, @CheckForNull PowerManager powerMgr) {
         this.fullText = fullText;
-        this.listener = (PropertyChangeEvent evt) -> {
-            this.setPowerIcons();
-        };
-        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
+        this.powerMgr = powerMgr;
+        this.listener = evt -> this.setPowerIcons();
+
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         } else {
             powerMgr.addPropertyChangeListener(this.listener);
         }
-        super.addActionListener((ActionEvent e) -> {
-            this.setPower();
-        });
+        super.addActionListener( e -> this.setPower());
+
         this.initComponentsImpl();
     }
 
     public void dispose() {
-        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr != null) {
             powerMgr.removePropertyChangeListener(this.listener);
         }
@@ -84,13 +85,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
      */
     abstract void loadIcons();
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        this.setPowerIcons();
-    }
-
     protected void setPowerIcons() {
-        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
             return;
         }
@@ -107,6 +102,13 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
                 setToolTipText(Bundle.getMessage("LayoutPowerOff"));
                 if (getFullText()) {
                     setText(Bundle.getMessage("PowerStateOff"));
+                }
+                break;
+            case PowerManager.IDLE:
+                setIcon(getPowerIdleIcon());
+                setToolTipText(Bundle.getMessage("LayoutPowerIdle"));
+                if (getFullText()) {
+                    setText(Bundle.getMessage("PowerStateIdle"));
                 }
                 break;
             case PowerManager.UNKNOWN:
@@ -128,16 +130,14 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
     }
 
     private void setPower() {
-        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr != null) {
             try {
                 switch (powerMgr.getPower()) {
-                    case PowerManager.ON:
-                        powerMgr.setPower(PowerManager.OFF);
-                        break;
                     case PowerManager.OFF:
                         powerMgr.setPower(PowerManager.ON);
                         break;
+                    case PowerManager.ON:
+                    case PowerManager.IDLE:
                     case PowerManager.UNKNOWN:
                     default:
                         powerMgr.setPower(PowerManager.OFF);
@@ -149,6 +149,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
                 if (getFullText()) {
                     setText(Bundle.getMessage("PowerStateUnknown"));
                 }
+                log.error("Could not set Power to {}, {}",powerMgr,ex.getMessage(),ex);
             }
         }
     }
@@ -199,17 +200,35 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
     }
 
     /**
+     * @return the icon that represents a power on state
+     */
+    public NamedIcon getPowerIdleIcon() {
+        return powerIdleIcon;
+    }
+
+    /**
+     * @param icon the icon that represents a power Idle state.
+     */
+    public void setPowerIdleIcon(NamedIcon icon) {
+        this.powerIdleIcon = icon;
+        this.setPowerIcons();
+    }
+
+    /**
      * @return true if text should be shown
      */
-    protected Boolean getFullText() {
+    private boolean getFullText() {
         return fullText;
     }
 
     /**
      * @param fullText true if text should be shown
      */
-    protected void setFullText(Boolean fullText) {
+    protected void setFullText(boolean fullText) {
         this.fullText = fullText;
         this.setPowerIcons();
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PowerManagerButton.class);
+
 }
