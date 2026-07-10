@@ -126,8 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fix a problem manually creating a Sensor or Turnout
-                    from the bottom of the CDI window.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
