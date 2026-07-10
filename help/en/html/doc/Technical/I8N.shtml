@@ -347,8 +347,7 @@ log.debug("The process failed account of user error"); // NOI18N
             <li>The 'package' statement at the top should list your package;</li>
 
             <li>The 'class ... extends' should refer to the Bundle class directly above your
-            package. If there isn't a Bundle class there, this can refer to a Bundle
-            class in a grandparent package;</li>
+            package. If there isn't a Bundle class there, please install one there too;</li>
 
             <li>The assignment to the 'name' variable should be the name of your local bundle, by
             convention "jmri/mypackage.Bundle". If your code only uses properties
