@@ -149,7 +149,7 @@ public abstract class PowerManagerButton extends JButton {
                 if (getFullText()) {
                     setText(Bundle.getMessage("PowerStateUnknown"));
                 }
-                log.error("Could not set Power to {}, {}",powerMgr,ex.getMessage(),ex);
+                log.error("Could not set Power to {}",powerMgr,ex);
             }
         }
     }
