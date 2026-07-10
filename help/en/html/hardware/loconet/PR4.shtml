@@ -148,14 +148,14 @@
         profile, so that you may perform some other type of work.</li>
       </ul>
 
-      <p><strong>If a loco on your main track will not move:</strong> When the PR4 is configured as
-      a "PR4 Standalone Programmer" (a programming-track-only mode), JMRI still lets you open a
-      throttle, but that throttle can only control a loco sitting on the PR4's dedicated programming
-      track -- it cannot run a loco on the main track, so a main-track loco will appear unresponsive
-      even though the throttle looks like it is working. To run trains on the main track, configure
-      the connection as a LocoNet Interface by selecting your actual command-station type (see the
-      "LocoNet Interface, Decoder Programming" row in the table above) instead of the "PR4
-      Standalone Programmer" type.</p>
+      <p><strong>You cannot run a loco on the main track while the PR4 is configured as a
+      "PR4 Standalone Programmer".</strong> In that programming-track-only mode JMRI still lets
+      you open a throttle, but the throttle can only control a loco sitting on the PR4's dedicated
+      programming track, so a main-track loco will appear unresponsive even though the throttle
+      looks like it is working. To run trains on the main track, configure the connection as a
+      LocoNet Interface by selecting your actual command-station type (see the "LocoNet Interface,
+      Decoder Programming" row in the table above) instead of the "PR4 Standalone Programmer"
+      type.</p>
 
       <h2>PR4 as a stand-alone decoder programmer</h2>
       <img src="images/PR3-PR4StandaloneProgConnections.png" alt=
