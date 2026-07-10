@@ -347,10 +347,14 @@ log.debug("The process failed account of user error"); // NOI18N
             <li>The 'package' statement at the top should list your package;</li>
 
             <li>The 'class ... extends' should refer to the Bundle class directly above your
-            package;</li>
+            package. If there isn't a Bundle class there, this can refer to a Bundle
+            class in a grandparent package;</li>
 
             <li>The assignment to the 'name' variable should be the name of your local bundle, by
-            convention "jmri/mypackage.Bundle".</li>
+            convention "jmri/mypackage.Bundle". If your code only uses properties
+            defined in parent packages, e.g. your Bundle.properties file would be
+            otherwise empty, assign null to 'name' and don't provide a Bundle.properties file.
+            </li>
           </ol>
         </li>
 
