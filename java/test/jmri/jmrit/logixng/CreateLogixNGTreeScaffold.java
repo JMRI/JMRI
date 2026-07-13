@@ -3453,6 +3453,19 @@ public class CreateLogixNGTreeScaffold {
         }
 
 
+        ForEachRoster actionForEachRoster =
+                new ForEachRoster(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionForEachRoster);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEachRoster = new ForEachRoster(digitalActionManager.getAutoSystemName(), null);
+        actionForEachRoster.setComment("A comment");
+        actionForEachRoster.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEachRoster);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ForEachWithDelay actionForEachWithDelay =
                 new ForEachWithDelay(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionForEachWithDelay);
