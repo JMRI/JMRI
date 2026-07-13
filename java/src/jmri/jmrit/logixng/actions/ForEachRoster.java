@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -64,9 +63,6 @@ public class ForEachRoster extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-
-        AtomicReference<Collection<? extends Object>> collectionRef = new AtomicReference<>();
-        AtomicReference<JmriException> ref = new AtomicReference<>();
 
         var roster = Roster.getDefault();
         roster.getAllEntries();
