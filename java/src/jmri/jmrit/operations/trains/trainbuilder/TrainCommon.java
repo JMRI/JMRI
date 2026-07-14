@@ -2586,7 +2586,7 @@ public class TrainCommon {
             
                 color = ColorUtil.stringToColor(c);
             } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
-                log.error("Exception when getting text color: {} {}", string, e);
+                log.error("Exception when getting text color: {} {}", string, e.getLocalizedMessage());
             }
         }
         return color;
@@ -2628,7 +2628,7 @@ public class TrainCommon {
             try {
                 fontSize = Integer.parseInt(size);
             } catch (NumberFormatException e) {
-                log.error("Font size not an integer: {} Text: {} {}", size, string, e);
+                log.error("Font size not an integer: {} Text: {} {}", size, string, e.getLocalizedMessage());
                 fontSize = Setup.getManifestFontSize();
             }
         }
