@@ -489,7 +489,7 @@
           <li>The LogixNG clipboard window now has the menu item
               <strong>Clear clipboard</strong> in the <strong>Tools</strong>
               menu. It allows you to clear the entire clipboard.</li>
-          <li></li>
+          <li>The action <strong>For each roster</strong> has been added.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
