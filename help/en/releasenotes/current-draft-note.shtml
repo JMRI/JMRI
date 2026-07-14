@@ -543,6 +543,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
+            <li>Added a "ClearBlockValues.py" sample script for clearing block contents.  See
+            comments within it for more info on how to use it.</li>
             <li>Added two scripts to show how to start logging of an LCC or LocoNet 
                 connection as the program starts up</li>
         </ul>
