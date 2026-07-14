@@ -533,8 +533,10 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             if (maxCommentLength < TrainManifestHeaderText.getStringHeader_Pickup_Comment().length()) {
                 maxCommentLength = TrainManifestHeaderText.getStringHeader_Pickup_Comment().length();
             }
-            log.info(Bundle.getMessage("InfoMaxLoadMessage", maxComment, maxCommentLength,
-                    carTypeName, carLoadName));
+            if (!maxComment.isBlank()) {
+                log.info(Bundle.getMessage("InfoMaxLoadMessage", maxComment, maxCommentLength,
+                        carTypeName, carLoadName));
+            }
         }
         return maxCommentLength;
     }

@@ -247,7 +247,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#RoadOptions">Road Options</a></li>
                 <li><a href="#Pools">Track Pools</a></li>
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
-                <li><a href="#PlannedPickUps">Planned Pick Ups</a></li>
+                <li><a href="#PlannedPickUps">Planned Pick Ups (Track Overloading)</a></li>
                 <li><a href="#TrackWorkComments">Manifest Comments</a></li>
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
@@ -335,7 +335,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
         <li><a href="#Locomotives">Locomotives</a>
           <ul>
-            <li><a href="#ImportLocomotives">Import Locomotives</a></li>
+            <li><a href="#ImportLocomotives">Import Locomotives</a>
+              <ul>
+                <li><a href="#ImportLocomotivesRoster">Import Locomotives from the JMRI
+                    Roster</a></li>
+                <li><a href="#ImportLocomotivesFile">Import Locomotives from a File</a></li>
+              </ul></li>
             <li><a href="#LocomotivesAdd">Adding Locomotives to your Roster</a>
               <ul>
                 <li><a href="#LocomotiveHP">Locomotive HP and Tractive Effort</a></li>
@@ -371,7 +376,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#RouteSwitchTime">Departure and Travel Times</a></li>
                 <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
                 <li><a href="#RouteGrade">Grade</a></li>
-                <li><a href="RouteIconCoordinates">Train Icon Coordinates</a></li>
+                <li><a href="#RouteIconCoordinates">Train Icon Coordinates</a></li>
+                <li><a href="#RouteComment">Route Location Comment</a></li>
               </ul></li>
 
             <li><a href="#TrainTurnRoute">Train Turn Route</a></li>
@@ -2230,13 +2236,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         for that particular message.</p>
 
       <p>You can also modify the color of the text by adding the color control text &lt;FONT
-        color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
-        the color change by placing &lt;/FONT&gt; at the end of the line.</p>
+        color="red"&gt; at the start of the text, where "red" is the color text you want. Complete
+        the color change by placing &lt;/FONT&gt; at the end of the text.</p>
 
       <p>If you want your text in bold, at the start of the text add &lt;b&gt; and &lt;/b&gt; at
-        the end of the text. If you use both bold and color controls for a sentence, the entire
-        sentence will be bold and in color. Note that only when using a monospaced font and no
-        color, that it's possible to selectively bold words in a sentence.</p>
+        the end of the text. If you use both bold and color controls for a line, the entire
+        line will be bold and text in color you chose. Note that only when using a monospaced
+        font that it's possible to selectively bold or color words in a line.</p>
+
+      <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
+        text, where "8" is the font size you want. Complete the size change by placing
+        &lt;/FONTSIZE&gt; at the end of the text.</p>
 
       <h3 id="ManifestDayNameMapping">Edit Day to Name Mapping</h3>
 
@@ -2567,8 +2577,25 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       from the edit location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.
 
       <h4>Location Comment</h4>
-      You can enter an optional comment for your location. If you want the comment to print on your
-      Manifests you must select the print location comments <a href="#ManifestComments">option</a>.
+      You can enter an optional comment for your location. You can also select the color of the text
+      and if you want the text to be bold when printed on a Manifest.
+
+      <p>You also have the option to selectively color or bold the text. Add the color control
+        text &lt;FONT color="red"&gt; at the start of the text, where "red" is the color text you
+        want. Complete the color change by placing &lt;/FONT&gt; at the end of the text. To bold
+        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. If
+        you use both bold and color controls for a line, the entire line will be bold and text in
+        color you chose. Note that only when using a monospaced font that it's possible to
+        selectively bold or color words in a line.</p>
+
+      <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
+        line, where "8" is the font size you want. Complete the size change by placing
+        &lt;/FONTSIZE&gt; at the end of the lines you want resized.</p>
+
+      <p>
+        If you want the comment to print on your Manifests you must select the print location
+        comments <a href="#ManifestComments">option</a>.
+      </p>
 
       <h4>Delete Location</h4>
 
@@ -4020,7 +4047,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         interchanges or yards get cleared, the program will assign the outbound car to the available
         interchange or yard and the car will continue to its final destination.</p>
 
-      <h4 id="PlannedPickUps">Planned Pick Ups</h4>
+      <h4 id="PlannedPickUps">Planned Pick Ups (Track Overloading)</h4>
       The program when searching for tracks to set out cars, checks to see if there's space
       available for new cars. Sometimes due to the order that you're building your trains, you know
       better than the program that certain cars will be picked up during your session, say by a
@@ -4039,24 +4066,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         until this train or a later train arrives and picks up the original 10 cars. Therefore you
         might need some temporary track space available to hold the new cars. So if you don't have
         "extra" space for cars, you might not want to use this feature! Note that it is your
-        responsibility when using planned pickups and not the programs to build and terminate a
+        responsibility when using planned pick ups and not the programs to build and terminate a
         train that eliminates the potential overloading.</p>
 
       <p>
-        The following is an example using planned pickups to get a desired set of car moves. Say you
+        The following is an example using planned pick ups to get a desired set of car moves. Say you
         only have two tracks at a location that can hold exactly three cars each. You place three
         cars on each track for a total of six cars. You've configured the program to allow a local
-        switcher to swap the cars on each track. Without planned pickups, when you build the
+        switcher to swap the cars on each track. Without planned pick ups, when you build the
         switcher the program would find both tracks full and the <a href="#BuildReports">build
           report</a> will state that there isn't any space available to move cars to either track. The
         program needs to find an empty spot for a car before it can plan a move. With planned
-        pickups set to 100% for both tracks, it allows the program to plan three car set outs to the
-        full track, because with planned pickups the space consumed by the cars sitting there is
+        pick ups set to 100% for both tracks, it allows the program to plan three car set outs to the
+        full track, because with planned pick ups the space consumed by the cars sitting there is
         ignored. This allows for a complete car swap between the two tracks.
       </p>
 
       <p>Now using the example above we'll show how easy it is to overload a track using planned
-        pickups. If we set the number of moves for the switcher to an odd number the program could
+        pick ups. If we set the number of moves for the switcher to an odd number the program could
         overload one of the two track. Let's try 5 moves for the switcher, with 5 moves the program
         would pull three cars from one track and set them out to the other, and then pull two cars
         from the other track and set them out to the other. Once the switching is complete, one
@@ -4070,8 +4097,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         Also recommended is that you not use the <a href="#AlternateTrack">Alternate Track</a>
-        feature and planned pickups at the same time for a spur. It can defeat car movement from the
+        feature and planned pick ups at the same time for a spur. It can defeat car movement from the
         alternate track to the spur.
+      </p>
+
+      <p>
+        When using <a href="#InterchangeQuickService">Quick Service</a> and planned pick ups for
+        track, only the cars currently sitting on the track before building your trains are ignored.
+        Car delivered later are not evaluated for the planned pick up feature. Once all trains
+        delivering cars to the track are terminated, the planned pick up feature is re-enabled.
       </p>
 
       <h4 id="TrackDestinations">Track Destinations</h4>
@@ -4193,9 +4227,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       Import locations allows you to populate your locations using a CSV file. First do an Export
       Locations and examine the file to see the order the data has to be entered. The import
-      locations code hasn't implemented all of the exports fields and some are ignored. Columns 4
-      through 7, columns 18 through 21, and columns 30 though 40 are currently ignored during an
-      import.
+      locations code hasn't implemented all of the exports fields and some are ignored.
+
+      <p>Ignored fields:</p>
+      <p>Columns 5 through 8; used track length, number of cars, number of locomotives and track
+        moves.</p>
+      <p>Columns 19 through 22; pick up and set out restrictions.</p>
+      <p>Columns 32 though 42; track destinations through block cars by pick up location.</p>
 
       <h4 id="PrintLocation">Print or Preview</h4>
       This tool provides several options with regards to printing or previewing your locations.
@@ -4970,7 +5008,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you already have a list of locomotives in your JMRI roster or in a database, you can import
       the locomotives into the program.
 
-      <h3>Import Locomotives from the JMRI Roster</h3>
+      <h3 id="ImportLocomotivesRoster">Import Locomotives from the JMRI Roster</h3>
       The program will only import locomotives from your JMRI roster that have a road and number. To
       get your locomotives from your JMRI roster, select "Import from JMRI roster" from the
       Tools&rArr;Operations&rArr;Locomotives&rArr;Tools&rArr;Locomotive Roster menu. Only
@@ -4981,7 +5019,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       lengths. If your JMRI roster doesn't provide the locomotive's model, you will have to enter
       one before saving your files.
 
-      <h3>Import Locomotives from a File</h3>
+      <h3 id="ImportLocomotivesFile">Import Locomotives from a File</h3>
       The import from file function requires an ACSII text file, with one line for each locomotive.
       The locomotive import requires four attributes and order is locomotive number, road (reporting
       mark), model, and length. All four attributes are required for the import to work correctly.
@@ -5452,10 +5490,23 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         you're not using the icon feature.
       </p>
 
-      <h4 id="RouteComment">Comment</h4>
+      <h4 id="RouteComment">Route Location Comment</h4>
       <p>Each location in the route can also have an optional comment that will appear in the
         train's Manifests. Press the "Add" button under the table heading "Comment" to add a comment
-        to a location.</p>
+        to a location. You can also select the color of the text and if you want the text to be bold
+        when printed on a Manifest.
+      
+      <p>You also have the option to selectively color or bold the text. Add the color control
+        text &lt;FONT color="red"&gt; at the start of the text, where "red" is the color text you
+        want. Complete the color change by placing &lt;/FONT&gt; at the end of the text. To bold
+        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. If
+        you use both bold and color controls for a line, the entire line will be bold and text in
+        color you chose. Note that only when using a monospaced font that it's possible to
+        selectively bold or color words in a line.</p>
+
+      <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
+        line, where "8" is the font size you want. Complete the size change by placing
+        &lt;/FONTSIZE&gt; at the end of the lines you want resized.</p>
 
       <h4>Save Route</h4>
       Press "Save Route" to save your route. The program will create a file named
@@ -5790,7 +5841,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h4>Train Comment</h4>
-      You can enter an optional comment for your train that will appear on your Manifests.
+      You can enter an optional comment for your train that will appear on your Manifests. You can
+      also select the color of the text and if you want the text to be bold when printed on a
+      Manifest.
+
+      <p>You also have the option to selectively color or bold the text. Add the color control
+        text &lt;FONT color="red"&gt; at the start of the text, where "red" is the color text you
+        want. Complete the color change by placing &lt;/FONT&gt; at the end of the text. To bold
+        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. If
+        you use both bold and color controls for a line, the entire line will be bold and text in
+        color you chose. Note that only when using a monospaced font that it's possible to
+        selectively bold or color words in a line.</p>
+
+      <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
+        line, where "8" is the font size you want. Complete the size change by placing
+        &lt;/FONTSIZE&gt; at the end of the lines you want resized.</p>
 
       <h4 id="TrainReset">Reset Train</h4>
       The "Reset Train" button allows you to remove locomotives and cars that have been assigned to

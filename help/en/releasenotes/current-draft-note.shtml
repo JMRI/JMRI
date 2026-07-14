@@ -501,7 +501,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improvements to the "Two Column" Manifest format for locomotives.</li>
+            <li>Users can now customize font size, color and bold text for location, train, and route location comments. For monospaced fonts, single words can now be colored or in bold.</li>
+            <li>Improvements to the automation "Run Automation".  Now the acton shows the status of the automation to run.</li>
+            <li>"Show Schedules by Load" now shows the which mode (Match or Sequential) was selected for the schedule.</li>
+            <li>The system console now show the name and length of the longest model name for a locomotive.</li>
+            <li>When selection "On Time" mode for the first time, the program now automatically brings up the tool "Modify Locations Quick Service".</li>
+            <li>Improved Manifest and switch list CSV files to only show route comments when they exist.</li>
         </ul>
 
    <h3>Panel Editor</h3>

@@ -228,7 +228,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     updateTrackComments(rl, !IS_MANIFEST);
                     
                     String msg = TrainCommon.getSwitchListTrainStatus(_train, rl);
-                    textTrainStatusPane.setText(msg);
+                    textTrainStatusPane.setText(TrainCommon.getOnlyText(msg));
+                    textTrainStatusPane.setForeground(TrainCommon.getTextColor(msg));
                     textTrainStatusPane.setVisible(!msg.isBlank());
 
                     // check for locos
@@ -238,6 +239,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     blockCars(rl, !IS_MANIFEST);
 
                     textStatus.setText(getStatus(rl, !IS_MANIFEST));
+                    textStatus.setForeground(getStatusColor());
                 }
                 updateComplete();
             }

@@ -1574,6 +1574,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         return format;
     }
+    
+    public static String[] getPickupEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackPickupMessageFormat(getPickupEngineMessageFormat());
+    }
 
     public static String[] getPickupTwoColumnByTrackManifestMessageFormat() {
         return createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
@@ -1600,6 +1604,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             }
         }
         return format;
+    }
+    
+    public static String[] getDropEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackDropMessageFormat(getDropEngineMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackManifestMessageFormat() {
