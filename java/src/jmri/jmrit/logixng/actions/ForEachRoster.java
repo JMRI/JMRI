@@ -65,7 +65,6 @@ public class ForEachRoster extends AbstractDigitalAction
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
         var roster = Roster.getDefault();
-        roster.getAllEntries();
 
         for (RosterEntry rosterEntry : roster.getAllEntries()) {
             symbolTable.setValue(_variableName, rosterEntry);
