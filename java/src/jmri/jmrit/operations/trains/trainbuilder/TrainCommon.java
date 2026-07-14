@@ -2659,10 +2659,9 @@ public class TrainCommon {
 
     /**
      * Used to determine if user has modified the text with bold and color
-     * controls. <b><FONT color="green">Example of program generated color and
-     * bold</FONT></b> If there are two or more bold or color controls, then
-     * user modified text. If there is only one bold and/or color control they
-     * have to be at the start and end of the text string, otherwise modified by
+     * controls. If there are two or more bold or color controls, then user
+     * modified text. If there is only one bold and/or color control they have
+     * to be at the start and end of the text string, otherwise modified by
      * user.
      * 
      * @param string the string to test
