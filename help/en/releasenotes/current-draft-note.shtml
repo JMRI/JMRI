@@ -665,6 +665,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>The standard SortedProperties class has been put in place
+                of the custom jmri.util.OrderedProperties class, which in
+                turn has been deprecated for removal.</li>
             <li>Improve caching of user preferences files when node-specific profile info is present.</li>
             <li>Added a new black sensor icon to the smallschematics/LEDs group.</li>
         </ul>
