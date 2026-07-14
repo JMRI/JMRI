@@ -34,9 +34,14 @@
                 <li></li>
             </ul>
 
-        <h4>DCC++ and DCC-EX</h4>
+        <h4>DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCC-EX turnouts and lights now support a <strong>CS VPIN</strong> mode that
+                drives a VPIN directly via the &lt;z&gt; command (DCC-EX v4.2.35+), with no
+                pre-configuration required on the command station. Set the hardware address to
+                the VPIN number and select "CS VPIN" as the feedback mode (turnouts) or mode
+                (lights). The Mode column in the Light Table only appears when a DCC-EX
+                connection is active. Requires EX-CommandStation firmware v4.2.35 or later.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -481,6 +486,9 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The LogixNG clipboard window now has the menu item
+              <strong>Clear clipboard</strong> in the <strong>Tools</strong>
+              menu. It allows you to clear the entire clipboard.</li>
           <li></li>
         </ul>
 
@@ -535,7 +543,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added two scripts to show how to start logging of an LCC or LocoNet 
+                connection as the program starts up</li>
         </ul>
 
     <h3>Signals</h3>
@@ -611,7 +620,8 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>It's now possible to listen on <strong>Warrant.getRunningMessage()</strong>
+                by listening on the property <strong>PROPERTY_RUNNING_MESSAGE</strong>.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -629,7 +639,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Improved frame layout so that long names won't cause the selector to disappear.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -654,5 +664,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Improve caching of user preferences files when node-specific profile info is present.</li>
+            <li>Added a new black sensor icon to the smallschematics/LEDs group.</li>
         </ul>
 

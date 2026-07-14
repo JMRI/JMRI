@@ -347,6 +347,35 @@ you've committed all your local changes.
 
       <p>Approximately twice a year, a similar process is used to build production releases.</p>
 
+      <h3 id="otherUserBranch">Checkout another user's branch</h3>
+      Sometimes it's useful to checkout another user's branch. It might happen due to an user having
+      a problem and needs help to resolve that. If the user has commited his changes and pushed the
+      changes to his GitHub repository, you can then checkout his branch.
+      
+      <p>First you need to add his repository to your local repository. This only needs to be done once.</p>
+      
+      <pre style="font-family: monospace;">
+    git remote add &lt;username&gt; https://github.com/&lt;username&gt;/JMRI.git
+</pre>
+
+      <p>Then you need to fetch the user's branches.</p>
+
+      <pre style="font-family: monospace;">
+    git fetch &lt;username&gt;
+</pre>
+
+      <p>Then you checkout the branch.</p>
+
+      <pre style="font-family: monospace;">
+    git checkout &lt;username&gt;/&lt;branch&gt;
+</pre>
+
+      <p>It's recommended that you now create your own branch based on the user's branch.</p>
+    
+      <pre style="font-family: monospace;">
+    git checkout -b &lt;my-branch&gt;
+</pre>
+      
       <h3>Who are these people?</h3>
       JMRI is the work of <a href="../../../Acknowledgements.shtml">several hundred people</a>.
       Anybody can contribute their work, large or small to JMRI, either by creating a PR (see
