@@ -58,6 +58,7 @@ public final class DCCppConstants {
     public static final char TURNOUT_CMD            = 'T'; // Turnout command <T id throw> -- NEW versions V1.1
     public static final char SENSOR_CMD             = 'S'; // Sensor command -- NEW V1.1
     public static final char OUTPUT_CMD             = 'Z'; // Output command -- NEW V1.2?
+    public static final char OUTPUT_CMD_LC          = 'z'; // Pin control command <z vpin> / <z -vpin> -- DCC-EX v4.2.35+
     public static final char OPS_WRITE_CV_BYTE      = 'w'; // Write CV byte on ops track
     public static final char OPS_WRITE_CV_BIT       = 'b'; // Set/Clear a single CV bit on ops track
     public static final char PROG_WRITE_CV_BYTE     = 'W'; // Write CV byte on program track
@@ -120,6 +121,7 @@ public final class DCCppConstants {
     public static final String SENSOR_DELETE_REGEX = "S\\s(\\d+)";
     public static final String SENSOR_LIST_REGEX = "S";
     public static final String OUTPUT_CMD_REGEX = "Z\\s(\\d+)\\s([1,0])"; // <Z ID STATE>
+    public static final String OUTPUT_CMD_LC_REGEX = "z\\s*(-?\\d+)\\s*"; // <z [-]VPIN>
     public static final String OUTPUT_ADD_REGEX = "\\s*Z\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // <Z ID PIN IFLAG>
     public static final String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*"; // <Z ID>
     public static final String OUTPUT_LIST_REGEX = "\\s*Z\\s*"; // <Z>
@@ -221,6 +223,7 @@ public final class DCCppConstants {
     // Max JMRI addr = ((MAX_ADDRESS - 1) * (MAX_SUBADDR+1)) + (MAX_SUBADDR) + 1
     public static final int MAX_ACC_DECODER_JMRI_ADDR = 2044;
     public static final int MAX_TURNOUT_ADDRESS = 32767;
+    public static final int MAX_VPIN = 65535;  // DCC-EX vpin numbering is uint16
     public static final int MAX_DIRECT_CV = 1024;
     public static final int MAX_DIRECT_CV_VAL = 255;
     public static final int MAX_CALLBACK_NUM = 32767;
