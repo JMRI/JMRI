@@ -99,8 +99,8 @@ public abstract class AbstractMonPane extends JmriPanel {
     String autoScrollCheck = this.getClass().getName() + ".AutoScroll"; // NOI18N
     String filterFieldCheck = this.getClass().getName() + ".FilterField"; // NOI18N
 
-    // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
+    // to find and remember the log file. Public for script access
+    public final javax.swing.JFileChooser logFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
     public AbstractMonPane() {
         super();
