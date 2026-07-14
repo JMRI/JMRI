@@ -854,6 +854,18 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Output Cmd: ID: 23, State: LOW", msg.toMonitorString());
     }
 
+    @Test
+    public void testOutputCmdReplyExpected() {
+        Assert.assertTrue("uppercase <Z> expects a reply", DCCppMessage.makeOutputCmdMsg(23, true).replyExpected());
+    }
+
+    @Test
+    public void testOutputCmdLCNoReplyExpected() {
+        // lowercase <z> is fire-and-forget; no reply from CS
+        Assert.assertFalse("lowercase <z> on does not expect a reply", DCCppMessage.makeOutputCmdMsgLC(26, true).replyExpected());
+        Assert.assertFalse("lowercase <z> off does not expect a reply", DCCppMessage.makeOutputCmdMsgLC(26, false).replyExpected());
+    }
+
     @BeforeEach
     @Override
     public void setUp() {

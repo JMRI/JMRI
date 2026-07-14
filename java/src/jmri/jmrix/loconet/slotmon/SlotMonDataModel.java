@@ -1,5 +1,10 @@
 package jmri.jmrix.loconet.slotmon;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -30,42 +35,43 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     public static final int SPDCOLUMN = 3;
     public static final int TYPECOLUMN = 4;
     public static final int STATCOLUMN = 5;  // status: free, common, etc
-    public static final int DISPCOLUMN = 6;  // originally "dispatch" button, now "free"
-    public static final int CONSCOLUMN = 7;  // consist state
-    public static final int CONSISTADDRESS = 8; //consist address
-    public static final int THROTCOLUMN = 9;
-    public static final int DIRCOLUMN = 10;
-    public static final int F0COLUMN = 11;
-    public static final int F1COLUMN = 12;
-    public static final int F2COLUMN = 13;
-    public static final int F3COLUMN = 14;
-    public static final int F4COLUMN = 15;
-    public static final int F5COLUMN = 16;
-    public static final int F6COLUMN = 17;
-    public static final int F7COLUMN = 18;
-    public static final int F8COLUMN = 19;
-    public static final int F9COLUMN = 20;
-    public static final int F10COLUMN = 21;
-    public static final int F11COLUMN = 22;
-    public static final int F12COLUMN = 23;
-    public static final int F13COLUMN = 24;
-    public static final int F14COLUMN = 25;
-    public static final int F15COLUMN = 26;
-    public static final int F16COLUMN = 27;
-    public static final int F17COLUMN = 28;
-    public static final int F18COLUMN = 29;
-    public static final int F19COLUMN = 30;
-    public static final int F20COLUMN = 31;
-    public static final int F21COLUMN = 32;
-    public static final int F22COLUMN = 33;
-    public static final int F23COLUMN = 34;
-    public static final int F24COLUMN = 35;
-    public static final int F25COLUMN = 36;
-    public static final int F26COLUMN = 37;
-    public static final int F27COLUMN = 38;
-    public static final int F28COLUMN = 39;
+    public static final int LASTUPDATE = 6;
+    public static final int DISPCOLUMN = 7;  // originally "dispatch" button, now "free"
+    public static final int CONSCOLUMN = 8;  // consist state
+    public static final int CONSISTADDRESS = 9; //consist address
+    public static final int THROTCOLUMN = 10;
+    public static final int DIRCOLUMN = 11;
+    public static final int F0COLUMN = 12;
+    public static final int F1COLUMN = 13;
+    public static final int F2COLUMN = 14;
+    public static final int F3COLUMN = 15;
+    public static final int F4COLUMN = 16;
+    public static final int F5COLUMN = 17;
+    public static final int F6COLUMN = 18;
+    public static final int F7COLUMN = 19;
+    public static final int F8COLUMN = 20;
+    public static final int F9COLUMN = 21;
+    public static final int F10COLUMN = 22;
+    public static final int F11COLUMN = 23;
+    public static final int F12COLUMN = 24;
+    public static final int F13COLUMN = 25;
+    public static final int F14COLUMN = 26;
+    public static final int F15COLUMN = 27;
+    public static final int F16COLUMN = 28;
+    public static final int F17COLUMN = 29;
+    public static final int F18COLUMN = 30;
+    public static final int F19COLUMN = 31;
+    public static final int F20COLUMN = 32;
+    public static final int F21COLUMN = 33;
+    public static final int F22COLUMN = 34;
+    public static final int F23COLUMN = 35;
+    public static final int F24COLUMN = 36;
+    public static final int F25COLUMN = 37;
+    public static final int F26COLUMN = 38;
+    public static final int F27COLUMN = 39;
+    public static final int F28COLUMN = 40;
 
-    //public static final int NUMCOLUMN = 40; Number of columns comes from the pane.
+    //public static final int NUMCOLUMN = 41; Number of columns comes from the pane.
 
     private int numRows = 128;
     private int columns;
@@ -197,6 +203,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return Throttle.getFunctionString(28);
             case THROTCOLUMN:
                 return Bundle.getMessage("ThrottleIDCol");
+            case LASTUPDATE:
+                return Bundle.getMessage("LastUpdate");
             default:
                 return "unknown"; // NOI18N
         }
@@ -215,6 +223,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case CONSCOLUMN:
             case DIRCOLUMN:
             case THROTCOLUMN:
+            case LASTUPDATE:
                 return String.class;
             case ESTOPCOLUMN:
             case DISPCOLUMN:
@@ -460,7 +469,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 int upper = (s.id() >> 7) & 0x7F;
                 int lower = s.id() & 0x7F;
                 return StringUtil.twoHexFromInt(upper) + " " + StringUtil.twoHexFromInt(lower);
-
+            case LASTUPDATE:
+                Instant instant = Instant.ofEpochMilli(s.getLastUpdateTime());
+                ZonedDateTime dateTime = instant.atZone(ZoneId.systemDefault());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String formattedDateTime = dateTime.format(formatter);
+                if (s.getSlowScanStartedAt() != 0) {
+                    formattedDateTime=Bundle.getMessage("LastUpdateSlowScan",formattedDateTime);
+                }
+                return formattedDateTime;
             default:
                 log.error("internal state inconsistent with table requst for {} {}", row, col);
                 return null;
@@ -493,6 +510,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
                 return new JTextField(7).getPreferredSize().width;
+            case LASTUPDATE:
+                return new JTextField("SS HH:MM:SS ").getPreferredSize().width;
             case F0COLUMN:
             case F1COLUMN:
             case F2COLUMN:
