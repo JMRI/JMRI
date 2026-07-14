@@ -153,7 +153,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.8.6 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.6/openlcb-0.8.6.jar
- - with PRs through #303 pre-release https://github.com/openlcb/OpenLCB_Java/pull/303
+ - with PRs through #304 pre-release https://github.com/openlcb/OpenLCB_Java/pull/304
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -177,7 +177,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - see <jdom.org>
 - from Maven Central https://mvnrepository.com/artifact/org.jdom/jdom2/2.0.6.1
 
-##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
+##### jackson-annotations-2.22.jar, jackson-core-2.22.0.jar, jackson-databind-2.22.0.jar, jackson-datatype-jsr310-2.22.0.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 

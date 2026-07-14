@@ -97,13 +97,13 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.15.10 5.17.1 5.17.2
+  ./scripts/update-HOWTO.sh 5.15.11 5.17.1 5.17.2
 ```
 
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
 
-- To check the script ran OK, the following should be the release you're doing now: 5.15.10
+- To check the script ran OK, the following should be the release you're doing now: 5.15.11
 
 - Make sure that the release.branch property in release.properties has the right value for what you want to do.  Typically, this has been a release from the `master` branch,
 and that’s assumed here. Be careful of these instructions if you’re working from
@@ -113,7 +113,7 @@ something else.
 
 ## Notification
 
-- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 5.15.10". (This [might already exist](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+5.15.10%22), if it was properly created at the end of the last build cycle)  Typical content:
+- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 5.15.11". (This [might already exist](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+5.15.11%22), if it was properly created at the end of the last build cycle)  Typical content:
 ```
 This is the next release in the 5.15 cycle. It's intended to be created from the HEAD of the master branch.
 ```
@@ -246,7 +246,7 @@ This is the next release in the 5.15 cycle. It's intended to be created from the
 - Commit the current copy of these notes, then push directly back to master on GitHub.
 
 ```
-        git commit -m"for 5.15.10" scripts/HOWTO-distribution.md
+        git commit -m"for 5.15.11" scripts/HOWTO-distribution.md
         git push github
 ```
 
@@ -267,7 +267,7 @@ This section describes in detail the process for creating the release note for a
         cd releasenotes
         git checkout master
         git pull
-        cp jmri5.15.10.shtml jmri5.17.1.shtml
+        cp jmri5.15.11.shtml jmri5.17.1.shtml
         $EDITOR jmri5.17.1.shtml
 ```
 
@@ -293,22 +293,22 @@ This section describes in detail the process for creating the release note for a
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
 ```
-        ${EDITOR} help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri5.15.10.shtml
+        ${EDITOR} help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri5.15.11.shtml
 ```
 
 - Merge the new warnings (if any) from help/en/releasenotes/current-warnings.shtml in the JMRI/JMRI repository into the actual release note in website repository:
 ```
-        ${EDITOR} help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri5.15.10.shtml
+        ${EDITOR} help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri5.15.11.shtml
 ```
 
  - Add any new warnings to the old warnings section of the next (5.17.1) release note:
 ```
-        ${EDITOR} ../website/releasenotes/jmri5.15.10.shtml ../website/releasenotes/jmri5.17.1.shtml
+        ${EDITOR} ../website/releasenotes/jmri5.15.11.shtml ../website/releasenotes/jmri5.17.1.shtml
 ```
 
 - Clean out the unneeded sections from the release note
 ```
-        ${EDITOR} ../website/releasenotes/jmri5.15.10.shtml
+        ${EDITOR} ../website/releasenotes/jmri5.15.11.shtml
 ```
 
 - Create the new draft note section
@@ -323,7 +323,7 @@ This section describes in detail the process for creating the release note for a
 - Commit release note, push and pull back
 ```
         cd ../website/releasenotes
-        git commit -m"updated 5.15.10 release notes" jmri5.*
+        git commit -m"updated 5.15.11 release notes" jmri5.*
         git push github
         git pull
         cd ../../JMRI
@@ -343,7 +343,7 @@ This section describes in detail the process for creating the release note for a
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.15.9-SNAPSHOT/5.15.10-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.15.9-SNAPSHOT/5.15.11-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
@@ -352,18 +352,18 @@ This section describes in detail the process for creating the release note for a
         sed -i.bak s/release.build=9/release.build=10/g release.properties
         head -10 release.properties
 ```
- - Check that both those edits left 5.15.10 defined in the two files
+ - Check that both those edits left 5.15.11 defined in the two files
  
  - Commit them back
  
 ```
-        git commit -m"5.15.10 until next release" release.properties pom.xml
+        git commit -m"5.15.11 until next release" release.properties pom.xml
 ```
 
  - Recreate the Software BOM. For instructions on how to install `spdx-sbom-generator` see the [project page](https://github.com/opensbom-generator/spdx-sbom-generator). Note that a large number of changes from the previous version of the `lib/bom-Java-Maven.spdx` file are expected:  The bill of materials is processed in parallel, and the output order depends on which Maven repository responded quickest.
 ```
         spdx-sbom-generator -o lib
-        git commit -m"SBOM update for 5.15.10" lib/bom-Java-Maven.spdx
+        git commit -m"SBOM update for 5.15.11" lib/bom-Java-Maven.spdx
         
         git push github
 ```
@@ -382,41 +382,41 @@ This section describes in detail the process for creating the release note for a
         git pull
 ```
 
-- Remove the 5.15.10 milestone on [unmerged PRs or [click here]](https://github.com/JMRI/JMRI/pulls?q=is%3Aopen+is%3Apr+milestone%3A5.15.10)
+- Remove the 5.15.11 milestone on [unmerged PRs or [click here]](https://github.com/JMRI/JMRI/pulls?q=is%3Aopen+is%3Apr+milestone%3A5.15.11)
 
-- Check on GitHub that [`release.properties`](https://github.com/JMRI/JMRI/blob/master/release.properties) on `master` is showing 5.15.10
+- Check on GitHub that [`release.properties`](https://github.com/JMRI/JMRI/blob/master/release.properties) on `master` is showing 5.15.11
 
-- Create a `release-5.15.10` branch on GitHub
+- Create a `release-5.15.11` branch on GitHub
 ```
-        git checkout -b release-5.15.10
+        git checkout -b release-5.15.11
         git push github
 ```
 
-- Put the following comment in the [release GitHub item](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+5.15.10%22) saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
+- Put the following comment in the [release GitHub item](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+5.15.11%22) saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
 ```
-The release-5.15.10 branch has been created.
+The release-5.15.11 branch has been created.
 
 Maintainers, please set the 5.17.1 milestone on pulls from now on, as that will be the next test release.
 
-Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/)
+Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/)
 ```
 
 
 - For the last test release before a production release:
 
 ```
-The release-5.15.10 branch has been created.
+The release-5.15.11 branch has been created.
 
 Maintainers, please set the (next series, i.e. 5.17.1) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.15.10/)
+Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.15.11/)
 
-If you're developing any additional (post-5.15.10) changes that you want in the JMRI 5.16 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.15.10; git checkout -b myBranchName` to start your work.
+If you're developing any additional (post-5.15.11) changes that you want in the JMRI 5.16 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.15.11; git checkout -b myBranchName` to start your work.
 ```
 
 
-- Fetch back to make sure your repository is fully up to date but stay on the release-5.15.10 branch
+- Fetch back to make sure your repository is fully up to date but stay on the release-5.15.11 branch
 
 ================================================================================
 
@@ -428,13 +428,13 @@ If you're developing any additional (post-5.15.10) changes that you want in the 
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.15.10 release name at the top. Enter the 5.15.7 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.15.11 release name at the top. Enter the 5.15.7 most recent release at the bottom.  Click "OK"
 
 - Update
 
         Description
         Source Code Management:
-           Branch Specified:  5.15.10
+           Branch Specified:  5.15.11
 
 - Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours "Shallow Clone" is checked, Shallow Clone Depth is 1, and time out is 20.
 
@@ -442,7 +442,7 @@ If you're developing any additional (post-5.15.10) changes that you want in the 
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
-- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature. If there is a non-zero code, resolve that and rebuild before proceeding!
+- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature. If there is a non-zero code, resolve that and rebuild before proceeding!
 
 ================================================================================
 
@@ -460,35 +460,36 @@ This should be done on a machine with only one display.
 
 - Connect `jconsole` to the test class when it appears.
 
-- When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 5.15.10](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+5.15.10%22)" Github issue so that historical resource usage info is available.
+- When that's done, put a screen-shot of the four monitor graphs into the "[Create Test Release 5.15.11](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+%22Create+Test+Release+5.15.11%22)" Github issue so that historical resource usage info is available.
 
 ================================================================================
 
 ## Put Files Out For Checking
 
-- Announce the file set via [email to jmri@jmri-developers.groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%205.15.10%20files%20available) with a subject line
+- Announce the file set via [email to jmri@jmri-developers.groups.io](mailto:jmri@jmri-developers.groups.io?subject=First%205.15.11%20files%20available) with a subject line
 
 
 ```
-"First 5.15.10 files available":
+"First 5.15.11 files available":
 ```
 
-(You have to update the tag part of the direction links)
+*(You have to update the tag part of the direction links below)* 
+Recommended content:
 
 ```
-First JMRI 5.15.10 files are available in the usual way at:
+First JMRI 5.15.11 files are available in the usual way at:
 
-https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/
+https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/
 
-The Jenkins machine is currently getting a heavy load of web-spider requests, and you may get errors accessing that page.  I'm sorry about that, but I don't know what else to do about that. Please try again in that case.
+The Jenkins machine is currently getting a heavy load of web-spider requests, and you may get errors accessing that page.  I'm sorry about that, but I don't know what else to do about it. Please try again in that case.
 
 If you want to pick the files up directly with curl, wget or another tool, the links are
 
-https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Redb35646a6.dmg
-https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Redb35646a6.exe
-https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.10+Redb35646a6.tgz
+https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.11+Re5fcc00c8a.dmg
+https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.11+Re5fcc00c8a.exe
+https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.11+Re5fcc00c8a.tgz
 
-Feedback appreciated! I would like to release this later today or tomorrow morning if the files are OK on macOS, Linux and Windows.
+Feedback appreciated! I would like to release this later today or tomorrow morning if the files are OK on macOS, Windows and Linux.
 
 Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to do better functional checking of the development releases leading up to the test release build)
 
@@ -504,11 +505,11 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 
 Do not allow changes between the last test release and a production release. If changes are needed, create another test release instead.
 
-These instructions result in the initial release-5.15.10 branch label being attached to the master branch sequence.  If somebody commits to master after that, master will move along with additional contents. Once that happens, if you want to include _all_ merges to master to date, you can just move the release-5.15.10 branch forward on master to the current head (and update the release note, decoderIndex and help files as needed)
+These instructions result in the initial release-5.15.11 branch label being attached to the master branch sequence.  If somebody commits to master after that, master will move along with additional contents. Once that happens, if you want to include _all_ merges to master to date, you can just move the release-5.15.11 branch forward on master to the current head (and update the release note, decoderIndex and help files as needed)
 
-If you want to add something to release-5.15.10 and _not_ include other additions to master, you have to branch the contents of release-5.15.10 away from master.  This section describes how to do that.
+If you want to add something to release-5.15.11 and _not_ include other additions to master, you have to branch the contents of release-5.15.11 away from master.  This section describes how to do that.
 
-- Ideally, start the work on either the release-5.15.10 branch (if working after that was started) or on a branch-from-master that's _before_ the release-5.15.10 branch was created.  That way, the change can be cleanly included in the release branch, and also directly onto master.
+- Ideally, start the work on either the release-5.15.11 branch (if working after that was started) or on a branch-from-master that's _before_ the release-5.15.11 branch was created.  That way, the change can be cleanly included in the release branch, and also directly onto master.
 
 - Commit their changes to that branch, and push as needed to get it to their GitHub fork.
 
@@ -516,7 +517,7 @@ If you want to add something to release-5.15.10 and _not_ include other addition
 
    - One to master, as usual
 
-   - One to the release branch e.g. "release-5.15.10".  The comment on this PR should explain why this should be included instead of waiting for the next release.
+   - One to the release branch e.g. "release-5.15.11".  The comment on this PR should explain why this should be included instead of waiting for the next release.
 
    Merging the PR to the master makes those changes available on further developments forever; the one on the release, if accepted, includes the change and kicks off new runs of the various CI and build jobs.
 
@@ -524,13 +525,13 @@ If you want to add something to release-5.15.10 and _not_ include other addition
 
 - If somebody has merged their change into master (or it's branched from master later than the release tag), you have two choices:
 
-   - Merge master into the release-5.15.10 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.
+   - Merge master into the release-5.15.11 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.
 
    - `git cherrypick` just the changes you want onto the release-511.1 branch. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
-- Make sure that the 5.15.10 milestone is on the original PR and any others that have been pulled in
+- Make sure that the 5.15.11 milestone is on the original PR and any others that have been pulled in
 
-- If the PR(s) has any changes to the help/en/releasenotes directory, go through the steps to update the master if any section(s) were added, and to move notes and warnings to the 5.15.10 release note.  Merge these as needed to the release-5.15.10 and master branches
+- If the PR(s) has any changes to the help/en/releasenotes directory, go through the steps to update the master if any section(s) were added, and to move notes and warnings to the 5.15.11 release note.  Merge these as needed to the release-5.15.11 and master branches
 
 - If needed, remake the decoder index and helpfile meta data
 
@@ -545,19 +546,19 @@ Once you have acceptable files available, you can proceed.
 The following will take several minutes, so be patient:
 
 ```
-git checkout release-5.15.10
+git checkout release-5.15.11
 ant realclean compile
 cd target
-rm -f properties.5.15.10.zip
+rm -f properties.5.15.11.zip
 
 for x in `find classes -name \*.properties`; do
-printf '%s\n' 0a '# from tag v5.15.10' . x | ex $x
+printf '%s\n' 0a '# from tag v5.15.11' . x | ex $x
 done
 
-find classes -name \*.properties | zip -@ properties.5.15.10.zip
+find classes -name \*.properties | zip -@ properties.5.15.11.zip
 cd ..
 mkdir release
-mv target/properties.5.15.10.zip release/
+mv target/properties.5.15.11.zip release/
 ls -lt release/
 git checkout master
 
@@ -571,18 +572,18 @@ Note: Before the next step will work, you may have to go to CloudFlare.com, sign
 
 Run a script to download the created files, create checksums and create text for release notes, etc
 ```
-./scripts/releasesummary 5.15.10
+./scripts/releasesummary 5.15.11
 ```
-(This attempts a large ~628MB download.  If it fails, [download the files](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/) individually     
+(This attempts a large ~630MB download.  If it fails, [download the files](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/) individually     
 
-    https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/
+    https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/
 
 and put them in a `release/` directory in your working directory, then repeat the command)
 
 This will print a bunch of text in several sections. Edit that into the website/releaselist, release note files and GitHub info below in this file.
 
 ```
-${EDITOR} ../website/releaselist ../website/releasenotes/jmri5.15.10.shtml scripts/HOWTO-distribution.md
+${EDITOR} ../website/releaselist ../website/releasenotes/jmri5.15.11.shtml scripts/HOWTO-distribution.md
 ```
 
 ====================================================================================
@@ -591,7 +592,7 @@ ${EDITOR} ../website/releaselist ../website/releasenotes/jmri5.15.10.shtml scrip
 
 Note: Once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
-- Disable the Jenkins [release-build project](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.10/); this is so it doesn't fail after later steps
+- Disable the Jenkins [release-build project](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.11/); this is so it doesn't fail after later steps
 
 - on GitHub JMRI/JMRI go to the "[releases](https://github.com/JMRI/JMRI/releases/new)" link, then click "Draft a new release" e.g.
 ```
@@ -600,24 +601,22 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
 - Fill out form:
 
-   - "tag version field" gets v5.15.10 (note leading lower-case "v"!)
-   - @ branch: select the release-5.15.10 release branch
-   - "Release title" field gets "Prod/Test Release 5.15.10"
+   - "tag version field" gets v5.15.11 (note leading lower-case "v"!)
+   - @ branch: select the release-5.15.11 release branch
+   - "Release title" field gets "Prod/Test Release 5.15.11"
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
 
-
-[Release notes](https://jmri.org/releasenotes/jmri5.15.10.shtml)
+[Release notes](https://jmri.org/releasenotes/jmri5.15.11.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.15.10+R1cad2d78d8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+R1cad2d78d8.dmg) | e4add02eb16595d09e00d0800ebc235bb20848254811df7519fbe47a7f10e52a
-[JMRI.5.15.10+R1cad2d78d8.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+R1cad2d78d8.exe) | ea0451786a8fa199e51ba66e2bd6d5ae6fc97b0753ecd32e1c32e6e980518926
-[JMRI.5.15.10+R1cad2d78d8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.10/JMRI.5.15.10+R1cad2d78d8.tgz) | dac02802420df1ea52bde9e3f70d41395834af2dbe18f1be4f509186e8dc2761
-
+[JMRI.5.15.11+Re6f137d282.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.11/JMRI.5.15.11+Re6f137d282.dmg) | 86fcbc3397f4277979c1ed7936091599114bfa6001e6aba21262317137eb4289
+[JMRI.5.15.11+Re6f137d282.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.11/JMRI.5.15.11+Re6f137d282.exe) | fe7774678f3a83605bedb4017c21e264e2c4c173c7e673caf6f2a2e480d12a24
+[JMRI.5.15.11+Re6f137d282.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.11/JMRI.5.15.11+Re6f137d282.tgz) | 187f768acecef72ad337f2f71e432dd0e0521f80a68bb3cbac76fea275d45f71
 
 ```
 
@@ -640,7 +639,7 @@ File | SHA256 checksum
 If there were changes once the release was tagged, it's important that those changes also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then (*need a cleaner, more robust mechanism for this*; maybe GitX or a PR?):
 
 ```
-git diff master...release-5.15.10
+git diff master...release-5.15.11
 ```
 
 Note that you're testing the merge of the release branch back onto master.  This should report no differences, with the possible exception of some auto-generated files:
@@ -672,7 +671,7 @@ If there are any changes in other files, do both of:
 This is the next release in the 5.18 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 
-- Confirm that the tag for the current release (v5.15.10 for release 5.15.10) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-5.15.10) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
+- Confirm that the tag for the current release (v5.15.11 for release 5.15.11) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-5.15.11) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "[afterNextTestRelease](https://github.com/JMRI/JMRI/labels/After%20Next%20Test%20Release)" (and "[afterNextProductionRelease](https://github.com/JMRI/JMRI/labels/After%20Next%20Production%20Release)" if appropriate) labels from pending items
 
@@ -690,14 +689,14 @@ This is the next release in the 5.18 cycle. It's intended to be created from the
 
 - Update the release note with date, name, remove warning about draft, download links, one last check of release numbers throughout
 ```
-        ${EDITOR}  releasenotes/jmri5.15.10.shtml
+        ${EDITOR}  releasenotes/jmri5.15.11.shtml
 ```
 
 - If this is a production release and there is no superceding test release, comment out the sections in index.shtml and download/index.shtml (three total) that list the current test release.  If this is the first test release of a new sequence, after a production release, uncomment those sections.
 
 - Commit site, push to github
 ```
-        git commit -m"5.15.10 web site" .
+        git commit -m"5.15.11 web site" .
         git push github
         git pull
 ```
@@ -712,31 +711,31 @@ This is the next release in the 5.18 cycle. It's intended to be created from the
 
 - Mail announcement to
 
-[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20release%205.15.10%20of%20JMRI/DecoderPro%20is%20available%20for%20download%20#announcement&body=Test%20release%205.15.10%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20July%202026.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20releases%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20release,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.15.10.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.15.10%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.15.10.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.15.10.shtml>%0A)
+[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20release%205.15.11%20of%20JMRI/DecoderPro%20is%20available%20for%20download%20#announcement&body=Test%20release%205.15.11%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20July%202026.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20releases%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20release,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.15.11.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.15.11%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.15.11.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.15.11.shtml>%0A)
 
 Subject:
 
-   "Test release 5.15.10 of JMRI/DecoderPro is available for download #announcement"
+   "Test release 5.15.11 of JMRI/DecoderPro is available for download #announcement"
     or
    "JMRI 5.16 is available for download #announcement"
 
 Content:
 
-    Test release 5.15.10 of JMRI/DecoderPro is available for download.
+    Test release 5.15.11 of JMRI/DecoderPro is available for download.
 
     This is the next in a series of test releases that will culminate in a production release, hopefully in June 2026. It's really helpful when people download, install and use these test releases so we can find and fix any inadvertent new problems early.
 
     If you are currently using JMRI 4.99.10 or earlier, there is an update process that we strongly recommend. See the release note section on updates:
-    <https://www.jmri.org/releasenotes/jmri5.15.10.shtml#update>
+    <https://www.jmri.org/releasenotes/jmri5.15.11.shtml#update>
 
-    For more information on the issues, new features and bug fixes in 5.15.10 please see the release note:
-    <https://www.jmri.org/releasenotes/jmri5.15.10.shtml>
+    For more information on the issues, new features and bug fixes in 5.15.11 please see the release note:
+    <https://www.jmri.org/releasenotes/jmri5.15.11.shtml>
 
     Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
     <https://www.jmri.org/Copyright.html>
 
     The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
-    <https://www.jmri.org/releasenotes/jmri5.15.10.shtml>
+    <https://www.jmri.org/releasenotes/jmri5.15.11.shtml>
 
 You might want to edit it, i.e. to add
 
@@ -744,9 +743,9 @@ You might want to edit it, i.e. to add
     - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
 
 
-- Close the [5.15.10 release GitHub Issue](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+%22Create+Test+Release+5.15.10%22) with a comment saying that
+- Close the [5.15.11 release GitHub Issue](https://github.com/JMRI/JMRI/issues?q=is%3Aissue+%22Create+Test+Release+5.15.11%22) with a comment saying that
 ```
-    JMRI 5.15.10 has been released. Files are available in the GitHub release section.
+    JMRI 5.15.11 has been released. Files are available in the GitHub release section.
 
 ```
 - Commit this document and push back to GitHub
@@ -814,7 +813,7 @@ you want to have it anyway to update the .nsi files and rebuild it, start by get
 - Get the release in your local work directory
 
 ```
-    git checkout release-5.15.10
+    git checkout release-5.15.11
 ```
 
 - edit release.properties to say `release.official=true` (near the bottom) **Do not commit this back**
@@ -890,9 +889,9 @@ Some of the operations that are performed will still generate files with CRLF li
 Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
 
 ```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v5.15.10 -n "JMRI.5.9.8+Rd144052.dmg" -f /var/lib/jenkins/jobs/testreleases/jobs/5.15.10/builds/4/archive/dist/release/JMRI.5.15.10+Rd144052.dmg
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v5.15.10 -n "JMRI.5.9.8+Rd144052.exe" -f /var/lib/jenkins/jobs/testreleases/jobs/5.15.10/builds/4/archive/dist/release/JMRI.5.15.10+Rd144052.exe
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v5.15.10 -n "JMRI.5.9.8+Rd144052.tgz" -f /var/lib/jenkins/jobs/testreleases/jobs/5.15.10/builds/4/archive/dist/release/JMRI.5.15.10+Rd144052.tgz
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v5.15.11 -n "JMRI.5.9.8+Rd144052.dmg" -f /var/lib/jenkins/jobs/testreleases/jobs/5.15.11/builds/4/archive/dist/release/JMRI.5.15.11+Rd144052.dmg
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v5.15.11 -n "JMRI.5.9.8+Rd144052.exe" -f /var/lib/jenkins/jobs/testreleases/jobs/5.15.11/builds/4/archive/dist/release/JMRI.5.15.11+Rd144052.exe
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v5.15.11 -n "JMRI.5.9.8+Rd144052.tgz" -f /var/lib/jenkins/jobs/testreleases/jobs/5.15.11/builds/4/archive/dist/release/JMRI.5.15.11+Rd144052.tgz
 ```
 
 It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins

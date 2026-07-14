@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.15.10-SNAPSHOT</version>
+    <version>5.15.11-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -22,9 +22,10 @@
         <jemmy.version>RELEASE125</jemmy.version>
         <slf4j.version>2.0.17</slf4j.version>
         <log4j.version>2.25.3</log4j.version>
-        <jackson-core.version>2.13.4</jackson-core.version>
-        <jackson-databind.version>2.13.4.2</jackson-databind.version>
-        <jackson-annotations.version>2.13.4</jackson-annotations.version>
+        <jackson-core.version>2.22.0</jackson-core.version>
+        <jackson-databind.version>2.22.0</jackson-databind.version>
+        <jackson-annotations.version>2.22</jackson-annotations.version>
+        <jackson-datatype-jsr310.version>2.22.0</jackson-datatype-jsr310.version>
         <jogamp.version>2.5.0</jogamp.version>
         <openlcb.version>0.8.6</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
@@ -1395,6 +1396,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-api</artifactId>
             <version>${jetty.version}</version>
@@ -1568,10 +1575,8 @@
             <!-- The next two lines force use of the local lib/openlcb.jar file. -->
             <!-- This is needed when we're using a custom openlcb.jar file -->
             <!-- not yet available on a maven repository. -->
-            <!-- 
                 <scope>system</scope>
                 <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
-             -->
         </dependency>
         <dependency>
             <groupId>com.github.weisj</groupId>
