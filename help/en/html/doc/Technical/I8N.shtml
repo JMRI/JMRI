@@ -74,7 +74,7 @@ string; to the right of the equals sign is the String that will be displayed.
       <em>NamedBeanBundle</em>, located in the jmri package. A next level is inside the jmri.jmrit
       (Tools) directory, where the Bundle.properties bundle contains keys common for all tools,
       such as the names of colors and other Tools interface strings.</p>
-
+    
       <h2>Adapting to a new language</h2>
       The primary steps to adapt JMRI to a new language are:
       <ol>
@@ -319,6 +319,21 @@ log.debug("The process failed account of user error"); // NOI18N
 // This comment is in English and need not be annotated w.r.t. internationalization
 </pre>
 
+      To make it easier for translators, please:
+      <ul>
+        <li>When adding a new item, do not include it in the files for 
+            other languages unless you can also provide the translated language.
+            E.g. don't copy the item into other non-default files using the 
+            English phrase.  You might think that this is being helpful,
+            but it interferes with tools that the translators use to 
+            find untranslated strings.
+        <li>If you want to <u>change</u> the text associated with an entry,
+            create a new entry instead.  E.g. if you want to change the
+            &quot;Error123&quot; string above to something else, 
+            leave that entry as it is and create a new &quot;Error123_2&quot;
+            entry in both the .properties file and the code.
+      </ul>
+
       <h3>Adding a new Bundle</h3>
 
       <p>If your package does not already have a Bundle class, you can add it by:</p>
@@ -332,10 +347,13 @@ log.debug("The process failed account of user error"); // NOI18N
             <li>The 'package' statement at the top should list your package;</li>
 
             <li>The 'class ... extends' should refer to the Bundle class directly above your
-            package;</li>
+            package. If there isn't a Bundle class there, please install one there too;</li>
 
             <li>The assignment to the 'name' variable should be the name of your local bundle, by
-            convention "jmri/mypackage.Bundle".</li>
+            convention "jmri/mypackage.Bundle". If your code only uses properties
+            defined in parent packages, e.g. your Bundle.properties file would be
+            otherwise empty, assign null to 'name' and don't provide a Bundle.properties file.
+            </li>
           </ol>
         </li>
 
