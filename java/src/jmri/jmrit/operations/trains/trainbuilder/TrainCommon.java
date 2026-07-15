@@ -48,6 +48,9 @@ public class TrainCommon {
     protected static final String TEXT_COLOR_END = "</FONT>";
     protected static final String TEXT_BOLD = "<b>";
     protected static final String TEXT_BOLD_END = "</b>";
+    protected static final String TEXT_SIZE_START = "<FONT size=\"";
+    protected static final String TEXT_SIZE_DONE = "\">";
+    protected static final String TEXT_SIZE_END = "</FONTSIZE>";
 
     // when true a pick up, when false a set out
     protected static final boolean PICKUP = true;
@@ -79,21 +82,75 @@ public class TrainCommon {
     protected void blockLocosTwoColumn(PrintWriter file, List<Engine> engineList, RouteLocation rl,
             boolean isManifest) {
         if (isThereWorkAtLocation(null, engineList, rl)) {
-            printEngineHeader(file, isManifest);
+            printEngineHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
         }
         int lineLength = getLineLength(isManifest);
         for (Engine engine : engineList) {
             if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(Engine.NONE)) {
-                String pullText = padAndTruncate(pickupEngine(engine).trim(), lineLength / 2);
+                String pullText = padAndTruncate(pickupEngine(engine, !IS_TWO_COLUMN_TRACK).trim(), lineLength / 2);
                 pullText = formatColorString(pullText, Setup.getPickupEngineColor());
                 String s = pullText + VERTICAL_LINE_CHAR + tabString("", lineLength / 2 - 1);
                 addLine(file, s);
             }
             if (engine.getRouteDestination() == rl) {
-                String dropText = padAndTruncate(dropEngine(engine).trim(), lineLength / 2 - 1);
+                String dropText = padAndTruncate(dropEngine(engine, !IS_TWO_COLUMN_TRACK).trim(), lineLength / 2 - 1);
                 dropText = formatColorString(dropText, Setup.getDropEngineColor());
                 String s = tabString("", lineLength / 2) + VERTICAL_LINE_CHAR + dropText;
                 addLine(file, s);
+            }
+        }
+    }
+
+    /**
+     * Produces a two column format for engine pick ups and set outs. Sorted by
+     * track blocking order. Track name in header format, track name removed
+     * from format. This routine is used to generate the "Two Column by Track"
+     * format for locomotives.
+     *
+     * @param file       Manifest or switch list File
+     * @param engineList List of engines for this train
+     * @param rl         The RouteLocation being printed
+     * @param isManifest True if manifest, false if switch list.
+     */
+    protected void blockLocosByTrackNameTwoColumn(PrintWriter file, List<Engine> engineList, RouteLocation rl,
+            boolean isManifest) {
+        index = 0;
+        List<Track> tracks = rl.getLocation().getTracksByBlockingOrderList(null);
+        List<String> trackNames = new ArrayList<>();
+        if (isThereWorkAtLocation(null, engineList, rl)) {
+            printEngineHeader(file, isManifest, IS_TWO_COLUMN_TRACK);
+        }
+        int lineLength = getLineLength(isManifest);
+        for (Track track : tracks) {
+            String trackName = track.getSplitName();
+            if (trackNames.contains(trackName)) {
+                continue;
+            }
+            for (Engine engine : engineList) {
+                if (engine.getTrack() != null &&
+                        engine.getRouteLocation() == rl &&
+                        trackName.equals(engine.getSplitTrackName())) {
+                    if (!trackNames.contains(trackName)) {
+                        printTrackNameHeader(file, trackName, isManifest);
+                    }
+                    trackNames.add(trackName); // use a track name once
+                    String pullText = padAndTruncate(pickupEngine(engine, IS_TWO_COLUMN_TRACK).trim(), lineLength / 2);
+                    pullText = formatColorString(pullText, Setup.getPickupEngineColor());
+                    String s = pullText + VERTICAL_LINE_CHAR + tabString("", lineLength / 2 - 1);
+                    addLine(file, s);
+                }
+                if (engine.getRouteDestination() == rl &&
+                        trackName.equals(engine.getSplitDestinationTrackName())) {
+                    if (!trackNames.contains(trackName)) {
+                        printTrackNameHeader(file, trackName, isManifest);
+                    }
+                    trackNames.add(trackName); // use a track name once
+                    String dropText =
+                            padAndTruncate(dropEngine(engine, IS_TWO_COLUMN_TRACK).trim(), lineLength / 2 - 1);
+                    dropText = formatColorString(dropText, Setup.getDropEngineColor());
+                    String s = tabString("", lineLength / 2) + VERTICAL_LINE_CHAR + dropText;
+                    addLine(file, s);
+                }
             }
         }
     }
@@ -174,14 +231,19 @@ public class TrainCommon {
 
     /**
      * Returns the pick up string for a loco. Useful for frames like the train
-     * conductor and yardmaster.
+     * conductor, yardmaster, and two column format.
      *
-     * @param engine The Engine.
+     * @param engine           The Engine.
+     * @param isTwoColumnTrack when true two column track by name.
      * @return engine pick up string
      */
-    public String pickupEngine(Engine engine) {
+    public String pickupEngine(Engine engine, boolean isTwoColumnTrack) {
+        String[] format = Setup.getPickupEngineMessageFormat();
+        if (isTwoColumnTrack) {
+            format = Setup.getPickupEngineTwoColumnByTrackMessageFormat();
+        }
         StringBuilder builder = new StringBuilder();
-        for (String attribute : Setup.getPickupEngineMessageFormat()) {
+        for (String attribute : format) {
             builder.append(getEngineAttribute(engine, attribute, PICKUP));
         }
         return builder.toString();
@@ -191,12 +253,17 @@ public class TrainCommon {
      * Returns the drop string for a loco. Useful for frames like the train
      * conductor and yardmaster.
      *
-     * @param engine The Engine.
+     * @param engine           The Engine.
+     * @param isTwoColumnTrack when true two column track by name.
      * @return engine drop string
      */
-    public String dropEngine(Engine engine) {
+    public String dropEngine(Engine engine, boolean isTwoColumnTrack) {
+        String[] format = Setup.getDropEngineMessageFormat();
+        if (isTwoColumnTrack) {
+            format = Setup.getDropEngineTwoColumnByTrackMessageFormat();
+        }
         StringBuilder builder = new StringBuilder();
-        for (String attribute : Setup.getDropEngineMessageFormat()) {
+        for (String attribute : format) {
             builder.append(getEngineAttribute(engine, attribute, !PICKUP));
         }
         return builder.toString();
@@ -513,7 +580,7 @@ public class TrainCommon {
     protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList, RouteLocation rl,
             boolean printHeader, boolean isManifest) {
         index = 0;
-        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByBlockingOrderList(null);
         List<String> trackNames = new ArrayList<>();
         doneCars.clear();
         clearUtilityCarTypes(); // list utility cars by quantity
@@ -1785,10 +1852,11 @@ public class TrainCommon {
     /**
      * Two column header format. Left side pick ups, right side set outs
      *
-     * @param file       Manifest or switch list File.
-     * @param isManifest True if manifest, false if switch list.
+     * @param file             Manifest or switch list File.
+     * @param isManifest       True if manifest, false if switch list.
+     * @param isTwoColumnTrack True if two column with track name.
      */
-    public void printEngineHeader(PrintWriter file, boolean isManifest) {
+    public void printEngineHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
         int lineLength = getLineLength(isManifest);
         printHorizontalLine(file, isManifest);
         if (Setup.isPrintHeadersEnabled()) {
@@ -1804,8 +1872,8 @@ public class TrainCommon {
                 printHorizontalLine1(file, isManifest);
             }
 
-            String s = padAndTruncate(getPickupEngineHeader(), lineLength / 2);
-            s = padAndTruncate(s + VERTICAL_LINE_CHAR + getDropEngineHeader(), lineLength);
+            String s = padAndTruncate(getPickupEngineHeader(isTwoColumnTrack), lineLength / 2);
+            s = padAndTruncate(s + VERTICAL_LINE_CHAR + getDropEngineHeader(isTwoColumnTrack), lineLength);
             addLine(file, s);
             printHorizontalLine2(file, isManifest);
         }
@@ -1814,7 +1882,8 @@ public class TrainCommon {
     public void printPickupEngineHeader(PrintWriter file, boolean isManifest) {
         int lineLength = getLineLength(isManifest);
         printHorizontalLine1(file, isManifest);
-        String s = padAndTruncate(createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getPickupEngineHeader(),
+        String s = padAndTruncate(
+                createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getPickupEngineHeader(!IS_TWO_COLUMN_TRACK),
                 lineLength);
         addLine(file, s);
         printHorizontalLine2(file, isManifest);
@@ -1823,7 +1892,8 @@ public class TrainCommon {
     public void printDropEngineHeader(PrintWriter file, boolean isManifest) {
         int lineLength = getLineLength(isManifest);
         printHorizontalLine1(file, isManifest);
-        String s = padAndTruncate(createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getDropEngineHeader(),
+        String s = padAndTruncate(
+                createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getDropEngineHeader(!IS_TWO_COLUMN_TRACK),
                 lineLength);
         addLine(file, s);
         printHorizontalLine2(file, isManifest);
@@ -1892,12 +1962,20 @@ public class TrainCommon {
         printHorizontalLine2(file, isManifest);
     }
 
-    public String getPickupEngineHeader() {
-        return getHeader(Setup.getPickupEngineMessageFormat(), PICKUP, !LOCAL, ENGINE);
+    public String getPickupEngineHeader(boolean isTwoColumnTrack) {
+        if (!isTwoColumnTrack) {
+            return getHeader(Setup.getPickupEngineMessageFormat(), PICKUP, !LOCAL, ENGINE);
+        } else {
+            return getHeader(Setup.getPickupEngineTwoColumnByTrackMessageFormat(), PICKUP, !LOCAL, ENGINE);
+        }
     }
 
-    public String getDropEngineHeader() {
-        return getHeader(Setup.getDropEngineMessageFormat(), !PICKUP, !LOCAL, ENGINE);
+    public String getDropEngineHeader(boolean isTwoColumnTrack) {
+        if (!isTwoColumnTrack) {
+            return getHeader(Setup.getDropEngineMessageFormat(), !PICKUP, !LOCAL, ENGINE);
+        } else {
+            return getHeader(Setup.getDropEngineTwoColumnByTrackMessageFormat(), !PICKUP, !LOCAL, ENGINE);
+        }
     }
 
     public String getPickupCarHeader(boolean isManifest, boolean isTwoColumnTrack) {
@@ -2052,7 +2130,7 @@ public class TrainCommon {
     }
 
     protected void printTrackNameHeader(PrintWriter file, String trackName, boolean isManifest) {
-        printHorizontalLine(file, isManifest);
+        printHorizontalLine2(file, isManifest);
         int lineLength = getLineLength(isManifest);
         String s = padAndTruncate(tabString(trackName.trim(), lineLength / 4 - trackName.trim().length() / 2),
                 lineLength / 2) +
@@ -2278,8 +2356,7 @@ public class TrainCommon {
     }
 
     /**
-     * Returns the line length for manifest or switch list printout. Always an
-     * even number.
+     * Returns the line length for manifest or switch list printout.
      * 
      * @param isManifest True if manifest.
      * @return line length for manifest or switch list.
@@ -2466,9 +2543,18 @@ public class TrainCommon {
     }
 
     public static String getOnlyText(String string) {
+        string = getTextSizeString(string);
         string = getTextColorString(string);
         string = getTextBoldString(string);
         return string;
+    }
+
+    private static String getTextColorString(String string) {
+        String text = string;
+        while (text.contains(TEXT_COLOR_START) || text.contains(TEXT_COLOR_END)) {
+            text = stripColorControlCharacters(text);
+        }
+        return text;
     }
 
     /**
@@ -2477,11 +2563,12 @@ public class TrainCommon {
      * @param string the string with control characters
      * @return pure text
      */
-    private static String getTextColorString(String string) {
+    private static String stripColorControlCharacters(String string) {
         String text = string;
         if (string.contains(TEXT_COLOR_START)) {
             text = string.substring(0, string.indexOf(TEXT_COLOR_START)) +
-                    string.substring(string.indexOf(TEXT_COLOR_DONE) + TEXT_COLOR_DONE.length());
+                    string.substring(string.indexOf(TEXT_COLOR_DONE, string.indexOf(TEXT_COLOR_START)) +
+                            TEXT_COLOR_DONE.length());
         }
         if (text.contains(TEXT_COLOR_END)) {
             text = text.substring(0, text.indexOf(TEXT_COLOR_END)) +
@@ -2493,12 +2580,13 @@ public class TrainCommon {
     public static Color getTextColor(String string) {
         Color color = Color.black;
         if (string.contains(TEXT_COLOR_START)) {
-            String c = string.substring(string.indexOf(TEXT_COLOR_START) + TEXT_COLOR_START.length());
-            c = c.substring(0, c.indexOf("\""));
             try {
+            String c = string.substring(string.indexOf(TEXT_COLOR_START) + TEXT_COLOR_START.length(),
+                    string.indexOf(TEXT_COLOR_DONE, string.indexOf(TEXT_COLOR_START)));
+            
                 color = ColorUtil.stringToColor(c);
-            } catch (IllegalArgumentException e) {
-                log.error("Exception when getting text color: {}", string, e);
+            } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
+                log.error("Exception when getting text color: {} {}", string, e.getLocalizedMessage());
             }
         }
         return color;
@@ -2510,19 +2598,117 @@ public class TrainCommon {
 
     public static String getTextBoldString(String string) {
         String text = string;
-        if (string.contains(TEXT_BOLD)) {
+        while (text.contains(TEXT_BOLD) || text.contains(TEXT_BOLD_END)) {
+            text = stripBoldControlCharacters(text);
+        }
+        return text;
+    }
+
+    private static String stripBoldControlCharacters(String text) {
+        if (text.contains(TEXT_BOLD)) {
             text = text.substring(0, text.indexOf(TEXT_BOLD)) +
-                    string.substring(string.indexOf(TEXT_BOLD) + TEXT_BOLD.length());
+                    text.substring(text.indexOf(TEXT_BOLD) + TEXT_BOLD.length());
         }
         if (text.contains(TEXT_BOLD_END)) {
             text = text.substring(0, text.indexOf(TEXT_BOLD_END)) +
-                    string.substring(string.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
+                    text.substring(text.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
         }
         return text;
     }
 
     public static boolean isTextBold(String string) {
-        return (string.contains(TEXT_BOLD));
+        return (!isTextUserModified(string) && string.contains(TEXT_BOLD));
+    }
+
+    public static int getFontSize(String string) {
+        int fontSize = 0;
+        if (string.contains(TEXT_SIZE_START)) {
+            String size = string.substring(string.indexOf(TEXT_SIZE_START) + TEXT_SIZE_START.length(),
+                    string.indexOf(TEXT_SIZE_DONE, string.indexOf(TEXT_SIZE_START)));
+            try {
+                fontSize = Integer.parseInt(size);
+            } catch (NumberFormatException e) {
+                log.error("Font size not an integer: {} Text: {} {}", size, string, e.getLocalizedMessage());
+                fontSize = Setup.getManifestFontSize();
+            }
+        }
+        return fontSize;
+    }
+
+    public static String getTextSizeString(String string) {
+        String text = string;
+        while (text.contains(TEXT_SIZE_START) || text.contains(TEXT_SIZE_END)) {
+            text = stripSizeControlCharacters(text);
+        }
+        return text;
+    }
+
+    private static String stripSizeControlCharacters(String string) {
+        String text = string;
+        if (string.contains(TEXT_SIZE_START)) {
+            text = string.substring(0, string.indexOf(TEXT_SIZE_START)) +
+                    string.substring(
+                            string.indexOf(TEXT_SIZE_DONE, string.indexOf(TEXT_SIZE_START)) + TEXT_SIZE_DONE.length());
+        }
+        if (text.contains(TEXT_SIZE_END)) {
+            text = text.substring(0, text.indexOf(TEXT_SIZE_END)) +
+                    string.substring(string.indexOf(TEXT_SIZE_END) + TEXT_SIZE_END.length());
+        }
+        return text;
+    }
+
+    /**
+     * Used to determine if user has modified the text with bold and color
+     * controls. If there are two or more bold or color controls, then user
+     * modified text. If there is only one bold and/or color control they have
+     * to be at the start and end of the text string, otherwise modified by
+     * user.
+     * 
+     * @param string the string to test
+     * @return true if modified by user
+     */
+    public static boolean isTextUserModified(String string) {
+        String text = string;
+        if (text.contains(TEXT_SIZE_START) || text.contains(TEXT_SIZE_END)) {
+            return true;
+        }
+        int count = 0;
+        while (text.contains(TEXT_BOLD) || text.contains(TEXT_BOLD_END)) {
+            text = stripBoldControlCharacters(text);
+            count++;
+        }
+        if (count > 1) {
+            return true; // two or more bold controls
+        }
+        if (count == 1) {
+            // if bold at start and end bold at end then program added
+            String[] test = string.split(TEXT_BOLD);
+            if (!test[0].isBlank()) {
+                return true;
+            }
+            test = string.split(TEXT_BOLD_END);
+            if (test.length > 1 && !test[1].isBlank()) {
+                return true;
+            }
+        }
+        count = 0;
+        String textColor = string;
+        while (textColor.contains(TEXT_COLOR_START) || textColor.contains(TEXT_COLOR_END)) {
+            textColor = stripColorControlCharacters(textColor);
+            count++;
+        }
+        if (count == 1) {
+            // if color controls at start and end then program added
+            String[] test = text.split(TEXT_COLOR_START);
+            if (!test[0].isBlank()) {
+                return true;
+            }
+            test = text.split(TEXT_COLOR_END);
+            if (test.length > 1 && !test[1].isBlank()) {
+                return true;
+            }
+        }
+        return count > 1;
     }
 
     private static final Logger log = LoggerFactory.getLogger(TrainCommon.class);

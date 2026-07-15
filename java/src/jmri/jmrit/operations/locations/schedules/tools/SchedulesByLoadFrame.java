@@ -144,14 +144,15 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         int row = 0;
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Spur")), 1, row);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 2, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Type")), 3, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Random")), 4, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Delivery")), 5, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Road")), 6, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")), 7, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")), 8, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 9, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Pickup")), 10, row++);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("ScheduleMode")), 3, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Type")), 4, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Random")), 5, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Delivery")), 6, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Road")), 7, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")), 8, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")), 9, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 10, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Pickup")), 11, row++);
 
         // now load data
         for (Location location : locationManager.getLocationsByNameList()) {
@@ -194,10 +195,11 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         }
                         addItemLeft(locationsPanel, new JLabel(spur.getName()), 1, row);
                         addItemLeft(locationsPanel, new JLabel(spur.getScheduleName()), 2, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getTypeName()), 3, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getRandom()), 4, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getSetoutTrainScheduleName()), 5, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getRoadName()), 6, row);
+                        addItemLeft(locationsPanel, new JLabel(spur.getScheduleModeName()), 3, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getTypeName()), 4, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getRandom()), 5, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getSetoutTrainScheduleName()), 6, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getRoadName()), 7, row);
                         // report if spur can't service the selected load
                         if (!allLoadsCheckBox.isSelected() &&
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
@@ -205,18 +207,18 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                             JLabel warnLoad =
                                     new JLabel(Bundle.getMessage("spurNotTypeLoad", spur.getName(), type, load));
                             warnLoad.setForeground(Color.BLUE);
-                            addItemLeft(locationsPanel, warnLoad, 7, row);
+                            addItemLeft(locationsPanel, warnLoad, 8, row);
                         } else {
-                            addItemLeft(locationsPanel, new JLabel(si.getReceiveLoadName()), 7, row);
+                            addItemLeft(locationsPanel, new JLabel(si.getReceiveLoadName()), 8, row);
                         }
-                        addItemLeft(locationsPanel, new JLabel(si.getShipLoadName()), 8, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getShipLoadName()), 9, row);
                         // now the destination and track
                         if (si.getDestination() != null) {
                             addItemLeft(locationsPanel,
-                                    new JLabel(si.getDestinationName() + " (" + si.getDestinationTrackName() + ")"), 9,
+                                    new JLabel(si.getDestinationName() + " (" + si.getDestinationTrackName() + ")"), 10,
                                     row);
                         }
-                        addItemLeft(locationsPanel, new JLabel(si.getPickupTrainScheduleName()), 10, row++);
+                        addItemLeft(locationsPanel, new JLabel(si.getPickupTrainScheduleName()), 11, row++);
                     }
                 }
             }

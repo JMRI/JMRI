@@ -18,16 +18,19 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.CompatibleHardcopyWriter;
 
 /**
- * Used for printing train Manifests and switch lists.
+ * Used for printing train Manifests and switch lists. Text can have color and
+ * bold characters.
  *
- * @author Daniel Boudreau (C) 2025
+ * @author Daniel Boudreau (C) 2025, 2026
  */
 public class TrainPrintManifest extends TrainCommon {
 
-    protected static final char SPACE = ' ';
+    protected static final char SPACE_CHAR = ' ';
     private static boolean isPrintingBoldDone = false;
     private static boolean isPrintingColor = false;
+    private static boolean isTextSizeDone = false;
     private static Color color;
+    private static int _fontSize;
 
     /**
      * Print or preview a train Manifest or switch list.
@@ -69,6 +72,8 @@ public class TrainPrintManifest extends TrainCommon {
             if (!fontName.isEmpty()) {
                 writer.setFontName(fontName);
             }
+            
+            _fontSize = fontSize;
 
             if (logoURL != null && !logoURL.equals(Setup.NONE)) {
                 ImageIcon icon = new ImageIcon(logoURL);
@@ -95,7 +100,7 @@ public class TrainPrintManifest extends TrainCommon {
                     print(writer, lines, false);
                 }
             }
-            print(writer, lines, true);
+            print(writer, lines, true); // last block
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
         } catch (CompatibleHardcopyWriter.PrintCanceledException ex) {
@@ -107,10 +112,10 @@ public class TrainPrintManifest extends TrainCommon {
 
     private static void print(CompatibleHardcopyWriter writer, List<String> lines, boolean lastBlock)
             throws IOException {
-        int lineSize = getNumberOfLines(lines);
+        int lineSize = getNumberOfLines(writer, lines);
         if (Setup.isPrintNoPageBreaksEnabled() &&
                 writer.getCurrentLineNumber() != 0 &&
-                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lineSize) {
+                writer.getLinesPerPage() - writer.getCurrentLineNumber() < (lastBlock ? lineSize : lineSize - 1)) {
             writer.pageBreak();
         }
         // check for exact page break
@@ -131,10 +136,13 @@ public class TrainPrintManifest extends TrainCommon {
 
         for (String line : lines) {
             // determine if there's a line separator
-            if (printHorizontialLineSeparator(writer, line)) {
+            if (printHorizontalLineSeparator(writer, line)) {
                 color = null;
                 continue;
             }
+            
+            // font size change?
+            line = setFontSize(writer, line);
 
             // bold text?
             line = printBold(writer, line);
@@ -155,6 +163,12 @@ public class TrainPrintManifest extends TrainCommon {
                     writer.getCurrentLineNumber() < writer.getLinesPerPage() - 1) {
                 writer.write(NEW_LINE);
             }
+            
+            // done text size change?
+            if (isTextSizeDone) {
+                writer.setFont(null, null, _fontSize);
+                isTextSizeDone = false;
+            }
 
             // done bold text?
             if (isPrintingBoldDone) {
@@ -169,61 +183,59 @@ public class TrainPrintManifest extends TrainCommon {
      * When determining the number of lines to print, we need to ignore any
      * horizontal lines.
      */
-    private static int getNumberOfLines(List<String> lines) {
+    private static int getNumberOfLines(CompatibleHardcopyWriter writer, List<String> lines) {
         int numberLines = lines.size();
         for (String line : lines) {
-            boolean foundHorizontalLine = false;
-            for (char c : line.toCharArray()) {
-                if (c == HORIZONTAL_LINE_CHAR) {
-                    foundHorizontalLine = true;
-                } else {
-                    foundHorizontalLine = false;
-                    break; // all characters need to be horizontal char
-                }
-            }
-            if (foundHorizontalLine) {
-                numberLines--; 
+            if (isHorizontalLineSpearator(writer, line)) {
+                numberLines--;
             }
         }
         return numberLines;
     }
 
     /*
-     * Returns true if horizontal line was printed, or line length = 0
+     * Returns true if horizontal line was printed
      */
-    private static boolean printHorizontialLineSeparator(CompatibleHardcopyWriter writer, String line) {
-        boolean horizontialLineSeparatorFound = true;
-        if (line.length() > 0) {
-            for (int i = 0; i < line.length(); i++) {
-                if (line.charAt(i) != HORIZONTAL_LINE_CHAR) {
-                    horizontialLineSeparatorFound = false;
-                    break;
-                }
-            }
-            if (horizontialLineSeparatorFound) {
-                int endCol = writer.getCharactersPerLine() + 1;
-                writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
-                        endCol);
+    private static boolean printHorizontalLineSeparator(CompatibleHardcopyWriter writer, String line) {
+        boolean horizontalLineSeparatorFound = isHorizontalLineSpearator(writer, line);
+        if (horizontalLineSeparatorFound) {
+            float hEnd = writer.getPrintablePagesizePoints().width;
+            writer.writeLine(writer.getCurrentVPos(), 0, writer.getCurrentVPos(),
+                    hEnd);
+        }
+        return horizontalLineSeparatorFound;
+    }
+
+    /*
+     * Determines if horizontal line. Requires the number of horizontal line
+     * characters equal to the page width and no other characters in the line.
+     * The smallest horizontal line is when the 2.25 wide paper is selected and
+     * largest font 18. About 12 horizontal line characters.
+     */
+    private static boolean isHorizontalLineSpearator(CompatibleHardcopyWriter writer, String line) {
+        int count = 0;
+        for (char c : line.toCharArray()) {
+            if (c == HORIZONTAL_LINE_CHAR) {
+                count++;
+            } else {
+                count = 0;
+                break; // all characters need to be horizontal char
             }
         }
-        return horizontialLineSeparatorFound;
+        // one less character most likely not necessary
+        return count >= writer.getCharactersPerLine() - 1;
     }
 
     private static String printVerticalLineSeparator(CompatibleHardcopyWriter writer, String line) {
-        for (int i = 0; i < line.length(); i++) {
-            if (line.charAt(i) == VERTICAL_LINE_CHAR) {
-                // make a frame (two column format)
-                if (Setup.isTabEnabled()) {
-                    int endCol = writer.getCharactersPerLine() + 1;
-                    writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
-                    writer.write(writer.getCurrentLineNumber(), endCol,
-                            writer.getCurrentLineNumber() + 1, endCol);
-                }
-                writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1,
-                        i + 1);
-            }
+        if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
+            // make a frame (two column format)
+            float hEnd = writer.getPrintablePagesizePoints().width;
+            writer.writeLine(writer.getCurrentVPos(), 0, writer.getCurrentVPos() + writer.getLineHeight(), 0);
+            writer.writeLine(writer.getCurrentVPos(), hEnd / 2, writer.getCurrentVPos() + writer.getLineHeight(),
+                    hEnd / 2);
+            writer.writeLine(writer.getCurrentVPos(), hEnd, writer.getCurrentVPos() + writer.getLineHeight(), hEnd);
+            line = line.replace(VERTICAL_LINE_CHAR, SPACE_CHAR);
         }
-        line = line.replace(VERTICAL_LINE_CHAR, SPACE);
         return line;
     }
 
@@ -231,8 +243,8 @@ public class TrainPrintManifest extends TrainCommon {
         if (line.contains(TEXT_BOLD_END)) {
             isPrintingBoldDone = true;
         }
-        // if monospaced font, it is possible to only bold a subset of words in the line
-        // can't combine color and bold words
+        // If monospaced font, it is possible to only bold a subset of words in the line.
+        // Can't combine color and bold words in a single line today. Would need to combine routines.
         if (writer.isMonospaced() &&
                 line.contains(TEXT_BOLD) &&
                 line.contains(TEXT_BOLD_END) &&
@@ -265,11 +277,9 @@ public class TrainPrintManifest extends TrainCommon {
                 writeWords(writer, text); // bold text
 
                 writer.setFontStyle(Font.PLAIN);
-                text = s.substring(s.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
-                writeWords(writer, text); // plain text
-            } else {
-                writeWords(writer, s); // plain text
+                s = s.substring(s.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
             }
+            writeWords(writer, s); // plain text
         }
     }
 
@@ -282,12 +292,8 @@ public class TrainPrintManifest extends TrainCommon {
     private static String printColor(CompatibleHardcopyWriter writer, String line) throws IOException {
         if (line.contains(TEXT_COLOR_START)) {
             color = getTextColor(line);
-            if (line.contains(TEXT_COLOR_END)) {
-                isPrintingColor = false;
-            } else {
-                // printing multiple lines in color
-                isPrintingColor = true;
-            }
+            // if no TEXT_COLOR_END then printing multiple lines in color
+            isPrintingColor = !line.contains(TEXT_COLOR_END);
             // could be a color change when using two column format
             if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
                 String s = line.substring(0, line.indexOf(VERTICAL_LINE_CHAR));
@@ -298,6 +304,9 @@ public class TrainPrintManifest extends TrainCommon {
                 color = getTextColor(line);
                 // pad out string
                 line = tabString(getOnlyText(line), s.length());
+            } else if (writer.isMonospaced() &&
+                    printColorWords(writer, line)) {
+                line = ""; // done
             } else {
                 // simple case only one color
                 line = getOnlyText(line);
@@ -309,6 +318,61 @@ public class TrainPrintManifest extends TrainCommon {
             color = null;
         }
         return line;
+    }
+
+    // If monospaced font, it is possible to only color subset of words in the line can't combine color and bold words
+    private static boolean printColorWords(CompatibleHardcopyWriter writer, String line) throws IOException {
+        offset = 0;
+        for (String words : getColorWords(line)) {
+            Color color = getTextColor(words);
+            words = getOnlyText(words);
+            writeColorWords(writer, words, color);
+        }
+        return true;
+    }
+
+    private static List<String> getColorWords(String line) {
+        ArrayList<String> list = new ArrayList<>();
+        String s;
+        while (line.length() > 0) {
+            if (line.contains(TEXT_COLOR_START)) {
+                s = line.substring(0, line.indexOf(TEXT_COLOR_START));
+                if (s.length() > 0) {
+                    list.add(s);
+                }
+                if (line.contains(TEXT_COLOR_END)) {
+                    s = line.substring(line.indexOf(TEXT_COLOR_START),
+                            line.indexOf(TEXT_COLOR_END) + TEXT_COLOR_END.length());
+                    list.add(s);
+                    line = line.substring(line.indexOf(TEXT_COLOR_END) + TEXT_COLOR_END.length());
+                } else {
+                    s = line.substring(line.indexOf(TEXT_COLOR_START));
+                    list.add(s);
+                    break;
+                }
+            } else {
+                list.add(line);
+                break; //done
+            }
+        }
+        return list;
+    }
+
+    private static void writeColorWords(CompatibleHardcopyWriter writer, String s, Color color) throws IOException {
+        String text = tabString(s, offset);
+        writer.write(color, text);
+        offset = +text.length();
+    }
+
+    private static String setFontSize(CompatibleHardcopyWriter writer, String line) {
+        if (line.contains(TEXT_SIZE_START)) {
+            int size = getFontSize(line);
+            writer.setFont(null, null, size);
+        }
+        if (line.contains(TEXT_SIZE_END)) {
+            isTextSizeDone = true;
+        }
+        return getTextSizeString(line);
     }
 
     private static final Logger log = LoggerFactory.getLogger(TrainPrintManifest.class);

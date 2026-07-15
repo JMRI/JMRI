@@ -25,7 +25,8 @@ import jmri.util.FileUtil;
 /**
  * Builds a switch list for a location on the railroad
  *
- * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015, 2024
+ * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015, 2024,
+ *         2026
  */
 public class TrainSwitchLists extends TrainCommon {
 
@@ -332,12 +333,25 @@ public class TrainSwitchLists extends TrainCommon {
                     blockCarsByTrack(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
                 }
             } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
-                blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                blockCarsTwoColumn(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
+                // if switcher show loco drop at end of list
+                if (train.isLocalSwitcher() ||
+                        Setup.isPrintLocoLastEnabled() && train.getTrainTerminatesRouteLocation() == rl) {
+                    blockCarsTwoColumn(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
+                    blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
+                } else {
+                    blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
+                    blockCarsTwoColumn(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
+                }
             } else {
-                blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                blockCarsByTrackNameTwoColumn(fileOut, train, carList, rl, IS_PRINT_HEADER,
-                        !IS_MANIFEST);
+                // if switcher show loco drop at end of list
+                if (train.isLocalSwitcher() ||
+                        Setup.isPrintLocoLastEnabled() && train.getTrainTerminatesRouteLocation() == rl) {
+                    blockCarsByTrackNameTwoColumn(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
+                    blockLocosByTrackNameTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
+                } else {
+                    blockLocosByTrackNameTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
+                    blockCarsByTrackNameTwoColumn(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
+                }
             }
             // print horizontal line if there was work and enabled
             printHorizontalLine3(fileOut, !IS_MANIFEST);
@@ -419,9 +433,8 @@ public class TrainSwitchLists extends TrainCommon {
                                 rs.getSplitDestinationName().equals(location.getSplitName())))
                     carList.add(rs);
             }
-
-            List<String> trackNames = new ArrayList<>(); // locations and tracks can have "similar" names, only list
-                                                         // track names once
+            // locations and tracks can have "similar" names, only list track names once
+            List<String> trackNames = new ArrayList<>();
             for (Location loc : locationManager.getLocationsByNameList()) {
                 if (!loc.getSplitName().equals(location.getSplitName()))
                     continue;
@@ -436,7 +449,7 @@ public class TrainSwitchLists extends TrainCommon {
                     newLine(fileOut, trackName); // print out just the track name
                     // now show the cars pickup and holds for this track
                     for (Car car : carList) {
-                        if (!car.getSplitTrackName().equals(trackName)) {
+                        if (!car.getSplitTrackName().equals(trackName) || car.isLocalMove()) {
                             continue;
                         }
                         // is the car scheduled for pickup?
@@ -490,8 +503,9 @@ public class TrainSwitchLists extends TrainCommon {
                         }
                     }
                     // now do set outs at this location
+                    trainName = ""; // for printing train message once
                     for (Car car : carList) {
-                        if (!car.getSplitDestinationTrackName().equals(trackName)) {
+                        if (!car.getSplitDestinationTrackName().equals(trackName) || car.isLocalMove()) {
                             continue;
                         }
                         if (car.getRouteDestination() != null &&
@@ -504,6 +518,30 @@ public class TrainSwitchLists extends TrainCommon {
                                         messageFormatText = TrainSwitchListText.getStringScheduledWork(),
                                         new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
                                 printDropCarHeader(fileOut, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
+                            }
+                            if (car.isUtility()) {
+                                setoutUtilityCars(fileOut, carList, car, false, !IS_MANIFEST);
+                            } else {
+                                dropCar(fileOut, car, !IS_MANIFEST);
+                            }
+                        }
+                    }
+                    // only local moves
+                    trainName = ""; // for printing train message once
+                    for (Car car : carList) {
+                        if (!car.getSplitDestinationTrackName().equals(trackName) || !car.isLocalMove()) {
+                            continue;
+                        }
+                        if (car.getRouteDestination() != null &&
+                                car.getRouteDestination().getLocation().getSplitName()
+                                        .equals(location.getSplitName())) {
+                            // cars are sorted by train name, print train message once
+                            if (!trainName.equals(car.getTrainName())) {
+                                trainName = car.getTrainName();
+                                newLine(fileOut, MessageFormat.format(
+                                        messageFormatText = TrainSwitchListText.getStringScheduledWork(),
+                                        new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
+                                printLocalCarMoveHeader(fileOut, !IS_MANIFEST);
                             }
                             if (car.isUtility()) {
                                 setoutUtilityCars(fileOut, carList, car, false, !IS_MANIFEST);
