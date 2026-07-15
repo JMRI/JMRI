@@ -24,9 +24,10 @@
       "Files.shtml#location">"Configuration Files" Help page</a>. You should only use the Roster
       menu to manipulate the Roster file, to ensure that it stays self-consistent.</p>
 
-      <p>To move the entire Roster to another computer, choose "Export Complete Roster" from the
+      <p>To move the entire Roster to another computer, choose "Export Complete Roster..." from the
       File menu, select a location to save the file, move that file to the other computer, then
-      choose "Import Complete Roster" from the menu to import it there.</p>
+      choose "Import Complete Roster..." from the menu to import it there. You can 
+      also export the entries in just one Roster Group with "Export Roster Group...".</p>
 
       <p>To do this manually at the file level, there will be a file called "roster.xml", and a
       directory called "roster". You need to move the "roster.xml" file, the "roster" directory,
