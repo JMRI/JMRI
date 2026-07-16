@@ -39,6 +39,7 @@ public class TreeEditor extends TreeViewer {
     public enum EnableRootRemoveCutCopy { EnableRootRemoveCutCopy, DisableRootRemoveCutCopy }
     public enum EnableRootPopup { EnableRootPopup, DisableRootPopup }
     public enum EnableExecuteEvaluate { EnableExecuteEvaluate, DisableExecuteEvaluate }
+    public enum EnableChangeUsernameForRoot { EnableChangeUsername, DisableChangeUsername }
 
 
     private static final String ACTION_COMMAND_RENAME_SOCKET = "rename_socket";
@@ -95,6 +96,7 @@ public class TreeEditor extends TreeViewer {
     private final boolean _disableRootRemoveCutCopy;
     private final boolean _disableRootPopup;
     private final boolean _enableExecuteEvaluate;
+    private final boolean _enableChangeUsernameForRoot;
 
     /**
      * Construct a TreeEditor.
@@ -105,19 +107,22 @@ public class TreeEditor extends TreeViewer {
      *                                 cut and copy be enabled or disabled?
      * @param enableRootPopup          should the popup menu be disabled for root?
      * @param enableExecuteEvaluate    should the popup menu show execute/evaluate?
+     * @param enableChangeUsername     should the popup menu show change user name for the root socket?
      */
     public TreeEditor(
             @Nonnull FemaleSocket femaleRootSocket,
             EnableClipboard enableClipboard,
             EnableRootRemoveCutCopy enableRootRemoveCutCopy,
             EnableRootPopup enableRootPopup,
-            EnableExecuteEvaluate enableExecuteEvaluate) {
+            EnableExecuteEvaluate enableExecuteEvaluate,
+            EnableChangeUsernameForRoot enableChangeUsername) {
 
         super(femaleRootSocket);
         _enableClipboard = enableClipboard == EnableClipboard.EnableClipboard;
         _disableRootRemoveCutCopy = enableRootRemoveCutCopy == EnableRootRemoveCutCopy.DisableRootRemoveCutCopy;
         _disableRootPopup = enableRootPopup == EnableRootPopup.DisableRootPopup;
         _enableExecuteEvaluate = enableExecuteEvaluate == EnableExecuteEvaluate.EnableExecuteEvaluate;
+        _enableChangeUsernameForRoot = enableChangeUsername == EnableChangeUsernameForRoot.EnableChangeUsername;
     }
 
     @Override
@@ -1948,7 +1953,11 @@ public class TreeEditor extends TreeViewer {
                         && femaleSocket.getConnectedSocket().isSupportingLocalVariables()
                         && !_isLocked);
 
-                menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !_isLocked);
+                menuItemChangeUsername.setEnabled(
+                        femaleSocket.isConnected()
+                                && !_isLocked
+                                && (_enableChangeUsernameForRoot
+                                        || (_currentFemaleSocket != _treePane._femaleRootSocket)));
 
                 if (_enableExecuteEvaluate) {
                     menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());

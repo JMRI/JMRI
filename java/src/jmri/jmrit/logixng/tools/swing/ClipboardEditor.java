@@ -37,7 +37,8 @@ public class ClipboardEditor extends TreeEditor {
                 EnableClipboard.DisableClipboard,
                 EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
                 EnableRootPopup.DisableRootPopup,
-                EnableExecuteEvaluate.DisableExecuteEvaluate
+                EnableExecuteEvaluate.DisableExecuteEvaluate,
+                EnableChangeUsernameForRoot.DisableChangeUsername
         );
 
         ClipboardEditor.this.setTitle(Bundle.getMessage("TitleClipboardEditor"));
