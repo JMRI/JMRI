@@ -575,11 +575,5 @@ public class TrainSwitchLists extends TrainCommon {
         }
     }
 
-    protected void newLine(PrintWriter file, String string) {
-        if (!string.isEmpty()) {
-            newLine(file, string, !IS_MANIFEST);
-        }
-    }
-
     private static final Logger log = LoggerFactory.getLogger(TrainSwitchLists.class);
 }

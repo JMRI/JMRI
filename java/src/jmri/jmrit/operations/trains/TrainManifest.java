@@ -337,10 +337,4 @@ public class TrainManifest extends TrainCommon {
                             rl.getLocation().getDivisionName()}));
         }
     }
-
-    private void newLine(PrintWriter file, String string) {
-        if (!string.isEmpty()) {
-            newLine(file, string, IS_MANIFEST);
-        }
-    }
 }

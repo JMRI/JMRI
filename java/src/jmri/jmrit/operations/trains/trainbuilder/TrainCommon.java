@@ -671,11 +671,11 @@ public class TrainCommon {
                 }
                 // print the appropriate comment if there's one
                 if (pickup && setout && !track.getCommentBothWithColor().equals(Track.NONE)) {
-                    newLine(file, track.getCommentBothWithColor(), isManifest);
+                    newLine(file, track.getCommentBothWithColor());
                 } else if (pickup && !setout && !track.getCommentPickupWithColor().equals(Track.NONE)) {
-                    newLine(file, track.getCommentPickupWithColor(), isManifest);
+                    newLine(file, track.getCommentPickupWithColor());
                 } else if (!pickup && setout && !track.getCommentSetoutWithColor().equals(Track.NONE)) {
-                    newLine(file, track.getCommentSetoutWithColor(), isManifest);
+                    newLine(file, track.getCommentSetoutWithColor());
                 }
             }
         }
@@ -1427,35 +1427,41 @@ public class TrainCommon {
     }
 
     /**
-     * Writes a string to a file. Checks for string length, and will
-     * automatically wrap lines.
+     * Writes a string to a file.
      *
      * @param file       The File to write to.
      * @param string     The string to write.
-     * @param isManifest set true for manifest page orientation, false for
-     *                   switch list orientation
      */
-    protected void newLine(PrintWriter file, String string, boolean isManifest) {
-        String[] lines = string.split(NEW_LINE);
-        for (String line : lines) {
-            String[] words = line.split(SPACE);
-            StringBuffer sb = new StringBuffer();
-            for (String word : words) {
-                if (checkStringLength(sb.toString() + word, isManifest)) {
-                    sb.append(word + SPACE);
-                } else {
-                    if (sb.length() > 0) {
-                        sb.setLength(sb.length() - 1); // remove last space added to string
-                        addLine(file, sb.toString());
-                    }
-                    sb = new StringBuffer(word + SPACE);
-                }
-            }
-            if (sb.length() > 0) {
-                sb.setLength(sb.length() - 1); // remove last space added to string
-            }
-            addLine(file, sb.toString());
+    protected void newLine(PrintWriter file, String string) {
+        if (!string.isEmpty()) {
+            addLine(file, string);
         }
+
+        // this code is no longer needed, now provided in HardcopyWriter
+//        if (string.contains(TEXT_SIZE_START)) {
+//            addLine(file, string);
+//        } else {
+//            String[] lines = string.split(NEW_LINE);
+//            for (String line : lines) {
+//                String[] words = line.split(SPACE);
+//                StringBuffer sb = new StringBuffer();
+//                for (String word : words) {
+//                    if (checkStringLength(sb.toString() + word, isManifest)) {
+//                        sb.append(word + SPACE);
+//                    } else {
+//                        if (sb.length() > 0) {
+//                            sb.setLength(sb.length() - 1); // remove last space added to string
+//                            addLine(file, sb.toString());
+//                        }
+//                        sb = new StringBuffer(word + SPACE);
+//                    }
+//                }
+//                if (sb.length() > 0) {
+//                    sb.setLength(sb.length() - 1); // remove last space added to string
+//                }
+//                addLine(file, sb.toString());
+//            }
+//        }
     }
 
     /**
@@ -1559,24 +1565,24 @@ public class TrainCommon {
             return; // no cars to search for!
         }
         newLine(file);
-        newLine(file, Setup.getMiaComment(), isManifest);
+        newLine(file, Setup.getMiaComment());
         if (Setup.isPrintHeadersEnabled()) {
             printHorizontalLine1(file, isManifest);
-            newLine(file, SPACE + getHeader(Setup.getMissingCarMessageFormat(), false, false, false), isManifest);
+            newLine(file, SPACE + getHeader(Setup.getMissingCarMessageFormat(), false, false, false));
             printHorizontalLine2(file, isManifest);
         }
         for (Car car : cars) {
-            addSearchForCar(file, car, isManifest);
+            addSearchForCar(file, car);
         }
     }
 
-    private void addSearchForCar(PrintWriter file, Car car, boolean isManifest) {
+    private void addSearchForCar(PrintWriter file, Car car) {
         StringBuffer buf = new StringBuffer();
         String[] format = Setup.getMissingCarMessageFormat();
         for (String attribute : format) {
             buf.append(getCarAttribute(car, attribute, false, false));
         }
-        newLine(file, buf.toString(), isManifest);
+        newLine(file, buf.toString());
     }
 
     /*

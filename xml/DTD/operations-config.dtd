@@ -250,6 +250,7 @@
 <!ATTLIST headerLines printHeaderLine1	(true | false ) "true">
 <!ATTLIST headerLines printHeaderLine2	(true | false ) "true">
 <!ATTLIST headerLines printHeaderLine3	(true | false ) "true">
+<!ATTLIST headerLines lineAdjustment	CDATA #IMPLIED>
 
 
 <!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model | hp
