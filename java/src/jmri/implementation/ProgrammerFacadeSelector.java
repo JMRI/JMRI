@@ -151,6 +151,11 @@ public class ProgrammerFacadeSelector {
                         programmer = pf; // to go around and see if there are more
                     }
                     break;
+                case "Digitrax OpSw Word Programming":
+                    var pf
+                            = new jmri.implementation.DigitraxOpSwWordFacade(programmer);
+                    log.debug("new programmer '{}' {}", fname, pf);
+                    programmer = pf; // to go around and see if there are more
                 default:
                     log.error("Cannot create programmer capability named: \"{}\"", fname);
                     break;

@@ -17,15 +17,18 @@
                 showEmptyPanes="no">
 
     <version author="Bob Jacobsen" version="1" lastUpdated="20171121" />
+    <version author="Bob Jacobsen" version="2" lastUpdated="20260711" />
 
     <decoder>
-
         <family name="DS64" mfg="Digitrax">
             <model model="DS64"/>
         </family>
 
         <programming direct="no" paged="no" register="no" ops="no">
-            <mode>LOCONETBDOPSWMODE</mode>
+          <capability>
+            <name>Digitrax OpSw Word Programming</name>
+          </capability>
+          <mode>LOCONETBDOPSWMODE</mode>
         </programming>
 
         <variables>
@@ -495,6 +498,43 @@
             <label> </label>
           </variable>
 
+          <variable item="Turnout 1 Address Route 1" CV="115.24.16" 
+                default="1" mask="VVVVVVVVVVV">
+            <decVal min="1" max="2047" />
+          </variable>
+          <variable item="Turnout 1    Mode Route 1" CV="115.24.16" 
+                default="7" mask="VVVXXXXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="0">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+          <variable item="Turnout 2 Address Route 1" CV="115.24.24" 
+                default="1" mask="VVVVVVVVVVV">
+            <decVal min="1" max="2047"/>
+          </variable>
+          <variable item="Turnout 2    Mode Route 1" CV="115.24.24"
+                default="7" mask="VVVXXXXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="0">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
         </variables>
     </decoder>
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
@@ -518,6 +558,10 @@
                     &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board 
                     Address configured on the "Basic" sheet.
                     &lt;p&gt;&lt;p&gt;OpSw value 0 = "T"hrown.  OpSw value 1 = "C"losed.
+                    &lt;p&gt;&lt;p&gt;OpSw numbers like 115.24.16 with three parts
+                    are for defining output addresses and routes. 
+                    &lt;p&gt;They have a complex
+                    inner structure. Large values are normal for these.
                     &lt;/html&gt;
                 </text>
             </label>
@@ -601,6 +645,52 @@
 
     </column>
   </pane>
+
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <name xml:lang="it">CV</name>
+    <name xml:lang="de">CV-Tabelle</name>
+    <name xml:lang="ca">Taula-CV</name>
+    <name xml:lang="cs">Tabulka CV</name>
+    <name xml:lang="nl">CV-tabel</name>
+    <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+    </qualifier>
+    <column>
+        <label>
+            <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
+        </label>
+    </column>
+  </pane>
+
+  <pane>
+    <name>Route 1</name>
+    <column>
+    <grid gridy="NEXT" weightx="1">
+        <griditem gridx="1" gridy="0">
+            <label><text>Turnout (Top):</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="0">
+            <display item="Turnout 1 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="0">
+            <display item="Turnout 1    Mode Route 1" label=""/>
+        </griditem>
+        <griditem gridx="1" gridy="1">
+            <label><text>Turnout 2:</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="1">
+            <display item="Turnout 2 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="1">
+            <display item="Turnout 2    Mode Route 1" label=""/>
+        </griditem>
+    </grid>
+    </column>
+  </pane>
+
   <pane>
       <name>Notes</name>
       <column>
@@ -623,23 +713,5 @@
             &lt;/ul&gt;&lt;/html&gt;</text>
         </label>
       </column>
-  </pane>
-  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-    <name>CVs</name>
-    <name xml:lang="it">CV</name>
-    <name xml:lang="de">CV-Tabelle</name>
-    <name xml:lang="ca">Taula-CV</name>
-    <name xml:lang="cs">Tabulka CV</name>
-    <name xml:lang="nl">CV-tabel</name>
-    <qualifier>
-          <variableref>Short Address</variableref>
-          <relation>eq</relation>
-          <value>0</value>
-    </qualifier>
-    <column>
-        <label>
-            <text>This sheet intentionally un-populated.  See the "OpSws" tab.</text>
-        </label>
-    </column>
   </pane>
 </decoder-config>
