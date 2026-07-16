@@ -508,6 +508,7 @@
             <li>The system console now show the name and length of the longest model name for a locomotive.</li>
             <li>When selection "On Time" mode for the first time, the program now automatically brings up the tool "Modify Locations Quick Service".</li>
             <li>Improved Manifest and switch list CSV files to only show route comments when they exist.</li>
+            <li>Users can now adjust the position of the horizontal lines in Manifests and switch lists.</li>
         </ul>
 
    <h3>Panel Editor</h3>

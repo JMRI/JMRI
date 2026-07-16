@@ -72,7 +72,7 @@ public class TrainPrintManifest extends TrainCommon {
             if (!fontName.isEmpty()) {
                 writer.setFontName(fontName);
             }
-            
+
             _fontSize = fontSize;
 
             if (logoURL != null && !logoURL.equals(Setup.NONE)) {
@@ -140,7 +140,7 @@ public class TrainPrintManifest extends TrainCommon {
                 color = null;
                 continue;
             }
-            
+
             // font size change?
             line = setFontSize(writer, line);
 
@@ -163,7 +163,7 @@ public class TrainPrintManifest extends TrainCommon {
                     writer.getCurrentLineNumber() < writer.getLinesPerPage() - 1) {
                 writer.write(NEW_LINE);
             }
-            
+
             // done text size change?
             if (isTextSizeDone) {
                 writer.setFont(null, null, _fontSize);
@@ -199,9 +199,10 @@ public class TrainPrintManifest extends TrainCommon {
     private static boolean printHorizontalLineSeparator(CompatibleHardcopyWriter writer, String line) {
         boolean horizontalLineSeparatorFound = isHorizontalLineSpearator(writer, line);
         if (horizontalLineSeparatorFound) {
+            int lineOffset = Setup.getHorizontalLineAdjustment();
+            float vStart = writer.getCurrentVPos() + lineOffset;
             float hEnd = writer.getPrintablePagesizePoints().width;
-            writer.writeLine(writer.getCurrentVPos(), 0, writer.getCurrentVPos(),
-                    hEnd);
+            writer.writeLine(vStart, 0, vStart, hEnd);
         }
         return horizontalLineSeparatorFound;
     }
@@ -229,11 +230,12 @@ public class TrainPrintManifest extends TrainCommon {
     private static String printVerticalLineSeparator(CompatibleHardcopyWriter writer, String line) {
         if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
             // make a frame (two column format)
+            int lineOffset = Setup.getHorizontalLineAdjustment();
+            float vStart = writer.getCurrentVPos() + lineOffset;
             float hEnd = writer.getPrintablePagesizePoints().width;
-            writer.writeLine(writer.getCurrentVPos(), 0, writer.getCurrentVPos() + writer.getLineHeight(), 0);
-            writer.writeLine(writer.getCurrentVPos(), hEnd / 2, writer.getCurrentVPos() + writer.getLineHeight(),
-                    hEnd / 2);
-            writer.writeLine(writer.getCurrentVPos(), hEnd, writer.getCurrentVPos() + writer.getLineHeight(), hEnd);
+            writer.writeLine(vStart, 0, vStart + writer.getLineHeight(), 0);
+            writer.writeLine(vStart, hEnd / 2, vStart + writer.getLineHeight(), hEnd / 2);
+            writer.writeLine(vStart, hEnd, vStart + writer.getLineHeight(), hEnd);
             line = line.replace(VERTICAL_LINE_CHAR, SPACE_CHAR);
         }
         return line;

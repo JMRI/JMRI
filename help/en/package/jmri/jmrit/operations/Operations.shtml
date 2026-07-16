@@ -126,8 +126,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                       
                         <li><a href="#MorePrintOptions">More Print Options</a></li>
                         <li><a href="#EditManifestHeaderText">Edit Manifest Header Text</a></li>
-                        <li><a href="#EditManifestHeaderText">Edit Manifest Text</a></li>
-                        <li><a href="#EditManifestHeaderText">Edit Switch List Text</a></li>
+                        <li><a href="#EditManifestText">Edit Manifest Text</a></li>
+                        <li><a href="#EditManifestText">Edit Switch List Text</a></li>
                         <li><a href="#ManifestDayNameMapping">Edit Day to Day Mapping</a></li>
                       </ul></li>
                   </ul></li>
@@ -2221,11 +2221,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="EditManifestHeaderText">Edit Manifest Header Text</h3>
 
-      The tools "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List Text" allow
-      you to modify all of the text found in a Manifest or switch list. Each text line used by the
-      program is shown along with a text box with the same message. Edit the text box to change the
-      default message to your liking and press "Save" to complete your change. You can always return
-      the text to the original settings by pressing the "Reset" button followed by "Save".
+      This tool allows you the modify the header text shown on Manifests and switch lists. You can disable
+      the various horizontal lines, and also adjust their position on the page. Use negative numbers to move
+      the header lines upwards.
+      <p>
+        <img src="images/EditManifestHeaderText.png" alt="">
+      </p>
+
+
+      <h3 id="EditManifestText">Edit Manifest Text and Edit Switch List Text</h3>
+      The tools "Edit Manifest Text" and "Edit Switch List Text" allow you to modify all of the text
+      found in a Manifest or switch list. Each text line used by the program is shown along with a
+      text box with the same message. Edit the text box to change the default message to your liking
+      and press "Save" to complete your change. You can always return the text to the original
+      settings by pressing the "Reset" button followed by "Save".
 
       <p>
         <img src="images/EditManifestText.png" alt="">
@@ -2244,9 +2253,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         line will be bold and text in color you chose. Note that only when using a monospaced
         font that it's possible to selectively bold or color words in a line.</p>
 
-      <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
-        text, where "8" is the font size you want. Complete the size change by placing
-        &lt;/FONTSIZE&gt; at the end of the text.</p>
+      <p>You can also change the size of the font for the line. Add &lt;FONT size="8"&gt; at the
+        start of the line, where "8" is the font size you want. Complete the size change by placing
+        &lt;/FONTSIZE&gt; at the end of the line.</p>
 
       <h3 id="ManifestDayNameMapping">Edit Day to Name Mapping</h3>
 
