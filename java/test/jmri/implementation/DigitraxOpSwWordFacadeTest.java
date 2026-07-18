@@ -31,13 +31,16 @@ public class DigitraxOpSwWordFacadeTest {
         ProgListener l = getNewProgListener();
 
         replied = false;
+        dp.operations = new ArrayList<Record>(List.of(
+            new Record("115.4", 12, false)
+        ));
         p.writeCV("115.4", 12, l);
         JUnitUtil.waitFor(() -> replied, "Write completed");
-        Assert.assertEquals("target CV written", "115.4", dp.written.get(0).cv);
-        Assert.assertEquals("target value written", 12, dp.written.get(0).value);
 
         replied = false;
-        dp.read.add(new Record("115.4", 12));
+        dp.operations = new ArrayList<Record>(List.of(
+            new Record("115.5", 12, true)
+        ));
         p.readCV("115.5", l);
         JUnitUtil.waitFor(() -> replied, "Read completed");
         Assert.assertEquals("read back", 12, readValue);
@@ -45,13 +48,16 @@ public class DigitraxOpSwWordFacadeTest {
 
     // from here down is testing infrastructure
 
+    // This represents the result of one read or write operation for checking
     class Record {
-        Record(String cv, int value) {
+        Record(String cv, int value, boolean read) {
             this.cv = cv;
             this.value = value;
+            this.read = read;
         }
         String cv;
         int value;
+        boolean read;
         @Override
         public boolean equals(Object other) {
             Record c = (Record) other;
@@ -59,14 +65,13 @@ public class DigitraxOpSwWordFacadeTest {
         }
     }
 
+    // This class checks the intermediate operations that the facade creates
     class OpSwProgrammer extends AbstractProgrammer {
         
-        ArrayList<Record> written = new ArrayList<>();
-        ArrayList<Record> read = new ArrayList<>();
+        ArrayList<Record> operations = new ArrayList<>();
         
         void clear() { 
-            written = new ArrayList<>(); 
-            read = new ArrayList<>();
+            operations = new ArrayList<>(); 
         }
         
         @Override
@@ -74,26 +79,32 @@ public class DigitraxOpSwWordFacadeTest {
 
         @Override
         public void writeCV(String cv, int val, ProgListener p) throws ProgrammerException {
-            // record for later use
-            written.add(new Record(cv, val));
+            // check against expected
+            var expected = operations.remove(0);
+            if (!expected.cv.equals(cv)) Assert.fail("CV did not match");
+            if (expected.value != val) Assert.fail("Value did not match");
+            if (expected.read != false) Assert.fail("read/write did not match");
             p.programmingOpReply(0,0);
         }
     
         @Override
         public void readCV(String cv, ProgListener p) throws ProgrammerException {
-            // the first element of the read array provides the value,
-            // but first check for correct CV read
-            if (read.size() == 0) Assert.fail("No read values available");
-            var record = read.remove(0);
-            if (record.cv.equals(cv)) Assert.fail("Expected cv "+record.cv+" got "+cv);
-            
+            // check against expected
+            var expected = operations.remove(0);
+            if (!expected.cv.equals(cv)) Assert.fail("CV did not match");
+            if (expected.read != true) Assert.fail("read/write did not match");
             // return designated value with OK status
-            p.programmingOpReply(record.value,0);
+            p.programmingOpReply(expected.value,0);
         }
     
         @Override
         public void confirmCV(String cv, int val, ProgListener p) throws ProgrammerException {
-            p.programmingOpReply(0,0);
+            // check against expected
+            var expected = operations.remove(0);
+            if (!expected.cv.equals(cv)) Assert.fail("CV did not match");
+            if (expected.read != true) Assert.fail("read/write did not match");
+            // return designated value with OK status
+            p.programmingOpReply(expected.value,0);
         }
 
         @Override
@@ -104,6 +115,8 @@ public class DigitraxOpSwWordFacadeTest {
     int readValue = 0; // results of the last read operation
     boolean replied;   // the most recent operation has returned a result
     
+    // This ProgListener is used to check the overall operation.
+    // It's not used to check the intermediate operations.
     ProgListener getNewProgListener() {
         ProgListener l = new ProgListener() {
             @Override
