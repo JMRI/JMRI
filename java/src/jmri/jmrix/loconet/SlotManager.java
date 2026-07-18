@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.CommandStation;
 import jmri.ProgListener;
@@ -59,7 +61,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * that has not been updated within this interval IN SECONDS.
      * A value of Zero or less disables Slow Scanning.
      */
-    public double slowScanInterval =  90.0;
+    public double slowScanIntervalOveride =  0.0;
+
+    private double slowScanInterval =  90.0;
 
     public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
 
@@ -68,6 +72,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean pmManagerGotReply = false;  //this is public to allow changes via script and tests
 
     public boolean supportsSlot250;
+//    public boolean supportsSlot126;
+    public boolean supportsSlot127;
 
      /**
      * a Map of the CS slots.
@@ -220,6 +226,28 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     private int slot250FreeSlots;
 
     /**
+     * Command station opswitch can be THROWN, CLOSED or NUll
+     */
+    public enum CsOpSwValue {
+        THROWN,
+        CLOSED
+    }
+    private CsOpSwValue[] csOpSw = new CsOpSwValue[129];
+
+    /**
+     * Gets the value of aan OpSw if known else Null
+     * @param csOpSwNumber
+     * @return csOpSwValue
+     */
+    @CheckForNull
+    public CsOpSwValue getCsOpSw(int csOpSwNumber) {
+        if (csOpSwNumber < 1 || csOpSwNumber > 128) {
+            return null;
+        }
+        return csOpSw[csOpSwNumber];
+    }
+
+    /**
      * The network protocol.
      */
     private int loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;    // defaults to unknown
@@ -315,6 +343,26 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     javax.swing.Timer staleSlotCheckTimer = null;
 
     /**
+     * Calculate the effective slow scan rate to use.
+     * @return the slowScanInterval to use.
+     */
+    public double getEffectiveslowScanInterval() {
+        double slowScanIntervalToUse = slowScanInterval;
+        if (getCsOpSw(13) == CsOpSwValue.CLOSED) {
+            // with extended purging extend period.
+            slowScanIntervalToUse *= 2;
+        }
+        if (getCsOpSw(14) != null && getCsOpSw(14) == CsOpSwValue.CLOSED) {
+            // with purging disabled dont both slow scanning
+            slowScanIntervalToUse = -1;
+        }
+        if (slowScanIntervalOveride != 0) {
+            slowScanIntervalToUse = slowScanIntervalOveride;
+        }
+        return slowScanIntervalToUse;
+    }
+
+    /**
      * Scan the slot array looking for slots that are in-use or common but have
      * not had any updates in over 90s and issue a read slot request to update
      * their state as the command station may have purged or stopped updating
@@ -323,8 +371,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * This is intended to be called from the staleSlotCheckTimer
      */
     private void checkStaleSlots() {
-        if (slowScanInterval > 0) {
-            long staleTimeout = System.currentTimeMillis() - ((long) (slowScanInterval * 1000)); // 90 seconds ago
+        double slowScanIntervalToUse = getEffectiveslowScanInterval();
+        if (slowScanIntervalToUse > 0) {
+            long staleTimeout = System.currentTimeMillis() - ((long) (slowScanIntervalToUse * 1000)); // 90 seconds ago
             LocoNetSlot slot;
 
             // We will just check the normal loco slots 1 to numSlots exclude systemslots
@@ -546,7 +595,26 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
 
         if (m.getElement(1) != 0x15) {
-            // cannot check short slot messages.
+            // check short special slots
+            int opSwNo  = -1;  // will be 1 for slot 127, 65 for 126
+            if (supportsSlot127 && slot == 127) {
+                opSwNo = 1;
+            }
+//            else if (supportsSlot126 && slot == 126) {
+//                opSwNo = 65;
+//            }
+            if (opSwNo > 0 ) {
+                int[] numbers = {3,4,5,6,8,9,10,11};   // skips power/status byte
+                for ( int i: numbers) {
+                    int b = m.getElement(i);
+                    for (int x = 0 ; x < 8 ; x++) {
+                        csOpSw[opSwNo] = ((b & 0x01) == 0x01) ? CsOpSwValue.CLOSED : CsOpSwValue.THROWN;
+                        log.debug("CS OpSw [{}] is {}", opSwNo, csOpSw[opSwNo].name());
+                        opSwNo++;
+                        b = b >> 1;
+                    }
+                }
+            }
             return;
         }
 
@@ -1242,7 +1310,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mProgEndSequence = value.getProgPowersOff();
         slotMap = commandStationType.getSlotMap();
         supportsSlot250 = value.getSupportsSlot250();
-
+//        supportsSlot126 = value.getSupportsSlot126();
+        supportsSlot127 = value.getSupportsSlot127();
         loadSlots(false);
 
         // We will scan the slot table every 0.3 s for in-use slots that are stale
