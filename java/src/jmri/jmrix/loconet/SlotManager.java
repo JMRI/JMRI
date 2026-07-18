@@ -235,9 +235,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     private CsOpSwValue[] csOpSw = new CsOpSwValue[129];
 
     /**
-     * Gets the value of aan OpSw if known else Null
-     * @param csOpSwNumber
-     * @return csOpSwValue
+     * Gets the value of an OpSw if known else Null
+     * @param csOpSwNumber CS op sw number
+     * @return csOpSwValue THROWN CLOSED or null
      */
     @CheckForNull
     public CsOpSwValue getCsOpSw(int csOpSwNumber) {
