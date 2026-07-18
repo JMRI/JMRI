@@ -191,7 +191,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
             case SENDWRITESEQUENCE:
             
             
-            case SENDREADSEQUENCE;
+            case SENDREADSEQUENCE:
             
             
             default:
