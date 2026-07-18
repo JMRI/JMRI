@@ -636,7 +636,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     2, 0);
             JScrollPane panelPane = new JScrollPane(pC);
 
-            commentTextArea.setText(TrainCommon.getOnlyText(location.getSwitchListCommentWithColor()));
+            commentTextArea.setText(TrainCommon.isTextUserModified(location.getSwitchListCommentWithColor())
+                    ? location.getSwitchListCommentWithColor() : location.getSwitchListComment());
             boldCheckBox.setSelected(TrainCommon.isTextBold(location.getSwitchListCommentWithColor()));
 
             JPanel pB = new JPanel();

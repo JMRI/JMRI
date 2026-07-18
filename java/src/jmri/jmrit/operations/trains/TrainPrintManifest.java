@@ -26,7 +26,7 @@ import jmri.util.davidflanagan.CompatibleHardcopyWriter;
 public class TrainPrintManifest extends TrainCommon {
 
     protected static final char SPACE_CHAR = ' ';
-    private static boolean isPrintingBoldDone = false;
+    private static boolean isPrintingStyleDone = false;
     private static boolean isPrintingColor = false;
     private static boolean isTextSizeDone = false;
     private static Color color;
@@ -144,8 +144,8 @@ public class TrainPrintManifest extends TrainCommon {
             // font size change?
             line = setFontSize(writer, line);
 
-            // bold text?
-            line = printBold(writer, line);
+            // bold or italic text?
+            line = printStyle(writer, line);
 
             // color text?
             line = printColor(writer, line);
@@ -170,10 +170,10 @@ public class TrainPrintManifest extends TrainCommon {
                 isTextSizeDone = false;
             }
 
-            // done bold text?
-            if (isPrintingBoldDone) {
+            // done bold or italic text?
+            if (isPrintingStyleDone) {
                 writer.setFontStyle(Font.PLAIN);
-                isPrintingBoldDone = false;
+                isPrintingStyleDone = false;
             }
         }
         lines.clear();
@@ -241,22 +241,37 @@ public class TrainPrintManifest extends TrainCommon {
         return line;
     }
 
-    private static String printBold(CompatibleHardcopyWriter writer, String line) throws IOException {
-        if (line.contains(TEXT_BOLD_END)) {
-            isPrintingBoldDone = true;
+    private static String printStyle(CompatibleHardcopyWriter writer, String line) throws IOException {
+        if (line.contains(TEXT_BOLD_END) || line.contains(TEXT_ITALIC_END)) {
+            isPrintingStyleDone = true;
         }
-        // If monospaced font, it is possible to only bold a subset of words in the line.
-        // Can't combine color and bold words in a single line today. Would need to combine routines.
+        // If monospaced font, it is possible to only style a subset of words in the line.
+        // Can't combine color and bold and italic words in a single line today. Would need to combine routines.
         if (writer.isMonospaced() &&
-                line.contains(TEXT_BOLD) &&
-                line.contains(TEXT_BOLD_END) &&
                 !line.contains(TEXT_COLOR_START) &&
-                !line.contains(TEXT_COLOR_END)) {
-            printBoldWords(writer, line);
+                !line.contains(TEXT_COLOR_END) &&
+                line.contains(TEXT_BOLD) &&
+                line.contains(TEXT_BOLD_END)) {
+            offset = 0;
+            printStyleWords(writer, line, TEXT_BOLD, TEXT_BOLD_END, Font.BOLD);
+            line = ""; // done
+        } else if (writer.isMonospaced() &&
+                !line.contains(TEXT_COLOR_START) &&
+                !line.contains(TEXT_COLOR_END) &&
+                line.contains(TEXT_ITALIC) &&
+                line.contains(TEXT_ITALIC_END)) {
+            offset = 0;
+            printStyleWords(writer, line, TEXT_ITALIC, TEXT_ITALIC_END, Font.ITALIC);
             line = ""; // done
         } else {
+            if (line.contains(TEXT_ITALIC)) {
+                writer.setFontStyle(Font.ITALIC); // italicize the entire line
+            }
             if (line.contains(TEXT_BOLD)) {
                 writer.setFontStyle(Font.BOLD); // bold the entire line
+            }
+            if (line.contains(TEXT_ITALIC) || line.contains(TEXT_ITALIC_END)) {
+                line = getTextItalicString(line); // strip the italic characters
             }
             if (line.contains(TEXT_BOLD) || line.contains(TEXT_BOLD_END)) {
                 line = getTextBoldString(line); // strip the bold characters
@@ -268,20 +283,25 @@ public class TrainPrintManifest extends TrainCommon {
     // where in the line to add words
     private static int offset;
 
-    private static void printBoldWords(CompatibleHardcopyWriter writer, String line) throws IOException {
-        offset = 0;
-        // determine how many bold words to print
-        String[] strings = line.split(TEXT_BOLD);
+    private static void printStyleWords(CompatibleHardcopyWriter writer, String line, String startStyle,
+            String endStyle, int style) throws IOException {
+        // determine how many bold or italic words to print
+        String[] strings = line.split(startStyle);
         for (String s : strings) {
-            if (s.contains(TEXT_BOLD_END)) {
-                writer.setFontStyle(Font.BOLD);
-                String text = s.substring(0, s.indexOf(TEXT_BOLD_END));
-                writeWords(writer, text); // bold text
+            if (s.contains(endStyle)) {
+                writer.setFontStyle(style);
+                String text = s.substring(0, s.indexOf(endStyle));
+                writeWords(writer, text); // bold or italic text
 
                 writer.setFontStyle(Font.PLAIN);
-                s = s.substring(s.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
+                s = s.substring(s.indexOf(endStyle) + endStyle.length());
             }
-            writeWords(writer, s); // plain text
+            // special case where the line contains both bold and italic words
+            if (s.contains(TEXT_ITALIC)) {
+                printStyleWords(writer, s, TEXT_ITALIC, TEXT_ITALIC_END, Font.ITALIC);
+            } else {
+                writeWords(writer, s); // plain text
+            }
         }
     }
 
