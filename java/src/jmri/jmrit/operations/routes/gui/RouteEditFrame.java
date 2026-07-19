@@ -49,7 +49,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     // text field
     JTextField routeNameTextField = new JTextField(Control.max_len_string_route_name);
-    JTextField commentTextField = new JTextField(35);
+    JTextField commentTextField = new JTextField(55);
 
     // combo boxes
     JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();

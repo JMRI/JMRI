@@ -51,6 +51,8 @@ public class TrainCommon {
     protected static final String TEXT_SIZE_START = "<FONT size=\"";
     protected static final String TEXT_SIZE_DONE = "\">";
     protected static final String TEXT_SIZE_END = "</FONTSIZE>";
+    protected static final String TEXT_ITALIC = "<i>";
+    protected static final String TEXT_ITALIC_END = "</i>";
 
     // when true a pick up, when false a set out
     protected static final boolean PICKUP = true;
@@ -1429,8 +1431,8 @@ public class TrainCommon {
     /**
      * Writes a string to a file.
      *
-     * @param file       The File to write to.
-     * @param string     The string to write.
+     * @param file   The File to write to.
+     * @param string The string to write.
      */
     protected void newLine(PrintWriter file, String string) {
         if (!string.isEmpty()) {
@@ -1438,30 +1440,30 @@ public class TrainCommon {
         }
 
         // this code is no longer needed, now provided in HardcopyWriter
-//        if (string.contains(TEXT_SIZE_START)) {
-//            addLine(file, string);
-//        } else {
-//            String[] lines = string.split(NEW_LINE);
-//            for (String line : lines) {
-//                String[] words = line.split(SPACE);
-//                StringBuffer sb = new StringBuffer();
-//                for (String word : words) {
-//                    if (checkStringLength(sb.toString() + word, isManifest)) {
-//                        sb.append(word + SPACE);
-//                    } else {
-//                        if (sb.length() > 0) {
-//                            sb.setLength(sb.length() - 1); // remove last space added to string
-//                            addLine(file, sb.toString());
-//                        }
-//                        sb = new StringBuffer(word + SPACE);
-//                    }
-//                }
-//                if (sb.length() > 0) {
-//                    sb.setLength(sb.length() - 1); // remove last space added to string
-//                }
-//                addLine(file, sb.toString());
-//            }
-//        }
+        //        if (string.contains(TEXT_SIZE_START)) {
+        //            addLine(file, string);
+        //        } else {
+        //            String[] lines = string.split(NEW_LINE);
+        //            for (String line : lines) {
+        //                String[] words = line.split(SPACE);
+        //                StringBuffer sb = new StringBuffer();
+        //                for (String word : words) {
+        //                    if (checkStringLength(sb.toString() + word, isManifest)) {
+        //                        sb.append(word + SPACE);
+        //                    } else {
+        //                        if (sb.length() > 0) {
+        //                            sb.setLength(sb.length() - 1); // remove last space added to string
+        //                            addLine(file, sb.toString());
+        //                        }
+        //                        sb = new StringBuffer(word + SPACE);
+        //                    }
+        //                }
+        //                if (sb.length() > 0) {
+        //                    sb.setLength(sb.length() - 1); // remove last space added to string
+        //                }
+        //                addLine(file, sb.toString());
+        //            }
+        //        }
     }
 
     /**
@@ -2587,11 +2589,13 @@ public class TrainCommon {
         Color color = Color.black;
         if (string.contains(TEXT_COLOR_START)) {
             try {
-            String c = string.substring(string.indexOf(TEXT_COLOR_START) + TEXT_COLOR_START.length(),
-                    string.indexOf(TEXT_COLOR_DONE, string.indexOf(TEXT_COLOR_START)));
-            
+                String c = string.substring(string.indexOf(TEXT_COLOR_START) + TEXT_COLOR_START.length(),
+                        string.indexOf(TEXT_COLOR_DONE, string.indexOf(TEXT_COLOR_START)));
+
                 color = ColorUtil.stringToColor(c);
-            } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
+            } catch (
+                    IllegalArgumentException |
+                    StringIndexOutOfBoundsException e) {
                 log.error("Exception when getting text color: {} {}", string, e.getLocalizedMessage());
             }
         }
@@ -2605,25 +2609,33 @@ public class TrainCommon {
     public static String getTextBoldString(String string) {
         String text = string;
         while (text.contains(TEXT_BOLD) || text.contains(TEXT_BOLD_END)) {
-            text = stripBoldControlCharacters(text);
-        }
-        return text;
-    }
-
-    private static String stripBoldControlCharacters(String text) {
-        if (text.contains(TEXT_BOLD)) {
-            text = text.substring(0, text.indexOf(TEXT_BOLD)) +
-                    text.substring(text.indexOf(TEXT_BOLD) + TEXT_BOLD.length());
-        }
-        if (text.contains(TEXT_BOLD_END)) {
-            text = text.substring(0, text.indexOf(TEXT_BOLD_END)) +
-                    text.substring(text.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
+            text = stripStyleControlCharacters(text, TEXT_BOLD, TEXT_BOLD_END);
         }
         return text;
     }
 
     public static boolean isTextBold(String string) {
         return (!isTextUserModified(string) && string.contains(TEXT_BOLD));
+    }
+
+    public static String getTextItalicString(String string) {
+        String text = string;
+        while (text.contains(TEXT_ITALIC) || text.contains(TEXT_ITALIC_END)) {
+            text = stripStyleControlCharacters(text, TEXT_ITALIC, TEXT_ITALIC_END);
+        }
+        return text;
+    }
+
+    private static String stripStyleControlCharacters(String text, String startStyle, String endStyle) {
+        if (text.contains(startStyle)) {
+            text = text.substring(0, text.indexOf(startStyle)) +
+                    text.substring(text.indexOf(startStyle) + startStyle.length());
+        }
+        if (text.contains(endStyle)) {
+            text = text.substring(0, text.indexOf(endStyle)) +
+                    text.substring(text.indexOf(endStyle) + endStyle.length());
+        }
+        return text;
     }
 
     public static int getFontSize(String string) {
@@ -2675,12 +2687,15 @@ public class TrainCommon {
      */
     public static boolean isTextUserModified(String string) {
         String text = string;
-        if (text.contains(TEXT_SIZE_START) || text.contains(TEXT_SIZE_END)) {
+        if (text.contains(TEXT_SIZE_START) ||
+                text.contains(TEXT_SIZE_END) ||
+                text.contains(TEXT_ITALIC) ||
+                text.contains(TEXT_ITALIC_END)) {
             return true;
         }
         int count = 0;
         while (text.contains(TEXT_BOLD) || text.contains(TEXT_BOLD_END)) {
-            text = stripBoldControlCharacters(text);
+            text = stripStyleControlCharacters(text, TEXT_BOLD, TEXT_BOLD_END);
             count++;
         }
         if (count > 1) {
