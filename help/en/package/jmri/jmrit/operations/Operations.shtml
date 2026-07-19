@@ -147,6 +147,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
             <li><a href="#LocationServiceDirection">Train Direction Serviced</a></li>
             <li><a href="#LocationDivision">Railroad Divisions</a></li>
             <li><a href="#LocationRollingStock">Rolling Stock Serviced</a></li>
+            <li><a href="#LocationComment">Location Comment</a></li>
             <li><a href="#Yardmaster">Yardmaster</a></li>
             <li><a href="#LocationTools">Location Tools</a>
               <ul>
@@ -2092,9 +2093,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Manifests Options</h4>
       There are four checkboxes that allow you to modify the content of your Manifests. They are
       labeled "Location", "Route", "Departure Time", and "Truncate".
-      <p>Each location and the train's route can have an optional comment. The program will
-        print these comments on your Manifest if the "Location" and "Route" checkboxes are selected
-        respectively.</p>
+
+      <p>
+        Each <a href="#LocationComment">location</a> and the train's <a href="#AddRoute">route</a>
+        can have an optional comment. The program will print these comments on your Manifest if the
+        "Location" and "Route" checkboxes are selected respectively.
+      </p>
 
       <p>
         The Manifest normally shows the estimated arrival time for the train at each location worked
@@ -2248,10 +2252,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         color="red"&gt; at the start of the text, where "red" is the color text you want. Complete
         the color change by placing &lt;/FONT&gt; at the end of the text.</p>
 
-      <p>If you want your text in bold, at the start of the text add &lt;b&gt; and &lt;/b&gt; at
-        the end of the text. If you use both bold and color controls for a line, the entire
-        line will be bold and text in color you chose. Note that only when using a monospaced
-        font that it's possible to selectively bold or color words in a line.</p>
+      <p>If you want to style your text in bold, at the start of the text add &lt;b&gt; and
+        &lt;/b&gt; at the end of the text.</p>
+
+      <p>If you want to italicize your text, at the start of the text add &lt;i&gt; and
+        &lt;/i&gt; at the end of the text. Note that the program doesn't allow you to use both bold
+        and italic style controls for a given set of words.</p>
+
+      <p>Note that only when using a monospaced font that it's possible to selectively style or
+        color words in a line.</p>
 
       <p>You can also change the size of the font for the line. Add &lt;FONT size="8"&gt; at the
         start of the line, where "8" is the font size you want. Complete the size change by placing
@@ -2585,24 +2594,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       type names that a location can service. You can also access the "Edit Car Attributes" window
       from the edit location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.
 
-      <h4>Location Comment</h4>
+      <h4 id="LocationComment">Location Comment</h4>
       You can enter an optional comment for your location. You can also select the color of the text
       and if you want the text to be bold when printed on a Manifest.
 
-      <p>You also have the option to selectively color or bold the text. Add the color control
+      <p>You also have the option to selectively color or style the text. Add the color control
         text &lt;FONT color="red"&gt; at the start of the text, where "red" is the color text you
         want. Complete the color change by placing &lt;/FONT&gt; at the end of the text. To bold
-        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. If
-        you use both bold and color controls for a line, the entire line will be bold and text in
-        color you chose. Note that only when using a monospaced font that it's possible to
-        selectively bold or color words in a line.</p>
+        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. To
+        italicize your text, at the start of the text add &lt;i&gt; and &lt;/i&gt; at the end of the
+        text. Note that only when using a monospaced font that it's possible to selectively style or
+        color words in a line.</p>
 
       <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
         line, where "8" is the font size you want. Complete the size change by placing
         &lt;/FONTSIZE&gt; at the end of the lines you want resized.</p>
 
       <p>
-        If you want the comment to print on your Manifests you must select the print location
+        If you want the location comment to print on your Manifests you must select the print location
         comments <a href="#ManifestComments">option</a>.
       </p>
 
@@ -5505,13 +5514,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         to a location. You can also select the color of the text and if you want the text to be bold
         when printed on a Manifest.
       
-      <p>You also have the option to selectively color or bold the text. Add the color control
+      <p>You also have the option to selectively color or style the text. Add the color control
         text &lt;FONT color="red"&gt; at the start of the text, where "red" is the color text you
         want. Complete the color change by placing &lt;/FONT&gt; at the end of the text. To bold
-        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. If
-        you use both bold and color controls for a line, the entire line will be bold and text in
-        color you chose. Note that only when using a monospaced font that it's possible to
-        selectively bold or color words in a line.</p>
+        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. To
+        italicize your text, at the start of the text add &lt;i&gt; and &lt;/i&gt; at the end of the
+        text. Note that only when using a monospaced font that it's possible to selectively style or
+        color words in a line.</p>
 
       <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
         line, where "8" is the font size you want. Complete the size change by placing
@@ -5854,13 +5863,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       also select the color of the text and if you want the text to be bold when printed on a
       Manifest.
 
-      <p>You also have the option to selectively color or bold the text. Add the color control
+      <p>You also have the option to selectively color or style the text. Add the color control
         text &lt;FONT color="red"&gt; at the start of the text, where "red" is the color text you
         want. Complete the color change by placing &lt;/FONT&gt; at the end of the text. To bold
-        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. If
-        you use both bold and color controls for a line, the entire line will be bold and text in
-        color you chose. Note that only when using a monospaced font that it's possible to
-        selectively bold or color words in a line.</p>
+        your text, at the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text. To
+        italicize your text, at the start of the text add &lt;i&gt; and &lt;/i&gt; at the end of the
+        text. Note that only when using a monospaced font that it's possible to selectively style or
+        color words in a line.</p>
 
       <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
         line, where "8" is the font size you want. Complete the size change by placing
