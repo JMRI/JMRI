@@ -22,7 +22,7 @@ import org.junit.Assert;
  */
 public class DigitraxOpSwWordFacadeTest {
 
-
+    // test reads and writes that fall through
     @Test
     public void testWriteReadDirect() throws jmri.ProgrammerException, InterruptedException {
 
@@ -46,6 +46,131 @@ public class DigitraxOpSwWordFacadeTest {
         Assert.assertEquals("read back", 12, readValue);
     }
 
+    // test of a full-word write
+    @Test
+    public void testWriteFullWord() throws jmri.ProgrammerException, InterruptedException {
+
+        OpSwProgrammer dp = new OpSwProgrammer();
+        Programmer p = new DigitraxOpSwWordFacade(dp);
+        ProgListener l = getNewProgListener();
+
+        replied = false;
+        dp.operations = new ArrayList<Record>(List.of(
+            new Record("115.25", 1, false),
+            new Record("115.26", 1, false),
+            new Record("115.27", 0, false),
+            new Record("115.28", 0, false),
+            new Record("115.29", 1, false),
+            new Record("115.30", 0, false),
+            new Record("115.31", 0, false),
+            new Record("115.32", 1, false),
+
+            new Record("115.46", 1, false),
+            new Record("115.47", 0, false),
+            new Record("115.48", 1, false),
+
+            new Record("115.33", 1, false),
+            new Record("115.34", 1, false),
+            new Record("115.35", 0, false),
+            new Record("115.36", 0, false),
+            new Record("115.37", 0, false),
+            new Record("115.38", 1, false),
+            new Record("115.39", 0, false),
+            new Record("115.40", 0, false),
+            new Record("115.41", 1, false),
+            new Record("115.42", 0, false),
+            new Record("115.43", 0, false),
+            new Record("115.44", 0, false),
+            new Record("115.45", 0, false),
+
+            new Record("115.62", 0, false),
+            new Record("115.63", 1, false),
+            new Record("115.64", 0, false),
+
+            new Record("115.49", 0, false),
+            new Record("115.50", 0, false),
+            new Record("115.51", 1, false),
+            new Record("115.52", 1, false),
+            new Record("115.53", 0, false),
+            new Record("115.54", 1, false),
+            new Record("115.55", 1, false),
+            new Record("115.56", 1, false),
+            new Record("115.57", 0, false),
+            new Record("115.58", 1, false),
+            new Record("115.59", 0, false),
+            new Record("115.60", 0, false),
+            new Record("115.61", 0, false)
+        ));
+        int checkValue = (0x2<<29)+(0x2EC<<16)+(0x5<<13)+(0x123);
+        
+        p.writeCV("115.25.147", checkValue, l);// 0x93 is 147
+        JUnitUtil.waitFor(() -> replied, "Write completed");
+        Assert.assertEquals("finished full list", 0, dp.operations.size());
+    }
+    
+    // test of a full-word read
+    @Test
+    public void testReadFullWord() throws jmri.ProgrammerException, InterruptedException {
+
+        OpSwProgrammer dp = new OpSwProgrammer();
+        Programmer p = new DigitraxOpSwWordFacade(dp);
+        ProgListener l = getNewProgListener();
+
+        replied = false;
+        dp.operations = new ArrayList<Record>(List.of(
+            new Record("115.25", 1, false),
+            new Record("115.26", 1, false),
+            new Record("115.27", 0, false),
+            new Record("115.28", 0, false),
+            new Record("115.29", 1, false),
+            new Record("115.30", 0, false),
+            new Record("115.31", 0, false),
+            new Record("115.32", 1, false),
+
+            new Record("115.46", 1, true),
+            new Record("115.47", 0, true),
+            new Record("115.48", 1, true),
+
+            new Record("115.33", 1, true),
+            new Record("115.34", 1, true),
+            new Record("115.35", 0, true),
+            new Record("115.36", 0, true),
+            new Record("115.37", 0, true),
+            new Record("115.38", 1, true),
+            new Record("115.39", 0, true),
+            new Record("115.40", 0, true),
+            new Record("115.41", 1, true),
+            new Record("115.42", 0, true),
+            new Record("115.43", 0, true),
+            new Record("115.44", 0, true),
+            new Record("115.45", 0, true),
+
+            new Record("115.62", 0, true),
+            new Record("115.63", 1, true),
+            new Record("115.64", 0, true),
+
+            new Record("115.49", 0, true),
+            new Record("115.50", 0, true),
+            new Record("115.51", 1, true),
+            new Record("115.52", 1, true),
+            new Record("115.53", 0, true),
+            new Record("115.54", 1, true),
+            new Record("115.55", 1, true),
+            new Record("115.56", 1, true),
+            new Record("115.57", 0, true),
+            new Record("115.58", 1, true),
+            new Record("115.59", 0, true),
+            new Record("115.60", 0, true),
+            new Record("115.61", 0, true)
+        ));
+        int checkValue = (0x2<<29)+(0x2EC<<16)+(0x5<<13)+(0x123);
+        
+        p.readCV("115.25.147", l, 0);// 0x93 is 147
+        JUnitUtil.waitFor(() -> replied, "Write completed");
+        Assert.assertEquals("finished full list", 0, dp.operations.size());
+        Assert.assertEquals("correct result", checkValue, readValue);
+    }
+    
     // from here down is testing infrastructure
 
     // This represents the result of one read or write operation for checking
@@ -81,9 +206,10 @@ public class DigitraxOpSwWordFacadeTest {
         public void writeCV(String cv, int val, ProgListener p) throws ProgrammerException {
             // check against expected
             var expected = operations.remove(0);
-            if (!expected.cv.equals(cv)) Assert.fail("CV did not match");
-            if (expected.value != val) Assert.fail("Value did not match");
-            if (expected.read != false) Assert.fail("read/write did not match");
+            log.debug("checking write CV {}", expected.cv);
+            Assert.assertEquals("CV did not match", expected.cv, cv);
+            Assert.assertEquals("Value did not match", expected.value, val);
+            Assert.assertFalse("read/write did not match", expected.read);
             p.programmingOpReply(0,0);
         }
     
@@ -91,8 +217,9 @@ public class DigitraxOpSwWordFacadeTest {
         public void readCV(String cv, ProgListener p) throws ProgrammerException {
             // check against expected
             var expected = operations.remove(0);
-            if (!expected.cv.equals(cv)) Assert.fail("CV did not match");
-            if (expected.read != true) Assert.fail("read/write did not match");
+            log.debug("checking read CV {}", expected.cv);
+            Assert.assertEquals("CV did not match", expected.cv, cv);
+            Assert.assertTrue("read/write did not match", expected.read);
             // return designated value with OK status
             p.programmingOpReply(expected.value,0);
         }
@@ -101,8 +228,9 @@ public class DigitraxOpSwWordFacadeTest {
         public void confirmCV(String cv, int val, ProgListener p) throws ProgrammerException {
             // check against expected
             var expected = operations.remove(0);
-            if (!expected.cv.equals(cv)) Assert.fail("CV did not match");
-            if (expected.read != true) Assert.fail("read/write did not match");
+            Assert.assertEquals("CV did not match", expected.cv, cv);
+            Assert.assertEquals("Value did not match", expected.value, val);
+            Assert.assertTrue("read/write did not match", expected.read);
             // return designated value with OK status
             p.programmingOpReply(expected.value,0);
         }
