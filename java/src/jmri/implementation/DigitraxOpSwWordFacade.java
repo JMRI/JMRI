@@ -49,7 +49,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
     int pageNumber;    // the page number to be written to the address
     
     // members for handling the programmer interface
-    class OpSwCommand {
+    static class OpSwCommand {
         OpSwCommand(String cv, int value, boolean read) {
             this.cv = cv;
             this.value = value;
@@ -262,7 +262,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
 
             case SENDWRITESEQUENCE:
                 // drop last-sent item
-                var last = commands.pollFirst();
+                commands.pollFirst();
                 // and send next
                 var next = commands.peekFirst();
                 if (next == null) {
@@ -289,7 +289,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
       
             case SENDREADSEQUENCE:
                 // drop last-sent item
-                last = commands.pollFirst();
+                var last = commands.pollFirst();
                 // if last was a read, accumulate value
                 if (last.read) {
                     accumulation = accumulation | ((value&0x01)<<last.bit);

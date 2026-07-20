@@ -183,11 +183,6 @@ public class DigitraxOpSwWordFacadeTest {
         String cv;
         int value;
         boolean read;
-        @Override
-        public boolean equals(Object other) {
-            Record c = (Record) other;
-            return (this.cv.equals(c.cv) && this.value == c.value);
-        }
     }
 
     // This class checks the intermediate operations that the facade creates
