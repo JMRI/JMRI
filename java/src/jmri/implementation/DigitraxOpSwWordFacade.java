@@ -106,6 +106,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
     // programming interface
     @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        log.debug("writeCV with {}", p);
         _val = val;
         useProgrammer(p);
         pageAddress= -1;
@@ -139,6 +140,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
     int accumulation;  // accumulate the read result
     @Override
     synchronized public void readCV(String CV, jmri.ProgListener p, int val) throws jmri.ProgrammerException {
+        log.debug("readCV with {}", p);
         useProgrammer(p);
         pageAddress= -1;
         accumulation = 0;
@@ -160,7 +162,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
             for (int i = 49; i <= 61; i++) commands.add(oneBit(typeValue, i, val, true));
 
             state = ProgState.SENDREADSEQUENCE;
-            prog.writeCV(commands.getFirst().cv, commands.getFirst().value, this);
+            prog.writeCV(commands.getFirst().cv, commands.getFirst().value, this); // first address bit written
         }
     }
 
@@ -194,11 +196,10 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
 
     // internal method to remember who's using the programmer
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
+        log.debug("useProgrammer for {} with {}", p, _usingProgrammer, new Exception("traceback"));
         // test for only one!
-        if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by {}", _usingProgrammer);
-            }
+        if (_usingProgrammer != null && _usingProgrammer != p) {        
+            log.debug("programmer already in use by {}", _usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
@@ -213,16 +214,14 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
         SENDREADSEQUENCE
     }
 
-    public static int delayInterval = 10; // public static so can be changed in a script
+    public static int delayInterval = 5; // public static so can be changed in a script
     
     /** {@inheritDoc}
      * Note this assumes that there's only one phase to the operation
      */
     @Override
     synchronized public void programmingOpReply(int value, int status) {
-        if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value {} status {}", value, status);
-        }
+        log.debug("notifyProgListenerEnd value {} status {}", value, status);
 
         if (_usingProgrammer == null) {
             log.error("No listener to notify, reset and ignore");
@@ -233,7 +232,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
         // Complete processing later 
         final int myValue = value;
         final int myStatus = status;
-        ThreadingUtil.runOnLayoutDelayed(() -> {
+        ThreadingUtil.runOnGUIDelayed(() -> {
             processProgrammingOpReply(myValue, myStatus);
         }, delayInterval);
     }
@@ -257,8 +256,8 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                 jmri.ProgListener temp = _usingProgrammer;
                 _usingProgrammer = null; // done
                 state = ProgState.NOTPROGRAMMING;
+                commands.clear();  // just in case
                 temp.programmingOpReply(value, status);
-                commands.clear();
                 break;
 
             case SENDWRITESEQUENCE:
@@ -273,9 +272,10 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                     temp = _usingProgrammer;
                     _usingProgrammer = null; // done
                     state = ProgState.NOTPROGRAMMING;
-                    temp.programmingOpReply(_val, status);
-                    commands.clear();
-                    break;
+                    commands.clear();  // just in case
+                    log.debug("_usingProgrammer: {}", _usingProgrammer);
+                    temp.programmingOpReply(accumulation, status);
+                    return;
                     
                 } else {
                     // send that one
@@ -286,9 +286,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                     }   
                 }
                 return;
-
-            
-            
+      
             case SENDREADSEQUENCE:
                 // drop last-sent item
                 last = commands.pollFirst();
@@ -305,9 +303,10 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                     temp = _usingProgrammer;
                     _usingProgrammer = null; // done
                     state = ProgState.NOTPROGRAMMING;
+                    commands.clear();  // just in case
+                    log.debug("_usingProgrammer: {}", _usingProgrammer);
                     temp.programmingOpReply(accumulation, status);
-                    commands.clear();
-                    break;
+                    return;
                     
                 } else {
                     // send that one
@@ -322,16 +321,14 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                     }   
                 }
                 return;
-
-            
-            
+        
             default:
                 log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;
                 commands.clear();
-                break;
+                return;
         }
     }
 
