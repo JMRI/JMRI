@@ -2557,7 +2557,7 @@ public class TrainCommon {
         return string;
     }
 
-    private static String getTextColorString(String string) {
+    public static String getTextColorString(String string) {
         String text = string;
         while (text.contains(TEXT_COLOR_START) || text.contains(TEXT_COLOR_END)) {
             text = stripColorControlCharacters(text);
@@ -2687,6 +2687,7 @@ public class TrainCommon {
      */
     public static boolean isTextUserModified(String string) {
         String text = string;
+        // current GUI doesn't provide user font size change or italic characters 
         if (text.contains(TEXT_SIZE_START) ||
                 text.contains(TEXT_SIZE_END) ||
                 text.contains(TEXT_ITALIC) ||
