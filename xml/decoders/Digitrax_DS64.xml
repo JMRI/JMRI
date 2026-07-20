@@ -498,38 +498,149 @@
             <label> </label>
           </variable>
 
-          <variable item="Turnout 1 Address Route 1" CV="115.24.16" 
-                default="1" mask="VVVVVVVVVVV">
-            <decVal min="1" max="2047" />
+          <variable item="Turnout 1 Address Route 1" CV="115.25.16,115.25.16" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
           </variable>
-          <variable item="Turnout 1    Mode Route 1" CV="115.24.16" 
-                default="7" mask="VVVXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1    Mode Route 1" CV="115.25.16" 
+                default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
                   <enumChoice value="7">
                       <choice>Unused</choice>
                   </enumChoice>
-                  <enumChoice value="1">
+                  <enumChoice value="0">
                       <choice>Thrown</choice>
                   </enumChoice>
-                  <enumChoice value="0">
+                  <enumChoice value="1">
                       <choice>Closed</choice>
                   </enumChoice>
               </enumVal>
           </variable>
-          <variable item="Turnout 2 Address Route 1" CV="115.24.24" 
-                default="1" mask="VVVVVVVVVVV">
-            <decVal min="1" max="2047"/>
+          <variable item="Turnout 2 Address Route 1" CV="115.25.16,115.25.16" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
           </variable>
-          <variable item="Turnout 2    Mode Route 1" CV="115.24.24"
-                default="7" mask="VVVXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 2    Mode Route 1" CV="115.25.16"
+                default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
                   <enumChoice value="7">
                       <choice>Unused</choice>
                   </enumChoice>
-                  <enumChoice value="1">
+                  <enumChoice value="0">
                       <choice>Thrown</choice>
                   </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="Turnout 3 Address Route 1" CV="115.25.17,115.25.17" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
+          <variable item="Turnout 3    Mode Route 1" CV="115.25.17" 
+                default="7" mask="VVVXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
                   <enumChoice value="0">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+          <variable item="Turnout 4 Address Route 1" CV="115.25.17,115.25.17" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
+          <variable item="Turnout 4    Mode Route 1" CV="115.25.17"
+                default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
+                  <enumChoice value="0">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="Turnout 5 Address Route 1" CV="115.25.18,115.25.18" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
+          <variable item="Turnout 5    Mode Route 1" CV="115.25.18" 
+                default="7" mask="VVVXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
+                  <enumChoice value="0">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+          <variable item="Turnout 6 Address Route 1" CV="115.25.18,115.25.18" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
+          <variable item="Turnout 6    Mode Route 1" CV="115.25.18"
+                default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
+                  <enumChoice value="0">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+
+          <variable item="Turnout 7 Address Route 1" CV="115.25.19,115.25.19" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
+          <variable item="Turnout 7    Mode Route 1" CV="115.25.19" 
+                default="7" mask="VVVXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
+                  <enumChoice value="0">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
+                      <choice>Closed</choice>
+                  </enumChoice>
+              </enumVal>
+          </variable>
+          <variable item="Turnout 8 Address Route 1" CV="115.25.19,115.25.19" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
+          <variable item="Turnout 8    Mode Route 1" CV="115.25.19"
+                default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
+              <enumVal>
+                  <enumChoice value="7">
+                      <choice>Unused</choice>
+                  </enumChoice>
+                  <enumChoice value="0">
+                      <choice>Thrown</choice>
+                  </enumChoice>
+                  <enumChoice value="1">
                       <choice>Closed</choice>
                   </enumChoice>
               </enumVal>
@@ -687,6 +798,64 @@
         <griditem gridx="3" gridy="1">
             <display item="Turnout 2    Mode Route 1" label=""/>
         </griditem>
+
+        <griditem gridx="1" gridy="2">
+            <label><text>Turnout 3:</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="2">
+            <display item="Turnout 3 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="2">
+            <display item="Turnout 3    Mode Route 1" label=""/>
+        </griditem>
+        <griditem gridx="1" gridy="3">
+            <label><text>Turnout 4:</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="3">
+            <display item="Turnout 4 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="3">
+            <display item="Turnout 4    Mode Route 1" label=""/>
+        </griditem>
+
+        <griditem gridx="1" gridy="4">
+            <label><text>Turnout 5:</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="4">
+            <display item="Turnout 5 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="4">
+            <display item="Turnout 5    Mode Route 1" label=""/>
+        </griditem>
+        <griditem gridx="1" gridy="5">
+            <label><text>Turnout 6:</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="5">
+            <display item="Turnout 6 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="5">
+            <display item="Turnout 6    Mode Route 1" label=""/>
+        </griditem>
+
+        <griditem gridx="1" gridy="6">
+            <label><text>Turnout 7:</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="6">
+            <display item="Turnout 7 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="6">
+            <display item="Turnout 7    Mode Route 1" label=""/>
+        </griditem>
+        <griditem gridx="1" gridy="7">
+            <label><text>Turnout 8:</text></label>
+        </griditem>
+        <griditem gridx="2" gridy="7">
+            <display item="Turnout 8 Address Route 1" label=""/>
+        </griditem>
+        <griditem gridx="3" gridy="7">
+            <display item="Turnout 8    Mode Route 1" label=""/>
+        </griditem>
+
     </grid>
     </column>
   </pane>
