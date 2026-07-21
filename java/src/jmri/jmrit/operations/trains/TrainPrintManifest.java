@@ -18,15 +18,15 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.CompatibleHardcopyWriter;
 
 /**
- * Used for printing train Manifests and switch lists. Text can have color and
- * bold characters.
+ * Used for printing train Manifests and switch lists. Text can have color, bold
+ * and italic control characters.
  *
  * @author Daniel Boudreau (C) 2025, 2026
  */
 public class TrainPrintManifest extends TrainCommon {
 
     protected static final char SPACE_CHAR = ' ';
-    private static boolean isPrintingBoldDone = false;
+    private static boolean isPrintingStyleDone = false;
     private static boolean isPrintingColor = false;
     private static boolean isTextSizeDone = false;
     private static Color color;
@@ -72,7 +72,7 @@ public class TrainPrintManifest extends TrainCommon {
             if (!fontName.isEmpty()) {
                 writer.setFontName(fontName);
             }
-            
+
             _fontSize = fontSize;
 
             if (logoURL != null && !logoURL.equals(Setup.NONE)) {
@@ -110,6 +110,7 @@ public class TrainPrintManifest extends TrainCommon {
         }
     }
 
+    // this routine checks to see if the text between line spaces will fit on the page
     private static void print(CompatibleHardcopyWriter writer, List<String> lines, boolean lastBlock)
             throws IOException {
         int lineSize = getNumberOfLines(writer, lines);
@@ -140,40 +141,36 @@ public class TrainPrintManifest extends TrainCommon {
                 color = null;
                 continue;
             }
-            
+
             // font size change?
             line = setFontSize(writer, line);
 
-            // bold text?
-            line = printBold(writer, line);
+            // bold or italic text?
+            line = printStyle(writer, line);
 
-            // color text?
+            // color text without bold or italic text?
             line = printColor(writer, line);
 
             line = printVerticalLineSeparator(writer, line);
 
-            if (color != null) {
-                writer.write(color, line);
-            } else {
-                writer.write(line);
-            }
+            // color can be null
+            writer.write(color, line);
 
             // no line feed if last line of file, eliminates blank page
-            if (!lastBlock ||
-                    writer.getCurrentLineNumber() < writer.getLinesPerPage() - 1) {
+            if (!lastBlock || writer.getCurrentLineNumber() < writer.getLinesPerPage() - 1) {
                 writer.write(NEW_LINE);
             }
-            
+
             // done text size change?
             if (isTextSizeDone) {
                 writer.setFont(null, null, _fontSize);
                 isTextSizeDone = false;
             }
 
-            // done bold text?
-            if (isPrintingBoldDone) {
+            // done bold or italic text?
+            if (isPrintingStyleDone) {
                 writer.setFontStyle(Font.PLAIN);
-                isPrintingBoldDone = false;
+                isPrintingStyleDone = false;
             }
         }
         lines.clear();
@@ -199,9 +196,10 @@ public class TrainPrintManifest extends TrainCommon {
     private static boolean printHorizontalLineSeparator(CompatibleHardcopyWriter writer, String line) {
         boolean horizontalLineSeparatorFound = isHorizontalLineSpearator(writer, line);
         if (horizontalLineSeparatorFound) {
+            int lineOffset = Setup.getHorizontalLineAdjustment();
+            float vStart = writer.getCurrentVPos() + lineOffset;
             float hEnd = writer.getPrintablePagesizePoints().width;
-            writer.writeLine(writer.getCurrentVPos(), 0, writer.getCurrentVPos(),
-                    hEnd);
+            writer.writeLine(vStart, 0, vStart, hEnd);
         }
         return horizontalLineSeparatorFound;
     }
@@ -229,32 +227,39 @@ public class TrainPrintManifest extends TrainCommon {
     private static String printVerticalLineSeparator(CompatibleHardcopyWriter writer, String line) {
         if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
             // make a frame (two column format)
+            int lineOffset = Setup.getHorizontalLineAdjustment();
+            float vStart = writer.getCurrentVPos() + lineOffset;
             float hEnd = writer.getPrintablePagesizePoints().width;
-            writer.writeLine(writer.getCurrentVPos(), 0, writer.getCurrentVPos() + writer.getLineHeight(), 0);
-            writer.writeLine(writer.getCurrentVPos(), hEnd / 2, writer.getCurrentVPos() + writer.getLineHeight(),
-                    hEnd / 2);
-            writer.writeLine(writer.getCurrentVPos(), hEnd, writer.getCurrentVPos() + writer.getLineHeight(), hEnd);
+            writer.writeLine(vStart, 0, vStart + writer.getLineHeight(), 0);
+            writer.writeLine(vStart, hEnd / 2, vStart + writer.getLineHeight(), hEnd / 2);
+            writer.writeLine(vStart, hEnd, vStart + writer.getLineHeight(), hEnd);
             line = line.replace(VERTICAL_LINE_CHAR, SPACE_CHAR);
         }
         return line;
     }
 
-    private static String printBold(CompatibleHardcopyWriter writer, String line) throws IOException {
-        if (line.contains(TEXT_BOLD_END)) {
-            isPrintingBoldDone = true;
-        }
-        // If monospaced font, it is possible to only bold a subset of words in the line.
-        // Can't combine color and bold words in a single line today. Would need to combine routines.
+    private static String printStyle(CompatibleHardcopyWriter writer, String line) throws IOException {
+        // If monospaced font, it is possible to style or color a subset of words in the line.
         if (writer.isMonospaced() &&
-                line.contains(TEXT_BOLD) &&
-                line.contains(TEXT_BOLD_END) &&
-                !line.contains(TEXT_COLOR_START) &&
-                !line.contains(TEXT_COLOR_END)) {
-            printBoldWords(writer, line);
-            line = ""; // done
+                (line.contains(TEXT_BOLD) ||
+                line.contains(TEXT_BOLD_END))) {
+            line = printingStyleWords(writer, line, TEXT_BOLD, TEXT_BOLD_END, Font.BOLD);
+        } else if (writer.isMonospaced() &&
+                (line.contains(TEXT_ITALIC) ||
+                line.contains(TEXT_ITALIC_END))) {
+            line = printingStyleWords(writer, line, TEXT_ITALIC, TEXT_ITALIC_END, Font.ITALIC);
         } else {
+            if (line.contains(TEXT_ITALIC)) {
+                writer.setFontStyle(Font.ITALIC); // italicize the entire line
+            }
             if (line.contains(TEXT_BOLD)) {
                 writer.setFontStyle(Font.BOLD); // bold the entire line
+            }
+            if (line.contains(TEXT_BOLD_END) || line.contains(TEXT_ITALIC_END)) {
+                isPrintingStyleDone = true;
+            }
+            if (line.contains(TEXT_ITALIC) || line.contains(TEXT_ITALIC_END)) {
+                line = getTextItalicString(line); // strip the italic characters
             }
             if (line.contains(TEXT_BOLD) || line.contains(TEXT_BOLD_END)) {
                 line = getTextBoldString(line); // strip the bold characters
@@ -263,33 +268,90 @@ public class TrainPrintManifest extends TrainCommon {
         return line;
     }
 
+    private static String printingStyleWords(CompatibleHardcopyWriter writer, String line, String startStyle,
+            String endStyle, int style) throws IOException {
+        if (!isPrintingColor) {
+            color = null;
+        }
+        offset = 0;
+        printStyleWords(writer, line, startStyle, endStyle, style);
+        return ""; // done
+    }
+
     // where in the line to add words
     private static int offset;
 
-    private static void printBoldWords(CompatibleHardcopyWriter writer, String line) throws IOException {
-        offset = 0;
-        // determine how many bold words to print
-        String[] strings = line.split(TEXT_BOLD);
-        for (String s : strings) {
-            if (s.contains(TEXT_BOLD_END)) {
-                writer.setFontStyle(Font.BOLD);
-                String text = s.substring(0, s.indexOf(TEXT_BOLD_END));
-                writeWords(writer, text); // bold text
+    private static void printStyleWords(CompatibleHardcopyWriter writer, String line, String startStyle,
+            String endStyle, int style) throws IOException {
+        // determine how many bold or italic words to print
+        List<String> words = getSytleWords(line, startStyle, endStyle);
+        for (String s : words) {
+            if (s.contains(startStyle)) {
+                writer.setFontStyle(style);
+                s = s.substring(s.indexOf(startStyle) + startStyle.length());
+            }
+            if (s.contains(endStyle)) {
+                writer.setFontStyle(style);
+                String text = s.substring(0, s.indexOf(endStyle));
+                if (text.contains(TEXT_COLOR_START)) {
+                    printColorWords(writer, text);
+                } else {
+                    writeWords(writer, text); // bold or italic text
+                }
 
                 writer.setFontStyle(Font.PLAIN);
-                s = s.substring(s.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
+                s = s.substring(s.indexOf(endStyle) + endStyle.length());
             }
-            writeWords(writer, s); // plain text
+            // special case where the line contains both bold and italic words
+            if (s.contains(TEXT_ITALIC)) {
+                printStyleWords(writer, s, TEXT_ITALIC, TEXT_ITALIC_END, Font.ITALIC);
+            } else if (s.contains(TEXT_COLOR_START)) {
+                printColorWords(writer, s);
+            } else if (s.contains(TEXT_COLOR_END)) {
+                printColorEnd(writer, s);
+            } else {
+                writeWords(writer, s); // plain text
+            }
         }
+    }
+    
+    private static List<String> getSytleWords(String line, String startStyle, String endStyle) {
+        ArrayList<String> list = new ArrayList<>();
+        String s;
+        while (line.length() > 0) {
+            if (line.contains(startStyle)) {
+                s = line.substring(0, line.indexOf(startStyle));
+                if (s.length() > 0) {
+                    list.add(s);
+                    line = line.substring(line.indexOf(startStyle));
+                }
+                if (line.contains(endStyle)) {
+                    s = line.substring(line.indexOf(startStyle),
+                            line.indexOf(endStyle, line.indexOf(startStyle)) + endStyle.length());
+                    list.add(s);
+                    line = line.substring(
+                            line.indexOf(endStyle, line.indexOf(startStyle)) + endStyle.length());
+                } else {
+                    s = line.substring(line.indexOf(startStyle));
+                    list.add(s);
+                    break;
+                }
+            } else {
+                list.add(line);
+                break; //done
+            }
+        }
+        return list;
     }
 
     private static void writeWords(CompatibleHardcopyWriter writer, String s) throws IOException {
         String text = tabString(s, offset);
-        writer.write(text);
+        writer.write(color, text);
         offset = +text.length();
     }
 
     private static String printColor(CompatibleHardcopyWriter writer, String line) throws IOException {
+        offset = 0;
         if (line.contains(TEXT_COLOR_START)) {
             color = getTextColor(line);
             // if no TEXT_COLOR_END then printing multiple lines in color
@@ -304,8 +366,8 @@ public class TrainPrintManifest extends TrainCommon {
                 color = getTextColor(line);
                 // pad out string
                 line = tabString(getOnlyText(line), s.length());
-            } else if (writer.isMonospaced() &&
-                    printColorWords(writer, line)) {
+            } else if (writer.isMonospaced()) {
+                printColorWords(writer, line);
                 line = ""; // done
             } else {
                 // simple case only one color
@@ -313,22 +375,40 @@ public class TrainPrintManifest extends TrainCommon {
             }
         } else if (line.contains(TEXT_COLOR_END)) {
             isPrintingColor = false;
-            line = getOnlyText(line);
+            if (writer.isMonospaced()) {
+                printColorEnd(writer, line);
+                line = ""; //done
+            } else {
+                line = getOnlyText(line);
+            }
         } else if (!isPrintingColor) {
             color = null;
         }
         return line;
     }
 
-    // If monospaced font, it is possible to only color subset of words in the line can't combine color and bold words
-    private static boolean printColorWords(CompatibleHardcopyWriter writer, String line) throws IOException {
-        offset = 0;
+    private static void printColorEnd(CompatibleHardcopyWriter writer, String line) throws IOException {
+        String s = line.substring(0, line.indexOf(TEXT_COLOR_END));
+        writeColorWords(writer, s, color);
+        s = line.substring(line.indexOf(TEXT_COLOR_END) + TEXT_COLOR_END.length());
+        writeColorWords(writer, s, null);
+        isPrintingColor = false;
+        color = null;
+    }
+
+    // If monospaced font, it is possible to only color subset of words in the line
+    private static void printColorWords(CompatibleHardcopyWriter writer, String line) throws IOException {
         for (String words : getColorWords(line)) {
-            Color color = getTextColor(words);
+            color = getTextColor(words);
+            if (words.contains(TEXT_COLOR_START)) {
+                isPrintingColor = true;
+            }
+            if (words.contains(TEXT_COLOR_END)) {
+                isPrintingColor = false;
+            }
             words = getOnlyText(words);
             writeColorWords(writer, words, color);
         }
-        return true;
     }
 
     private static List<String> getColorWords(String line) {
@@ -339,12 +419,14 @@ public class TrainPrintManifest extends TrainCommon {
                 s = line.substring(0, line.indexOf(TEXT_COLOR_START));
                 if (s.length() > 0) {
                     list.add(s);
+                    line = line.substring(line.indexOf(TEXT_COLOR_START));
                 }
                 if (line.contains(TEXT_COLOR_END)) {
                     s = line.substring(line.indexOf(TEXT_COLOR_START),
-                            line.indexOf(TEXT_COLOR_END) + TEXT_COLOR_END.length());
+                            line.indexOf(TEXT_COLOR_END, line.indexOf(TEXT_COLOR_START)) + TEXT_COLOR_END.length());
                     list.add(s);
-                    line = line.substring(line.indexOf(TEXT_COLOR_END) + TEXT_COLOR_END.length());
+                    line = line.substring(
+                            line.indexOf(TEXT_COLOR_END, line.indexOf(TEXT_COLOR_START)) + TEXT_COLOR_END.length());
                 } else {
                     s = line.substring(line.indexOf(TEXT_COLOR_START));
                     list.add(s);

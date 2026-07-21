@@ -34,14 +34,9 @@
                 <li></li>
             </ul>
 
-        <h4>DCC-EX</h4>
+        <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCC-EX turnouts and lights now support a <strong>CS VPIN</strong> mode that
-                drives a VPIN directly via the &lt;z&gt; command (DCC-EX v4.2.35+), with no
-                pre-configuration required on the command station. Set the hardware address to
-                the VPIN number and select "CS VPIN" as the feedback mode (turnouts) or mode
-                (lights). The Mode column in the Light Table only appears when a DCC-EX
-                connection is active. Requires EX-CommandStation firmware v4.2.35 or later.</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -491,10 +486,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The LogixNG clipboard window now has the menu item
-              <strong>Clear clipboard</strong> in the <strong>Tools</strong>
-              menu. It allows you to clear the entire clipboard.</li>
-          <li>The action <strong>For each roster</strong> has been added.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -506,13 +498,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Improvements to the "Two Column" Manifest format for locomotives.</li>
-            <li>Users can now customize font size, color and bold text for location, train, and route location comments. For monospaced fonts, single words can now be colored or in bold.</li>
-            <li>Improvements to the automation "Run Automation".  Now the acton shows the status of the automation to run.</li>
-            <li>"Show Schedules by Load" now shows the which mode (Match or Sequential) was selected for the schedule.</li>
-            <li>The system console now show the name and length of the longest model name for a locomotive.</li>
-            <li>When selection "On Time" mode for the first time, the program now automatically brings up the tool "Modify Locations Quick Service".</li>
-            <li>Improved Manifest and switch list CSV files to only show route comments when they exist.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -554,10 +540,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Added a "ClearBlockValues.py" sample script for clearing block contents.  See
-            comments within it for more info on how to use it.</li>
-            <li>Added two scripts to show how to start logging of an LCC or LocoNet 
-                connection as the program starts up</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -566,7 +549,7 @@
             <li></li>
         </ul>
         <h4>Signal Systems</h4>
-               <ul>
+            <ul>
                 <li></li>
             </ul>
 
@@ -609,7 +592,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Power buttons do not error when displaying the Idle state.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -633,8 +616,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>It's now possible to listen on <strong>Warrant.getRunningMessage()</strong>
-                by listening on the property <strong>PROPERTY_RUNNING_MESSAGE</strong>.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -652,7 +634,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li>Improved frame layout so that long names won't cause the selector to disappear.</li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -676,10 +658,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The standard SortedProperties class has been put in place
-                of the custom jmri.util.OrderedProperties class, which in
-                turn has been deprecated for removal.</li>
-            <li>Improve caching of user preferences files when node-specific profile info is present.</li>
-            <li>Added a new black sensor icon to the smallschematics/LEDs group.</li>
+            <li></li>
         </ul>
 
