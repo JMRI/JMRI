@@ -653,6 +653,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The Linux desktop icons have been updated from .gif from .png
+                so they work on more Linux distributions.</li>
         </ul>
 

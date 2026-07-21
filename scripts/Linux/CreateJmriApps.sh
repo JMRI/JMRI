@@ -29,7 +29,7 @@ Type=Application
 Encoding=UTF-8
 Name=DecoderPro
 Comment=JMRI Decoder Pro
-Icon=${PROGDIR}/resources/decoderpro.gif
+Icon=${PROGDIR}/resources/decoderpro.png
 Exec=${PROGDIR}/DecoderPro
 Terminal=false;
 DP-App
@@ -42,7 +42,7 @@ Type=Application
 Encoding=UTF-8
 Name=PanelPro
 Comment=JMRI Panel Pro
-Icon=${PROGDIR}/resources/PanelPro.gif
+Icon=${PROGDIR}/resources/PanelPro.png
 Exec=${PROGDIR}/PanelPro
 Terminal=false;
 PP-App
