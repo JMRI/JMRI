@@ -94,13 +94,13 @@ public class LnCommandStationTypeTest {
 
     @Test
     public void testGetSupportsSlot250() {
-        //DB150 only one that needs power turned back on after programmin
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS052.getSupportsSlot250());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsSlot250());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210PLUS.getSupportsSlot250());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsSlot250());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240PLUS.getSupportsSlot250());
         // all others false
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DB150.getSupportsSlot250());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS050.getSupportsSlot250());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS051.getSupportsSlot250());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS100.getSupportsSlot250());
@@ -118,6 +118,35 @@ public class LnCommandStationTypeTest {
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getSupportsSlot250());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsSlot250());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getSupportsSlot250());
+    }
+
+    @Test
+    public void testGetSupportsSlot127() {
+        //DB150 only one that needs power turned back on after programmin
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DB150.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS052.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210PLUS.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240PLUS.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS050.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS051.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS100.getSupportsSlot127());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS200.getSupportsSlot127());
+        // all others are false
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR2_ALONE.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR3_ALONE.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR4_ALONE.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS240_ALONE.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS240PLUS_ALONE.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS52_ALONE.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE_EXT_TERM.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsSlot127());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getSupportsSlot127());
     }
 
     @Test
