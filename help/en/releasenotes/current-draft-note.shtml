@@ -91,7 +91,11 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Remove some extra messages when configuring with the board-level tools
+                    in the LocoNet menu</li>
+                <li>Added a new programming facade "Digitrax OpSw Word Programming" for
+                    programming at the board level for e.g. DS64's.</li>
+                <li>You can now program DS64 output addresses and routes using DecoderPro.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -440,6 +444,7 @@
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
             <li>Add the ability to export a backup of a single Roster Group.</li>
+            <li>You can now program DS64 output addresses and routes using DecoderPro.</li>
         </ul>
 
    <h3>Dispatcher</h3>
