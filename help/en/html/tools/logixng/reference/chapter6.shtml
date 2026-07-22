@@ -766,7 +766,7 @@
 
       <p>The <strong>Timer</strong> expression returns <strong>False</strong> until some time has
       passed. It then returns <strong>True</strong> once and the timer starts again. This expression
-      is intended to be used together with the <a href="chapter5#sequence_id">Sequence</a> action.
+      is intended to be used together with the <a href="chapter5.shtml#sequence_id">Sequence</a> action.
       This makes it possible to have sequence steps based on time durations.</p>
 
       <div style="margin-left: 2em;">
