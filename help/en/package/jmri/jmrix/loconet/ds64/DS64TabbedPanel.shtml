@@ -20,7 +20,9 @@
       "float:right; margin: 5px;" height="408" width="438" alt="Configure DS64 panel image"></a>
 
       <p>The JMRI DS64 Configuration tool lets you configure the internal options of a Digitrax
-      DS64 Stationary Decoder directly from your computer running JMRI.</p>
+      DS64 Stationary Decoder directly from your computer running JMRI. You can also 
+      configure, load and save DS64 configuration information by making a
+      roster entry for the DS64 in DecoderPro's roster.</p>
 
       <p>To open this tool select "Configure DS64" from the LocoNet menu for the connection this
       DS64 is attached to.</p>
@@ -124,7 +126,9 @@
         above to suit the DS64's buttons, button press time, and lamp flashes.
         </li>
 
-        <li>This tool does not have the capability to save the DS64 configuration.</li>
+        <li>This tool does not have the capability to save the DS64 configuration.
+        If you'd like to use that,  you can create a DS64 roster entry within
+        DecoderPro.</li>
 
         <li>The "Output Addresses" tab shows the state of the output <em>at the time that the
         "sheet" was last read from the DS64</em>. This tool does not attempt to track any ongoing
