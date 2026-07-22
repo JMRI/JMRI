@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
@@ -9,6 +10,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -18,7 +20,6 @@ import jmri.util.swing.JmriJOptionPane;
  * Frame for user edit of track roads
  *
  * @author Dan Boudreau Copyright (C) 2013, 2014
- * 
  */
 public class TrackRoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -43,6 +44,10 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
     // combo box
     JComboBox<String> comboBoxRoads = InstanceManager.getDefault(CarRoads.class).getComboBox();
+    JComboBox<String> comboBoxLoadTypes = InstanceManager.getDefault(CarLoads.class).getLoadTypesComboBox();
+
+    // check boxes
+    JCheckBox roadAndLoadTypeCheckBox = new JCheckBox(Bundle.getMessage("RoadAndLoadType"));
 
     // labels
     JLabel trackName = new JLabel();
@@ -100,15 +105,18 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         pRoadRadioButtons.add(roadNameAll);
         pRoadRadioButtons.add(roadNameInclude);
         pRoadRadioButtons.add(roadNameExclude);
+        pRoadRadioButtons.add(roadAndLoadTypeCheckBox);
 
         pRoadControls.setLayout(new FlowLayout());
 
         pRoadControls.add(comboBoxRoads);
+        pRoadControls.add(comboBoxLoadTypes);
         pRoadControls.add(addRoadButton);
         pRoadControls.add(deleteRoadButton);
         pRoadControls.add(deleteAllRoadsButton);
 
         pRoadControls.setVisible(false);
+        comboBoxLoadTypes.setVisible(false);
 
         p3.add(pRoadRadioButtons);
         p3.add(pRoadControls);
@@ -147,6 +155,8 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         addRadioButtonAction(roadNameInclude);
         addRadioButtonAction(roadNameExclude);
 
+        addCheckBoxAction(roadAndLoadTypeCheckBox);
+
         // road fields and enable buttons
         if (_track != null) {
             _track.addPropertyChangeListener(this);
@@ -158,7 +168,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         updateRoadComboBox();
         updateRoadNames();
-        
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_RoadOptions", true); // NOI18N
 
@@ -167,7 +177,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
     // Save, Delete, Add
     @Override
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void buttonActionPerformed(ActionEvent ae) {
         if (_track == null) {
             return;
         }
@@ -180,11 +190,19 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
             }
         }
         if (ae.getSource() == addRoadButton) {
-            _track.addRoadName((String) comboBoxRoads.getSelectedItem());
+            String roadName = (String) comboBoxRoads.getSelectedItem();
+            if (roadAndLoadTypeCheckBox.isSelected()) {
+                roadName = roadName + CarRoads.SPLIT_CHAR + comboBoxLoadTypes.getSelectedItem();
+            }
+            _track.addRoadName(roadName);
             selectNextItemComboBox(comboBoxRoads);
         }
         if (ae.getSource() == deleteRoadButton) {
-            _track.deleteRoadName((String) comboBoxRoads.getSelectedItem());
+            String roadName = (String) comboBoxRoads.getSelectedItem();
+            if (roadAndLoadTypeCheckBox.isSelected()) {
+                roadName = roadName + CarRoads.SPLIT_CHAR + comboBoxLoadTypes.getSelectedItem();
+            }
+            _track.deleteRoadName(roadName);
             selectNextItemComboBox(comboBoxRoads);
         }
         if (ae.getSource() == deleteAllRoadsButton) {
@@ -200,7 +218,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     @Override
-    public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void radioButtonActionPerformed(ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == roadNameAll) {
             _track.setRoadOption(Track.ALL_ROADS);
@@ -261,22 +279,15 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     @Override
-    public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+    public void checkBoxActionPerformed(ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
-        log.debug("checkbox change {}", b.getText());
-        if (_location == null) {
-            return;
-        }
-        if (b.isSelected()) {
-            _track.addTypeName(b.getText());
-        } else {
-            _track.deleteTypeName(b.getText());
-        }
+        comboBoxLoadTypes.setVisible(b.isSelected());
     }
 
     private void checkForErrors() {
         if (_track.getRoadOption().equals(Track.INCLUDE_ROADS) && _track.getRoadNames().length == 0) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedRoads"), Bundle.getMessage("ErrorNoRoads"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedRoads"),
+                    Bundle.getMessage("ErrorNoRoads"),
                     JmriJOptionPane.ERROR_MESSAGE);
         }
     }
