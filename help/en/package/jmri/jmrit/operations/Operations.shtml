@@ -413,6 +413,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#TrainRequires">Optional locomotive requirements</a></li>
                 <li><a href="#OptionalLastCar">Optional last car in train requirements
                     (Caboose or FRED)</a></li>
+                <li><a href="#TrainComment">Train Comment</a></li>
               </ul></li>
             <li><a href="#TrainReset">Reset Train</a></li>
 
@@ -5858,7 +5859,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         roads a train is allowed to use.
       </p>
 
-      <h4>Train Comment</h4>
+      <h4 id="TrainComment">Train Comment</h4>
       You can enter an optional comment for your train that will appear on your Manifests. You can
       also select the color of the text and if you want the text to be bold when printed on a
       Manifest.

@@ -242,11 +242,11 @@ public class TrainPrintManifest extends TrainCommon {
         // If monospaced font, it is possible to style or color a subset of words in the line.
         if (writer.isMonospaced() &&
                 (line.contains(TEXT_BOLD) ||
-                line.contains(TEXT_BOLD_END))) {
+                        line.contains(TEXT_BOLD_END))) {
             line = printingStyleWords(writer, line, TEXT_BOLD, TEXT_BOLD_END, Font.BOLD);
         } else if (writer.isMonospaced() &&
                 (line.contains(TEXT_ITALIC) ||
-                line.contains(TEXT_ITALIC_END))) {
+                        line.contains(TEXT_ITALIC_END))) {
             line = printingStyleWords(writer, line, TEXT_ITALIC, TEXT_ITALIC_END, Font.ITALIC);
         } else {
             if (line.contains(TEXT_ITALIC)) {
@@ -268,6 +268,7 @@ public class TrainPrintManifest extends TrainCommon {
         return line;
     }
 
+    // text has bold or italic control characters and possibly color control characters
     private static String printingStyleWords(CompatibleHardcopyWriter writer, String line, String startStyle,
             String endStyle, int style) throws IOException {
         if (!isPrintingColor) {
@@ -293,28 +294,20 @@ public class TrainPrintManifest extends TrainCommon {
             if (s.contains(endStyle)) {
                 writer.setFontStyle(style);
                 String text = s.substring(0, s.indexOf(endStyle));
-                if (text.contains(TEXT_COLOR_START)) {
-                    printColorWords(writer, text);
-                } else {
-                    writeWords(writer, text); // bold or italic text
-                }
-
+                printWords(writer, text);
                 writer.setFontStyle(Font.PLAIN);
+                
                 s = s.substring(s.indexOf(endStyle) + endStyle.length());
             }
             // special case where the line contains both bold and italic words
             if (s.contains(TEXT_ITALIC)) {
                 printStyleWords(writer, s, TEXT_ITALIC, TEXT_ITALIC_END, Font.ITALIC);
-            } else if (s.contains(TEXT_COLOR_START)) {
-                printColorWords(writer, s);
-            } else if (s.contains(TEXT_COLOR_END)) {
-                printColorEnd(writer, s);
             } else {
-                writeWords(writer, s); // plain text
+                printWords(writer, s);
             }
         }
     }
-    
+
     private static List<String> getSytleWords(String line, String startStyle, String endStyle) {
         ArrayList<String> list = new ArrayList<>();
         String s;
@@ -329,11 +322,9 @@ public class TrainPrintManifest extends TrainCommon {
                     s = line.substring(line.indexOf(startStyle),
                             line.indexOf(endStyle, line.indexOf(startStyle)) + endStyle.length());
                     list.add(s);
-                    line = line.substring(
-                            line.indexOf(endStyle, line.indexOf(startStyle)) + endStyle.length());
+                    line = line.substring(line.indexOf(endStyle, line.indexOf(startStyle)) + endStyle.length());
                 } else {
-                    s = line.substring(line.indexOf(startStyle));
-                    list.add(s);
+                    list.add(line);
                     break;
                 }
             } else {
@@ -343,11 +334,15 @@ public class TrainPrintManifest extends TrainCommon {
         }
         return list;
     }
-
-    private static void writeWords(CompatibleHardcopyWriter writer, String s) throws IOException {
-        String text = tabString(s, offset);
-        writer.write(color, text);
-        offset = +text.length();
+    
+    private static void printWords(CompatibleHardcopyWriter writer, String text) throws IOException {
+        if (text.contains(TEXT_COLOR_START)) {
+            printColorWords(writer, text);
+        } else if (text.contains(TEXT_COLOR_END)) {
+            printColorEnd(writer, text);
+        } else {
+            writeColorWords(writer, text); // bold or italic text
+        }
     }
 
     private static String printColor(CompatibleHardcopyWriter writer, String line) throws IOException {
@@ -389,11 +384,11 @@ public class TrainPrintManifest extends TrainCommon {
 
     private static void printColorEnd(CompatibleHardcopyWriter writer, String line) throws IOException {
         String s = line.substring(0, line.indexOf(TEXT_COLOR_END));
-        writeColorWords(writer, s, color);
+        writeColorWords(writer, s);
         s = line.substring(line.indexOf(TEXT_COLOR_END) + TEXT_COLOR_END.length());
-        writeColorWords(writer, s, null);
         isPrintingColor = false;
         color = null;
+        writeColorWords(writer, s);
     }
 
     // If monospaced font, it is possible to only color subset of words in the line
@@ -407,7 +402,10 @@ public class TrainPrintManifest extends TrainCommon {
                 isPrintingColor = false;
             }
             words = getOnlyText(words);
-            writeColorWords(writer, words, color);
+            writeColorWords(writer, words);
+            if (!isPrintingColor) {
+                color = null;
+            }
         }
     }
 
@@ -428,8 +426,7 @@ public class TrainPrintManifest extends TrainCommon {
                     line = line.substring(
                             line.indexOf(TEXT_COLOR_END, line.indexOf(TEXT_COLOR_START)) + TEXT_COLOR_END.length());
                 } else {
-                    s = line.substring(line.indexOf(TEXT_COLOR_START));
-                    list.add(s);
+                    list.add(line);
                     break;
                 }
             } else {
@@ -440,7 +437,7 @@ public class TrainPrintManifest extends TrainCommon {
         return list;
     }
 
-    private static void writeColorWords(CompatibleHardcopyWriter writer, String s, Color color) throws IOException {
+    private static void writeColorWords(CompatibleHardcopyWriter writer, String s) throws IOException {
         String text = tabString(s, offset);
         writer.write(color, text);
         offset = +text.length();
