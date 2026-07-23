@@ -90,7 +90,7 @@
 				<li>N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
 				<li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
 				<li>If purgeing is disabled in the Command Station so is slow scanning.</li>
-				<li>A custom interval, in seconds can be implemented by placing the value in slotmon.slowScanIntervalOveride.</li>
+				<li>A custom interval, in seconds can be implemented by placing the value in jmri.jmrix.loconet.SlotManager.slowScanIntervalOveride.</li>
 				<li>A value of -1 stops slowscanning.</li>
             </ul>
 

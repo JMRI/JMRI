@@ -16,7 +16,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
@@ -37,7 +36,7 @@ import jmri.util.table.*;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements SlotListener, InstanceManagerAutoDefault {
+public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements SlotListener {
 
     /**
      * Controls whether not-in-use slots are shown
@@ -69,6 +68,11 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     public SlotMonPane() {
         super();
     }
+    @Override
+    public boolean isMultipleInstances() {
+        return false;
+    }
+
 
     @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
