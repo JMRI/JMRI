@@ -64,6 +64,12 @@ public abstract class AbstractValue {
         FROMFILE(Color.yellow, "FromFile"),
 
         /**
+         * Defines state where value was defined by the decoder definition default, 
+         * and has never been edited or read from or written to the decoder.
+         */
+        FROMDEFAULT(new Color(0xC0C0E0), "FromDefault"),  // light blue
+
+        /**
          * Defines state where value was read from a config file, and is the same as
          * the decoder.
          */
