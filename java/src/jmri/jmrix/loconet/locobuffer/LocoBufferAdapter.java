@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.locobuffer;
 import java.util.Arrays;
 
 import jmri.jmrix.loconet.*;
-import jmri.jmrix.loconet.locobuffer.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
