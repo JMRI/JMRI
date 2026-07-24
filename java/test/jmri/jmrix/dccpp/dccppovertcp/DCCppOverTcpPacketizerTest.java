@@ -41,6 +41,7 @@ public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizer
     @AfterEach
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

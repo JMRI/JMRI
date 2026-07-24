@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>PowerManager - Added method for requesting power status from layout.</li>
             </ul>
 
         <h4>DCC4pc</h4>

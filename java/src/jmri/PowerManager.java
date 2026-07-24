@@ -50,19 +50,45 @@ public interface PowerManager extends PropertyChangeProvider {
      */
     String POWER = "power"; // as recommended in JavaBeans Spec // NOI18N
 
+    /**
+     * Set the Power.
+     * @param v the new power status.
+     * @throws jmri.JmriException if unable to send request.
+     */
     void setPower(int v) throws JmriException;
 
+    /**
+     * Get the current power state.
+     * @return int value of state.
+     */
     @CheckReturnValue
     int getPower();
 
-    // to free resources when no longer used
+    /**
+     * Free resources when no longer used.
+     * @throws jmri.JmriException if unable to dispose.
+     */
     void dispose() throws JmriException;
 
+    /**
+     * Check if the connection supports the Idle power state.
+     * By default the Power Manager does not implement the IDLE power state.
+     * @return true if the connection implements Idle, else false.
+     */
     default boolean implementsIdle() {
-        // By default the Power Manager does not implement the IDLE power state
         return false;
     }
 
+    /**
+     * Request Track Power Status Update.
+     * Default implementation does nothing.
+     */
+    default void requestUpdateFromLayout() {}
+
+    /**
+     * Get the PowerManager UserName.
+     * @return a nonNull userName.
+     */
     @CheckReturnValue
     @Nonnull String getUserName();
 }
