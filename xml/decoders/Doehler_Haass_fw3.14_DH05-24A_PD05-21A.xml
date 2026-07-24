@@ -1154,7 +1154,8 @@
       <!-- SECTION 6    - Extra general options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
       <!--              - Extra general options as of fw3.10 -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.14.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bits1-4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bit5_fw3.14.xml"/>
       <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
       <!-- SECTION 8    - Motorola format as of fw3.06 -->

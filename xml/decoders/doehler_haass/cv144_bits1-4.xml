@@ -32,20 +32,17 @@
       <revremark>Creation. CV144 bits 1-5 for firmware 3.14 and later.</revremark>
     </revision>
   </revhistory>
-  <!-- CV144 bits 1-5 for firmware 3.14 and later. Replaces cv144_fw3.10.xml, which is kept    -->
-  <!-- unchanged for the firmware 3.10-3.13 and sound definitions that use it. Include this    -->
-  <!-- fragment INSTEAD of cv144_fw3.10.xml, not alongside it - the two overlap on bits 1-4.   -->
-  <!-- Bit 0 is unrelated and still comes from cv135-136_144_railcom_fw3.06.xml.               -->
-  <!--                                                                                        -->
-  <!-- Differences from cv144_fw3.10.xml:                                                      -->
-  <!--   - bit 5 added; new in firmware 3.14. It uses the generic item name                    -->
-  <!--     "Advanced Group 1 Option 2" so that the standard Advanced pane displays it, next    -->
-  <!--     to bit 1 which uses "Advanced Group 1 Option 1". A decoder-specific item name        -->
-  <!--     would not appear on any standard pane.                                              -->
-  <!--   - bits 3 and 4 are gated by productID (200 = DH21A, 201 = DH21B, 202 = DH22A,         -->
-  <!--     203 = DH22B, 204 = DH24A, 192 = FH22A), matching the applicability D&H document.    -->
-  <!--     The old fragment listed 2018-era identifiers that match no model from firmware      -->
-  <!--     3.13 onwards, so these two bits never appeared on those decoders.                   -->
+  <!-- CV144 bits 1-4 for the non-sound decoders, firmware 3.10 and later.                    -->
+  <!-- Bit 0 is unrelated and comes from cv135-136_144_railcom_fw3.06.xml; bit 5 exists only    -->
+  <!-- from firmware 3.14 and lives in cv144_bit5_fw3.14.xml.                                   -->
+  <!--                                                                                          -->
+  <!-- Bits 3 and 4 (the two GPIO brake settings) are gated to the models D&H document:          -->
+  <!-- DH21A, DH21B, DH22A, DH22B, DH24A and FH22A. The include list carries every product ID    -->
+  <!-- form these decoders use across firmware versions - the alphanumeric 2018-era ones and     -->
+  <!-- the numeric ones from firmware 3.12 on. The previous list in cv144_fw3.10.xml held only   -->
+  <!-- the 2018 DH values, and even those were wrong for FH22A ("FH22A_2018_09" against an       -->
+  <!-- actual "FH22A_2018.10"), so both bits were invisible on firmware 3.12, 3.13 and on every  -->
+  <!-- FH22A. The sound definitions keep cv144_fw3.10.xml, where family-name gating works.       -->
   <variable item="Advanced Group 1 Option 1" CV="144" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Immediate starting after current interruption</label>
@@ -61,7 +58,7 @@
     <tooltip xml:lang="fr">Bit Spécial Lumières en mode Analogique</tooltip>
     <tooltip xml:lang="de">Spezielles Bit für Beleuchtung im Analogbetrieb</tooltip>
   </variable>
-  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="200,201,202,203,204,192">
+  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018.04,FH22A_2018.10,200,201,202,203,204,192">
     <enumVal>
       <enumChoice choice="Braking">
         <choice>Braking</choice>
@@ -78,7 +75,7 @@
     <label xml:lang="fr">Sortie Section Freinage sur "GPIO"</label>
     <label xml:lang="de">Bremsstreckenausgabe an "GPIO"</label>
   </variable>
-  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="200,201,202,203,204,192">
+  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018.04,FH22A_2018.10,200,201,202,203,204,192">
     <enumVal>
       <enumChoice choice="Braking">
         <choice>Braking</choice>
@@ -97,14 +94,5 @@
     <tooltip>1 = driving, 0 = braking</tooltip>
     <tooltip xml:lang="fr">1 = rouler, 0 = freiner</tooltip>
     <tooltip xml:lang="de">1 = Fahren, 0 = Bremsen</tooltip>
-  </variable>
-  <variable item="Advanced Group 1 Option 2" CV="144" mask="XXVXXXXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>Deactivate temporary data storage</label>
-    <label xml:lang="fr">Désactiver la mémorisation temporaire des données</label>
-    <label xml:lang="de">Kurzzeitige Datenspeicherung deaktivieren</label>
-    <tooltip>bit 5 - since firmware 3.14.095. Disables restoring the last driving state.</tooltip>
-    <tooltip xml:lang="fr">bit 5 - depuis le firmware 3.14.095. Désactive la restauration du dernier état de marche.</tooltip>
-    <tooltip xml:lang="de">bit 5 - ab Firmware 3.14.095. Schaltet die Wiederherstellung des letzten Fahrzustandes aus.</tooltip>
   </variable>
 </variables>

@@ -265,6 +265,11 @@
                     and 4 available on the DH21A, DH21B, DH22A, DH22B, DH24A and FH22A as D&amp;H
                     document; those two bits were previously gated to identifiers that no longer
                     matched any model, so they never appeared.</li>
+                <li>Firmware 3.10 to 3.13 definitions: the CV144 GPIO brake settings (bits 3 and 4)
+                    are now shown on the decoders D&amp;H document them for. They had been gated to
+                    product IDs that no model in those files carries - and, for the FH22A, to a
+                    misspelt one - so neither setting was reachable on firmware 3.12 or 3.13, nor
+                    on any FH22A.</li>
             </ul>
 
         <h4>ESU</h4>
