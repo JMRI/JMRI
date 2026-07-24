@@ -97,14 +97,15 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
     }
 
     /**
-     * Request Track Power Status Update.
-     * Request the current command station status.
-     * Request the trackmanager configuration.
+     * Request the current command station status and
+     * request the trackmanager configuration.
      * {@inheritDoc }
      */
     @Override
     public void requestUpdateFromLayout() {
+        // Request the current command station status.
         tc.sendDCCppMessage(DCCppMessage.makeCSStatusMsg(), this);
+        // Request the trackmanager configuration.
         tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), this);
     }
 
