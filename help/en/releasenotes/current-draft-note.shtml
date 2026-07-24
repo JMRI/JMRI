@@ -440,6 +440,7 @@
         <ul>
             <li>Add the ability to export a backup of a single Roster Group.</li>
             <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
+            <li>Fixed a bug which caused importing a decoder on Windows to fail.</li>
         </ul>
 
    <h3>Dispatcher</h3>
