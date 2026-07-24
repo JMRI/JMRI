@@ -259,6 +259,12 @@
                     which carried the values of their A variants and so could not be distinguished
                     from them by decoder identification; and declared Motorola protocol support on
                     the FH models, which D&amp;H document but which had never been listed.</li>
+                <li>New definitions for firmware 3.14.095: "Train Decoders (firmware 3.14+)" and
+                    "Function Decoders (firmware 3.14+)". Relative to firmware 3.13 these add CV144
+                    bit 5, which disables restoring the last driving state, and make CV144 bits 3
+                    and 4 available on the DH21A, DH21B, DH22A, DH22B, DH24A and FH22A as D&amp;H
+                    document; those two bits were previously gated to identifiers that no longer
+                    matched any model, so they never appeared.</li>
             </ul>
 
         <h4>ESU</h4>
