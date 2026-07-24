@@ -1,12 +1,10 @@
 package jmri.jmrix.loconet.locobuffer;
 
 import java.util.Arrays;
-import java.util.Vector;
-import jmri.jmrix.loconet.LnCommandStationType;
-import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LnPacketizerStrict;
-import jmri.jmrix.loconet.LnPortController;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+
+import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.locobuffer.Bundle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,14 +39,14 @@ public class LocoBufferAdapter extends LnPortController {
         options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
                 new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("LoconetProtocolAutoDetect")} )); // NOI18N
     }
-    
+
     /**
      * Create a list of possible command stations and append "Standalone LocoNet"
-     * 
+     *
      * Note: This is not suitable for use by any class which extends this class if
      * the hardware interface is part of a command station.
-     * 
-     * @return String[] containing the array of command stations, plus "Standalone 
+     *
+     * @return String[] containing the array of command stations, plus "Standalone
      *          LocoNet"
      */
     public String[] getCommandStationListWithStandaloneLN() {
@@ -59,8 +57,6 @@ public class LocoBufferAdapter extends LnPortController {
         result[commandStationNames.length] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
         return result;
     }
-    
-    Vector<String> portNameVector = null;
 
     @Override
     public String openPort(String portName, String appName) {
@@ -71,7 +67,7 @@ public class LocoBufferAdapter extends LnPortController {
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         reportOpen(portName);
-        
+
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
@@ -96,7 +92,7 @@ public class LocoBufferAdapter extends LnPortController {
     protected void reportOpen(String portName) {
         log.info("Connecting LocoBuffer via {} {}", portName, currentSerialPort);
     }
-    
+
     /**
      * Allow subtypes to change the flow control algorithm
      */
@@ -107,18 +103,37 @@ public class LocoBufferAdapter extends LnPortController {
         }
         setFlowControl(currentSerialPort, flow);
     }
-    
+
     /**
      * Can the port accept additional characters? The state of CTS determines
      * this, as there seems to be no way to check the number of queued bytes and
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
-     * 
+     *
      * @return an indication of whether the interface is accepting transmit messages.
      */
     @Override
     public boolean okToSend() {
         return currentSerialPort.getCTS();
+    }
+
+    @Override
+    public void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection lost. Attempting to recover...");
+        }
+        super.recover();
+    }
+
+    // after reconnect, reattach the packetizer's streams and restart the receive thread
+    @Override
+    protected void resetupConnection() {
+        LnTrafficController tc = getSystemConnectionMemo().getLnTrafficController();
+        if (tc instanceof LnPacketizer) {
+            LnPacketizer packets = (LnPacketizer) tc;
+            packets.connectPort(this);
+            packets.restartRcvThread();
+        }
     }
 
     /**
@@ -214,7 +229,7 @@ public class LocoBufferAdapter extends LnPortController {
         return "lnPacketizer";
     }
     /**
-     * 
+     *
      * @param s the packetizer to use in its readable form.
      * @return a LnPacketizer
      */
