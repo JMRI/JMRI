@@ -245,7 +245,12 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>Firmware 3.13 definitions (Train Decoders (2023) and Function Decoders (2023)):
+                    added the CV401-412 function swapping settings, which D&amp;H have documented since
+                    firmware 3.12 or earlier but which had never been implemented for the non-sound
+                    decoders, and CV137 bit 6, which applies those swappings to the SUSI functions
+                    F1-F12 and was introduced in firmware 3.13.053. Both appear on a new
+                    "Function Swapping" tab.</li>
             </ul>
 
         <h4>ESU</h4>
