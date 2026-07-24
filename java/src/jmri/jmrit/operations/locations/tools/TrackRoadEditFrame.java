@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -19,12 +20,13 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of track roads
  *
- * @author Dan Boudreau Copyright (C) 2013, 2014
+ * @author Dan Boudreau Copyright (C) 2013, 2014, 2026
  */
 public class TrackRoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     Location _location = null;
     Track _track = null;
+    private static boolean roadAndLoadType = false;
 
     // panels
     JPanel pRoadControls = new JPanel();
@@ -117,6 +119,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         pRoadControls.setVisible(false);
         comboBoxLoadTypes.setVisible(false);
+        roadAndLoadTypeCheckBox.setSelected(roadAndLoadType);
 
         p3.add(pRoadRadioButtons);
         p3.add(pRoadControls);
@@ -172,10 +175,11 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_RoadOptions", true); // NOI18N
 
-        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight400));
     }
 
     // Save, Delete, Add
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     @Override
     public void buttonActionPerformed(ActionEvent ae) {
         if (_track == null) {
@@ -183,10 +187,12 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
         if (ae.getSource() == saveButton) {
             log.debug("track save button activated");
-            checkForErrors();
-            OperationsXml.save();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
+            if (!checkForErrors()) {
+                roadAndLoadType = roadAndLoadTypeCheckBox.isSelected();
+                OperationsXml.save();
+                if (Setup.isCloseWindowOnSaveEnabled()) {
+                    dispose();
+                }
             }
         }
         if (ae.getSource() == addRoadButton) {
@@ -284,12 +290,14 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         comboBoxLoadTypes.setVisible(b.isSelected());
     }
 
-    private void checkForErrors() {
+    private boolean checkForErrors() {
         if (_track.getRoadOption().equals(Track.INCLUDE_ROADS) && _track.getRoadNames().length == 0) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedRoads"),
                     Bundle.getMessage("ErrorNoRoads"),
                     JmriJOptionPane.ERROR_MESSAGE);
+            return true;
         }
+        return false;
     }
 
     @Override
