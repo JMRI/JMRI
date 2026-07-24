@@ -486,7 +486,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Add the <strong>Occupied</strong> option to the Sections Expression.  This is used to
+          test if any blocks within a Section are occupied.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

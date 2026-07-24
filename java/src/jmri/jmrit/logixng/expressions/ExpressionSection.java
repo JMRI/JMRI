@@ -86,7 +86,12 @@ public class ExpressionSection extends AbstractDigitalExpression
 
         SectionState checkSectionState = _selectEnum.evaluateEnum(conditionalNG);
 
-        int currentState = section.getState();
+        int currentState = 0;
+        if (_selectEnum.getEnum() == SectionState.Occupied) {
+            currentState = section.getOccupancy();
+        } else {
+            currentState = section.getState();
+        }
 
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentState == checkSectionState.getID();
@@ -134,6 +139,22 @@ public class ExpressionSection extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (_selectEnum.getEnum() == SectionState.Occupied) {
+            if (!_selectNamedBean.isDirectAddressing()) {
+                log.error("The section occupied expression requires a 'Direct' section reference");
+                return;
+            }
+
+            if (_selectNamedBean.getBean() == null) {
+                log.error("The section occupied expression requires a selected section");
+                return;
+            }
+
+            // Sections are not active until Section.initializeBlocks is invoked by Dispatcher.
+            // Section.getNumBlocks is a public method that will invoke Section.initializeBlocks if needed.
+            _selectNamedBean.getBean().getNumBlocks();
+        }
+
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
             _selectNamedBean.registerListeners();
@@ -165,7 +186,9 @@ public class ExpressionSection extends AbstractDigitalExpression
     public enum SectionState {
         Free(Section.FREE, Bundle.getMessage("Section_StateFree")),
         Forward(Section.FORWARD, Bundle.getMessage("Section_StateForward")),
-        Reverse(Section.REVERSE, Bundle.getMessage("Section_StateReverse"));
+        Reverse(Section.REVERSE, Bundle.getMessage("Section_StateReverse")),
+        Separator1(-1, Base.SEPARATOR),
+        Occupied(Section.OCCUPIED, Bundle.getMessage("Section_StateOccupied"));
 
         private final int _id;
         private final String _text;
