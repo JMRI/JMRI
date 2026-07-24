@@ -434,19 +434,19 @@
             <compositeVal>
               <compositeChoice choice="are triggered by switch commands on LocoNet">
                 <compositeSetting label="Route Command Source" value="0"/>
-                <compositeSetting label="Route Command Source" value="0"/>
+                <compositeSetting label="Routes Enable" value="0"/>
               </compositeChoice>
               <compositeChoice choice="are triggered by local inputs or LocoNet switch commands">
                 <compositeSetting label="Route Command Source" value="1"/>
-                <compositeSetting label="Route Command Source" value="0"/>
+                <compositeSetting label="Routes Enable" value="0"/>
               </compositeChoice>
               <compositeChoice choice="are disabled">
                 <compositeSetting label="Route Command Source" value="0"/>
-                <compositeSetting label="Route Command Source" value="1"/>
+                <compositeSetting label="Routes Enable" value="1"/>
               </compositeChoice>
               <compositeChoice choice="are disabled (alternate)">
                 <compositeSetting label="Route Command Source" value="1"/>
-                <compositeSetting label="Route Command Source" value="1"/>
+                <compositeSetting label="Routes Enable" value="1"/>
               </compositeChoice>
             </compositeVal>
             <label>DS64 Routes</label>
