@@ -251,6 +251,14 @@
                     decoders, and CV137 bit 6, which applies those swappings to the SUSI functions
                     F1-F12 and was introduced in firmware 3.13.053. Both appear on a new
                     "Function Swapping" tab.</li>
+                <li>Firmware 3.13 definitions: added the DH24A and DHSP10A locomotive decoders
+                    and the FH16A vehicle function decoder. Note that on firmware 3.13 the DH24A
+                    AUX10-AUX12 outputs cannot be mapped, since CV101-103 only exist from
+                    firmware 3.15.</li>
+                <li>Firmware 3.13 definitions: corrected the product IDs of the DH21B and DH22B,
+                    which carried the values of their A variants and so could not be distinguished
+                    from them by decoder identification; and declared Motorola protocol support on
+                    the FH models, which D&amp;H document but which had never been listed.</li>
             </ul>
 
         <h4>ESU</h4>
