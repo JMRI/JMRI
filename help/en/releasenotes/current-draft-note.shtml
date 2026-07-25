@@ -37,6 +37,9 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>PowerManager - Added method for requesting power status from layout.</li>
+                <li>Power status is polled following a set power state command as newer DCC-EX command
+                stations do not confirm their power status following the command.
+                </li>
             </ul>
 
         <h4>DCC4pc</h4>
