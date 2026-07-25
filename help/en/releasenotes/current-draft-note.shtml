@@ -265,6 +265,14 @@
                     and 4 available on the DH21A, DH21B, DH22A, DH22B, DH24A and FH22A as D&amp;H
                     document; those two bits were previously gated to identifiers that no longer
                     matched any model, so they never appeared.</li>
+                <li>New definitions for firmware 3.15.016: "Train Decoders (firmware 3.15+)" and
+                    "Function Decoders (firmware 3.15+)". Relative to firmware 3.14 these add the
+                    shuttle mode (Pendelbetrieb) and a brake-ramp minimum speed step in CV60,
+                    function mapping for AUX10-AUX12 in CV101-103 on the DH21B, DH22B and DH24A,
+                    dimming of AUX3-AUX6 in CV461/463/465/467, dimming mask bits for AUX3-AUX6 in
+                    CV156, and widen CV112 to 0-127. CV63 and CV65 take a second meaning depending
+                    on CV60. Note that CV467 ships reading 255 rather than its documented default
+                    of 31; a decoder reset (CV8 = 8) after the firmware update corrects it.</li>
                 <li>Firmware 3.10 to 3.13 definitions: the CV144 GPIO brake settings (bits 3 and 4)
                     are now shown on the decoders D&amp;H document them for. They had been gated to
                     product IDs that no model in those files carries - and, for the FH22A, to a
