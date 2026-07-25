@@ -1,10 +1,12 @@
 package jmri.jmrix.dccpp;
 
 import jmri.JmriException;
+import jmri.PowerManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -20,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class DCCppPowerManagerTest {
 
     // TODO : Extend from AbstractPowerManagerTestBase
-    // TODO : Different DCC-EX versions ?
+    // TODO : Test command station messages ( containing power status? )
+    // TODO : Test trackmanager responses
 
     @Test
     public void testCtor() {
@@ -38,6 +41,51 @@ public class DCCppPowerManagerTest {
         assertEquals(2, tc.outbound.size());
         assertEquals("Status Cmd ", tc.outbound.get(0).toMonitorString());
         assertEquals("Request TrackManager Config: '='", tc.outbound.get(1).toMonitorString());
+    }
+
+    @Test
+    public void testSendOn() {
+        assertNotNull(pwr, "DccppPowerManager created");
+        tc.outbound.clear();
+
+        assertDoesNotThrow( () -> { pwr.setPower(PowerManager.ON); },
+            "Does not throw set ON");
+        assertEquals(3, tc.outbound.size(),"ON + Request messages sent");
+        assertEquals("Track Power ON Cmd ", tc.outbound.get(0).toMonitorString());
+        assertEquals("Status Cmd ", tc.outbound.get(1).toMonitorString());
+        assertEquals("Request TrackManager Config: '='", tc.outbound.get(2).toMonitorString());
+    }
+
+    @Test
+    public void testSendOff() {
+        assertNotNull(pwr, "DccppPowerManager created");
+        tc.outbound.clear();
+
+        assertDoesNotThrow( () -> { pwr.setPower(PowerManager.OFF); },
+            "Does not throw set OFF");
+        assertEquals(3, tc.outbound.size(),"OFF + Request messages sent");
+        assertEquals("Track Power OFF Cmd ", tc.outbound.get(0).toMonitorString());
+        assertEquals("Status Cmd ", tc.outbound.get(1).toMonitorString());
+        assertEquals("Request TrackManager Config: '='", tc.outbound.get(2).toMonitorString());
+    }
+
+    @Test
+    public void testPowerOnOffOnReply() {
+        assertNotNull(pwr, "DccppPowerManager created");
+        tc.outbound.clear();
+        assertEquals(PowerManager.UNKNOWN, pwr.getPower(), "starts unknown");
+
+        DCCppReply r = DCCppReply.parseDCCppReply("p1");
+        pwr.message(r);
+        assertEquals(PowerManager.ON, pwr.getPower(), "power ON notification");
+
+        r = DCCppReply.parseDCCppReply("p0");
+        pwr.message(r);
+        assertEquals(PowerManager.OFF, pwr.getPower(), "power OFF notification");
+
+        r = DCCppReply.parseDCCppReply("p1");
+        pwr.message(r);
+        assertEquals(PowerManager.ON, pwr.getPower(), "power back ON notification");
     }
 
     private DCCppPowerManager pwr; // local copy of DCCppPowerManager
