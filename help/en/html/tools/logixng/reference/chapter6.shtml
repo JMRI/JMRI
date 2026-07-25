@@ -566,6 +566,11 @@
 
         <li><strong>Reverse:</strong> Evaluate to true if the selected section is being used by
         a transit and is set for the reverse direction.</li>
+
+        <li><strong>Occupied:</strong> Evaluate to true if any blocks in the selected section are
+        occupied.  <strong>Note:</strong> This option is not dependent on transit or dispatcher
+        states.  For example, a group of blocks can be in a section that defines a route which then
+        has an occupancy state.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
