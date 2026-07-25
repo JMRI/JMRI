@@ -46,6 +46,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>5</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Correct the CV131-133 defaults, English labels and tooltips</revremark>
+    </revision>
+    <revision>
       <revnumber>4</revnumber>
       <date>2023-07-15</date>
       <authorinitials>RK</authorinitials>

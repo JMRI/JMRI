@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- version 1 - 2026-07-25 - PB - gate the AUX 7+ note by product ID and include the DH24A -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>

@@ -44,6 +44,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>12</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Exclude CV63 for the firmware 3.15 families</revremark>
+    </revision>
+    <revision>
       <revnumber>11</revnumber>
       <date>2023-07-22</date>
       <authorinitials>RK</authorinitials>

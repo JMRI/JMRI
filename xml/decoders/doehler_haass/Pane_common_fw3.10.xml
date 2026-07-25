@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 7 - 2026-07-25 - PB - add AUX3-AUX6 dimming and dim mask (fw 3.15), and CV124 as eight bits -->
 <!-- version 6 - 2023-07-17 - RK - disable unimplemented options for PD10MU -->
 <!-- version 5 - 2020-05-02 - RK - added initialmapping functions -->
 <!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->

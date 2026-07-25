@@ -33,6 +33,12 @@
       <authorinitials>RK</authorinitials>
       <revremark>for fw 3.06 and 3.07</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>CV124 is a bit mask over F1-F8, not a single choice; now eight bits</revremark>
+    </revision>
    </revhistory>
   <!-- CV124 is a bit mask, not a selection: D&H document "Bit 0 = F1 ... Bit 7 = F8",       -->
   <!-- range 0-255, so several keys can start the delay at once. It was previously a single  -->

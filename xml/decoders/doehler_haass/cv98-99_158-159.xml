@@ -31,6 +31,12 @@
       <authorinitials>RK</authorinitials>
       <revremark>Creation for DH21B/DH22B</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Gate by product ID instead of model name; add the DH24A</revremark>
+    </revision>
   </revhistory>
   <!-- Gated by productID rather than model name: 201 = DH21B, 203 = DH22B, 204 = DH24A.      -->
   <!-- Product IDs are stable across firmware versions, whereas the model names carry a       -->

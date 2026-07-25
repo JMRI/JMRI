@@ -33,6 +33,12 @@
       <authorinitials>ALM</authorinitials>
       <revremark>for fw 3.08 and above</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Exclude CV65 for the firmware 3.15 families</revremark>
+    </revision>
    </revhistory>
   <variable item="Max Speed Braking Section 2" CV="65" default="12" exclude="Train Decoders (firmware 3.15+),Function Decoders (firmware 3.15+)">
     <decVal max="127"/>

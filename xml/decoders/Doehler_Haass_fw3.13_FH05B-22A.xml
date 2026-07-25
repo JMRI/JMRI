@@ -12,32 +12,20 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version version="1.5" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  CV112 is not offered on the FH* series or the PD05A any more; the D&amp;H CV table marks
-        it as not relevant for those, but the shared definition in Vars_post2012_dc.xml had no
-        such restriction. Now provided by doehler_haass/cv112_fw3.12-3.14.xml, which also carries
-        D&amp;H's documented default of 15 rather than 0.
-        -->
-  <version version="1.4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  Fixed the gating of CV144 bits 3 and 4, the two GPIO brake settings. They were
-        restricted to product IDs that no model in this file carries, so neither bit was
-        ever shown. Now provided by doehler_haass/cv144_bits1-4.xml, whose include list
-        covers every product ID form these decoders use.
-        -->
-  <version version="1.3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  Added the Motorola protocol to all four FH models; D&amp;H document MM1/MM2 support for
-        the FH series but it had never been declared.
-        -->
-  <version version="1.2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  Added the FH16A model, which Doehler &amp; Haass document from firmware 3.15 but which
-        runs this firmware too.
-        -->
   <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  Added CV401-412 function swapping (documented by D&amp;H since firmware 3.12 or earlier,
-        never implemented for the non-sound decoders) and CV137 bit 6, which applies those
-        swappings to SUSI F1-F12 and was introduced in firmware 3.13.053.
-        New fragments: doehler_haass/cv401-412.xml, doehler_haass/cv137_bit6_fw3.13.xml,
-        doehler_haass/Pane_function_swapping_nonsound.xml
+  <!--  Firmware 3.13 completed and corrected:
+        - Added CV401-412 function swapping, documented by D&amp;H since firmware 3.12 or earlier
+          but never implemented for the non-sound decoders, and CV137 bit 6, which applies
+          those swappings to SUSI F1-F12 and was introduced in firmware 3.13.053. Both appear
+          on a new "Function Swapping" tab.
+        - Added the FH16A model, which D&amp;H document from firmware 3.15 but which runs this
+          firmware too.
+        - Declared the Motorola protocol on all four FH models; D&amp;H document MM1/MM2 support
+          for the FH series but it had never been listed.
+        - CV144 bits 3 and 4, the GPIO brake settings, were gated to product IDs that no model
+          in this file carries, so neither was ever shown. Now from cv144_bits1-4.xml.
+        - CV112 is no longer offered on the FH* series, which the D&amp;H CV table marks it as not
+          relevant for, and it carries the documented default of 15.
         -->
   <version version="1.0" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230720"/>
   <!--  Creation (new firmware 3.13.053).

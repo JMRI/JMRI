@@ -44,6 +44,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Fix a misspelt label and a soft hyphen</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2023-07-22</date>
       <authorinitials>RK</authorinitials>

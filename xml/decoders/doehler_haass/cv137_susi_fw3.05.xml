@@ -31,6 +31,12 @@
       <authorinitials>PB</authorinitials>
       <revremark>Creation. Valid for most decoders after Oct 2014.</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Fix a soft hyphen in the German label</revremark>
+    </revision>
   </revhistory>
   <variable item="Revert SUSI direction" CV="137" mask="XXXXXVXX" tooltip="CV137 bit 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

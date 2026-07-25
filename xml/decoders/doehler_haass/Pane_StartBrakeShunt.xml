@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 4 - 2026-07-25 - PB - add CV60 brake ramp minimum and shuttle mode (fw 3.15) -->
 <!-- version 3 - 2020-04-30 - RK - Add CV160 to CV165, CV390, Cv391  -->
 <!-- version 2 - 2019-07-28 - ALM - Add CV144 bits 3 & 4, CV154 and CV155"  -->
 <!-- version 2 - 2018-02-04 - ALM - Add CV65 "Max Speed Braking Section 2"  -->
