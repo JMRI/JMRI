@@ -122,7 +122,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate SUSI startup delay</label>
     <label xml:lang="fr">Désactiver délai de départ SUSI</label>
-    <label xml:lang="de">SUSI­Anfahrverzögerung ausschalten</label>
+    <label xml:lang="de">SUSI-Anfahrverzögerung ausschalten</label>
     <tooltip>bit 3</tooltip>
   </variable>
   <variable CV="137" item="Extended mapping" mask="XXXVXXXX" exclude="60,130,131,132,133,134">
@@ -149,7 +149,7 @@
       </enumChoice>
      </enumChoiceGroup>
     </enumVal>
-    <label>SUSI ouputs mapping</label>
+    <label>SUSI outputs mapping</label>
     <label xml:lang="de">AUX an SUSI</label>
     <label xml:lang="ca">AUX en SUSI</label>
     <tooltip>bit5 - Only valid if CV137/Bit 0=1 and Bit 4=1</tooltip>

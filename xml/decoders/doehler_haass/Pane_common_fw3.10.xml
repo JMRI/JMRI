@@ -559,6 +559,14 @@
 				  <display item="Function to deactivate start delay"/>
 				  <display item="Function for dimmed lights"/>
 				  <display item="Function for shunting speed"/>
+				  <display item="F1 starts delay" format="checkbox"/>
+				  <display item="F2 starts delay" format="checkbox"/>
+				  <display item="F3 starts delay" format="checkbox"/>
+				  <display item="F4 starts delay" format="checkbox"/>
+				  <display item="F5 starts delay" format="checkbox"/>
+				  <display item="F6 starts delay" format="checkbox"/>
+				  <display item="F7 starts delay" format="checkbox"/>
+				  <display item="F8 starts delay" format="checkbox"/>
 			  </column>
 		  </griditem>
 		</group>

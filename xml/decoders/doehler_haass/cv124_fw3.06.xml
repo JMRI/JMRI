@@ -34,10 +34,81 @@
       <revremark>for fw 3.06 and 3.07</revremark>
     </revision>
    </revhistory>
-  <variable item="F-Key Accel Delay" CV="124" mask="VVVVVVVV">
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/choice-F1F8.xml"/>
-    <label>Acceleration Delay</label>
-    <label xml:lang="de">Anfahrverzögerung F-Taste</label>
-    <label xml:lang="ca">Retard d'acceleració</label>
+  <!-- CV124 is a bit mask, not a selection: D&H document "Bit 0 = F1 ... Bit 7 = F8",       -->
+  <!-- range 0-255, so several keys can start the delay at once. It was previously a single  -->
+  <!-- 10-entry enumeration on the whole byte, which could only ever produce 10 of the 256   -->
+  <!-- possible values. Now eight one-bit variables, matching CV125-CV128 which share the    -->
+  <!-- same format. The delay itself is CV63.                                                -->
+  <variable item="F1 starts delay" CV="124" mask="XXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F1 activates the starting delay</label>
+    <label xml:lang="fr">F1 active le retard au démarrage</label>
+    <label xml:lang="de">F1 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 0 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 0 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 0 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
+  </variable>
+  <variable item="F2 starts delay" CV="124" mask="XXXXXXVX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F2 activates the starting delay</label>
+    <label xml:lang="fr">F2 active le retard au démarrage</label>
+    <label xml:lang="de">F2 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 1 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 1 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 1 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
+  </variable>
+  <variable item="F3 starts delay" CV="124" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F3 activates the starting delay</label>
+    <label xml:lang="fr">F3 active le retard au démarrage</label>
+    <label xml:lang="de">F3 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 2 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 2 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 2 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
+  </variable>
+  <variable item="F4 starts delay" CV="124" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F4 activates the starting delay</label>
+    <label xml:lang="fr">F4 active le retard au démarrage</label>
+    <label xml:lang="de">F4 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 3 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 3 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 3 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
+  </variable>
+  <variable item="F5 starts delay" CV="124" mask="XXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F5 activates the starting delay</label>
+    <label xml:lang="fr">F5 active le retard au démarrage</label>
+    <label xml:lang="de">F5 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 4 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 4 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 4 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
+  </variable>
+  <variable item="F6 starts delay" CV="124" mask="XXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F6 activates the starting delay</label>
+    <label xml:lang="fr">F6 active le retard au démarrage</label>
+    <label xml:lang="de">F6 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 5 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 5 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 5 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
+  </variable>
+  <variable item="F7 starts delay" CV="124" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F7 activates the starting delay</label>
+    <label xml:lang="fr">F7 active le retard au démarrage</label>
+    <label xml:lang="de">F7 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 6 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 6 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 6 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
+  </variable>
+  <variable item="F8 starts delay" CV="124" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>F8 activates the starting delay</label>
+    <label xml:lang="fr">F8 active le retard au démarrage</label>
+    <label xml:lang="de">F8 aktiviert die Anfahrverzögerung</label>
+    <tooltip>CV124 bit 7 - the delay itself is set in CV63</tooltip>
+    <tooltip xml:lang="fr">CV124 bit 7 - le retard lui-même se règle au CV63</tooltip>
+    <tooltip xml:lang="de">CV124 Bit 7 - die Verzögerung selbst wird in CV63 eingestellt</tooltip>
   </variable>
 </variables>

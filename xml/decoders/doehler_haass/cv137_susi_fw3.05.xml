@@ -43,7 +43,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate SUSI startup delay</label>
     <label xml:lang="fr">Désactiver délai de départ SUSI</label>
-    <label xml:lang="de">SUSI­Anfahrverzögerung ausschalten</label>
+    <label xml:lang="de">SUSI-Anfahrverzögerung ausschalten</label>
     <label xml:lang="ca">Desactiva el retard d'arrencada SUSI</label>
   </variable>
 </variables>

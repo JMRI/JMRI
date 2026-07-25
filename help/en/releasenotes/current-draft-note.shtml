@@ -263,6 +263,14 @@
                     shown on the decoders that support them.</li>
                 <li>Non-sound decoders, firmware 3.12 to 3.14: CV112 is no longer shown on FH and
                     PD05A decoders, and its default is corrected to 15.</li>
+                <li>Non-sound decoders: CV124, which selects the function keys that start the
+                    delay, is now shown on the DH Options tab. It is a bit mask over F1-F8 and is
+                    modelled as such; it was previously a single-choice list.</li>
+                <li>Non-sound decoders: corrected the default function assignments of CV131, CV132
+                    and CV133 (low beam light, shunting gear, deceleration off), which all
+                    defaulted to F1 instead of F8, F4 and F9.</li>
+                <li>Non-sound decoders: label and tooltip corrections on CV131-133 and CV137,
+                    using D&amp;H's own wording.</li>
             </ul>
 
         <h4>ESU</h4>
