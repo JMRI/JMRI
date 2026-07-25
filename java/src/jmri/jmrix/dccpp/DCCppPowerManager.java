@@ -18,6 +18,12 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
 
     private DCCppTrafficController tc = null;
 
+    /**
+     * Create a new DCCppPowerManager.
+     * Adds listener to connection.
+     * Requests power update from layout.
+     * @param memo the Connection.
+     */
     public DCCppPowerManager(DCCppSystemConnectionMemo memo) {
         super(memo);
         // connect to the TrafficManager
@@ -26,6 +32,11 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
         DCCppPowerManager.this.requestUpdateFromLayout();
     }
 
+    /**
+     * Set the Power status.
+     * After sending to the layout, requests power status update.
+     * {@inheritDoc }
+     */
     @Override
     public void setPower(int v) throws JmriException {
         int old = power;
@@ -39,6 +50,9 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
             tc.sendDCCppMessage(DCCppMessage.makeTrackPowerOffMsg(), this);
         }
         firePowerPropertyChange(old, power);
+        // Newer( > v5.5 / v5.6 ?? ) versions of DCC-EX only broadcast power state changes,
+        // so we request confirmation of power status.
+        requestUpdateFromLayout();
     }
 
     // to free resources when no longer used
