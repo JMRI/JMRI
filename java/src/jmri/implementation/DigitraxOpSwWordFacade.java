@@ -214,7 +214,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
         SENDREADSEQUENCE
     }
 
-    public static int delayInterval = 5; // public static so can be changed in a script
+    public static int delayInterval = 10; // public static so can be changed in a script
     
     /** {@inheritDoc}
      * Note this assumes that there's only one phase to the operation
