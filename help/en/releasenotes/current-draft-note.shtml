@@ -270,6 +270,12 @@
                     product IDs that no model in those files carries - and, for the FH22A, to a
                     misspelt one - so neither setting was reachable on firmware 3.12 or 3.13, nor
                     on any FH22A.</li>
+                <li>Firmware 3.12, 3.13 and 3.14 definitions: CV112, the analog speed reduction, is
+                    no longer offered on the FH series or the PD05A. D&amp;H have documented it as not
+                    relevant for those decoders since the 3.12 CV table, but the shared definition
+                    carried no such restriction. Earlier definitions are deliberately unchanged, as
+                    the CV tables up to 3.05 carry no such restriction. Separately, CV112's default
+                    is corrected from 0 to the documented value of 15 for all definitions.</li>
             </ul>
 
         <h4>ESU</h4>

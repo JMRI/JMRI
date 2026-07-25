@@ -12,22 +12,21 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  CV112 is not offered on the FH* series or the PD05A any more; the D&amp;H CV table marks
-        it as not relevant for those, but the shared definition in Vars_post2012_dc.xml had no
-        such restriction. Now provided by doehler_haass/cv112_fw3.12-3.14.xml, which also carries
-        D&amp;H's documented default of 15 rather than 0.
-        -->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  Creation (new firmware 3.14.095).
-        Based on Doehler_Haass_fw3.13_FH05B-22A.xml
-        Changes in firmware 3.14 relative to 3.13, per the D&amp;H ChangeLog:
-          - CV144 bit 5, disabling the restoration of the last driving state.
-        The CV set is otherwise identical to firmware 3.13.
+  <!--  Creation (new firmware 3.15.016).
+        Based on Doehler_Haass_fw3.14_FH05B-22A.xml
+        Changes in firmware 3.15 relative to 3.14:
+          - CV60 becomes a settings register: bit 1 enables a minimum speed step for the
+            brake ramp, bits 2 and 3 configure the shuttle mode (Pendelbetrieb).
+          - CV101-103 map AUX10-AUX12 on the DH21B, DH22B and DH24A.
+          - CV461, 463, 465 and 467 dim AUX3-AUX6 (odd addresses only).
+          - CV156 gains bits 4-7, dimming AUX3-AUX6; its range widens to 0-255.
+          - CV112 widens from 0-31 to 0-127.
+          - CV63 and CV65 change meaning depending on CV60.
         -->
   <decoder>
-    <family name="Function Decoders (firmware 3.14+)" mfg="Doehler und Haass">
-      <model model="FH05B (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+    <family name="Function Decoders (firmware 3.15+)" mfg="Doehler und Haass">
+      <model model="FH05B (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -69,7 +68,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="FH16A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug" maxInputVolts="30V" maxTotalCurrent="1.5A" connector="PluX16">
+      <model model="FH16A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug" maxInputVolts="30V" maxTotalCurrent="1.5A" connector="PluX16">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -117,7 +116,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="FH18A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
+      <model model="FH18A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -165,7 +164,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="FH22A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+      <model model="FH22A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -244,8 +243,13 @@
 <!-- relevant für FH ??? Start-->
       <!--              - Extra general options as of fw3.10 -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bits1-4.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv112_fw3.12-3.14.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bit5_fw3.14.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv60_bits1-3_fw3.15.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv63_fw3.15.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_fw3.15.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv112_fw3.15.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv156_bits4-7_fw3.15.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv461-467_fw3.15.xml"/>
 <!-- relevant für FH ??? Ende-->
       <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->

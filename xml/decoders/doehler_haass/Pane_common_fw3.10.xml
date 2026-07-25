@@ -61,6 +61,52 @@
               <display item="AUX 2 dimming" label="" format="hslider"/>
             </row>
           </griditem>
+          <!-- AUX3-AUX6 dimming levels, CV461/463/465/467, new in firmware 3.15. Gated on the
+               variable existing rather than on a family name, so later firmware definitions that
+               include doehler_haass/cv461-467_fw3.15.xml pick these up without editing this pane. -->
+          <group>
+            <qualifier>
+              <variableref>AUX 3 dimming</variableref>
+              <relation>exists</relation>
+              <value>1</value>
+            </qualifier>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="AUX 3 dimming"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 3 dimming" label="" format="hslider"/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="AUX 4 dimming"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 4 dimming" label="" format="hslider"/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="AUX 5 dimming"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 5 dimming" label="" format="hslider"/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="AUX 6 dimming"/>
+                <label>
+                  <text> </text>
+                </label>
+                <display item="AUX 6 dimming" label="" format="hslider"/>
+              </row>
+            </griditem>
+          </group>
         </grid>
         <!-- END - Dimming grid -->
       </column>
@@ -113,6 +159,35 @@
               <display item="Dim AUX2" format="checkbox"/>
             </row>
           </griditem>
+          <!-- CV156 bits 4-7, dimming mask for AUX3-AUX6, new in firmware 3.15. Gated on the
+               variable existing, as above. -->
+          <group>
+            <qualifier>
+              <variableref>Dim AUX3</variableref>
+              <relation>exists</relation>
+              <value>1</value>
+            </qualifier>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="Dim AUX3" format="checkbox"/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="Dim AUX4" format="checkbox"/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="Dim AUX5" format="checkbox"/>
+              </row>
+            </griditem>
+            <griditem gridx="0" gridy="NEXT" gridwidth="1" anchor="LINE_END">
+              <row>
+                <display item="Dim AUX6" format="checkbox"/>
+              </row>
+            </griditem>
+          </group>
         </grid>
         <!-- END - Dimming mask -->
       </column>

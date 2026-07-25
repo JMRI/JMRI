@@ -12,6 +12,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.10" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
+  <!--  CV112 is not offered on the FH* series or the PD05A any more; the D&amp;H CV table for
+        this firmware marks it as not relevant for those, but the shared definition in
+        Vars_post2012_dc.xml carried no such restriction. Now provided by
+        doehler_haass/cv112_fw3.12-3.14.xml, which also carries D&amp;H's documented default of 15.
+        -->
   <version version="1.9" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
   <!--  Fixed the gating of CV144 bits 3 and 4, the two GPIO brake settings. They were
         restricted to product IDs that no model in this file carries, so neither bit was
@@ -592,6 +598,7 @@
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
       <!--              - Extra general options as of fw3.10 -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bits1-4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv112_fw3.12-3.14.xml"/>
       <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
       <!-- SECTION 8    - Motorola format as of fw3.06 -->

@@ -29,9 +29,9 @@
              across firmware versions, unlike the model names. -->
         <group include="201,203,204">
         <label>
-          <text>With types DH21B, DH22B and DH24A, the F-button for AUX 7 and AUX 8 is selected from a list!</text>
-          <text xml:lang="fr">Sur les DH21B, DH22B et DH24A, la touche F pour AUX 7 et AUX 8 se choisit dans une liste !</text>
-          <text xml:lang="de">Bei den Typen DH21B, DH22B und DH24A wird die F-Taste für AUX 7 und AUX 8 aus einer Liste gewählt!</text>
+          <text>With types DH21B, DH22B and DH24A, the F-button for AUX 7 and above is selected from a list!</text>
+          <text xml:lang="fr">Sur les DH21B, DH22B et DH24A, la touche F pour AUX 7 et au-delà se choisit dans une liste !</text>
+          <text xml:lang="de">Bei den Typen DH21B, DH22B und DH24A wird die F-Taste für AUX 7 und höher aus einer Liste gewählt!</text>
         </label>
         </group>
         <label>

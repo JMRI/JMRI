@@ -34,7 +34,7 @@
       <revremark>for fw 3.08 and above</revremark>
     </revision>
    </revhistory>
-  <variable item="Max Speed Braking Section 2" CV="65" default="12">
+  <variable item="Max Speed Braking Section 2" CV="65" default="12" exclude="Train Decoders (firmware 3.15+),Function Decoders (firmware 3.15+)">
     <decVal max="127"/>
     <label>Max. speed in two-part braking section</label>
     <label xml:lang="de">Max. Fahrstufe in zweiteiligen Bremsabschnitten</label>

@@ -36,6 +36,26 @@
 				<display item="Nbr of braking sections"/>
 			</row>
 		</griditem>
+		<!-- CV60 became a settings register in firmware 3.15. Gated on the variable existing
+		     rather than on a family name, so any later firmware that includes
+		     doehler_haass/cv60_bits1-3_fw3.15.xml picks these up without editing this pane. -->
+		<group>
+			<qualifier>
+			  <variableref>Shuttle mode</variableref>
+			  <relation>exists</relation>
+			  <value>1</value>
+			</qualifier>
+			<griditem gridx="0" gridy="NEXT" gridwidth="3">
+				<row>
+					<display item="Minimum speed step for brake ramp" format="checkbox"/>
+				</row>
+			</griditem>
+			<griditem gridx="0" gridy="NEXT" gridwidth="3">
+				<row>
+					<display item="Shuttle mode"/>
+				</row>
+			</griditem>
+		</group>
 		<griditem gridx="0" gridy="1" gridwidth="3">
 			<label>
       			<text> </text>
