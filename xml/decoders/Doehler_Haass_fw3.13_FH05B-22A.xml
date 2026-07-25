@@ -29,9 +29,8 @@
         the FH series but it had never been declared.
         -->
   <version version="1.2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
-  <!--  Added the DH24A, DHSP10A and FH16A models, which Doehler &amp; Haass document from
-        firmware 3.15 but which run this firmware too. On 3.13 the DH24A AUX10-AUX12
-        outputs cannot be mapped, as CV101-103 only exist from firmware 3.15.
+  <!--  Added the FH16A model, which Doehler &amp; Haass document from firmware 3.15 but which
+        runs this firmware too.
         -->
   <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
   <!--  Added CV401-412 function swapping (documented by D&amp;H since firmware 3.12 or earlier,
