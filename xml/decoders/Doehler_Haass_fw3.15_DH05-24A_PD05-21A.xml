@@ -784,7 +784,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="DH24A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="13" numFns="16" productID="204" comment="DH24A, 24-pin E24 direct plug. AUX10-12 cannot be mapped on this firmware (CV101-103 exist from firmware 3.15)" maxInputVolts="30V" maxMotorCurrent="0.7A" maxTotalCurrent="1.5A" connector="other">
+      <model model="DH24A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="13" numFns="16" productID="204" comment="DH24A, 24-pin E24 direct plug. AUX10-12 cannot be mapped on this firmware (CV101-103 exist from firmware 3.15)" maxInputVolts="30V" maxMotorCurrent="0.7A" maxTotalCurrent="1.5A" connector="E24">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>

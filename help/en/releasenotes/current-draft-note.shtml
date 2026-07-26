@@ -248,6 +248,8 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
+                <li>The decoder schema now offers <code>E24</code> as a connector type (NEM 664 /
+                    RCN-124, marketed by ESU as "Next28"); the D&amp;H DH24A uses it.</li>
                 <li>New definitions for firmware 3.15.016, covering the non-sound decoders (DH05C,
                     DH06A, DH10C, DH12A, DH14B, DH16A, DH18A, DH21A, DH21B, DH22A, DH22B, DH24A,
                     DHSP10A, PD05A, PD06A, PD10MU, PD12A, PD18A, PD18MU, PD21A, FH05B, FH16A, FH18A
