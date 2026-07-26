@@ -27,7 +27,7 @@
   -->
   <decoder>
     <family name="Combo sound decoders" mfg="Doehler und Haass">
-      <model model="SD21A (firmware 1.01+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+      <model model="SD21A (firmware 1.01+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -44,6 +44,7 @@
         </protocols>
       </model>
       <model model="SD21A (firmware 1.02+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="6" numFns="16" productID="SD21A_1.02" comment="SD21A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+        <versionCV lowVersionID="84" highVersionID="84" comment="firmware 1.02.084"/>
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -76,6 +77,7 @@
         </protocols>
       </model>
     <model model="SD21A (firmware 1.04+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD21A_1.04" comment="SD21A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+      <versionCV lowVersionID="115" highVersionID="115" comment="firmware 1.05.115 has no dedicated definition; this is the nearest earlier CV set"/>
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>

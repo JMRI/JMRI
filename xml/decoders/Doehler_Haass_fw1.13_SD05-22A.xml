@@ -17,6 +17,7 @@
 <decoder>
   <family name="Sound Decoders (2022)" mfg="Doehler und Haass">
     <model model="SD05A (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="8" numFns="16" productID="205" comment="SD05A-0 / SD05A-1 / SD05A-3 from July 2020" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A">
+      <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release"/>
       <!--lowVersionID="098" highVersionID="098"-->
       <output name="1" label="Front|Light" maxcurrent="150mA">
         <label xml:lang="de">LV</label>
@@ -52,6 +53,7 @@
       </protocols>
     </model>
     <model model="SD10A (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="8" numFns="16" productID="210" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from July 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A">
+      <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release"/>
     <!--lowVersionID="098" highVersionID="098"-->
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
@@ -87,6 +89,7 @@
     </protocols>
   </model>
     <model model="SD16A (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="10" numFns="16" productID="216" comment="SD16A-0 / SD16A-2 / SD16A-3 / SD16A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A">
+      <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release"/>
      <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
@@ -117,6 +120,7 @@
     </protocols>
   </model>
     <model model="SD18A (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="8" numFns="16" productID="218" comment="SD18A with update from October 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+      <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release"/>
     <!--lowVersionID="098" highVersionID="098"-->
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
@@ -152,6 +156,7 @@
     </protocols>
   </model>
     <model model="SD21A-4 (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="10" numFns="16" productID="221" comment="SD21A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+      <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release"/>
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
@@ -182,6 +187,7 @@
     </protocols>
   </model>
     <model model="SD21A-5 (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="10" numFns="16" productID="221" comment="SD21A-5 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+      <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release"/>
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
@@ -212,6 +218,7 @@
     </protocols>
   </model>
     <model model="SD22A (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="12" numFns="16" productID="222" comment="SD22A-0 / SD22A-2 / SD22A-3 / SD22A-4 with update from October 2020" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A">
+      <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release"/>
     <output name="1" label="Front|Light" maxcurrent="150mA">
       <label xml:lang="de">LV</label>
       <label xml:lang="nl">Kop|lampen</label>
