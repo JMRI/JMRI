@@ -344,7 +344,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(TrainCommon.isTextUserModified(_train.getCommentWithColor())
-                    ? _train.getCommentWithColor() : TrainCommon.getOnlyText(_train.getCommentWithColor()));
+                    ? _train.getCommentWithColor() : _train.getComment());
             cabooseRadioButton.setSelected(_train.isCabooseNeeded());
             fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();

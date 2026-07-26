@@ -491,7 +491,11 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             // are we programming? If not, ignore
             if (p == null) {
-                log.warn("received board-program reply message with no reply object: {}", m);
+                // This condition happens due to e.g. an error, but also 
+                // when the LocoNet OpSw programming message has been issued
+                // by some child class of AbstractBoardProgPanel e.g. the
+                // DS64 programmer. In that second case, it's normal.
+                log.debug("received board-program reply message with no reply object: {}", m);
                 return;
             }
             // check for right type, unit

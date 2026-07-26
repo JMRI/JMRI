@@ -1404,7 +1404,7 @@
     <xs:restriction base="xs:normalizedString">
       <xs:pattern value="(V|X)*"/>
       <xs:minLength value="8"/>
-      <xs:maxLength value="16"/>
+      <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
 
