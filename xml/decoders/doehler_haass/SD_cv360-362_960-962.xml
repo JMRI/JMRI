@@ -95,7 +95,7 @@
   </variable>
   <!-- END SIMILAR CV -->
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
-  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="9" item="Sound Option 21" exclude="SUSI sound modules,SUSI sound modules (2020),SUSI sound modules (2022)">
+  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="7" item="Sound Option 21" exclude="SUSI sound modules,SUSI sound modules (2020),SUSI sound modules (2022)">
   <decVal min="0" max="14"/>
   <label xml:lang="fr">Seuil ZVS</label>
   <label xml:lang="de">Schwellenwert ZVS</label>
