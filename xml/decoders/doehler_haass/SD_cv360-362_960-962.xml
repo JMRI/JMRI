@@ -101,7 +101,7 @@
   <label xml:lang="de">Schwellenwert ZVS</label>
   <label xml:lang="ca">Límit ZVS</label>
    </variable>
-  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2022),SH10A_1.00">
+  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="7" item="Sound Option 21" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2022),SH10A_1.00">
   <decVal min="0" max="14"/>
   <label xml:lang="fr">Seuil ZVS</label>
   <label xml:lang="de">Schwellenwert ZVS</label>
