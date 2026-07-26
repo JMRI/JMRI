@@ -17,12 +17,12 @@
         -->
   <decoder>
     <family name="SUSI sound modules (2022)" mfg="Doehler und Haass">
-      <model model="SH05A (firmware 1.15.112+)" lowVersionID="112" highVersionID="112" numOuts="2" numFns="30" productID="50" comment="SH10A with firmware 1.14 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH05A (firmware 1.15.112+)" lowVersionID="112" highVersionID="112" numOuts="2" numFns="30" productID="50" comment="SH05A with firmware 1.15 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="14.3" width="9.3" height="2.9" units="mm"/>
       </model>
-      <model model="SH10A (firmware 1.15.112+)" lowVersionID="112" highVersionID="112" numOuts="2" numFns="30" productID="100" comment="SH10A with firmware 1.14 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.15.112+)" lowVersionID="112" highVersionID="112" numOuts="2" numFns="30" productID="100" comment="SH10A with firmware 1.15 or later" maxInputVolts="30V" connector="SUSI">
         <output name="1" label="AUX|1" maxcurrent="20mA"/>
         <output name="2" label="AUX|2" maxcurrent="20mA"/>
         <size length="20" width="12" height="1.9" units="mm"/>
