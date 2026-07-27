@@ -55,7 +55,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DCS240("DCS240 (Advanced Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -73,7 +75,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.LOCO),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.LOCO)),
-            SupportsSlot250.SLOT250_AVAILABLE
+            SupportsSlot250.SLOT250_AVAILABLE,
+//            SupportsSlot126.SLOT126_AVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DCS240PLUS("DCS240+ (Advanced Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -91,7 +95,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.LOCO),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.LOCO)),
-            SupportsSlot250.SLOT250_AVAILABLE
+            SupportsSlot250.SLOT250_AVAILABLE,
+//            SupportsSlot126.SLOT126_AVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
 
     COMMAND_STATION_DCS210PLUS("DCS210+ (Advanced Command Station)",  // NOI18N
@@ -111,7 +117,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_AVAILABLE
+            SupportsSlot250.SLOT250_AVAILABLE,
+//            SupportsSlot126.SLOT126_AVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -130,7 +138,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_AVAILABLE
+            SupportsSlot250.SLOT250_AVAILABLE,
+//            SupportsSlot126.SLOT126_AVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DCS200("DCS200",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -148,7 +158,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DCS050("DCS50 (Zephyr)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -167,7 +179,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -186,7 +200,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DCS052("DCS52 (Zephyr Express)", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -205,7 +221,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_AVAILABLE
+            SupportsSlot250.SLOT250_AVAILABLE,
+//            SupportsSlot126.SLOT126_AVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     COMMAND_STATION_DB150("DB150 (Empire Builder)", // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -223,7 +241,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//          SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_AVAILABLE
             ),
     // the following command stations are assumed to not support "OPC_IDLE"
     COMMAND_STATION_LBPS("LocoBuffer (PS)",  // NOI18N
@@ -242,7 +262,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_MM("Mix-Master",  // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -260,7 +282,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_IBX_TYPE_1("Intellibox-I",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -278,7 +302,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_IBX_TYPE_2("Intellibox-II",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -296,7 +322,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(257,375,SlotType.UNKNOWN),
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     // the following command stations are known to not support "OPC_IDLE"
     COMMAND_STATION_PR3_ALONE("PR3 standalone programmer",  // NOI18N
@@ -311,7 +339,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_PR2_ALONE("PR2 standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -325,7 +355,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_STANDALONE("Stand-alone LocoNet",  // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -339,7 +371,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_STANDALONE_EXT_TERM("Stand-alone LocoNet (using external LocoNet Data Termination!)",  // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -353,7 +387,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_PR4_ALONE("PR4 standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -367,7 +403,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//           SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_USB_DCS240_ALONE("DCS240 USB interface as standalone programmer", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -381,7 +419,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_USB_DCS240PLUS_ALONE("DCS240+ USB interface as standalone programmer", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -395,7 +435,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_USB_DCS210Plus_ALONE("DCS210+ USB interface as standalone programmer", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -409,7 +451,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             ),
     COMMAND_STATION_USB_DCS52_ALONE("DCS52 USB interface as standalone programmer",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
@@ -423,7 +467,9 @@ public enum LnCommandStationType {
                     new SlotMapEntry(1,120,SlotType.UNKNOWN),
                     new SlotMapEntry(121,127,SlotType.SYSTEM),
                     new SlotMapEntry(128,432,SlotType.UNKNOWN)),
-            SupportsSlot250.SLOT250_UNAVAILABLE
+            SupportsSlot250.SLOT250_UNAVAILABLE,
+//            SupportsSlot126.SLOT126_UNAVAILABLE,
+            SupportsSlot127.SLOT127_UNAVAILABLE
             );
     // Note that the convention is that the first word (space-separated token) of the name is the
     // name of a configuration file for loconet.cmdstnconfig
@@ -432,7 +478,8 @@ public enum LnCommandStationType {
             String throttleClassName, String slotManagerClassName,
             IdleSupport supportsIdle, MultiMeterSupport supportMultiMeter,
             LocoResetSupport supportsLocoReset, CommandStationClockFracType csClockFracType,
-            List<SlotMapEntry> slotMap, SupportsSlot250 supportsSlot250) {
+            List<SlotMapEntry> slotMap, SupportsSlot250 supportsSlot250, SupportsSlot127 supportsSlot127) {
+//            List<SlotMapEntry> slotMap, SupportsSlot250 supportsSlot250, SupportsSlot126 supportsSlot126, SupportsSlot127 supportsSlot127) {
         this.name = name;
         this.canRead = canRead;
         this.progEndOp = progEndOp;
@@ -444,6 +491,8 @@ public enum LnCommandStationType {
         this.csClockFracType = csClockFracType;
         this.slotMap = slotMap;
         this.supportsSlot250 = supportsSlot250;
+//        this.supportsSlot126 = supportsSlot126;
+        this.supportsSlot127 = supportsSlot127;
     }
 
     final String name;
@@ -457,6 +506,8 @@ public enum LnCommandStationType {
     final CommandStationClockFracType csClockFracType;
     final List<SlotMapEntry> slotMap;
     final SupportsSlot250 supportsSlot250;
+//  final SupportsSlot126 supportsSlot126;
+    final SupportsSlot127 supportsSlot127;
 
     public String getName() {
         return name;
@@ -489,6 +540,21 @@ public enum LnCommandStationType {
      */
     public boolean getSupportsSlot250() {
         return supportsSlot250 == SupportsSlot250.SLOT250_AVAILABLE;
+    }
+
+//    /**
+//     * Does CS report slot availability in slot 126 (Extended CS OpSw)
+//     * @return true if it does
+//     */
+//    public boolean getSupportsSlot126() {
+//        return supportsSlot126 == SupportsSlot126.SLOT126_AVAILABLE;
+//    }
+    /**
+     * Does CS report slot availability in slot 127 (CS OpSw)
+     * @return true if it does
+     */
+    public boolean getSupportsSlot127() {
+        return supportsSlot127 == SupportsSlot127.SLOT127_AVAILABLE;
     }
 
     public static LnCommandStationType getByName(String name) {
@@ -620,6 +686,10 @@ public enum LnCommandStationType {
         return supportsSlot250;
     }
 
+    public SupportsSlot127 commandStationSupportSlot127() {
+        return supportsSlot127;
+    }
+
     protected enum ReadsFromServiceModeTrack {
         NO_SVC_MODE_READS, CAN_READ_ON_SVC_TRACK
     }
@@ -649,6 +719,16 @@ public enum LnCommandStationType {
     public enum SupportsSlot250 {
         SLOT250_AVAILABLE,
         SLOT250_UNAVAILABLE
+    }
+
+//    public enum SupportsSlot126 {
+//        SLOT126_AVAILABLE,
+//        SLOT126_UNAVAILABLE
+//    }
+//
+    public enum SupportsSlot127 {
+        SLOT127_AVAILABLE,
+        SLOT127_UNAVAILABLE
     }
 
     private static final Logger log = LoggerFactory.getLogger(LnCommandStationType.class);
