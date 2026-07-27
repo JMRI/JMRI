@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 6 - 2026-07-27 - PB - add CV28 bit 2, the NMRA form of the dynamic channel setting -->
 <!-- version 5 - 2019-07-28 - ALM - Moved Railcom BiDi to section with qualifier / Divider as enum -->
 <!-- version 4 - 2016-12-14 - RK - add options for fw 3.06, 3.07  -->
 <!-- version 3 - 2015-03-05 - PB - Now using grid  -->
@@ -35,6 +36,18 @@
       </griditem>
       <griditem gridx="0" gridy="4" anchor="LINE_END">
         <display item="Railcom Dynamic Channel" format="checkbox"/>
+        <!-- CV28 bit 2 does the same job as CV144 bit 0 above, to the NMRA standard.
+             New in sound decoder firmware 1.13.112, so gated on the variable existing
+             rather than on a family name: any later firmware that includes
+             doehler_haass/SD_cv28_bit2_fw1.13.xml picks it up without editing this pane. -->
+        <group>
+          <qualifier>
+            <variableref>Railcom dynamic channel (CV28)</variableref>
+            <relation>exists</relation>
+            <value>1</value>
+          </qualifier>
+          <display item="Railcom dynamic channel (CV28)" format="checkbox"/>
+        </group>
       </griditem>
       <griditem gridx="1" gridy="2" anchor="LINE_END">
        <row>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-27</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV28 bit 2, introduced in sound decoder firmware 1.13.112.</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="28" item="Railcom dynamic channel (CV28)" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Dynamic channel use (NMRA, CV28)</label>
+    <label xml:lang="fr">Utilisation dynamique du canal (NMRA, CV28)</label>
+    <label xml:lang="de">Dynamische Kanalnutzung (normgerecht, CV28)</label>
+    <tooltip>bit 2 - since firmware 1.13.112. Two CVs control this one function: this NMRA-standard bit, and the older D&amp;H "Railcom Dynamic Channel" (CV144 bit 0), which D&amp;H still support. Setting either one activates dynamic channel use.</tooltip>
+    <tooltip xml:lang="fr">bit 2 - depuis le firmware 1.13.112. Deux CV commandent cette même fonction : ce bit normalisé NMRA, et l'ancien "Railcom Dynamic Channel" D&amp;H (CV144 bit 0), toujours géré par D&amp;H. Activer l'un ou l'autre suffit.</tooltip>
+    <tooltip xml:lang="de">Bit 2 - seit Firmware 1.13.112. Zwei CV steuern dieselbe Funktion: dieses normgerechte NMRA-Bit und das ältere D&amp;H "Railcom Dynamic Channel" (CV144 Bit 0), das D&amp;H weiterhin unterstützen. Es genügt, eines von beiden zu setzen.</tooltip>
+  </variable>
+</variables>
