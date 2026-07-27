@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
 
@@ -15,11 +13,10 @@ import jmri.jmrit.logixng.util.LogixNG_SelectString;
  *
  * @author Daniel Bergqvist Copyright 2022
  */
-public class Error extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class Error extends AbstractDigitalAction {
 
     private final LogixNG_SelectString _selectMessage =
-            new LogixNG_SelectString(this, this);
+            new LogixNG_SelectString(this);
 
     public Error(String sys, String user) {
         super(sys, user);
@@ -69,11 +66,6 @@ public class Error extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebBrowser.class);

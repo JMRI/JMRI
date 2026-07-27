@@ -19,11 +19,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionSignalMast extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private final LogixNG_SelectNamedBean<SignalMast> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class));
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.Aspect;
@@ -41,7 +41,7 @@ public class ActionSignalMast extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<SignalMast> _selectExampleNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class));
 
 
     public ActionSignalMast(String sys, String user)
@@ -389,24 +389,6 @@ public class ActionSignalMast extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
