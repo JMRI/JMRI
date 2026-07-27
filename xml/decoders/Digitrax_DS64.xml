@@ -524,11 +524,6 @@
 
 <!-- Route 1 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 1" CV="115.25.016,115.25.16" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 1" CV="115.25.16" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -544,10 +539,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 1" CV="115.25.016,115.25.16"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 1" CV="115.25.016,115.25.16" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 1" CV="115.25.16"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -562,12 +563,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 1" CV="115.25.017,115.25.17" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 1" CV="115.25.016,115.25.16"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 1" CV="115.25.17" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -583,10 +589,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 1" CV="115.25.017,115.25.17" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 1" CV="115.25.017,115.25.17" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 1" CV="115.25.17"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -601,12 +613,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 1" CV="115.25.018,115.25.18" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 1" CV="115.25.017,115.25.17" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 1" CV="115.25.18" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -622,10 +639,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 1" CV="115.25.018,115.25.18" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 1" CV="115.25.018,115.25.18" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 1" CV="115.25.18"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -640,12 +663,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 1" CV="115.25.019,115.25.19" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 1" CV="115.25.018,115.25.18" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 1" CV="115.25.19" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -661,10 +689,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 1" CV="115.25.019,115.25.19" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 1" CV="115.25.019,115.25.19" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 1" CV="115.25.19"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -679,14 +713,19 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 1" CV="115.25.019,115.25.19" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 1</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 <!-- Route 2 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 2" CV="115.25.020,115.25.20" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 2" CV="115.25.20" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -702,10 +741,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 2" CV="115.25.020,115.25.20"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 2" CV="115.25.020,115.25.20" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 2" CV="115.25.20"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -720,12 +765,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 2" CV="115.25.021,115.25.21" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 2" CV="115.25.020,115.25.20"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 2" CV="115.25.21" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -741,10 +791,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 2" CV="115.25.021,115.25.21" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 2" CV="115.25.021,115.25.21" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 2" CV="115.25.21"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -759,12 +815,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 2" CV="115.25.022,115.25.22" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 2" CV="115.25.021,115.25.21" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 2" CV="115.25.22" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -780,10 +841,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 2" CV="115.25.022,115.25.22" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 2" CV="115.25.022,115.25.22" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 2" CV="115.25.22"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -798,12 +865,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 2" CV="115.25.023,115.25.23" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 2" CV="115.25.022,115.25.22" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 2" CV="115.25.23" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -819,10 +891,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 2" CV="115.25.023,115.25.23" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 2" CV="115.25.023,115.25.23" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 2" CV="115.25.23"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -837,14 +915,19 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 2" CV="115.25.023,115.25.23" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 2</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 <!-- Route 3 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 3" CV="115.25.024,115.25.24" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 3" CV="115.25.24" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -860,10 +943,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 3" CV="115.25.024,115.25.24"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 3" CV="115.25.024,115.25.24" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 3" CV="115.25.24"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -878,12 +967,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 3" CV="115.25.025,115.25.25" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 3" CV="115.25.024,115.25.24"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 3" CV="115.25.25" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -899,10 +993,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 3" CV="115.25.025,115.25.25" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 3" CV="115.25.025,115.25.25" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 3" CV="115.25.25"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -917,12 +1017,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 3" CV="115.25.026,115.25.26" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 3" CV="115.25.025,115.25.25" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 3" CV="115.25.26" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -938,10 +1043,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 3" CV="115.25.026,115.25.26" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 3" CV="115.25.026,115.25.26" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 3" CV="115.25.26"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -956,12 +1067,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 3" CV="115.25.027,115.25.27" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 3" CV="115.25.026,115.25.26" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 3" CV="115.25.27" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -977,10 +1093,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 3" CV="115.25.027,115.25.27" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 3" CV="115.25.027,115.25.27" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 3" CV="115.25.27"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -995,14 +1117,19 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 3" CV="115.25.027,115.25.27" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 3</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 <!-- Route 4 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 4" CV="115.25.028,115.25.28" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 4" CV="115.25.28" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1018,10 +1145,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 4" CV="115.25.028,115.25.28"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 4" CV="115.25.028,115.25.28" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 4" CV="115.25.28"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1036,12 +1169,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 4" CV="115.25.029,115.25.29" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 4" CV="115.25.028,115.25.28"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 4" CV="115.25.29" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1057,10 +1195,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 4" CV="115.25.029,115.25.29" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 4" CV="115.25.029,115.25.29" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 4" CV="115.25.29"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1075,12 +1219,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 4" CV="115.25.030,115.25.30" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 4" CV="115.25.029,115.25.29" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 4" CV="115.25.30" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1096,10 +1245,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 4" CV="115.25.030,115.25.30" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 4" CV="115.25.030,115.25.30" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 4" CV="115.25.30"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1114,12 +1269,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 4" CV="115.25.031,115.25.31" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 4" CV="115.25.030,115.25.30" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 4" CV="115.25.31" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1135,10 +1295,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 4" CV="115.25.031,115.25.31" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 4" CV="115.25.031,115.25.31" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 4" CV="115.25.31"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1153,14 +1319,19 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 4" CV="115.25.031,115.25.31" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 4</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 <!-- Route 5 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 5" CV="115.25.032,115.25.32" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 5" CV="115.25.32" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1176,10 +1347,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 5" CV="115.25.032,115.25.32"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 5" CV="115.25.032,115.25.32" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 5" CV="115.25.32"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1194,12 +1371,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 5" CV="115.25.033,115.25.33" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 5" CV="115.25.032,115.25.32"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 5" CV="115.25.33" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1215,10 +1397,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 5" CV="115.25.033,115.25.33" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 5" CV="115.25.033,115.25.33" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 5" CV="115.25.33"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1233,12 +1421,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 5" CV="115.25.034,115.25.34" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 5" CV="115.25.033,115.25.33" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 5" CV="115.25.34" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1254,10 +1447,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 5" CV="115.25.034,115.25.34" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 5" CV="115.25.034,115.25.34" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 5" CV="115.25.34"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1272,12 +1471,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 5" CV="115.25.035,115.25.35" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 5" CV="115.25.034,115.25.34" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 5" CV="115.25.35" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1293,10 +1497,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 5" CV="115.25.035,115.25.35" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 5" CV="115.25.035,115.25.35" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 5" CV="115.25.35"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1311,14 +1521,19 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 5" CV="115.25.035,115.25.35" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 5</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 <!-- Route 6 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 6" CV="115.25.036,115.25.36" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 6" CV="115.25.36" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1334,10 +1549,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 6" CV="115.25.036,115.25.36"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 6" CV="115.25.036,115.25.36" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 6" CV="115.25.36"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1352,12 +1573,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 6" CV="115.25.037,115.25.37" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 6" CV="115.25.036,115.25.36"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 6" CV="115.25.37" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1373,10 +1599,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 6" CV="115.25.037,115.25.37" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 6" CV="115.25.037,115.25.37" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 6" CV="115.25.37"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1391,12 +1623,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 6" CV="115.25.038,115.25.38" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 6" CV="115.25.037,115.25.37" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 6" CV="115.25.38" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1412,10 +1649,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 6" CV="115.25.038,115.25.38" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 6" CV="115.25.038,115.25.38" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 6" CV="115.25.38"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1430,12 +1673,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 6" CV="115.25.039,115.25.39" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 6" CV="115.25.038,115.25.38" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 6" CV="115.25.39" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1451,10 +1699,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 6" CV="115.25.039,115.25.39" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 6" CV="115.25.039,115.25.39" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 6" CV="115.25.39"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1469,14 +1723,19 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 6" CV="115.25.039,115.25.39" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 6</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 <!-- Route 7 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 7" CV="115.25.040,115.25.40" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 7" CV="115.25.40" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1492,10 +1751,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 7" CV="115.25.040,115.25.40"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 7" CV="115.25.040,115.25.40" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 7" CV="115.25.40"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1510,12 +1775,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 7" CV="115.25.041,115.25.41" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 7" CV="115.25.040,115.25.40"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 7" CV="115.25.41" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1531,10 +1801,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 7" CV="115.25.041,115.25.41" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 7" CV="115.25.041,115.25.41" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 7" CV="115.25.41"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1549,12 +1825,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 7" CV="115.25.042,115.25.42" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 7" CV="115.25.041,115.25.41" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 7" CV="115.25.42" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1570,10 +1851,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 7" CV="115.25.042,115.25.42" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 7" CV="115.25.042,115.25.42" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 7" CV="115.25.42"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1588,12 +1875,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 7" CV="115.25.043,115.25.43" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 7" CV="115.25.042,115.25.42" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 7" CV="115.25.43" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1609,10 +1901,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 7" CV="115.25.043,115.25.43" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 7" CV="115.25.043,115.25.43" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 7" CV="115.25.43"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1627,14 +1925,19 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 7" CV="115.25.043,115.25.43" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 7</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 <!-- Route 8 -->
 
-          <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 1 Address Route 8" CV="115.25.044,115.25.44" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
-            <splitVal min="1" max="2047" offset="1"/>
-          </variable>
           <variable item="Turnout 1    Mode Route 8" CV="115.25.44" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1650,10 +1953,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 2 Address Route 8" CV="115.25.044,115.25.44"
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 1 Address Route 8" CV="115.25.044,115.25.44" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 1    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 2    Mode Route 8" CV="115.25.44"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1668,12 +1977,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 3 Address Route 8" CV="115.25.045,115.25.45" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 2 Address Route 8" CV="115.25.044,115.25.44"
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 2    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 3    Mode Route 8" CV="115.25.45" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1689,10 +2003,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 4 Address Route 8" CV="115.25.045,115.25.45" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 3 Address Route 8" CV="115.25.045,115.25.45" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 3    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 4    Mode Route 8" CV="115.25.45"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1707,12 +2027,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 5 Address Route 8" CV="115.25.046,115.25.46" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 4 Address Route 8" CV="115.25.045,115.25.45" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 4    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 5    Mode Route 8" CV="115.25.46" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1728,10 +2053,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 6 Address Route 8" CV="115.25.046,115.25.46" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 5 Address Route 8" CV="115.25.046,115.25.46" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 5    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 6    Mode Route 8" CV="115.25.46"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1746,12 +2077,17 @@
                   </enumChoice>
               </enumVal>
           </variable>
-
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 7 Address Route 8" CV="115.25.047,115.25.47" 
-                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+          <variable item="Turnout 6 Address Route 8" CV="115.25.046,115.25.46" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 6    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 7    Mode Route 8" CV="115.25.47" 
                 default="7" mask="VVVXXXXXXXXXXXXX">
               <enumVal>
@@ -1767,10 +2103,16 @@
               </enumVal>
           </variable>
           <!-- same CV, leading zero for SplitVal bug-->
-          <variable item="Turnout 8 Address Route 8" CV="115.25.047,115.25.47" 
-                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+          <variable item="Turnout 7 Address Route 8" CV="115.25.047,115.25.47" 
+                default="1" mask="XXXXXVVVVVVV VVVVXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 7    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
             <splitVal min="1" max="2047" offset="1"/>
           </variable>
+
           <variable item="Turnout 8    Mode Route 8" CV="115.25.47"
                 default="7" mask="VVVXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
               <enumVal>
@@ -1785,11 +2127,22 @@
                   </enumChoice>
               </enumVal>
           </variable>
+          <!-- same CV, leading zero for SplitVal bug-->
+          <variable item="Turnout 8 Address Route 8" CV="115.25.047,115.25.47" 
+                default="1" mask="XXXXXVVVVVVVXXXXXXXXXXXXXXXX VVVVXXXXXXXXXXXXXXXXXXXXXXXX">
+            <qualifier>
+                <variableref>Turnout 8    Mode Route 8</variableref>
+                <relation>lt</relation>
+                <value>7</value>
+            </qualifier>
+            <splitVal min="1" max="2047" offset="1"/>
+          </variable>
 
 
 
         </variables>
     </decoder>
+    
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>OpSws</name>
     <qualifier>
