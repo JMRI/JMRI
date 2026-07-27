@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2014</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -27,28 +27,30 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2014-02-20</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>This file contains only variables that are common to D&amp;H decoders released
-		after around 2012 that support DC operation (as of 2014-02: all except the
-		DH06A).
-		Those CVs don't seem to be able applicable to older decoders,
-		even with the latest firmware upgrades.
-	  </revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
       <date>2026-07-25</date>
       <authorinitials>PB</authorinitials>
-      <revremark>Exclude CV112 for the firmware 3.12+ families; correct its default to 15</revremark>
+      <revremark>Creation. CV112 for firmware 3.12 to 3.14, excluded for FH* and PD05A.</revremark>
     </revision>
   </revhistory>
-  <variable CV="112" default="15" item="DC Brake Momentum" tooltip="CV112 (0:none, 31:strong)" exclude="Train Decoders (2020),Function Decoders (2020),Train Decoders (2023),Function Decoders (2023),Train Decoders (firmware 3.14+),Function Decoders (firmware 3.14+),Train Decoders (firmware 3.15+),Function Decoders (firmware 3.15+)">
+  <!-- Not relevant for the FH* series (product IDs 41, 150, 170, 192) or the PD05A (131),     -->
+  <!-- per the D&H CV table. Gated by product ID so the fragment behaves the same whichever    -->
+  <!-- definition includes it.                                                                -->
+  <!-- CV112 for firmware 3.12 to 3.14, range 0-31. Identical to the definition in            -->
+  <!-- Vars_post2012_dc.xml except that it is not offered on the FH* series or the PD05A, which -->
+  <!-- the D&H CV table marks it as not relevant for, and it carries D&H's documented default   -->
+  <!-- of 15. Vars_post2012_dc.xml excludes these families instead.                            -->
+  <!--                                                                                          -->
+  <!-- The FH*/PD05A restriction is NOT retrospective: the D&H CV tables for 3.02, 3.03, 3.04    -->
+  <!-- and 3.05 carry no such note, so those definitions correctly still offer CV112 on the      -->
+  <!-- FH05A. The restriction first appears in the 3.12 table. No tables exist for 3.06-3.11,    -->
+  <!-- so those definitions are left alone.                                                     -->
+  <variable CV="112" default="15" item="DC Brake Momentum" exclude="41,150,170,192,131">
     <decVal min="0" max="31"/>
     <label>Speed reduction in DC mode</label>
-    <label xml:lang="it">Riduzione velocità in analogico</label>
     <label xml:lang="fr">Réduction vitesse en analogique</label>
     <label xml:lang="de">Geschw.-minderung in Analog</label>
-    <label xml:lang="ca">Reducció de velocitat en CC</label>
+    <tooltip>CV112: 0 = small reduction … 31 = strong reduction</tooltip>
+    <tooltip xml:lang="fr">CV112 : 0 = faible réduction … 31 = forte réduction</tooltip>
+    <tooltip xml:lang="de">CV112: 0 = geringe Minderung … 31 = starke Minderung</tooltip>
   </variable>
 </variables>

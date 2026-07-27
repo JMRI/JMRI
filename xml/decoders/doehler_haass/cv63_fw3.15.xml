@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2015</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -27,29 +27,21 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2015-03-05</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Creation. Valid for most decoders after Oct 2014.</revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
       <date>2026-07-25</date>
       <authorinitials>PB</authorinitials>
-      <revremark>Fix a soft hyphen in the German label</revremark>
+      <revremark>Creation. CV63 with the firmware 3.15 dual meaning.</revremark>
     </revision>
   </revhistory>
-  <variable item="Revert SUSI direction" CV="137" mask="XXXXXVXX" tooltip="CV137 bit 2">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Revert SUSI direction</label>
-    <label xml:lang="fr">Inverser sens de marche SUSI</label>
-    <label xml:lang="de">SUSI-Fahrtrichtung invertieren</label>
-    <label xml:lang="ca">Inverteix sentit SUSI</label>
-  </variable>
-  <variable item="Deactivate SUSI startup delay" CV="137" mask="XXXXVXXX" tooltip="CV137 bit 3">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Deactivate SUSI startup delay</label>
-    <label xml:lang="fr">Désactiver délai de départ SUSI</label>
-    <label xml:lang="de">SUSI-Anfahrverzögerung ausschalten</label>
-    <label xml:lang="ca">Desactiva el retard d'arrencada SUSI</label>
+  <!-- CV63 gained a second meaning in firmware 3.15: with the shuttle mode active it sets     -->
+  <!-- the dwell times instead of the start delay. Replaces the definition in Vars_common.xml,  -->
+  <!-- which is excluded for the firmware 3.15 families.                                       -->
+  <variable CV="63" default="0" item="Start delay for speed step 1">
+    <decVal min="0" max="250"/>
+    <label>Start delay / dwell time</label>
+    <label xml:lang="fr">Retard au démarrage / durée d'arrêt</label>
+    <label xml:lang="de">Anfahrverzögerung / Aufenthaltsdauer</label>
+    <tooltip>CV63: with shuttle mode off, an extra wait before starting (100 ms steps). With shuttle mode on (CV60 bits 2-3), the dwell before reversing (1 s steps) and before restarting (0.5 s steps)</tooltip>
+    <tooltip xml:lang="fr">CV63 : navette inactive, attente supplémentaire avant le démarrage (pas de 100 ms). Navette active (CV60 bits 2-3), durée d'arrêt avant l'inversion (pas de 1 s) et avant la reprise (pas de 0,5 s)</tooltip>
+    <tooltip xml:lang="de">CV63: bei ausgeschaltetem Pendelbetrieb eine zusätzliche Wartezeit vor der Anfahrt (je 100 ms). Bei aktivem Pendelbetrieb (CV60 Bits 2-3) die Aufenthaltsdauer vor dem Fahrtrichtungswechsel (je 1 s) und vor der Wiederanfahrt (je 0,5 s)</tooltip>
   </variable>
 </variables>

@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2015</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -27,29 +27,36 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2015-03-05</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Creation. Valid for most decoders after Oct 2014.</revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
       <date>2026-07-25</date>
       <authorinitials>PB</authorinitials>
-      <revremark>Fix a soft hyphen in the German label</revremark>
+      <revremark>Creation. CV156 bits 4-7, dimming mask for AUX3-AUX6, new in firmware 3.15.</revremark>
     </revision>
   </revhistory>
-  <variable item="Revert SUSI direction" CV="137" mask="XXXXXVXX" tooltip="CV137 bit 2">
+  <!-- CV156 bits 4-7, new in firmware 3.15: before 3.15 these four bits were unused           -->
+  <!-- ("Derzeit ohne Funktion") and the CV ran 0-15; from 3.15 they select AUX3-AUX6 and the   -->
+  <!-- range is 0-255. Bits 0-3 are unchanged and still come from cv156-157_fw3.10.xml.         -->
+  <variable item="Dim AUX3" CV="156" default="0" mask="XXXVXXXX" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Revert SUSI direction</label>
-    <label xml:lang="fr">Inverser sens de marche SUSI</label>
-    <label xml:lang="de">SUSI-Fahrtrichtung invertieren</label>
-    <label xml:lang="ca">Inverteix sentit SUSI</label>
+    <label>Dim AUX3</label>
+    <label xml:lang="fr">Atténuer AUX3</label>
+    <label xml:lang="de">Abblendlicht AUX3</label>
   </variable>
-  <variable item="Deactivate SUSI startup delay" CV="137" mask="XXXXVXXX" tooltip="CV137 bit 3">
+  <variable item="Dim AUX4" CV="156" default="0" mask="XXVXXXXX" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Deactivate SUSI startup delay</label>
-    <label xml:lang="fr">Désactiver délai de départ SUSI</label>
-    <label xml:lang="de">SUSI-Anfahrverzögerung ausschalten</label>
-    <label xml:lang="ca">Desactiva el retard d'arrencada SUSI</label>
+    <label>Dim AUX4</label>
+    <label xml:lang="fr">Atténuer AUX4</label>
+    <label xml:lang="de">Abblendlicht AUX4</label>
+  </variable>
+  <variable item="Dim AUX5" CV="156" default="0" mask="XVXXXXXX" minOut="7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dim AUX5</label>
+    <label xml:lang="fr">Atténuer AUX5</label>
+    <label xml:lang="de">Abblendlicht AUX5</label>
+  </variable>
+  <variable item="Dim AUX6" CV="156" default="0" mask="VXXXXXXX" minOut="8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dim AUX6</label>
+    <label xml:lang="fr">Atténuer AUX6</label>
+    <label xml:lang="de">Abblendlicht AUX6</label>
   </variable>
 </variables>

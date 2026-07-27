@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2015</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -27,29 +27,24 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2015-03-05</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Creation. Valid for most decoders after Oct 2014.</revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
       <date>2026-07-25</date>
       <authorinitials>PB</authorinitials>
-      <revremark>Fix a soft hyphen in the German label</revremark>
+      <revremark>Creation. CV112 with the firmware 3.15 range of 0-127.</revremark>
     </revision>
   </revhistory>
-  <variable item="Revert SUSI direction" CV="137" mask="XXXXXVXX" tooltip="CV137 bit 2">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Revert SUSI direction</label>
-    <label xml:lang="fr">Inverser sens de marche SUSI</label>
-    <label xml:lang="de">SUSI-Fahrtrichtung invertieren</label>
-    <label xml:lang="ca">Inverteix sentit SUSI</label>
-  </variable>
-  <variable item="Deactivate SUSI startup delay" CV="137" mask="XXXXVXXX" tooltip="CV137 bit 3">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Deactivate SUSI startup delay</label>
-    <label xml:lang="fr">Désactiver délai de départ SUSI</label>
-    <label xml:lang="de">SUSI-Anfahrverzögerung ausschalten</label>
-    <label xml:lang="ca">Desactiva el retard d'arrencada SUSI</label>
+  <!-- Not relevant for the FH* series (product IDs 41, 150, 170, 192) or the PD05A (131),     -->
+  <!-- per the D&H CV table. Gated by product ID so the fragment behaves the same whichever    -->
+  <!-- definition includes it.                                                                -->
+  <!-- CV112 widened from 0-31 to 0-127 in firmware 3.15, and D&H renamed it from             -->
+  <!-- "Geschwindigkeitsminderung Analog" to "...Analogbetrieb". Replaces the definition in     -->
+  <!-- Vars_post2012_dc.xml, which is excluded for the firmware 3.15 families.                  -->
+  <variable CV="112" default="15" item="DC Brake Momentum" exclude="41,150,170,192,131">
+    <decVal min="0" max="127"/>
+    <label>Speed reduction in analog operation</label>
+    <label xml:lang="fr">Réduction de vitesse en mode analogique</label>
+    <label xml:lang="de">Geschwindigkeitsminderung Analogbetrieb</label>
+    <tooltip>CV112: 0 = small reduction … 127 = strong reduction</tooltip>
+    <tooltip xml:lang="fr">CV112 : 0 = faible réduction … 127 = forte réduction</tooltip>
+    <tooltip xml:lang="de">CV112: 0 = geringe Minderung … 127 = starke Minderung</tooltip>
   </variable>
 </variables>

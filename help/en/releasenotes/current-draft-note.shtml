@@ -248,7 +248,34 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>The decoder schema now offers <code>E24</code> as a connector type (NEM 664 /
+                    RCN-124, marketed by ESU as "Next28"); the D&amp;H DH24A uses it.</li>
+                <li>New definitions for firmware 3.15.016, covering the non-sound decoders (DH05C,
+                    DH06A, DH10C, DH12A, DH14B, DH16A, DH18A, DH21A, DH21B, DH22A, DH22B, DH24A,
+                    DHSP10A, PD05A, PD06A, PD10MU, PD12A, PD18A, PD18MU, PD21A, FH05B, FH16A, FH18A
+                    and FH22A). Adds shuttle mode (CV60), AUX10-AUX12 mapping (CV101-103), AUX3-AUX6
+                    dimming (CV461-467) and a wider CV112 range. Note that CV467 may read 255 after a
+                    firmware update; a reset (CV8 = 8) restores its default of 31.</li>
+                <li>New definitions for firmware 3.14.095, covering the same decoders, adding CV144
+                    bit 5 and the GPIO brake settings on the DH21B, DH22B and DH24A.</li>
+                <li>Non-sound decoders, firmware 3.13: added the CV401-412 function swapping settings
+                    and CV137 bit 6, on a new Function Swapping tab.</li>
+                <li>Non-sound decoders, firmware 3.13: added the DH24A and DHSP10A locomotive decoders
+                    and the FH16A function decoder.</li>
+                <li>Non-sound decoders, firmware 3.13: corrected the DH21B and DH22B product IDs, and
+                    declared Motorola support on the FH decoders.</li>
+                <li>Non-sound decoders, firmware 3.10 to 3.13: the CV144 GPIO brake settings are now
+                    shown on the decoders that support them.</li>
+                <li>Non-sound decoders, firmware 3.12 to 3.14: CV112 is no longer shown on FH and
+                    PD05A decoders, and its default is corrected to 15.</li>
+                <li>Non-sound decoders: CV124, which selects the function keys that start the
+                    delay, is now shown on the DH Options tab. It is a bit mask over F1-F8 and is
+                    modelled as such; it was previously a single-choice list.</li>
+                <li>Non-sound decoders: corrected the default function assignments of CV131, CV132
+                    and CV133 (low beam light, shunting gear, deceleration off), which all
+                    defaulted to F1 instead of F8, F4 and F9.</li>
+                <li>Non-sound decoders: label and tooltip corrections on CV131-133 and CV137,
+                    using D&amp;H's own wording.</li>
             </ul>
 
         <h4>ESU</h4>

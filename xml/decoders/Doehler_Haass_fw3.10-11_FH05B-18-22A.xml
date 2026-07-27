@@ -12,6 +12,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="4.2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
+  <!--  Fixed the gating of CV144 bits 3 and 4, the two GPIO brake settings. They were
+        restricted to product IDs that no model in this file carries, so neither bit was
+        ever shown. Now provided by doehler_haass/cv144_bits1-4.xml, whose include list
+        covers every product ID form these decoders use.
+        -->
   <version version="4.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
   <!--  Removed Firmware pane (outdated since fw 3.06 and
         introduction of CVs260-265: fw info now on "DH Info" page)
@@ -333,7 +339,7 @@
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
 <!-- relevant für FH ??? Start-->
       <!--              - Extra general options as of fw3.10 -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.10.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bits1-4.xml"/>
 <!-- relevant für FH ??? Ende-->
       <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
