@@ -280,6 +280,7 @@
 
         <h4>ESU</h4>
             <ul>
+                <li>LokSound 5 nano DCC now declares its E24 interface.</li>
                 <li></li>
             </ul>
 
@@ -435,6 +436,8 @@
 
         <h4>ZIMO</h4>
             <ul>
+                <li>MS540E24 now declares its E24 interface, and the MN140E24 definition is now
+                    available.</li>
                 <li></li>
             </ul>
 
