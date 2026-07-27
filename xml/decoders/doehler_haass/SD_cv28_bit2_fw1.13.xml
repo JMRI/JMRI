@@ -34,9 +34,9 @@
   </revhistory>
   <variable CV="28" item="Railcom dynamic channel (CV28)" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>Dynamic channel use (NMRA, CV28)</label>
-    <label xml:lang="fr">Utilisation dynamique du canal (NMRA, CV28)</label>
-    <label xml:lang="de">Dynamische Kanalnutzung (normgerecht, CV28)</label>
+    <label>Dynamic Channel (NMRA, CV28)</label>
+    <label xml:lang="fr">Canal dynamique (NMRA, CV28)</label>
+    <label xml:lang="de">Dynamische Kanalnutzung (NMRA, CV28)</label>
     <tooltip>bit 2 - since firmware 1.13.112. Two CVs control this one function: this NMRA-standard bit, and the older D&amp;H "Railcom Dynamic Channel" (CV144 bit 0), which D&amp;H still support. Setting either one activates dynamic channel use.</tooltip>
     <tooltip xml:lang="fr">bit 2 - depuis le firmware 1.13.112. Deux CV commandent cette même fonction : ce bit normalisé NMRA, et l'ancien "Railcom Dynamic Channel" D&amp;H (CV144 bit 0), toujours géré par D&amp;H. Activer l'un ou l'autre suffit.</tooltip>
     <tooltip xml:lang="de">Bit 2 - seit Firmware 1.13.112. Zwei CV steuern dieselbe Funktion: dieses normgerechte NMRA-Bit und das ältere D&amp;H "Railcom Dynamic Channel" (CV144 Bit 0), das D&amp;H weiterhin unterstützen. Es genügt, eines von beiden zu setzen.</tooltip>

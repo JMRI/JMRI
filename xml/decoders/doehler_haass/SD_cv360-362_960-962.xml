@@ -38,6 +38,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2026-07-27</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>CV361 and CV961 defaults corrected to 7</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2023-07-22</date>
       <authorinitials>RK</authorinitials>

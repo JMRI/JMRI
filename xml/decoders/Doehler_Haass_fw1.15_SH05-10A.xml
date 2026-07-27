@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260727"/>
+  <!--  Corrected the SH05A and SH10A model comments  -->
   <version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230720"/>
   <!--  Creation, based on Doehler_Haass_susi_sd_fw1.14_SH05-10A.xml
         -->

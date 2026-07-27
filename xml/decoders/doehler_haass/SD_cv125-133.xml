@@ -28,6 +28,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2026-07-27</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>CV131, CV132 and CV133 defaults corrected to F8, F4 and F9; English labels added; tooltips and CV133 translations corrected</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2015-10-14</date>
       <authorinitials>PB</authorinitials>

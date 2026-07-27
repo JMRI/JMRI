@@ -36,19 +36,21 @@
       </griditem>
       <griditem gridx="0" gridy="4" anchor="LINE_END">
         <display item="Railcom Dynamic Channel" format="checkbox"/>
-        <!-- CV28 bit 2 does the same job as CV144 bit 0 above, to the NMRA standard.
-             New in sound decoder firmware 1.13.112, so gated on the variable existing
-             rather than on a family name: any later firmware that includes
-             doehler_haass/SD_cv28_bit2_fw1.13.xml picks it up without editing this pane. -->
-        <group>
-          <qualifier>
-            <variableref>Railcom dynamic channel (CV28)</variableref>
-            <relation>exists</relation>
-            <value>1</value>
-          </qualifier>
-          <display item="Railcom dynamic channel (CV28)" format="checkbox"/>
-        </group>
       </griditem>
+      <!-- CV28 bit 2 does the same job as CV144 bit 0 above, to the NMRA standard, so it sits
+           on the line below it. New in sound decoder firmware 1.13.112, so gated on the variable
+           existing rather than on a family name: any later firmware that includes
+           doehler_haass/SD_cv28_bit2_fw1.13.xml picks it up without editing this pane. -->
+      <group>
+        <qualifier>
+          <variableref>Railcom dynamic channel (CV28)</variableref>
+          <relation>exists</relation>
+          <value>1</value>
+        </qualifier>
+        <griditem gridx="0" gridy="5" anchor="LINE_END">
+          <display item="Railcom dynamic channel (CV28)" format="checkbox"/>
+        </griditem>
+      </group>
       <griditem gridx="1" gridy="2" anchor="LINE_END">
        <row>
         <display item="Multiplicator for speed fedback"/>
