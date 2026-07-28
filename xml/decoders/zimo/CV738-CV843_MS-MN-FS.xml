@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - 24 Nov 2022.  Merging MX and MS series files to single unit for CVs700-899, Nigel Cliffe -->
 <!-- version 1.1  March 2025  Extended CV837 and added CV843 for Zimo-Scripting control,  Nigel Cliffe -->
+<!-- version 1.2  28 July 2026  Pierre Billon - renamed from CV700-CV899_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV738-843) -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->

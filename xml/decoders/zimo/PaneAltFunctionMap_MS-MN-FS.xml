@@ -8,6 +8,7 @@
 <!--        Split to avoid future problems as MS-series receives updates  -->  
 <!-- version 2.3 - Ronald Kuhn - added MN series ID numbers to include statements --> 
 <!-- version 2.4 - Ronald Kuhn - added new MN- and MS ID numbers to include statements --> 
+<!-- version 2.5  28 July 2026  Pierre Billon - renamed from PaneAltFunctionMap_MS_series.xml; the name now states the CV range held and the decoder series it applies to -->
 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Alt Function Map</name>

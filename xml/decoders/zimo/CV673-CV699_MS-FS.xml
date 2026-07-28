@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 copied from MX series file for MS-series decoders.  24 Nov 2022, Nigel Cliffe -->
+<!-- version 1.1  28 July 2026  Pierre Billon - renamed from CV604-CV699_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV673-699, all sound) -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable CV="673" item="F20 Sound Sample">

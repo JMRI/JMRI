@@ -319,9 +319,9 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV199_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV200-CV249_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV7-CV97_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV107-CV196_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV201-CV249_MS-MN-FS.xml"/>
 
 
       <variable CV="7" item="Decoder Version" readOnly="yes" default="4">
@@ -425,11 +425,11 @@
         <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
 
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV399_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV499_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699_MS_series.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV700-CV899_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV399_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV499_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV602_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV673-CV699_MS-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV738-CV843_MS-MN-FS.xml"/>
 
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
@@ -440,10 +440,10 @@
 
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel_MS_series.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel_MS-MN-FS.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap_MS_series.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_MS_series.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap_MS-MN-FS.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_MS-MN-FS.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
