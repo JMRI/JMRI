@@ -503,6 +503,19 @@
     <label xml:lang="de">DCC-A automatische Anmeldung (RCN-218)</label>
     <label xml:lang="cs">RailCom signál napětí</label>
   </variable>
+  <!-- CV30 is the decoder self-test and its error readout: writing 255 or 254 starts a test,
+       reading returns an error code, writing 0 clears it. It is a diagnostic procedure rather
+       than a setting, so it is deliberately NOT placed on any pane for now - it is defined here
+       only so the value can be read and cleared when needed. -->
+  <variable CV="30" item="Decoder self-test" default="1">
+    <decVal min="0" max="255"/>
+    <label>Decoder self-test and error code</label>
+    <label xml:lang="fr">Autotest du décodeur et code d'erreur</label>
+    <label xml:lang="de">Decoder-Selbsttest und Fehlercode</label>
+    <tooltip>Write 255 for the simple self-test, 254 for the extended one (needs exactly 18 V on the programming track). Reading returns the error code; write 0 to clear it.</tooltip>
+    <tooltip xml:lang="fr">Écrire 255 pour l'autotest simple, 254 pour l'autotest étendu (nécessite exactement 18 V sur la voie de programmation). La lecture renvoie le code d'erreur ; écrire 0 pour l'effacer.</tooltip>
+    <tooltip xml:lang="de">255 schreiben für den einfachen Selbsttest, 254 für den erweiterten (benötigt genau 18 V am Programmiergleis). Das Lesen liefert den Fehlercode; 0 schreiben zum Löschen.</tooltip>
+  </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
  <!--group exclude="253"-->
   <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
