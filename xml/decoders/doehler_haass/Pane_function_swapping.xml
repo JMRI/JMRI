@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 2 - 2026-07-27 - PB - add CV137 bit 6, apply swappings to SUSI F1-F12 -->
 <!-- version 1 - Ronald Kuhn - initial version -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Function Swapping</name>
@@ -105,6 +106,18 @@
           <text xml:lang="de">    33 - 46 = Soundablauf 3 - 16</text>
         </label>
       </column>
+    </row>
+    <row>
+      <!-- CV137 bit 6 extends these swappings to the SUSI functions. New in sound decoder
+           firmware 1.13.112, so gated on the variable existing rather than on a family name. -->
+      <group>
+        <qualifier>
+          <variableref>Adopt function swapping for SUSI</variableref>
+          <relation>exists</relation>
+            <value>1</value>
+        </qualifier>
+        <display item="Adopt function swapping for SUSI" format="checkbox"/>
+      </group>
     </row>
   </column>
 </pane>

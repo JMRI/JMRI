@@ -254,6 +254,13 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
+                <li>Sound decoders, firmware 1.13: added CV137 bit 6 and CV28 bit 2.</li>
+                <li>Sound decoders: firmware 1.01, 1.02.084, 1.05.115, 1.08.027, 1.09.117,
+                    1.11.069 and 1.13.101 are now identified correctly.</li>
+                <li>Sound decoders: corrected the CV131, CV132 and CV133 defaults to F8, F4
+                    and F9, and the CV361 threshold to 7.</li>
+                <li>SUSI sound modules: corrected the CV961 threshold default and the SH05A
+                    and SH10A model comments.</li>
                 <li>The decoder schema now offers <code>E24</code> as a connector type (NEM 664 /
                     RCN-124, marketed by ESU as "Next28"); the D&amp;H DH24A uses it.</li>
                 <li>New definitions for firmware 3.15.016, covering the non-sound decoders (DH05C,
