@@ -201,11 +201,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                     case STORED:
                         return "Stored";
                     case FROMFILE:
-                        return "From file, known valid";
-                    case FROMFILEDEFAULT:
-                        return "From file, still at default";
+                        return "From file, known previously valid";
+                    case FROMFILEUNKNOWN:
+                        return "From file, possibly still at default";
                     case FROMDEFAULT:
-                        return "From file";
+                        return "From decoder definition defaults";
                     default:
                         return "inconsistent";
                 }

@@ -92,11 +92,6 @@ public class LocoFile extends XmlFile {
                 String value = element.getAttribute("value").getValue();
                 log.debug("CV named {} has value: {}", name, value);
                 
-                // retrieve the state, if available
-                if (element.getAttribute("value") != null) {
-                } else {
-                }
-                
 
                 // Fairly ugly hack to migrate Indexed CVs of existing Tsunami2 & Econami
                 // roster entries to full NMRA S9.2.2 format (include CV 31 value).
