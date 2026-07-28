@@ -34,6 +34,59 @@
   
   <decoder>
     <family name="MS Sound (version 4+)" mfg="Zimo">
+      <!-- MS001 is an OEM build (e.g. in the Fleischmann Beilhack). Physical data varies by locomotive,
+           so none is declared; the maximum output count of the small MS decoders is used. -->
+      <model model="MS001 (OEM) version 4+" lowVersionID="4" highVersionID="42" numOuts="12" numFns="14" productID="11" comment="OEM version of an MS sound decoder, factory-fitted by a model manufacturer and not sold separately. Physical characteristics vary by locomotive: outputs, connector, size and current ratings are not those of any catalogue MS decoder. The maximum number of outputs is offered here; your locomotive may use fewer.">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="de">FA8</label>
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <output name="11" label="FO 9">
+          <label xml:lang="de">FA9</label>
+          <label xml:lang="cs">FV 9</label>
+        </output>
+        <output name="12" label="FO 10">
+          <label xml:lang="de">FA10</label>
+          <label xml:lang="cs">FV 10</label>
+        </output>
+      </model>
+
       <model model="MS440 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -631,6 +684,15 @@
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
 
+      <variable item="Decoder ID 1" CV="250" default="11" readOnly="yes" include="11">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="11" readOnly="yes" include="11">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="12" readOnly="yes" include="12">
         <decVal/>
         <label>Decoder ID 1</label>
