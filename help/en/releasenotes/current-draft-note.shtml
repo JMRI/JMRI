@@ -525,6 +525,10 @@
         <ul>
           <li>Add the <strong>Occupied</strong> option to the Sections Expression.  This is used to
           test if any blocks within a Section are occupied.</li>
+          <li>Removed the <strong>Listen</strong> option from the <strong>Memory</strong> reference
+          tab used by Actions and Expressions.
+          See <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/chapter7.shtml#listenRemoved">
+          Removed Listen</a> for details.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
