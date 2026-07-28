@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1.0  28 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="309" item="Brake key" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F1-F28.xml"/>
+    <label>Brake key</label>
+    <label xml:lang="de">Bremstaste</label>
+    <label xml:lang="cs">Tlačítko brzdy</label>
+      <tooltip> </tooltip>
+      <tooltip xml:lang="de">Die hier zugewiesene Funktionstaste löst einen Bremsvorgang nach der in CV#349 definierten Bremszeit aus</tooltip>
+      <tooltip xml:lang="cs">Které tlačítko spustí brždění po doběš definované v CV349</tooltip>
+  </variable>
+  <variable item="Fn key driving solo" CV="347" default="0" tooltip="CV347">
+     <enumVal>
+      <enumChoice choice="No key assigned">
+        <choice>No key assigned</choice>
+        <choice xml:lang="it">Nessun Tasto</choice>
+        <choice xml:lang="de">keine Taste</choice>
+        <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Fn key driving solo</label>
+    <label xml:lang="de">Lokfahrt-Taste</label>
+    <label xml:lang="cs">Funkční klávesa pro strojovou jízdu</label>
+  </variable>
+  <variable item="Solo unhindered rpm" CV="348" default="0" mask="XXXXXXXV">
+    <enumVal>
+      <enumChoice choice="no">
+        <choice>no</choice>
+        <choice xml:lang="de">nein</choice>
+        <choice xml:lang="cs">neomezeno</choice>
+      </enumChoice>
+        <enumChoice choice="limited">
+        <choice>limited</choice>
+        <choice xml:lang="de">eingeschränkt</choice>
+        <choice xml:lang="cs">omezeno</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Solo unhindered rpm</label>
+    <label xml:lang="de">Verhaltensdefinition für Lokfahrt 1</label>
+    <tooltip>CV348 bit 0</tooltip>
+    <tooltip xml:lang="de">lässt Diesel-Sound unbeschränkt schnell hochfahren (bit 0)</tooltip>
+    <label xml:lang="cs">Strojová jízda omezení otáček</label>
+    <tooltip xml:lang="cs">Rychlost přechodu do maximálních otáček spalovacího motoru</tooltip>
+  </variable>
+  <variable item="Solo change momentum" CV="348" default="0" mask="XXXXXXVX">
+    <enumVal>
+      <enumChoice choice="no">
+        <choice>no</choice>
+        <choice xml:lang="de">nein</choice>
+        <choice xml:lang="cs">nesníženo</choice>
+      </enumChoice>
+        <enumChoice choice="reduced">
+        <choice>reduced</choice>
+        <choice xml:lang="de">reduziert</choice>
+        <choice xml:lang="cs">sníženo</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Solo change momentum</label>
+    <label xml:lang="de">Verhaltensdefinition für Lokfahrt 2</label>
+    <tooltip>CV348 bit 1</tooltip>
+    <tooltip xml:lang="de">reduziert CV #3, CV #4 (bit 1)</tooltip>
+    <label xml:lang="cs">Strojová jízda hybnost</label>
+  </variable>
+  <variable item="Solo change idle only" CV="348" default="0" mask="XXXXXVXX">
+    <enumVal>
+      <enumChoice choice="no">
+        <choice>no</choice>
+        <choice xml:lang="de">nein</choice>
+        <choice xml:lang="cs">Ne</choice>
+      </enumChoice>
+        <enumChoice choice="idle">
+        <choice>idle</choice>
+        <choice xml:lang="de">verschieben</choice>
+        <choice xml:lang="cs">Volnoběh</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Solo change idle only</label>
+    <label xml:lang="de">Verhaltensdefinition für Lokfahrt 3</label>
+    <tooltip>CV348 bit 2</tooltip>
+    <tooltip xml:lang="de">verschiebt Diesel-Sound-Schwellen nach oben (bit 2)</tooltip>
+    <label xml:lang="cs">Strojová jízda volnoběh</label>
+    <tooltip xml:lang="cs">Přehrávání zvuku volnoběhu při pomalé jízdě</tooltip>
+  </variable>
+  <variable CV="348" item="Switch-over" default="0" exclude="">
+    <decVal max="4"/>
+    <label>Switch-over parameters for driving solo</label>
+    <label xml:lang="de">Verhaltensdefinition für Lokfahrt</label>
+    <label xml:lang="cs">Parametry přepínání pro strojovou jízdu</label>
+      <tooltip> </tooltip>
+      <tooltip xml:lang="de">Auswahl der Maßnahmen, die bei Umschaltung auf Alleinfahrt getroffen werden sollen</tooltip>
+      <tooltip xml:lang="cs">Výběr nastavení pro přepnutí do jízda sólo.</tooltip>
+  </variable>
+  
+   <variable item="Brake Key Deceleration Rate" CV="349" default="0" tooltip="CV349, brake key time">
+	<decVal min="0" max="255"/>
+    <label>Brake Key Deceleration Rate</label>
+    <label xml:lang="cs">Klávesa brzdy míra zpomalení</label>
+  </variable>
+  <variable CV="349" item="Brake time" default="0" exclude="">
+    <decVal/>
+    <label>Brake time</label>
+    <label xml:lang="de">Bremszeit für Bremstaste</label>
+      <tooltip> </tooltip>
+      <tooltip xml:lang="de">Bremszeit nach Auslösen der Bremstaste</tooltip>
+      <tooltip xml:lang="cs">Doba brždění po uvolnění tlačítka brždění.</tooltip>
+  </variable>
+  
+
+
+  <variable item="Second exhaust Fan" CV="348" default="0" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Second exhaust Fan and -steam</label>
+    <label xml:lang="de">2. Rauch-Ventilator und -Heizung</label>
+    <label xml:lang="cs">Druhý ventilátor výfuku a -páry</label>
+    <tooltip>CV348 bit 3</tooltip>
+    <tooltip xml:lang="de">Mit CV348 Bit3=1 wird der 2. Rauch-Venti und die Heizung auf dem jeweils höheren Ausgang deaktiviert.</tooltip>
+    <tooltip xml:lang="cs">CV348 Bit3=1 deaktivuje druhý ventilátor výfuku a topení na vyšší výkon.</tooltip>
+  </variable>
+  <variable item="Brake squel suppressed" CV="348" default="0" mask="XXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Brake squel can be suppressed with switch-over key</label>
+    <label xml:lang="de">Bremsenquietschen mit Lokfahrtaste unterdrücken</label>
+    <label xml:lang="cs">Skřípění brzdy lze potlačit přepínacím tlačítkem</label>
+    <tooltip>CV348 bit 4</tooltip>
+    <tooltip xml:lang="de">Wenn CV348 Bit4=1 und Lokfahrtaste eingeschalten, Bremsenquietschen unterdrücken</tooltip>
+    <tooltip xml:lang="cs">CV348 Bit4=1 a tlačítko pohonu lokomotivy je zapnuté, tak se potlačí skřípění brzdy</tooltip>
+  </variable>
+  <variable CV="351" item="Smoke Fan Speed at Steady Speed" default="27" tooltip="8 to 63">
+    <decVal min="8" max="63"/>
+    <label>Smoke Fan Speed at Steady Speed</label>
+    <label xml:lang="it">Velocità ventole fumo a velocità costante</label>
+    <label xml:lang="de">Rauch-Ventilator Drehzahl bei konst. Fahrt</label>
+    <label xml:lang="cs">Rychlost ventilátoru kouře při ustálené rychlosti</label>
+  </variable>
+  <variable CV="352" item="Smoke Fan Speed at Startup and Acceleration" default="128" tooltip="25 to 170">
+    <decVal min="25" max="170"/>
+    <label>Smoke Fan Speed at Startup and Acceleration</label>
+    <label xml:lang="it">Velocità ventole fumo in partenza e accellerazione</label>
+    <label xml:lang="de">Rauch-Ventilator Drehzahl bei Beschleunigung</label>
+    <label xml:lang="cs">Rychlost ventilátoru kouře při rozjezdu</label>
+  </variable>
+  <variable item="Automatic Shut-down of Smoke Generator" CV="353" default="0">
+    <decVal min="0" max="252"/>
+    <label>Automatic Shut-down of Smoke Generator</label>
+    <label xml:lang="it">Spegnimento automatico generatore Fumo</label>
+    <label xml:lang="de">Rauchgenerator Laufzeit</label>
+    <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
+    <tooltip>0 to 252, 25sec per unit</tooltip>
+    <tooltip xml:lang="de">0 bis 252, 25 sec pro Einheit</tooltip>
+    <tooltip xml:lang="cs">0 až 252, 25 sekund na jednotku</tooltip>
+  </variable>
+  <variable item="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133">
+    <decVal min="0" max="255"/>
+    <label>Fan Speed at Standstill</label>
+    <label xml:lang="it">Velocità Ventole da fermo</label>
+    <label xml:lang="de">Rauch-Ventilator Drehzahl bei Stillstand</label>
+    <label xml:lang="cs">Rychlost ventilátoru kouře při stání</label>
+  </variable>
+  
+  <variable item="Momentum reduction when driving solo" CV="390" default="0" tooltip="CV390">
+    <decVal />
+    <label xml:lang="de">Reduzierung Verzögerungszeiten</label>
+    <label xml:lang="cs">Omezení zrychlení při strojové jízdě</label>
+  </variable>
+  
+    <variable CV="393" item="Ditch Light with Bell" mask="XXXXXXXV" default="0" exclude="130,177,195,197,199,201,211,218,240">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Ditch Light with Bell</label>
+    <label xml:lang="de">Aktiviert Ditch Light wenn Glocke spielt</label>
+    <label xml:lang="cs">Obrysová světla se zvonem</label>
+  </variable>
+  <variable CV="393" item="Ditch Light with Horn" mask="XXXXXXVX" default="0" exclude="130,177,195,197,199,201,211,218,240">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Ditch Light with Horn</label>
+    <label xml:lang="de">Aktiviert Ditch Light wenn Horn spielt</label>
+    <label xml:lang="cs">Obrysová světla s houkačkou</label>
+  </variable>
+  <variable CV="393" item="ZIMO Konfig 5-2" mask="XXXXXVXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>ZIMO Konfig 5-2</label>
+    <label xml:lang="de">Hochgeschwindigkeitsschaltwerk 1</label>
+    <label xml:lang="cs">Vysokorychlostní rozvaděč 1</label>
+      <tooltip>Highspeed switchgear</tooltip>
+      <tooltip xml:lang="de">Statt immer mit dem 1.Sample im Hochgeschwindigkeitsschaltwerk zu beginnen, ein Sample nach dem anderen verwenden.</tooltip>
+  </variable>
+  <variable CV="393" item="ZIMO Konfig 5-3" mask="XXXXVXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>ZIMO Konfig 5-3</label>
+    <label xml:lang="de">Hochgeschwindigkeitsschaltwerk 2</label>
+    <label xml:lang="cs">Vysokorychlostní rozvaděč 2</label>
+      <tooltip>Highspeed switchgear</tooltip>
+      <tooltip xml:lang="de">Hochgeschwindigkeitsschaltwerk beim Hochschalten Anfangs- und Endteil des Samples überspringen (falls Loop Zeiger gesetzt sind).</tooltip>
+  </variable>
+  <variable CV="393" item="ZIMO Konfig 5-4" mask="XXXVXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>ZIMO Konfig 5-4</label>
+    <label xml:lang="de">Thyristor2 Tonhöhe nicht anheben</label>
+    <label xml:lang="cs">Tyristor 2 nezvyšuje tón</label>
+  </variable>
+  <variable CV="393" item="SUSI as In" mask="XXVXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>SUSI as In</label>
+    <label xml:lang="de">SUSI als Schalteingang</label>
+    <label xml:lang="cs">SUSI jako Vstup</label>
+  </variable>
+  <variable CV="393" item="Slower Steam Strokes" mask="XVXXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Slower Steam Strokes</label>
+    <label xml:lang="de">Langsamere Dampfschläge</label>
+    <label xml:lang="cs">Pomalé výfuky páry</label>
+  </variable>
+
+  
+  <variable item="Lights flash with switchgear sound" CV="394" mask="XXXXXXXV" default="0" tooltip="CV394 bit 0">
+    <enumVal>
+        <enumChoice choice="0">
+        <choice>no</choice>
+        <choice xml:lang="de">nein</choice>
+        <choice xml:lang="cs">Ne</choice>
+      </enumChoice>
+      <enumChoice choice="1">
+        <choice>yes</choice>
+        <choice xml:lang="de">ja</choice>
+        <choice xml:lang="cs">Ano</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
+    <label xml:lang="cs">Blikání světel pri zvuku kontroleru</label>
+  </variable>
+
+  <variable item="Speed Dependant Headlights" CV="399" default="0">
+    <decVal/>
+    <label xml:lang="de">Fernlicht-Schwelle</label>
+    <label xml:lang="cs">Mez zapnutí dálkových světel</label>
+  </variable>
+</variables>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1.0  28 July 2026  Pierre Billon - split out of CV738-CV843_MS-MN-FS.xml: switch-input sound samples, random sounds Z1-Z8, steam impact, turbocharger and motor start sound -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <!-- include this CV to put it onto the Sound Levels pane -->
+
+  <variable CV="738" item="Switch input 1 Sound Sample" >
+    <decVal/>
+    <label>Switch input 1 Sound Sample</label>
+    <label xml:lang="de">Sample Nummer für S1</label>
+    <label xml:lang="cs">Zvukový vzorek spínací vstup 1</label>
+  </variable>
+  <variable CV="739" item="Zimo Sound Setting 51" >
+    <decVal/>
+    <label>Switch triggered sound S1</label>
+    <label xml:lang="it">Suono S1 iniziato da Switch</label>
+    <label xml:lang="de">Lautstärke Schalteing.-Sound S1</label>
+    <label xml:lang="cs">Spínač spouští zvuk S1</label>
+  </variable>
+  <variable CV="740" item="Switch input 2 Sound Sample" >
+    <decVal/>
+    <label>Switch input 2 Sound Sample</label>
+    <label xml:lang="de">Sample Nummer für S2</label>
+    <label xml:lang="cs">Zvukový vzorek spínací vstup 2</label>
+  </variable>
+  <variable CV="741" item="Zimo Sound Setting 52" >
+    <decVal/>
+    <label>Switch triggered sound S2</label>
+    <label xml:lang="it">Suono S2 iniziato da Switch</label>
+    <label xml:lang="de">Lautstärke Schalteing.-Sound S2</label>
+    <label xml:lang="cs">Spínač spouští zvuk S2</label>
+  </variable>
+  <variable CV="742" item="Switch input 3 Sound Sample" >
+    <decVal/>
+    <label>Switch input 3 Sound Sample</label>
+    <label xml:lang="de">Sample Nummer für S3</label>
+    <label xml:lang="cs">Zvukový vzorek spínací vstup 3</label>
+  </variable>
+  <variable CV="743" item="Zimo Sound Setting 53" >
+    <decVal/>
+    <label>Switch triggered sound S3</label>
+    <label xml:lang="it">Suono S3 iniziato da Switch</label>
+    <label xml:lang="de">Lautstärke Schalteing.-Sound S3</label>
+    <label xml:lang="cs">Spínač spouští zvuk S3</label>
+  </variable>
+  
+  <variable CV="744" item="Z1 Sound Sample" >
+    <decVal/>
+    <label>Z1 </label>
+  </variable>
+  <variable CV="745" item="Zimo Sound Setting 61">
+    <decVal/>
+    <label>Random sound Z1</label>
+    <label xml:lang="it">Suono Z1 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z1</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z1</label>
+  </variable>
+  <variable item="Z1 Stand" CV="746" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z1 Drive" CV="746" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="747" item="Z2 Sound Sample" >
+    <decVal/>
+    <label>Z2 </label>
+  </variable>
+  <variable CV="748" item="Zimo Sound Setting 62">
+    <decVal/>
+    <label>Random sound Z2</label>
+    <label xml:lang="it">Suono Z2 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z2</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z2</label>
+  </variable>
+  <variable item="Z2 Stand" CV="749" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z2 Drive" CV="749" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="750" item="Z3 Sound Sample" >
+    <decVal/>
+    <label>Z3 </label>
+  </variable>
+  <variable CV="751" item="Zimo Sound Setting 63">
+    <decVal/>
+    <label>Random sound Z3</label>
+    <label xml:lang="it">Suono Z3 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z3</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z3</label>
+  </variable>
+  <variable item="Z3 Stand" CV="752" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z3 Drive" CV="752" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="753" item="Z4 Sound Sample" >
+    <decVal/>
+    <label>Z4 </label>
+  </variable>
+  <variable CV="754" item="Zimo Sound Setting 64">
+    <decVal/>
+    <label>Random sound Z4</label>
+    <label xml:lang="it">Suono Z4 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z4</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z4</label>
+  </variable>
+  <variable item="Z4 Stand" CV="755" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z4 Drive" CV="755" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="756" item="Z5 Sound Sample" >
+    <decVal/>
+    <label>Z5 </label>
+  </variable>
+  <variable CV="757" item="Zimo Sound Setting 65">
+    <decVal/>
+    <label>Random sound Z5</label>
+    <label xml:lang="it">Suono Z5 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z5</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z5</label>
+  </variable>
+  <variable item="Z5 Stand" CV="758" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z5 Drive" CV="758" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="759" item="Z6 Sound Sample" >
+    <decVal/>
+    <label>Z6 </label>
+  </variable>
+  <variable CV="760" item="Zimo Sound Setting 66">
+    <decVal/>
+    <label>Random sound Z6</label>
+    <label xml:lang="it">Suono Z6 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z6</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z6</label>
+  </variable>
+  <variable item="Z6 Stand" CV="761" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z6 Drive" CV="761" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="762" item="Z7 Sound Sample" >
+    <decVal/>
+    <label>Z7 </label>
+  </variable>
+  <variable CV="763" item="Zimo Sound Setting 67">
+    <decVal/>
+    <label>Random sound Z7</label>
+    <label xml:lang="it">Suono Z7 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z7</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z7</label>
+  </variable>
+  <variable item="Z7 Stand" CV="764" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z7 Drive" CV="764" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="765" item="Z8 Sound Sample" >
+    <decVal/>
+    <label>Z8 </label>
+  </variable>
+  <variable CV="766" item="Zimo Sound Setting 68">
+    <decVal/>
+    <label>Random sound Z8</label>
+    <label xml:lang="it">Suono Z8 casuale</label>
+    <label xml:lang="de">Lautstärke Sound Z8</label>
+    <label xml:lang="cs">Zvuk generátor náhody Z8</label>
+  </variable>
+  <variable item="Z8 Stand" CV="767" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z8 Drive" CV="767" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  
+ <variable CV="828" item="Steam Impact Stroke" default="0" exclude="">
+    <decVal/>
+    <label>steam impact stroke for Set+1</label>
+    <label xml:lang="de">Dampfschlagtakt für Set+1</label>
+    <label xml:lang="cs">Výfuk páry pro sadu 1</label>
+    <tooltip> </tooltip>
+    <tooltip xml:lang="de">Dampfschlagtakt wie CV # 267 aber für Set+1</tooltip>
+  </variable>
+  
+  
+    <variable CV="834" item="Turbocharger acceleration" default="0">
+    <decVal/>
+    <label>reduces acceleration dependency of the turboloader</label>
+    <label xml:lang="de">Turbolader: Beschleunigungsabhängigkeit</label>
+    <label xml:lang="cs">Snižuje závislost zrychlení na Turboladeru</label>
+  </variable>
+  
+  <variable CV="835" item="Quick Select Shift key" >
+    <decVal max="32"/>
+    <label>Quick Select Shift key</label>
+    <label xml:lang="de">Set+1 Taste erweitern</label>
+    <label xml:lang="cs">Shift tlačítko pro rychlý výběr</label>
+    <tooltip>Shift key to switch between sound sets.</tooltip>
+    <tooltip xml:lang="de">Set+1 Taste erweitern.</tooltip>
+    <tooltip xml:lang="cs">Shift tlačítko pro přepínaní mezi sadami zvuků.</tooltip>
+  </variable>
+
+  <variable CV="836" item="Motor Start Sound" mask="XXXXXXXV" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Motor Start Sound</label>
+    <label xml:lang="de">Motor Start Sound</label>
+    <label xml:lang="cs">Zvuk startujícího motoru</label>
+      <tooltip>Don't start if Motor Sound not complete</tooltip>
+      <tooltip xml:lang="de">Lok soll nicht Anfahren solange der Motor Start Sound nicht zu Ende gespielt hat.</tooltip>
+  </variable>
+  
+  
+
+</variables>

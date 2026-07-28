@@ -425,12 +425,14 @@
         <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
 
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV399_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV398_MS-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV309-CV399_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV499_MS-MN-FS.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV602_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV512_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV513-CV602_MS-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV673-CV699_MS-FS.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV738-CV843_MS-MN-FS.xml"/>
-
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV738-CV836_MS-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV800-CV843_MS-MN-FS.xml"/>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
 
