@@ -151,8 +151,7 @@
         <size length="13.3" width="9.5" height="2.6" units="mm"/>
       </model>
 
-<!-- not available yet (2024-05-02)
-      <model model="MN250 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.2A, peak=1.0A" maxTotalCurrent="0.2A" formFactor="N" numOuts="6" numFns="14" productID="120">
+      <model model="MN250 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.2A, peak=0.3A" maxTotalCurrent="0.5A" formFactor="N" connector="Wires" numOuts="4" numFns="14" productID="120">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -169,17 +168,8 @@
           <label xml:lang="de">FA2</label>
           <label xml:lang="cs">Funkční výstup 2</label>
         </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">Funkční výstup 3</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">Funkční výstup 4</label>
-        </output>
         <size length="9.9" width="7.5" height="2.1" units="mm"/>
       </model>
--->
       <model model="MN300 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.0A" formFactor="H0" numOuts="8" numFns="14" productID="125">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
