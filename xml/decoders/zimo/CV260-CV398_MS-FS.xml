@@ -1333,7 +1333,7 @@
     <decVal min="0" max="10"/>
     <label xml:lang="de">Dieselstufe anheben auf:</label>
   </variable>    
-  <variable item="Switch input 1 playback time" CV="341" default="0" include="208,210,214,215,221,222,224,227,230">
+  <variable item="Switch input 1 playback time" CV="341" default="0">
     <decVal min="0" max="255"/>
     <label>Switch input 1 playback time</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 1</label>
@@ -1343,14 +1343,14 @@
     <tooltip xml:lang="de">Zugeordneter Sound am S1 wird mit der definierten Dauer abgespielt</tooltip>
     <tooltip xml:lang="cs">Sekundy. 0 = Jednou přehraje zvukový záznam (tak jak je nahrán).</tooltip>
   </variable>
-  <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,210,224,227,230">
+  <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 2 playback time</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 2</label>
     <label xml:lang="de">Schalteingang 2 Abspiel-Dauer</label>
     <label xml:lang="cs">Doba přehrání spínací vstup 2</label>
   </variable>
-  <variable item="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,224,227,230">
+  <variable item="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 3 playback time</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 3</label>

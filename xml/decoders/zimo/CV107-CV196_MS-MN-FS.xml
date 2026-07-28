@@ -1352,27 +1352,7 @@
     <label xml:lang="cs">Chování funkčního výstupu 6</label>
     <label xml:lang="de">FA6 Verhalten</label>
   </variable>
-  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="4" include="217">
-    <enumVal>
-      <enumChoice choice="Function Output 2 Normal Output">
-        <choice>Function Output 2 Normal Output</choice>
-        <choice xml:lang="it">Uscita Funzione 2 Uscita Normale</choice>
-        <choice xml:lang="cs">Funkční výstup 2 normální výstup</choice>
-        <choice xml:lang="de">FA2 - Normal</choice>
-      </enumChoice>
-      <enumChoice choice="Function Output 2 Cam Pulses or Smoke Fan">
-        <choice>Function Output 2 Cam Pulses or Smoke Fan</choice>
-        <choice xml:lang="it">Uscita Funzione 2 Impulso Cam  o Ventola Fumo</choice>
-        <choice xml:lang="cs">Funkční výstup 2 rytmus vaček nebo ventilátor kouře</choice>
-        <choice xml:lang="de">FA2 - Rauchventilator</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Function Output 2 as virtual Cam or Smoke Fan</label>
-    <label xml:lang="it">Uscita 2 Cam virtuale  o Ventola Fumo</label>
-    <label xml:lang="cs">Funkční výstup 2 jako virtuální vačky nebo ventilátor kouře</label>
-    <label xml:lang="de">FA2 - Funktionsauswahl</label>
-  </variable>
-  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="1,2,3,4,5,6,7,8,9,10,125,126,127,201,203,210,211,212,213,214,215,216,218,219,220,221,222,225,233,237,240,234,243,246,253">
+  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6">
     <enumVal>
       <enumChoice choice="Function Output 4 Normal Output">
         <choice>Function Output 4 Normal Output</choice>
@@ -1391,25 +1371,6 @@
     <label xml:lang="it">Uscita 4 Cam virtuale  o Ventola Fumo</label>
     <label xml:lang="cs">Funkční výstup 4 jako virtuální vačky nebo ventilátor kouře</label>
     <label xml:lang="de">FA4 - Funktionsauswahl</label>
-  </variable>
-  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="12" include="208,209">
-    <enumVal>
-      <enumChoice choice="Function Output 10 Normal Output">
-        <choice>Function Output 10 Normal Output</choice>
-        <choice xml:lang="it">Uscita Funzione 10 Uscita Normale</choice>
-        <choice xml:lang="de">FA10 - Normal</choice>
-      </enumChoice>
-      <enumChoice choice="Function Output 10 Cam Pulses or Smoke Fan">
-        <choice>Function Output 10 Cam Pulses or Smoke Fan</choice>
-        <choice xml:lang="it">Uscita Funzione 10 Impulso Cam  o Ventola Fumo</choice>
-        <choice xml:lang="de">FA10 - Rauchventilator</choice>
-        <choice xml:lang="cs">Funkční výstup 10 rytmus vaček nebo ventilátor kouře</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Function Output 10 as virtual Cam or Smoke Fan</label>
-    <label xml:lang="it">Uscita 10 Cam virtuale  o Ventola Fumo</label>
-    <label xml:lang="de">FA10 - Funktionsauswahl</label>
-    <label xml:lang="cs">Funkční výstup 10 jako virtuální vačky nebo ventilátor kouře</label>
   </variable>
   <variable CV="134" item="Asymmetrical DCC Threshold" default="106">
     <decVal max="214"/>
