@@ -91,6 +91,12 @@ public class LocoFile extends XmlFile {
                 String name = element.getAttribute("name").getValue();
                 String value = element.getAttribute("value").getValue();
                 log.debug("CV named {} has value: {}", name, value);
+                
+                // retrieve the state, if available
+                if (element.getAttribute("value") != null) {
+                } else {
+                }
+                
 
                 // Fairly ugly hack to migrate Indexed CVs of existing Tsunami2 & Econami
                 // roster entries to full NMRA S9.2.2 format (include CV 31 value).
@@ -122,6 +128,18 @@ public class LocoFile extends XmlFile {
                 if (cvObject != null) {
                     cvObject.setValue(Integer.parseInt(value));
                     cvObject.setState(AbstractValue.ValueState.FROMFILE);
+
+                    // retrieve the state, if available
+                    if (element.getAttribute("state") != null) {
+                        var state = AbstractValue.ValueState.valueOf(element.getAttributeValue("state"));
+                        if (!state.equals(AbstractValue.ValueState.FROMDEFAULT)) {
+                            state = AbstractValue.ValueState.FROMFILE;
+                        }
+                        cvObject.setState(state);
+                    } else {
+                        cvObject.setState(AbstractValue.ValueState.FROMFILEUNKNOWN);
+                    }
+
                 }
             }
         } else {
@@ -192,9 +210,18 @@ public class LocoFile extends XmlFile {
             String value = element.getAttribute("value").getValue();
             log.debug("Variable \"{}\" has value: {}", item, value);
 
-            VariableValue var = map.get(item);
-            if (var != null) {
-                var.setValue(value);
+            VariableValue varValue = map.get(item);
+            if (varValue != null) {
+                varValue.setValue(value);
+
+                // retrieve the state, if available
+                if (element.getAttribute("state") != null) {
+                    var state = AbstractValue.ValueState.valueOf(element.getAttributeValue("state"));
+                    varValue.setState(state);
+                } else {
+                    varValue.setState(AbstractValue.ValueState.FROMFILEUNKNOWN);
+                }
+
             } else {
                 if (selectMissingVarResponse(item) == MessageResponse.REPORT) {
                     // not a warning, as this is how some definitions are migrated to remove erroneous variables
@@ -269,6 +296,7 @@ public class LocoFile extends XmlFile {
                     decoderDef.addContent(new Element("varValue")
                             .setAttribute("item", variableModel.getItem(i))
                             .setAttribute("value", variableModel.getValString(i))
+                            .setAttribute("state", variableModel.getState(i).toString())
                     );
                 }
                 // mark file as OK
@@ -281,6 +309,7 @@ public class LocoFile extends XmlFile {
                     values.addContent(new Element("CVvalue")
                             .setAttribute("name", cvModel.getName(i))
                             .setAttribute("value", cvModel.getValString(i))
+                            .setAttribute("state", cvModel.getCvByRow(i).getState().toString())
                     );
                 }
             }

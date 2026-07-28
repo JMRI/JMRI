@@ -33,6 +33,13 @@ public abstract class AbstractValue {
      */
     abstract void setColor(Color c);
 
+    /**
+     * States, hence colors, of Variables and CVs.
+     *
+     * Note that these as written and read by name in LocoFiles in the roster.
+     * Do not change the name of these values without putting a migration scheme
+     * in place.
+     */
     public enum ValueState {
         /**
          * Defines state when nothing is known about the real value.
@@ -59,15 +66,21 @@ public abstract class AbstractValue {
 
         /**
          * Defines state where value was read from a config file, but might not be
-         * the same as the decoder.
+         * the same as the decoder. It is known to have at some point been edited/read/written
          */
-        FROMFILE(Color.yellow, "FromFile"),
+        FROMFILE(new Color(0xFFFF90), "FromFile"),  // slightly lighter yellow
+
+        /**
+         * Defines state where value was read from a config file, but might not be
+         * the same as the decoder. It's unknown whether the item has been edited/read/written at some point.
+         */
+        FROMFILEUNKNOWN(Color.yellow, "FromFileUnknown"),
 
         /**
          * Defines state where value was defined by the decoder definition default, 
          * and has never been edited or read from or written to the decoder.
          */
-        FROMDEFAULT(new Color(0xC0C0E0), "FromDefault"),  // light blue
+        FROMDEFAULT(new Color(0xE0F0FF), "FromDefault"),  // ice blue 0xF0F8FF
 
         /**
          * Defines state where value was read from a config file, and is the same as

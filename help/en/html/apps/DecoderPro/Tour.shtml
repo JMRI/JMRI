@@ -140,32 +140,48 @@
           variable fields are color coded to represent their states:</p>
 
           <dl>
-          <dt style="background:orange;">Edited</dt>
+              <dt style="background:white;">Read</dt>
+    
+              <dd>The value shown has been read from the decoder. This is shown as white to
+              indicate that the value is trustworthy.</dd>
+    
+              <dt style="background:white;">Stored</dt>
+    
+              <dd>The value show has been written to the decoder. This is also shown as
+              white.</dd>
+    
+              <dt style="background:orange;">Edited</dt>
+    
+              <dd>You've changed this value in the current programming session.
+              This is shown as black numbers on an orange background, since the value differs from what's
+              expected or last seen in the decoder. The item will get a white background
+              when you write it to the decoder.</dd>
+    
+              <dt style="background:yellow;">From File</dt>
+    
+              <dd>The field contains values read from a locomotive file. This is shown as yellow,
+              since we're not certain that the file agrees with the decoder contents.
+              There are two shades of yellow.  The lighter one is for when you have
+              read, written or edited this sometime in the past. It's likely to agree
+              with what's in the decoder. The darker/brighter one
+              is for when the program doesn't know whether you've read, written or edited this
+              sometime in the past or not.  It might still be the default values
+              that might or might not agree with what's in the decoder.  In this case,
+              it might be safest to first read the decoder contents if you're not
+              sure.</dd>
 
-          <dd>You've changed this value, or it contains default values from the decoder file.
-          This is shown as black numbers on an orange background, since the value differs from what's
-          expected or last seen in the decoder.</dd>
-
-          <dt style="background:yellow;">From File</dt>
-
-          <dd>The field contains values read from a locomotive file. This is shown on yellow,
-          since we're not certain that the file agrees with the decoder contents.</dd>
-
-          <dt style="background:white;">Read</dt>
-
-          <dd>The value shown has been read from the decoder. This is shown as white to
-          indicate that the value is trustworthy.</dd>
-
-          <dt style="background:white;">Stored</dt>
-
-          <dd>The value show has been written to the decoder. This is also shown as
-          white.</dd>
-
-          <dt style="background:red;">Unknown</dt>
-
-          <dd>If something goes wrong with the read or write process, we might have a
-          completely untrustworthy result. This results in the variable's state being marked
-          as UNKNOWN and shown on a red background.</dd>
+              <dt style="background:blue;">Still at default</dt>
+    
+              <dd>The field contains values that came from the default values in 
+              DecoderPro's decoder definition.  These may or may not agree with 
+              what's in the decoder.  The safest thing to do is to read the values
+              from the decoder, which will turn these white.
+              
+              <dt style="background:red;">Unknown</dt>
+    
+              <dd>If something goes wrong with the read or write process, we might have a
+              completely untrustworthy result. This results in the variable's state being marked
+              as UNKNOWN and shown on a red background.</dd>
           </dl>
         </div>
       </div>

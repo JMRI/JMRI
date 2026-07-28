@@ -201,6 +201,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                     case STORED:
                         return "Stored";
                     case FROMFILE:
+                        return "From file, known valid";
+                    case FROMFILEDEFAULT:
+                        return "From file, still at default";
+                    case FROMDEFAULT:
                         return "From file";
                     default:
                         return "inconsistent";
@@ -369,7 +373,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // record new variable, update state, hook up listeners
         rowVector.addElement(v);
-        v.setState(AbstractValue.ValueState.FROMFILE);
+        v.setState(AbstractValue.ValueState.FROMDEFAULT);
         v.addPropertyChangeListener(this);
 
         // set to default value if specified (CV load may later override this)
@@ -380,8 +384,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 cvList.add(CV);  // it's an ordinary CV so add it as such
             }
             for (String theCV : cvList) {
-                log.debug("Setting CV={} of '{}'to {}", theCV, CV, AbstractValue.ValueState.FROMFILE.getName());
-                _cvModel.getCvByNumber(theCV).setState(AbstractValue.ValueState.FROMFILE); // correct for transition to "edited"
+                log.debug("Setting CV={} of '{}'to {}", theCV, CV, AbstractValue.ValueState.FROMDEFAULT.getName());
+                _cvModel.getCvByNumber(theCV).setState(AbstractValue.ValueState.FROMDEFAULT); // correct for transition to "edited"
             }
         }
     }
