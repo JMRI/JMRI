@@ -443,7 +443,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom_MS-MN-FS.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>

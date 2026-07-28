@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Pierre Billon - 2026-07-28 - RailCom pane for the MS, MN and FS decoders. -->
+<!--   Split from PaneRailcom.xml, which is shared with 139 MX definitions: CV28 bit 6 -->
+<!--   (high voltage RailCom) exists only on the large scale MS decoders, and bit 7 is -->
+<!--   DCC-A registration on this generation. -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <name>RailCom</name>
+  <name xml:lang="it">RailCom</name>
+  <name xml:lang="fr">RailCom</name>
+  <name xml:lang="de">RailCom</name>
+  <name xml:lang="cs">RailCom</name>
+  <column>
+    <display item="Enable RailCom" format="checkbox"/>
+    <display item="RailCom channel 1 (Broadcast)"/>
+    <display item="RailCom channel 2 (Data)"/>
+    <display item="Railcom high voltage"/>
+    <display item="DCC-A registration"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="RailCom speed reporting method"/>
+  </column>
+</pane>

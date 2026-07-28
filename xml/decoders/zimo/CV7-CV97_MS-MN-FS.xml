@@ -490,10 +490,17 @@
     <label xml:lang="cs">Zpřístupnit RailCom</label>
     <label xml:lang="de">RailCom</label>
   </variable>
-   <variable CV="28" item="Railcom voltage signal" default="0" mask="VXXXXXXX">
+   <variable CV="28" item="Railcom high voltage" default="0" mask="XVXXXXXX" include="7,9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Railcom voltage signal</label>
-    <label xml:lang="de">Railcom-Spannungsmeldung</label>
+    <label>RailCom high voltage (large scale only)</label>
+    <label xml:lang="fr">RailCom haute tension (grande échelle uniquement)</label>
+    <label xml:lang="de">RailCom Hochspannung (nur Großbahn)</label>
+  </variable>
+  <variable CV="28" item="DCC-A registration" default="1" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>DCC-A automatic registration (RCN-218)</label>
+    <label xml:lang="fr">Enregistrement automatique DCC-A (RCN-218)</label>
+    <label xml:lang="de">DCC-A automatische Anmeldung (RCN-218)</label>
     <label xml:lang="cs">RailCom signál napětí</label>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
