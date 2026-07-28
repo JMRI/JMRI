@@ -29,6 +29,7 @@
   <!-- v1.4,  added new decoder versions -->
 
   <version author="Nigel Cliffe" version="1.5" lastUpdated="2025/03/14"/>
+  <version author="Pierre Billon, pierre.bln@me.com" version="1.6" lastUpdated="2026/07/27"/>
   <!--  added Zimo Scripting variables, CV837, CV843, CV981-1019  new pane for Zimo Scripting,  added decoder MS591N18, and removed comments to enable MS540E4-->
   
   <decoder>
@@ -222,7 +223,7 @@
       </model>
 
 
-      <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14">
+      <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14" connector="E24">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
