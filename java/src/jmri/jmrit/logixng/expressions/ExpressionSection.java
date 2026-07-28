@@ -24,12 +24,12 @@ public class ExpressionSection extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Section> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Section.class, InstanceManager.getDefault(SectionManager.class), this);
+                    this, Section.class, InstanceManager.getDefault(SectionManager.class));
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
     private final LogixNG_SelectEnum<SectionState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, SectionState.values(), SectionState.Free, this);
+            new LogixNG_SelectEnum<>(this, SectionState.values(), SectionState.Free);
 
     public ExpressionSection(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -157,7 +157,6 @@ public class ExpressionSection extends AbstractDigitalExpression
 
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -167,7 +166,6 @@ public class ExpressionSection extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

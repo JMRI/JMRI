@@ -18,7 +18,7 @@ public class ExecuteAction extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<MaleDigitalActionSocket> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, MaleDigitalActionSocket.class, InstanceManager.getDefault(DigitalActionManager.class), this);
+                    this, MaleDigitalActionSocket.class, InstanceManager.getDefault(DigitalActionManager.class));
 
     public ExecuteAction(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -106,7 +106,6 @@ public class ExecuteAction extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(PROPERTY_LAST_RESULT_CHANGED, this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -116,7 +115,6 @@ public class ExecuteAction extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(PROPERTY_LAST_RESULT_CHANGED, this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

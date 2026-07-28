@@ -24,7 +24,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private TurnoutState _turnoutState = TurnoutState.Thrown;
@@ -232,7 +232,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownState", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -242,7 +241,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownState", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

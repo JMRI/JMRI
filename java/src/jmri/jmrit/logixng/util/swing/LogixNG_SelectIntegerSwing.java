@@ -32,7 +32,6 @@ public class LogixNG_SelectIntegerSwing {
     private JPanel _panelTable;
     private JTextField _referenceTextField;
     private BeanSelectPanel<Memory> _memoryPanel;
-    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -60,11 +59,9 @@ public class LogixNG_SelectIntegerSwing {
         _panelTable = _selectTableSwing.createPanel(selectInteger.getSelectTable());
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
-        _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -103,7 +100,6 @@ public class LogixNG_SelectIntegerSwing {
         _valueTextField.setText(_formatterParserValidator.format(selectInteger.getValue()));
         _referenceTextField.setText(selectInteger.getReference());
         _memoryPanel.setDefaultNamedBean(selectInteger.getMemory());
-        _listenToMemoryCheckBox.setSelected(selectInteger.getListenToMemory());
         _localVariableTextField.setText(selectInteger.getLocalVariable());
         _formulaTextField.setText(selectInteger.getFormula());
 
@@ -173,7 +169,6 @@ public class LogixNG_SelectIntegerSwing {
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
                 selectInteger.setAddressing(NamedBeanAddressing.Memory);
                 selectInteger.setMemory(_memoryPanel.getNamedBean());
-                selectInteger.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectInteger.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectInteger.setLocalVariable(_localVariableTextField.getText());
@@ -197,7 +192,6 @@ public class LogixNG_SelectIntegerSwing {
         _valueTextField.setEnabled(enabled);
         _referenceTextField.setEnabled(enabled);
         _memoryPanel.getBeanCombo().setEnabled(enabled);
-        _listenToMemoryCheckBox.setEnabled(enabled);
         _localVariableTextField.setEnabled(enabled);
         _formulaTextField.setEnabled(enabled);
         _selectTableSwing.setEnabled(enabled);
