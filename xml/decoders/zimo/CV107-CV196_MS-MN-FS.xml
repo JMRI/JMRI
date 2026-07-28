@@ -1560,7 +1560,7 @@
     <label xml:lang="cs">Zastavení řízené vzdáleností</label>
     <label xml:lang="de">Distanzgesteuerter Halt</label>
   </variable>
-  <variable CV="141" item="Distance controlled stopping Distance" default="0" exclude="">
+  <variable CV="141" item="Distance controlled stopping Distance" default="20" exclude="">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping Distance</label>
     <label xml:lang="it">Controllo Distanza di Fermata</label>
@@ -1683,17 +1683,17 @@
     <tooltip xml:lang="de">Ausgleich des Getriebe-Leerganges bei Richtungsumkehr</tooltip>
     <tooltip xml:lang="cs">Kompenzace vůle převodovky při změně směru</tooltip>
    </variable>
-  <variable CV="147" default="0" item="EMF Option 3">
+  <variable CV="147" default="100" item="EMF Option 3">
     <decVal min="0" max="255"/>
     <label>Integral Value of PID regulation</label>
     <label xml:lang="de">Integralwert der PID - Motorregelung</label>
   </variable>
-  <variable CV="148" default="0" item="EMF Option 4">
+  <variable CV="148" default="100" item="EMF Option 4">
     <decVal min="0" max="255"/>
     <label>Differential value of PID regulation</label>
     <label xml:lang="de">Differentialwert der PID - Motorregelung</label>
   </variable>
-  <variable CV="149" default="0" item="EMF Option 5">
+  <variable CV="149" default="100" item="EMF Option 5">
     <decVal min="0" max="255"/>
     <label>Proportional value of PID regulation</label>
     <label xml:lang="de">Proportionalwert der PID - Motorregelung</label>
