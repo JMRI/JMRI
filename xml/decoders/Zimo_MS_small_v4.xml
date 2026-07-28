@@ -471,7 +471,10 @@
 
       
 
-      <model model="MS950 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="9">
+
+
+
+      <model model="MS950 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="14" numFns="14" productID="9">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -512,18 +515,26 @@
           <label xml:lang="de">FA8</label>
           <label xml:lang="cs">FV 8</label>
         </output>
-        <output name="11" label="FO 9 (+5V)">
-          <label xml:lang="de">FA9 (+5V)</label>
-          <label xml:lang="cs">FV 9 (+5V)</label>
+        <output name="11" label="FO 9">
+          <label xml:lang="de">FA9</label>
+          <label xml:lang="cs">FV 9</label>
         </output>
         <output name="12" label="FO 10 (+5V)">
           <label xml:lang="de">FA10 (+5V)</label>
           <label xml:lang="cs">FV 10 (+5V)</label>
         </output>
+        <output name="13" label="FO 11 (+5V)">
+          <label xml:lang="de">FA11 (+5V)</label>
+          <label xml:lang="cs">FV 11 (+5V)</label>
+        </output>
+        <output name="14" label="FO 12 (+5V)">
+          <label xml:lang="de">FA12 (+5V)</label>
+          <label xml:lang="cs">FV 12 (+5V)</label>
+        </output>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
 
-      <model model="MS990 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="7">
+      <model model="MS990 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="15" numFns="14" productID="7">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -564,23 +575,34 @@
           <label xml:lang="de">FA8</label>
           <label xml:lang="cs">FV 8</label>
         </output>
-        <output name="11" label="FO 9 (+5V)">
-          <label xml:lang="de">FA9 (+5V)</label>
-          <label xml:lang="cs">FV 9 (+5V)</label>
+        <output name="11" label="FO 9">
+          <label xml:lang="de">FA9</label>
+          <label xml:lang="cs">FV 9</label>
         </output>
-        <output name="12" label="FO 10 (+5V)">
-          <label xml:lang="de">FA10 (+5V)</label>
-          <label xml:lang="cs">FV 10 (+5V)</label>
+        <output name="12" label="FO 10">
+          <label xml:lang="de">FA10</label>
+          <label xml:lang="cs">FV 10</label>
+        </output>
+        <output name="13" label="FO 11">
+          <label xml:lang="de">FA11</label>
+          <label xml:lang="cs">FV 11</label>
+        </output>
+        <output name="14" label="FO 12">
+          <label xml:lang="de">FA12</label>
+          <label xml:lang="cs">FV 12</label>
+        </output>
+        <output name="15" label="FO 13">
+          <label xml:lang="de">FA13</label>
+          <label xml:lang="cs">FV 13</label>
         </output>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-
 
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV7-CV97_MS-MN-FS.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV107-CV196_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV107-CV199_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV201-CV249_MS-MN-FS.xml"/>
 
 

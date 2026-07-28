@@ -310,7 +310,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV7-CV97_MS-MN-FS.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV107-CV196_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV107-CV199_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV201-CV249_MS-MN-FS.xml"/>
 
 

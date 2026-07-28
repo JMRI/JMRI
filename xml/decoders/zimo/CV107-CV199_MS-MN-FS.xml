@@ -5,7 +5,7 @@
 <!-- version 1.1   26 May 2023  Ronald Kuhn.   Added CV133, 192, 195-199 for MS- and MN-series.  -->
 <!-- version 1.2   22 June 2023  Ronald Kuhn.   Added some german translations.  -->
 <!-- version 1.3,  05 April 2024  Ronald Kuhn.   very small correction by CV154 bit0  -->
-<!-- version 1.4  28 July 2026  Pierre Billon - renamed from CV100-CV199_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV107-196) -->
+<!-- version 1.4  28 July 2026  Pierre Billon - renamed from CV100-CV199_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV107-199). Added CV197-199, the effects for FO11-FO13 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -2648,6 +2648,60 @@
     <label xml:lang="it">Comportamento uscita Funzione 10</label>
     <label xml:lang="cs">Chování funkčního výstupu 10</label>
     <label xml:lang="de">FA10 Verhalten</label>
+  </variable>
+  <variable CV="197" mask="VVVVVVXX" item="Output 13 effect generated" minOut="13">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 11 effect generated</label>
+    <label xml:lang="fr">Effet généré sur la sortie de fonction 11</label>
+    <label xml:lang="de">FA11 Effekt</label>
+  </variable>
+  <variable CV="197" mask="XXXXXXVV" item="Output 13 behavior" minOut="13">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 11 behavior</label>
+    <label xml:lang="fr">Comportement de la sortie de fonction 11</label>
+    <label xml:lang="de">FA11 Verhalten</label>
+  </variable>
+  <variable CV="198" mask="VVVVVVXX" item="Output 14 effect generated" minOut="14">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 12 effect generated</label>
+    <label xml:lang="fr">Effet généré sur la sortie de fonction 12</label>
+    <label xml:lang="de">FA12 Effekt</label>
+  </variable>
+  <variable CV="198" mask="XXXXXXVV" item="Output 14 behavior" minOut="14">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 12 behavior</label>
+    <label xml:lang="fr">Comportement de la sortie de fonction 12</label>
+    <label xml:lang="de">FA12 Verhalten</label>
+  </variable>
+  <variable CV="199" mask="VVVVVVXX" item="Output 15 effect generated" minOut="15">
+     <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light4_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
+    </enumVal>
+    <label>Function output 13 effect generated</label>
+    <label xml:lang="fr">Effet généré sur la sortie de fonction 13</label>
+    <label xml:lang="de">FA13 Effekt</label>
+  </variable>
+  <variable CV="199" mask="XXXXXXVV" item="Output 15 behavior" minOut="15">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
+    <label>Function output 13 behavior</label>
+    <label xml:lang="fr">Comportement de la sortie de fonction 13</label>
+    <label xml:lang="de">FA13 Verhalten</label>
   </variable>
 
 <!-- not used at now (2023-05-26) Ronald Kuhn
