@@ -123,6 +123,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     public void initComponents(CanSystemConnectionMemo memo, boolean launchEvTable) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
+        if ( tc == null ) {
+            throw new IllegalArgumentException("TC Should not be null for memo.getTrafficController() " + memo.getUserName()
+            + "" + memo.getTrafficController() + " on GUI Thread " + ThreadingUtil.isGUIThread());
+        }
         decodePane = new CbusConsoleDecodeOptionsPane(this);
         if (launchEvTable){
             memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
@@ -312,6 +316,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         protected CbusHighlightPainter(Color color) {
             super(color);
         }
+    }
+
+    protected String getMemoUserName(){
+        return memo.getUserName();
     }
 
     /**

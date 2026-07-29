@@ -35,7 +35,8 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
         _mainPane = mainPane;
         // set file chooser to a default
         logFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
-        logFileChooser.setSelectedFile(new File(FileUtil.getUserFilesPath()+"monitorLog.txt"));
+        logFileChooser.setSelectedFile(new File(FileUtil.getUserFilesPath()
+            + mainPane.getMemoUserName() + "_monitorLog.txt"));
 
         startStopLogButton = new JToggleButton();
         openLogFileButton = new JButton();
