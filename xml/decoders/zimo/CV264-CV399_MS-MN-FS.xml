@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1.0  28 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block -->
+<!-- version 1.0  28 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block. Added CV264, the variable low voltage -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="264" item="Variable low voltage" default="15" include="7,9">
+    <decVal min="10" max="158"/>
+    <label>Variable low voltage (large scale only)</label>
+    <label xml:lang="fr">Basse tension variable (grande échelle uniquement)</label>
+    <label xml:lang="de">Variable Niederspannung (nur Großbahn)</label>
+    <tooltip>Low voltage in tenths of a volt, so 10 to 158 means 1.0 V to 15.8 V. Large scale and some special decoders only.</tooltip>
+    <tooltip xml:lang="fr">Basse tension en dixièmes de volt : 10 à 158 correspond à 1,0 V à 15,8 V. Grande échelle et certains décodeurs spéciaux uniquement.</tooltip>
+    <tooltip xml:lang="de">Niederspannung in Zehntelvolt, 10 bis 158 entspricht 1,0 V bis 15,8 V. Nur Großbahn- und einige Spezial-Decoder.</tooltip>
+  </variable>
+
   <variable CV="309" item="Brake key" default="0">
     <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F1-F28.xml"/>
     <label>Brake key</label>

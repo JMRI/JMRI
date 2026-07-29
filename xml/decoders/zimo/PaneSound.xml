@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 2.0 - Pierre Billon - 2026-07-29 - add switch input 4 playback time (CV392) -->
 <!-- version 1.9 - Ronald Kuhn - small visual improvement -->
 <!-- version 1.8 - Ronald Kuhn - add CVs from v40+ -->
 <!-- version 1.7 - Ronald Kuhn - add CVs from v37+ -->
@@ -21,7 +22,6 @@
 <!-- version 1.2, Nigel Cliffe, added "Standing Sound on premature shutdown" and "Chuff rate at higher speed steps" -->
 <!-- version 1.1, Nigel Cliffe, added "Steam chuff frequency at speed step 1" -->
 <!-- version 1, Mark Waters - for Unified Software -->
-<!-- version 1.1 - Pierre Billon - 2026-07-29 - add switch input 4 playback time (CV392) -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Sound</name>
   <name xml:lang="it">Suono</name>

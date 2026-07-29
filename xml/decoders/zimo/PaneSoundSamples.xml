@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- version 1 - for Unified Software -->
-<!-- version 1.1 - Pierre Billon - 2026-07-29 - add switch input 4 sound sample (CV671) -->
-<!-- version 1.2 - Pierre Billon - 2026-07-29 - add the six sound connections (CV726-CV737) -->
 <!-- Mark Waters, 11 Mar 2016 -->
 <!-- From Version 32 firmware -->
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added german translation.   Ronald Kuhn, 26 Apr 2019 -->
   <!-- v1.2  added CV's 593-598 Nigel Cliffe 14 Feb 2022-->
+  <!-- v1.3  added switch input 4 sound sample (CV671) and the six sound connections (CV726-CV737), Pierre Billon, 29 July 2026 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Sound Samples</name>
     <name xml:lang="it">Livelli Suono</name>

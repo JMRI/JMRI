@@ -3,6 +3,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 1.2 - Nigel Cliffe, added CV370 -->
+<!-- version 1.3 - Pierre Billon - 2026-07-29 - add CV838 and CV844, the pitch extensions -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Sound - Electric Loco</name>
   <name xml:lang="it">Suoni - Elettrico</name>
@@ -30,6 +31,7 @@
       <!--label>Sound pitch at maximum speed</label-->
       <!--label xml:lang="it">Volume suono a velocità Massima</label-->
     </display>
+    <display item="Thyristor control: Speed step for maximum pitch"/>
     <display item="Thyristor control: Speed step for medium speed">
       <!--label>Speed step for medium speed</label-->
       <!--label xml:lang="it">Step Velocità a velocità Media</label-->
@@ -97,6 +99,7 @@
       <!--label>Dependence of the pitch on speed</label-->
       <!--label xml:lang="it">Dipendenza del pitch da velocità</label-->
     </display>
+    <display item="Electric Engine Motor sound: further pitch increase"/>
     
     <display item="Volume dependent on Speed">
     </display>

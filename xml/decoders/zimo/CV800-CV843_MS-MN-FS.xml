@@ -6,6 +6,22 @@
 <!-- version 1.3  28 July 2026  Pierre Billon - split - the shared CVs stay here, the sound CVs moved to CV738-CV836_MS-FS.xml -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <!-- CV839 and CV842 report the software and bootloader patch versions. They are read-only
+       build identifiers, of use only when reporting a fault to ZIMO, so they are deliberately
+       NOT placed on any pane - defined here purely so the values can be read when needed. -->
+  <variable CV="839" item="Software patch version" readOnly="yes" default="0">
+    <decVal min="0" max="255"/>
+    <label>Software patch version</label>
+    <label xml:lang="fr">Version du correctif logiciel</label>
+    <label xml:lang="de">Software-Patch-Version</label>
+  </variable>
+  <variable CV="842" item="Bootloader patch version" readOnly="yes" default="0">
+    <decVal min="0" max="255"/>
+    <label>Bootloader patch version</label>
+    <label xml:lang="fr">Version du correctif du bootloader</label>
+    <label xml:lang="de">Bootloader-Patch-Version</label>
+  </variable>
+
   
 
   

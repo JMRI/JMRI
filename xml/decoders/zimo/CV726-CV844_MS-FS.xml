@@ -3,6 +3,25 @@
 <!-- version 1.0  28 July 2026  Pierre Billon - split out of CV738-CV843_MS-MN-FS.xml: switch-input sound samples, random sounds Z1-Z8, steam impact, turbocharger and motor start sound -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="838" item="Thyristor control: Speed step for maximum pitch" default="255">
+    <decVal min="1" max="255"/>
+    <label>Thyristor control: Speed step for maximum pitch</label>
+    <label xml:lang="fr">Thyristor : cran de vitesse pour la hauteur maximale</label>
+    <label xml:lang="de">Thyristoren: Fahrstufe für maximale Tonhöhe</label>
+    <tooltip>Internal speed step (1 - 255) at which the pitch set in CV #291 applies.</tooltip>
+    <tooltip xml:lang="fr">Cran de vitesse interne (1 - 255) auquel s'applique la hauteur définie en CV #291.</tooltip>
+    <tooltip xml:lang="de">Interne Fahrstufe (1 - 255), fuer die die Tonhöhe nach CV #291 gilt.</tooltip>
+  </variable>
+  <variable CV="844" item="Electric Engine Motor sound: further pitch increase" default="0">
+    <decVal min="0" max="255"/>
+    <label>Electric Engine Motor sound: further pitch increase</label>
+    <label xml:lang="fr">Moteur électrique : augmentation supplémentaire de la hauteur</label>
+    <label xml:lang="de">E-Motor Sound: weitere Tonhöhen-Steigerung</label>
+    <tooltip>Extends the frequency increase set in CV #299. 0 = no further increase, 1 = CV #299 x 1.01, 2 to 254 = x 1.02 to x 3.54, 255 = x 3.55.</tooltip>
+    <tooltip xml:lang="fr">Prolonge l'augmentation de fréquence définie en CV #299. 0 = aucune, 1 = CV #299 x 1,01, 2 à 254 = x 1,02 à x 3,54, 255 = x 3,55.</tooltip>
+    <tooltip xml:lang="de">Erweitert die Frequenzsteigerung nach CV #299. 0 = keine weitere, 1 = CV #299 x 1,01, 2 bis 254 = x 1,02 bis x 3,54, 255 = x 3,55.</tooltip>
+  </variable>
+
   <variable CV="726" item="Connection 1 sound" default="0">
     <decVal min="0" max="255"/>
     <label>Connection 1 sound number</label>

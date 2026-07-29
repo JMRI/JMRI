@@ -10,6 +10,7 @@
 <!-- version 1.5 - Ronald Kuhn - add value for effect dimming and SUSI usage -->
 <!-- version 1.6 - Ronald Kuhn - add value for Lights flash with switchgear and a few visual correction -->
 <!-- version 2.0 - Ronald Kuhn - new arrangement of the options per grid -->
+<!-- version 2.1 - Pierre Billon - 2026-07-29 - add the pantograph settings, CV186-CV189 -->
 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Function Output</name>
@@ -293,6 +294,42 @@
              <display item="Ditch Light with Horn"/>
             </griditem>
           </grid>
+     </row>
+     <row>
+       <column>
+         <label>
+          <text>&lt;html&gt;&lt;b&gt;Pantographs&lt;/b&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;b&gt;Pantographes&lt;/b&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;b&gt;Stromabnehmer&lt;/b&gt;&lt;/html&gt;</text>
+         </label>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 1 function key"/>
+         <display item="Panto 1 direction"/>
+         <display item="Panto 1 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 2 function key"/>
+         <display item="Panto 2 direction"/>
+         <display item="Panto 2 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 3 function key"/>
+         <display item="Panto 3 direction"/>
+         <display item="Panto 3 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 4 function key"/>
+         <display item="Panto 4 direction"/>
+         <display item="Panto 4 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+       </column>
      </row>
          <label>
           <text> </text>
