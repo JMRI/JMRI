@@ -8,7 +8,7 @@
 <!-- version 1.3 22 June 2023  Ronald Kuhn - added german translation.   -->
 <!-- version 1.4 02 May 2024  Ronald Kuhn - new decoder excluded   -->
 <!-- version 1.5  28 July 2026  Pierre Billon - renamed from CV1-CV99_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV7-97). Excluded MS491 and MS591N18 from mfx, both stated non-mfx-able by ZIMO -->
-<!-- version 1.6  29 July 2026  Pierre Billon - added CV99 (RailCom ID 7 transmissions), CV100 and CV101 (asymmetry voltage and its correction factor) and CV102 (SUSI slave 3); renamed from CV7-CV97_MS-MN-FS.xml to match the range now held -->
+<!-- version 1.6  29 July 2026  Pierre Billon - added CV99 (RailCom ID 7 transmissions), CV100 and CV101 (asymmetry voltage and its correction factor) and CV102 (SUSI slave 3); corrected the CV9 default from 0 to 55; renamed from CV7-CV97_MS-MN-FS.xml to match the range now held -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -34,12 +34,21 @@
     <label xml:lang="nl">Fabrikant ID: </label>
   </variable>
 
-  <variable item="EMF Option 1" CV="9" default="0" >
+  <!-- Default 55, not 0: ZIMO state "the default value of 55 represents a medium setting", and
+       55 is the most common value across read decoders. The range is left unbounded because the
+       valid values are not contiguous - 0, then 11 to 99, then 100 to 199 for the coreless motor
+       settings from software 4.215 - so any single min/max would either block a legal value or
+       admit an illegal one. -->
+  <variable item="EMF Option 1" CV="9" default="55" >
     <decVal/>
     <label>Motor Frequency and EMF sample Rate</label>
+    <label xml:lang="fr">Fréquence moteur et taux d'échantillonnage FEM</label>
     <label xml:lang="it">Frequenza Motore e Freq.Campionamento EMF</label>
     <label xml:lang="cs">Frekvence motoru a EMF vzorkovací míra</label>
     <label xml:lang="de">Motoransteuerungsperiode bzw. – frequenz und EMK-Abtastrate</label>
+    <tooltip>Tens digit 1-4 samples slower than default (less noise), 6-9 faster (against juddering); ones digit 1-4 shortens the sampling time, 5-9 lengthens it. Hundreds digit 1 selects the coreless motor settings.</tooltip>
+    <tooltip xml:lang="fr">Le chiffre des dizaines, 1 à 4, échantillonne plus lentement que par défaut (moins de bruit), 6 à 9 plus vite (contre les à-coups) ; le chiffre des unités, 1 à 4, raccourcit le temps d'échantillonnage, 5 à 9 l'allonge. Le chiffre des centaines à 1 sélectionne les réglages pour moteurs sans fer.</tooltip>
+    <tooltip xml:lang="de">Zehnerstelle 1-4 tastet langsamer als der Standard ab (weniger Geräusch), 6-9 schneller (gegen Ruckeln); Einerstelle 1-4 verkürzt die Abtastzeit, 5-9 verlängert sie. Hunderterstelle 1 wählt die Einstellungen für eisenlose Motoren.</tooltip>
   </variable>
 
   <variable item="Motorola Subsequent addresses" CV="10" default="0">
