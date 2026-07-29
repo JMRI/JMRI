@@ -916,8 +916,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             car.getKernel().getSize(),
                             car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
         }
-        // does train terminate into staging?
-        if (getTerminateStagingTrack() != null) {
+        // does train terminate into staging? and car not departing staging?
+        if (getTerminateStagingTrack() != null && !car.getTrack().getTrackType().equals(Track.STAGING)) {
             log.debug("Train terminates into staging track ({})", getTerminateStagingTrack().getName());
             // bias cars to staging
             if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
@@ -946,7 +946,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         } else {
-            // train doesn't terminate into staging
+            // train doesn't terminate into staging or the car is departing staging
             if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                 log.debug("Car ({}) has home division ({}) and load type empty", car.toString(), car.getDivisionName());
                 if (car.getTrack().isYard() && car.getTrack().getDivision() == car.getDivision()) {
@@ -1058,7 +1058,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         addLine(FIVE,
                 Bundle.getMessage("buildSearchForSpur", car.toString(), car.getTypeName(), car.getTypeExtensions(),
-                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
+                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackTypeName(), car.getLocationName(),
                         car.getTrackName()));
         if (car.getKernel() != null) {
             addLine(SEVEN,
@@ -1355,7 +1355,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
 
         addLine(FIVE,
                 Bundle.getMessage("buildCarRoutingBegins", car.toString(), car.getTypeName(),
-                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
+                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackTypeName(), car.getLocationName(),
                         car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
@@ -1672,7 +1672,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         addLine(FIVE,
                 Bundle.getMessage("buildFindDestinationForCar", car.toString(), car.getTypeName(),
-                        car.getTypeExtensions(), car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(),
+                        car.getTypeExtensions(), car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackTypeName(),
                         car.getLocationName(), car.getTrackName()));
         if (car.getKernel() != null) {
             addLine(SEVEN, Bundle.getMessage("buildCarLeadKernel", car.toString(), car.getKernelName(),
