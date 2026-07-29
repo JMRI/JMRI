@@ -399,7 +399,9 @@
     <tooltip xml:lang="cs">Viz návod!</tooltip>
     <tooltip xml:lang="de">Handbuch beachten!</tooltip>
   </variable>
-  <variable item="Total volume" CV="266" default="64">
+  <!-- Superseded for software version 5: ZIMO moved the distortion-free reference from 64 to 65.
+       The version 5 replacement follows this variable. -->
+  <variable item="Total volume" CV="266" default="64" exclude="MS Sound (version 5+)">
     <decVal min="0" max="255"/>
     <label>Total volume</label>
     <label xml:lang="it">Volume generale</label>
@@ -408,6 +410,18 @@
     <tooltip>64 is highest distortion-free play back, INC=5</tooltip>
     <tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
     <tooltip xml:lang="cs">Výchozí hodnota "64" udává nejhlasitější možnou nezkreslenou reprodukci. Použitelné hodnoty jsou asi do "100".</tooltip>
+  </variable>
+
+  <variable item="Total volume" CV="266" default="65" include="MS Sound (version 5+)">
+    <decVal min="0" max="255"/>
+    <label>Total volume</label>
+    <label xml:lang="fr">Volume général</label>
+    <label xml:lang="it">Volume generale</label>
+    <label xml:lang="de">Gesamtlautstärke</label>
+    <label xml:lang="cs">Celková hlasitost</label>
+    <tooltip>0 to 255 gives 0 to 400 %; 65 is 100 %, the highest distortion-free play back. INC=5</tooltip>
+    <tooltip xml:lang="fr">0 à 255 donne 0 à 400 % ; 65 correspond à 100 %, la reproduction la plus forte sans distorsion. INC=5</tooltip>
+    <tooltip xml:lang="de">0 bis 255 ergibt 0 bis 400 %; der Wert 65 entspricht 100 % und damit der lautest-möglichen verzerrungsfreien Wiedergabe. INC=5</tooltip>
   </variable>
   <variable CV="266" item="Zimo Sound Setting 1">
     <decVal/>

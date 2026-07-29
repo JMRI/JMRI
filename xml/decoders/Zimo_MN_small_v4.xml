@@ -313,7 +313,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV7-CV97_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV7-CV102_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV107-CV199_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV201-CV249_MS-MN-FS.xml"/>
 
@@ -419,7 +419,7 @@
         <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
 
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV264-CV399_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV258-CV399_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV499_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV512_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV800-CV843_MS-MN-FS.xml"/>

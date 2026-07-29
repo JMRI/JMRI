@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 2 - Pierre Billon - 2026-07-29 - added the CV99 ID 7 transmission switches. -->
 <!-- version 1 - Pierre Billon - 2026-07-28 - RailCom pane for the MS, MN and FS decoders. -->
 <!--   Split from PaneRailcom.xml, which is shared with 139 MX definitions: CV28 bit 6 -->
 <!--   (high voltage RailCom) exists only on the large scale MS decoders, and bit 7 is -->
@@ -20,5 +21,17 @@
       <text> </text>
     </label>
     <display item="RailCom speed reporting method"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>ID 7 transmissions</text>
+      <text xml:lang="fr">Émissions ID 7</text>
+      <text xml:lang="de">ID-7-Aussendungen</text>
+    </label>
+    <display item="RailCom ID 7 deactivate speed"/>
+    <display item="RailCom ID 7 deactivate revolutions"/>
+    <display item="RailCom ID 7 deactivate temperature"/>
+    <display item="RailCom ID 7 deactivate track voltage"/>
   </column>
 </pane>

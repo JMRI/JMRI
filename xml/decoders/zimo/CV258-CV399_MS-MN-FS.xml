@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.0  28 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block. Added CV264, the variable low voltage -->
+<!-- version 1.1  29 July 2026  Pierre Billon - added CV258 (read out CV #8) and CV259 (read the loco set, sound decoders only); renamed from CV264-CV399_MS-MN-FS.xml to match the range now held -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <!-- CV #258 arrived in software 4.254 and is left ungated so it serves the version 4
+       definitions too. CV #259 is new in 5.29 and reads the sound project's loco set, so it
+       is limited to the sound decoders. Both are read-only diagnostics. -->
+
+  <variable CV="258" item="Read out CV8" readOnly="yes" default="0">
+    <decVal min="0" max="255"/>
+    <label>Manufacturer ID, read from CV #8</label>
+    <label xml:lang="fr">Identifiant du fabricant, lu dans le CV #8</label>
+    <label xml:lang="de">Herstellerkennung, aus CV #8 gelesen</label>
+    <tooltip>Returns the value of CV #8, which cannot always be read directly because writing it triggers a decoder reset.</tooltip>
+    <tooltip xml:lang="fr">Renvoie la valeur du CV #8, qui n'est pas toujours lisible directement car son écriture déclenche une réinitialisation du décodeur.</tooltip>
+    <tooltip xml:lang="de">Liefert den Wert von CV #8, der nicht immer direkt lesbar ist, da ein Schreibzugriff einen Decoder-Reset auslöst.</tooltip>
+  </variable>
+
+  <variable CV="259" item="Read loco set" readOnly="yes" default="0" include="MS Sound (version 5+)">
+    <decVal min="0" max="255"/>
+    <label>Loco set in use, read from CV #265</label>
+    <label xml:lang="fr">Jeu de locomotive utilisé, lu dans le CV #265</label>
+    <label xml:lang="de">Verwendeter Loco-Set, aus CV #265 gelesen</label>
+    <tooltip>Shows the last loco set written to CV #265, so the selection within a multi-locomotive sound project can be checked.</tooltip>
+    <tooltip xml:lang="fr">Indique le dernier jeu de locomotive écrit dans le CV #265, ce qui permet de vérifier la sélection dans un projet sonore multi-locomotives.</tooltip>
+    <tooltip xml:lang="de">Zeigt den zuletzt in CV #265 geschriebenen Loco-Set, sodass die Auswahl innerhalb eines Mehrlok-Soundprojekts geprüft werden kann.</tooltip>
+  </variable>
+
   <variable CV="264" item="Variable low voltage" default="15" include="7,9">
     <decVal min="10" max="158"/>
     <label>Variable low voltage (large scale only)</label>

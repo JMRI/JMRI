@@ -6,6 +6,7 @@
 <!-- version 1.2   22 June 2023  Ronald Kuhn.   Added some german translations.  -->
 <!-- version 1.3,  05 April 2024  Ronald Kuhn.   very small correction by CV154 bit0  -->
 <!-- version 1.4  28 July 2026  Pierre Billon - renamed from CV100-CV199_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV107-199). Added CV197-199, the effects for FO11-FO13, and CV186-189, Panto 1-4 -->
+<!-- version 1.5  29 July 2026  Pierre Billon - superseded CV151 and CV157 for the software version 5 families: CV151 becomes a 0-99 value, CV157 runs to F28 with 29 selecting F0 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -1699,7 +1700,10 @@
     <label xml:lang="de">Proportionalwert der PID - Motorregelung</label>
   </variable>
 
-  <variable CV="151" item="Advanced Group 1 Option 1" default="0" exclude="">
+  <!-- Superseded for software version 5: ZIMO redefined CV #151 as a two-digit value (0-99), the
+       tens digit reducing the motor regulation in a consist. The version 5 replacement follows
+       this variable; this enumeration is kept unchanged for the version 4 decoders. -->
+  <variable CV="151" item="Advanced Group 1 Option 1" default="0" exclude="MS Sound (version 5+),MN Non-Sound (version 5+)">
     <enumVal>
       <enumChoice choice="No Braking">
         <choice>No Braking</choice>
@@ -1769,6 +1773,16 @@
     <tooltip>Motor braked by shorting output</tooltip>
     <tooltip xml:lang="de">Reduziert die Ausregelung des Motors auf 10 - 90 % des Wertes laut CV #58.</tooltip>
     <tooltip xml:lang="cs">Snižuje regulaci motoru na 10 – 90 %.</tooltip>
+  </variable>
+
+  <variable CV="151" item="Advanced Group 1 Option 1" default="0" include="MS Sound (version 5+),MN Non-Sound (version 5+)">
+    <decVal min="0" max="99"/>
+    <label>Consist motor control reduction / motor brake</label>
+    <label xml:lang="fr">Réduction de la régulation moteur en UM / frein moteur</label>
+    <label xml:lang="de">Reduktion der Motorregelung im Consist / Motorbremse</label>
+    <tooltip>Tens digit 1 to 9 reduces the motor control to 10 % - 90 % of CV #58 while the consist key is active. The ones digit is the motor brake, which ZIMO documents from software version 6.00 on.</tooltip>
+    <tooltip xml:lang="fr">Le chiffre des dizaines, de 1 à 9, réduit la régulation moteur à 10 % - 90 % du CV #58 tant que la touche d'UM est active. Le chiffre des unités est le frein moteur, documenté par ZIMO à partir de la version 6.00.</tooltip>
+    <tooltip xml:lang="de">Die Zehnerstelle 1 bis 9 reduziert die Motorregelung auf 10 % - 90 % des Wertes aus CV #58, solange die Consist-Taste aktiv ist. Die Einerstelle ist die Motorbremse, von ZIMO ab Software-Version 6.00 dokumentiert.</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 7" mask="XXXXXXXV" default="0" minOut="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -2196,7 +2210,10 @@
     <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
     <label xml:lang="de">ABV deaktivieren</label>
   </variable>
-  <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" tooltip="Disables ABC and HLU Signal Control">
+  <!-- Superseded for software version 5: the choice of function key runs to F28, with 29 selecting
+       F0. The version 5 replacement follows this variable; this one stops at F19 and is kept for
+       the version 4 decoders. -->
+  <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" tooltip="Disables ABC and HLU Signal Control" exclude="MS Sound (version 5+),MN Non-Sound (version 5+)">
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>
@@ -2266,6 +2283,109 @@
     <label xml:lang="it">Estensione tasto funzione MAN (disabilita controllo segnale HLU o ABC)</label>
     <label xml:lang="cs">Rozšíření funkční klávesy MAN (zakázání řízení signálem HLU nebo ABC)</label>
     <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
+  </variable>
+
+  <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" include="MS Sound (version 5+),MN Non-Sound (version 5+)">
+    <enumVal>
+      <enumChoice choice="Setting in CV124" value="0">
+        <choice>Setting in CV124</choice>
+        <choice xml:lang="fr">Réglage du CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+      <enumChoice choice="F0" value="29">
+        <choice>F0</choice>
+      </enumChoice>
+    </enumVal>
+    <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
+    <label xml:lang="fr">Touche MAN (désactive le contrôle par signal HLU ou ABC)</label>
+    <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
+    <tooltip>Assigns a function key to the MAN function, for controllers without a dedicated MAN key. Cancels a signal-controlled speed limit or stop.</tooltip>
+    <tooltip xml:lang="fr">Affecte une touche de fonction à la fonction MAN, pour les centrales sans touche MAN dédiée. Annule une limitation de vitesse ou un arrêt commandé par signal.</tooltip>
+    <tooltip xml:lang="de">Weist der MAN-Funktion eine Funktionstaste zu, für Steuergeräte ohne eigene MAN-Taste. Hebt eine signalabhängige Geschwindigkeitsbegrenzung oder einen Halt auf.</tooltip>
   </variable>
   <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="0">
     <enumVal>

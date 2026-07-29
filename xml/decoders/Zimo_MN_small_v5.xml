@@ -330,7 +330,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV7-CV97_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV7-CV102_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV107-CV199_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV201-CV249_MS-MN-FS.xml"/>
 
@@ -436,10 +436,14 @@
         <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
 
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV264-CV399_MS-MN-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV258-CV399_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV499_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV512_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV800-CV843_MS-MN-FS.xml"/>
+      <!-- The scripting block. ZIMO scripts drive function outputs and driving behaviour, not
+           sound, so they belong on a non-sound decoder; no MN definition has carried them
+           before. CV #102 switches this block over to a third SUSI slave. -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV980-CV1019_MS-MN-FS.xml"/>
       <!-- Begin sound-only CVs - not included, MN decoders are non-sound -->
       <!--
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV398_MS-FS.xml"/>
@@ -464,6 +468,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoScripting.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom_MS-MN-FS.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
