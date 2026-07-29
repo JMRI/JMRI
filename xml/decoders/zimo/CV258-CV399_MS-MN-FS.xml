@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.0  28 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block. Added CV264, the variable low voltage -->
-<!-- version 1.1  29 July 2026  Pierre Billon - added CV258 (read out CV #8) and CV259 (read the loco set, sound decoders only); renamed from CV264-CV399_MS-MN-FS.xml to match the range now held -->
+<!-- version 1.1  29 July 2026  Pierre Billon - added CV258 (read out CV #8) and CV259 (read the loco set, sound decoders only); renamed from CV264-CV399_MS-MN-FS.xml to match the range now held; replaced the placeholder English labels on CV348 and CV393 with ZIMO's own wording and completed the French and German -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- CV #258 arrived in software 4.254 and is left ungated so it serves the version 4
@@ -43,6 +43,7 @@
     <label>Brake key</label>
     <label xml:lang="de">Bremstaste</label>
     <label xml:lang="cs">Tlačítko brzdy</label>
+    <label xml:lang="fr">Touche de frein</label>
       <tooltip> </tooltip>
       <tooltip xml:lang="de">Die hier zugewiesene Funktionstaste löst einen Bremsvorgang nach der in CV#349 definierten Bremszeit aus</tooltip>
       <tooltip xml:lang="cs">Které tlačítko spustí brždění po doběš definované v CV349</tooltip>
@@ -54,6 +55,7 @@
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
+        <choice xml:lang="fr">Aucune touche affectée</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -143,6 +145,7 @@
     <label>Fn key driving solo</label>
     <label xml:lang="de">Lokfahrt-Taste</label>
     <label xml:lang="cs">Funkční klávesa pro strojovou jízdu</label>
+    <label xml:lang="fr">Touche de fonction en marche solo</label>
   </variable>
   <variable item="Solo unhindered rpm" CV="348" default="0" mask="XXXXXXXV">
     <enumVal>
@@ -155,11 +158,14 @@
         <choice>limited</choice>
         <choice xml:lang="de">eingeschränkt</choice>
         <choice xml:lang="cs">omezeno</choice>
+        <choice xml:lang="fr">limité</choice>
       </enumChoice>
     </enumVal>
-    <label>Solo unhindered rpm</label>
-    <label xml:lang="de">Verhaltensdefinition für Lokfahrt 1</label>
-    <tooltip>CV348 bit 0</tooltip>
+    <label>Diesel sound rises unlimited at acceleration</label>
+    <label xml:lang="fr">Le son diesel monte sans limite à l'accélération</label>
+    <label xml:lang="de">Dieselsound steigt bei Beschleunigung unbeschränkt an</label>
+    <tooltip>Bit 0 = 1: the diesel sound steps rise unlimitedly at acceleration; otherwise they are limited by speed step, CV #389.</tooltip>
+    <tooltip xml:lang="fr">Bit 0 = 1 : les crans du son diesel montent sans limite à l'accélération ; sinon ils sont limités par le cran de vitesse, CV #389.</tooltip>
     <tooltip xml:lang="de">lässt Diesel-Sound unbeschränkt schnell hochfahren (bit 0)</tooltip>
     <label xml:lang="cs">Strojová jízda omezení otáček</label>
     <tooltip xml:lang="cs">Rychlost přechodu do maximálních otáček spalovacího motoru</tooltip>
@@ -175,11 +181,14 @@
         <choice>reduced</choice>
         <choice xml:lang="de">reduziert</choice>
         <choice xml:lang="cs">sníženo</choice>
+        <choice xml:lang="fr">réduit</choice>
       </enumChoice>
     </enumVal>
-    <label>Solo change momentum</label>
-    <label xml:lang="de">Verhaltensdefinition für Lokfahrt 2</label>
-    <tooltip>CV348 bit 1</tooltip>
+    <label>Reduce acceleration and deceleration times</label>
+    <label xml:lang="fr">Réduire les temps d'accélération et de décélération</label>
+    <label xml:lang="de">Beschleunigungs- und Bremszeit reduzieren</label>
+    <tooltip>Bit 1 = 1: the acceleration and deceleration times of CV #3 and CV #4 are reduced, by the amount set in CV #390.</tooltip>
+    <tooltip xml:lang="fr">Bit 1 = 1 : les temps d'accélération et de décélération des CV #3 et CV #4 sont réduits, de la valeur définie au CV #390.</tooltip>
     <tooltip xml:lang="de">reduziert CV #3, CV #4 (bit 1)</tooltip>
     <label xml:lang="cs">Strojová jízda hybnost</label>
   </variable>
@@ -194,11 +203,14 @@
         <choice>idle</choice>
         <choice xml:lang="de">verschieben</choice>
         <choice xml:lang="cs">Volnoběh</choice>
+        <choice xml:lang="fr">ralenti</choice>
       </enumChoice>
     </enumVal>
-    <label>Solo change idle only</label>
-    <label xml:lang="de">Verhaltensdefinition für Lokfahrt 3</label>
-    <tooltip>CV348 bit 2</tooltip>
+    <label>Play idle sound when driving at low speeds</label>
+    <label xml:lang="fr">Jouer le son de ralenti à basse vitesse</label>
+    <label xml:lang="de">Leerlaufsound bei langsamer Fahrt abspielen</label>
+    <tooltip>Bit 2 = 1: the motor's idle sound is played back when driving at low speeds, while the highest speed step still plays the idle sound set in CV #391.</tooltip>
+    <tooltip xml:lang="fr">Bit 2 = 1 : le son de ralenti du moteur est joué à basse vitesse, le cran de vitesse le plus élevé conservant le son de ralenti défini au CV #391.</tooltip>
     <tooltip xml:lang="de">verschiebt Diesel-Sound-Schwellen nach oben (bit 2)</tooltip>
     <label xml:lang="cs">Strojová jízda volnoběh</label>
     <tooltip xml:lang="cs">Přehrávání zvuku volnoběhu při pomalé jízdě</tooltip>
@@ -208,6 +220,7 @@
     <label>Switch-over parameters for driving solo</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt</label>
     <label xml:lang="cs">Parametry přepínání pro strojovou jízdu</label>
+    <label xml:lang="fr">Paramètres de commutation pour la marche solo</label>
       <tooltip> </tooltip>
       <tooltip xml:lang="de">Auswahl der Maßnahmen, die bei Umschaltung auf Alleinfahrt getroffen werden sollen</tooltip>
       <tooltip xml:lang="cs">Výběr nastavení pro přepnutí do jízda sólo.</tooltip>
@@ -217,11 +230,14 @@
 	<decVal min="0" max="255"/>
     <label>Brake Key Deceleration Rate</label>
     <label xml:lang="cs">Klávesa brzdy míra zpomalení</label>
+    <label xml:lang="fr">Décélération de la touche de frein</label>
+    <label xml:lang="de">Verzögerung der Bremstaste</label>
   </variable>
   <variable CV="349" item="Brake time" default="0" exclude="">
     <decVal/>
     <label>Brake time</label>
     <label xml:lang="de">Bremszeit für Bremstaste</label>
+    <label xml:lang="fr">Durée de freinage</label>
       <tooltip> </tooltip>
       <tooltip xml:lang="de">Bremszeit nach Auslösen der Bremstaste</tooltip>
       <tooltip xml:lang="cs">Doba brždění po uvolnění tlačítka brždění.</tooltip>
@@ -234,16 +250,20 @@
     <label>Second exhaust Fan and -steam</label>
     <label xml:lang="de">2. Rauch-Ventilator und -Heizung</label>
     <label xml:lang="cs">Druhý ventilátor výfuku a -páry</label>
-    <tooltip>CV348 bit 3</tooltip>
+    <label xml:lang="fr">Deuxième ventilateur d'échappement et sa vapeur</label>
+    <tooltip>Bit 3 = 1: deactivates the second smoke fan and heating element with this key, so a diesel loco with two engines runs on one.</tooltip>
+    <tooltip xml:lang="fr">Bit 3 = 1 : désactive le deuxième ventilateur de fumée et sa résistance avec cette touche, une locomotive diesel à deux moteurs ne tournant plus que sur un.</tooltip>
     <tooltip xml:lang="de">Mit CV348 Bit3=1 wird der 2. Rauch-Venti und die Heizung auf dem jeweils höheren Ausgang deaktiviert.</tooltip>
     <tooltip xml:lang="cs">CV348 Bit3=1 deaktivuje druhý ventilátor výfuku a topení na vyšší výkon.</tooltip>
   </variable>
   <variable item="Brake squel suppressed" CV="348" default="0" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Brake squel can be suppressed with switch-over key</label>
+    <label>Suppress brake squeal</label>
     <label xml:lang="de">Bremsenquietschen mit Lokfahrtaste unterdrücken</label>
     <label xml:lang="cs">Skřípění brzdy lze potlačit přepínacím tlačítkem</label>
-    <tooltip>CV348 bit 4</tooltip>
+    <label xml:lang="fr">Le crissement des freins peut être supprimé par la touche de commutation</label>
+    <tooltip>Bit 4 = 1: suppresses the brake squeal while the solo drive key is on.</tooltip>
+    <tooltip xml:lang="fr">Bit 4 = 1 : supprime le crissement des freins tant que la touche de marche solo est active.</tooltip>
     <tooltip xml:lang="de">Wenn CV348 Bit4=1 und Lokfahrtaste eingeschalten, Bremsenquietschen unterdrücken</tooltip>
     <tooltip xml:lang="cs">CV348 Bit4=1 a tlačítko pohonu lokomotivy je zapnuté, tak se potlačí skřípění brzdy</tooltip>
   </variable>
@@ -253,6 +273,7 @@
     <label xml:lang="it">Velocità ventole fumo a velocità costante</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei konst. Fahrt</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při ustálené rychlosti</label>
+    <label xml:lang="fr">Vitesse du ventilateur de fumée à vitesse stabilisée</label>
   </variable>
   <variable CV="352" item="Smoke Fan Speed at Startup and Acceleration" default="128" tooltip="25 to 170">
     <decVal min="25" max="170"/>
@@ -260,6 +281,7 @@
     <label xml:lang="it">Velocità ventole fumo in partenza e accellerazione</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei Beschleunigung</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při rozjezdu</label>
+    <label xml:lang="fr">Vitesse du ventilateur de fumée au démarrage et à l'accélération</label>
   </variable>
   <variable item="Automatic Shut-down of Smoke Generator" CV="353" default="0">
     <decVal min="0" max="252"/>
@@ -267,9 +289,11 @@
     <label xml:lang="it">Spegnimento automatico generatore Fumo</label>
     <label xml:lang="de">Rauchgenerator Laufzeit</label>
     <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
+    <label xml:lang="fr">Arrêt automatique du générateur de fumée</label>
     <tooltip>0 to 252, 25sec per unit</tooltip>
     <tooltip xml:lang="de">0 bis 252, 25 sec pro Einheit</tooltip>
     <tooltip xml:lang="cs">0 až 252, 25 sekund na jednotku</tooltip>
+    <tooltip xml:lang="fr">0 à 252, 25 s par unité</tooltip>
   </variable>
   <variable item="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>
@@ -277,6 +301,7 @@
     <label xml:lang="it">Velocità Ventole da fermo</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei Stillstand</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při stání</label>
+    <label xml:lang="fr">Vitesse du ventilateur à l'arrêt</label>
   </variable>
   
   <variable item="Momentum reduction when driving solo" CV="390" default="0" tooltip="CV390">
@@ -290,38 +315,46 @@
     <label>Ditch Light with Bell</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Glocke spielt</label>
     <label xml:lang="cs">Obrysová světla se zvonem</label>
+    <label xml:lang="fr">Feux de fossé avec cloche</label>
   </variable>
   <variable CV="393" item="Ditch Light with Horn" mask="XXXXXXVX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Ditch Light with Horn</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Horn spielt</label>
     <label xml:lang="cs">Obrysová světla s houkačkou</label>
+    <label xml:lang="fr">Feux de fossé avec trompe</label>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-2" mask="XXXXXVXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>ZIMO Konfig 5-2</label>
-    <label xml:lang="de">Hochgeschwindigkeitsschaltwerk 1</label>
+    <label>High-speed switchgear: use the samples in turn</label>
+    <label xml:lang="fr">Commutateur grande vitesse : utiliser les échantillons à tour de rôle</label>
+    <label xml:lang="de">Hochgeschwindigkeitsschaltwerk: Samples der Reihe nach verwenden</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 1</label>
-      <tooltip>Highspeed switchgear</tooltip>
+      <tooltip>Instead of always starting with the first sample of the high-speed switchgear, use one sample after another.</tooltip>
       <tooltip xml:lang="de">Statt immer mit dem 1.Sample im Hochgeschwindigkeitsschaltwerk zu beginnen, ein Sample nach dem anderen verwenden.</tooltip>
+      <tooltip xml:lang="fr">Au lieu de toujours commencer par le premier échantillon du commutateur grande vitesse, les utiliser l'un après l'autre.</tooltip>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-3" mask="XXXXVXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>ZIMO Konfig 5-3</label>
-    <label xml:lang="de">Hochgeschwindigkeitsschaltwerk 2</label>
+    <label>High-speed switchgear: skip the sample start and end when upshifting</label>
+    <label xml:lang="fr">Commutateur grande vitesse : ignorer le début et la fin de l'échantillon en montant les crans</label>
+    <label xml:lang="de">Hochgeschwindigkeitsschaltwerk: Anfangs- und Endteil des Samples beim Hochschalten überspringen</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 2</label>
-      <tooltip>Highspeed switchgear</tooltip>
+      <tooltip>When upshifting, skip the start and end part of the sample, if loop pointers are set.</tooltip>
       <tooltip xml:lang="de">Hochgeschwindigkeitsschaltwerk beim Hochschalten Anfangs- und Endteil des Samples überspringen (falls Loop Zeiger gesetzt sind).</tooltip>
+      <tooltip xml:lang="fr">En montant les crans, ignorer le début et la fin de l'échantillon si les pointeurs de boucle sont définis.</tooltip>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-4" mask="XXXVXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>ZIMO Konfig 5-4</label>
+    <label>Thyristor 2 do not elevate pitch</label>
+    <label xml:lang="fr">Thyristor 2 : ne pas élever la hauteur du son</label>
     <label xml:lang="de">Thyristor2 Tonhöhe nicht anheben</label>
     <label xml:lang="cs">Tyristor 2 nezvyšuje tón</label>
   </variable>
   <variable CV="393" item="SUSI as In" mask="XXVXXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>SUSI as In</label>
+    <label>SUSI as switch input</label>
+    <label xml:lang="fr">SUSI comme entrée de commutation</label>
     <label xml:lang="de">SUSI als Schalteingang</label>
     <label xml:lang="cs">SUSI jako Vstup</label>
   </variable>
@@ -330,6 +363,7 @@
     <label>Slower Steam Strokes</label>
     <label xml:lang="de">Langsamere Dampfschläge</label>
     <label xml:lang="cs">Pomalé výfuky páry</label>
+    <label xml:lang="fr">Coups de vapeur plus lents</label>
   </variable>
 
   
@@ -344,6 +378,7 @@
         <choice>yes</choice>
         <choice xml:lang="de">ja</choice>
         <choice xml:lang="cs">Ano</choice>
+        <choice xml:lang="fr">oui</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>

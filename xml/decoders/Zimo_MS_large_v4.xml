@@ -33,10 +33,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -93,10 +95,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -175,6 +179,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="1" readOnly="yes" include="1">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -184,6 +190,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="2" readOnly="yes" include="2">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -193,6 +201,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="3" readOnly="yes" include="3">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -202,6 +212,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="4" readOnly="yes" include="4">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -211,6 +223,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="5" readOnly="yes" include="5">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -220,6 +234,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="6" readOnly="yes" include="6">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -229,6 +245,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="7" readOnly="yes" include="7">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -238,6 +256,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="8" readOnly="yes" include="8">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -247,6 +267,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="9" readOnly="yes" include="9">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -256,6 +278,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="10" readOnly="yes" include="10">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -266,6 +290,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="11" readOnly="yes" include="11">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -275,6 +301,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="12" readOnly="yes" include="12">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -284,6 +312,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="13" readOnly="yes" include="13">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -293,6 +323,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="14" readOnly="yes" include="14">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -302,6 +334,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="15" readOnly="yes" include="15">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -314,18 +348,24 @@
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="fr">Identifiant décodeur 2</label>
+        <label xml:lang="de">Decoder-ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="fr">Identifiant décodeur 3</label>
+        <label xml:lang="de">Decoder-ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="fr">Identifiant décodeur 4</label>
+        <label xml:lang="de">Decoder-ID 4</label>
       </variable>
 
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV398_MS-FS.xml"/>

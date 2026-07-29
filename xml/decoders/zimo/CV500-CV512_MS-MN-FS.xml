@@ -12,6 +12,7 @@
   <!-- v1.1   merge in various CV's for Swiss Mapping into correct numerical sequence,  Nigel Cliffe, 24 Nov 2022 -->  
   <!-- v1.2   added german translation,  Ronald Kuhn, 22 June 2023 -->  
 <!-- version 1.0  28 July 2026  Pierre Billon - split out of CV500-CV602_MS-MN-FS.xml: Swiss Mapping dimming values and special configurations -->
+<!-- version 1.1  29 July 2026  Pierre Billon - added the missing French and German labels -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
@@ -58,6 +59,8 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Map to:</label> 
+    <label xml:lang="fr">Affecter à :</label>
+    <label xml:lang="de">Zuordnen zu:</label>
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
   <variable item="Swiss Mapping Group 13 M-key M+F" CV="503" mask="VXXXXXXX">
@@ -68,6 +71,7 @@
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
+    <tooltip xml:lang="fr">les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 13 M-key NotOff" CV="503" mask="XVVXXXXX">
    
@@ -81,23 +85,29 @@
           <choice>Fwd on</choice>
           <choice xml:lang="de">Vor an</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
+          <choice xml:lang="fr">Allumé en marche avant</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
           <choice xml:lang="de">Rück an</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
+          <choice xml:lang="fr">Allumé en marche arrière</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
           <choice xml:lang="de">Beide an</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
+          <choice xml:lang="fr">Tous allumés</choice>
         </enumChoice>
     </enumVal>
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
+    <label xml:lang="fr">Actif tant que</label>
+    <label xml:lang="de">EIN solange</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être coupées si la touche F est active et le sens de marche</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 13 M-key Hibeam" CV="503" >
   
@@ -109,13 +119,18 @@
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
           <choice xml:lang="cs">Ano</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
+    <label xml:lang="fr">Feux de route</label>
+    <label xml:lang="de">Fernlicht</label>
     <tooltip>M-key Hibeam (hides other options in CV503 )</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV503)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV503)</tooltip>
+    <tooltip xml:lang="fr">Feux de route de la touche M (masque les autres options du CV503)</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 13 A1 Fw" CV="504" mask="XXXVVVVV">
     <enumVal>
@@ -175,21 +190,25 @@
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
          <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
          <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
          <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
          <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -236,21 +255,25 @@
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
          <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
          <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
          <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
          <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -297,21 +320,25 @@
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
          <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
          <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
          <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
          <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -358,21 +385,25 @@
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
          <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
          <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
          <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
          <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -419,21 +450,25 @@
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
          <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
          <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
          <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
          <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
         </enumChoice>
        </enumVal>
         <label> </label>

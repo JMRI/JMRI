@@ -6,6 +6,7 @@
 <!--  Version 1.3   02 May 2024,  Ronald Kuhn.    correcting the default value of CV 310 and CV 313 -->
 <!-- version 1.4  28 July 2026  Pierre Billon - renamed from CV260-CV399_MS_series.xml; the name now states the CV range held and the decoder series it applies to -->
 <!-- version 1.5  28 July 2026  Pierre Billon - split - the sound CVs stay here, the rest moved to CV309-CV399_MS-MN-FS.xml -->
+<!-- version 1.6  29 July 2026  Pierre Billon - superseded CV266 for the software version 5 families (default 64 to 65); added the missing French labels -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Load Code 1" CV="260">
@@ -407,6 +408,7 @@
     <label xml:lang="it">Volume generale</label>
     <label xml:lang="de">Gesamtlautstärke</label>
     <label xml:lang="cs">Celková hlasitost</label>
+    <label xml:lang="fr">Volume général</label>
     <tooltip>64 is highest distortion-free play back, INC=5</tooltip>
     <tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
     <tooltip xml:lang="cs">Výchozí hodnota "64" udává nejhlasitější možnou nezkreslenou reprodukci. Použitelné hodnoty jsou asi do "100".</tooltip>

@@ -29,10 +29,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -64,10 +66,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -84,10 +88,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -112,10 +118,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -148,10 +156,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -176,10 +186,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -192,8 +204,14 @@
         <size length="9.9" width="7.5" height="2.1" units="mm"/>
       </model>
       <model model="MN300 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.0A" formFactor="H0" numOuts="8" numFns="14" productID="125">
-        <output name="1" label="Front Light"/>
-        <output name="2" label="Rear Light"/>
+        <output name="1" label="Front Light">
+          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="de">Licht vorne</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="de">Licht hinten</label>
+        </output>
         <output name="3" label="FO 1"/>
         <output name="4" label="FO 2"/>
         <output name="5" label="FO 3"/>
@@ -207,10 +225,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -259,10 +279,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -287,10 +309,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -349,6 +373,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="119" readOnly="yes" include="119">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -358,6 +384,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="120" readOnly="yes" include="120">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -367,6 +395,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="122" readOnly="yes" include="122">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -376,6 +406,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="123" readOnly="yes" include="123">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -385,6 +417,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="124" readOnly="yes" include="124">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -394,6 +428,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="125" readOnly="yes" include="125">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -403,6 +439,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="126" readOnly="yes" include="126">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -412,6 +450,8 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="fr">Identifiant décodeur 1</label>
+        <label xml:lang="de">Decoder-ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="127" readOnly="yes" include="127">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -422,18 +462,24 @@
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="fr">Identifiant décodeur 2</label>
+        <label xml:lang="de">Decoder-ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="fr">Identifiant décodeur 3</label>
+        <label xml:lang="de">Decoder-ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="fr">Identifiant décodeur 4</label>
+        <label xml:lang="de">Decoder-ID 4</label>
       </variable>
 
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV258-CV399_MS-MN-FS.xml"/>
