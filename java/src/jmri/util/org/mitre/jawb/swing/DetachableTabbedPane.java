@@ -393,11 +393,13 @@ public class DetachableTabbedPane extends JTabbedPane {
   public void remove (Component comp) {
     Detachable detachable = panelToDetMap.get (comp);
     if (detachable != null)
+      log.trace("panelToDetMap of {} found {} with {}", comp, detachable, detachable.component);
       remove (detachable);
     else
       super.remove(comp);
   }
   private void remove (Detachable d) {
+    log.trace("remove Detachable {} Component {}", d, d.component);
     if (d != null) {
       panelToDetMap.remove (d.component);
       shiftDetachables (false, d);
