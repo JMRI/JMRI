@@ -21,15 +21,17 @@
        The family name is deliberately unchanged, so existing roster entries keep resolving -
        a family spanning several files is normal (Zimo Unified software spans 82). -->
 
+  <!-- Version identification: CV #7 is the main software version and CV #65 the sub-version, so
+       the version 4 families are gated to CV #7 = 4 exactly while these run 5 to 42. The 42 is
+       deliberate, not a leftover - it keeps one open-ended family so a future 6.x decoder still
+       identifies as something if the definitions have not caught up. The open end moves to the
+       newest generation each time. -->
+
   <version author="Pierre Billon, pierre.bln@me.com" version="1" lastUpdated="2026/07/29"/>
 
   <decoder>
-  <!-- These version 4 families are gated to CV #7 = 4 exactly. CV #7 is the main software
-       version and CV #65 the sub-version, so this matches every 4.x decoder and nothing else.
-       The open-ended range that used to live here (4 to 42) has moved to the version 5
-       families, which keep one catch-all so a future 6.x decoder still identifies. -->
-    <family name="MS Sound (version 4+)" mfg="Zimo">
-      <model model="MS950 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="14" numFns="14" productID="9">
+    <family name="MS Sound (version 5+)" mfg="Zimo">
+      <model model="MS950 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="14" numFns="14" productID="9">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -89,7 +91,7 @@
         <size length="30" width="15" height="4" units="mm"/>
       </model>
 
-      <model model="MS990 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="15" numFns="14" productID="7">
+      <model model="MS990 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="15" numFns="14" productID="7">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
