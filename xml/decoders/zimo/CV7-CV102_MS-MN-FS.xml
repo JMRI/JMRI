@@ -8,7 +8,7 @@
 <!-- version 1.3 22 June 2023  Ronald Kuhn - added german translation.   -->
 <!-- version 1.4 02 May 2024  Ronald Kuhn - new decoder excluded   -->
 <!-- version 1.5  28 July 2026  Pierre Billon - renamed from CV1-CV99_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV7-97). Excluded MS491 and MS591N18 from mfx, both stated non-mfx-able by ZIMO -->
-<!-- version 1.6  29 July 2026  Pierre Billon - added CV99 (RailCom ID 7 transmissions), CV100 and CV101 (asymmetry voltage and its correction factor) and CV102 (SUSI slave 3); corrected the CV9 default from 0 to 55; renamed from CV7-CV97_MS-MN-FS.xml to match the range now held -->
+<!-- version 1.6  29 July 2026  Pierre Billon - added CV99 (RailCom ID 7 transmissions), CV100 and CV101 (asymmetry voltage and its correction factor) and CV102 (SUSI slave 3); corrected the CV9 default from 0 to 55; excluded the FS890N18 from mfx, stated non-mfx-able by ZIMO; renamed from CV7-CV97_MS-MN-FS.xml to match the range now held -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -96,7 +96,7 @@
       <label>Decoder Operating Mode MM</label>
       <label xml:lang="de">MM Betrieb</label>
   </variable>
-    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,12,15,122,124,125,127">
+    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,12,15,65,122,124,125,127">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode MFX</label>
       <label xml:lang="de">mfx Betrieb</label>
