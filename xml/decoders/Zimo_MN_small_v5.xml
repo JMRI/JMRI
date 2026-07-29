@@ -60,6 +60,26 @@
         </output>
         <size length="14" width="8.7" height="2.3" units="mm"/>
       </model>
+      <model model="MN150 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1.0A" maxTotalCurrent="0.5A" formFactor="N" numOuts="4" numFns="14" productID="121">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="8.2" width="5.9" height="2.1" units="mm"/>
+      </model>
+
       <model model="MN160 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1.0A" maxTotalCurrent="0.5A" formFactor="N" numOuts="6" numFns="14" productID="122">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
