@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 copied from MX series file for MS-series decoders.  24 Nov 2022, Nigel Cliffe -->
-<!-- version 1.1  28 July 2026  Pierre Billon - renamed from CV604-CV699_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV673-699, all sound) -->
+<!-- version 1.1  28 July 2026  Pierre Billon - renamed from CV604-CV699_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV671-699, all sound). Added CV671 and CV672, the switch input 4 sound sample and volume -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="671" item="Switch input 4 Sound Sample" >
+    <decVal/>
+    <label>Switch input 4 Sound Sample</label>
+    <label xml:lang="fr">Échantillon sonore entrée de commutation 4</label>
+    <label xml:lang="de">Sample Nummer für S4</label>
+  </variable>
+
+  <variable CV="672" item="Zimo Sound Setting 54" >
+    <decVal/>
+    <label>Switch triggered sound S4</label>
+    <label xml:lang="fr">Son déclenché par l'entrée S4</label>
+    <label xml:lang="de">Lautstärke Schalteing.-Sound S4</label>
+  </variable>
+
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable CV="673" item="F20 Sound Sample">
     <decVal/>

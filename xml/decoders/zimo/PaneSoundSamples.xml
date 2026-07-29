@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Pierre Billon - 2026-07-29 - add switch input 4 sound sample (CV671) -->
 <!-- Mark Waters, 11 Mar 2016 -->
 <!-- From Version 32 firmware -->
 <!-- see Zimo German manual for small decoders, -->
@@ -633,6 +634,10 @@
                 <text> </text>
             </label>
             <display item="Switch input 3 Sound Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Switch input 4 Sound Sample"/>
             <label>
                 <text> </text>
             </label>

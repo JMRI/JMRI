@@ -1357,6 +1357,12 @@
     <label xml:lang="de">Schalteingang 3 Abspiel-Dauer</label>
     <label xml:lang="cs">Doba přehrání spínací vstup 3</label>
   </variable>
+  <variable item="Switch input 4 playback time" CV="392" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
+    <decVal min="0" max="255"/>
+    <label>Switch input 4 playback time</label>
+    <label xml:lang="fr">Durée de lecture entrée de commutation 4</label>
+    <label xml:lang="de">Schalteingang 4 Abspiel-Dauer</label>
+  </variable>
   <variable item="Run-on time for Diesel and Electric Auxiliaries" CV="344" default="0" tooltip="0 = no run-on, 255 = 25sec">
     <decVal min="0" max="255"/>
     <label>Run-on time</label>
