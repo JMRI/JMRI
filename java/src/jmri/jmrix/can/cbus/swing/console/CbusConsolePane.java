@@ -43,7 +43,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     protected final CbusConsolePacketPane packetPane;
     protected final CbusSendEventPane sendPane;
     protected CbusConsoleDecodeOptionsPane decodePane;
-    protected final CbusConsoleLoggingPane logPane;
+    protected CbusConsoleLoggingPane logPane;
     public final CbusConsoleDisplayOptionsPane displayPane;
 
     // members for handling the CBUS interface
@@ -56,7 +56,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         statsPane = new CbusConsoleStatsPane(this);
         packetPane = new CbusConsolePacketPane(this);
         sendPane = new CbusSendEventPane(this);
-        logPane = new CbusConsoleLoggingPane(this);
         displayPane = new CbusConsoleDisplayOptionsPane(this);
 
     }
@@ -128,6 +127,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
             + "" + memo.getTrafficController() + " on GUI Thread " + ThreadingUtil.isGUIThread());
         }
         decodePane = new CbusConsoleDecodeOptionsPane(this);
+        logPane = new CbusConsoleLoggingPane(this);
         if (launchEvTable){
             memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
         }

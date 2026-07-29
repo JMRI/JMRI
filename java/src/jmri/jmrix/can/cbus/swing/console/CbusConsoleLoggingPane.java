@@ -28,7 +28,7 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
     private final JButton logenterButton;
 
     // @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
-    private PrintStream logStream;
+    private transient PrintStream logStream;
 
     public CbusConsoleLoggingPane(CbusConsolePane mainPane){
         super();
