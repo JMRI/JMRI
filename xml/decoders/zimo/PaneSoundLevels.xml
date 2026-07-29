@@ -2,12 +2,22 @@
 <!-- modified from the standard Sound Levels pane to cope with more values -->
 <!-- and provide headings suitable for Zimo chips -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
-<!-- version 1.2 - Pierre Billon - 2026-07-29 - add switch input 4 volume (CV672) -->
+<!-- version 1.2 - Pierre Billon - 2026-07-29 - add switch input 4 volume (CV672), rename to -->
+<!-- "Sound Levels" so this pane replaces the standard one instead of sitting beside it -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <name>Zimo Sound Levels</name>
-  <name xml:lang="it">Livelli Suono</name>
-  <name xml:lang="de">ZIMO Lautstärke-Einstellung</name>
-  <name xml:lang="cs">Zimo nastavení hlasitosti</name>
+  <!-- Named exactly as the standard programmer pane on purpose: a decoder pane whose first
+       <name> matches a programmer pane's replaces it. Zimo names its variables "Zimo Sound
+       Setting N", so the standard pane resolves none of its items and would otherwise show
+       as a second, permanently empty tab. Same approach as the ESU, Trix and PIKO panes. -->
+  <name>Sound Levels</name>
+  <name xml:lang="ca">Volum de so</name>
+  <name xml:lang="cs">Hladiny zvuku</name>
+  <name xml:lang="da">Lydstyrker</name>
+  <name xml:lang="de">Sound Lautstärke</name>
+  <name xml:lang="fr">Volume des Sons</name>
+  <name xml:lang="it">Livelli dei Suoni</name>
+  <name xml:lang="nl">Geluidvolume</name>
+  <name xml:lang="es">Niveles de sonido</name>
   <row>
     <column>
       <label>
