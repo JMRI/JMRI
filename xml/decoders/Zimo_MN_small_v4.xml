@@ -424,7 +424,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV398_MS-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV513-CV602_MS-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV671-CV699_MS-FS.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV738-CV836_MS-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV726-CV836_MS-FS.xml"/>
       -->
       <!-- End sound-only CVs -->
     </variables>

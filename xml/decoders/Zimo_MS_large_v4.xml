@@ -330,7 +330,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV512_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV513-CV602_MS-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV671-CV699_MS-FS.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV738-CV836_MS-FS.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV726-CV836_MS-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV800-CV843_MS-MN-FS.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV980-CV1019_MS-MN-FS.xml"/>
 

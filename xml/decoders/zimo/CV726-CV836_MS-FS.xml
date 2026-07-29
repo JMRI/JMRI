@@ -3,6 +3,120 @@
 <!-- version 1.0  28 July 2026  Pierre Billon - split out of CV738-CV843_MS-MN-FS.xml: switch-input sound samples, random sounds Z1-Z8, steam impact, turbocharger and motor start sound -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="726" item="Connection 1 sound" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 1 sound number</label>
+    <label xml:lang="fr">Numéro de son de la liaison 1</label>
+    <label xml:lang="de">Verknüpfung 1 Soundnummer</label>
+    <tooltip>Sound number for connection 1. Normally set by the sound project; the numbers are listed in most sound project documentation.</tooltip>
+    <tooltip xml:lang="fr">Numéro de son de la liaison 1. Normalement défini par le projet sonore ; les numéros figurent dans la documentation de la plupart des projets.</tooltip>
+    <tooltip xml:lang="de">Soundnummer für Verknüpfung 1. Normalerweise vom Sound-Projekt gesetzt; die Nummern stehen in der Dokumentation der meisten Sound-Projekte.</tooltip>
+  </variable>
+  <variable CV="727" item="Connection 1 function output" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 1 function output</label>
+    <label xml:lang="fr">Sortie de fonction de la liaison 1</label>
+    <label xml:lang="de">Verknüpfung 1 Funktionsausgang</label>
+    <tooltip>Function output whose activation plays the sound back. 0 = none, 1 = front light, 2 = rear light, 3 = FO 1, 4 = FO 2 and so on.</tooltip>
+    <tooltip xml:lang="fr">Sortie de fonction dont l'activation déclenche le son. 0 = aucune, 1 = feu avant, 2 = feu arrière, 3 = FO 1, 4 = FO 2, etc.</tooltip>
+    <tooltip xml:lang="de">Funktionsausgang, dessen Aktivierung den Sound abspielt. 0 = keiner, 1 = Lvor, 2 = Lrück, 3 = FA 1, 4 = FA 2 usw.</tooltip>
+  </variable>
+
+  <variable CV="728" item="Connection 2 sound" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 2 sound number</label>
+    <label xml:lang="fr">Numéro de son de la liaison 2</label>
+    <label xml:lang="de">Verknüpfung 2 Soundnummer</label>
+    <tooltip>Sound number for connection 2. Normally set by the sound project; the numbers are listed in most sound project documentation.</tooltip>
+    <tooltip xml:lang="fr">Numéro de son de la liaison 2. Normalement défini par le projet sonore ; les numéros figurent dans la documentation de la plupart des projets.</tooltip>
+    <tooltip xml:lang="de">Soundnummer für Verknüpfung 2. Normalerweise vom Sound-Projekt gesetzt; die Nummern stehen in der Dokumentation der meisten Sound-Projekte.</tooltip>
+  </variable>
+  <variable CV="729" item="Connection 2 function output" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 2 function output</label>
+    <label xml:lang="fr">Sortie de fonction de la liaison 2</label>
+    <label xml:lang="de">Verknüpfung 2 Funktionsausgang</label>
+    <tooltip>Function output whose activation plays the sound back. 0 = none, 1 = front light, 2 = rear light, 3 = FO 1, 4 = FO 2 and so on.</tooltip>
+    <tooltip xml:lang="fr">Sortie de fonction dont l'activation déclenche le son. 0 = aucune, 1 = feu avant, 2 = feu arrière, 3 = FO 1, 4 = FO 2, etc.</tooltip>
+    <tooltip xml:lang="de">Funktionsausgang, dessen Aktivierung den Sound abspielt. 0 = keiner, 1 = Lvor, 2 = Lrück, 3 = FA 1, 4 = FA 2 usw.</tooltip>
+  </variable>
+
+  <variable CV="730" item="Connection 3 sound" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 3 sound number</label>
+    <label xml:lang="fr">Numéro de son de la liaison 3</label>
+    <label xml:lang="de">Verknüpfung 3 Soundnummer</label>
+    <tooltip>Sound number for connection 3. Normally set by the sound project; the numbers are listed in most sound project documentation.</tooltip>
+    <tooltip xml:lang="fr">Numéro de son de la liaison 3. Normalement défini par le projet sonore ; les numéros figurent dans la documentation de la plupart des projets.</tooltip>
+    <tooltip xml:lang="de">Soundnummer für Verknüpfung 3. Normalerweise vom Sound-Projekt gesetzt; die Nummern stehen in der Dokumentation der meisten Sound-Projekte.</tooltip>
+  </variable>
+  <variable CV="731" item="Connection 3 function output" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 3 function output</label>
+    <label xml:lang="fr">Sortie de fonction de la liaison 3</label>
+    <label xml:lang="de">Verknüpfung 3 Funktionsausgang</label>
+    <tooltip>Function output whose activation plays the sound back. 0 = none, 1 = front light, 2 = rear light, 3 = FO 1, 4 = FO 2 and so on.</tooltip>
+    <tooltip xml:lang="fr">Sortie de fonction dont l'activation déclenche le son. 0 = aucune, 1 = feu avant, 2 = feu arrière, 3 = FO 1, 4 = FO 2, etc.</tooltip>
+    <tooltip xml:lang="de">Funktionsausgang, dessen Aktivierung den Sound abspielt. 0 = keiner, 1 = Lvor, 2 = Lrück, 3 = FA 1, 4 = FA 2 usw.</tooltip>
+  </variable>
+
+  <variable CV="732" item="Connection 4 sound" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 4 sound number</label>
+    <label xml:lang="fr">Numéro de son de la liaison 4</label>
+    <label xml:lang="de">Verknüpfung 4 Soundnummer</label>
+    <tooltip>Sound number for connection 4. Normally set by the sound project; the numbers are listed in most sound project documentation.</tooltip>
+    <tooltip xml:lang="fr">Numéro de son de la liaison 4. Normalement défini par le projet sonore ; les numéros figurent dans la documentation de la plupart des projets.</tooltip>
+    <tooltip xml:lang="de">Soundnummer für Verknüpfung 4. Normalerweise vom Sound-Projekt gesetzt; die Nummern stehen in der Dokumentation der meisten Sound-Projekte.</tooltip>
+  </variable>
+  <variable CV="733" item="Connection 4 function output" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 4 function output</label>
+    <label xml:lang="fr">Sortie de fonction de la liaison 4</label>
+    <label xml:lang="de">Verknüpfung 4 Funktionsausgang</label>
+    <tooltip>Function output whose activation plays the sound back. 0 = none, 1 = front light, 2 = rear light, 3 = FO 1, 4 = FO 2 and so on.</tooltip>
+    <tooltip xml:lang="fr">Sortie de fonction dont l'activation déclenche le son. 0 = aucune, 1 = feu avant, 2 = feu arrière, 3 = FO 1, 4 = FO 2, etc.</tooltip>
+    <tooltip xml:lang="de">Funktionsausgang, dessen Aktivierung den Sound abspielt. 0 = keiner, 1 = Lvor, 2 = Lrück, 3 = FA 1, 4 = FA 2 usw.</tooltip>
+  </variable>
+
+  <variable CV="734" item="Connection 5 sound" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 5 sound number</label>
+    <label xml:lang="fr">Numéro de son de la liaison 5</label>
+    <label xml:lang="de">Verknüpfung 5 Soundnummer</label>
+    <tooltip>Sound number for connection 5. Normally set by the sound project; the numbers are listed in most sound project documentation.</tooltip>
+    <tooltip xml:lang="fr">Numéro de son de la liaison 5. Normalement défini par le projet sonore ; les numéros figurent dans la documentation de la plupart des projets.</tooltip>
+    <tooltip xml:lang="de">Soundnummer für Verknüpfung 5. Normalerweise vom Sound-Projekt gesetzt; die Nummern stehen in der Dokumentation der meisten Sound-Projekte.</tooltip>
+  </variable>
+  <variable CV="735" item="Connection 5 function output" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 5 function output</label>
+    <label xml:lang="fr">Sortie de fonction de la liaison 5</label>
+    <label xml:lang="de">Verknüpfung 5 Funktionsausgang</label>
+    <tooltip>Function output whose activation plays the sound back. 0 = none, 1 = front light, 2 = rear light, 3 = FO 1, 4 = FO 2 and so on.</tooltip>
+    <tooltip xml:lang="fr">Sortie de fonction dont l'activation déclenche le son. 0 = aucune, 1 = feu avant, 2 = feu arrière, 3 = FO 1, 4 = FO 2, etc.</tooltip>
+    <tooltip xml:lang="de">Funktionsausgang, dessen Aktivierung den Sound abspielt. 0 = keiner, 1 = Lvor, 2 = Lrück, 3 = FA 1, 4 = FA 2 usw.</tooltip>
+  </variable>
+
+  <variable CV="736" item="Connection 6 sound" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 6 sound number</label>
+    <label xml:lang="fr">Numéro de son de la liaison 6</label>
+    <label xml:lang="de">Verknüpfung 6 Soundnummer</label>
+    <tooltip>Sound number for connection 6. Normally set by the sound project; the numbers are listed in most sound project documentation.</tooltip>
+    <tooltip xml:lang="fr">Numéro de son de la liaison 6. Normalement défini par le projet sonore ; les numéros figurent dans la documentation de la plupart des projets.</tooltip>
+    <tooltip xml:lang="de">Soundnummer für Verknüpfung 6. Normalerweise vom Sound-Projekt gesetzt; die Nummern stehen in der Dokumentation der meisten Sound-Projekte.</tooltip>
+  </variable>
+  <variable CV="737" item="Connection 6 function output" default="0">
+    <decVal min="0" max="255"/>
+    <label>Connection 6 function output</label>
+    <label xml:lang="fr">Sortie de fonction de la liaison 6</label>
+    <label xml:lang="de">Verknüpfung 6 Funktionsausgang</label>
+    <tooltip>Function output whose activation plays the sound back. 0 = none, 1 = front light, 2 = rear light, 3 = FO 1, 4 = FO 2 and so on.</tooltip>
+    <tooltip xml:lang="fr">Sortie de fonction dont l'activation déclenche le son. 0 = aucune, 1 = feu avant, 2 = feu arrière, 3 = FO 1, 4 = FO 2, etc.</tooltip>
+    <tooltip xml:lang="de">Funktionsausgang, dessen Aktivierung den Sound abspielt. 0 = keiner, 1 = Lvor, 2 = Lrück, 3 = FA 1, 4 = FA 2 usw.</tooltip>
+  </variable>
+
   <!-- include this CV to put it onto the Sound Levels pane -->
 
   <variable CV="738" item="Switch input 1 Sound Sample" >

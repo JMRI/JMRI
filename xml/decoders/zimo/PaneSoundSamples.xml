@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Pierre Billon - 2026-07-29 - add switch input 4 sound sample (CV671) -->
+<!-- version 1.2 - Pierre Billon - 2026-07-29 - add the six sound connections (CV726-CV737) -->
 <!-- Mark Waters, 11 Mar 2016 -->
 <!-- From Version 32 firmware -->
 <!-- see Zimo German manual for small decoders, -->
@@ -763,6 +764,74 @@
                     <text>     </text>
                 </label>
                 <display item="Z8 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>Sound connections</text>
+                <text xml:lang="fr">Liaisons sonores</text>
+                <text xml:lang="de">       Verknüpfungen</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 1 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 1 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 2 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 2 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 3 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 3 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 4 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 4 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 5 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 5 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 6 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 6 function output"/>
             </row>
             <label>
                 <text> </text>
