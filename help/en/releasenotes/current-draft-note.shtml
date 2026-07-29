@@ -451,6 +451,14 @@
             <ul>
                 <li>MS540E24 now declares its E24 interface, and the MN140E24 definition is now
                     available.</li>
+                <li>New definitions for Zimo MS/MN/FS software v5+.</li>
+                <li>Expanded and minor corrections to Zimo MS/MN software v4+.</li>
+                <li>New decoders added: MS001 and MN250 (v4 &amp; v5), MS420, MS440C, MS440D, MS481,
+                    MS501, MS920LE and MN150 (v5 only), and the FS sound decoders FS840, FS850 and
+                    FS890N18.</li>
+                <li>No more sound CVs for MN non-sound decoders.</li>
+                <li>ZIMO sound levels now in the standard Sound Levels pane (including for MX
+                    decoders), to avoid an empty Sound Levels pane.</li>
                 <li></li>
             </ul>
 
