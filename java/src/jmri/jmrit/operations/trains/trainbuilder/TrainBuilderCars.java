@@ -1175,6 +1175,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * @return false if there's an issue with using the spur
      */
     private boolean sendCarToDestinationSpur(Car car, Track track) {
+        addLine(SEVEN, BLANK_LINE);
         if (!checkBasicMoves(car, track)) {
             addLine(SEVEN, Bundle.getMessage("trainCanNotDeliverToDestination", getTrain().getName(),
                     car.toString(), track.getLocation().getName(), track.getName()));
@@ -1215,7 +1216,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         }
-        addLine(SEVEN, BLANK_LINE);
         addLine(SEVEN,
                 Bundle.getMessage("buildSetFinalDestDiv", track.getTrackTypeName(), track.getLocation().getName(),
                         track.getName(), track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
