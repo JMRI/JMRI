@@ -1717,12 +1717,14 @@ abstract public class PaneProgFrame extends JmriJFrame
                     // how to handle the tab depends on whether it has contents and option setting
                     int index;
                     if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty()) {
+                        log.debug("'{}' pane of 1st type at index {}", name, tabPane.indexOfTab(name));
                         // Was there a race condition here with qualified panes?
                         // QualifiedVarTest attempts to invoke that, but haven't it with the following code
                         index = tabPane.indexOfTab(name);
                         tabPane.setComponentAt(tabPane.indexOfTab(name), p);  // always add if not empty
                         tabPane.setToolTipTextAt(tabPane.indexOfTab(name), p.getToolTipText());
                     } else if (isShowingEmptyPanes()) {
+                        log.debug("'{}' pane of 2nd type", name);
                         // here empty, but showing anyway as disabled
                         index = tabPane.indexOfTab(name);
                         tabPane.setComponentAt(tabPane.indexOfTab(name), p);
@@ -1730,10 +1732,12 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 Bundle.getMessage("TipTabEmptyNoCategory"));
                         tabPane.setEnabledAt(tabPane.indexOfTab(name), true); // need to enable the pane so user can see message
                     } else {
+                        log.debug("'{}' pane of 3rd type", name);
                         // here not showing tab at all
                         index = -1;
-                        log.trace("deleted {} tab here", name);
-                        tabPane.removeTabAt(tabPane.indexOfTab(name));
+                        log.trace("deleted {} tab here at index {}", name, tabPane.indexOfTab(name));
+                        // tabPane.removeTabAt(..) does not work here with DetachableTabbedPane
+                        tabPane.remove(tabPane.indexOfTab(name));
                     }
 
                     // remember it for programming
