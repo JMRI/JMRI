@@ -29,7 +29,7 @@
            motor CVs are kept rather than hidden - a few read errors on a CV that does nothing are
            preferable to a setting the owner cannot reach. -->
 
-      <model model="FS850 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxTotalCurrent="1.8A" formFactor="HO" numOuts="12" numFns="14" productID="64">
+      <model model="FS850 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="64">
         <output name="1" label="Front Light">
           <label xml:lang="fr">Feu avant</label>
           <label xml:lang="de">Lvor</label>
@@ -78,12 +78,47 @@
           <label xml:lang="fr">FO 10</label>
           <label xml:lang="de">FA10</label>
         </output>
-        <size length="25" width="15" height="4" units="mm"/>
+        <size length="21" width="15" height="3.6" units="mm"/>
       </model>
 
-      <!-- Dimensions, current and output count from ZIMO's function-decoder product page. The
-           connection diagram in the manual breaks out eight of the ten outputs. -->
-      <model model="FS890N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxTotalCurrent="1.2A" formFactor="N" connector="Next18" numOuts="10" numFns="14" productID="65">
+      <model model="FS890N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="65">
+        <output name="1" label="Front Light">
+          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="de">Lvor</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="de">Lrück</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="fr">FO 1</label>
+          <label xml:lang="de">FA1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="fr">FO 2</label>
+          <label xml:lang="de">FA2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="fr">FO 3</label>
+          <label xml:lang="de">FA3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="fr">FO 4</label>
+          <label xml:lang="de">FA4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="fr">FO 5</label>
+          <label xml:lang="de">FA5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="fr">FO 6</label>
+          <label xml:lang="de">FA6</label>
+        </output>
+        <size length="13.6" width="9.3" height="3.1" units="mm"/>
+      </model>
+
+      <!-- FO 3 to FO 6 can be used as logic level outputs, per ZIMO's connection note. -->
+      <model model="FS840 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="12" numFns="14" productID="66">
         <output name="1" label="Front Light">
           <label xml:lang="fr">Feu avant</label>
           <label xml:lang="de">Lvor</label>
@@ -124,37 +159,15 @@
           <label xml:lang="fr">FO 8</label>
           <label xml:lang="de">FA8</label>
         </output>
-        <size length="13.6" width="9.3" height="3.1" units="mm"/>
-      </model>
-
-      <!-- ZIMO have not published dimensions or a current rating for the FS840 yet, so none are
-           declared, as for the MS001. The six function outputs are taken from the connection
-           diagram in the manual. -->
-      <model model="FS840 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" numOuts="6" numFns="14" productID="66">
-        <output name="1" label="FO 1">
-          <label xml:lang="fr">FO 1</label>
-          <label xml:lang="de">FA1</label>
+        <output name="11" label="FO 9">
+          <label xml:lang="fr">FO 9</label>
+          <label xml:lang="de">FA9</label>
         </output>
-        <output name="2" label="FO 2">
-          <label xml:lang="fr">FO 2</label>
-          <label xml:lang="de">FA2</label>
+        <output name="12" label="FO 10">
+          <label xml:lang="fr">FO 10</label>
+          <label xml:lang="de">FA10</label>
         </output>
-        <output name="3" label="FO 3">
-          <label xml:lang="fr">FO 3</label>
-          <label xml:lang="de">FA3</label>
-        </output>
-        <output name="4" label="FO 4">
-          <label xml:lang="fr">FO 4</label>
-          <label xml:lang="de">FA4</label>
-        </output>
-        <output name="5" label="FO 5">
-          <label xml:lang="fr">FO 5</label>
-          <label xml:lang="de">FA5</label>
-        </output>
-        <output name="6" label="FO 6">
-          <label xml:lang="fr">FO 6</label>
-          <label xml:lang="de">FA6</label>
-        </output>
+        <size length="21.5" width="15" height="3.8" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

@@ -537,7 +537,7 @@
         <size length="27" width="14" height="2.6" units="mm"/>
       </model>
 
-      <model model="MS580N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="5">
+      <model model="MS580N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="5">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -564,10 +564,16 @@
           <label xml:lang="de">FA4 (+5v)</label>
           <label xml:lang="cs">FV 4 (+5V)</label>
         </output>
+        <output name="7" label="FO 5 (LED)">
+          <label xml:lang="de">FA5 (LED)</label>
+        </output>
+        <output name="8" label="FO 6 (LED)">
+          <label xml:lang="de">FA6 (LED)</label>
+        </output>
         <size length="25" width="10.5" height="4" units="mm"/>
       </model>
 
-      <model model="MS581N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="13">
+      <model model="MS581N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="9" numFns="14" productID="13">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -602,10 +608,13 @@
           <label xml:lang="de">FA6 (+5v)</label>
           <label xml:lang="cs">FV 6 (+5V)</label>
         </output>
+        <output name="9" label="FO 7 (+5v)">
+          <label xml:lang="de">FA7</label>
+        </output>
         <size length="24,9" width="10" height="4" units="mm"/>
       </model>
 
-      <model model="MS590N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="8">
+      <model model="MS590N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="7" numFns="14" productID="8">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -631,12 +640,15 @@
         <output name="6" label="FO 4 (+5v)">
           <label xml:lang="de">FA4 (+5v)</label>
           <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
         </output>
         <size length="15" width="9.5" height="3.3" units="mm"/>
       </model>
       
       
-      <model model="MS591N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="15">
+      <model model="MS591N18 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="15">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -655,13 +667,19 @@
           <label xml:lang="de">FA2</label>
           <label xml:lang="cs">FV 2</label>
         </output>
-        <output name="5" label="FO 3 (+5v)">
+        <output name="5" label="FO 3">
           <label xml:lang="de">FA3 (+5v)</label>
           <label xml:lang="cs">FV 3 (+5V)</label>
         </output>
-        <output name="6" label="FO 4 (+5v)">
+        <output name="6" label="FO 4">
           <label xml:lang="de">FA4 (+5v)</label>
           <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
         </output>
         <size length="15" width="9.3" height="3.1" units="mm"/>
       </model>
