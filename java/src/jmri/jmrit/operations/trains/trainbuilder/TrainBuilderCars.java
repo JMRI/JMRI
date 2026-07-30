@@ -1270,6 +1270,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
+            car.setScheduleItemId(Car.NONE);
             // don't move car if another train can
             if (router.getStatus().startsWith(Router.STATUS_NOT_THIS_TRAIN_PREFIX)) {
                 _routeToTrackFound = true;
@@ -1280,7 +1281,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             track.bumpMoves();
             // car is being routed to this track
             if (track.getSchedule() != null) {
-                car.setScheduleItemId(track.getCurrentScheduleItem().getId());
+                car.setScheduleItemId(track.getScheduleItemId());
                 track.bumpSchedule();
             }
         }
