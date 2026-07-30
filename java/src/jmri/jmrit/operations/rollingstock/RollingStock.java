@@ -436,7 +436,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return TrainCommon.splitString(getTrackName());
     }
     
-    public String getTrackType() {
+    public String getTrackTypeName() {
         if (getTrack() != null) {
             return getTrack().getTrackTypeName();
         }

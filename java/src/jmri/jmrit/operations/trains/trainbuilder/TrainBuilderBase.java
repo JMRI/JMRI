@@ -1579,7 +1579,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         addLine(SEVEN, Bundle.getMessage("buildExcludeCarByInterchange", car.toString(),
-                car.getTypeName(), car.getTrackType(), car.getLocationName(), car.getTrackName()));
+                car.getTypeName(), car.getTrackTypeName(), car.getLocationName(), car.getTrackName()));
         return false;
     }
 
