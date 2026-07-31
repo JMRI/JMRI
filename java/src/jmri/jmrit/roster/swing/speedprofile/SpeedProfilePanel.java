@@ -16,10 +16,12 @@ import java.util.TreeMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -86,6 +88,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     JButton deleteProfileButton = new JButton(Bundle.getMessage("ButtonDeleteProfile"));
     JButton saveDefaultsButton = new JButton(Bundle.getMessage("ButtonSaveDefaults"));
     JTextField lengthField = new JTextField(10);
+    JRadioButton lengthUnitInches = new JRadioButton(Bundle.getMessage("in"));
+    JRadioButton lengthUnitMm = new JRadioButton(Bundle.getMessage("mm"));
+    ButtonGroup lengthUnit = new ButtonGroup();
     JTextField sensorDelay = new JTextField(5);
     JTextField speedStepTest = new JTextField(5);
     JTextField speedStepTestFwd = new JTextField(10);
@@ -148,7 +153,16 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         c.weightx = 1.0;
         c.anchor = GridBagConstraints.CENTER;
         JLabel label = new JLabel(Bundle.getMessage("LabelLengthOfBlock"));
-        addRow(main, gb, c, 0, label, lengthField);
+        JPanel lengthPanel = new JPanel();
+        lengthUnitMm.setActionCommand("MM");
+        lengthUnitInches.setActionCommand("IN");
+        lengthPanel.add(lengthField);
+        lengthUnit.add(lengthUnitMm);
+        lengthUnit.add(lengthUnitInches);
+        lengthPanel.add(lengthUnitMm);
+        lengthPanel.add(lengthUnitMm);
+        lengthPanel.add(lengthUnitInches);
+        addRow(main, gb, c, 0, label, lengthPanel);
         label = new JLabel(Bundle.getMessage("LabelSensorDelay"));
         addRow(main, gb, c, 1, label, sensorDelay);
         label = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelStartSensor")));
@@ -409,7 +423,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         speedSettingsToUse = new ArrayList<Integer>();
         try {
             profileBlockLength = Float.parseFloat(lengthField.getText());
-        } catch (Exception e) {
+            if (lengthUnit.getSelection() != null && "IN".equals(lengthUnit.getSelection().getActionCommand())) {
+                profileBlockLength = profileBlockLength * 25.4f ;
+            }
+        } catch (NumberFormatException e) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorLengthInvalid"));
             return;
         }
@@ -1167,13 +1184,26 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     }
 
+    // Removed for now
+    // Doesnot work
+    // not referenced
+    /*
     void stopTrainTest() {
-        int sectionlength = Integer.parseInt(lengthField.getText());
+        float sectionlength;
+        try {
+            sectionlength = Float.parseFloat(lengthField.getText());
+            if ("IN".equals(lengthUnit.getSelection().getActionCommand())) {
+                sectionlength = sectionlength * 25.4f ;
+            }
+        } catch (Exception e) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorLengthInvalid"));
+            return;
+        }
         re.getSpeedProfile().changeLocoSpeed(t, sectionlength, 0.0f);
         setButtonStates(true);
         startSensor.removePropertyChangeListener(startListener);
     }
-
+    */
     long startTime;
     long finishTime;
 
@@ -1261,6 +1291,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (lengthField.getText().length() > 0) {
             values.addContent(new Element("length").addContent(lengthField.getText()));
         }
+        if (lengthUnit.getSelection() != null) {
+            String selectedValue = lengthUnit.getSelection().getActionCommand();
+            values.addContent(new Element("lengthUnit").addContent(selectedValue));
+        }
         if (sensorDelay.getText().length() > 0) {
             values.addContent(new Element("sensordelay").addContent(sensorDelay.getText()));
         }
@@ -1335,6 +1369,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                         break;
                     case "sensordelay":
                         sensorDelay.setText(e.getValue());
+                        break;
+                    case "lengthUnit":
+                        if ("IN".equals(e.getValue())) {
+                            lengthUnitInches.setSelected(true);
+                        } else {
+                            lengthUnitMm.setSelected(true);
+                        }
                         break;
                     default:
                         log.warn("Invalid field in PanelProSpeedProfiler.xml");
