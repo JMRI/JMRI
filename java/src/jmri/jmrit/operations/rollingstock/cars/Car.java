@@ -257,8 +257,8 @@ public class Car extends RollingStock {
         if (track != null && track.isSpur() && !getScheduleItemId().equals(NONE)) {
             Schedule sch = track.getSchedule();
             if (sch == null) {
-                log.error("Schedule missing for car ({}) to spur ({}, {})", toString(), track.getLocation().getName(),
-                        track.getName());
+                log.error("Schedule {} missing for car ({}) to spur ({}, {})", getScheduleItemId(), toString(),
+                        track.getLocation().getName(), track.getName());
             } else {
                 si = sch.getItemById(getScheduleItemId());
             }
@@ -857,7 +857,7 @@ public class Car extends RollingStock {
         // is car going to its final destination?
         removeCarFinalDestination();
         // now check to see if the track has a schedule
-        if (track != null && destinationTrack != track && loaded) {
+        if (track != null && destinationTrack != track && loaded && !isClone()) {
             status = track.scheduleNext(this);
             if (!status.equals(Track.OKAY)) {
                 return status;
