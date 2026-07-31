@@ -27,7 +27,7 @@
        identifies as something if the definitions have not caught up. The open end moves to the
        newest generation each time. -->
 
-  <version author="Pierre Billon" version="1" lastUpdated="2026/07/29"/>
+  <version author="Pierre Billon" version="1" lastUpdated="2026/07/31"/>
 
   <decoder>
     <family name="MS Sound (version 5+)" mfg="Zimo">

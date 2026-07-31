@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1.0  28 July 2026  Pierre Billon - split out of CV738-CV843_MS-MN-FS.xml: switch-input sound samples, random sounds Z1-Z8, steam impact, turbocharger and motor start sound -->
-<!-- version 1.1  29 July 2026  Pierre Billon - added the missing French labels -->
+<!-- version 1.0  31 July 2026  Pierre Billon - split out of CV738-CV843_MS-MN-FS.xml: switch-input sound samples, random sounds Z1-Z8, steam impact, turbocharger and motor start sound Also: added the missing French labels -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="838" item="Thyristor control: Speed step for maximum pitch" default="255">

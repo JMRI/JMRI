@@ -19,7 +19,7 @@
 <!-- version 1.5 - Ronald Kuhn, add german translation, 29 November 2021-->
 <!-- version 1.6 - Pierre Billon, updated for light boards (Fns Decoders), excluding Gps 11-17 for some light boards. Added mask on bit 6 of each 1st group CV (Value 64 reserved for 2nd address for function decoders), 26 Feb 2024 -->
 <!-- version 1.7 - Ronald Kuhn, exclude CVs for Decoder without 1K EEPROM, 05 April 2024 -->
-<!-- version 1.8 - Pierre Billon - 2026-07-29 - tooltip on the dimming group selectors explaining the new "Off" value (6) added to Choice-DG.xml, tested on an MX620N -->
+<!-- version 1.8 - Pierre Billon - 2026-07-31 - tooltip on the dimming group selectors explaining the new "Off" value (6) added to Choice-DG.xml, tested on an MX620N -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Swiss Mapping Group 1 F-key" CV="430" mask="VXVVVVVV">
     <enumVal>

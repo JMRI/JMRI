@@ -21,7 +21,7 @@
        The family name is deliberately unchanged, so existing roster entries keep resolving -
        a family spanning several files is normal (Zimo Unified software spans 82). -->
 
-  <version author="Pierre Billon" version="1" lastUpdated="2026/07/29"/>
+  <version author="Pierre Billon" version="1" lastUpdated="2026/07/31"/>
 
   <decoder>
   <!-- These version 4 families are gated to CV #7 = 4 exactly. CV #7 is the main software

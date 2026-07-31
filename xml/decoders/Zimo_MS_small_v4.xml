@@ -29,7 +29,7 @@
   <!-- v1.4,  added new decoder versions -->
 
   <version author="Nigel Cliffe" version="1.5" lastUpdated="2025/03/14"/>
-  <version author="Pierre Billon" version="1.6" lastUpdated="2026/07/29"/>
+  <version author="Pierre Billon" version="1.6" lastUpdated="2026/07/31"/>
   <!--  added Zimo Scripting variables, CV837, CV843, CV981-1019  new pane for Zimo Scripting,  added decoder MS591N18, and removed comments to enable MS540E4-->
   
   <decoder>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.0 - Nigel Cliffe,  March 2025,  Zimo Sound Project Scripting variables  -->
-<!-- version 1.1  28 July 2026  Pierre Billon - renamed from CV980-CV1019_MS_series.xml; the name now states the CV range held and the decoder series it applies to -->
+<!-- version 1.1  31 July 2026  Pierre Billon - renamed from CV980-CV1019_MS_series.xml; the name now states the CV range held and the decoder series it applies to -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="980" item="Script Variable 980">

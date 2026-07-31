@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1.0  28 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block. Added CV264, the variable low voltage -->
-<!-- version 1.1  29 July 2026  Pierre Billon - added CV258 (read out CV #8) and CV259 (read the loco set, sound decoders only); renamed from CV264-CV399_MS-MN-FS.xml to match the range now held; replaced the placeholder English labels on CV348 and CV393 with ZIMO's own wording and completed the French and German -->
+<!-- version 1.0  31 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block. Added CV264, the variable low voltage Also: added CV258 (read out CV #8) and CV259 (read the loco set, sound decoders only); renamed from CV264-CV399_MS-MN-FS.xml to match the range now held; replaced the placeholder English labels on CV348 and CV393 with ZIMO's own wording and completed the French and German -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- CV #258 arrived in software 4.254 and is left ungated so it serves the version 4

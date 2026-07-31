@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<!-- version 1.1  28 July 2026  Pierre Billon - renamed from CV500-CV603_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV500-602) -->
+<!-- version 1.1  31 July 2026  Pierre Billon - renamed from CV500-CV603_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV500-602) Also: split - the sound CVs stay here, the rest moved to CV500-CV512_MS-MN-FS.xml -->
 <!-- Nigel Cliffe, 16th Nov 2012 -->
 <!-- from version 30 firmware -->
 <!-- CV's 500-603 control volume and sound choices of individual sounds -->
@@ -13,7 +13,6 @@
   <!-- v1.0 of Zimo MS-series fork from MX-series files,  Nigel Cliffe, 23 Nov 2022 -->
   <!-- v1.1   merge in various CV's for Swiss Mapping into correct numerical sequence,  Nigel Cliffe, 24 Nov 2022 -->  
   <!-- v1.2   added german translation,  Ronald Kuhn, 22 June 2023 -->  
-<!-- version 1.2  28 July 2026  Pierre Billon - split - the sound CVs stay here, the rest moved to CV500-CV512_MS-MN-FS.xml -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       

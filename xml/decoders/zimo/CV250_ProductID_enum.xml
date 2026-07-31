@@ -18,7 +18,7 @@
 <!--    added some missing and new Zimo decoder                             -->
 <!-- version 1.2 - Ronald Kuhn - 2024-05-02                                 -->
 <!--    added new Zimo MS-decoder                             -->
-<!-- version 1.3 - Pierre Billon - 2026-07-28                              -->
+<!-- version 1.3 - Pierre Billon - 2026-07-31                              -->
 <!--    enabled MS001, the OEM MS decoder type; added MS481, MS501, MS920,  -->
 <!--    MS420 and MN150                                                     -->
 <!--    added the FS sound decoders FS850, FS890 and FS840              -->
