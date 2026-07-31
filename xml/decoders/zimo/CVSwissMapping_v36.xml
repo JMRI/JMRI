@@ -17,6 +17,7 @@
 <!-- version 1.3 - Ronald Kuhn, disable groups 14 to 17 for non Sounddecoder, 25 April 2019-->
 <!-- version 1.4 - Nigel Cliffe. Added masks to group members (A1 Fwd, A2 Fwd, A1 Rev, A2 Rev) and dimming group selection. Added dimming levels,  14 Feb 2021 -->
 <!-- version 1.5 - Ronald Kuhn, add german translation, 29 November 2021-->
+<!-- version 1.6 - Pierre Billon - 2026-07-29 - tooltip on the dimming group selectors explaining the new "Off" value (6) added to Choice-DG.xml, tested on an MX620N -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>
@@ -144,6 +145,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 1 A2 Fw" CV="433" mask="XXXVVVVV">
     <enumVal>
@@ -157,6 +161,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 1 A1 Rw" CV="434" mask="XXXVVVVV">
     <enumVal>
@@ -170,6 +177,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 1 A2 Rw" CV="435" mask="XXXVVVVV">
     <enumVal>
@@ -183,6 +193,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 2 F-key" CV="436">
     <enumVal>
@@ -302,6 +315,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 2 A2 Fw" CV="439" mask="XXXVVVVV">
     <enumVal>
@@ -315,6 +331,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 2 A1 Rw" CV="440" mask="XXXVVVVV">
     <enumVal>
@@ -328,6 +347,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 2 A2 Rw" CV="441" mask="XXXVVVVV">
     <enumVal>
@@ -341,6 +363,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 3 F-key" CV="442">
     <enumVal>
@@ -459,6 +484,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 3 A2 Fw" CV="445" mask="XXXVVVVV">
     <enumVal>
@@ -472,6 +500,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 3 A1 Rw" CV="446" mask="XXXVVVVV">
     <enumVal>
@@ -485,6 +516,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 3 A2 Rw" CV="447" mask="XXXVVVVV">
     <enumVal>
@@ -498,6 +532,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 4 F-key" CV="448">
     <enumVal>
@@ -616,6 +653,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 4 A2 Fw" CV="451" mask="XXXVVVVV">
     <enumVal>
@@ -629,6 +669,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 4 A1 Rw" CV="452" mask="XXXVVVVV">
     <enumVal>
@@ -642,6 +685,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 4 A2 Rw" CV="453" mask="XXXVVVVV">
     <enumVal>
@@ -655,6 +701,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 5 F-key" CV="454">
     <enumVal>
@@ -773,6 +822,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 5 A2 Fw" CV="457" mask="XXXVVVVV">
     <enumVal>
@@ -786,6 +838,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 5 A1 Rw" CV="458" mask="XXXVVVVV">
     <enumVal>
@@ -799,6 +854,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 5 A2 Rw" CV="459" mask="XXXVVVVV">
     <enumVal>
@@ -812,6 +870,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 6 F-key" CV="460">
     <enumVal>
@@ -930,6 +991,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 6 A2 Fw" CV="463" mask="XXXVVVVV">
     <enumVal>
@@ -943,6 +1007,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 6 A1 Rw" CV="464" mask="XXXVVVVV">
     <enumVal>
@@ -956,6 +1023,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 6 A2 Rw" CV="465" mask="XXXVVVVV">
     <enumVal>
@@ -969,6 +1039,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 7 F-key" CV="466">
     <enumVal>
@@ -1087,6 +1160,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 7 A2 Fw" CV="469" mask="XXXVVVVV">
     <enumVal>
@@ -1100,6 +1176,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 7 A1 Rw" CV="470" mask="XXXVVVVV">
     <enumVal>
@@ -1113,6 +1192,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 7 A2 Rw" CV="471" mask="XXXVVVVV">
     <enumVal>
@@ -1126,6 +1208,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 8 F-key" CV="472">
     <enumVal>
@@ -1244,6 +1329,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 8 A2 Fw" CV="475" mask="XXXVVVVV">
     <enumVal>
@@ -1257,6 +1345,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 8 A1 Rw" CV="476" mask="XXXVVVVV">
     <enumVal>
@@ -1270,6 +1361,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 8 A2 Rw" CV="477" mask="XXXVVVVV">
     <enumVal>
@@ -1283,6 +1377,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 9 F-key" CV="478">
     <enumVal>
@@ -1401,6 +1498,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 9 A2 Fw" CV="481" mask="XXXVVVVV">
     <enumVal>
@@ -1414,6 +1514,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 9 A1 Rw" CV="482" mask="XXXVVVVV">
     <enumVal>
@@ -1427,6 +1530,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 9 A2 Rw" CV="483" mask="XXXVVVVV">
     <enumVal>
@@ -1440,6 +1546,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 10 F-key" CV="484">
     <enumVal>
@@ -1558,6 +1667,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 10 A2 Fw" CV="487" mask="XXXVVVVV">
     <enumVal>
@@ -1571,6 +1683,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 10 A1 Rw" CV="488" mask="XXXVVVVV">
     <enumVal>
@@ -1584,6 +1699,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 10 A2 Rw" CV="489" mask="XXXVVVVV">
     <enumVal>
@@ -1597,6 +1715,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
      <variables>
         <qualifier>
@@ -1706,6 +1827,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 11 A2 Fw" CV="493" mask="XXXVVVVV">
     <enumVal>
@@ -1719,6 +1843,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 11 A1 Rw" CV="494" mask="XXXVVVVV">
     <enumVal>
@@ -1732,6 +1859,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 11 A2 Rw" CV="495" mask="XXXVVVVV">
     <enumVal>
@@ -1745,6 +1875,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
 
   <variable item="Swiss Mapping Group 12 F-key" CV="496">
@@ -1849,6 +1982,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 12 A2 Fw" CV="499" mask="XXXVVVVV">
     <enumVal>
@@ -1862,6 +1998,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 12 A1 Rw" CV="500" mask="XXXVVVVV">
     <enumVal>
@@ -1875,6 +2014,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 12 A2 Rw" CV="501" mask="XXXVVVVV">
     <enumVal>
@@ -1888,6 +2030,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
 
   <variable item="Swiss Mapping Group 13 F-key" CV="502">
@@ -1992,6 +2137,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 13 A2 Fw" CV="505" mask="XXXVVVVV">
     <enumVal>
@@ -2005,6 +2153,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 13 A1 Rw" CV="506" mask="XXXVVVVV">
     <enumVal>
@@ -2018,6 +2169,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 13 A2 Rw" CV="507" mask="XXXVVVVV">
     <enumVal>
@@ -2031,6 +2185,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
 
  <variable item="Swiss Mapping Group 14 F-key" CV="800" exclude="130,177,195,197,199,201,211,218,240">
@@ -2135,6 +2292,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 14 A2 Fw" CV="803" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2148,6 +2308,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 14 A1 Rw" CV="804" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2161,6 +2324,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 14 A2 Rw" CV="805" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2174,6 +2340,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
 
  <variable item="Swiss Mapping Group 15 F-key" CV="806" exclude="130,177,195,197,199,201,211,218,240">
@@ -2278,6 +2447,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 15 A2 Fw" CV="809" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2291,6 +2463,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 15 A1 Rw" CV="810" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2304,6 +2479,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 15 A2 Rw" CV="811" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2317,6 +2495,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
 
  <variable item="Swiss Mapping Group 16 F-key" CV="812" exclude="130,177,195,197,199,201,211,218,240">
@@ -2421,6 +2602,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 16 A2 Fw" CV="815" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2434,6 +2618,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 16 A1 Rw" CV="816" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2447,6 +2634,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 16 A2 Rw" CV="817" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2460,6 +2650,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
 
  <variable item="Swiss Mapping Group 17 F-key" CV="818" exclude="130,177,195,197,199,201,211,218,240">
@@ -2564,6 +2757,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 17 A2 Fw" CV="821" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2577,6 +2773,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 17 A1 Rw" CV="822" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2590,6 +2789,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 17 A2 Rw" CV="823" mask="XXXVVVVV" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
@@ -2603,6 +2805,9 @@
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
+  <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+  <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+  <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
   </variable>
 
 </variables>

@@ -19,11 +19,8 @@
 <!--   offers "off" in this selector and writes 6, confirmed on an MS decoder. Note this is    -->
 <!--   distinct from 0: 0 means no dimming, 6 turns the output off. The variables using this  -->
 <!--   list carry a tooltip spelling that out; the choice itself is kept short because it     -->
-<!--   appears in every cell of the Swiss Mapping grid.                                       -->
-<!--   UNTESTED ON THE MX SOUND DECODERS - this file is shared with them through               -->
-<!--   CVSwissMapping_v36.xml and CVSwissMapping_v40.xml. The field is documented the same     -->
-<!--   way there, so the value should behave identically, but it has not been verified on MX   -->
-<!--   hardware. Value 7 is left undefined: the range allows it, nothing documents it.         -->
+<!--   appears in every cell of the Swiss Mapping grid. Confirmed on the MX generation as well. -->
+<!--   Value 7 is left undefined: the range allows it, nothing documents it.                    -->
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>

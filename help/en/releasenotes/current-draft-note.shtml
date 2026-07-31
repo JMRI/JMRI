@@ -459,6 +459,8 @@
                 <li>No more sound CVs for MN non-sound decoders.</li>
                 <li>ZIMO sound levels now in the standard Sound Levels pane (including for MX
                     decoders), to avoid an empty Sound Levels pane.</li>
+                <li>New "Off" option for the Swiss Mapping dimming groups (also for older MX
+                    decoders).</li>
                 <li></li>
             </ul>
 
