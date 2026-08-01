@@ -243,7 +243,6 @@
                     item="Routes Enable" default="0" infoOnly="no"
                     tooltip="OpSw16">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-              <label>Routes are</label>
           </variable>
 
           <variable CV="115.17" comment="Crossing Gate on Output 1"
