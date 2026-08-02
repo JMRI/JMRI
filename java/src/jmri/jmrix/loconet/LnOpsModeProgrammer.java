@@ -46,6 +46,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     ProgListener p;
     boolean doingWrite;
     boolean boardOpSwWriteVal;
+    boolean bdOpsAccessRetrying = false;
+    String  bdOpsAccessCV = "";
+    int     bdOpsAccessValue;
+    
     private int artNum;
     private javax.swing.Timer bdOpSwAccessTimer = null;
     private javax.swing.Timer sv2AccessTimer = null;
@@ -114,6 +118,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             }
             p = pL;
             doingWrite = true;
+            bdOpsAccessCV = CV;
+            bdOpsAccessValue = val;
+
             // Board programming mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
             String[] parts = CV.split("\\.");
@@ -300,6 +307,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             }
             p = pL;
             doingWrite = false;
+            bdOpsAccessCV = CV;
+
             // Board programming mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
             parts = CV.split("\\.");
@@ -489,6 +498,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     @Override
     public void message(LocoNetMessage m) {
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
+            
+            bdOpsAccessRetrying = false;
+
             // are we programming? If not, ignore
             if (p == null) {
                 // This condition happens due to e.g. an error, but also 
@@ -907,13 +919,29 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     public String getAddress() {
         return getAddressNumber() + " " + getLongAddress();
     }
-
+    
     void initializeBdOpsAccessTimer() {
         if (bdOpSwAccessTimer == null) {
             bdOpSwAccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
-                ProgListener temp = p;
-                p = null;
-                notifyProgListenerEnd(temp, 0, ProgListener.FailedTimeout);
+                if (!bdOpsAccessRetrying) {
+                    bdOpsAccessRetrying = true;
+                    ProgListener temp = p;
+                    p = null;
+                    try {
+                        if (doingWrite) {
+                            writeCV(bdOpsAccessCV, bdOpsAccessValue, temp);
+                        } else {
+                            readCV(bdOpsAccessCV, temp);
+                        }
+                    } catch (jmri.ProgrammerException ex) {
+                        log.error("Unexpected exception while retrying in LOCONETBDOPSWMODE", ex);
+                    }
+                } else {
+                    ProgListener temp = p;
+                    p = null;
+                    bdOpsAccessRetrying = false;
+                    notifyProgListenerEnd(temp, 0, ProgListener.FailedTimeout);
+                }
             });
         bdOpSwAccessTimer.setInitialDelay(1000);
         bdOpSwAccessTimer.setRepeats(false);

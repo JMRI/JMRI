@@ -89,17 +89,20 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>SlotMonitor: Add ability to hide / move columns.</li>
-				<li>N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
-				<li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
-				<li>If purgeing is disabled in the Command Station so is slow scanning.</li>
-				<li>A custom interval, in seconds can be implemented by placing the value in jmri.jmrix.loconet.SlotManager.slowScanIntervalOveride.</li>
-				<li>A value of -1 stops slowscanning.</li>
+                <li>SlotMonitor update: 
+                <ul>
+                    <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
+				    <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
+				    <li>If purging is disabled in the Command Station so is slow scanning.</li>
+				    <li>A custom interval, in seconds can be implemented by placing the value in jmri.jmrix.loconet.SlotManager.slowScanIntervalOveride. 
+				            A value of -1 stops slowscanning.</li>
+                </ul>
                 <li>Remove some extra messages when configuring with the board-level tools
-                    in the LocoNet menu</li>
+                            in the LocoNet menu</li>
                 <li>Added a new programming facade "Digitrax OpSw Word Programming" for
-                    programming at the board level for e.g. DS64's.</li>
+                            programming at the board level for e.g. DS64's.</li>
                 <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
+                <li>Timeouts when programming the Op Switches on Digitrax boards (e.g. DS64, etc) will automatically be retried once.</li>
                 <li>Added interpretation of some BDL716 configuration messages to
                     LocoNet Monitor.</li>
             </ul>
@@ -554,6 +557,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New feature, you can now control which road names and load types a track can service.</li>
+            <li>Fixed a problem with spurs with schedules in quick service mode.</li>
         </ul>
 
    <h3>Panel Editor</h3>
