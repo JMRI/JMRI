@@ -723,7 +723,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added coasting and key-notching features in Diesel3Sound.java.</li>
         </ul>
 
    <h3>Z21 Server</h3>
