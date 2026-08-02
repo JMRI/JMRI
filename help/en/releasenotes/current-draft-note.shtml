@@ -105,6 +105,7 @@
                 <li>Timeouts when programming the Op Switches on Digitrax boards (e.g. DS64, etc) will automatically be retried once.</li>
                 <li>Added interpretation of some BDL716 configuration messages to
                     LocoNet Monitor.</li>
+                <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.
             </ul>
 
         <h4>Maple</h4>
