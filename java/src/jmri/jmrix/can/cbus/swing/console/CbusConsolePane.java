@@ -103,6 +103,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         }
         displayPane.dispose();
         statsPane.dispose();
+        logPane.dispose();
         super.dispose();
     }
 
@@ -316,10 +317,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         protected CbusHighlightPainter(Color color) {
             super(color);
         }
-    }
-
-    protected String getMemoUserName(){
-        return memo.getUserName();
     }
 
     /**

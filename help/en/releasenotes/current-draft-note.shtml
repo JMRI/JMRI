@@ -27,6 +27,7 @@
         <h4>CBUS</h4>
             <ul>
                 <li>Console Connection Logging - Default filename now includes connection name.</li>
+                <li>On opening the Console, Logging to File resumes in an empty file if active when the previous console is closed.</li>
             </ul>
 
         <h4>C/MRI</h4>
