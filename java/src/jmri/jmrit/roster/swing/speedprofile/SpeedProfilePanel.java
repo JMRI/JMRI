@@ -1394,13 +1394,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 String sensorType = e.getChild("sensorname").getText();
                 switch (sensorType) {
                     case "sensorAPanel":
-                        sensorAPanel.setDefaultNamedBean(manager.getByUserName(e.getChild("sensorvalue").getText()));
+                        sensorAPanel.setDefaultNamedBean(manager.getSensor(e.getChild("sensorvalue").getText()));
                         break;
                     case "sensorBPanel":
-                        sensorBPanel.setDefaultNamedBean(manager.getByUserName(e.getChild("sensorvalue").getText()));
+                        sensorBPanel.setDefaultNamedBean(manager.getSensor(e.getChild("sensorvalue").getText()));
                         break;
                     case "sensorCPanel":
-                        sensorCPanel.setDefaultNamedBean(manager.getByUserName(e.getChild("sensorvalue").getText()));
+                        sensorCPanel.setDefaultNamedBean(manager.getSensor(e.getChild("sensorvalue").getText()));
                         break;
                     default:
                         log.warn("Invalid Sensor found in DecoderProSpeedProfile.xml");

@@ -605,7 +605,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Roster speed profile added ability to specify distance in inches or mm.</li>
+            <li>Roster speed profile added ability to specify distance in inches or mm. Fix txt visibility.</li>
         </ul>
 
     <h3>Routes</h3>
