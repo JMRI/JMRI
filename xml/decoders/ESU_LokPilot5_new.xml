@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/ESU_LokPilot5_new.xsl"?>
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
+                allowResetDefaults="no">
+    
+    <version author="Heiko Rosemann" version="1" lastUpdated="20260803"/>
+
+    <decoder>
+        <family name="LokPilot 5 new" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+            <model model="LokPilot 5 micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
+                <output name="1,35" label="|"/> <!-- suppress unused item -->
+                <size length="21.0" width="10.6" height="4.0" units="mm"/>
+            </model>
+            <model model="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+                <output name="1,35" label="|"/> <!-- suppress unused item -->
+                <size length="21.0" width="10.6" height="4.0" units="mm"/>
+            </model>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v5lpOutputLabels.xml"/>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">
+                    <text>Light</text>
+                    <text xml:lang="de">Licht</text>
+                </functionlabel>
+                <functionlabel num="1" lockable="true">
+                    <text>Bell</text>
+                    <text xml:lang="de">Sound</text>
+                </functionlabel>
+                <functionlabel num="2" lockable="false">
+                    <text>Horn</text>
+                    <text xml:lang="de">Pfeife / Signalhorn</text>
+                </functionlabel>
+            </functionlabels>
+            <soundlabels>
+                <soundlabel num="33">
+                    <text>Automatic brake sound</text>
+                    <text xml:lang="de">automatischer Bremssound</text>
+                </soundlabel>
+                <soundlabel num="34">
+                    <text>Gear shift sound</text>
+                    <text xml:lang="de">Schaltgeräusch</text>
+                </soundlabel>
+            </soundlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>High Access via Double Index</name>
+                <parameter name="Max Regular CV address">256</parameter>
+                <parameter name="High Address CV">96</parameter>
+                <parameter name="Low Address CV">97</parameter>
+                <parameter name="Access Register CV">99</parameter>
+                <parameter name="Modulo">100</parameter>
+            </capability>
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+                <parameter name="skipDupIndexWrite">true</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v5standardCVs.xml"/>
+        </variables>
+
+    </decoder>
+</decoder-config>
