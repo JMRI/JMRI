@@ -49,7 +49,8 @@
 
         <h4>Direct</h4>
             <ul>
-                <li></li>
+              <li>Added LokPilot 5 micro DCC Direct Atlas Legacy</li>
+              <li>Renamed LokPilot 5 Micro Next18 DCC to LokPilot 5 micro Next18 DCC (capitalization) to match ESU</li>
             </ul>
 
         <h4>ESU</h4>
