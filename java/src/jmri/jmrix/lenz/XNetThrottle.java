@@ -40,6 +40,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected int requestState = THROTTLEIDLE;
 
+    // Consecutive retransmittable (busy/communication) error replies seen for
+    // the current outstanding request; guards against a stuck state machine
+    // when the command station keeps answering busy (see countRetransmittableError).
+    private int retransmittableErrorCount = 0;
+    private static final int MAX_RETRANSMITTABLE_ERRORS = 5;
+
     protected int address;
 
     // Get the number of valid functions from the software version number.
@@ -574,6 +580,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
                 log.trace("Communications error occurred - message received was: {}", l);
+                countRetransmittableError();
             } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
@@ -714,10 +721,21 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     // And then we want to request the Function Momentary Status
                     // for functions F13-F28
                     sendFunctionHighMomentaryStatusRequest();
+                } else {
+                    // The reply to the outstanding request has been consumed,
+                    // so no timeout will ever fire for it.  Without this
+                    // branch an unrecognized subtype leaves requestState stuck
+                    // (never returns to THROTTLEIDLE) and every command queued
+                    // afterwards is silently held back forever.
+                    log.debug("Unhandled LOCO_INFO_RESPONSE subtype {} while in THROTTLESTATSENT, resuming queue",
+                            l.getElement(1));
+                    requestState = THROTTLEIDLE;
+                    sendQueuedMessage();
                 }
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
                 log.trace("Communications error occurred - message received was: {}", l);
+                countRetransmittableError();
             } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
@@ -1062,6 +1080,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * Send message from queue.
      */
     protected synchronized void sendQueuedMessage() {
+        // a new request is being started (or the previous one completed):
+        // clear the consecutive-busy guard counter.
+        retransmittableErrorCount = 0;
 
         RequestMessage msg;
         // check to see if the queue has a message in it, and if it does,
@@ -1082,6 +1103,23 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             log.debug("message queue empty");
             // if the queue is empty, set the state to idle.
             requestState = THROTTLEIDLE;
+        }
+    }
+
+    /**
+     * Count a retransmittable (busy/communication) error reply received while
+     * a request is outstanding.  The traffic controller retries the message
+     * itself, but if the command station keeps answering busy the retry/error
+     * cycle can repeat with requestState never returning to idle.  After
+     * MAX_RETRANSMITTABLE_ERRORS consecutive errors, reset the state machine
+     * and restart the queue so the throttle does not stay stuck forever.
+     */
+    private void countRetransmittableError() {
+        if (++retransmittableErrorCount >= MAX_RETRANSMITTABLE_ERRORS) {
+            log.warn("Throttle {}: {} consecutive busy/communication errors, resetting request state",
+                    getDccAddress(), retransmittableErrorCount);
+            requestState = THROTTLEIDLE;
+            sendQueuedMessage();
         }
     }
 

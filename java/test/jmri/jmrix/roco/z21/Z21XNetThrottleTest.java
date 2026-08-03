@@ -7,6 +7,7 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -249,6 +250,84 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+    }
+
+    /**
+     * Z21 flavour of the parent test: the status request message and the
+     * commands queued behind it differ, but the stuck-state behaviour being
+     * checked is the one inherited from XNetThrottle.message(XNetReply).
+     */
+    @Override
+    @Test
+    @Timeout(1000)
+    public void testUnknownLocoInfoResponseSubtypeDoesNotStallQueue() {
+        int n = tc.outbound.size();
+        Z21XNetThrottle t = (Z21XNetThrottle) instance;
+        initThrottle(t, n);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 F0 00 03 10", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // answer with an unrecognized LOCO_INFO_RESPONSE sub-type, which the
+        // Z21 throttle hands over to the standard XpressNet handling.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE3);
+        m.setElement(1, 0x60);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x83);
+        t.message(m);
+
+        // the throttle has to be back to idle, so the next command reaches the
+        // traffic controller instead of piling up in the internal queue.
+        n = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+
+        assertEquals( n + 1, tc.outbound.size(),
+            "Speed message sent after unrecognized LOCO_INFO_RESPONSE sub-type");
+    }
+
+    /**
+     * Z21 flavour of the parent test.  Speed and function commands are queued
+     * with the THROTTLEIDLE state here, so the outstanding request used to
+     * hold the queue is a status request instead of a speed command.
+     */
+    @Override
+    @Test
+    @Timeout(1000)
+    public void testRepeatedCommandStationBusyDoesNotStallQueue() {
+        int n = tc.outbound.size();
+        Z21XNetThrottle t = (Z21XNetThrottle) instance;
+        initThrottle(t, n);
+        n = tc.outbound.size();
+
+        // send a status request, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( n + 1, tc.outbound.size(), "Throttle Information Request Message sent");
+
+        // and queue a command behind it; it can not go out while the status
+        // request is still outstanding.
+        n = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( n, tc.outbound.size(),
+            "Speed message held while a request is outstanding");
+
+        // the command station answers busy over and over.
+        for (int i = 0; i < 5; i++) {
+            XNetReply m = new XNetReply();
+            m.setElement(0, 0x61);
+            m.setElement(1, 0x81);
+            m.setElement(2, 0xE3);
+            t.message(m);
+        }
+
+        JUnitAppender.assertWarnMessage(
+            "Throttle 3: 5 consecutive busy/communication errors, resetting request state");
+        assertEquals( n + 1, tc.outbound.size(),
+            "Queued speed message released after repeated busy answers");
     }
 
     @Override
