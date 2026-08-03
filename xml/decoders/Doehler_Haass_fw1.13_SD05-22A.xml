@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-<version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260727"/>
+<version version="2" author="Pierre Billon" lastUpdated="20260727"/>
 <!--  Firmware 1.13.101 now identified; added CV137 bit 6 and CV28 bit 2, both new in 1.13  -->
 <version version="1" author="Ronald Kuhn" lastUpdated="2023-07-22"/>
 <!--  Creation Decoder template for the Doehler & Haass combo sound decoder with Firmware v1.13  -->

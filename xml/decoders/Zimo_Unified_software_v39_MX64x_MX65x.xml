@@ -36,7 +36,7 @@
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.7" lastUpdated="2020/05/02"/>
   <!-- v1.7,  added version 37 firmware capabilities,  Ronald Kuhn, 28 Feb 2018 -->
   <!-- v1.8,  merged MX64x/MX65x-Decoder and added version 39 firmware capabilities,  Ronald Kuhn, 02 May 2020 -->
-  <version author="Pierre Billon   pierre.bln@me.com" version="1.8" lastUpdated="2021/03/06"/>
+  <version author="Pierre Billon" version="1.8" lastUpdated="2021/03/06"/>
   <!-- v1.9,  added sound decoder MX605 (special Kato version for N-scale ICE 4) . Due to the combination with MX605FL & MX605SL installed in same engine, Front/rear lights and FO 1 for interior lighting listed as functons of this decoder,  Pierre Billon, 06 Mar 2021 -->
   <!-- v1.9.1,  added replacement-options version 40 firmware capabilities,  Ronald Kuhn, 30 November 2021 -->
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.9.2" lastUpdated="2022/10/30"/>

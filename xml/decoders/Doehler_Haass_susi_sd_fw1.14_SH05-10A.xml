@@ -12,11 +12,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260727"/>
+  <version version="2" author="Pierre Billon" lastUpdated="20260727"/>
   <!--  Corrected the SH05A model comment  -->
   <version version="1.1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230731"/>
   <!--  Added update paths to newest fw 1.15.112 -->
-  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+  <version version="1" author="Pierre Billon" lastUpdated="20210312"/>
   <!--  Creation, based on Doehler_Haass_susi_sd_SH10A.xml
         -->
   <decoder>
