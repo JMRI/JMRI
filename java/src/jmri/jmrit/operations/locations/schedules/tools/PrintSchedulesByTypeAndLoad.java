@@ -10,7 +10,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.tools.PrintTrainsServingLocation;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
@@ -62,7 +61,7 @@ public class PrintSchedulesByTypeAndLoad {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
+            log.error("Error printing: {}", we.getLocalizedMessage());
         }
     }
 
@@ -176,5 +175,5 @@ public class PrintSchedulesByTypeAndLoad {
         return TrainCommon.padAndTruncate(s, length) + SPACE;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PrintTrainsServingLocation.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintSchedulesByTypeAndLoad.class);
 }
