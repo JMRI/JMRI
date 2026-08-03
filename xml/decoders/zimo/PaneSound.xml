@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 2.0 - Pierre Billon - 2026-07-31 - add switch input 4 playback time (CV392) -->
 <!-- version 1.9 - Ronald Kuhn - small visual improvement -->
 <!-- version 1.8 - Ronald Kuhn - add CVs from v40+ -->
 <!-- version 1.7 - Ronald Kuhn - add CVs from v37+ -->
@@ -58,6 +59,7 @@
     <display item="Switch input 1 playback time"/>
     <display item="Switch input 2 playback time"/>
     <display item="Switch input 3 playback time"/>
+    <display item="Switch input 4 playback time"/>
     <label>
       <text> </text>
     </label>
