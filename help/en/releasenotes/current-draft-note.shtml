@@ -144,7 +144,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>LccPro will now prompt you for a backup directory the first time
+                    you do a node backup from the main screen if the location hasn't already been set.</li>
             </ul>
 
         <h4>Powerline</h4>
