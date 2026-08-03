@@ -186,6 +186,12 @@
                         <choice xml:lang="de">Servo Dampflok Umsteuerung</choice>
                     </enumChoice>
                 </xsl:if>
+                <enumChoice choice="Trigger smoke chuff (Edge Toggle)" value="35">                    
+                </enumChoice>
+                <xsl:if test="$type = 6 or $type = 7 or $type = 16 or $type = 17">
+                    <enumChoice choice="Servo output Pantograph bouncing" value="36">
+                    </enumChoice>
+                </xsl:if>
                 
                     
             </enumVal>
