@@ -94,6 +94,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         toolMenu.addSeparator();
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintSchedulesByTypeAndLoadAction(true, this));
+        toolMenu.add(new PrintSchedulesByTypeAndLoadAction(false, this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
@@ -157,7 +160,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // now load data
         for (Location location : locationManager.getLocationsByNameList()) {
             // only spurs have schedules
-            if (!location.hasSpurs())
+            if (!location.hasSchedules())
                 continue;
             addItemLeft(locationsPanel, new JLabel(location.getName()), 0, row++);
             // now look for a spur with a schedule
@@ -226,6 +229,20 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         locationsPanel.revalidate();
         revalidate();
         repaint();
+    }
+    
+    public String getCarType() {
+        if (allTypesCheckBox.isSelected()) {
+            return null;
+        }
+        return (String) typesComboBox.getSelectedItem();
+    }
+
+    public String getCarLoad() {
+        if (allLoadsCheckBox.isSelected()) {
+            return null;
+        }
+        return (String) loadsComboBox.getSelectedItem();
     }
 
     @Override
