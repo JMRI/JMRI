@@ -349,7 +349,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         // update count
         int inUseSlotCount = 0;
         for (var slot : memo.getSlotManager().getSlots()) {
-            if (slot.slotStatus() == LnConstants.LOCO_IN_USE) {
+            if (!slot.isSystemSlot() && slot.slotStatus() == LnConstants.LOCO_IN_USE) {
                 inUseSlotCount++;
             }
         }
