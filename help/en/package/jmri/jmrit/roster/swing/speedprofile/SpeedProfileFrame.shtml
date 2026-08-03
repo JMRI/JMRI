@@ -21,8 +21,10 @@
       Primary goal is to help getting a loco to stop, or change speed (Ramping) within a specific distance using known
       Throttle settings.</p>
 
-      <p>The tool is accessed through the Roster -&gt; Speed Profiling menu item.<br>
-      It works on the principle of timing a loco over a known distance at a given speed step, in
+      <p>The tool is accessed through PanelPro's Roster menu -&gt; Speed Profiling menu item
+      or DecoderPro's Actions menu  -&gt; Speed Profiling menu item.
+      
+      <p>It works on the principle of timing a loco over a known distance at a given speed step, in
       both the forward and reverse direction. Currently it requires three sensors which monitor the
       occupancy around a section of track. Ideally the section of track that the timed runs are
       performed over should be straight, and a minimum of 1 Meter long; the longer the length the

@@ -617,6 +617,9 @@
         <name xml:lang="nl">Multi-Decoder aansturing</name>
         <adapter>jmri.jmrit.dualdecoder.DualDecoderToolAction</adapter>
     </node>
+    <node name="Speed Profiling">
+        <adapter>jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction</adapter>
+    </node>
     <node>separator</node><!-- separator -->
     <node name="Start WiThrottle Server">
         <name xml:lang="fr">Lancer Serveur WiThrottle</name>
