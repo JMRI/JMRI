@@ -144,7 +144,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Update OpenLCB_Java library to pick up an improvement in 
+                    how the configuration windows are rendered.</li>
             </ul>
 
         <h4>Powerline</h4>
