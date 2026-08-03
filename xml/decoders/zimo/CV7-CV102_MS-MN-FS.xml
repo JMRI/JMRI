@@ -7,6 +7,7 @@
 <!-- version 1.2 26 May 2023  Ronald Kuhn - added values specific for MS- an MN-series.   -->
 <!-- version 1.3 22 June 2023  Ronald Kuhn - added german translation.   -->
 <!-- version 1.4 02 May 2024  Ronald Kuhn - new decoder excluded   -->
+<!-- version 1.5  31 July 2026  Pierre Billon - renamed from CV1-CV99_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV7-97). Excluded MS491 and MS591N18 from mfx, both stated non-mfx-able by ZIMO Also: added CV99 (RailCom ID 7 transmissions), CV100 and CV101 (asymmetry voltage and its correction factor) and CV102 (SUSI slave 3); corrected the CV9 default from 0 to 55; excluded the FS890N18 from mfx, stated non-mfx-able by ZIMO; renamed from CV7-CV97_MS-MN-FS.xml to match the range now held -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -32,12 +33,21 @@
     <label xml:lang="nl">Fabrikant ID: </label>
   </variable>
 
-  <variable item="EMF Option 1" CV="9" default="0" >
+  <!-- Default 55, not 0: ZIMO state "the default value of 55 represents a medium setting", and
+       55 is the most common value across read decoders. The range is left unbounded because the
+       valid values are not contiguous - 0, then 11 to 99, then 100 to 199 for the coreless motor
+       settings from software 4.215 - so any single min/max would either block a legal value or
+       admit an illegal one. -->
+  <variable item="EMF Option 1" CV="9" default="55" >
     <decVal/>
     <label>Motor Frequency and EMF sample Rate</label>
+    <label xml:lang="fr">Fréquence moteur et taux d'échantillonnage FEM</label>
     <label xml:lang="it">Frequenza Motore e Freq.Campionamento EMF</label>
     <label xml:lang="cs">Frekvence motoru a EMF vzorkovací míra</label>
     <label xml:lang="de">Motoransteuerungsperiode bzw. – frequenz und EMK-Abtastrate</label>
+    <tooltip>Tens digit 1-4 samples slower than default (less noise), 6-9 faster (against juddering); ones digit 1-4 shortens the sampling time, 5-9 lengthens it. Hundreds digit 1 selects the coreless motor settings.</tooltip>
+    <tooltip xml:lang="fr">Le chiffre des dizaines, 1 à 4, échantillonne plus lentement que par défaut (moins de bruit), 6 à 9 plus vite (contre les à-coups) ; le chiffre des unités, 1 à 4, raccourcit le temps d'échantillonnage, 5 à 9 l'allonge. Le chiffre des centaines à 1 sélectionne les réglages pour moteurs sans fer.</tooltip>
+    <tooltip xml:lang="de">Zehnerstelle 1-4 tastet langsamer als der Standard ab (weniger Geräusch), 6-9 schneller (gegen Ruckeln); Einerstelle 1-4 verkürzt die Abtastzeit, 5-9 verlängert sie. Hunderterstelle 1 wählt die Einstellungen für eisenlose Motoren.</tooltip>
   </variable>
 
   <variable item="Motorola Subsequent addresses" CV="10" default="0">
@@ -85,7 +95,7 @@
       <label>Decoder Operating Mode MM</label>
       <label xml:lang="de">MM Betrieb</label>
   </variable>
-    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,122,124,125,127">
+    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,12,15,65,122,124,125,127">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode MFX</label>
       <label xml:lang="de">mfx Betrieb</label>
@@ -489,11 +499,31 @@
     <label xml:lang="cs">Zpřístupnit RailCom</label>
     <label xml:lang="de">RailCom</label>
   </variable>
-   <variable CV="28" item="Railcom voltage signal" default="0" mask="VXXXXXXX">
+   <variable CV="28" item="Railcom high voltage" default="0" mask="XVXXXXXX" include="7,9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Railcom voltage signal</label>
-    <label xml:lang="de">Railcom-Spannungsmeldung</label>
+    <label>RailCom high voltage (large scale only)</label>
+    <label xml:lang="fr">RailCom haute tension (grande échelle uniquement)</label>
+    <label xml:lang="de">RailCom Hochspannung (nur Großbahn)</label>
+  </variable>
+  <variable CV="28" item="DCC-A registration" default="1" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>DCC-A automatic registration (RCN-218)</label>
+    <label xml:lang="fr">Enregistrement automatique DCC-A (RCN-218)</label>
+    <label xml:lang="de">DCC-A automatische Anmeldung (RCN-218)</label>
     <label xml:lang="cs">RailCom signál napětí</label>
+  </variable>
+  <!-- CV30 is the decoder self-test and its error readout: writing 255 or 254 starts a test,
+       reading returns an error code, writing 0 clears it. It is a diagnostic procedure rather
+       than a setting, so it is deliberately NOT placed on any pane for now - it is defined here
+       only so the value can be read and cleared when needed. -->
+  <variable CV="30" item="Decoder self-test" default="1">
+    <decVal min="0" max="255"/>
+    <label>Decoder self-test and error code</label>
+    <label xml:lang="fr">Autotest du décodeur et code d'erreur</label>
+    <label xml:lang="de">Decoder-Selbsttest und Fehlercode</label>
+    <tooltip>Write 255 for the simple self-test, 254 for the extended one (needs exactly 18 V on the programming track). Reading returns the error code; write 0 to clear it.</tooltip>
+    <tooltip xml:lang="fr">Écrire 255 pour l'autotest simple, 254 pour l'autotest étendu (nécessite exactement 18 V sur la voie de programmation). La lecture renvoie le code d'erreur ; écrire 0 pour l'effacer.</tooltip>
+    <tooltip xml:lang="de">255 schreiben für den einfachen Selbsttest, 254 für den erweiterten (benötigt genau 18 V am Programmiergleis). Das Lesen liefert den Fehlercode; 0 schreiben zum Löschen.</tooltip>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
  <!--group exclude="253"-->
@@ -1829,6 +1859,91 @@
       <tooltip>Key to change between Default- and Consist-address</tooltip>
       <tooltip xml:lang="de">Taste zum Umschalten zwischen Hauptadresse und Consistadresse.</tooltip>
       <tooltip xml:lang="cs">Tlačítko které přepíná mezi výchozí adresou a adresou soupravy.</tooltip>
+  </variable>
+
+  <!-- CV #99 to #102. CV #99 and #100 arrived in software 4.254 and 4.227 respectively, so they
+       are left ungated and serve the version 4 definitions as well. CV #101 (SW 5.15) and
+       CV #102 (SW 5.29) are gated to the version 5 families. -->
+
+  <variable CV="99" mask="XXXXXXXV" item="RailCom ID 7 deactivate speed" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Deactivate km/h reporting</label>
+    <label xml:lang="fr">Désactiver le report de la vitesse en km/h</label>
+    <label xml:lang="de">Km/h-Aussendung deaktivieren</label>
+    <tooltip>Stops the decoder sending the speed in km/h as a RailCom ID 7 message.</tooltip>
+    <tooltip xml:lang="fr">Empêche le décodeur d'émettre la vitesse en km/h dans un message RailCom ID 7.</tooltip>
+    <tooltip xml:lang="de">Unterbindet die Aussendung der Geschwindigkeit in km/h als RailCom-ID-7-Meldung.</tooltip>
+  </variable>
+
+  <variable CV="99" mask="XXXXXXVX" item="RailCom ID 7 deactivate revolutions" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Deactivate revolutions reporting</label>
+    <label xml:lang="fr">Désactiver le report du nombre de tours</label>
+    <label xml:lang="de">U/min-Aussendung deaktivieren</label>
+    <tooltip>Stops the decoder sending the motor revolutions as a RailCom ID 7 message.</tooltip>
+    <tooltip xml:lang="fr">Empêche le décodeur d'émettre le nombre de tours moteur dans un message RailCom ID 7.</tooltip>
+    <tooltip xml:lang="de">Unterbindet die Aussendung der Motordrehzahl als RailCom-ID-7-Meldung.</tooltip>
+  </variable>
+
+  <variable CV="99" mask="XXXXXVXX" item="RailCom ID 7 deactivate temperature" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Deactivate temperature reporting</label>
+    <label xml:lang="fr">Désactiver le report de la température</label>
+    <label xml:lang="de">Temperatur-Aussendung deaktivieren</label>
+    <tooltip>Stops the decoder sending its temperature as a RailCom ID 7 message.</tooltip>
+    <tooltip xml:lang="fr">Empêche le décodeur d'émettre sa température dans un message RailCom ID 7.</tooltip>
+    <tooltip xml:lang="de">Unterbindet die Aussendung der Decodertemperatur als RailCom-ID-7-Meldung.</tooltip>
+  </variable>
+
+  <variable CV="99" mask="XXXXVXXX" item="RailCom ID 7 deactivate track voltage" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Deactivate track voltage reporting</label>
+    <label xml:lang="fr">Désactiver le report de la tension de voie</label>
+    <label xml:lang="de">Gleisspannungs-Aussendung deaktivieren</label>
+    <tooltip>Stops the decoder sending the track voltage as a RailCom ID 7 message.</tooltip>
+    <tooltip xml:lang="fr">Empêche le décodeur d'émettre la tension de voie dans un message RailCom ID 7.</tooltip>
+    <tooltip xml:lang="de">Unterbindet die Aussendung der Gleisspannung als RailCom-ID-7-Meldung.</tooltip>
+  </variable>
+
+  <variable CV="100" item="Current asymmetry voltage" readOnly="yes" default="0">
+    <decVal min="0" max="255"/>
+    <label>Current asymmetry voltage (read only)</label>
+    <label xml:lang="fr">Tension d'asymétrie actuelle (lecture seule)</label>
+    <label xml:lang="de">Aktuelle Asymmetriespannung (nur lesen)</label>
+    <tooltip>The asymmetry the decoder measures right now, in tenths of a volt. Read on the main to set the ABC threshold in CV #134.</tooltip>
+    <tooltip xml:lang="fr">Asymétrie mesurée par le décodeur, en dixièmes de volt. À lire sur la voie principale pour régler le seuil ABC du CV #134.</tooltip>
+    <tooltip xml:lang="de">Die aktuell gemessene Asymmetrie in Zehntelvolt. Auf dem Hauptgleis auslesen, um die ABC-Schwelle in CV #134 einzustellen.</tooltip>
+  </variable>
+
+  <variable CV="101" item="Asymmetry voltage correction factor" default="0" include="MS Sound (version 5+),MN Non-Sound (version 5+)">
+    <decVal min="0" max="255"/>
+    <label>Asymmetry voltage correction factor</label>
+    <label xml:lang="fr">Facteur de correction de la tension d'asymétrie</label>
+    <label xml:lang="de">Korrekturfaktor zur Asymmetriespannung</label>
+    <tooltip>Corrects the value read in CV #100, needed on six-pin NEM 651 installations.</tooltip>
+    <tooltip xml:lang="fr">Corrige la valeur lue dans le CV #100, nécessaire sur les installations NEM 651 à six broches.</tooltip>
+    <tooltip xml:lang="de">Korrigiert den in CV #100 gelesenen Wert, erforderlich bei sechspoligen NEM-651-Einbauten.</tooltip>
+  </variable>
+
+  <variable CV="102" mask="XXXXXXXV" item="SUSI slave 3" default="0" include="MS Sound (version 5+),MN Non-Sound (version 5+)">
+    <enumVal>
+      <enumChoice choice="CV #980 to #1019 available for scripts" value="0">
+        <choice>CV #980 to #1019 available for scripts</choice>
+        <choice xml:lang="fr">CV #980 à #1019 disponibles pour les scripts</choice>
+        <choice xml:lang="de">CV #980 bis #1019 stehen Skripten zur Verfügung</choice>
+      </enumChoice>
+      <enumChoice choice="CV #980 to #1019 available for the SUSI bank 3" value="1">
+        <choice>CV #980 to #1019 available for the SUSI bank 3</choice>
+        <choice xml:lang="fr">CV #980 à #1019 disponibles pour la banque SUSI 3</choice>
+        <choice xml:lang="de">CV #980 bis #1019 stehen der SUSI-Bank 3 zur Verfügung</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Use of CV #980 to #1019</label>
+    <label xml:lang="fr">Utilisation des CV #980 à #1019</label>
+    <label xml:lang="de">Verwendung von CV #980 bis #1019</label>
+    <tooltip>Switches the CV #980 to #1019 block between the ZIMO scripts and a third SUSI slave.</tooltip>
+    <tooltip xml:lang="fr">Bascule le bloc CV #980 à #1019 entre les scripts ZIMO et un troisième esclave SUSI.</tooltip>
+    <tooltip xml:lang="de">Schaltet den Block CV #980 bis #1019 zwischen den ZIMO-Skripten und einem dritten SUSI-Slave um.</tooltip>
   </variable>
 
 </variables>

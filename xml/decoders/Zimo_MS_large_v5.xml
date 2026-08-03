@@ -14,33 +14,128 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 
-  <!--  Initial version, created from copy of Zimo Unified Software (version 40+) for the MX-series decoders -->
-  <!-- v1  Nigel Cliffe. 29th July 2022, initial version to get most panes functioning   -->
-  <!--             noted in Zimo manual on Page 3 for differences to the MX series, Motor Control largely done -->
-  <!-- v1.1  24 Nov 2022.  Nigel Cliffe   Rationalisation of sub-component files, now grouped in blocks of CVs -->
-  <!--  v1.2   21 Apr 2023.  Nigel Cliffe.  Updating MS950/MS990 definitions, removed filter on CV250 from this file (all decoders in MS series support CV250, this was legacy filter from old MX-series decoders) and altering "AltFunctionMap" pane to be MS-specific, rather than using the MX-series element   --> 
+  <!-- The large scale MS decoders, split out of Zimo_MS_small_v4.xml, which despite its name
+       carried MS950 and MS990. They differ from the small ones in more than size: variable low
+       voltage (CV264), high voltage RailCom (CV28 bit 6), 14 or 15 function outputs, smoke
+       generator connections and more servo and switch inputs.
+       The family name is deliberately unchanged, so existing roster entries keep resolving -
+       a family spanning several files is normal (Zimo Unified software spans 82). -->
 
-  <version author="Nigel Cliffe" version="1.2" lastUpdated="2023/04/21"/>
+  <!-- Version identification: CV #7 is the main software version and CV #65 the sub-version, so
+       the version 4 families are gated to CV #7 = 4 exactly while these run 5 to 42. The 42 is
+       deliberate, not a leftover - it keeps one open-ended family so a future 6.x decoder still
+       identifies as something if the definitions have not caught up. The open end moves to the
+       newest generation each time. -->
 
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.3" lastUpdated="2024/04/28"/>
-  <!-- v1.3,  added CV#250 with naming, MS560 and a small correction-->
+  <version author="Pierre Billon" version="1" lastUpdated="2026/07/31"/>
 
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.4" lastUpdated="2024/05/02"/>
-  <!-- v1.4,  added new decoder versions -->
-
-  <version author="Nigel Cliffe" version="1.5" lastUpdated="2025/03/14"/>
-  <version author="Pierre Billon" version="1.6" lastUpdated="2026/07/31"/>
-  <!--  added Zimo Scripting variables, CV837, CV843, CV981-1019  new pane for Zimo Scripting,  added decoder MS591N18, and removed comments to enable MS540E4-->
-  
   <decoder>
-  <!-- These version 4 families are gated to CV #7 = 4 exactly. CV #7 is the main software
-       version and CV #65 the sub-version, so this matches every 4.x decoder and nothing else.
-       The open-ended range that used to live here (4 to 42) has moved to the version 5
-       families, which keep one catch-all so a future 6.x decoder still identifies. -->
-    <family name="MS Sound (version 4+)" mfg="Zimo">
-      <!-- MS001 is an OEM build (e.g. in the Fleischmann Beilhack). Physical data varies by locomotive,
-           so none is declared; the maximum output count of the small MS decoders is used. -->
-      <model model="MS001 (OEM) version 4+" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="11" comment="OEM version of an MS sound decoder, factory-fitted by a model manufacturer and not sold separately. Physical characteristics vary by locomotive: outputs, connector, size and current ratings are not those of any catalogue MS decoder. The maximum number of outputs is offered here; your locomotive may use fewer.">
+    <family name="MS Sound (version 5+)" mfg="Zimo">
+      <model model="MS920LE version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="G" numOuts="9" numFns="14" productID="18">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <size length="38.5" width="29.8" height="12" units="mm"/>
+      </model>
+
+      <model model="MS950 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="14" numFns="14" productID="9">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+          <label xml:lang="fr">Feu avant</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+          <label xml:lang="fr">Feu arrière</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="de">FA8</label>
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <output name="11" label="FO 9">
+          <label xml:lang="de">FA9</label>
+          <label xml:lang="cs">FV 9</label>
+        </output>
+        <output name="12" label="FO 10 (+5V)">
+          <label xml:lang="de">FA10 (+5V)</label>
+          <label xml:lang="cs">FV 10 (+5V)</label>
+        </output>
+        <output name="13" label="FO 11 (+5V)">
+          <label xml:lang="de">FA11 (+5V)</label>
+          <label xml:lang="cs">FV 11 (+5V)</label>
+        </output>
+        <output name="14" label="FO 12 (+5V)">
+          <label xml:lang="de">FA12 (+5V)</label>
+          <label xml:lang="cs">FV 12 (+5V)</label>
+        </output>
+        <size length="30" width="15" height="4" units="mm"/>
+      </model>
+
+      <model model="MS990 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="15" numFns="14" productID="7">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -91,440 +186,20 @@
           <label xml:lang="de">FA10</label>
           <label xml:lang="cs">FV 10</label>
         </output>
-      </model>
-
-      <model model="MS440 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+        <output name="13" label="FO 11">
+          <label xml:lang="de">FA11</label>
+          <label xml:lang="cs">FV 11</label>
         </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+        <output name="14" label="FO 12">
+          <label xml:lang="de">FA12</label>
+          <label xml:lang="cs">FV 12</label>
         </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">Funkční výstup 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">Funkční výstup 2</label>
-        </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">Funkční výstup 3</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">Funkční výstup 4</label>
-        </output>
-        <output name="7" label="FO 5">
-          <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">Funkční výstup 5</label>
-        </output>
-        <output name="8" label="FO 6">
-          <label xml:lang="de">FA6</label>
-          <label xml:lang="cs">Funkční výstup 6</label>
+        <output name="15" label="FO 13">
+          <label xml:lang="de">FA13</label>
+          <label xml:lang="cs">FV 13</label>
         </output>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-
-      <model model="MS450 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="6">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">FV 3</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">FV 4</label>
-        </output>
-        <output name="7" label="FO 5">
-          <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">FV 5</label>
-        </output>
-        <output name="8" label="FO 6">
-          <label xml:lang="de">FA6</label>
-          <label xml:lang="cs">FV 6</label>
-        </output>
-        <output name="9" label="FO 7">
-          <label xml:lang="de">FA7</label>
-          <label xml:lang="cs">FV 7</label>
-        </output>
-        <output name="10" label="FO 8">
-          <label xml:lang="de">FA8</label>
-          <label xml:lang="cs">FV 8</label>
-        </output>
-        <output name="11" label="FO 9 (+5V)">
-          <label xml:lang="de">FA9 (+5V)</label>
-          <label xml:lang="cs">FV 9 (+5V)</label>
-        </output>
-        <output name="12" label="FO 10 (+5V)">
-          <label xml:lang="de">FA10 (+5V)</label>
-          <label xml:lang="cs">FV 10 (+5V)</label>
-        </output>
-        <size length="30" width="15" height="4" units="mm"/>
-      </model>
-
-      <model model="MS480 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
-        <output name="1" label="Front Light">
-          <label xml:lang="fr">Feu avant</label>
-          <label xml:lang="de">Licht vorne</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="fr">Feu arrière</label>
-          <label xml:lang="de">Licht hinten</label>
-        </output>
-        <output name="3" label="FO 1"/>
-        <output name="4" label="FO 2"/>
-        <output name="5" label="FO 3"/>
-        <output name="6" label="FO 4"/>
-        <output name="7" label="FO 5 (+5v)"/>
-        <output name="8" label="FO 6 (+5v)"/>
-        <size length="19" width="11" height="3.1" units="mm"/>
-      </model>
-
-      <model model="MS490 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="6" numFns="14" productID="3">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">FV 3</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">FV 4</label>
-        </output>
-        <size length="19" width="8.6" height="2.9" units="mm"/>
-      </model>
-
-      <model model="MS491 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="7" numFns="14" productID="12">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">FV 3</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">FV 4</label>
-        </output>
-        <output name="7" label="FO 5">
-          <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">FV 5</label>
-        </output>
-        <size length="19" width="7.8" height="2.8" units="mm"/>
-      </model>
-
-      <model model="MS500 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="1">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3 (+5v)">
-          <label xml:lang="de">FA3 (+5v)</label>
-          <label xml:lang="cs">FV 3 (+5V)</label>
-        </output>
-        <output name="6" label="FO 4 (+5v)">
-          <label xml:lang="de">FA4 (+5v)</label>
-          <label xml:lang="cs">FV 4 (+5V)</label>
-        </output>
-        <size length="14" width="10" height="2.6" units="mm"/>
-      </model>
-
-
-      <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14" connector="E24">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">FV 3</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">FV 4</label>
-        </output>
-        <output name="7" label="FO 5">
-          <label xml:lang="de">FA5</label>
-          <label xml:lang="cs">FV 5</label>
-        </output>
-        <output name="8" label="FO 6">
-          <label xml:lang="de">FA6</label>
-          <label xml:lang="cs">FV 6</label>
-        </output>
-        <output name="9" label="FO 7 (+5V)">
-          <label xml:lang="de">FA7 (+5V)</label>
-          <label xml:lang="cs">FV 7 (+5V)</label>
-        </output>
-        <output name="10" label="FO 8 (+5V)">
-          <label xml:lang="de">FA8 (+5V)</label>
-          <label xml:lang="cs">FV 8 (+5V)</label>
-        </output>
-        <output name="11" label="FO 9 (+5V)">
-          <label xml:lang="de">FA9 (+5V)</label>
-          <label xml:lang="cs">FV 9 (+5V)</label>
-        </output>
-        <output name="12" label="FO 10 (+5V)">
-          <label xml:lang="de">FA10 (+5V)</label>
-          <label xml:lang="cs">FV 10 (+5V)</label>
-        </output>
-        <size length="19" width="8.7" height="2.8" units="mm"/>
-      </model>
-
-      <model model="MS560 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="4" numFns="14" productID="10">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1 (+5v)">
-          <label xml:lang="de">FA1 (+5v)</label>
-          <label xml:lang="cs">FV 1 (+5v)</label>
-        </output>
-        <output name="4" label="FO 2 (+5v)">
-          <label xml:lang="de">FA2 (+5v)</label>
-          <label xml:lang="cs">FV 2 (+5v)</label>
-        </output>
-        <size length="27" width="14" height="2.6" units="mm"/>
-      </model>
-
-      <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="5">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3 (+5v)">
-          <label xml:lang="de">FA3 (+5v)</label>
-          <label xml:lang="cs">FV 3 (+5V)</label>
-        </output>
-        <output name="6" label="FO 4 (+5v)">
-          <label xml:lang="de">FA4 (+5v)</label>
-          <label xml:lang="cs">FV 4 (+5V)</label>
-        </output>
-        <output name="7" label="FO 5 (LED)">
-          <label xml:lang="de">FA5 (LED)</label>
-        </output>
-        <output name="8" label="FO 6 (LED)">
-          <label xml:lang="de">FA6 (LED)</label>
-        </output>
-        <size length="25" width="10.5" height="4" units="mm"/>
-      </model>
-
-      <model model="MS581N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="9" numFns="14" productID="13">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="3" label="FO 3">
-          <label xml:lang="de">FA3</label>
-          <label xml:lang="cs">FV 3</label>
-        </output>
-        <output name="4" label="FO 4">
-          <label xml:lang="de">FA4</label>
-          <label xml:lang="cs">FV 4</label>
-        </output>
-        <output name="5" label="FO 5 (+5v)">
-          <label xml:lang="de">FA5 (+5v)</label>
-          <label xml:lang="cs">FV 5 (+5V)</label>
-        </output>
-        <output name="6" label="FO 6 (+5v)">
-          <label xml:lang="de">FA6 (+5v)</label>
-          <label xml:lang="cs">FV 6 (+5V)</label>
-        </output>
-        <output name="9" label="FO 7 (+5v)">
-          <label xml:lang="de">FA7</label>
-        </output>
-        <size length="24,9" width="10" height="4" units="mm"/>
-      </model>
-
-      <model model="MS590N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="7" numFns="14" productID="8">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3 (+5v)">
-          <label xml:lang="de">FA3 (+5v)</label>
-          <label xml:lang="cs">FV 3 (+5V)</label>
-        </output>
-        <output name="6" label="FO 4 (+5v)">
-          <label xml:lang="de">FA4 (+5v)</label>
-          <label xml:lang="cs">FV 4 (+5V)</label>
-        </output>
-        <output name="7" label="FO 5 (+5v)">
-          <label xml:lang="de">FA5</label>
-        </output>
-        <size length="15" width="9.5" height="3.3" units="mm"/>
-      </model>
-      
-      
-      <model model="MS591N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="15">
-        <output name="1" label="Front Light">
-          <label xml:lang="de">Lvor</label>
-          <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
-        </output>
-        <output name="2" label="Rear Light">
-          <label xml:lang="de">Lrück</label>
-          <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
-        </output>
-        <output name="3" label="FO 1">
-          <label xml:lang="de">FA1</label>
-          <label xml:lang="cs">FV 1</label>
-        </output>
-        <output name="4" label="FO 2">
-          <label xml:lang="de">FA2</label>
-          <label xml:lang="cs">FV 2</label>
-        </output>
-        <output name="5" label="FO 3">
-          <label xml:lang="de">FA3 (+5v)</label>
-          <label xml:lang="cs">FV 3 (+5V)</label>
-        </output>
-        <output name="6" label="FO 4">
-          <label xml:lang="de">FA4 (+5v)</label>
-          <label xml:lang="cs">FV 4 (+5V)</label>
-        </output>
-        <output name="7" label="FO 5 (+5v)">
-          <label xml:lang="de">FA5</label>
-        </output>
-        <output name="8" label="FO 6 (+5v)">
-          <label xml:lang="de">FA6</label>
-        </output>
-        <size length="15" width="9.3" height="3.1" units="mm"/>
-      </model>
-
-      
-
-
-
 
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -717,18 +392,24 @@
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="fr">Identifiant décodeur 2</label>
+        <label xml:lang="de">Decoder-ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="fr">Identifiant décodeur 3</label>
+        <label xml:lang="de">Decoder-ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="fr">Identifiant décodeur 4</label>
+        <label xml:lang="de">Decoder-ID 4</label>
       </variable>
 
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV398_MS-FS.xml"/>
