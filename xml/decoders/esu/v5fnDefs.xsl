@@ -19,6 +19,7 @@
          Type 9: Type 8 + Roco Coupler + External Controlled Smoke Unit
          Type 10: Type 8 + Roco Coupler
          Type 11 to Type 20: Type 1 to Type 10 + Smoke unit (controlled by sound)
+         Type 21: Type 8 + External Controlled Smoke Unit
 
          Determined from decoder manuals and LokProgrammer 5.2.18 -->
     
@@ -121,7 +122,7 @@
                     <enumChoice choice="ESU coupler" value="21">
                     </enumChoice>
                 </xsl:if>
-                <xsl:if test="$type > 10">
+                <xsl:if test="$type &gt; 10 and $type &lt; 21">
                     <enumChoice choice="Sound controlled smoke unit" value="22">
                         <choice xml:lang="it">Gener.Fumo sonoro</choice>
                         <choice xml:lang="de">Raucheinheit (Soundgesteuert)</choice>
@@ -143,7 +144,7 @@
                     <choice xml:lang="de">Dampfstoß-Trigger</choice>
                     <choice xml:lang="ca">Disparador del chuff del fumigen</choice>
                 </enumChoice>
-                <xsl:if test="$type = 2 or $type = 9 or $type = 12">
+                <xsl:if test="$type = 2 or $type = 9 or $type = 12 or $type = 21">
                     <enumChoice choice="External controlled smoke unit" value="26">
                         <choice>External controlled smoke unit</choice>
                         <choice xml:lang="de">externer Rauchgenerator</choice>
