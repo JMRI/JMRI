@@ -81,7 +81,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     JButton viewNewButton = new JButton(Bundle.getMessage("ButtonViewNew"));
     JButton viewMergedButton = new JButton(Bundle.getMessage("ButtonViewMerged"));
     JButton viewButton = new JButton(Bundle.getMessage("ButtonViewCurrent"));
-    JCheckBox useCurrentSpeedStepsCheckBox = new JCheckBox("Use current speed steps.");
+    JCheckBox createSensorsCheckBox = new JCheckBox(Bundle.getMessage("CreateSensorsIfNotDefined"));
+    JCheckBox useCurrentSpeedStepsCheckBox = new JCheckBox(Bundle.getMessage("UseCurrentSpeedSteps"));
 
     JButton updateProfileButton = new JButton(Bundle.getMessage("ButtonUpdateProfile"));
     JButton replaceProfileButton = new JButton(Bundle.getMessage("ButtonSaveProfile"));
@@ -147,7 +148,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         GridBagLayout gb = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         main.setLayout(gb);
-
+        int gridRow = 0;
         c.gridx = 0;
         c.gridy = 0;
         c.weightx = 1.0;
@@ -162,24 +163,27 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         lengthPanel.add(lengthUnitMm);
         lengthPanel.add(lengthUnitMm);
         lengthPanel.add(lengthUnitInches);
-        addRow(main, gb, c, 0, label, lengthPanel);
+        addRow(main, gb, c, gridRow++, label, lengthPanel);
         label = new JLabel(Bundle.getMessage("LabelSensorDelay"));
-        addRow(main, gb, c, 1, label, sensorDelay);
+        addRow(main, gb, c, gridRow++, label, sensorDelay);
+        label = new JLabel("");
+        createSensorsCheckBox.setToolTipText(Bundle.getMessage("CreateSensorsIfNotDefinedHint"));
+        addRow(main, gb, c, gridRow++, label, createSensorsCheckBox);
         label = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelStartSensor")));
-        addRow(main, gb, c, 2, label, sensorAPanel);
+        addRow(main, gb, c, gridRow++, label, sensorAPanel);
         label = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelBlockSensor")));
-        addRow(main, gb, c, 3, label, sensorCPanel);
+        addRow(main, gb, c, gridRow++, label, sensorCPanel);
         label = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelFinishSensor")));
-        addRow(main, gb, c, 4, label, sensorBPanel);
+        addRow(main, gb, c, gridRow++, label, sensorBPanel);
         label = new JLabel(Bundle.getMessage("LabelSelectRoster"));
         JPanel left = makePadPanel(label);
         JPanel right = makePadPanel(reBox);
-        addRow(main, gb, c, 5, left, right);
+        addRow(main, gb, c, gridRow++, left, right);
         label = new JLabel(Bundle.getMessage("LabelThrottleType"));
         left = makePadPanel(label);
         right = makePadPanel(throttleStatus);
         throttleStatus.setText("");
-        addRow(main, gb, c, 6, left, right);
+        addRow(main, gb, c, gridRow++, left, right);
         JPanel panelViews = new JPanel();
         panelViews.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TitleView")));
         panelViews.setLayout(new BoxLayout(panelViews, BoxLayout.LINE_AXIS));
@@ -194,7 +198,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         panelProfileControl.add(profileButton);
         panelProfileControl.add(cancelButton);
         right = makePadPanel(panelProfileControl);
-        addRow(main, gb, c, 7, left, right);
+        addRow(main, gb, c, gridRow++, left, right);
 
         left = new JPanel();
         left.add(Box.createRigidArea(new java.awt.Dimension(20, 10)));
@@ -209,7 +213,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         speedStepIncr.setToolTipText(Bundle.getMessage("StepIncrToolTip"));
         left.add(useCurrentSpeedStepsCheckBox);
         right = new JPanel();
-        addRow(main, gb, c, 8, left, right);
+        addRow(main, gb, c, gridRow++, left, right);
 
 
         JPanel testDataPanel = new JPanel();
@@ -232,11 +236,11 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         testProfileControl.add(testCancelButton);
         right = makePadPanel(testProfileControl);
 
-        addRow(main, gb, c, 9, left, right);
+        addRow(main, gb, c, gridRow++, left, right);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 10;
+        c.gridy = gridRow++;
         c.gridwidth = 2;
         sourceLabel = new JLabel("   ");
         sourceLabel.setBackground(Color.white);
@@ -249,11 +253,11 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         warrentScaleLabel.setBackground(Color.white);
         warrentScaleLabel.setToolTipText(Bundle.getMessage("LayoutScaleHint"));
         left = makePadPanel(warrentScaleLabel);
-        c.gridy = 11;
+        c.gridy = gridRow++;
         gb.setConstraints(left, c);
         main.add(left);
 
-        c.gridy = 12;
+        c.gridy = gridRow++;
         JPanel southBtnPanel = new JPanel();
         southBtnPanel.add(clearNewDataButton);
         southBtnPanel.add(updateProfileButton);
@@ -1291,6 +1295,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (lengthField.getText().length() > 0) {
             values.addContent(new Element("length").addContent(lengthField.getText()));
         }
+        if (createSensorsCheckBox.isSelected()) {
+            values.addContent(new Element("createMissingSensors").addContent("true"));
+        }
         if (lengthUnit.getSelection() != null) {
             String selectedValue = lengthUnit.getSelection().getActionCommand();
             values.addContent(new Element("lengthUnit").addContent(selectedValue));
@@ -1377,10 +1384,19 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                             lengthUnitMm.setSelected(true);
                         }
                         break;
+                    case "createMissingSensors":
+                        if ("true".equals(e.getValue())) {
+                            createSensorsCheckBox.setSelected(true);
+                        }
+                        break;
+
                     default:
                         log.warn("Invalid field in PanelProSpeedProfiler.xml");
                 }
             }
+        }
+        if (lengthUnit.getSelection() == null) {
+            lengthUnitMm.setSelected(true);
         }
         // Now read sensor information
         if (root.getChild("sensors") != null) {
@@ -1392,6 +1408,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             for (int i = 0; i < l.size(); i++) {
                 Element e = l.get(i);
                 String sensorType = e.getChild("sensorname").getText();
+                if (createSensorsCheckBox.isSelected() && manager.getSensor(e.getChild("sensorvalue").getText()) == null) {
+                    try {
+                        manager.newSensor(e.getChild("sensorvalue").getText(),null);
+                    } catch (IllegalArgumentException iex) {
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorCannotCreate", e.getChild("sensorvalue").getText()));
+                    }
+                }
                 switch (sensorType) {
                     case "sensorAPanel":
                         sensorAPanel.setDefaultNamedBean(manager.getSensor(e.getChild("sensorvalue").getText()));
