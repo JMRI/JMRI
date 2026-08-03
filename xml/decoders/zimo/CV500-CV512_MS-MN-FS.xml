@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Nigel Cliffe, 16th Nov 2012 -->
+<!-- from version 30 firmware -->
+<!-- CV's 500-603 control volume and sound choices of individual sounds -->
+<!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
+<!-- see Zimo German manual for small decoders, -->
+  <!-- v1.1,  Added CVs for Sound Sample selection.   Mark Waters, 11 Mar 2016 -->
+  <!-- v1.2,  Include CVs 508-512 for Blinking by Swiss Mapping.   Ronald Kuhn, 26 Apr 2019 -->
+  <!-- v1.3  added CV593-598 as sound samples 43,44,45  - Nigel Cliffe, 14 Feb 2022 -->
+  <!-- v1.0 of Zimo MS-series fork from MX-series files,  Nigel Cliffe, 23 Nov 2022 -->
+  <!-- v1.1   merge in various CV's for Swiss Mapping into correct numerical sequence,  Nigel Cliffe, 24 Nov 2022 -->  
+  <!-- v1.2   added german translation,  Ronald Kuhn, 22 June 2023 -->  
+<!-- version 1.0  31 July 2026  Pierre Billon - split out of CV500-CV602_MS-MN-FS.xml: Swiss Mapping dimming values and special configurations Also: added the missing French and German labels -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <!-- include this CV to put it onto the Sound Levels pane -->
+
+  <variable item="Swiss Mapping Group 12 A1 Rw" CV="500" mask="XXXVVVVV">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 12 A1 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 A1 Rw DG" CV="500" mask="VVVXXXXX">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 12 A2 Rw" CV="501" mask="XXXVVVVV">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 12 A2 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 A2 Rw DG" CV="501" mask="VVVXXXXX">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+
+  <variable item="Swiss Mapping Group 13 F-key" CV="502">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 Tasto F</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 13 tlačítko F</label>
+    <label xml:lang="nl">Zwitserse Mapping Groep 13 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 M-key" CV="503" mask="XXXVVVVV">
+       
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Map to:</label> 
+    <label xml:lang="fr">Affecter à :</label>
+    <label xml:lang="de">Zuordnen zu:</label>
+    <label xml:lang="cs">Přiřazeno na:</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 M-key M+F" CV="503" mask="VXXXXXXX">
+   
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>M+F</label>
+    <label xml:lang="cs">M+F</label>
+    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
+    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
+    <tooltip xml:lang="fr">les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 13 M-key NotOff" CV="503" mask="XVVXXXXX">
+   
+      <enumVal>
+        <enumChoice choice="None" value="0">
+          <choice>Off</choice>
+          <choice xml:lang="de">Aus</choice>
+          <choice xml:lang="cs">Vypnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Fw" value="2">
+          <choice>Fwd on</choice>
+          <choice xml:lang="de">Vor an</choice>
+          <choice xml:lang="cs">Vpřed zapnuto</choice>
+          <choice xml:lang="fr">Allumé en marche avant</choice>
+        </enumChoice>
+        <enumChoice choice="Rev" value="1">
+          <choice>Rev on</choice>
+          <choice xml:lang="de">Rück an</choice>
+          <choice xml:lang="cs">Vzad zapnuto</choice>
+          <choice xml:lang="fr">Allumé en marche arrière</choice>
+        </enumChoice>
+        <enumChoice choice="Both" value="3">
+          <choice>All on</choice>
+          <choice xml:lang="de">Beide an</choice>
+          <choice xml:lang="cs">Vše zapnuto</choice>
+          <choice xml:lang="fr">Tous allumés</choice>
+        </enumChoice>
+    </enumVal>
+    <label>ON while</label>
+    <label xml:lang="cs">Když Zapnuto</label>
+    <label xml:lang="fr">Actif tant que</label>
+    <label xml:lang="de">EIN solange</label>
+    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
+    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être coupées si la touche F est active et le sens de marche</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 13 M-key Hibeam" CV="503" >
+  
+      <enumVal> <!-- copy in for special value-->
+        <enumChoice choice="No">
+          <choice>No</choice>
+          <choice xml:lang="cs">Ne</choice>
+        </enumChoice>
+        <enumChoice choice="Yes" value="255" >    <!--  -->
+          <choice>Yes</choice>
+          <choice xml:lang="cs">Ano</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
+        </enumChoice>
+    </enumVal>
+    <label>Hibeam</label>
+    <label xml:lang="cs">Dálkové světlo</label>
+    <label xml:lang="fr">Feux de route</label>
+    <label xml:lang="de">Fernlicht</label>
+    <tooltip>M-key Hibeam (hides other options in CV503 )</tooltip>
+    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV503)</tooltip>
+    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV503)</tooltip>
+    <tooltip xml:lang="fr">Feux de route de la touche M (masque les autres options du CV503)</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A1 Fw" CV="504" mask="XXXVVVVV">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A1 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A1 Fw DG" CV="504" mask="VVVXXXXX">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A2 Fw" CV="505" mask="XXXVVVVV">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A2 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A2 Fw DG" CV="505" mask="VVVXXXXX">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A1 Rw" CV="506" mask="XXXVVVVV">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A1 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A1 Rw DG" CV="506" mask="VVVXXXXX">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A2 Rw" CV="507" mask="XXXVVVVV">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 13 A2 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A2 Rw DG" CV="507" mask="VVVXXXXX">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+        <variable CV="508" item="Swiss Dimming 1" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+	  <variable CV="508" item="Swiss Dimming 1 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
+      <variable CV="509" item="Swiss Dimming 2" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+	  <variable CV="509" item="Swiss Dimming 2 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
+      <variable CV="510" item="Swiss Dimming 3" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+	  <variable CV="510" item="Swiss Dimming 3 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
+      <variable CV="511" item="Swiss Dimming 4" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+	  <variable CV="511" item="Swiss Dimming 4 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
+      <variable CV="512" item="Swiss Dimming 5" mask="XXXXXVVV">
+       <enumVal>
+        <enumChoice choice="normal">
+         <choice>normal</choice>
+         <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
+         <choice xml:lang="fr">normal</choice>
+        </enumChoice>
+        <enumChoice choice="Light effect off">
+         <choice>Light effect off</choice>
+         <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
+         <choice xml:lang="fr">Effet lumineux désactivé</choice>
+        </enumChoice>
+        <enumChoice choice="Flashing">
+         <choice>Flashing</choice>
+         <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
+         <choice xml:lang="fr">Clignotant</choice>
+        </enumChoice>
+        <enumChoice choice="inverted flashing" value="4">
+         <choice>inverted flashing</choice>
+         <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
+         <choice xml:lang="fr">clignotement inversé</choice>
+        </enumChoice>
+       </enumVal>
+        <label> </label>
+      </variable>
+	  <variable CV="512" item="Swiss Dimming 5 brightness" mask="VVVVVXXX">
+       <enumVal>
+        <enumChoice choice="0"/>
+        <enumChoice choice="1"/>
+        <enumChoice choice="2"/>
+        <enumChoice choice="3"/>
+        <enumChoice choice="4"/>
+        <enumChoice choice="5"/>
+        <enumChoice choice="6"/>
+        <enumChoice choice="7"/>
+        <enumChoice choice="8"/>
+        <enumChoice choice="9"/>
+        <enumChoice choice="10"/>
+        <enumChoice choice="11"/>
+        <enumChoice choice="12"/>
+        <enumChoice choice="13"/>
+        <enumChoice choice="14"/>
+        <enumChoice choice="15"/>
+        <enumChoice choice="16"/>
+        <enumChoice choice="17"/>
+        <enumChoice choice="18"/>
+        <enumChoice choice="19"/>
+        <enumChoice choice="20"/>
+        <enumChoice choice="21"/>
+        <enumChoice choice="22"/>
+        <enumChoice choice="23"/>
+        <enumChoice choice="24"/>
+        <enumChoice choice="25"/>
+        <enumChoice choice="26"/>
+        <enumChoice choice="27"/>
+        <enumChoice choice="28"/>
+        <enumChoice choice="29"/>
+        <enumChoice choice="30"/>
+        <enumChoice choice="31"/>
+       </enumVal>
+	  </variable>
+</variables>
