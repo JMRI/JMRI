@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
@@ -301,6 +302,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public LocoNetSlot slot(int i) {
         return _slots[i];
     }
+    
+    /**
+     * Get a list of slots for direct access
+     * @return A non-modifiable List of slots
+     */
+     public List<LocoNetSlot> getSlots() {
+        return Collections.unmodifiableList(Arrays.asList(_slots));
+     }
 
     public int getNumSlots() {
         return numSlots;
