@@ -572,6 +572,8 @@
         <ul>
             <li>New feature, you can now control which road names and load types a track can service.</li>
             <li>Fixed a problem with spurs with schedules in quick service mode.</li>
+            <li>You can now print the contents of the "Show Schedules by Car Type and Load".</li>
+            <li>You can also print the contents of the "Show Staging and Schedules by Car Type and Load".</li>
         </ul>
 
    <h3>Panel Editor</h3>
