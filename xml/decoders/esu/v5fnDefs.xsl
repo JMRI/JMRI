@@ -7,19 +7,18 @@
 
     <!-- Template for function output -->
 
-    <!-- The different output types are:
-         Type 1: Type 8 + Servo Power
-         Type 2: Type 1 + Roco Coupler + External Controlled Smoke Unit
-         Type 3: Type 1 + Roco Coupler
-         Type 4: Type 1 + ESU Coupler
-         Type 5: Type 1 + Pantograph
-         Type 6: Type 1 + Servo
-         Type 7: Type 1 + ESU Coupler + Servo
-         Type 8: Common among all LokPilot 5 / LokSound 5 versions
-         Type 9: Type 8 + Roco Coupler + External Controlled Smoke Unit
-         Type 10: Type 8 + Roco Coupler
-         Type 11 to Type 20: Type 1 to Type 10 + Smoke unit (controlled by sound)
-         Type 21: Type 8 + External Controlled Smoke Unit
+    <!-- Available output features are:
+
+         "sP": Output option called "Servo Power"
+         "sO": Output options called "Servo output",
+               "Servo output Steam engine Johnson Bar Control" and "Servo output Pantograph bouncing"
+         "eS": Output option called "External controlled smoke unit"
+         "sC": Output option called "Sound controlled smoke unit"
+         "pa": Output option called "Pantograph"
+         "rC": Output option called "Roco coupler"
+         "eC": Output option called "ESU coupler"
+
+         All other output options are common among all LokPilot 5 and LokSound 5 decoders.
 
          Determined from decoder manuals and LokProgrammer 5.2.18 -->
     
@@ -27,7 +26,7 @@
         <xsl:param name="outputLabel"/>
         <xsl:param name="outputShort"/>
         <xsl:param name="CVbase"/>
-        <xsl:param name="type"/>
+        <xsl:param name="features"/>
 
         <!-- output mode CV -->
         <variable label="{$outputLabel} Mode" CV="16.0.{$CVbase}" item="ESU FnOut {$outputShort} Mode">
@@ -118,11 +117,11 @@
                 </enumChoice>
                 <enumChoice choice="16 2/3 Hz flickering" value="20">
                 </enumChoice>
-                <xsl:if test="$type = 4 or $type = 7 or $type = 14 or $type = 17">
+                <xsl:if test="contains($features, 'eC')">
                     <enumChoice choice="ESU coupler" value="21">
                     </enumChoice>
                 </xsl:if>
-                <xsl:if test="$type &gt; 10 and $type &lt; 21">
+                <xsl:if test="contains($features, 'sC')">
                     <enumChoice choice="Sound controlled smoke unit" value="22">
                         <choice xml:lang="it">Gener.Fumo sonoro</choice>
                         <choice xml:lang="de">Raucheinheit (Soundgesteuert)</choice>
@@ -144,17 +143,22 @@
                     <choice xml:lang="de">Dampfstoß-Trigger</choice>
                     <choice xml:lang="ca">Disparador del chuff del fumigen</choice>
                 </enumChoice>
-                <xsl:if test="$type = 2 or $type = 9 or $type = 12 or $type = 21">
+                <xsl:if test="contains($features, 'eS')">
                     <enumChoice choice="External controlled smoke unit" value="26">
                         <choice>External controlled smoke unit</choice>
                         <choice xml:lang="de">externer Rauchgenerator</choice>
                     </enumChoice>
                 </xsl:if>
-                <xsl:if test="$type = 6 or $type = 7 or $type = 16 or $type = 17">
+                <xsl:if test="contains($features, 'sO')">
                     <enumChoice choice="Servo output" value="27">
                         <choice xml:lang="it">Servo</choice>
                         <choice xml:lang="de">Servoausgang</choice>
                         <choice xml:lang="ca">Servo</choice>
+                    </enumChoice>
+                    <enumChoice choice="Servo output Steam engine Johnson Bar Control" value="34">
+                        <choice xml:lang="de">Servo Dampflok Umsteuerung</choice>
+                    </enumChoice>
+                    <enumChoice choice="Servo output Pantograph bouncing" value="36">
                     </enumChoice>
                 </xsl:if>
                 <enumChoice choice="Coupler" value="28">
@@ -162,38 +166,28 @@
                     <choice xml:lang="de">Kupplung</choice>
                     <choice xml:lang="ca">Enganxall</choice>
                 </enumChoice>
-                <xsl:if test="$type = 2 or $type = 3 or $type = 9 or $type = 10 or $type = 12 or $type = 13">
+                <xsl:if test="contains($features, 'rC')">
                     <enumChoice choice="Roco coupler" value="29">
                         <choice xml:lang="it">Gancio Roco</choice>
                         <choice xml:lang="de">Roco Kupplung</choice>
                         <choice xml:lang="ca">Enganxall Roco</choice>
                     </enumChoice>
                 </xsl:if>
-                <xsl:if test="$type = 5 or $type = 15">
+                <xsl:if test="contains($features, 'pa')">
                     <enumChoice choice="Pantograph" value="30">
                     </enumChoice>
                 </xsl:if>
                 <enumChoice choice="PowerPack control" value="31">
                 </enumChoice>
-                <xsl:if test="$type &lt;= 7 or $type &gt;= 10">
+                <xsl:if test="contains($features, 'sP')">
                     <enumChoice choice="Servo Power" value="32">
                     </enumChoice>
                 </xsl:if>
                 <enumChoice choice="Autocoupler coil#2" value="33">
                 </enumChoice>
-                <xsl:if test="$type = 6 or $type = 7 or $type = 16 or $type = 17">
-                    <enumChoice choice="Servo output Steam engine Johnson Bar Control" value="34">
-                        <choice xml:lang="de">Servo Dampflok Umsteuerung</choice>
-                    </enumChoice>
-                </xsl:if>
                 <enumChoice choice="Trigger smoke chuff (Edge Toggle)" value="35">                    
                 </enumChoice>
-                <xsl:if test="$type = 6 or $type = 7 or $type = 16 or $type = 17">
-                    <enumChoice choice="Servo output Pantograph bouncing" value="36">
-                    </enumChoice>
-                </xsl:if>
-                
-                    
+
             </enumVal>
 
         </variable>
