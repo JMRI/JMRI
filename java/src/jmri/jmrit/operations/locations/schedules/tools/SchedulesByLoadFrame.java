@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Frame to display spurs with schedules and their loads
  *
- * @author Dan Boudreau Copyright (C) 2012, 2015, 2021, 2025
+ * @author Dan Boudreau Copyright (C) 2012, 2015, 2021, 2025, 2026
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -147,15 +147,17 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         int row = 0;
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Spur")), 1, row);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 2, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("ScheduleMode")), 3, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Type")), 4, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Random")), 5, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Delivery")), 6, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Road")), 7, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")), 8, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")), 9, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 10, row);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Pickup")), 11, row++);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Id")), 3, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("ScheduleMode")), 4, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Type")), 5, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Random")), 6, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Delivery")), 7, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Road")), 8, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")), 9, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")), 10, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Destination")), 11, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Track")), 12, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Pickup")), 13, row++);
 
         // now load data
         for (Location location : locationManager.getLocationsByNameList()) {
@@ -198,11 +200,12 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         }
                         addItemLeft(locationsPanel, new JLabel(spur.getName()), 1, row);
                         addItemLeft(locationsPanel, new JLabel(spur.getScheduleName()), 2, row);
-                        addItemLeft(locationsPanel, new JLabel(spur.getScheduleModeName()), 3, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getTypeName()), 4, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getRandom()), 5, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getSetoutTrainScheduleName()), 6, row);
-                        addItemLeft(locationsPanel, new JLabel(si.getRoadName()), 7, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getId()), 3, row);
+                        addItemLeft(locationsPanel, new JLabel(spur.getScheduleModeName()), 4, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getTypeName()), 5, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getRandom()), 6, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getSetoutTrainScheduleName()), 7, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getRoadName()), 8, row);
                         // report if spur can't service the selected load
                         if (!allLoadsCheckBox.isSelected() &&
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
@@ -210,18 +213,19 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                             JLabel warnLoad =
                                     new JLabel(Bundle.getMessage("spurNotTypeLoad", spur.getName(), type, load));
                             warnLoad.setForeground(Color.BLUE);
-                            addItemLeft(locationsPanel, warnLoad, 8, row);
+                            addItemLeft(locationsPanel, warnLoad, 9, row);
                         } else {
-                            addItemLeft(locationsPanel, new JLabel(si.getReceiveLoadName()), 8, row);
+                            addItemLeft(locationsPanel, new JLabel(si.getReceiveLoadName()), 9, row);
                         }
-                        addItemLeft(locationsPanel, new JLabel(si.getShipLoadName()), 9, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getShipLoadName()), 10, row);
                         // now the destination and track
                         if (si.getDestination() != null) {
                             addItemLeft(locationsPanel,
-                                    new JLabel(si.getDestinationName() + " (" + si.getDestinationTrackName() + ")"), 10,
-                                    row);
+                                    new JLabel(si.getDestinationName()), 11, row);
+                            addItemLeft(locationsPanel,
+                                    new JLabel(si.getDestinationTrackName()), 12, row);
                         }
-                        addItemLeft(locationsPanel, new JLabel(si.getPickupTrainScheduleName()), 11, row++);
+                        addItemLeft(locationsPanel, new JLabel(si.getPickupTrainScheduleName()), 13, row++);
                     }
                 }
             }
@@ -230,7 +234,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         revalidate();
         repaint();
     }
-    
+
     public String getCarType() {
         if (allTypesCheckBox.isSelected()) {
             return null;

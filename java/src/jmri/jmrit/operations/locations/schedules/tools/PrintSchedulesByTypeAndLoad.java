@@ -25,7 +25,7 @@ public class PrintSchedulesByTypeAndLoad {
 
     // Maximum string lengths
     int trackMax = locationManager.getMaxTrackNameLength();
-    int scheduleMax = 9;
+    int scheduleMax = 12; // limit so everything fits on one line
     int locationMax = locationManager.getMaxLocationNameLength();
     int carTypeMax = InstanceManager.getDefault(CarTypes.class).getMaxNameSubStringLength();
     int randomMax = 3;
@@ -53,7 +53,7 @@ public class PrintSchedulesByTypeAndLoad {
         // obtain a HardcopyWriter
         String title = Bundle.getMessage("SchedulesByTypeAndLoad");
         try (HardcopyWriter writer =
-                new HardcopyWriter(new Frame(), title, null, null, Control.reportFontSize - 2, .5 * 72, .5 * 72,
+                new HardcopyWriter(new Frame(), title, null, null, Control.reportFontSize - 3, .5 * 72, .5 * 72,
                         .5 * 72, .5 * 72, _isPreview, "", true, true, null, null)) {
 
             printSchedules(writer);
@@ -68,17 +68,11 @@ public class PrintSchedulesByTypeAndLoad {
     private void printSchedules(HardcopyWriter writer) throws IOException {
         printBold(writer,
                 Bundle.getMessage("Location") +
+                        TAB.repeat(8) +
+                        (_carType == null ? Bundle.getMessage("allTypes") : _carType) +
                         TAB +
-                        TAB +
-                        TAB +
-                        TAB +
-                        TAB +
-                        TAB +
-                        TAB +
-                        (_carType == null ? "" : _carType) +
-                        TAB +
-                        (_carLoad == null ? "" : _carLoad));
-        
+                        (_carLoad == null ? Bundle.getMessage("allLoads") : _carLoad));
+
         writer.write(getHeader());
 
         // determine if load is default empty or load
@@ -133,7 +127,7 @@ public class PrintSchedulesByTypeAndLoad {
         String s = SPACE +
                 padAndSpaceString(Bundle.getMessage("Spur"), trackMax) +
                 padAndSpaceString(Bundle.getMessage("Schedule"), scheduleMax) +
-                //                padOutString(Bundle.getMessage("ScheduleMode"), 1) +
+                padAndSpaceString(Bundle.getMessage("ScheduleMode"), 1) +
                 padAndSpaceString(Bundle.getMessage("Type"), carTypeMax) +
                 padAndSpaceString(Bundle.getMessage("Random"), randomMax) +
                 padAndSpaceString(Bundle.getMessage("Delivery"), trainScheduleMax) +
@@ -151,7 +145,7 @@ public class PrintSchedulesByTypeAndLoad {
         String s = SPACE +
                 padAndSpaceString(spur.getName(), trackMax) +
                 padAndSpaceString(spur.getScheduleName(), scheduleMax) +
-                //                padOutString(spur.getScheduleModeName(), 1) +
+                padAndSpaceString(spur.getScheduleModeName(), 1) +
                 padAndSpaceString(si.getTypeName(), carTypeMax) +
                 padAndSpaceString(si.getRandom(), randomMax) +
                 padAndSpaceString(si.getSetoutTrainScheduleName(), trainScheduleMax) +
@@ -160,7 +154,7 @@ public class PrintSchedulesByTypeAndLoad {
                 padAndSpaceString(si.getShipLoadName(), carLoadMax) +
                 padAndSpaceString(si.getDestinationName(), locationMax) +
                 padAndSpaceString(si.getDestinationTrackName(), trackMax) +
-                si.getPickupTrainScheduleName() +
+                TrainCommon.padAndTruncate(si.getPickupTrainScheduleName(), trainScheduleMax) +
                 NEW_LINE;
         return s;
     }

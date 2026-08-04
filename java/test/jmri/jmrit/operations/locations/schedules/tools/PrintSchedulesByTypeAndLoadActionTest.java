@@ -14,7 +14,8 @@ public class PrintSchedulesByTypeAndLoadActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        PrintSchedulesByTypeAndLoad t = new PrintSchedulesByTypeAndLoad(true, "type", "load");
+        SchedulesByLoadFrame sblf = new SchedulesByLoadFrame();
+        PrintSchedulesByTypeAndLoadAction t = new PrintSchedulesByTypeAndLoadAction(true, sblf);
         Assert.assertNotNull("exists", t);
     }
 }

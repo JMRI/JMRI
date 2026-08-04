@@ -10,11 +10,12 @@ import jmri.jmrit.operations.OperationsTestCase;
  * @author Daniel Boudreau Copyright (C) 2026
  */
 @jmri.util.junit.annotations.DisabledIfHeadless
-public class PrintSchedulesByTypeAndLoadTest extends OperationsTestCase {
+public class PrintStagingAndSchedulesByTypeAndLoadActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        PrintSchedulesByTypeAndLoad t = new PrintSchedulesByTypeAndLoad(true, "type", "load");
+        SchedulesAndStagingFrame ssf = new SchedulesAndStagingFrame();
+        PrintStagingAndSchedulesByTypeAndLoadAction t = new PrintStagingAndSchedulesByTypeAndLoadAction(true, ssf);
         Assert.assertNotNull("exists", t);
     }
 }
