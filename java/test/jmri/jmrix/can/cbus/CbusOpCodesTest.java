@@ -123,7 +123,8 @@ public class CbusOpCodesTest {
     @Test
     public void testdecodeopcReserved() {
         CanMessage m = new CanMessage( new int[]{0x18 },0x12  );
-        assertEquals("Reserved opcode x18",CbusOpCodes.decodeopc(m), "decodeopc 1");
+        assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
+            CbusOpCodes.decodeopc(m), "decodeopc 1");
         m.setExtended(true);
         assertTrue(CbusOpCodes.decodeopc(m).isEmpty(),"decodeopc 3");
     }
@@ -136,7 +137,7 @@ public class CbusOpCodesTest {
             if (OPCMAP.containsKey(i)) {
                 assertEquals(OPCMAP.get(i),CbusOpCodes.decodeopc(m),"opc short text "+i);
             } else {
-                assertEquals(Bundle.getMessage("OPC_RESERVED") + " x"+Integer.toHexString(i).toUpperCase(),
+                assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
                     CbusOpCodes.decodeopc(m),"opc short text "+i);
             }
         }
