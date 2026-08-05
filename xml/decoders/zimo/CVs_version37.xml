@@ -12,6 +12,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <!--xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/-->
     <label>Auto Consist Address Active</label>
+    <label xml:lang="fr">Adresse d'UM automatique active</label>
     <label xml:lang="de">Auto Consist Addresse aktiv</label>
     <label xml:lang="cs">Automatická souprava je aktivní</label>
     <tooltip xml:lang="de">Es wird automatisch zwischen Einzel- und Verbundadresse gewechselt, jeweils zu jener Adresse, deren Geschwindigkeit > 0 ist, wenn die andere Geschwindigkeit = 0.</tooltip>
@@ -21,6 +22,7 @@
   <variable CV="22" item="Consist Address Active For F13-F27" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F13 - F27</label>
+    <label xml:lang="fr">Adresse d'UM active pour F13 - F27</label>
     <label xml:lang="it">Indirizzo Consist attivo per F13 - F27</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F13 - F27</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F13 - F27</label>
@@ -28,6 +30,7 @@
   <variable CV="97" item="Consist Option 1" default="0">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
     <label>Consist-Key</label>
+    <label xml:lang="fr">Touche d'UM</label>
     <label xml:lang="de">Consist-Taste</label>
     <label xml:lang="cs">Tlačítko soupravy</label>
       <tooltip>Key to change between Default- and Consist-address</tooltip>
@@ -280,7 +283,7 @@
     <label xml:lang="de">Messfahrt</label>
     <label xml:lang="cs">Test zatížení</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Messfahrt zur Bestimmung der Motor-Grundlast</tooltip>
+      <tooltip xml:lang="de"> Messfahrt zur Bestimmung der Motor-Grundlast </tooltip>
       <tooltip xml:lang="cs">Průběh měření pro zjištění základního zatížení mototu</tooltip>
   </variable>
   -->
@@ -292,7 +295,7 @@
     <label xml:lang="de">Kurvenquietschen Reed Eingänge</label>
     <label xml:lang="cs">Vstup skřípění v oblouku</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Welcher Reed-Eingang löst das Kurvenquietschen aus</tooltip>
+      <tooltip xml:lang="de"> Welcher Reed-Eingang löst das Kurvenquietschen aus </tooltip>
       <tooltip xml:lang="cs">Který vstup spustí skřípění kol v oblouku</tooltip>
   </variable>
   <variable CV="308" item="Curve squeal key" default="0" exclude="130,177,195,197,199,201,211,218,240">
@@ -302,7 +305,7 @@
     <label xml:lang="de">Kurvenquietschen-Taste</label>
     <label xml:lang="cs">Tlačítko křivky skřípění v oblouku</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Welche Funktionstaste löst das Kurvenquietschen aus</tooltip>
+      <tooltip xml:lang="de"> Welche Funktionstaste löst das Kurvenquietschen aus </tooltip>
       <tooltip xml:lang="cs">Které tlačítko spustí skřípění kol v oblouku</tooltip>
   </variable>
   <variable CV="309" item="Brake key" default="0">
@@ -312,7 +315,7 @@
     <label xml:lang="de">Bremstaste</label>
     <label xml:lang="cs">Tlačítko brzdy</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Die hier zugewiesene Funktionstaste löst einen Bremsvorgang nach der in CV#349 definierten Bremszeit aus</tooltip>
+      <tooltip xml:lang="de"> Die hier zugewiesene Funktionstaste löst einen Bremsvorgang nach der in CV#349 definierten Bremszeit aus </tooltip>
       <tooltip xml:lang="cs">Které tlačítko spustí brždění po doběš definované v CV349</tooltip>
   </variable>
   <variable CV="348" item="Switch-over" default="0" exclude="130,177,195,197,199,201,211,218,240">
@@ -322,7 +325,7 @@
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt</label>
     <label xml:lang="cs">Parametry přepínání pro strojovou jízdu</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Auswahl der Maßnahmen, die bei Umschaltung auf Alleinfahrt getroffen werden sollen</tooltip>
+      <tooltip xml:lang="de"> Auswahl der Maßnahmen, die bei Umschaltung auf Alleinfahrt getroffen werden sollen </tooltip>
       <tooltip xml:lang="cs">Výběr nastavení pro přepnutí do jízda sólo.</tooltip>
   </variable>
   <variable CV="349" item="Brake time" default="0" exclude="130,201,211,218">
@@ -330,7 +333,7 @@
     <label>Brake time</label>
     <label xml:lang="de">Bremszeit für Bremstaste</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Bremszeit nach Auslösen der Bremstaste</tooltip>
+      <tooltip xml:lang="de"> Bremszeit nach Auslösen der Bremstaste </tooltip>
       <tooltip xml:lang="cs">Doba brždění po uvolnění tlačítka brždění.</tooltip>
   </variable>
   <variable CV="393" item="Ditch Light with Bell" mask="XXXXXXXV" default="0" exclude="130,177,195,197,199,201,211,218,240">
@@ -388,7 +391,7 @@
     <label xml:lang="de">Dampfschlagtakt für Set+1</label>
     <label xml:lang="cs">Výfuk páry pro sadu 1</label>
     <tooltip> </tooltip>
-    <tooltip xml:lang="de">Dampfschlagtakt wie CV # 267 aber für Set+1</tooltip>
+    <tooltip xml:lang="de"> Dampfschlagtakt wie CV # 267 aber für Set+1 </tooltip>
   </variable>
   <variable CV="836" item="Motor Start Sound" mask="XXXXXXXV" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -403,8 +406,8 @@
   <variable CV="837" item="Script Running 1" mask="XXXXXXXV" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 1 Running </label>
-    <label xml:lang="fr">Script 1 en cours</label>
-    <label xml:lang="de">Script Ablauf 1</label>
+    <label xml:lang="fr">Script 1 en cours </label>
+    <label xml:lang="de">Script Ablauf 1 </label>
     <label xml:lang="cs">Skript 1 běžící</label>
       <tooltip>Deactivate Script 1</tooltip>
       <tooltip xml:lang="fr">Désactiver le script 1</tooltip>

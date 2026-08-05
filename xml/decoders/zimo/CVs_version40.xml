@@ -6,6 +6,7 @@
   <variable CV="28" item="Railcom voltage signal" default="0" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Railcom voltage signal</label>
+    <label xml:lang="fr">Signal de tension Railcom</label>
     <label xml:lang="de">Railcom-Spannungsmeldung</label>
     <label xml:lang="cs">RailCom signál napětí</label>
   </variable>

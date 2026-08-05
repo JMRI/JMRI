@@ -304,7 +304,7 @@
           </label>
           <label>
             <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
-            <text xml:lang="fr">Unités : temps de mesure EMK (1-9), valeur médiane = 5</text>
+            <text xml:lang="fr">Unités : temps de mesure BEMF (1-9), valeur médiane = 5</text>
             <text xml:lang="it">Numero unità = tempo campionamento EMF(1-9), valore medio =5</text>
             <text xml:lang="cs">Jednotky = EMF vzorkovací čas (1-9) střední hodnota = 5</text>
             <text xml:lang="de">Einerstelle = EMF-Abtastzeit (1-9) Mittelwert = 5</text>

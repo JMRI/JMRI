@@ -6,6 +6,8 @@
 <!-- version 1.3 - Ronald Kuhn - small visual improvement -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Servos</name>
+  <name xml:lang="fr">Servos</name>
+  <name xml:lang="de">Servos</name>
   <name xml:lang="it">Comandi Servo</name>
   <name xml:lang="cs">Serva</name>
   <column>
@@ -34,6 +36,8 @@
       <column>
         <label>
           <text>Servo 1        </text>
+          <text xml:lang="fr">Servo 1        </text>
+          <text xml:lang="de">Servo 1        </text>
         </label>
         <label>
           <text> </text>
@@ -45,6 +49,7 @@
         </label>
         <display item="Servo 1 Function Allocation">
           <label>Function Allocation</label>
+          <label xml:lang="fr">Affectation des fonctions</label>
           <label xml:lang="it">Allocazione Funzioni</label>
           <label xml:lang="cs">Přiřazení funkcí</label>
           <label xml:lang="de">Funktionszuordnung</label>
@@ -56,6 +61,7 @@
           <column>
             <display item="Servo 1 Rotation Speed">
               <label>Rotation Speed</label>
+              <label xml:lang="fr">Temps de course</label>
               <label xml:lang="it">Velocità di Rotazione</label>
               <label xml:lang="cs">Rychlost otáčení</label>
               <label xml:lang="de">Umlaufzeit</label>
@@ -64,6 +70,7 @@
           <column>
             <label>
               <text>Tenths of a second</text>
+              <text xml:lang="fr">Dixièmes de seconde</text>
               <text xml:lang="it">Decimi di secondo</text>
               <text xml:lang="cs"> desetiny sekundy</text>
               <text xml:lang="de">Zehntelsekunden</text>
@@ -75,18 +82,21 @@
         </label>
         <display item="Servo 1 Left Stop">
           <label>Left Stop</label>
+          <label xml:lang="fr">Butée gauche</label>
           <label xml:lang="it">Stop Sinistro</label>
           <label xml:lang="cs">Levá pozice</label>
           <label xml:lang="de">Endstellung links</label>
         </display>
         <display item="Servo 1 Centre">
           <label>Centre</label>
+          <label xml:lang="fr">Position centrale</label>
           <label xml:lang="it">Centro</label>
           <label xml:lang="cs">Střed</label>
           <label xml:lang="de">Mittelstellung</label>
         </display>
         <display item="Servo 1 Right Stop">
           <label>Right Stop</label>
+          <label xml:lang="fr">Butée droite</label>
           <label xml:lang="it">Stop destro</label>
           <label xml:lang="cs">Pravá pozice</label>
           <label xml:lang="de">Endstellung rechts</label>
@@ -101,6 +111,8 @@
       <column>
         <label>
           <text>Servo 2        </text>
+          <text xml:lang="fr">Servo 2        </text>
+          <text xml:lang="de">Servo 2        </text>
         </label>
         <label>
           <text> </text>
@@ -112,6 +124,7 @@
         </label>
         <display item="Servo 2 Function Allocation">
           <label>Function Allocation</label>
+          <label xml:lang="fr">Affectation des fonctions</label>
           <label xml:lang="it">Allocazione Funzioni</label>
           <label xml:lang="cs">Přiřazení funkcí</label>
           <label xml:lang="de">Funktionszuordnung</label>
@@ -123,6 +136,7 @@
           <column>
             <display item="Servo 2 Rotation Speed">
               <label>Rotation Speed</label>
+              <label xml:lang="fr">Temps de course</label>
               <label xml:lang="it">Velocità di Rotazione</label>
               <label xml:lang="cs">Rychlost otáčení</label>
               <label xml:lang="de">Umlaufzeit</label>
@@ -131,6 +145,7 @@
           <column>
             <label>
               <text>Tenths of a second</text>
+              <text xml:lang="fr">Dixièmes de seconde</text>
               <text xml:lang="it">Decimi di secondo</text>
               <text xml:lang="cs"> desetiny sekundy</text>
               <text xml:lang="de">Zehntelsekunden</text>
@@ -142,18 +157,21 @@
         </label>
         <display item="Servo 2 Left Stop">
           <label>Left Stop</label>
+          <label xml:lang="fr">Butée gauche</label>
           <label xml:lang="it">Stop Sinistro</label>
           <label xml:lang="cs">Levá pozice</label>
           <label xml:lang="de">Endstellung links</label>
         </display>
         <display item="Servo 2 Centre">
           <label>Centre</label>
+          <label xml:lang="fr">Position centrale</label>
           <label xml:lang="it">Centro</label>
           <label xml:lang="cs">Střed</label>
           <label xml:lang="de">Mittelstellung</label>
         </display>
         <display item="Servo 2 Right Stop">
           <label>Right Stop</label>
+          <label xml:lang="fr">Butée droite</label>
           <label xml:lang="it">Stop destro</label>
           <label xml:lang="cs">Pravá pozice</label>
           <label xml:lang="de">Endstellung rechts</label>

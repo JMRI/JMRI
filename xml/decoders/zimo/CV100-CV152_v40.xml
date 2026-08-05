@@ -682,7 +682,7 @@
       </enumChoice>
       <enumChoice choice="extended address">
         <choice>Extended address</choice>
-        <choice xml:lang="fr">Adresse etendue</choice>
+        <choice xml:lang="fr">Adresse étendue</choice>
         <choice xml:lang="de">Erweiterte Adresse</choice>
         <choice xml:lang="cs">rozšířená adresa</choice>
       </enumChoice>
@@ -711,7 +711,7 @@
   <variable CV="113" item="EMF Feedback Cutout" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
-    <label xml:lang="fr">Influence de la régulation EMK</label>
+    <label xml:lang="fr">Influence de la régulation BEMF</label>
     <label xml:lang="it">Intensità Taglio EMF</label>
     <label xml:lang="cs">Intenzita přerušení BEMF</label>
     <label xml:lang="de">Regeleinfluss</label>
@@ -1747,7 +1747,7 @@
   <variable CV="147" item="Total PWM Period" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Extended Sample Time</label>
-    <label xml:lang="fr">Temps de mesure EMK étendu</label>
+    <label xml:lang="fr">Temps de mesure BEMF étendu</label>
     <label xml:lang="it">Misura timeout EMK</label>
     <label xml:lang="cs">Měřící pauza EMK</label>
     <label xml:lang="de">EMK – Messlücke</label>
@@ -1755,7 +1755,7 @@
   <variable CV="148" item="EMF Control Reference" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
-    <label xml:lang="fr">Valeur dérivée (EMK)</label>
+    <label xml:lang="fr">Valeur dérivée (BEMF)</label>
     <label xml:lang="it">Valore differenziale</label>
     <label xml:lang="cs">Diferenciální složka</label>
     <label xml:lang="de">EMK - D-Wert</label>
@@ -1763,7 +1763,7 @@
   <variable CV="149" item="EMF Enable" mask="XXXXXXXV" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
-    <label xml:lang="fr">Valeur proportionnelle adaptative (EMK)</label>
+    <label xml:lang="fr">Valeur proportionnelle adaptative (BEMF)</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>
     <label xml:lang="cs">Adaptivní proporcionální složka</label>
     <label xml:lang="de">EMK - P-Wert</label>

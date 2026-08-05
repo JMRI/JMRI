@@ -6,6 +6,7 @@
 <!-- version 1.3 - Ronald Kuhn - small visual improvement -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>ZIMO Input Mapping</name>
+  <name xml:lang="fr">Mapping d'entrée ZIMO</name>
   <name xml:lang="it">Mappatura Ingressi</name>
   <name xml:lang="cs">ZIMO přiřazení vstupů</name>
   <name xml:lang="de">ZIMO Eingangs-Mapping</name>
@@ -18,11 +19,13 @@
       <column>
         <label>
           <text>ZIMO Input Mapping</text>
+          <text xml:lang="fr">Mapping d'entrée ZIMO</text>
           <text xml:lang="cs">ZIMO přiřazení vstupů</text>
           <text xml:lang="de">ZIMO Eingangs-Mapping</text>
         </label>
         <label>
           <text>Allows any feature controlled by a function key to be moved to any other key.</text>
+          <text xml:lang="fr">Permet de déplacer toute fonction commandée par une touche vers n'importe quelle autre touche.</text>
           <text xml:lang="cs">Umožňuje jakoukoliv vlastnost řízenou funkčním tlačítkem přesunout na jiné tlačítko.</text>
           <text xml:lang="de">Ermöglicht das Verschieben jeder von einer Funktionstaste gesteuerten Funktion auf eine andere Taste.</text>
         </label>
@@ -31,24 +34,28 @@
         </label>
         <label>
           <text>This is usually the "last layer" of any mapping control. A typical end-user of a decoder can use this pane to move control of sounds and lights to the </text>
+          <text xml:lang="fr">C'est en général le « dernier niveau » du mapping. L'utilisateur d'un décodeur peut s'en servir pour déplacer la commande des sons et des feux vers les </text>
           <text xml:lang="cs">Toto je obvykle "poslední vrstva" jakéhokoliv přiřazení řízení. Běžný koncový uživatel dekodéru může tento panel použít k přesunu ovládání zvuků a světel </text>
-          <text xml:lang="de">Dies ist normalerweise die „letzte Ebene“ jeder Zuordnungssteuerung. Ein typischer Endbenutzer eines Decoders kann diesen Bereich verwenden, um die Steuerung</text>
+          <text xml:lang="de">Dies ist normalerweise die „letzte Ebene“ jeder Zuordnungssteuerung. Ein typischer Endbenutzer eines Decoders kann diesen Bereich verwenden, um die Steuerung </text>
         </label>
         <label>
           <text>function-keys of their choice, without affecting other settings within the decoder. </text>
+          <text xml:lang="fr">touches de fonction de son choix, sans toucher aux autres réglages du décodeur. </text>
           <text xml:lang="cs">na funkční tlačítka dle vlastního výběru, aniž by to ovlivnilo další nastavení v dekodéru. </text>
-          <text xml:lang="de">von Tönen und Lichtern auf die Funktionstasten seiner Wahl zu verschieben, ohne andere Einstellungen im Decoder zu beeinflussen.</text>
+          <text xml:lang="de">von Tönen und Lichtern auf die Funktionstasten seiner Wahl zu verschieben, ohne andere Einstellungen im Decoder zu beeinflussen. </text>
         </label>
         <label>
           <text>   </text>
         </label>
         <label>
           <text>The "internal Fx" is the function key in the sound project or function mapping.  For example, the horn/whistle is typically on "internal F2".</text>
+          <text xml:lang="fr">La « Fx interne » est la touche de fonction dans le projet sonore ou le mapping de fonction. Par exemple, la trompe ou le sifflet est en général sur « F2 interne ».</text>
           <text xml:lang="cs">"Interní Fx" je funkční tlačítko ve zvukovém projektu nebo přiřazení funkcí.  Například houkačka/píšťala je typicky na "interní F2".</text>
           <text xml:lang="de">Die „interne Fx“ ist die Funktionstaste im Soundprojekt bzw. Funktionsmapping. Beispielsweise steht die Hupe/Pfeife typischerweise auf „intern F2“.</text>
         </label>
         <label>
           <text>If the user wishes to move that feature to a different key, enter the key number in the box.</text>
+          <text xml:lang="fr">Pour déplacer cette fonction vers une autre touche, saisissez le numéro de touche dans la case.</text>
           <text xml:lang="cs">Pokud si uživatel přeje přesun na jiné tlačítko, tak zadá číslo tlačítka do pole.</text>
           <text xml:lang="de">Wenn Sie diese Funktion auf eine andere Taste verschieben möchte, geben Sie die Tastennummer in das Feld ein.</text>
         </label>
@@ -64,30 +71,35 @@
       <column>
         <display item="Input mapping for internal F0">
           <label>Internal F0</label>
+          <label xml:lang="fr">F0 interne</label>
           <!--label xml:lang="it">Assegnazione per F0 interno</label-->
           <label xml:lang="cs">Interní F0</label>
           <label xml:lang="de">Intern F0</label>
         </display>
         <display item="Input mapping for internal F1">
           <label>Internal F1</label>
+          <label xml:lang="fr">F1 interne</label>
           <!--label xml:lang="it">Assegnazione per F1 interno</label-->
           <label xml:lang="cs">Interní F1</label>
           <label xml:lang="de">Intern F1</label>
         </display>
         <display item="Input mapping for internal F2">
           <label>Internal F2</label>
+          <label xml:lang="fr">F2 interne</label>
           <!--label xml:lang="it">Assegnazione per F2 interno</label-->
           <label xml:lang="cs">Interní F2</label>
           <label xml:lang="de">Intern F2</label>
         </display>
         <display item="Input mapping for internal F3">
           <label>Internal F3</label>
+          <label xml:lang="fr">F3 interne</label>
           <!--label xml:lang="it">Assegnazione per F3 interno</label-->
           <label xml:lang="cs">Interní F3</label>
           <label xml:lang="de">Intern F3</label>
         </display>
         <display item="Input mapping for internal F4">
           <label>Internal F4</label>
+          <label xml:lang="fr">F4 interne</label>
           <!--label xml:lang="it">Assegnazione per F4 interno</label-->
           <label xml:lang="cs">Interní F4</label>
           <label xml:lang="de">Intern F4</label>
@@ -97,30 +109,35 @@
         </label>
         <display item="Input mapping for internal F5">
           <label>Internal F5</label>
+          <label xml:lang="fr">F5 interne</label>
           <!--label xml:lang="it">Assegnazione per F5 interno</label-->
           <label xml:lang="cs">Interní F5</label>
           <label xml:lang="de">Intern F5</label>
         </display>
         <display item="Input mapping for internal F6">
           <label>Internal F6</label>
+          <label xml:lang="fr">F6 interne</label>
           <!--label xml:lang="it">Assegnazione per F6 interno</label-->
           <label xml:lang="cs">Interní F6</label>
           <label xml:lang="de">Intern F6</label>
         </display>
         <display item="Input mapping for internal F7">
           <label>Internal F7</label>
+          <label xml:lang="fr">F7 interne</label>
           <!--label xml:lang="it">Assegnazione per F7 interno</label-->
           <label xml:lang="cs">Interní F7</label>
           <label xml:lang="de">Intern F7</label>
         </display>
         <display item="Input mapping for internal F8">
           <label>Internal F8</label>
+          <label xml:lang="fr">F8 interne</label>
           <!--label xml:lang="it">Assegnazione per F8 interno</label-->
           <label xml:lang="cs">Interní F8</label>
           <label xml:lang="de">Intern F8</label>
         </display>
         <display item="Input mapping for internal F9">
           <label>Internal F9</label>
+          <label xml:lang="fr">F9 interne</label>
           <!--label xml:lang="it">Assegnazione per F9 interno</label-->
           <label xml:lang="cs">Interní F9</label>
           <label xml:lang="de">Intern F9</label>
@@ -130,30 +147,35 @@
         </label>
         <display item="Input mapping for internal F10">
           <label>Internal F10</label>
+          <label xml:lang="fr">F10 interne</label>
           <!--label xml:lang="it">Assegnazione per F10 interno</label-->
           <label xml:lang="cs">Interní F10</label>
           <label xml:lang="de">Intern F10</label>
         </display>
         <display item="Input mapping for internal F11">
           <label>Internal F11</label>
+          <label xml:lang="fr">F11 interne</label>
           <!--label xml:lang="it">Assegnazione per F11 interno</label-->
           <label xml:lang="cs">Interní F11</label>
           <label xml:lang="de">Intern F11</label>
         </display>
         <display item="Input mapping for internal F12">
           <label>Internal F12</label>
+          <label xml:lang="fr">F12 interne</label>
           <!--label xml:lang="it">Assegnazione per F12 interno</label-->
           <label xml:lang="cs">Interní F12</label>
           <label xml:lang="de">Intern F12</label>
         </display>
         <display item="Input mapping for internal F13">
           <label>Internal F13</label>
+          <label xml:lang="fr">F13 interne</label>
           <!--label xml:lang="it">Assegnazione per F13 interno</label-->
           <label xml:lang="cs">Interní F13</label>
           <label xml:lang="de">Intern F13</label>
         </display>
         <display item="Input mapping for internal F14">
           <label>Internal F14</label>
+          <label xml:lang="fr">F14 interne</label>
           <!--label xml:lang="it">Assegnazione per F14 interno</label-->
           <label xml:lang="cs">Interní F14</label>
           <label xml:lang="de">Intern F14</label>
@@ -167,30 +189,35 @@
       <column>
         <display item="Input mapping for internal F15">
           <label>Internal F15</label>
+          <label xml:lang="fr">F15 interne</label>
           <!--label xml:lang="it">Assegnazione per F15 interno</label-->
           <label xml:lang="cs">Interní F15</label>
           <label xml:lang="de">Intern F15</label>
         </display>
         <display item="Input mapping for internal F16">
           <label>Internal F16</label>
+          <label xml:lang="fr">F16 interne</label>
           <!--label xml:lang="it">Assegnazione per F16 interno</label-->
           <label xml:lang="cs">Interní F16</label>
           <label xml:lang="de">Intern F16</label>
         </display>
         <display item="Input mapping for internal F17">
           <label>Internal F17</label>
+          <label xml:lang="fr">F17 interne</label>
           <!--label xml:lang="it">Assegnazione per F17 interno</label-->
           <label xml:lang="cs">Interní F17</label>
           <label xml:lang="de">Intern F17</label>
         </display>
         <display item="Input mapping for internal F18">
           <label>Internal F18</label>
+          <label xml:lang="fr">F18 interne</label>
           <!--label xml:lang="it">Assegnazione per F18 interno</label-->
           <label xml:lang="cs">Interní F18</label>
           <label xml:lang="de">Intern F18</label>
         </display>
         <display item="Input mapping for internal F19">
           <label>Internal F19</label>
+          <label xml:lang="fr">F19 interne</label>
           <!--label xml:lang="it">Assegnazione per F19 interno</label-->
           <label xml:lang="cs">Interní F19</label>
           <label xml:lang="de">Intern F19</label>
@@ -200,30 +227,35 @@
         </label>
         <display item="Input mapping for internal F20">
           <label>Internal F20</label>
+          <label xml:lang="fr">F20 interne</label>
           <!--label xml:lang="it">Assegnazione per F20 interno</label-->
           <label xml:lang="cs">Interní F20</label>
           <label xml:lang="de">Intern F20</label>
         </display>
         <display item="Input mapping for internal F21">
           <label>Internal F21</label>
+          <label xml:lang="fr">F21 interne</label>
           <!--label xml:lang="it">Assegnazione per F21 interno</label-->
           <label xml:lang="cs">Interní F21</label>
           <label xml:lang="de">Intern F21</label>
         </display>
         <display item="Input mapping for internal F22">
           <label>Internal F22</label>
+          <label xml:lang="fr">F22 interne</label>
           <!--label xml:lang="it">Assegnazione per F22 interno</label-->
           <label xml:lang="cs">Interní F22</label>
           <label xml:lang="de">Intern F22</label>
         </display>
         <display item="Input mapping for internal F23">
           <label>Internal F23</label>
+          <label xml:lang="fr">F23 interne</label>
           <!--label xml:lang="it">Assegnazione per F23 interno</label-->
           <label xml:lang="cs">Interní F23</label>
           <label xml:lang="de">Intern F23</label>
         </display>
         <display item="Input mapping for internal F24">
           <label>Internal F24</label>
+          <label xml:lang="fr">F24 interne</label>
           <!--label xml:lang="it">Assegnazione per F24 interno</label-->
           <label xml:lang="cs">Interní F24</label>
           <label xml:lang="de">Intern F24</label>
@@ -233,24 +265,28 @@
         </label>
         <display item="Input mapping for internal F25">
           <label>Internal F25</label>
+          <label xml:lang="fr">F25 interne</label>
           <!--label xml:lang="it">Assegnazione per F25 interno</label-->
           <label xml:lang="cs">Interní F25</label>
           <label xml:lang="de">Intern F25</label>
         </display>
         <display item="Input mapping for internal F26">
           <label>Internal F26</label>
+          <label xml:lang="fr">F26 interne</label>
           <!--label xml:lang="it">Assegnazione per F26 interno</label-->
           <label xml:lang="cs">Interní F26</label>
           <label xml:lang="de">Intern F26</label>
         </display>
         <display item="Input mapping for internal F27">
           <label>Internal F27</label>
+          <label xml:lang="fr">F27 interne</label>
           <!--label xml:lang="it">Assegnazione per F27 interno</label-->
           <label xml:lang="cs">Interní F27</label>
           <label xml:lang="de">Intern F27</label>
         </display>
         <display item="Input mapping for internal F28">
           <label>Internal F28</label>
+          <label xml:lang="fr">F28 interne</label>
           <!--label xml:lang="it">Assegnazione per F28 interno</label-->
           <label xml:lang="cs">Interní F28</label>
           <label xml:lang="de">Intern F28</label>
@@ -273,6 +309,7 @@
       <column>
         <label>
           <text>                  SETTINGS</text>
+          <text xml:lang="fr">                  RÉGLAGES</text>
           <text xml:lang="it">                  PROGRAMMA</text>
           <text xml:lang="cs">                  Nastavení</text>
           <text xml:lang="de">              EINSTELLUNGEN</text>
@@ -282,6 +319,7 @@
         </label>
         <label>
           <text>       0   = Default 1:1 mapping</text>
+          <text xml:lang="fr">       0   = Mapping 1:1 par défaut</text>
           <text xml:lang="it">       0   = Default 1:1 assegna</text>
           <text xml:lang="cs">       0   = Implicitní přiřazení 1:1</text>
           <text xml:lang="de">              0 = Standard 1:1 mapping</text>
@@ -291,12 +329,14 @@
         </label>
         <label>
           <text> 1 - 28 = F1 - F28 Both Directions</text>
+          <text xml:lang="fr"> 1 - 28 = F1 - F28 Deux sens</text>
           <text xml:lang="it"> 1 - 28 = F1 - F28 Entrambe Dir</text>
           <text xml:lang="cs"> 1 - 28 = F1 - F28 oba směry</text>
           <text xml:lang="de">      1 - 28 = F1 - F28   Beide Richtungen</text>
         </label>
         <label>
           <text>       29 =      F0      Both Directions</text>
+          <text xml:lang="fr">       29 =      F0      Deux sens</text>
           <text xml:lang="it">       29 =      F0       Entrambe Dir</text>
           <text xml:lang="cs">       29 =      F0       oba směry</text>
           <text xml:lang="de">            29 = F0             Beide Richtungen</text>
@@ -306,12 +346,14 @@
         </label>
         <label>
           <text>30 - 57 = F1 - F28 Forward Only</text>
+          <text xml:lang="fr">30 - 57 = F1 - F28 Avant seulement</text>
           <text xml:lang="it">30 - 57 = F1 - F28 Solo avanti </text>
           <text xml:lang="cs">30 - 57 = F1 - F28 pouze vpřed</text>
           <text xml:lang="de">    30 - 57 = F1 - F28   nur Vorwärts</text>
         </label>
         <label>
           <text>        58 =      F0      Forward Only</text>
+          <text xml:lang="fr">        58 =      F0      Avant seulement</text>
           <text xml:lang="it">         58 = F0       Solo avanti </text>
           <text xml:lang="cs">         58 = F0       pouze vpřed</text>
           <text xml:lang="de">            58 = F0             nur Vorwärts </text>
@@ -321,12 +363,14 @@
         </label>
         <label>
           <text>59 - 86 = F1 - F28 Reverse Only</text>
+          <text xml:lang="fr">59 - 86 = F1 - F28 Arrière seulement</text>
           <text xml:lang="it">59 - 86 = F1 - F28 Solo indietro</text>
           <text xml:lang="cs">59 - 86 = F1 - F28 pouze vzad</text>
           <text xml:lang="de">    59 - 86 = F1 - F28   nur Rückwärts</text>
         </label>
         <label>
           <text>        87 =      F0      Forward Only</text>
+          <text xml:lang="fr">        87 =      F0      Avant seulement</text>
           <text xml:lang="it">         87 = F0       Solo avanti </text>
           <text xml:lang="cs">         87 = F0       pouze vpřed</text>
           <text xml:lang="de">            87 = F0             nur Vorwärts</text>
@@ -336,12 +380,14 @@
         </label>
         <label>
           <text>101 - 128 = F1 - F28 Both Directions, Inverse</text>
+          <text xml:lang="fr">101 - 128 = F1 - F28 Deux sens, inversé</text>
           <text xml:lang="it">101 - 128 = F1 - F28 Entrambe Dir, Indietro</text>
           <text xml:lang="cs">101 - 128 = F1 - F28 oba směry, převráceno</text>
           <text xml:lang="de">101 - 128 = F1 - F28   Beide Richtungen, invertiert</text>
         </label>
         <label>
           <text>           129 =      F0      Both Directions, Inverse</text>
+          <text xml:lang="fr">           129 =      F0      Deux sens, inversé</text>
           <text xml:lang="it">           129 =      F0      Entrambe Dir, Indietro</text>
           <text xml:lang="cs">           129 =      F0      oba směry, převráceno</text>
           <text xml:lang="de">          129 = F0             Beide Richtungen, invertiert</text>
@@ -351,12 +397,14 @@
         </label>
         <label>
           <text>130 - 157 = F1 - F28 Forward Only, Inverse</text>
+          <text xml:lang="fr">130 - 157 = F1 - F28 Avant seulement, inversé</text>
           <text xml:lang="it">130 - 157 = F1 - F28 Solo avanti, Indietro</text>
           <text xml:lang="cs">130 - 157 = F1 - F28 pouze vpřed, převráceno</text>
           <text xml:lang="de">130 - 157 = F1 - F28   nur Vorwärts, invertiert</text>
         </label>
         <label>
           <text>           158 =      F0      Forward Only, Inverse</text>
+          <text xml:lang="fr">           158 =      F0      Avant seulement, inversé</text>
           <text xml:lang="it">           158 =      F0      Solo avanti, Indietro</text>
           <text xml:lang="cs">           158 =      F0      pouze vpřed, převráceno</text>
           <text xml:lang="de">          158 = F0             nur Vorwärts, invertiert</text>
@@ -366,12 +414,14 @@
         </label>
         <label>
           <text>159 - 186 = F1 - F28 Reverse Only, Inverse</text>
+          <text xml:lang="fr">159 - 186 = F1 - F28 Arrière seulement, inversé</text>
           <text xml:lang="it">159 - 186 = F1 - F28 Solo indietro, Indietro</text>
           <text xml:lang="cs">159 - 186 = F1 - F28 pouze vzad, převráceno</text>
           <text xml:lang="de">159 - 186 = F1 - F28   nur Rückwärts, invertiert</text>
         </label>
         <label>
           <text>           187 =      F0      Forward Only, Inverse</text>
+          <text xml:lang="fr">           187 =      F0      Avant seulement, inversé</text>
           <text xml:lang="it">           187 =      F0      Solo avanti, Indietro</text>
           <text xml:lang="cs">           187 =      F0      pouze vpřed, převráceno</text>
           <text xml:lang="de">          187 = F0             nur Rückwärts, invertiert</text>
@@ -381,12 +431,14 @@
         </label>
         <label>
           <text>      254 = Forward</text>
+          <text xml:lang="fr">      254 = Avant</text>
           <text xml:lang="it">      254 = Avanti</text>
           <text xml:lang="cs">      254 = vpřed</text>
           <text xml:lang="de">          254 =                 Vorwärts</text>
         </label>
         <label>
           <text>      255 = Reverse</text>
+          <text xml:lang="fr">      255 = Arrière</text>
           <text xml:lang="it">      255 = Indietro</text>
           <text xml:lang="cs">      255 = vzad</text>
           <text xml:lang="de">          255 =                 Rückwärts</text>

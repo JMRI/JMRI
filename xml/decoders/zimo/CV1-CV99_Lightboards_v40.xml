@@ -164,6 +164,7 @@
   <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F1</label>
+    <label xml:lang="fr">Adresse d'UM active pour F1</label>
     <label xml:lang="it">Indirizzo Consist attivo per F1</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F1</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F1</label>
@@ -171,6 +172,7 @@
   <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F2</label>
+    <label xml:lang="fr">Adresse d'UM active pour F2</label>
     <label xml:lang="it">Indirizzo Consist attivo per F2</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F2</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F2</label>
@@ -178,6 +180,7 @@
   <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F3</label>
+    <label xml:lang="fr">Adresse d'UM active pour F3</label>
     <label xml:lang="it">Indirizzo Consist attivo per F3</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F3</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F3</label>
@@ -185,6 +188,7 @@
   <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F4</label>
+    <label xml:lang="fr">Adresse d'UM active pour F4</label>
     <label xml:lang="it">Indirizzo Consist attivo per F4</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F4</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F4</label>
@@ -192,6 +196,7 @@
   <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F5</label>
+    <label xml:lang="fr">Adresse d'UM active pour F5</label>
     <label xml:lang="it">Indirizzo Consist attivo per F5</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F5</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F5</label>
@@ -199,6 +204,7 @@
   <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F6</label>
+    <label xml:lang="fr">Adresse d'UM active pour F6</label>
     <label xml:lang="it">Indirizzo Consist attivo per F6</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F6</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F6</label>
@@ -206,6 +212,7 @@
   <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F7</label>
+    <label xml:lang="fr">Adresse d'UM active pour F7</label>
     <label xml:lang="it">Indirizzo Consist attivo per F7</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F7</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F7</label>
@@ -213,6 +220,7 @@
   <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F8</label>
+    <label xml:lang="fr">Adresse d'UM active pour F8</label>
     <label xml:lang="it">Indirizzo Consist attivo per F8</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F8</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F8</label>
@@ -220,6 +228,7 @@
   <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For FL in Forward</label>
+    <label xml:lang="fr">Adresse d'UM active pour FL en avant</label>
     <label xml:lang="it">Indirizzo Consist attivo per Luci (in avanti)</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F světla vpřed</label>
     <label xml:lang="de">im Verbundbetrieb aktiv FL bei Vorwärts</label>
@@ -227,6 +236,7 @@
   <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For FL in Reverse</label>
+    <label xml:lang="fr">Adresse d'UM active pour FL en arrière</label>
     <label xml:lang="it">Indirizzo Consist attivo per Luci (in retro)</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F světla vzad</label>
     <label xml:lang="de">im Verbundbetrieb aktiv FL bei Rückwärts</label>
@@ -234,6 +244,7 @@
   <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F9</label>
+    <label xml:lang="fr">Adresse d'UM active pour F9</label>
     <label xml:lang="it">Indirizzo Consist attivo per F9</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F9</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F9</label>
@@ -241,6 +252,7 @@
   <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F10</label>
+    <label xml:lang="fr">Adresse d'UM active pour F10</label>
     <label xml:lang="it">Indirizzo Consist attivo per F10</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F10</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F10</label>
@@ -248,6 +260,7 @@
   <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F11</label>
+    <label xml:lang="fr">Adresse d'UM active pour F11</label>
     <label xml:lang="it">Indirizzo Consist attivo per F11</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F11</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F11</label>
@@ -255,6 +268,7 @@
   <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F12</label>
+    <label xml:lang="fr">Adresse d'UM active pour F12</label>
     <label xml:lang="it">Indirizzo Consist attivo per F12</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F12</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F12</label>
@@ -262,6 +276,7 @@
   <variable item="RailCom channel 1 (Broadcast)" CV="28" default="1" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom channel 1 (Broadcast)</label>
+    <label xml:lang="fr">RailCom canal 1 (broadcast)</label>
     <label xml:lang="it">RailCom canale 1 (Broadcast)</label>
     <label xml:lang="cs">RailCom kanál 1 (adresa)</label>
     <label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
@@ -269,6 +284,7 @@
   <variable item="RailCom channel 2 (Data)" CV="28" default="1" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom channel 2 (Data)</label>
+    <label xml:lang="fr">RailCom canal 2 (données)</label>
     <label xml:lang="it">RailCom canale 2 (Dati)</label>
     <label xml:lang="cs">RailCom kanál 2 (data)</label>
     <label xml:lang="de">RailCom Kanal 2 (Daten)</label>
@@ -279,6 +295,7 @@
   <variable item="Enable RailCom" CV="29" mask="XXXXVXXX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Enable RailCom</label>
+    <label xml:lang="fr">Activer RailCom</label>
     <label xml:lang="it">Abilitazione RailCom</label>
     <label xml:lang="cs">Zpřístupnit RailCom</label>
     <label xml:lang="de">RailCom</label>
@@ -292,7 +309,7 @@
     <label xml:lang="cs">Minimální hodnota tlumení jasu</label>
     <label xml:lang="de">Minimum-Dimm-Wert</label>
     <tooltip> </tooltip>
-    <tooltip xml:lang="de">Veränderung des Minimum-Dimm-Wertes</tooltip>
+    <tooltip xml:lang="de"> Veränderung des Minimum-Dimm-Wertes </tooltip>
   </variable>
   <variable item="Global lighting option 2" CV="63" default="51">
     <decVal max="255"/>
@@ -302,7 +319,7 @@
     <label xml:lang="cs">Úprava světelných efektů</label>
     <label xml:lang="de">Lichteffekte anpassen</label>
     <tooltip> </tooltip>
-    <tooltip xml:lang="de">Zykluszeit (Zehner-), Aus-Verlängerung (Einerstelle)</tooltip>
+    <tooltip xml:lang="de"> Zykluszeit (Zehner-), Aus-Verlängerung (Einerstelle) </tooltip>
   </variable>
   <variable item="Global lighting option 4" CV="64" default="5" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="9"/>
@@ -312,7 +329,7 @@
     <label xml:lang="cs">Čas zhasínání návěstních světel</label>
     <label xml:lang="de">Ditchlight Aus-Zeit</label>
     <tooltip> </tooltip>
-    <tooltip xml:lang="de">Ditch light Aus-Zeit verändern</tooltip>
+    <tooltip xml:lang="de"> Ditch light Aus-Zeit verändern </tooltip>
   </variable>
   <variable item="Product Number" CV="65" readOnly="yes" default="0">
     <decVal/>

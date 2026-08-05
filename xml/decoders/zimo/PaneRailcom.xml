@@ -5,6 +5,7 @@
 <!-- version 1.2 - Ronald Kuhn - add Railcom voltage signal -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>RailCom</name>
+  <name xml:lang="fr">RailCom</name>
   <name xml:lang="it">RailCom</name>
   <name xml:lang="de">RailCom</name>
   <name xml:lang="cs">RailCom</name>

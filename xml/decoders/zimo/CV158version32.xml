@@ -7,16 +7,19 @@
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">
       <choice>Zimo for MX31ZL</choice>
+      <choice xml:lang="fr">Ancienne variante (pour MX31ZL)</choice>
       <choice xml:lang="cs">Zimo pro MX31ZL</choice>
       <choice xml:lang="de">„alte“ Variante (für MX31ZL)</choice>
       </enumChoice>
       <enumChoice choice="Standard Reporting" value="1">
       <choice>Standard Reporting</choice>
+      <choice xml:lang="fr">Remontée selon la norme NMRA</choice>
       <choice xml:lang="cs">Standardní zprávy</choice>
       <choice xml:lang="de">Rückmeldung nach NMRA</choice>
       </enumChoice>
     </enumVal>
     <label>RailCom speed reporting method</label>
+    <label xml:lang="fr">Méthode de remontée de vitesse RailCom</label>
     <label xml:lang="de">RailCom Geschwindigkeits-Rückmeldung</label>
     <label xml:lang="cs">Metoda hlášení rychlosti RailCom</label>
   </variable>

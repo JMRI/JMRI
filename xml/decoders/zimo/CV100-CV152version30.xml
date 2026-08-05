@@ -669,13 +669,18 @@
   <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="228,226,232,235,247,MX689_v30">
     <enumVal>
       <enumChoice choice="short address">
-        <choice>Basisadresse</choice>
+        <choice>Short address</choice>
+        <choice xml:lang="fr">Adresse courte</choice>
+        <choice xml:lang="de">Basisadresse</choice>
       </enumChoice>
       <enumChoice choice="extended address">
-        <choice>Erweiterte Adresse</choice>
+        <choice>Extended address</choice>
+        <choice xml:lang="fr">Adresse étendue</choice>
+        <choice xml:lang="de">Erweiterte Adresse</choice>
       </enumChoice>
     </enumVal>
     <label>Addressformat Second Address</label>
+    <label xml:lang="fr">Format de la deuxième adresse</label>
     <label xml:lang="de">Zweitadresse Format</label>
    </variable>
   <variable CV="112" item="Radio Power Conversion" mask="XVXXXXXX" default="0">
@@ -697,7 +702,7 @@
   <variable CV="113" default="0" item="EMF Feedback Cutout" exclude="228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
-    <label xml:lang="fr">Influence de la régulation EMK</label>
+    <label xml:lang="fr">Influence de la régulation BEMF</label>
     <label xml:lang="it">Intensità Taglio EMF</label>
     <label xml:lang="cs">Intenzita přerušní BEMF</label>
     <label xml:lang="de">Regeleinfluss</label>
@@ -1704,7 +1709,7 @@
   <variable CV="147" default="0" item="Total PWM Period" exclude="228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Extended Sample Time</label>
-    <label xml:lang="fr">Temps de mesure EMK étendu</label>
+    <label xml:lang="fr">Temps de mesure BEMF étendu</label>
     <label xml:lang="it">Misura timeout EMK</label>
     <label xml:lang="cs">Měřící pauza EMK</label>
     <label xml:lang="de">EMK – Messlücke</label>
@@ -1712,7 +1717,7 @@
   <variable CV="148" default="0" item="EMF Control Reference" exclude="228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
-    <label xml:lang="fr">Valeur dérivée (EMK)</label>
+    <label xml:lang="fr">Valeur dérivée (BEMF)</label>
     <label xml:lang="it">Valore differenziale</label>
     <label xml:lang="cs">Diferenciální složka</label>
     <label xml:lang="de">EMK - D-Wert</label>
@@ -1720,7 +1725,7 @@
   <variable CV="149" mask="XXXXXXXV" default="0" item="EMF Enable" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
-    <label xml:lang="fr">Valeur proportionnelle adaptative (EMK)</label>
+    <label xml:lang="fr">Valeur proportionnelle adaptative (BEMF)</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>
     <label xml:lang="cs">Adaptivní proporcionální složka</label>
     <label xml:lang="de">EMK - P-Wert</label>

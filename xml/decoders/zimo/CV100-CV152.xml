@@ -108,7 +108,7 @@
   <variable CV="113" default="0" item="EMF Feedback Cutout" tooltip="Controls how much Feedback Cutoff">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
-    <label xml:lang="fr">Influence de la régulation EMK</label>
+    <label xml:lang="fr">Influence de la régulation BEMF</label>
     <label xml:lang="de">Regeleinfluss</label>
     <label xml:lang="it">Intensità Taglio EMF</label>
     <label xml:lang="cs">Intenzita přerušní BEMF</label>
@@ -942,7 +942,7 @@
   <variable CV="147" default="0" item="Total PWM Period">
     <decVal min="0" max="255"/>
     <label>EMK measure timeout</label>
-    <label xml:lang="fr">Fenêtre de mesure EMK</label>
+    <label xml:lang="fr">Fenêtre de mesure BEMF</label>
     <label xml:lang="de">EMK – Messlücke</label>
     <label xml:lang="it">Misura timeout EMK</label>
     <label xml:lang="cs">Měřící pauza EMK</label>
@@ -950,7 +950,7 @@
   <variable CV="148" default="0" item="EMF Control Reference">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
-    <label xml:lang="fr">Valeur dérivée (EMK)</label>
+    <label xml:lang="fr">Valeur dérivée (BEMF)</label>
     <label xml:lang="de">EMK - D-Wert</label>
     <label xml:lang="it">Valore differenziale</label>
     <label xml:lang="cs">Diferenciální složka</label>
@@ -958,7 +958,7 @@
   <variable CV="149" mask="XXXXXXXV" default="0" item="EMF Enable">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
-    <label xml:lang="fr">Valeur proportionnelle adaptative (EMK)</label>
+    <label xml:lang="fr">Valeur proportionnelle adaptative (BEMF)</label>
     <label xml:lang="de">EMK - P-Wert</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>
     <label xml:lang="cs">Adaptivní proporcionální složka</label>

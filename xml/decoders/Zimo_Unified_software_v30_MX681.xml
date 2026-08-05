@@ -89,8 +89,10 @@
       <variable CV="64" default="0" item="Secondary Short Address">
         <shortAddressVal/>
         <label>Secondary Short Address</label>
+        <label xml:lang="fr">Deuxième adresse courte</label>
         <label xml:lang="de">zweite Basisadresse</label>
         <tooltip>Sets the short (Primary) address</tooltip>
+        <tooltip xml:lang="fr">Définit l'adresse courte (primaire)</tooltip>
         <tooltip xml:lang="de">Setzt die zweite Basisadresse</tooltip>
         <comment>Short address</comment>
         <comment xml:lang="de">zweite Basisadresse</comment>
@@ -99,8 +101,10 @@
         <decVal/>
         <!--longAddressVal/-->
         <label>Secondary Long Address, part 1</label>
+        <label xml:lang="fr">Deuxième adresse longue, partie 1</label>
         <label xml:lang="de">zweite Erweiterte Adresse, Teil 1</label>
         <tooltip>Sets the long (Extended) address</tooltip>
+        <tooltip xml:lang="fr">Définit l'adresse longue (étendue)</tooltip>
         <tooltip xml:lang="de">Wert aus CV#17 manuell übernehmen</tooltip>
         <comment>Long address (Range 0001-10239)</comment>
         <comment xml:lang="de">Lange Zweitadresse (Bereich 0001-10239)</comment>
@@ -108,8 +112,10 @@
       <variable CV="68" item="Secondary Long Address 2">
         <decVal/>
         <label>Secondary Long Address, part 2</label>
+        <label xml:lang="fr">Deuxième adresse longue, partie 2</label>
         <label xml:lang="de">zweite Erweiterte Adresse, Teil 2</label>
         <tooltip>Sets the long (Extended) address</tooltip>
+        <tooltip xml:lang="fr">Définit l'adresse longue (étendue)</tooltip>
         <tooltip xml:lang="de">Wert aus CV#18 manuell übernehmen</tooltip>
         <comment>Long address (Range 0001-10239)</comment>
         <comment xml:lang="de">Lange Zweitadresse (Bereich 0001-10239)</comment>
