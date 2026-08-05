@@ -9,7 +9,7 @@
 
     <!-- Available output features are:
 
-         "sP": Output option called "Servo Power"
+         "noSP": Output does not have the option called "Servo Power"
          "sO": Output options called "Servo output",
                "Servo output Steam engine Johnson Bar Control" and "Servo output Pantograph bouncing"
          "eS": Output option called "External controlled smoke unit"
@@ -18,7 +18,7 @@
          "rC": Output option called "Roco coupler"
          "eC": Output option called "ESU coupler"
 
-         All other output options are common among all LokPilot 5 and LokSound 5 decoders.
+         All other output options are the most common among all LokPilot 5 and LokSound 5 decoders.
 
          Determined from decoder manuals and LokProgrammer 5.2.18 -->
     
@@ -179,7 +179,7 @@
                 </xsl:if>
                 <enumChoice choice="PowerPack control" value="31">
                 </enumChoice>
-                <xsl:if test="contains($features, 'sP')">
+                <xsl:if test="not(contains($features, 'noSP'))">
                     <enumChoice choice="Servo Power" value="32">
                     </enumChoice>
                 </xsl:if>
