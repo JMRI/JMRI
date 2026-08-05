@@ -31,6 +31,8 @@
     <variable CV="1" comment="Short address" item="Short Address" default="03">
       <shortAddressVal/>
       <label>Primary Address</label>
+      <label xml:lang="fr">Adresse décodeur</label>
+      <label xml:lang="de">Basisadresse</label>
     </variable>
 
 <!--                                                                        -->
@@ -44,36 +46,50 @@
       <variable item="Power On Time (cv33=0)" CV="3" comment="Power On Time (cv33=0)" default="01">
         <decVal min="0" max="255"/>
         <label>Power On Time (cv33=0)</label>
+        <label xml:lang="fr">Durée d'activation (CV33=0)</label>
+        <label xml:lang="de">Einschaltdauer (CV33=0)</label>
       </variable>
 
       <variable item="Power On Time (cv33=1)" CV="4" comment="Power On Time (cv33=1)" default="01">
         <decVal min="0" max="255"/>
         <label>Power On Time (cv33=1)</label>
+        <label xml:lang="fr">Durée d'activation (CV33=1)</label>
+        <label xml:lang="de">Einschaltdauer (CV33=1)</label>
       </variable>
 
       <variable item="Power On Time (cv33=2)" CV="5" comment="Power On Time (cv33=2)" default="01">
         <decVal min="0" max="255"/>
         <label>Power On Time (cv33=2)</label>
+        <label xml:lang="fr">Durée d'activation (CV33=2)</label>
+        <label xml:lang="de">Einschaltdauer (CV33=2)</label>
       </variable>
 
       <variable item="Power On Time (cv33=3)" CV="6" comment="Power On Time (cv33=3)" default="01">
         <decVal min="0" max="255"/>
         <label>Power On Time (cv33=3)</label>
+        <label xml:lang="fr">Durée d'activation (CV33=3)</label>
+        <label xml:lang="de">Einschaltdauer (CV33=3)</label>
       </variable>
 
       <variable CV="7" readOnly="yes" item="Decoder Version" >
         <decVal min="0" max="255"/>
         <label>Decoder Version</label>
+        <label xml:lang="fr">Version décodeur</label>
+        <label xml:lang="de">Decoder-Version</label>
       </variable>
 
       <variable item="Manufacturer" CV="8" readOnly="yes" default="165">
         <decVal min="0" max="255"/>
         <label>Manufacturer</label>
+        <label xml:lang="fr">ID constructeur</label>
+        <label xml:lang="de">Hersteller ID</label>
       </variable>
 
       <variable item="Decoder ID" CV="250" readOnly="yes" default="165">
         <decVal min="0" max="255"/>
         <label>Decoder ID</label>
+        <label xml:lang="fr">Identifiant décodeur</label>
+        <label xml:lang="de">Decoderkennzeichen</label>
       </variable>
 <!--                                                                        -->
 <!-- Zimo accessory address is 9 bits. Low 6 bts in cv1, high 3 bits in cv9 -->
@@ -81,6 +97,8 @@
       <variable item="Zimo Address" CV="1,9" mask="XXVVVVVV XXXXXVVV" comment="Zimo Address">
         <splitVal/>
         <label>Zimo Address</label>
+        <label xml:lang="fr">Adresse Zimo</label>
+        <label xml:lang="de">Zimo-Adresse</label>
       </variable>
 
 <!--                                                                        -->
@@ -90,6 +108,8 @@
       <variable item="NMRA Address" CV="33,1,9" mask="XXXXXXVV XXVVVVVV XXXXXVVV" comment="NMRA Address">
         <splitVal offset="-3"/>
         <label>Zimo Address</label>
+        <label xml:lang="fr">Adresse Zimo</label>
+        <label xml:lang="de">Zimo-Adresse</label>
       </variable>
 
 <!--                                                                        -->
@@ -98,16 +118,22 @@
       <variable item="Low 6 bytes of Address" CV="1" mask="XXVVVVVV" comment="Decoder address (lower 6 bits)" default="1">
         <decVal min="1" max="63"/>
         <label>Low 6 bits of Address</label>
+        <label xml:lang="fr">6 bits de poids faible de l'adresse</label>
+        <label xml:lang="de">Untere 6 Bit der Adresse</label>
       </variable>
 
       <variable item="High 3 bits of Address" CV="9" mask="XXXXXVVV" comment="Decoder Address (higher 3 bits)" default="00">
         <decVal min="0" max="3"/>
         <label>High 3 bits of Address CV9</label>
+        <label xml:lang="fr">3 bits de poids fort de l'adresse (CV9)</label>
+        <label xml:lang="de">Obere 3 Bit der Adresse (CV9)</label>
       </variable>
 
       <variable item="Zimo Sub Address" CV="33" mask="XXXXXXVV" comment="Zimo Sub Address" default="0">
         <decVal min="0" max="3"/>
         <label>Zimo Sub Address CV33</label>
+        <label xml:lang="fr">Sous-adresse Zimo (CV33)</label>
+        <label xml:lang="de">Zimo-Unteradresse (CV33)</label>
       </variable>
 <!--                                                                        -->
 <!-- Definitions for cvs 1, 9 and 33 MUST come AFTER the splitvals (above)   -->
@@ -119,6 +145,8 @@
           <enumChoice choice="Reversed"/>
         </enumVal>
         <label>Reverse Operation CV38</label>
+        <label xml:lang="fr">Fonctionnement inversé (CV38)</label>
+        <label xml:lang="de">Umgekehrter Betrieb (CV38)</label>
       </variable>
 
       <variable item="Program Lock/Unlock" CV="144" mask="XVXXXXXX" comment="Program Lock/Unlock" default="0">
@@ -127,6 +155,8 @@
           <enumChoice choice="Locked"/>
         </enumVal>
         <label>Program Lock/Unlock</label>
+        <label xml:lang="fr">Verrouillage de programmation</label>
+        <label xml:lang="de">Programmiersperre</label>
       </variable>
 
       <variable item="Software Update Lock/Unlock" CV="144" mask="VXXXXXXX" comment="Update Lock/Unlock" default="0">
@@ -135,6 +165,8 @@
           <enumChoice choice="Locked"/>
         </enumVal>
         <label>Software Lock+Unlock</label>
+        <label xml:lang="fr">Verrouillage du logiciel</label>
+        <label xml:lang="de">Softwaresperre</label>
       </variable>
     </variables>
   </decoder>
@@ -145,6 +177,8 @@
 <!--                                                                        -->
   <pane>
     <name>Basic</name>
+    <name xml:lang="fr">Basique</name>
+    <name xml:lang="de">Basis</name>
 
     <column>
 
@@ -162,6 +196,8 @@
           </label>
           <label>
             <text>Addressing: enter NMRA address or Zimo addresses</text>
+            <text xml:lang="fr">Adressage : saisir l'adresse NMRA ou les adresses Zimo</text>
+            <text xml:lang="de">Adressierung: NMRA-Adresse oder Zimo-Adressen eingeben</text>
           </label>
 
           <separator/>
@@ -173,12 +209,24 @@
           <row>
 
             <column>
-              <display item="NMRA Address" label="NMRA Address"/>
+              <display item="NMRA Address">
+                <label>NMRA Address</label>
+                <label xml:lang="fr">Adresse NMRA</label>
+                <label xml:lang="de">NMRA-Adresse</label>
+              </display>
               <label>
                 <text> </text>
               </label>
-              <display item="Zimo Address" label="Zimo Accessory Address"/>
-              <display item="Zimo Sub Address" label="Zimo Accessory Sub Address"/>
+              <display item="Zimo Address">
+                <label>Zimo Accessory Address</label>
+                <label xml:lang="fr">Adresse d'accessoire Zimo</label>
+                <label xml:lang="de">Zimo Zubehöradresse</label>
+              </display>
+              <display item="Zimo Sub Address">
+                <label>Zimo Accessory Sub Address</label>
+                <label xml:lang="fr">Sous-adresse d'accessoire Zimo</label>
+                <label xml:lang="de">Zimo Zubehör-Unteradresse</label>
+              </display>
               <label>
                 <text> </text>
               </label>
@@ -194,6 +242,8 @@
 <!--                                                                        -->
   <pane>
     <name>MX820E Settings</name>
+    <name xml:lang="fr">Réglages MX820E</name>
+    <name xml:lang="de">MX820E Einstellungen</name>
         <column>
           <label>
             <text> </text>
@@ -209,6 +259,8 @@
           </label>
           <label>
             <text>Options</text>
+            <text xml:lang="fr">Options</text>
+            <text xml:lang="de">Optionen</text>
           </label>
 
           <separator/>
@@ -220,15 +272,27 @@
           <row>
 
             <column>
-              <display item="Reverse Operation" format="checkbox" label="Reverse Operation"/>
+              <display item="Reverse Operation" format="checkbox">
+                <label>Reverse Operation</label>
+                <label xml:lang="fr">Fonctionnement inversé</label>
+                <label xml:lang="de">Umgekehrter Betrieb</label>
+              </display>
               <label>
                 <text> </text>
               </label>
-              <display item="Program Lock/Unlock" format="checkbox" label="Program Lock"/>
+              <display item="Program Lock/Unlock" format="checkbox">
+                <label>Program Lock</label>
+                <label xml:lang="fr">Verrouillage de programmation</label>
+                <label xml:lang="de">Programmiersperre</label>
+              </display>
               <label>
                 <text> </text>
               </label>
-              <display item="Software Update Lock/Unlock" format="checkbox" label="Software Update Lock"/>
+              <display item="Software Update Lock/Unlock" format="checkbox">
+                <label>Software Update Lock</label>
+                <label xml:lang="fr">Verrouillage de mise à jour</label>
+                <label xml:lang="de">Updatesperre</label>
+              </display>
             </column>
 
           </row>
@@ -242,6 +306,8 @@
             <column>
               <label>
                 <text>Power On Time (in 1/10th seconds):</text>
+                <text xml:lang="fr">Durée d'activation (en 1/10 s) :</text>
+                <text xml:lang="de">Einschaltdauer (in 1/10 s):</text>
               </label>
               <separator/>
               <label>
@@ -256,7 +322,11 @@
                   </qualifier>
 
                   <row>
-                    <display item="Power On Time (cv33=0)" label="For NMRA Address"/>
+                    <display item="Power On Time (cv33=0)">
+                      <label>For NMRA Address</label>
+                      <label xml:lang="fr">Pour l'adresse NMRA</label>
+                      <label xml:lang="de">Für NMRA-Adresse</label>
+                    </display>
                   </row>
              </group>
 
@@ -268,7 +338,11 @@
                   </qualifier>
 
                    <row>
-                     <display item="Power On Time (cv33=1)" label="For NMRA Address" />
+                     <display item="Power On Time (cv33=1)">
+                       <label>For NMRA Address</label>
+                       <label xml:lang="fr">Pour l'adresse NMRA</label>
+                       <label xml:lang="de">Für NMRA-Adresse</label>
+                     </display>
                    </row>
                 </group>
 
@@ -280,7 +354,11 @@
                   </qualifier>
 
                     <row>
-                    <display item="Power On Time (cv33=2)" label="For NMRA Address" />
+                    <display item="Power On Time (cv33=2)">
+                      <label>For NMRA Address</label>
+                      <label xml:lang="fr">Pour l'adresse NMRA</label>
+                      <label xml:lang="de">Für NMRA-Adresse</label>
+                    </display>
                     </row>
                 </group>
 
@@ -292,7 +370,11 @@
                   </qualifier>
 
                     <row>
-                    <display item="Power On Time (cv33=3)" label="For NMRA Address" />
+                    <display item="Power On Time (cv33=3)">
+                      <label>For NMRA Address</label>
+                      <label xml:lang="fr">Pour l'adresse NMRA</label>
+                      <label xml:lang="de">Für NMRA-Adresse</label>
+                    </display>
                     </row>
                 </group>
 
@@ -301,19 +383,35 @@
           </label>
 
               <row>
-                <display item="Power On Time (cv33=0)" label="For subaddress 0"/>
+                <display item="Power On Time (cv33=0)">
+                  <label>For subaddress 0</label>
+                  <label xml:lang="fr">Pour la sous-adresse 0</label>
+                  <label xml:lang="de">Für Unteradresse 0</label>
+                </display>
               </row>
 
               <row>
-                <display item="Power On Time (cv33=1)" label="For subaddress 1"/>
+                <display item="Power On Time (cv33=1)">
+                  <label>For subaddress 1</label>
+                  <label xml:lang="fr">Pour la sous-adresse 1</label>
+                  <label xml:lang="de">Für Unteradresse 1</label>
+                </display>
               </row>
 
               <row>
-                <display item="Power On Time (cv33=2)" label="For subaddress 2"/>
+                <display item="Power On Time (cv33=2)">
+                  <label>For subaddress 2</label>
+                  <label xml:lang="fr">Pour la sous-adresse 2</label>
+                  <label xml:lang="de">Für Unteradresse 2</label>
+                </display>
               </row>
 
               <row>
-                <display item="Power On Time (cv33=3)" label="For subaddress 3"/>
+                <display item="Power On Time (cv33=3)">
+                  <label>For subaddress 3</label>
+                  <label xml:lang="fr">Pour la sous-adresse 3</label>
+                  <label xml:lang="de">Für Unteradresse 3</label>
+                </display>
               </row>
             </column>
 
