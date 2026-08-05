@@ -11,6 +11,7 @@
 <!-- version 1.6 - Ronald Kuhn - add value for Lights flash with switchgear and a few visual correction -->
 <!-- version 2.0 - Ronald Kuhn - new arrangement of the options per grid -->
 <!-- version 2.1 - Pierre Billon - 2026-07-31 - add the pantograph settings, CV186-CV189 -->
+<!-- version 2.2 - Pierre Billon - 2026-08-05 - CV62 and CV64 were shown under item names no definition provides, so they never appeared -->
 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Function Output</name>
@@ -246,7 +247,7 @@
              </label>
             </griditem>
             <griditem>
-             <display item="Minimum Dimming Value"/>
+             <display item="Global lighting option 1"/>
             </griditem>
             <griditem>
              <display item="Fade-in time"/>
@@ -285,7 +286,7 @@
              </label>
             </griditem>
             <griditem>
-             <display item="Ditch Light Off Time"/>
+             <display item="Global lighting option 4"/>
             </griditem>
             <griditem>
              <display item="Ditch Light with Bell"/>
