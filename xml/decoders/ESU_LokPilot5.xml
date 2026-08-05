@@ -176,6 +176,9 @@
             <model model="LokPilot 5 MKL DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608,33554643">
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
+            <model model="LokPilot 5 micro KATO" maxFnNum="31" numOuts="20" maxMotorCurrent="0.9A" extFnsESU="V5" productID="16777452">
+                <size length="60.0" width="10.1" height="3.0" units="mm"/>
+            </model>
             <model show="no" model="LokPilot 5 micro DCC Next18" replacementModel="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>

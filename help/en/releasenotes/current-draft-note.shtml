@@ -303,6 +303,7 @@
         <h4>ESU</h4>
             <ul>
                 <li>LokSound 5 nano DCC now declares its E24 interface.</li>
+                <li>Added LokPilot 5 micro KATO.</li>
                 <li></li>
             </ul>
 
