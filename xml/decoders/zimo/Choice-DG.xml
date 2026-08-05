@@ -24,6 +24,7 @@
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
         <choice xml:lang="cs">Žádný</choice>

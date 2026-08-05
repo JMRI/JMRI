@@ -25,180 +25,210 @@
     <enumVal>
       <enumChoice choice="Not active">
         <choice>Not active</choice>
+        <choice xml:lang="fr">Non actif</choice>
         <choice xml:lang="it">Non Attivo</choice>
         <choice xml:lang="cs">Neaktivní</choice>
         <choice xml:lang="de">nicht aktiv</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F1 key">
         <choice>Controlled by F1 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F1</choice>
         <choice xml:lang="it">Controllato da F1</choice>
         <choice xml:lang="cs">Řízeno klávesou F1</choice>
         <choice xml:lang="de">gesteuert mit F1</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F2 key">
         <choice>Controlled by F2 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F2</choice>
         <choice xml:lang="it">Controllato da F2</choice>
         <choice xml:lang="cs">Řízeno klávesou F2</choice>
         <choice xml:lang="de">gesteuert mit F2</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F3 key">
         <choice>Controlled by F3 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F3</choice>
         <choice xml:lang="it">Controllato da F3</choice>
         <choice xml:lang="cs">Řízeno klávesou F3</choice>
         <choice xml:lang="de">gesteuert mit F3</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F4 key">
         <choice>Controlled by F4 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F4</choice>
         <choice xml:lang="it">Controllato da F4</choice>
         <choice xml:lang="cs">Řízeno klávesou F4</choice>
         <choice xml:lang="de">gesteuert mit F4</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F5 key">
         <choice>Controlled by F5 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F5</choice>
         <choice xml:lang="it">Controllato da F5</choice>
         <choice xml:lang="cs">Řízeno klávesou F5</choice>
         <choice xml:lang="de">gesteuert mit F5</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F6 key">
         <choice>Controlled by F6 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F6</choice>
         <choice xml:lang="it">Controllato da F6</choice>
         <choice xml:lang="cs">Řízeno klávesou F6</choice>
         <choice xml:lang="de">gesteuert mit F6</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F7 key">
         <choice>Controlled by F7 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F7</choice>
         <choice xml:lang="it">Controllato da F7</choice>
         <choice xml:lang="cs">Řízeno klávesou F7</choice>
         <choice xml:lang="de">gesteuert mit F7</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F8 key">
         <choice>Controlled by F8 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F8</choice>
         <choice xml:lang="it">Controllato da F8</choice>
         <choice xml:lang="cs">Řízeno klávesou F8</choice>
         <choice xml:lang="de">gesteuert mit F8</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F9 key">
         <choice>Controlled by F9 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F9</choice>
         <choice xml:lang="it">Controllato da F9</choice>
         <choice xml:lang="cs">Řízeno klávesou F9</choice>
         <choice xml:lang="de">gesteuert mit F9</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F10 key">
         <choice>Controlled by F10 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F10</choice>
         <choice xml:lang="it">Controllato da F10</choice>
         <choice xml:lang="cs">Řízeno klávesou F10</choice>
         <choice xml:lang="de">gesteuert mit F10</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F11 key">
         <choice>Controlled by F11 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F11</choice>
         <choice xml:lang="it">Controllato da F11</choice>
         <choice xml:lang="cs">Řízeno klávesou F11</choice>
         <choice xml:lang="de">gesteuert mit F11</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F12 key">
         <choice>Controlled by F12 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F12</choice>
         <choice xml:lang="it">Controllato da F12</choice>
         <choice xml:lang="cs">Řízeno klávesou F12</choice>
         <choice xml:lang="de">gesteuert mit F12</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F13 key">
         <choice>Controlled by F13 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F13</choice>
         <choice xml:lang="it">Controllato da F13</choice>
         <choice xml:lang="cs">Řízeno klávesou F13</choice>
         <choice xml:lang="de">gesteuert mit F13</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F14 key">
         <choice>Controlled by F14 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F14</choice>
         <choice xml:lang="it">Controllato da F14</choice>
         <choice xml:lang="cs">Řízeno klávesou F14</choice>
         <choice xml:lang="de">gesteuert mit F14</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F15 key">
         <choice>Controlled by F15 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F15</choice>
         <choice xml:lang="it">Controllato da F15</choice>
         <choice xml:lang="cs">Řízeno klávesou F15</choice>
         <choice xml:lang="de">gesteuert mit F15</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F16 key">
         <choice>Controlled by F16 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F16</choice>
         <choice xml:lang="it">Controllato da F16</choice>
         <choice xml:lang="cs">Řízeno klávesou F16</choice>
         <choice xml:lang="de">gesteuert mit F16</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F17 key">
         <choice>Controlled by F17 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F17</choice>
         <choice xml:lang="it">Controllato da F17</choice>
         <choice xml:lang="cs">Řízeno klávesou F17</choice>
         <choice xml:lang="de">gesteuert mit F17</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F18 key">
         <choice>Controlled by F18 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F18</choice>
         <choice xml:lang="it">Controllato da F18</choice>
         <choice xml:lang="cs">Řízeno klávesou F18</choice>
         <choice xml:lang="de">gesteuert mit F18</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F19 key">
         <choice>Controlled by F19 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F19</choice>
         <choice xml:lang="it">Controllato da F19</choice>
         <choice xml:lang="cs">Řízeno klávesou F19</choice>
         <choice xml:lang="de">gesteuert mit F19</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F20 key">
         <choice>Controlled by F20 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F20</choice>
         <choice xml:lang="it">Controllato da F20</choice>
         <choice xml:lang="cs">Řízeno klávesou F20</choice>
         <choice xml:lang="de">gesteuert mit F20</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F21 key">
         <choice>Controlled by F21 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F21</choice>
         <choice xml:lang="it">Controllato da F21</choice>
         <choice xml:lang="cs">Řízeno klávesou F21</choice>
         <choice xml:lang="de">gesteuert mit F21</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F22 key">
         <choice>Controlled by F22 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F22</choice>
         <choice xml:lang="it">Controllato da F22</choice>
         <choice xml:lang="cs">Řízeno klávesou F22</choice>
         <choice xml:lang="de">gesteuert mit F22</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F23 key">
         <choice>Controlled by F23 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F23</choice>
         <choice xml:lang="it">Controllato da F23</choice>
         <choice xml:lang="cs">Řízeno klávesou F23</choice>
         <choice xml:lang="de">gesteuert mit F23</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F24 key">
         <choice>Controlled by F24 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F24</choice>
         <choice xml:lang="it">Controllato da F24</choice>
         <choice xml:lang="cs">Řízeno klávesou F24</choice>
         <choice xml:lang="de">gesteuert mit F24</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F25 key">
         <choice>Controlled by F25 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F25</choice>
         <choice xml:lang="it">Controllato da F25</choice>
         <choice xml:lang="cs">Řízeno klávesou F25</choice>
         <choice xml:lang="de">gesteuert mit F25</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F26 key">
         <choice>Controlled by F26 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F26</choice>
         <choice xml:lang="it">Controllato da F26</choice>
         <choice xml:lang="cs">Řízeno klávesou F26</choice>
         <choice xml:lang="de">gesteuert mit F26</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F27 key">
         <choice>Controlled by F27 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F27</choice>
         <choice xml:lang="it">Controllato da F27</choice>
         <choice xml:lang="cs">Řízeno klávesou F27</choice>
         <choice xml:lang="de">gesteuert mit F27</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F28 key">
         <choice>Controlled by F28 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F28</choice>
         <choice xml:lang="it">Controllato da F28</choice>
         <choice xml:lang="cs">Řízeno klávesou F28</choice>
         <choice xml:lang="de">gesteuert mit F28</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front lights off</label>
+    <label xml:lang="fr">Feux AV éteints</label>
     <label xml:lang="it">Luci Frontali Off</label>
     <label xml:lang="cs">Vypnutí předních světel lokomotivy</label>
     <label xml:lang="de">Lvor aus</label>
@@ -207,54 +237,63 @@
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="cs">Žádný</choice>
         <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="fr">FO 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
         <choice xml:lang="cs">Funkční výstup 1</choice>
         <choice xml:lang="de">FA 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="fr">FO 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
         <choice xml:lang="cs">Funkční výstup 2</choice>
         <choice xml:lang="de">FA 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="fr">FO 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
         <choice xml:lang="cs">Funkční výstup 3</choice>
         <choice xml:lang="de">FA 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="fr">FO 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
         <choice xml:lang="cs">Funkční výstup 4</choice>
         <choice xml:lang="de">FA 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="fr">FO 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
         <choice xml:lang="cs">Funkční výstup 5</choice>
         <choice xml:lang="de">FA 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="fr">FO 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
         <choice xml:lang="cs">Funkční výstup 6</choice>
         <choice xml:lang="de">FA 6</choice>
       </enumChoice>
       <enumChoice choice="Function output 7">
         <choice>Function output 7</choice>
+        <choice xml:lang="fr">FO 7</choice>
         <choice xml:lang="it">Uscita Funzione 7</choice>
         <choice xml:lang="cs">Funkční výstup 7</choice>
         <choice xml:lang="de">FA 7</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front additional function off</label>
+    <label xml:lang="fr">Feux AV fonction supplémentaire éteinte</label>
     <label xml:lang="it">Funzione addizionale Frontale Off</label>
     <label xml:lang="cs">Vypnutí funkčních výstupů vpřed lokomotivy</label>
     <label xml:lang="de">Lvor zusätzlich aus</label>
@@ -263,180 +302,210 @@
     <enumVal>
       <enumChoice choice="Not active">
         <choice>Not active</choice>
+        <choice xml:lang="fr">Non actif</choice>
         <choice xml:lang="it">Non Attivo</choice>
         <choice xml:lang="cs">Neaktivní</choice>
         <choice xml:lang="de">nicht aktiv</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F1 key">
         <choice>Controlled by F1 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F1</choice>
         <choice xml:lang="it">Controllato da F1</choice>
         <choice xml:lang="cs">Řízeno klávesou F1</choice>
         <choice xml:lang="de">gesteuert mit F1</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F2 key">
         <choice>Controlled by F2 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F2</choice>
         <choice xml:lang="it">Controllato da F2</choice>
         <choice xml:lang="cs">Řízeno klávesou F2</choice>
         <choice xml:lang="de">gesteuert mit F2</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F3 key">
         <choice>Controlled by F3 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F3</choice>
         <choice xml:lang="it">Controllato da F3</choice>
         <choice xml:lang="cs">Řízeno klávesou F3</choice>
         <choice xml:lang="de">gesteuert mit F3</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F4 key">
         <choice>Controlled by F4 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F4</choice>
         <choice xml:lang="it">Controllato da F4</choice>
         <choice xml:lang="cs">Řízeno klávesou F4</choice>
         <choice xml:lang="de">gesteuert mit F4</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F5 key">
         <choice>Controlled by F5 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F5</choice>
         <choice xml:lang="it">Controllato da F5</choice>
         <choice xml:lang="cs">Řízeno klávesou F5</choice>
         <choice xml:lang="de">gesteuert mit F5</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F6 key">
         <choice>Controlled by F6 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F6</choice>
         <choice xml:lang="it">Controllato da F6</choice>
         <choice xml:lang="cs">Řízeno klávesou F6</choice>
         <choice xml:lang="de">gesteuert mit F6</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F7 key">
         <choice>Controlled by F7 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F7</choice>
         <choice xml:lang="it">Controllato da F7</choice>
         <choice xml:lang="cs">Řízeno klávesou F7</choice>
         <choice xml:lang="de">gesteuert mit F7</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F8 key">
         <choice>Controlled by F8 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F8</choice>
         <choice xml:lang="it">Controllato da F8</choice>
         <choice xml:lang="cs">Řízeno klávesou F8</choice>
         <choice xml:lang="de">gesteuert mit F8</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F9 key">
         <choice>Controlled by F9 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F9</choice>
         <choice xml:lang="it">Controllato da F9</choice>
         <choice xml:lang="cs">Řízeno klávesou F9</choice>
         <choice xml:lang="de">gesteuert mit F9</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F10 key">
         <choice>Controlled by F10 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F10</choice>
         <choice xml:lang="it">Controllato da F10</choice>
         <choice xml:lang="cs">Řízeno klávesou F10</choice>
         <choice xml:lang="de">gesteuert mit F10</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F11 key">
         <choice>Controlled by F11 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F11</choice>
         <choice xml:lang="it">Controllato da F11</choice>
         <choice xml:lang="cs">Řízeno klávesou F11</choice>
         <choice xml:lang="de">gesteuert mit F11</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F12 key">
         <choice>Controlled by F12 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F12</choice>
         <choice xml:lang="it">Controllato da F12</choice>
         <choice xml:lang="cs">Řízeno klávesou F12</choice>
         <choice xml:lang="de">gesteuert mit F12</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F13 key">
         <choice>Controlled by F13 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F13</choice>
         <choice xml:lang="it">Controllato da F13</choice>
         <choice xml:lang="cs">Řízeno klávesou F13</choice>
         <choice xml:lang="de">gesteuert mit F13</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F14 key">
         <choice>Controlled by F14 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F14</choice>
         <choice xml:lang="it">Controllato da F14</choice>
         <choice xml:lang="cs">Řízeno klávesou F14</choice>
         <choice xml:lang="de">gesteuert mit F14</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F15 key">
         <choice>Controlled by F15 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F15</choice>
         <choice xml:lang="it">Controllato da F15</choice>
         <choice xml:lang="cs">Řízeno klávesou F15</choice>
         <choice xml:lang="de">gesteuert mit F15</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F16 key">
         <choice>Controlled by F16 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F16</choice>
         <choice xml:lang="it">Controllato da F16</choice>
         <choice xml:lang="cs">Řízeno klávesou F16</choice>
         <choice xml:lang="de">gesteuert mit F16</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F17 key">
         <choice>Controlled by F17 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F17</choice>
         <choice xml:lang="it">Controllato da F17</choice>
         <choice xml:lang="cs">Řízeno klávesou F17</choice>
         <choice xml:lang="de">gesteuert mit F17</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F18 key">
         <choice>Controlled by F18 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F18</choice>
         <choice xml:lang="it">Controllato da F18</choice>
         <choice xml:lang="cs">Řízeno klávesou F18</choice>
         <choice xml:lang="de">gesteuert mit F18</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F19 key">
         <choice>Controlled by F19 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F19</choice>
         <choice xml:lang="it">Controllato da F19</choice>
         <choice xml:lang="cs">Řízeno klávesou F19</choice>
         <choice xml:lang="de">gesteuert mit F19</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F20 key">
         <choice>Controlled by F20 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F20</choice>
         <choice xml:lang="it">Controllato da F20</choice>
         <choice xml:lang="cs">Řízeno klávesou F20</choice>
         <choice xml:lang="de">gesteuert mit F20</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F21 key">
         <choice>Controlled by F21 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F21</choice>
         <choice xml:lang="it">Controllato da F21</choice>
         <choice xml:lang="cs">Řízeno klávesou F21</choice>
         <choice xml:lang="de">gesteuert mit F21</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F22 key">
         <choice>Controlled by F22 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F22</choice>
         <choice xml:lang="it">Controllato da F22</choice>
         <choice xml:lang="cs">Řízeno klávesou F22</choice>
         <choice xml:lang="de">gesteuert mit F22</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F23 key">
         <choice>Controlled by F23 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F23</choice>
         <choice xml:lang="it">Controllato da F23</choice>
         <choice xml:lang="cs">Řízeno klávesou F23</choice>
         <choice xml:lang="de">gesteuert mit F23</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F24 key">
         <choice>Controlled by F24 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F24</choice>
         <choice xml:lang="it">Controllato da F24</choice>
         <choice xml:lang="cs">Řízeno klávesou F24</choice>
         <choice xml:lang="de">gesteuert mit F24</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F25 key">
         <choice>Controlled by F25 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F25</choice>
         <choice xml:lang="it">Controllato da F25</choice>
         <choice xml:lang="cs">Řízeno klávesou F25</choice>
         <choice xml:lang="de">gesteuert mit F25</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F26 key">
         <choice>Controlled by F26 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F26</choice>
         <choice xml:lang="it">Controllato da F26</choice>
         <choice xml:lang="cs">Řízeno klávesou F26</choice>
         <choice xml:lang="de">gesteuert mit F26</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F27 key">
         <choice>Controlled by F27 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F27</choice>
         <choice xml:lang="it">Controllato da F27</choice>
         <choice xml:lang="cs">Řízeno klávesou F27</choice>
         <choice xml:lang="de">gesteuert mit F27</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F28 key">
         <choice>Controlled by F28 key</choice>
+        <choice xml:lang="fr">Commandé par la touche F28</choice>
         <choice xml:lang="it">Controllato da F28</choice>
         <choice xml:lang="cs">Řízeno klávesou F28</choice>
         <choice xml:lang="de">gesteuert mit F28</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear lights off</label>
+    <label xml:lang="fr">Feux AR éteints</label>
     <label xml:lang="it">Luci Posteriori Off</label>
     <label xml:lang="cs">Vypnutí zadních světel lokomotivy</label>
     <label xml:lang="de">Lrück aus</label>
@@ -445,54 +514,63 @@
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="cs">Žádný</choice>
         <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="fr">FO 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
         <choice xml:lang="cs">Funkční výstup 1</choice>
         <choice xml:lang="de">FA 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="fr">FO 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
         <choice xml:lang="cs">Funkční výstup 2</choice>
         <choice xml:lang="de">FA 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="fr">FO 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
         <choice xml:lang="cs">Funkční výstup 3</choice>
         <choice xml:lang="de">FA 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="fr">FO 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
         <choice xml:lang="cs">Funkční výstup 4</choice>
         <choice xml:lang="de">FA 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="fr">FO 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
         <choice xml:lang="cs">Funkční výstup 5</choice>
         <choice xml:lang="de">FA 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="fr">FO 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
         <choice xml:lang="cs">Funkční výstup 6</choice>
         <choice xml:lang="de">FA 6</choice>
       </enumChoice>
       <enumChoice choice="Function output 7">
         <choice>Function output 7</choice>
+        <choice xml:lang="fr">FO 7</choice>
         <choice xml:lang="it">Uscita Funzione 7</choice>
         <choice xml:lang="cs">Funkční výstup 7</choice>
         <choice xml:lang="de">FA 7</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear additional function off</label>
+    <label xml:lang="fr">Feux AR fonction supplémentaire éteinte</label>
     <label xml:lang="it">Funzione addizionale Posteriore Off</label>
     <label xml:lang="cs">Vypnutí funkčních výstupů vzad lokomotivy</label>
     <label xml:lang="de">Lrück zusätzlich aus</label>
@@ -581,10 +659,12 @@
       </enumChoice>
     </enumVal>
     <label>PWM Frequency</label>
+    <label xml:lang="fr">Fréquence PWM</label>
     <label xml:lang="it">Frequenza PWM</label>
     <label xml:lang="cs">Frekvence PWM</label>
-    <label xml:lang="de">Motoransteuerungsfrequenz</label>
+    <label xml:lang="de">PWM Frequenz</label>
     <tooltip>See CV9=0</tooltip>
+    <tooltip xml:lang="fr">Voir CV9=0</tooltip>
     <tooltip xml:lang="de">See CV9=0</tooltip>
    </variable>
   <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="179,184,228,226,232,235,247,MX689_v30">
@@ -618,96 +698,115 @@
   <variable CV="112" item="Pulse Chain Generation" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Pulse Chain Generation</label>
+    <label xml:lang="fr">Génération de chaine d'impulsions</label>
     <label xml:lang="it">Generazione treno impulsi</label>
     <label xml:lang="cs">Generování řetězců impulsů</label>
-    <label xml:lang="de">F1-Pulskettenerzeugung (LGB)</label>
+    <label xml:lang="de">Pulskettenerzeugung</label>
   </variable>
   <variable CV="113" item="EMF Feedback Cutout" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
+    <label xml:lang="fr">Influence de la régulation EMK</label>
     <label xml:lang="it">Intensità Taglio EMF</label>
     <label xml:lang="cs">Intenzita přerušení BEMF</label>
     <label xml:lang="de">Regeleinfluss</label>
     <tooltip>Controls how much Feedback Cutoff</tooltip>
+    <tooltip xml:lang="fr">Ampleur de la régulation de charge (0 = aucune, 255 = max)</tooltip>
     <tooltip xml:lang="de">Ausmaß der EMK, Lastregelung (0=kein EMK bis 255=max)</tooltip>
     <tooltip xml:lang="cs">Řídí jak moc je kontrolována zátěž</tooltip>
    </variable>
   <variable CV="114" item="Dim Front Light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim Front Light</label>
+    <label xml:lang="fr">Atténuer les feux AV</label>
     <label xml:lang="it">Smorzamento Luci frontali</label>
     <label xml:lang="cs">Tlumení předního světla</label>
     <label xml:lang="de">Dimmung Lvor</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim Rear Light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim Rear Light</label>
+    <label xml:lang="fr">Atténuer les feux AR</label>
     <label xml:lang="it">Smorzamento Luci posteriori</label>
     <label xml:lang="cs">Tlumení zadního světla</label>
     <label xml:lang="de">Dimmung Lrück</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 1</label>
+    <label xml:lang="fr">Atténuer FO1</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 1</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 1</label>
     <label xml:lang="de">Dimmung FA1</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 2</label>
+    <label xml:lang="fr">Atténuer FO2</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 2</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 2</label>
     <label xml:lang="de">Dimmung FA2</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 3</label>
+    <label xml:lang="fr">Atténuer FO3</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 3</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 3</label>
     <label xml:lang="de">Dimmung FA3</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 4</label>
+    <label xml:lang="fr">Atténuer FO4</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 4</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 4</label>
     <label xml:lang="de">Dimmung FA4</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 5" mask="XVXXXXXX" default="0" minOut="7" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 5</label>
+    <label xml:lang="fr">Atténuer FO5</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 5</label>
     <label xml:lang="de">Dimmung FA5</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 6" mask="VXXXXXXX" default="0" minOut="8" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 6</label>
+    <label xml:lang="fr">Atténuer FO6</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 6</label>
     <label xml:lang="de">Dimmung FA6</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
@@ -749,6 +848,7 @@
   <variable CV="117" item="Flash Rate" default="0">
     <decVal max="99"/>
     <label>Flash Rate</label>
+    <label xml:lang="fr">Fréquence de clignotement</label>
     <label xml:lang="it">Frequenza Lampeggio</label>
     <label xml:lang="cs">Poměr blikání</label>
     <label xml:lang="de">Blinken</label>
@@ -756,6 +856,7 @@
   <variable CV="118" item="Flash front light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash front light</label>
+    <label xml:lang="fr">Clignotant feux AV</label>
     <label xml:lang="it">Lampeggio Luci Frontali</label>
     <label xml:lang="cs">Blikání předního světla</label>
     <label xml:lang="de">Blinken Lvor</label>
@@ -763,6 +864,7 @@
   <variable CV="118" item="Flash rear light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash rear light</label>
+    <label xml:lang="fr">Clignotant feux AR</label>
     <label xml:lang="it">Lampeggio Luci posteriori</label>
     <label xml:lang="cs">Blikání zadního světla</label>
     <label xml:lang="de">Blinken Lrück</label>
@@ -770,6 +872,7 @@
   <variable CV="118" item="Flash function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 1</label>
+    <label xml:lang="fr">Clignotant FO1</label>
     <label xml:lang="it">Lampeggio uscita funzione 1</label>
     <label xml:lang="cs">Blikání funkčního výstupu 1</label>
     <label xml:lang="de">Blinken FA1</label>
@@ -777,6 +880,7 @@
   <variable CV="118" item="Flash function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 2</label>
+    <label xml:lang="fr">Clignotant FO2</label>
     <label xml:lang="it">Lampeggio uscita funzione 2</label>
     <label xml:lang="cs">Blikání funkčního výstupu 2</label>
     <label xml:lang="de">Blinken FA2</label>
@@ -784,6 +888,7 @@
   <variable CV="118" item="Flash function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 3</label>
+    <label xml:lang="fr">Clignotant FO3</label>
     <label xml:lang="it">Lampeggio uscita funzione 3</label>
     <label xml:lang="cs">Blikání funkčního výstupu 3</label>
     <label xml:lang="de">Blinken FA3</label>
@@ -791,6 +896,7 @@
   <variable CV="118" item="Flash function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 4</label>
+    <label xml:lang="fr">Clignotant FO4</label>
     <label xml:lang="it">Lampeggio uscita funzione 4</label>
     <label xml:lang="cs">Blikání funkčního výstupu 4</label>
     <label xml:lang="de">Blinken FA4</label>
@@ -798,6 +904,7 @@
   <variable CV="118" item="Inverse Flash Output 2" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Inverse Flash Output 2</label>
+    <label xml:lang="fr">Clignotant inversé FO2</label>
     <label xml:lang="it">Lampeggio invertito uscita 2</label>
     <label xml:lang="cs">Převrácené blikání funkčního výstupu 2</label>
     <label xml:lang="de">invers Blinken FA2</label>
@@ -805,6 +912,7 @@
   <variable CV="118" item="Inverse Flash Output 4" mask="VXXXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Inverse Flash Output 4</label>
+    <label xml:lang="fr">Clignotant inversé FO4</label>
     <label xml:lang="it">Lampeggio invertito uscita 4</label>
     <label xml:lang="cs">Převrácené blikání funkčního výstupu 4</label>
     <label xml:lang="de">invers Blinken FA4</label>
@@ -812,6 +920,7 @@
   <variable CV="119" item="F6 dims front light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims front light</label>
+    <label xml:lang="fr">F6 atténue les feux AV</label>
     <label xml:lang="it">F6 smorza Luci frontali</label>
     <label xml:lang="cs">F6 tlumí přední světlo</label>
     <label xml:lang="de">F6 dimmt Lvor</label>
@@ -819,6 +928,7 @@
   <variable CV="119" item="F6 dims rear light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims rear light</label>
+    <label xml:lang="fr">F6 atténue les feux AR</label>
     <label xml:lang="it">F6 smorza Luci posteriori</label>
     <label xml:lang="cs">F6 tlumí zadní světlo</label>
     <label xml:lang="de">F6 dimmt Lrück</label>
@@ -826,6 +936,7 @@
   <variable CV="119" item="F6 dims function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 1</label>
+    <label xml:lang="fr">F6 atténue FO1</label>
     <label xml:lang="it">F6 smorza Uscita funzione 1</label>
     <label xml:lang="cs">F6 tlumí funkční výstup 1</label>
     <label xml:lang="de">F6 dimmt FA1</label>
@@ -833,6 +944,7 @@
   <variable CV="119" item="F6 dims function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 2</label>
+    <label xml:lang="fr">F6 atténue FO2</label>
     <label xml:lang="it">F6 smorza Uscita funzione 2</label>
     <label xml:lang="cs">F6 tlumí funkční výstup 2</label>
     <label xml:lang="de">F6 dimmt FA2</label>
@@ -840,6 +952,7 @@
   <variable CV="119" item="F6 dims function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 3</label>
+    <label xml:lang="fr">F6 atténue FO3</label>
     <label xml:lang="it">F6 smorza Uscita funzione 3</label>
     <label xml:lang="cs">F6 tlumí funkční výstup 3</label>
     <label xml:lang="de">F6 dimmt FA3</label>
@@ -847,6 +960,7 @@
   <variable CV="119" item="F6 dims function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 4</label>
+    <label xml:lang="fr">F6 atténue FO4</label>
     <label xml:lang="it">F6 smorza Uscita funzione 4</label>
     <label xml:lang="cs">F6 tlumí funkční výstup 4</label>
     <label xml:lang="de">F6 dimmt FA4</label>
@@ -854,6 +968,7 @@
   <variable CV="119" item="F6 inverted" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 inverted</label>
+    <label xml:lang="fr">F6 inversé</label>
     <label xml:lang="it">F6 invertito</label>
     <label xml:lang="cs">F6 převrátí efekty</label>
     <label xml:lang="de">F6 invertiert</label>
@@ -861,6 +976,7 @@
   <variable CV="120" item="F7 dims front light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims front light</label>
+    <label xml:lang="fr">F7 atténue les feux AV</label>
     <label xml:lang="it">F7 smorza Luci frontali</label>
     <label xml:lang="cs">F7 tlumí přední světlo</label>
     <label xml:lang="de">F7 dimmt Lvor</label>
@@ -868,6 +984,7 @@
   <variable CV="120" item="F7 dims rear light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims rear light</label>
+    <label xml:lang="fr">F7 atténue les feux AR</label>
     <label xml:lang="it">F7 smorza Luci posteriori</label>
     <label xml:lang="cs">F7 tlumí zadní světlo</label>
     <label xml:lang="de">F7 dimmt Lrück</label>
@@ -875,6 +992,7 @@
   <variable CV="120" item="F7 dims function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 1</label>
+    <label xml:lang="fr">F7 atténue FO1</label>
     <label xml:lang="it">F7 smorza Uscita funzione 1</label>
     <label xml:lang="cs">F7 tlumí funkční výstup 1</label>
     <label xml:lang="de">F7 dimmt FA1</label>
@@ -882,6 +1000,7 @@
   <variable CV="120" item="F7 dims function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 2</label>
+    <label xml:lang="fr">F7 atténue FO2</label>
     <label xml:lang="it">F7 smorza Uscita funzione 2</label>
     <label xml:lang="cs">F7 tlumí funkční výstup 2</label>
     <label xml:lang="de">F7 dimmt FA2</label>
@@ -889,6 +1008,7 @@
   <variable CV="120" item="F7 dims function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 3</label>
+    <label xml:lang="fr">F7 atténue FO3</label>
     <label xml:lang="it">F7 smorza Uscita funzione 3</label>
     <label xml:lang="cs">F7 tlumí funkční výstup 3</label>
     <label xml:lang="de">F7 dimmt FA3</label>
@@ -896,6 +1016,7 @@
   <variable CV="120" item="F7 dims function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 4</label>
+    <label xml:lang="fr">F7 atténue FO4</label>
     <label xml:lang="it">F7 smorza Uscita funzione 4</label>
     <label xml:lang="cs">F7 tlumí funkční výstup 4</label>
     <label xml:lang="de">F7 dimmt FA4</label>
@@ -903,6 +1024,7 @@
   <variable CV="120" item="F7 inverted" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 inverted</label>
+    <label xml:lang="fr">F7 inversé</label>
     <label xml:lang="it">F7 invertito</label>
     <label xml:lang="cs">F7 převrátí efekty</label>
     <label xml:lang="de">F7 invertiert</label>
@@ -910,6 +1032,7 @@
   <variable CV="121" item="Exponential Acceleration" default="0">
     <decVal max="99"/>
     <label>Exponential Acceleration</label>
+    <label xml:lang="fr">Accélération exponentielle</label>
     <label xml:lang="it">Accellerazione Esponenziale</label>
     <label xml:lang="cs">Exponenciální zrychlení</label>
     <label xml:lang="de">Expon. Beschleunigung</label>
@@ -921,6 +1044,7 @@
   <variable CV="122" item="Exponential Deceleration" default="0">
     <decVal max="99"/>
     <label>Exponential Deceleration</label>
+    <label xml:lang="fr">Décélération exponentielle</label>
     <label xml:lang="it">Decellerazione Esponenziale</label>
     <label xml:lang="cs">Exponenciální zpomalení</label>
     <label xml:lang="de">Expon. Bremskurve</label>
@@ -932,6 +1056,7 @@
   <variable CV="123" item="Adaptive Acceleration/Deceleration" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal max="99"/>
     <label>Adaptive Acceleration/Deceleration</label>
+    <label xml:lang="fr">Accélération/décélération adaptative</label>
     <label xml:lang="it">Accell./Decell.adattabile</label>
     <label xml:lang="cs">Přizpůsobené zrychlení/zpomalení</label>
     <label xml:lang="de">Adaptives Beschleunigen/Bremsen</label>
@@ -1017,12 +1142,14 @@
     <enumVal>
       <enumChoice choice="SUSI Serial interface for sound board">
         <choice>SUSI Serial interface for sound board</choice>
+        <choice xml:lang="fr">Interface SUSI active</choice>
         <choice xml:lang="it">Interf.seriale SUSI</choice>
         <choice xml:lang="cs">Sériové rozhraní pro zvuková zařízení SUSI</choice>
         <choice xml:lang="de">SUSI-Schnittstelle aktiv</choice>
       </enumChoice>
       <enumChoice choice="Output as additional Function Pads">
         <choice>Output as additional Function Pads</choice>
+        <choice xml:lang="fr">Sorties de fonction à la place de SUSI</choice>
         <choice xml:lang="it">uscita su Pad funzione addizionale</choice>
         <choice xml:lang="cs">Dodatečný funkční výstup na ploškách</choice>
         <choice xml:lang="de">FU-Ausgänge anstelle SUSI aktiviert</choice>
@@ -1039,6 +1166,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Front light effect generated</label>
+    <label xml:lang="fr">Effet feux AV</label>
     <label xml:lang="it">Effetti Luci frontali</label>
     <label xml:lang="cs">Generátor efektů předního světla</label>
     <label xml:lang="de">Lvor Effekt</label>
@@ -1046,6 +1174,7 @@
   <variable CV="125" item="Output 1 behavior" mask="XXXXXXVV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Front light behavior</label>
+    <label xml:lang="fr">Comportement feux AV</label>
     <label xml:lang="it">Comportamento Luci frontali</label>
     <label xml:lang="cs">Chování předního světla</label>
     <label xml:lang="de">Lvor Verhalten</label>
@@ -1059,6 +1188,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Rear light effect generated</label>
+    <label xml:lang="fr">Effet feux AR</label>
     <label xml:lang="it">Effetti Luci posteriori</label>
     <label xml:lang="cs">Generátor efektů zadního světla</label>
     <label xml:lang="de">Lrück Effekt</label>
@@ -1066,6 +1196,7 @@
   <variable CV="126" item="Output 2 behavior" mask="XXXXXXVV">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Rear light behavior</label>
+    <label xml:lang="fr">Comportement feux AR</label>
     <label xml:lang="it">Comportamento Luci posteriori</label>
     <label xml:lang="cs">Chování zadního světla</label>
     <label xml:lang="de">Lrück Verhalten</label>
@@ -1079,6 +1210,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 1 effect generated</label>
+    <label xml:lang="fr">Effet FO1</label>
     <label xml:lang="it">Effetti uscita Funzione 1</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 1</label>
     <label xml:lang="de">FA1 Effekt</label>
@@ -1086,6 +1218,7 @@
   <variable CV="127" item="Output 3 behavior" mask="XXXXXXVV">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 1 behavior</label>
+    <label xml:lang="fr">Comportement FO1</label>
     <label xml:lang="it">Comportamento uscita Funzione 1</label>
     <label xml:lang="cs">Chování funkčního výstupu 1</label>
     <label xml:lang="de">FA1 Verhalten</label>
@@ -1099,6 +1232,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 2 effect generated</label>
+    <label xml:lang="fr">Effet FO2</label>
     <label xml:lang="it">Effetti uscita Funzione 2</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 2</label>
     <label xml:lang="de">FA2 Effekt</label>
@@ -1106,6 +1240,7 @@
   <variable CV="128" item="Output 4 behavior" mask="XXXXXXVV">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 2 behavior</label>
+    <label xml:lang="fr">Comportement FO2</label>
     <label xml:lang="it">Comportamento uscita Funzione 2</label>
     <label xml:lang="cs">Chování funkčního výstupu 2</label>
     <label xml:lang="de">FA2 Verhalten</label>
@@ -1119,6 +1254,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 3 effect generated</label>
+    <label xml:lang="fr">Effet FO3</label>
     <label xml:lang="it">Effetti uscita Funzione 3</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 3</label>
     <label xml:lang="de">FA3 Effekt</label>
@@ -1126,6 +1262,7 @@
   <variable CV="129" item="Output 5 behavior" mask="XXXXXXVV" minOut="5">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 3 behavior</label>
+    <label xml:lang="fr">Comportement FO3</label>
     <label xml:lang="it">Comportamento uscita Funzione 3</label>
     <label xml:lang="cs">Chování funkčního výstupu 3</label>
     <label xml:lang="de">FA3 Verhalten</label>
@@ -1139,6 +1276,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 4 effect generated</label>
+    <label xml:lang="fr">Effet FO4</label>
     <label xml:lang="it">Effetti uscita Funzione 4</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 4</label>
     <label xml:lang="de">FA4 Effekt</label>
@@ -1146,6 +1284,7 @@
   <variable CV="130" item="Output 6 behavior" mask="XXXXXXVV" minOut="6">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 4 behavior</label>
+    <label xml:lang="fr">Comportement FO4</label>
     <label xml:lang="it">Comportamento uscita Funzione 4</label>
     <label xml:lang="cs">Chování funkčního výstupu 4</label>
     <label xml:lang="de">FA4 Verhalten</label>
@@ -1159,6 +1298,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Function output 5 effect generated</label>
+    <label xml:lang="fr">Effet FO5</label>
     <label xml:lang="it">Effetti uscita Funzione 5</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 5</label>
     <label xml:lang="de">FA5 Effekt</label>
@@ -1166,6 +1306,7 @@
   <variable CV="131" item="Output 7 behavior" mask="XXXXXXVV" minOut="7">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 5 behavior</label>
+    <label xml:lang="fr">Comportement FO5</label>
     <label xml:lang="it">Comportamento uscita Funzione 5</label>
     <label xml:lang="cs">Chování funkčního výstupu 5</label>
     <label xml:lang="de">FA5 Verhalten</label>
@@ -1179,6 +1320,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Functin output 6 effect generated</label>
+    <label xml:lang="fr">Effet FO6</label>
     <label xml:lang="it">Effetti uscita Funzione 6</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 6</label>
     <label xml:lang="de">FA6 Effekt</label>
@@ -1186,6 +1328,7 @@
   <variable CV="132" item="Output 8 behavior" mask="XXXXXXVV" minOut="8">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 6 behavior</label>
+    <label xml:lang="fr">Comportement FO6</label>
     <label xml:lang="it">Comportamento uscita Funzione 6</label>
     <label xml:lang="cs">Chování funkčního výstupu 6</label>
     <label xml:lang="de">FA6 Verhalten</label>
@@ -1490,42 +1633,49 @@
     <enumVal>
       <enumChoice choice="Normal (DC and Coreless)" value="0">
         <choice>Normal (DC and Coreless)</choice>
+        <choice xml:lang="fr">Normal (CC et moteur coreless)</choice>
         <choice xml:lang="it">Normale (DC e Coreless)</choice>
         <choice xml:lang="de">Normal (DC und Bürstenlos)</choice>
         <choice xml:lang="cs">Normální (DC a Coreless)</choice>
       </enumChoice>
       <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
         <choice>Low Impedance DC (with added capacitor see manual)</choice>
+        <choice xml:lang="fr">CC basse impédance (avec condensateur, voir le manuel)</choice>
         <choice xml:lang="it">Bassa impedenza DC(con condensatoe: vedere manuale)</choice>
         <choice xml:lang="cs">Nízká impedance DC (přidaný kondenzátor, viz.manuál)</choice>
-        <choice xml:lang="de">Spezialeinstellung Fleischmann-Rundmotor</choice>
+        <choice xml:lang="de">Niederohmiger DC (mit zusätzlichem Kondensator, siehe Handbuch)</choice>
       </enumChoice>
       <enumChoice choice="C or Softdrive-Sinus (FO4 not useable)" value="10">
         <choice>C or Softdrive-Sinus (FO4 not useable)</choice>
+        <choice xml:lang="fr">C ou Softdrive-Sinus (FO4 inutilisable)</choice>
         <choice xml:lang="it">C o Softdrive-Sinusoidale (F4 non usabile)</choice>
         <choice xml:lang="cs">C nebo Softdrive-Sinusoida (funkční výstup 4 není použitelný)</choice>
         <choice xml:lang="de">C oder Softdrive-Sinus (FA4 nicht verwendbar)</choice>
       </enumChoice>
       <enumChoice choice="alternative C or Softdrive-Sinus (FO4 useable)" value="11">
         <choice>alternative C or Softdrive-Sinus (FO4 useable)</choice>
+        <choice xml:lang="fr">C ou Softdrive-Sinus alternatif (FO4 utilisable)</choice>
         <choice xml:lang="it">C alternativo o Softdrive-Sinusoidale (F4 usabile)</choice>
         <choice xml:lang="cs">Alternativní C nebo Softdrive-Sinusoida (funkční výstup 4 je použitelný)</choice>
         <choice xml:lang="de">alternativ C oder Softdrive-Sinus (FA4 verwendbar)</choice>
       </enumChoice>
       <enumChoice choice="Special C or Softdrive-Sinus requiring normal output (FO4 not useable)" value="12">
         <choice>Special C or Softdrive-Sinus requiring normal output (FO4 not useable)</choice>
+        <choice xml:lang="fr">C ou Softdrive-Sinus spécial nécessitant une sortie normale (FO4 inutilisable)</choice>
         <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale con uscita normale (F4 non usabile)</choice>
         <choice xml:lang="cs">Speciální C nebo Softdrive-Sinusoida požadující normální výstup (funkční výstup 4 není použitelný)</choice>
         <choice xml:lang="de">Spezial C oder Softdrive-Sinus benötigt FA (FA4 nicht verwendbar)</choice>
       </enumChoice>
       <enumChoice choice="Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)" value="13">
         <choice>Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)</choice>
+        <choice xml:lang="fr">C ou Softdrive-Sinus spécial pour Märklin Gotthard (FO3 sélectionne le sens du 3e rail)</choice>
         <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale per Marklin Gottardo (F3 selezione direzionale della terza rotaia)</choice>
         <choice xml:lang="cs">Speciální C nebo Softdrive-Sinusoida pro Märklin Gottardo (funkční výstup 3 je směrová volba podle třetí kolejnice)</choice>
         <choice xml:lang="de">Spezial C oder Softdrive-Sinus für Märklin Gotthard (F3 ist Richtungsauswahl)</choice>
       </enumChoice>
     </enumVal>
     <label>Motor Control Method</label>
+    <label xml:lang="fr">Mode de régulation moteur</label>
     <label xml:lang="it">Metodo controllo motore</label>
     <label xml:lang="cs">Způsoby řízení motoru</label>
     <label xml:lang="de">Motor-Regelung</label>
@@ -1533,16 +1683,19 @@
   <variable CV="146" item="Load Control" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Motor Backlash Control</label>
+    <label xml:lang="fr">Compensation du jeu de transmission</label>
     <label xml:lang="it">Controllo rinculo motore</label>
     <label xml:lang="cs">Vyrovnání vůle převodovky motoru</label>
     <label xml:lang="de">Ausgleich Leergang</label>
     <tooltip>Motor Backlash Control</tooltip>
+    <tooltip xml:lang="fr">Compensation du jeu de transmission</tooltip>
     <tooltip xml:lang="de">Ausgleich des Getriebe-Leerganges bei Richtungsumkehr</tooltip>
     <tooltip xml:lang="cs">Kompenzace vůle převodovky při změně směru</tooltip>
    </variable>
   <variable CV="147" item="Total PWM Period" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Extended Sample Time</label>
+    <label xml:lang="fr">Temps de mesure EMK étendu</label>
     <label xml:lang="it">Misura timeout EMK</label>
     <label xml:lang="cs">Měřící pauza EMK</label>
     <label xml:lang="de">EMK – Messlücke</label>
@@ -1550,6 +1703,7 @@
   <variable CV="148" item="EMF Control Reference" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
+    <label xml:lang="fr">Valeur dérivée (EMK)</label>
     <label xml:lang="it">Valore differenziale</label>
     <label xml:lang="cs">Diferenciální složka</label>
     <label xml:lang="de">EMK - D-Wert</label>
@@ -1557,6 +1711,7 @@
   <variable CV="149" item="EMF Enable" mask="XXXXXXXV" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
+    <label xml:lang="fr">Valeur proportionnelle adaptative (EMK)</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>
     <label xml:lang="cs">Adaptivní proporcionální složka</label>
     <label xml:lang="de">EMK - P-Wert</label>
@@ -1564,6 +1719,7 @@
   <variable CV="150" item="EMF Static Config" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Regulation at full speed</label>
+    <label xml:lang="fr">Régulation à pleine vitesse</label>
     <label xml:lang="it">Regolazione a velocità massima</label>
     <label xml:lang="cs">Regulace při plné rychlosti</label>
     <label xml:lang="de">EMK - Ausregelung bei Vollgeschwindigkeit</label>
@@ -1572,130 +1728,154 @@
     <enumVal>
       <enumChoice choice="No Braking">
         <choice>No Braking</choice>
+        <choice xml:lang="fr">Pas de freinage</choice>
         <choice xml:lang="it"> Nessuna Frenata</choice>
         <choice xml:lang="cs">Bez brzdy</choice>
         <choice xml:lang="de"> kein Bremsen</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 1sec from Stop" value="1">
         <choice>Gradual brake application over 1sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 1 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 1 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 1 sekundu před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 1 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 2sec from Stop" value="2">
         <choice>Gradual brake application over 2sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 2 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 2 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 2 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 2 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 3sec from Stop" value="3">
         <choice>Gradual brake application over 3sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 3 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 3 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 3 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 3 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 4sec from Stop" value="4">
         <choice>Gradual brake application over 4sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 4 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 4 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 4 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 4 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 5sec from Stop" value="5">
         <choice>Gradual brake application over 5sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 5 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 5 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 5 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 5 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 6sec from Stop" value="6">
         <choice>Gradual brake application over 6sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 6 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 6 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 6 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 6 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 7sec from Stop" value="7">
         <choice>Gradual brake application over 7sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 7 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 7 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 7 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 7 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 8sec from Stop" value="8">
         <choice>Gradual brake application over 8sec from Stop</choice>
+        <choice xml:lang="fr">Freinage progressif sur 8 s avant l'arrêt</choice>
         <choice xml:lang="it">Frenata graduale oltre 8 sec. dallo stop</choice>
         <choice xml:lang="cs">Použití motorové brzdy na 8 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 8 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Full brake application at Stop" value="2">
         <choice>Full brake application at Stop</choice>
+        <choice xml:lang="fr">Freinage complet à l'arrêt</choice>
         <choice xml:lang="it">Frenata completa allo stop</choice>
         <choice xml:lang="cs">Použití plné brzdy na zastavení</choice>
         <choice xml:lang="de">Vollbremsung bei Stop</choice>
       </enumChoice>
     </enumVal>
     <label>Motor brake</label>
+    <label xml:lang="fr">Frein moteur</label>
     <label xml:lang="it">Freno motore</label>
     <label xml:lang="cs">Motorová brzda</label>
     <label xml:lang="de">Motorbremse</label>
     <tooltip>Motor braked by shorting output</tooltip>
+    <tooltip xml:lang="fr">Moteur freiné par court-circuit de la sortie</tooltip>
     <tooltip xml:lang="de">Reduziert die Ausregelung des Motors auf 10 - 90 % des Wertes laut CV #58.</tooltip>
     <tooltip xml:lang="cs">Snižuje regulaci motoru na 10 – 90 %.</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 7" mask="XXXXXXXV" default="0" minOut="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 7</label>
+    <label xml:lang="fr">Atténuer FO7</label>
     <label xml:lang="it">Funzione smorzamento uscita 7</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 7</label>
     <label xml:lang="de">Dimmung FA7</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 8" mask="XXXXXXVX" default="0" minOut="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 8</label>
+    <label xml:lang="fr">Atténuer FO8</label>
     <label xml:lang="it">Funzione smorzamento uscita 8</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 8</label>
     <label xml:lang="de">Dimmung FA8</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 9" mask="XXXXXVXX" default="0" minOut="11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 9</label>
+    <label xml:lang="fr">Atténuer FO9</label>
     <label xml:lang="it">Funzione smorzamento uscita 9</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 9</label>
     <label xml:lang="de">Dimmung FA9</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 10" mask="XXXXVXXX" default="0" minOut="12">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 10</label>
+    <label xml:lang="fr">Atténuer FO10</label>
     <label xml:lang="it">Funzione smorzamento uscita 10</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 10</label>
     <label xml:lang="de">Dimmung FA10</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 11" mask="XXXVXXXX" default="0" minOut="13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 11</label>
+    <label xml:lang="fr">Atténuer FO11</label>
     <label xml:lang="it">Funzione smorzamento uscita 11</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 11</label>
     <label xml:lang="de">Dimmung FA11</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 12" mask="XXVXXXXX" default="0" minOut="14">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 12</label>
+    <label xml:lang="fr">Atténuer FO12</label>
     <label xml:lang="it">Funzione smorzamento uscita 12</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 12</label>
     <label xml:lang="de">Dimmung FA12</label>
     <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="fr">Si coché, la sortie est atténuée</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
     <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>

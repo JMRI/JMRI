@@ -54,7 +54,7 @@
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
-        <choice xml:lang="fr">Aucune touche affectée</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -150,6 +150,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">neomezeno</choice>
       </enumChoice>
@@ -173,6 +174,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">nesníženo</choice>
       </enumChoice>
@@ -195,6 +197,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>
@@ -229,7 +232,7 @@
 	<decVal min="0" max="255"/>
     <label>Brake Key Deceleration Rate</label>
     <label xml:lang="cs">Klávesa brzdy míra zpomalení</label>
-    <label xml:lang="fr">Décélération de la touche de frein</label>
+    <label xml:lang="fr">Décélération pour la touche de frein</label>
     <label xml:lang="de">Verzögerung der Bremstaste</label>
   </variable>
   <variable CV="349" item="Brake time" default="0" exclude="">
@@ -314,14 +317,14 @@
     <label>Ditch Light with Bell</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Glocke spielt</label>
     <label xml:lang="cs">Obrysová světla se zvonem</label>
-    <label xml:lang="fr">Feux de fossé avec cloche</label>
+    <label xml:lang="fr">Ditch light avec la cloche</label>
   </variable>
   <variable CV="393" item="Ditch Light with Horn" mask="XXXXXXVX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Ditch Light with Horn</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Horn spielt</label>
     <label xml:lang="cs">Obrysová světla s houkačkou</label>
-    <label xml:lang="fr">Feux de fossé avec trompe</label>
+    <label xml:lang="fr">Ditch light avec le klaxon</label>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-2" mask="XXXXXVXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -370,6 +373,7 @@
     <enumVal>
         <enumChoice choice="0">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>

@@ -135,11 +135,13 @@
     <enumVal>
         <enumChoice choice="0">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>
       <enumChoice choice="1">
         <choice>yes</choice>
+        <choice xml:lang="fr">oui</choice>
         <choice xml:lang="de">ja</choice>
         <choice xml:lang="cs">Ano</choice>
       </enumChoice>

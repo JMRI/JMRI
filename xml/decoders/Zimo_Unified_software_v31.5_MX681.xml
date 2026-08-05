@@ -121,41 +121,49 @@
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="fr">FO 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
         <choice xml:lang="de">FA1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="fr">FO 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
         <choice xml:lang="de">FA2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="fr">FO 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
         <choice xml:lang="de">FA3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="fr">FO 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
         <choice xml:lang="de">FA4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="fr">FO 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
         <choice xml:lang="de">FA5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="fr">FO 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
         <choice xml:lang="de">FA6</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front additional function 2 off</label>
+    <label xml:lang="fr">Feux AV fonction supplémentaire 2 éteinte</label>
     <label xml:lang="it">Funzione addizionale 2 Frontale Off</label>
     <label xml:lang="de">Lvor + Zusatz 2 aus</label>
       </variable>
@@ -163,41 +171,49 @@
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="fr">FO 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
         <choice xml:lang="de">FA1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="fr">FO 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
         <choice xml:lang="de">FA2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="fr">FO 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
         <choice xml:lang="de">FA3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="fr">FO 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
         <choice xml:lang="de">FA4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="fr">FO 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
         <choice xml:lang="de">FA5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="fr">FO 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
         <choice xml:lang="de">FA6</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear additional function 2 off</label>
+    <label xml:lang="fr">Feux AR fonction supplémentaire 2 éteinte</label>
     <label xml:lang="it">Funzione addizionale 2 Posteriore Off</label>
     <label xml:lang="de">Lrück + Zusatz 2 aus</label>
       </variable>

@@ -38,6 +38,7 @@
   <variable item="Motor Frequency and EMF sample Rate" CV="9" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal/>
     <label>Motor Frequency and EMF sample Rate</label>
+    <label xml:lang="fr">Fréquence moteur et taux d'échantillonnage EMK</label>
     <label xml:lang="it">Frequenza Motore e Freq.Campionamento EMF</label>
     <label xml:lang="cs">Frekvence motoru a EMF vzorkovací míra</label>
     <label xml:lang="de">Motoransteuerungsperiode bzw. – frequenz und EMK-Abtastrate</label>
@@ -45,10 +46,12 @@
   <variable item="EMF Droop Config" CV="10" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal max="252"/>
     <label>EMF Feedback Cutoff Speed Step</label>
+    <label xml:lang="fr">Cran de vitesse de coupure de la régulation</label>
     <label xml:lang="it">Step velocità taglio EMF</label>
     <label xml:lang="cs">Rychlostní stupeň pro přerušení regulace EMF</label>
     <label xml:lang="de">Regelungs-Cutoff</label>
     <tooltip>Range 0-252</tooltip>
+    <tooltip xml:lang="fr">Cran de vitesse interne à partir duquel la force de régulation du CV #113 agit.</tooltip>
     <tooltip xml:lang="de">Interne Fahrstufe, ab der Ausregelungskraft laut CV #113 wirkt.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
@@ -307,6 +310,7 @@
   <variable item="Acceleration Trim" CV="23" mask="XVVVVVVV">
     <decVal max="127"/>
     <label>Acceleration Trim</label>
+    <label xml:lang="fr">Correction d'accélération</label>
     <label xml:lang="it">Regolazione fine Accellerazione</label>
     <label xml:lang="cs">Korekce zrychlení</label>
     <label xml:lang="de">Beschleunigungsvariation</label>
@@ -315,6 +319,7 @@
   <variable item="Acceleration Trim Sign" CV="23" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-AddSubtract.xml"/>
     <label>Acceleration Trim Sign</label>
+    <label xml:lang="fr">Utiliser la correction d'accélération</label>
     <label xml:lang="it">Segno Regolazione fine Accellerazione</label>
     <label xml:lang="cs">Znaménko korekce zrychlení</label>
     <label xml:lang="de">Beschleunigungsvariation verwenden</label>
@@ -322,6 +327,7 @@
   <variable item="Deceleration Trim" CV="24" mask="XVVVVVVV">
     <decVal max="127"/>
     <label>Deceleration Trim</label>
+    <label xml:lang="fr">Correction de décélération</label>
     <label xml:lang="it">Regolazione fine Decellarazione</label>
     <label xml:lang="cs">Korekce zpomalení</label>
     <label xml:lang="de">Bremszeitvariation</label>
@@ -330,6 +336,7 @@
   <variable item="Deceleration Trim Sign" CV="24" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-AddSubtract2.xml"/>
     <label>Deceleration Trim Sign</label>
+    <label xml:lang="fr">Utiliser la correction de décélération</label>
     <label xml:lang="it">Segno Regolazione fine Decellarazione</label>
     <label xml:lang="cs">Znaménko korekce zpomalení</label>
     <label xml:lang="de">Bremszeitvariation verwenden</label>
@@ -1605,6 +1612,7 @@
   <variable item="BEMF config" CV="56" default="55" tooltip="Range 0-199" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal max="199"/>
     <label>BEMF config</label>
+    <label xml:lang="fr">Configuration EMK</label>
     <label xml:lang="it">Configuarzione BEMF</label>
     <label xml:lang="cs">Konfigurace BEMF</label>
     <label xml:lang="de">&lt;html&gt;P- und I-Wert&lt;br&gt;der EMK-Regelung&lt;/html&gt;</label>
@@ -1612,15 +1620,18 @@
   <variable item="Dither frequency" CV="57" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal max="255"/>
     <label>Voltage Reference</label>
+    <label xml:lang="fr">Référence de régulation</label>
     <label xml:lang="it">Tensione di Riferimento</label>
     <label xml:lang="cs">Referenční napětí</label>
     <label xml:lang="de">Regelungsreferenz</label>
     <tooltip>Value divided by 10 is voltage applied to motor at full speed, 0 = automatic adjustment</tooltip>
+    <tooltip xml:lang="fr">Valeur divisée par 10 = tension appliquée au moteur à pleine vitesse, 0 = ajustement automatique</tooltip>
     <tooltip xml:lang="de">Absolute Motoransteuerungs-Spannung in Zehntel- Volt, die bei voller Fahrt am Motor anliegen soll.</tooltip>
   </variable>
   <variable item="Dither option" CV="58" default="255" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal/>
     <label>BEMF Intensity</label>
+    <label xml:lang="fr">Intensité BEMF</label>
     <label xml:lang="it">Intensità BEMF</label>
     <label xml:lang="cs">Intenzita BEMF</label>
     <label xml:lang="de">&lt;html&gt;Regelungseinfluss&lt;br&gt;der EMK-Regelung&lt;/html&gt;</label>
@@ -1640,6 +1651,7 @@
   <variable item="Output Level" CV="60" default="0">
     <decVal min="0" max="255"/>
     <label>Output Level</label>
+    <label xml:lang="fr">Atténuation des sorties de fonction</label>
     <label xml:lang="it">Livello di uscita</label>
     <label xml:lang="cs">Výstupní úroveň</label>
     <label xml:lang="de">Dimmen der Funktionsausgänge</label>
@@ -1675,6 +1687,7 @@
   <variable item="Global lighting option 1" CV="62" default="0">
     <decVal min="0" max="9"/>
     <label>Minimum Dimming Value</label>
+    <label xml:lang="fr">Valeur d'atténuation minimale</label>
     <label xml:lang="it">Valore minimo smorzamento luci</label>
     <label xml:lang="cs">Minimální hodnota tlumení jasu</label>
     <label xml:lang="de">Minimum-Dimm-Wert</label>
@@ -1684,6 +1697,7 @@
   <variable item="Global lighting option 2" CV="63" default="51">
     <decVal max="255"/>
     <label>Light Effects Modifications</label>
+    <label xml:lang="fr">Réglage des effets lumineux</label>
     <label xml:lang="it">Modifica effetti Luci</label>
     <label xml:lang="cs">Úprava světelných efektů</label>
     <label xml:lang="de">Lichteffekte anpassen</label>
@@ -1693,6 +1707,7 @@
   <variable item="Global lighting option 4" CV="64" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="9"/>
     <label>Ditch Light Off Time</label>
+    <label xml:lang="fr">Durée d'extinction du Ditch Light</label>
     <label xml:lang="it">Tempo di Off luci Ditch</label>
     <label xml:lang="cs">Čas zhasínání návěstních světel</label>
     <label xml:lang="de">Ditchlight Aus-Zeit</label>

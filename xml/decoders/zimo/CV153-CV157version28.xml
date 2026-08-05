@@ -20,18 +20,21 @@
     <enumVal>
       <enumChoice choice="No Special Configuration">
         <choice>No Special Configuration</choice>
+        <choice xml:lang="fr">Aucun réglage particulier</choice>
         <choice xml:lang="it">Nessuna configurazione Speciale</choice>
         <choice xml:lang="cs">Bez speciální konfigurace</choice>
         <choice xml:lang="de">keine spezielle Einstellung</choice>
       </enumChoice>
       <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
         <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
+        <choice xml:lang="fr">Commande de pantographe (Zimo/Roco BR110)</choice>
         <choice xml:lang="it">Pantografo (Zimo/Roco BR110)</choice>
         <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)</choice>
         <choice xml:lang="de">Pantograph (Zimo/Roco BR110)</choice>
       </enumChoice>
     </enumVal>
     <label>Special Output Configuration</label>
+    <label xml:lang="fr">Bits spéciaux divers</label>
     <label xml:lang="it">Configurazione Speciale Uscita</label>
     <label xml:lang="cs">Speciální konfigurace výstupu</label>
     <label xml:lang="de">Diverse Spezialbits</label>

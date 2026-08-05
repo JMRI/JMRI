@@ -677,6 +677,7 @@
 	<enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -846,6 +847,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -920,6 +922,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1226,6 +1229,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1357,6 +1361,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1460,6 +1465,7 @@
      <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1557,6 +1563,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">neomezeno</choice>
       </enumChoice>
@@ -1577,11 +1584,13 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">nesníženo</choice>
       </enumChoice>
         <enumChoice choice="reduced">
         <choice>reduced</choice>
+        <choice xml:lang="fr">réduit</choice>
         <choice xml:lang="de">reduziert</choice>
         <choice xml:lang="cs">sníženo</choice>
       </enumChoice>
@@ -1589,6 +1598,7 @@
     <label>Solo change momentum</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt 2</label>
     <tooltip>CV348 bit 1</tooltip>
+    <tooltip xml:lang="fr">réduit CV #3, CV #4 (bit 1)</tooltip>
     <tooltip xml:lang="de">reduziert CV #3, CV #4 (bit 1)</tooltip>
     <label xml:lang="cs">Strojová jízda hybnost</label>
   </variable>
@@ -1596,6 +1606,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>

@@ -83,26 +83,27 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="de">Aus</choice>
           <choice xml:lang="cs">Vypnuto</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="de">Vor an</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
-          <choice xml:lang="fr">Allumé en marche avant</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="de">Rück an</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
-          <choice xml:lang="fr">Allumé en marche arrière</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="de">Beide an</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
-          <choice xml:lang="fr">Tous allumés</choice>
         </enumChoice>
     </enumVal>
     <label>ON while</label>
@@ -119,6 +120,8 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->

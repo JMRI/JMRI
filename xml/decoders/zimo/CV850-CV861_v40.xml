@@ -8,6 +8,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Front light effect generated new level</label>
+    <label xml:lang="fr">Effet feux AV (niveau additionnel)</label>
     <label xml:lang="de">Lvor Effekt (neue Ebene)</label>
   </variable>
   <variable CV="851" mask="VVVVVVVV" item="New Output 2 effect generated">
@@ -15,6 +16,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Rear light effect generated new level</label>
+    <label xml:lang="fr">Effet feux AR (niveau additionnel)</label>
     <label xml:lang="de">Lrück Effekt (neue Ebene)</label>
   </variable>
   <variable CV="852" mask="VVVVVVVV" item="New Output 3 effect generated">
@@ -22,6 +24,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 1 effect generated new level</label>
+    <label xml:lang="fr">Effet FO1 (niveau additionnel)</label>
     <label xml:lang="de">FA1 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="853" mask="VVVVVVVV" item="New Output 4 effect generated">
@@ -29,6 +32,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 2 effect generated new level</label>
+    <label xml:lang="fr">Effet FO2 (niveau additionnel)</label>
     <label xml:lang="de">FA2 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="854" mask="VVVVVVVV" item="New Output 5 effect generated" exclude="151,166,194,199">
@@ -36,6 +40,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 3 effect generated new level</label>
+    <label xml:lang="fr">Effet FO3 (niveau additionnel)</label>
     <label xml:lang="de">FA3 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="855" mask="VVVVVVVV" item="New Output 6 effect generated" exclude="151,166,194,199">
@@ -43,6 +48,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 4 effect generated new level</label>
+    <label xml:lang="fr">Effet FO4 (niveau additionnel)</label>
     <label xml:lang="de">FA4 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="856" mask="VVVVVVVV" item="New Output 7 effect generated" exclude="138,151,160,161,166,177,190,192,194,195,197,199,225,233,246,249,253">
@@ -50,6 +56,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 5 effect generated new level</label>
+    <label xml:lang="fr">Effet FO5 (niveau additionnel)</label>
     <label xml:lang="de">FA5 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="857" mask="VVVVVVVV" item="New Output 8 effect generated" exclude="138,151,160,161,166,177,190,192,194,195,197,199,225,233,246,249,253">
@@ -57,6 +64,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 6 effect generated new level</label>
+    <label xml:lang="fr">Effet FO6 (niveau additionnel)</label>
     <label xml:lang="de">FA6 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="858" mask="VVVVVVVV" item="New Output 9 effect generated" exclude="130,131,132,134,136,138,151,160,161,166,177,181,190,192,193,194,195,197,199,211,218,222,225,233,234,240,243,246,249,253">
@@ -64,6 +72,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 7 effect generated new level</label>
+    <label xml:lang="fr">Effet FO7 (niveau additionnel)</label>
     <label xml:lang="de">FA7 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="859" mask="VVVVVVVV" item="New Output 10 effect generated" exclude="130,131,132,134,136,138,151,160,161,166,177,181,190,192,193,194,195,197,199,211,218,222,225,233,234,240,243,246,249,253">
@@ -71,6 +80,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 8 effect generated new level</label>
+    <label xml:lang="fr">Effet FO8 (niveau additionnel)</label>
     <label xml:lang="de">FA8 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="860" mask="VVVVVVVV" item="New Output 11 effect generated" exclude="130,131,132,133,134,135,136,137,138,151,160,161,166,177,181,190,192,193,194,195,197,199,211,218,222,225,233,234,237,240,243,246,249,253">
@@ -78,6 +88,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 9 effect generated new level</label>
+    <label xml:lang="fr">Effet FO9 (niveau additionnel)</label>
     <label xml:lang="de">FA9 Effekt (neue Ebene)</label>
   </variable>
   <variable CV="861" mask="VVVVVVVV" item="New Output 12 effect generated" exclude="130,131,132,133,134,135,136,137,138,151,160,161,166,177,181,190,192,193,194,195,197,199,211,218,222,225,233,234,237,240,243,246,249,253">
@@ -85,6 +96,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-SecondEffectLevel.xml"/>
     </enumVal>
     <label>Function output 10 effect generated new level</label>
+    <label xml:lang="fr">Effet FO10 (niveau additionnel)</label>
     <label xml:lang="de">FA10 Effekt (neue Ebene)</label>
   </variable>
 </variables>
