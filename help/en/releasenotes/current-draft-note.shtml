@@ -147,6 +147,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>Update OpenLCB_Java library to pick up an improvement in 
+                    how the configuration windows are rendered.</li>
                 <li>LccPro will now prompt you for a backup directory the first time
                     you do a node backup from the main screen if the location hasn't already been set.</li>
             </ul>
