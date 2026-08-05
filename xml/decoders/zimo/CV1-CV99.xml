@@ -1663,23 +1663,28 @@
     <enumVal>
       <enumChoice choice="NMRA Standard Mapping">
         <choice>NMRA Standard Mapping</choice>
+        <choice xml:lang="fr">Mapping standard NMRA</choice>
+        <choice xml:lang="de">NMRA Standard-Mapping</choice>
         <choice xml:lang="it">Mappatura standard NMRA</choice>
         <choice xml:lang="cs">Standardní přiřazení NMRA</choice>
       </enumChoice>
       <enumChoice choice="Alternative Mapping, use this page" value="97">
         <choice>Alternative Mapping, use this page</choice>
+        <choice xml:lang="fr">Mapping alternatif, utiliser cette page</choice>
         <choice xml:lang="it">Mappatura alternativa, usa questa pagina</choice>
         <choice xml:lang="cs">Alternativní přiřazení, použije tuto stránku</choice>
         <choice xml:lang="de">Alternatives Mapping, diese Seite verwenden</choice>
       </enumChoice>
       <enumChoice choice="Use mapping stored by POM CV61=98 method" value="99">
         <choice>Use mapping stored by POM CV61=98 method</choice>
+        <choice xml:lang="fr">Utiliser le mapping enregistré par POM CV61=98</choice>
         <choice xml:lang="it">Usa Mappatura in memoria metodo POM CV61=98</choice>
         <choice xml:lang="cs">Použití přiřazení uloženého metodou POM CV61=98</choice>
         <choice xml:lang="de">Benutze Mapping nach POM CV61=98</choice>
       </enumChoice>
     </enumVal>
     <label>Special Function Mapping</label>
+    <label xml:lang="fr">Mapping de fonction ZIMO</label>
     <label xml:lang="it">Mappatura funzioni speciali</label>
     <label xml:lang="cs">Přiřazení speciálních funkcí</label>
     <label xml:lang="de">Spezielle „ZIMO-Funktionszuordnungen“</label>
