@@ -21,6 +21,7 @@
 <!--   list carry a tooltip spelling that out; the choice itself is kept short because it     -->
 <!--   appears in every cell of the Swiss Mapping grid. Confirmed on the MX generation as well. -->
 <!--   Value 7 is left undefined: the range allows it, nothing documents it.                    -->
+<!-- version 3 - Pierre Billon - 2026-08-06 - Added French translations -->
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>

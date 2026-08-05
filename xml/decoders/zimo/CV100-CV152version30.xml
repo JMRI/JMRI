@@ -16,6 +16,7 @@
 <!-- version 1.9 25 Jun 2019 Ronald Kuhn -  CV114 & CV152 tooltip correction -->
 <!-- version 1.10 8 Mar 2021 Nigel Cliffe -  CV112 bit 5 tooltip correction -->
 <!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Correction of "Choice_Ligthx.xml"-->
+<!-- version 1.12 05 Aug 2026 Pierre Billon - Added French and German translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->

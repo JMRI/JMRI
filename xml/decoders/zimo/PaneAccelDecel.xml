@@ -5,6 +5,7 @@
 <!-- version 1.2 - 10 Mar 2021, Nigel Cliffe - New layout, to group related features, and bring all motor CVs into the pane  -->
 <!-- version 1.3 - 22 June 2023 Ronald Kuhn - add some german translation -->
 <!-- version 1.4 - 02 May 2024 Ronald Kuhn - a small visual correction -->
+<!-- version 1.5 - 06 August 2026 Pierre Billon - Added French and German translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Accel/Decel + Motor</name>
   <name xml:lang="fr">Accél./décél. + moteur</name>

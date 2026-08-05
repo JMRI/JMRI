@@ -4,6 +4,7 @@
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 1.2 - Pierre Billon - 2026-07-31 - add switch input 4 volume (CV672), rename to -->
 <!-- "Sound Levels" so this pane replaces the standard one instead of sitting beside it -->
+<!-- version 1.3 - Pierre Billon - 2026-08-06 - Added French translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- Named exactly as the standard programmer pane on purpose: a decoder pane whose first
        <name> matches a programmer pane's replaces it. Zimo names its variables "Zimo Sound

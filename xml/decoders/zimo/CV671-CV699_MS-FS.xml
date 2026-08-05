@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 copied from MX series file for MS-series decoders.  24 Nov 2022, Nigel Cliffe -->
 <!-- version 1.1  31 July 2026  Pierre Billon - renamed from CV604-CV699_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV671-699, all sound). Added CV671 and CV672, the switch input 4 sound sample and volume -->
+<!-- version 1.2  06 August 2026  Pierre Billon - Added French translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="671" item="Switch input 4 Sound Sample" >
     <decVal/>

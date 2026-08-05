@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 29 Feb 2024 Pierre Billon -  Created for Light boards, excluding CVs 33-46 that have their own file (CV33-CV46_Lightboards_v40.xml) -->
+<!-- version 1.1 05 Aug 2026 Pierre Billon - Added French and German translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>

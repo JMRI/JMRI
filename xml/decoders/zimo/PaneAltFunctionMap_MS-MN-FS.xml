@@ -9,6 +9,7 @@
 <!-- version 2.3 - Ronald Kuhn - added MN series ID numbers to include statements --> 
 <!-- version 2.4 - Ronald Kuhn - added new MN- and MS ID numbers to include statements --> 
 <!-- version 2.5  31 July 2026  Pierre Billon - renamed from PaneAltFunctionMap_MS_series.xml; the name now states the CV range held and the decoder series it applies to. -->
+<!-- version 2.6  06 August 2026  Pierre Billon - Added French and German translations, converted the layout to a grid -->
 <!--   Also dropped the two smaller productID-gated grids and left one ungated 8-column grid. This pane   -->
 <!--   configures ZIMO's alternative mapping, CV #61 = 97, "function mapping without left shift" - but    -->
 <!--   that shares the CVs #33-#46 registers with the NMRA mapping and only changes how they are read,    -->

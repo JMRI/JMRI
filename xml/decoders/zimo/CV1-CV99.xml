@@ -10,6 +10,7 @@
 <!-- version 1.6 10 Mar 2021  Nigel Cliffe -  minor changes to menus called for CV23,24, to improve appearance in panes -->
 <!-- version 1.7 26 Feb 2024 Pierre Billon -  Excluded light boards (179,184) for some CVs -->
 <!-- version 1.8 05 Apr 2024 Ronald Kuhn -  some corrections for default values -->
+<!-- version 1.9 05 Aug 2026 Pierre Billon - Added French and German translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>

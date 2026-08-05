@@ -18,6 +18,7 @@
 <!-- version 1.4 - Nigel Cliffe. Added masks to group members (A1 Fwd, A2 Fwd, A1 Rev, A2 Rev) and dimming group selection. Added dimming levels,  14 Feb 2021 -->
 <!-- version 1.5 - Ronald Kuhn, add german translation, 29 November 2021-->
 <!-- version 1.6 - Pierre Billon - 2026-07-31 - tooltip on the dimming group selectors explaining the new "Off" value (6) added to Choice-DG.xml, tested on an MX620N -->
+<!-- version 1.7 - Pierre Billon - 2026-08-06 - Added French and German translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>

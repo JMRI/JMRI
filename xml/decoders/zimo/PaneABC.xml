@@ -6,6 +6,7 @@
 <!-- version 1.2 - Ronald Kuhn - transfer label for CV#830-833 to CV700-CV899_MS_series.xml -->
 <!-- version 1.3 - Ronald Kuhn - a small visual correction -->
 <!-- version 1.4 - Pierre Billon - 2026-07-31 - added the measured asymmetry voltage (CV100) and its correction factor (CV101) -->
+<!-- version 1.5 - Pierre Billon - 2026-08-06 - Added French and German translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>ABC</name>
   <column>

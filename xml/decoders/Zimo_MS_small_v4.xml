@@ -31,6 +31,8 @@
   <version author="Nigel Cliffe" version="1.5" lastUpdated="2025/03/14"/>
   <version author="Pierre Billon" version="1.6" lastUpdated="2026/07/31"/>
   <!--  added Zimo Scripting variables, CV837, CV843, CV981-1019  new pane for Zimo Scripting,  added decoder MS591N18, and removed comments to enable MS540E4-->
+  <version author="Pierre Billon" version="1.7" lastUpdated="2026/08/05"/>
+  <!-- v1.7 added some translations -->
   
   <decoder>
   <!-- These version 4 families are gated to CV #7 = 4 exactly. CV #7 is the main software

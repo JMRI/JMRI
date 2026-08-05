@@ -11,7 +11,8 @@
   <!-- v1.0 of Zimo MS-series fork from MX-series files,  Nigel Cliffe, 23 Nov 2022 -->
   <!-- v1.1   merge in various CV's for Swiss Mapping into correct numerical sequence,  Nigel Cliffe, 24 Nov 2022 -->  
   <!-- v1.2   added german translation,  Ronald Kuhn, 22 June 2023 -->  
-<!-- version 1.0  31 July 2026  Pierre Billon - split out of CV500-CV602_MS-MN-FS.xml: Swiss Mapping dimming values and special configurations Also: added the missing French and German labels -->
+<!-- version 2.0  31 July 2026  Pierre Billon - split out of CV500-CV602_MS-MN-FS.xml: Swiss Mapping dimming values and special configurations Also: added the missing French and German labels -->
+<!-- version 2.1  06 August 2026  Pierre Billon - Added French and German translations -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->

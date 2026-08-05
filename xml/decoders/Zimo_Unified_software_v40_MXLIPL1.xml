@@ -24,6 +24,8 @@
   <!-- listing of Light boards vs. function decoders present on their webpage at             -->
   <!-- http://www.zimo.at/web2010/documents/manuals.htm                                      -->
   <!--                                                                                       -->
+  <version author="Pierre Billon" version="2" lastUpdated="20260805"/>
+  <!-- Added some translations                                                               -->
   <decoder>
     <family name="Zimo Light Boards" mfg="Zimo">
       <model model="LIPLDNW1 version 40+" lowVersionID="40" highVersionID="40" maxInputVolts="10-35V" productID="184" formFactor="N" numOuts="10" numFns="14">

@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 1.8  Added French and German translations, corrected English, Pierre Billon, 06 Aug 2026 -->
 <!-- version 1.7  correcting the default value of CV 313, Ronald Kuhn, 02 May 2024 -->
 <!-- version 1.6, for Unified Software version 37, added Brake squel suppressed, Ronald Kuhn, 30 Apr 2019 -->
 <!-- version 1.5, added CV309 and CV349 for brake (function) key control, in decoders from zimo version 33.25.  Nigel Cliffe, 20 Sept 2018 -->

@@ -18,6 +18,7 @@
 <!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Choice-Light4_v40 for v40.x -->
 <!-- version 1.12 31 Oct 2022 Ronald Kuhn -  decVal for CV#115 to max -->
 <!-- version 1.13 05 Apr 2024 Ronald Kuhn -  small sorting for more overview and correction of default values-->
+<!-- version 1.14 05 Aug 2026 Pierre Billon - Added French and German translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->

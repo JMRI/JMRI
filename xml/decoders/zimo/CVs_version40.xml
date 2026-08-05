@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 28 November 2021 Ronald Kuhn - CVs for firmware v40 and above-->
 <!-- version 2 05 April 2024 Ronald Kuhn - exclude CVs for Decoder without 1K EEPROM -->
+<!-- version 2.1 06 August 2026 Pierre Billon - Added French translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="28" item="Railcom voltage signal" default="0" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

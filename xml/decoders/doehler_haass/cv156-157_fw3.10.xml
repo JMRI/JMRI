@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 3 - Pierre Billon - Added French translations -->
 <!-- version 2 - Ronald Kuhn - disable unimplemented options for PD-series -->
 <!-- version 1 - Alain Le Marchand - for fw 3.10 and above -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">

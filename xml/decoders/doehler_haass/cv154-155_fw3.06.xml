@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 4 - Pierre Billon - Added French translations -->
 <!-- version 3 - Ronald Kuhn - exclude CV 154 for PD05A -->
 <!-- version 2 - Alain Le Marchand - for fw 3.10 -->
 <!-- version 1 - Ronald Kuhn - for fw 3.06 -->

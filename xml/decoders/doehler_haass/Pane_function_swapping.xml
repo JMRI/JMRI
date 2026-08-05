@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 3 - 2026-08-06 - PB - Added French translations -->
 <!-- version 2 - 2026-07-27 - PB - add CV137 bit 6, apply swappings to SUSI F1-F12 -->
 <!-- version 1 - Ronald Kuhn - initial version -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">

@@ -19,6 +19,7 @@
 <!-- version 1.5 - Nigel Cliffe. Small bugfix to v1.4,  Corrected layout for decoders which lack swiss mapping groups 14-17 -->
 <!-- version 1.6 - Ronald Kuhn - add german translation -->
 <!-- version 1.7 - Pierre Billon, added 2nd Address checkboxes for function decoders, 26 Feb 2024 -->
+<!-- version 1.8 - Pierre Billon - Added French translations, 06 August 2026 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Swiss Mapping V36+</name>
   <name xml:lang="fr">Mapping suisse V36+</name>

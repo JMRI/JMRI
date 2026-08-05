@@ -5,6 +5,7 @@
 <!-- version 2 - Ronald Kuhn - merged "Alt Funkction Map's" for v39 -->
 <!-- version 2.1 - Nigel Cliffe - added MS series version numbers to include statements --> 
 <!-- version 2.1 - Ronald Kuhn - small visual improvement -->
+<!-- version 2.2 - Pierre Billon - Added French and German translations, converted the layout to a grid -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Alt Function Map</name>
   <name xml:lang="fr">Mapping alternatif</name>

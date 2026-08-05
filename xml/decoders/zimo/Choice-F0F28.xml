@@ -13,7 +13,8 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software V32+, Mark Waters 26 Jan 2015 -->
 <!-- version 1.1  Extended for "inverted" function labels, by adding 128 to invert the chosen function.   Used in Swiss Mapping  --> 
-<!-- version 1.1     Nigel Cliffe, 21 Jan 2024  --> 
+<!-- version 1.1     Nigel Cliffe, 21 Jan 2024  -->
+<!-- version 1.2     Pierre Billon, Added French translations, 06 Aug 2026  -->
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>

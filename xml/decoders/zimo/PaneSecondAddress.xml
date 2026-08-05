@@ -6,6 +6,7 @@
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
 <!-- version 1.3 - Pierre Billon - fixed table labels -->
+<!-- version 1.4 - Pierre Billon - Added French translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Secondary Function Map</name>
     <name xml:lang="fr">Deuxième adresse</name>

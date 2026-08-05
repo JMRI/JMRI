@@ -7,6 +7,7 @@
 <!-- version 1.4 - 22 June 2023 Ronald Kuhn - add some german translation and small corrections -->
 <!-- version 1.5 - 02 May 2024 Ronald Kuhn - a small visual correction -->
 <!-- version 1.6  31 July 2026  Pierre Billon - renamed from PaneAccelDecel_MS_series.xml; the name now states the CV range held and the decoder series it applies to -->
+<!-- version 1.7  06 August 2026  Pierre Billon - Added French and German translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Accel/Decel + Motor</name>
   <name xml:lang="fr">Accél./décél. + moteur</name>

@@ -17,6 +17,8 @@
   <!--  Gratefully assisted by Nigel Cliffe    -->
   <!--  Limited SOLELY to the portions of an MX820E that I am currently using -->
   <!--  Though I have also exposed the Zimo addressing scheme as well as NMRA -->
+  <version author="Pierre Billon" version="1.1" lastUpdated="20260806"/>
+  <!-- Version 1.1  Added French and German translations, corrected English -->
   <decoder>
     <family name="MX820 Accessory Decoders" mfg="Zimo" comment="Just for MX820E for now">
       <model model="MX820E">

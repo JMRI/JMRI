@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 7 - 2026-08-06 - PB - Added French and German translations, corrected English -->
 <!-- version 6 - 2026-07-25 - PB - add CV124 as eight bits -->
 <!-- version 5 - 2020-05-03 - RK - correction of a very small spelling mistake -->
 <!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->

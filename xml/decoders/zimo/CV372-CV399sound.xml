@@ -19,6 +19,7 @@
 <!-- version 1.3 - Alain Carasso - CV396/397 were inverted 05 March 2018 -->
 <!-- version 1.4 - Nigel Cliffe,  CV379 added -->
 <!-- version 1.5 - Ronald Kuhn - add german translation 05 April 2024 -->
+<!-- version 1.6 - Pierre Billon,  Added French translations 06 August 2026 -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   
