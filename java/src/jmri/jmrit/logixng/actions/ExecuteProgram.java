@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.*;
 import java.io.*;
 import java.util.*;
 
@@ -15,15 +14,14 @@ import jmri.util.FileUtil;
  *
  * @author Daniel Bergqvist Copyright 2025
  */
-public class ExecuteProgram extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ExecuteProgram extends AbstractDigitalAction {
 
     private final LogixNG_SelectString _selectProgram =
-            new LogixNG_SelectString(this, this);
+            new LogixNG_SelectString(this);
     private final LogixNG_SelectStringList _selectParameters =
             new LogixNG_SelectStringList();
     private final LogixNG_SelectString _selectWorkingDirectory =
-            new LogixNG_SelectString(this, "", this);
+            new LogixNG_SelectString(this, "");
 
 
     public ExecuteProgram(String sys, String user)
@@ -113,30 +111,6 @@ public class ExecuteProgram extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered) {
-            _selectProgram.registerListeners();
-            _selectWorkingDirectory.registerListeners();
-            _listenersAreRegistered = true;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectProgram.unregisterListeners();
-        _selectWorkingDirectory.unregisterListeners();
-        _listenersAreRegistered = false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

@@ -25,10 +25,10 @@ public class ActionSetReporter extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class));
     private final LogixNG_SelectNamedBean<Memory> _selectOtherMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
     private ReporterOperation _reporterOperation = ReporterOperation.SetToString;
     private String _otherConstantValue = "";
     private String _otherLocalVariable = "";
@@ -279,7 +279,6 @@ public class ActionSetReporter extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            _selectNamedBean.registerListeners();
             _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
             _listenersAreRegistered = true;
         }
@@ -289,7 +288,6 @@ public class ActionSetReporter extends AbstractDigitalAction
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _selectNamedBean.unregisterListeners();
             _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
             _listenersAreRegistered = false;
         }

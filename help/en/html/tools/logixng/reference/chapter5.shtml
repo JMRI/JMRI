@@ -1228,6 +1228,7 @@ LogixNG: IQ:AUTO:0001
         <li><a href="#flow_exit">Exit</a></li>
         <li><a href="#flow_for">For</a></li>
         <li><a href="#foreach">For each</a></li>
+        <li><a href="#foreachroster">For each roster</a></li>
         <li><a href="#foreachdelay">For each with delay</a></li>
         <li><a href="#if-then-else">If Then Else</a></li>
         <li><a href="#flow_return">Return</a></li>
@@ -1338,6 +1339,24 @@ LogixNG: IQ:AUTO:0001
        </div>
 
       <p>For another example, see <a href="#lob_lv">Listen on beans - Local variable</a>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="foreachroster">For each roster<span class="since">since 5.17.1</span></h4>
+
+      <p>The <strong>For each roster</strong> action gets each <strong>RosterEntry</strong> from the
+      roster.  Each item is placed in the specified local variable.  The action is then invoked for
+      each item.</p>
+
+      <p>The following example displays the ID for each roster entry.</p>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/for_each_roster.png"><img class="image-border"
+         src="images/chapter5/for_each_roster.png" alt="Chapter 5 for each roster"></a>
+       </div>
+
+      <p>The RosterEntry Javadoc is at
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrit/roster/RosterEntry.html">RosterEntry</a>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

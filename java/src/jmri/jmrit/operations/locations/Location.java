@@ -1680,13 +1680,27 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     private void replaceRoad(String oldRoad, String newRoad) {
-        // now adjust any track locations
+        // now adjust tracks at this location
         List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             if (track.containsRoadName(oldRoad)) {
                 track.deleteRoadName(oldRoad);
                 if (newRoad != null) {
                     track.addRoadName(newRoad);
+                }
+            }
+            String s = oldRoad + CarRoads.SPLIT_CHAR + CarLoad.LOAD_TYPE_EMPTY;
+            if (track.containsRoadName(s)) {
+                track.deleteRoadName(s);
+                if (newRoad != null) {
+                    track.addRoadName(newRoad + CarRoads.SPLIT_CHAR + CarLoad.LOAD_TYPE_EMPTY);
+                }
+            }
+            s = oldRoad + CarRoads.SPLIT_CHAR + CarLoad.LOAD_TYPE_LOAD;
+            if (track.containsRoadName(s)) {
+                track.deleteRoadName(s);
+                if (newRoad != null) {
+                    track.addRoadName(newRoad + CarRoads.SPLIT_CHAR + CarLoad.LOAD_TYPE_LOAD);
                 }
             }
         }

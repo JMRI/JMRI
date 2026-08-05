@@ -168,9 +168,10 @@
         <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.13.4.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.13.4.2.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.22.0.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.22.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.22.0.jar"/>
+        <pathelement location="${libdir}/jackson-datatype-jsr310-2.22.0.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
@@ -279,7 +280,6 @@
         <pathelement location="${libdir}/jaxb-impl-2.3.2.jar"/>
         <pathelement location="${libdir}/jgoodies-binding-2.13.0.jar"/>
         <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
-        <pathelement location="${libdir}/jackson-datatype-jsr310-2.13.4.jar"/>
         <!-- //BiDiB -->
         <pathelement location="${libdir}/reflections-0.10.2.jar"/>
         <pathelement location="${libdir}/javassist-3.28.0-GA.jar"/>

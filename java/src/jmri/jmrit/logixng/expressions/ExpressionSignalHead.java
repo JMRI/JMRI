@@ -26,7 +26,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<SignalHead> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
+                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class));
 
     private NamedBeanAddressing _queryAddressing = NamedBeanAddressing.Direct;
     private QueryType _queryType = QueryType.Appearance;
@@ -44,7 +44,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<SignalHead> _selectExampleNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
+                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class));
 
 
     public ExpressionSignalHead(String sys, String user)
@@ -444,7 +444,6 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 default:
                     throw new RuntimeException("Unknown enum: "+_queryType.name());
             }
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -474,7 +473,6 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 default:
                     throw new RuntimeException("Unknown enum: "+_queryType.name());
             }
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

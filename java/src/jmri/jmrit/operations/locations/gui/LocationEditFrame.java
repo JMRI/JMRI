@@ -177,7 +177,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (_location != null) {
             enableButtons(true);
             locationNameTextField.setText(_location.getName());
-            commentTextArea.setText(_location.getComment());
+            commentTextArea.setText(TrainCommon.isTextUserModified(_location.getCommentWithColor())
+                    ? _location.getCommentWithColor() : _location.getComment());
             divisionComboBox.setSelectedItem(_location.getDivision());
             yardModel.initTable(yardTable, location);
             spurModel.initTable(spurTable, location);

@@ -5,6 +5,7 @@
 <!-- version 1.2 - Ronald Kuhn - add options for #273, #274, #310 for Non-Sound-Decoder -->
 <!-- version 1.3 - Ronald Kuhn - add options for Motorola Subsequent addresses and Bootloader Version for MS- and MN-series -->
 <!-- version 1.4 - Ronald Kuhn - a small visual correction -->
+<!-- version 1.5 - Pierre Billon - 2026-07-31 - add CV264, variable low voltage, CV102 (use of the CV980-1019 block) and the CV258/CV259 read-only diagnostics -->
 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Zimo Specific</name>
@@ -16,6 +17,7 @@
         <text> </text>
        </label>
     <display item="Pulse Chain Recognition (LGB)"/>
+    <display item="Variable low voltage"/>
     <display item="NMRA"/>
     <display item="Loco Number Recognition"/>
     <display item="Emergency Delay"/>
@@ -135,8 +137,19 @@
       <label>
         <text>     </text>
        </label>
+        <display item="SUSI slave 3"/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+      <label>
+        <text>     </text>
+       </label>
         <display item="Bootloader Version"/>
         <display item="Bootloader SubVersion" />
+        <display item="Read out CV8"/>
+        <display item="Read loco set"/>
       </column>
     </row>
   </column>

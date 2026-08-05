@@ -1579,7 +1579,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         addLine(SEVEN, Bundle.getMessage("buildExcludeCarByInterchange", car.toString(),
-                car.getTypeName(), car.getTrackType(), car.getLocationName(), car.getTrackName()));
+                car.getTypeName(), car.getTrackTypeName(), car.getLocationName(), car.getTrackName()));
         return false;
     }
 
@@ -2128,7 +2128,7 @@ public class TrainBuilderBase extends TrainCommon {
                 if (!terminateStageTrack.isRoadNameAccepted(road)) {
                     addLine(FIVE,
                             Bundle.getMessage("buildStagingTrackRoad", terminateStageTrack.getLocation().getName(),
-                                    terminateStageTrack.getName(), road));
+                                    terminateStageTrack.getName(), road, ""));
                     return false;
                 }
             }
@@ -2753,10 +2753,10 @@ public class TrainBuilderBase extends TrainCommon {
                             car.getTypeName()));
             return false;
         }
-        if (!stageTrack.isRoadNameAccepted(car.getRoadName())) {
+        if (!stageTrack.isRoadNameAndLoadTypeAccepted(car.getRoadName(), car.getLoadType())) {
             addLine(SEVEN,
                     Bundle.getMessage("buildStagingTrackRoad", stageTrack.getLocation().getName(), stageTrack.getName(),
-                            car.getRoadName()));
+                            car.getRoadName(), car.getLoadType()));
             return false;
         }
         // Departing and returning to same location in staging?

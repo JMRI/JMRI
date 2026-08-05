@@ -165,6 +165,14 @@
 
       <h1>Usage suggestions</h1>
 
+      <p><strong>You cannot run a loco on the main track while the PR3 is configured as a
+      "PR3 Standalone Programmer".</strong> In that programming-track-only mode JMRI still lets
+      you open a throttle, but the throttle can only control a loco sitting on the PR3's dedicated
+      programming track, so a main-track loco will appear unresponsive even though the throttle
+      looks like it is working. The PR3 can act as a programmer OR as a LocoNet interface, but not
+      both at once; to run trains on the main track, set up the PR3 as a LocoNet Interface by
+      selecting your actual command-station type, not "PR3 Standalone Programmer".</p>
+
       <p>You can use a JMRI throttle to control the locomotive connected to the PR3 Programmer. Use
       the JMRI Power Control or the "Power" menu item on the Throttle's menu bar to turn on track
       power, and then you can operate the locomotive normally.</p>

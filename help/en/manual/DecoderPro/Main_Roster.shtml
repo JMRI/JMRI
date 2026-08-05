@@ -153,7 +153,13 @@
 
       <h3>Export Complete Roster...</h3>
 
-      <p>Opens the Save dialog box to allow you to select directory and name the file.</p>
+      <p>Opens the Save dialog box to allow you to select directory and name the file.
+      You can also "Export Roster Group..." to export all the entries in a specific group.
+      </p>
+      <p>
+      The corresponding "Import Complete Roster..." item will allow you to 
+      import the resulting file into a roster.  This will overwrite any existing
+      entries, but will not remove any entries that were not in the exported file.</p>
 
       <h3 id="speedProfiling">Speed Profiling</h3>
 

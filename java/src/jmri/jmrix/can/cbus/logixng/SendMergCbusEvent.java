@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.logixng;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
 
@@ -21,19 +19,14 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2025
  */
-public class SendMergCbusEvent extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class SendMergCbusEvent extends AbstractDigitalAction {
 
-    private final LogixNG_SelectInteger _selectNodeNumber =
-            new LogixNG_SelectInteger(
-                    this, this);
+    private final LogixNG_SelectInteger _selectNodeNumber = new LogixNG_SelectInteger(this);
 
-    private final LogixNG_SelectInteger _selectEventNumber =
-            new LogixNG_SelectInteger(
-                    this, this);
+    private final LogixNG_SelectInteger _selectEventNumber = new LogixNG_SelectInteger(this);
 
     private final LogixNG_SelectEnum<CbusEventType> _selectEventType =
-            new LogixNG_SelectEnum<>(this, CbusEventType.values(), CbusEventType.Off, this);
+            new LogixNG_SelectEnum<>(this, CbusEventType.values(), CbusEventType.Off);
 
     private CanSystemConnectionMemo _memo;
 
@@ -142,26 +135,6 @@ public class SendMergCbusEvent extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectNodeNumber.registerListeners();
-        _selectEventType.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNodeNumber.unregisterListeners();
-        _selectEventType.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

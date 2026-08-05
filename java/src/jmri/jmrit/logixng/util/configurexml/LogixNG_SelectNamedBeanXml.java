@@ -62,7 +62,8 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         if (memory != null) {
             namedBeanElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        namedBeanElement.addContent(new Element("listenToMemory").addContent(selectNamedBean.getListenToMemory() ? "yes" : "no"));
+        // Not used anymore. It's kept to not change old tables and panels files
+        namedBeanElement.addContent(new Element("listenToMemory").addContent("no"));
         if (selectNamedBean.getLocalVariable() != null && !selectNamedBean.getLocalVariable().isEmpty()) {
             namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
         }
@@ -113,11 +114,6 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectNamedBean.setMemory(m);
                     else selectNamedBean.removeMemory();
-                }
-
-                Element listenToMemoryElem = namedBeanElement.getChild("listenToMemory");
-                if (listenToMemoryElem != null) {
-                    selectNamedBean.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
                 }
 
                 elem = namedBeanElement.getChild("localVariable");

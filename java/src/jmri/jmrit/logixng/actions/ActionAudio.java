@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -18,15 +16,14 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionAudio extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionAudio extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Audio> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Audio.class, InstanceManager.getDefault(AudioManager.class), this);
+                    this, Audio.class, InstanceManager.getDefault(AudioManager.class));
 
     private final LogixNG_SelectEnum<Operation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play, this);
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play);
 
 
     public ActionAudio(String sys, String user)
@@ -151,20 +148,6 @@ public class ActionAudio extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-        _selectEnum.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-        _selectEnum.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -198,12 +181,6 @@ public class ActionAudio extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionAudio.class);

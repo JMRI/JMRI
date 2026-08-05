@@ -58,6 +58,8 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
     JCheckBox printHeaderLine1 = new JCheckBox(Bundle.getMessage("PrintHeaderLine1"));
     JCheckBox printHeaderLine2 = new JCheckBox(Bundle.getMessage("PrintHeaderLine2"));
     JCheckBox printHeaderLine3 = new JCheckBox(Bundle.getMessage("PrintHeaderLine3"));
+    
+    JSpinner spinnerLine = new JSpinner(new SpinnerNumberModel(0, -10, 10, 1));
 
     public EditManifestHeaderTextPanel() {
 
@@ -72,15 +74,25 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
         JPanel pHeaderLineOptions = new JPanel();
         pHeaderLineOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHeaderLines")));
-        pHeaderLineOptions.setLayout(new GridBagLayout());
+        pHeaderLineOptions.setLayout(new BoxLayout(pHeaderLineOptions, BoxLayout.X_AXIS));
 
-        addItemLeft(pHeaderLineOptions, printHeaderLine1, 0, 0);
-        addItemLeft(pHeaderLineOptions, printHeaderLine2, 0, 1);
-        addItemLeft(pHeaderLineOptions, printHeaderLine3, 0, 2);
+        JPanel pLineOptions = new JPanel();
+        pLineOptions.setLayout(new GridBagLayout());
+        addItemLeft(pLineOptions, printHeaderLine1, 0, 0);
+        addItemLeft(pLineOptions, printHeaderLine2, 0, 1);
+        addItemLeft(pLineOptions, printHeaderLine3, 0, 2);
+        pHeaderLineOptions.add(pLineOptions);
+        
+        JPanel pHorzontailLineAdjment = new JPanel();
+        pHorzontailLineAdjment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintLineAdjustment")));
+        pHorzontailLineAdjment.add(spinnerLine);
+        pHorzontailLineAdjment.add(new JLabel(Bundle.getMessage("AdjustmentInstructions")));
+        pHeaderLineOptions.add(pHorzontailLineAdjment);
 
         printHeaderLine1.setSelected(Setup.isPrintHeaderLine1Enabled());
         printHeaderLine2.setSelected(Setup.isPrintHeaderLine2Enabled());
         printHeaderLine3.setSelected(Setup.isPrintHeaderLine3Enabled());
+        spinnerLine.setValue(Setup.getHorizontalLineAdjustment());
 
         pManifest.add(pHeaderLineOptions);
 
@@ -293,6 +305,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
             printHeaderLine1.setSelected(true);
             printHeaderLine2.setSelected(true);
             printHeaderLine3.setSelected(true);
+            spinnerLine.setValue(0);
             road_TextField.setText(Bundle.getMessage("Road"));
             number_TextField.setText(Bundle.getMessage("Number"));
             engineNumber_TextField.setText(Bundle.getMessage("Number"));
@@ -351,6 +364,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         Setup.setPrintHeaderLine1Enabled(printHeaderLine1.isSelected());
         Setup.setPrintHeaderLine2Enabled(printHeaderLine2.isSelected());
         Setup.setPrintHeaderLine3Enabled(printHeaderLine3.isSelected());
+        Setup.setHorizontalLineAdjustment((Integer) spinnerLine.getValue());
         // car and engine attributes
         TrainManifestHeaderText.setStringHeader_Road(road_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Number(number_TextField.getText());
@@ -396,6 +410,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         return !(Setup.isPrintHeaderLine1Enabled() == printHeaderLine1.isSelected() &&
                 Setup.isPrintHeaderLine2Enabled() == printHeaderLine2.isSelected() &&
                 Setup.isPrintHeaderLine3Enabled() == printHeaderLine3.isSelected() &&
+                Setup.getHorizontalLineAdjustment() == (Integer) spinnerLine.getValue() &&
                 TrainManifestHeaderText.getStringHeader_Road().equals(road_TextField.getText()) &&
                 TrainManifestHeaderText.getStringHeader_Number().equals(number_TextField.getText()) &&
                 TrainManifestHeaderText.getStringHeader_EngineNumber().equals(engineNumber_TextField.getText()) &&

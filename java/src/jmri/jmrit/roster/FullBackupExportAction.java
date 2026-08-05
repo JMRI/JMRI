@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.swing.Icon;
@@ -20,7 +21,7 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Offer an easy mechanism to save the entire roster contents from one instance
- * of DecoderPro. The result is a zip format file, containing all of the roster
+ * of DecoderPro to another. The result is a zip format file, containing all of the roster
  * entries plus the overall roster.xml index file.
  *
  * @author david d zuhn
@@ -39,9 +40,9 @@ public class FullBackupExportAction
         super(s, i, wi);
         _parent = wi.getFrame();
     }
-    private Component _parent;
-    private String filename;
-    private CountingBusyDialog dialog;
+    protected Component _parent;
+    protected String filename;
+    protected CountingBusyDialog dialog;
 
     /**
      * @param s      Name of this action, e.g. in menus
@@ -74,25 +75,25 @@ public class FullBackupExportAction
             filename = filename.concat("."+roster_filename_extension);
         }
 
-        new Thread(() -> {run();}).start();
+        Roster roster = Roster.getDefault();
+        var list = roster.getAllEntries();
+        new Thread(() -> {run(list);}).start();
     }
 
     /**
      * Actually do the copying
      */
-    public void run() {
+    public void run(List<RosterEntry> entries) {
         try {
 
-            Roster roster = Roster.getDefault();
-
-            dialog = new CountingBusyDialog(null, "Exporting Roster", false, roster.getAllEntries().size());
+            dialog = new CountingBusyDialog(null, "Exporting Roster", false, entries.size());
             ThreadingUtil.runOnGUIEventually(() -> {dialog.start();});
 
             try (ZipOutputStream zipper = new ZipOutputStream(new FileOutputStream(filename))) {
 
                 // create a zip file roster entry for each entry in the main roster
                 int count = 0;
-                for (RosterEntry entry : roster.getAllEntries()) {
+                for (RosterEntry entry : entries) {
                     count++;
                     final int thisCount = count;
                     ThreadingUtil.runOnGUIEventually(() -> {dialog.count(thisCount);});

@@ -18,7 +18,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of track loads
  *
- * @author Dan Boudreau Copyright (C) 2013, 2014, 2015, 2023
+ * @author Dan Boudreau Copyright (C) 2013, 2014, 2015, 2023, 2026
  * 
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -297,9 +297,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (ae.getSource() == saveButton) {
             log.debug("track save button activated");
             save();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
-            }
         }
         if (ae.getSource() == addLoadButton) {
             String loadName = (String) comboBoxLoads.getSelectedItem();
@@ -343,16 +340,20 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void save() {
-        checkForErrors();
-        _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
-        _track.setDisableLoadChangeEnabled(disableLoadChange.isSelected());
-        _track.setQuickServiceEnabled(quickLoadService.isSelected());
-        saveReservationFactor();
-        // save the last state of the "Use car type and load" checkbox
-        loadAndType = loadAndTypeCheckBox.isSelected();
-        shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
-        // save location file
-        OperationsXml.save();
+        if (!checkForErrors()) {
+            _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
+            _track.setDisableLoadChangeEnabled(disableLoadChange.isSelected());
+            _track.setQuickServiceEnabled(quickLoadService.isSelected());
+            saveReservationFactor();
+            // save the last state of the "Use car type and load" checkbox
+            loadAndType = loadAndTypeCheckBox.isSelected();
+            shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
+            // save location file
+            OperationsXml.save();
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
+            }
+        }
     }
 
     /*
@@ -544,12 +545,14 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    private void checkForErrors() {
+    private boolean checkForErrors() {
         if (_track.getLoadOption().equals(Track.INCLUDE_LOADS) && _track.getLoadNames().length == 0
                 || _track.getShipLoadOption().equals(Track.INCLUDE_LOADS) && _track.getShipLoadNames().length == 0) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedLoads"), Bundle.getMessage("ErrorNoLoads"),
                     JmriJOptionPane.ERROR_MESSAGE);
+            return true;
         }
+        return false;
     }
 
     @Override

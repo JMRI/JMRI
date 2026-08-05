@@ -26,7 +26,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<SignalMast> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class));
 
     private NamedBeanAddressing _queryAddressing = NamedBeanAddressing.Direct;
     private QueryType _queryType = QueryType.Aspect;
@@ -44,7 +44,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<SignalMast> _selectExampleNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class));
 
 
     public ExpressionSignalMast(String sys, String user)
@@ -427,7 +427,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                 default:
                     throw new RuntimeException("Unknown enum: "+_queryType.name());
             }
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -462,7 +461,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                 default:
                     throw new RuntimeException("Unknown enum: "+_queryType.name());
             }
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

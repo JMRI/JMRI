@@ -208,9 +208,9 @@ public abstract class JsonHttpService {
         JsonNode schema;
         try {
             if (server) {
-                schema = this.mapper.readTree(this.getClass().getClassLoader().getResource(serverSchema));
+                schema = this.mapper.readTree(this.getClass().getClassLoader().getResourceAsStream(serverSchema));
             } else {
-                schema = this.mapper.readTree(this.getClass().getClassLoader().getResource(clientSchema));
+                schema = this.mapper.readTree(this.getClass().getClassLoader().getResourceAsStream(clientSchema));
             }
         } catch (
                 IOException |

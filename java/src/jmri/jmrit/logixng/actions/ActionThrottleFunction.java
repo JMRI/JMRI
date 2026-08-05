@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
 
@@ -15,8 +13,7 @@ import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
  *
  * @author Daniel Bergqvist Copyright 2023
  */
-public final class ActionThrottleFunction extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public final class ActionThrottleFunction extends AbstractDigitalAction {
 
     private SystemConnectionMemo _memo;
     private ThrottleManager _throttleManager;
@@ -26,10 +23,10 @@ public final class ActionThrottleFunction extends AbstractDigitalAction
     private DccThrottle _throttle;
     private ThrottleListener _throttleListener;
 
-    private final LogixNG_SelectInteger _selectAddress = new LogixNG_SelectInteger(this, this);
-    private final LogixNG_SelectInteger _selectFunction = new LogixNG_SelectInteger(this, this);
+    private final LogixNG_SelectInteger _selectAddress = new LogixNG_SelectInteger(this);
+    private final LogixNG_SelectInteger _selectFunction = new LogixNG_SelectInteger(this);
     private final LogixNG_SelectEnum<FunctionState> _selectOnOff =
-            new LogixNG_SelectEnum<>(this, FunctionState.values(), FunctionState.On, this);
+            new LogixNG_SelectEnum<>(this, FunctionState.values(), FunctionState.On);
 
 
     public ActionThrottleFunction(String sys, String user) {
@@ -195,24 +192,6 @@ public final class ActionThrottleFunction extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _listenersAreRegistered = true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _listenersAreRegistered = false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

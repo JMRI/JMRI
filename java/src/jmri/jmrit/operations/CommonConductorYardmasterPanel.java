@@ -34,7 +34,6 @@ import jmri.util.swing.JmriJOptionPane;
  * Common elements for the Conductor and Yardmaster Frames.
  *
  * @author Dan Boudreau Copyright (C) 2013
- *
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
@@ -169,13 +168,13 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textTrainRouteLocationCommentPane.setBackground(null);
         textTrainRouteLocationCommentPane.setEditable(false);
         textTrainRouteLocationCommentPane.setMaximumSize(new Dimension(2000, 200));
-        
+
         // Switch list location comment
         textSwitchListCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         textSwitchListCommentPane.setBackground(null);
         textSwitchListCommentPane.setEditable(false);
         textSwitchListCommentPane.setMaximumSize(new Dimension(2000, 200));
-        
+
         // Train status
         textTrainStatusPane.setBorder(BorderFactory.createTitledBorder(""));
         textTrainStatusPane.setBackground(null);
@@ -465,17 +464,17 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     /**
-     * Uses "ep" prefix to denote a checkbox with an engine pick up, and "es" for an
-     * engine set out.
+     * Uses "ep" prefix to denote a checkbox with an engine pick up, and "es"
+     * for an engine set out.
      *
      * @param rl The routeLocation to show loco pick ups or set outs.
      */
     protected void updateLocoPanes(RouteLocation rl) {
         if (Setup.isPrintHeadersEnabled()) {
-            JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader());
+            JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
             setLabelFont(header);
             pPickupLocos.add(header);
-            JLabel headerDrop = new JLabel(Tab + trainCommon.getDropEngineHeader());
+            JLabel headerDrop = new JLabel(Tab + trainCommon.getDropEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
             setLabelFont(headerDrop);
             pSetoutLocos.add(headerDrop);
         }
@@ -491,7 +490,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 if (checkBoxes.containsKey("ep" + engine.getId())) {
                     checkBox = checkBoxes.get("ep" + engine.getId());
                 } else {
-                    checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
+                    checkBox = new JCheckBox(trainCommon.pickupEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
                     setCheckBoxFont(checkBox, Setup.getPickupEngineColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("ep" + engine.getId(), checkBox);
@@ -511,7 +510,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 if (checkBoxes.containsKey("es" + engine.getId())) {
                     checkBox = checkBoxes.get("es" + engine.getId());
                 } else {
-                    checkBox = new JCheckBox(trainCommon.dropEngine(engine));
+                    checkBox = new JCheckBox(trainCommon.dropEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
                     setCheckBoxFont(checkBox, Setup.getDropEngineColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("es" + engine.getId(), checkBox);
@@ -529,19 +528,18 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     /**
-     * Block cars by track (optional), then pick up and set out for each location in
-     * a train's route. This shows each car with a check box or with a set button.
-     * The set button is displayed when the checkbox isn't selected and the display
-     * is in "set" mode. If the car is a utility. Show the number of cars that have
-     * the same attributes, and not the car's road and number. Each car is displayed
-     * only once in one of three panes. The three panes are pick up, set out, or
-     * local move. To keep track of each car and which pane to use, they are placed
-     * in the list "rollingStock" with the prefix "p", "s" or "m" and the car's
-     * unique id.
+     * Block cars by track (optional), then pick up and set out for each
+     * location in a train's route. This shows each car with a check box or with
+     * a set button. The set button is displayed when the checkbox isn't
+     * selected and the display is in "set" mode. If the car is a utility. Show
+     * the number of cars that have the same attributes, and not the car's road
+     * and number. Each car is displayed only once in one of three panes. The
+     * three panes are pick up, set out, or local move. To keep track of each
+     * car and which pane to use, they are placed in the list "rollingStock"
+     * with the prefix "p", "s" or "m" and the car's unique id.
      *
      * @param rl         The RouteLocation
      * @param isManifest True if manifest, false if switch list
-     *
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
         if (Setup.isPrintHeadersEnabled()) {
@@ -764,31 +762,29 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     // returns departure strings for a train
     protected String getStatus(RouteLocation rl, boolean isManifest) {
-        String text = "";
+        String text = ""; // user modified text
+        String status = "";
         try {
             if (rl == _train.getTrainTerminatesRouteLocation()) {
-                return MessageFormat.format(text = TrainManifestText.getStringTrainTerminates(),
+                status = MessageFormat.format(text = TrainManifestText.getStringTrainTerminates(),
                         new Object[]{_train.getTrainTerminatesName(),
                                 _train.getSplitName(), _train.getDescription(),
                                 rl.getLocation().getDivisionName()});
-            }
-            if (rl != _train.getCurrentRouteLocation() &&
+            } else if (rl != _train.getCurrentRouteLocation() &&
                     _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
-                return MessageFormat.format(text = TrainSwitchListText.getStringTrainDone(),
+                status = MessageFormat.format(text = TrainSwitchListText.getStringTrainDone(),
                         new Object[]{_train.getSplitName(), _train.getDescription(),
                                 rl.getSplitName()});
-            }
-            if (!_train.isBuilt() || rl == null) {
-                return _train.getStatus();
-            }
-            if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+            } else if (!_train.isBuilt() || rl == null) {
+                status = _train.getStatus();
+            } else if (Setup.isPrintLoadsAndEmptiesEnabled()) {
                 int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
                 if (isManifest) {
                     text = TrainManifestText.getStringTrainDepartsLoads();
                 } else {
                     text = TrainSwitchListText.getStringTrainDepartsLoads();
                 }
-                return MessageFormat.format(text,
+                status = MessageFormat.format(text,
                         new Object[]{rl.getSplitName(), rl.getTrainDirectionString(),
                                 _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
                                 Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
@@ -800,7 +796,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 } else {
                     text = TrainSwitchListText.getStringTrainDepartsCars();
                 }
-                return MessageFormat.format(text,
+                status = MessageFormat.format(text,
                         new Object[]{rl.getSplitName(), rl.getTrainDirectionString(),
                                 _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
                                 Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
@@ -811,6 +807,13 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             log.error("Illegal argument", e);
             return Bundle.getMessage("ErrorIllegalArgument", text, e.getLocalizedMessage());
         }
+        _color = TrainCommon.getTextColor(status);
+        return TrainCommon.getOnlyText(status);
+    }
+    
+    private Color _color;
+    protected Color getStatusColor() {
+        return _color;
     }
 
     protected void removeCarFromList(Car car) {

@@ -174,6 +174,7 @@ public class Xml {
     protected static final String PRINT_HEADER_LINE1 = "printHeaderLine1"; // NOI18N
     protected static final String PRINT_HEADER_LINE2 = "printHeaderLine2"; // NOI18N
     protected static final String PRINT_HEADER_LINE3 = "printHeaderLine3"; // NOI18N
+    protected static final String HORIZONTAL_LINE_ADJ = "lineAdjustment"; // NOI18N 
 
     protected static final String TRUNCATE = "truncate"; // NOI18N
     protected static final String USE_DEPARTURE_TIME = "useDepartureTime"; // NOI18N

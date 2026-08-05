@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
+
 /**
  * {@link java.util.Properties} implementation that enumerates properties sorted
  * by key.
@@ -15,15 +16,20 @@ import java.util.TreeSet;
  *
  * @author Randall Wood
  */
+@Deprecated (since="5.17.1",forRemoval=true) // replaced by org.apache.commons.collections4.properties.SortedProperties
 public class OrderedProperties extends Properties {
 
     @Override
     public Set<Object> keySet() {
+        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use org.apache.commons.collections4.properties.SortedProperties");
         return Collections.unmodifiableSet(new TreeSet<Object>(super.keySet()));
     }
 
     @Override
     public synchronized Enumeration<Object> keys() {
+        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use org.apache.commons.collections4.properties.SortedProperties");
         return Collections.enumeration(new TreeSet<Object>(super.keySet()));
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderedProperties.class);
 }

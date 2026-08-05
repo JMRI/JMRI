@@ -81,6 +81,7 @@ Example:
     * If sensor
     * Then Throw turnout
 </pre>
+
       <p>You can cut the Many action from the ConditionalNG, then go to the clipboard and expand
       the Many action and then cut the IfThenElse action. The IfThenElse action will then be moved
       to the first row on the clipboard. Now you can go back to the ConditionalNG and paste the
@@ -89,6 +90,17 @@ Example:
       <p>If the popup menu is opened on an item that can be copied, the menu item Copy is enabled.
       If "Copy" is selected, the item and its sub tree are copied to the clipboard. Each item gets
       an auto system name and no user name.</p>
+
+      <h3>Tools Menu</h3>
+
+      <p><span class="since">since 5.17.1</span>The Clipboard <strong>Tools</strong> menu has a
+      <strong>Clear clipboard</strong> option that will remove all of the clipboard entries.  A
+      confirmation dialog will be displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter2/confirm_clear_clipboard.png"><img src=
+        "images/chapter2/confirm_clear_clipboard.png" alt="Clear clipboard confirmation"></a>
+      </div>
 
       <hr>
 

@@ -170,7 +170,6 @@ public class HtmlTrainCommon extends TrainCommon {
         return String.format(strings.getProperty("EnginesList"), builder.toString());
     }
 
-    @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
@@ -194,7 +193,6 @@ public class HtmlTrainCommon extends TrainCommon {
         return String.format(locale, strings.getProperty("EnginesList"), builder.toString());
     }
 
-    @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");

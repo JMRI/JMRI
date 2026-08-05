@@ -33,7 +33,7 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     private ExpressionNode _expressionNode;
 
     private final LogixNG_SelectEnum<DispatcherState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, DispatcherState.values(), DispatcherState.Mode, this);
+            new LogixNG_SelectEnum<>(this, DispatcherState.values(), DispatcherState.Mode);
 
     private String _trainInfoFileName = "";
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;

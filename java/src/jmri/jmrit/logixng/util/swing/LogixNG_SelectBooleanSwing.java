@@ -32,7 +32,6 @@ public class LogixNG_SelectBooleanSwing {
     private JPanel _panelTable;
     private JTextField _referenceTextField;
     private BeanSelectPanel<Memory> _memoryPanel;
-    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -57,11 +56,9 @@ public class LogixNG_SelectBooleanSwing {
         _panelTable = _selectTableSwing.createPanel(selectBoolean.getSelectTable());
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
-        _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -98,7 +95,6 @@ public class LogixNG_SelectBooleanSwing {
         _valueCheckBox.setSelected(selectBoolean.getValue());
         _referenceTextField.setText(selectBoolean.getReference());
         _memoryPanel.setDefaultNamedBean(selectBoolean.getMemory());
-        _listenToMemoryCheckBox.setSelected(selectBoolean.getListenToMemory());
         _localVariableTextField.setText(selectBoolean.getLocalVariable());
         _formulaTextField.setText(selectBoolean.getFormula());
 
@@ -161,7 +157,6 @@ public class LogixNG_SelectBooleanSwing {
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
                 selectBoolean.setAddressing(NamedBeanAddressing.Memory);
                 selectBoolean.setMemory(_memoryPanel.getNamedBean());
-                selectBoolean.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectBoolean.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectBoolean.setLocalVariable(_localVariableTextField.getText());
@@ -185,7 +180,6 @@ public class LogixNG_SelectBooleanSwing {
         _valueCheckBox.setEnabled(enabled);
         _referenceTextField.setEnabled(enabled);
         _memoryPanel.getBeanCombo().setEnabled(enabled);
-        _listenToMemoryCheckBox.setEnabled(enabled);
         _localVariableTextField.setEnabled(enabled);
         _formulaTextField.setEnabled(enabled);
         _selectTableSwing.setEnabled(enabled);

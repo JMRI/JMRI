@@ -24,7 +24,7 @@ public class ExpressionConditional extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Conditional> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Conditional.class, InstanceManager.getDefault(ConditionalManager.class), this);
+                    this, Conditional.class, InstanceManager.getDefault(ConditionalManager.class));
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private ConditionalState _conditionalState = ConditionalState.False;
@@ -231,7 +231,6 @@ public class ExpressionConditional extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownState", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -241,7 +240,6 @@ public class ExpressionConditional extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownState", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

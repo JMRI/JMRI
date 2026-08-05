@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+
 import jmri.profile.AuxiliaryConfiguration;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.xml.XMLUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,8 +27,6 @@ import org.xml.sax.SAXException;
  */
 public abstract class JmriConfiguration implements AuxiliaryConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(JmriConfiguration.class);
-
     JmriConfiguration() {
     }
 
@@ -42,11 +40,10 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
 
     protected abstract void setPrivateBackedUp(boolean backedUp);
 
+    File persistentFile;
     Document persistentDocument; 
     
-    
-    Document getDocumentFromFile(final boolean shared) {
-        File file = this.getConfigurationFile(shared);
+    Document getDocumentFromFile(File file) {
         if (file != null && file.canRead()) {
             try {
                 try (final InputStream is = new FileInputStream(file)) {
@@ -71,8 +68,11 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
     public Element getConfigurationFragment(final String elementName, final String namespace, final boolean shared) {
         return ThreadingUtil.runOnGUIwithReturn(() -> {
             synchronized (this) {
-                if (persistentDocument == null) {
-                    persistentDocument = getDocumentFromFile(shared);
+                File file = this.getConfigurationFile(shared);
+                if (persistentDocument == null || ! file.equals(persistentFile)) {
+                    log.debug("getting config for get from {}", file);
+                    persistentDocument = getDocumentFromFile(file);
+                    persistentFile = file;
                 }
                 if (persistentDocument == null) {
                     return null;
@@ -92,8 +92,11 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
                 if (namespace == null) {
                     throw new IllegalArgumentException();
                 }
-                if (persistentDocument == null) {
-                    persistentDocument = getDocumentFromFile(shared);
+                File file = this.getConfigurationFile(shared);
+                if (persistentDocument == null || ! file.equals(persistentFile) ) {
+                    log.debug("getting config for put from {}", file);
+                    persistentDocument = getDocumentFromFile(file);
+                    persistentFile = file;
                 }
                 if (persistentDocument == null) {
                     persistentDocument = XMLUtil.createDocument("auxiliary-configuration", JmriConfigurationProvider.NAMESPACE, null, null); // NOI18N
@@ -120,7 +123,6 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
                     }
                 }
                 root.insertBefore(root.getOwnerDocument().importNode(fragment, true), ref);
-                File file = this.getConfigurationFile(shared);
                 try {
                     this.backup(shared);
                     try (final OutputStream os = new FileOutputStream(file)) {
@@ -147,8 +149,10 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
                 File file = this.getConfigurationFile(shared);
                 if (file.canWrite()) {
                     try {
-                        if (persistentDocument == null) {
-                            persistentDocument = getDocumentFromFile(shared);
+                        if (persistentDocument == null || ! file.equals(persistentFile)) {
+                            log.debug("getting config for remove from {}", file);
+                            persistentDocument = getDocumentFromFile(file);
+                            persistentFile = file;
                         }
                         Element root = persistentDocument.getDocumentElement();
                         Element toRemove = XMLUtil.findElement(root, elementName, namespace);
@@ -193,4 +197,5 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
         }
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriConfiguration.class);
 }

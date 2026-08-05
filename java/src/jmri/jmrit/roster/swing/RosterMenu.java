@@ -8,6 +8,7 @@ import jmri.jmrit.roster.CopyRosterItemAction;
 import jmri.jmrit.roster.DeleteRosterItemAction;
 import jmri.jmrit.roster.ExportRosterItemAction;
 import jmri.jmrit.roster.FullBackupExportAction;
+import jmri.jmrit.roster.GroupBackupExportAction;
 import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.ImportRosterItemAction;
 import jmri.jmrit.roster.PrintListAction;
@@ -100,6 +101,9 @@ public class RosterMenu extends JMenu {
         AbstractAction rosterExportAction = new FullBackupExportAction(Bundle.getMessage("MenuFullExport"), pWho);
         rosterExportAction.setEnabled(false);
 
+        AbstractAction rosterGroupExportAction = new GroupBackupExportAction(Bundle.getMessage("MenuGroupExport"), pWho);
+        rosterGroupExportAction.setEnabled(false);
+
         AbstractAction rosterImportAction = new FullBackupImportAction(Bundle.getMessage("MenuFullImport"), pWho);
         rosterImportAction.setEnabled(false);
 
@@ -123,6 +127,7 @@ public class RosterMenu extends JMenu {
         groupMenu.add(rosterGroupTableAction);
         groupMenu.add(rosterEntryToGroupAction);
         groupMenu.add(removeRosterEntryToGroupAction);
+        groupMenu.add(rosterGroupExportAction);
 
         add(dp3Action);
         addSeparator();
@@ -140,6 +145,7 @@ public class RosterMenu extends JMenu {
         add(groupMenu);
         addSeparator();
         add(rosterExportAction);
+        add(rosterGroupExportAction);
         add(rosterImportAction);
         add(speedProfileAction);
 
@@ -162,6 +168,7 @@ public class RosterMenu extends JMenu {
                 previewListAction.setEnabled(true);
                 rosterGroupTableAction.setEnabled(true);
                 rosterExportAction.setEnabled(true);
+                rosterGroupExportAction.setEnabled(true);
                 rosterImportAction.setEnabled(true);
                 speedProfileAction.setEnabled(true);
                 break;

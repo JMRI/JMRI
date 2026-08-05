@@ -388,7 +388,7 @@ public class TrainBuilder extends TrainBuilderCars {
                     Car car = getCarList().get(_carIndex);
                     // find a car that meets the user's requests
                     if (checkItem(mbi, car)) {
-                        addLine(FIVE, Bundle.getMessage("mbuildRemove", mbi.getId(), car.toString(), car.getTrackType(),
+                        addLine(FIVE, Bundle.getMessage("mbuildRemove", mbi.getId(), car.toString(), car.getTrackTypeName(),
                                 car.getLocationName(), car.getTrackName()));
                         remove(car);
                     }

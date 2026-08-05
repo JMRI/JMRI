@@ -181,7 +181,7 @@ public class SCWarrant extends Warrant {
      * {@inheritDoc}
      **/
     @Override
-    protected synchronized String getRunningMessage() {
+    protected synchronized String getRunningMessagePrim() {
         if (_throttle == null) {
             // The warrant is not active
             return super.getRunningMessage();
@@ -354,7 +354,7 @@ public class SCWarrant extends Warrant {
                     _trainName, _nextSignal.getDisplayName(),appearance,speed);
             } else {
                 String aspect = ((SignalMast) _nextSignal).getAspect();
-                speed = _speedMap.getAspectSpeed((aspect == null ? "" : aspect), 
+                speed = _speedMap.getAspectSpeed((aspect == null ? "" : aspect),
                     ((SignalMast) _nextSignal).getSignalSystem());
                 log.debug("{} SignalMast {} shows aspect {} which maps to speed {}",
                     _trainName, _nextSignal.getDisplayName(),aspect,speed);

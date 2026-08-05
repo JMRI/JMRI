@@ -53,6 +53,7 @@ public class ProgrammerFacadeSelector {
             }
 
             switch (fname) {
+
                 case "High Access via Double Index": {
                     String top = parameters.get(0).getText();
                     String addrCVhigh = parameters.get(1).getText();
@@ -65,6 +66,7 @@ public class ProgrammerFacadeSelector {
                     programmer = pf; // to go around and see if there are more
                     break;
                 }
+
                 case "High Access via Partial Index": {
                     String top = parameters.get(0).getText();
                     String addrCV = parameters.get(1).getText();
@@ -76,6 +78,7 @@ public class ProgrammerFacadeSelector {
                     programmer = pf; // to go around and see if there are more
                     break;
                 }
+
                 case "High Access via Partial Index with Reset": {
                     String top = parameters.get(0).getText();
                     String addrCV = parameters.get(1).getText();
@@ -88,6 +91,7 @@ public class ProgrammerFacadeSelector {
                     programmer = pf; // to go around and see if there are more
                     break;
                 }
+
                 case "Indexed CV access": {
                     String PI = parameters.get(0).getText();
                     String SI = (parameters.size() > 1) ? parameters.get(1).getText() : null;
@@ -99,6 +103,7 @@ public class ProgrammerFacadeSelector {
                     programmer = pf; // to go around and see if there are more
                     break;
                 }
+
                 case "TCS 4 CV access": {
                     jmri.implementation.TwoIndexTcsProgrammerFacade pf
                             = new jmri.implementation.TwoIndexTcsProgrammerFacade(programmer);
@@ -106,6 +111,7 @@ public class ProgrammerFacadeSelector {
                     programmer = pf; // to go around and see if there are more
                     break;
                 }
+
                 case "Ops Mode Accessory Programming":
                     if (AddressedProgrammer.class.isAssignableFrom(baseProg.getClass())) {  // create if relevant to current mode, otherwise silently ignore
                         String addrType = "decoder";
@@ -131,6 +137,7 @@ public class ProgrammerFacadeSelector {
                         programmer = pf; // to go around and see if there are more
                     }
                     break;
+
                 case "Ops Mode Delayed Programming":
                     if (AddressedProgrammer.class.isAssignableFrom(baseProg.getClass())) {  // create if relevant to current mode, otherwise silently ignore
                         int delay = 500;
@@ -151,6 +158,13 @@ public class ProgrammerFacadeSelector {
                         programmer = pf; // to go around and see if there are more
                     }
                     break;
+
+                case "Digitrax OpSw Word Programming":
+                    var pf = new jmri.implementation.DigitraxOpSwWordFacade(programmer);
+                    log.debug("new programmer '{}' {}", fname, pf);
+                    programmer = pf; // to go around and see if there are more
+                    break;
+                    
                 default:
                     log.error("Cannot create programmer capability named: \"{}\"", fname);
                     break;

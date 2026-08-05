@@ -315,12 +315,9 @@ public class OperationsPanel extends JPanel {
         return null;
     }
 
-    public JPanel getColorChooserPanel(String text, JColorChooser chooser) {
-        return getColorChooserPanel(Bundle.getMessage("TextColor"), TrainCommon.getTextColor(text), chooser, null);
-    }
-    
     public JPanel getColorChooserPanel(String text, JColorChooser chooser, JCheckBox checkBox) {
-        return getColorChooserPanel(Bundle.getMessage("TextColor"), TrainCommon.getTextColor(text), chooser, checkBox);
+        return getColorChooserPanel(Bundle.getMessage("TextColor"),
+                TrainCommon.isTextUserModified(text) ? Color.BLACK : TrainCommon.getTextColor(text), chooser, checkBox);
     }
 
     public JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser, JCheckBox checkBox) {

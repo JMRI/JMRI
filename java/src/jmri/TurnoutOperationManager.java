@@ -292,7 +292,9 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
             return Bundle.getMessage("TurnoutOperationOffTip");
         }
         if ( t != null && operatorName.equals(Bundle.getMessage("TurnoutOperationDefault"))) {
-            return Bundle.getMessage("UseGlobal", getMatchingOperationAlways(t).getName());
+            TurnoutOperation op = getMatchingOperationAlways(t);
+            if (op == null) return null;
+            return Bundle.getMessage("UseGlobal", op.getName());
         }
         for ( TurnoutOperation to : getTurnoutOperations() ) {
             if (operatorName.equals(to.getName())) {

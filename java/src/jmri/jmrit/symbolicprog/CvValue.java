@@ -321,7 +321,6 @@ public class CvValue extends AbstractValue implements ProgListener {
             _reading = true;
             _confirm = false;
             try {
-                //mProgrammer.readCV(_num, this);
                 mProgrammer.readCV(_num, this, this.getValue());
             } catch (Exception e) {
                 if (status != null) {

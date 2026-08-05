@@ -39,6 +39,7 @@ public class TreeEditor extends TreeViewer {
     public enum EnableRootRemoveCutCopy { EnableRootRemoveCutCopy, DisableRootRemoveCutCopy }
     public enum EnableRootPopup { EnableRootPopup, DisableRootPopup }
     public enum EnableExecuteEvaluate { EnableExecuteEvaluate, DisableExecuteEvaluate }
+    public enum EnableChangeUsernameForRoot { EnableChangeUsername, DisableChangeUsername }
 
 
     private static final String ACTION_COMMAND_RENAME_SOCKET = "rename_socket";
@@ -95,6 +96,7 @@ public class TreeEditor extends TreeViewer {
     private final boolean _disableRootRemoveCutCopy;
     private final boolean _disableRootPopup;
     private final boolean _enableExecuteEvaluate;
+    private final boolean _enableChangeUsernameForRoot;
 
     /**
      * Construct a TreeEditor.
@@ -105,19 +107,22 @@ public class TreeEditor extends TreeViewer {
      *                                 cut and copy be enabled or disabled?
      * @param enableRootPopup          should the popup menu be disabled for root?
      * @param enableExecuteEvaluate    should the popup menu show execute/evaluate?
+     * @param enableChangeUsername     should the popup menu show change user name for the root socket?
      */
     public TreeEditor(
             @Nonnull FemaleSocket femaleRootSocket,
             EnableClipboard enableClipboard,
             EnableRootRemoveCutCopy enableRootRemoveCutCopy,
             EnableRootPopup enableRootPopup,
-            EnableExecuteEvaluate enableExecuteEvaluate) {
+            EnableExecuteEvaluate enableExecuteEvaluate,
+            EnableChangeUsernameForRoot enableChangeUsername) {
 
         super(femaleRootSocket);
         _enableClipboard = enableClipboard == EnableClipboard.EnableClipboard;
         _disableRootRemoveCutCopy = enableRootRemoveCutCopy == EnableRootRemoveCutCopy.DisableRootRemoveCutCopy;
         _disableRootPopup = enableRootPopup == EnableRootPopup.DisableRootPopup;
         _enableExecuteEvaluate = enableExecuteEvaluate == EnableExecuteEvaluate.EnableExecuteEvaluate;
+        _enableChangeUsernameForRoot = enableChangeUsername == EnableChangeUsernameForRoot.EnableChangeUsername;
     }
 
     @Override
@@ -135,6 +140,7 @@ public class TreeEditor extends TreeViewer {
             });
             toolsMenu.add(openClipboardItem);
         }
+        addExtraItemsToToolsMenu(toolsMenu);
         menuBar.add(toolsMenu);
 
         JTree tree = _treePane._tree;
@@ -282,6 +288,14 @@ public class TreeEditor extends TreeViewer {
                     }
                 }
         );
+    }
+
+    /**
+     * Adds extra menu items to the tools menu.
+     * This method is used for sub classes.
+     * @param toolsMenu the tools menu
+     */
+    protected void addExtraItemsToToolsMenu(JMenu toolsMenu) {
     }
 
     private void openPopupMenu(JTree tree, TreePath path, int x, int y, boolean onlyAddItems) {
@@ -1939,7 +1953,11 @@ public class TreeEditor extends TreeViewer {
                         && femaleSocket.getConnectedSocket().isSupportingLocalVariables()
                         && !_isLocked);
 
-                menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !_isLocked);
+                menuItemChangeUsername.setEnabled(
+                        femaleSocket.isConnected()
+                                && !_isLocked
+                                && (_enableChangeUsernameForRoot
+                                        || (_currentFemaleSocket != _treePane._femaleRootSocket)));
 
                 if (_enableExecuteEvaluate) {
                     menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());
@@ -2002,16 +2020,28 @@ public class TreeEditor extends TreeViewer {
 
 
     // This class is copied from BeanTableDataModel
-    private class DeleteBeanWorker extends SwingWorker<Void, Void> {
+    protected class DeleteBeanWorker extends SwingWorker<Void, Void> {
 
         private final FemaleSocket _currentFemaleSocket;
         private final TreePath _currentPath;
-        MaleSocket _maleSocket;
+        private final MaleSocket _maleSocket;
+        private final boolean _deleteOnlyChildren;
+        private final String _deleteQuestion;
 
         public DeleteBeanWorker(FemaleSocket currentFemaleSocket, TreePath currentPath) {
+            this(currentFemaleSocket, currentPath, false, null);
+        }
+
+        public DeleteBeanWorker(
+                FemaleSocket currentFemaleSocket,
+                TreePath currentPath,
+                boolean deleteOnlyChildren,
+                String deleteQuestion) {
             _currentFemaleSocket = currentFemaleSocket;
             _currentPath = currentPath;
             _maleSocket = _currentFemaleSocket.getConnectedSocket();
+            _deleteOnlyChildren = deleteOnlyChildren;
+            _deleteQuestion = deleteQuestion;
         }
 
         public int getDisplayDeleteMsg() {
@@ -2025,8 +2055,12 @@ public class TreeEditor extends TreeViewer {
         public void doDelete() {
             _treePane._femaleRootSocket.unregisterListeners();
             try {
-                _currentFemaleSocket.disconnect();
-                _maleSocket.getManager().deleteBean(_maleSocket, "DoDelete");
+                if (_deleteOnlyChildren) {
+                    _maleSocket.getManager().deleteChildren(_maleSocket, "DoDelete");
+                } else {
+                    _currentFemaleSocket.disconnect();
+                    _maleSocket.getManager().deleteBean(_maleSocket, "DoDelete");
+                }
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
                 log.error("Unexpected doDelete failure for {}, {}", _maleSocket, e.getMessage() );
@@ -2044,7 +2078,11 @@ public class TreeEditor extends TreeViewer {
         public Void doInBackground() {
             StringBuilder message = new StringBuilder();
             try {
-                _maleSocket.getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
+                if (_deleteOnlyChildren) {
+                    _maleSocket.getManager().deleteChildren(_maleSocket, "CanDelete");
+                } else {
+                    _maleSocket.getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
+                }
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
                     log.warn("Do not Delete {}, {}", _maleSocket, e.getMessage());
@@ -2065,7 +2103,8 @@ public class TreeEditor extends TreeViewer {
             _maleSocket.getListenerRefsIncludingChildren(listenerRefs);
             int count = listenerRefs.size();
             log.debug("Delete with {}", count);
-            if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
+            if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()
+                    && _deleteQuestion == null) {
                 doDelete();
             } else {
                 final JDialog dialog = new JDialog();
@@ -2075,20 +2114,24 @@ public class TreeEditor extends TreeViewer {
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
-
-                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                    JLabel question = new JLabel(Bundle.getMessage(
-                            prompt,
-                            ((NamedBean)_maleSocket.getObject())
-                                    .getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
-                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    container.add(question);
+                    JLabel questionLabel;
+                    if (_deleteQuestion != null) {
+                        questionLabel = new JLabel(_deleteQuestion);
+                    } else {
+                        String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                        questionLabel = new JLabel(Bundle.getMessage(
+                                prompt,
+                                ((NamedBean)_maleSocket.getObject())
+                                        .getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
+                    }
+                    questionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(questionLabel);
 
                     ArrayList<String> tempListenerRefs = new ArrayList<>();
 
                     tempListenerRefs.addAll(listenerRefs);
 
-                    if (tempListenerRefs.size() > 0) {
+                    if (!tempListenerRefs.isEmpty()) {
                         ArrayList<String> listeners = new ArrayList<>();
                         for (int i = 0; i < tempListenerRefs.size(); i++) {
                             if (!listeners.contains(tempListenerRefs.get(i))) {
@@ -2114,12 +2157,17 @@ public class TreeEditor extends TreeViewer {
                         container.add(jScrollPane);
                     }
                 } else {
-                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
-                    String msg = MessageFormat.format(Bundle.getMessage(prompt),
-                            new Object[]{_maleSocket.getSystemName()});
-                    JLabel question = new JLabel(msg);
-                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    container.add(question);
+                    JLabel questionLabel;
+                    if (_deleteQuestion != null) {
+                        questionLabel = new JLabel(_deleteQuestion);
+                    } else {
+                        String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                        String msg = MessageFormat.format(Bundle.getMessage(prompt),
+                                new Object[]{_maleSocket.getSystemName()});
+                        questionLabel = new JLabel(msg);
+                    }
+                    questionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(questionLabel);
                 }
 
                 final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
@@ -2141,13 +2189,15 @@ public class TreeEditor extends TreeViewer {
                 });
 
                 yesButton.addActionListener((ActionEvent e) -> {
-                    if (remember.isSelected()) {
+                    if (remember.isSelected() && _deleteQuestion == null) {
                         setDisplayDeleteMsg(0x02);
                     }
                     doDelete();
                     dialog.dispose();
                 });
-                container.add(remember);
+                if (_deleteQuestion == null) {
+                    container.add(remember);
+                }
                 container.setAlignmentX(Component.CENTER_ALIGNMENT);
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
