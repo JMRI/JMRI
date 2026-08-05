@@ -28,6 +28,8 @@
     <version author="Dave Heap" version="6" lastUpdated="20211203"/>
     <!-- ver7 add "LokPilot 5 micro DCC Direct", "LokPilot 5 nano DCC" and a few more productIDs -->
     <version author="Heiko Rosemann" version="7" lastUpdated="20240901"/>
+    <!-- ver9 add "LokPilot 5 micro KATO" -->
+    <version author="Heiko Rosemann" version="9" lastUpdated="20260805"/>
     <decoder>
         <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokPilot 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600,33554636">
