@@ -127,12 +127,14 @@
   <variable CV="178" item="Analog Vstart" default="0">
     <decVal min="0" max="255"/>
     <label>Analog Vstart</label>
+    <label xml:lang="fr">Vstart analogique</label>
     <label xml:lang="de">Anfahrspannung Analog</label>
     <label xml:lang="cs">Analog Rozjezdové napětí</label>
   </variable>
   <variable CV="179" item="Analog Vhigh" default="0">
     <decVal min="0" max="255"/>
     <label>Analog Vhigh</label>
+    <label xml:lang="fr">Vhigh analogique</label>
     <label xml:lang="de">Geschwindigkeit Analog</label>
     <label xml:lang="cs">Analog Maximální napětí</label>
   </variable>

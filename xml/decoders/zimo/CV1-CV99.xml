@@ -62,6 +62,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F1</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F1</label>
       <tooltip>Check to enable function F1 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F1 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F1 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
@@ -72,6 +73,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F2</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F2</label>
       <tooltip>Check to enable function F2 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F2 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F2 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
@@ -82,6 +84,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F3</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F3</label>
       <tooltip>Check to enable function F3 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F3 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F3 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
@@ -92,6 +95,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F4</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F4</label>
       <tooltip>Check to enable function F4 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F4 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F4 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
@@ -102,6 +106,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F5</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F5</label>
       <tooltip>Check to enable function F5 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F5 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F5 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
@@ -112,6 +117,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F6</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F6</label>
       <tooltip>Check to enable function F6 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F6 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F6 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX">
@@ -122,6 +128,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F7</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F7</label>
       <tooltip>Check to enable function F7 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F7 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F7 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX">
@@ -132,24 +139,29 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F8</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F8</label>
       <tooltip>Check to enable function F8 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F8 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F8 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - FL(f)</label>
+      <label xml:lang="fr">État de la fonction en analogique - FL(f)</label>
       <label xml:lang="it">Stato Funzioni in Analogico - Luci (in avanti)</label>
       <label xml:lang="cs">Stav funkce v analogovém režimu - F světla vpřed</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - FL(f)</label>
       <tooltip>Check to enable function FL(f) when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction FL(f) en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn FL(f) im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
        <label>Analog Mode Function Status - FL(r)</label>
+       <label xml:lang="fr">État de la fonction en analogique - FL(r)</label>
        <label xml:lang="it">Stato Funzioni in Analogico - Luci (in retro)</label>
        <label xml:lang="cs">Stav funkce v analogovém režimu - F světla vzad</label>
        <label xml:lang="de">Funktion ein im Analogbetrieb - FL(r)</label>
       <tooltip>Check to enable function FL(r) when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction FL(r) en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn FL(r) im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
@@ -160,6 +172,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F9</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F9</label>
       <tooltip>Check to enable function F9 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F9 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F9 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
@@ -170,6 +183,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F10</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F10</label>
       <tooltip>Check to enable function F10 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F10 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F10 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
@@ -180,6 +194,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F11</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F11</label>
       <tooltip>Check to enable function F11 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F11 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F11 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
@@ -190,11 +205,13 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F12</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F12</label>
       <tooltip>Check to enable function F12 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F12 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F12 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Zero-1 Power Conversion" CV="14" mask="XVXXXXXX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog operation with accel/decel from CV3/4</label>
+    <label xml:lang="fr">Fonctionnement analogique avec l'inertie des CV3/4</label>
     <label xml:lang="it">Operatività in Analogico con accell/decell. da CV 3/4</label>
     <label xml:lang="cs">Analogový provoz se zrychlením/zpomalením podle CV3/4</label>
     <label xml:lang="de">Anfahr- und Bremsverzögerung (CV 3/4) aktiv</label>
@@ -202,6 +219,7 @@
   <variable item="Trix Power Conversion" CV="14" mask="VXXXXXXX" default="0" exclude="223,236">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DC Regulation</label>
+    <label xml:lang="fr">Régulation en analogique CC</label>
     <label xml:lang="it">Regolazioni in DC</label>
     <label xml:lang="cs">Regulace v DC</label>
     <label xml:lang="de">Motorregelung aktiv</label>
@@ -1749,9 +1767,12 @@
   <variable item="Product Number" CV="65" readOnly="yes" default="0">
     <decVal/>
     <label>Sub-version</label>
+    <label xml:lang="fr">Sous-version</label>
+    <label xml:lang="de">Unterversion</label>
     <label xml:lang="it">Sub-Vers. Numero prodotto</label>
     <label xml:lang="cs">Podverze</label>
     <tooltip>Sub-version Number (read only)</tooltip>
+    <tooltip xml:lang="fr">Numéro de sous-version (lecture seule)</tooltip>
     <tooltip xml:lang="de">Unterversion Nummer (nur lesend)</tooltip>
   </variable>
   <variable item="Speed Table" CV="67" default="4" exclude="179,184,228,226,232,235,247,MX689_v30">

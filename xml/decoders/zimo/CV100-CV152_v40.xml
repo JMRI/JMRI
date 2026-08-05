@@ -608,12 +608,14 @@
       </enumChoice>
       <enumChoice choice="High Frequency - High Power">
         <choice>High Frequency - High Power</choice>
+        <choice xml:lang="fr">Haute fréquence - forte puissance</choice>
         <choice xml:lang="it">Frequenza Alta - Alto Carico</choice>
         <choice xml:lang="cs">Vysoká frekvence - vysoký výkon</choice>
         <choice xml:lang="de">Hochfrequenz-Stromimpulse</choice>
       </enumChoice>
     </enumVal>
     <label>ACKnowledgement</label>
+    <label xml:lang="fr">Impulsion d'acquittement (ACK)</label>
     <label xml:lang="it">Riconoscimento</label>
     <label xml:lang="cs">Potvrzování</label>
     <label xml:lang="de">POM Quittierung</label>
@@ -695,6 +697,7 @@
   <variable CV="112" item="Radio Power Conversion" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Non directional DC braking</label>
+    <label xml:lang="fr">Freinage CC non directionnel</label>
     <label xml:lang="it">Frenatura non direzionale in DC</label>
     <label xml:lang="cs">Nesměrové brždění DC</label>
     <label xml:lang="de">„Märklin“-Bremsen</label>
@@ -1149,6 +1152,7 @@
   <variable CV="124" item="Analog Power Conversion" mask="XXVXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Polarity Dependent DC stopping method</label>
+    <label xml:lang="fr">Arrêt en CC selon la polarité</label>
     <label xml:lang="it">Metodo fermata in DC dipendente da polarità</label>
     <label xml:lang="cs">Metoda DC zastavení v závislosti na polaritě</label>
     <label xml:lang="de">polaritätsabhängige DC-Bremsabschnitte</label>
