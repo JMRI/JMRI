@@ -98,8 +98,11 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public void dispose() {
-        if (decodePane!=null) {
+        if (decodePane!=null) { // initComponents called
             decodePane.dispose();
+        }
+        if (logPane!=null) { // initComponents called
+            logPane.dispose();
         }
         displayPane.dispose();
         statsPane.dispose();
@@ -316,10 +319,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         protected CbusHighlightPainter(Color color) {
             super(color);
         }
-    }
-
-    protected String getMemoUserName(){
-        return memo.getUserName();
     }
 
     /**

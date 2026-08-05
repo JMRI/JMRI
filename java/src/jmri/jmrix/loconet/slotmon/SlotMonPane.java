@@ -54,6 +54,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
     private final JButton estopAllButton = new JButton(Bundle.getMessage("ButtonSlotMonEStopAll"));
 
+    private JLabel inUseCount = new JLabel("      ");
+    
     //Added by Jeffrey Machacek 2013
     private final JButton clearAllButton = new JButton(Bundle.getMessage("ButtonSlotMonClearAll"));
     private final JButton refreshAllButton = new JButton(Bundle.getMessage("ButtonSlotRefresh"));
@@ -181,6 +183,9 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         topPanel.add(showSystemCheckBox);
         topPanel.add(estopAllButton);
         topPanel.add(clearAllButton);
+        topPanel.add(clearAllButton);
+        topPanel.add(new JLabel(Bundle.getMessage("SlotMonUnUseCountLabel")));
+        topPanel.add(inUseCount);
 
         add(topPanel);
         add(slotScroll);
@@ -340,6 +345,15 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
             }
         }
+        
+        // update count
+        int inUseSlotCount = 0;
+        for (var slot : memo.getSlotManager().getSlots()) {
+            if (!slot.isSystemSlot() && slot.slotStatus() == LnConstants.LOCO_IN_USE) {
+                inUseSlotCount++;
+            }
+        }
+        inUseCount.setText(""+inUseSlotCount);
     }
 
     void showHideSlot250Data(boolean b) {

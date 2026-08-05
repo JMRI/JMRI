@@ -499,8 +499,6 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     public void message(LocoNetMessage m) {
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             
-            bdOpsAccessRetrying = false;
-
             // are we programming? If not, ignore
             if (p == null) {
                 // This condition happens due to e.g. an error, but also 
@@ -923,6 +921,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     void initializeBdOpsAccessTimer() {
         if (bdOpSwAccessTimer == null) {
             bdOpSwAccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
+                log.trace("bdOpSwAccessTimer timeout with {}", bdOpsAccessRetrying);
                 if (!bdOpsAccessRetrying) {
                     bdOpsAccessRetrying = true;
                     ProgListener temp = p;
