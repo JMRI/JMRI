@@ -329,17 +329,17 @@
   <variable CV="393" item="ZIMO Konfig 5-2" mask="XXXXXVXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>High-speed switchgear: use the samples in turn</label>
-    <label xml:lang="fr">Commutateur grande vitesse : utiliser les échantillons à tour de rôle</label>
+    <label xml:lang="fr">Graduateur grande vitesse : utiliser les échantillons à tour de rôle</label>
     <label xml:lang="de">Hochgeschwindigkeitsschaltwerk: Samples der Reihe nach verwenden</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 1</label>
       <tooltip>Instead of always starting with the first sample of the high-speed switchgear, use one sample after another.</tooltip>
       <tooltip xml:lang="de">Statt immer mit dem 1.Sample im Hochgeschwindigkeitsschaltwerk zu beginnen, ein Sample nach dem anderen verwenden.</tooltip>
-      <tooltip xml:lang="fr">Au lieu de toujours commencer par le premier échantillon du commutateur grande vitesse, les utiliser l'un après l'autre.</tooltip>
+      <tooltip xml:lang="fr">Au lieu de toujours commencer par le premier échantillon du graduateur grande vitesse, les utiliser l'un après l'autre.</tooltip>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-3" mask="XXXXVXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>High-speed switchgear: skip the sample start and end when upshifting</label>
-    <label xml:lang="fr">Commutateur grande vitesse : ignorer le début et la fin de l'échantillon en montant les crans</label>
+    <label xml:lang="fr">Graduateur grande vitesse : ignorer le début et la fin de l'échantillon en montant les crans</label>
     <label xml:lang="de">Hochgeschwindigkeitsschaltwerk: Anfangs- und Endteil des Samples beim Hochschalten überspringen</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 2</label>
       <tooltip>When upshifting, skip the start and end part of the sample, if loop pointers are set.</tooltip>
@@ -385,6 +385,7 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
+    <label xml:lang="fr">Éclats lumineux avec le son du graduateur</label>
     <label xml:lang="cs">Blikání světel pri zvuku kontroleru</label>
   </variable>
 

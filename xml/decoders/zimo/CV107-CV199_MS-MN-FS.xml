@@ -799,6 +799,7 @@
     <label xml:lang="de">Emergency Verzögerungszeit</label>
     <label xml:lang="cs">Nouzové zpoždění</label>
     <tooltip>This CV is for Emergency Stopp instead CV #4</tooltip>
+    <tooltip xml:lang="fr">Ce CV s'applique à l'arrêt d'urgence, à la place du CV #4</tooltip>
     <tooltip xml:lang="de">Dieser CV-Wert gilt bei Emergency Stopp anstelle der CV #4, also bei Einzelstopp und Sammelstopp emerg.</tooltip>
     <tooltip xml:lang="cs">Toto CV je pro nouzové zastavení místo CV4.</tooltip>
   </variable>
@@ -826,6 +827,7 @@
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Normal</choice>
+        <choice xml:lang="fr">Normal</choice>
         <choice xml:lang="it">Normale</choice>
         <choice xml:lang="cs">Normální</choice>
         <choice xml:lang="de">Normal</choice>
@@ -1026,6 +1028,7 @@
     <label xml:lang="cs">Rozpojovač</label>
     <label xml:lang="de">Kupplung</label>
     <tooltip xml:lang="de">Einschaltzeit für digitale Kupplung (Einheit 0,1 sek d.h. 60 = 6 sek)</tooltip>
+    <tooltip xml:lang="fr">Durée d'activation de l'attelage numérique (unité 0,1 s, donc 60 = 6 s)</tooltip>
     <tooltip xml:lang="cs">Čas sepnutí digitálního spřáhla (jednotka 0,1 s, t.j. 60 = 6 s)</tooltip>
   </variable>
   <variable CV="116" item="Auto Uncouple" default="0">
@@ -1650,6 +1653,7 @@
     <label xml:lang="de">Ergänzung zu CV#136</label>
     <label xml:lang="cs">Dodatek k CV136</label>
     <tooltip>Bit 6 of the CV 135 is the "9th Bit" for the speed feedback in CV 136</tooltip>
+    <tooltip xml:lang="fr">Le bit 6 du CV 135 est le « 9e bit » de la remontée de vitesse du CV 136</tooltip>
     <tooltip xml:lang="de">Bit 6 der CV 135 ist das "9. Bit“ für die Geschwindigkeits-Rückmeldung in CV 136</tooltip>
     <tooltip xml:lang="cs">Bit 6 v CV135 je "9. Bit" pro zpětnou vazbu rychlosti v CV136</tooltip>
   </variable>
@@ -1758,6 +1762,7 @@
     <label xml:lang="de">Komplette Sperre CV-Prog (SERV und OP)</label>
     <label xml:lang="cs">Kompletní programování CV zamčeno (Servisní a Provozní)</label>
     <tooltip>In intensive analog operation, the UPDATE LOCK should be engaged to avoid disturbances and poorer handling!</tooltip>
+    <tooltip xml:lang="fr">En usage analogique intensif, le VERROU DE MISE À JOUR doit être activé pour éviter les perturbations et un moins bon comportement de roulement !</tooltip>
     <tooltip xml:lang="de">Bei intensivem Analogbetrieb sollte die UPDATESPERRE eingelegt werden, um Störungen und schlechteres Fahrverhalten zu vermeiden!</tooltip>
     <tooltip xml:lang="cs">Při intenzivním analogovém provozu by měl být aktivován Zámek úprav, aby nedocházelo k rušení a horší manipulaci.!</tooltip>
   </variable>
@@ -1768,6 +1773,7 @@
     <label xml:lang="de">Jingle-Sound CV-Schreiben Bestätigung</label>
     <label xml:lang="cs">Potvrzení zápisu znělkou</label>
     <tooltip>The writing of values is confirmed by a jingle.</tooltip>
+    <tooltip xml:lang="fr">L'écriture des valeurs est confirmée par un jingle.</tooltip>
     <tooltip xml:lang="de">Das Schreiben von Werten wird durch einen Jingle bestätigt.</tooltip>
     <tooltip xml:lang="cs">Zápis hodnoty je potvrzen znělkou.</tooltip>
   </variable>
@@ -1778,6 +1784,7 @@
     <label xml:lang="cs">Zámek čtení v servisním režimu</label>
     <label xml:lang="de">„Service mode“-Sperre CV lesen</label>
     <tooltip>Read CV's in "Service mode" locked</tooltip>
+    <tooltip xml:lang="fr">Lecture des CV en « Service mode » verrouillée</tooltip>
     <tooltip xml:lang="de">CV's lesen im "Service mode" gesperrt</tooltip>
     <tooltip xml:lang="cs">Čtení CV v Servisním režimu je uzamčeno</tooltip>
   </variable>
@@ -2073,6 +2080,7 @@
     <label xml:lang="cs">Maximální doba jízdy po ztrátě signálu</label>
     <label xml:lang="de">Weiterfahrt ohne Signal</label>
     <tooltip>When Energy storage cct connected, 0-255 (0-25 sec)</tooltip>
+    <tooltip xml:lang="fr">Avec un circuit de stockage d'énergie connecté, 0-255 (0-25 s)</tooltip>
     <tooltip xml:lang="de">Anhalten nach Nicht-mehr-DCC-Empfang (Zehntel-sec)</tooltip>
   </variable>
   <variable CV="154" item="Special Output Configuration" mask="XXXXXXXV" default="0">
@@ -2101,6 +2109,7 @@
   <variable CV="154" item="Drive Away if Startup sound still playing" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Drive Away if Startup sound still playing</label>
+    <label xml:lang="fr">DIESEL : démarrer immédiatement, même si le son de ralenti n'est pas terminé</label>
     <label xml:lang="it">Partenza anche se suono accensione ancora attivo</label>
     <label xml:lang="cs">Odjet když se ještě přehrává zvuk startování</label>
     <label xml:lang="de">&lt;html&gt;DIESEL: Sofort abfahren, auch wenn Stand-&lt;br&gt;geräusch noch nicht zu Ende abgespielt&lt;/html&gt;</label>
@@ -2108,10 +2117,12 @@
   <variable CV="154" item="Two Stage Air Compressor" mask="XXXVXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Two Stage Air Compressor</label>
+    <label xml:lang="fr">VAPEUR : pompe à air à deux étages</label>
     <label xml:lang="it">Compressore aria a due stadi</label>
     <label xml:lang="de">DAMPF: Zweistufige Luftpumpe</label>
     <label xml:lang="cs">Dvoustupňový kompresor</label>
     <tooltip>Z1=fast, Z2=slow</tooltip>
+    <tooltip xml:lang="fr">Z1 après l'arrêt, Z2 pendant l'arrêt</tooltip>
     <tooltip xml:lang="de">Z1 nach Stehenbleiben, Z2 während Stehens</tooltip>
   </variable>
   <variable CV="154" mask="XXVXXXXX" default="0" item="Advanced Group 1 Option 2">
@@ -2168,6 +2179,7 @@
   <variable CV="154" item="Delay Shutdown untill end of Starting Whistle" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Delay Shutdown</label>
+    <label xml:lang="fr">VAPEUR : différer le départ jusqu'à la fin du sifflet de départ</label>
     <label xml:lang="it">Ritardo Spegnimento</label>
     <label xml:lang="cs">Zpoždění vypnutí</label>
     <label xml:lang="de">&lt;html&gt;DAMPF: Anfahrt verzögern, bis&lt;br&gt;„Anfahrpfiff“ vollständig abgespielt.&lt;/html&gt;</label>
@@ -2617,18 +2629,21 @@
     <enumVal>
       <enumChoice choice="Present" value="0">
         <choice>Present</choice>
+        <choice xml:lang="fr">Non</choice>
         <choice xml:lang="it">Presente</choice>
         <choice xml:lang="cs">Přítomný</choice>
         <choice xml:lang="de">Nein</choice>
       </enumChoice>
       <enumChoice choice="Disappear" value="1">
         <choice>Disappear</choice>
+        <choice xml:lang="fr">Oui</choice>
         <choice xml:lang="it">Sparisce</choice>
         <choice xml:lang="cs">Zmizí</choice>
         <choice xml:lang="de">Ja</choice>
       </enumChoice>
     </enumVal>
     <label>Standing Sound on premature shutdown</label>
+    <label xml:lang="fr">Interrompre le son de ralenti par anticipation</label>
     <label xml:lang="it">Suono distinto per arresto prematuro</label>
     <label xml:lang="cs">Zvuk stání při předčasném vypnutí</label>
     <label xml:lang="de">Standgeräusch vorzeitig abbrechen</label>
@@ -2637,18 +2652,21 @@
     <enumVal>
       <enumChoice choice="Normal" value="0">
         <choice>Normal</choice>
+        <choice xml:lang="fr">Normal</choice>
         <choice xml:lang="it">Normale</choice>
         <choice xml:lang="cs">Normální</choice>
         <choice xml:lang="de">Normal</choice>
       </enumChoice>
       <enumChoice choice="Reduced" value="1">
         <choice>Reduced</choice>
+        <choice xml:lang="fr">Abaisser</choice>
         <choice xml:lang="it">Ridotta</choice>
         <choice xml:lang="cs">Snížená</choice>
         <choice xml:lang="de">Geringer</choice>
       </enumChoice>
     </enumVal>
     <label>Chuff rate at higher speed steps</label>
+    <label xml:lang="fr">La fréquence des coups de vapeur augmente moins vite à grande vitesse</label>
     <label xml:lang="it">Frequenza di Chuff a velocità massima</label>
     <label xml:lang="cs">Frekvence výfuků páry při vyšších rychlostech</label>
     <label xml:lang="de">&lt;html&gt;DAMPFschlag Häufigkeit steigt&lt;br&gt;beim Schnellfahren unterproportional&lt;/html&gt;</label>
@@ -2657,18 +2675,21 @@
     <enumVal>
       <enumChoice choice="Off (default)" value="0">
         <choice>Normal</choice>
+        <choice xml:lang="fr">Normal</choice>
         <choice xml:lang="it">Normale</choice>
         <choice xml:lang="cs">Normální</choice>
         <choice xml:lang="de">Normal</choice>
       </enumChoice>
       <enumChoice choice="On" value="1">
         <choice>Reduced</choice>
+        <choice xml:lang="fr">Abaisser</choice>
         <choice xml:lang="it">Ridotta</choice>
         <choice xml:lang="cs">Snížený</choice>
         <choice xml:lang="de">Absenken</choice>
       </enumChoice>
     </enumVal>
     <label>Drop one speed step to lower turbocharger</label>
+    <label xml:lang="fr">Abaissement du son diesel et du turbocompresseur</label>
     <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
     <label xml:lang="cs">Snížení jednoho rychlostního stupně sníží turbodmychadlo</label>
     <label xml:lang="de">Absenkung Diesel-Sound und Turbolader Sound</label>

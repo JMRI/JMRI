@@ -147,6 +147,7 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
+    <label xml:lang="fr">Éclats lumineux avec le son du graduateur</label>
     <label xml:lang="cs">Blikání světel pri zvuku kontroleru</label>
   </variable>
 

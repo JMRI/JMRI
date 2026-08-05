@@ -651,36 +651,44 @@
   <variable CV="837" item="Script Running 1" mask="XXXXXXXV" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 1 Disable</label>
+    <label xml:lang="fr">Désactiver le script 1</label>
     <label xml:lang="de">Script deaktivieren 1</label>
     <label xml:lang="cs">Skript 1 zakázat</label>
       <tooltip>Deactivate Script 1</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 1</tooltip>
       <tooltip xml:lang="de">Script 1 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 1.</tooltip>
   </variable>
   <variable CV="837" item="Script Running 2" mask="XXXXXXVX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 2 Disable</label>
+    <label xml:lang="fr">Désactiver le script 2</label>
     <label xml:lang="de">Script deaktivieren 2</label>
     <label xml:lang="cs">Skript 2 zakázat</label>
       <tooltip>Deactivate Script 2</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 2</tooltip>
       <tooltip xml:lang="de">Script 2 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 2.</tooltip>
   </variable>
   <variable CV="837" item="Script Running 3" mask="XXXXXVXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 3 Disable</label>
+    <label xml:lang="fr">Désactiver le script 3</label>
     <label xml:lang="de">Script deaktivieren 3</label>
     <label xml:lang="cs">Skript 3 zakázat</label>
       <tooltip>Deactivate Script 3</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 3</tooltip>
       <tooltip xml:lang="de">Script 3 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 3.</tooltip>
   </variable>
   <variable CV="837" item="Script Running 4" mask="XXXXVXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 4 Disable</label>
+    <label xml:lang="fr">Désactiver le script 4</label>
     <label xml:lang="de">Script deaktivieren 4</label>
     <label xml:lang="cs">Skript 4 zakázat</label>
       <tooltip>Deactivate Script 4</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 4</tooltip>
       <tooltip xml:lang="de">Script 4 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 4.</tooltip>
   </variable>
@@ -690,6 +698,7 @@
     <label xml:lang="de">Script deaktivieren 5</label>
     <label xml:lang="cs">Skript 5 zakázat</label>
       <tooltip>Deactivate Script 5</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 5</tooltip>
       <tooltip xml:lang="de">Script 5 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 5.</tooltip>
   </variable>
@@ -699,6 +708,7 @@
     <label xml:lang="de">Script deaktivieren 6</label>
     <label xml:lang="cs">Skript 6 zakázat</label>
       <tooltip>Deactivate Script 6</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 6</tooltip>
       <tooltip xml:lang="de">Script 6 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 6.</tooltip>
   </variable>
@@ -708,6 +718,7 @@
     <label xml:lang="de">Script deaktivieren 7</label>
     <label xml:lang="cs">Skript 7 zakázat</label>
       <tooltip>Deactivate Script 7</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 7</tooltip>
       <tooltip xml:lang="de">Script 7 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 7.</tooltip>
   </variable>
@@ -717,6 +728,7 @@
     <label xml:lang="de">Script deaktivieren 8</label>
     <label xml:lang="cs">Skript 8 zakázat</label>
       <tooltip>Deactivate Script 8</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 8</tooltip>
       <tooltip xml:lang="de">Script 8 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 8.</tooltip>
   </variable>
@@ -733,6 +745,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F13</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F13</label>
       <tooltip>Check to enable function F13 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F13 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F13 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F13 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -744,6 +757,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F14</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F14</label>
       <tooltip>Check to enable function F14 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F14 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F14 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F14 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -755,6 +769,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F15</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F15</label>
       <tooltip>Check to enable function F15 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F15 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F15 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F15 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -766,6 +781,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F16</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F16</label>
       <tooltip>Check to enable function F16 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F16 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F16 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F16 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -777,6 +793,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F17</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F17</label>
       <tooltip>Check to enable function F17 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F17 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F17 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F17 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -788,6 +805,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F18</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F18</label>
       <tooltip>Check to enable function F18 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F18 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F18 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F18 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -799,6 +817,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F19</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F19</label>
       <tooltip>Check to enable function F19 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F19 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F19 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F19 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -810,6 +829,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F20</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F20</label>
       <tooltip>Check to enable function F20 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F20 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F20 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F20 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -821,6 +841,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F21</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F21</label>
       <tooltip>Check to enable function F21 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F21 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F21 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F21 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -832,6 +853,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F22</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F22</label>
       <tooltip>Check to enable function F22 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F22 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F22 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F22 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -843,6 +865,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F23</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F23</label>
       <tooltip>Check to enable function F23 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F23 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F23 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F23 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -854,6 +877,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F24</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F24</label>
       <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F24 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F24 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F24 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -865,6 +889,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F25</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F25</label>
       <tooltip>Check to enable function F25 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F25 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F25 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F25 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -876,6 +901,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F26</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F26</label>
       <tooltip>Check to enable function F26 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F26 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F26 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F26 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -887,6 +913,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F27</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F27</label>
       <tooltip>Check to enable function F27 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F27 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F27 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F27 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -898,6 +925,7 @@
       <label xml:lang="cs">Stav funkce v analogovém režimu - F28</label>
       <label xml:lang="de">Funktion ein im Analogbetrieb - F28</label>
       <tooltip>Check to enable function F28 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F28 en mode analogique</tooltip>
       <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F28 im Analogbetrieb eingeschaltet sein soll.</tooltip>
       <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F28 když jednotka pracuje v režimu analogového napájení.</tooltip>
   </variable>
@@ -909,6 +937,7 @@
     <label xml:lang="de">Script deaktivieren 9</label>
     <label xml:lang="cs">Skript 9 zakázat</label>
       <tooltip>Deactivate Script 9</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 9</tooltip>
       <tooltip xml:lang="de">Script 9 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 9.</tooltip>
   </variable>
@@ -918,6 +947,7 @@
     <label xml:lang="de">Script deaktivieren 10</label>
     <label xml:lang="cs">Skript 10 zakázat</label>
       <tooltip>Deactivate Script 10</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 10</tooltip>
       <tooltip xml:lang="de">Script 10 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 10.</tooltip>
   </variable>
@@ -927,6 +957,7 @@
     <label xml:lang="de">Script deaktivieren 11</label>
     <label xml:lang="cs">Skript 11 zakázat</label>
       <tooltip>Deactivate Script 11</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 11</tooltip>
       <tooltip xml:lang="de">Script 11 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 11.</tooltip>
   </variable>
@@ -936,6 +967,7 @@
     <label xml:lang="de">Script deaktivieren 12</label>
     <label xml:lang="cs">Skript 12 zakázat</label>
       <tooltip>Deactivate Script 12</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 12</tooltip>
       <tooltip xml:lang="de">Script 12 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 12.</tooltip>
   </variable>
@@ -945,6 +977,7 @@
     <label xml:lang="de">Script deaktivieren 13</label>
     <label xml:lang="cs">Skript 13 zakázat</label>
       <tooltip>Deactivate Script 13</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 13</tooltip>
       <tooltip xml:lang="de">Script 13 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 13.</tooltip>
   </variable>
@@ -954,6 +987,7 @@
     <label xml:lang="de">Script deaktivieren 14</label>
     <label xml:lang="cs">Skript 14 zakázat</label>
       <tooltip>Deactivate Script 14</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 14</tooltip>
       <tooltip xml:lang="de">Script 14 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 14.</tooltip>
   </variable>
@@ -963,6 +997,7 @@
     <label xml:lang="de">Script deaktivieren 15</label>
     <label xml:lang="cs">Skript 15 zakázat</label>
       <tooltip>Deactivate Script 15</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 15</tooltip>
       <tooltip xml:lang="de">Script 15 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 15.</tooltip>
   </variable>
@@ -972,6 +1007,7 @@
     <label xml:lang="de">Script deaktivieren 16</label>
     <label xml:lang="cs">Skript 16 zakázat</label>
       <tooltip>Deactivate Script 16</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 16</tooltip>
       <tooltip xml:lang="de">Script 16 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 16.</tooltip>
   </variable>  

@@ -13,12 +13,14 @@
   <variable CV="738" item="Switch input 1 Sound Sample" include="208,210,214,215,221,222,224,227,230">
     <decVal/>
     <label>Switch input 1 Sound Sample</label>
+    <label xml:lang="fr">Échantillon sonore de l'entrée 1</label>
     <label xml:lang="de">Sample Nummer für S1</label>
     <label xml:lang="cs">Zvukový vzorek spínací vstup 1</label>
   </variable>
   <variable CV="739" item="Zimo Sound Setting 51" include="208,210,214,215,221,222,224,227,230">
     <decVal/>
     <label>Switch triggered sound S1</label>
+    <label xml:lang="fr">Volume du son sur entrée S1</label>
     <label xml:lang="it">Suono S1 iniziato da Switch</label>
     <label xml:lang="de">Lautstärke Schalteing.-Sound S1</label>
     <label xml:lang="cs">Spínač spouští zvuk S1</label>
@@ -26,12 +28,14 @@
   <variable CV="740" item="Switch input 2 Sound Sample" include="208,210,224,227,230">
     <decVal/>
     <label>Switch input 2 Sound Sample</label>
+    <label xml:lang="fr">Échantillon sonore de l'entrée 2</label>
     <label xml:lang="de">Sample Nummer für S2</label>
     <label xml:lang="cs">Zvukový vzorek spínací vstup 2</label>
   </variable>
   <variable CV="741" item="Zimo Sound Setting 52" include="208,210,224,227,230">
     <decVal/>
     <label>Switch triggered sound S2</label>
+    <label xml:lang="fr">Volume du son sur entrée S2</label>
     <label xml:lang="it">Suono S2 iniziato da Switch</label>
     <label xml:lang="de">Lautstärke Schalteing.-Sound S2</label>
     <label xml:lang="cs">Spínač spouští zvuk S2</label>
@@ -39,12 +43,14 @@
   <variable CV="742" item="Switch input 3 Sound Sample" include="208,224,227,230">
     <decVal/>
     <label>Switch input 3 Sound Sample</label>
+    <label xml:lang="fr">Échantillon sonore de l'entrée 3</label>
     <label xml:lang="de">Sample Nummer für S3</label>
     <label xml:lang="cs">Zvukový vzorek spínací vstup 3</label>
   </variable>
   <variable CV="743" item="Zimo Sound Setting 53" include="208,224,227,230">
     <decVal/>
     <label>Switch triggered sound S3</label>
+    <label xml:lang="fr">Volume du son sur entrée S3</label>
     <label xml:lang="it">Suono S3 iniziato da Switch</label>
     <label xml:lang="de">Lautstärke Schalteing.-Sound S3</label>
     <label xml:lang="cs">Spínač spouští zvuk S3</label>

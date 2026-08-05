@@ -16,6 +16,7 @@
   <variable CV="745" item="Zimo Sound Setting 61">
     <decVal/>
     <label>Random sound Z1</label>
+    <label xml:lang="fr">Volume du son aléatoire Z1</label>
     <label xml:lang="it">Suono Z1 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z1</label>
     <label xml:lang="cs">Zvuk generátor náhody Z1</label>
@@ -35,6 +36,7 @@
   <variable CV="748" item="Zimo Sound Setting 62">
     <decVal/>
     <label>Random sound Z2</label>
+    <label xml:lang="fr">Volume du son aléatoire Z2</label>
     <label xml:lang="it">Suono Z2 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z2</label>
     <label xml:lang="cs">Zvuk generátor náhody Z2</label>
@@ -54,6 +56,7 @@
   <variable CV="751" item="Zimo Sound Setting 63">
     <decVal/>
     <label>Random sound Z3</label>
+    <label xml:lang="fr">Volume du son aléatoire Z3</label>
     <label xml:lang="it">Suono Z3 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z3</label>
     <label xml:lang="cs">Zvuk generátor náhody Z3</label>
@@ -73,6 +76,7 @@
   <variable CV="754" item="Zimo Sound Setting 64">
     <decVal/>
     <label>Random sound Z4</label>
+    <label xml:lang="fr">Volume du son aléatoire Z4</label>
     <label xml:lang="it">Suono Z4 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z4</label>
     <label xml:lang="cs">Zvuk generátor náhody Z4</label>
@@ -92,6 +96,7 @@
   <variable CV="757" item="Zimo Sound Setting 65">
     <decVal/>
     <label>Random sound Z5</label>
+    <label xml:lang="fr">Volume du son aléatoire Z5</label>
     <label xml:lang="it">Suono Z5 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z5</label>
     <label xml:lang="cs">Zvuk generátor náhody Z5</label>
@@ -111,6 +116,7 @@
   <variable CV="760" item="Zimo Sound Setting 66">
     <decVal/>
     <label>Random sound Z6</label>
+    <label xml:lang="fr">Volume du son aléatoire Z6</label>
     <label xml:lang="it">Suono Z6 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z6</label>
     <label xml:lang="cs">Zvuk generátor náhody Z6</label>
@@ -130,6 +136,7 @@
   <variable CV="763" item="Zimo Sound Setting 67">
     <decVal/>
     <label>Random sound Z7</label>
+    <label xml:lang="fr">Volume du son aléatoire Z7</label>
     <label xml:lang="it">Suono Z7 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z7</label>
     <label xml:lang="cs">Zvuk generátor náhody Z7</label>
@@ -149,6 +156,7 @@
   <variable CV="766" item="Zimo Sound Setting 68">
     <decVal/>
     <label>Random sound Z8</label>
+    <label xml:lang="fr">Volume du son aléatoire Z8</label>
     <label xml:lang="it">Suono Z8 casuale</label>
     <label xml:lang="de">Lautstärke Sound Z8</label>
     <label xml:lang="cs">Zvuk generátor náhody Z8</label>

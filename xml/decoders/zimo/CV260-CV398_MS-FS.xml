@@ -39,362 +39,460 @@
     <enumVal>
       <enumChoice choice="Steam Set 1" value="1">
         <choice>Steam Set 1</choice>
+        <choice xml:lang="fr">Set vapeur 1</choice>
         <choice xml:lang="it">Vapore Set 1</choice>
         <choice xml:lang="de">Dampf Set 1</choice>
         <choice xml:lang="cs">Sada pára 1</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 2">
         <choice>Steam Set 2</choice>
+        <choice xml:lang="fr">Set vapeur 2</choice>
         <choice xml:lang="it">Vapore Set 2</choice>
         <choice xml:lang="de">Dampf Set 2</choice>
         <choice xml:lang="cs">Sada pára 2</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 3">
         <choice>Steam Set 3</choice>
+        <choice xml:lang="fr">Set vapeur 3</choice>
         <choice xml:lang="it">Vapore Set 3</choice>
         <choice xml:lang="de">Dampf Set 3</choice>
         <choice xml:lang="cs">Sada pára 3</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 4">
         <choice>Steam Set 4</choice>
+        <choice xml:lang="fr">Set vapeur 4</choice>
         <choice xml:lang="it">Vapore Set 4</choice>
         <choice xml:lang="de">Dampf Set 4</choice>
         <choice xml:lang="cs">Sada pára 4</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 5">
         <choice>Steam Set 5</choice>
+        <choice xml:lang="fr">Set vapeur 5</choice>
         <choice xml:lang="it">Vapore Set 5</choice>
         <choice xml:lang="de">Dampf Set 5</choice>
         <choice xml:lang="cs">Sada pára 5</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 6">
         <choice>Steam Set 6</choice>
+        <choice xml:lang="fr">Set vapeur 6</choice>
         <choice xml:lang="it">Vapore Set 6</choice>
         <choice xml:lang="de">Dampf Set 6</choice>
         <choice xml:lang="cs">Sada pára 6</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 7">
         <choice>Steam Set 7</choice>
+        <choice xml:lang="fr">Set vapeur 7</choice>
         <choice xml:lang="it">Vapore Set 7</choice>
         <choice xml:lang="de">Dampf Set 7</choice>
         <choice xml:lang="cs">Sada pára 7</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 8">
         <choice>Steam Set 8</choice>
+        <choice xml:lang="fr">Set vapeur 8</choice>
         <choice xml:lang="it">Vapore Set 8</choice>
         <choice xml:lang="de">Dampf Set 8</choice>
         <choice xml:lang="cs">Sada pára 8</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 9">
         <choice>Steam Set 9</choice>
+        <choice xml:lang="fr">Set vapeur 9</choice>
         <choice xml:lang="it">Vapore Set 9</choice>
         <choice xml:lang="de">Dampf Set 9</choice>
         <choice xml:lang="cs">Sada pára 9</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 10">
         <choice>Steam Set 10</choice>
+        <choice xml:lang="fr">Set vapeur 10</choice>
         <choice xml:lang="it">Vapore Set 10</choice>
         <choice xml:lang="de">Dampf Set 10</choice>
         <choice xml:lang="cs">Sada pára 10</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 11">
         <choice>Steam Set 11</choice>
+        <choice xml:lang="fr">Set vapeur 11</choice>
         <choice xml:lang="it">Vapore Set 11</choice>
         <choice xml:lang="de">Dampf Set 11</choice>
         <choice xml:lang="cs">Sada pára 11</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 12">
         <choice>Steam Set 12</choice>
+        <choice xml:lang="fr">Set vapeur 12</choice>
         <choice xml:lang="it">Vapore Set 12</choice>
         <choice xml:lang="de">Dampf Set 12</choice>
         <choice xml:lang="cs">Sada pára 12</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 13">
         <choice>Steam Set 13</choice>
+        <choice xml:lang="fr">Set vapeur 13</choice>
         <choice xml:lang="it">Vapore Set 13</choice>
         <choice xml:lang="de">Dampf Set 13</choice>
         <choice xml:lang="cs">Sada pára 13</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 14">
         <choice>Steam Set 14</choice>
+        <choice xml:lang="fr">Set vapeur 14</choice>
         <choice xml:lang="it">Vapore Set 14</choice>
         <choice xml:lang="de">Dampf Set 14</choice>
         <choice xml:lang="cs">Sada pára 14</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 15">
         <choice>Steam Set 15</choice>
+        <choice xml:lang="fr">Set vapeur 15</choice>
         <choice xml:lang="it">Vapore Set 15</choice>
         <choice xml:lang="de">Dampf Set 15</choice>
         <choice xml:lang="cs">Sada pára 15</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 16">
         <choice>Steam Set 16</choice>
+        <choice xml:lang="fr">Set vapeur 16</choice>
         <choice xml:lang="it">Vapore Set 16</choice>
         <choice xml:lang="de">Dampf Set 16</choice>
         <choice xml:lang="cs">Sada pára 16</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 17">
         <choice>Steam Set 17</choice>
+        <choice xml:lang="fr">Set vapeur 17</choice>
         <choice xml:lang="it">Vapore Set 17</choice>
         <choice xml:lang="de">Dampf Set 17</choice>
         <choice xml:lang="cs">Sada pára 17</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 18">
         <choice>Steam Set 18</choice>
+        <choice xml:lang="fr">Set vapeur 18</choice>
         <choice xml:lang="it">Vapore Set 18</choice>
         <choice xml:lang="de">Dampf Set 18</choice>
         <choice xml:lang="cs">Sada pára 18</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 19">
         <choice>Steam Set 19</choice>
+        <choice xml:lang="fr">Set vapeur 19</choice>
         <choice xml:lang="it">Vapore Set 19</choice>
         <choice xml:lang="de">Dampf Set 19</choice>
         <choice xml:lang="cs">Sada pára 19</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 20">
         <choice>Steam Set 20</choice>
+        <choice xml:lang="fr">Set vapeur 20</choice>
         <choice xml:lang="it">Vapore Set 20</choice>
         <choice xml:lang="de">Dampf Set 20</choice>
         <choice xml:lang="cs">Sada pára 20</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 21">
         <choice>Steam Set 21</choice>
+        <choice xml:lang="fr">Set vapeur 21</choice>
         <choice xml:lang="it">Vapore Set 21</choice>
         <choice xml:lang="de">Dampf Set 21</choice>
         <choice xml:lang="cs">Sada pára 21</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 22">
         <choice>Steam Set 22</choice>
+        <choice xml:lang="fr">Set vapeur 22</choice>
         <choice xml:lang="it">Vapore Set 22</choice>
         <choice xml:lang="de">Dampf Set 22</choice>
         <choice xml:lang="cs">Sada pára 22</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 23">
         <choice>Steam Set 23</choice>
+        <choice xml:lang="fr">Set vapeur 23</choice>
         <choice xml:lang="it">Vapore Set 23</choice>
         <choice xml:lang="de">Dampf Set 23</choice>
         <choice xml:lang="cs">Sada pára 23</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 24">
         <choice>Steam Set 24</choice>
+        <choice xml:lang="fr">Set vapeur 24</choice>
         <choice xml:lang="it">Vapore Set 24</choice>
         <choice xml:lang="de">Dampf Set 24</choice>
         <choice xml:lang="cs">Sada pára 24</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 25">
         <choice>Steam Set 25</choice>
+        <choice xml:lang="fr">Set vapeur 25</choice>
         <choice xml:lang="it">Vapore Set 25</choice>
         <choice xml:lang="de">Dampf Set 25</choice>
         <choice xml:lang="cs">Sada pára 25</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 26">
         <choice>Steam Set 26</choice>
+        <choice xml:lang="fr">Set vapeur 26</choice>
         <choice xml:lang="it">Vapore Set 26</choice>
         <choice xml:lang="de">Dampf Set 26</choice>
         <choice xml:lang="cs">Sada pára 26</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 27">
         <choice>Steam Set 27</choice>
+        <choice xml:lang="fr">Set vapeur 27</choice>
         <choice xml:lang="it">Vapore Set 27</choice>
         <choice xml:lang="de">Dampf Set 27</choice>
         <choice xml:lang="cs">Sada pára 27</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 28">
         <choice>Steam Set 28</choice>
+        <choice xml:lang="fr">Set vapeur 28</choice>
         <choice xml:lang="it">Vapore Set 28</choice>
         <choice xml:lang="de">Dampf Set 28</choice>
         <choice xml:lang="cs">Sada pára 28</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 29">
         <choice>Steam Set 29</choice>
+        <choice xml:lang="fr">Set vapeur 29</choice>
         <choice xml:lang="it">Vapore Set 29</choice>
         <choice xml:lang="de">Dampf Set 29</choice>
         <choice xml:lang="cs">Sada pára 29</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 30">
         <choice>Steam Set 30</choice>
+        <choice xml:lang="fr">Set vapeur 30</choice>
         <choice xml:lang="it">Vapore Set 30</choice>
         <choice xml:lang="de">Dampf Set 30</choice>
         <choice xml:lang="cs">Sada pára 30</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 31">
         <choice>Steam Set 31</choice>
+        <choice xml:lang="fr">Set vapeur 31</choice>
         <choice xml:lang="it">Vapore Set 31</choice>
         <choice xml:lang="de">Dampf Set 31</choice>
         <choice xml:lang="cs">Sada pára 31</choice>
       </enumChoice>
       <enumChoice choice="Steam Set 32">
         <choice>Steam Set 32</choice>
+        <choice xml:lang="fr">Set vapeur 32</choice>
         <choice xml:lang="it">Vapore Set 32</choice>
         <choice xml:lang="de">Dampf Set 32</choice>
         <choice xml:lang="cs">Sada pára 32</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 1" value="101">
         <choice>Diesel Set 1</choice>
+        <choice xml:lang="fr">Set diesel 1</choice>
+        <choice xml:lang="de">Diesel Set 1</choice>
         <choice xml:lang="it">Diesel Set 1</choice>
         <choice xml:lang="cs">Sada motor 1</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 2">
         <choice>Diesel Set 2</choice>
+        <choice xml:lang="fr">Set diesel 2</choice>
+        <choice xml:lang="de">Diesel Set 2</choice>
         <choice xml:lang="it">Diesel Set 2</choice>
         <choice xml:lang="cs">Sada motor 2</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 3">
         <choice>Diesel Set 3</choice>
+        <choice xml:lang="fr">Set diesel 3</choice>
+        <choice xml:lang="de">Diesel Set 3</choice>
         <choice xml:lang="it">Diesel Set 3</choice>
         <choice xml:lang="cs">Sada motor 3</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 4">
         <choice>Diesel Set 4</choice>
+        <choice xml:lang="fr">Set diesel 4</choice>
+        <choice xml:lang="de">Diesel Set 4</choice>
         <choice xml:lang="it">Diesel Set 4</choice>
         <choice xml:lang="cs">Sada motor 4</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 5">
         <choice>Diesel Set 5</choice>
+        <choice xml:lang="fr">Set diesel 5</choice>
+        <choice xml:lang="de">Diesel Set 5</choice>
         <choice xml:lang="it">Diesel Set 5</choice>
         <choice xml:lang="cs">Sada motor 5</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 6">
         <choice>Diesel Set 6</choice>
+        <choice xml:lang="fr">Set diesel 6</choice>
+        <choice xml:lang="de">Diesel Set 6</choice>
         <choice xml:lang="it">Diesel Set 6</choice>
         <choice xml:lang="cs">Sada motor 6</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 7">
         <choice>Diesel Set 7</choice>
+        <choice xml:lang="fr">Set diesel 7</choice>
+        <choice xml:lang="de">Diesel Set 7</choice>
         <choice xml:lang="it">Diesel Set 7</choice>
         <choice xml:lang="cs">Sada motor 7</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 8">
         <choice>Diesel Set 8</choice>
+        <choice xml:lang="fr">Set diesel 8</choice>
+        <choice xml:lang="de">Diesel Set 8</choice>
         <choice xml:lang="it">Diesel Set 8</choice>
         <choice xml:lang="cs">Sada motor 8</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 9">
         <choice>Diesel Set 9</choice>
+        <choice xml:lang="fr">Set diesel 9</choice>
+        <choice xml:lang="de">Diesel Set 9</choice>
         <choice xml:lang="it">Diesel Set 9</choice>
         <choice xml:lang="cs">Sada motor 9</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 10">
         <choice>Diesel Set 10</choice>
+        <choice xml:lang="fr">Set diesel 10</choice>
+        <choice xml:lang="de">Diesel Set 10</choice>
         <choice xml:lang="it">Diesel Set 10</choice>
         <choice xml:lang="cs">Sada motor 10</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 11">
         <choice>Diesel Set 11</choice>
+        <choice xml:lang="fr">Set diesel 11</choice>
+        <choice xml:lang="de">Diesel Set 11</choice>
         <choice xml:lang="it">Diesel Set 11</choice>
         <choice xml:lang="cs">Sada motor 11</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 12">
         <choice>Diesel Set 12</choice>
+        <choice xml:lang="fr">Set diesel 12</choice>
+        <choice xml:lang="de">Diesel Set 12</choice>
         <choice xml:lang="it">Diesel Set 12</choice>
         <choice xml:lang="cs">Sada motor 12</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 13">
         <choice>Diesel Set 13</choice>
+        <choice xml:lang="fr">Set diesel 13</choice>
+        <choice xml:lang="de">Diesel Set 13</choice>
         <choice xml:lang="it">Diesel Set 13</choice>
         <choice xml:lang="cs">Sada motor 13</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 14">
         <choice>Diesel Set 14</choice>
+        <choice xml:lang="fr">Set diesel 14</choice>
+        <choice xml:lang="de">Diesel Set 14</choice>
         <choice xml:lang="it">Diesel Set 14</choice>
         <choice xml:lang="cs">Sada motor 14</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 15">
         <choice>Diesel Set 15</choice>
+        <choice xml:lang="fr">Set diesel 15</choice>
+        <choice xml:lang="de">Diesel Set 15</choice>
         <choice xml:lang="it">Diesel Set 15</choice>
         <choice xml:lang="cs">Sada motor 15</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 16">
         <choice>Diesel Set 16</choice>
+        <choice xml:lang="fr">Set diesel 16</choice>
+        <choice xml:lang="de">Diesel Set 16</choice>
         <choice xml:lang="it">Diesel Set 16</choice>
         <choice xml:lang="cs">Sada motor 16</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 17">
         <choice>Diesel Set 17</choice>
+        <choice xml:lang="fr">Set diesel 17</choice>
+        <choice xml:lang="de">Diesel Set 17</choice>
         <choice xml:lang="it">Diesel Set 17</choice>
         <choice xml:lang="cs">Sada motor 17</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 18">
         <choice>Diesel Set 18</choice>
+        <choice xml:lang="fr">Set diesel 18</choice>
+        <choice xml:lang="de">Diesel Set 18</choice>
         <choice xml:lang="it">Diesel Set 18</choice>
         <choice xml:lang="cs">Sada motor 18</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 19">
         <choice>Diesel Set 19</choice>
+        <choice xml:lang="fr">Set diesel 19</choice>
+        <choice xml:lang="de">Diesel Set 19</choice>
         <choice xml:lang="it">Diesel Set 19</choice>
         <choice xml:lang="cs">Sada motor 19</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 20">
         <choice>Diesel Set 20</choice>
+        <choice xml:lang="fr">Set diesel 20</choice>
+        <choice xml:lang="de">Diesel Set 20</choice>
         <choice xml:lang="it">Diesel Set 20</choice>
         <choice xml:lang="cs">Sada motor 20</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 21">
         <choice>Diesel Set 21</choice>
+        <choice xml:lang="fr">Set diesel 21</choice>
+        <choice xml:lang="de">Diesel Set 21</choice>
         <choice xml:lang="it">Diesel Set 21</choice>
         <choice xml:lang="cs">Sada motor 21</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 22">
         <choice>Diesel Set 22</choice>
+        <choice xml:lang="fr">Set diesel 22</choice>
+        <choice xml:lang="de">Diesel Set 22</choice>
         <choice xml:lang="it">Diesel Set 22</choice>
         <choice xml:lang="cs">Sada motor 22</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 23">
         <choice>Diesel Set 23</choice>
+        <choice xml:lang="fr">Set diesel 23</choice>
+        <choice xml:lang="de">Diesel Set 23</choice>
         <choice xml:lang="it">Diesel Set 23</choice>
         <choice xml:lang="cs">Sada motor 23</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 24">
         <choice>Diesel Set 24</choice>
+        <choice xml:lang="fr">Set diesel 24</choice>
+        <choice xml:lang="de">Diesel Set 24</choice>
         <choice xml:lang="it">Diesel Set 24</choice>
         <choice xml:lang="cs">Sada motor 24</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 25">
         <choice>Diesel Set 25</choice>
+        <choice xml:lang="fr">Set diesel 25</choice>
+        <choice xml:lang="de">Diesel Set 25</choice>
         <choice xml:lang="it">Diesel Set 25</choice>
         <choice xml:lang="cs">Sada motor 25</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 26">
         <choice>Diesel Set 26</choice>
+        <choice xml:lang="fr">Set diesel 26</choice>
+        <choice xml:lang="de">Diesel Set 26</choice>
         <choice xml:lang="it">Diesel Set 26</choice>
         <choice xml:lang="cs">Sada motor 26</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 27">
         <choice>Diesel Set 27</choice>
+        <choice xml:lang="fr">Set diesel 27</choice>
+        <choice xml:lang="de">Diesel Set 27</choice>
         <choice xml:lang="it">Diesel Set 27</choice>
         <choice xml:lang="cs">Sada motor 27</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 28">
         <choice>Diesel Set 28</choice>
+        <choice xml:lang="fr">Set diesel 28</choice>
+        <choice xml:lang="de">Diesel Set 28</choice>
         <choice xml:lang="it">Diesel Set 28</choice>
         <choice xml:lang="cs">Sada motor 28</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 29">
         <choice>Diesel Set 29</choice>
+        <choice xml:lang="fr">Set diesel 29</choice>
+        <choice xml:lang="de">Diesel Set 29</choice>
         <choice xml:lang="it">Diesel Set 29</choice>
         <choice xml:lang="cs">Sada motor 29</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 30">
         <choice>Diesel Set 30</choice>
+        <choice xml:lang="fr">Set diesel 30</choice>
+        <choice xml:lang="de">Diesel Set 30</choice>
         <choice xml:lang="it">Diesel Set 30</choice>
         <choice xml:lang="cs">Sada motor 30</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 31">
         <choice>Diesel Set 31</choice>
+        <choice xml:lang="fr">Set diesel 31</choice>
+        <choice xml:lang="de">Diesel Set 31</choice>
         <choice xml:lang="it">Diesel Set 31</choice>
         <choice xml:lang="cs">Sada motor 31</choice>
       </enumChoice>
       <enumChoice choice="Diesel Set 32">
         <choice>Diesel Set 32</choice>
+        <choice xml:lang="fr">Set diesel 32</choice>
+        <choice xml:lang="de">Diesel Set 32</choice>
         <choice xml:lang="it">Diesel Set 32</choice>
         <choice xml:lang="cs">Sada motor 32</choice>
       </enumChoice>
     </enumVal>
     <label>Set sound program</label>
+    <label xml:lang="fr">Programme sonore</label>
     <label xml:lang="it">Programma serie suoni</label>
     <label xml:lang="cs">Nastavení zvukového programu</label>
     <label xml:lang="de">Sound Collection</label>
     <tooltip>See manual!</tooltip>
+    <tooltip xml:lang="fr">Voir le manuel !</tooltip>
     <tooltip xml:lang="cs">Viz návod!</tooltip>
     <tooltip xml:lang="de">Handbuch beachten!</tooltip>
   </variable>
@@ -408,6 +506,7 @@
     <label xml:lang="cs">Celková hlasitost</label>
     <label xml:lang="fr">Volume général</label>
     <tooltip>64 is highest distortion-free play back, INC=5</tooltip>
+    <tooltip xml:lang="fr">La valeur 64 donne la lecture la plus forte sans distorsion.</tooltip>
     <tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
     <tooltip xml:lang="cs">Výchozí hodnota "64" udává nejhlasitější možnou nezkreslenou reprodukci. Použitelné hodnoty jsou asi do "100".</tooltip>
   </variable>
@@ -426,6 +525,7 @@
   <variable CV="266" item="Zimo Sound Setting 1">
     <decVal/>
     <label>Overall Volume</label>
+    <label xml:lang="fr">Volume général</label>
     <label xml:lang="it">Volume Generale</label>
     <label xml:lang="de">Gesamtlautstärke</label>
     <label xml:lang="cs">Celková hlasitost</label>
@@ -433,10 +533,12 @@
   <variable item="Virtual cam chuff frequency" CV="267" default="70">
     <decVal min="0" max="255"/>
     <label>Virtual cam chuff frequency</label>
+    <label xml:lang="fr">Fréquence virtuelle des coups de vapeur</label>
     <label xml:lang="it">Frequenza Chuff Camma Virtuale</label>
     <label xml:lang="de">virtuelle Dampfschlag-Häufigkeit</label>
     <label xml:lang="cs">Frekvence výfuků páry z virtuální vačky</label>
     <tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
+    <tooltip xml:lang="fr">Une valeur plus faible augmente la fréquence des coups de vapeur, et inversement.</tooltip>
     <tooltip xml:lang="cs">Snížení hodnoty způsobí vyšší frekvenci výfuků páry.</tooltip>
     <tooltip xml:lang="de">Absenken des Wertes bewirkt höhere Dampfschlag-Häufigkeit und umgekehrt.</tooltip>
   </variable>
@@ -448,10 +550,13 @@
         </qualifier>
     <decVal min="0" max="255"/>
     <label>Real cam sensor chuff rate 1</label>
+    <label xml:lang="fr">Détecteur d'essieu réel, cadence 1</label>
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor 1</label>
     <label xml:lang="cs">Frekvence výfuků páry z reálné vačky 1</label>
     <tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
+    <tooltip xml:lang="fr">0 = capteur virtuel, déclenchements par coup de vapeur, INC=1</tooltip>
+    <tooltip xml:lang="de">0 = virtueller Sensor, Auslösungen/Dampfschlag, INC=1</tooltip>
     <tooltip xml:lang="cs">Počet signálů vačky na jeden výfuk páry. 0 přepne na virtuální vačku.</tooltip>
   </variable>
   <variable item="Real cam sensor chuff rate 2" CV="268" mask="XVVVVVVV" default="0">
@@ -476,14 +581,17 @@
         </qualifier>
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Chuff for Articulated Locomotives</label>
+    <label xml:lang="fr">Détecteur d'essieu réel</label>
     <label xml:lang="de">echter Achsdetektor</label>
     <label xml:lang="cs">Výfuky páry malletky</label>
     <tooltip>With and without axle sensor on 2 channels with 2 sets</tooltip>
+    <tooltip xml:lang="fr">Détecteur d'essieu présent ou non</tooltip>
     <tooltip xml:lang="de">Achsdetektor vorhanden oder nicht</tooltip>
   </variable>
   <variable item="Lead chuff accentuated" CV="269" default="0" tooltip="See manual, INC=10">
     <decVal min="0" max="255"/>
     <label>Lead chuff accentuated</label>
+    <label xml:lang="fr">Accentuation du coup de vapeur directeur</label>
     <label xml:lang="it">Chuff accentuato</label>
     <label xml:lang="de">Führungsschlag-Betonung</label>
     <label xml:lang="cs">Zvýraznění prvního výfuku páry</label>
@@ -491,6 +599,7 @@
   <variable item="Overlapping effect at high speeds" CV="271" default="16" tooltip="Useful up to about 30, see manual, INC=1">
     <decVal min="0" max="255"/>
     <label>Overlapping effect at high speeds</label>
+    <label xml:lang="fr">Effet de recouvrement à grande vitesse</label>
     <label xml:lang="it">Sovrapposizione effetti ad alta velocità</label>
     <label xml:lang="de">Schnellfahrt Überlappungseffekt</label>
     <label xml:lang="cs">Efekt překrytí při vysoké rychlosti</label>
@@ -498,6 +607,7 @@
   <variable item="Blow-off time" CV="272" default="50" tooltip="How long after start-up blow-off occurs, INC=10">
     <decVal min="0" max="255"/>
     <label>Blow-off time</label>
+    <label xml:lang="fr">Durée de purge</label>
     <label xml:lang="it">Tempo Scarico Vapore</label>
     <label xml:lang="de">Entwässerungsdauer</label>
     <label xml:lang="cs">Doba otevření odvodňovacího ventilu</label>
@@ -506,25 +616,30 @@
   <variable CV="273" item="Delayed start after blow-off time" default="0">
     <decVal min="0" max="255"/>
     <label>Delayed start after blow-off time</label>
+    <label xml:lang="fr">Démarrage retardé après la purge</label>
     <label xml:lang="it">Ritardo partenza dopo Scarico Vapore</label>
     <label xml:lang="de">Entwässerungs-Anfahrverzögerung</label>
     <label xml:lang="cs">Zpoždění rozjezdu po otevření odvodňovacího ventilu</label>
     <tooltip>0 = no delay, 1 = blow-off on speed step 1, 2+ = 10ths of seconds, INC=1</tooltip>
+    <tooltip xml:lang="fr">0 = pas de retard, 1 = purge au cran 1, 2+ = dixièmes de seconde, INC=1</tooltip>
     <tooltip xml:lang="de">0 = keine Verzögerung, 1 = Entwässern per Fahrregler, 2+ = Anfahrverzögerung in Zehntel-sec, INC=1, Angleichung des Anfahrens im Traktionsbetrieb</tooltip>
   </variable>
   <variable CV="274" item="Blow-off schedule" default="30">
     <decVal min="0" max="255"/>
     <label>Blow-off schedule</label>
+    <label xml:lang="fr">Purge à l'arrêt</label>
     <label xml:lang="it">Pianificazione Scarico Vapore</label>
     <label xml:lang="de">Entwässerung-Stillstandzeit</label>
     <label xml:lang="cs">Časový rozvrh odvodňovacího ventilu</label>
     <tooltip>Blow-off suppressed by shunting, 10ths of seconds, INC=10</tooltip>
+    <tooltip xml:lang="fr">Purge supprimée en manoeuvre, en dixièmes de seconde, INC=10</tooltip>
     <tooltip xml:lang="de">Stillstandzeit im Rangierbetrieb, INC=10</tooltip>
   </variable>
   
   <variable item="Chuff volume at low speed and no load" CV="275" default="60" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Chuff volume at low speed and no load</label>
+    <label xml:lang="fr">Volume des coups de vapeur à faible vitesse sans charge</label>
     <label xml:lang="it">Volume Chuff a bassa velocità e senza carico</label>
     <label xml:lang="de">&lt;html&gt;Lautstärke der Dampfschläge&lt;br&gt;bei unbelasteter Langsamfahrt&lt;/html&gt;</label>
     <label xml:lang="cs">Hlasitost výfuku páry při malé rychlosti bez zátěže</label>
@@ -532,6 +647,7 @@
   <variable item="Chuff volume at high speed and no load" CV="276" default="80" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Chuff volume at high speed and no load</label>
+    <label xml:lang="fr">Volume à vitesse élevée sans charge</label>
     <label xml:lang="it">Volume Chuff a alta velocità e senza carico</label>
     <label xml:lang="de">Lautstärke bei unbelasteter Schnellfahrt</label>
     <label xml:lang="cs">Hlasitost výfuku páry při vysoké rychlosti bez zátěže</label>
@@ -539,6 +655,7 @@
   <variable item="Degree of volume change under load" CV="277" default="0" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Degree of volume change under load</label>
+    <label xml:lang="fr">Variation du volume selon la charge</label>
     <label xml:lang="it">Cambio Volume con carico</label>
     <label xml:lang="de">Lautstärkeänderung unter Last</label>
     <label xml:lang="cs">Míra závislosti hlasitosti na zátěži</label>
@@ -546,6 +663,7 @@
   <variable item="Load change threshold" CV="278" default="0" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Load change threshold</label>
+    <label xml:lang="fr">Seuil de variation de charge</label>
     <label xml:lang="it">Soglia cambio per carico</label>
     <label xml:lang="de">Laständerung Schwellwert</label>
     <label xml:lang="cs">Práh změny zatížení</label>
@@ -553,6 +671,7 @@
   <variable item="Reaction time to load change" CV="279" default="0" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Reaction time to load change</label>
+    <label xml:lang="fr">Temps de réaction à la variation de charge</label>
     <label xml:lang="it">Tempo reazione cambio per carico</label>
     <label xml:lang="de">Laständerung Reaktionszeit</label>
     <label xml:lang="cs">Zpoždění odezvy na změnu zatížení</label>
@@ -560,6 +679,7 @@
   <variable item="Load influence for diesel engines" CV="280" default="0" tooltip="See manual! 0=no influence, reacts to motor speed only, 1-255, load influence increases with number">
     <decVal min="0" max="255"/>
     <label>Load influence for diesel engines</label>
+    <label xml:lang="fr">Influence de la charge sur le moteur diesel</label>
     <label xml:lang="it">Influenza carico per Diesel</label>
     <label xml:lang="de">Dieselmotor - Lasteinfluss</label>
     <label xml:lang="cs">Vliv zatížení pro motorové lokomotivy</label>
@@ -567,6 +687,7 @@
   <variable item="Acceleration threshold for full load sound" CV="281" default="1" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Acceleration threshold for full load sound</label>
+    <label xml:lang="fr">Seuil d'accélération pour le son de pleine charge</label>
     <label xml:lang="it">Soglia accellerazione per suono a pieno carico</label>
     <label xml:lang="de">&lt;html&gt;Beschleunigungsschwelle für&lt;br&gt;volles Beschleunigungsgeräusch&lt;/html&gt;</label>
     <label xml:lang="cs">Práh zrychlení pro hlasitý zvuk při rozjezdu</label>
@@ -574,6 +695,7 @@
   <variable item="Duration of acceleration sound" CV="282" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Duration of acceleration sound</label>
+    <label xml:lang="fr">Durée du son d'accélération</label>
     <label xml:lang="it">Durata suono Accellerazione</label>
     <label xml:lang="de">Dauer Beschleunigungsgeräusches</label>
     <label xml:lang="cs">Doba trvání hlasitého zvuku rozjezdu</label>
@@ -581,6 +703,7 @@
   <variable item="Engine volume at full acceleration" CV="283" default="255" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Engine volume at full acceleration</label>
+    <label xml:lang="fr">Volume maximal du son de roulement</label>
     <label xml:lang="it">Volume Motore a piena Accellerazione</label>
     <label xml:lang="de">Maximale Lautstärke des Fahrgeräusch</label>
     <label xml:lang="cs">Hlasitost při zrychlení naplno</label>
@@ -588,6 +711,7 @@
   <variable item="Threshold for deceleration sound" CV="284" default="1" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Threshold for deceleration sound</label>
+    <label xml:lang="fr">Seuil de réduction du son à la décélération</label>
     <label xml:lang="it">Soglia per suono Decellerazione</label>
     <label xml:lang="de">&lt;html&gt;Verzögerungsschwelle für&lt;br&gt;Geräuschreduktion bei Verzögerung&lt;/html&gt;</label>
     <label xml:lang="cs">Práh zpomalení pro ztišený zvuk při snížení výkonu</label>
@@ -595,6 +719,7 @@
   <variable item="Duration of reduced volume on deceleration" CV="285" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Duration of reduced volume on deceleration</label>
+    <label xml:lang="fr">Durée de la réduction du son à la décélération</label>
     <label xml:lang="it">Durata volume ridotto per Decellerazione</label>
     <label xml:lang="de">&lt;html&gt;Dauer der Geräuschreduktion&lt;br&gt;bei Verzögerung&lt;/html&gt;</label>
     <label xml:lang="cs">Doba trvání ztišeného zvuku při snížení výkonu</label>
@@ -602,6 +727,7 @@
   <variable item="Volume level during deceleration" CV="286" default="20" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Volume level during deceleration</label>
+    <label xml:lang="fr">Volume réduit du son de roulement à la décélération</label>
     <label xml:lang="it">Volume Motore durante Decellerazione</label>
     <label xml:lang="de">&lt;html&gt;Lautstärke des reduzierten&lt;br&gt;Fahrgeräusches bei Verzögerung&lt;/html&gt;</label>
     <label xml:lang="cs">Hlasitost ztišeného zvuku během zpomalování</label>
@@ -609,6 +735,7 @@
   <variable item="Brake squeal threshold" CV="287" default="20" tooltip="Internal speed step below which brake squeal starts, INC=10">
     <decVal min="0" max="255"/>
     <label>Brake squeal threshold</label>
+    <label xml:lang="fr">Seuil de crissement des freins</label>
     <label xml:lang="it">Soglia Stridio Freni</label>
     <label xml:lang="de">Schwelle für Bremsenquietschen</label>
     <label xml:lang="cs">Práh skřípění brzd</label>
@@ -616,6 +743,7 @@
   <variable item="Minimum driving time before brake squeal" CV="288" default="50" tooltip="Unless loco is driven for this time Brake squeal will be surpressed (0-25sec), INC=10">
     <decVal min="0" max="255"/>
     <label>Minimum driving time before brake squeal</label>
+    <label xml:lang="fr">Temps de roulement minimal avant crissement</label>
     <label xml:lang="it">Distanza minima prima di Stridio Freni</label>
     <label xml:lang="de">Bremsenquietschen Mindestfahrzeit</label>
     <label xml:lang="cs">Minimální čas jízdy před skřípěním brzd</label>
@@ -623,6 +751,7 @@
   <variable item="Thyristor control: Sound pitch for stepping effect" CV="289" default="1" tooltip="See manual!, INC=10">
     <decVal min="1" max="255"/>
     <label>Thyristor control: Sound pitch for stepping effect</label>
+    <label xml:lang="fr">Thyristor : effet de palier</label>
     <label xml:lang="it">Controllo Tiristore: Step Increm. suono</label>
     <label xml:lang="de">Thyristor: Stufen-Effekt der Tonhöhe</label>
     <label xml:lang="cs">Tyristorová regulace: výška tónu při zvyšování výkonu</label>
@@ -630,6 +759,7 @@
   <variable item="Thyristor control: Sound pitch at medium speed" CV="290" default="40" tooltip="See manual!, INC=10">
     <decVal min="0" max="100"/>
     <label>Thyristor control: Sound pitch at medium speed</label>
+    <label xml:lang="fr">Thyristor : hauteur du son à vitesse moyenne</label>
     <label xml:lang="it">Controllo Tiristore: Increm. suono a velocità media</label>
     <label xml:lang="de">Thyristor: Tonhöhe bei mittlerer Geschwindigkeit</label>
     <label xml:lang="cs">Tyristorová regulace: výška tónu při středním výkonu</label>
@@ -637,6 +767,7 @@
   <variable item="Thyristor control: Sound pitch at maximum speed" CV="291" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="100"/>
     <label>Thyristor control: Sound pitch at maximum speed</label>
+    <label xml:lang="fr">Thyristor : hauteur du son à vitesse maximale</label>
     <label xml:lang="it">Controllo Tiristore: Increm. suono a velocità massima</label>
     <label xml:lang="de">Thyristor: Tonhöhe bei maximaler Geschwindigkeit</label>
     <label xml:lang="cs">Tyristorová regulace: výška tónu při maximálním výkonu</label>
@@ -644,6 +775,7 @@
   <variable item="Thyristor control: Speed step for medium speed" CV="292" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Speed step for medium speed</label>
+    <label xml:lang="fr">Thyristor : cran de vitesse moyenne</label>
     <label xml:lang="it">Controllo Tiristore: Step velocità per velocità media</label>
     <label xml:lang="de">Thyristor: Fahrstufe für mittlere Geschwindigkeit</label>
     <label xml:lang="cs">Tyristorová regulace: rychlostní stupeň při středním výkonu</label>
@@ -651,6 +783,7 @@
   <variable item="Thyristor control: Volume at steady speed" CV="293" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume at steady speed</label>
+    <label xml:lang="fr">Thyristor : volume à vitesse constante</label>
     <label xml:lang="it">Controllo Tiristore: Volume. suono a velocità costante</label>
     <label xml:lang="de">Thyristor: Lautstärke bei gleichmäßiger Fahrt</label>
     <label xml:lang="cs">Tyristorová regulace: hlasitost při ustálené rychlosti</label>
@@ -658,6 +791,7 @@
   <variable item="Thyristor control: Volume during acceleration" CV="294" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume during acceleration</label>
+    <label xml:lang="fr">Thyristor : volume à l'accélération</label>
     <label xml:lang="it">Controllo Tiristore: Volume. durante Accellerazione</label>
     <label xml:lang="de">Thyristor: Lautstärke bei Beschleunigungs-Fahrt</label>
     <label xml:lang="cs">Tyristorová regulace: hlasitost při zrychlování</label>
@@ -665,6 +799,7 @@
   <variable item="Thyristor control: Volume during deceleration" CV="295" default="50" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume during deceleration</label>
+    <label xml:lang="fr">Thyristor : volume à la décélération</label>
     <label xml:lang="it">Controllo Tiristore: Volume. durante Decellerazione</label>
     <label xml:lang="de">Thyristor: Lautstärke bei Verzögerungs-Fahrt</label>
     <label xml:lang="cs">Tyristorová regulace: hlasitost při zpomalování</label>
@@ -672,6 +807,7 @@
   <variable item="Electric Engine Motor sound: highest volume" CV="296" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: highest volume</label>
+    <label xml:lang="fr">Moteur électrique : volume maximal</label>
     <label xml:lang="it">Motore Elettrico: Volume. massimo</label>
     <label xml:lang="de">E-Motor: Maximale Lautstärke</label>
     <label xml:lang="cs">Trakční motor: maximální hlasitost</label>
@@ -679,6 +815,7 @@
   <variable item="Electric Engine Motor sound: where sound becomes audible" CV="297" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: where sound becomes audible</label>
+    <label xml:lang="fr">Moteur électrique : cran de vitesse minimal</label>
     <label xml:lang="it">Motore Elettrico: quando diventa udibile il suono</label>
     <label xml:lang="de">E-Motor: Minimalste Fahrstufe</label>
     <label xml:lang="cs">Trakční motor: práh slyšitelnosti</label>
@@ -686,6 +823,7 @@
   <variable item="Electric Engine Motor sound: starting point of full volume" CV="298" default="128" tooltip="Should be &gt; value in CV 297. See manual!, INC=10.">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: starting point of full volume</label>
+    <label xml:lang="fr">Moteur électrique : montée du volume</label>
     <label xml:lang="it">Motore Elettrico: Punto partenza Volume. massimo</label>
     <label xml:lang="de">E-Motor: Steigung der Lautstärke</label>
     <label xml:lang="cs">Trakční motor: počáteční bod hlasitosti naplno</label>
@@ -693,6 +831,7 @@
   <variable item="Electric Engine Motor sound: dependence of the pitch on speed" CV="299" default="100" tooltip="Should be &gt; value in CV 297. See manual!, INC=10.">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: dependence of the pitch on speed</label>
+    <label xml:lang="fr">Moteur électrique : montée en fréquence</label>
     <label xml:lang="it">Motore Elettrico: Dipendenza increm.volume da Velocità</label>
     <label xml:lang="de">E-Motor: Steigung der Frequenz</label>
     <label xml:lang="cs">Trakční motor: závislost výšky tónu na rychlosti</label>
@@ -700,6 +839,7 @@
   <variable CV="307" item="Curve squeal reed" default="0" exclude="">
     <decVal/>
     <label>Curve squeal reed input</label>
+    <label xml:lang="fr">Entrée reed du crissement en courbe</label>
     <label xml:lang="de">Kurvenquietschen Reed Eingänge</label>
     <label xml:lang="cs">Vstup křivka skřípění</label>
       <tooltip> </tooltip>
@@ -709,6 +849,7 @@
   <variable CV="308" item="Curve squeal key" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
     <label>Curve squeal key</label>
+    <label xml:lang="fr">Touche de crissement en courbe</label>
     <label xml:lang="de">Kurvenquietschen-Taste</label>
     <label xml:lang="cs">Tlačítko křivky skřípění</label>
       <tooltip> </tooltip>
@@ -781,22 +922,26 @@
       </enumChoice>
       <enumChoice choice="Always On" value="255">
         <choice>Always On</choice>
+        <choice xml:lang="fr">Toujours activé</choice>
         <choice xml:lang="it">Sempre On</choice>
         <choice xml:lang="de">immer an</choice>
         <choice xml:lang="cs">Vždy zapnuto</choice>
       </enumChoice>
     </enumVal>
     <label>On/off key for engine and random sound</label>
+    <label xml:lang="fr">Touche marche/arrêt du son, temporisation de démarrage</label>
     <label xml:lang="it">Tasto On-Off per Motore e suoni casuali</label>
     <label xml:lang="de">Sound Ein/Aus-Taste, Anfahrverzögerung ein/aus</label>
     <label xml:lang="cs">Klávesa pro zapnutí/vypnutí náhodných zvuků motoru</label>
     <tooltip>Defines the key that turns the engine and random sounds on or off</tooltip>
+    <tooltip xml:lang="fr">Touche de marche/arrêt des bruits de roulement et aléatoires</tooltip>
     <tooltip xml:lang="de">Ein/Ausschalt-Taste für Fahrgeräusche und Zufalls-Geräusche sowie Anfahrverzögerung definieren</tooltip>
   </variable>
   <variable item="On/off key for function sound" CV="311" default="0">
     <enumVal>
       <enumChoice choice="Always On">
         <choice>F-key sounds always on</choice>
+        <choice xml:lang="fr">toujours activé</choice>
         <choice xml:lang="it">Tasto F sempre On</choice>
         <choice xml:lang="de">immer an</choice>
         <choice xml:lang="cs">Funkční zvuk trvale zapnut</choice>
@@ -860,10 +1005,12 @@
       </enumChoice>
     </enumVal>
     <label>On/off key for function sound</label>
+    <label xml:lang="fr">Touche marche/arrêt des sons de fonction</label>
     <label xml:lang="it">Tasto On-Off per suoni Funzione</label>
     <label xml:lang="de">Funktionssound Ein/Aus Taste</label>
     <label xml:lang="cs">Klávesa zapíná/vypíná funkční zvuk</label>
     <tooltip>Defines the key that turns the function sounds (e.g. F2 bell) on or off.</tooltip>
+    <tooltip xml:lang="fr">Touche de marche/arrêt des sons affectés aux touches de fonction</tooltip>
     <tooltip xml:lang="de">Definieren einer Ein/Ausschalt-Taste für Sounds die den Funktionstasten zugeordnet sind; = 0: Funktionstastensounds immer aktiv</tooltip>
     <tooltip xml:lang="cs">Definuje která klávesa přepíná funkci zvuku (např. F2 zvon) zapnuto/vypnuto.</tooltip>
   </variable>
@@ -871,6 +1018,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -934,10 +1082,12 @@
       </enumChoice>
     </enumVal>
     <label>Blow-off key</label>
+    <label xml:lang="fr">Touche de purge</label>
     <label xml:lang="it">Tasto per Scarico vapore</label>
     <label xml:lang="de">Entwässerungstaste</label>
     <label xml:lang="cs">Klávesa pro odvodňovací ventil</label>
     <tooltip>Defines the key to play-back the blow-off sound manually</tooltip>
+    <tooltip xml:lang="fr">Touche déclenchant manuellement le son de purge</tooltip>
     <tooltip xml:lang="de">Definieren einer Funktions-Taste, mit welcher das Entwässerungs-Geräusch ausgelöst werden kann</tooltip>
     <tooltip xml:lang="cs">Definuje která klávesa ručně spustí přehrání zvuku odvodňovacího ventilu</tooltip>
   </variable>
@@ -945,6 +1095,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1008,73 +1159,114 @@
       </enumChoice>
       <enumChoice choice="F1 on=Fade" value="101">
         <choice>F1 Off</choice>
+        <choice xml:lang="fr">F1 arrêt</choice>
+        <choice xml:lang="de">F1 aus</choice>
       </enumChoice>
       <enumChoice choice="F2 on=Fade">
         <choice>F2 Off</choice>
+        <choice xml:lang="fr">F2 arrêt</choice>
+        <choice xml:lang="de">F2 aus</choice>
       </enumChoice>
       <enumChoice choice="F3 on=Fade">
         <choice>F3 Off</choice>
+        <choice xml:lang="fr">F3 arrêt</choice>
+        <choice xml:lang="de">F3 aus</choice>
       </enumChoice>
       <enumChoice choice="F4 on=Fade">
         <choice>F4 Off</choice>
+        <choice xml:lang="fr">F4 arrêt</choice>
+        <choice xml:lang="de">F4 aus</choice>
       </enumChoice>
       <enumChoice choice="F5 on=Fade">
         <choice>F5 Off</choice>
+        <choice xml:lang="fr">F5 arrêt</choice>
+        <choice xml:lang="de">F5 aus</choice>
       </enumChoice>
       <enumChoice choice="F6 on=Fade">
         <choice>F6 Off</choice>
+        <choice xml:lang="fr">F6 arrêt</choice>
+        <choice xml:lang="de">F6 aus</choice>
       </enumChoice>
       <enumChoice choice="F7 on=Fade">
         <choice>F7 Off</choice>
+        <choice xml:lang="fr">F7 arrêt</choice>
+        <choice xml:lang="de">F7 aus</choice>
       </enumChoice>
       <enumChoice choice="F8 on=Fade">
         <choice>F8 Off</choice>
+        <choice xml:lang="fr">F8 arrêt</choice>
+        <choice xml:lang="de">F8 aus</choice>
       </enumChoice>
       <enumChoice choice="F9 on=Fade">
         <choice>F9 Off</choice>
+        <choice xml:lang="fr">F9 arrêt</choice>
+        <choice xml:lang="de">F9 aus</choice>
       </enumChoice>
       <enumChoice choice="F10 on=Fade">
         <choice>F10 Off</choice>
+        <choice xml:lang="fr">F10 arrêt</choice>
+        <choice xml:lang="de">F10 aus</choice>
       </enumChoice>
       <enumChoice choice="F11 on=Fade">
         <choice>F11 Off</choice>
+        <choice xml:lang="fr">F11 arrêt</choice>
+        <choice xml:lang="de">F11 aus</choice>
       </enumChoice>
       <enumChoice choice="F12 on=Fade">
         <choice>F12 Off</choice>
+        <choice xml:lang="fr">F12 arrêt</choice>
+        <choice xml:lang="de">F12 aus</choice>
       </enumChoice>
       <enumChoice choice="F13 on=Fade">
         <choice>F13 Off</choice>
+        <choice xml:lang="fr">F13 arrêt</choice>
+        <choice xml:lang="de">F13 aus</choice>
       </enumChoice>
       <enumChoice choice="F14 on=Fade">
         <choice>F14 Off</choice>
+        <choice xml:lang="fr">F14 arrêt</choice>
+        <choice xml:lang="de">F14 aus</choice>
       </enumChoice>
       <enumChoice choice="F15 on=Fade">
         <choice>F15 Off</choice>
+        <choice xml:lang="fr">F15 arrêt</choice>
+        <choice xml:lang="de">F15 aus</choice>
       </enumChoice>
       <enumChoice choice="F16 on=Fade">
         <choice>F16 Off</choice>
+        <choice xml:lang="fr">F16 arrêt</choice>
+        <choice xml:lang="de">F16 aus</choice>
       </enumChoice>
       <enumChoice choice="F17 on=Fade">
         <choice>F17 Off</choice>
+        <choice xml:lang="fr">F17 arrêt</choice>
+        <choice xml:lang="de">F17 aus</choice>
       </enumChoice>
       <enumChoice choice="F18 on=Fade">
         <choice>F18 Off</choice>
+        <choice xml:lang="fr">F18 arrêt</choice>
+        <choice xml:lang="de">F18 aus</choice>
       </enumChoice>
       <enumChoice choice="F19 on=Fade">
         <choice>F19 Off</choice>
+        <choice xml:lang="fr">F19 arrêt</choice>
+        <choice xml:lang="de">F19 aus</choice>
       </enumChoice>
     </enumVal>
     <label>Mute key</label>
+    <label xml:lang="fr">Touche Mute</label>
     <label xml:lang="it">Tasto Tacitazione</label>
     <label xml:lang="de">Mute Taste</label>
     <label xml:lang="cs">Klávesa ztlumit</label>
     <tooltip>Defines key to fade in and out driving sounds</tooltip>
+    <tooltip xml:lang="fr">Touche de fondu de tous les bruits</tooltip>
     <tooltip xml:lang="de">Alle Geräusche Aus-/Einblenden</tooltip>
     <tooltip xml:lang="cs">Definuje která klávesa ztlumí běžící zvuk</tooltip>
   </variable>
   <variable item="Fade in/out time" CV="314" default="0" tooltip="Time of fade in 10ths of second. 0 is same as 10 (1sec).">
     <decVal min="0" max="255"/>
     <label>Fade in/out time</label>
+    <label xml:lang="fr">Durée de fondu Mute</label>
     <label xml:lang="it">Tempo dissolvenza In-Out</label>
     <label xml:lang="de">Mute Ein-/Ausblendzeit</label>
     <label xml:lang="cs">Doba ztlumování/zesilování</label>
@@ -1082,6 +1274,7 @@
   <variable item="Minimum interval for random generator Z1" CV="315" default="1" tooltip="Seconds. By default, the compressor is assigned to Z1. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z1</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z1</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z1</label>
     <label xml:lang="de">Zufallsgenerator Z1 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z1</label>
@@ -1089,6 +1282,7 @@
   <variable item="Maximum interval for random generator Z1" CV="316" default="60" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z1. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z1</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z1</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z1</label>
     <label xml:lang="de">Zufallsgenerator Z1 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z1</label>
@@ -1096,6 +1290,7 @@
   <variable item="Playback length for random generator Z1" CV="317" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z1</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z1</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z1</label>
     <label xml:lang="de">Zufallsgenerator Z1 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z1</label>
@@ -1103,6 +1298,7 @@
   <variable item="Minimum interval for random generator Z2" CV="318" default="20" tooltip="Seconds. By default, coal shoveling is assigned to Z2. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z2</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z2</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z2</label>
     <label xml:lang="de">Zufallsgenerator Z2 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z2</label>
@@ -1110,6 +1306,7 @@
   <variable item="Maximum interval for random generator Z2" CV="319" default="80" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z2. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z2</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z2</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z2</label>
     <label xml:lang="de">Zufallsgenerator Z2 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z2</label>
@@ -1117,6 +1314,7 @@
   <variable item="Playback length for random generator Z2" CV="320" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z2</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z2</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z2</label>
     <label xml:lang="de">Zufallsgenerator Z2 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z2</label>
@@ -1124,6 +1322,7 @@
   <variable item="Minimum interval for random generator Z3" CV="321" default="30" tooltip="Seconds. By default, the injector is assigned to Z3. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z3</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z3</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z3</label>
     <label xml:lang="de">Zufallsgenerator Z3 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z3</label>
@@ -1131,6 +1330,7 @@
   <variable item="Maximum interval for random generator Z3" CV="322" default="90" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z3. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z3</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z3</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z3</label>
     <label xml:lang="de">Zufallsgenerator Z3 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z3</label>
@@ -1138,6 +1338,7 @@
   <variable item="Playback length for random generator Z3" CV="323" default="3" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z3</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z3</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z3</label>
     <label xml:lang="de">Zufallsgenerator Z3 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z3</label>
@@ -1145,6 +1346,7 @@
   <variable item="Minimum interval for random generator Z4" CV="324" tooltip="Seconds. There is no default assignment for Z4. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z4</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z4</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z4</label>
     <label xml:lang="de">Zufallsgenerator Z4 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z4</label>
@@ -1152,6 +1354,7 @@
   <variable item="Maximum interval for random generator Z4" CV="325" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z4. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z4</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z4</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z4</label>
     <label xml:lang="de">Zufallsgenerator Z4 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z4</label>
@@ -1159,6 +1362,7 @@
   <variable item="Playback length for random generator Z4" CV="326" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z4</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z4</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z4</label>
     <label xml:lang="de">Zufallsgenerator Z4 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z4</label>
@@ -1166,6 +1370,7 @@
   <variable item="Minimum interval for random generator Z5" CV="327" tooltip="Seconds. There is no default assignment for Z5. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z5</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z5</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z5</label>
     <label xml:lang="de">Zufallsgenerator Z5 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z5</label>
@@ -1173,6 +1378,7 @@
   <variable item="Maximum interval for random generator Z5" CV="328" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z5. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z5</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z5</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z5</label>
     <label xml:lang="de">Zufallsgenerator Z5 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z5</label>
@@ -1180,6 +1386,7 @@
   <variable item="Playback length for random generator Z5" CV="329" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z5</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z5</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z5</label>
     <label xml:lang="de">Zufallsgenerator Z5 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z5</label>
@@ -1187,6 +1394,7 @@
   <variable item="Minimum interval for random generator Z6" CV="330" tooltip="Seconds. There is no default assignment for Z6. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z6</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z6</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z6</label>
     <label xml:lang="de">Zufallsgenerator Z6 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z6</label>
@@ -1194,6 +1402,7 @@
   <variable item="Maximum interval for random generator Z6" CV="331" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z6. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z6</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z6</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z6</label>
     <label xml:lang="de">Zufallsgenerator Z6 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z6</label>
@@ -1201,6 +1410,7 @@
   <variable item="Playback length for random generator Z6" CV="332" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z6</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z6</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z6</label>
     <label xml:lang="de">Zufallsgenerator Z6 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z6</label>
@@ -1208,6 +1418,7 @@
   <variable item="Minimum interval for random generator Z7" CV="333" tooltip="Seconds. There is no default assignment for Z7. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z7</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z7</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z7</label>
     <label xml:lang="de">Zufallsgenerator Z7 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z7</label>
@@ -1215,6 +1426,7 @@
   <variable item="Maximum interval for random generator Z7" CV="334" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z7. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z7</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z7</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z7</label>
     <label xml:lang="de">Zufallsgenerator Z7 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z7</label>
@@ -1222,6 +1434,7 @@
   <variable item="Playback length for random generator Z7" CV="335" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z7</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z7</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z7</label>
     <label xml:lang="de">Zufallsgenerator Z7 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z7</label>
@@ -1229,6 +1442,7 @@
   <variable item="Minimum interval for random generator Z8" CV="336" tooltip="Seconds. There is no default assignment for Z8. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z8</label>
+    <label xml:lang="fr">Intervalle minimal du générateur aléatoire Z8</label>
     <label xml:lang="it">Intervallo minimo per generatore casuale Z8</label>
     <label xml:lang="de">Zufallsgenerator Z8 Mindest-Intervall</label>
     <label xml:lang="cs">Minimální interval pro náhodný generátor Z8</label>
@@ -1236,6 +1450,7 @@
   <variable item="Maximum interval for random generator Z8" CV="337" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z8. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z8</label>
+    <label xml:lang="fr">Intervalle maximal du générateur aléatoire Z8</label>
     <label xml:lang="it">Intervallo massimo per generatore casuale Z8</label>
     <label xml:lang="de">Zufallsgenerator Z8 Höchst-Intervall</label>
     <label xml:lang="cs">Maximální interval pro náhodný generátor Z8</label>
@@ -1243,6 +1458,7 @@
   <variable item="Playback length for random generator Z8" CV="338" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z8</label>
+    <label xml:lang="fr">Durée de lecture du générateur aléatoire Z8</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z8</label>
     <label xml:lang="de">Zufallsgenerator Z8 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z8</label>
@@ -1251,6 +1467,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1341,25 +1558,30 @@
       </enumChoice>
     </enumVal>
     <label>Function key to raise diesel sound step</label>
+    <label xml:lang="fr">Touche augmentant le cran de son diesel</label>
     <label xml:lang="de">Taste zum Anheben der Dieselstufe</label>
   </variable>  
   <variable item="Diesel sound step" CV="340" tooltip="">
     <decVal min="0" max="10"/>
     <label xml:lang="de">Dieselstufe anheben auf:</label>
+    <label xml:lang="fr">Cran de son diesel</label>
   </variable>    
   <variable item="Switch input 1 playback time" CV="341" default="0">
     <decVal min="0" max="255"/>
     <label>Switch input 1 playback time</label>
+    <label xml:lang="fr">Durée de lecture de l'entrée 1</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 1</label>
     <label xml:lang="de">Schalteingang 1 Abspiel-Dauer</label>
     <label xml:lang="cs">Doba přehrání spínací vstup 1</label>
     <tooltip>Seconds. 0 = Play sample back once (as recorded).</tooltip>
+    <tooltip xml:lang="fr">Le son affecté à S1 est joué pendant la durée définie</tooltip>
     <tooltip xml:lang="de">Zugeordneter Sound am S1 wird mit der definierten Dauer abgespielt</tooltip>
     <tooltip xml:lang="cs">Sekundy. 0 = Jednou přehraje zvukový záznam (tak jak je nahrán).</tooltip>
   </variable>
   <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 2 playback time</label>
+    <label xml:lang="fr">Durée de lecture de l'entrée 2</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 2</label>
     <label xml:lang="de">Schalteingang 2 Abspiel-Dauer</label>
     <label xml:lang="cs">Doba přehrání spínací vstup 2</label>
@@ -1367,6 +1589,7 @@
   <variable item="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 3 playback time</label>
+    <label xml:lang="fr">Durée de lecture de l'entrée 3</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 3</label>
     <label xml:lang="de">Schalteingang 3 Abspiel-Dauer</label>
     <label xml:lang="cs">Doba přehrání spínací vstup 3</label>
@@ -1380,6 +1603,7 @@
   <variable item="Run-on time for Diesel and Electric Auxiliaries" CV="344" default="0" tooltip="0 = no run-on, 255 = 25sec">
     <decVal min="0" max="255"/>
     <label>Run-on time</label>
+    <label xml:lang="fr">Durée résiduelle des sons auxiliaires</label>
     <label xml:lang="it">Durata esecuzione suono</label>
     <label xml:lang="de">E-Lok Lüfter Nachlaufzeit</label>
     <label xml:lang="cs">Doba doběhu</label>
@@ -1388,6 +1612,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1451,6 +1676,7 @@
       </enumChoice>
     </enumVal>
     <label>Multi-system engine Quick Select key</label>
+    <label xml:lang="fr">Touche de commutation de Set</label>
     <label xml:lang="it">Tasto selezione veloce motore multiplo</label>
     <label xml:lang="de">Set-Umschalt-Taste</label>
     <label xml:lang="cs">Tlačítko rychlého výběru pro hybridní lokomotivy</label>
@@ -1461,25 +1687,31 @@
     <enumVal>
       <enumChoice choice="ignore">
         <choice>ignore</choice>
+        <choice xml:lang="fr">ignorer</choice>
         <choice xml:lang="de">ignorieren</choice>
         <choice xml:lang="cs">Nevšímat si</choice>
       </enumChoice>
         <enumChoice choice="Stop only">
         <choice>Stop only</choice>
+        <choice xml:lang="fr">Uniquement son coupé</choice>
         <choice xml:lang="de">nur bei Sound AUS</choice>
         <choice xml:lang="cs">Pouze stojící</choice>
       </enumChoice>
         <enumChoice choice="Moving only">
         <choice>Moving only</choice>
+        <choice xml:lang="fr">Aussi avec le son à l'arrêt</choice>
         <choice xml:lang="de">auch bei Standsound</choice>
         <choice xml:lang="cs">Pouze pohybující se</choice>
       </enumChoice>
         <enumChoice choice="Stop and moving">
-        <choice>bei Stand- und Fahrtsound</choice>
+        <choice>Stop and moving</choice>
+        <choice xml:lang="fr">À l'arrêt et en marche</choice>
+        <choice xml:lang="de">bei Stand- und Fahrtsound</choice>
         <choice xml:lang="cs">Stojící a pohybující se</choice>
       </enumChoice>
     </enumVal>
     <label>Condition for switching sound sets</label>
+    <label xml:lang="fr">Conditions de commutation de Set</label>
     <label xml:lang="de">Set-Umschalt-Bedingungen</label>
     <label xml:lang="cs">Podmínka pro přepínání zvukových sad</label>
   </variable>
@@ -1488,6 +1720,7 @@
   <variable item="Delay of Switchgear sound at startup" CV="350" default="0" tooltip="0 = no delay, 255 = 25sec">
     <decVal min="0" max="255"/>
     <label>Delay of Switchgear sound at startup</label>
+    <label xml:lang="fr">Temps de blocage du graduateur</label>
     <label xml:lang="it">Ritardo suono Cambio in partenza</label>
     <label xml:lang="de">Schaltwerk Sperrzeit</label>
     <label xml:lang="cs">Zpoždění zvuku kontroleru po spuštění</label>
@@ -1495,10 +1728,12 @@
   <variable item="Steam chuff frequency at speed step 1" CV="354" default="0">
     <decVal min="0" max="255"/>
     <label>Steam chuff frequency at speed step 1</label>
+    <label xml:lang="fr">Fréquence des coups de vapeur à faible vitesse</label>
     <label xml:lang="it">Frequenza Chuff a velocità step 1</label>
     <label xml:lang="de">Dampfschlaghäufigkeit bei Langsamfahrt</label>
     <label xml:lang="cs">Frekvence výfuků páry na prvním rychlostním stupni</label>
     <tooltip>0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV267</tooltip>
+    <tooltip xml:lang="fr">0 = aucun effet, 1-127 = plus de coups de vapeur, 255-128 = moins, par rapport au CV267</tooltip>
     <tooltip xml:lang="de">0 = kein Effekt, 1-127 = mehr Dampfschläge, 255-128 = weniger Dampfschläge relativ zu CV267</tooltip>
     <tooltip xml:lang="cs">0 = bez efektu, 1 – 127 = více výfuků, 255 – 128 = méně výfuků ve srovnání s CV267</tooltip>
   </variable>
@@ -1507,6 +1742,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1597,95 +1833,125 @@
       </enumChoice>
     </enumVal>
     <label>SpeedLock Feature</label>
+    <label xml:lang="fr">Touche Speedlock</label>
     <label xml:lang="cs">Vlastnost Zámek rychlosti</label>
     <label xml:lang="de">Speedlock-Taste</label>
     <tooltip>If the key is activated, you can control the sound without changing the speed of the locomotive.</tooltip>
+    <tooltip xml:lang="fr">Si la touche est active, le régulateur pilote le son sans changer la vitesse de la locomotive.</tooltip>
     <tooltip xml:lang="de">Wenn Taste aktiv dann kann mit Geschwindigkeitsregler der Sound geregelt werden wobei sich die Geschwindigkeit der Lok nicht ändert.</tooltip>
     <tooltip xml:lang="cs">Pokud je tlačítko aktivní, lze zvuk ovládat regulátorem rychlosti, přičemž rychlost zůstane konstantní.</tooltip>
   </variable>
   <variable item="Thyristor Volume at Higher Speed" CV="357" default="0">
     <decVal min="0" max="255"/>
     <label>Thyristor Volume at Higher Speed</label>
+    <label xml:lang="fr">Thyristor : réduction du volume à partir du cran</label>
     <label xml:lang="it">Volume Tiristore a velocità alta</label>
     <label xml:lang="de">Thyristor: Lautstärke senken ab Fahrstufe</label>
     <tooltip>0 to 255</tooltip>
+    <tooltip xml:lang="fr">0 à 255</tooltip>
+    <tooltip xml:lang="de">0 bis 255</tooltip>
     <label xml:lang="cs">Hlasitost tyristorů při vysoké rychlosti</label>
   </variable>
   <variable item="Thyristor Volume Change Speed Step" CV="358" default="0">
     <decVal min="0" max="255"/>
     <label>Thyristor Volume Change Speed Step</label>
+    <label xml:lang="fr">Thyristor : pente de réduction du volume</label>
     <label xml:lang="it">Volume Tiristore a cambio velocità</label>
     <label xml:lang="de">Thyristor: Lautstärke Reduktion Steilheit</label>
     <tooltip>0 to 255, Internal Speed step from which volume is decreased</tooltip>
+    <tooltip xml:lang="fr">0 à 255, cran de vitesse interne à partir duquel le volume est réduit</tooltip>
+    <tooltip xml:lang="de">0 bis 255, interne Fahrstufe, ab der die Lautstärke reduziert wird</tooltip>
     <label xml:lang="cs">Hlasitost tyristorů při změně rychlostního stupně</label>
     <tooltip xml:lang="cs">0 až 255, Interní rychlostní krok při kterém je hlasitost snížena</tooltip>
   </variable>
   <variable item="Switchgear noise Duration at speed change" CV="359" default="30">
     <decVal min="0" max="255"/>
     <label>Switchgear noise Duration at speed change</label>
+    <label xml:lang="fr">Durée du son de graduateur</label>
     <label xml:lang="it">Durata rumore Cambio al cambio velocità</label>
     <label xml:lang="de">Schaltwerk-Sound-Dauer</label>
     <tooltip>0 to 255(0-25sec)</tooltip>
+    <tooltip xml:lang="fr">0 à 255 (0-25 s)</tooltip>
+    <tooltip xml:lang="de">0 bis 255 (0-25 s)</tooltip>
     <label xml:lang="cs">Doba trvání zvuku kontroleru při změně rychlosti</label>
     <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Switchgear noise Duration after stop" CV="360" default="0">
     <decVal min="0" max="255"/>
     <label>Switchgear noise Duration after stop</label>
+    <label xml:lang="fr">Durée du son de graduateur après arrêt</label>
     <label xml:lang="it">Durata rumore Cambio dopo uno stop</label>
     <label xml:lang="de">Schaltwerk-Sound-Dauer nach Anhalten</label>
     <tooltip>0 to 255(0-25sec)</tooltip>
+    <tooltip xml:lang="fr">0 à 255 (0-25 s)</tooltip>
+    <tooltip xml:lang="de">0 bis 255 (0-25 s)</tooltip>
     <label xml:lang="cs">Doba trvání zvuku kontroleru po zastavení</label>
     <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Switchgear noise minimum Wait before the next play" CV="361" default="0">
     <decVal min="0" max="255"/>
     <label>Switchgear noise minimum Wait before the next play</label>
+    <label xml:lang="fr">Intervalle minimal du son de graduateur</label>
     <label xml:lang="it">Minima attesa rumore Cambio prima di cambiare marcia</label>
     <label xml:lang="de">Schaltwerk-Sound Mindest-Intervall</label>
     <tooltip>0 to 255(0-25sec)</tooltip>
+    <tooltip xml:lang="fr">0 à 255 (0-25 s)</tooltip>
+    <tooltip xml:lang="de">0 bis 255 (0-25 s)</tooltip>
     <label xml:lang="cs">Minimální pauza zvuku kontroleru před dalším přehráním</label>
     <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Thyristor Second Switching Threshold" CV="362" default="0">
     <decVal min="0" max="255"/>
     <label>Thyristor Second Switching Threshold</label>
+    <label xml:lang="fr">Thyristor : seuil du thyristor 2</label>
     <label xml:lang="it">Soglia manovra secondo Tiristore</label>
     <label xml:lang="de">Thyristor: Schwelle für Thyristor 2</label>
     <tooltip>0 to 255</tooltip>
+    <tooltip xml:lang="fr">0 à 255</tooltip>
+    <tooltip xml:lang="de">0 bis 255</tooltip>
     <label xml:lang="cs">Tyristory mez druhé frekvence</label>
     <tooltip xml:lang="cs">0 až 255 (0 – 25 sekund)</tooltip>
   </variable>
   <variable item="Switchgear noise Distribution of speed in Switching stages" CV="363" default="0">
     <decVal min="0" max="255"/>
     <label>Switchgear noise Distribution of speed in Switching stages</label>
+    <label xml:lang="fr">Graduateur : nombre de crans</label>
     <label xml:lang="it">Distribuzione tra le velocità del Rumore Cambio in Manovra</label>
     <label xml:lang="de">Schaltwerk: Anzahl der Stufen</label>
     <tooltip>0 to 255,0 is the default which is equivalent to five stages</tooltip>
+    <tooltip xml:lang="fr">0 à 255 ; 0 est la valeur par défaut, équivalant à cinq crans</tooltip>
+    <tooltip xml:lang="de">0 bis 255; 0 ist der Standardwert und entspricht fünf Stufen</tooltip>
     <label xml:lang="cs">Celkový počet stupňů kontroleru</label>
-    <tooltip>0 až 255, 0 je výchozí hodnota která odpovídá pěti stupňům</tooltip>
+    <tooltip xml:lang="cs">0 až 255, 0 je výchozí hodnota která odpovídá pěti stupňům</tooltip>
   </variable>
   <variable item="Engine Speed Fallback when changing gear" CV="364" default="0">
     <decVal min="0" max="255"/>
     <label>Engine Speed Fallback when changing gear</label>
+    <label xml:lang="fr">Diesel mécanique : régime moteur lors du passage de rapport</label>
     <label xml:lang="it">Diminuzione di Velocità del motore durante il cambio marcia</label>
     <label xml:lang="de">&lt;html&gt;Diesel-Mechanisch:&lt;br&gt;Motor-Drehzahl beim Hochschalten&lt;/html&gt;</label>
     <label xml:lang="cs">Pokles otáček spalovacího motoru při řazení mechanické převodovky nahoru</label>
     <tooltip>0 to 255</tooltip>
+    <tooltip xml:lang="fr">0 à 255</tooltip>
+    <tooltip xml:lang="de">0 bis 255</tooltip>
     <tooltip xml:lang="cs">0 až 255</tooltip>
   </variable>
   <variable item="Maximum speed before upshifting" CV="365" default="0">
     <decVal min="0" max="255"/>
     <label>Maximum speed before upshifting</label>
+    <label xml:lang="fr">Diesel mécanique : régime moteur maximal</label>
     <label xml:lang="it">Velocità massima prima di cambiare marcia</label>
     <label xml:lang="de">&lt;html&gt;Diesel-Mechanisch:&lt;br&gt;Max. Motor-Drehzahl&lt;/html&gt;</label>
     <tooltip>0 to 255</tooltip>
+    <tooltip xml:lang="fr">0 à 255</tooltip>
+    <tooltip xml:lang="de">0 bis 255</tooltip>
     <label xml:lang="cs">Maximální otáčky spalovacího motoru před řazení mechanické převodovky nahoru</label>
     <tooltip xml:lang="cs">0 až 255</tooltip>
   </variable>
  <variable item="Maximum volume of Turbocharger" CV="366" default="48">
     <decVal min="0" max="255"/>
     <label>Maximum volume of Turbocharger</label>
+    <label xml:lang="fr">Volume du turbocompresseur</label>
    <label xml:lang="it">Volume Max. Turbocompressore</label>
    <label xml:lang="de">Turbolader: Lautstärke</label>
    <label xml:lang="cs">Maximální hlasitost turbodmychadla</label>
@@ -1693,6 +1959,7 @@
   <variable item="Turbocharger dependence on speed" CV="367" default="150" tooltip="Frequency is dependant on speed">
     <decVal min="0" max="255"/>
     <label>Turbocharger dependence on speed</label>
+    <label xml:lang="fr">Turbocompresseur : dépendance à la vitesse</label>
     <label xml:lang="it">Turbocompressore in funzione della Velocità</label>
     <label xml:lang="de">Turbolader: Frequenz zu Geschwindigkeit</label>
     <label xml:lang="cs">Závislost otáček turbodmychadla na rychlosti</label>
@@ -1700,6 +1967,7 @@
   <variable item="Turbocharger dependence on acceleration" CV="368" default="100" tooltip="Frequency is dependant on the difference between selected speed step and the actual speed">
     <decVal min="0" max="255"/>
     <label>Turbocharger dependence on acceleration</label>
+    <label xml:lang="fr">Turbocompresseur : dépendance à l'accélération</label>
     <label xml:lang="it">Turbocompressore in funzione della accellerazione</label>
     <label xml:lang="de">Turbolader: Frequenz zu Beschleunigen/Bremsen</label>
     <label xml:lang="cs">Závislost otáček turbodmychadla na zrychlení</label>
@@ -1707,6 +1975,7 @@
   <variable item="Minimum load on the Turbocharger" CV="369" default="30" tooltip="Threshold of audible sound of the turbocharger, the load is determined by CV367 and 368">
     <decVal min="0" max="255"/>
     <label>Minimum load on the Turbocharger</label>
+    <label xml:lang="fr">Seuil d'audibilité du turbocompresseur</label>
     <label xml:lang="it">Carico Min. Turbocompressore</label>
     <label xml:lang="de">Turbolader: Hörschwelle</label>
     <label xml:lang="cs">Minimální zatížení pro slyšitelnost turbodmychadla</label>
@@ -1714,6 +1983,7 @@
   <variable item="Increase in frequency of the Turbocharger" CV="370" default="25" tooltip="The rate of change of an increase in the frequency of the turbocharger">
     <decVal min="0" max="255"/>
     <label>Increase in frequency of the Turbocharger</label>
+    <label xml:lang="fr">Montée en fréquence du turbocompresseur</label>
     <label xml:lang="it">Incremento frequenza Turbocompressore</label>
     <label xml:lang="de">Turbolader: Steigung der Frequenz erhöhen</label>
     <label xml:lang="cs">Nárůst frekvence turbodmychadla</label>
@@ -1721,6 +1991,7 @@
   <variable item="Decrease in frequency of the Turbocharger" CV="371" default="15" tooltip="The rate of change of a decrease in the frequency of the turbocharger">
     <decVal min="0" max="255"/>
     <label>Decrease in frequency of the Turbocharger</label>
+    <label xml:lang="fr">Descente en fréquence du turbocompresseur</label>
     <label xml:lang="it">Decremento frequenza Turbocompressore</label>
     <label xml:lang="de">Turbolader: Steigung der Frequenz absenken</label>
     <label xml:lang="cs">Pokles frekvence turbodmychadla</label>
@@ -1728,11 +1999,13 @@
   <variable item="Volume dependent on Speed" CV="372" default="0" tooltip="CV372">
     <decVal />
     <label xml:lang="de">E-Motor: Lautstärke Beschleunigen</label>
+    <label xml:lang="fr">Volume selon la vitesse</label>
     <label xml:lang="cs">Závislost hlasitosti na rychlosti</label>
   </variable>
   <variable item="Volume dependent on Braking" CV="373" default="0" tooltip="CV373">
     <decVal />
     <label xml:lang="de">E-Motor: Lautstärke Bremsen</label>
+    <label xml:lang="fr">Volume selon le freinage</label>
     <label xml:lang="cs">Závislost hlasitosti na brždění</label>
   </variable>
 
@@ -1742,6 +2015,7 @@
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
+        <choice xml:lang="fr">Off</choice>
         <choice xml:lang="de">Aus</choice>
         <choice xml:lang="cs">Vypnuto</choice>
       </enumChoice>
@@ -1831,6 +2105,7 @@
       </enumChoice>
     </enumVal>
     <label>Function Key for Coasting</label>
+    <label xml:lang="fr">Touche de roue libre</label>
     <label xml:lang="it">Tasto Funzione per cambio in Folle</label>
     <label xml:lang="de">Coasting Taste</label>
     <label xml:lang="cs">Funkční klávesa pro výběh</label>
@@ -1872,6 +2147,7 @@
       </enumChoice>
     </enumVal>
     <label>Sound Slot during Coasting</label>
+    <label xml:lang="fr">Cran sonore en roue libre</label>
     <label xml:lang="it">Slot Suono per cambio in Folle</label>
     <label xml:lang="de">Coasting Stufe</label>
     <label xml:lang="cs">Zvuk převodovky během výběhu</label>
@@ -1882,11 +2158,13 @@
   <variable item="Percentage Reduction of Driving Sound Volume" CV="376" default="0" tooltip="CV376">
     <decVal />
     <label xml:lang="de">Fahrsound Lautstärke</label>
+    <label xml:lang="fr">Réduction du volume du son de roulement (%)</label>
     <label xml:lang="cs">Hlasitost zvuku při jízdě</label>
   </variable>
   <variable item="Likeihood of switchgear sparks" CV="378" default="0" tooltip="CV378">
     <decVal />
     <label>Likeihood of switchgear sparks (accelerating)</label>
+    <label xml:lang="fr">Éclats lumineux à l'accélération</label>
     <label xml:lang="de">Lichtblitzen Beschleunigen</label>
     <label xml:lang="cs">Pravděpodobnost jiskření kontroleru</label>
   </variable>
@@ -1894,11 +2172,13 @@
     <decVal />
     <label xml:lang="cs">Pravděpodobnost jiskření kontroleru (zpomalování)</label>
     <label xml:lang="de">Lichtblitzen Verzögerung</label>
+    <label xml:lang="fr">Éclats lumineux à la décélération</label>
   </variable>  
   <variable item="Electric brake function key" CV="380" default="0" tooltip="CV380">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -1989,87 +2269,105 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Elektrische Bremse Taste</label>
+    <label xml:lang="fr">Touche de frein électrique</label>
     <label xml:lang="cs">Funkční klávesa elektrodynamická brzda</label>
   </variable>
   <variable item="Electric brake minimum speed" CV="381" default="0" tooltip="CV381">
     <decVal />
     <label xml:lang="de">Elektrische Bremse min. Fahrstufe</label>
+    <label xml:lang="fr">Frein électrique : cran de vitesse minimal</label>
     <label xml:lang="cs">Elektrdynamická brzda minimální rychlost</label>
   </variable>
   <variable item="Electric brake maximum speed" CV="382" default="0" tooltip="CV382">
     <decVal />
     <label xml:lang="de">Elektrische Bremse max. Fahrstufe</label>
+    <label xml:lang="fr">Frein électrique : cran de vitesse maximal</label>
     <label xml:lang="cs">Elektrdynamická brzda maximální rychlost</label>
   </variable>
   <variable item="Electric brake pitch" CV="383" default="0" tooltip="CV383">
     <decVal />
     <label xml:lang="de">&lt;html&gt;Elektrische Bremse Abhängigkeit&lt;br&gt;Tonhöhe von Fahrgeschwindigkeit&lt;/html&gt;</label>
+    <label xml:lang="fr">Frein électrique : hauteur du son selon la vitesse</label>
     <label xml:lang="cs">Elektrodynamická brzda výška tónu</label>
   </variable>
   <variable item="Electric brake deceleration threshold" CV="384" default="0" tooltip="CV384">
     <decVal />
     <label xml:lang="de">Elektrische Bremse Verzögerungsschwelle</label>
+    <label xml:lang="fr">Frein électrique : seuil de décélération</label>
     <label xml:lang="cs">Elektrodynamická brzda mez zpomalení</label>
   </variable>
   <variable item="Electric brake downhill" CV="385" default="0" tooltip="CV385">
     <decVal />
     <label xml:lang="de">Elektrische Bremse Gefällefahrt</label>
+    <label xml:lang="fr">Frein électrique : marche en descente</label>
     <label xml:lang="cs">Elektrodynamická brzda mez spádu</label>
   </variable>
   <variable item="Electric brake loop time interval" mask="XXXXXVVV" CV="386" default="0" tooltip="CV386, values 0-7">
     <decVal />
     <label xml:lang="de">Elektrische Bremse Loop 1</label>
+    <label xml:lang="fr">Frein électrique : boucle 1</label>
     <tooltip xml:lang="de">Laufzeit-Verlängerung (0-7 = 0-7s)</tooltip>
+    <tooltip xml:lang="fr">Prolongation de la durée (0-7 = 0-7 s)</tooltip>
     <label xml:lang="cs">Elektrodynamická brzda časový interval smyčky</label>
   </variable>
   <variable item="Electric brake loop cutoff" mask="XXXXVXXX" CV="386" default="0" tooltip="CV386 bit 3">
     <enumVal>
         <enumChoice choice="0">
         <choice>Fade out</choice>
+        <choice xml:lang="fr">Fondu de sortie</choice>
         <choice xml:lang="de">ausblenden</choice>
         <choice xml:lang="cs">Odeznít</choice>
       </enumChoice>
       <enumChoice choice="1">
         <choice>Cut off</choice>
+        <choice xml:lang="fr">Couper</choice>
         <choice xml:lang="de">ausschalten</choice>
         <choice xml:lang="cs">Vypnout</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Elektrische Bremse Loop 2</label>
+    <label xml:lang="fr">Frein électrique : boucle 2</label>
     <tooltip xml:lang="de">Am Ende Sound Loop beenden und Sample bis Ende abspielen statt Sound ausblenden</tooltip>
+    <tooltip xml:lang="fr">À la fin, arrêter la boucle et jouer l'échantillon jusqu'au bout au lieu d'un fondu de sortie</tooltip>
     <label xml:lang="cs">Elektrodynamická brzda ukončení smyčky</label>
   </variable>
   
   <variable item="Influence of Acceleration on Diesel Sound Steps" CV="387" default="0" tooltip="CV387">
     <decVal />
     <label xml:lang="de">Beschleunigen Diesel-Sound</label>
+    <label xml:lang="fr">Influence de l'accélération sur les crans de son diesel</label>
     <label xml:lang="cs">Vliv zrychlení na zvuk spalovacího motoru</label>
   </variable>
   <variable item="Influence of Deceleration on Diesel Sound Steps" CV="388" default="0" tooltip="CV388">
     <decVal />
     <label xml:lang="de">Bremsen Diesel-Sound</label>
+    <label xml:lang="fr">Influence de la décélération sur les crans de son diesel</label>
     <label xml:lang="cs">Vliv zpomalení na zvuk spalovacího motoru</label>
   </variable>
   <variable item="Limitation of Acceleration on Diesel Sound Steps" CV="389" default="0" tooltip="CV389">
     <decVal />
     <label xml:lang="de">Diesel Stufe Beschleunigungslimit</label>
+    <label xml:lang="fr">Limite d'accélération des crans de son diesel</label>
     <label xml:lang="cs">Omezení zrychlení na zvuk spalovacího motoru</label>
   </variable>
   <variable item="Driving idle sound speed step threshold" CV="391" default="0" tooltip="CV391">
     <decVal />
     <label xml:lang="de">Gescchwindigkeitsschwelle anheben</label>
+    <label xml:lang="fr">Seuil de vitesse du son de marche à vide</label>
     <label xml:lang="cs">Mez rychlostního kroku pro zvuk volnoběhu</label>
   </variable>
 
   <variable item="Maximum Volume" CV="395" default="0">
     <decVal />
     <label xml:lang="de">Maximale Lautstärke</label>
+    <label xml:lang="fr">Volume maximal</label>
     <label xml:lang="cs">Maximální hlasitost</label>
   </variable>
    <variable item="Function Key to Reduce Volume"  CV="396"  default="0" tooltip="CV396">
      <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -2160,12 +2458,14 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Leiser Taste</label>
+    <label xml:lang="fr">Touche de réduction du volume</label>
     <label xml:lang="cs">Funkční klávesa pro zvýšení hlasitosti</label>
   </variable>
    <variable item="Function Key to Increase Volume"  CV="397"  default="0"  tooltip="CV397">
      <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -2256,14 +2556,17 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Lauter Taste</label>
+    <label xml:lang="fr">Touche d'augmentation du volume</label>
     <label xml:lang="cs">Funkční klávesa pro snížení hlasitosti</label>
   </variable>
   
   <variable item="Automatic Coasting Speed Steps"  CV="398"  default="0">
     <decVal />
     <label xml:lang="de">Automatische Coasting-Wirkung</label>
+    <label xml:lang="fr">Crans de vitesse pour la roue libre automatique</label>
     <label xml:lang="cs">Rychlostní kroky pro automatický výběh</label>
     <tooltip>Number of steps speed has to be reduced within 0.5 seconds for coasting effect</tooltip>
+    <tooltip xml:lang="fr">Nombre de crans de vitesse à perdre en 0,5 s environ pour déclencher la roue libre</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Anzahl Fahrstufen (von 255) einstellen um die innerhalb von ca. 0,5s gebremst&lt;br&gt;werden muss damit der Diesel- Motor auf "Idle/Stand" abgesenkt wird.&lt;/html&gt;</tooltip>
     <tooltip xml:lang="cs">Počet rychlostích kroků snížených za 0,5 sekundy pro automatické spuštění výběhu</tooltip>
   </variable>

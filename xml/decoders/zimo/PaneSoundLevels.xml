@@ -35,6 +35,7 @@
       </label>
       <label>
         <text>Function Key Controlled Sounds </text>
+        <text xml:lang="fr">Sons contrôlés par touche de fonction </text>
         <text xml:lang="it">Suoni controllati da Tasti Funzione</text>
         <text xml:lang="de">       Funktions-Sounds</text>
         <text xml:lang="cs">Funkční klávesy ovládání zvuků</text>
@@ -356,6 +357,7 @@
       </label>
       <label>
         <text>Automatic Sound Levels </text>
+        <text xml:lang="fr">Sons automatiques </text>
         <text xml:lang="it">Livello Automatico Suoni</text>
         <text xml:lang="de">       Ablauf-Sounds</text>
         <text xml:lang="cs">Automatické úrovně zvuků</text>
@@ -657,6 +659,7 @@
     <column>
       <label>
         <text>Sound Level Control by Function Keys</text>
+        <text xml:lang="fr">Contrôle du volume par touche de fonction</text>
         <text xml:lang="de">Lautstärkekontrolle durch F-Taste</text>
         <text xml:lang="cs">Úrovně zvuků řízené funkčními klávesami</text>
       </label>
@@ -675,6 +678,7 @@
       </label>
       <label>
         <text>Switch triggered sounds </text>
+        <text xml:lang="fr">Sons sur entrée </text>
         <text xml:lang="it">Livello Suoni regolato da Ingresso</text>
         <text xml:lang="de">       Schalteingangs-Sounds</text>
         <text xml:lang="cs">Spínač spouští zvuk</text>
@@ -724,6 +728,7 @@
       </label>
       <label>
         <text>Randomly generated sounds </text>
+        <text xml:lang="fr">Sons aléatoires </text>
         <text xml:lang="it">Suoni Casuali</text>
         <text xml:lang="de">       Zufalls-Sounds</text>
         <text xml:lang="cs">Náhodně generované zvuky</text>
