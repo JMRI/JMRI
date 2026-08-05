@@ -11,16 +11,22 @@
     <enumVal>
       <enumChoice choice="Speed dependent">
         <choice>Speed dependent</choice>
+        <choice xml:lang="fr">Selon la vitesse</choice>
+        <choice xml:lang="de">Sollwertabhängig</choice>
         <choice xml:lang="it">Dipende da velocità</choice>
         <choice xml:lang="cs">V závislosti na rychlosti</choice>
       </enumChoice>
       <enumChoice choice="Load dependent">
         <choice>Load dependent</choice>
+        <choice xml:lang="fr">Selon la charge</choice>
+        <choice xml:lang="de">Lastabhängig</choice>
         <choice xml:lang="it">Dipende dal carico</choice>
         <choice xml:lang="cs">V závislosti na zátěži</choice>
       </enumChoice>
     </enumVal>
     <label>Smoke Characteristic</label>
+    <label xml:lang="fr">Génération de fumée</label>
+    <label xml:lang="de">Raucherzeugung</label>
     <label xml:lang="it">Specifiche Fumo</label>
     <label xml:lang="cs">Charakteristiky kouře</label>
   </variable>
@@ -44,6 +50,8 @@
   <variable item="Loco Number Recognition" CV="112" mask="XXXXXVXX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Loco Number Recognition</label>
+    <label xml:lang="fr">Reconnaissance du numéro de train</label>
+    <label xml:lang="de">Zugnummernimpulse</label>
     <label xml:lang="it">Riconoscimento Numero Loco</label>
     <label xml:lang="cs">Rozpoznání čísla lokomotivy</label>
   </variable>
@@ -63,6 +71,8 @@
   <variable item="Pulse Chain Recognition (LGB)" CV="112" mask="XXXVXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Pulse Chain Recognition (LGB)</label>
+    <label xml:lang="fr">Détection de chaine d'impulsions (LGB)</label>
+    <label xml:lang="de">F1-Pulskettenempfang (LGB)</label>
     <label xml:lang="it">Riconoscimento treno Impulsi (LGB)</label>
     <label xml:lang="cs">Rozpoznání řetězců impulsů (LGB)</label>
   </variable>
@@ -170,12 +180,16 @@
   <variable item="Uncoupler" CV="115" default="0">
     <decVal max="99"/>
     <label>Uncoupler</label>
+    <label xml:lang="fr">Attelage</label>
+    <label xml:lang="de">Kupplung</label>
     <label xml:lang="it">Sganciatore</label>
     <label xml:lang="cs">Rozpojovač</label>
   </variable>
   <variable item="Auto Uncouple" CV="116" default="0">
     <decVal max="199"/>
     <label>Auto Uncouple</label>
+    <label xml:lang="fr">Dételage automatique</label>
+    <label xml:lang="de">Kupplungs-Walzer</label>
     <label xml:lang="it">Sgancio Automatico</label>
     <label xml:lang="cs">Automatický rozpojovač</label>
   </variable>
@@ -397,26 +411,36 @@
     <enumVal>
       <enumChoice choice="no shunting">
         <choice>no shunting</choice>
+        <choice xml:lang="fr">aucun effet</choice>
+        <choice xml:lang="de">kein Einfluss</choice>
         <choice xml:lang="it">nessuna manovra</choice>
         <choice xml:lang="cs">bez posunu</choice>
       </enumChoice>
       <enumChoice choice="no exponential and adaptive influence">
         <choice>no exponential and adaptive influence</choice>
+        <choice xml:lang="fr">désactive l'exponentiel et l'adaptatif</choice>
+        <choice xml:lang="de">Taste deaktiviert Exponential + Adaptiv</choice>
         <choice xml:lang="it">nessuna influenza esponenziale / adattabile</choice>
         <choice xml:lang="cs">ne exponenciální a přizpůsobený vliv</choice>
       </enumChoice>
       <enumChoice choice="1/4 acceleration/deceleration">
         <choice>1/4 acceleration/deceleration</choice>
+        <choice xml:lang="fr">1/4 de l'accélération/décélération</choice>
+        <choice xml:lang="de">1/4 Beschleunigungs-/Bremszeit</choice>
         <choice xml:lang="it">1/4 Accell. / Decell.</choice>
         <choice xml:lang="cs">1/4 zrychlení/zpomalení</choice>
       </enumChoice>
       <enumChoice choice="no acceleration/deceleration">
         <choice>no acceleration/deceleration</choice>
+        <choice xml:lang="fr">désactive l'accélération/décélération</choice>
+        <choice xml:lang="de">deaktiviert Beschleun./Bremszeit</choice>
         <choice xml:lang="it">nessuna Accell. / Decell.</choice>
         <choice xml:lang="cs">bez zrychlení/zpomalení</choice>
       </enumChoice>
     </enumVal>
     <label>Shunting</label>
+    <label xml:lang="fr">Manoeuvre</label>
+    <label xml:lang="de">Rangieren</label>
     <label xml:lang="it">Manovra</label>
     <label xml:lang="cs">Posun</label>
   </variable>
@@ -424,6 +448,8 @@
     <enumVal>
       <enumChoice choice="not set">
         <choice>not set</choice>
+        <choice xml:lang="fr">aucune</choice>
+        <choice xml:lang="de">keine</choice>
         <choice xml:lang="it">nessuno</choice>
         <choice xml:lang="cs">nenastaveno</choice>
       </enumChoice>
@@ -435,6 +461,8 @@
       </enumChoice>
     </enumVal>
     <label>Half Speed Key</label>
+    <label xml:lang="fr">Vitesse de manoeuvre</label>
+    <label xml:lang="de">Rangiergeschwindigkeit</label>
     <label xml:lang="it">Tasto mezza velocità</label>
     <label xml:lang="cs">Klávesa poloviční rychlosti</label>
   </variable>
@@ -451,6 +479,8 @@
       </enumChoice>
     </enumVal>
     <label>Shunt Function Key</label>
+    <label xml:lang="fr">Touche de manoeuvre</label>
+    <label xml:lang="de">Rangierfunktionstaste</label>
     <label xml:lang="it">Tasto funzione Manovra</label>
     <label xml:lang="cs">Funkční klávesa posun</label>
   </variable>
@@ -648,7 +678,9 @@
     <label xml:lang="it">Comportamento uscita Funzione 6</label>
     <label xml:lang="cs">Chování funkčního výstupu 6</label>
   </variable>
-  <variable item="Function Output 4 as virtual Cam or Smoke Fan" CV="133" default="0" minOut="5">
+  <!-- item renamed to match the newer firmware files so the pane can find it by
+       item rather than relying on a label match; the label itself is unchanged -->
+  <variable item="Function Output as virtual Cam or Smoke Fan" CV="133" default="0" minOut="5">
     <enumVal>
       <enumChoice choice="Normal Output">
         <choice>Normal Output</choice>
@@ -674,6 +706,8 @@
   <variable item="Asymmetrical DCC Threshold" CV="134" default="106">
     <decVal max="214"/>
     <label>Asymmetrical DCC Threshold</label>
+    <label xml:lang="fr">Seuil d'asymétrie DCC</label>
+    <label xml:lang="de">Asymmetrie-Schwelle</label>
     <label xml:lang="it">Soglia DCC asimmetrica</label>
     <label xml:lang="cs">Práh asymetrického DCC</label>
   </variable>
@@ -681,6 +715,8 @@
     <enumVal>
       <enumChoice choice="Not Active">
         <choice>Not Active</choice>
+        <choice xml:lang="fr">Non actif</choice>
+        <choice xml:lang="de">nicht aktiv</choice>
         <choice xml:lang="it">Non attiva</choice>
         <choice xml:lang="cs">Neaktivní</choice>
       </enumChoice>
@@ -762,6 +798,7 @@
       </enumChoice>
     </enumVal>
     <label>km/h speed regulation control and range</label>
+    <label xml:lang="fr">Régulation km/h : activation et plage</label>
     <label xml:lang="it">Regolazione velocità e valori km/h</label>
     <label xml:lang="cs">Regulace rychlosti km/h, aktivace, řízení a meze</label>
   </variable>
@@ -774,18 +811,24 @@
   <variable item="Smoke PWM at standstill" CV="137">
     <decVal/>
     <label>Smoke PWM at standstill</label>
+    <label xml:lang="fr">Fumée à l'arrêt</label>
+    <label xml:lang="de">Rauch im Stillstand</label>
     <label xml:lang="it">Impulsi Fumo da fermo</label>
     <label xml:lang="cs">PWM kouře v klidu</label>
   </variable>
   <variable item="Smoke PWM at minimum speed" CV="138">
     <decVal/>
     <label>Smoke PWM at minimum speed</label>
+    <label xml:lang="fr">Fumée en marche</label>
+    <label xml:lang="de">Rauch bei Fahrt</label>
     <label xml:lang="it">Impulsi Fumo velocità minima</label>
     <label xml:lang="cs">PWM kouře při minimální rychlosti</label>
   </variable>
   <variable item="Smoke PWM at max speed" CV="139">
     <decVal/>
     <label>Smoke PWM at max speed</label>
+    <label xml:lang="fr">Fumée à l'accélération</label>
+    <label xml:lang="de">Rauch bei Beschleunigung</label>
     <label xml:lang="it">Impulsi Fumo velocità massima</label>
     <label xml:lang="cs">PWM kouře při maximální rychlosti</label>
   </variable>
@@ -793,71 +836,97 @@
     <enumVal>
       <enumChoice choice="not active">
         <choice>not active</choice>
+        <choice xml:lang="fr">non actif</choice>
+        <choice xml:lang="de">nicht aktiv</choice>
         <choice xml:lang="it">non attivo</choice>
         <choice xml:lang="cs">Neaktivní</choice>
       </enumChoice>
       <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
         <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
+        <choice xml:lang="fr">Arrêt automatique avec HLU ou ABC</choice>
+        <choice xml:lang="de">automatisches Anhalten mit ZIMO HLU oder ABC</choice>
         <choice xml:lang="it">Stop Automatico, Controllato da segnale o DCC asimmetrica</choice>
         <choice xml:lang="cs">Automatické zastavení, přizpůsobení řízení rychlosti návěstidlům nebo asymetrické DCC</choice>
       </enumChoice>
       <enumChoice choice="Manual stops using cab">
         <choice>Manual stops using cab</choice>
+        <choice xml:lang="fr">Arrêt manuel</choice>
+        <choice xml:lang="de">manuelles Anhalten</choice>
         <choice xml:lang="it">Stop manuale con palmare</choice>
         <choice xml:lang="cs">Ruční zastavení z ovladače</choice>
       </enumChoice>
       <enumChoice choice="Automatic and Manual stops">
         <choice>Automatic and Manual stops</choice>
+        <choice xml:lang="fr">Arrêt automatique et manuel</choice>
+        <choice xml:lang="de">automatisches und manuelles Anhalten</choice>
         <choice xml:lang="it">Stop manuale e Automatico</choice>
         <choice xml:lang="cs">Automatické a ruční zastavení</choice>
       </enumChoice>
       <enumChoice choice="Automatic stops with immediate braking" value="11">
         <choice>Automatic stops with immediate braking</choice>
+        <choice xml:lang="fr">Arrêt automatique immédiat avec HLU ou ABC</choice>
+        <choice xml:lang="de">sofort automatisches Anhalten mit ZIMO HLU oder ABC</choice>
         <choice xml:lang="it">Stop automatico con freno di emergenza</choice>
         <choice xml:lang="cs">Automatické zastavení s okamžitým bržděním</choice>
       </enumChoice>
       <enumChoice choice="Manual stops with immediate braking">
         <choice>Manual stops with immediate braking</choice>
+        <choice xml:lang="fr">Arrêt manuel avec freinage immédiat</choice>
+        <choice xml:lang="de">sofort manuelles Anhalten</choice>
         <choice xml:lang="it">Stop manuale con freno di emergenza</choice>
         <choice xml:lang="cs">Ruční zastavení s okamžitým bržděním</choice>
       </enumChoice>
       <enumChoice choice="Automatic and Manual stops with immediate braking">
         <choice>Automatic and Manual stops with immediate braking</choice>
+        <choice xml:lang="fr">Arrêt automatique et manuel avec freinage immédiat</choice>
+        <choice xml:lang="de">sofort automatisches und manuelles Anhalten</choice>
         <choice xml:lang="it">Stop automatico e manuale con freno di emergenza</choice>
         <choice xml:lang="cs">Automatické a ruční zastavení s okamžitým bržděním</choice>
       </enumChoice>
     </enumVal>
     <label>Distance controlled stopping</label>
+    <label xml:lang="fr">Arrêt à distance contrôlée</label>
+    <label xml:lang="de">Distanzgesteuerter Halt</label>
     <label xml:lang="it">Distanza di Fermata</label>
     <label xml:lang="cs">Zastavení řízené vzdáleností</label>
   </variable>
   <variable item="Distance controlled stopping Distance" CV="141" default="0">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping Distance</label>
+    <label xml:lang="fr">Arrêt à distance contrôlée - distance constante</label>
+    <label xml:lang="de">Distanzgesteuerter Halt - konstanter Bremsweg</label>
     <label xml:lang="it">Controllo Distanza di Fermata</label>
     <label xml:lang="cs">Konstantní brzdná dráha</label>
   </variable>
   <variable item="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (ABC)</label>
+    <label xml:lang="fr">Arrêt à distance contrôlée - compensation grande vitesse (ABC)</label>
+    <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (ABC)</label>
     <label xml:lang="it">Correzione velocità Distanza di Fermata (ABC)</label>
     <label xml:lang="cs">Rychlostní korekce pro zastavení řízené vzdáleností (ABC)</label>
   </variable>
   <variable item="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (HLU)</label>
+    <label xml:lang="fr">Arrêt à distance contrôlée - compensation grande vitesse (HLU)</label>
+    <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (HLU)</label>
     <label xml:lang="it">Correzione velocità Distanza di Fermata (HLU)</label>
     <label xml:lang="cs">Rychlostní korekce pro zastavení řízené vzdáleností (HLU)</label>
   </variable>
   <variable item="Service Mode Programming Locked" CV="144" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
     <label>Service Mode Programming Locked</label>
+    <label xml:lang="fr">Verrouillage « Service mode » : écriture de CV</label>
+    <label xml:lang="de">„Service mode“-Sperre CV schreiben</label>
     <label xml:lang="it">Blocco programmazione in modo Servizio</label>
     <label xml:lang="cs">Zámek programování v servisním režimu</label>
   </variable>
   <variable item="Software Update Locked" CV="144" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
     <label>Software Update Locked</label>
+    <label xml:lang="fr">Mise à jour verrouillée</label>
+    <label xml:lang="de">Updatesperre</label>
     <label xml:lang="it">Blocco aggiornamento Software</label>
     <label xml:lang="cs">Zámek softwarových aktualizací</label>
   </variable>

@@ -220,7 +220,7 @@
       <separator/>
       <column> <label> <text>  </text> </label> </column>
       <column>
-        <display item="BEMF Intensity"/>    <!--  CV58 --> 
+        <display item="Dither option"/>    <!--  CV58, labelled "BEMF Intensity" -->
       </column>
       <column> <label> <text>  </text> </label> </column>
       <separator/>

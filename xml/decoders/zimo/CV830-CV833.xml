@@ -10,24 +10,28 @@
   <variable CV="830" item="stopping distance fwd high" exclude="199,211,218">
     <decVal/>
     <label>stopping distance forward high byte</label>
+    <label xml:lang="fr">distance de freinage avant, octet de poids fort</label>
     <label xml:lang="de">Bremsweg Vorwärts High</label>
     <label xml:lang="cs">Brzdná dráha vpřed horní byte</label>
   </variable>
   <variable CV="831" item="stopping distance fwd low" exclude="199,211,218">
     <decVal/>
     <label>stopping distance forward low byte</label>
+    <label xml:lang="fr">distance de freinage avant, octet de poids faible</label>
     <label xml:lang="de">Bremsweg Vorwärts Low</label>
     <label xml:lang="cs">Brzdná dráha vpřed dolní byte</label>
   </variable>
   <variable CV="832" item="stopping distance rev high" exclude="199,211,218">
     <decVal/>
     <label>stopping distance reverse high byte</label>
+    <label xml:lang="fr">distance de freinage arrière, octet de poids fort</label>
     <label xml:lang="de">Bremsweg Rückwärts High</label>
     <label xml:lang="cs">Brzdná dráha vzad horní byte</label>
   </variable>
   <variable CV="833" item="stopping distance rev low" exclude="199,211,218">
     <decVal/>
     <label>stopping distance reverse low byte</label>
+    <label xml:lang="fr">distance de freinage arrière, octet de poids faible</label>
     <label xml:lang="de">Bremsweg Rückwärts Low</label>
     <label xml:lang="cs">Brzdná dráha vzad dolní byte</label>
   </variable>

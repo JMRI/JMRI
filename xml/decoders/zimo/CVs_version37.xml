@@ -152,6 +152,7 @@
   <variable CV="111" item="Emergency Delay" default="0">
     <decVal/>
     <label>Emergency Delay</label>
+    <label xml:lang="fr">Temporisation d'arrêt d'urgence</label>
     <label xml:lang="de">Emergency Verzögerungszeit</label>
     <label xml:lang="cs">Nouzové zpoždění</label>
     <tooltip>This CV is for Emergency Stopp instead CV #4</tooltip>
@@ -163,6 +164,7 @@
      <enumVal>
       <enumChoice choice="0.625 (default)">
         <choice>0.625 (default)</choice>
+        <choice xml:lang="fr">0,625 (par défaut)</choice>
         <choice xml:lang="de">0,625 (Standard)</choice>
         <choice xml:lang="cs">0,625 (Výchozí)</choice>
       </enumChoice>
@@ -203,6 +205,7 @@
       </enumChoice>
     </enumVal>
     <label>Half Speed</label>
+    <label xml:lang="fr">Demi-vitesse</label>
     <label xml:lang="de">Halbgeschwindigkeit</label>
     <label xml:lang="cs">Poloviční rychlost</label>
   </variable>

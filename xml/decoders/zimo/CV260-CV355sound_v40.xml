@@ -1868,6 +1868,7 @@
   <variable item="Second exhaust Fan" CV="348" default="0" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Second exhaust Fan and -steam</label>
+    <label xml:lang="fr">2e ventilateur de fumée et chauffage</label>
     <label xml:lang="de">2. Rauch-Ventilator und -Heizung</label>
     <label xml:lang="cs">Druhý ventilátor výfuku a -páry</label>
     <tooltip>CV348 bit 3</tooltip>
@@ -1898,6 +1899,7 @@
   <variable item="Automatic Shut-down of Smoke Generator" CV="353" default="0">
     <decVal min="0" max="252"/>
     <label>Automatic Shut-down of Smoke Generator</label>
+    <label xml:lang="fr">Temps d'extinction automatique du générateur de fumée</label>
     <label xml:lang="it">Spegnimento automatico generatore Fumo</label>
     <label xml:lang="de">Rauchgenerator Laufzeit</label>
     <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
@@ -1921,6 +1923,7 @@
   <variable item="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>
     <label>Fan Speed at Standstill</label>
+    <label xml:lang="fr">Ventilateur de fumée : régime à l'arrêt</label>
     <label xml:lang="it">Velocità Ventole da fermo</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei Stillstand</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při stání</label>

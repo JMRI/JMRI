@@ -117,16 +117,19 @@
   <variable CV="353" item="Automatic Shut-down of Smoke Generator" default="0">
     <decVal min="0" max="252"/>
     <label>Automatic Shut-down of Smoke Generator</label>
+    <label xml:lang="fr">Temps d'extinction automatique du générateur de fumée</label>
     <label xml:lang="it">Spegnimento automatico generatore Fumo</label>
     <label xml:lang="de">Rauchgenerator Laufzeit</label>
     <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
     <tooltip>0 to 252, 25sec per unit</tooltip>
+    <tooltip xml:lang="fr">0 à 252, 25 s par unité</tooltip>
     <tooltip xml:lang="de">0 bis 252, 25 sec pro Einheit</tooltip>
     <tooltip xml:lang="cs">0 až 252, 25 sekund na jednotku</tooltip>
   </variable>
   <variable CV="355" item="Fan Speed at Standstill" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>
     <label>Fan Speed at Standstill</label>
+    <label xml:lang="fr">Ventilateur de fumée : régime à l'arrêt</label>
     <label xml:lang="it">Velocità Ventole da fermo</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei Stillstand</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při stání</label>

@@ -627,24 +627,28 @@
   <variable CV="830" item="stopping distance fwd high">
     <decVal/>
     <label>Alternative Stopping Distance Fwd High Byte</label>
+    <label xml:lang="fr">Distance de freinage avant, octet de poids fort</label>
     <label xml:lang="de">Bremsweg Vorwärts High</label>
     <label xml:lang="cs">Brzdná dráha vpřed horní byte</label>
   </variable>
   <variable CV="831" item="stopping distance fwd low">
     <decVal/>
     <label>Alternative Stopping Distance Fwd Low Byte</label>
+    <label xml:lang="fr">Distance de freinage avant, octet de poids faible</label>
     <label xml:lang="de">Bremsweg Vorwärts Low</label>
     <label xml:lang="cs">Brzdná dráha vpřed dolní byte</label>
   </variable>
   <variable CV="832" item="stopping distance rev high">
     <decVal/>
     <label>Alternative Stopping Distance Rev High Byte</label>
+    <label xml:lang="fr">Distance de freinage arrière, octet de poids fort</label>
     <label xml:lang="de">Bremsweg Rückwärts High</label>
     <label xml:lang="cs">Brzdná dráha vzad horní byte</label>
   </variable>
   <variable CV="833" item="stopping distance rev low">
     <decVal/>
     <label>Alternative Stopping Distance Rev Low Byte</label>
+    <label xml:lang="fr">Distance de freinage arrière, octet de poids faible</label>
     <label xml:lang="de">Bremsweg Rückwärts Low</label>
     <label xml:lang="cs">Brzdná dráha vzad dolní byte</label>
   </variable>
@@ -695,6 +699,7 @@
   <variable CV="837" item="Script Running 5" mask="XXXVXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 5 Disable</label>
+    <label xml:lang="fr">Désactiver le script 5</label>
     <label xml:lang="de">Script deaktivieren 5</label>
     <label xml:lang="cs">Skript 5 zakázat</label>
       <tooltip>Deactivate Script 5</tooltip>
@@ -705,6 +710,7 @@
   <variable CV="837" item="Script Running 6" mask="XXVXXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 6 Disable</label>
+    <label xml:lang="fr">Désactiver le script 6</label>
     <label xml:lang="de">Script deaktivieren 6</label>
     <label xml:lang="cs">Skript 6 zakázat</label>
       <tooltip>Deactivate Script 6</tooltip>
@@ -715,6 +721,7 @@
   <variable CV="837" item="Script Running 7" mask="XVXXXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 7 Disable</label>
+    <label xml:lang="fr">Désactiver le script 7</label>
     <label xml:lang="de">Script deaktivieren 7</label>
     <label xml:lang="cs">Skript 7 zakázat</label>
       <tooltip>Deactivate Script 7</tooltip>
@@ -725,6 +732,7 @@
   <variable CV="837" item="Script Running 8" mask="VXXXXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 8 Disable</label>
+    <label xml:lang="fr">Désactiver le script 8</label>
     <label xml:lang="de">Script deaktivieren 8</label>
     <label xml:lang="cs">Skript 8 zakázat</label>
       <tooltip>Deactivate Script 8</tooltip>
@@ -934,6 +942,7 @@
   <variable CV="843" item="Script Running 9" mask="XXXXXXXV" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 9 Disable</label>
+    <label xml:lang="fr">Désactiver le script 9</label>
     <label xml:lang="de">Script deaktivieren 9</label>
     <label xml:lang="cs">Skript 9 zakázat</label>
       <tooltip>Deactivate Script 9</tooltip>
@@ -944,6 +953,7 @@
   <variable CV="843" item="Script Running 10" mask="XXXXXXVX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 10 Disable</label>
+    <label xml:lang="fr">Désactiver le script 10</label>
     <label xml:lang="de">Script deaktivieren 10</label>
     <label xml:lang="cs">Skript 10 zakázat</label>
       <tooltip>Deactivate Script 10</tooltip>
@@ -954,6 +964,7 @@
   <variable CV="843" item="Script Running 11" mask="XXXXXVXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 11 Disable</label>
+    <label xml:lang="fr">Désactiver le script 11</label>
     <label xml:lang="de">Script deaktivieren 11</label>
     <label xml:lang="cs">Skript 11 zakázat</label>
       <tooltip>Deactivate Script 11</tooltip>
@@ -964,6 +975,7 @@
   <variable CV="843" item="Script Running 12" mask="XXXXVXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 12 Disable</label>
+    <label xml:lang="fr">Désactiver le script 12</label>
     <label xml:lang="de">Script deaktivieren 12</label>
     <label xml:lang="cs">Skript 12 zakázat</label>
       <tooltip>Deactivate Script 12</tooltip>
@@ -974,6 +986,7 @@
   <variable CV="843" item="Script Running 13" mask="XXXVXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 13 Disable</label>
+    <label xml:lang="fr">Désactiver le script 13</label>
     <label xml:lang="de">Script deaktivieren 13</label>
     <label xml:lang="cs">Skript 13 zakázat</label>
       <tooltip>Deactivate Script 13</tooltip>
@@ -984,6 +997,7 @@
   <variable CV="843" item="Script Running 14" mask="XXVXXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 14 Disable</label>
+    <label xml:lang="fr">Désactiver le script 14</label>
     <label xml:lang="de">Script deaktivieren 14</label>
     <label xml:lang="cs">Skript 14 zakázat</label>
       <tooltip>Deactivate Script 14</tooltip>
@@ -994,6 +1008,7 @@
   <variable CV="843" item="Script Running 15" mask="XVXXXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 15 Disable</label>
+    <label xml:lang="fr">Désactiver le script 15</label>
     <label xml:lang="de">Script deaktivieren 15</label>
     <label xml:lang="cs">Skript 15 zakázat</label>
       <tooltip>Deactivate Script 15</tooltip>
@@ -1004,6 +1019,7 @@
   <variable CV="843" item="Script Running 16" mask="VXXXXXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 16 Disable</label>
+    <label xml:lang="fr">Désactiver le script 16</label>
     <label xml:lang="de">Script deaktivieren 16</label>
     <label xml:lang="cs">Skript 16 zakázat</label>
       <tooltip>Deactivate Script 16</tooltip>

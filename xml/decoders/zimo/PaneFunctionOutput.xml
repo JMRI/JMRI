@@ -64,7 +64,7 @@
              <display item="Special Output Configuration"/>
             </griditem>
             <griditem anchor="LINE_END">
-             <display item="Function Output 4 as virtual Cam or Smoke Fan"/>
+             <display item="Function Output as virtual Cam or Smoke Fan"/>
             </griditem>
             <griditem gridy="13">
              <display item="Output Level"/>

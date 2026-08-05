@@ -45,10 +45,14 @@
       <variable item="Bootloader Version" CV="248" readOnly="yes">
         <decVal/>
         <label>Bootloader Version</label>
+        <label xml:lang="fr">Version du bootloader</label>
+        <label xml:lang="de">Bootloader-Version</label>
       </variable>
       <variable item="Bootloader SubVersion" CV="249" readOnly="yes">
         <decVal/>
         <label>Bootloader SubVersion</label>
+        <label xml:lang="fr">Sous-version du bootloader</label>
+        <label xml:lang="de">Bootloader-Unterversion</label>
       </variable>
 
 </variables>

@@ -241,6 +241,7 @@
   <variable CV="351" item="Smoke Fan Speed at Steady Speed" default="27" tooltip="8 to 63">
     <decVal min="8" max="63"/>
     <label>Smoke Fan Speed at Steady Speed</label>
+    <label xml:lang="fr">Ventilateur de fumée : régime à vitesse constante</label>
     <label xml:lang="it">Velocità ventole fumo a velocità costante</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei konst. Fahrt</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při ustálené rychlosti</label>
@@ -248,6 +249,7 @@
   <variable CV="352" item="Smoke Fan Speed at Startup and Acceleration" default="128" tooltip="25 to 170">
     <decVal min="25" max="170"/>
     <label>Smoke Fan Speed at Startup and Acceleration</label>
+    <label xml:lang="fr">Ventilateur de fumée : régime à l'accélération</label>
     <label xml:lang="it">Velocità ventole fumo in partenza e accellerazione</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei Beschleunigung</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při rozjezdu</label>

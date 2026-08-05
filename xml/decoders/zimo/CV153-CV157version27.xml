@@ -35,6 +35,8 @@
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
+        <choice xml:lang="fr">Réglage issu du CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
         <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
@@ -97,6 +99,8 @@
       </enumChoice>
     </enumVal>
     <label>Shunt Function Key Extension</label>
+    <label xml:lang="fr">Désactive l'inertie</label>
+    <label xml:lang="de">ABV deaktivieren</label>
     <label xml:lang="it">Estensione tasto funzione Manovra</label>
     <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
   </variable>
@@ -104,6 +108,8 @@
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
+        <choice xml:lang="fr">Réglage issu du CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
         <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
@@ -166,6 +172,8 @@
       </enumChoice>
     </enumVal>
     <label>Half Speed Key Extension</label>
+    <label xml:lang="fr">Demi-vitesse par la touche</label>
+    <label xml:lang="de">Halbgeschwindigkeit mit Taste</label>
     <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
     <label xml:lang="cs">Rozšíření funkční klávesy poloviční rychlost</label>
   </variable>
@@ -173,6 +181,8 @@
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>
+        <choice xml:lang="fr">Réglage issu du CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
         <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
@@ -235,6 +245,8 @@
       </enumChoice>
     </enumVal>
     <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
+    <label xml:lang="fr">Touche MAN (désactive la commande par signal HLU ou ABC)</label>
+    <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
     <label xml:lang="it">Estensione tasto funzione MAN (disabilita controllo segnale HLU o ABC)</label>
     <label xml:lang="cs">Rozšíření funkční klávesy MAN (zakázání řízení signálem HLU nebo ABC)</label>
   </variable>

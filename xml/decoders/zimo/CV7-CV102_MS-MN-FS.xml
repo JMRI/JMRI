@@ -54,50 +54,61 @@
     <enumVal>
       <enumChoice choice="No Subsequent address">
         <choice>No Subsequent address</choice>
+        <choice xml:lang="fr">Aucune adresse suivante</choice>
         <choice xml:lang="de">keine Folgeadresse</choice>
       </enumChoice>
       <enumChoice choice="One Subsequent address for F5-F8">
         <choice>One Subsequent address for F5-F8</choice>
+        <choice xml:lang="fr">Une adresse suivante pour F5-F8</choice>
         <choice xml:lang="de">Eine Folgeadresse für F5-F8</choice>
       </enumChoice>
       <enumChoice choice="Two Subsequent addresses for F5-F12">
         <choice>Two Subsequent addresses for F5-F12</choice>
+        <choice xml:lang="fr">Deux adresses suivantes pour F5-F12</choice>
         <choice xml:lang="de">Zwei Folgeadressen für F5-F12</choice>
       </enumChoice>
       <enumChoice choice="Three Subsequent addresses for F5-F16">
         <choice>Three Subsequent addresses for F5-F16</choice>
+        <choice xml:lang="fr">Trois adresses suivantes pour F5-F16</choice>
         <choice xml:lang="de">Drei Folgeadressen für F5-F16</choice>
       </enumChoice>
     </enumVal>
     <label>Motorola Subsequent addresses</label>
+    <label xml:lang="fr">Adresses Motorola suivantes</label>
     <label xml:lang="de">Motorola Folgeadressen</label>
     <tooltip>Range 0-3</tooltip>
+    <tooltip xml:lang="fr">Plage 0-3</tooltip>
     <tooltip xml:lang="de">0 = keine Folgeadresse, 1 = Eine Folgeadresse für F5-F8, 2 = Zwei Folgeadressen für F5-F12, 3 = Drei Folgeadressen für F5-F16.</tooltip>
   </variable>
 
   <variable item="Operating Mode DC Analogue" CV="12" mask="XXXXXXXV" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode DC Analogue</label>
+      <label xml:lang="fr">Mode analogique DC</label>
       <label xml:lang="de">DC Analogbetrieb</label>
   </variable>
   <variable item="Operating Mode DCC" CV="12"  readOnly="yes" mask="XXXXXVXX" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode DCC</label>
+      <label xml:lang="fr">Mode DCC</label>
       <label xml:lang="de">DCC Betrieb</label>
   </variable>
   <variable item="Operating Mode AC Analogue" CV="12" mask="XXXVXXXX" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode AC Analogue</label>
+      <label xml:lang="fr">Mode analogique AC</label>
       <label xml:lang="de">AC Analogbetrieb</label>
   </variable>
     <variable item="Operating Mode MM" CV="12" mask="XXVXXXXX" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode MM</label>
+      <label xml:lang="fr">Mode MM</label>
       <label xml:lang="de">MM Betrieb</label>
   </variable>
     <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,12,15,65,122,124,125,127">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode MFX</label>
+      <label xml:lang="fr">Mode mfx</label>
       <label xml:lang="de">mfx Betrieb</label>
   </variable>
 
@@ -257,15 +268,19 @@
   <variable item="Decoder Lock 1" CV="15" default="0">
     <decVal/>
       <label>Decoder Lock 1</label>
+      <label xml:lang="fr">Verrouillage décodeur 1</label>
       <label xml:lang="de">Decoder Sperre 1</label>
       <tooltip>The decoder lock is used to access the CVs of several decoders with identical address separately.</tooltip>
+      <tooltip xml:lang="fr">Le verrouillage du décodeur permet d'accéder séparément aux CV de plusieurs décodeurs partageant la même adresse.</tooltip>
       <tooltip xml:lang="de">Die Decoder-Sperre dient dazu, auf die CVs mehrerer Decoder mit identischer Adresse getrennt zuzugreifen.</tooltip>
   </variable>
   <variable item="Decoder Lock 2" CV="16" default="0">
     <decVal/>
       <label>Decoder Lock 2</label>
+      <label xml:lang="fr">Verrouillage décodeur 2</label>
       <label xml:lang="de">Decoder Sperre 2</label>
       <tooltip>The decoder lock is used to access the CVs of several decoders with identical address separately.</tooltip>
+      <tooltip xml:lang="fr">Le verrouillage du décodeur permet d'accéder séparément aux CV de plusieurs décodeurs partageant la même adresse.</tooltip>
       <tooltip xml:lang="de">Die Decoder-Sperre dient dazu, auf die CVs mehrerer Decoder mit identischer Adresse getrennt zuzugreifen.</tooltip>
   </variable>
 
@@ -435,39 +450,46 @@
     <enumVal>
       <enumChoice choice="Does Not Stop">
         <choice>Does Not Stop</choice>
+        <choice xml:lang="fr">Pas de freinage</choice>
         <choice xml:lang="it">Non si ferma</choice>
         <choice xml:lang="cs">Nezastavuje</choice>
         <choice xml:lang="de">Kein Bremsen</choice>
       </enumChoice>
       <enumChoice choice="Stops when Right rail is higher voltage">
         <choice>Stops when Right rail is higher voltage</choice>
+        <choice xml:lang="fr">Freinage si la tension du rail droit est supérieure</choice>
         <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
         <choice xml:lang="cs">Zastaví když pravá kolejnice má vyšší napětí</choice>
         <choice xml:lang="de">Bremsen, wenn rechte Schienenspannung höher</choice>
       </enumChoice>
       <enumChoice choice="Stops when Left rail is higher voltage">
         <choice>Stops when Left rail is higher voltage</choice>
+        <choice xml:lang="fr">Freinage si la tension du rail gauche est supérieure</choice>
         <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
         <choice xml:lang="cs">Zastaví když levá kolejnice má vyšší napětí</choice>
         <choice xml:lang="de">Bremsen, wenn linke Schienenspannung höher</choice>
       </enumChoice>
       <enumChoice choice="Stops in Both Directions">
         <choice>Stops in Both Directions</choice>
+        <choice xml:lang="fr">Freinage dans les deux sens</choice>
         <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
         <choice xml:lang="cs">Zastaví v obou směrech</choice>
         <choice xml:lang="de">Bremsen in beiden Richtungen</choice>
       </enumChoice>
     </enumVal>
     <label>Direction Dependent stops with asymmetrical DCC</label>
+    <label xml:lang="fr">Configuration de freinage</label>
     <label xml:lang="it">Fermata dipendente da direzione con DCC asimmetrico</label>
     <label xml:lang="cs">Směrově závislé zastavování při nesymetrickém DCC</label>
     <label xml:lang="de">Bremskonfiguration</label>
     <tooltip>Brake on DC detect</tooltip>
+    <tooltip xml:lang="fr">Freinage sur tension DCC asymétrique</tooltip>
     <tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
   </variable>
    <variable item="Asymmetric DCC shuttle" CV="27" mask="XVXXXXXX">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Asymmetric DCC Shuttle</label>
+      <label xml:lang="fr">Signal DCC asymétrique</label>
       <label xml:lang="de">Asymmetrisches DCC-Signal</label>
   </variable>
   <variable CV="27" item="Activate Residence Time" default="0" mask="XVXXXXXX">
@@ -1687,6 +1709,7 @@
   <variable item="Signal Dependent Acceleration" CV="49" default="0" comment="Range 0-255">
     <decVal max="255"/>
     <label>Signal Dependent Acceleration</label>
+    <label xml:lang="fr">Accélération dépendante du signal (HLU)</label>
     <label xml:lang="it">Accellerazione dipendente da Segnale</label>
     <label xml:lang="de">Signalabhängige (HLU) Beschleunigung</label>
     <label xml:lang="cs">Zrychlení závislé na návěstidle</label>
@@ -1697,6 +1720,7 @@
   <variable item="Signal Dependent Deceleration" CV="50" default="0" comment="Range 0-255">
     <decVal max="255"/>
     <label>Signal Dependent Deceleration</label>
+    <label xml:lang="fr">Décélération dépendante du signal (HLU)</label>
     <label xml:lang="it">Decellarazione dipendente da Segnale</label>
     <label xml:lang="de">Signalabhängige (HLU) Bremszeit</label>
     <label xml:lang="cs">Zpomalení závislé na návěstidle</label>
@@ -1771,6 +1795,7 @@
   <variable item="Signal Dependent Reaction Time" CV="59" default="5" comment="Range 0-255">
     <decVal max="255"/>
     <label>Signal Dependent Reaction Time</label>
+    <label xml:lang="fr">Temps de réaction dépendant du signal (HLU)</label>
     <label xml:lang="it">Tempo di reazione dipendente da Segnale</label>
     <label xml:lang="cs">Reakční doba závisí na návěstidle</label>
     <label xml:lang="de">Signalabhängige (HLU) Reaktionszeit</label>

@@ -3,11 +3,15 @@
 <!-- version 1.0 - Nigel Cliffe, March 2025 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Zimo Scripting</name>
+  <name xml:lang="fr">Scripts ZIMO</name>
+  <name xml:lang="de">ZIMO Scripts</name>
   <column>
       <row>
         <column> 
             <label>
                 <text>Zimo Scripts can control features in sound projects.  Refer to documentation for specific sound project for details of any script within that sound project.</text>
+                <text xml:lang="fr">Les scripts ZIMO peuvent piloter des fonctions dans les projets sonores. Voir la documentation du projet sonore concerné pour le détail de ses scripts.</text>
+                <text xml:lang="de">ZIMO Scripts können Funktionen in Sound-Projekten steuern. Einzelheiten zu den Scripts eines Projekts sind der jeweiligen Projektdokumentation zu entnehmen.</text>
             </label>
             <label>
             <text>        </text>
@@ -70,6 +74,8 @@
             </label>
             <label>
                 <text>Zimo Script Variables can control features within a script. Refer to documentation for specific sound project for how these variables are used in the project.</text>
+                <text xml:lang="fr">Les variables de script ZIMO peuvent piloter des fonctions au sein d'un script. Voir la documentation du projet sonore concerné pour leur usage.</text>
+                <text xml:lang="de">ZIMO Script-Variablen können Funktionen innerhalb eines Scripts steuern. Ihre Verwendung ist der jeweiligen Projektdokumentation zu entnehmen.</text>
             </label>
             <label>
             <text>        </text>
