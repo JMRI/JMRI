@@ -27,6 +27,7 @@
         <h4>CBUS</h4>
             <ul>
                 <li>Console Connection Logging - Default filename now includes connection name.</li>
+                <li>On opening the Console, Logging to File resumes in an empty file if active when the previous console is closed.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -102,9 +103,11 @@
                 <li>Added a new programming facade "Digitrax OpSw Word Programming" for
                             programming at the board level for e.g. DS64's.</li>
                 <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
+                <li>Add in-use count to the Slot Monitor.</li>
                 <li>Timeouts when programming the Op Switches on Digitrax boards (e.g. DS64, etc) will automatically be retried once.</li>
                 <li>Added interpretation of some BDL716 configuration messages to
                     LocoNet Monitor.</li>
+                <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.
             </ul>
 
         <h4>Maple</h4>
@@ -144,7 +147,10 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Update OpenLCB_Java library to pick up an improvement in 
+                    how the configuration windows are rendered.</li>
+                <li>LccPro will now prompt you for a backup directory the first time
+                    you do a node backup from the main screen if the location hasn't already been set.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -300,6 +306,8 @@
         <h4>ESU</h4>
             <ul>
                 <li>LokSound 5 nano DCC now declares its E24 interface.</li>
+                <li>Added LokPilot 5 micro DCC Direct Atlas Legacy.</li>
+                <li>Renamed LokPilot 5 Micro Next18 DCC to LokPilot 5 micro Next18 DCC (capitalization) to match ESU.</li>
                 <li></li>
             </ul>
 
@@ -508,6 +516,7 @@
             <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
             <li>Fixed a bug which caused importing a decoder on Windows to fail.</li>
             <li>Fixed a bug which would sometimes show empty tabs when it shouldn't.</li>
+            <li>Added the Speed Profiling tool to the Actions menu.<li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -573,6 +582,8 @@
         <ul>
             <li>New feature, you can now control which road names and load types a track can service.</li>
             <li>Fixed a problem with spurs with schedules in quick service mode.</li>
+            <li>You can now print the contents of the "Show Schedules by Car Type and Load".</li>
+            <li>You can also print the contents of the "Show Staging and Schedules by Car Type and Load".</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -602,7 +613,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Roster speed profile added ability to specify distance in inches or mm. Fix txt visibility.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -720,7 +731,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added coasting and key-notching features in Diesel3Sound.java.</li>
         </ul>
 
    <h3>Z21 Server</h3>

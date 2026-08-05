@@ -249,7 +249,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#Pools">Track Pools</a></li>
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
                 <li><a href="#PlannedPickUps">Planned Pick Ups (Track Overloading)</a></li>
-                <li><a href="#TrackWorkComments">Manifest Comments</a></li>
+                <li><a href="#TrackWorkComments">Track Comments</a></li>
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
                 <li><a href="#CopyTrack">Copy Track</a></li>
@@ -1966,6 +1966,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       below.
       <p>
         <img src="images/PrintOptions.png" alt="">
+      </p>
+
+      <p>
+        You can also optionally customize your Manifests or switch lists with any of the following
+        comments; <a href="#TrainComment">Train</a>, <a href="#RouteComment">Route Location</a>, <a
+          href="#AddRoute">Route</a>, <a href="#LocationComment">Location</a>, <a
+          href="#TrackWorkComments">Track</a>, <a href="#CarComment">Car</a>, <a
+          href="#OptionalLoadMessages">Car Loads</a> <a href="#MisplacedCarsComment">Misplaced Cars
+          </a> and <a href="#LocoComment">Locomotive</a>.
       </p>
 
       <h3 id="PrintFont">Manifest Printer Font</h3>
@@ -3939,7 +3948,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         from this track.
       </p>
 
-      <h4 id="TrackWorkComments">Manifest Comments</h4>
+      <h4 id="TrackWorkComments">Track Comments</h4>
       You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
       pickup and set out occurs to a track. Only one of the three messages will be added to your
       paperwork when there's work for the selected track. The checkboxes at the bottom of the window
@@ -4611,7 +4620,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       You can optionally enter the owner's name. Trains can be <a href="#TrainBuildOptions">configured</a>
       to only accept certain owner names.
 
-      <h4>Comment</h4>
+      <h4 id="CarComment">Car Comment</h4>
       You can enter a comment for this car. If you want to see the car's comment on the Train's
       Manifest or switch lists, make an adjustment to the <a href="#MessageFormats">Message
         Formats</a>.
@@ -4743,7 +4752,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you want the <a href="#HazardousComment">Hazardous Comment</a> to be added to your Manifest
       or switch lists, select "Yes" for your car's load.
 
-      <h4>Optional Load Messages</h4>
+      <h4 id="OptionalLoadMessages">Optional Load Messages</h4>
       You can also provide optional messages for your crew based on the type of car and load. The
       messages can be useful if you have visible car loads that need to be added or removed by your
       crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
@@ -5137,6 +5146,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         href="#LocationReporter">Id Tag Reader at Location</a> and the Id Tag associated with this
       locomotive is read by that Reporter, then the location will be updated. See <a href="#Options">Options</a>
       to enable this feature.
+
+      <h4 id="LocoComment">Locomotive Comment</h4>
+      You can enter a comment for this locomotive. If you want to see the locomotive's comment on
+      the Train's Manifest or switch lists, make an adjustment to the
+      <a href="#MessageFormats">Message Formats</a>.
 
       <h4>Save</h4>
       Press "Save" to store the locomotive's settings. The program will create a file named
