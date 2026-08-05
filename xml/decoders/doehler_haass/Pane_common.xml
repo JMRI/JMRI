@@ -8,6 +8,8 @@
 <!-- version 1 - 2014-02-20 - PB - for common D&H software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>DH Options</name>
+  <name xml:lang="fr">Options DH</name>
+  <name xml:lang="de">DH Optionen</name>
   <column>
     <row>
       <column>
@@ -208,7 +210,11 @@
       <griditem gridx="7" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F8</text></label></griditem>
       <!-- BEGIN - Row 2 (Front lights)-->
       <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-		<display item="F1 precludes front lights" format="checkbox" label="Front lights"/>
+		<display item="F1 precludes front lights" format="checkbox">
+			<label>Front lights</label>
+			<label xml:lang="fr">Feux avant</label>
+			<label xml:lang="de">Licht vorne</label>
+		</display>
 	  </griditem>
       <griditem gridx="1" gridy="1" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes front lights" format="checkbox" label=""/>
@@ -233,7 +239,11 @@
 	  </griditem>
       <!-- BEGIN - Row 3 (Rear lights)-->
       <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
-		<display item="F1 precludes rear lights" format="checkbox" label="Rear lights"/>
+		<display item="F1 precludes rear lights" format="checkbox">
+			<label>Rear lights</label>
+			<label xml:lang="fr">Feux arrière</label>
+			<label xml:lang="de">Licht hinten</label>
+		</display>
 	  </griditem>
       <griditem gridx="1" gridy="2" gridwidth="1" anchor="LINE_END">
 		<display item="F2 precludes rear lights" format="checkbox" label=""/>

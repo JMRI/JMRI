@@ -30,12 +30,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -84,12 +84,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -130,12 +130,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -176,12 +176,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -230,12 +230,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -268,12 +268,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -298,12 +298,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -350,11 +350,11 @@
 
       <model model="MS480 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
         <output name="1" label="Front Light">
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
           <label xml:lang="de">Licht vorne</label>
         </output>
         <output name="2" label="Rear Light">
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
           <label xml:lang="de">Licht hinten</label>
         </output>
         <output name="3" label="FO 1"/>
@@ -370,12 +370,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -400,12 +400,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -434,12 +434,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -465,12 +465,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -519,12 +519,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1 (+5v)">
           <label xml:lang="de">FA1 (+5v)</label>
@@ -541,12 +541,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -577,12 +577,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -618,12 +618,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -652,12 +652,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
