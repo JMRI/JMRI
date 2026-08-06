@@ -558,6 +558,7 @@
                 <xs:enumeration value="Wires"/>
                 <xs:enumeration value="21MTC"/>
                 <xs:enumeration value="Next18"/>
+                <xs:enumeration value="E24"/>
                 <xs:enumeration value="PluX8"/>
                 <xs:enumeration value="PluX12"/>
                 <xs:enumeration value="PluX16"/>

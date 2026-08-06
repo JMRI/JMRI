@@ -19,6 +19,7 @@
 <!-- version 1.5 - Nigel Cliffe. Small bugfix to v1.4,  Corrected layout for decoders which lack swiss mapping groups 14-17 -->
 <!-- version 1.6 - Ronald Kuhn - add german translation -->
 <!-- version 1.7 - Nigel Cliffe - fork for MS Series decoders.   The conditional on "version 34 software" doesn't work for MS series, as MS starts versions from zero, and is currently 4.  Conditional element removed -->
+<!-- version 1.8  31 July 2026  Pierre Billon - renamed from PaneSwissMapping_MS_series.xml; the name now states the CV range held and the decoder series it applies to -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Swiss Mapping</name>
   <name xml:lang="it">Mappatura Svizzera</name>

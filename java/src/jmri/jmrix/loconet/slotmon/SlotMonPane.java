@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.slotmon;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
@@ -19,7 +21,11 @@ import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.swing.JmriJTablePersistenceManager;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.WrapLayout;
+import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.*;
 
 /**
@@ -30,7 +36,7 @@ import jmri.util.table.*;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements SlotListener  {
+public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements SlotListener {
 
     /**
      * Controls whether not-in-use slots are shown
@@ -48,6 +54,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
     private final JButton estopAllButton = new JButton(Bundle.getMessage("ButtonSlotMonEStopAll"));
 
+    private JLabel inUseCount = new JLabel("      ");
+    
     //Added by Jeffrey Machacek 2013
     private final JButton clearAllButton = new JButton(Bundle.getMessage("ButtonSlotMonClearAll"));
     private final JButton refreshAllButton = new JButton(Bundle.getMessage("ButtonSlotRefresh"));
@@ -62,16 +70,25 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     public SlotMonPane() {
         super();
     }
+    @Override
+    public boolean isMultipleInstances() {
+        return false;
+    }
+
 
     @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-        int columns = 41;
+        int columns = SlotMonDataModel.NUMCOLUMN_LOCONETPROTOCOL_TWO ;
         if (memo.getSlotManager().getLoconetProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
-            columns=20;
+            columns = SlotMonDataModel.NUMCOLUMN_LOCONETPROTOCOL_ONE ;
         }
         slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), columns, memo);
         slotTable = new JTable(slotModel);
+        slotTable.setColumnModel(new XTableColumnModel());
+        slotTable.createDefaultColumnsFromModel();
+        //XTableColumnModel SlotMonDataModel = (XTableColumnModel)slotTable.getColumnModel();
+
         slotTable.setName(this.getTitle());
 
         sorter = new TableRowSorter<>(slotModel);
@@ -102,13 +119,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         }
         slotTable.sizeColumnsToFit(-1);
 
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
-            // unable to persist because Default class provides no mechanism to
-            // ensure window is destroyed when closed or that existing window is
-            // reused when hidden and user reopens it from menu
-            // tpm.persist(slotTable, true);
-        });
-
         // install a button renderer & editor in the "DISP" column for freeing a slot
         setColumnToHoldButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.DISPCOLUMN));
 
@@ -117,8 +127,19 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
         // Install a numeric format for ConsistAddress
         setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.CONSISTADDRESS));
-        // add listener object so checkboxes function
 
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
+            // unable to persist because Default class provides no mechanism to
+            // ensure window is destroyed when closed or that existing window is
+            // reused when hidden and user reopens it from menu
+            try {
+                tpm.persist(slotTable, true);
+            } catch (IllegalArgumentException Ex) {
+                log.warn("SlotMon Can only save layout changes for second and subsequent invocations");
+            }
+        });
+
+        // add listener object so checkboxes functio
         refreshAllButton.addActionListener((ActionEvent e) -> {
             slotModel.refreshSlots();
         });
@@ -162,9 +183,15 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         topPanel.add(showSystemCheckBox);
         topPanel.add(estopAllButton);
         topPanel.add(clearAllButton);
+        topPanel.add(clearAllButton);
+        topPanel.add(new JLabel(Bundle.getMessage("SlotMonUnUseCountLabel")));
+        topPanel.add(inUseCount);
 
         add(topPanel);
         add(slotScroll);
+
+        addMouseListenerToHeader(slotTable);
+
 
         memo.getSlotManager().addSlotListener(this);
 
@@ -249,6 +276,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
     @Override
     public void dispose() {
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent( tpm ->
+            tpm.stopPersisting(slotTable) );
         slotModel.dispose();
         slotModel = null;
         slotTable = null;
@@ -316,6 +345,15 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
             }
         }
+        
+        // update count
+        int inUseSlotCount = 0;
+        for (var slot : memo.getSlotManager().getSlots()) {
+            if (!slot.isSystemSlot() && slot.slotStatus() == LnConstants.LOCO_IN_USE) {
+                inUseSlotCount++;
+            }
+        }
+        inUseCount.setText(""+inUseSlotCount);
     }
 
     void showHideSlot250Data(boolean b) {
@@ -330,5 +368,103 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         topPanel.revalidate();
     }
 
+    /*
+     * Mouse popup stuff
+     */
+
+    /**
+     * Process the column header click
+     * @param e     the evnt data
+     * @param table the JTable
+     */
+    protected void showTableHeaderPopup(JmriMouseEvent e, JTable table) {
+        JPopupMenu popupMenu = new JPopupMenu();
+        XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
+        for (int i = 0; i < tcm.getColumnCount(false); i++) {
+            TableColumn tc = tcm.getColumnByModelIndex(i);
+            String columnName = table.getModel().getColumnName(i);
+            if (columnName != null && !columnName.equals("")) {
+                JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
+                menuItem.addActionListener(new HeaderActionListener(tc, tcm));
+                popupMenu.add(menuItem);
+            }
+        }
+        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    /**
+     * Adds the column header pop listener to a JTable using XTableColumnModel
+     * @param table The JTable effected.
+     */
+    protected void addMouseListenerToHeader(JTable table) {
+        JmriMouseListener mouseHeaderListener = new TableHeaderListener(table);
+        table.getTableHeader().addMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
+    }
+
+    protected static class HeaderActionListener implements ActionListener {
+
+        TableColumn tc;
+        XTableColumnModel tcm;
+
+        HeaderActionListener(TableColumn tc, XTableColumnModel tcm) {
+            this.tc = tc;
+            this.tcm = tcm;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
+            //Do not allow the last column to be hidden
+            if (!check.isSelected() && tcm.getColumnCount(true) == 1) {
+                return;
+            }
+            tcm.setColumnVisible(tc, check.isSelected());
+        }
+    }
+
+    /**
+     * Class to support Columnheader popup menu on XTableColum model.
+     */
+    class TableHeaderListener extends JmriMouseAdapter {
+
+        JTable table;
+
+        TableHeaderListener(JTable tbl) {
+            super();
+            table = tbl;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void mousePressed(JmriMouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void mouseReleased(JmriMouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void mouseClicked(JmriMouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotMonPane.class);
 
 }

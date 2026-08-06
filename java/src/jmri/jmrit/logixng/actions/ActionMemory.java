@@ -24,10 +24,10 @@ public class ActionMemory extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
     private final LogixNG_SelectNamedBean<Memory> _selectOtherMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 //    private NamedBeanHandle<Memory> _otherMemoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.SetToString;
     private String _otherConstantValue = "";
@@ -264,7 +264,6 @@ public class ActionMemory extends AbstractDigitalAction
             if (_listenToMemory) {
                 _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
             }
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -275,7 +274,6 @@ public class ActionMemory extends AbstractDigitalAction
         if (_listenersAreRegistered && _listenToMemory) {
             _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
         }
-        _selectNamedBean.unregisterListeners();
         _listenersAreRegistered = false;
     }
 

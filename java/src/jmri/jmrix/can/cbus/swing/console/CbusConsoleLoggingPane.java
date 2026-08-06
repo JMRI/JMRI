@@ -26,16 +26,18 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
     private final JButton openFileChooserButton;
     private final JTextField entryField;
     private final JButton logenterButton;
+    private static final String IS_LOGGING_TO_FILE = ".isLoggingToFile.";
 
     // @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
-    private PrintStream logStream;
+    private transient PrintStream logStream;
 
     public CbusConsoleLoggingPane(CbusConsolePane mainPane){
         super();
         _mainPane = mainPane;
         // set file chooser to a default
         logFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
-        logFileChooser.setSelectedFile(new File(FileUtil.getUserFilesPath()+"monitorLog.txt"));
+        logFileChooser.setSelectedFile(new File(FileUtil.getUserFilesPath()
+            + _mainPane.getMemo().getUserName() + "_monitorLog.txt"));
 
         startStopLogButton = new JToggleButton();
         openLogFileButton = new JButton();
@@ -61,6 +63,13 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
         add(entryField);
 
         addListeners();
+
+        var p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (p.getSimplePreferenceState(logToFilePreferenceString())) {
+            startStopLogButton.setSelected(true);
+            updateStartStopButtonText();
+            startLogButtonActionPerformed(null);
+        }
 
     }
 
@@ -217,6 +226,15 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
             }
             logStream.print(logLine);
         }
+    }
+
+    private String logToFilePreferenceString(){
+        return getClass().getName() + IS_LOGGING_TO_FILE + _mainPane.getMemo().getSystemPrefix();
+    }
+
+    public void dispose(){
+        var p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        p.setSimplePreferenceState(logToFilePreferenceString(), startStopLogButton.isSelected());
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsoleLoggingPane.class);

@@ -53,6 +53,11 @@ public class Alm {
         0x04, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     });
 
+    private static final LocoNetMessage drcBdl716 = new LocoNetMessage(new int[] {
+        0xE6, 0x10, 0x02, 0x00, 0x02, 0x00, 0x01, 0x02,
+        0x02, 0x43, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    });
+
     private static final LocoNetMessage almchga = new LocoNetMessage (new int[] {
         0xEE, 0x10, 2, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
     private static final int[] almchgam = {
@@ -66,7 +71,7 @@ public class Alm {
     public static boolean isCsCapsRpt(LocoNetMessage l) {
         return l.equals(capCsRr, csCapabilitiesMasks);
     }
-    
+
     public static boolean isDs74CapsRpt(LocoNetMessage l) {
         return l.equals(drcDs74, ds74CapabilitiesMasks);
     }
@@ -81,6 +86,11 @@ public class Alm {
 
     public static boolean isPm74CapsRpt(LocoNetMessage l) {
         return l.equals(drcPm74, ds74CapabilitiesMasks);
+    }
+
+    public static boolean isBdl716CapsRpt(LocoNetMessage l) {
+        log.info("dsgsgs {}", l.toString());
+        return l.equals(drcBdl716, ds74CapabilitiesMasks);
     }
 
     public static boolean isDevBAW(LocoNetMessage l) {
@@ -117,6 +127,5 @@ public class Alm {
         }
         return AlmMsgTypes.NOT_ALM_MSG;
     }
-//    private static final Logger log = LoggerFactory.getLogger(Alm.class);
-
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Alm.class);
 }

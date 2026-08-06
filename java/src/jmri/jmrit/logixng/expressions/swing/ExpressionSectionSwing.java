@@ -87,6 +87,18 @@ public class ExpressionSectionSwing extends AbstractDigitalExpressionSwing {
         ExpressionSection expression = new ExpressionSection("IQDE1", null);
         _selectNamedBeanSwing.validate(expression.getSelectNamedBean(), errorMessages);
         _selectSectionStateSwing.validate(expression.getSelectEnum(), errorMessages);
+
+        // The Occupied option requires a Direct bean reference.
+        if (_selectSectionStateSwing.getEnum() == SectionState.Occupied) {
+            if (_selectNamedBeanSwing.getAddressing() == NamedBeanAddressing.Direct) {
+                if (_selectNamedBeanSwing.getBean() == null) {
+                    errorMessages.add(Bundle.getMessage("ExpressionSection_BeanNameError"));
+                }
+            } else {
+                errorMessages.add(Bundle.getMessage("ExpressionSection_RequireDirect"));
+            }
+        }
+
         return errorMessages.isEmpty();
     }
 

@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260727"/>
+  <!--  Firmware 1.01 identified by CV7=54 (was 1, which is 1.00); firmware 1.02.084 and 1.05.115 now identified  -->
   <version version="3.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210416"/>
   <!--  Added update paths to newest fw 1.12.050 -->
   <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151014"/>
@@ -43,7 +45,7 @@
             <protocol>selectrix</protocol>
         </protocols>
       </model>
-      <model model="SD18A (firmware 1.01+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.01" comment="SD18A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+      <model model="SD18A (firmware 1.01+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="16" productID="SD18A_1.01" comment="SD18A with firmware 1.01" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -60,6 +62,7 @@
         </protocols>
       </model>
       <model model="SD18A (firmware 1.02+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="4" numFns="16" productID="SD18A_1.02" comment="SD18A with July 2014 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <versionCV lowVersionID="84" highVersionID="84" comment="firmware 1.02.084"/>
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>
@@ -94,6 +97,7 @@
         </protocols>
       </model>
     <model model="SD18A (firmware 1.04+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD18A_1.04" comment="SD18A with May 2015 firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+      <versionCV lowVersionID="115" highVersionID="115" comment="firmware 1.05.115 has no dedicated definition; this is the nearest earlier CV set"/>
         <output name="1" label="Front|Light" maxcurrent="150mA"/>
         <output name="2" label="Rear|Light" maxcurrent="150mA"/>
         <output name="3" label="AUX|1" maxcurrent="300mA"/>

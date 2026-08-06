@@ -19,8 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.setup.*;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
@@ -756,7 +755,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public JComboBox<Train> getTrainComboBox() {
         JComboBox<Train> box = new JComboBox<>();
         updateTrainComboBox(box);
-        OperationsPanel.padComboBox(box);
+        OperationsPanel.padComboBox(box, Control.max_len_string_train_name);
         return box;
     }
 

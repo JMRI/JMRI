@@ -71,7 +71,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     public static final int F27COLUMN = 39;
     public static final int F28COLUMN = 40;
 
-    //public static final int NUMCOLUMN = 41; Number of columns comes from the pane.
+ // Number of columns comes from the pane, but these constants are used when creating the table model.
+    public static final int NUMCOLUMN_LOCONETPROTOCOL_ONE = F8COLUMN + 1;
+    public static final int NUMCOLUMN_LOCONETPROTOCOL_TWO = F28COLUMN + 1;
 
     private int numRows = 128;
     private int columns;
@@ -126,7 +128,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case SLOTCOLUMN:
                 return Bundle.getMessage("SlotCol");
             case ESTOPCOLUMN:
-                return "";     // no heading, as button is clear
+                return Bundle.getMessage("ButtonEstop");     // no heading, as button is clear
             case ADDRCOLUMN:
                 return Bundle.getMessage("AddressCol");
             case SPDCOLUMN:
@@ -142,7 +144,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case DIRCOLUMN:
                 return Bundle.getMessage("DirectionCol");
             case DISPCOLUMN:
-                return "";     // no heading, as button is clear
+                return Bundle.getMessage("ButtonRelease");
             case F0COLUMN:
                 return Throttle.getFunctionString(0);
             case F1COLUMN:
@@ -180,7 +182,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F17COLUMN:
                 return Throttle.getFunctionString(17);
             case F18COLUMN:
-                return Throttle.getFunctionString(16);
+                return Throttle.getFunctionString(18);
             case F19COLUMN:
                 return Throttle.getFunctionString(19);
             case F20COLUMN:

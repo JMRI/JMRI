@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV144 bits 1-5 for firmware 3.14 and later.</revremark>
+    </revision>
+  </revhistory>
+  <!-- CV144 bits 1-4 for the non-sound decoders, firmware 3.10 and later.                    -->
+  <!-- Bit 0 is unrelated and comes from cv135-136_144_railcom_fw3.06.xml; bit 5 exists only    -->
+  <!-- from firmware 3.14 and lives in cv144_bit5_fw3.14.xml.                                   -->
+  <!--                                                                                          -->
+  <!-- Bits 3 and 4 (the two GPIO brake settings) are gated to the models D&H document:          -->
+  <!-- DH21A, DH21B, DH22A, DH22B, DH24A and FH22A. The include list carries every product ID    -->
+  <!-- form these decoders use across firmware versions - the alphanumeric 2018-era ones and     -->
+  <!-- the numeric ones from firmware 3.12 on. The previous list in cv144_fw3.10.xml held only   -->
+  <!-- the 2018 DH values, and even those were wrong for FH22A ("FH22A_2018_09" against an       -->
+  <!-- actual "FH22A_2018.10"), so both bits were invisible on firmware 3.12, 3.13 and on every  -->
+  <!-- FH22A. The sound definitions keep cv144_fw3.10.xml, where family-name gating works.       -->
+  <variable item="Advanced Group 1 Option 1" CV="144" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Immediate starting after current interruption</label>
+    <label xml:lang="fr">Démarrage immédiat après interruption courant</label>
+    <label xml:lang="de">Sofortiges Anfahren nach Stromunterbrechung</label>
+  </variable>
+  <variable item="Radio Power Conversion" CV="144" mask="XXXXXVXX" default="0" exclude="60,131">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Lighting in analog operation</label>
+    <label xml:lang="fr">Lumières en mode Analogique</label>
+    <label xml:lang="de">Beleuchtung im Analogbetrieb</label>
+    <tooltip>Special bit for lighting in analog operation</tooltip>
+    <tooltip xml:lang="fr">Bit Spécial Lumières en mode Analogique</tooltip>
+    <tooltip xml:lang="de">Spezielles Bit für Beleuchtung im Analogbetrieb</tooltip>
+  </variable>
+  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018.04,FH22A_2018.10,200,201,202,203,204,192">
+    <enumVal>
+      <enumChoice choice="Braking">
+        <choice>Braking</choice>
+        <choice xml:lang="fr">Freiner</choice>
+        <choice xml:lang="de">Bremsen</choice>
+      </enumChoice>
+      <enumChoice choice="No Brake Section">
+        <choice>No Brake Section detected</choice>
+        <choice xml:lang="fr">Pas Section Freinage Détectée</choice>
+        <choice xml:lang="de">Keine Bremsstrecke erkannt</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Brake section output to "GPIO"</label>
+    <label xml:lang="fr">Sortie Section Freinage sur "GPIO"</label>
+    <label xml:lang="de">Bremsstreckenausgabe an "GPIO"</label>
+  </variable>
+  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018.04,FH22A_2018.10,200,201,202,203,204,192">
+    <enumVal>
+      <enumChoice choice="Braking">
+        <choice>Braking</choice>
+        <choice xml:lang="fr">Freiner</choice>
+        <choice xml:lang="de">Bremsen</choice>
+      </enumChoice>
+      <enumChoice choice="Driving">
+        <choice>Driving</choice>
+        <choice xml:lang="fr">Rouler</choice>
+        <choice xml:lang="de">Fahren</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Brake with "GPIO"</label>
+    <label xml:lang="fr">Freinage avec "GPIO"</label>
+    <label xml:lang="de">Bremsen mit "GPIO"</label>
+    <tooltip>1 = driving, 0 = braking</tooltip>
+    <tooltip xml:lang="fr">1 = rouler, 0 = freiner</tooltip>
+    <tooltip xml:lang="de">1 = Fahren, 0 = Bremsen</tooltip>
+  </variable>
+</variables>

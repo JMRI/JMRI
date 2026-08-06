@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -15,12 +13,11 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2025
  */
-public class ActionRequestUpdateOfTurnout extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionRequestUpdateOfTurnout extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
 
 
     public ActionRequestUpdateOfTurnout(String sys, String user)
@@ -91,26 +88,8 @@ public class ActionRequestUpdateOfTurnout extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -15,15 +13,14 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionTurnoutLock extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionTurnoutLock extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
 
     private final LogixNG_SelectEnum<TurnoutLock> _selectEnum =
-            new LogixNG_SelectEnum<>(this, TurnoutLock.values(), TurnoutLock.Unlock, this);
+            new LogixNG_SelectEnum<>(this, TurnoutLock.values(), TurnoutLock.Unlock);
 
 
     public ActionTurnoutLock(String sys, String user)
@@ -118,20 +115,6 @@ public class ActionTurnoutLock extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-        _selectEnum.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-        _selectEnum.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -158,12 +141,6 @@ public class ActionTurnoutLock extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnoutLock.class);

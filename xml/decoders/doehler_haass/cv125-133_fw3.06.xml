@@ -46,6 +46,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>5</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Correct the CV131-133 defaults, English labels and tooltips</revremark>
+    </revision>
+    <revision>
       <revnumber>4</revnumber>
       <date>2023-07-15</date>
       <authorinitials>RK</authorinitials>
@@ -348,28 +354,31 @@
     <tooltip xml:lang="de">Je 100 ms, 0 = ausgeschaltet</tooltip>
     <tooltip xml:lang="ca">Sí 100 ms, 0 = apagat</tooltip>
   </variable>
-  <variable item="Function for dimmed lights" CV="131" default="1" exclude="130,131,132,133,134,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+  <variable item="Function for dimmed lights" CV="131" default="8" exclude="130,131,132,133,134,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function mapping low beam light</label>
     <label xml:lang="fr">Fonction pour feux réduits</label>
     <label xml:lang="de">Funktionszuordnung Abblendlicht</label>
-    <label xml:lang="ca">Apagat programat de AUX 5</label>
-    <tooltip>CV131: 0=>Off, 1-28=>F1-F8, 29=>F0</tooltip>
+    <label xml:lang="ca">Funció per als llums atenuats</label>
+    <tooltip>CV131: 0=>Off, 1-28=>F1-F28, 29=>F0</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0 = deaktiviert, 1 … 28 = F1 … F28, 29 = F0 (Licht)&lt;br&gt;Nur bei CV137 Bit 4 = 1&lt;/html&gt;</tooltip>
   </variable>
-  <variable item="Function for shunting speed" CV="132" default="1" exclude="PD05A,130,D12A,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+  <variable item="Function for shunting speed" CV="132" default="4" exclude="PD05A,130,D12A,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function mapping shunting gear</label>
     <label xml:lang="fr">Fonction pour marche réduite</label>
     <label xml:lang="de">Funktionszuordnung Rangiergang</label>
-    <label xml:lang="ca">Apagat programat de AUX 5</label>
-    <tooltip>CV132: 0=>Off, 1-28=>F1-F8, 29=>F0</tooltip>
+    <label xml:lang="ca">Funció per a la marxa de maniobres</label>
+    <tooltip>CV132: 0=>Off, 1-28=>F1-F28, 29=>F0</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0 = deaktiviert, 1 … 28 = F1 … F28, 29 = F0 (Licht)&lt;br&gt;Nur bei CV137 Bit 4 = 1&lt;/html&gt;</tooltip>
   </variable>
-  <variable item="Function to deactivate start delay" CV="133" default="1" exclude="130,131,132,133,134,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+  <variable item="Function to deactivate start delay" CV="133" default="9" exclude="130,131,132,133,134,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
-    <label xml:lang="fr">Fonction pour désactiver délai de départ</label>
-    <label xml:lang="de">Funktionszuordnung Verzögerung ausschalten</label>
-    <label xml:lang="ca">Apagat programat de AUX 5</label>
-    <tooltip>CV133: 0=>Off, 1-28=>F1-F8, 29=>F0</tooltip>
+    <label>Function mapping deceleration off</label>
+    <label xml:lang="fr">Fonction pour désactiver les temporisations</label>
+    <label xml:lang="de">Funktionszuordnung Verzögerungen ausschalten</label>
+    <label xml:lang="ca">Funció per desactivar les temporitzacions</label>
+    <tooltip>CV133: switches off the acceleration and deceleration rates (CV3/CV4). 0=>Off, 1-28=>F1-F28, 29=>F0</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0 = deaktiviert, 1 … 28 = F1 … F28, 29 = F0 (Licht)&lt;br&gt;Nur bei CV137 Bit 4 = 1&lt;/html&gt;</tooltip>
   </variable>
 </variables>
