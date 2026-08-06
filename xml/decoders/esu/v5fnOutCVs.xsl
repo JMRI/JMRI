@@ -11,27 +11,27 @@
     <xsl:template match="variables">
         <variables>
             <xsl:copy-of select="node()"/>
+            <xsl:for-each select="//decoder-config/pane[name/text() = '__DecoderFnDefs']/column/display">
+                <xsl:variable name="decoders" select="string(@item)"/>
+                <variables include="{$decoders}">
+                    <xsl:for-each select="label">
+                        <xsl:variable name="features" select="."/>
+                        <xsl:variable name="index" select="position()"/>
+                        <xsl:variable name="outputName" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputNames']/label)[$index]"/>
+                        <xsl:variable name="outputLabel" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputLabel']/label)[$index]"/>
+                        <xsl:variable name="baseCV" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='baseCV']/label)[$index]"/>
+                        <xsl:if test="$features != 'N'">
+                            <xsl:call-template name="functionOutput">
+                                <xsl:with-param name="outputLabel" select="$outputName"/>
+                                <xsl:with-param name="outputShort" select="$outputLabel"/>
+                                <xsl:with-param name="CVbase" select="$baseCV"/>
+                                <xsl:with-param name="features" select="$features"/>
+                            </xsl:call-template>
+                        </xsl:if>
+                    </xsl:for-each>
+                </variables>
+            </xsl:for-each>
         </variables>
-        <xsl:for-each select="//decoder-config/pane[name/text() = '__DecoderFnDefs']/column/display">
-            <xsl:variable name="decoders" select="string(@item)"/>
-            <variables include="{$decoders}">
-                <xsl:for-each select="label">
-                    <xsl:variable name="features" select="."/>
-                    <xsl:variable name="index" select="position()"/>
-                    <xsl:variable name="outputName" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputNames']/label)[$index]"/>
-                    <xsl:variable name="outputLabel" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputLabel']/label)[$index]"/>
-                    <xsl:variable name="baseCV" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='baseCV']/label)[$index]"/>
-                    <xsl:if test="$features != 'N'">
-                        <xsl:call-template name="functionOutput">
-                            <xsl:with-param name="outputLabel" select="$outputName"/>
-                            <xsl:with-param name="outputShort" select="$outputLabel"/>
-                            <xsl:with-param name="CVbase" select="$baseCV"/>
-                            <xsl:with-param name="features" select="$features"/>
-                        </xsl:call-template>
-                    </xsl:if>
-                </xsl:for-each>
-            </variables>
-        </xsl:for-each>
 
     </xsl:template>
 
