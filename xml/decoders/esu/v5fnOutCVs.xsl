@@ -1,46 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet   version="1.0" 
+<xsl:stylesheet version="1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:db="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude">
+
+    <!-- Copyright (C) JMRI 2026 All rights reserved -->
     
-    <xsl:output method="xml" encoding="utf-8"/>
-
-    <!-- Create function output CV settings for each decoder defined in the xml file -->
-    <!-- install new variables at end of variables element-->
-    
-    <xsl:template match="variables">
-        <variables>
-            <xsl:copy-of select="node()"/>
-            <xsl:for-each select="//decoder-config/pane[name/text() = '__DecoderFnDefs']/column/display">
-                <xsl:variable name="decoders" select="string(@item)"/>
-                <variables include="{$decoders}">
-                    <xsl:for-each select="label">
-                        <xsl:variable name="features" select="."/>
-                        <xsl:variable name="index" select="position()"/>
-                        <xsl:variable name="outputName" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputNames']/label)[$index]"/>
-                        <xsl:variable name="outputLabel" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputLabel']/label)[$index]"/>
-                        <xsl:variable name="baseCV" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='baseCV']/label)[$index]"/>
-                        <xsl:if test="$features != 'N'">
-                            <xsl:call-template name="functionOutput">
-                                <xsl:with-param name="outputLabel" select="$outputName"/>
-                                <xsl:with-param name="outputShort" select="$outputLabel"/>
-                                <xsl:with-param name="CVbase" select="$baseCV"/>
-                                <xsl:with-param name="features" select="$features"/>
-                            </xsl:call-template>
-                        </xsl:if>
-                    </xsl:for-each>
-                </variables>
-            </xsl:for-each>
-        </variables>
-
-    </xsl:template>
-
-    <!--Identity template copies content forward -->
-    <xsl:template match="@*|node()">
-        <xsl:copy>
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:copy>
-    </xsl:template>
+    <xsl:output method="xml" encoding="utf-8" indent="yes"/>
 
     <!-- Template for one function output -->
 
@@ -65,7 +31,8 @@
         <xsl:param name="CVbase"/>
         <xsl:param name="features"/>
 
-        <!-- output mode CV -->
+        <!-- all CVs mentioned in the following comments are the ones for output HL-1 -->
+        <!-- output mode CV 16.0.259 -->
         <variable label="{$outputLabel} Mode" CV="16.0.{$CVbase}" item="ESU FnOut {$outputShort} Mode">
             <enumVal xmlns:xi="http://www.w3.org/2001/XInclude"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -267,5 +234,386 @@
             </enumVal>
         </variable>
 
+        <!-- CV 16.0.260 -->
+        <variables>
+	    <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>27</value>
+            </qualifier>
+            <variable label="Function Switch On Delay" CV="16.0.{$CVbase+1}" default="0" item="ESU FnOut {$outputShort} Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
+                <decVal max="15"/>
+                <label xml:lang="de">Verzögerung beim Einschalten</label>
+            </variable>
+            <variable label="Function Switch Off Delay" CV="16.0.{$CVbase+1}" default="0" item="ESU FnOut {$outputShort} Slider 2" tooltip="Units = 0.4 sec" mask="VVVVXXXX">
+w               <decVal max="15"/>
+                <label xml:lang="de">Verzögerung beim Ausschalten</label>
+            </variable>
+        </variables>
+
+        <!-- CV 16.0.261 -->
+        <variable label="Function Auto Switch Off" CV="16.0.{$CVbase+2}" default="0" item="ESU FnOut {$outputShort} Slider 3" tooltip="Units = 0.4 sec">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>27</value>
+            </qualifier>
+            <decVal/>
+            <label xml:lang="de">Ausgang automatisch Ausschalten</label>
+        </variable>
+
+        <!-- CV 16.0.262 -->
+        <variable item="Brightness CV{$CVbase+3}" label="Brightness CV" CV="16.0.{$CVbase+3}" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>        
+
+        <variable label="Brightness" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 5" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>18</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Helligkeit</label>
+        </variable>
+
+        <variable label="Mode" CV="16.0.{$CVbase+3}" default="0" item="ESU FnOut {$outputShort} Option 1" mask="XXXXXXXV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>22</value>
+            </qualifier>
+            <enumVal>
+                <enumChoice choice="Heating control">
+                    <choice>Heating control</choice>
+                    <choice xml:lang="de">Heizungssteuerung</choice>
+                </enumChoice>
+                <enumChoice choice="Fan control">
+                    <choice>Fan control</choice>
+                    <choice xml:lang="de">Lüftersteuerung</choice>
+                </enumChoice>
+            </enumVal>
+            <label xml:lang="de">Modus</label>
+        </variable>
+        
+        <variable label="Coupler Force" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 7" mask="XXXVVVVV">
+        <qualifier>
+            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+            <relation>ge</relation>
+            <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
+        </qualifier>
+        <decVal max="31"/>
+        <label xml:lang="de">Stärke des Kupplers</label>
+        </variable>
+        
+        <variable label="Fan Speed" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 11" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>23</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Geschwindigkeit</label>
+        </variable>
+        
+        <variable label="Standing heat" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 14" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>24</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Heizstufe im Stand</label>
+        </variable>
+
+        <variable label="Chuff power" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 8" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>25</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Dampfstoßstärke</label>
+        </variable>
+        
+        <!-- CV 16.0.263 -->
+        <variable item="Special Function CV{$CVbase+4}" label="Special Function CV 1" CV="16.0.{$CVbase+4}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
+        <variable label="Fan Acceleration rate" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 12" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>23</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Beschleunigungszeit</label>
+        </variable>
+
+        <variable label="Minimum driving heat" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 15" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>24</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
+        </variable>
+
+        <variable label="Fan power" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 9" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>25</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Stärke des Bläsers</label>
+        </variable>
+
+        <variable label="Phase Reverse" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 6" mask="XXXXXXXV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>15</value>
+            </qualifier>
+            <xsl:call-template name="enum-OffOn" />
+            <label xml:lang="de">Phase tauschen</label>
+        </variable>
+
+        <variable label="Grade Crossing" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 1" mask="XXXXXXVX">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>15</value>
+            </qualifier>
+            <xsl:call-template name="enum-OffOn" />
+        </variable>
+        <variable label="Rule 17 Fwd" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 2" mask="XXXXXVXX">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>15</value>
+            </qualifier>
+            <xsl:call-template name="enum-OffOn" />
+            <label xml:lang="de">Rule 17 vorwärts</label>
+        </variable>
+        <variable label="Rule 17 Rev" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 3" mask="XXXXVXXX">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>15</value>
+            </qualifier>
+            <xsl:call-template name="enum-OffOn" />
+            <label xml:lang="de">Rule 17 rückwärts</label>
+        </variable>
+        <variable label="Dimmer" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 4" mask="XXXVXXXX">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>15</value>
+            </qualifier>
+            <xsl:call-template name="enum-OffOn" />
+            <label xml:lang="de">Abdimmen</label>
+        </variable>
+        <variable label="LED Mode" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 5" mask="VXXXXXXX">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>gt</relation>
+                <value>0</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>15</value>
+            </qualifier>
+            <xsl:call-template name="enum-OffOn" />
+            <label xml:lang="de">LED Modus</label>
+        </variable>
+
+        <!-- CV 16.0.264 -->
+        <variable item="Special Function CV{$CVbase+5}" label="Special Function CV 2" CV="16.0.{$CVbase+5}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
+        <variable label="Fan Decceleration rate" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 13" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>23</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Bremszeit</label>
+        </variable>
+        <variable label="Maximum driving heat" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 16" mask="XXXVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>24</value>
+            </qualifier>
+            <decVal max="31"/>
+            <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
+        </variable>
+        <variable label="Timeout" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 10" tooltip="Units = 0.25 sec">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>25</value>
+            </qualifier>
+            <decVal/>
+        </variable>
+        <variable label="Startup Time" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 6">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ge</relation>
+                <value>16</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>17</value>
+            </qualifier>
+            <decVal/>
+            <label xml:lang="de">Startzeit</label>
+        </variable>
+        <variable label="Level" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 20" mask="XVVVVVVV">
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>eq</relation>
+                <value>19</value>
+            </qualifier>
+            <decVal max="127"/>
+        </variable>
+
+        
     </xsl:template>
+
+    <!-- Create function output CV settings for each decoder defined in the xml file -->
+    <!-- install new variables at end of variables element-->
+    <xsl:template match="variables">
+        <variables>
+            <xsl:copy-of select="node()"/>
+
+            <xsl:for-each select="//decoder-config/pane[name/text() = '__DecoderFnDefs']/column/display">
+                <xsl:variable name="decoders" select="string(@item)"/>
+                <variables include="{$decoders}">
+                    <xsl:for-each select="label">
+                        <xsl:variable name="features" select="."/>
+                        <xsl:variable name="index" select="position()"/>
+                        <xsl:variable name="outputName" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputNames']/label)[$index]"/>
+                        <xsl:variable name="outputLabel" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputLabel']/label)[$index]"/>
+                        <xsl:variable name="baseCV" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='baseCV']/label)[$index]"/>
+                        <xsl:if test="$features != 'N'">
+                            <xsl:call-template name="functionOutput">
+                                <xsl:with-param name="outputLabel" select="$outputName"/>
+                                <xsl:with-param name="outputShort" select="$outputLabel"/>
+                                <xsl:with-param name="CVbase" select="$baseCV"/>
+                                <xsl:with-param name="features" select="$features"/>
+                            </xsl:call-template>
+                        </xsl:if>
+                    </xsl:for-each>
+                </variables>
+            </xsl:for-each>
+        </variables>
+
+    </xsl:template>
+
+    <!--Identity template copies content forward -->
+    <xsl:template match="@*|node()">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- helper functions to reuse -->
+    <!-- Replacement for the enum-OffOn.xml included in multiple places
+         Can't be <xi:include>'d in xsl stylesheets because the path to the
+         xsl stylesheet in the enum-OffOn.xml is relative -->
+
+    <xsl:template name="enum-OffOn">
+        <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+            <enumChoice choice="Off">
+                <choice>Off</choice>
+                <choice xml:lang="it">Off</choice>
+                <choice xml:lang="fr">Éteint</choice>
+                <choice xml:lang="de">Aus</choice>
+                <choice xml:lang="es">De</choice>
+                <choice xml:lang="cs">Vypnuto</choice>
+                <choice xml:lang="nl">Uit</choice>
+            </enumChoice>
+            <enumChoice choice="On">
+                <choice>On</choice>
+                <choice xml:lang="it">On</choice>
+                <choice xml:lang="fr">Allumé</choice>
+                <choice xml:lang="de">Ein</choice>
+                <choice xml:lang="es">En</choice>
+                <choice xml:lang="cs">Zapnuto</choice>
+                <choice xml:lang="nl">Aan</choice>
+            </enumChoice>
+        </enumVal>
+    </xsl:template>
+    
 </xsl:stylesheet>
