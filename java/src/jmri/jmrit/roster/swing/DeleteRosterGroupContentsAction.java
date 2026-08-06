@@ -80,7 +80,7 @@ public class DeleteRosterGroupContentsAction extends JmriAbstractAction {
         List<RosterEntry> entries = roster.getEntriesInGroup(group);
         for (RosterEntry entry : entries) {
             log.info("Deleting entry: {}", entry.getId());
-            //roster.removeEntry(entry);
+            roster.removeEntry(entry);
         }
         
         roster.writeRoster();
