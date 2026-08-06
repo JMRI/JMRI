@@ -5,7 +5,44 @@
     
     <xsl:output method="xml" encoding="utf-8"/>
 
-    <!-- Template for function output -->
+    <!-- Create function output CV settings for each decoder defined in the xml file -->
+    <!-- install new variables at end of variables element-->
+    
+    <xsl:template match="variables">
+        <variables>
+            <xsl:copy-of select="node()"/>
+        </variables>
+        <xsl:for-each select="//decoder-config/pane[name/text() = '__DecoderFnDefs']/column/display">
+            <xsl:variable name="decoders" select="string(@item)"/>
+            <variables include="{$decoders}">
+                <xsl:for-each select="label">
+                    <xsl:variable name="features" select="."/>
+                    <xsl:variable name="index" select="position()"/>
+                    <xsl:variable name="outputName" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputNames']/label)[$index]"/>
+                    <xsl:variable name="outputLabel" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputLabel']/label)[$index]"/>
+                    <xsl:variable name="baseCV" select="(//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='baseCV']/label)[$index]"/>
+                    <xsl:if test="$features != 'N'">
+                        <xsl:call-template name="functionOutput">
+                            <xsl:with-param name="outputLabel" select="$outputName"/>
+                            <xsl:with-param name="outputShort" select="$outputLabel"/>
+                            <xsl:with-param name="CVbase" select="$baseCV"/>
+                            <xsl:with-param name="features" select="$features"/>
+                        </xsl:call-template>
+                    </xsl:if>
+                </xsl:for-each>
+            </variables>
+        </xsl:for-each>
+
+    </xsl:template>
+
+    <!--Identity template copies content forward -->
+    <xsl:template match="@*|node()">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- Template for one function output -->
 
     <!-- Available output features are:
 
@@ -182,13 +219,6 @@
                         <choice xml:lang="de">Servoausgang</choice>
                         <choice xml:lang="ca">Servo</choice>
                     </enumChoice>
-                    <enumChoice value="34">
-                        <choice>Servo output Steam engine Johnson Bar Control</choice>
-                        <choice xml:lang="de">Servo Dampflok Umsteuerung</choice>
-                    </enumChoice>
-                    <enumChoice value="36">
-                        <choice>Servo output Pantograph bouncing</choice>
-                    </enumChoice>
                 </xsl:if>
                 <enumChoice value="28">
                     <choice>Coupler</choice>
@@ -220,12 +250,22 @@
                 <enumChoice value="33">
                     <choice>Autocoupler coil#2</choice>
                 </enumChoice>
+                <xsl:if test="contains($features, 'sO')">
+                    <enumChoice value="34">
+                        <choice>Servo output Steam engine Johnson Bar Control</choice>
+                        <choice xml:lang="de">Servo Dampflok Umsteuerung</choice>
+                    </enumChoice>
+                </xsl:if>
                 <enumChoice value="35">
                     <choice>Trigger smoke chuff (Edge Toggle)</choice>
                 </enumChoice>
-
+                <xsl:if test="contains($features, 'sO')">
+                    <enumChoice value="36">
+                        <choice>Servo output Pantograph bouncing</choice>
+                    </enumChoice>
+                </xsl:if>
             </enumVal>
-
         </variable>
+
     </xsl:template>
 </xsl:stylesheet>
