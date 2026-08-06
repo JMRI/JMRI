@@ -743,5 +743,7 @@
         <ul>
             <li>The Linux desktop icons have been updated from .gif from .png
                 so they work on more Linux distributions.</li>
+            <li>Updated how preferences are written so that the profile.xml file
+                will schema validate.
         </ul>
 

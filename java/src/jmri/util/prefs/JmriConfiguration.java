@@ -102,6 +102,18 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
                     persistentDocument = XMLUtil.createDocument("auxiliary-configuration", JmriConfigurationProvider.NAMESPACE, null, null); // NOI18N
                 }
                 Element root = persistentDocument.getDocumentElement();
+                
+                // migrate to new (2026) schema from older netbeans.org one upon rewriting profile.xml
+                root.removeAttribute("xmlns:xsi");
+                root.removeAttributeNS(null, "xmlns");
+                root.removeAttribute("xsi");
+                root.removeAttribute("xsi:noNamespaceSchemaLocation");
+                root.removeAttribute("noNamespaceSchemaLocation");
+                root.setAttribute("xmlns:xsi",
+                        "http://www.w3.org/2001/XMLSchema-instance");
+                root.setAttribute("xsi:noNamespaceSchemaLocation",
+                        "http://jmri.org/xml/schema/auxiliary-configuration.xsd");
+                
                 Element oldFragment = XMLUtil.findElement(root, elementName, namespace);
                 if (oldFragment != null) {
                     root.removeChild(oldFragment);
