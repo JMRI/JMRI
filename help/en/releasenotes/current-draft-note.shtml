@@ -307,6 +307,7 @@
                 <li>LokSound 5 nano DCC now declares its E24 interface.</li>
                 <li>Added LokPilot 5 micro DCC Direct Atlas Legacy.</li>
                 <li>Renamed LokPilot 5 Micro Next18 DCC to LokPilot 5 micro Next18 DCC (capitalization) to match ESU.</li>
+                <li>Reorganized function output definitions for LokSound 5 / LokPilot 5 decoders for easier maintenance. Removed 7500 lines of mostly duplicate xml, replaced with a few hundred lines of xsl.
                 <li></li>
             </ul>
 
