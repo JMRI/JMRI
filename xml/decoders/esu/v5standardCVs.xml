@@ -1058,7 +1058,6 @@
     <variables exclude="ESU LokPilot 5">
         <xi:include href="http://jmri.org/xml/decoders/esu/v5soundCVs.xml"/>
     </variables>
-<!--    <xi:include href="http://jmri.org/xml/decoders/esu/v5fnOutCVs.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncCVs.xml"/>
     <!-- begin SUSI variables -->
     <!-- note that the exclusions below must be copied to xml/decoders/esu/susiMapPane.xml -->
