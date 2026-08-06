@@ -259,7 +259,7 @@
          Needs to stay in this file for xsl transform to work and create all the CVs
          Abusing pane element to store data for xsl transform -->
     
-    <pane>
+    <pane include="never">
         <name>__DecoderFnDefs</name>
         <column>
             <!-- list function outputs for each supported decoder here in the labels -->
@@ -446,7 +446,7 @@
          Needs to stay in this file for xsl transform to work and create all the CVs
          Abusing pane element to store data for xsl transform -->
     
-    <pane>
+    <pane include="never">
         <name>__functionCommonDefs</name>
         <column>
             <!-- Add translations as new display item outputNames:lang -->
