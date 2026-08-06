@@ -147,6 +147,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>Update OpenLCB_Java library to pick up an improvement in 
+                    how the configuration windows are rendered.</li>
                 <li>LccPro will now prompt you for a backup directory the first time
                     you do a node backup from the main screen if the location hasn't already been set.</li>
             </ul>
@@ -303,6 +305,8 @@
         <h4>ESU</h4>
             <ul>
                 <li>LokSound 5 nano DCC now declares its E24 interface.</li>
+                <li>Added LokPilot 5 micro DCC Direct Atlas Legacy.</li>
+                <li>Renamed LokPilot 5 Micro Next18 DCC to LokPilot 5 micro Next18 DCC (capitalization) to match ESU.</li>
                 <li>Added LokPilot 5 micro KATO.</li>
                 <li></li>
             </ul>

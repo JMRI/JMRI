@@ -28,6 +28,8 @@
     <version author="Dave Heap" version="6" lastUpdated="20211203"/>
     <!-- ver7 add "LokPilot 5 micro DCC Direct", "LokPilot 5 nano DCC" and a few more productIDs -->
     <version author="Heiko Rosemann" version="7" lastUpdated="20240901"/>
+    <!-- ver8 correct capitalization of "LokPilot 5 micro Next18 DCC", add "LokPilot 5 micro DCC Direct Atlas Legacy" -->
+    <version author="Heiko Rosemann" version="8" lastUpdated="20260803"/>
     <!-- ver9 add "LokPilot 5 micro KATO" -->
     <version author="Heiko Rosemann" version="9" lastUpdated="20260805"/>
     <decoder>
@@ -83,11 +85,14 @@
             <model model="LokPilot 5 micro DCC Direct" maxFnNum="31" numOuts="10" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
                 <size length="66.0" width="8.5" height="3.0" units="mm"/>
             </model>
+            <model model="LokPilot 5 micro DCC Direct Atlas Legacy" maxFnNum="31" numOuts="10" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777451">
+                <size length="66.0" width="8.5" height="3.0" units="mm"/>
+            </model>
             <model model="LokPilot 5 micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
                 <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
-            <model model="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+            <model model="LokPilot 5 micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
                 <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
@@ -182,6 +187,10 @@
                 <size length="60.0" width="10.1" height="3.0" units="mm"/>
             </model>
             <model show="no" model="LokPilot 5 micro DCC Next18" replacementModel="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+                <size length="21.0" width="10.6" height="4.0" units="mm"/>
+            </model>
+            <model show="no" model="LokPilot 5 Micro Next18 DCC" replacementModel="LokPilot 5 micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+                <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
             <xi:include href="http://jmri.org/xml/decoders/esu/v5lpOutputLabels.xml"/>
