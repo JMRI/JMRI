@@ -58,8 +58,6 @@ public abstract class LnTrafficController implements LocoNetInterface {
     /**
      * Get configuration option: Notify listeners on adding message to transmit queue,
      * don't notify them on reading back the echo
-     * 
-     * @param value true for notify on adding to queue
      */
     public boolean getLoconetUpdateSlotOnMessageCreation() {
         return mLoconetUpdateSlotOnMessageCreation;
