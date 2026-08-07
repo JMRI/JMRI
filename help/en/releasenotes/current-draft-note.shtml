@@ -28,6 +28,7 @@
             <ul>
                 <li>Console Connection Logging - Default filename now includes connection name.</li>
                 <li>On opening the Console, Logging to File resumes in an empty file if active when the previous console is closed.</li>
+                <li>Unknwon Console CAN Frames now include the hex value of the Frame.</li>
             </ul>
 
         <h4>C/MRI</h4>
