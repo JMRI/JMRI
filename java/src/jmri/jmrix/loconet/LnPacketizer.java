@@ -107,9 +107,22 @@ public class LnPacketizer extends LnTrafficController {
         // queued up.
         try {
             xmtList.add(msg);
+            // save to queue if we want to remember it to check in receive handler
+            if(mLoconetUpdateSlotOnMessageCreation) {
+                try {
+                    log.debug("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
+                    sentList.add(m);
+                    log.debug("notify listeners of message: {}", m);
+                    notify(m);
+                }
+                catch (RuntimeException e) {
+                    log.warn("saving to sent messages list: unexpected exception: ", e);
+                }
+            }
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }
+        
     }
 
     /**
@@ -310,9 +323,18 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // message is complete, dispatch it !!
                     {
-                        log.debug("queue message for notification: {}", msg);
+                        log.debug("message complete: {}", msg);
+                        
+                        if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
+                                && trafficController.getSentList().contains(msg)) {
+                            trafficController.getSentList().remove(msg);
+                            log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                        }
+                        else {
+                            log.debug("queue message for notification: {}", msg);
 
-                        jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
+                            jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
+                        }
                     }
 
                     // done with this one

@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.concurrent.LinkedTransferQueue;
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
@@ -22,6 +23,12 @@ public abstract class LnTrafficController implements LocoNetInterface {
     LocoNetSystemConnectionMemo memo = null;
 
     /**
+     * Configuration option: Notify listeners on adding message to transmit queue, 
+     * don't notify them on receiving an echo
+     */
+    protected boolean mLoconetUpdateSlotOnMessageCreation = false;
+    
+    /**
      * Constructor without reference to a LocoNetSystemConnectionMemo.
      */
     public LnTrafficController() {
@@ -38,6 +45,35 @@ public abstract class LnTrafficController implements LocoNetInterface {
         this.memo = memo;
     }
 
+    /**
+     * Set configuration option: Notify listeners on adding message to transmit queue,
+     * don't notify them on reading back the echo
+     * 
+     * @param value true for notify on adding to queue
+     */
+    public void setLoconetUpdateSlotOnMessageCreation(boolean value) {
+        mLoconetUpdateSlotOnMessageCreation = value;
+    }
+    
+    /**
+     * Get configuration option: Notify listeners on adding message to transmit queue,
+     * don't notify them on reading back the echo
+     * 
+     * @param value true for notify on adding to queue
+     */
+    public boolean getLoconetUpdateSlotOnMessageCreation() {
+        return mLoconetUpdateSlotOnMessageCreation;
+    }
+    
+    /**
+     * Synchronized list to remember outbound packets
+     */
+    protected LinkedTransferQueue<LocoNetMessage> sentList = new LinkedTransferQueue<>();
+
+    public LinkedTransferQueue<LocoNetMessage> getSentList() {
+        return sentList;
+    }
+    
     /**
      * {@inheritDoc}
      */

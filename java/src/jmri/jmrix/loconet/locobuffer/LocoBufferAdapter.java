@@ -40,8 +40,9 @@ public class LocoBufferAdapter extends LnPortController {
                 new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
         options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
                 new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("LoconetProtocolAutoDetect")} )); // NOI18N
-        options.put("LoconetIgnoreReadbackOwnMessages", new Option(Bundle.getMessage("LoconetIgnoreReadbackOwnMessagesLabel"), 
-                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} )); // NOI18N
+        options.put("LoconetUpdateSlotOnMessageCreation",                                       // NOI18N
+                new Option(Bundle.getMessage("LoconetUpdateSlotOnMessageCreationLabel"),        // I18N
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} ));  // I18N
     }
     
     /**
@@ -137,6 +138,7 @@ public class LocoBufferAdapter extends LnPortController {
         setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
         // connect to a packetizing traffic controller
         LnPacketizer packets = getPacketizer(getOptionState(option4Name));
+        packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
         packets.connectPort(this);
 
         // create memo
