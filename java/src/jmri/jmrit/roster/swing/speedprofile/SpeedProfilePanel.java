@@ -222,8 +222,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         testDataPanel.add(new MakeLabelPanel("LabelTestStep", speedStepTest));
         speedStepTest.setToolTipText(Bundle.getMessage("StepTestToolTip"));
         speedStepTestFwd.setEditable(false);
+        speedStepTestFwd.setPreferredSize(new JTextField("99999.99 WWWWW ").getPreferredSize());
         testDataPanel.add(new MakeLabelPanel("LabelTestStepFwd", speedStepTestFwd));
         speedStepTestFwd.setToolTipText(Bundle.getMessage("ForwardTestToolTip"));
+        speedStepTestRev.setPreferredSize(new JTextField("99999.99 WWWWW ").getPreferredSize());
         speedStepTestRev.setEditable(false);
         testDataPanel.add(new MakeLabelPanel("LabelTestStepRev", speedStepTestRev));
         speedStepTestRev.setToolTipText(Bundle.getMessage("ReverseTestToolTip"));
