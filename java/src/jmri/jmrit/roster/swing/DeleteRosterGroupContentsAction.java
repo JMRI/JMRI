@@ -10,9 +10,11 @@ import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.swing.CountingBusyDialog;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WindowInterface;
+import jmri.util.ThreadingUtil;
 
 /**
  * Remove roster group contents, leaving the group
@@ -41,7 +43,8 @@ public class DeleteRosterGroupContentsAction extends JmriAbstractAction {
     }
 
     Component _who;
-
+    CountingBusyDialog dialog;
+    
     /**
      * Call setParameter("group", oldName) prior to calling
      * actionPerformed(event) to bypass the roster group selection dialog if the
@@ -76,14 +79,27 @@ public class DeleteRosterGroupContentsAction extends JmriAbstractAction {
             return;
         }
 
-        // delete the roster group contents
-        List<RosterEntry> entries = roster.getEntriesInGroup(group);
-        for (RosterEntry entry : entries) {
-            log.info("Deleting entry: {}", entry.getId());
-            roster.removeEntry(entry);
-        }
+        final String deleteGroup = group;
         
-        roster.writeRoster();
+        ThreadingUtil.newThread(() -> {
+            // delete the roster group contents
+            List<RosterEntry> entries = roster.getEntriesInGroup(deleteGroup);
+            
+            dialog = new CountingBusyDialog(null, "Deleting Roster Entries", true, entries.size());
+            ThreadingUtil.runOnGUIEventually(() -> {dialog.start();});
+    
+            int count = 0;
+            for (RosterEntry entry : entries) {
+                log.info("Deleting entry: {}", entry.getId());
+                roster.removeEntry(entry);
+                final int thisCount = ++count;
+                ThreadingUtil.runOnGUI(() -> {dialog.count(thisCount);});
+            }
+            
+            roster.writeRoster();
+            ThreadingUtil.runOnGUIEventually(() -> {dialog.finish();});
+        }, "Delete Roster Group Contents").start();
+        
     }
 
     /**
