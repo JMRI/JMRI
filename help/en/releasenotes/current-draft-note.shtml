@@ -310,6 +310,7 @@
                 <li>Added LokPilot 5 micro DCC Direct Atlas Legacy.</li>
                 <li>Renamed LokPilot 5 Micro Next18 DCC to LokPilot 5 micro Next18 DCC (capitalization) to match ESU.</li>
                 <li>Added LokPilot 5 micro KATO.</li>
+                <li>Reorganized function output definitions for LokSound 5 / LokPilot 5 decoders for easier maintenance. Removed 7500 lines of mostly duplicate xml, replaced with a few hundred lines of xsl.
                 <li></li>
             </ul>
 
@@ -747,5 +748,7 @@
         <ul>
             <li>The Linux desktop icons have been updated from .gif from .png
                 so they work on more Linux distributions.</li>
+            <li>Updated how preferences are written so that the profile.xml file
+                will schema validate.
         </ul>
 
