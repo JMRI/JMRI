@@ -41,6 +41,11 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         // We do not send off messages to the Elite
     }
 
+    @Override
+    protected int expectedOffMessages() {
+        return 0; // We do not send off messages to the Elite
+    }
+
     // Test the XNetTurnout message sequence.
     @Test
     @Override
