@@ -784,7 +784,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             } else if (col == COL_TRIGGER) {
                 var nodeMemo = memos.get(row);
-                log.info("Trigger "+nodeMemo.eventID.toShortString());
                 var sysMemo = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class);
                 var connection = sysMemo.get(org.openlcb.Connection.class);
                 var srcNodeID = sysMemo.get(org.openlcb.NodeID.class);
