@@ -152,6 +152,8 @@
                     how the configuration windows are rendered.</li>
                 <li>LccPro will now prompt you for a backup directory the first time
                     you do a node backup from the main screen if the location hasn't already been set.</li>
+                <li>Added a "Trigger" column of buttons to the event table to conveniently produce the 
+                    corresponding event.</li>
             </ul>
 
         <h4>Powerline</h4>
