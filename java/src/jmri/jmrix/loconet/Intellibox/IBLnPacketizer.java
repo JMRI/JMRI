@@ -155,17 +155,29 @@ public class IBLnPacketizer extends LnPacketizer {
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
-                    {
-                        if (log.isDebugEnabled()) {
-                            log.debug("queue message for notification");
+                    if (log.isDebugEnabled()) { // avoid String building if not needed
+                        log.debug("message complete: {}", msg);
+                    }
+                        
+                    if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
+                            && trafficController.getSentList().contains(msg)) {
+                        trafficController.getSentList().remove(msg);
+                        if (log.isDebugEnabled()) { // avoid String building if not needed
+                            log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                         }
+                    }
+                    else {
+                        if (log.isDebugEnabled()) { // avoid String building if not needed
+                            log.debug("queue message for notification: {}", msg);
+                        }
+
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTc = thisTc;
-
+                            
                             @Override
                             public void run() {
                                 myTc.notify(msgForLater);
