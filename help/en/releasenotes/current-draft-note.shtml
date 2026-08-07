@@ -28,6 +28,7 @@
             <ul>
                 <li>Console Connection Logging - Default filename now includes connection name.</li>
                 <li>On opening the Console, Logging to File resumes in an empty file if active when the previous console is closed.</li>
+                <li>Unknwon Console CAN Frames now include the hex value of the Frame.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -300,6 +301,7 @@
                     defaulted to F1 instead of F8, F4 and F9.</li>
                 <li>Non-sound decoders: label and tooltip corrections on CV131-133 and CV137,
                     using D&amp;H's own wording.</li>
+                <li>Added the missing French and German translations.</li>
             </ul>
 
         <h4>ESU</h4>
@@ -307,6 +309,7 @@
                 <li>LokSound 5 nano DCC now declares its E24 interface.</li>
                 <li>Added LokPilot 5 micro DCC Direct Atlas Legacy.</li>
                 <li>Renamed LokPilot 5 Micro Next18 DCC to LokPilot 5 micro Next18 DCC (capitalization) to match ESU.</li>
+                <li>Added LokPilot 5 micro KATO.</li>
                 <li></li>
             </ul>
 
@@ -477,6 +480,7 @@
                     decoder has (also for MX decoders).</li>
                 <li>MS540E24 now declares its E24 interface, and the MN140E24 definition is now
                     available.</li>
+                <li>Added the missing French and German translations.</li>
                 <li></li>
             </ul>
 

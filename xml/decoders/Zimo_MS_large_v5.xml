@@ -28,6 +28,7 @@
        newest generation each time. -->
 
   <version author="Pierre Billon" version="1" lastUpdated="2026/07/31"/>
+  <version author="Pierre Billon" version="1.1" lastUpdated="2026/08/06"/>
 
   <decoder>
     <family name="MS Sound (version 5+)" mfg="Zimo">
@@ -35,12 +36,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -77,12 +78,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -139,12 +140,12 @@
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>

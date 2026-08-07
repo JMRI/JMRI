@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
+  <version version="1.1" author="Pierre Billon" lastUpdated="20260725"/>
   <!--  Firmware 3.13 completed and corrected:
         - Added CV401-412 function swapping, documented by D&amp;H since firmware 3.12 or earlier
           but never implemented for the non-sound decoders, and CV137 bit 6, which applies
