@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnOutCVs.xsl"?>
 <!-- Copyright (C) JMRI 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -24,6 +24,7 @@
     <!-- ver8 add "LokSound 5 micro DCC Direct Atlas Legacy -->
     <!-- ver9 add additional productIDs -->
     <!-- ver10 add "LokSound 5 micro DCC Direct Atlas S2" and "LokSound 5 nano DCC Next18" -->
+    <!-- ver12 move function output CVs to xsl -->
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
     <version author="Dave Heap" version="2" lastUpdated="20200410"/>
     <version author="Dave Heap" version="3" lastUpdated="20200726"/>
@@ -35,6 +36,8 @@
     <version author="Michael Mosher" version="9" lastUpdated="20240321"/>
     <version author="Heiko Rosemann" version="10" lastUpdated="20240901"/>
     <version author="Pierre Billon" version="11" lastUpdated="20260727"/>
+    <version author="Heiko Rosemann" version="12" lastUpdated="20260806"/>
+
     <decoder>
         <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582,33554679,33554650">
@@ -188,4 +191,264 @@
     <xi:include href="http://jmri.org/xml/decoders/esu/susiMapPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v5readMePane.xml"/>
+
+    <!-- the following is the decoder function output definition
+         Needs to stay in this file for xsl transform to work and create all the CVs
+         Abusing pane element to store data for xsl transform -->
+    
+    <pane include="never">
+        <name>__DecoderFnDefs</name>
+        <column>
+            <!-- list function outputs for each supported decoder here in the labels -->
+            
+            <!-- Available output features are:
+                 
+                 "noSP": Output does not have the option called "Servo Power"
+                 "sO": Output options called "Servo output",
+                 "Servo output Steam engine Johnson Bar Control" and "Servo output Pantograph bouncing"
+                 "eS": Output option called "External controlled smoke unit"
+                 "sC": Output option called "Sound controlled smoke unit"
+                 "pa": Output option called "Pantograph"
+                 "rC": Output option called "Roco coupler"
+                 "eC": Output option called "ESU coupler"
+                 "N" : Output does not exist on this decoder
+
+                 All other output options are the most common among all LokPilot 5 and LokSound 5 decoders.
+                 
+                 Determined from decoder manuals and LokProgrammer 5.2.18 -->
+
+            <display item="LokSound 5 L,LokSound 5 L DCC,LokSound 5 XL">
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC,eS</label>
+                <label>sC,eS</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>eC,sC</label>
+                <label>eC,sC</label>
+                <label>sC,pa</label>
+                <label>sC,pa</label>
+                <label>sC,sO</label>
+                <label>sC,sO</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>eC,sC,sO</label>
+                <label>eC,sC,sO</label>
+                <label>sC,sO</label>
+                <label>sC,sO</label>
+            </display>
+            
+            <display item="LokSound 5,LokSound 5 DCC,LokSound 5 micro KATO,LokSound 5 MKL,LokSound 5 nano DCC">
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC,eS,rC</label>
+                <label>sC,eS,rC</label>
+                <label>sC,rC</label>
+                <label>sC,rC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>eC,sC</label>
+                <label>eC,sC</label>
+                <label>sC,pa</label>
+                <label>sC,pa</label>
+                <label>sC,sO</label>
+                <label>sC,sO</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>eC,sC,sO</label>
+                <label>eC,sC,sO</label>
+                <label>sC,sO</label>
+                <label>sC,sO</label>
+            </display>
+
+            <display item="LokSound 5 Fx,LokSound 5 Fx DCC">
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC,eS,rC</label>
+                <label>sC,eS,rC</label>
+                <label>sC,rC</label>
+                <label>sC,rC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>N</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC,sO</label>
+                <label>sC,sO</label>
+            </display>
+
+            <display item="LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 nano DCC Next18">
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC,eS,rC</label>
+                <label>sC,eS,rC</label>
+                <label>sC,rC</label>
+                <label>sC,rC</label>
+                <label>sC,sO</label>
+                <label>sC,sO</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>eC,sC</label>
+                <label>eC,sC</label>
+                <label>sC,pa</label>
+                <label>sC,pa</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>sC</label>
+                <label>eC,sC,sO</label>
+                <label>eC,sC,sO</label>
+                <label>sC,sO</label>
+                <label>sC,sO</label>
+            </display>
+
+            <display item="LokSound 5 micro DCC Direct">
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,eS,noSP</label>
+                <label>sC,eS,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+            </display>
+
+            <display item="LokSound 5 micro DCC Direct Atlas Legacy">
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,eS,noSP</label>
+                <label>sC,eS,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+            </display>
+
+            <display item="LokSound 5 micro DCC Direct Atlas S2">
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,noSP</label>
+                <label>sC,eS,noSP</label>
+                <label>sC,eS,noSP</label>
+            </display>
+
+        </column>
+    </pane>
+
+    <!-- the following is the decoder function labels and names
+         Needs to stay in this file for xsl transform to work and create all the CVs
+         Abusing pane element to store data for xsl transform -->
+    
+    <pane include="never">
+        <name>__functionCommonDefs</name>
+        <column>
+            <!-- Add translations as new display item outputNames:lang -->
+            <!-- i.e. display item="outputNames:de" -->
+            <display item="outputNames">
+                <label>Headlight [1]</label>
+                <label>Headlight [2]</label>
+                <label>Rearlight [1]</label>
+                <label>Rearlight [2]</label>
+                <label>AUX1 [1]</label>
+                <label>AUX1 [2]</label>
+                <label>AUX2 [1]</label>
+                <label>AUX2 [2]</label>
+                <label>AUX3</label>
+                <label>AUX4</label>
+                <label>AUX5</label>
+                <label>AUX6</label>
+                <label>AUX7</label>
+                <label>AUX8</label>
+                <label>AUX9</label>
+                <label>AUX10</label>
+                <label>AUX11</label>
+                <label>AUX12</label>
+                <label>AUX13</label>
+                <label>AUX14</label>
+                <label>AUX15</label>
+                <label>AUX16</label>
+                <label>AUX17</label>
+                <label>AUX18</label>
+            </display>
+            <display item="outputLabel">
+                <label>HL-1</label>
+                <label>HL-2</label>
+                <label>RL-1</label>
+                <label>RL-2</label>
+                <label>A1-1</label>
+                <label>A1-2</label>
+                <label>A2-1</label>
+                <label>A2-2</label>
+                <label>A3</label>
+                <label>A4</label>
+                <label>A5</label>
+                <label>A6</label>
+                <label>A7</label>
+                <label>A8</label>
+                <label>A9</label>
+                <label>A10</label>
+                <label>A11</label>
+                <label>A12</label>
+                <label>A13</label>
+                <label>A14</label>
+                <label>A15</label>
+                <label>A16</label>
+                <label>A17</label>
+                <label>A18</label>
+            </display>
+            <display item="baseCV">
+                <label>259</label>
+                <label>419</label>
+                <label>267</label>
+                <label>427</label>
+                <label>275</label>
+                <label>435</label>
+                <label>283</label>
+                <label>443</label>
+                <label>291</label>
+                <label>299</label>
+                <label>307</label>
+                <label>315</label>
+                <label>323</label>
+                <label>331</label>
+                <label>339</label>
+                <label>347</label>
+                <label>355</label>
+                <label>363</label>
+                <label>371</label>
+                <label>379</label>
+                <label>387</label>
+                <label>395</label>
+                <label>403</label>
+                <label>411</label>
+            </display>
+        </column>
+    </pane>
+
 </decoder-config>
