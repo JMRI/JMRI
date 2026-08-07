@@ -4,14 +4,17 @@
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 1.2 - Nigel Cliffe, added CV370 -->
 <!-- version 1.3 - Pierre Billon - 2026-07-31 - add CV838 and CV844, the pitch extensions -->
+<!-- version 1.4 - Pierre Billon - 2026-08-06 - Added French translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Sound - Electric Loco</name>
+  <name xml:lang="fr">Son - locomotive électrique</name>
   <name xml:lang="it">Suoni - Elettrico</name>
   <name xml:lang="de">Sound - Elektrolok</name>
   <name xml:lang="cs">Zvuk - elektrická lokomotiva</name>
   <column>
     <label>
       <text>Thyristor control</text>
+      <text xml:lang="fr">Thyristor</text>
       <text xml:lang="de">Thyristor</text>
       <text xml:lang="cs">Tyristorová regulace</text>
     </label>
@@ -75,6 +78,7 @@
   <column>
     <label>
       <text>Motor sound</text>
+      <text xml:lang="fr">Moteur</text>
       <text xml:lang="it">Suoni Motore</text>
       <text xml:lang="de">Motor</text>
       <text xml:lang="cs">Zvuk trakčního motoru</text>
@@ -137,6 +141,7 @@
   <column>
     <label>
       <text>Switchgear sound</text>
+      <text xml:lang="fr">Graduateur</text>
       <text xml:lang="it">Suoni Cambio</text>
       <text xml:lang="de">Schaltanlage</text>
       <text xml:lang="cs">Zvuk kontroleru</text>

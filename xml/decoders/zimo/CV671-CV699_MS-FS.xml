@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 copied from MX series file for MS-series decoders.  24 Nov 2022, Nigel Cliffe -->
 <!-- version 1.1  31 July 2026  Pierre Billon - renamed from CV604-CV699_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV671-699, all sound). Added CV671 and CV672, the switch input 4 sound sample and volume -->
+<!-- version 1.2  06 August 2026  Pierre Billon - Added French translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="671" item="Switch input 4 Sound Sample" >
     <decVal/>
@@ -25,6 +26,7 @@
   <variable CV="674" item="Zimo Sound Setting 22">
     <decVal/>
     <label>Volume on Key F20</label>
+    <label xml:lang="fr">Volume sur la touche F20</label>
     <label xml:lang="it">Volume per Tasto F20</label>
     <label xml:lang="de">Lautstärke von F20</label>
     <label xml:lang="cs">Hlasitost na tlačítko F20</label>
@@ -44,6 +46,7 @@
   <variable CV="677" item="Zimo Sound Setting 23">
     <decVal/>
     <label>Volume on Key F21</label>
+    <label xml:lang="fr">Volume sur la touche F21</label>
     <label xml:lang="it">Volume per Tasto F21</label>
     <label xml:lang="de">Lautstärke von F21</label>
     <label xml:lang="cs">Hlasitost na tlačítko F21</label>
@@ -63,6 +66,7 @@
   <variable CV="680" item="Zimo Sound Setting 24">
     <decVal/>
     <label>Volume on Key F22</label>
+    <label xml:lang="fr">Volume sur la touche F22</label>
     <label xml:lang="it">Volume per Tasto F22</label>
     <label xml:lang="de">Lautstärke von F22</label>
     <label xml:lang="cs">Hlasitost na tlačítko F22</label>
@@ -82,6 +86,7 @@
   <variable CV="683" item="Zimo Sound Setting 25">
     <decVal/>
     <label>Volume on Key F23</label>
+    <label xml:lang="fr">Volume sur la touche F23</label>
     <label xml:lang="it">Volume per Tasto F23</label>
     <label xml:lang="de">Lautstärke von F23</label>
     <label xml:lang="cs">Hlasitost na tlačítko F23</label>
@@ -101,6 +106,7 @@
   <variable CV="686" item="Zimo Sound Setting 26">
     <decVal/>
     <label>Volume on Key F24</label>
+    <label xml:lang="fr">Volume sur la touche F24</label>
     <label xml:lang="it">Volume per Tasto F24</label>
     <label xml:lang="de">Lautstärke von F24</label>
     <label xml:lang="cs">Hlasitost na tlačítko F24</label>
@@ -120,6 +126,7 @@
   <variable CV="689" item="Zimo Sound Setting 27">
     <decVal/>
     <label>Volume on Key F25</label>
+    <label xml:lang="fr">Volume sur la touche F25</label>
     <label xml:lang="it">Volume per Tasto F25</label>
     <label xml:lang="de">Lautstärke von F25</label>
     <label xml:lang="cs">Hlasitost na tlačítko F25</label>
@@ -139,6 +146,7 @@
   <variable CV="692" item="Zimo Sound Setting 28">
     <decVal/>
     <label>Volume on Key F26</label>
+    <label xml:lang="fr">Volume sur la touche F26</label>
     <label xml:lang="it">Volume per Tasto F26</label>
     <label xml:lang="de">Lautstärke von F26</label>
     <label xml:lang="cs">Hlasitost na tlačítko F26</label>
@@ -158,6 +166,7 @@
   <variable CV="695" item="Zimo Sound Setting 29">
     <decVal/>
     <label>Volume on Key F27</label>
+    <label xml:lang="fr">Volume sur la touche F27</label>
     <label xml:lang="it">Volume per Tasto F27</label>
     <label xml:lang="de">Lautstärke von F27</label>
     <label xml:lang="cs">Hlasitost na tlačítko F27</label>
@@ -177,6 +186,7 @@
   <variable CV="698" item="Zimo Sound Setting 30">
     <decVal/>
     <label>Volume on Key F28</label>
+    <label xml:lang="fr">Volume sur la touche F28</label>
     <label xml:lang="it">Volume per Tasto F28</label>
     <label xml:lang="de">Lautstärke von F28</label>
     <label xml:lang="cs">Hlasitost na tlačítko F28</label>

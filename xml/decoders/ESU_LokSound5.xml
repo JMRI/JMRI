@@ -34,7 +34,7 @@
     <version author="Heiko Rosemann" version="8" lastUpdated="20230123"/>
     <version author="Michael Mosher" version="9" lastUpdated="20240321"/>
     <version author="Heiko Rosemann" version="10" lastUpdated="20240901"/>
-    <version author="Pierre Billon, pierre.bln@me.com" version="11" lastUpdated="20260727"/>
+    <version author="Pierre Billon" version="11" lastUpdated="20260727"/>
     <decoder>
         <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582,33554679,33554650">

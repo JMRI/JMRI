@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.0  31 July 2026  Pierre Billon - split out of CV260-CV399_MS-MN-FS.xml: brake key, smoke fan, solo drive and high beam - the non-sound CVs that were mixed in with the sound block. Added CV264, the variable low voltage Also: added CV258 (read out CV #8) and CV259 (read the loco set, sound decoders only); renamed from CV264-CV399_MS-MN-FS.xml to match the range now held; replaced the placeholder English labels on CV348 and CV393 with ZIMO's own wording and completed the French and German -->
+<!-- version 1.1  06 August 2026 Pierre Billon - Added French translations -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- CV #258 arrived in software 4.254 and is left ungated so it serves the version 4
@@ -54,7 +55,7 @@
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
-        <choice xml:lang="fr">Aucune touche affectée</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -150,6 +151,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">neomezeno</choice>
       </enumChoice>
@@ -173,6 +175,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">nesníženo</choice>
       </enumChoice>
@@ -195,6 +198,7 @@
     <enumVal>
       <enumChoice choice="no">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>
@@ -229,7 +233,7 @@
 	<decVal min="0" max="255"/>
     <label>Brake Key Deceleration Rate</label>
     <label xml:lang="cs">Klávesa brzdy míra zpomalení</label>
-    <label xml:lang="fr">Décélération de la touche de frein</label>
+    <label xml:lang="fr">Décélération pour la touche de frein</label>
     <label xml:lang="de">Verzögerung der Bremstaste</label>
   </variable>
   <variable CV="349" item="Brake time" default="0" exclude="">
@@ -314,29 +318,29 @@
     <label>Ditch Light with Bell</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Glocke spielt</label>
     <label xml:lang="cs">Obrysová světla se zvonem</label>
-    <label xml:lang="fr">Feux de fossé avec cloche</label>
+    <label xml:lang="fr">Ditch light avec la cloche</label>
   </variable>
   <variable CV="393" item="Ditch Light with Horn" mask="XXXXXXVX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Ditch Light with Horn</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Horn spielt</label>
     <label xml:lang="cs">Obrysová světla s houkačkou</label>
-    <label xml:lang="fr">Feux de fossé avec trompe</label>
+    <label xml:lang="fr">Ditch light avec le klaxon</label>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-2" mask="XXXXXVXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>High-speed switchgear: use the samples in turn</label>
-    <label xml:lang="fr">Commutateur grande vitesse : utiliser les échantillons à tour de rôle</label>
+    <label xml:lang="fr">Graduateur grande vitesse : utiliser les échantillons à tour de rôle</label>
     <label xml:lang="de">Hochgeschwindigkeitsschaltwerk: Samples der Reihe nach verwenden</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 1</label>
       <tooltip>Instead of always starting with the first sample of the high-speed switchgear, use one sample after another.</tooltip>
       <tooltip xml:lang="de">Statt immer mit dem 1.Sample im Hochgeschwindigkeitsschaltwerk zu beginnen, ein Sample nach dem anderen verwenden.</tooltip>
-      <tooltip xml:lang="fr">Au lieu de toujours commencer par le premier échantillon du commutateur grande vitesse, les utiliser l'un après l'autre.</tooltip>
+      <tooltip xml:lang="fr">Au lieu de toujours commencer par le premier échantillon du graduateur grande vitesse, les utiliser l'un après l'autre.</tooltip>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-3" mask="XXXXVXXX" default="0" exclude="">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>High-speed switchgear: skip the sample start and end when upshifting</label>
-    <label xml:lang="fr">Commutateur grande vitesse : ignorer le début et la fin de l'échantillon en montant les crans</label>
+    <label xml:lang="fr">Graduateur grande vitesse : ignorer le début et la fin de l'échantillon en montant les crans</label>
     <label xml:lang="de">Hochgeschwindigkeitsschaltwerk: Anfangs- und Endteil des Samples beim Hochschalten überspringen</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 2</label>
       <tooltip>When upshifting, skip the start and end part of the sample, if loop pointers are set.</tooltip>
@@ -370,6 +374,7 @@
     <enumVal>
         <enumChoice choice="0">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>
@@ -381,6 +386,7 @@
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
+    <label xml:lang="fr">Éclats lumineux avec le son du graduateur</label>
     <label xml:lang="cs">Blikání světel pri zvuku kontroleru</label>
   </variable>
 

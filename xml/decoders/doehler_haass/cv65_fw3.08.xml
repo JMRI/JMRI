@@ -46,6 +46,7 @@
     <label xml:lang="de">Max. Fahrstufe in zweiteiligen Bremsabschnitten</label>
     <label xml:lang="fr">Vitesse max. en section de freinage 2 parties</label>
     <tooltip>Only with 2 braking sections (CV60=1) and Diode braking</tooltip>
+    <tooltip xml:lang="fr">Uniquement avec 2 sections de freinage (CV60=1) et freinage par diode</tooltip>
     <tooltip xml:lang="de">Nur bei zweiteiligen Bremsabschnitten (CV60=1) und Bremsdiode</tooltip>  
   </variable>
 </variables>

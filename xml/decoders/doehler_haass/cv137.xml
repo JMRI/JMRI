@@ -134,6 +134,7 @@
   <variable CV="137" item="Extended mapping" mask="XXXVXXXX" exclude="60,130,131,132,133,134">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Extended mapping</label>
+    <label xml:lang="fr">Mapping étendu</label>
     <label xml:lang="de">Erweiterte Funktionszuordnung</label>
     <label xml:lang="ca">Mapejat estès</label>
     <tooltip>bit4</tooltip>
@@ -145,20 +146,24 @@
      <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="AUX3">
         <choice>AUX3 and AUX4 on ZCLK and ZDAT</choice>
+        <choice xml:lang="fr">AUX3 et AUX4 sur ZCLK et ZDAT</choice>
         <choice xml:lang="de">AUX3 und AUX4 an ZCLK und ZDAT</choice>
         <choice xml:lang="ca">AUX3 i AUX4 en lloc de  ZCLK i ZDAT</choice>
       </enumChoice>
       <enumChoice choice="AUX5">
         <choice>AUX5 and AUX6 on ZCLK and ZDAT</choice>
+        <choice xml:lang="fr">AUX5 et AUX6 sur ZCLK et ZDAT</choice>
         <choice xml:lang="de">AUX5 und AUX6 an ZCLK und ZDAT</choice>
          <choice xml:lang="ca">AUX5 i AUX6 en lloc de  ZCLK i ZDAT</choice>
       </enumChoice>
      </enumChoiceGroup>
     </enumVal>
     <label>SUSI outputs mapping</label>
+    <label xml:lang="fr">Mapping des sorties SUSI</label>
     <label xml:lang="de">AUX an SUSI</label>
     <label xml:lang="ca">AUX en SUSI</label>
     <tooltip>bit5 - Only valid if CV137/Bit 0=1 and Bit 4=1</tooltip>
+    <tooltip xml:lang="fr">bit5 - Valide uniquement si CV137/Bit 0=1 et Bit 4=1</tooltip>
     <tooltip xml:lang="de">bit 5 - Nur gültig, wenn CV137/Bit 0=1 und Bit 4=1</tooltip>
   </variable>
 </variables>

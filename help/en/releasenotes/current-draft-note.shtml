@@ -300,6 +300,7 @@
                     defaulted to F1 instead of F8, F4 and F9.</li>
                 <li>Non-sound decoders: label and tooltip corrections on CV131-133 and CV137,
                     using D&amp;H's own wording.</li>
+                <li>Added the missing French and German translations.</li>
             </ul>
 
         <h4>ESU</h4>
@@ -477,6 +478,7 @@
                     decoder has (also for MX decoders).</li>
                 <li>MS540E24 now declares its E24 interface, and the MN140E24 definition is now
                     available.</li>
+                <li>Added the missing French and German translations.</li>
                 <li></li>
             </ul>
 
