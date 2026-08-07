@@ -109,6 +109,7 @@
                 <li>Added interpretation of some BDL716 configuration messages to
                   LocoNet Monitor.</li>
                 <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
+                <li>Added a LocoNet option to update slot status at LocoNet message creation and ignore echos of our own messages.</li>
             </ul>
 
         <h4>Maple</h4>
