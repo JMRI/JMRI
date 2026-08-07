@@ -4,14 +4,16 @@
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="Uncoupling">
         <choice>Uncoupling</choice>
+        <choice xml:lang="fr">Dételage</choice>
         <choice xml:lang="it">Sganciamento</choice>
         <choice xml:lang="cs">Rozpojování</choice>
-        <choice xml:lang="de">Kupplung</choice>
+        <choice xml:lang="de">Entkuppeln</choice>
       </enumChoice>
       <enumChoice choice="Soft Start">
         <choice>Soft Start</choice>
+        <choice xml:lang="fr">Démarrage progressif</choice>
         <choice xml:lang="it">Accensione graduale</choice>
         <choice xml:lang="cs">Měkký start</choice>
-        <choice xml:lang="de">Soft Start</choice>
+        <choice xml:lang="de">Sanftanlauf</choice>
       </enumChoice>
 </enumChoiceGroup>

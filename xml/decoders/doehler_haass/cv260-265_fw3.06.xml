@@ -67,6 +67,7 @@
     <variable item="Manufacturer 2" CV="260" readOnly="yes" default="97">
       <decVal min="97" max="97"/>
         <label>Manufacturer</label>
+        <label xml:lang="fr">Constructeur</label>
         <label xml:lang="de">Herstellerkennung</label>
         <label xml:lang="ca">Fabricant</label>
         <label xml:lang="nl">Produzent</label>
@@ -74,6 +75,7 @@
     <variable item="Decoder ID" CV="261" readOnly="yes" default="0">
       <decVal min="0" max="250"/>
         <label>Decoder ID</label>
+        <label xml:lang="fr">Identifiant décodeur</label>
         <label xml:lang="de">Decoderkennzeichen</label>
         <label xml:lang="ca">ID del decoder</label>
         <label xml:lang="nl">Decoder-ID</label>
@@ -117,6 +119,7 @@
             <enumChoice choice="SD22A" value ="222"/>
         </enumVal>
         <label>Decoder ID</label>
+        <label xml:lang="fr">Identifiant décodeur</label>
         <label xml:lang="de">Decoderkennzeichen</label>
         <label xml:lang="ca">ID del decoder</label>
         <label xml:lang="nl">Decoder-ID</label>
@@ -124,6 +127,7 @@
     <variable item="Decoder Version 2" CV="262" readOnly="yes" default="0">
       <decVal min="0" max="250"/>
         <label>Firmware Version</label>
+        <label xml:lang="fr">Version du firmware</label>
         <label xml:lang="de">Versionsnummer</label>
          <label xml:lang="ca">Versió número</label>
          <label xml:lang="nl">Versie-nummer</label>
@@ -138,6 +142,7 @@
     <variable item="Revision 2" CV="264" readOnly="yes" default="0">
       <decVal min="0" max="255"/>
         <label>Revision</label>
+        <label xml:lang="fr">Révision</label>
         <label xml:lang="de">Revisionsnummer</label>
         <label xml:lang="ca">Número de revisió</label>
         <label xml:lang="nl">Revisie-nummer

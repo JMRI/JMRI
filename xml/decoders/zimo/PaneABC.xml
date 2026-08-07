@@ -6,6 +6,7 @@
 <!-- version 1.2 - Ronald Kuhn - transfer label for CV#830-833 to CV700-CV899_MS_series.xml -->
 <!-- version 1.3 - Ronald Kuhn - a small visual correction -->
 <!-- version 1.4 - Pierre Billon - 2026-07-31 - added the measured asymmetry voltage (CV100) and its correction factor (CV101) -->
+<!-- version 1.5 - Pierre Billon - 2026-08-06 - Added French and German translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>ABC</name>
   <column>
@@ -106,12 +107,14 @@
       <column>
         <label>
           <text>Entered value multiplied by 0.4 seconds is the additional accel/decel</text>
+          <text xml:lang="fr">La valeur saisie, multipliée par 0,4 seconde, donne l'accélération/décélération</text>
           <text xml:lang="it">Il valore x 0,4 è il valore sommato a CV3 e CV4</text>
           <text xml:lang="cs">zadaná hodnota vynásobená 0,4 sekundy je další zrychlení/zpomalení</text>
           <text xml:lang="de">Der eingegebene Wert, multipliziert mit 0,4, wird den Werten in</text>
         </label>
         <label>
           <text>added to the normal CV3 and CV4 setting, for speed changes due to ABC</text>
+          <text xml:lang="fr">ajoutée aux CV3 et CV4 normaux, pour les changements de vitesse dus à l'ABC</text>
           <text xml:lang="it">per cambio velocità per ABC</text>
           <text xml:lang="cs">přidané k základnímu nastavení v CV3 a CV4 pro rychlost změn v důsledku ABC</text>
           <text xml:lang="de">CV3 und CV4 hinzugerechnet und verändert die Geschwindigkeit bei ABC.</text>
@@ -146,6 +149,7 @@
           <column>
             <label>
               <text>Hundreds digit = sensitivity</text>
+              <text xml:lang="fr">Chiffre des centaines = sensibilité</text>
               <text xml:lang="it">Centinaia = sensibilità</text>
               <text xml:lang="cs">Stovky = citlivost</text>
               <text xml:lang="de">Hunderterstelle = Sensibilität</text>
@@ -159,18 +163,21 @@
           <column>
             <label>
               <text>0 = Fast recognition</text>
+              <text xml:lang="fr">0 = détection rapide</text>
               <text xml:lang="it">0 = Alta</text>
               <text xml:lang="cs">0 = Rychlé rozpoznání</text>
               <text xml:lang="de">0 = Schnell</text>
             </label>
             <label>
               <text>1 = Normal recognition (0.5s)</text>
+              <text xml:lang="fr">1 = détection normale (0,5 s)</text>
               <text xml:lang="it">1 = Normale (0,5 sec)</text>
               <text xml:lang="cs">1 = Normální (0,5 sekundy)</text>
               <text xml:lang="de">1 = Normal (0,5 sec)</text>
             </label>
             <label>
               <text>2 = Slow recognition (1s)</text>
+              <text xml:lang="fr">2 = détection lente (1 s)</text>
               <text xml:lang="it">2 = Bassa (1 sec)</text>
               <text xml:lang="cs">2 = Pomalé rozpoznání (1 sekunda)</text>
               <text xml:lang="de">2 = Langsam (1 sec)</text>
@@ -179,6 +186,7 @@
         </row>
         <label>
           <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
+          <text xml:lang="fr">Chiffres des dizaines et des unités = seuil d'asymétrie en dixièmes de volt</text>
           <text xml:lang="it">Decine e Unità = Soglia asimmetrica in decimi di Volt</text>
           <text xml:lang="cs">Desítky a jednotky = prahová hodnoty asymetrie v desetinách voltu</text>
           <text xml:lang="de">Zehner- und Einerstelle = Asymmetrie-Schwelle in Zehntel-Volt.</text>

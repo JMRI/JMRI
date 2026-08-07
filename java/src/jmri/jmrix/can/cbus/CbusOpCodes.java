@@ -361,7 +361,10 @@ public class CbusOpCodes {
      */
     @Nonnull
     public static final String decodeopcNonExtended(AbstractMessage msg) {
-        return MAP.getOrDefault(msg.getElement(0),getDefaultOpc()).getName();
+        var mapString = MAP.get(msg.getElement(0));
+        return ( mapString != null ? mapString.getName() :
+            Bundle.getMessage("OPC_RESERVED") + " " +
+                msg.toMonitorString().toUpperCase()); // uppercase to emphasise hex value
     }
 
     /**
