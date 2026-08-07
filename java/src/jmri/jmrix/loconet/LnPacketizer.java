@@ -449,9 +449,24 @@ public class LnPacketizer extends LnTrafficController {
         if (!echo) {
             return;
         }
-        // message is queued for transmit, echo it when needed
-        // return a notification via the queue to ensure end
-        javax.swing.SwingUtilities.invokeLater(new Echo(this, new LocoNetMessage(msg)));
+ 
+        LocoNetMessage m = new LocoNetMessage(msg);
+        
+        if(getLoconetUpdateSlotOnMessageCreation() 
+                && getSentList().contains(m)) {
+            getSentList().remove(m);
+            if (log.isDebugEnabled()) { // avoid String building if not needed
+                log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", m, getSentList().size());
+            }
+        }
+        else {
+            if (log.isDebugEnabled()) { // avoid String building if not needed
+                log.debug("queue message for notification: {}", m);
+            }
+            // message is queued for transmit, echo it when needed
+            // return a notification via the queue to ensure end
+            javax.swing.SwingUtilities.invokeLater(new Echo(this, m));
+        }
     }
 
     static class Echo implements Runnable {
