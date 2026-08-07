@@ -143,7 +143,9 @@ public class LnPacketizerStrict extends LnPacketizer {
                     }
                     // message is complete, dispatch it !!
                     {
-                        log.debug("message complete: {}", msg);
+                        if (log.isDebugEnabled()) { // avoid String building if not needed
+                            log.debug("message complete: {}", msg);
+                        }
                         
                         // check for XmtHandler waiting on return values
                         if (waitForMsg != null) {
@@ -177,10 +179,14 @@ public class LnPacketizerStrict extends LnPacketizer {
                         if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
                                 && trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
-                            log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                            if (log.isDebugEnabled()) { // avoid String building if not needed
+                                log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                            }
                         }
                         else {
-                            log.debug("queue message for notification: {}", msg);
+                            if (log.isDebugEnabled()) { // avoid String building if not needed
+                                log.debug("queue message for notification: {}", msg);
+                            }
                             jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                         }
                     }

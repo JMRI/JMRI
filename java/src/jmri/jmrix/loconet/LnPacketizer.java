@@ -110,9 +110,13 @@ public class LnPacketizer extends LnTrafficController {
             // save to queue if we want to remember it to check in receive handler
             if(mLoconetUpdateSlotOnMessageCreation) {
                 try {
-                    log.debug("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
+                    if (log.isDebugEnabled()) { // avoid String building if not needed
+                        log.debug("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
+                    }
                     sentList.add(m);
-                    log.debug("notify listeners of message: {}", m);
+                    if (log.isDebugEnabled()) { // avoid String building if not needed
+                        log.debug("notify listeners of message: {}", m);
+                    }
                     notify(m);
                 }
                 catch (RuntimeException e) {
@@ -323,15 +327,21 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // message is complete, dispatch it !!
                     {
-                        log.debug("message complete: {}", msg);
+                        if (log.isDebugEnabled()) { // avoid String building if not needed
+                            log.debug("message complete: {}", msg);
+                        }
                         
                         if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
                                 && trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
-                            log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                            if (log.isDebugEnabled()) { // avoid String building if not needed
+                                log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                            }
                         }
                         else {
-                            log.debug("queue message for notification: {}", msg);
+                            if (log.isDebugEnabled()) { // avoid String building if not needed
+                                log.debug("queue message for notification: {}", msg);
+                            }
 
                             jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                         }
