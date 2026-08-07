@@ -142,6 +142,8 @@ public final class CbusConstants {
     public static final int CBUS_RQNPN = 0x73;
     public static final int CBUS_NUMEV = 0x74;
     public static final int CBUS_CANID = 0x75;
+    public static final int CBUS_MODE = 0x76;
+    public static final int CBUS_RQSD = 0x78;
 
     public static final int CBUS_EXTC2 = 0x7F;
 
@@ -151,6 +153,8 @@ public final class CbusConstants {
     public static final int CBUS_WCVB = 0x83;
     public static final int CBUS_QCVS = 0x84;
     public static final int CBUS_PCVS = 0x85;
+    public static final int CBUS_RDGN = 0x87;
+    public static final int CBUS_NVSETRD = 0x8E;
 
     public static final int CBUS_ACON = 0x90;
     public static final int CBUS_ACOF = 0x91;
@@ -173,6 +177,9 @@ public final class CbusConstants {
     public static final int CBUS_RDCC4 = 0xA0;
     public static final int CBUS_WCVS = 0xA2;
     public static final int CBUS_VCVS = 0xA4;
+    public static final int CBUS_HEARTB = 0xAB;
+    public static final int CBUS_SD = 0xAC;
+    public static final int CBUS_GRSP = 0xAF;
 
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;
@@ -191,6 +198,7 @@ public final class CbusConstants {
     public static final int CBUS_RDCC5 = 0xC0;
     public static final int CBUS_WCVOA = 0xC1;
     public static final int CBUS_CABDAT = 0xC2;
+    public static final int CBUS_DGN = 0xC7;
     public static final int CBUS_FCLK = 0xCF;
 
     public static final int CBUS_ACON2 = 0xD0;
@@ -212,6 +220,10 @@ public final class CbusConstants {
     public static final int CBUS_PLOC = 0xE1;
     public static final int CBUS_NAME = 0xE2;
     public static final int CBUS_STAT = 0xE3;
+    public static final int CBUS_ENACK = 0xE6;
+    public static final int CBUS_ESD = 0xE7;
+    public static final int CBUS_DTXC = 0xE9;
+    public static final int CBUS_LM = 0xEA;
 
     public static final int CBUS_PARAMS = 0xEF;
 
