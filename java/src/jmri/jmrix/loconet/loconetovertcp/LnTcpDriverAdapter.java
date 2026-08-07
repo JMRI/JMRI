@@ -33,7 +33,8 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
                 new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
         options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
                 new String[]{Bundle.getMessage("LoconetProtocolAutoDetect"),Bundle.getMessage("ButtonNo")} )); // NOI18N
-
+        options.put("LoconetIgnoreReadbackOwnMessages", new Option(Bundle.getMessage("LoconetIgnoreReadbackOwnMessagesLabel"), 
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} )); // NOI18N
     }
 
     public LnTcpDriverAdapter() {

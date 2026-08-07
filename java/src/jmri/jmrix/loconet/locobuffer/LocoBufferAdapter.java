@@ -40,6 +40,8 @@ public class LocoBufferAdapter extends LnPortController {
                 new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
         options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
                 new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("LoconetProtocolAutoDetect")} )); // NOI18N
+        options.put("LoconetIgnoreReadbackOwnMessages", new Option(Bundle.getMessage("LoconetIgnoreReadbackOwnMessagesLabel"), 
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} )); // NOI18N
     }
     
     /**

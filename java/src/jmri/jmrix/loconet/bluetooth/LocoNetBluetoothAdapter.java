@@ -42,6 +42,8 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         options.put(option1Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
         options.put(option2Name, new Option(Bundle.getMessage("TurnoutHandling"),
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
+        options.put("LoconetIgnoreReadbackOwnMessages", new Option(Bundle.getMessage("LoconetIgnoreReadbackOwnMessagesLabel"), 
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} )); // NOI18N
     }
 
     @Override
