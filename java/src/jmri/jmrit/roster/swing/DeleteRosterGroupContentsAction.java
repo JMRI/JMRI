@@ -70,7 +70,7 @@ public class DeleteRosterGroupContentsAction extends JmriAbstractAction {
                     roster.getRosterGroupListWithNoGroup().toArray(),
                     null);
         }
-        // can't delete the roster itself (ALLENTRIES and null represent the roster) and NOGROUP
+        // can't delete the roster itself (ALLENTRIES and null represent the full roster)
         if (group == null || group.equals(Roster.ALLENTRIES)) {
             return;
         }
