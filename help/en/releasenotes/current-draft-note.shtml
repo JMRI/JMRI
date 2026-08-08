@@ -719,7 +719,8 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>Layout Editor has a turnout option to "Show ? When Unknown".
+                This will now also show when displaying the panel via the web.</li>
         </ul>
 
    <h3>Web Server</h3>
