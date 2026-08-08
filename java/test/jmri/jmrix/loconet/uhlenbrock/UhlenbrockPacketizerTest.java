@@ -15,6 +15,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 /**
  *
@@ -34,6 +35,8 @@ public class UhlenbrockPacketizerTest {
 
     @Test
     public void testMatchingEchoReleasesNextMessage() throws IOException {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+        
         LocoNetMessage first = new LocoNetMessage(new int[]{0xB0, 0x01, 0x02, 0x00});
         LocoNetMessage second = new LocoNetMessage(new int[]{0xB1, 0x03, 0x04, 0x00});
 
@@ -48,6 +51,8 @@ public class UhlenbrockPacketizerTest {
 
     @Test
     public void testEchoDuringWriteReleasesNextMessage() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+
         LocoNetMessage first = new LocoNetMessage(new int[]{0xB0, 0x01, 0x02, 0x00});
         LocoNetMessage second = new LocoNetMessage(new int[]{0xB1, 0x03, 0x04, 0x00});
         packetizer.ostream = new EchoingOutputStream();
@@ -60,6 +65,8 @@ public class UhlenbrockPacketizerTest {
 
     @Test
     public void testNonMatchingMessageDoesNotReleaseNextMessage() throws IOException {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+
         LocoNetMessage first = new LocoNetMessage(new int[]{0xB0, 0x01, 0x02, 0x00});
         LocoNetMessage second = new LocoNetMessage(new int[]{0xB1, 0x03, 0x04, 0x00});
         LocoNetMessage inbound = new LocoNetMessage(new int[]{0xB2, 0x05, 0x06, 0x00});
@@ -80,6 +87,8 @@ public class UhlenbrockPacketizerTest {
 
     @Test
     public void testTerminateThreadsWhileWaitingForEcho() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
+
         LocoNetMessage message = new LocoNetMessage(new int[]{0xB0, 0x01, 0x02, 0x00});
         packetizer.sendLocoNetMessage(message);
         waitForTransmittedBytes(message.getNumDataElements());
