@@ -52,7 +52,12 @@ public abstract class LnTrafficController implements LocoNetInterface {
      */
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
-        log.debug("getSystemConnectionMemo {} called in LnTC", memo.getUserName());
+        if(memo != null) {
+            log.debug("getSystemConnectionMemo {} called in LnTC", memo.getUserName());
+        }
+        else {
+            log.debug("getSystemConnectionMemo called in LnTC on null SystemConnectionMemo");
+        }
         return memo;
     }
 
