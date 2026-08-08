@@ -109,6 +109,7 @@
                 <li>Added interpretation of some BDL716 configuration messages to
                     LocoNet Monitor.</li>
                 <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.
+                <li>A LocoBuffer connection now reconnects if the connection goes down and then comes up again.</li>
             </ul>
 
         <h4>Maple</h4>

@@ -15,6 +15,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected LnPortController(LocoNetSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
         setManufacturer(LnConnectionTypeList.DIGITRAX);
+
+        allowConnectionRecovery = true;
+        reconnectMaxAttempts = -1; // retry indefinitely
     }
 
     /**
@@ -117,7 +120,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         mLoconetProtocolAutoDetect = (value.equals("Yes") || value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
         log.debug("Loconet XPSlots: {}", mLoconetProtocolAutoDetect); // NOI18N
     }
-    
+
     public void setInterrogateOnStart(String value) {
         // default (most common state) is on, so just check for No
         mInterrogateAtStart = !(value.equals("No") || value.equals(Bundle.getMessage("ButtonNo")));

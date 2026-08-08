@@ -71,14 +71,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         networkController = p;
     }
 
-    /** Starts a new receive thread after a reconnect. */
-    public void restartRcvThread() {
-        rcvThread = jmri.util.ThreadingUtil.newThread(rcvHandler, "LocoNet receive handler"); // NOI18N
-        rcvThread.setDaemon(true);
-        rcvThread.setPriority(Thread.MAX_PRIORITY);
-        rcvThread.start();
-    }
-
     /**
      * Break connection to existing LnPortnetworkController object. Once broken,
      * attempts to send via "message" member will fail.

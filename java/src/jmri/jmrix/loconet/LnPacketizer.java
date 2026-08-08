@@ -146,6 +146,14 @@ public class LnPacketizer extends LnTrafficController {
         controller = p;
     }
 
+    /** Starts a new receive thread after a reconnect. */
+    public void restartRcvThread() {
+        rcvThread = jmri.util.ThreadingUtil.newThread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread.setDaemon(true);
+        rcvThread.setPriority(Thread.MAX_PRIORITY);
+        rcvThread.start();
+    }
+
     /**
      * Break connection to an existing LnPortController object. Once broken,
      * attempts to send via "message" member will fail.
@@ -323,10 +331,17 @@ public class LnPacketizer extends LnTrafficController {
                     // posted from idle port when enableReceiveTimeout used
                     // Normal condition, go around the loop again
                 } catch (java.io.IOException e) {
-                    // fired when read detects end-of-file
-                    log.info("End of file", e); // NOI18N
-                    dispose();
-                    disconnectPort(controller);
+                    if (LnPacketizer.this.controller != null
+                            && LnPacketizer.this.controller.getAllowConnectionRecovery()) {
+                        log.info("run: server closed connection, attempting recovery");
+                        LnPacketizer.this.controller.closePort();
+                        LnPacketizer.this.controller.recover();
+                    } else {
+                        // fired when read detects end-of-file
+                        log.info("End of file", e); // NOI18N
+                        dispose();
+                        disconnectPort(controller);
+                    }
                     return;
                 } catch (RuntimeException e) {
                     // normally, we don't catch RuntimeException, but in this
@@ -396,6 +411,12 @@ public class LnPacketizer extends LnTrafficController {
                         }
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
+
+                        if (LnPacketizer.this.controller != null && LnPacketizer.this.controller.getAllowConnectionRecovery()) {
+                            log.info("run: server closed connection, attempting recovery");
+                            LnPacketizer.this.controller.closePort();
+                            LnPacketizer.this.controller.recover();
+                        }
                     }
                 } catch (InterruptedException ie) {
                     return; // ending the thread
