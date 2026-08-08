@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import java.util.Date;
 import jmri.util.JUnitUtil;
 
-import jmri.util.JUnitAppender;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -25,7 +24,6 @@ public class LnClockControlTest {
         Assert.assertNotNull("exists",t);
 
         c.dispose();
-        JUnitAppender.suppressWarnMessage("Cannot get throttleID from ThrottleManager. Using default 0x3ff1.");        
     }
 
     @Test
@@ -40,7 +38,6 @@ public class LnClockControlTest {
 
         Assert.assertNotNull("exists",t);
         slotmanager.dispose();
-        JUnitAppender.suppressWarnMessage("Cannot get throttleID from ThrottleManager. Using default 0x3ff1.");        
     }
 
     @Test
@@ -68,7 +65,6 @@ public class LnClockControlTest {
         Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());
 
         c.dispose();
-        JUnitAppender.suppressWarnMessage("Cannot get throttleID from ThrottleManager. Using default 0x3ff1.");        
     }
 
     @Test
@@ -96,7 +92,6 @@ public class LnClockControlTest {
         Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());
 
         c.dispose();
-        JUnitAppender.suppressWarnMessage("Cannot get throttleID from ThrottleManager. Using default 0x3ff1.");        
     }
 
     @BeforeEach
