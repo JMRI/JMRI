@@ -26,9 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Console Connection Logging - Default filename now includes connection name.</li>
-                <li>On opening the Console, Logging to File resumes in an empty file if active when the previous console is closed.</li>
-                <li>Unknwon Console CAN Frames now include the hex value of the Frame.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -38,10 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>PowerManager - Added method for requesting power status from layout.</li>
-                <li>Power status is polled following a set power state command as newer DCC-EX command
-                stations do not confirm their power status following the command.
-                </li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -91,23 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>SlotMonitor update: 
-                <ul>
-                    <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
-                    <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
-                    <li>If purging is disabled in the Command Station so is slow scanning.</li>
-                      A value of -1 stops slowscanning.</li>
-                </ul>
-                <li>Remove some extra messages when configuring with the board-level tools
-                  in the LocoNet menu</li>
-                <li>Added a new programming facade "Digitrax OpSw Word Programming" for
-                  programming at the board level for e.g. DS64's.</li>
-                <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
-                <li>Add in-use count to the Slot Monitor.</li>
-                <li>Timeouts when programming the Op Switches on Digitrax boards (e.g. DS64, etc) will automatically be retried once.</li>
-                <li>Added interpretation of some BDL716 configuration messages to
-                  LocoNet Monitor.</li>
-                <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -147,12 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Update OpenLCB_Java library to pick up an improvement in 
-                    how the configuration windows are rendered.</li>
-                <li>LccPro will now prompt you for a backup directory the first time
-                    you do a node backup from the main screen if the location hasn't already been set.</li>
-                <li>Added a "Trigger" column of buttons to the event table to conveniently produce the 
-                    corresponding event.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -267,51 +241,11 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>Sound decoders, firmware 1.13: added CV137 bit 6 and CV28 bit 2.</li>
-                <li>Sound decoders: firmware 1.01, 1.02.084, 1.05.115, 1.08.027, 1.09.117,
-                    1.11.069 and 1.13.101 are now identified correctly.</li>
-                <li>Sound decoders: corrected the CV131, CV132 and CV133 defaults to F8, F4
-                    and F9, and the CV361 threshold to 7.</li>
-                <li>SUSI sound modules: corrected the CV961 threshold default and the SH05A
-                    and SH10A model comments.</li>
-                <li>The decoder schema now offers <code>E24</code> as a connector type (NEM 664 /
-                    RCN-124, marketed by ESU as "Next28"); the D&amp;H DH24A uses it.</li>
-                <li>New definitions for firmware 3.15.016, covering the non-sound decoders (DH05C,
-                    DH06A, DH10C, DH12A, DH14B, DH16A, DH18A, DH21A, DH21B, DH22A, DH22B, DH24A,
-                    DHSP10A, PD05A, PD06A, PD10MU, PD12A, PD18A, PD18MU, PD21A, FH05B, FH16A, FH18A
-                    and FH22A). Adds shuttle mode (CV60), AUX10-AUX12 mapping (CV101-103), AUX3-AUX6
-                    dimming (CV461-467) and a wider CV112 range. Note that CV467 may read 255 after a
-                    firmware update; a reset (CV8 = 8) restores its default of 31.</li>
-                <li>New definitions for firmware 3.14.095, covering the same decoders, adding CV144
-                    bit 5 and the GPIO brake settings on the DH21B, DH22B and DH24A.</li>
-                <li>Non-sound decoders, firmware 3.13: added the CV401-412 function swapping settings
-                    and CV137 bit 6, on a new Function Swapping tab.</li>
-                <li>Non-sound decoders, firmware 3.13: added the DH24A and DHSP10A locomotive decoders
-                    and the FH16A function decoder.</li>
-                <li>Non-sound decoders, firmware 3.13: corrected the DH21B and DH22B product IDs, and
-                    declared Motorola support on the FH decoders.</li>
-                <li>Non-sound decoders, firmware 3.10 to 3.13: the CV144 GPIO brake settings are now
-                    shown on the decoders that support them.</li>
-                <li>Non-sound decoders, firmware 3.12 to 3.14: CV112 is no longer shown on FH and
-                    PD05A decoders, and its default is corrected to 15.</li>
-                <li>Non-sound decoders: CV124, which selects the function keys that start the
-                    delay, is now shown on the DH Options tab. It is a bit mask over F1-F8 and is
-                    modelled as such; it was previously a single-choice list.</li>
-                <li>Non-sound decoders: corrected the default function assignments of CV131, CV132
-                    and CV133 (low beam light, shunting gear, deceleration off), which all
-                    defaulted to F1 instead of F8, F4 and F9.</li>
-                <li>Non-sound decoders: label and tooltip corrections on CV131-133 and CV137,
-                    using D&amp;H's own wording.</li>
-                <li>Added the missing French and German translations.</li>
+                <li></li>
             </ul>
 
         <h4>ESU</h4>
             <ul>
-                <li>LokSound 5 nano DCC now declares its E24 interface.</li>
-                <li>Added LokPilot 5 micro DCC Direct Atlas Legacy.</li>
-                <li>Renamed LokPilot 5 Micro Next18 DCC to LokPilot 5 micro Next18 DCC (capitalization) to match ESU.</li>
-                <li>Added LokPilot 5 micro KATO.</li>
-                <li>Reorganized function output definitions for LokSound 5 / LokPilot 5 decoders for easier maintenance. Removed 7500 lines of mostly duplicate xml, replaced with a few hundred lines of xsl.
                 <li></li>
             </ul>
 
@@ -467,22 +401,6 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>New definitions for Zimo MS/MN/FS software v5+.</li>
-                <li>New decoders added: MS420, MS440C, MS440D, MS481, MS501, MS920LE and MN150,
-                    plus the FS sound decoders FS840, FS850 and FS890N18 (v5 only), and MS001 and
-                    MN250 (v4 &amp; v5).</li>
-                <li>Expanded CV coverage and corrections to Zimo MS/MN software v4+, including
-                    output counts on the Next18 types.</li>
-                <li>No more sound CVs for MN non-sound decoders.</li>
-                <li>ZIMO sound levels now in the standard Sound Levels pane (including for MX
-                    decoders), to avoid an empty Sound Levels pane.</li>
-                <li>New "Off" option for the Swiss Mapping dimming groups (also for older MX
-                    decoders).</li>
-                <li>The alternative function mapping pane now shows exactly the outputs each
-                    decoder has (also for MX decoders).</li>
-                <li>MS540E24 now declares its E24 interface, and the MN140E24 definition is now
-                    available.</li>
-                <li>Added the missing French and German translations.</li>
                 <li></li>
             </ul>
 
@@ -516,13 +434,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Add the ability to export a backup of a single Roster Group.</li>
-            <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
-            <li>Fixed a bug which caused importing a decoder on Windows to fail.</li>
-            <li>Provide "Delete Roster Group Contents" entry in the Settings menu which 
-                lets you delete (i.e. permanently remove) all the entries in a selected Roster Group.</li>
-            <li>Fixed a bug which would sometimes show empty tabs when it shouldn't.</li>
-            <li>Added the Speed Profiling tool to the Actions menu.<li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -569,12 +481,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Add the <strong>Occupied</strong> option to the Sections Expression.  This is used to
-          test if any blocks within a Section are occupied.</li>
-          <li>Removed the <strong>Listen</strong> option from the <strong>Memory</strong> reference
-          tab used by Actions and Expressions.
-          See <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/chapter7.shtml#listenRemoved">
-          Removed Listen</a> for details.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -586,10 +493,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, you can now control which road names and load types a track can service.</li>
-            <li>Fixed a problem with spurs with schedules in quick service mode.</li>
-            <li>You can now print the contents of the "Show Schedules by Car Type and Load".</li>
-            <li>You can also print the contents of the "Show Staging and Schedules by Car Type and Load".</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -619,7 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Roster speed profile added ability to specify distance in inches or mm. Fix txt visibility.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -701,11 +605,6 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed high CPU use of the Sensor Table when the "graphic state" preference
-                is enabled: painting a state icon no longer resizes the row, which kept the
-                table repainting itself continuously once all sensors were in a known state.
-                Rows are now also tall enough for the icons while sensors are still in the
-                Unknown state.</li>
             <li></li>
         </ul>
 
@@ -718,8 +617,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>Layout Editor has a turnout option to "Show ? When Unknown".
-                This will now also show when displaying the panel via the web.</li>
+            <li></li>
         </ul>
 
    <h3>Web Server</h3>
@@ -743,7 +641,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added coasting and key-notching features in Diesel3Sound.java.</li>
+            <li></li>
         </ul>
 
    <h3>Z21 Server</h3>
@@ -755,9 +653,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The Linux desktop icons have been updated from .gif from .png
-                so they work on more Linux distributions.</li>
-            <li>Updated how preferences are written so that the profile.xml file
-                will schema validate.
+            <li></li>
         </ul>
 
