@@ -24,6 +24,7 @@
     <!-- ver8 add "LokSound 5 micro DCC Direct Atlas Legacy -->
     <!-- ver9 add additional productIDs -->
     <!-- ver10 add "LokSound 5 micro DCC Direct Atlas S2" and "LokSound 5 nano DCC Next18" -->
+    <!-- ver11 Declare E24 interface on LokSound 5 nano DCC -->
     <!-- ver12 move function output CVs to xsl -->
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
     <version author="Dave Heap" version="2" lastUpdated="20200410"/>
