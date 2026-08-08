@@ -343,13 +343,13 @@ This section describes in detail the process for creating the release note for a
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.15.11-SNAPSHOT/5.17.2-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.17.1-SNAPSHOT/5.17.2-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=11/release.build=1/g release.properties
+        sed -i.bak s/release.build=1/release.build=2/g release.properties
         head -10 release.properties
 ```
  - Check that both those edits left 5.17.2 defined in the two files
@@ -473,7 +473,6 @@ This should be done on a machine with only one display.
 "First 5.17.2 files available":
 ```
 
-*(You have to update the tag part of the direction links below)* 
 Recommended content:
 
 ```
@@ -599,16 +598,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
-
 [Release notes](https://jmri.org/releasenotes/jmri5.17.2.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.17.2+Re6f137d282.dmg](https://github.com/JMRI/JMRI/releases/download/v5.17.2/JMRI.5.17.2+Re6f137d282.dmg) | 86fcbc3397f4277979c1ed7936091599114bfa6001e6aba21262317137eb4289
-[JMRI.5.17.2+Re6f137d282.exe](https://github.com/JMRI/JMRI/releases/download/v5.17.2/JMRI.5.17.2+Re6f137d282.exe) | fe7774678f3a83605bedb4017c21e264e2c4c173c7e673caf6f2a2e480d12a24
-[JMRI.5.17.2+Re6f137d282.tgz](https://github.com/JMRI/JMRI/releases/download/v5.17.2/JMRI.5.17.2+Re6f137d282.tgz) | 187f768acecef72ad337f2f71e432dd0e0521f80a68bb3cbac76fea275d45f71
+[JMRI.5.17.2+R0e37219373.dmg](https://github.com/JMRI/JMRI/releases/download/v5.17.2/JMRI.5.17.2+R0e37219373.dmg) | ac9156d788286ba42281674b71579e0026a546ea766191ed355a3f7f274baaee
+[JMRI.5.17.2+R0e37219373.exe](https://github.com/JMRI/JMRI/releases/download/v5.17.2/JMRI.5.17.2+R0e37219373.exe) | fadc2f91dcf6d537c20f387cb3b2862d221326c3dc0ab7182d867e454a5b20dc
+[JMRI.5.17.2+R0e37219373.tgz](https://github.com/JMRI/JMRI/releases/download/v5.17.2/JMRI.5.17.2+R0e37219373.tgz) | 84c2f49f54bb5a7b4b523df6a2857ff53d8f4e4902db9b82b5d73fa6c380f316
+
 
 ```
 
