@@ -69,11 +69,14 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         this.tc = tc;
         this.pm = pm;
 
+        LocoNetSystemConnectionMemo lcm;
+        ThrottleManager tm;
         // get throttleID of this connection
-        ThrottleManager tm = tc.getSystemConnectionMemo().getThrottleManager();
-        if(tm instanceof LnThrottleManager) {
-            throttleID = ((LnThrottleManager) tm).getThrottleID();
-            log.debug("Got throttleID 0x{}.", Integer.toHexString(throttleID));
+        if(    ( (lcm = tc.getSystemConnectionMemo()) != null)
+            && ( (tm = lcm.getThrottleManager()) != null) 
+            && tm instanceof LnThrottleManager) {
+                throttleID = ((LnThrottleManager) tm).getThrottleID();
+                log.debug("Got throttleID 0x{}.", Integer.toHexString(throttleID));
         }
         else {
             // 7f 71 (from LNPE) as two 7bit values combined into 14bit integer is 0x3ff1
