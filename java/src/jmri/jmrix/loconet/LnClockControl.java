@@ -78,7 +78,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         else {
             // 7f 71 (from LNPE) as two 7bit values combined into 14bit integer is 0x3ff1
             throttleID = 0x3ff1;
-            log.warn("Cannot get throttleID from ThrottleManager. Using default 0x{}.", Integer.toHexString(throttleID));
+            log.debug("Cannot get throttleID from ThrottleManager. Using default 0x{}.", Integer.toHexString(throttleID));
         }
         
         // listen for updated slot contents
