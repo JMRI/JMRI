@@ -109,6 +109,7 @@
                 <li>Added interpretation of some BDL716 configuration messages to
                   LocoNet Monitor.</li>
                 <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
+                <li>LocoNet Clock now uses the same throttle ID as the rest of JMRI, instead of (illegal) 00 00.</li>
             </ul>
 
         <h4>Maple</h4>
