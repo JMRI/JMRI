@@ -194,9 +194,12 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                         throw new LocoNetMessageException();
                     }
 
-                    if (msg.equals(lastMessage)) {
-                        log.debug("We have our returned message and can send back out our next instruction");
-                        mCurrentState = NOTIFIEDSTATE;
+                    synchronized (xmtHandler) {
+                        if (mCurrentState == WAITMSGREPLYSTATE && msg.equals(lastMessage)) {
+                            log.debug("We have our returned message and can send back out our next instruction");
+                            mCurrentState = NOTIFIEDSTATE;
+                            xmtHandler.notify();
+                        }
                     }
 
                     // message is complete, dispatch it !!
@@ -274,11 +277,13 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                             while (!controller.okToSend()) {
                                 Thread.yield();
                             }
+                            synchronized (xmtHandler) {
+                                mCurrentState = WAITMSGREPLYSTATE;
+                            }
                             ostream.write(msg);
                             ostream.flush();
                             log.debug("end write to stream");
                             messageTransmitted(msg);
-                            mCurrentState = WAITMSGREPLYSTATE;
                             transmitWait(defaultWaitTimer, WAITMSGREPLYSTATE);
                         } else {
                             // no stream connected
