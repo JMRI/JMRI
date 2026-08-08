@@ -520,6 +520,8 @@
             <li>Add the ability to export a backup of a single Roster Group.</li>
             <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
             <li>Fixed a bug which caused importing a decoder on Windows to fail.</li>
+            <li>Provide "Delete Roster Group Contents" entry in the Settings menu which 
+                lets you delete (i.e. permanently remove) all the entries in a selected Roster Group.</li>
             <li>Fixed a bug which would sometimes show empty tabs when it shouldn't.</li>
             <li>Added the Speed Profiling tool to the Actions menu.<li>
         </ul>
