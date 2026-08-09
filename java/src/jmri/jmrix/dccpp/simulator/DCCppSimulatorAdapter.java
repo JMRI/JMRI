@@ -51,7 +51,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     static final int SENSOR_MSG_RATE = 10;
 
     private boolean outputBufferEmpty = true;
-    private final boolean checkBuffer = false;
+    private final boolean checkBuffer = false; // mousewheel on throttle could overrun buffer, ignore it
     private boolean trackPowerState = false;
     // One extra array element so that i can index directly from the
     // CV value, ignoring CVs[0].
