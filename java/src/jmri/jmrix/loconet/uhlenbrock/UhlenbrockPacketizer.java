@@ -195,6 +195,9 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     }
 
                     synchronized (xmtHandler) {
+                        // Remove this log.error()
+                        log.error("danielb987 demo of stack trace of error messages");
+
                         if (mCurrentState == WAITMSGREPLYSTATE && msg.equals(lastMessage)) {
                             log.debug("We have our returned message and can send back out our next instruction");
                             mCurrentState = NOTIFIEDSTATE;
