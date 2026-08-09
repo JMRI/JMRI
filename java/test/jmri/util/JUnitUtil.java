@@ -164,7 +164,7 @@ public class JUnitUtil {
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
     /**
-     * If true, will cause the checkSetUpTearDownSequence check to 
+     * If true, will cause the checkSetUpTearDownSequence check to
      * fail the test in addition to logging.
      * <p>
      * Set from the jmri.util.JUnitUtil.checkSequenceFailsTest environment variable.
@@ -455,8 +455,12 @@ public class JUnitUtil {
         Level severity = Level.ERROR; // level at or above which we'll complain
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
+        Exception unexpectedMessageException = JUnitAppender.unexpectedMessageException(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
+        if (unexpectedMessageSeen) {
+            unexpectedMessageException.printStackTrace();
+        }
         Assertions.assertFalse( unexpectedMessageSeen,
             () -> "Unexpected "+severity+" or higher messages emitted: \""+unexpectedMessageContent+"\"");
 

@@ -8,13 +8,17 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.*;
 import org.apache.logging.log4j.core.*;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.appender.AppenderLoggingException;
 import org.apache.logging.log4j.core.config.Property;
 import org.apache.logging.log4j.core.config.plugins.*;
+import org.apache.logging.log4j.core.impl.ThrowableProxy;
 import org.apache.logging.log4j.core.layout.PatternLayout;
+import org.apache.logging.log4j.core.time.Instant;
+import org.apache.logging.log4j.message.Message;
+import org.apache.logging.log4j.util.ReadOnlyStringMap;
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -43,7 +47,7 @@ import org.junit.jupiter.api.Assertions;
 @Plugin(name="JUnitAppender", category="Core", elementType="appender", printObject=true)
 public class JUnitAppender extends AbstractAppender {
 
-    protected JUnitAppender(final String name, final Filter filter, final Layout<? extends Serializable> layout, 
+    protected JUnitAppender(final String name, final Filter filter, final Layout<? extends Serializable> layout,
             final boolean ignoreExceptions, final Property[] properties) {
         super(name, filter, layout, ignoreExceptions, properties );
         activateInstance();
@@ -75,7 +79,7 @@ public class JUnitAppender extends AbstractAppender {
         return new JUnitAppender(name, filter, layout, true, Property.EMPTY_ARRAY);
     }
 
-    private static final java.util.ArrayList<LogEvent> list = new java.util.ArrayList<>();
+    private static final java.util.ArrayList<JmriLogEvent> list = new java.util.ArrayList<>();
 
     /**
      * Called for each logging event.
@@ -85,7 +89,7 @@ public class JUnitAppender extends AbstractAppender {
     @Override
     public synchronized void append(LogEvent event) {
         if (hold) {
-            list.add(event);
+            list.add(new JmriLogEvent(event));
         } else {
             sendToConsole(event);
         }
@@ -145,6 +149,8 @@ public class JUnitAppender extends AbstractAppender {
     static volatile String  unexpectedWarnContent = null;
     static volatile boolean unexpectedInfoSeen = false;
     static volatile String  unexpectedInfoContent = null;
+    static volatile Exception unexpectedFatalException = null;
+    static volatile Exception unexpectedErrorException = null;
 
     static synchronized void setUnexpectedFatalSeen(boolean seen) {
         unexpectedFatalSeen = seen;
@@ -176,6 +182,14 @@ public class JUnitAppender extends AbstractAppender {
 
     static synchronized void setUnexpectedInfoContent(String content) {
         unexpectedInfoContent = content;
+    }
+
+    static synchronized void setUnexpectedFatalException(Exception exception) {
+        unexpectedFatalException = exception;
+    }
+
+    static synchronized void setUnexpectedErrorException(Exception exception) {
+        unexpectedErrorException = exception;
     }
 
     public static boolean unexpectedMessageSeen(org.slf4j.event.Level l) {
@@ -220,6 +234,27 @@ public class JUnitAppender extends AbstractAppender {
             if (unexpectedErrorContent != null ) { return unexpectedErrorContent; }
             if (unexpectedWarnContent != null ) { return unexpectedWarnContent; }
             return unexpectedInfoContent;
+        }
+        throw new java.lang.IllegalArgumentException("Did not expect " + l);
+    }
+
+    public static Exception unexpectedMessageException(org.slf4j.event.Level l) {
+        return unexpectedMessageException(convertSlf4jLevelToLog4jLevel(l));
+    }
+
+    private static Exception unexpectedMessageException(Level l) {
+        if (l == Level.FATAL) {
+            return unexpectedFatalException;
+        }
+        if (l == Level.ERROR) {
+            if (unexpectedFatalException != null ) { return unexpectedFatalException; }
+            return unexpectedErrorException;
+        }
+        if (l == Level.WARN) {
+            return null;
+        }
+        if (l == Level.INFO) {
+            return null;
         }
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
@@ -270,7 +305,7 @@ public class JUnitAppender extends AbstractAppender {
     public static void end() {
         hold = false;
         while (!list.isEmpty()) {
-            LogEvent evt = list.remove(0);
+            JmriLogEvent evt = list.remove(0);
             instance().superappend(evt);
         }
     }
@@ -280,10 +315,11 @@ public class JUnitAppender extends AbstractAppender {
      *
      * @param l the event to process
      */
-    private void superappend(LogEvent l) {
+    private void superappend(JmriLogEvent l) {
         if (l.getLevel() == Level.FATAL) {
             setUnexpectedFatalSeen(true);
             setUnexpectedFatalContent(l.getMessage().getFormattedMessage());
+            setUnexpectedFatalException(l.getException());
         }
         if (l.getLevel() == Level.ERROR) {
             if (compare(l, "Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
@@ -291,6 +327,7 @@ public class JUnitAppender extends AbstractAppender {
             } else {
                 setUnexpectedErrorSeen(true);
                 setUnexpectedErrorContent(l.getMessage().getFormattedMessage());
+                setUnexpectedErrorException(l.getException());
             }
         }
         if (l.getLevel() == Level.WARN) {
@@ -375,7 +412,7 @@ public class JUnitAppender extends AbstractAppender {
             return true;
         }
         while (!list.isEmpty()) {
-            LogEvent evt = list.remove(0);
+            JmriLogEvent evt = list.remove(0);
             instance().superappend(evt);
         }
         return false;
@@ -751,7 +788,7 @@ public class JUnitAppender extends AbstractAppender {
      * @param msg the message to assert exists
      */
     public static void assertMessage(String msg) {
-        Iterator<LogEvent> iterator = list.iterator();
+        Iterator<JmriLogEvent> iterator = list.iterator();
         LogEvent lastEvent = null;
         while (iterator.hasNext()) {
             lastEvent = iterator.next();
@@ -821,6 +858,140 @@ public class JUnitAppender extends AbstractAppender {
 
     public static JUnitAppender instance() {
         return JUnitAppender.instance;
+    }
+
+
+    public static class JmriLogEvent implements LogEvent {
+
+        private final LogEvent event;
+        private final Exception exception;
+
+        private JmriLogEvent(LogEvent event) {
+            this.event = event;
+            if ( event.getLevel().compareTo(Level.ERROR) <= 0 ) {
+                this.exception = new Exception(String.format(
+                        "Unexpected %s message: %s",
+                        event.getLevel(),
+                        event.getMessage().getFormattedMessage()));
+            } else {
+                this.exception = null;
+            }
+        }
+
+        public Exception getException() {
+            return exception;
+        }
+
+        @Override
+        public LogEvent toImmutable() {
+            return event.toImmutable();
+        }
+
+        @Override
+        public Map<String, String> getContextMap() {
+            return event.getContextMap();
+        }
+
+        @Override
+        public ReadOnlyStringMap getContextData() {
+            return event.getContextData();
+        }
+
+        @Override
+        public ThreadContext.ContextStack getContextStack() {
+            return event.getContextStack();
+        }
+
+        @Override
+        public String getLoggerFqcn() {
+            return event.getLoggerFqcn();
+        }
+
+        @Override
+        public Level getLevel() {
+            return event.getLevel();
+        }
+
+        @Override
+        public String getLoggerName() {
+            return event.getLoggerName();
+        }
+
+        @Override
+        public Marker getMarker() {
+            return event.getMarker();
+        }
+
+        @Override
+        public Message getMessage() {
+            return event.getMessage();
+        }
+
+        @Override
+        public long getTimeMillis() {
+            return event.getTimeMillis();
+        }
+
+        @Override
+        public Instant getInstant() {
+            return event.getInstant();
+        }
+
+        @Override
+        public StackTraceElement getSource() {
+            return event.getSource();
+        }
+
+        @Override
+        public String getThreadName() {
+            return event.getThreadName();
+        }
+
+        @Override
+        public long getThreadId() {
+            return event.getThreadId();
+        }
+
+        @Override
+        public int getThreadPriority() {
+            return event.getThreadPriority();
+        }
+
+        @Override
+        public Throwable getThrown() {
+            return event.getThrown();
+        }
+
+        @Override
+        public ThrowableProxy getThrownProxy() {
+            return event.getThrownProxy();
+        }
+
+        @Override
+        public boolean isEndOfBatch() {
+            return event.isEndOfBatch();
+        }
+
+        @Override
+        public boolean isIncludeLocation() {
+            return event.isIncludeLocation();
+        }
+
+        @Override
+        public void setEndOfBatch(boolean endOfBatch) {
+            event.setEndOfBatch(endOfBatch);
+        }
+
+        @Override
+        public void setIncludeLocation(boolean locationRequired) {
+            event.setIncludeLocation(locationRequired);
+        }
+
+        @Override
+        public long getNanoTime() {
+            return event.getNanoTime();
+        }
+
     }
 
 }
