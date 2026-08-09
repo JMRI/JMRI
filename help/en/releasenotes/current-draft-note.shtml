@@ -653,6 +653,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>When a test logs a fatal or error message that's neither
+                asserted nor suppressed, a stack trace is shown before the
+                tearDown() method fails. This helps finding where the error
+                message comes from.</li>
             <li></li>
         </ul>
 
