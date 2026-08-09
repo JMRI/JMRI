@@ -41,6 +41,9 @@
                 <display item="ESU FnOut HL-1 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut HL-1 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut HL-1 Slider 5"/>
                 <display item="ESU FnOut HL-1 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -150,6 +153,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut HL-2 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut HL-2 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut HL-2 Slider 5"/>
@@ -263,6 +269,9 @@
                 <display item="ESU FnOut RL-1 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut RL-1 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut RL-1 Slider 5"/>
                 <display item="ESU FnOut RL-1 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -372,6 +381,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut RL-2 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut RL-2 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut RL-2 Slider 5"/>
@@ -485,6 +497,9 @@
                 <display item="ESU FnOut A1-1 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A1-1 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A1-1 Slider 5"/>
                 <display item="ESU FnOut A1-1 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -594,6 +609,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A1-2 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A1-2 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A1-2 Slider 5"/>
@@ -707,6 +725,9 @@
                 <display item="ESU FnOut A2-1 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A2-1 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A2-1 Slider 5"/>
                 <display item="ESU FnOut A2-1 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -816,6 +837,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A2-2 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A2-2 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A2-2 Slider 5"/>
@@ -929,6 +953,9 @@
                 <display item="ESU FnOut A3 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A3 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A3 Slider 5"/>
                 <display item="ESU FnOut A3 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -1038,6 +1065,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A4 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A4 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A4 Slider 5"/>
@@ -1151,6 +1181,9 @@
                 <display item="ESU FnOut A5 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A5 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A5 Slider 5"/>
                 <display item="ESU FnOut A5 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -1260,6 +1293,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A6 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A6 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A6 Slider 5"/>
@@ -1373,6 +1409,9 @@
                 <display item="ESU FnOut A7 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A7 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A7 Slider 5"/>
                 <display item="ESU FnOut A7 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -1482,6 +1521,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A8 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A8 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A8 Slider 5"/>
@@ -1595,6 +1637,9 @@
                 <display item="ESU FnOut A9 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A9 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A9 Slider 5"/>
                 <display item="ESU FnOut A9 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -1704,6 +1749,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A10 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A10 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A10 Slider 5"/>
@@ -1817,6 +1865,9 @@
                 <display item="ESU FnOut A11 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A11 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A11 Slider 5"/>
                 <display item="ESU FnOut A11 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -1926,6 +1977,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A12 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A12 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A12 Slider 5"/>
@@ -2039,6 +2093,9 @@
                 <display item="ESU FnOut A13 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A13 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A13 Slider 5"/>
                 <display item="ESU FnOut A13 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -2148,6 +2205,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A14 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A14 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A14 Slider 5"/>
@@ -2261,6 +2321,9 @@
                 <display item="ESU FnOut A15 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A15 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A15 Slider 5"/>
                 <display item="ESU FnOut A15 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -2370,6 +2433,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A16 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A16 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A16 Slider 5"/>
@@ -2483,6 +2549,9 @@
                 <display item="ESU FnOut A17 Option 1"/>
             </griditem>
             <griditem>
+                <display item="ESU FnOut A17 Option 2"/>
+            </griditem>
+            <griditem>
                 <display item="ESU FnOut A17 Slider 5"/>
                 <display item="ESU FnOut A17 Slider 5" format="hslider" label=""/>
             </griditem>
@@ -2592,6 +2661,9 @@
             </griditem>
             <griditem>
                 <display item="ESU FnOut A18 Option 1"/>
+            </griditem>
+            <griditem>
+                <display item="ESU FnOut A18 Option 2"/>
             </griditem>
             <griditem>
                 <display item="ESU FnOut A18 Slider 5"/>
