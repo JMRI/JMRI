@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnOutCVs.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnOutputs.xsl"?>
 <!-- Copyright (C) JMRI 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
