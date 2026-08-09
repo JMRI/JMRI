@@ -152,7 +152,6 @@
     <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncPane.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
     <!-- the following is the decoder function output definition
