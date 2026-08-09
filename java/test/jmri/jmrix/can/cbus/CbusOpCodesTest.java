@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -129,17 +132,19 @@ public class CbusOpCodesTest {
         assertTrue(CbusOpCodes.decodeopc(m).isEmpty(),"decodeopc 3");
     }
 
-    @Test
-    public void testDecodeopc() {
+    static IntStream opcRange() {
+        return IntStream.range(0, 258);
+    }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testDecodeopc(int opc) {
         CanMessage m = new CanMessage(1,11);
-        for ( int i = 0; (i<258); i++ ) {
-            m.setElement(0, i);
-            if (OPCMAP.containsKey(i)) {
-                assertEquals(OPCMAP.get(i),CbusOpCodes.decodeopc(m),"opc short text "+i);
-            } else {
-                assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
-                    CbusOpCodes.decodeopc(m),"opc short text "+i);
-            }
+        m.setElement(0, opc);
+        if (OPCMAP.containsKey(opc)) {
+            assertEquals(OPCMAP.get(opc),CbusOpCodes.decodeopc(m),"opc short text "+opc);
+        } else {
+            assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
+                CbusOpCodes.decodeopc(m),"opc short text "+opc);
         }
     }
 
@@ -315,12 +320,16 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_RQNPN, "RQNPN"); // NOI18N
         result.put(CbusConstants.CBUS_NUMEV, "NUMEV"); // NOI18N
         result.put(CbusConstants.CBUS_CANID, "CANID"); // NOI18N
+        result.put(CbusConstants.CBUS_MODE, "MODE"); // NOI18N
+        result.put(CbusConstants.CBUS_RQSD, "RQSD"); // NOI18N
         result.put(CbusConstants.CBUS_EXTC2, "EXTC2"); // NOI18N
         result.put(CbusConstants.CBUS_RDCC3, "RDCC3"); // NOI18N
         result.put(CbusConstants.CBUS_WCVO, "WCVO"); // NOI18N
         result.put(CbusConstants.CBUS_WCVB, "WCVB"); // NOI18N
         result.put(CbusConstants.CBUS_QCVS, "QCVS"); // NOI18N
         result.put(CbusConstants.CBUS_PCVS, "PCVS"); // NOI18N
+        result.put(CbusConstants.CBUS_RDGN, "RDGN"); // NOI18N
+        result.put(CbusConstants.CBUS_NVSETRD, "NVSETRD"); // NOI18N
         result.put(CbusConstants.CBUS_ACON, "ACON"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF, "ACOF"); // NOI18N
         result.put(CbusConstants.CBUS_AREQ, "AREQ"); // NOI18N
@@ -340,7 +349,9 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_RDCC4, "RDCC4"); // NOI18N
         result.put(CbusConstants.CBUS_WCVS, "WCVS"); // NOI18N
         result.put(CbusConstants.CBUS_VCVS, "VCVS"); // NOI18N
-        result.put(CbusConstants.CBUS_CABDAT, "CABDAT"); // NOI18N
+        result.put(CbusConstants.CBUS_HEARTB, "HEARTB"); // NOI18N
+        result.put(CbusConstants.CBUS_SD, "SD"); // NOI18N
+        result.put(CbusConstants.CBUS_GRSP, "GRSP"); // NOI18N
         result.put(CbusConstants.CBUS_ACON1, "ACON1"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF1, "ACOF1"); // NOI18N
         result.put(CbusConstants.CBUS_REQEV, "REQEV"); // NOI18N
@@ -355,6 +366,8 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_EXTC4, "EXTC4"); // NOI18N
         result.put(CbusConstants.CBUS_RDCC5, "RDCC5"); // NOI18N
         result.put(CbusConstants.CBUS_WCVOA, "WCVOA"); // NOI18N
+        result.put(CbusConstants.CBUS_CABDAT, "CABDAT"); // NOI18N
+        result.put(CbusConstants.CBUS_DGN, "DGN"); // NOI18N
         result.put(CbusConstants.CBUS_FCLK, "FCLK"); // NOI18N
         result.put(CbusConstants.CBUS_ACON2, "ACON2"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF2, "ACOF2"); // NOI18N
@@ -371,6 +384,10 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_PLOC, "PLOC"); // NOI18N
         result.put(CbusConstants.CBUS_NAME, "NAME"); // NOI18N
         result.put(CbusConstants.CBUS_STAT, "STAT"); // NOI18N
+        result.put(CbusConstants.CBUS_ENACK, "ENACK"); // NOI18N
+        result.put(CbusConstants.CBUS_ESD, "ESD"); // NOI18N
+        result.put(CbusConstants.CBUS_DTXC, "DTXC"); // NOI18N
+        result.put(CbusConstants.CBUS_LM, "LM"); // NOI18N
         result.put(CbusConstants.CBUS_PARAMS, "PARAMS"); // NOI18N
         result.put(CbusConstants.CBUS_ACON3, "ACON3"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF3, "ACOF3"); // NOI18N
