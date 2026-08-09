@@ -667,6 +667,130 @@ w               <decVal max="15"/>
 
     </xsl:template>
 
+    <!-- Autocreate pane for function outputs -->
+    <xsl:template match="pane[1]">
+        <pane include="never">
+            <xsl:copy-of select="node()"/>
+        </pane>
+        <pane xmlns:xi="http://www.w3.org/2001/XInclude"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+            <name>Function Outputs</name>
+            <name xml:lang="de">Funktionsausgänge</name>
+            <column>
+                <separator/>
+                <xsl:for-each select="//decoder-config/pane[name/text() = '__functionCommonDefs']/column/display[@item='outputLabel']/label">
+                    <xsl:variable name="outputLabel" select="."/>
+                    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+                        <griditem insets="2,0,2,0">
+                            <display item="ESU FnOut {$outputLabel} Mode"/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 1"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 1" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 2"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 2" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 3"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 3" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 4"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 4" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Option 1"/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Option 2"/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 5"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 5" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 6"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 6" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 7"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 7" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 8"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 8" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 9"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 9" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 10"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 10" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 11"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 11" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 12"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 12" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 13"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 13" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 14"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 14" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 15"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 15" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 16"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 16" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 17"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 17" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 18"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 18" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 19"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 19" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 20"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 20" format="hslider" label=""/>
+                        </griditem>
+                        <griditem insets="2,0,2,0">
+                            <display item="ESU FnOut {$outputLabel} Check 1" layout="above" format="checkbox"/>
+                            <separator/>
+                            <display item="ESU FnOut {$outputLabel} Check 2" layout="above" format="checkbox"/>
+                            <separator/>
+                            <display item="ESU FnOut {$outputLabel} Check 3" layout="above" format="checkbox"/>
+                            <separator/>
+                            <display item="ESU FnOut {$outputLabel} Check 4" layout="above" format="checkbox"/>
+                            <separator/>
+                            <display item="ESU FnOut {$outputLabel} Check 5" layout="above" format="checkbox"/>
+                            <separator/>
+                            <display item="ESU FnOut {$outputLabel} Check 6" layout="above" format="checkbox"/>
+                        </griditem>
+                    </grid>
+                    <separator/>
+                </xsl:for-each>
+            </column>
+        </pane>
+    </xsl:template>
+    
     <!--Identity template copies content forward -->
     <xsl:template match="@*|node()">
         <xsl:copy>
