@@ -201,7 +201,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
             case BidibLibrary.MSG_BOOST_DIAGNOSTIC:
             {
                 BoostDiagnosticResponse m = (BoostDiagnosticResponse)message;
-                line = "Voltage: " + m.getVoltage() + " mV, Current: " + m.getCurrent() + " mA, Temperature: " + m.getTemperature() + " °C";
+                line = "Voltage: " + m.getVoltage() + " mV, Current: " + m.getCurrent().getCurrent() + " mA, Temperature: " + m.getTemperature() + " °C";
             }
                 break;
             case BidibLibrary.MSG_BOOST_STAT:
