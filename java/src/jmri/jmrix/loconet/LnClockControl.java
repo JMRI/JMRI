@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.util.Date;
 import jmri.PowerManager;
+import jmri.ThrottleManager;
 import jmri.implementation.DefaultClockControl;
 
 import org.slf4j.Logger;
@@ -68,6 +69,18 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         this.tc = tc;
         this.pm = pm;
 
+        // get throttleID of this connection
+        ThrottleManager tm = tc.getSystemConnectionMemo().getThrottleManager();
+        if(tm instanceof LnThrottleManager) {
+            throttleID = ((LnThrottleManager) tm).getThrottleID();
+            log.debug("Got throttleID 0x{}.", Integer.toHexString(throttleID));
+        }
+        else {
+            // 7f 71 (from LNPE) as two 7bit values combined into 14bit integer is 0x3ff1
+            throttleID = 0x3ff1;
+            log.debug("Cannot get throttleID from ThrottleManager. Using default 0x{}.", Integer.toHexString(throttleID));
+        }
+        
         // listen for updated slot contents
         if (sm != null) {
             sm.addSlotListener(this);
@@ -90,6 +103,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     final SlotManager sm;
     final LnTrafficController tc;
     final LnPowerManager pm;
+    final int throttleID;
 
     /* Operational variables */
     jmri.Timebase clock = null;
@@ -338,6 +352,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             s.setFcMinutes(curMinutes);
             s.setFcRate(curRate);
             s.setFcFracMins(curFractionalMinutes);
+            s.setThrottleIdentity(throttleID);
 
             // set other content
             //     power (GTRK_POWER, 0x01 bit in byte 7)
