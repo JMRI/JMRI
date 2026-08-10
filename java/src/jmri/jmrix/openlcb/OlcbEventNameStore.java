@@ -15,7 +15,7 @@ import org.openlcb.EventNameStore;
  *
  * @author Bob Jacobsen Copyright (C) 2024
  */
-public final class OlcbEventNameStore implements EventNameStore {
+public class OlcbEventNameStore implements EventNameStore { // not final for testing
 
     public OlcbEventNameStore() {
 
@@ -92,7 +92,7 @@ public final class OlcbEventNameStore implements EventNameStore {
 
     public void readDetails() {
         log.debug("reading Event Name Details");
-        new OlcbEventNameStoreXml(this,"EventNames.xml").load();  // NOI18N
+        new OlcbEventNameStoreXml(this).load();  // NOI18N
         log.debug("...done reading Event Name details");
     }
 
@@ -128,7 +128,7 @@ public final class OlcbEventNameStore implements EventNameStore {
     public void writeEventNameDetails() throws java.io.IOException {
         log.debug("storing event name map {}", dirty);
         if (this.dirty) {
-            new OlcbEventNameStoreXml(this,"EventNames.xml").store();  // NOI18N
+            new OlcbEventNameStoreXml(this).store();  // NOI18N
             this.dirty = false;
             log.debug("...done writing event name details");
         }
