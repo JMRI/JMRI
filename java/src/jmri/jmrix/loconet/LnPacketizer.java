@@ -110,12 +110,12 @@ public class LnPacketizer extends LnTrafficController {
             // save to queue if we want to remember it to check in receive handler
             if(mLoconetUpdateSlotOnMessageCreation) {
                 try {
-                    if (log.isDebugEnabled()) { // avoid String building if not needed
-                        log.debug("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
+                    if (log.isTraceEnabled()) { // avoid String building if not needed
+                        log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
                     }
                     sentList.add(m);
-                    if (log.isDebugEnabled()) { // avoid String building if not needed
-                        log.debug("notify listeners of message: {}", m);
+                    if (log.isTraceEnabled()) { // avoid String building if not needed
+                        log.trace("notify listeners of message: {}", m);
                     }
                     notify(m);
                 }
@@ -327,20 +327,20 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // message is complete, dispatch it !!
                     {
-                        if (log.isDebugEnabled()) { // avoid String building if not needed
-                            log.debug("message complete: {}", msg);
+                        if (log.isTraceEnabled()) { // avoid String building if not needed
+                            log.trace("message complete: {}", msg);
                         }
                         
                         if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
                                 && trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
-                                log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                            if (log.isTraceEnabled()) { // avoid String building if not needed
+                                log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                             }
                         }
                         else {
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
-                                log.debug("queue message for notification: {}", msg);
+                            if (log.isTraceEnabled()) { // avoid String building if not needed
+                                log.trace("queue message for notification: {}", msg);
                             }
 
                             jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
@@ -455,13 +455,13 @@ public class LnPacketizer extends LnTrafficController {
         if(getLoconetUpdateSlotOnMessageCreation() 
                 && getSentList().contains(m)) {
             getSentList().remove(m);
-            if (log.isDebugEnabled()) { // avoid String building if not needed
-                log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", m, getSentList().size());
+            if (log.isTraceEnabled()) { // avoid String building if not needed
+                log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", m, getSentList().size());
             }
         }
         else {
-            if (log.isDebugEnabled()) { // avoid String building if not needed
-                log.debug("queue message for notification: {}", m);
+            if (log.isTraceEnabled()) { // avoid String building if not needed
+                log.trace("queue message for notification: {}", m);
             }
             // message is queued for transmit, echo it when needed
             // return a notification via the queue to ensure end

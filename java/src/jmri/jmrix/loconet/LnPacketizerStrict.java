@@ -143,8 +143,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                     }
                     // message is complete, dispatch it !!
                     {
-                        if (log.isDebugEnabled()) { // avoid String building if not needed
-                            log.debug("message complete: {}", msg);
+                        if (log.isTraceEnabled()) { // avoid String building if not needed
+                            log.trace("message complete: {}", msg);
                         }
                         
                         // check for XmtHandler waiting on return values
@@ -179,13 +179,13 @@ public class LnPacketizerStrict extends LnPacketizer {
                         if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
                                 && trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
-                                log.debug("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                            if (log.isTraceEnabled()) { // avoid String building if not needed
+                                log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                             }
                         }
                         else {
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
-                                log.debug("queue message for notification: {}", msg);
+                            if (log.isTraceEnabled()) { // avoid String building if not needed
+                                log.trace("queue message for notification: {}", msg);
                             }
                             jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                         }
