@@ -17,6 +17,8 @@ import jmri.util.ThreadingUtil;
 
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.swing.MultiLineCellRenderer;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -95,6 +97,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         table.setName("jmri.jmrix.openlcb.swing.eventtable.EventTablePane.table"); // for persistence
         table.setColumnSelectionAllowed(true);
         table.setRowSelectionAllowed(true);
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        table.setDefaultRenderer(JButton.class, buttonRenderer);
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+        table.setDefaultEditor(JButton.class, buttonEditor);
+
         
         // render in fixed size font
         var defaultFont = table.getFont();
@@ -637,12 +644,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         static final int COL_EVENTID = 0;
         static final int COL_EVENTNAME = 1;
-        static final int COL_PRODUCER_NODE = 2;
-        static final int COL_PRODUCER_NAME = 3;
-        static final int COL_CONSUMER_NODE = 4;
-        static final int COL_CONSUMER_NAME = 5;
-        static final int COL_CONTEXT_INFO = 6;
-        static final int COL_COUNT = 7;
+        static final int COL_TRIGGER = 2;
+        static final int COL_PRODUCER_NODE = 3;
+        static final int COL_PRODUCER_NAME = 4;
+        static final int COL_CONSUMER_NODE = 5;
+        static final int COL_CONSUMER_NAME = 6;
+        static final int COL_CONTEXT_INFO = 7;
+        static final int COL_COUNT = 8;
 
         MimicNodeStore store;
         EventTable stdEventTable;
@@ -704,6 +712,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         return "";
                     }
                     
+                case COL_TRIGGER:
+                    return Bundle.getMessage("TableColTrigger");
                 case COL_PRODUCER_NODE:
                     return memo.producer != null ? memo.producer.toString() : "";
                 case COL_PRODUCER_NAME: return memo.producerName;
@@ -764,13 +774,23 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         @Override
         public void setValueAt(Object value, int row, int col) {
-            if (col != COL_EVENTNAME) return;
-            if (row >= memos.size()) {
-                log.warn("request out of range: {} greater than {}", row, memos.size());
+            if (col == COL_EVENTNAME) {
+                if (row >= memos.size()) {
+                    log.warn("request out of range: {} greater than {}", row, memos.size());
+                    return;
+                }
+                var memo = memos.get(row);
+                nameStore.addMatch(memo.eventID, value.toString());
                 return;
+            } else if (col == COL_TRIGGER) {
+                var nodeMemo = memos.get(row);
+                var sysMemo = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class);
+                var connection = sysMemo.get(org.openlcb.Connection.class);
+                var srcNodeID = sysMemo.get(org.openlcb.NodeID.class);
+                Message m = new ProducerConsumerEventReportMessage(srcNodeID, nodeMemo.eventID);
+                connection.put(m, null);
+                
             }
-            var memo = memos.get(row);
-            nameStore.addMatch(memo.eventID, value.toString());
         }
 
         @Override
@@ -783,6 +803,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             switch (col) {
                 case COL_EVENTID:       return Bundle.getMessage("TableColEventId");
                 case COL_EVENTNAME:     return Bundle.getMessage("TableColEventName");
+                case COL_TRIGGER:       return Bundle.getMessage("TableColTrigger");
                 case COL_PRODUCER_NODE: return Bundle.getMessage("TableColProducerNode");
                 case COL_PRODUCER_NAME: return Bundle.getMessage("TableColProducerName");
                 case COL_CONSUMER_NODE: return Bundle.getMessage("TableColConsumerNode");
@@ -799,12 +820,16 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            return col == COL_EVENTNAME;
+            return col == COL_EVENTNAME || col == COL_TRIGGER;
         }
 
         @Override
         public Class<?> getColumnClass(int col) {
-            return String.class;
+            if (col == COL_TRIGGER) {
+                return JButton.class;
+            } else {
+                return String.class;
+            }
         }
 
         /**

@@ -1154,6 +1154,9 @@
 
         <li>Bryan Vianco provided two MRC decoder definitions</li>
 
+        <li>Adrien Virolleaud, <!-- avirolleaud -->
+        who improved the performance of the bean tables in graphics mode.</li>
+        
         <li>Didrik Voss, who provided the configuration information, including the default values,
         for the Hornby R8215 decoder <a id="W"></a>
         </li>

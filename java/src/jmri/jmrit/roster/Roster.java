@@ -1563,11 +1563,26 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Strings are immutable, so deleting an item from the copy should not
      * affect the system-wide list of roster groups.
      *
-     * @return A list of the roster group names.
+     * @return A list of the roster group names not including All Entries and No Group.
      */
     public ArrayList<String> getRosterGroupList() {
         ArrayList<String> list = new ArrayList<>(this.rosterGroups.keySet());
         Collections.sort(list);
+        return list;
+    }
+
+    /**
+     * Get a list of the roster group names.
+     * <p>
+     * Strings are immutable, so deleting an item from the copy should not
+     * affect the system-wide list of roster groups.
+     *
+     * @return A list of the roster group names including No Group, not including All Entries
+     */
+    public ArrayList<String> getRosterGroupListWithNoGroup() {
+        ArrayList<String> list = new ArrayList<>(this.rosterGroups.keySet());
+        Collections.sort(list);
+        list.add(NOGROUP);
         return list;
     }
 
