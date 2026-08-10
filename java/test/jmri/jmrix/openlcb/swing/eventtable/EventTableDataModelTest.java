@@ -13,11 +13,31 @@ import org.openlcb.implementations.EventTable;
  *
  * @author Bob Jacobsen Copyright (C) 2026
  */
-public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
-
+public class EventTableDataModelTest {
 
     @Test
     public void tableTest() {
+    }
+
+    // test for adding produced events
+    @Test
+    public void tableModelLoadProducerTest() {
+        var model = new EventTableDataModel(store, eventTable, olcbStore);
+        
+        model.recordProducer(new EventID("1.1.1.1.2.2.2.2"), new NodeID("1.1.1.1.2.2"),"", false);
+        
+        assertEquals(1, model.getRowCount());
+        
+        // duplicate event and node is not a new row
+        model.recordProducer(new EventID("1.1.1.1.2.2.2.2"), new NodeID("1.1.1.1.2.2"),"", false);
+
+        assertEquals(1, model.getRowCount());
+
+        // duplicate event, different source node is a new row
+        model.recordProducer(new EventID("1.1.1.1.2.2.2.2"), new NodeID("1.1.1.1.3.3"),"", false);
+
+        assertEquals(2, model.getRowCount());
+        
     }
 
     final NodeID nid1 = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
@@ -32,13 +52,9 @@ public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     };
 
     @BeforeEach
-    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        panel = new EventTablePane();
-        title = "Event Table";
-        helpTarget = "package.jmri.jmrix.openlcb.swing.eventtable.EventTablePane";
         
         store = new MimicNodeStore(connection, nid1);
         eventTable = new EventTable();
@@ -55,12 +71,11 @@ public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @AfterEach
-    @Override
     public void tearDown() {
         olcbStore.deregisterShutdownTask();
         JUnitUtil.tearDown();
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(EventTablePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EventTableDataModelTest.class);
 
 }
