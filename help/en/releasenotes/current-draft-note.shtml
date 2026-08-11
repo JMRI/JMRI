@@ -517,6 +517,10 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+            <li>Sensor and MultiSensor icons now repaint only their own area of the panel
+                when their sensor changes state, instead of the whole window, reducing CPU
+                use on panels receiving frequent sensor events. The repainted area follows
+                the panel zoom level.</li>
             <li></li>
         </ul>
 
@@ -623,6 +627,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>Fixed high CPU use of the Turnout Table when the "graphic state" preference
+                is enabled: painting a state icon no longer resizes the row, which kept the
+                table repainting itself continuously once all turnouts were in a known state.
+                Rows are now also tall enough for the icons while turnouts are still in the
+                Unknown state.</li>
             <li></li>
         </ul>
 
