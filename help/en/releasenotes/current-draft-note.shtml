@@ -115,7 +115,10 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>Fixed an issue where a throttle could stop sending speed and
+                    function commands for its locomotive after receiving an
+                    unrecognized locomotive information response, requiring a
+                    JMRI restart to recover.</li>
             </ul>
 
         <h4>LocoNet</h4>

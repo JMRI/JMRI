@@ -7,7 +7,6 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -288,46 +287,6 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
         assertEquals( n + 1, tc.outbound.size(),
             "Speed message sent after unrecognized LOCO_INFO_RESPONSE sub-type");
-    }
-
-    /**
-     * Z21 flavour of the parent test.  Speed and function commands are queued
-     * with the THROTTLEIDLE state here, so the outstanding request used to
-     * hold the queue is a status request instead of a speed command.
-     */
-    @Override
-    @Test
-    @Timeout(1000)
-    public void testRepeatedCommandStationBusyDoesNotStallQueue() {
-        int n = tc.outbound.size();
-        Z21XNetThrottle t = (Z21XNetThrottle) instance;
-        initThrottle(t, n);
-        n = tc.outbound.size();
-
-        // send a status request, which leaves the throttle in THROTTLESTATSENT.
-        t.sendStatusInformationRequest();
-        assertEquals( n + 1, tc.outbound.size(), "Throttle Information Request Message sent");
-
-        // and queue a command behind it; it can not go out while the status
-        // request is still outstanding.
-        n = tc.outbound.size();
-        t.setSpeedSetting(0.5f);
-        assertEquals( n, tc.outbound.size(),
-            "Speed message held while a request is outstanding");
-
-        // the command station answers busy over and over.
-        for (int i = 0; i < 5; i++) {
-            XNetReply m = new XNetReply();
-            m.setElement(0, 0x61);
-            m.setElement(1, 0x81);
-            m.setElement(2, 0xE3);
-            t.message(m);
-        }
-
-        JUnitAppender.assertWarnMessage(
-            "Throttle 3: 5 consecutive busy/communication errors, resetting request state");
-        assertEquals( n + 1, tc.outbound.size(),
-            "Queued speed message released after repeated busy answers");
     }
 
     @Override

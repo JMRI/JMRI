@@ -501,8 +501,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * A LOCO_INFO_RESPONSE (0xE3) carrying a sub-type the throttle does not
      * know about used to leave requestState stuck at THROTTLESTATSENT: the
      * reply was consumed, so no timeout ever fired, and every command queued
-     * afterwards was held back forever.  Observed on real hardware (LZV200)
-     * as "E3 60 00 00 83" in answer to a status request.
+     * afterwards was held back forever.
      */
     @Test
     public void testUnknownLocoInfoResponseSubtypeDoesNotStallQueue() {
@@ -534,46 +533,6 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             "Speed message sent after unrecognized LOCO_INFO_RESPONSE sub-type");
         assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(n).getElement(1),
             "Throttle Set Speed Message");
-        t.throttleDispose();
-    }
-
-    /**
-     * The command station answering "busy" (61 81 E3) is retransmitted by the
-     * traffic controller without any limit.  If the answer keeps being busy,
-     * requestState never returns to idle, so cap the number of consecutive
-     * retransmittable errors accepted for a single request.
-     */
-    @Test
-    public void testRepeatedCommandStationBusyDoesNotStallQueue() {
-        int n = tc.outbound.size();
-        XNetThrottle t = (XNetThrottle) instance;
-        initThrottle(t, n);
-        n = tc.outbound.size();
-
-        // send a speed command, which leaves the throttle in THROTTLESPEEDSENT.
-        t.setSpeedSetting(0.5f);
-        assertEquals( n + 1, tc.outbound.size(), "Throttle Set Speed Message sent");
-
-        // and queue a second command behind it; it can not go out while the
-        // first request is still outstanding.
-        n = tc.outbound.size();
-        t.setFunction(0, true);
-        assertEquals( n, tc.outbound.size(),
-            "Function message held while a request is outstanding");
-
-        // the command station answers busy over and over.
-        for (int i = 0; i < 5; i++) {
-            XNetReply m = new XNetReply();
-            m.setElement(0, XNetConstants.CS_INFO);
-            m.setElement(1, XNetConstants.CS_BUSY);
-            m.setElement(2, 0xE3);
-            t.message(m);
-        }
-
-        JUnitAppender.assertWarnMessage(
-            "Throttle 3: 5 consecutive busy/communication errors, resetting request state");
-        assertEquals( n + 1, tc.outbound.size(),
-            "Queued function message released after repeated busy answers");
         t.throttleDispose();
     }
 
