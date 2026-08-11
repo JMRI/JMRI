@@ -262,12 +262,25 @@ w               <decVal max="15"/>
             <label xml:lang="de">Ausgang automatisch Ausschalten</label>
         </variable>
 
-        <!-- CV 16.0.262 -->
+        <!-- CV 16.0.262 - CV 16.0.264 and CV 16.0.258 -->
         <variable item="Brightness CV{$CVbase+3}" label="Brightness CV" CV="16.0.{$CVbase+3}" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
             <decVal/>
         </variable>        
 
-        <variable label="Brightness" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 5" mask="XXXVVVVV">
+        <variable item="Special Function CV{$CVbase+4}" label="Special Function CV 1" CV="16.0.{$CVbase+4}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
+
+        <variable item="Special Function CV{$CVbase+5}" label="Special Function CV 2" CV="16.0.{$CVbase+5}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
+ 
+        <variable item="Special Function CV{$CVbase-1}" label="Special Function CV 3" CV="16.0.{$CVbase-1}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
+
+        <!-- Mode 1 to Mode 20 - all the different lights -->
+        <variables>
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
                 <relation>gt</relation>
@@ -278,12 +291,167 @@ w               <decVal max="15"/>
                 <relation>le</relation>
                 <value>20</value>
             </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Helligkeit</label>
-        </variable>
 
-        <!-- Mode 21 - ESU coupler - has no CV 16.0.262 -->
-        
+            <variable label="Brightness" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 5" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Helligkeit</label>                
+            </variable>
+
+            <variable label="Phase Reverse" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 6" mask="XXXXXXXV">
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ge</relation>
+                    <value>5</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>le</relation>
+                    <value>15</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Firmware Full Version</variableref>
+                    <relation>lt</relation>
+                    <!-- 5.8.156 -> 0x0508009c -> 84410524 -->
+                    <value>84410524</value>
+                </qualifier>
+                <xsl:call-template name="enum-OffOn" />
+                <label xml:lang="de">Phase tauschen</label>
+            </variable>
+
+            <variable label="Grade Crossing" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 1" mask="XXXXXXVX">
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ge</relation>
+                    <value>5</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ne</relation>
+                    <value>16</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ne</relation>
+                    <value>17</value>
+                </qualifier>            
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>le</relation>
+                    <value>18</value>
+                </qualifier>
+                <xsl:call-template name="enum-OffOn" />
+            </variable>
+
+            <variables>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>gt</relation>
+                    <value>0</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>le</relation>
+                    <value>2</value>
+                </qualifier>
+                <variable label="Rule 17 Fwd" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 2" mask="XXXXXVXX">
+                    <xsl:call-template name="enum-OffOn" />
+                    <label xml:lang="de">Rule 17 vorwärts</label>
+                </variable>
+                
+                <variable label="Rule 17 Rev" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 3" mask="XXXXVXXX">
+                    <xsl:call-template name="enum-OffOn" />
+                    <label xml:lang="de">Rule 17 rückwärts</label>
+                </variable>
+                <variable label="Dimmer" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 4" mask="XXXVXXXX">
+                    <xsl:call-template name="enum-OffOn" />
+                    <label xml:lang="de">Abdimmen</label>
+                </variable>
+                <variable label="Position in Class light sequence (0 = not a Class light)" CV="16.0.{$CVbase-1}" default="0" item="ESU FnOut {$outputShort} Slider 19" mask="VVXXXXXX">
+                    <qualifier>
+                        <variableref>Firmware Full Version</variableref>
+                        <relation>ge</relation>
+                        <!-- 5.8.156 -> 0x0508009c -> 84410524 -->
+                        <value>84410524</value>
+                    </qualifier>
+                    <decVal max="3"/>
+                </variable>
+                    
+            </variables>        
+
+            <variable label="LED Mode" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 5" mask="VXXXXXXX">
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ne</relation>
+                    <value>5</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ne</relation>
+                    <value>6</value>
+                </qualifier> 
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ne</relation>
+                    <value>12</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>le</relation>
+                    <value>15</value>
+                </qualifier>
+                <xsl:call-template name="enum-OffOn" />
+                <label xml:lang="de">LED Modus</label>
+            </variable>
+
+            <variable label="Phase shift" CV="16.0.{$CVbase-1}" default="0" item="ESU FnOut {$outputShort} Slider 21" mask="XXVVVVVV">
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ge</relation>
+                    <value>5</value>
+                </qualifier> 
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>le</relation>
+                    <value>15</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Firmware Full Version</variableref>
+                    <relation>ge</relation>
+                    <!-- 5.8.156 -> 0x0508009c -> 84410524 -->
+                    <value>84410524</value>
+                </qualifier>
+                <decVal max="63"/>
+            </variable>
+
+            <variable label="Startup time (255 = defective lamp)" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 6">
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ge</relation>
+                    <value>16</value>
+                </qualifier> 
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>le</relation>
+                    <value>17</value>
+                </qualifier>
+                <decVal max="255"/>
+                <label xml:lang="de">Startzeit (255 = defekte Lampe)</label>                
+            </variable>
+
+            <variable label="Level" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier> 
+                <decVal max="127"/>
+            </variable>            
+            
+        </variables>
+
+        <!-- Mode 21 - ESU coupler - has no CV 16.0.262 - 264, 258 -->
+
+        <!-- Mode 22 - Sound controlled Smoke unit -->
         <variable label="Mode" CV="16.0.{$CVbase+3}" item="ESU FnOut {$outputShort} Option 1">
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
@@ -302,37 +470,78 @@ w               <decVal max="15"/>
             </enumVal>
             <label xml:lang="de">Modus</label>
         </variable>
-        
-        <variable label="Fan Speed" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 11" mask="XXXVVVVV">
+
+        <!-- Mode 23 - Ventilator -->
+        <variables>
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
                 <relation>eq</relation>
                 <value>23</value>
             </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Geschwindigkeit</label>
-        </variable>
-        
-        <variable label="Standing heat" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 14" mask="XXXVVVVV">
+
+            <variable label="Fan Speed" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 11" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Geschwindigkeit</label>
+            </variable>
+
+            <variable label="Fan Acceleration rate" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 12" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Beschleunigungszeit</label>
+            </variable>
+            <variable label="Fan Decceleration rate" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 13" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Bremszeit</label>
+            </variable>
+        </variables>
+
+        <!-- Mode 24 - Seuthe smoke unit -->
+        <variables>
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
                 <relation>eq</relation>
                 <value>24</value>
             </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Heizstufe im Stand</label>
-        </variable>
 
-        <variable label="Chuff power" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 8" mask="XXXVVVVV">
+            <variable label="Standing heat" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 14" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Heizstufe im Stand</label>
+            </variable>
+
+            <variable label="Minimum driving heat" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 15" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
+            </variable>
+
+            <variable label="Maximum driving heat" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 16" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
+            </variable>
+        </variables>
+
+        <!-- Mode 25 - Trigger smoke chuff -->
+        <variables>
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
                 <relation>eq</relation>
                 <value>25</value>
             </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Dampfstoßstärke</label>
-        </variable>
 
+            <variable label="Chuff power" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 8" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Dampfstoßstärke</label>
+            </variable>
+
+            <variable label="Fan power" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 9" mask="XXXVVVVV">
+                <decVal max="31"/>
+                <label xml:lang="de">Stärke des Bläsers</label>
+            </variable>
+            
+            <variable label="Timeout" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 10" tooltip="Units = 0.256 sec">
+                <decVal/>
+            </variable>
+        </variables>                       
+
+        <!-- Mode 26 - External controlled smoke unit -->
         <variable label="Type of smoke unit:" CV="16.0.{$CVbase+3}" item="ESU FnOut {$outputShort} Option 2">
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
@@ -358,50 +567,120 @@ w               <decVal max="15"/>
             </enumVal>
         </variable>
 
-        <variable label="Duration (speed) B" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 17" mask="XXVVVVVV" tooltip="Units = 0.25 sec">>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>ge</relation>
-            <value>27</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>ne</relation>
-            <value>28</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>ne</relation>
-            <value>29</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>ne</relation>
-            <value>30</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>ne</relation>
-            <value>31</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>ne</relation>
-            <value>32</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>ne</relation>
-            <value>33</value>
-        </qualifier>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>le</relation>
-            <value>34</value>
-        </qualifier>
-        <decVal max="63"/>
-        </variable>
+        <!-- Modes 27 - Servo, 34 - Servo Johnson bar control and 36 - Servo Pantograph bounce -->
+        <variables>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ge</relation>
+                <value>27</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>28</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>29</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>30</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>31</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>32</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>33</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>ne</relation>
+                <value>35</value>
+            </qualifier>
+            <qualifier>
+                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                <relation>le</relation>
+                <value>36</value>
+            </qualifier>
 
+            <!-- Modes 27 and 34 only -->
+            <variables>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ne</relation>
+                    <value>36</value>
+                </qualifier>
+                
+                <variable label="Duration (speed) A" CV="16.0.{$CVbase+-1}" default="31" item="ESU FnOut {$outputShort} Slider 17" mask="XXVVVVVV" tooltip="Units = 0.25 sec">
+                    <decVal max="63"/>
+                </variable>
+                
+                <variable label="Duration (speed) B" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 22" mask="XXVVVVVV" tooltip="Units = 0.25 sec">
+                    <decVal max="63"/>
+                </variable>
+            </variables>
+
+            <!-- Mode 36 only -->
+            <variables>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>eq</relation>
+                    <value>36</value>
+                </qualifier>
+
+                <variable label="Max bouncing strength" CV="16.0.{$CVbase+-1}" default="31" item="ESU FnOut {$outputShort} Slider 23" mask="XXVVVVVV">
+                    <decVal max="63"/>
+                </variable>
+                
+                <variable label="Duration (speed)" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 24" mask="XXVVVVVV" tooltip="Units = 0.25 sec">
+                    <decVal max="63"/>
+                </variable>
+            </variables>
+
+            <variable label="Position A (off)" CV="16.0.{$CVbase+4}" default="31" item="ESU FnOut {$outputShort} Slider 25" mask="XXVVVVVV">
+                <decVal max="63"/>
+            </variable>
+            <variable label="Position B (on)" CV="16.0.{$CVbase+5}" default="31" item="ESU FnOut {$outputShort} Slider 26" mask="XXVVVVVV">
+                <decVal max="63"/>
+            </variable>
+
+            <!-- Modes 27 and 36 only -->
+            <variables>
+                <qualifier>
+                    <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
+                    <relation>ne</relation>
+                    <value>34</value>
+                </qualifier>
+                
+                <qualifier>
+                    <variableref>Firmware Full Version</variableref>
+                    <relation>ge</relation>
+                    <!-- 5.4.139 -> 0x0504008b -> 84148363 -->
+                    <value>84148363</value>
+                </qualifier>
+                
+                <variable label="Do not disable servo pulse at Position A" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 7" mask="VXXXXXXX">
+                    <xsl:call-template name="enum-OffOn" />
+                </variable>
+                
+                <variable label="Do not disable servo pulse at Position B" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Check 8" mask="VXXXXXXX">
+                    <xsl:call-template name="enum-OffOn" />
+                </variable>
+            </variables>                        
+        </variables>
+        
         <variable label="Coupler Force" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
@@ -463,177 +742,9 @@ w               <decVal max="15"/>
         </variable>        
         
         <!-- CV 16.0.263 -->
-        <variable item="Special Function CV{$CVbase+4}" label="Special Function CV 1" CV="16.0.{$CVbase+4}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-            <decVal/>
-        </variable>
-        <variable label="Fan Acceleration rate" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 12" mask="XXXVVVVV">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>eq</relation>
-                <value>23</value>
-            </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Beschleunigungszeit</label>
-        </variable>
 
-        <variable label="Minimum driving heat" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 15" mask="XXXVVVVV">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>eq</relation>
-                <value>24</value>
-            </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Minimale Heizstufe bei Fahrt</label>
-        </variable>
-
-        <variable label="Fan power" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 9" mask="XXXVVVVV">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>eq</relation>
-                <value>25</value>
-            </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Stärke des Bläsers</label>
-        </variable>
-
-        <variable label="Phase Reverse" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 6" mask="XXXXXXXV">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>gt</relation>
-                <value>0</value>
-            </qualifier>
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>le</relation>
-                <value>15</value>
-            </qualifier>
-            <xsl:call-template name="enum-OffOn" />
-            <label xml:lang="de">Phase tauschen</label>
-        </variable>
-
-        <variable label="Grade Crossing" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 1" mask="XXXXXXVX">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>gt</relation>
-                <value>0</value>
-            </qualifier>
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>le</relation>
-                <value>15</value>
-            </qualifier>
-            <xsl:call-template name="enum-OffOn" />
-        </variable>
-        <variable label="Rule 17 Fwd" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 2" mask="XXXXXVXX">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>gt</relation>
-                <value>0</value>
-            </qualifier>
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>le</relation>
-                <value>15</value>
-            </qualifier>
-            <xsl:call-template name="enum-OffOn" />
-            <label xml:lang="de">Rule 17 vorwärts</label>
-        </variable>
-        <variable label="Rule 17 Rev" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 3" mask="XXXXVXXX">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>gt</relation>
-                <value>0</value>
-            </qualifier>
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>le</relation>
-                <value>15</value>
-            </qualifier>
-            <xsl:call-template name="enum-OffOn" />
-            <label xml:lang="de">Rule 17 rückwärts</label>
-        </variable>
-        <variable label="Dimmer" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 4" mask="XXXVXXXX">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>gt</relation>
-                <value>0</value>
-            </qualifier>
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>le</relation>
-                <value>15</value>
-            </qualifier>
-            <xsl:call-template name="enum-OffOn" />
-            <label xml:lang="de">Abdimmen</label>
-        </variable>
-        <variable label="LED Mode" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Check 5" mask="VXXXXXXX">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>gt</relation>
-                <value>0</value>
-            </qualifier>
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>le</relation>
-                <value>15</value>
-            </qualifier>
-            <xsl:call-template name="enum-OffOn" />
-            <label xml:lang="de">LED Modus</label>
-        </variable>
 
         <!-- CV 16.0.264 -->
-        <variable item="Special Function CV{$CVbase+5}" label="Special Function CV 2" CV="16.0.{$CVbase+5}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-            <decVal/>
-        </variable>
-        <variable label="Fan Decceleration rate" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 13" mask="XXXVVVVV">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>eq</relation>
-                <value>23</value>
-            </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Bremszeit</label>
-        </variable>
-        <variable label="Maximum driving heat" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 16" mask="XXXVVVVV">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>eq</relation>
-                <value>24</value>
-            </qualifier>
-            <decVal max="31"/>
-            <label xml:lang="de">Maximale Heizstufe bei Fahrt</label>
-        </variable>
-        <variable label="Timeout" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 10" tooltip="Units = 0.25 sec">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>eq</relation>
-                <value>25</value>
-            </qualifier>
-            <decVal/>
-        </variable>
-        <variable label="Startup Time" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 6">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>ge</relation>
-                <value>16</value>
-            </qualifier>
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>le</relation>
-                <value>17</value>
-            </qualifier>
-            <decVal/>
-            <label xml:lang="de">Startzeit</label>
-        </variable>
-        <variable label="Level" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 20" mask="XVVVVVVV">
-            <qualifier>
-                <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-                <relation>eq</relation>
-                <value>19</value>
-            </qualifier>
-            <decVal max="127"/>
-        </variable>
-
         
     </xsl:template>
 
@@ -770,6 +881,36 @@ w               <decVal max="15"/>
                         <griditem>
                             <display item="ESU FnOut {$outputLabel} Slider 20"/>
                             <display item="ESU FnOut {$outputLabel} Slider 20" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 21"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 21" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 22"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 22" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 23"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 23" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 24"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 24" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 25"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 25" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Check 7" layout="right" format="checkbox"/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Slider 26"/>
+                            <display item="ESU FnOut {$outputLabel} Slider 26" format="hslider" label=""/>
+                        </griditem>
+                        <griditem>
+                            <display item="ESU FnOut {$outputLabel} Check 8" layout="right" format="checkbox"/>
                         </griditem>
                         <griditem insets="2,0,2,0">
                             <display item="ESU FnOut {$outputLabel} Check 1" layout="above" format="checkbox"/>
