@@ -20,8 +20,6 @@ import jmri.util.swing.MultiLineCellRenderer;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
@@ -318,10 +316,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
         model.clear();
 
-        model.loadIdTagEventIDs();
+        model.loadNameStoreEventIDs();
         model.handleTableUpdate(-1, -1);
 
-        final int IDENTIFY_EVENTS_DELAY = 125; // msec between operations - 64 events at speed
+        final int IDENTIFY_EVENTS_DELAY = 250; // msec between operations - 250 events at speed
         int nextDelay = 0;
 
         // assumes that a VerifyNodes has been done and all nodes are in the MimicNodeStore

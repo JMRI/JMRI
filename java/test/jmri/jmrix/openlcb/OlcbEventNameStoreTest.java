@@ -18,7 +18,7 @@ public class OlcbEventNameStoreTest {
     OlcbEventNameStore olcbStore;
 
     @Test
-    public void testLoadAndStore() {
+    public void testLoadAndStoreEventInfo() {
         olcbStore.addMatch(new EventID(1234), "named 1234");
         assertEquals(new EventID(1234), olcbStore.getEventID("named 1234"));
         assertEquals("named 1234", olcbStore.getEventName(new EventID(1234)));

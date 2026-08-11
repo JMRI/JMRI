@@ -1,38 +1,20 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.nio.charset.StandardCharsets;
-import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
 
 import jmri.*;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.*;
-import jmri.util.ThreadingUtil;
-
-import jmri.swing.JmriJTablePersistenceManager;
-import jmri.util.swing.MultiLineCellRenderer;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
-
 import org.openlcb.*;
 import org.openlcb.implementations.*;
-import org.openlcb.swing.*;
-
 
 /**
- * DataModel for table in EventTablePane
+ * DataModel for the table in the EventTablePane
  *
  * @author Bob Jacobsen Copyright (C) 2023, 2026
  * @since 5.17.3
@@ -44,7 +26,7 @@ public class EventTableDataModel extends AbstractTableModel {
         this.stdEventTable = stdEventTable;
         this.nameStore = nameStore;
 
-        loadIdTagEventIDs();
+        loadNameStoreEventIDs();
     }
 
     static final int COL_EVENTID = 0;
@@ -65,6 +47,9 @@ public class EventTableDataModel extends AbstractTableModel {
     TableRowSorter<EventTableDataModel> sorter;
     boolean popcornModeActive = false;
 
+    // static so the data remains available through a window close-open cycle
+    static ArrayList<TripleMemo> memos = new ArrayList<>();
+
     TripleMemo getTripleMemo(int row) {
         if (row >= memos.size()) {
             return null;
@@ -72,8 +57,77 @@ public class EventTableDataModel extends AbstractTableModel {
         return memos.get(row);
     }
 
-    void loadIdTagEventIDs() {
-        // are there events in the IdTags? If so, add them
+    // ********************************
+    // Store for node name<->ID mapping
+    // ********************************
+ 
+    private final Map<String, NodeID> nameToNodeId = new HashMap<>();
+    private final Map<NodeID, String> nodeIdToName = new HashMap<>();
+
+
+    /**
+     * @param nodeID The NodeID being searched for
+     * @return The name associated with that NodeID or an empty string
+     */
+    public String getNodeName(NodeID nodeID) {
+        var name = nodeIdToName.get(nodeID);
+        if (name == null || name.isEmpty()) return nodeID.toString();
+        return name;
+    }
+    
+    /**
+     * @param nodeID The NodeID being searched for
+     * @return true if there is an associated name
+     */
+    public boolean hasNodeName(NodeID nodeID) {
+        var name = nodeIdToName.get(nodeID);
+        if (name == null || name.isEmpty()) return false;
+        return true;
+    }
+
+    /**
+     * @param name The node name being searched for
+     * @return The NodeID associated with that name or a node ID constructed from the input
+     */
+    public NodeID getNodeID(String name) {
+        var nid = nameToNodeId.get(name);
+        if (nid == null) return new NodeID(name);
+        return nid;    
+    }
+
+    /**
+     * @param name The node name being searched for
+     * @return true if an NodeID is associated with that name
+     */
+    public boolean hasNodeID(String name) {
+        var nid = nameToNodeId.get(name);
+        if (nid == null) return false;
+        return true;    
+    }
+
+    /**
+     * Create a new name to/from NodeID association
+     * @param nodeID associated EventID
+     * @param name  associated name
+     */
+    public void addMatch(NodeID nodeID, String name) {
+        nameToNodeId.put(name, nodeID);
+        nodeIdToName.put(nodeID, name);
+        log.trace("setting dirty true");
+    }
+
+    /**
+     * Get all the NodeIDs available
+     * @return Set of all available NodeIDs
+     */
+    public java.util.Set<NodeID> getNodeIDMatches() {
+        return nodeIdToName.keySet();        
+    }
+
+    // ********************************
+
+    void loadNameStoreEventIDs() {
+        // are there events in the Name Store? If so, add them
         for (var eventID: nameStore.getMatches()) {
             var memo = new TripleMemo(
                                 eventID,
@@ -245,9 +299,6 @@ public class EventTableDataModel extends AbstractTableModel {
         memos = new ArrayList<>();
         fireTableDataChanged();  // don't queue this one, must be immediate
     }
-
-    // static so the data remains available through a window close-open cycle
-    static ArrayList<TripleMemo> memos = new ArrayList<>();
 
     /**
      * Notify the table that the contents have changed.
