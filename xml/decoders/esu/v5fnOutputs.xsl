@@ -435,7 +435,7 @@ w               <decVal max="15"/>
         <!-- Mode 21 - ESU coupler - has no CV 16.0.262 - 264, 258 -->
 
         <!-- Mode 22 - Sound controlled Smoke unit -->
-        <variable label="Mode" CV="16.0.{$CVbase+3}" item="ESU FnOut {$outputShort} Option 1">
+        <variable label="Mode" CV="16.0.{$CVbase+3}" item="ESU FnOut {$outputShort} Option 1" mask="XXXVVVVV">
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
                 <relation>eq</relation>
@@ -471,7 +471,7 @@ w               <decVal max="15"/>
                 <decVal max="31"/>
                 <label xml:lang="de">Beschleunigungszeit</label>
             </variable>
-            <variable label="Fan Decceleration rate" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 13" mask="XXXVVVVV">
+            <variable label="Fan Deceleration rate" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 13" mask="XXXVVVVV">
                 <decVal max="31"/>
                 <label xml:lang="de">Bremszeit</label>
             </variable>
@@ -935,7 +935,7 @@ w               <decVal max="15"/>
 
     <xsl:template name="enum-OffOn">
         <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-            <enumChoice choice="Off">
+            <enumChoice>
                 <choice>Off</choice>
                 <choice xml:lang="it">Off</choice>
                 <choice xml:lang="fr">Éteint</choice>
@@ -944,7 +944,7 @@ w               <decVal max="15"/>
                 <choice xml:lang="cs">Vypnuto</choice>
                 <choice xml:lang="nl">Uit</choice>
             </enumChoice>
-            <enumChoice choice="On">
+            <enumChoice>
                 <choice>On</choice>
                 <choice xml:lang="it">On</choice>
                 <choice xml:lang="fr">Allumé</choice>
