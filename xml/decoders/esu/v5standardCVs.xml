@@ -1024,7 +1024,6 @@
                 <!-- 5.8.156 -> 0x0508009c -> 84410524 -->
                 <value>84410524</value>
             </qualifier>
-            <label>Class light logic: Number of colors</label>
             <enumVal>
                 <enumChoice value="1">
                     <choice>2 (Two different color class lights)</choice>
@@ -1033,6 +1032,7 @@
                     <choice>3 (Three different color class lights)</choice>
                 </enumChoice>
             </enumVal>
+            <label>Class light logic: Number of colors</label>
         </variable>
     </variables>
     
