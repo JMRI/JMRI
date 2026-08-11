@@ -3269,7 +3269,7 @@ function $drawTurnout($widget) {
     var $eraseColor = $gPanel.backgroundcolor;
     var $eraseWidth = $gPanel.mainlinetrackwidth;
  
-    //erase Unknown circle by saving and restoring the t0-be-covered pixels
+    //erase Unknown circle by saving and restoring the to-be-covered pixels
     if ($widget.showunknown == "yes") {
         halfsize = $gPanel.turnoutcirclesize * SIZE // circle size is radius, so this is half the copied/restored area
         if (! isDefined($widget.unknownSnippet)) {  // first pass through, we capture the base image
