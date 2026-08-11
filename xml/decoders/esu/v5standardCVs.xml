@@ -15,6 +15,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
     <variable CV="2" default="3" item="Vstart">
         <decVal min="1"/>
         <label>Vstart</label>
@@ -738,21 +739,21 @@
         <label>Optional Load Adjustment</label>
         <label xml:lang="de">Lastanpassung „Alternative Last”</label>
         <tooltip>&lt;html&gt;Sets the factor that changes CV3, CV4 and the sound.&lt;br/&gt;
-            Acceleration time = CV3*(load value/128).&lt;br/&gt;
-            Deceleration time = CV4*(load value/128).&lt;br/&gt;
-            (load value = 0) changes the time to zero.&lt;br/&gt;
-            (load value = 128) does not change the time.&lt;br/&gt;
-            (load value = 255) doubles the time.&lt;br/&gt;
-            Intended to be set up for Light Load.
+        Acceleration time = CV3*(load value/128).&lt;br/&gt;
+        Deceleration time = CV4*(load value/128).&lt;br/&gt;
+        (load value = 0) changes the time to zero.&lt;br/&gt;
+        (load value = 128) does not change the time.&lt;br/&gt;
+        (load value = 255) doubles the time.&lt;br/&gt;
+        Intended to be set up for Light Load.
         &lt;/html&gt;
         </tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Stellt den Faktor ein, der CV3, CV4 und den Klang ändert.&lt;br/&gt;
-            Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
-            Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
-            (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
-            (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
-            (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
-            Vorgesehen für leichte Belastung.
+        Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
+        Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
+        (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
+        (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
+        (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
+        Vorgesehen für leichte Belastung.
         &lt;/html&gt;
         </tooltip>
     </variable>
@@ -761,23 +762,23 @@
         <label>Primary Load Adjustment</label>
         <label xml:lang="de">Lastanpassung „Schwere Last”</label>
         <tooltip>&lt;html&gt;Sets the factor that changes CV3, CV4 and the sound.&lt;br/&gt;
-            Acceleration time = CV3*(load value/128).&lt;br/&gt;
-            Deceleration time = CV4*(load value/128).&lt;br/&gt;
-            (load value = 0) changes the time to zero.&lt;br/&gt;
-            (load value = 128) does not change the time.&lt;br/&gt;
-            (load value = 255) doubles the time.&lt;br/&gt;
-            Intended to be set up for Heavy Load.&lt;br/&gt;
-            If active, overrides Optional Load.
+        Acceleration time = CV3*(load value/128).&lt;br/&gt;
+        Deceleration time = CV4*(load value/128).&lt;br/&gt;
+        (load value = 0) changes the time to zero.&lt;br/&gt;
+        (load value = 128) does not change the time.&lt;br/&gt;
+        (load value = 255) doubles the time.&lt;br/&gt;
+        Intended to be set up for Heavy Load.&lt;br/&gt;
+        If active, overrides Optional Load.
         &lt;/html&gt;
         </tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Stellt den Faktor ein, der CV3, CV4 und den Klang ändert.&lt;br/&gt;
-            Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
-            Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
-            (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
-            (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
-            (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
-            Vorgesehen für schwere Lastunen.&lt;br/&gt;
-            Wenn aktiv, wird die Lastanpassung „Alternative Last” überschrieben.
+        Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
+        Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
+        (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
+        (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
+        (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
+        Vorgesehen für schwere Lastunen.&lt;br/&gt;
+        Wenn aktiv, wird die Lastanpassung „Alternative Last” überschrieben.
         &lt;/html&gt;
         </tooltip>
     </variable>
@@ -1014,6 +1015,27 @@
             <tooltip xml:lang="nl">M4 Decoderversienummer</tooltip>
         </variable>
     </variables>
+
+    <variables> <!-- extra nesting level required to get access to Firmware Full Version -->
+        <variable CV="199" default="2" item="Class light logic colors">
+            <qualifier>
+                <variableref>Firmware Full Version</variableref>
+                <relation>ge</relation>
+                <!-- 5.8.156 -> 0x0508009c -> 84410524 -->
+                <value>84410524</value>
+            </qualifier>
+            <label>Class light logic: Number of colors</label>
+            <enumVal>
+                <enumChoice value="1">
+                    <choice>2 (Two different color class lights)</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                    <choice>3 (Three different color class lights)</choice>
+                </enumChoice>
+            </enumVal>
+        </variable>
+    </variables>
+    
     <variable CV="249" default="0" item="Sound Steam Chuffs Min Distance">
         <decVal/>
         <label>Chuff minimum spacing</label>
@@ -1031,7 +1053,6 @@
     <!-- Index variables -->
     <constant item="PICV" default="31" comment="CV used for Primary Index"/>
     <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
     <variables exclude="Essential Sound Unit">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/>
     </variables>
