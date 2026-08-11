@@ -3273,11 +3273,8 @@ function $drawTurnout($widget) {
     if ($widget.showunknown == "yes") {
         halfsize = $gPanel.turnoutcirclesize * SIZE // circle size is radius, so this is half the copied/restored area
         if (! isDefined($widget.unknownSnippet)) {  // first pass through, we capture the base image
-            console.log("no snippet");
-            console.log($widget)
             $widget.unknownSnippet = $gCtx.getImageData($widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize, halfsize * 2, halfsize * 2);
         } else {
-            console.log("snippet present");
             $gCtx.putImageData($widget.unknownSnippet, $widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize);
         }
     }
