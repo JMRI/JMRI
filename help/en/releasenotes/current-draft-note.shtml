@@ -516,6 +516,10 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+            <li>Sensor and MultiSensor icons now repaint only their own area of the panel
+                when their sensor changes state, instead of the whole window, reducing CPU
+                use on panels receiving frequent sensor events. The repainted area follows
+                the panel zoom level.</li>
             <li></li>
         </ul>
 
