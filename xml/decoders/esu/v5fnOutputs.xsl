@@ -262,23 +262,6 @@ w               <decVal max="15"/>
             <label xml:lang="de">Ausgang automatisch Ausschalten</label>
         </variable>
 
-        <!-- CV 16.0.262 - CV 16.0.264 and CV 16.0.258 -->
-        <variable item="Brightness CV{$CVbase+3}" label="Brightness CV" CV="16.0.{$CVbase+3}" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
-            <decVal/>
-        </variable>        
-
-        <variable item="Special Function CV{$CVbase+4}" label="Special Function CV 1" CV="16.0.{$CVbase+4}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-            <decVal/>
-        </variable>
-
-        <variable item="Special Function CV{$CVbase+5}" label="Special Function CV 2" CV="16.0.{$CVbase+5}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-            <decVal/>
-        </variable>
- 
-        <variable item="Special Function CV{$CVbase-1}" label="Special Function CV 3" CV="16.0.{$CVbase-1}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
-            <decVal/>
-        </variable>
-
         <!-- Mode 1 to Mode 20 - all the different lights -->
         <variables>
             <qualifier>
@@ -366,7 +349,7 @@ w               <decVal max="15"/>
                     <xsl:call-template name="enum-OffOn" />
                     <label xml:lang="de">Abdimmen</label>
                 </variable>
-                <variable label="Position in Class light sequence (0 = not a Class light)" CV="16.0.{$CVbase-1}" default="0" item="ESU FnOut {$outputShort} Slider 19" mask="VVXXXXXX">
+                <variable label="Position in Class light sequence (0 = not a Class light)" CV="16.0.{$CVbase - 1}" default="0" item="ESU FnOut {$outputShort} Slider 19" mask="VVXXXXXX">
                     <qualifier>
                         <variableref>Firmware Full Version</variableref>
                         <relation>ge</relation>
@@ -403,7 +386,7 @@ w               <decVal max="15"/>
                 <label xml:lang="de">LED Modus</label>
             </variable>
 
-            <variable label="Phase shift" CV="16.0.{$CVbase-1}" default="0" item="ESU FnOut {$outputShort} Slider 21" mask="XXVVVVVV">
+            <variable label="Phase shift" CV="16.0.{$CVbase - 1}" default="0" item="ESU FnOut {$outputShort} Slider 21" mask="XXVVVVVV">
                 <qualifier>
                     <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
                     <relation>ge</relation>
@@ -623,7 +606,7 @@ w               <decVal max="15"/>
                     <value>36</value>
                 </qualifier>
                 
-                <variable label="Duration (speed) A" CV="16.0.{$CVbase+-1}" default="31" item="ESU FnOut {$outputShort} Slider 17" mask="XXVVVVVV" tooltip="Units = 0.25 sec">
+                <variable label="Duration (speed) A" CV="16.0.{$CVbase - 1}" default="31" item="ESU FnOut {$outputShort} Slider 17" mask="XXVVVVVV" tooltip="Units = 0.25 sec">
                     <decVal max="63"/>
                 </variable>
                 
@@ -640,7 +623,7 @@ w               <decVal max="15"/>
                     <value>36</value>
                 </qualifier>
 
-                <variable label="Max bouncing strength" CV="16.0.{$CVbase+-1}" default="31" item="ESU FnOut {$outputShort} Slider 23" mask="XXVVVVVV">
+                <variable label="Max bouncing strength" CV="16.0.{$CVbase - 1}" default="31" item="ESU FnOut {$outputShort} Slider 23" mask="XXVVVVVV">
                     <decVal max="63"/>
                 </variable>
                 
@@ -649,10 +632,10 @@ w               <decVal max="15"/>
                 </variable>
             </variables>
 
-            <variable label="Position A (off)" CV="16.0.{$CVbase+4}" default="31" item="ESU FnOut {$outputShort} Slider 25" mask="XXVVVVVV">
+            <variable label="Position A (off)" CV="16.0.{$CVbase+4}" default="0" item="ESU FnOut {$outputShort} Slider 25" mask="XXVVVVVV">
                 <decVal max="63"/>
             </variable>
-            <variable label="Position B (on)" CV="16.0.{$CVbase+5}" default="31" item="ESU FnOut {$outputShort} Slider 26" mask="XXVVVVVV">
+            <variable label="Position B (on)" CV="16.0.{$CVbase+5}" default="0" item="ESU FnOut {$outputShort} Slider 26" mask="XXVVVVVV">
                 <decVal max="63"/>
             </variable>
 
@@ -680,7 +663,8 @@ w               <decVal max="15"/>
                 </variable>
             </variables>                        
         </variables>
-        
+
+        <!-- Modes 28 - Coupler and 33 - Autocoupler coil #2 -->
         <variable label="Coupler Force" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
@@ -716,8 +700,9 @@ w               <decVal max="15"/>
         <label xml:lang="de">Stärke des Kupplers</label>
         </variable>
 
-        <!-- Mode 29 - Roco Coupler - does not have CV 16.0.262 -->
+        <!-- Mode 29 - Roco Coupler - has no CV 16.0.262 - 264, 258 -->
 
+        <!-- Mode 30 - Pantograph -->
         <variable label="Pantograph height" CV="16.0.{$CVbase+3}" item="ESU FnOut {$outputShort} Slider 4" mask="XXXXVVVV">
             <qualifier>
                 <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
@@ -727,25 +712,29 @@ w               <decVal max="15"/>
             <decVal max="15"/>
         </variable>
 
-        <!-- Mode 31 and 32 - Power Pack Control and Servo Power - don't have CV 16.0.262 -->
-        <!-- Mode 33 - Autocoupler coil #2 - CV 16.0.262 is the same as Mode 28 - Coupler -->
-        <!-- Mode 34 - Servo output Steam engine Johnson Bar Control - is the same as Mode 27 - Servo output -->
-        <!-- Mode 35 - Trigger smoke chuff "Edge Toggle" - does not have CV 16.0.262 -->
-
-        <variable label="Duration (speed)" CV="16.0.{$CVbase+3}" default="31" item="ESU FnOut {$outputShort} Slider 18" mask="XXVVVVVV" tooltip="Units = 0.25 sec">>
-        <qualifier>
-            <variableref>ESU FnOut <xsl:value-of select="$outputShort" /> Mode</variableref>
-            <relation>eq</relation>
-            <value>36</value>
-        </qualifier>
-        <decVal max="63"/>
+        <!-- Mode 31 and 32 - Power Pack Control and Servo Power - have no CV 16.0.262 - 264, 258 -->
+        <!-- Mode 33 - Autocoupler coil #2 - is the same as Mode 28 - Coupler -->
+        <!-- Mode 34 - Servo output Steam engine Johnson Bar Control - is included in Mode 27 - Servo output -->
+        <!-- Mode 35 - Trigger smoke chuff "Edge Toggle" - has no CV 16.0.262 - 264, 258 -->
+        <!-- Mode 36 - Servo output Pantograph bounce - is included in Mode 27 - Servo output -->
+        
+        <!-- CV 16.0.262 - CV 16.0.264 and CV 16.0.258 -->
+        <variable item="Brightness CV{$CVbase+3}" label="Brightness CV" CV="16.0.{$CVbase+3}" default="31" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
         </variable>        
-        
-        <!-- CV 16.0.263 -->
 
+        <variable item="Special Function CV{$CVbase+4}" label="Special Function CV 1" CV="16.0.{$CVbase+4}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
 
-        <!-- CV 16.0.264 -->
-        
+        <variable item="Special Function CV{$CVbase+5}" label="Special Function CV 2" CV="16.0.{$CVbase+5}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
+ 
+        <variable item="Special Function CV{$CVbase - 1}" label="Special Function CV 3" CV="16.0.{$CVbase - 1}" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
+            <decVal/>
+        </variable>
+
     </xsl:template>
 
     <!-- Create function output CV settings for each decoder defined in the xml file -->
