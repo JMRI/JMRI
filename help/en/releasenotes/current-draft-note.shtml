@@ -653,7 +653,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Improve how "show ? if unknown" works with background image.</li>
         </ul>
 
     <h3>Where Used</h3>
