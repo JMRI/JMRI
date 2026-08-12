@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Randall Wood Copyright (C) 2016
+ * Modified by Andrew Deak 2026
  */
 public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpService> {
 
@@ -37,18 +38,26 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
     public void onMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         if (JsonConsist.CONSISTS.equals(type)) {
             connection.sendMessage(service.doGetList(type, data, request), request.id);
+            return;
+        }
+        DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
+        String name = address.getNumber() + (address.isLongAddress() ? "(L)" : "(S)");
+        if (request.method.equals(JSON.DELETE)) {
+            if (consists.remove(address)) {
+                service.manager.getConsist(address).removeConsistListener(consistListener);
+            }
+            service.doDelete(type, name, data, request);
+            connection.sendMessage(service.getObjectMapper().createObjectNode(), request.id);
+            return;
+        }
+        if (request.method.equals(JSON.PUT)) {
+            connection.sendMessage(service.doPut(type, name, data, request), request.id);
         } else {
-            DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
-            String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
-            if (request.method.equals(JSON.PUT)) {
-                connection.sendMessage(service.doPut(type, name, data, request), request.id);
-            } else {
-                connection.sendMessage(service.doPost(type, name, data, request), request.id);
-            }
-            if (!consists.contains(address)) {
-                service.manager.getConsist(address).addConsistListener(consistListener);
-                consists.add(address);
-            }
+            connection.sendMessage(service.doPost(type, name, data, request), request.id);
+        }
+        if (!consists.contains(address)) {
+            service.manager.getConsist(address).addConsistListener(consistListener);
+            consists.add(address);
         }
     }
 

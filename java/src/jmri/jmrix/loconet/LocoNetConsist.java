@@ -13,6 +13,7 @@ import jmri.ThrottleListener;
  * This is the Consist definition for a consist on a LocoNet system.
  * It uses the LocoNet specific commands to build a consist.
  * @author Paul Bender Copyright (C) 2011
+ * Modified by Andrew Deak 2026
  */
 public class LocoNetConsist extends jmri.implementation.DccConsist implements SlotListener, ThrottleListener {
 
@@ -20,8 +21,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     private LnTrafficController trafficController = null;
     private jmri.jmrix.AbstractThrottleManager throttleManager = null;
     private LocoNetSlot leadSlot = null;
-
     private ArrayList<DccLocoAddress> needToWrite = null;
+    private ArrayList<DccLocoAddress> needToRemove = null;
 
     // State Machine states
     static final int IDLESTATE = 0;
@@ -44,6 +45,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = LEADREQUESTSTATE;
         consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<>();
+        needToRemove = new ArrayList<>();
         throttleManager.requestThrottle(consistAddress, LocoNetConsist.this, false);
     }
 
@@ -58,6 +60,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = LEADREQUESTSTATE;
         consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<>();
+        needToRemove = new ArrayList<>();
         throttleManager.requestThrottle(consistAddress, LocoNetConsist.this, false);
     }
 
@@ -87,7 +90,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         return consistType == Consist.CS_CONSIST || (address.getNumber() != 0);
     }
 
-    /** 
+    /**
      * Is there a size limit for this consist?
      * @return -1 (no limit) for
      * both CS and Advanced Consists,
@@ -120,8 +123,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // locomotive in the consist
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
-        log.debug("consist {} obtaining direction for {} Consist List Size {}", 
-            consistAddress, address, consistList.size());
+        log.debug("consist {} obtaining direction for {} Consist List Size {}",
+                consistAddress, address, consistList.size());
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
             if (address == consistAddress) {
                 return true;
@@ -162,13 +165,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     /**
      * Add a Locomotive to a Consist.
      *
-     * @param locoAddress     the Locomotive address to add to the locomotive
+     * @param locoAddress the Locomotive address to add to the locomotive
      * @param directionNormal if the locomotive is traveling
-     *        the same direction as the consist, false otherwise
+     *  the same direction as the consist, false otherwise
      */
     @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
-        if (locoAddress == consistAddress) {
+        if (locoAddress.equals(consistAddress)) {
             // this is required for command station consists on LocoNet.
             addToConsistList(locoAddress, directionNormal);
             notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
@@ -218,9 +221,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      * This is used for restoring the consist
      * from a file or adding a consist read from the command station.
      *
-     * @param locoAddress     the Locomotive address to add to the locomotive
+     * @param locoAddress the Locomotive address to add to the locomotive
      * @param directionNormal True if the locomotive is traveling
-     *        the same direction as the consist, false otherwise
+     *  the same direction as the consist, false otherwise
      */
     @Override
     public synchronized void restore(DccLocoAddress locoAddress, boolean directionNormal) {
@@ -237,9 +240,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     /**
-     *  Remove a Locomotive from this Consist.
+     * Remove a Locomotive from this Consist.
      *
-     *  @param locoAddress is the Locomotive address to add to the locomotive
+     * @param locoAddress is the Locomotive address to add to the locomotive
      */
     @Override
     public synchronized void remove(DccLocoAddress locoAddress) {
@@ -249,7 +252,15 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                 removeFromConsistList(locoAddress);
                 break;
             case CS_CONSIST:
-                removeFromCSConsist(locoAddress);
+                if (leadSlot == null || consistRequestState != IDLESTATE) {
+                    // an unlink is already in progress (or the lead throttle
+                    // isn't ready yet); queue this removal so it gets
+                    // processed one at a time instead of racing the
+                    // in-progress request's shared state fields.
+                    needToRemove.add(locoAddress);
+                } else {
+                    removeFromCSConsist(locoAddress);
+                }
                 removeFromConsistList(locoAddress);
                 break;
             default:
@@ -259,17 +270,23 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         }
     }
 
+    private synchronized void delayedRemove() {
+        DccLocoAddress locoAddress = needToRemove.get(0);
+        removeFromCSConsist(locoAddress);
+        needToRemove.remove(locoAddress);
+    }
+
     /**
-     *  Add a Locomotive to an Advanced Consist.
+     * Add a Locomotive to an Advanced Consist.
      *
-     *  @param locoAddress     the Locomotive address to add to the locomotive
-     *  @param directionNormal True if the locomotive is traveling
-     *        the same direction as the consist, false otherwise
+     * @param locoAddress the Locomotive address to add to the locomotive
+     * @param directionNormal True if the locomotive is traveling
+     *  the same direction as the consist, false otherwise
      */
     @Override
     protected synchronized void addToAdvancedConsist(DccLocoAddress locoAddress, boolean directionNormal) {
         log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.",
-            locoAddress, consistAddress, directionNormal);
+                locoAddress, consistAddress, directionNormal);
         //set the value in the roster entry for CV19
         setRosterEntryCVValue(locoAddress);
         consistRequestState = LINKSTAGEONESTATE;
@@ -277,8 +294,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     /**
-     *  Remove a Locomotive from an Advanced Consist
-     *  @param locoAddress is the Locomotive address to add to the locomotive
+     * Remove a Locomotive from an Advanced Consist
+     * @param locoAddress is the Locomotive address to add to the locomotive
      */
     @Override
     protected synchronized void removeFromAdvancedConsist(DccLocoAddress locoAddress) {
@@ -290,18 +307,18 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     /**
-     *  Add a Locomotive to a LocoNet Universal Consist.
-     *  @param locoAddress is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling
-     *        the same direction as the consist, or false otherwise.
+     * Add a Locomotive to a LocoNet Universal Consist.
+     * @param locoAddress is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
+     * the same direction as the consist, or false otherwise.
      */
     private synchronized void addToCSConsist(DccLocoAddress locoAddress, boolean directionNormal) {
-        log.debug("Add Locomotive {} to Standard Consist {} With Direction Normal {}.", 
-            locoAddress, consistAddress, directionNormal);
+        log.debug("Add Locomotive {} to Standard Consist {} With Direction Normal {}.",
+                locoAddress, consistAddress, directionNormal);
         if(consistList.size()<=1 && locoAddress.equals(consistAddress)){
-          // there is only one address in this consist, no reason to link.
-          notifyConsistListeners(locoAddress,ConsistListener.OPERATION_SUCCESS);
-          return;
+            // there is only one address in this consist, no reason to link.
+            notifyConsistListeners(locoAddress,ConsistListener.OPERATION_SUCCESS);
+            return;
         }
         throttleManager.requestThrottle(locoAddress, this, false);
         // skip right to stage 2, we do not need to status edit.
@@ -309,15 +326,31 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     /**
-     *  Remove a Locomotive from a LocoNet Universal Consist.
-     *  @param locoAddress is the Locomotive address to add to the locomotive.
+     * Remove a Locomotive from a LocoNet Universal Consist.
+     * @param locoAddress is the Locomotive address to add to the locomotive.
      */
     public synchronized void removeFromCSConsist(DccLocoAddress locoAddress) {
         log.debug("Remove Locomotive {} from Standard Consist {}.", locoAddress, consistAddress);
-        if(consistList.size()==1 && locoAddress.equals(consistAddress)){
-          // there is only one address in this consist, no reason to link.
-          notifyConsistListeners(locoAddress,ConsistListener.OPERATION_SUCCESS);
-          return;
+        if((consistList == null || consistList.size() <= 1) && locoAddress.equals(consistAddress)){
+            // Either there is only one address left in this consist, or the
+            // consist object is being disposed (consistList already nulled
+            // out by dispose()) and this is the final, lead address left to
+            // remove. Either way there's no second slot to unlink against,
+            // but we still need to release this slot back to the pool so
+            // it doesn't stay stuck as "In Use" forever, AND we must detach
+            // ourselves as a listener on that slot now -- otherwise this
+            // (soon to be disposed) consist object stays registered on the
+            // physical LocoNetSlot object, and will get spuriously notified
+            // later when that same slot number is reassigned to a totally
+            // different address, potentially throwing an NPE if this object
+            // has already been disposed by then.
+            if (leadSlot != null) {
+                trafficController.sendLocoNetMessage(leadSlot.writeStatus(LnConstants.LOCO_FREE));
+                leadSlot.removeSlotListener(this);
+                leadSlot = null;
+            }
+            notifyConsistListeners(locoAddress,ConsistListener.OPERATION_SUCCESS);
+            return;
         }
         slotManager.slotFromLocoAddress(locoAddress.getNumber(), this);
         consistRequestState = UNLINKSTAGEONESTATE;
@@ -340,7 +373,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                 msg.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL);
                 msg.setElement(1, dest1 | 0b00111000);
                 msg.setElement(2, dest2 & 0x7F);
-                msg.setElement(3, src1  | 0b01000000);
+                msg.setElement(3, src1 | 0b01000000);
                 msg.setElement(4, src2 & 0x7F);
             } else {
                 msg = new LocoNetMessage(4);
@@ -350,15 +383,17 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             }
             trafficController.sendLocoNetMessage(msg);
         } else {
-          // lead == follow
-          // this is an error, notify the consist listeners.
-          follow.removeSlotListener(this);
-          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
-                throttleManager.canBeLongAddress(follow.locoAddr())),
-                ConsistListener.CONSIST_ERROR);
+            // lead == follow
+            // this is an error, notify the consist listeners.
+            follow.removeSlotListener(this);
+            notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                    throttleManager.canBeLongAddress(follow.locoAddr())),
+                    ConsistListener.CONSIST_ERROR);
         }
         consistRequestState = IDLESTATE;
-        if (!needToWrite.isEmpty()) {
+        if (!needToRemove.isEmpty()) {
+            delayedRemove();
+        } else if (!needToWrite.isEmpty()) {
             delayedAdd();
         }
     }
@@ -389,16 +424,21 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                 msg.setElement(2, lead.getSlot());
             }
             trafficController.sendLocoNetMessage(msg);
+            // the locomotive is no longer part of the consist; release its
+            // slot back to the pool instead of leaving it "In Use" forever.
+            trafficController.sendLocoNetMessage(follow.writeStatus(LnConstants.LOCO_FREE));
         } else {
-          // lead == follow
-          // this is an error, notify the consist listeners.
-          follow.removeSlotListener(this);
-          notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
-                throttleManager.canBeLongAddress(follow.locoAddr())),
-                ConsistListener.CONSIST_ERROR | ConsistListener.DELETE_ERROR );
+            // lead == follow
+            // this is an error, notify the consist listeners.
+            follow.removeSlotListener(this);
+            notifyConsistListeners(new DccLocoAddress(follow.locoAddr(),
+                    throttleManager.canBeLongAddress(follow.locoAddr())),
+                    ConsistListener.CONSIST_ERROR | ConsistListener.DELETE_ERROR );
         }
         consistRequestState = IDLESTATE;
-        if (!needToWrite.isEmpty()) {
+        if (!needToRemove.isEmpty()) {
+            delayedRemove();
+        } else if (!needToWrite.isEmpty()) {
             delayedAdd();
         }
     }
@@ -413,7 +453,6 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         } else {
             t.setIsForward(!leadSlot.isForward());
         }
-
         consistRequestState = LINKSTAGETWOSTATE;
     }
 
@@ -427,8 +466,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // slot listener interface functions
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
-        log.debug("Notified slot {} changed with mode {} slot consist state: {}", 
-            s.getSlot(), consistRequestState, LnConstants.CONSIST_STAT(s.consistStatus()));
+        log.debug("Notified slot {} changed with mode {} slot consist state: {}",
+                s.getSlot(), consistRequestState, LnConstants.CONSIST_STAT(s.consistStatus()));
         switch (consistRequestState) {
             case LEADREQUESTSTATE:
                 leadSlot = s;
@@ -450,7 +489,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                 notifyConsistListeners(new DccLocoAddress(s.locoAddr(),
                         throttleManager.canBeLongAddress(s.locoAddr())),
                         ConsistListener.OPERATION_SUCCESS);
-                if (!needToWrite.isEmpty()) {
+                if (!needToRemove.isEmpty()) {
+                    delayedRemove();
+                } else if (!needToWrite.isEmpty()) {
                     delayedAdd();
                 } else {
                     consistRequestState = IDLESTATE;
@@ -467,7 +508,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                 ((LocoNetThrottle) t).setIsForward(true);
                 leadSlot = ((LocoNetThrottle) t).getLocoNetSlot();
                 consistRequestState = IDLESTATE;
-                if (!needToWrite.isEmpty()) {
+                if (!needToRemove.isEmpty()) {
+                    delayedRemove();
+                } else if (!needToWrite.isEmpty()) {
                     delayedAdd();
                 }
             } else {
@@ -491,7 +534,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             if (consistRequestState == LEADREQUESTSTATE) {
                 t.setIsForward(true);
                 consistRequestState = IDLESTATE;
-                if (!needToWrite.isEmpty()) {
+                if (!needToRemove.isEmpty()) {
+                    delayedRemove();
+                } else if (!needToWrite.isEmpty()) {
                     delayedAdd();
                 }
             } else {
@@ -525,5 +570,4 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LocoNetConsist.class);
-
 }

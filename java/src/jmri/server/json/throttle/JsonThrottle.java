@@ -26,6 +26,7 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import jmri.jmrit.roster.Roster;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     /**
+     *Modified by Andrew Deak 2026
      * Token for type for throttle status messages.
      * <p>
      * {@value #THROTTLE}
@@ -86,13 +88,13 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * guess" of the address length.
      *
      * @param throttleId The client's identity token for this throttle
-     * @param data       JSON object containing either an ADDRESS or an ID
-     * @param server     The server requesting this throttle on behalf of a
-     *                   client
-     * @param id         message id set by client
+     * @param data JSON object containing either an ADDRESS or an ID
+     * @param server The server requesting this throttle on behalf of a
+     * client
+     * @param id message id set by client
      * @return The throttle
      * @throws jmri.server.json.JsonException if unable to get the requested
-     *                                        {@link jmri.Throttle}
+     * {@link jmri.Throttle}
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server, int id)
             throws JsonException {
@@ -132,7 +134,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     manager.getServers(throttle).size()));
         } else {
             throttle = new JsonThrottle(address, server);
-            if (entry!=null) {
+            if (entry != null) {
                 if (!manager.requestThrottle(entry, throttle)) {
                     log.error("Unable to get rostered throttle for \"{}\".", entry.getId());
                     throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle
@@ -170,8 +172,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         ObjectMapper mapper = server.getConnection().getObjectMapper();
         if (this.throttle != null) {
             if (manager.getServers(this).size() == 1) {
-                this.throttle.release(this);
                 this.throttle.removePropertyChangeListener(this);
+                this.throttle.release(this);
                 this.throttle = null;
             }
             if (notifyClient) {
@@ -198,7 +200,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                 case ESTOP:
                     this.throttle.setSpeedSetting(-1);
                     return; // stop processing any commands that may conflict
-                            // with ESTOP
+                    // with ESTOP
                 case IDLE:
                     this.throttle.setSpeedSetting(0);
                     break;
@@ -221,9 +223,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     // no action for address, name, or throttle property
                     break;
                 default:
-                    for ( int i = 0; i< this.throttle.getFunctions().length; i++ ) {
+                    for (int i = 0; i < this.throttle.getFunctions().length; i++) {
                         if (k.equals(jmri.Throttle.getFunctionString(i))) {
-                            this.throttle.setFunction(i,v.asBoolean());
+                            this.throttle.setFunction(i, v.asBoolean());
                             break;
                         }
                     }
@@ -297,13 +299,15 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     /**
-     * No steal or share decisions made locally
+     * Automatically resolve steal/share decisions with STEAL, since there is
+     * no local UI to prompt the user.
      * <p>
      * {@inheritDoc}
      */
     @Override
     public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
-        // no steal or share decisions made locally
+        InstanceManager.getDefault(ThrottleManager.class)
+                .responseThrottleDecision(address.getNumber(), this, DecisionType.STEAL);
     }
 
     private void sendErrorMessage(JsonException message, JsonThrottleSocketService server) {
@@ -336,7 +340,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(ADDRESS, this.throttle.getLocoAddress().getNumber());
         data.put(JSON.SPEED, this.throttle.getSpeedSetting());
         data.put(FORWARD, this.throttle.getIsForward());
-        for ( int i = 0; i< this.throttle.getFunctions().length; i++ ) {
+        for (int i = 0; i < this.throttle.getFunctions().length; i++) {
             data.put(Throttle.getFunctionString(i), this.throttle.getFunction(i));
         }
         data.put(SPEED_STEPS, this.speedSteps);

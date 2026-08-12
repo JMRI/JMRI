@@ -24,7 +24,7 @@ public class LocoNetConsistManager extends AbstractConsistManager {
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station
-     *
+     * Modified by Andrew Deak 2026
      * @param lm the LocoNetSystemConnectionMemo to which this object is related
      */
     public LocoNetConsistManager(LocoNetSystemConnectionMemo lm) {
@@ -40,6 +40,15 @@ public class LocoNetConsistManager extends AbstractConsistManager {
     @Override
     public boolean isCommandStationConsistPossible() {
         return true;
+    }
+
+    /**
+     * Digitrax LocoNet only supports command station assisted consisting,
+     * not NMRA advanced (CV19-based) consisting.
+     */
+    @Override
+    public boolean isAdvancedConsistPossible() {
+        return false;
     }
 
     /**
@@ -75,9 +84,9 @@ public class LocoNetConsistManager extends AbstractConsistManager {
      * Consists from the command station.
      *
      * On a LocoNet command station, the consists are stored in the
-     * slots in an array based tree.  Each node in a consist contains
-     * a pointer to the "top" slot in the consist.  A top slot is
-     * allowed to be a member of another consist.  When this occurs,
+     * slots in an array based tree. Each node in a consist contains
+     * a pointer to the "top" slot in the consist. A top slot is
+     * allowed to be a member of another consist. When this occurs,
      * it is labeled as a "mid" locomotive.
      *
      * This function updates the list of consists by scanning the
@@ -139,5 +148,5 @@ public class LocoNetConsistManager extends AbstractConsistManager {
     protected boolean shouldRequestUpdateFromLayout() {
         return !requestingUpdate;
     }
-    private final static Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class);
 }
