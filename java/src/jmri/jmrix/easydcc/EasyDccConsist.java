@@ -9,6 +9,7 @@ import jmri.DccLocoAddress;
  * the EasyDcc specific commands to build a consist.
  *
  * @author Paul Bender Copyright (C) 2006
+ * Updated Andrew Deak 2026
  */
 public class EasyDccConsist extends jmri.implementation.DccConsist {
 
@@ -58,8 +59,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
      * Is there a size limit for this consist?
      *
      * @return 8 for EasyDcc Standard Consist,
-     * -1 for Decoder Assisted Consists (no limit),
-     * 0 for any other consist type
+     *         -1 for Decoder Assisted Consists (no limit),
+     *         0 for any other consist type
      * {@inheritDoc}
      */
     @Override
@@ -137,7 +138,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
      *
      * @param locoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
-     *        the same direction as the consist, or false otherwise.
+     *                         the same direction as the consist, or false otherwise.
      */
     @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
@@ -163,12 +164,12 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
 
     /**
      * Restore a Locomotive to an Advanced Consist, but don't write to
-     * the command station.  This is used for restoring the consist
+     * the command station. This is used for restoring the consist
      * from a file or adding a consist read from the command station.
      *
      * @param locoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
-     *        the same direction as the consist, or false otherwise.
+     *                         the same direction as the consist, or false otherwise.
      */
     @Override
     public synchronized void restore(DccLocoAddress locoAddress, boolean directionNormal) {
@@ -214,12 +215,12 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
      *
      * @param locoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
-     *        the same direction as the consist, or false otherwise.
+     *                         the same direction as the consist, or false otherwise.
      */
     @Override
     protected synchronized void addToAdvancedConsist(DccLocoAddress locoAddress, boolean directionNormal) {
-        log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.", 
-            locoAddress, consistAddress, directionNormal);
+        log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.",
+                locoAddress, consistAddress, directionNormal);
         // create the message and fill it,
         byte[] contents = jmri.NmraPacket.consistControl(locoAddress.getNumber(),
                 locoAddress.isLongAddress(),
@@ -232,10 +233,9 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         msg.setElement(3, '5');
         int j = 4;
         for (int i = 0; i < contents.length; i++) {
-            j++;
             msg.setElement(j, ' ');
-            msg.addIntAsTwoHex(contents[i] & 0xFF, j);
-            j += 2;
+            msg.addIntAsTwoHex(contents[i] & 0xFF, j + 1);
+            j += 3;
         }
 
         // send it
@@ -261,10 +261,9 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         msg.setElement(3, '5');
         int j = 4;
         for (int i = 0; i < contents.length; i++) {
-            j++;
             msg.setElement(j, ' ');
-            msg.addIntAsTwoHex(contents[i] & 0xFF, j);
-            j += 2;
+            msg.addIntAsTwoHex(contents[i] & 0xFF, j + 1);
+            j += 3;
         }
 
         // send it
@@ -276,11 +275,11 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
      *
      * @param locoAddress is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling
-     *        the same direction as the consist, or false otherwise.
+     *                         the same direction as the consist, or false otherwise.
      */
     private synchronized void addToCSConsist(DccLocoAddress locoAddress, boolean directionNormal) {
-        log.debug("Add Locomotive {} to Standard Consist {} With Direction Normal {}.", 
-            locoAddress, consistAddress, directionNormal);
+        log.debug("Add Locomotive {} to Standard Consist {} With Direction Normal {}.",
+                locoAddress, consistAddress, directionNormal);
         EasyDccMessage m;
         if (directionNormal) {
             m = EasyDccMessage.getAddConsistNormal(consistAddress.getNumber(), locoAddress);

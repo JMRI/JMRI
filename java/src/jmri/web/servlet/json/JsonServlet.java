@@ -8,24 +8,20 @@ import static jmri.web.servlet.ServletUtil.*;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.*;
-
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import jmri.InstanceManager;
 import jmri.server.json.*;
 import jmri.server.json.schema.JsonSchemaServiceCache;
@@ -41,6 +37,7 @@ import jmri.web.servlet.ServletUtil;
  * requests.
  *
  * @author Randall Wood Copyright (C) 2012, 2013, 2016, 2019
+ *  Modified by Andrew Deak 2026
  */
 @WebServlet(name = "JsonServlet",
         urlPatterns = {"/json"})
@@ -116,13 +113,11 @@ public class JsonServlet extends WebSocketServlet {
     protected void doGet(final HttpServletRequest request, HttpServletResponse response) throws IOException {
         configureResponse(response);
         JsonRequest jsonRequest = createJsonRequest(request);
-
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
         if (path.length > 1 && jsonRequest.version.equals(path[1])) {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
-
         // echo the contents of result if present and abort further processing
         if (request.getAttribute("result") != null) {
             JsonNode result = (JsonNode) request.getAttribute("result");
@@ -131,7 +126,6 @@ public class JsonServlet extends WebSocketServlet {
             sendMessage(response, code, result, jsonRequest);
             return;
         }
-
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         if (type != null && !type.isEmpty()) {
             response.setContentType(UTF8_APPLICATION_JSON);
@@ -237,7 +231,6 @@ public class JsonServlet extends WebSocketServlet {
                     util.getNavBar(request.getLocale(), request.getContextPath()),
                     util.getRailroadName(false),
                     util.getFooter(request.getLocale(), request.getContextPath())));
-
         }
     }
 
@@ -245,15 +238,12 @@ public class JsonServlet extends WebSocketServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         configureResponse(response);
         InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
-
         JsonRequest jsonRequest = createJsonRequest(request);
-
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
         if (path.length >= 1 && jsonRequest.version.equals(path[1])) {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
-
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
         int id = 0;
@@ -265,7 +255,7 @@ public class JsonServlet extends WebSocketServlet {
         JsonNode data;
         JsonNode reply = null;
         try {
-            if (request.getContentType().contains(APPLICATION_JSON)) {
+            if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
                 data = mapper.readTree(request.getReader());
                 if (!data.path(DATA).isMissingNode()) {
                     data = data.path(DATA);
@@ -344,21 +334,18 @@ public class JsonServlet extends WebSocketServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         configureResponse(response);
         InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
-
         JsonRequest jsonRequest = createJsonRequest(request);
-
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
         if (path.length >= 1 && jsonRequest.version.equals(path[1])) {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
-
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         String name = (rest.length > 2) ? URLDecoder.decode(rest[2], UTF8) : null;
         JsonNode data;
         JsonNode reply = null;
         try {
-            if (request.getContentType().contains(APPLICATION_JSON)) {
+            if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
                 data = mapper.readTree(request.getReader());
                 if (!data.path(DATA).isMissingNode()) {
                     data = data.path(DATA);
@@ -430,9 +417,7 @@ public class JsonServlet extends WebSocketServlet {
             throws ServletException, IOException {
         configureResponse(response);
         InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
-
         JsonRequest jsonRequest = createJsonRequest(request);
-
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
         if (path.length >= 1 && jsonRequest.version.equals(path[1])) {
@@ -449,7 +434,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
                 if (services.get(jsonRequest.version).get(type) != null) {
                     JsonNode data = mapper.createObjectNode();
-                    if (request.getContentType().contains(APPLICATION_JSON)) {
+                    if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
                         data = mapper.readTree(request.getReader());
                         if (!data.path(DATA).isMissingNode()) {
                             data = data.path(DATA);
@@ -496,7 +481,6 @@ public class JsonServlet extends WebSocketServlet {
                 id = 0;
             }
         }
-
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         if (path.length > 1 && VERSIONS.stream().anyMatch(v -> v.equals(path[1]))) {
             version = path[1];
