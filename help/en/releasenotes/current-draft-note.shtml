@@ -49,6 +49,11 @@
                 <li></li>
             </ul>
 
+        <h4>EasyDCC</h4>
+            <ul>
+                <li>Some updates to consisting.</li>
+            </ul>
+
         <h4>ESU</h4>
             <ul>
                 <li></li>
@@ -104,6 +109,7 @@
                   LocoNet Monitor.</li>
                 <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
                 <li>LocoNet Clock now uses the same throttle ID as the rest of JMRI, instead of (illegal) 00 00.</li>
+                <li>Some updates to consisting support.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -653,7 +659,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Some updates to consisting support.</li>
         </ul>
 
     <h3>Where Used</h3>
