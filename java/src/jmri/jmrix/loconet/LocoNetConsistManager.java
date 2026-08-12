@@ -43,12 +43,16 @@ public class LocoNetConsistManager extends AbstractConsistManager {
     }
 
     /**
-     * Digitrax LocoNet only supports command station assisted consisting,
-     * not NMRA advanced (CV19-based) consisting.
+     * Digitrax LocoNet supports NMRA advanced (CV19-based) consisting in
+     * addition to command station assisted (Universal) consisting; see
+     * LocoNetConsist#addToAdvancedConsist/#removeFromAdvancedConsist.
+     * Digitrax documents Universal Consisting as their preferred method,
+     * but Advanced Consisting is supported by their command stations and
+     * decoders.
      */
     @Override
     public boolean isAdvancedConsistPossible() {
-        return false;
+        return true;
     }
 
     /**
