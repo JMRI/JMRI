@@ -14,9 +14,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrix.openlcb.OlcbConstants;
 import jmri.jmrix.openlcb.OlcbEventNameStore;
+import jmri.jmrix.openlcb.swing.eventtable.EventTableDataModel;
 import jmri.util.FileUtil;
 
-import org.openlcb.EventID;
 import org.openlcb.NodeID;
 
 /**
@@ -24,33 +24,31 @@ import org.openlcb.NodeID;
  *
  * @author Bob Jacobsen Copyright (C) 2025, 2026
  */
-public final class EventTableDataModelXml extends XmlFile {
+public class EventTableDataModelXml extends XmlFile { // note final for testing
 
-    public EventTableDataModelXml(OlcbEventNameStore nameStore) {
-        this.nameStore = nameStore;
+    public EventTableDataModelXml(EventTableDataModel model) {
+        this.model = model;
     }
 
-    OlcbEventNameStore nameStore;
+    EventTableDataModel model;
 
     public void store() throws java.io.IOException {
-        log.debug("Storing using file: {}", getDefaultEventNameFileName());
-        createFile(getDefaultEventNameFileName(), true);
+        log.debug("Storing using file: {}", getDefaultModelFileName());
+        createFile(getDefaultModelFileName(), true);
         try {
-            writeFile(getDefaultEventNameFileName());
+            writeFile(getDefaultModelFileName());
         } catch (FileNotFoundException ex) {
-            log.error("File not found while writing Event Name file, may not be complete", ex);
+            log.error("File not found while writing Data Model file, may not be complete", ex);
         }
     }
 
     public void load() {
         log.debug("Loading...");
-        var wasDirty = nameStore.dirty;
         try {
-            readFile(getDefaultEventNameFileName());
+            readFile(getDefaultModelFileName());
         } catch (JDOMException | IOException ex) {
-            log.error("Exception during IdTag file reading", ex);
+            log.error("Exception during Data Model file reading", ex);
         }
-        nameStore.dirty = wasDirty;
     }
 
     private File createFile(String fileName, boolean backup) {
@@ -89,7 +87,7 @@ public final class EventTableDataModelXml extends XmlFile {
            file = new File(fileName);
         }
         // Create root element
-        Element root = new Element("eventNameStore");              // NOI18N
+        Element root = new Element("eventTableStore");              // NOI18N
         // root.setAttribute("noNamespaceSchemaLocation", // NOI18N
         //      "http://jmri.org/xml/schema/idtags.xsd", // NOI18N
         //      org.jdom2.Namespace.getNamespace("xsi", // NOI18N
@@ -105,56 +103,41 @@ public final class EventTableDataModelXml extends XmlFile {
 
         Element values;
 
+        // Loop through node names
+        root.addContent(values = new Element("nodes")); // NOI18N
+        for (NodeID nid : model.getNodeIDMatches()) {
+            var name = model.getNodeName(nid);
+            log.debug("Writing node name: {} node {}", name, nid);
+            var element = new Element("node");
+            var nameElement = new Element("name");
+            nameElement.addContent(name);
+            var nodeIdElement = new Element("nodeID");
+            nodeIdElement.addContent(nid.toString());
+            element.addContent(nodeIdElement);
+            element.addContent(nameElement);
+            values.addContent(element);
+        }
 
-//         // Loop through node names
-//         root.addContent(values = new Element("nodes")); // NOI18N
-//         for (NodeID nid : nameStore.getNodeIDMatches()) {
-//             var name = nameStore.getNodeName(nid);
-//             log.debug("Writing node name: {} node {}", name, nid);
-//             var element = new Element("name");
-//             var nameElement = new Element("name");
-//             nameElement.addContent(name);
-//             var nodeIdElement = new Element("nodeID");
-//             nodeIdElement.addContent(nid.toString());
-//             element.addContent(nodeIdElement);
-//             element.addContent(nameElement);
-//             values.addContent(element);
-//         }
-
-//         // Loop through event names
-//         root.addContent(values = new Element("names")); // NOI18N
-//         for (EventID eid : nameStore.getEventIDMatches()) {
-//             var name = nameStore.getEventName(eid);
-//             log.debug("Writing event name: {} event {}", name, eid);
-//             var element = new Element("entry");
-//             var nameElement = new Element("name");
-//             nameElement.addContent(name);
-//             var eventIdElement = new Element("eventID");
-//             eventIdElement.addContent(eid.toShortString());
-//             element.addContent(eventIdElement);
-//             element.addContent(nameElement);
-//             values.addContent(element);
-//         }
 
         writeXML(file, doc);
     }
 
-    private String getDefaultEventNameFileName() {
-        return getFileLocation() + getEventNameDirectoryName() + File.separator + getEventNameFileName();
+    protected String getDefaultModelFileName() { // protected for testing
+        return getFileLocation() + getModelFileDirectoryName() + File.separator + getModelDataFileName();
     }
     
     private String getFileLocation() {
         return FileUtil.getUserFilesPath();
     }
 
-    private static final String EVENT_NAMES_DIRECTORY_NAME = "eventnames"; // NOI18N
+    private static final String MODEL_FILE_DIRECTORY_NAME = "eventnames"; // NOI18N
 
-    private String getEventNameDirectoryName() {
-        return EVENT_NAMES_DIRECTORY_NAME;
+    protected String getModelFileDirectoryName() { // protected for testing
+        return MODEL_FILE_DIRECTORY_NAME;
     }
 
-    private String getEventNameFileName() {
-        return "eventNames.xml";
+    private String getModelDataFileName() {
+        return "eventtable.xml";
     }
     
     private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
@@ -167,27 +150,26 @@ public final class EventTableDataModelXml extends XmlFile {
         // Find root
         Element root = rootFromName(fileName);
         if (root == null) {
-            log.debug("{} file could not be read", fileName);
+            log.warn("{} file could not be read", fileName);
             return;
         }
 
         // Now read name-id mapping information
-        if (root.getChild("names") != null) { // NOI18N
-            List<Element> names = root.getChildren("names");
-            log.debug("readFile sees {} names elements", names.size());
-            for (Element n : names) {
-                List<Element> l = n.getChildren("entry"); // NOI18N
-                log.debug("    readFile sees {} event names", l.size());
+        if (root.getChild("nodes") != null) { // NOI18N
+            List<Element> nodes = root.getChildren("nodes");
+            log.debug("readFile sees {} nodes elements", nodes.size());
+            for (Element n : nodes) {
+                List<Element> l = n.getChildren("node"); // NOI18N
+                log.debug("    readFile sees {} node names", l.size());
                 for (Element e : l) {
-                    String eid = e.getChild("eventID").getText(); // NOI18N
+                    String nid = e.getChild("nodeID").getText(); // NOI18N
                     String name = e.getChild("name").getText();
-                    log.debug("        read EventID {}", eid);
-                    nameStore.addMatch(new EventID(eid), name);
+                    log.trace("        read nodeID {} name {}", nid, name);
+                    model.addMatch(new NodeID(nid), name);
                 }
             }
         }
     }
-
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXml.class);
 

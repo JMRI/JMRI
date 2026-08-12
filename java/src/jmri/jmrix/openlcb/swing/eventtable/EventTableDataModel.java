@@ -7,6 +7,7 @@ import javax.swing.table.*;
 
 import jmri.*;
 import jmri.jmrix.openlcb.*;
+import jmri.jmrix.openlcb.swing.eventtable.configurexml.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -21,12 +22,15 @@ import org.openlcb.implementations.*;
  */
 public class EventTableDataModel extends AbstractTableModel {
 
-    EventTableDataModel(MimicNodeStore store, EventTable stdEventTable, OlcbEventNameStore nameStore) {
+    public EventTableDataModel(MimicNodeStore store, EventTable stdEventTable, OlcbEventNameStore nameStore) {
         this.store = store;
         this.stdEventTable = stdEventTable;
         this.nameStore = nameStore;
 
         loadNameStoreEventIDs();
+        readDetails();
+        
+        initShutdownTask();
     }
 
     static final int COL_EVENTID = 0;
@@ -48,7 +52,7 @@ public class EventTableDataModel extends AbstractTableModel {
     boolean popcornModeActive = false;
 
     // static so the data remains available through a window close-open cycle
-    static ArrayList<TripleMemo> memos = new ArrayList<>();
+    static public ArrayList<TripleMemo> memos = new ArrayList<>(); // public for testing
 
     TripleMemo getTripleMemo(int row) {
         if (row >= memos.size()) {
@@ -126,7 +130,7 @@ public class EventTableDataModel extends AbstractTableModel {
 
     // ********************************
 
-    void loadNameStoreEventIDs() {
+    protected void loadNameStoreEventIDs() {
         // are there events in the Name Store? If so, add them
         for (var eventID: nameStore.getMatches()) {
             var memo = new TripleMemo(
@@ -325,6 +329,36 @@ public class EventTableDataModel extends AbstractTableModel {
     }
     boolean pending = false;
 
+    private String chooseNodeName(NodeID nodeID) {
+        String name = "";
+
+        // see if in the current EventStore, done first to pick up changes
+        var nodeMemo = store.findNode(nodeID);
+        if (nodeMemo != null) {
+            var ident = nodeMemo.getSimpleNodeIdent();
+            if (ident != null) {
+                    name = ident.getUserName();
+                    // and remember this name for later
+                    addMatch(nodeID, name);
+                    
+                }
+        }
+        // otherwise  if node name already encountered
+        if (name.isEmpty() && hasNodeName(nodeID)) {
+            name = getNodeName(nodeID);
+        }
+
+        // if all else fails, use a name constructed from SNIP information
+        if (name.isEmpty() && nodeMemo != null) {
+            var ident = nodeMemo.getSimpleNodeIdent();
+            if (ident != null) {
+                name = ident.getMfgName()+" - "+ident.getModelName()+" - "+ident.getHardwareVersion();
+            }
+        }
+
+        return name;
+    }
+
     /**
      * Record an event-producer pair
      * @param eventID Observed event
@@ -340,18 +374,7 @@ public class EventTableDataModel extends AbstractTableModel {
             handleTableUpdate(-1, -1);
         }
 
-        var nodeMemo = store.findNode(nodeID);
-        String name = "";
-        if (nodeMemo != null) {
-            var ident = nodeMemo.getSimpleNodeIdent();
-                if (ident != null) {
-                    name = ident.getUserName();
-                    if (name.isEmpty()) {
-                        name = ident.getMfgName()+" - "+ident.getModelName()+" - "+ident.getHardwareVersion();
-                    }
-                }
-        }
-
+        String name = chooseNodeName(nodeID);
 
         // if this already exists, skip storing it
         // if you can, find a matching memo with an empty consumer value
@@ -457,17 +480,7 @@ public class EventTableDataModel extends AbstractTableModel {
             handleTableUpdate(-1, -1);
         }
 
-        var nodeMemo = store.findNode(nodeID);
-        String name = "";
-        if (nodeMemo != null) {
-            var ident = nodeMemo.getSimpleNodeIdent();
-                if (ident != null) {
-                    name = ident.getUserName();
-                    if (name.isEmpty()) {
-                        name = ident.getMfgName()+" - "+ident.getModelName()+" - "+ident.getHardwareVersion();
-                    }
-                }
-        }
+        String name = chooseNodeName(nodeID);
 
         // if this already exists, skip storing it
         // if you can, find a matching memo with an empty consumer value
@@ -629,6 +642,47 @@ public class EventTableDataModel extends AbstractTableModel {
             this.consumerName = consumerName;
         }
     }
-    
+
+    public void readDetails() {
+        log.debug("reading Node Name Details");
+        new EventTableDataModelXml(this).load();  // NOI18N
+        log.debug("...done reading Node Name details");
+    }
+
+    private Runnable shutDownTask = null;
+
+    protected void initShutdownTask(){
+        // Create shutdown task to save
+        log.debug("Register ShutDown task");
+        if (this.shutDownTask == null) {
+            this.shutDownTask = () -> {
+                // Save event name details prior to exit, if necessary
+                log.debug("Start writing node name details...");
+                try {
+                    writeNodeNameDetails();
+                } catch (java.io.IOException ioe) {
+                    log.error("Exception writing node name", ioe);
+                }
+            };
+            InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
+        }
+    }
+
+    /**
+     * De-register the Shutdown task.
+     */
+    public void deregisterShutdownTask(){
+        log.debug("Deregister ShutDown task");
+        if ( shutDownTask != null ) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
+        }
+    }
+
+    public void writeNodeNameDetails() throws java.io.IOException {
+        log.debug("storing node name map");
+        new EventTableDataModelXml(this).store();  // NOI18N
+        log.debug("...done writing event name details");
+    }
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModel.class);
 }
