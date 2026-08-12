@@ -82,5 +82,5 @@ public class ProfileManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProfileManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProfileManagerTest.class);
 }

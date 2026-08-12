@@ -28,7 +28,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    static public RevHistory loadRevHistory(Element e) {
+    public static RevHistory loadRevHistory(Element e) {
         RevHistory r = new RevHistory();
 
         java.util.List<Element> list = e.getChildren("revision", Namespace.getNamespace(NAMESPACE));
@@ -85,7 +85,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return storeDirectly(o);
     }
 
-    static public Element storeDirectly(Object o) {
+    public static Element storeDirectly(Object o) {
         final RevHistory r = (RevHistory) o;
         if (r == null) {
             return null;

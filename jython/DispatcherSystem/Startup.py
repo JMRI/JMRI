@@ -46,8 +46,10 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
 
 
     #list and option buttons
-    def ListOptions(self, list_items, title, options, preferred_size = "default"):
+    def ListOptions(self, list_items, title, options, message=None, preferred_size="default"):
+        # print "list_items=",list_items
         my_list = JList(list_items)
+        # print "my_list=",my_list
         if list_items != []:
             my_list.setSelectedIndex(0)
         scrollPane = JScrollPane(my_list)
@@ -61,8 +63,16 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             h = int(dim.getHeight() + 20) # to leave a bit of space at bottom. Height of row = approx 20
             scrollPane.setPreferredSize(Dimension(w,h))
         self.CLOSED_OPTION = False
+        panel = JPanel()
+        panel.setLayout(BoxLayout(panel, BoxLayout.Y_AXIS))
+        panel.add(JLabel(message))
+        # Add a little spacing
+        panel.add(Box.createVerticalStrut(10))
+        # Add the scrollPane containing the list
+        panel.add(scrollPane)
+
         s = JOptionPane.showOptionDialog(None,
-                                         scrollPane,
+                                         panel,
                                          title,
                                          JOptionPane.YES_NO_OPTION,
                                          JOptionPane.PLAIN_MESSAGE,
@@ -71,18 +81,21 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
                                          options[0])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
-            return [None,None]
+            return [None,None,None]
+        if my_list.getModel().getSize() != 0:
+            index = my_list.getSelectedIndices()[0]
+        else:
+            index = 0
         if list_items == []:
-            return [None, options[s]]
-        index = my_list.getSelectedIndices()[0]
-        return [list_items[index], options[s]]
+            return [None, options[s], index]
+        return [list_items[index], options[s], index]
 
         # call using
         # list_items = ["list1","list2"]
         # options = ["opt1", "opt2", "opt3"]
         # title = "title"
-        # [list, option] = OptionDialog().ListOptions(list_items, title, options)
-        # print "option= " ,option, " list = ",list
+        # [list, option, index] = OptionDialog().ListOptions(list_items, title, options)
+        # print "option= " ,option, " list = ",list, " index = ",index
 
     def MultipleListOptions(self, list_items, title, options, preferred_size = "default"):
         my_list = JList(list_items)

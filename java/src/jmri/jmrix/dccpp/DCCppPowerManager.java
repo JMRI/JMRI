@@ -1,3 +1,8 @@
+package jmri.jmrix.dccpp;
+
+import jmri.JmriException;
+import jmri.managers.AbstractPowerManager;
+
 /**
  * DCCppPowerManager.java
  *
@@ -9,29 +14,29 @@
   *
  * Based on XNetPowerManager by Bob Jacobsen and Paul Bender
  */
-package jmri.jmrix.dccpp;
-
-import jmri.JmriException;
-import jmri.managers.AbstractPowerManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectionMemo> implements DCCppListener {
 
-    DCCppTrafficController tc = null;
+    private DCCppTrafficController tc = null;
 
+    /**
+     * Create a new DCCppPowerManager.
+     * Adds listener to connection.
+     * Requests power update from layout.
+     * @param memo the Connection.
+     */
     public DCCppPowerManager(DCCppSystemConnectionMemo memo) {
         super(memo);
         // connect to the TrafficManager
         tc = memo.getDCCppTrafficController();
         tc.addDCCppListener(DCCppInterface.CS_INFO, this);
-        // request the current command station status
-        tc.sendDCCppMessage(DCCppMessage.makeCSStatusMsg(), this);
-        // request the trackmanager configuration
-        tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), this);
+        DCCppPowerManager.this.requestUpdateFromLayout();
     }
 
+    /**
+     * Set the Power status.
+     * After sending to the layout, requests power status update.
+     * {@inheritDoc }
+     */
     @Override
     public void setPower(int v) throws JmriException {
         int old = power;
@@ -45,6 +50,9 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
             tc.sendDCCppMessage(DCCppMessage.makeTrackPowerOffMsg(), this);
         }
         firePowerPropertyChange(old, power);
+        // Newer( > v5.5 / v5.6 ?? ) versions of DCC-EX only broadcast power state changes,
+        // so we request confirmation of power status.
+        requestUpdateFromLayout();
     }
 
     // to free resources when no longer used
@@ -102,10 +110,19 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
         }        
     }
 
-    // Initialize logging information
-    private final static Logger log = LoggerFactory.getLogger(DCCppPowerManager.class);
+    /**
+     * Request the current command station status and
+     * request the trackmanager configuration.
+     * {@inheritDoc }
+     */
+    @Override
+    public void requestUpdateFromLayout() {
+        // Request the current command station status.
+        tc.sendDCCppMessage(DCCppMessage.makeCSStatusMsg(), this);
+        // Request the trackmanager configuration.
+        tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), this);
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppPowerManager.class);
 
 }
-
-
-

@@ -43,7 +43,7 @@
       programmed. Some stationary decoders can also be added to this database.<br>
       It includes the information seen in the screen below:</p>
 
-      <img src="RosterTab.png" alt="DecoderPro Roster Tab">
+      <img src="RosterOpsTab.png" alt="DecoderPro Roster Tab">
       <p>The first field "ID" becomes the file name in the Roster for the locomotive you are
       programming.</p>
 
@@ -51,6 +51,9 @@
       "#Basic">Basic Pane</a>.</p>
 
       <p>The Throttle Speed Limit sets the Maximum throttle percentage allowed.</p>
+
+      <p><a href="../../../../../html/apps/DecoderPro/Roster.shtml#loco_data">Locomotive Data</a>
+      is an advanced feature.<span class="since">since 5.15.4</span></p>
 
       <p>You can put anything you want in the other fields.</p>
 

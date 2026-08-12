@@ -153,7 +153,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
 
 
     protected TrackSegment trackSegment = null;
-    //static private TrackSegmentView trackSegmentView = null;
+    //private static TrackSegmentView trackSegmentView = null;
 
 
     /**

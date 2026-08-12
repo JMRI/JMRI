@@ -1,8 +1,10 @@
 package jmri.jmrit.ussctc;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 
@@ -23,7 +25,7 @@ public class TrafficLockTest {
 
         TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(! lock.isLockClear(Lock.signalLockLogger));
+        assertFalse(lock.isLockClear(Lock.signalLockLogger));
     }
 
     @Test
@@ -36,14 +38,14 @@ public class TrafficLockTest {
 
         TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(lock.isLockClear(Lock.signalLockLogger));
+        assertTrue(lock.isLockClear(Lock.signalLockLogger));
     }
 
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initMemoryManager();
     }

@@ -2,7 +2,6 @@ package jmri.jmrit.jython;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -27,7 +26,7 @@ public class JynstrumentTest {
            protected void quit(){
            }
         };
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -40,6 +39,6 @@ public class JynstrumentTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JynstrumentTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JynstrumentTest.class);
 
 }

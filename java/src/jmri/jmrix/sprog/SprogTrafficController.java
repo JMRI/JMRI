@@ -179,6 +179,8 @@ public class SprogTrafficController implements SprogInterface,
         final Vector<SprogListener> listeners = this.getCopyOfListeners();
         final SprogReply replyForLater = r;
         final SprogListener senderForLater = lastSender;
+
+        // Notify non-sender listeners on the GUI thread (e.g. monitor frames)
         Runnable rl = () -> {
             for (SprogListener listener : listeners) {
                 try {
@@ -192,14 +194,15 @@ public class SprogTrafficController implements SprogInterface,
                     log.warn("notify: During dispatch to {}", listener, e);
                 }
             }
-            // forward to the last listener who sent a message
-            // this is done _second_ so monitoring can have already stored the reply
-            // before a response is sent
-            if (senderForLater != null) {
-                senderForLater.notifyReply(replyForLater);
-            }
         };
         javax.swing.SwingUtilities.invokeLater(rl);
+
+        // Notify the sender synchronously on the current thread so that
+        // time-critical listeners (e.g. SprogCommandStation slot thread)
+        // are woken immediately, without waiting for the EDT to be free.
+        if (senderForLater != null) {
+            senderForLater.notifyReply(replyForLater);
+        }
     }
 
     protected synchronized void notifyReply(SprogReply r, SprogListener lastSender) {
@@ -208,6 +211,8 @@ public class SprogTrafficController implements SprogInterface,
         final Vector<SprogListener> listeners = this.getCopyOfListeners();
         final SprogReply replyForLater = r;
         final SprogListener senderForLater = lastSender;
+
+        // Notify non-sender listeners on the GUI thread (e.g. monitor frames)
         Runnable rl = () -> {
             log.debug("notifyReply starts last sender: {}", senderForLater);
             for (SprogListener listener : listeners) {
@@ -223,20 +228,20 @@ public class SprogTrafficController implements SprogInterface,
                     log.warn("notify: During dispatch to {}", listener, e);
                 }
             }
-
-            // forward to the last listener who sent a message
-            // this is done _second_ so monitoring can have already stored the reply
-            // before a response is sent
-            if (senderForLater != null) {
-                log.debug("notify last sender: {} {}", senderForLater, replyForLater.toString());
-                senderForLater.notifyReply(replyForLater);
-            }
         };
         javax.swing.SwingUtilities.invokeLater(rl);
+
+        // Notify the sender synchronously on the current thread so that
+        // time-critical listeners (e.g. SprogCommandStation slot thread)
+        // are woken immediately, without waiting for the EDT to be free.
+        if (senderForLater != null) {
+            log.debug("notify last sender: {} {}", senderForLater, replyForLater.toString());
+            senderForLater.notifyReply(replyForLater);
+        }
     }
 
     // A class to remember the message and who sent it
-    static private class MessageTuple {
+    private static class MessageTuple {
         private final SprogMessage message;
         private final SprogListener listener;
 

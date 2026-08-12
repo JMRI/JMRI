@@ -1,6 +1,8 @@
 package jmri.jmrit.throttle;
 
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.implementation.ThrottleFramePropertyEditor;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.*;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 

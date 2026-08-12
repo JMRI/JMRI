@@ -19,9 +19,11 @@
     <!-- Version 2 - Add English translations -->
     <version author="Ulrich Gerlach" version="3" lastUpdated="2024-03-27"/>
     <!-- Version 3 - Supported decoder: PIKO56505-22 = PluX22 decoder neutral, PIKO56508-16 = PluX16 decoder neutral -->
-    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <version author="Ulrich Gerlach" version="5" lastUpdated="2025-12-06"/>
-    <!-- Version 5 - Add CVs and pane for decorder informationen, set highVersionID=16 -->
+    <!-- Version 5 - Add CVs and pane for decorder informationen, set highVersionID="16" -->
+    <version author="Ulrich Gerlach" version="6" lastUpdated="2026-04-04"/>
+    <!-- Version 6 - Support for the product ID and replacementModels -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
         <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order">
             <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
@@ -31,13 +33,23 @@
                 <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
                 <size length="21.5" width="10.5" height="3.7" units="mm"/>
             </model>
-            <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
+
+            <model show="no" model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46540 BR55-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <size length="21.5" width="10.5" height="3.7" units="mm"/>
+
+            </model>
+            <model model="PIKO46540 BR55-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="46540" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
                 <size length="21.5" width="10.5" height="3.7" units="mm"/>
             </model>
+
             <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>

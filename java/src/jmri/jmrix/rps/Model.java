@@ -104,7 +104,7 @@ public class Model {
     // for now, we only allow one Model
     static Model _instance = null;
 
-    static public Model instance() {
+    public static Model instance() {
         if (_instance == null) {
             Model i = new Model();
             i.loadValues();

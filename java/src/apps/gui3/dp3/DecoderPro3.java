@@ -95,7 +95,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         app.start();
     }
 
-    static public void preInit(String[] args) {
+    public static void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
         apps.gui3.Apps3.setConfigFilename("DecoderProConfig3.xml", args);
     }
@@ -125,6 +125,6 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class);
+    private static final Logger log = LoggerFactory.getLogger(DecoderPro3.class);
 
 }

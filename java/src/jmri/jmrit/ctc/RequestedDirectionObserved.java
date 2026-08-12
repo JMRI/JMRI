@@ -13,7 +13,7 @@ import java.beans.PropertyChangeSupport;
 public class RequestedDirectionObserved {
     private int _mRequestedDirection;
     private final PropertyChangeSupport _mPropertyChangeSupport = new PropertyChangeSupport(this);
-    private final static String PROPERTY = "RequestedDirection";  // NOI18N  NEVER pass "null" for propertyName, there is a bug relating to this (for safety!)
+    private static final String PROPERTY = "RequestedDirection";  // NOI18N  NEVER pass "null" for propertyName, there is a bug relating to this (for safety!)
     
     public RequestedDirectionObserved() { _mRequestedDirection = CTCConstants.OUTOFCORRESPONDENCE; }    // Obviously nothing could have registered with us YET!
     public void addPropertyChangeListener(PropertyChangeListener pcl) { _mPropertyChangeSupport.addPropertyChangeListener(pcl); }

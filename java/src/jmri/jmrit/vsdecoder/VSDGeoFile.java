@@ -444,6 +444,12 @@ public class VSDGeoFile extends XmlFile {
                                         layoutTracksInBlock.add(lt);
                                         blockList.add(bl);
                                     }
+                                } else if (lt instanceof LayoutTraverser) {
+                                    LayoutTraverser tv = (LayoutTraverser) lt;
+                                    if (tv.getLayoutBlock() == lblk) {
+                                        layoutTracksInBlock.add(lt);
+                                        blockList.add(bl);
+                                    }
                                 }
                             }
                             log.debug("layoutTracksInBlock: {}", layoutTracksInBlock);

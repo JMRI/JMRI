@@ -43,5 +43,5 @@ abstract public class PowerlinePanel extends jmri.util.swing.JmriPanel implement
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PowerlinePanel.class);
+    private static final Logger log = LoggerFactory.getLogger(PowerlinePanel.class);
 }

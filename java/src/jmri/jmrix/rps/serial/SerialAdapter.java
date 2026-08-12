@@ -313,7 +313,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         }
     }
 
-    static private final int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
+    private static final int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
     private boolean first = true;
 
     /**
@@ -389,6 +389,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialAdapter.class);
 
 }

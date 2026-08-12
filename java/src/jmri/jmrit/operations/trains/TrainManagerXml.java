@@ -12,6 +12,7 @@ import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.manualtrainbuilder.TrainManualBuildManager;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
 
@@ -34,15 +35,15 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     private static final String FILE_TYPE_CSV = ").csv"; // NOI18N
 
     // the directories under operations
-    static final String BUILD_STATUS = "buildstatus"; // NOI18N
-    static final String MANIFESTS = "manifests"; // NOI18N
-    static final String SWITCH_LISTS = "switchLists"; // NOI18N
+    protected static final String BUILD_STATUS = "buildstatus"; // NOI18N
+    protected static final String MANIFESTS = "manifests"; // NOI18N
+    protected static final String SWITCH_LISTS = "switchLists"; // NOI18N
     public static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
     public static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
-    static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
-    static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
-    static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
-    static final String BUILD_STATUS_BACKUPS = "buildStatusBackups"; // NOI18N
+    protected static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
+    protected static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
+    protected static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
+    protected static final String BUILD_STATUS_BACKUPS = "buildStatusBackups"; // NOI18N
 
     public TrainManagerXml() {
     }
@@ -67,6 +68,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         doc.addContent(0, p);
 
         InstanceManager.getDefault(TrainManager.class).store(root);
+        InstanceManager.getDefault(TrainManualBuildManager.class).store(root);
         InstanceManager.getDefault(TrainScheduleManager.class).store(root);
         InstanceManager.getDefault(AutomationManager.class).store(root);
 
@@ -102,6 +104,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         }
 
         InstanceManager.getDefault(TrainManager.class).load(root);
+        InstanceManager.getDefault(TrainManualBuildManager.class).load(root);
         InstanceManager.getDefault(TrainScheduleManager.class).load(root);
 
         fileLoaded = true; // set flag trains are loaded
@@ -110,7 +113,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         log.debug("Trains have been loaded!");
         
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
-            if (train.getStatusCode() == Train.CODE_BUILDING) {
+            if (train.isBuilding()) {
                 log.warn("Reseting train ({}), was building when saved", train.getName());
                 train.reset();
             }
@@ -456,7 +459,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainManagerXml.class);
 
     @Override
     public void initialize() {

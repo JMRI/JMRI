@@ -17,6 +17,6 @@ public class EcosReporterTest extends jmri.implementation.AbstractRailComReporte
         r = new EcosReporter("UR1","Test");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosReporterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EcosReporterTest.class);
 
 }

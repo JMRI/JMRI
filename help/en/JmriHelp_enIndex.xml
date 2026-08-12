@@ -156,9 +156,7 @@
  </indexitem>
  <indexitem text="DCC Specialties - Hardware, Connection, Tools " target="html.hardware.misc.DccSpecialties"/>
 
- <indexitem text="DCC-EX EX-CommandStation Hardware, Connection, Tools " target="html.hardware.dcc-ex.index"/>
-
- <indexitem text="DCC++ Hardware, Connection, Tools " target="html.hardware.dccpp.index"/>
+ <indexitem text="DCC-EX Hardware, Connection, Tools " target="html.hardware.dcc-ex.index"/>
 
  <indexitem text="Debug Menu " target="html.apps.PanelPro.DebugMenu"/>
 
@@ -592,6 +590,8 @@
  <indexitem text="Python (in Scripting) " target="html.tools.scripting.Python"/>
 
  <indexitem text="QSI - Hardware, Connection, Tools " target="html.hardware.qsi.index"/>
+
+ <indexitem text="RailCom " target="package.jmri.jmrit.beantable.RailComTable"/>
 
  <indexitem text="RailDriver Throttle " target="html.hardware.raildriver.index"/>
 

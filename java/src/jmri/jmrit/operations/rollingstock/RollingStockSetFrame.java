@@ -476,6 +476,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     String status = rs.setLocation((Location) locationBox.getSelectedItem(),
                             (Track) trackLocationBox.getSelectedItem());
                     rs.setLastRouteId(RollingStock.NONE); // clear last route id
+                    rs.setLastTrain(null); // clear last train
                     if (!status.equals(Track.OKAY)) {
                         log.debug("Can't set rs's location because of {}", status);
                         JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(

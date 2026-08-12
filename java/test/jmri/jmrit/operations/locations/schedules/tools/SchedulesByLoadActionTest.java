@@ -36,6 +36,6 @@ public class SchedulesByLoadActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SchedulesByLoadActionTest.class);
 
 }

@@ -40,6 +40,10 @@ public class ChangeDepartureTimesFrameTest extends OperationsTestCase {
         Train train2 = tmanager.getTrainById("2");
         Assert.assertEquals("departure time", "22", train2.getDepartureTimeHour());
         ChangeDepartureTimesFrame f = new ChangeDepartureTimesFrame();
+        // default is 0
+        Assert.assertEquals("Default", 0, f.hourBox.getSelectedItem());
+        Assert.assertEquals("Default", 0, f.dayBox.getSelectedItem());
+        f.hourBox.setSelectedItem(1);
         JemmyUtil.enterClickAndLeave(f.changeButton);
         Assert.assertEquals("departure time", "23", train2.getDepartureTimeHour());
         // test roll over at 24 hours
@@ -64,16 +68,20 @@ public class ChangeDepartureTimesFrameTest extends OperationsTestCase {
         // leave route update checkbox unselected
         Assert.assertEquals("departure time", "03", train2.getDepartureTimeHour());
         ChangeDepartureTimesFrame f = new ChangeDepartureTimesFrame();
+        f.hourBox.setSelectedItem(1);
+        f.dayBox.setSelectedItem(2);
         JemmyUtil.enterClickAndLeave(f.changeButton);
         Assert.assertEquals("departure day", "1", train2.getDepartureTimeDay());
         Assert.assertEquals("departure time", "03", train2.getDepartureTimeHour());
+        Assert.assertEquals("Route location departure day", "30", rl2.getDepartureTimeDay());
         Assert.assertEquals("Route location departure time", "23", rl2.getDepartureTimeHour());
 
         // now select checkbox
         JemmyUtil.enterClickAndLeave(f.routesCheckBox);
         JemmyUtil.enterClickAndLeave(f.changeButton);
-        Assert.assertEquals("departure day", "1", train2.getDepartureTimeDay());
+        Assert.assertEquals("departure day", "3", train2.getDepartureTimeDay());
         Assert.assertEquals("departure time", "04", train2.getDepartureTimeHour());
+        Assert.assertEquals("Route location departure day", "1", rl2.getDepartureTimeDay());
         Assert.assertEquals("Route location departure time", "00", rl2.getDepartureTimeHour());
     }
 }

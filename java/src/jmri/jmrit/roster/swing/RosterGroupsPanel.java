@@ -505,7 +505,16 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
             for (DataFlavor flavor : transferFlavors) {
                 if (RosterEntrySelection.rosterEntryFlavor.equals(flavor)) {
-                    return true;
+                    if (c instanceof JTree && ((JTree) c).getDropLocation() != null && ((JTree) c).getDropLocation().getPath() != null) {
+                        var target = ((JTree) c).getDropLocation().getPath().getLastPathComponent().toString();
+                        if (Roster.ALLENTRIES.equals(target) || Roster.NOGROUP.equals(target) ) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -552,7 +561,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
 
-    static public class TreeCellRenderer extends DefaultTreeCellRenderer {
+    public static class TreeCellRenderer extends DefaultTreeCellRenderer {
 
     }
 
@@ -597,7 +606,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
 
-    static public class TreeUI extends BasicTreeUI {
+    public static class TreeUI extends BasicTreeUI {
 
         @Override
         public void paint(Graphics g, JComponent c) {

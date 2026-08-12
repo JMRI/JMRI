@@ -27,6 +27,6 @@ public class ActiveSystemsMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ActiveSystemsMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ActiveSystemsMenuTest.class);
 
 }

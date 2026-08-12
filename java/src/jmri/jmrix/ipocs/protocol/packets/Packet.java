@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @since 4.21.2
  */
 public abstract class Packet {
-  private final static Logger log = LoggerFactory.getLogger(Packet.class);
+  private static final Logger log = LoggerFactory.getLogger(Packet.class);
   private byte length;
   private byte ack;
 

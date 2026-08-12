@@ -90,16 +90,16 @@ public class SetupTest extends OperationsTestCase {
     
     @Test
     public void testEngineMessageComboBox() {
-        Assert.assertEquals("default size", 16, Setup.getEngineMessageComboBox().getItemCount());
+        Assert.assertEquals("default size", 18, Setup.getEngineMessageComboBox().getItemCount());
         Setup.setTabEnabled(true);
-        Assert.assertEquals("with tabs", 19, Setup.getEngineMessageComboBox().getItemCount());
+        Assert.assertEquals("with tabs", 21, Setup.getEngineMessageComboBox().getItemCount());
     }
     
     @Test
     public void testCarMessageComboBox() {
-        Assert.assertEquals("default size", 26, Setup.getCarMessageComboBox().getItemCount());
+        Assert.assertEquals("default size", 28, Setup.getCarMessageComboBox().getItemCount());
         Setup.setTabEnabled(true);
-        Assert.assertEquals("with tabs", 29, Setup.getCarMessageComboBox().getItemCount());
+        Assert.assertEquals("with tabs", 31, Setup.getCarMessageComboBox().getItemCount());
     }
     
     @Test
@@ -111,6 +111,6 @@ public class SetupTest extends OperationsTestCase {
         Assert.assertEquals("error", 0, Setup.getDirectionInt("X"));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetupTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SetupTest.class);
 
 }

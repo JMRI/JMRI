@@ -40,6 +40,7 @@
  * panel(name, value, data)
  * panels(array)
  * power(state)
+ * powerWithPrefix(prefix, state)
  * railroad(name)
  * reporter(name, value, data)
  * reporters(array)
@@ -166,6 +167,9 @@
             };
             jmri.power = function (state) {
             };
+            jmri.powerWithPrefix = function (prefix, state) {
+            };
+            jmri.defaultPowerPrefix = null;
             jmri.railroad = function (name) {
             };
             jmri.reporter = function (name, value, data) {
@@ -437,6 +441,10 @@
                 } else {
                     $.getJSON(jmri.url + "power", function (json) {
                         if ($.isArray(json)) json=json[0]; //unwrap array
+                        if (json.data.default && json.data.prefix) {
+                            jmri.defaultPowerPrefix = json.data.prefix;
+                        }
+                        jmri.powerWithPrefix(json.data.prefix, json.data.state);
                         jmri.power(json.data.state);
                     });
                 }
@@ -451,6 +459,7 @@
                         data: JSON.stringify({ state: state }),
                         contentType: "application/json; charset=utf-8",
                         success: function (json) {
+                            jmri.powerWithPrefix(json.data.prefix, json.data.state);
                             jmri.power(json.data.state);
                         }
                     });
@@ -1028,7 +1037,13 @@
                     jmri.panels(e);
                 },
                 power: function (e) {
-                    jmri.power(e.data.state);
+                    if (e.data.default && e.data.prefix) {
+                        jmri.defaultPowerPrefix = e.data.prefix;
+                    }
+                    jmri.powerWithPrefix(e.data.prefix, e.data.state);
+                    if (!e.data.prefix || e.data.prefix === jmri.defaultPowerPrefix) {
+                        jmri.power(e.data.state);
+                    }
                 },
                 railroad: function (e) {
                     jmri.railroad(e.data.name);

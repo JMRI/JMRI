@@ -44,5 +44,5 @@ public class NceConsistEngineAction extends AbstractAction {
         mb.start();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(NceConsistEngineAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(NceConsistEngineAction.class);
 }

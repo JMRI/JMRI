@@ -30,7 +30,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
     }
 
     // will this be enabled if created?
-    static public boolean willBeEnabled() {
+    public static boolean willBeEnabled() {
         // see if there's an openlcb connection
         var cscm = getSystemConnectionMemo();
         if (cscm == null) {
@@ -200,5 +200,5 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
         return -1;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsUploadAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsUploadAction.class);
 }

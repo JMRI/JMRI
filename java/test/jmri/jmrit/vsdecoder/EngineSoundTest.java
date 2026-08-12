@@ -2,7 +2,6 @@ package jmri.jmrit.vsdecoder;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class EngineSoundTest {
     @Test
     public void testCTor() {
         EngineSound t = new EngineSound("test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -35,6 +34,6 @@ public class EngineSoundTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EngineSoundTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EngineSoundTest.class);
 
 }

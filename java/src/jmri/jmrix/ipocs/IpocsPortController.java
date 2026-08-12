@@ -25,7 +25,7 @@ import jmri.util.zeroconf.ZeroConfService;
  * @since 4.21.2
  */
 public class IpocsPortController extends AbstractPortController implements IpocsClientListener {
-  private final static Logger log = LoggerFactory.getLogger(IpocsPortController.class);
+  private static final Logger log = LoggerFactory.getLogger(IpocsPortController.class);
   private static String INADDR_ANY = "0.0.0.0";
   private short port = 0;
   private AsynchronousServerSocketChannel serverSocket = null;

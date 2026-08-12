@@ -59,7 +59,7 @@ public class OlcbClockControlTest {
     }
 
     @BeforeAll
-    static public void checkSeparate() {
+    public static void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
     }
@@ -538,5 +538,5 @@ public class OlcbClockControlTest {
         new org.netbeans.jemmy.QueueTool().waitEmpty();  // using 100 as argument has a high fail rate 2018-12-15
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
 }

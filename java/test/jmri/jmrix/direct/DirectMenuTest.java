@@ -36,6 +36,6 @@ public class DirectMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DirectMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DirectMenuTest.class);
 
 }

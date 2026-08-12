@@ -116,7 +116,7 @@ public class PhysicalLocation extends Vector3f {
      * @param title the title of the component
      * @return a new component
      */
-    static public PhysicalLocationPanel getPanel(String title) {
+    public static PhysicalLocationPanel getPanel(String title) {
         return (new PhysicalLocationPanel(title));
     }
 
@@ -127,7 +127,7 @@ public class PhysicalLocation extends Vector3f {
      * @param pos : String "(X, Y, Z)"
      * @return PhysicalLocation
      */
-    static public PhysicalLocation parse(String pos) {
+    public static PhysicalLocation parse(String pos) {
         // position is stored as a tuple string "(x,y,z)"
         // Optional flags come immediately after the (x,y,z) in the form of "(flag)".
         // Flags are boolean. If they are present, they are true.

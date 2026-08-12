@@ -88,6 +88,6 @@ public class BiDiBLightManagerXml extends jmri.managers.configurexml.AbstractLig
     }
 */
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBLightManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBLightManagerXml.class);
 
 }

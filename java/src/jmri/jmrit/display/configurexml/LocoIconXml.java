@@ -126,5 +126,5 @@ public class LocoIconXml extends PositionableLabelXml {
         l.init();  // to detect "background" color for use in Tracker, examine icon file
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoIconXml.class);
 }

@@ -36,5 +36,5 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class);
 }

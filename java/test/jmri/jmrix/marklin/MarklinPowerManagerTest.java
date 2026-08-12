@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,7 +17,7 @@ public class MarklinPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",p);
+        Assertions.assertNotNull(p, "exists");
     }
 
     @Override
@@ -114,6 +113,6 @@ public class MarklinPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinPowerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinPowerManagerTest.class);
 
 }

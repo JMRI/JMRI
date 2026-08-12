@@ -11,7 +11,7 @@ import javax.swing.table.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.throttle.LargePowerManagerButton;
+import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import jmri.swing.JmriJTablePersistenceManager;

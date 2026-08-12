@@ -23,7 +23,7 @@ import jmri.JmriException;
  */
 public class CreateButtonModel extends AbstractActionModel {
 
-    // private final static Logger log = LoggerFactory.getLogger(CreateButtonModel.class);
+    // private static final Logger log = LoggerFactory.getLogger(CreateButtonModel.class);
 
     public CreateButtonModel() {
         super();

@@ -37,7 +37,7 @@ public class LnPacketizerStrict extends LnPacketizer {
     // retry required, lost echo, bad IMM, general busy
     private boolean reTryRequired;
 
-    static public int maxWaitCount = 150; // public for script access
+    public static int maxWaitCount = 150; // public for script access
 
     public LnPacketizerStrict(LocoNetSystemConnectionMemo m) {
         super(m);
@@ -383,6 +383,6 @@ public class LnPacketizerStrict extends LnPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPacketizerStrict.class);
+    private static final Logger log = LoggerFactory.getLogger(LnPacketizerStrict.class);
 
 }

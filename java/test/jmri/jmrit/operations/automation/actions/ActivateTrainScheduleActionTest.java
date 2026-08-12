@@ -71,6 +71,6 @@ public class ActivateTrainScheduleActionTest extends OperationsTestCase {
         Assert.assertEquals("default schedules", 8, action.getComboBox().getItemCount());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ActivateTrainScheduleActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ActivateTrainScheduleActionTest.class);
 
 }

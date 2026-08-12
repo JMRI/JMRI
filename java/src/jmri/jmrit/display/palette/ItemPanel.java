@@ -85,7 +85,7 @@ public abstract class ItemPanel extends JPanel  {
             "BeanStateUnknown", "first", "second", "third"};
     // SIGNALMAST family is empty is signal system
     static final String[] RPSREPORTER = {"active", "error"};
-    final static String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "PositionTrack",
+    static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "PositionTrack",
             "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH,
             PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
@@ -161,7 +161,7 @@ public abstract class ItemPanel extends JPanel  {
         return newMap;
     }
 
-    static protected void checkIconMap(String type, HashMap<String, NamedIcon> map) {
+    protected static void checkIconMap(String type, HashMap<String, NamedIcon> map) {
         for (String name : STATE_MAP.get(type)) {
             if (map.get(name) == null) {
                 NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
@@ -504,7 +504,7 @@ public abstract class ItemPanel extends JPanel  {
         return new Dimension(23, 48);
     }
 
-    static public GridBagConstraints itemGridBagConstraint() {
+    public static GridBagConstraints itemGridBagConstraint() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;

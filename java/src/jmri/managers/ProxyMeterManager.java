@@ -137,6 +137,6 @@ public class ProxyMeterManager extends AbstractProxyManager<Meter>
         }
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyMeterManager.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyMeterManager.class);
 
 }

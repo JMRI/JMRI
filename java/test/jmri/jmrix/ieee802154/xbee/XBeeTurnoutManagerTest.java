@@ -146,5 +146,5 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(XBeeTurnoutManagerTest.class);
 }

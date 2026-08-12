@@ -657,6 +657,6 @@ public class CanisbEditNVPane extends AbstractEditNVPane {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanisbEditNVPane.class);
+    private static final Logger log = LoggerFactory.getLogger(CanisbEditNVPane.class);
 
 }

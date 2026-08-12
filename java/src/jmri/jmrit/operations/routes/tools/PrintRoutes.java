@@ -26,9 +26,9 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintRoutes {
 
-    static final String NEW_LINE = "\n"; // NOI18N
-    static final String TAB = "\t"; // NOI18N
-    static final String SPACE = " ";
+    protected static final String NEW_LINE = "\n"; // NOI18N
+    protected static final String TAB = "\t"; // NOI18N
+    protected static final String SPACE = " ";
     private static final char FORM_FEED = '\f';
 
     private static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
@@ -58,8 +58,8 @@ public class PrintRoutes {
 
     private void printRoutes() {
         // obtain a HardcopyWriter to do this
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoutesTable"),
-                Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoutesTable"), null, null,
+                Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", false, true, null, null)) {
 
             writer.write(SPACE); // prevents exception when using Preview and no routes
             List<Route> routes = InstanceManager.getDefault(RouteManager.class).getRoutesByNameList();
@@ -84,7 +84,8 @@ public class PrintRoutes {
         }
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoute", route.getName()),
-                Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
+                null, null, Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", false, true,
+                null, null)) {
 
             printRoute(writer, route);
         } catch (HardcopyWriter.PrintCanceledException ex) {
@@ -181,5 +182,5 @@ public class PrintRoutes {
         return TrainCommon.padAndTruncate(string, fieldSize);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRoutes.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintRoutes.class);
 }

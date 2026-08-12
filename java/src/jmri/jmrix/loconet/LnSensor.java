@@ -118,6 +118,6 @@ public class LnSensor extends AbstractSensor  {
         // reach here only in error
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensor.class);
+    private static final Logger log = LoggerFactory.getLogger(LnSensor.class);
 
 }

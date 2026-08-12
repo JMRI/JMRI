@@ -34,6 +34,6 @@ public class ConnectionsPreferencesPanelTest extends PreferencesPanelTestBase<Co
         assertThat(prefsPanel.isDirty()).isTrue();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanelTest.class);
 
 }

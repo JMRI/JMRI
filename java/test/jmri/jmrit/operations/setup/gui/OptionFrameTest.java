@@ -124,6 +124,6 @@ public class OptionFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OptionFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OptionFrameTest.class);
 
 }

@@ -53,9 +53,10 @@ import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
-import jmri.jmrit.throttle.LargePowerManagerButton;
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.*;
+import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
+import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -176,6 +177,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         getToolBar().add(Box.createHorizontalGlue());
         JPanel p = new JPanel();
         p.setAlignmentX(JPanel.RIGHT_ALIGNMENT);
+        p.setOpaque(false);
         p.add(modePanel);
         getToolBar().add(p);
     }
@@ -277,9 +279,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             if (!checkIfEntrySelected()) {
                 return;
             }
-            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
             tf.toFront();
-            tf.getAddressPanel().setRosterEntry(re);
+            tf.setRosterEntry(re);
         });
         return panel;
     }
@@ -593,6 +595,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange("groupspane", "setEnabled", enable);
         firePropertyChange("grouptable", "setEnabled", enable);
         firePropertyChange("deletegroup", "setEnabled", enable);
+        firePropertyChange("deletegroupcontents", "setEnabled", enable);
+        firePropertyChange("addgroup", "setEnabled", enable);
     }
 
     protected void exportLoco() {
@@ -877,6 +881,29 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
+     * Print the displayed table, as displayed.
+     *
+     */
+    protected void printCurrentTable() {
+        try {
+            var cal = java.util.Calendar.getInstance();
+            var sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String time = sdf.format(cal.getTime());
+
+            var selectedRosterGroup = getSelectedRosterGroup();
+            String g = (selectedRosterGroup != null) ? selectedRosterGroup : "All Entries";
+            String group = String.format("%-20s",g);  // pad to right to fixed length
+
+            rtable.getTable().print(javax.swing.JTable.PrintMode.FIT_WIDTH,
+                            null,  // no header
+                            new java.text.MessageFormat(group+" - {0} -   "+time)  // spaces for heuristic formatting, don't change
+                            );
+        } catch (java.awt.print.PrinterException ep) {
+            log.error("While printing",ep);
+        }
+    }
+
+    /**
      * Match the first argument in the array against a locally-known method.
      *
      * @param args Array of arguments, we take with element 0
@@ -887,6 +914,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         switch (args[0]) {
             case "identifyloco":
                 startIdentifyLoco();
+                break;
+            case "printcurrenttable":
+                    printCurrentTable();
                 break;
             case "printloco":
                 if (checkIfEntrySelected()) {
@@ -1267,10 +1297,24 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         popupMenu.add(menuItem);
         menuItem = new JMenuItem(Bundle.getMessage("Throttle"));
         menuItem.addActionListener((ActionEvent e1) -> {
-            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+            ThrottleControllersUIContainer tw = null;
+            for (RosterEntry re : rtable.getSelectedRosterEntries()) {
+                ThrottleControllerUI tf;
+                if (tw == null) {
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                    tw = tf.getThrottleControllersContainer();
+                } else {
+                    tf = tw.newThrottleController();
+                }
+                tf.toFront();
+                tf.setRosterEntry(re);
+            }
+        });
+        popupMenu.add(menuItem);
+        menuItem = new JMenuItem(Bundle.getMessage("SimpleThrottle"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            ThrottleControllerUI tf =InstanceManager.getDefault(ThrottleFrameManager.class).createSimpleThrottleFrame(re);
             tf.toFront();
-            tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
-            tf.getAddressPanel().setRosterEntry(re);
         });
         if (re == null) {
             menuItem.setEnabled(false);
@@ -1303,6 +1347,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         menuItem.addActionListener((ActionEvent e1) -> deleteLoco());
         popupMenu.add(menuItem);
         menuItem.setEnabled(this.getSelectedRosterEntries().length > 0);
+
+        menuItem = new JMenuItem(new jmri.jmrit.roster.swing.RosterEntryToGroupAction(Bundle.getMessage("AddToGroup"), re));
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
+        popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
@@ -1554,7 +1604,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         log.trace("start global check with {}, {}, {}", serModeProCon, gpm, (gpm != null ? gpm.isGlobalProgrammerAvailable() : "<none>"));
         if (serModeProCon != null && gpm != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(), serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getAdapter().getSystemConnectionMemo())) {
                 log.debug("GPM Connection online 1");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
@@ -1615,7 +1665,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(), opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getAdapter().getSystemConnectionMemo())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));

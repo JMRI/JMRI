@@ -152,7 +152,7 @@ public class LnCabSignal extends DefaultCabSignal {
         _memo.getLnTrafficController().sendLocoNetMessage(peerXFerMessage);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnCabSignal.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnCabSignal.class);
 
 
 }

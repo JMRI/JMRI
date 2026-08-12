@@ -10,6 +10,8 @@ import jmri.jmrit.entryexit.PointDetails;
 import jmri.jmrit.entryexit.Source;
 import jmri.util.JUnitAppender;
 
+import org.junit.jupiter.api.AfterEach;
+
 /**
  * Test import of Logix to LogixNG.
  * <P>
@@ -72,6 +74,7 @@ public class ImportExpressionEntryExitTest extends ImportExpressionTestBase {
     }
 
     @Override
+    @AfterEach
     public void tearDown() {
         JUnitAppender.assertErrorMessage("Signal not found at point");
         JUnitAppender.assertErrorMessage("Signal not found at point");

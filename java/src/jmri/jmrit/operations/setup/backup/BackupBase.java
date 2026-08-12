@@ -22,7 +22,7 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public abstract class BackupBase extends PropertyChangeSupport implements InstanceManagerAutoDefault {
 
-    private final static Logger log = LoggerFactory.getLogger(BackupBase.class);
+    private static final Logger log = LoggerFactory.getLogger(BackupBase.class);
 
     // Property Changes
     public static final String COPY_FILES_CHANGED_PROPERTY = "Backup Copy Files";

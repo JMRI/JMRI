@@ -216,6 +216,8 @@
    <indexitem text="V&#233;rification Affectation des Pins " target="package.jmri.jmrix.cmri.serial.assignment.ListFrame"/>
 
   </indexitem>
+  <indexitem text="DCC-EX Mat&#233;riel, Connexion, Outils " target="html.hardware.dcc-ex.index"/>
+
   <indexitem text="DCC Specialties " target="html.hardware.misc.DccSpecialties"/>
 
   <indexitem text="Digitrax LocoNet " target="html.hardware.loconet.Digitrax"/>

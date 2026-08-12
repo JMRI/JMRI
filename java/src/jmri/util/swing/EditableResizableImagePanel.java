@@ -350,5 +350,5 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class);
+    private static final Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class);
 }

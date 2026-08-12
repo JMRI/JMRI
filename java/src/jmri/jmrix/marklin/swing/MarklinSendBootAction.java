@@ -10,10 +10,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to send MCAN BOOT message to Märklin devices.
  * <p>
- * This action sends a CAN BOOT command (0xB1) to invoke the bootloader
- * update sequence for Märklin hardware. According to German language 
- * forum documentation, this is part of the software/bootloader command 
- * range used for firmware updates and device initialization.
+ * This action sends a CAN BOOT command (0x1B) to reset the Gleisbox/trackbox
+ * and initiate it to start passing commands to locos and accessories on the rails.
+ * Without this command on startup, the hardware does not respond to subsequent
+ * commands. This is part of the software/bootloader command range used for
+ * firmware updates and device initialization.
  *
  * @author JMRI Community
  * @see <a href="https://www.stummiforum.de/t122854f7-M-rklin-CAN-Protokoll-x-B-commands-updates.html">Märklin CAN Protokoll 0x1B commands documentation</a>

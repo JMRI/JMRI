@@ -14,7 +14,7 @@ public class XNetAddressTest {
 
     @Test
     public void testXNetAddressConstants() {
-        assertEquals( 1024, XNetAddress.MAXSENSORADDRESS);
+        assertEquals( 2048, XNetAddress.MAXSENSORADDRESS);
     }
 
     @BeforeEach

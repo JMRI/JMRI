@@ -30,6 +30,6 @@ public class DragJLabelTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DragJLabelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DragJLabelTest.class);
 
 }

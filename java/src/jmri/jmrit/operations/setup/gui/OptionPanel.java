@@ -5,8 +5,9 @@ import java.awt.GridBagLayout;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.locations.tools.LocationsByQuickServiceFrame;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
@@ -101,7 +102,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         dwellTimeTextField.setText(Integer.toString(Setup.getDwellTime()));
         rfidTextField.setText(Setup.getRfidLabel());
         valueTextField.setText(Setup.getValueLabel());
-        
+
         // add tool tips
         saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
         rfidTextField.setToolTipText(Bundle.getMessage("EnterNameRfidTip"));
@@ -140,7 +141,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         pPasses.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutNumberPasses")));
         addItem(pPasses, numberPassesComboBox, 0, 0);
         pBuild.add(pPasses);
-        
+
         JPanel pDwellTime = new JPanel();
         pDwellTime.setLayout(new GridBagLayout());
         pDwellTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDwellTime")));
@@ -228,7 +229,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         buildGroup.add(buildNormal);
         buildGroup.add(buildAggressive);
         buildGroup.add(buildOnTime);
-        
+
         addRadioButtonAction(buildNormal);
         addRadioButtonAction(buildAggressive);
         addRadioButtonAction(buildOnTime);
@@ -317,6 +318,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     @Override
     public void savePreferences() {
         // build option
+        boolean isBuildOnTime = Setup.isBuildOnTime();
         Setup.setBuildAggressive(buildAggressive.isSelected() || buildOnTime.isSelected());
         Setup.setNumberPasses((Integer) numberPassesComboBox.getSelectedItem());
         Setup.setBuildOnTime(buildOnTime.isSelected());
@@ -357,7 +359,12 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // VSD
         Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
         // write the file
-        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
+        OperationsXml.save();
+        // bring up the quick service tool
+        if (!isBuildOnTime && buildOnTime.isSelected()) {
+            LocationsByQuickServiceFrame f = new LocationsByQuickServiceFrame();
+            f.initComponents();
+        }
     }
 
     @Override

@@ -201,6 +201,6 @@ abstract public class KnownLocoSelPane extends LocoSelPane {
     abstract protected void startProgrammer(DecoderFile decoderFile, RosterEntry r,
             String programmerName);
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(KnownLocoSelPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(KnownLocoSelPane.class);
 
 }

@@ -174,5 +174,5 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElseXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElseXml.class);
 }

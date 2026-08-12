@@ -96,5 +96,5 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OlcbReporterManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OlcbReporterManagerTest.class);
 }

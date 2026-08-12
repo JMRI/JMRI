@@ -70,5 +70,5 @@ abstract public class LayoutXOver extends LayoutTurnout {
         super(id, t, layoutEditor, 1);
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
 }

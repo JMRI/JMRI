@@ -70,7 +70,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         preferencesItem = category;
     }
 
-    final public void actionPerformed() {
+    public final void actionPerformed() {
         if (! InstanceManager.getDefault(PermissionManager.class)
                 .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
                         BooleanPermission.BooleanValue.TRUE)) {
@@ -115,6 +115,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class);
+    // private static final Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class);
 
 }

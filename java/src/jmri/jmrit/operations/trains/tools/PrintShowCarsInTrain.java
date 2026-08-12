@@ -27,11 +27,11 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintShowCarsInTrain extends TrainCommon {
 
-    static final String NEW_LINE = "\n"; // NOI18N
+    protected static final String NEW_LINE = "\n"; // NOI18N
 
-    static int fieldSize =
+    protected static int fieldSize =
             InstanceManager.getDefault(CarRoads.class).getMaxNameLength() + Control.max_len_string_road_number;
-    static final String TAB = padString("", fieldSize);
+    protected static final String TAB = padString("", fieldSize);
 
     /**
      * Prints the block order for a train at the train's current location.
@@ -43,9 +43,9 @@ public class PrintShowCarsInTrain extends TrainCommon {
         if (train.isBuilt()) {
             // obtain a HardcopyWriter to do this
             try (HardcopyWriter writer =
-                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()),
-                            Control.reportFontSize, .5,
-                            .5, .5, .5, isPreview);) {
+                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()), null,
+                            null, Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, "", false,
+                            true, null, null)) {
 
                 printCarsAtLocation(writer, train, train.getCurrentRouteLocation());
 
@@ -95,9 +95,9 @@ public class PrintShowCarsInTrain extends TrainCommon {
         if (train.isBuilt()) {
             // obtain a HardcopyWriter to do this
             try (HardcopyWriter writer =
-                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()),
-                            Control.reportFontSize, .5,
-                            .5, .5, .5, isPreview);) {
+                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()), null,
+                            null, Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, "", false,
+                            true, null, null);) {
                 printCarsRoute(writer, train);
             } catch (HardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print canceled");
@@ -170,5 +170,5 @@ public class PrintShowCarsInTrain extends TrainCommon {
         return header;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrain.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintShowCarsInTrain.class);
 }

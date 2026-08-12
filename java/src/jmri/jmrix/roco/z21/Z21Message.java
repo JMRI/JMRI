@@ -251,11 +251,22 @@ public class Z21Message extends AbstractMRMessage {
      * @return z21 message for LAN_RAILCOM_GETDATA request.
      */
     public static Z21Message getLanRailComGetDataRequestMessage() {
-        Z21Message retval = new Z21Message(4);
-        retval.setElement(0, 0x04);
+        return getLanRailComGetDataRequestMessage(0); // address 0 causes the Z21 to search for the next address.
+    }
+
+    /**
+     * @param address the address of the locomotive to request RailCom data for.
+     * @return z21 message for LAN_RAILCOM_GETDATA request.
+     */
+    public static Z21Message getLanRailComGetDataRequestMessage(int address) {
+        Z21Message retval = new Z21Message(7);
+        retval.setElement(0, 0x07);
         retval.setElement(1, 0x00);
         retval.setElement(2, 0x89);
         retval.setElement(3, 0x00);
+        retval.setElement(4, 0x01);
+        retval.setElement(5, address & 0xff);
+        retval.setElement(6, (address & 0xff00)>>8);
         return retval;
     }
 
@@ -374,6 +385,62 @@ public class Z21Message extends AbstractMRMessage {
         retval.setElement(4, 0x00);// type, currently fixed.
         retval.setElement(5, (address & 0xff));
         retval.setElement(6, ((address & 0xff00)>>8));
+        return retval;
+    }
+
+    /**
+     * @param address CAN NetworkID of the module to request data from.
+     * @return z21 message for LAN_CAN_GET_DESCRIPTION request message
+     */
+    public static Z21Message getLanCanGetDescription(int address) {
+        Z21Message retval = new Z21Message(6);
+        retval.setElement(0, 0x06);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0xC8);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (address & 0xff));
+        retval.setElement(5, ((address & 0xff00)>>8));
+        return retval;
+    }
+
+    /**
+     * @param address CAN NetworkID of the module to request data from.
+     * @param description description for the CAN Module
+     * @return z21 message for LAN_CAN_SET_DESCRIPTION request message
+     */
+    public static Z21Message getLanCanSetDescription(int address, String description) {
+        Z21Message retval = new Z21Message(22);
+        retval.setElement(0, 0x16);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0xC9);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (address & 0xff));
+        retval.setElement(5, ((address & 0xff00)>>8));
+        for (int j = 0; j < 16; j++) {
+            if (j < description.length()) {
+                retval.setElement(6 + j, description.charAt(j));
+            } else {
+                retval.setElement(6 + j, '\0'); // pad with nulls if description is too short.
+            }
+        }
+        return retval;
+    }
+
+
+    /**
+     * @param address CAN NetworkID of the module to set.
+     * @param powerSet track power state to set (0x00 for all on, 0xFF for all off.).
+     * @return z21 message for LAN_CAN_SET_BOOSTER_TRACK_POWER request message
+     */
+    public static Z21Message getLanCanSetBoosterTrackPower(int address, int powerSet) {
+        Z21Message retval = new Z21Message(7);
+        retval.setElement(0, 0x07);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0xCB);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (address & 0xff));
+        retval.setElement(5, ((address & 0xff00)>>8));
+        retval.setElement(6, (powerSet & 0xff));
         return retval;
     }
 

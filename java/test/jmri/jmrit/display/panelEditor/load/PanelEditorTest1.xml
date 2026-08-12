@@ -18,4 +18,5 @@
         <turnouticon turnout="IT1" x="136" y="53" level="7" closed="program:resources/icons/misc/X-red.gif" thrown="program:resources/icons/misc/X-red.gif" unknown="program:resources/icons/misc/X-red.gif" inconsistent="program:resources/icons/misc/X-red.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
         <sensoricon sensor="IS1" x="138" y="54" level="10" active="program:resources/icons/misc/Checkmark-green.gif" inactive="program:resources/icons/misc/Checkmark-green.gif" unknown="program:resources/icons/misc/Checkmark-green.gif" inconsistent="program:resources/icons/misc/Checkmark-green.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     </paneleditor>
+    <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed May 18 11:01:35 EDT 2022" startsettime="no" />
 </layout-config>

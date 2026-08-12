@@ -45,6 +45,6 @@ public class IterableEnumerationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IterableEnumerationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(IterableEnumerationTest.class);
 
 }

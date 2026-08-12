@@ -343,5 +343,5 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         tc.sendMrcMessage(cmdMrc);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcClockControl.class);
+    private static final Logger log = LoggerFactory.getLogger(MrcClockControl.class);
 }

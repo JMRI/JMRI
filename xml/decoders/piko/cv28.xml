@@ -66,11 +66,11 @@
         <label xml:lang="de">RailCom Kanal 2 (Daten)</label>
         <label xml:lang="nl">RailCom Kanaal 2 (Data)</label>
     </variable>
-    <variable item="RailCom channel 1 auto" CV="28" default="1" mask="XXXXXVXX" include="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
+    <variable item="RailCom channel 1 auto" CV="28" default="1" mask="XXXXXVXX" include="PIKO SmartDecoder XP5.1 (version 1.17+),PIKO SmartDecoder XP5.1 (version 1.8+),PIKO SmartDecoder XP5.1 (version 1.5+),PIKO SmartDecoder XP5.1 (version 1.1+)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>RailCom Kanal 1 auto aus</label>
+        <label>RailCom auto</label>
     </variable>
-    <variable item="RailCom Broadcast" CV="28" default="1" mask="XXXVXXXX" include="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
+    <variable item="RailCom Broadcast" CV="28" default="1" mask="XXXVXXXX" include="PIKO SmartDecoder XP5.1 (version 1.17+),PIKO SmartDecoder XP5.1 (version 1.8+),PIKO SmartDecoder XP5.1 (version 1.5+),PIKO SmartDecoder XP5.1 (version 1.1+)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom Broadcast Adresse</label>
     </variable>

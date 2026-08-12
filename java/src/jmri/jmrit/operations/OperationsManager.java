@@ -27,7 +27,7 @@ public final class OperationsManager implements InstanceManagerAutoDefault, Inst
 
     private ShutDownTask shutDownTask = null;
 
-    static private final Logger log = LoggerFactory.getLogger(OperationsManager.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsManager.class);
 
     public OperationsManager() {
     }

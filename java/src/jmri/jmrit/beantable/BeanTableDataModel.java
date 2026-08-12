@@ -23,7 +23,7 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -37,12 +37,12 @@ import jmri.util.table.ButtonRenderer;
  */
 abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTableModel implements PropertyChangeListener {
 
-    static public final int SYSNAMECOL = 0;
-    static public final int USERNAMECOL = 1;
-    static public final int VALUECOL = 2;
-    static public final int COMMENTCOL = 3;
-    static public final int DELETECOL = 4;
-    static public final int NUMCOLUMN = 5;
+    public static final int SYSNAMECOL = 0;
+    public static final int USERNAMECOL = 1;
+    public static final int VALUECOL = 2;
+    public static final int COMMENTCOL = 3;
+    public static final int DELETECOL = 4;
+    public static final int NUMCOLUMN = 5;
     protected List<String> sysNameList = null;
     private NamedBeanHandleManager nbMan;
     private Predicate<? super T> filter;
@@ -570,7 +570,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      *
      * @param w the printer writer
      */
-    public void printTable(HardcopyWriter w) {
+    public void printTable(OriginalHardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
         int columnSize = (w.getCharactersPerLine() - this.getColumnCount() - 1) / this.getColumnCount();
 
@@ -586,7 +586,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnSize);
-        w.setFontStyle(0);
+        w.setFontStyle(Font.PLAIN);
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 (columnSize + 1) * this.getColumnCount());
 
@@ -616,7 +616,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String[] columnStrings, int columnSize) {
+    protected void printColumns(OriginalHardcopyWriter w, String[] columnStrings, int columnSize) {
         // create a base string the width of the column
         StringBuilder spaces = new StringBuilder(); // NOI18N
         for (int i = 0; i < columnSize; i++) {
@@ -1505,6 +1505,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanTableDataModel.class);
 
 }

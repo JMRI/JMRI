@@ -225,6 +225,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class);
 
 }

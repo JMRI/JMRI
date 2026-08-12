@@ -1,5 +1,7 @@
 package jmri.jmrit.consisttool;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
 import java.awt.Component;
 import javax.swing.JButton;
 import jmri.DccLocoAddress;
@@ -63,7 +65,8 @@ public class ConsistToolScaffold extends JFrameOperator {
         JButtonOperator jbo = new JButtonOperator(this, new ComponentChooser() {
             @Override
             public boolean checkComponent(Component comp) {
-                String tooltip = ((JButton) comp).getToolTipText();
+                JButton jb = assertInstanceOf(JButton.class, comp);
+                String tooltip = jb.getToolTipText();
                 if (tooltip != null) {
                     return tooltip.equals(Bundle.getMessage("DeleteButtonToolTip"));
                 } else {

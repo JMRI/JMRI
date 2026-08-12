@@ -325,7 +325,7 @@ public class LogixNG_Thread {
         }
     }
 
-    static private class ThreadEvent {
+    private static class ThreadEvent {
         private final ThreadAction _threadAction;
         private final Object _lock;
 
@@ -385,7 +385,7 @@ public class LogixNG_Thread {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_Thread.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_Thread.class);
 
 }
 

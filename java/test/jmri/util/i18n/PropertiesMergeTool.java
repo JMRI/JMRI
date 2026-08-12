@@ -23,7 +23,7 @@ import java.util.*;
 import java.io.*;
 
 class PropertiesMergeTool {
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         if (args.length < 2) {
             System.err.println("Needs two file names");
             return;
@@ -86,10 +86,8 @@ class PropertiesMergeTool {
             // done, flush and close output
             outWriter.close();
 
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            System.err.println("Exception: "+e);
+        } catch (IOException e) {
+            System.err.println("IOException: "+e);
             e.printStackTrace();
         } finally {
             try {
@@ -100,16 +98,17 @@ class PropertiesMergeTool {
         }
     }
 
-    static public boolean isBlankLine(String line) {
+    public static boolean isBlankLine(String line) {
         while (line.startsWith(" ")) {
             line = line.substring(1);
         }
         return line.isEmpty();
     }
 
-    static File outFile = null;
-    static Writer outWriter = null;
-    static public void writeOutLine(String line) throws IOException {
+    private static File outFile = null;
+    private static Writer outWriter = null;
+
+    public static void writeOutLine(String line) throws IOException {
 
         // double \ characters to have them go through explicitly
         var literalLine = line.replaceAll("\\n", "\\\\n");

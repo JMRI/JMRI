@@ -444,6 +444,6 @@ public class SerialAddress {
         return nName;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialAddress.class);
 
 }

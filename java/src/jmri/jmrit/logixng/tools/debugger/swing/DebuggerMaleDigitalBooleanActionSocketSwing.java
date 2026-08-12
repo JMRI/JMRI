@@ -5,6 +5,6 @@ package jmri.jmrit.logixng.tools.debugger.swing;
  */
 public class DebuggerMaleDigitalBooleanActionSocketSwing extends AbstractDebuggerMaleSocketSwing {
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebuggerMaleDigitalBooleanActionSocketSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebuggerMaleDigitalBooleanActionSocketSwing.class);
     
 }

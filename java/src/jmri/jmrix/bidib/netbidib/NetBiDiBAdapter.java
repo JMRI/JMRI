@@ -916,7 +916,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
 //    }
 
 
-    private final static Logger log = LoggerFactory.getLogger(NetBiDiBAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(NetBiDiBAdapter.class);
 
     
 }

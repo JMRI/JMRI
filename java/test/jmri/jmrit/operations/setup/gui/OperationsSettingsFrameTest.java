@@ -313,6 +313,6 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         f = JmriJFrame.getFrame(Bundle.getMessage("TitleOperationsSetup"));
         Assert.assertNull("does not exist", f);
     }
-    // private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class);
 
 }

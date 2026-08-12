@@ -32,6 +32,6 @@ public class SprogIIUpdateActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SprogIIUpdateActionTest.class);
 
 }

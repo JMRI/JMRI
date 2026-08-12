@@ -17,10 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -39,9 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
-import jmri.CatalogTreeManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -122,6 +117,7 @@ public class PanelEditor extends Editor implements ItemListener {
     private final JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
     private final JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
     private final JComboBox<String> scrollableComboBox = new JComboBox<>();
+    private JCheckBoxMenuItem disableLocoMarkerPopupMenuItem;
 
     private final JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
     private final JTextField nextLabel = new JTextField(10);
@@ -285,6 +281,13 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem(AUDIO));
         _addIconBox.addItem(new ComboBoxItem(LOGIXNG));
         _addIconBox.addItem(new ComboBoxItem(ICON));
+
+        for (var positionableFactory : ServiceLoader.load(PositionableFactory.class)) {
+            _addIconBox.addItem(new ComboBoxItem(
+                    positionableFactory.getIdentifier(),
+                    positionableFactory.getDescription()));
+        }
+
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
         JPanel p1 = new JPanel();
@@ -417,17 +420,10 @@ public class PanelEditor extends Editor implements ItemListener {
     static class ComboBoxItem {
 
         private final String name;
+        private final String description;
 
         protected ComboBoxItem(String n) {
             name = n;
-        }
-
-        protected String getName() {
-            return name;
-        }
-
-        @Override
-        public String toString() {
             // I18N split Bundle name
             // use NamedBeanBundle property for basic beans like "Turnout" I18N
             String bundleName;
@@ -452,7 +448,21 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 bundleName = name;
             }
-            return Bundle.getMessage(bundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            description = Bundle.getMessage(bundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
+        }
+
+        protected ComboBoxItem(String n, String descr) {
+            name = n;
+            description = descr;
+        }
+
+        protected String getName() {
+            return name;
+        }
+
+        @Override
+        public String toString() {
+            return description;
         }
     }
 
@@ -474,7 +484,17 @@ public class PanelEditor extends Editor implements ItemListener {
                 } else if (name.equals(RPSREPORTER)) {
                     addRpsReporter();
                 } else {
-                    log.error("Unable to open Icon Editor \"{}\"", item.getName());
+                    PositionableFactory positionableFactory = null;
+                    for (var pf : ServiceLoader.load(PositionableFactory.class)) {
+                        if (name.equals(pf.getIdentifier())) {
+                            positionableFactory = pf;
+                        }
+                    }
+                    if (positionableFactory != null) {
+                        positionableFactory.addPositionable(this, null);
+                    } else {
+                        log.error("Unable to open Icon Editor \"{}\"", item.getName());
+                    }
                 }
             }
             _addIconBox.setSelectedIndex(-1);
@@ -546,6 +566,18 @@ public class PanelEditor extends Editor implements ItemListener {
                 removeMarkers();
             }
         });
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
+            markerMenu.addSeparator();
+            disableLocoMarkerPopupMenuItem = new JCheckBoxMenuItem(
+                    new AbstractAction(Bundle.getMessage("DisableLocoMarkerPopup")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            enableDisableLocoMarkerPopups();
+                        }
+            });
+            disableLocoMarkerPopupMenuItem.setSelected(isLocoMarkerPopupDisabled());
+            markerMenu.add(disableLocoMarkerPopupMenuItem);
+        });
 
         JMenu warrantMenu = jmri.jmrit.logix.WarrantTableAction.getDefault().makeWarrantMenu(isEditable());
         if (warrantMenu != null) {
@@ -554,6 +586,13 @@ public class PanelEditor extends Editor implements ItemListener {
 
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
         return targetFrame;
+    }
+
+    private void enableDisableLocoMarkerPopups() {
+        if (disableLocoMarkerPopupMenuItem != null) {
+            boolean selected = disableLocoMarkerPopupMenuItem.isSelected();
+            setLocoMarkerPopupDisabled(selected);
+        }
     }
 
     /*
@@ -583,7 +622,7 @@ public class PanelEditor extends Editor implements ItemListener {
      * Set an object's location when it is created.
      */
     @Override
-    protected void setNextLocation(Positionable obj) {
+    public void setNextLocation(Positionable obj) {
         int x = Integer.parseInt(nextX.getText());
         int y = Integer.parseInt(nextY.getText());
         obj.setLocation(x, y);
@@ -944,7 +983,7 @@ public class PanelEditor extends Editor implements ItemListener {
         } else {
             _currentSelection = null;
             if (event.isPopupTrigger()) {
-                if (_multiItemCopyGroup == null) {
+                if (_multiItemCopyGroup != null) {
                     pasteItemPopUp(event);
                 } else {
                     backgroundPopUp(event);
@@ -1063,23 +1102,41 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem(LOGIXNG), _add);
         addItemPopUp(new ComboBoxItem(ICON), _add);
         addItemPopUp(new ComboBoxItem("Text"), _add);
+
+        for (var positionableFactory : ServiceLoader.load(PositionableFactory.class)) {
+            addItemPopUp(new ComboBoxItem(
+                    positionableFactory.getIdentifier(),
+                    positionableFactory.getDescription()),
+                    _add,
+                    (ActionEvent e) -> {
+                        addItemViaMouseClick = true;
+                        positionableFactory.addPositionable(this, null);
+                    });
+        }
+
         popup.add(_add);
     }
 
-    protected void addItemPopUp(final ComboBoxItem item, JMenu menu) {
+    void addItemPopUp(final ComboBoxItem item, JMenu menu) {
+        addItemPopUp(item, menu, null);
+    }
 
-        ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addItemViaMouseClick = true;
-                getIconFrame(item.getName());
-            }
+    void addItemPopUp(final ComboBoxItem item, JMenu menu, ActionListener a) {
 
-            ActionListener init(ComboBoxItem i) {
-                return this;
-            }
-        }.init(item);
+        if (a == null) {
+            a = new ActionListener() {
+                //final String desiredName = name;
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addItemViaMouseClick = true;
+                    getIconFrame(item.getName());
+                }
+
+                ActionListener init(ComboBoxItem i) {
+                    return this;
+                }
+            }.init(item);
+        }
         JMenuItem addto = new JMenuItem(item.toString());
         addto.addActionListener(a);
         menu.add(addto);
@@ -1089,7 +1146,15 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void putItem(Positionable l) throws Positionable.DuplicateIdException {
-        super.putItem(l);
+        putItem(l, false);
+    }
+
+    @Override
+    public void putItem(Positionable l, boolean factoryPositionable)
+            throws Positionable.DuplicateIdException {
+
+        super.putItem(l, factoryPositionable);
+
         /*This allows us to catch any new items that are being pasted into the panel
          and add them to the selection group, so that the user can instantly move them around*/
         //!!!

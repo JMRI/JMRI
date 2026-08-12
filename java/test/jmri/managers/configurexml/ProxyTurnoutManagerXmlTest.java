@@ -27,6 +27,6 @@ public class ProxyTurnoutManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManagerXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProxyTurnoutManagerXmlTest.class);
 
 }

@@ -3,7 +3,6 @@ package apps.startup;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class StartupModelCellEditorTest {
     @Test
     public void testCTor() {
         StartupModelCellEditor t = new StartupModelCellEditor();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class StartupModelCellEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StartupModelCellEditorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StartupModelCellEditorTest.class);
 
 }

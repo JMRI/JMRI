@@ -38,6 +38,6 @@ public class NodeTablePaneTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NodeTablePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NodeTablePaneTest.class);
 
 }

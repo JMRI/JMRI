@@ -2,7 +2,6 @@ package jmri.jmrit.jython;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class JythonWindowTest {
     @Test
     public void testCTor() {
         JythonWindow t = new JythonWindow();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class JythonWindowTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JythonWindowTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JythonWindowTest.class);
 
 }

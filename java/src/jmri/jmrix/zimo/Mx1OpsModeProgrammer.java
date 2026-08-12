@@ -83,9 +83,34 @@ public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProg
     @Override
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        log.debug("read CV={}", CV);
-        log.error("readCV not available in this protocol");
-        throw new ProgrammerException();
+
+        // The MXULF still can't read
+        if (tc.getAdapterMemo().getConnectionType() != Mx1SystemConnectionMemo.KLUG) {
+            log.debug("confirm CV={}", CV);
+            log.error("confirmCV not available in this protocol");
+            throw new ProgrammerException();
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("readCV {} listens {}", CV, p);
+        }
+        useProgrammer(p);
+        _progRead = true;
+        // set new state & save values
+        progState = INQUIRESENT;
+        _val = -1; // Read
+        _cv = CV;
+        // start the error timer
+        startShortTimer();
+        // format and send message to go to program mode
+        if (getMode() == ProgrammingMode.OPSBYTEMODE) {
+            if (tc.getProtocol() == Mx1Packetizer.ASCII) {
+                // Not supporting ASCII protocol for now.
+                throw new ProgrammerException();
+            } else {
+                tc.sendMx1Message(Mx1Message.getDecProgCmd(mAddress, _cv, _val, true), this);
+            }
+        }
     }
 
     /** 
@@ -101,14 +126,13 @@ public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProg
     /** 
      * {@inheritDoc}
      *
-     * Can this ops-mode programmer read back values? For now, no, but maybe
-     * later.
+     * Can this ops-mode programmer read back values? The KLUG yes, the MXULF is WIP, so no
      *
-     * @return always false for now
+     * @return true in case of KLUG, otherwise false
      */
     @Override
     public boolean getCanRead() {
-        return false;
+        return tc.getAdapterMemo().getConnectionType() == Mx1SystemConnectionMemo.KLUG;
     }
 
     /** 
@@ -135,6 +159,6 @@ public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProg
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1OpsModeProgrammer.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1OpsModeProgrammer.class);
 
 }

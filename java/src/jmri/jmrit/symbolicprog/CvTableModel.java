@@ -443,5 +443,5 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         return (getCvByNumber("29").getValue() & 0x20) != 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CvTableModel.class);
 }

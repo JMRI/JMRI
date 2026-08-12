@@ -639,7 +639,9 @@
         <li>Trains &mdash; Each train has a default speed of 4 and will be assigned to one of the 4 train
         types.</li>
 
-        <li>Stops &mdash; The duration of each stop is based on the move counts in Operations.</li>
+        <li>Stops &mdash; The duration of each stop is based on the route move counts and the
+          Settings switch time in OperationsPro when the train isn't built. And if the train is
+          built, duration is the estimated time to work a location provided by OperationsPro.</li>
       </ul>
 
       <h2 id="csvexport">CSV Export</h2>

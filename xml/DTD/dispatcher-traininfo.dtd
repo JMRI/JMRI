@@ -18,9 +18,9 @@
     <!ATTLIST traininfo version                 CDATA "1">
     <!ATTLIST traininfo transitname             CDATA #REQUIRED>
     <!ATTLIST traininfo transitid               CDATA "-1">
-    <!ATTLIST traininfo trainname        	CDATA #REQUIRED>
-    <!ATTLIST traininfo dccaddress	        CDATA #REQUIRED>
-    <!ATTLIST traininfo trainintransit	        CDATA #REQUIRED>
+    <!ATTLIST traininfo trainname               CDATA #REQUIRED>
+    <!ATTLIST traininfo dccaddress              CDATA #REQUIRED>
+    <!ATTLIST traininfo trainintransit          CDATA #REQUIRED>
     <!ATTLIST traininfo startblockname          CDATA #REQUIRED>
     <!ATTLIST traininfo startblockid            CDATA "-1">
     <!ATTLIST traininfo startblockseq           CDATA "-1">
@@ -28,38 +28,38 @@
     <!ATTLIST traininfo endblockid              CDATA "-1">
     <!ATTLIST traininfo endblockseq             CDATA "-1">
     <!ATTLIST traininfo trainfromroster         CDATA #REQUIRED>
-    <!ATTLIST traininfo trainfromtrains	   	CDATA #REQUIRED>
-    <!ATTLIST traininfo trainfromuser	   	CDATA #REQUIRED>
+    <!ATTLIST traininfo trainfromtrains         CDATA #REQUIRED>
+    <!ATTLIST traininfo trainfromuser           CDATA #REQUIRED>
     <!ATTLIST traininfo trainfromsetlater       CDATA #REQUIRED>
-    <!ATTLIST traininfo priority        	CDATA #REQUIRED>
-    <!ATTLIST traininfo resetwhendone        	CDATA #REQUIRED>
-    <!ATTLIST traininfo delayedrestart        	CDATA "no">
+    <!ATTLIST traininfo priority                CDATA #REQUIRED>
+    <!ATTLIST traininfo resetwhendone           CDATA #REQUIRED>
+    <!ATTLIST traininfo delayedrestart          CDATA "no">
     <!ATTLIST traininfo delayedrestartsensor    CDATA "-1">
     <!ATTLIST traininfo delayedrestarttime      CDATA "00:00">
     <!ATTLIST traininfo delayedSensor           CDATA "">
-    <!ATTLIST traininfo reverseatend        	CDATA #REQUIRED>
-    <!ATTLIST traininfo reversedelayedrestart          CDATA "no">
-    <!ATTLIST traininfo reversedelayedrestartsensor    CDATA "-1">
-    <!ATTLIST traininfo reversedelayedrestarttime      CDATA "00:00">
-    <!ATTLIST traininfo reversedelayedSensor           CDATA "">
-    <!ATTLIST traininfo delayedstart        	CDATA "no">
-    <!ATTLIST traininfo departuretimehr        	CDATA #REQUIRED>
+    <!ATTLIST traininfo reverseatend            CDATA #REQUIRED>
+    <!ATTLIST traininfo reversedelayedrestart   CDATA "no">
+    <!ATTLIST traininfo reversedelayedrestartsensor CDATA "-1">
+    <!ATTLIST traininfo reversedelayedrestarttime   CDATA "00:00">
+    <!ATTLIST traininfo reversedelayedSensor    CDATA "">
+    <!ATTLIST traininfo delayedstart            CDATA "no">
+    <!ATTLIST traininfo departuretimehr         CDATA #REQUIRED>
     <!ATTLIST traininfo departuretimemin        CDATA #REQUIRED>
-    <!ATTLIST traininfo traintype        	CDATA #REQUIRED>
-    <!ATTLIST traininfo autorun        		CDATA #REQUIRED>
-    <!ATTLIST traininfo speedfactor        	CDATA "1.0">
-    <!ATTLIST traininfo maxspeed        	CDATA "1.0">
-    <!ATTLIST traininfo ramprate        	CDATA "RAMP_NONE">
+    <!ATTLIST traininfo traintype               CDATA #REQUIRED>
+    <!ATTLIST traininfo autorun                 CDATA #REQUIRED>
+    <!ATTLIST traininfo speedfactor             CDATA "1.0">
+    <!ATTLIST traininfo maxspeed                CDATA "1.0">
+    <!ATTLIST traininfo ramprate                CDATA "RAMP_NONE">
     <!ATTLIST traininfo resistancewheels        CDATA "no">
-    <!ATTLIST traininfo runinreverse	        CDATA "no">
-    <!ATTLIST traininfo sounddecoder	        CDATA #REQUIRED>
-    <!ATTLIST traininfo maxtrainlength        	CDATA #REQUIRED>
-    <!ATTLIST traininfo terminatewhendone     	CDATA "yes">
-    <!ATTLIST traininfo loadatstartup        	CDATA "no">
-    <!ATTLIST traininfo allocationmethod      	CDATA "3">
-    <!ATTLIST traininfo nexttrain              CDATA #IMPLIED>
-    <!ATTLIST traininfo allocatealltheway     	CDATA "no">
-    <!ATTLIST traininfo usespeedprofile        	CDATA "no">
+    <!ATTLIST traininfo runinreverse            CDATA "no">
+    <!ATTLIST traininfo sounddecoder            CDATA #REQUIRED>
+    <!ATTLIST traininfo maxtrainlength          CDATA #IMPLIED>  <!-- obsolete? -->
+    <!ATTLIST traininfo terminatewhendone       CDATA "yes">
+    <!ATTLIST traininfo loadatstartup           CDATA "no">
+    <!ATTLIST traininfo allocationmethod        CDATA "3">
+    <!ATTLIST traininfo nexttrain               CDATA #IMPLIED>
+    <!ATTLIST traininfo allocatealltheway       CDATA "no">
+    <!ATTLIST traininfo usespeedprofile         CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofile      CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofileadjust CDATA "1500">
     <!ATTLIST traininfo waittime                CDATA "0">
@@ -67,3 +67,17 @@
     <!ATTLIST traininfo fnumberlight            CDATA "0">
     <!ATTLIST traininfo fnumberbell             CDATA "1">
     <!ATTLIST traininfo fnumberhorn             CDATA "2">
+    <!ATTLIST traininfo overridestopsensor      CDATA #IMPLIED>
+    <!ATTLIST traininfo additionaltrainweight_tonnes CDATA #IMPLIED>
+    <!ATTLIST traininfo rollingresistancecoeff  CDATA #IMPLIED>
+    <!ATTLIST traininfo driverpowerpercent      CDATA #IMPLIED>
+    <!ATTLIST traininfo minreliableoperatingspeed CDATA #IMPLIED>
+    <!ATTLIST traininfo maxtrainlengthscalemeters CDATA #IMPLIED>
+    <!ATTLIST traininfo trainlengthunits        CDATA #IMPLIED>
+    <!ATTLIST traininfo usestopsensor           CDATA #IMPLIED>
+    <!ATTLIST traininfo dynamictransit          CDATA #IMPLIED>
+    <!ATTLIST traininfo trainusername           CDATA #IMPLIED>
+    <!ATTLIST traininfo rosterid                CDATA #IMPLIED>
+    <!ATTLIST traininfo viablockname            CDATA #IMPLIED>
+    <!ATTLIST traininfo traindetection          CDATA #IMPLIED>
+

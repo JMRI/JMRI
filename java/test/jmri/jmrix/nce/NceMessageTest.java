@@ -176,6 +176,6 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("content", "93 02 81 FF 7E", msg.toString());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessageTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessageTest.class);
 
 }

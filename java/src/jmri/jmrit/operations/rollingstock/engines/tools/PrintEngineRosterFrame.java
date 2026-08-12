@@ -136,7 +136,8 @@ public class PrintEngineRosterFrame extends OperationsFrame {
 
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
-                fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, null, null);) {
+                null, null, fontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", isLandscape, true, null,
+                null)) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 
@@ -308,5 +309,5 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         return TrainCommon.padAndTruncate(attribute, length) + TrainCommon.SPACE;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintEngineRosterFrame.class);
 }

@@ -340,6 +340,6 @@ public class AcelaAddress {
         return ("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(AcelaAddress.class);
 
 }

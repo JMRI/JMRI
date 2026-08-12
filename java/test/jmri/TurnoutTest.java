@@ -1,5 +1,7 @@
 package jmri;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +31,16 @@ public class TurnoutTest {
         assertEquals( Turnout.CLOSED, Turnout.invertTurnoutState(Turnout.THROWN), "Thrown state Inverted");
         assertEquals( Turnout.INCONSISTENT, Turnout.invertTurnoutState(Turnout.INCONSISTENT), "Inconsistent state Inverted");
         assertEquals( Turnout.UNKNOWN, Turnout.invertTurnoutState(Turnout.UNKNOWN), "Unknown state Inverted");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

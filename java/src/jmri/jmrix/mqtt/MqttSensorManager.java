@@ -112,6 +112,6 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
     }
     MqttContentParser<Sensor> parser = null;
 
-    private final static Logger log = LoggerFactory.getLogger(MqttSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(MqttSensorManager.class);
 
 }

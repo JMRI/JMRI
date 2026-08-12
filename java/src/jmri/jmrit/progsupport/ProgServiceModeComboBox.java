@@ -99,6 +99,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
 
         // general GUI config
         setLayout(new BoxLayout(this, direction));
+        this.setOpaque(false);
 
         // create the programmer display combo box
         progBox = new JComboBox<>();
@@ -189,5 +190,5 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     @Override
     public void dispose() {
     }
-    private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class);
+    private static final Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class);
 }

@@ -1218,7 +1218,7 @@ public class SplitEnumVariableValue extends VariableValue
 
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SplitEnumVariableValue.class
+    private static final Logger log = LoggerFactory.getLogger(SplitEnumVariableValue.class
             .getName());
 
 }

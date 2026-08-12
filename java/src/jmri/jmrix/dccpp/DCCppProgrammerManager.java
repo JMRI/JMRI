@@ -6,7 +6,7 @@ import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide ops mode programmers on DCC++
+ * Extend DefaultProgrammerManager to provide ops mode programmers on DCC-EX
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Paul Bender Copyright (C) 2003

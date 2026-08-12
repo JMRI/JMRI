@@ -15,9 +15,6 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 
 /**
@@ -198,9 +195,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     }
 */
     @Disabled("Error: ProtectedTimerTask Cannot stop timer")
-    @Ignore("ProtectedTimerTask Cannot stop timer")
     @Test
-    @org.junit.Test
     @Override
     public void testIsActive() {
         _logixNG.setEnabled(true);
@@ -209,16 +204,13 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     }
 
     @Disabled("Error: ProtectedTimerTask Cannot stop timer")
-    @Ignore("ProtectedTimerTask Cannot stop timer")
     @Test
-    @org.junit.Test
     @Override
     public void testMaleSocketIsActive() {
         _logixNG.setEnabled(true);
         super.testMaleSocketIsActive();
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -250,7 +242,6 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(false);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         _logixNG.setEnabled(false);

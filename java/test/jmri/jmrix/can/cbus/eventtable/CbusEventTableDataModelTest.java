@@ -411,6 +411,6 @@ public class CbusEventTableDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventTableDataModelTest.class);
 
 }

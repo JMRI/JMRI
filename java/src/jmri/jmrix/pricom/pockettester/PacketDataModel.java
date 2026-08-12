@@ -19,12 +19,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
-    static public final int ADDRESSCOLUMN = 0;
-    static public final int TYPECOLUMN = 1;
-    static public final int DETAILCOLUMN = 2;
-    static public final int MONITORBUTTONCOLUMN = 3;
+    public static final int ADDRESSCOLUMN = 0;
+    public static final int TYPECOLUMN = 1;
+    public static final int DETAILCOLUMN = 2;
+    public static final int MONITORBUTTONCOLUMN = 3;
 
-    static public final int NUMCOLUMN = 4;
+    public static final int NUMCOLUMN = 4;
 
     /**
      * Returns the number of rows to be displayed. This can vary depending on
@@ -281,6 +281,6 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
         return s.substring(23, s.length() - 1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketDataModel.class);
 
 }

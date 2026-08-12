@@ -173,7 +173,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
         _selectItemTypeDialog.setVisible(true);
     }
 
-    final protected void cancelAddPressed(ActionEvent e) {
+    protected final void cancelAddPressed(ActionEvent e) {
         _selectItemTypeDialog.setVisible(false);
         _selectItemTypeDialog.dispose();
         _selectItemTypeDialog = null;

@@ -164,5 +164,5 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         loadLogixNG_Data(l, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(BlockContentsIconXml.class);
 }

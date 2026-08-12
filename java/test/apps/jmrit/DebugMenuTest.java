@@ -2,7 +2,6 @@ package apps.jmrit;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class DebugMenuTest {
     @Test
     public void testCTor() {
         DebugMenu t = new DebugMenu("Test",new javax.swing.JPanel());
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class DebugMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DebugMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DebugMenuTest.class);
 
 }

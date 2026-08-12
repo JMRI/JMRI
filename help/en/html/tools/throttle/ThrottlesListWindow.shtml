@@ -21,8 +21,11 @@
       This window is accessible from the <a href="ThrottleToolBar.shtml">Throttle pane
       toolbar.</a><br><br>
       The Throttles List shows all currently opened Throttles in JMRI, with their respective direction and speed. <br>
+      Each column represents a different throttle window, with all throttles in that window as rows in that column<br>
+      Drag'n drop of a throttle from one column to another is supported, the matching throttle frame will be moved from one window to the other<br>
+      Drag'n drop od roster entrie(s) from the DecoderPro main window is also supported, a throttle for each roster entry will assigned in the matching Throttle Window<br>
       If an <a href="RostersMediaPane.shtml">icon is available for that roster entry</a>, it will be used.<br>
-      If button icons are enabled in  <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>, speed and direction
+      If large speed sliders are enabled in  <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>, speed and direction
       will show graphicaly. <br>
 
       <br>

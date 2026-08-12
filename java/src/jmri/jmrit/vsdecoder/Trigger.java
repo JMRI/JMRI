@@ -23,22 +23,22 @@ import org.jdom2.Element;
  */
 abstract public class Trigger implements PropertyChangeListener {
 
-    static public enum TriggerType {
+    public static enum TriggerType {
 
         BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT, THROTTLE
     }
 
-    static public enum TargetAction {
+    public static enum TargetAction {
 
         PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING, STOP_AT_ZERO
     }
 
-    static public enum CompareType {
+    public static enum CompareType {
 
         EQ, GT, LT, GTE, LTE
     }
 
-    static public enum CompareValueType {
+    public static enum CompareValueType {
 
         INT, FLOAT
     }

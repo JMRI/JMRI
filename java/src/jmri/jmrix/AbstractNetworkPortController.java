@@ -47,27 +47,21 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return;
         }
         try {
-            socketConn = new Socket(getHostAddress(), m_port);
+            var address = getHostAddress();
+            log.info("Attempting to open connection to {}:{}", address, m_port);
+            socketConn = new Socket(address, m_port);
             socketConn.setKeepAlive(true);
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
         } catch (IOException e) {
             log.error("Error opening network connection to {} because {}", getHostName(), e.getMessage()); // nothing to help user in full exception
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        getUserName(), m_HostName, ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             throw (e);
         }
-        if (opened && m_port != 0) {
+        if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                    getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
-        } else if (opened) {
-            ConnectionStatus.instance().setConnectionState(
-                    getUserName(), m_HostName, ConnectionStatus.CONNECTION_UP);
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         }
         log.trace("connect ends");
     }
@@ -243,13 +237,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        getUserName(), m_HostName, ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         try {
             log.trace("getInputStream() returns normally");
@@ -272,17 +261,12 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return new DataOutputStream(socketConn.getOutputStream());
         } catch (java.io.IOException e) {
             log.error("getOutputStream exception:", e);
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        getUserName(), m_HostName, ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         return null;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -303,7 +287,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     @Override
     protected void resetupConnection() {
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -350,6 +334,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         return connTimeout;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNetworkPortController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNetworkPortController.class);
 
 }

@@ -115,6 +115,6 @@ public class Z21PredefinedMeters {
         }
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21PredefinedMeters.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21PredefinedMeters.class);
 
 }

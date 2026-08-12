@@ -34,7 +34,7 @@ public class ProtocolOptionsPersistenceTest {
     private PortAdapter adapter;
 
     @BeforeAll
-    static public void checkSeparate() {
+    public static void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
         assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
     }
@@ -196,5 +196,5 @@ public class ProtocolOptionsPersistenceTest {
         expectOptionValue("Single", "Foo", "");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProtocolOptionsPersistenceTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProtocolOptionsPersistenceTest.class);
 }

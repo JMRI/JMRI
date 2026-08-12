@@ -51,6 +51,6 @@ public class RollingStockLoggerTest extends OperationsTestCase {
         Assert.assertTrue("file exists", file.exists());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RollingStockLoggerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RollingStockLoggerTest.class);
 
 }

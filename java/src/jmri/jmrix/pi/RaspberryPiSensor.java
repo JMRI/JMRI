@@ -1,112 +1,119 @@
-
 package jmri.jmrix.pi;
 
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigitalInput;
-import com.pi4j.io.gpio.Pin;
-import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import com.pi4j.context.Context;
+import com.pi4j.io.gpio.digital.DigitalInput;
+import com.pi4j.io.gpio.digital.DigitalState;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import jmri.jmrix.pi.simulator.GpioPinDigitalInputSimulator;
 import jmri.jmrix.pi.simulator.GpioSimulator;
 
 /**
  * Sensor interface for RaspberryPi GPIO pins.
+ * <p>
+ * Uses Pi4J 3.x on real hardware, or the JMRI-internal
+ * {@link GpioSimulator} when in simulator mode.
+ * <p>
+ * <b>Pin numbering:</b> the numeric part of the system name is the BCM
+ * (Broadcom) GPIO number. For example, system name {@code "PS4"} addresses
+ * BCM GPIO 4.
  *
- * @author   Paul Bender Copyright (C) 2003-2017
+ * @author Paul Bender Copyright (C) 2003-2017
  */
-public class RaspberryPiSensor extends AbstractSensor implements GpioPinListenerDigital {
+public class RaspberryPiSensor extends AbstractSensor {
 
-    private static GpioController gpio = null;
-    private GpioPinDigitalInput pin = null;
-    private PinPullResistance pull = PinPullResistance.PULL_DOWN;
+    /** Pi4J digital input — non-null only in production (non-simulator) mode. */
+    private DigitalInput pi4jPin = null;
+
+    /** JMRI simulator input pin — non-null only in simulator mode. */
+    private GpioPinDigitalInputSimulator simPin = null;
+
+    /** Pi4J registry key for this pin, used to shut it down individually. */
+    private String pinId = null;
+
+    private com.pi4j.io.gpio.digital.PullResistance pi4jPull = com.pi4j.io.gpio.digital.PullResistance.PULL_DOWN;
+    private jmri.Sensor.PullResistance pull = jmri.Sensor.PullResistance.PULL_DOWN;
 
     public RaspberryPiSensor(String systemName, String userName) {
         super(systemName, userName);
-        // default pull is Pull Down
-        init(systemName, PinPullResistance.PULL_DOWN);
+        init(systemName, jmri.Sensor.PullResistance.PULL_DOWN);
     }
 
-    public RaspberryPiSensor(String systemName, String userName, PinPullResistance p) {
+    public RaspberryPiSensor(String systemName, String userName, jmri.Sensor.PullResistance p) {
         super(systemName, userName);
         init(systemName, p);
     }
 
     public RaspberryPiSensor(String systemName) {
         super(systemName);
-        init(systemName, PinPullResistance.PULL_DOWN);
+        init(systemName, jmri.Sensor.PullResistance.PULL_DOWN);
     }
 
-    public RaspberryPiSensor(String systemName, PinPullResistance p) {
+    public RaspberryPiSensor(String systemName, jmri.Sensor.PullResistance p) {
         super(systemName);
         init(systemName, p);
     }
 
     /**
-     * Common initialization for all constructors.
+     * Common initialisation for all constructors.
      * <p>
      * Compare {@link RaspberryPiTurnout}
      */
-    private void init(String systemName, PinPullResistance pRes){
+    private void init(String systemName, jmri.Sensor.PullResistance pRes) {
         log.debug("Provisioning sensor {}", systemName);
-        if (gpio == null) {
-            if (!RaspberryPiAdapter.isSimulator()) {
-                gpio = GpioFactory.getInstance();
-            } else {
-                gpio = GpioSimulator.getInstance();
-            }
-        }
         pull = pRes;
+        pi4jPull = toPi4JPull(pRes);
         int address = Integer.parseInt(systemName.substring(systemName.lastIndexOf("S") + 1));
-        String pinName = "GPIO " + address;
-        Pin p = RaspiPin.getPinByName(pinName);
-        if (p != null) {
-            try {
-                pin = gpio.provisionDigitalInputPin(p, getSystemName(), pull);
-            } catch (java.lang.RuntimeException re) {
-                log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
-                throw new IllegalArgumentException(re.getMessage());
-            }
-            if (pin != null) {
-                pin.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
-                pin.addListener(this);
-                requestUpdateFromLayout(); // set state to match current value.
-            } else {
-                String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
+        pinId = "jmri-rpi-sensor-" + address;
+
+        if (RaspberryPiAdapter.isSimulator()) {
+            simPin = GpioSimulator.getInstance().provisionDigitalInputPin(address, systemName);
+        } else {
+            Context ctx = RaspberryPiAdapter.getSharedContext();
+            if (ctx == null) {
+                String msg = Bundle.getMessage("PinNameNotValid", "GPIO " + address, systemName);
                 log.error(msg);
                 throw new IllegalArgumentException(msg);
             }
-        } else {
-            String msg = Bundle.getMessage("PinNameNotValid", pinName, systemName);
-            log.error(msg);
-            throw new IllegalArgumentException(msg);
+            try {
+                pi4jPin = ctx.create(
+                    DigitalInput.newConfigBuilder(ctx)
+                        .id(pinId)
+                        .name(systemName)
+                        .address(address)
+                        .pull(pi4jPull)
+                        .build()
+                );
+                pi4jPin.addListener(event -> setStateBeforeInvert(event.state().isHigh()));
+            } catch (RuntimeException re) {
+                log.error("Provisioning sensor {} failed with: {}", systemName, re.getMessage());
+                throw new IllegalArgumentException(re.getMessage());
+            }
         }
+        requestUpdateFromLayout();
+    }
+
+    private static com.pi4j.io.gpio.digital.PullResistance toPi4JPull(jmri.Sensor.PullResistance pr) {
+        if (pr == jmri.Sensor.PullResistance.PULL_UP)   return com.pi4j.io.gpio.digital.PullResistance.PULL_UP;
+        if (pr == jmri.Sensor.PullResistance.PULL_DOWN) return com.pi4j.io.gpio.digital.PullResistance.PULL_DOWN;
+        return com.pi4j.io.gpio.digital.PullResistance.OFF;
     }
 
     /**
-     * Request an update on status by sending an Instruction to the Pi.
+     * Request an update on status by reading the current pin state.
      */
     @Override
     public void requestUpdateFromLayout() {
-        setStateBeforeInvert(pin.isHigh());
-    }
-
-    @Override
-    public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event){
-        // log pin state change
-        log.debug("GPIO PIN STATE CHANGE: {} = {}", event.getPin(), event.getState());
-        if (event.getPin() == pin){
-            setStateBeforeInvert(event.getState().isHigh());
-       }
+        if (pi4jPin != null) {
+            setStateBeforeInvert(pi4jPin.state() == DigitalState.HIGH);
+        } else if (simPin != null) {
+            setStateBeforeInvert(simPin.isHigh());
+        }
     }
 
     private void setStateBeforeInvert(boolean high) {
-        if ( high ) {
+        if (high) {
             setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
         } else {
             setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
@@ -114,57 +121,50 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
     }
 
     /**
-     * Set the pull resistance on the pin.
-     *
-     * @param pr The new PinPullResistance value to set.
-     */
-    private void setPullState(PinPullResistance pr){
-        pull = pr;
-        pin.setPullResistance(pull);
-    }
-
-    /**
      * Set the pull resistance.
      * <p>
-     * In this default implementation, the input value is ignored.
+     * Note: Pi4J 3.x does not support changing pull resistance after a pin is
+     * provisioned. This call updates the cached value but has no effect on
+     * already-provisioned hardware pins.
      *
-     * @param r PullResistance value to use.
+     * @param r the new PullResistance value
      */
     @Override
-    public void setPullResistance(PullResistance r){
-       if (r == PullResistance.PULL_DOWN) {
-          setPullState(PinPullResistance.PULL_DOWN);
-       } else if(r == PullResistance.PULL_UP ) {
-          setPullState(PinPullResistance.PULL_UP);
-       } else {
-          setPullState(PinPullResistance.OFF);
-       }
+    public void setPullResistance(jmri.Sensor.PullResistance r) {
+        pull = r;
+        pi4jPull = toPi4JPull(r);
+        if (!RaspberryPiAdapter.isSimulator()) {
+            log.warn("Changing pull resistance after pin provisioning is not supported in Pi4J 3.x");
+        }
     }
 
     /**
-     * Get the pull resistance
+     * Get the pull resistance.
      *
-     * @return the currently set PullResistance value. In this default
-     * implementation, PullResistance.PULL_OFF is always returned.
+     * @return the currently configured pull resistance
      */
     @Override
-    public PullResistance getPullResistance(){
-       if (pull == PinPullResistance.PULL_DOWN) {
-          return PullResistance.PULL_DOWN;
-       } else if(pull == PinPullResistance.PULL_UP) {
-          return PullResistance.PULL_UP;
-       } else {
-          return PullResistance.PULL_OFF;
-       }
+    public jmri.Sensor.PullResistance getPullResistance() {
+        return pull;
     }
 
     @Override
     public void dispose() {
-        try {
-            gpio.unprovisionPin(pin);
-            // will remove all listeners and triggers from pin and remove it from the <GpioPin> pins list in _gpio
-        } catch ( com.pi4j.io.gpio.exception.GpioPinNotProvisionedException npe ){
-            log.trace("Pin not provisioned, was this sensor already disposed?");
+        if (pi4jPin != null) {
+            try {
+                Context ctx = RaspberryPiAdapter.getSharedContext();
+                if (ctx != null) {
+                    ctx.shutdown(pinId);
+                }
+            } catch (Exception ex) {
+                log.trace("Pin {} not found during dispose — already removed?", pinId);
+            }
+            pi4jPin = null;
+        } else if (simPin != null) {
+            int address = Integer.parseInt(
+                getSystemName().substring(getSystemName().lastIndexOf("S") + 1));
+            GpioSimulator.getInstance().unprovisionInputPin(address);
+            simPin = null;
         }
         super.dispose();
     }

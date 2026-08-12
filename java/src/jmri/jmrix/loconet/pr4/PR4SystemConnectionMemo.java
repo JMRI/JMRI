@@ -15,6 +15,6 @@ import jmri.jmrix.loconet.pr3.PR3SystemConnectionMemo;
  */
 public class PR4SystemConnectionMemo extends PR3SystemConnectionMemo {
 
-//    private final static Logger log = LoggerFactory.getLogger(PR4SystemConnectionMemo.class);
+//    private static final Logger log = LoggerFactory.getLogger(PR4SystemConnectionMemo.class);
 
 }

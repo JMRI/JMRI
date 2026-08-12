@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
 
@@ -13,8 +14,6 @@ import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.configurexml.LoadAndStorePreferences;
@@ -120,9 +119,7 @@ public class XmlFile {
     public Element rootFromName(String name) throws JDOMException, IOException {
         File fp = findFile(name);
         if (fp != null && fp.exists() && fp.canRead()) {
-            if (log.isDebugEnabled()) {
-                log.debug("readFile: {} from {}", name, fp.getAbsolutePath());
-            }
+            log.debug("readFile: {} from {}", name, fp.getAbsolutePath());
             return rootFromFile(fp);
         }
         URL resource = FileUtil.findURL(name);
@@ -150,10 +147,8 @@ public class XmlFile {
      *         exception should be thrown if anything goes wrong.
      * @throws IOException when needed
      */
-    public Element rootFromFile(File file) throws JDOMException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("reading xml from file: {}", file.getPath());
-        }
+    public Element rootFromFile(@Nonnull File file) throws JDOMException, IOException {
+        log.debug("reading xml from file: {}", file.getPath());
 
         try (FileInputStream fs = new FileInputStream(file)) {
             return getRoot(fs);
@@ -188,10 +183,8 @@ public class XmlFile {
      *         exception should be thrown if anything goes wrong.
      * @throws IOException when needed
      */
-    public Element rootFromURL(URL url) throws JDOMException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("reading xml from URL: {}", url.toString());
-        }
+    public Element rootFromURL(@Nonnull URL url) throws JDOMException, IOException {
+        log.debug("reading xml from URL: {}", url);
         return getRoot(url.openConnection().getInputStream());
     }
 
@@ -224,7 +217,7 @@ public class XmlFile {
      * @throws IOException when an IO error occurs
      * @throws FileNotFoundException if file not found
      */
-    public void writeXML(File file, Document doc) throws IOException, FileNotFoundException {
+    public void writeXML(@Nonnull File file, @Nonnull Document doc) throws IOException, FileNotFoundException {
         // ensure parent directory exists
         if (file.getParent() != null) {
             FileUtil.createDirectory(file.getParent());
@@ -247,7 +240,7 @@ public class XmlFile {
      * @param name file name, either absolute or relative
      * @return true if the file exists in a searched place
      */
-    protected boolean checkFile(String name) {
+    protected boolean checkFile(@Nonnull String name) {
         File fp = new File(name);
         if (fp.exists()) {
             return true;
@@ -276,7 +269,8 @@ public class XmlFile {
      *             "decoders/Mine.xml")
      * @return null if file found, otherwise the located File
      */
-    protected File findFile(String name) {
+    @CheckForNull
+    protected File findFile(@Nonnull String name) {
         URL url = FileUtil.findURL(name,
                 FileUtil.getUserFilesPath(),
                 ".",
@@ -297,7 +291,7 @@ public class XmlFile {
      *
      * @param name Element to print, should not be null
      */
-    static public void dumpElement(@Nonnull Element name) {
+    public static void dumpElement(@Nonnull Element name) {
         name.getChildren().forEach((element) -> {
             log.info(" Element: {} ns: {}", element.getName(), element.getNamespace());
         });
@@ -310,7 +304,7 @@ public class XmlFile {
      * @param name Last part of file pathname i.e. subdir/name, without the
      *             pathname for either the xml or preferences directory.
      */
-    public void makeBackupFile(String name) {
+    public void makeBackupFile(@Nonnull String name) {
         File file = findFile(name);
         if (file == null) {
             log.info("No {} file to backup", name);
@@ -336,23 +330,19 @@ public class XmlFile {
      * @param directory the backup directory to use.
      * @param file      the file to be backed up. The file name will have the
      *                  current date embedded in the backup name.
-     * @return true if successful.
+     * @return true if successful or file is null.
      */
-    public boolean makeBackupFile(String directory, File file) {
+    public boolean makeBackupFile(String directory, @CheckForNull File file) {
         if (file == null) {
             log.info("No file to backup");
         } else if (file.canWrite()) {
             String backupFullName = directory + File.separator + createFileNameWithDate(file.getName());
-            if (log.isDebugEnabled()) {
-                log.debug("new backup file: {}", backupFullName);
-            }
+            log.debug("new backup file: {}", backupFullName);
 
             File backupFile = findFile(backupFullName);
             if (backupFile != null) {
                 if (backupFile.delete()) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("deleted backup file {}", backupFullName);
-                    }
+                    log.debug("deleted backup file {}", backupFullName);
                 }
             } else {
                 backupFile = new File(backupFullName);
@@ -360,22 +350,16 @@ public class XmlFile {
             // create directory if needed
             File parentDir = backupFile.getParentFile();
             if (!parentDir.exists()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("creating backup directory: {}", parentDir.getName());
-                }
+                log.debug("creating backup directory: {}", parentDir.getName());
                 if (!parentDir.mkdirs()) {
                     log.error("backup directory not created");
                     return false;
                 }
             }
             if (file.renameTo(new File(backupFullName))) {
-                if (log.isDebugEnabled()) {
-                    log.debug("created new backup file {}", backupFullName);
-                }
+                log.debug("created new backup file {}", backupFullName);
             } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("could not create backup file {}", backupFullName);
-                }
+                log.debug("could not create backup file {}", backupFullName);
                 return false;
             }
         }
@@ -388,7 +372,7 @@ public class XmlFile {
      * @param name Last part of file pathname i.e. subdir/name, without the
      *             pathname for either the xml or preferences directory.
      */
-    public void revertBackupFile(String name) {
+    public void revertBackupFile(@Nonnull String name) {
         File file = findFile(name);
         if (file == null) {
             log.info("No {} file to revert", name);
@@ -422,19 +406,15 @@ public class XmlFile {
      */
     public String backupFileName(String name) {
         String f = name + ".bak";
-        if (log.isDebugEnabled()) {
-            log.debug("backup file name is: {}", f);
-        }
+        log.debug("backup file name is: {}", f);
         return f;
     }
 
-    public String createFileNameWithDate(String name) {
+    public String createFileNameWithDate(@Nonnull String name) {
         // remove .xml extension
         String[] fileName = name.split(".xml");
         String f = fileName[0] + "_" + getDate() + ".xml";
-        if (log.isDebugEnabled()) {
-            log.debug("backup file name is: {}", f);
-        }
+        log.debug("backup file name is: {}", f);
         return f;
     }
 
@@ -443,7 +423,7 @@ public class XmlFile {
      *         hour minute second. The date is fixed length and always returns a
      *         date represented by 14 characters.
      */
-    private String getDate() {
+    private static String getDate() {
         Calendar now = Calendar.getInstance();
         return String.format("%d%02d%02d%02d%02d%02d",
                 now.get(Calendar.YEAR),
@@ -463,7 +443,7 @@ public class XmlFile {
      * @param doc the document containing processing instructions
      * @return the processed document
      */
-    Document processInstructions(Document doc) {
+    Document processInstructions(@Nonnull Document doc) {
         // this iterates over top level
         for (Content c : doc.cloneContent()) {
             if (c instanceof ProcessingInstruction) {
@@ -491,7 +471,7 @@ public class XmlFile {
         return doc;
     }
 
-    Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
+    Document processOneInstruction(@Nonnull ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
         log.trace("handling {}", p);
 
         // check target
@@ -526,7 +506,7 @@ public class XmlFile {
      * @param dtd  name of an external DTD
      * @return new Document, with root installed
      */
-    static public Document newDocument(Element root, String dtd) {
+    public static Document newDocument(@Nonnull Element root, String dtd) {
         Document doc = new Document(root);
         doc.setDocType(new DocType(root.getName(), dtd));
         addDefaultInfo(root);
@@ -540,7 +520,7 @@ public class XmlFile {
      * @param root Root element of the final document
      * @return new Document, with root installed
      */
-    static public Document newDocument(Element root) {
+    public static Document newDocument(Element root) {
         Document doc = new Document(root);
         addDefaultInfo(root);
         return doc;
@@ -559,7 +539,7 @@ public class XmlFile {
      *
      * @param root The root element of the document that will be written.
      */
-    static public void addDefaultInfo(Element root) {
+    public static void addDefaultInfo(Element root) {
         var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
         if (!loadAndStorePreferences.isExcludeJmriVersion()) {
             String content = "Written by JMRI version " + jmri.Version.name()
@@ -578,7 +558,7 @@ public class XmlFile {
      *
      * @return the XML directory that ships with JMRI.
      */
-    static public String xmlDir() {
+    public static String xmlDir() {
         return FileUtil.getProgramPath() + "xml" + File.separator;
     }
 
@@ -588,15 +568,15 @@ public class XmlFile {
      *
      * @return the default level of validation to apply to a file
      */
-    static public Validate getDefaultValidate() {
+    public static Validate getDefaultValidate() {
         return defaultValidate;
     }
 
-    static public void setDefaultValidate(Validate v) {
+    public static void setDefaultValidate(Validate v) {
         defaultValidate = v;
     }
 
-    static private Validate defaultValidate = Validate.None;
+    private static Validate defaultValidate = Validate.None;
 
     /**
      * Whether to verify the DTD of this XML file when read.
@@ -619,11 +599,11 @@ public class XmlFile {
      *
      * @return the default DTD location
      */
-    static public String getDefaultDtdLocation() {
+    public static String getDefaultDtdLocation() {
         return defaultDtdLocation;
     }
 
-    static public void setDefaultDtdLocation(String v) {
+    public static void setDefaultDtdLocation(String v) {
         defaultDtdLocation = v;
     }
 
@@ -715,6 +695,6 @@ public class XmlFile {
     }
 
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(XmlFile.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XmlFile.class);
 
 }

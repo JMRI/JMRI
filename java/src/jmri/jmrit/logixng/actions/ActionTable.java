@@ -29,15 +29,15 @@ public class ActionTable extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private final LogixNG_SelectNamedBean<Block> _selectBlockNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Block.class, InstanceManager.getDefault(BlockManager.class), this);
+                    this, Block.class, InstanceManager.getDefault(BlockManager.class));
 
     private final LogixNG_SelectNamedBean<Reporter> _selectReporterNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class));
 
     private VariableOperation _variableOperation = VariableOperation.SetToString;
     private ConstantType _constantType = ConstantType.String;
@@ -395,9 +395,6 @@ public class ActionTable extends AbstractDigitalAction
                     && (_variableOperation == VariableOperation.CopyReporterToVariable)) {
                 _selectReporterNamedBean.addPropertyChangeListener("currentReport", this);
             }
-            _selectMemoryNamedBean.registerListeners();
-            _selectBlockNamedBean.registerListeners();
-            _selectReporterNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -418,9 +415,6 @@ public class ActionTable extends AbstractDigitalAction
                     && (_variableOperation == VariableOperation.CopyReporterToVariable)) {
                 _selectReporterNamedBean.removePropertyChangeListener("currentReport", this);
             }
-            _selectMemoryNamedBean.unregisterListeners();
-            _selectBlockNamedBean.unregisterListeners();
-            _selectReporterNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -489,6 +483,6 @@ public class ActionTable extends AbstractDigitalAction
         _selectReporterNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTable.class);
 
 }

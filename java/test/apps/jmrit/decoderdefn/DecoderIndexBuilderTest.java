@@ -2,7 +2,6 @@ package apps.jmrit.decoderdefn;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,22 +10,29 @@ import org.junit.jupiter.api.*;
  */
 public class DecoderIndexBuilderTest {
 
+    // no Constructor test, tested class only supplies static main method.
+
     @Test
-    public void testCTor() {
-        DecoderIndexBuilder t = new DecoderIndexBuilder();
-        Assert.assertNotNull("exists",t);
+    @Disabled("reconfigures logging for standalone operation")
+    public void testDecoderIndexBuilderMain() {
+        // Compilation will fail if class removed
+        DecoderIndexBuilder.main(new String[]{});
     }
+
+    private Thread.UncaughtExceptionHandler handler;
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        handler = Thread.getDefaultUncaughtExceptionHandler();
     }
 
     @AfterEach
     public void tearDown() {
+        Thread.setDefaultUncaughtExceptionHandler(handler);
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexBuilderTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DecoderIndexBuilderTest.class);
 
 }

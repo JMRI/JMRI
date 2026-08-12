@@ -51,7 +51,7 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
                 log.debug("located file {} for XML processing", file);
             }
             try {
-                return new URI("file:" + file.getCanonicalPath()).toURL();
+                return new URI("file:" + file.getCanonicalPath().replace('\\', '/')).toURL();
             } catch (Exception e) {
                 log.error("Unexpected exception in new URL", e);
                 return null;
@@ -69,6 +69,6 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InstallDecoderFileAction.class);
+    private static final Logger log = LoggerFactory.getLogger(InstallDecoderFileAction.class);
 
 }

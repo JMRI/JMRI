@@ -21,8 +21,6 @@ import jmri.script.ScriptEngineSelector.Engine;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,8 +32,8 @@ import org.junit.jupiter.api.Test;
  */
 public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
-    private final static String SCRIPT_TEXT = "lights.provideLight(\"IL1\").commandedState = ON";
-    private final static String ECMA_SCRIPT = "var DigitalIO = Java.type(\"jmri.DigitalIO\"); lights.provideLight(\"IL1\").setState(DigitalIO.ON);";
+    private static final String SCRIPT_TEXT = "lights.provideLight(\"IL1\").commandedState = ON";
+    private static final String ECMA_SCRIPT = "var DigitalIO = Java.type(\"jmri.DigitalIO\"); lights.provideLight(\"IL1\").setState(DigitalIO.ON);";
 
 
     private LogixNG logixNG;
@@ -403,7 +401,6 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         assertEquals("This is a bad script", actionScript.getScript());
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -451,7 +448,6 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

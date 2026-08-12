@@ -254,6 +254,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return new ArrayList<>(simplePreferenceList);
     }
 
+    /**
+     * Displays remember dialogue on save.
+     * {@inheritDoc}
+     */
     @Override
     public void setPreferenceState(String strClass, String item, boolean state) {
         // convert old manager preferences to new manager preferences
@@ -958,7 +962,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 if (file.exists()) {
                     log.debug("start load user pref file: {}", file.getPath());
                     try {
-                        InstanceManager.getDefault(ConfigureManager.class).load(file, true);
+                        boolean result = InstanceManager.getDefault(ConfigureManager.class).load(file, true);
+                        if (!result) {
+                            log.error("Failed to load file:{}", file);
+                        }
                         this.allowSave = true;
                         this.savePreferences(); // write new preferences format immediately
                     } catch (JmriException e) {
@@ -1000,7 +1007,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 combo.setAttribute("lastSelected", cbls.getValue());
                 return combo;
             }).forEach(element::addContent);
-            this.saveElement(element);
+            this.storeElement(element);
             this.resetChangeMade();
         }
     }
@@ -1025,7 +1032,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 checkbox.setAttribute("lastChecked", cbls.getValue() ? "yes" : "no");
                 return checkbox;
             }).forEach(element::addContent);
-            this.saveElement(element);
+            this.storeElement(element);
             this.resetChangeMade();
         }
     }
@@ -1087,7 +1094,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 }
             });
             if (!element.getChildren().isEmpty()) {
-                this.saveElement(element);
+                this.storeElement(element);
             }
         }
     }
@@ -1106,7 +1113,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             Element element = new Element(SETTINGS_ELEMENT, SETTINGS_NAMESPACE);
             getSimplePreferenceStateList().stream().forEach(setting ->
                 element.addContent(new Element("setting").addContent(setting)));
-            this.saveElement(element);
+            this.storeElement(element);
             this.resetChangeMade();
         }
     }
@@ -1204,7 +1211,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     }
                     element.addContent(window);
                 }
-                this.saveElement(element);
+                this.storeElement(element);
                 this.resetChangeMade();
             }
         }
@@ -1223,13 +1230,21 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return null;
     }
 
-    protected void saveElement(@Nonnull Element element) {
+    @Override
+    public void storeElement(@Nonnull Element element) {
         log.trace("Saving {} element.", element.getName());
         try {
             ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), false);
         } catch (JDOMException ex) {
             log.error("Unable to save user preferences", ex);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public Element loadElement(@Nonnull String elementName) {
+        return readElement(elementName, GENERIC_NAMESPACE);
     }
 
     private void savePreferences() {

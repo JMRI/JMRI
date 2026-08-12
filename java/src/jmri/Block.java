@@ -113,7 +113,7 @@ import jmri.util.PhysicalLocation;
  *
  * <p><a href="doc-files/Block.png"><img src="doc-files/Block.png" alt="State diagram for train tracking" height="33%" width="33%"></a>
  *
- * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014, 2026
  * @author Dave Duchamp Copywright (C) 2009
  */
 
@@ -1339,7 +1339,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     @Override
     public PhysicalLocation getPhysicalLocation() {
-        // We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
+        // We have our own PhysicalLocation. That's the point.  No need to defer to the Reporter.
         return PhysicalLocation.getBeanPhysicalLocation(this);
     }
 
@@ -1353,7 +1353,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     @Override
     public PhysicalLocation getPhysicalLocation(String s) {
-        // We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
+        // We have our own PhysicalLocation. That's the point.  No need to defer to the Reporter.
         // Intentionally ignore the String s
         return PhysicalLocation.getBeanPhysicalLocation(this);
     }

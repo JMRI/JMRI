@@ -1,17 +1,15 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.digi.xbee.api.XBeeNetwork;
 import com.digi.xbee.api.XBeeDevice;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * XBeeConnectionMemoTest.java
@@ -20,12 +18,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
  *
  * @author Paul Bender Copyright (C) 2012,2016
  */
-@ExtendWith(MockitoExtension.class)
 public class XBeeConnectionMemoTest extends SystemConnectionMemoTestBase<XBeeConnectionMemo> {
 
-    @Mock
     private XBeeTrafficController tc;
-    @Mock
     private XBeeNetwork xn;
     private XBeeAdapter xa;
     private XBeeDevice xb;
@@ -33,13 +28,15 @@ public class XBeeConnectionMemoTest extends SystemConnectionMemoTestBase<XBeeCon
     @Override
     @Test
     public void testProvidesConsistManager() {
-        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+        Assertions.assertFalse(scm.provides(jmri.ConsistManager.class), "Provides ConsistManager");
     }
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        tc = mock(XBeeTrafficController.class);
+        xn = mock(XBeeNetwork.class);
         scm = new XBeeConnectionMemo();
         scm.setTrafficController(tc);
         xa = new XBeeAdapter() {
@@ -54,7 +51,7 @@ public class XBeeConnectionMemoTest extends SystemConnectionMemoTestBase<XBeeCon
                 return xn;
             }
         };
-        Mockito.when(tc.getXBee()).thenReturn(xb);
+        when(tc.getXBee()).thenReturn(xb);
         scm.configureManagers();
     }
 

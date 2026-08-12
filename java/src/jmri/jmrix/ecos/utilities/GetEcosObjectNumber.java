@@ -15,7 +15,7 @@ public class GetEcosObjectNumber {
      * @param finish finish string.
      * @return object number.
      */
-    static public int getEcosObjectNumber(String s, String start, String finish) {
+    public static int getEcosObjectNumber(String s, String start, String finish) {
         int intStart = 0;
         int intEnd;
         if (start != null) {

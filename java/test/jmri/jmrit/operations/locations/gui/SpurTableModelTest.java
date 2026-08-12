@@ -16,6 +16,6 @@ public class SpurTableModelTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpurTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SpurTableModelTest.class);
 
 }

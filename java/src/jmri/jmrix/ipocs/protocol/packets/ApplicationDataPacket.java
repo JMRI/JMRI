@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class ApplicationDataPacket extends Packet {
-  public final static byte IDENT = 5;
+  public static final byte IDENT = 5;
   private short xUser;
   private ByteBuffer data = ByteBuffer.allocate(0);
 

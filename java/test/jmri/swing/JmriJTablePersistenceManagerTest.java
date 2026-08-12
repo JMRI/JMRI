@@ -139,7 +139,7 @@ public class JmriJTablePersistenceManagerTest {
     @SuppressWarnings("null")
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NP_NONNULL_PARAM_VIOLATION","NP_LOAD_OF_KNOWN_NULL_VALUE"},
         justification = "testing exception when null passed")
-    private void persistNullTable(JmriJTablePersistenceManagerSpy instance) throws Exception {
+    private void persistNullTable(JmriJTablePersistenceManagerSpy instance) {
         JTable nullTable = null;
         instance.persist(nullTable);
     }
@@ -581,7 +581,7 @@ public class JmriJTablePersistenceManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
+    private static final class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
 
         @Override
         public boolean isDirty() {

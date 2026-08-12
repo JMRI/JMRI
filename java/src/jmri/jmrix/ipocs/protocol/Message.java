@@ -19,7 +19,7 @@ import jmri.jmrix.ipocs.protocol.packets.Packet;
  * @since 4.21.2
  */
 public class Message {
-  private final static Logger log = LoggerFactory.getLogger(Message.class);
+  private static final Logger log = LoggerFactory.getLogger(Message.class);
   private byte length;
   private String objectName;
   private final List<Packet> packets = new ArrayList<Packet>();

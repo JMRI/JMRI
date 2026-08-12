@@ -24,7 +24,7 @@ import jmri.util.ThreadingUtil;
  * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutTest {
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
 
     protected PropertyChangeListenerScaffold l;
 
@@ -377,7 +377,7 @@ public class OlcbTurnoutTest {
     private OlcbTestInterface t;
 
     @BeforeAll
-    static public void checkSeparate() {
+    public static void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
     }

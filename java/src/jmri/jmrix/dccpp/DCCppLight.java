@@ -1,11 +1,12 @@
 package jmri.jmrix.dccpp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.implementation.AbstractLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the Light Object for DCC++
+ * Implementation of the Light Object for DCC-EX
  * <p>
  * NOTE: This is a simplification of the DCCppTurnout class.
  * <p>
@@ -15,6 +16,12 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppLight extends AbstractLight implements DCCppListener {
+
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",
+            justification = "Public for access by manager, tests, and SelectionPropertyDescriptor")
+    public static final String[] MODE_NAMES = {"Accessory Decoder", "CS VPIN"}; // NOI18N
+
+    public static final String CS_VPIN_MODE = MODE_NAMES[1];
 
     private DCCppTrafficController tc = null;
     private DCCppLightManager lm = null;
@@ -85,15 +92,12 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     /**
      * System dependent instance variables
      */
-    //protected int mState = OFF;  // current state of this light
-    //private int mOldState =mState; // save the old state
     int mAddress = 0;            // accessory output address
 
     /* Internal State Machine states. */
     static final int OFFSENT = 1;
     static final int COMMANDSENT = 2;
     static final int IDLE = 0;
-    //private int InternalState = IDLE;
 
     /**
      * Set the current state of this Light.
@@ -112,8 +116,17 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         // get the right packet
         if (mAddress > 0) {
             boolean state = (newState == jmri.Light.ON);
-            DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
-            //InternalState = COMMANDSENT;
+            DCCppMessage msg;
+            Object modeProperty = getProperty(DCCppLightManager.DCCPP_LIGHT_MODE_KEY);
+            if (CS_VPIN_MODE.equals(modeProperty)) {
+                // CS VPIN: HIGH = ON, LOW = OFF
+                msg = DCCppMessage.makeOutputCmdMsgLC(mAddress, state);
+            } else {
+                if (modeProperty != null && !MODE_NAMES[0].equals(modeProperty)) {
+                    log.warn("Unknown light mode '{}' for {}, using Accessory Decoder", modeProperty, getSystemName());
+                }
+                msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
+            }
             tc.sendDCCppMessage(msg, this);
 
             if (newState != mState) {
@@ -127,7 +140,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 
     /**
      * {@inheritDoc}
-     * Handle an incoming message from the DCC++ Base Station.
+     * Handle an incoming message from the DCC-EX Base Station.
      * <p>
      * NOTE: We aren't registered as a listener, so this is only triggered
      * when we send out a message
@@ -140,7 +153,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 
     /**
      * {@inheritDoc}
-     * Listen for messages to the DCC++ Base Station.
+     * Listen for messages to the DCC-EX Base Station.
      */
     @Override
     public void message(DCCppMessage l) {
@@ -153,6 +166,6 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         log.debug("Notified of timeout on message '{}'", msg);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLight.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppLight.class);
 
 }

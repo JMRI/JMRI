@@ -216,6 +216,6 @@ public class PermissionServlet extends HttpServlet {
         return "About Servlet";
     }// </editor-fold>
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PermissionServlet.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PermissionServlet.class);
 
 }

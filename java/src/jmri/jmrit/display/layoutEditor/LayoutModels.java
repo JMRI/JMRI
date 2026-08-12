@@ -88,6 +88,9 @@ public interface LayoutModels {
     List<LayoutTurntable> getLayoutTurntables();
 
     @Nonnull
+    List<LayoutTraverser> getLayoutTraversers();
+
+    @Nonnull
     List<LevelXing> getLevelXings();
 
     @Nonnull
@@ -122,6 +125,9 @@ public interface LayoutModels {
     
     // temporary
     LayoutTurntableView getLayoutTurntableView(LayoutTurntable to);
+
+    // temporary
+    LayoutTraverserView getLayoutTraverserView(LayoutTraverser to);
         
     // temporary
     TrackSegmentView getTrackSegmentView(TrackSegment to);

@@ -12,109 +12,142 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2022</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2022-11-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
-		</revision>
-		<revision>
-			<revnumber>2</revnumber>
-			<date>2023-12-03</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add English translations</revremark>
-		</revision>
-	</revhistory>
-	<name>Acceleration/Deceleration</name>
-	<name xml:lang="de">Beschleunigungs-/Bremsverhalten</name>
-	<column>
-		<label>
-			<text>&gt;&gt; Accel/Decel Delays &lt;&lt;</text>
-			<text xml:lang="de">&gt;&gt; Anfahrt-/Bremsverzögerung &lt;&lt;</text>
-			<text xml:lang="nl">Wegrij-/Remvertraging</text>
-			<text xml:lang="cs">Zpoždění Zrychlení/Zpomalení</text>
-		</label>
-		<!-- Leerzeile -->
-		<row>
-			<label>
-				<text> </text>
-			</label>
-		</row>
-		<grid gridy="1" weightx="1" ipadx="4" ipady="2">
-			<griditem gridx="0" gridy="0" anchor="LINE_END">
-				<display item="Accel"/>
-			</griditem>
-			<griditem gridx="0" gridy="1" anchor="LINE_END">
-				<display item="Decel"/>
-			</griditem>
-			<griditem gridx="1" gridy="0" anchor="LINE_END">
-				<display item="Accel2"/>
-			</griditem>
-			<griditem gridx="1" gridy="1" anchor="LINE_END">
-				<display item="Decel2"/>
-			</griditem>
-			<griditem gridx="2" gridy="0" anchor="LINE_END">
-				<display item="Accel3"/>
-			</griditem>
-			<griditem gridx="2" gridy="1" anchor="LINE_END">
-				<display item="Decel3"/>
-			</griditem>
-		</grid>
-		<!-- Leerzeile -->
-		<row>
-			<label>
-				<text> </text>
-			</label>
-		</row>
-		<separator/>
-		<row>
-			<label>
-				<text> </text>
-			</label>
-		</row>
-		<display item="Advanced Function Mapping"/>
-		<label>
-			<text> </text>
-		</label>
-		<grid gridy="1" weightx="1" ipadx="4" ipady="2">
-			<griditem gridx="0" gridy="0" anchor="LINE_END">
-				<display item="ABV AUS F Key"/>
-			</griditem>
-			<griditem gridx="0" gridy="1" anchor="LINE_END">
-				<display item="RG F Key"/>
-			</griditem>
-			<griditem gridx="1" gridy="0" anchor="LINE_END">
-				<display item="ABV2 F Key"/>
-			</griditem>
-			<griditem gridx="2" gridy="0" anchor="LINE_END">
-				<display item="ABV3 F Key"/>
-			</griditem>
-		</grid>
-		<!-- Leerzeile -->
-		<row>
-			<label>
-				<text> </text>
-			</label>
-		</row>
-		<row>
-			<display item="Anfahrrampe CV53"/>
-			<label>
-				<text>   </text>
-			</label>
-			<display item="Anfahrrampe CV53" format="hslider" label=""/>
-		</row>
-	</column>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2022</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-11-11</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-12-03</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add English translations</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2026-01-10</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add alternative max speed CVs</revremark>
+        </revision>
+    </revhistory>
+    <name>Acceleration/Deceleration</name>
+    <name xml:lang="de">Beschleunigungs-/Bremsverhalten</name>
+    <column>
+        <label>
+            <text>&gt;&gt; Accel/Decel Delays &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; Anfahrt-/Bremsverzögerung &lt;&lt;</text>
+            <text xml:lang="nl">Wegrij-/Remvertraging</text>
+            <text xml:lang="cs">Zpoždění Zrychlení/Zpomalení</text>
+        </label>
+        <!-- Leerzeile -->
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <grid gridy="1" weightx="1" ipadx="4" ipady="2">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="Accel"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Decel"/>
+            </griditem>
+            <griditem gridx="1" gridy="0" anchor="LINE_END">
+                <display item="Accel2"/>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="LINE_END">
+                <display item="Decel2"/>
+            </griditem>
+            <griditem gridx="2" gridy="0" anchor="LINE_END">
+                <display item="Accel3"/>
+            </griditem>
+            <griditem gridx="2" gridy="1" anchor="LINE_END">
+                <display item="Decel3"/>
+            </griditem>
+        </grid>
+        <!-- Leerzeile -->
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <separator/>
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <display item="Advanced Function Mapping"/>
+        <label>
+            <text> </text>
+        </label>
+        <grid gridy="1" weightx="1" ipadx="4" ipady="2">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="ABV AUS F Key"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="RG F Key"/>
+            </griditem>
+            <griditem gridx="1" gridy="0" anchor="LINE_END">
+                <display item="ABV2 F Key"/>
+            </griditem>
+            <griditem gridx="2" gridy="0" anchor="LINE_END">
+                <display item="ABV3 F Key"/>
+            </griditem>
+        </grid>
+        <!-- Leerzeile -->
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <row>
+            <display item="Anfahrrampe CV53"/>
+            <label>
+                <text>   </text>
+            </label>
+            <display item="Anfahrrampe CV53" format="hslider" label=""/>
+        </row>
+        <!-- Leerzeile -->
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <separator/>
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <label>
+            <text>&gt;&gt; Alternative Maximum Speed &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; Alternative Höchstgeschwindigkeit &lt;&lt;</text>
+        </label>
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <display item="Alt_max_speed_forward"/>
+        <display item="Alt_max_speed_backward"/>
+        <display item="Alt_max_speed_fkey"/>
+        <label>
+            <text> </text>
+        </label>
+    </column>
 </pane>

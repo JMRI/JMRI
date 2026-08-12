@@ -1,24 +1,20 @@
 package jmri.jmrix.loconet.soundloader;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Font;
 import java.io.IOException;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
-import jmri.jmrix.loconet.spjfile.SpjFile;
-import jmri.util.FileUtil;
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.jmrix.loconet.spjfile.SpjFile;
+import jmri.util.FileUtil;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 /**
  * Table data model for display of Digitrax SPJ files.
@@ -28,16 +24,16 @@ import org.slf4j.LoggerFactory;
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    static public final int HEADERCOL = 0;
-    static public final int TYPECOL = 1;
-    static public final int MAPCOL = 2;
-    static public final int HANDLECOL = 3;
-    static public final int FILENAMECOL = 4;
-    static public final int LENGTHCOL = 5;
-    static public final int PLAYBUTTONCOL = 6;
-    static public final int REPLACEBUTTONCOL = 7;
+    public static final int HEADERCOL = 0;
+    public static final int TYPECOL = 1;
+    public static final int MAPCOL = 2;
+    public static final int HANDLECOL = 3;
+    public static final int FILENAMECOL = 4;
+    public static final int LENGTHCOL = 5;
+    public static final int PLAYBUTTONCOL = 6;
+    public static final int REPLACEBUTTONCOL = 7;
 
-    static public final int NUMCOLUMN = 8;
+    public static final int NUMCOLUMN = 8;
 
     SpjFile file;
 
@@ -375,7 +371,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      *
      * @param w the printer output to write to
      */
-    public void printTable(HardcopyWriter w) {
+    public void printTable(OriginalHardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
         int columnSize = (w.getCharactersPerLine() - this.getColumnCount() - 1) / this.getColumnCount();
 
@@ -391,7 +387,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnSize);
-        w.setFontStyle(0);
+        w.setFontStyle(Font.PLAIN);
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 (columnSize + 1) * this.getColumnCount());
 
@@ -421,7 +417,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
+    protected void printColumns(OriginalHardcopyWriter w, String columnStrings[], int columnSize) {
         String columnString = "";
         StringBuilder lineString = new StringBuilder("");
         // create a base string the width of the column
@@ -478,6 +474,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditorTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(EditorTableDataModel.class);
 
 }

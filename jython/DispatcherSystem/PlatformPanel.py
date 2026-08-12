@@ -26,7 +26,7 @@ class CreateAndShowGUI7(TableModelListener):
 
         # Create and set up the window.
         self.initialise_model()
-        self.frame = JFrame("for a station group put the group name in one of the stations")
+        self.frame = JFrame("For a station group put a group name in the stations for that group")
         self.frame.setSize(600, 600)
         self.completeTablePanel()
         # print "about to populate"
@@ -185,6 +185,7 @@ class CreateAndShowGUI7(TableModelListener):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
         my_scheduled_route_list = [train.getRoute() for train in train_list]
+        print "my_scheduled_route_list"
         if None in my_scheduled_route_list:
             OptionDialog().displayMessage("check scheduled routes are entered correctly\ncannot proceed with timetable")
             return []

@@ -32,6 +32,6 @@ public class EasyDccSimulatorTrafficController extends EasyDccTrafficController 
                                        // testing we treat as unexpected...
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccSimulatorTrafficController.class);
+    // private static final Logger log = LoggerFactory.getLogger(EasyDccSimulatorTrafficController.class);
 
 }

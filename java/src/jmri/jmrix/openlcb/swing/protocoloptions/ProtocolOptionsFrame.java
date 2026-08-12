@@ -246,5 +246,5 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         this.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProtocolOptionsFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(ProtocolOptionsFrame.class);
 }

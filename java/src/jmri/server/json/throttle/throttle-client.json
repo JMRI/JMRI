@@ -8,6 +8,10 @@
             "type": "integer",
             "description": "DCC Address of the throttle"
         },
+        "prefix": {
+            "type": "string",
+            "description": "System prefix of the connection to use for this throttle (e.g. \"L\" for LocoNet); when absent the default ThrottleManager is used"
+        },
         "isLongAddress": {
             "type": "boolean",
             "description": "true if address must be long; false otherwise"

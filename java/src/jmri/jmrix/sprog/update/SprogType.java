@@ -119,7 +119,7 @@ public class SprogType {
      * @param bootVer the bootloader version
      * @return length in bytes
      */
-    static public int getBlockLen(int bootVer) {
+    public static int getBlockLen(int bootVer) {
         switch (bootVer) {
             case 10:
             case 11:
@@ -262,6 +262,6 @@ public class SprogType {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogType.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogType.class);
 
 }

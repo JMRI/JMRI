@@ -185,5 +185,5 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         return "1";
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractManagerTestBase.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractManagerTestBase.class);
 }

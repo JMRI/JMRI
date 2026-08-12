@@ -106,5 +106,5 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
         public void run() throws JmriException;
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class);
 }

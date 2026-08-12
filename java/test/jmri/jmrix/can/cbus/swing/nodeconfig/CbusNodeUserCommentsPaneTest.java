@@ -31,6 +31,6 @@ public class CbusNodeUserCommentsPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeUserCommentsPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeUserCommentsPaneTest.class);
 
 }

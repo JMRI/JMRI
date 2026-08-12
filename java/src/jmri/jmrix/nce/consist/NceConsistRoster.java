@@ -501,6 +501,6 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
+    private static final Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 
 }

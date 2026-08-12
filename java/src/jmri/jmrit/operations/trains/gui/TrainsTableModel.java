@@ -7,8 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
+import javax.swing.table.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
@@ -37,7 +36,8 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int TIME_COLUMN = ID_COLUMN + 1;
-    private static final int BUILDBOX_COLUMN = TIME_COLUMN + 1;
+    private static final int DONE_COLUMN = TIME_COLUMN + 1;
+    private static final int BUILDBOX_COLUMN = DONE_COLUMN + 1;
     private static final int BUILD_COLUMN = BUILDBOX_COLUMN + 1;
     private static final int NAME_COLUMN = BUILD_COLUMN + 1;
     private static final int DESCRIPTION_COLUMN = NAME_COLUMN + 1;
@@ -128,7 +128,7 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
 
     // Train frame table column widths, starts with id column and ends with edit
     private final int[] _tableColumnWidths =
-            {50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 50, 50, 120, 120, 120, 120, 50, 120, 90,
+            {50, 50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 50, 50, 120, 120, 120, 120, 50, 120, 90,
                     70};
 
     void initTable() {
@@ -152,12 +152,18 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
         // for tool tips
         DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
         tcm.getColumn(TIME_COLUMN).setCellRenderer(defaultRenderer);
+        tcm.getColumn(DONE_COLUMN).setCellRenderer(defaultRenderer);
 
         // set column preferred widths
         for (int i = 0; i < tcm.getColumnCount(); i++) {
             tcm.getColumn(i).setPreferredWidth(_tableColumnWidths[i]);
         }
         _frame.loadTableDetails(_table);
+        
+        // don't allow sorting for Time or Done columns
+        TableRowSorter<? extends TableModel> sorter = (TableRowSorter<? extends TableModel>) _table.getRowSorter();
+        sorter.setSortable(TIME_COLUMN, false);
+        sorter.setSortable(DONE_COLUMN, false);
 
         // turn off column
         updateColumnVisible();
@@ -167,6 +173,7 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ID_COLUMN), _sort == SORTBYID);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), _sort == SORTBYTIME);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DONE_COLUMN), Setup.isBuildOnTime());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), trainManager.isBuiltRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(CAR_ROAD_COLUMN), trainManager.isCarRoadRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(CABOOSE_ROAD_COLUMN), trainManager.isCabooseRoadRestricted());
@@ -187,6 +194,7 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
 
     public static final String IDCOLUMNNAME = Bundle.getMessage("Id");
     public static final String TIMECOLUMNNAME = Bundle.getMessage("Time");
+    public static final String DONECOLUMNNAME = Bundle.getMessage("Done");
     public static final String BUILDBOXCOLUMNNAME = Bundle.getMessage("Build");
     public static final String BUILDCOLUMNNAME = Bundle.getMessage("Function");
     public static final String NAMECOLUMNNAME = Bundle.getMessage("Name");
@@ -206,6 +214,8 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
                 return IDCOLUMNNAME;
             case TIME_COLUMN:
                 return TIMECOLUMNNAME;
+            case DONE_COLUMN:
+                return DONECOLUMNNAME;
             case BUILDBOX_COLUMN:
                 return BUILDBOXCOLUMNNAME;
             case BUILD_COLUMN:
@@ -256,6 +266,7 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
             case CARS_COLUMN:
                 return Integer.class;
             case TIME_COLUMN:
+            case DONE_COLUMN:
             case NAME_COLUMN:
             case DESCRIPTION_COLUMN:
             case BUILT_COLUMN:
@@ -307,6 +318,9 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
             case TIME_COLUMN:
                 setToolTip(Bundle.getMessage("TimeTip"), col);
                 return train.getDepartureTime();
+            case DONE_COLUMN:
+                setToolTip(Bundle.getMessage("TimeTip"), col);
+                return getDoneTime(train);
             case NAME_COLUMN:
                 return train.getIconName();
             case DESCRIPTION_COLUMN:
@@ -416,6 +430,10 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
         }
         return "E " + Integer.toString(number); // NOI18N
     }
+    
+    private String getDoneTime(Train train) {
+        return train.getExpectedDepartureTime(train.getTrainTerminatesRouteLocation(), true);
+    }
 
     @Override
     public void setValueAt(Object value, int row, int col) {
@@ -515,13 +533,18 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());
+            Train t = trainManager.getTrainBuiltAfter(train);
             // check to see if departure track was reused
             if (train.checkDepartureTrack()) {
                 log.debug("Train is departing staging that already has inbound cars");
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("StagingTrackUsed",
                                 train.getDepartureTrack().getName()),
-                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.WARNING_MESSAGE);
+            } else if (Setup.isBuildOnTime() && t != null) {
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("TrainAfterBuilt", t, train), Bundle.getMessage("CanNotResetTrain"),
+                        JmriJOptionPane.WARNING_MESSAGE);
             } else if (!train.reset()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("TrainIsInRoute",

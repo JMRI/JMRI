@@ -114,7 +114,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     }
 
     // claim support for Lunar aspects
-    private final static int[] validStates = new int[]{
+    private static final int[] validStates = new int[]{
         DARK,
         RED,
         LUNAR,
@@ -183,6 +183,6 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     @Override
     void readOutput() { }
 
-    private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class);
+    private static final Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class);
 
 }

@@ -1,12 +1,15 @@
 package jmri.jmrit.symbolicprog;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import javax.swing.JLabel;
 
 import jmri.Programmer;
 import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 public class CombinedLocoSelListPaneTest {
@@ -14,7 +17,7 @@ public class CombinedLocoSelListPaneTest {
     @Test
     public void testIsDecoderSelected() {
         ProgModeSelector sel = new ProgModeSelector() {
-            Programmer programmer = new jmri.progdebugger.ProgDebugger();
+            private final Programmer programmer = new jmri.progdebugger.ProgDebugger();
 
             @Override
             public Programmer getProgrammer() {
@@ -35,15 +38,15 @@ public class CombinedLocoSelListPaneTest {
         // ensure a valid DecoderIndexFile
         jmri.jmrit.decoderdefn.DecoderIndexFile.resetInstance();
         CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1, sel);
-        Assert.assertEquals("initial state", false, combinedlocosellistpane.isDecoderSelected());
+        assertFalse( combinedlocosellistpane.isDecoderSelected(), "initial state");
         combinedlocosellistpane.mDecoderList.setSelectedIndex(1);
-        Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
+        assertTrue( combinedlocosellistpane.isDecoderSelected(), "after update");
     }
 
     @Test
     public void testSelectedDecoderType() {
         ProgModeSelector sel = new ProgModeSelector() {
-            Programmer programmer = new jmri.progdebugger.ProgDebugger();
+            private final Programmer programmer = new jmri.progdebugger.ProgDebugger();
 
             @Override
             public Programmer getProgrammer() {
@@ -66,14 +69,14 @@ public class CombinedLocoSelListPaneTest {
 
         CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1, sel);
         combinedlocosellistpane.mDecoderList.setSelectedIndex(4);
-        Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
+        assertTrue( combinedlocosellistpane.isDecoderSelected(), "after update");
         String stringRet = combinedlocosellistpane.selectedDecoderType();
-        Assert.assertEquals("selected item", "SUSI Output Mapping definitions (SUSI Output Mapping definitions)",
-                stringRet);
+        assertEquals( "SUSI Output Mapping definitions (SUSI Output Mapping definitions)",
+                stringRet, "selected item");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();

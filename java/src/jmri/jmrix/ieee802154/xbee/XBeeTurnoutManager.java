@@ -237,6 +237,6 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         return Bundle.getMessage("AddTurnoutEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class);
 
 }

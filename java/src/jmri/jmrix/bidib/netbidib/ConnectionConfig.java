@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig implements ActionListener {
 
-    public final static String NAME = "netBiDiB"; //text to show in connection type ComboBox
+    public static final String NAME = "netBiDiB"; //text to show in connection type ComboBox
     
     private final JComboBox<String> deviceListField = new JComboBox<>();
     private final JLabel deviceListFieldLabel = new JLabel(Bundle.getMessage("NetBiDiBConnectionAvailableDevices"));

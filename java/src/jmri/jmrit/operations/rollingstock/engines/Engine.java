@@ -41,6 +41,7 @@ public class Engine extends RollingStock {
         addPropertyChangeListeners();
     }
 
+    @Override
     public Engine copy() {
         Engine eng = new Engine();
         super.copy(eng);
@@ -106,7 +107,7 @@ public class Engine extends RollingStock {
         String old = getHp();
         engineModels.setModelHorsepower(getModel(), hp);
         if (!old.equals(hp)) {
-            setDirtyAndFirePropertyChange(HP_CHANGED_PROPERTY, old, hp); // NOI18N
+            setDirtyAndFirePropertyChange(HP_CHANGED_PROPERTY, old, hp);
         }
     }
 
@@ -406,12 +407,7 @@ public class Engine extends RollingStock {
             Engine engine = engineManager.getByRoadAndNumber(getRoadName(), number[0]);
             int cloneCreationNumber = Integer.parseInt(number[1]);
             if (cloneCreationNumber <= engine.getCloneOrder()) {
-                engine.setLocation(getLocation(), getTrack(), Engine.FORCE);
-                engine.setRouteDestination(null); // clear rd
-                engine.setLastTrain(getLastTrain());
-                engine.setLastRouteId(getLastRouteId());
-                engine.setLastDate(getLastDate());
-                engine.setMoves(getMoves());
+                destroyCloneReset(engine);
                 // remember the last clone destroyed
                 engine.setCloneOrder(cloneCreationNumber);
             }
@@ -531,6 +527,6 @@ public class Engine extends RollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class);
+    private static final Logger log = LoggerFactory.getLogger(Engine.class);
 
 }

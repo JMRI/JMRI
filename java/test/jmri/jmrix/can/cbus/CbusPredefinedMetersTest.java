@@ -389,6 +389,6 @@ public class CbusPredefinedMetersTest {
         Assert.assertEquals("ma units", InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter").getUnit(), Meter.Unit.Milli);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusPredefinedMetersTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusPredefinedMetersTest.class);
 
 }

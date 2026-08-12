@@ -1,7 +1,5 @@
 package jmri;
 
-import org.junit.jupiter.api.*;
-
 import com.tngtech.archunit.junit.*;
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.library.freeze.*;
@@ -32,19 +30,9 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  
 // Pick up all classes from the target/classes directory, which is just the main (not test) code
 @AnalyzeClasses(packages = {"target/classes"}) // "jmri","apps"
-
 public class ArchitectureCheck extends ArchitectureTest {
 
-    // want these statics first in class, to initialize
-    // logging before various static items are constructed
-    @BeforeAll  // tests are static
-    static public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-    }
-    @AfterAll
-    static public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
-    }
+    // BeforeAll / AfterAll JUnit setup in super.
 
     /**
      * No access to apps outside of itself.

@@ -3,7 +3,6 @@ package jmri.configurexml.turnoutoperations;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class SensorTurnoutOperationXmlTest {
     @Test
     public void testCTor() {
         SensorTurnoutOperationXml t = new SensorTurnoutOperationXml();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class SensorTurnoutOperationXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperationXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SensorTurnoutOperationXmlTest.class);
 
 }

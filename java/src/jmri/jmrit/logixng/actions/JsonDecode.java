@@ -147,6 +147,6 @@ public class JsonDecode extends AbstractDigitalAction
         log.debug("getUsageReport :: JsonDecode: bean = {}, report = {}", cdl, report);
     }
 */
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonDecode.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonDecode.class);
 
 }

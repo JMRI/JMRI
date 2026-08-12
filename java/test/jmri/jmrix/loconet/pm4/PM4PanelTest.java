@@ -25,6 +25,6 @@ public class PM4PanelTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PM4PanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PM4PanelTest.class);
 
 }

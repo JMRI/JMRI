@@ -125,5 +125,5 @@ public class GlobalVariableComboIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableComboIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalVariableComboIconXml.class);
 }

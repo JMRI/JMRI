@@ -122,6 +122,6 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConfigToolPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ConfigToolPaneTest.class);
 
 }

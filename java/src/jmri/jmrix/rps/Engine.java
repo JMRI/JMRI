@@ -594,7 +594,7 @@ public class Engine implements ReadingListener {
     static volatile protected Engine _instance = null;
 
     @SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
-    static public Engine instance() {
+    public static Engine instance() {
         if (_instance == null) {
             // NOTE: _instance has to be initialized before loadValues()
             // is called, because it invokes instance() indirectly.
@@ -615,6 +615,6 @@ public class Engine implements ReadingListener {
         prop.addPropertyChangeListener(p);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class);
+    private static final Logger log = LoggerFactory.getLogger(Engine.class);
 
 }

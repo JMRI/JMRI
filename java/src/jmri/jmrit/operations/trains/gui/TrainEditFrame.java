@@ -19,6 +19,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.manualtrainbuilder.gui.TrainManualBuildAction;
 import jmri.jmrit.operations.trains.tools.*;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
@@ -77,9 +78,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     JTextField trainDescriptionTextField = new JTextField(30);
 
     // text area
-    JTextArea commentTextArea = new JTextArea(2, 70);
+    JTextArea commentTextArea = new JTextArea(4, 70);
     JScrollPane commentScroller = new JScrollPane(commentTextArea);
     JColorChooser commentColorChooser = new JColorChooser(Color.black);
+    JCheckBox boldCheckBox = new JCheckBox();
 
     // for padding out panel
     JLabel space0 = new JLabel(" "); // before day
@@ -160,7 +162,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         dayBox.setPrototypeDisplayValue("0000"); // needed for font size 9
         hourBox.setPrototypeDisplayValue("0000");
         minuteBox.setPrototypeDisplayValue("0000");
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < Control.numberOfDays; i++) {
             dayBox.addItem(Integer.toString(i));
         }
         for (int i = 0; i < 24; i++) {
@@ -189,7 +191,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         dayBox.setToolTipText(Bundle.getMessage("DepartureDayTip"));
         hourBox.setToolTipText(Bundle.getMessage("DepartureHourTip"));
         minuteBox.setToolTipText(Bundle.getMessage("DepartureMinuteTip"));
-        
+
         // row 2b
         // BUG! routeBox needs its own panel when resizing frame!
         JPanel pr = new JPanel();
@@ -283,9 +285,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         pC.setLayout(new GridBagLayout());
         addItem(pC, commentScroller, 1, 0);
         if (_train != null) {
-            addItem(pC, OperationsPanel.getColorChooserPanel(_train.getCommentWithColor(), commentColorChooser), 2, 0);
+            addItem(pC, getColorChooserPanel(_train.getCommentWithColor(), commentColorChooser, boldCheckBox), 2, 0);
+            boldCheckBox.setSelected(TrainCommon.isTextBold(_train.getCommentWithColor()));
         } else {
-            addItem(pC, OperationsPanel.getColorChooserPanel("", commentColorChooser), 2, 0);
+            addItem(pC, getColorChooserPanel("", commentColorChooser, boldCheckBox), 2, 0);
         }
 
         // adjust text area width based on window size less color chooser
@@ -340,7 +343,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             trainDescriptionTextField.setText(_train.getRawDescription());
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
-            commentTextArea.setText(TrainCommon.getTextColorString(_train.getCommentWithColor()));
+            commentTextArea.setText(TrainCommon.isTextUserModified(_train.getCommentWithColor())
+                    ? _train.getCommentWithColor() : _train.getComment());
             cabooseRadioButton.setSelected(_train.isCabooseNeeded());
             fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();
@@ -397,6 +401,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         toolMenu.add(new TrainRoadOptionsAction(this));
         toolMenu.add(new TrainManifestOptionAction(this));
         toolMenu.addSeparator();
+        toolMenu.add(new TrainManualBuildAction(_train));
+        toolMenu.addSeparator();
         toolMenu.add(new TrainCopyAction(_train));
         toolMenu.addSeparator();
         // scripts window closes when the edit train window closes
@@ -445,6 +451,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (ae.getSource() == deleteTrainButton) {
             log.debug("train delete button activated");
             if (train == null) {
+                return;
+            }
+            if (train.isBuilt()) {
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("BuiltTrain"),
+                        Bundle.getMessage("CanNotDeleteTrain"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (!_train.reset()) {
@@ -499,7 +511,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         return;
                     }
                 }
-                if (!_train.reset()) {
+                Train t = trainManager.getTrainBuiltAfter(train);
+                if (Setup.isBuildOnTime() && t != null) {
+                    JmriJOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("TrainAfterBuilt", t, train), Bundle.getMessage("CanNotResetTrain"),
+                            JmriJOptionPane.WARNING_MESSAGE);
+                } else if (!_train.reset()) {
                     JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("TrainIsInRoute",
                                     _train.getTrainTerminatesName()),
@@ -548,10 +565,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (!_train.getName().equals(trainNameTextField.getText().trim()) ||
                 !_train.getRawDescription().equals(trainDescriptionTextField.getText()) ||
                 !_train.getCommentWithColor().equals(
-                        TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()))) {
+                        TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor(),
+                                boldCheckBox.isSelected()))) {
             _train.setModified(true);
         }
-        _train.setDepartureTime(dayBox.getSelectedItem().toString(), hourBox.getSelectedItem().toString(), minuteBox.getSelectedItem().toString());
+        _train.setDepartureTime(dayBox.getSelectedItem().toString(), hourBox.getSelectedItem().toString(),
+                minuteBox.getSelectedItem().toString());
         _train.setNumberEngines((String) numEnginesBox.getSelectedItem());
         if (_train.getNumberEngines().equals("0")) {
             modelEngineBox.setSelectedIndex(0);
@@ -571,14 +590,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         _train.setCabooseRoad((String) roadCabooseBox.getSelectedItem());
         _train.setName(trainNameTextField.getText().trim());
         _train.setDescription(trainDescriptionTextField.getText());
-        _train.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
+        _train.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor(),
+                boldCheckBox.isSelected()));
         // save train file
         OperationsXml.save();
         return true;
     }
 
     /**
-     *
      * @return true if name isn't too long and is at least one character
      */
     private boolean checkName(String s) {
@@ -671,7 +690,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private boolean checkRoute() {
         if (_train.getRoute() == null) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"), Bundle.getMessage("TrainNoRoute"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"),
+                    Bundle.getMessage("TrainNoRoute"),
                     JmriJOptionPane.WARNING_MESSAGE);
             return false;
         }
@@ -721,7 +741,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             }
         }
     }
-    
+
     private void autoSelect() {
         if (_train != null) {
             Route route = _train.getRoute();
@@ -809,7 +829,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         Bundle.getMessage("TrainRouteStaging",
                                 _train.getName(), _train.getRoute().getRouteLocationById(id).getName()),
                         Bundle.getMessage("TrainRouteNotStaging"), JmriJOptionPane.OK_CANCEL_OPTION);
-                if (result != JmriJOptionPane.OK_OPTION ) {
+                if (result != JmriJOptionPane.OK_OPTION) {
                     b.setSelected(true);
                     return; // don't skip staging
                 }
@@ -1029,25 +1049,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         ref = new RouteEditFrame();
         setChildFrame(ref);
-        Route route = null;
-        Object selected = routeBox.getSelectedItem();
-        if (selected != null) {
-            route = (Route) selected;
-        }
-        // warn user if train is built that they shouldn't edit the train's route
-        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
-            // list the built trains for this route
-            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
-            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
-                if (train.getRoute() == route && train.isBuilt()) {
-                    buf.append(NEW_LINE +
-                            Bundle.getMessage("TrainIsBuilt",
-                                    train.getName(), route.getName()));
-                }
-            }
-            JmriJOptionPane.showMessageDialog(this, buf.toString(), Bundle.getMessage("BuiltTrain"),
-                    JmriJOptionPane.WARNING_MESSAGE);
-        }
+        Route route = (Route) routeBox.getSelectedItem();
         ref.initComponents(route, _train);
     }
 

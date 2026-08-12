@@ -3,7 +3,6 @@ package jmri.jmrit.beantable.signalmast;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class SignalMastRepeaterPanelTest {
     @Test
     public void testCTor() {
         SignalMastRepeaterPanel t = new SignalMastRepeaterPanel();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class SignalMastRepeaterPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanelTest.class);
 
 }

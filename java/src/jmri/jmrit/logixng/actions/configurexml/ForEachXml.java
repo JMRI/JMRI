@@ -138,5 +138,5 @@ public class ForEachXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEachXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEachXml.class);
 }

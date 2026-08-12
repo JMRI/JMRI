@@ -10,7 +10,8 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.rollingstock.cars.*;import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.*;
@@ -511,7 +512,10 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         // change road number for this car
         f.roadNumberTextField.setText("54321");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonYes"));
         car = cManager.getByRoadAndNumber("CP", "54321");
         Assert.assertNotNull("car exists", car);
         // confirm car id was modified
@@ -522,7 +526,10 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         // change road name
         f.roadComboBox.setSelectedItem("SP");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonYes"));
         car = cManager.getByRoadAndNumber("SP", "54321");
         Assert.assertNotNull("car exists", car);
         // confirm car id was modified
@@ -1324,8 +1331,12 @@ public class CarEditFrameTest extends OperationsTestCase {
         JUnitUtil.waitFor(() -> {
             return !t1.isAlive();
         }, "Click Yes Button in dialogue didn't happen");
-
-        Assert.assertTrue(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
+        
+        // confirm change edit car loads window appears
+        JmriJFrame lef = JmriJFrame.getFrame("Edit Car Loads");
+        Assert.assertNotNull(lef);
+        
+        JUnitUtil.dispose(lef);
         JUnitUtil.dispose(f);
     }
 }

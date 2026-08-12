@@ -278,7 +278,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
             @Override
             public void boosterState(byte[] address, int messageNum, BoosterState state, BoosterControl control) {
                 Node node = tc.getNodeByAddr(address);
-                log.info("BOOSTER STATE was signalled: {}, control: {}", state.getType(), control.getType());
+                log.debug("BOOSTER STATE was signalled: {}, control: {}", state, control);
                 if (node != null  &&  node == progNode) {
                     isBoosterOn = ((state.getType() & 0x80) == 0x80);
                 }
@@ -326,6 +326,6 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         notifyProgListenerEnd(temp, value, status);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammer.class);
 
 }

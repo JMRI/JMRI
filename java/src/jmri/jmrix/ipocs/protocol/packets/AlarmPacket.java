@@ -13,7 +13,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqAlarmState;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class AlarmPacket extends Packet {
-  public final static byte IDENT = 16;
+  public static final byte IDENT = 16;
   private short alarmCode;
   private byte alarmLevel;
   private RqAlarmState alarmState = null;

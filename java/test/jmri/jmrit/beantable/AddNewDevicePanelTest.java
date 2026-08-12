@@ -42,6 +42,6 @@ public class AddNewDevicePanelTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AddNewDevicePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AddNewDevicePanelTest.class);
 
 }

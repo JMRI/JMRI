@@ -111,5 +111,5 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModuleXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModuleXml.class);
 }

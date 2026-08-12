@@ -38,6 +38,6 @@ public class MapleMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MapleMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MapleMenuTest.class);
 
 }

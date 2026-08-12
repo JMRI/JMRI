@@ -15,6 +15,6 @@ import jmri.jmrix.loconet.pr3.PR3SystemConnectionMemo;
  */
 public class UsbDcs52SystemConnectionMemo extends PR3SystemConnectionMemo {
 
-//    private final static Logger log = LoggerFactory.getLogger(UsbDcs52SystemConnectionMemo.class);
+//    private static final Logger log = LoggerFactory.getLogger(UsbDcs52SystemConnectionMemo.class);
 
 }

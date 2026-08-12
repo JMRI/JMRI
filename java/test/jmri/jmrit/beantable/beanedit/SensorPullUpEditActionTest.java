@@ -76,6 +76,6 @@ public class SensorPullUpEditActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorPullUpEditActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SensorPullUpEditActionTest.class);
 
 }

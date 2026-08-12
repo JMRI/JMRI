@@ -46,5 +46,5 @@ public class TrainIconXml extends LocoIconXml {
         log.debug("Warning: loading of TrainIcon not implemented, TrainIcons will be placed by Operations");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainIconXml.class);
 }

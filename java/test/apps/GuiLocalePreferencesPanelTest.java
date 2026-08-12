@@ -78,6 +78,6 @@ public class GuiLocalePreferencesPanelTest extends PreferencesPanelTestBase<GuiL
     @Override
     public void isPreferencesValid() {
     }
-    // private final static Logger log = LoggerFactory.getLogger(GuiLocalePreferencesPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GuiLocalePreferencesPanelTest.class);
 
 }

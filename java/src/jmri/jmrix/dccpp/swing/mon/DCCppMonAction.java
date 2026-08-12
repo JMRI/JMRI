@@ -21,7 +21,7 @@ public class DCCppMonAction extends DCCppSystemConnectionAction {
     }
 
     public DCCppMonAction(DCCppSystemConnectionMemo memo) {
-        this("DCC++ Traffic Monitor", memo);
+        this("DCC-EX Traffic Monitor", memo);
     }
 
     public DCCppMonAction() {
@@ -44,6 +44,6 @@ public class DCCppMonAction extends DCCppSystemConnectionAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppMonAction.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppMonAction.class);
 
 }

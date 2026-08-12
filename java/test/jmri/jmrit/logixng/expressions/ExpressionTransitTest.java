@@ -23,8 +23,6 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -316,7 +314,6 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         assertNull( expressionTransit.getSelectNamedBean().getNamedBean(), "Transit is null");
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -363,7 +360,6 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
@@ -371,6 +367,6 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.tearDown();
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlockTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlockTest.class);
 
 }

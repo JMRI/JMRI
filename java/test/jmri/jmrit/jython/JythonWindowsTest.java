@@ -1,17 +1,19 @@
 package jmri.jmrit.jython;
 
-import jmri.script.swing.InputWindowAction;
-import jmri.script.swing.InputWindow;
-
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JFrame;
 
+import jmri.script.swing.InputWindowAction;
+import jmri.script.swing.InputWindow;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -25,57 +27,52 @@ public class JythonWindowsTest {
 
     // Really a check of Jython init, including the defaults file
     @Test
+    @DisabledIfHeadless
     public void testExec() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.util.JUnitAppender.clearBacklog();
+
+        assertEquals(0,JUnitAppender.clearBacklog());
         // open output window
-        JythonWindow outputWindow;  // actually an Action class
-        try {
-            outputWindow = new JythonWindow();
+        assertDoesNotThrow( () -> {
+            JythonWindow outputWindow = new JythonWindow(); // actually an Action class
             outputWindow.actionPerformed(null);
-        } catch (Exception e) {
-            Assert.fail("exception opening output window: " + e);
-        }
+        }, "exception opening output window: ");
 
         // create input window
         InputWindow w = new InputWindow();
 
         // run a null op test
-        try {
-            w.buttonPressed();
-        } catch (Exception e) {
-            Assert.fail("exception during execution: " + e);
-        }
+        assertDoesNotThrow( () ->
+            w.buttonPressed(), "exception during execution: ");
 
         // find, close output window
         JFrame f = JFrameOperator.waitJFrame("Script Output", true, true);
-        Assert.assertNotNull("found output frame", f);
+        assertNotNull(f, "found output frame");
         JUnitUtil.dispose(f);
 
         // error messages are a fail
-        if (jmri.util.JUnitAppender.clearBacklog(org.slf4j.event.Level.WARN) != 0) {
-           Assert.fail("Emitted error messages caused test to fail");
-        }
+        assertEquals(0, JUnitAppender.clearBacklog(org.slf4j.event.Level.WARN),
+            "Emitted WARN messages caused test to fail");
+
     }
 
     @Test
+    @DisabledIfHeadless
     public void testInput() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new InputWindowAction().actionPerformed(null);
         JFrame f = JFrameOperator.findJFrame("Script Entry", true, true);
-        Assert.assertNotNull("found input frame", f);
+        assertNotNull(f, "found input frame");
         JUnitUtil.dispose(f);
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

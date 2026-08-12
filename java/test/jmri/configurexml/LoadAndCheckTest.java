@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 
@@ -30,8 +31,8 @@ public class LoadAndCheckTest {
     @Test
     public void testLoadFileTest() throws JmriException {
         // load file
-        InstanceManager.getDefault(ConfigureManager.class)
-                .load(new File("java/test/jmri/configurexml/load/LoadFileTest.xml"));
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class)
+                .load(new File("java/test/jmri/configurexml/load/LoadFileTest.xml")));
 
         // check existence of a few objects
         assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
@@ -51,8 +52,8 @@ public class LoadAndCheckTest {
     @Test
     public void testLoadMultipleSystems() throws JmriException {
         // load file
-        InstanceManager.getDefault(ConfigureManager.class)
-                .load(new File("java/test/jmri/configurexml/load/LoadMultipleSystems.xml"));
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class)
+                .load(new File("java/test/jmri/configurexml/load/LoadMultipleSystems.xml")));
 
         // check existence of a few objects
         assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
@@ -69,8 +70,8 @@ public class LoadAndCheckTest {
     @Test
     public void testLoad295() throws JmriException {
         // load file
-        InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest295.xml"));
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class)
+                .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest295.xml")));
 
         // check existence of a few objects
         assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));

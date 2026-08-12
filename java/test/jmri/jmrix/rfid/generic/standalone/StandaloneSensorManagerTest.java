@@ -43,6 +43,6 @@ public class StandaloneSensorManagerTest extends jmri.managers.AbstractSensorMgr
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StandaloneSensorManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StandaloneSensorManagerTest.class);
 
 }

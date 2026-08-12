@@ -123,6 +123,6 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager {
         super.cancelThrottleRequest(address, l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManager.class);
 
 }

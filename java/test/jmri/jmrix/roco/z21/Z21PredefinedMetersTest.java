@@ -93,6 +93,6 @@ public class Z21PredefinedMetersTest {
         JUnitUtil.tearDown(); 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 
 }

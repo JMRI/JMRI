@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-15</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2026-06-01</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Firmware 1.1</revremark>
+        </revision>
+    </revhistory>
+
+    <!-- Global enable ===================================================== -->
+    <variable CV="50" item="Additional functions global enable" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Additiona masking functions global enabled</tooltip>
+        <tooltip xml:lang="cs">Dodatečné funkce maskování globální povolení</tooltip>
+    </variable>
+    <variable CV="50" item="Mask forward reverse" mask="XXXXXXVX" default="1">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward and reverse</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed a vzad</tooltip>
+    </variable>
+    <variable CV="50" item="Mask moving" mask="XXXXXVXX" default="1">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu</tooltip>
+    </variable>
+    <variable CV="50" item="Mask moving and delay" mask="XXXXVXXX" default="1">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus Čas prodlevy</tooltip>
+    </variable>
+    <variable CV="50" item="Mask stop and delay" mask="XXXVXXXX" default="0">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při stání plus Čas prodlevy</tooltip>
+    </variable>
+    <variable CV="50" item="Mask while maneuvering" mask="VXXXXXXX" default="1">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled while maneuvering</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při Posunu</tooltip>
+    </variable>
+
+    <!-- Delay time ======================================================== -->
+    <variable CV="56" item="Delay time" default="24">
+        <decVal max="64" />
+        <label>Delay time</label>
+        <label xml:lang="cs">Čas prodlevy</label>
+        <tooltip>Entered value × 0.08 sec</tooltip>
+        <tooltip xml:lang="cs">Zadaná hodnota × 0,08 s</tooltip>
+    </variable>
+
+
+    <!-- Driving forward =================================================== -->
+    <variable CV="52" item="Mask forward AUX1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX1</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward AUX2" mask="XXXXXXVX" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX2</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward AUX3" mask="XXXXXVXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX3</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward AUX4" mask="XXXXVXXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX4</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward AUX5" mask="XXXVXXXX" default="0" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX5</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward AUX6" mask="XXVXXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX6</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward AUX7" mask="XVXXXXXX" default="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX7</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward AUX8" mask="VXXXXXXX" default="1" 
+              include="NOT CONTROLLED">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for AUX8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro AUX8</tooltip>
+    </variable>
+    
+    <!-- Driving reverse =================================================== -->    
+    <variable CV="53" item="Mask reverse AUX1" mask="XXXXXXXV" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX1</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse AUX2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX2</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse AUX3" mask="XXXXXVXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX3</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse AUX4" mask="XXXXVXXX" default="0" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX4</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse AUX5" mask="XXXVXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX5</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse AUX6" mask="XXVXXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX6</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse AUX7" mask="XVXXXXXX" default="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX7</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse AUX8" mask="VXXXXXXX" default="1" 
+              include="NOT CONTROLLED">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for AUX8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro AUX8</tooltip>
+    </variable>
+    
+    
+    
+    <!-- Moving ============================================================ -->
+    <variable CV="54" item="Mask moving AUX1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX1</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving AUX2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX2</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving AUX3" mask="XXXXXVXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX3</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving AUX4" mask="XXXXVXXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX4</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving AUX5" mask="XXXVXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX5</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving AUX6" mask="XXVXXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX6</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving AUX7" mask="XVXXXXXX" default="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX7</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving AUX8" mask="VXXXXXXX" default="1" 
+              include="NOT CONTROLLED">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for AUX8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro AUX8</tooltip>
+    </variable>
+    
+    
+    
+    <!-- Moving and delay ================================================== -->
+    <variable CV="55" item="Mask moving and delay AUX1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX1</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay AUX2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX2</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay AUX3" mask="XXXXXVXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX3</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay AUX4" mask="XXXXVXXX" default="0" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX4</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay AUX5" mask="XXXVXXXX" default="0" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX5</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay AUX6" mask="XXVXXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX6</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay AUX7" mask="XVXXXXXX" default="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX7</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay AUX8" mask="VXXXXXXX" default="1" 
+              include="NOT CONTROLLED">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for AUX8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro AUX8</tooltip>
+    </variable>
+    
+    <!-- Stop and delay ==================================================== -->
+    <variable CV="57" item="Mask stop and delay AUX1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX1</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay AUX2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX2</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay AUX3" mask="XXXXXVXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX3</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay AUX4" mask="XXXXVXXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX4</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay AUX5" mask="XXXVXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX5</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay AUX6" mask="XXVXXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX6</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay AUX7" mask="XVXXXXXX" default="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX7</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay AUX8" mask="VXXXXXXX" default="1" 
+              include="NOT CONTROLLED">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for AUX8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro AUX8</tooltip>
+    </variable>
+    
+    <!-- Directive reset bit =============================================== -->
+    <variable CV="60" item="Directive reset bit F0f" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for F0f</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro F0f</tooltip>
+    </variable>
+    <variable CV="60" item="Directive reset bit F0r" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for F0r</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro F0r</tooltip>
+    </variable>
+    
+    <variable CV="61" item="Directive reset bit AUX1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX1</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX1</tooltip>
+    </variable>
+    <variable CV="61" item="Directive reset bit AUX2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX2</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX2</tooltip>
+    </variable>
+    <variable CV="61" item="Directive reset bit AUX3" mask="XXXXXVXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX3</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX3</tooltip>
+    </variable>
+    <variable CV="61" item="Directive reset bit AUX4" mask="XXXXVXXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX4</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX4</tooltip>
+    </variable>
+    <variable CV="61" item="Directive reset bit AUX5" mask="XXXVXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX5</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX5</tooltip>
+    </variable>
+    <variable CV="61" item="Directive reset bit AUX6" mask="XXVXXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX6</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX6</tooltip>
+    </variable>
+    <variable CV="61" item="Directive reset bit AUX7" mask="XVXXXXXX" default="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX7</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX7</tooltip>
+    </variable>
+    <variable CV="61" item="Directive reset bit AUX8" mask="VXXXXXXX" default="1" 
+              include="NOT CONTROLLED">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit reset in maneuvering mode for AUX8</tooltip>
+        <tooltip xml:lang="cs">Direktivní nulování bitu v režimu Posun pro AUX8</tooltip>
+    </variable>
+    
+    <!-- Directive set bit ================================================= -->
+    <variable CV="62" item="Directive set bit F0f" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for F0f</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro F0f</tooltip>
+    </variable>
+    <variable CV="62" item="Directive set bit F0r" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for F0r</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro F0r</tooltip>
+    </variable>
+    
+    <variable CV="63" item="Directive set bit AUX1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX1</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX1</tooltip>
+    </variable>
+    <variable CV="63" item="Directive set bit AUX2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX2</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX2</tooltip>
+    </variable>
+    <variable CV="63" item="Directive set bit AUX3" mask="XXXXXVXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX3</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX3</tooltip>
+    </variable>
+    <variable CV="63" item="Directive set bit AUX4" mask="XXXXVXXX" default="1" 
+              include="MND25-P22,MND25-N18,MSD25-P22,MSD25-N18">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX4</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX4</tooltip>
+    </variable>
+    <variable CV="63" item="Directive set bit AUX5" mask="XXXVXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX5</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX5</tooltip>
+    </variable>
+    <variable CV="63" item="Directive set bit AUX6" mask="XXVXXXXX" default="1" 
+              include="MND25-P22,MND25-P16,MSD25-P22,MSD25-P16">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX6</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX6</tooltip>
+    </variable>
+    <variable CV="63" item="Directive set bit AUX7" mask="XVXXXXXX" default="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX7</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX7</tooltip>
+    </variable>
+    <variable CV="63" item="Directive set bit AUX8" mask="VXXXXXXX" default="1" 
+              include="NOT CONTROLLED">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask while maneuvering</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Directive bit set in maneuvering mode for AUX8</tooltip>
+        <tooltip xml:lang="cs">Direktivní nastavení bitu v režimu Posun pro AUX8</tooltip>
+    </variable>
+    
+</variables>

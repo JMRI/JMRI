@@ -355,6 +355,6 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         locoNetOccupancyMessagesCheckBox.setSelected(cs.getLocoNetOccupancyMessagesFlag());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21ConfigFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21ConfigFrame.class);
 
 }

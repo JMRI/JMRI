@@ -31,6 +31,6 @@ public class PR2SystemConnectionMemoTest extends SystemConnectionMemoTestBase<PR
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PR2SystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PR2SystemConnectionMemoTest.class);
 
 }

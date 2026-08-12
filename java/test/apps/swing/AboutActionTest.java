@@ -2,7 +2,6 @@ package apps.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class AboutActionTest {
     @Test
     public void testCTor() {
         AboutAction t = new AboutAction();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,5 +26,5 @@ public class AboutActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AboutActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AboutActionTest.class);
 }

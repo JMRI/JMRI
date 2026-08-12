@@ -149,6 +149,6 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         rcvThread.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnStreamPortPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(LnStreamPortPacketizer.class);
 
 }

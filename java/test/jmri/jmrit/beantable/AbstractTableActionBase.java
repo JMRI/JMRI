@@ -194,5 +194,5 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     abstract public void tearDown();
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class);
 }

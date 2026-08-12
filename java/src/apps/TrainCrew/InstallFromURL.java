@@ -78,6 +78,6 @@ public class InstallFromURL extends JmriAbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InstallFromURL.class);
+    private static final Logger log = LoggerFactory.getLogger(InstallFromURL.class);
 
 }

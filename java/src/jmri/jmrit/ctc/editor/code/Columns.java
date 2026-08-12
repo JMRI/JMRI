@@ -27,8 +27,8 @@ import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
  interface.  It maintains the state of the screen for the higher level functions.
  */
 public class Columns {
-    public final static String REFERENCES_PRESENT_INDICATOR = " (";
-    private final static String ERROR_STRING = " ***ERROR***";
+    public static final String REFERENCES_PRESENT_INDICATOR = " (";
+    private static final String ERROR_STRING = " ***ERROR***";
 
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;
@@ -229,7 +229,7 @@ public class Columns {
         lazy1(_mTRL_Enabled, _mEdit_TRL, signalDirectionLeverEnabled, _mSelectedCodeButtonHandlerData._mTRL_Enabled);
     }
 
-    static private void lazy1(JCheckBox jCheckBox, JButton jButton, boolean enabled, boolean value) {
+    private static void lazy1(JCheckBox jCheckBox, JButton jButton, boolean enabled, boolean value) {
         jCheckBox.setEnabled(enabled);
         jCheckBox.setSelected(value);
         jButton.setEnabled(value);

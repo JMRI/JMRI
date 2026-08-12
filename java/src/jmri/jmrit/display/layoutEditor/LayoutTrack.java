@@ -31,8 +31,8 @@ import jmri.Turnout;
  */
 abstract public class LayoutTrack {
 
-    // final protected LayoutModels models;  // preferred
-    final protected LayoutEditor models; // temporary type
+    // protected final LayoutModels models;  // preferred
+    protected final LayoutEditor models; // temporary type
 
     /**
      * Constructor method.
@@ -50,12 +50,12 @@ abstract public class LayoutTrack {
      * @return track ident.
      */
     @Nonnull
-    final public String getId() {
+    public final String getId() {
         return ident;
     }
 
     @Nonnull
-    final public String getName() {
+    public final String getName() {
         return ident;
     }
 
@@ -67,7 +67,7 @@ abstract public class LayoutTrack {
 
     private String ident = "";
 
-    final protected void setIdent(@Nonnull String ident) {
+    protected final void setIdent(@Nonnull String ident) {
         this.ident = ident;
     }
 
@@ -82,7 +82,7 @@ abstract public class LayoutTrack {
      * @param turnoutState of the turnout
      * @return the turnout state string
      */
-    final public String getTurnoutStateString(int turnoutState) {
+    public final String getTurnoutStateString(int turnoutState) {
         String result = "";
         if (turnoutState == Turnout.CLOSED) {
             result = Bundle.getMessage("TurnoutStateClosed");
@@ -225,5 +225,5 @@ abstract public class LayoutTrack {
      */
     abstract public void setAllLayoutBlocks(LayoutBlock layoutBlock);
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrack.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrack.class);
 }

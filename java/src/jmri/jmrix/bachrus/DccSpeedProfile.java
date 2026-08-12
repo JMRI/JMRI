@@ -217,6 +217,6 @@ public class DccSpeedProfile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class);
+    private static final Logger log = LoggerFactory.getLogger(DccSpeedProfile.class);
 
 }

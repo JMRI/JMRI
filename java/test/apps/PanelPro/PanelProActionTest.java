@@ -3,7 +3,6 @@ package apps.PanelPro;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class PanelProActionTest {
     @Test
     public void testCTor() {
         PanelProAction t = new PanelProAction();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class PanelProActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanelProActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PanelProActionTest.class);
 
 }

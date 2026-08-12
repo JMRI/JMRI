@@ -84,5 +84,5 @@ public class NceConnectionStatusTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceConnectionStatusTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceConnectionStatusTest.class);
 }

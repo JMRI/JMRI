@@ -50,7 +50,7 @@ Some DEFAULT examples are listed here.  PLEASE VERIFY FOR YOUR LAYOUT!
     "XT"    for XpressNet, could be Atlas or CTI or Hornby or Lenz
     "AT"    for Bachrus AKA Speedo or for CTI Electronics or for KPF-Zeller
     "CT"    for C/MRI
-    "DT"    for DCC++ or for DCC4PC
+    "DT"    for DCC-EX or for DCC4PC
     "LT"    for Digitrax
     "UT"    for ECoS
     "ET"    for EasyDCC

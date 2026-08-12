@@ -93,5 +93,5 @@ public class IntlUtilities {
         return NumberFormat.getInstance().format(val);
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(IntlUtilities.class);
+    //private static final Logger log = LoggerFactory.getLogger(IntlUtilities.class);
 }

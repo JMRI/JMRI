@@ -29,14 +29,14 @@ public class ActionOBlock extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<OBlock> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class), this);
+                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class));
 
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.Deallocate, this);
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.Deallocate);
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -303,16 +303,12 @@ public class ActionOBlock extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-        _selectEnum.registerListeners();
         _selectMemoryNamedBean.addPropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-        _selectEnum.unregisterListeners();
         _selectMemoryNamedBean.removePropertyChangeListener("value", this);
     }
 
@@ -356,6 +352,6 @@ public class ActionOBlock extends AbstractDigitalAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionOBlock.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionOBlock.class);
 
 }

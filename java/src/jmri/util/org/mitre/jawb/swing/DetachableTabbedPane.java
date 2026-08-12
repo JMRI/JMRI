@@ -392,10 +392,12 @@ public class DetachableTabbedPane extends JTabbedPane {
   @Override
   public void remove (Component comp) {
     Detachable detachable = panelToDetMap.get (comp);
-    if (detachable != null)
+    if (detachable != null) {
+      log.trace("panelToDetMap of {} found {} with {}", comp, detachable, detachable.component);
       remove (detachable);
-    else
+    } else {
       super.remove(comp);
+    }
   }
   private void remove (Detachable d) {
     if (d != null) {
@@ -652,6 +654,6 @@ public class DetachableTabbedPane extends JTabbedPane {
 //     frame.setVisible(true);
 //   }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DetachableTabbedPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DetachableTabbedPane.class);
 
 }

@@ -22,8 +22,6 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -61,7 +59,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Throttle ::: Use default%n" +
+                "Throttle. Don't wait for throttle. Stop loco when switching loco ::: Use default%n" +
                 "   ?~ Address%n" +
                 "      Socket not connected%n" +
                 "   ?~ Speed%n" +
@@ -80,7 +78,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Throttle ::: Use default%n" +
+                "         Throttle. Don't wait for throttle. Stop loco when switching loco ::: Use default%n" +
                 "            ?~ Address%n" +
                 "               Socket not connected%n" +
                 "            ?~ Speed%n" +
@@ -110,12 +108,12 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         action2 = new ActionThrottle("IQDA321", null);
         assertNotNull( action2, "object exists");
         assertNull( action2.getUserName(), "Username matches");
-        assertEquals( "Throttle", action2.getLongDescription(), "String matches");
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", action2.getLongDescription(), "String matches");
 
         action2 = new ActionThrottle("IQDA321", "My throttle");
         assertNotNull( action2, "object exists");
         assertEquals( "My throttle", action2.getUserName(), "Username matches");
-        assertEquals( "Throttle", action2.getLongDescription(), "String matches");
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", action2.getLongDescription(), "String matches");
 
         IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
             () -> {
@@ -406,7 +404,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testLongDescription() {
-        assertEquals( "Throttle", _base.getLongDescription(), "String matches");
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", _base.getLongDescription(), "String matches");
     }
 
     @Test
@@ -705,10 +703,9 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         ActionThrottle a1 = new ActionThrottle("IQDA321", null);
         assertEquals( "Throttle", a1.getShortDescription(), "strings are equal");
         ActionThrottle a2 = new ActionThrottle("IQDA321", null);
-        assertEquals( "Throttle", a2.getLongDescription(), "strings are equal");
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", a2.getLongDescription(), "strings are equal");
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -741,7 +738,6 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
@@ -775,6 +771,6 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         }
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleTest.class);
 
 }

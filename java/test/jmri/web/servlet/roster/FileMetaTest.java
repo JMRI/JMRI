@@ -26,6 +26,6 @@ public class FileMetaTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FileMetaTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(FileMetaTest.class);
 
 }

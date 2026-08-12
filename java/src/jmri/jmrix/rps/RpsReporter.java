@@ -192,6 +192,6 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsReporter.class);
+    private static final Logger log = LoggerFactory.getLogger(RpsReporter.class);
 
 }

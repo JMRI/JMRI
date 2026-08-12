@@ -86,7 +86,7 @@ public class Play extends SdfMacro {
         return 2;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         // course match
         if ((buff.getAtIndex() & 0xC0) != 0x40) {
             return null;

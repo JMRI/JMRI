@@ -132,6 +132,6 @@ public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo imple
 
     // no dispose() for Maple
 
-    private final static Logger log = LoggerFactory.getLogger(MapleSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(MapleSystemConnectionMemo.class);
 
 }

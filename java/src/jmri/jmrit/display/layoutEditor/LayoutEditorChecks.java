@@ -17,7 +17,7 @@ import jmri.util.MathUtil;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class LayoutEditorChecks {
+public final class LayoutEditorChecks {
 
     private final LayoutEditor layoutEditor;
     private final JMenu checkMenu = new JMenu(Bundle.getMessage("CheckMenuTitle"));
@@ -809,5 +809,5 @@ final public class LayoutEditorChecks {
         return results;
     }   // getCheckMarkedMenuItemNames
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorChecks.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorChecks.class);
 }

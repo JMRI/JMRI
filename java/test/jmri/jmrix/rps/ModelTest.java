@@ -27,6 +27,6 @@ public class ModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ModelTest.class);
 
 }

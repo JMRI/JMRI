@@ -3,9 +3,7 @@ package jmri.implementation;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
 
 /**
  * test class for AbstractSensor 
@@ -37,14 +35,14 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
             public String toStringSuffix(){ return " After";} // feature under test
         };
 
-        Assert.assertEquals(nb.toString(), "Foo After");
+        Assertions.assertEquals("Foo After", nb.toString());
     }
-    
+
     // load t with actual object; create scaffolds as needed
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         t = new AbstractSensor("Foo", "Bar"){
             @Override
                 public void requestUpdateFromLayout(){}

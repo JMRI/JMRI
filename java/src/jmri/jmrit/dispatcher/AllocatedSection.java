@@ -247,7 +247,7 @@ public class AllocatedSection {
     /**
      * Methods
      */
-    final protected void setStoppingSensors() {
+    protected final void setStoppingSensors() {
         if (mSection.getState() == Section.FORWARD) {
             mForwardStoppingSensor = mSection.getForwardStoppingSensor();
             mReverseStoppingSensor = mSection.getReverseStoppingSensor();
@@ -278,6 +278,9 @@ public class AllocatedSection {
     }
 
     private synchronized void handleSectionChange(PropertyChangeEvent e) {
+        log.trace("{}:AllocatedSection[{}]:handleSectionChange Property Name[{}] old[{}] New[{}]",
+                mActiveTrain.getActiveTrainName(), mSection.getDisplayName(),
+                e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (mSection.getOccupancy() == Section.OCCUPIED) {
             mEntered = true;
         } else if (mSection.getOccupancy() == Section.UNOCCUPIED) {
@@ -462,5 +465,5 @@ public class AllocatedSection {
         pcs.firePropertyChange(name, oldVal, newVal);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AllocatedSection.class);
+    private static final Logger log = LoggerFactory.getLogger(AllocatedSection.class);
 }

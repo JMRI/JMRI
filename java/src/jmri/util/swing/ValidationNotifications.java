@@ -36,7 +36,7 @@ public class ValidationNotifications {
      *                 encountered
      * @return the byte value, -1 indicates failure
      */
-    public final static int parseBinDecHexByte(String s, int limit, boolean decimal, String errMsg,
+    public static final int parseBinDecHexByte(String s, int limit, boolean decimal, String errMsg,
             JPanel comp) {
         
         int radix = 16;

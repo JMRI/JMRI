@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 
 /**
- * Provide a JFrame to display the Roster Data Based upon BeanTableFrame.
+ * Provide a JFrame to display and modify Roster Group membership
  * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
@@ -47,7 +47,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         TableRowSorter<RosterGroupTableModel> sorter = new TableRowSorter<>(dataModel);
         dataTable.setRowSorter(sorter);
 
-        sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.AlphanumComparator());
+        sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.ChunkyNumbersComparator());
         sorter.toggleSortOrder(RosterGroupTableModel.IDCOL);
         
         dataScroll = new JScrollPane(dataTable);

@@ -1,10 +1,9 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -15,23 +14,21 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2004
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class PaneProgPaneTest {
 
-    ProgDebugger p = new ProgDebugger();
+    private final ProgDebugger p = new ProgDebugger();
 
     // test creating columns in a pane
     @Test
@@ -63,9 +60,9 @@ public class PaneProgPaneTest {
                 return new JPanel();
             }
         };
-        assertNotNull("exists", pane);
-        assertEquals("column count", 2, colCount);
-        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
+        assertNotNull( pane, "exists");
+        assertEquals( 2, colCount, "column count");
+        JUnitUtil.dispose(pFrame);
     }
 
     // test specifying variables in columns
@@ -96,9 +93,9 @@ public class PaneProgPaneTest {
                 varCount++;
             }
         };
-        assertNotNull("exists", pane);
-        assertEquals("variable defn count", 7, varCount);
-        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
+        assertNotNull(pane, "exists");
+        assertEquals(7, varCount, "variable defn count");
+        JUnitUtil.dispose(pFrame);
     }
 
     // test storage of programming info in list
@@ -142,10 +139,10 @@ public class PaneProgPaneTest {
 
         // test by invoking
         PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null);
-        assertEquals("variable list length", 2, pane.varList.size());
-        assertEquals("1st variable index ", Integer.valueOf(1), pane.varList.get(0));
-        assertEquals("2nd variable index ", Integer.valueOf(0), pane.varList.get(1));
-        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
+        assertEquals(2, pane.varList.size(), "variable list length");
+        assertEquals(Integer.valueOf(1), pane.varList.get(0), "1st variable index ");
+        assertEquals(Integer.valueOf(0), pane.varList.get(1), "2nd variable index ");
+        JUnitUtil.dispose(pFrame);
     }
 
     // test storage of programming info in list
@@ -199,11 +196,11 @@ public class PaneProgPaneTest {
             return !progPane.isBusy();
         }, "progPane.isBusy");
 
-        Assert.assertEquals("CV 2 value ", "20", varModel.getValString(0));
-        Assert.assertEquals("CV 3 value ", "30", varModel.getValString(1));
+        assertEquals("20", varModel.getValString(0), "CV 2 value ");
+        assertEquals("30", varModel.getValString(1), "CV 3 value ");
 
         log.debug("testPaneRead ends ok");
-        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
+        JUnitUtil.dispose(pFrame);
     }
 
     @Test
@@ -259,11 +256,11 @@ public class PaneProgPaneTest {
             return !progPane.isBusy();
         }, "progPane.isBusy");
 
-        Assert.assertEquals("CV 2 value ", 20, p.getCvVal(2));
-        Assert.assertEquals("CV 3 value ", 30, p.getCvVal(3));
+        assertEquals(20, p.getCvVal(2), "CV 2 value ");
+        assertEquals(30, p.getCvVal(3), "CV 3 value ");
 
         log.debug("testPaneWrite ends ok");
-        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
+        JUnitUtil.dispose(pFrame);
     }
 
     // test counting of read operations needed
@@ -327,55 +324,55 @@ public class PaneProgPaneTest {
         PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null);
 
         // start actual testing
-        Assert.assertEquals("number of all CVs to read ", 29, progPane.countOpsNeeded(true, false));
-        Assert.assertEquals("number of all CVs to write ", 29, progPane.countOpsNeeded(false, false));
+        assertEquals(29, progPane.countOpsNeeded(true, false), "number of all CVs to read ");
+        assertEquals(29, progPane.countOpsNeeded(false, false), "number of all CVs to write ");
 
-        Assert.assertEquals("number of changed CVs to read ", 0, progPane.countOpsNeeded(true, true));
-        Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false, true));
+        assertEquals(0, progPane.countOpsNeeded(true, true), "number of changed CVs to read ");
+        assertEquals(0, progPane.countOpsNeeded(false, true), "number of changed CVs to write ");
 
         // mark some as needing to be written
         var getKey1 = cvModel.allCvMap().get("1");
-        Assertions.assertNotNull(getKey1);
+        assertNotNull(getKey1);
         getKey1.setValue(12);
 
-        Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true, false));
-        Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false, false));
+        assertEquals(29, progPane.countOpsNeeded(true, false), "modified all CVs to read ");
+        assertEquals(29, progPane.countOpsNeeded(false, false), "modified all CVs to write ");
 
-        Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true, true));
-        Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false, true));
+        assertEquals(1, progPane.countOpsNeeded(true, true), "modified changed CVs to read ");
+        assertEquals(1, progPane.countOpsNeeded(false, true), "modified changed CVs to write ");
 
         var getKey69 = cvModel.allCvMap().get("69");
-        Assertions.assertNotNull(getKey69);
+        assertNotNull(getKey69);
         getKey69.setValue(12);
         // careful - might change more than one CV!
 
-        Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true, false));
-        Assert.assertEquals("spdtbl all CVs to write ", 29, progPane.countOpsNeeded(false, false));
+        assertEquals(29, progPane.countOpsNeeded(true, false), "spdtbl all CVs to read ");
+        assertEquals(29, progPane.countOpsNeeded(false, false), "spdtbl all CVs to write ");
 
-        Assert.assertEquals("spdtbl changed CVs to read ", 2, progPane.countOpsNeeded(true, true));
-        Assert.assertEquals("spdtbl changed CVs to write ", 2, progPane.countOpsNeeded(false, true));
+        assertEquals(2, progPane.countOpsNeeded(true, true), "spdtbl changed CVs to read ");
+        assertEquals(2, progPane.countOpsNeeded(false, true), "spdtbl changed CVs to write ");
 
         log.debug("testPaneReadOpCount ends ok");
-        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
+        JUnitUtil.dispose(pFrame);
     }
 
-    // static variables for internal classes to report their interpretations
-    private String result = null;
+    // variables for internal classes to report their interpretations
+    // private String result = null; // currently unused
     private int colCount = -1;
     private int varCount = -1;
 
     // static variables for the test XML structures
-    Element root = null;
-    Element pane1 = null;
-    Element pane2 = null;
-    Element pane3 = null;
-    Document doc = null;
+    private Element root = null;
+    private Element pane1 = null;
+    private Element pane2 = null;
+    private Element pane3 = null;
+    private Document doc = null;
 
     // provide a test document in the above static variables
     void setupDoc() {
-        Assertions.assertNull(result);
-        Assertions.assertEquals(-1,colCount);
-        Assertions.assertEquals(-1,varCount);
+        // assertNull(result);
+        assertEquals(-1,colCount);
+        assertEquals(-1,varCount);
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
         doc = new Document(root);
@@ -431,16 +428,17 @@ public class PaneProgPaneTest {
                         )
                 )
         ); // end of adding contents
-
+        assertNotNull(pane2);
+        assertNotNull(pane3);
         log.debug("setupDoc complete");
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
-        result = null;
+        // result = null;
         colCount = -1;
         varCount = -1;
     }
@@ -448,9 +446,10 @@ public class PaneProgPaneTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test frame"
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgPaneTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgPaneTest.class);
 
 }

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XpaMessage implements jmri.jmrix.Message {
 
-    public final static int MAX_SIZE = 64;
+    public static final int MAX_SIZE = 64;
 
     private int _nDataChars = 0;
     private byte[] _dataChars = null;
@@ -206,7 +206,7 @@ public class XpaMessage implements jmri.jmrix.Message {
         return new XpaMessage("ATDT*" + setting + "*");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XpaMessage.class
+    private static final Logger log = LoggerFactory.getLogger(XpaMessage.class
             .getName());
 
 }

@@ -83,6 +83,6 @@ public class CbusNodeBackupFileTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeBackupFile.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeBackupFile.class);
 
 }

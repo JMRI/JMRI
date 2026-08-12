@@ -21,8 +21,8 @@ public class VetoableChangeSupportTest {
 
     private VetoableChangeSupport instance;
     private TestVetoableChangeListener listener;
-    private final static String PROPERTY = "property";
-    private final static String VETO = "veto";
+    private static final String PROPERTY = "property";
+    private static final String VETO = "veto";
 
     @Test
     public void testFireVetoableChange_String_int_boolean_boolean() {

@@ -747,7 +747,7 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
         }
     }
 
-    static private String setSignal(SignalRow signalRow, boolean deletePortal) {
+    private static String setSignal(SignalRow signalRow, boolean deletePortal) {
         Portal portal = signalRow.getPortal();
         float length = signalRow.getLength();
         if (portal.setProtectSignal(signalRow.getSignal(), length, signalRow.getToBlock())) {
@@ -766,7 +766,7 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
         return null;
     }
 
-    static private boolean checkPortalBlock(Portal portal, OBlock block) {
+    private static boolean checkPortalBlock(Portal portal, OBlock block) {
         if (block == null) {
             return false;
         }

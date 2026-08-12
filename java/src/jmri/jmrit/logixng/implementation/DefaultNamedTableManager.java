@@ -267,7 +267,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     static volatile DefaultNamedTableManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultNamedTableManager instance() {
+    public static DefaultNamedTableManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
@@ -324,6 +324,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultNamedTableManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultNamedTableManager.class);
 
 }

@@ -30,7 +30,8 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
     static final int SVERSIONCOL = 4;
     public static final int CONFIGURECOL = 5;
     public static final int UPGRADECOL = 6;
-    public static final int DESCRIPTIONCOL = 7;
+    public static final int BACKUPCOL = 7;
+    public static final int DESCRIPTIONCOL = 8;
     public static final int NUMCOL = DESCRIPTIONCOL + 1;
 
     CanSystemConnectionMemo memo;
@@ -93,6 +94,8 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                 return Bundle.getMessage("FieldConfig");
             case UPGRADECOL:
                 return Bundle.getMessage("FieldUpgrade");
+            case BACKUPCOL:
+                return Bundle.getMessage("FieldBackup");
             case DESCRIPTIONCOL:
                 return Bundle.getMessage("FieldDescription");
             default:
@@ -105,6 +108,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         switch (col) {
             case CONFIGURECOL:
             case UPGRADECOL:
+            case BACKUPCOL:
                 return JButton.class;
             default:
                 return String.class;
@@ -124,6 +128,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         switch (col) {
             case CONFIGURECOL:
             case UPGRADECOL:
+            case BACKUPCOL:
                 return true;
             default:
                 return false;
@@ -171,6 +176,12 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                 } else {
                     return null;
                 }
+            case BACKUPCOL:
+                if (pip.hasProtocol(ProtocolIdentification.Protocol.ConfigurationDescription)) {
+                    return Bundle.getMessage("FieldBackup");
+                } else {
+                    return null;
+                }
             case DESCRIPTIONCOL:
                 return snip.getUserDesc();
             default:
@@ -208,11 +219,23 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                     action.actionPerformed(null);
                 }
                 break;
+            case BACKUPCOL:
+                if (pip.hasProtocol(ProtocolIdentification.Protocol.ConfigurationDescription)) {
+                    var snip = nodememo.getSimpleNodeIdent();
+                    String name = (snip != null) ? snip.getUserName() : "<unknown>";
+                    var backuper = new jmri.jmrix.openlcb.swing.lccpro.NodeBackupAction();
+                    backuper.doBackup(nodememo, memo, name);
+                    // We want the table to retain focus while the CDI loads
+                    // This also removes the selection from this cell, so that cmd-`
+                    // no longer repeats the action of pressing the button
+                    forceFocus();
+                }
+                break;
             default:
                 break;
         }
     }
-
+    
     // to be overridden at construction time with e.g.
     //      frame.toFront();
     //      frame.requestFocus();

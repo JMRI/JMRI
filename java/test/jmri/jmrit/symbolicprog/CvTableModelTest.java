@@ -1,7 +1,9 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
-import org.junit.Assert;
+
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,9 +13,19 @@ public class CvTableModelTest {
 
     @Test
     public void testStart() {
-        Assert.assertNotNull(new CvTableModel(new JLabel(), null));
+        Assertions.assertNotNull(new CvTableModel(new JLabel(), null));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CvTableModelTest.class);
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
+    // private static final Logger log = LoggerFactory.getLogger(CvTableModelTest.class);
 
 }

@@ -1,16 +1,14 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JPanel;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -19,8 +17,9 @@ import org.junit.Assume;
 public class PaneSetTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false, 42);
         RosterEntry re = new RosterEntry();
         PaneProgFrame pc = new PaneProgFrame(null, re,
@@ -35,8 +34,9 @@ public class PaneSetTest {
         JUnitUtil.waitFor(()->{return pc.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
         PaneSet t = new PaneSet(pc, re, p);
-        Assert.assertNotNull("exists", t);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(10);
+        Assertions.assertNotNull(t, "exists");
+        JUnitUtil.waitFor(10);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         pc.dispatchEvent(new WindowEvent(pc, WindowEvent.WINDOW_CLOSING));
     }
 
@@ -51,6 +51,7 @@ public class PaneSetTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test frame"
         JUnitUtil.tearDown();
     }
 

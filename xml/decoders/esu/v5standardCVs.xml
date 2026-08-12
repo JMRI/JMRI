@@ -1031,26 +1031,6 @@
     <!-- Index variables -->
     <constant item="PICV" default="31" comment="CV used for Primary Index"/>
     <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
-    <!-- Firmware Version -->
-    <variable CV="0.255.285:2" readOnly="no" item="Firmware Build Number">
-        <splitVal/>
-        <label>Firmware Build Number</label>
-        <label xml:lang="de">Firmware Build Nummer</label>
-        <label xml:lang="ca">Número de firmware</label>
-    </variable>
-    <variable CV="0.255.287" readOnly="no" item="Firmware Minor Version">
-        <decVal/>
-        <label>Firmware Minor Version</label>
-    </variable>
-    <variable CV="0.255.288" readOnly="no" item="Firmware Major Version">
-        <decVal/>
-        <label>Firmware Major Version</label>
-    </variable>
-    <variable CV="0.255.285:4" readOnly="yes" item="Firmware Full Version">
-        <splitHexVal/>
-        <label>Firmware Full Version</label>
-        <tooltip>A machine-comparable value calculated from the different parts of the Firmware Version</tooltip>
-    </variable>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
     <variables exclude="Essential Sound Unit">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/>
@@ -1058,7 +1038,6 @@
     <variables exclude="ESU LokPilot 5">
         <xi:include href="http://jmri.org/xml/decoders/esu/v5soundCVs.xml"/>
     </variables>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v5fnOutCVs.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncCVs.xml"/>
     <!-- begin SUSI variables -->
     <!-- note that the exclusions below must be copied to xml/decoders/esu/susiMapPane.xml -->

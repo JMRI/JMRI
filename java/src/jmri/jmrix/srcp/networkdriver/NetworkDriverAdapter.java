@@ -39,6 +39,6 @@ public class NetworkDriverAdapter extends SRCPPortController {
     // private control members
     private boolean opened = false;
 
-    // private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    // private static final Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

@@ -63,6 +63,6 @@ public class TcpServerAction extends AbstractAction {
             log.debug("TcpServer is not created.");
         }
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcpServerAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcpServerAction.class);
 
 }

@@ -203,7 +203,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     static volatile DefaultConditionalNGManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultConditionalNGManager instance() {
+    public static DefaultConditionalNGManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
@@ -266,5 +266,5 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManager.class);
 }

@@ -46,8 +46,8 @@ public class LayoutFunctionsTest {
     private final ExpressionNode exprLightOff = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.INACTIVE), 0));
     private final ExpressionNode exprLightOn = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.ACTIVE), 0));
 
-    private final static int SIGNAL_HEAD_RED = 1;
-    private final static int SIGNAL_HEAD_GREEN = 2;
+    private static final int SIGNAL_HEAD_RED = 1;
+    private static final int SIGNAL_HEAD_GREEN = 2;
 
     private final ExpressionNode exprSignalHeadIH1 = new ExpressionNodeString(new Token(TokenType.NONE, "IH1", 0));
     private final ExpressionNode exprSignalHeadMySignalHead = new ExpressionNodeString(new Token(TokenType.NONE, "My signal head", 0));

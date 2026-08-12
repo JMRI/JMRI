@@ -29,8 +29,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintLocationsByCarTypesAction extends AbstractAction {
 
-    static final String NEW_LINE = "\n"; // NOI18N
-    static final String TAB = "\t"; // NOI18N
+    protected static final String NEW_LINE = "\n"; // NOI18N
+    protected static final String TAB = "\t"; // NOI18N
 
     public PrintLocationsByCarTypesAction(boolean preview) {
         super(preview ? Bundle.getMessage("MenuItemPreviewByType") : Bundle.getMessage("MenuItemPrintByType"));
@@ -49,9 +49,10 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
 
     private void print() {
         // obtain a HardcopyWriter
-        try ( HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsByType"),
-            Control.reportFontSize, .5, .5, .5, .5, isPreview); ) {
-            
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsByType"), null,
+                null, Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, "", false, true, null,
+                null)) {
+           
             // Loop through the car types showing which locations and tracks will
             // service that car type
             String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
@@ -89,5 +90,5 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);
 }

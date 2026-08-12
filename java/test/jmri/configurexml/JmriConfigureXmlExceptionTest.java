@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for JmriConfigureXmlException class.
@@ -13,27 +12,29 @@ import org.junit.Assert;
 
 public class JmriConfigureXmlExceptionTest {
 
-   @Test
-   public void testCtor(){
-      Assert.assertNotNull("JmriConfigureXmlException constructor",new JmriConfigureXmlException());
-   }
+    @Test
+    public void testCtor(){
+        Assertions.assertNotNull(new JmriConfigureXmlException(),
+            "JmriConfigureXmlException constructor");
+    }
 
-   @Test
-   public void testStringConstructorXmlException(){
-      Assert.assertNotNull("JmriConfigureXmlException string constructor",new JmriConfigureXmlException("test exception"));
-   }
+    @Test
+    public void testStringConstructorXmlException(){
+        Assertions.assertNotNull(new JmriConfigureXmlException("test exception"),
+                "JmriConfigureXmlException string constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

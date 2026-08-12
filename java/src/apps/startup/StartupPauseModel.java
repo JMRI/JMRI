@@ -16,7 +16,7 @@ public class StartupPauseModel extends AbstractStartupModel {
 
     public static final int DEFAULT_DELAY = 10;
     private int delay = -1; // default to invalid duration
-    private final static Logger log = LoggerFactory.getLogger(StartupPauseModel.class);
+    private static final Logger log = LoggerFactory.getLogger(StartupPauseModel.class);
 
     @Override
     public String getName() {

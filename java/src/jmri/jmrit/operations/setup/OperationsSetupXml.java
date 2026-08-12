@@ -85,6 +85,7 @@ public class OperationsSetupXml extends OperationsXml implements InstanceManager
         // load control settings
         Control.load(root);
         
+        // train log files also save file back up dates, so start now if enabled
         InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
 
         // clear dirty bit
@@ -103,7 +104,7 @@ public class OperationsSetupXml extends OperationsXml implements InstanceManager
 
     private String operationsFileName = "Operations.xml"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsSetupXml.class);
 
     @Override
     public void initialize() {

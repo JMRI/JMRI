@@ -52,36 +52,28 @@
 	</variable>
 	<variable item="Rangiertango Pushtime" CV="132" default="15">
 		<decVal/>
-		<label>Push Duration (CV 132)</label>
+		<label>Shunting Push Time (CV 132)</label>
 		<label xml:lang="de">Andrückzeit Abkuppeln (CV 132)</label>
 		<label xml:lang="nl">Aanduwtijd</label>
 		<label xml:lang="cs">Čas najetí</label>
-		<tooltip>Coupling Push Duration T1 * 0.1 Sec</tooltip>
+		<tooltip>Shunting Tango Push Duration T1 * 0.1 Sec</tooltip>
 		<tooltip xml:lang="de">Andrückzeit T1 * 0,1 Sek</tooltip>
 		<tooltip xml:lang="nl">Aanduwtijd T1 * 0,1 Sek</tooltip>
 		<tooltip xml:lang="cs">Čas najetí pro přivěšení T1 * 0,1 s</tooltip>
 	</variable>
-	<variable item="Rangiertango Pushtime 2" CV="133" default="40">
+	<variable item="Rangiertango Pulltime 1" CV="133" default="40">
 		<decVal/>
-		<label>Push Duration 2 (CV 133)</label>
-		<label xml:lang="de">Andrückzeit Ankuppeln (CV 133)</label>
-		<label xml:lang="nl">Aanduwtijd</label>
-		<label xml:lang="cs">Čas najetí</label>
-		<tooltip>Coupling Push Duration T2 * 0.1 Sec</tooltip>
-		<tooltip xml:lang="de">Andrückzeit T2 * 0,1 Sek</tooltip>
-		<tooltip xml:lang="nl">Aanduwtijd T2 * 0,1 Sek</tooltip>
-		<tooltip xml:lang="cs">Čas najetí pro přivěšení T2 * 0,1 s</tooltip>
+		<label>Removing Time forwards  (CV 133)</label>
+		<label xml:lang="de">Abrückzeit vorw.  (CV 133)</label>
+		<tooltip>Removing time disconnect forwards T2 * 0.1 Sec</tooltip>
+		<tooltip xml:lang="de">Abrückzeit bei Vorwärtsfahrt T2 * 0,1 Sek</tooltip>
 	</variable>
-	<variable item="Rangiertango Pulltime" CV="134" default="30">
+	<variable item="Rangiertango Pulltime 2" CV="134" default="30">
 		<decVal/>
-		<label>Retract Duration (CV 134)</label>
-		<label xml:lang="de">Abrückzeit Abkuppeln (CV 134)</label>
-		<label xml:lang="nl">Wegrijtijd</label>
-		<label xml:lang="cs">Čas odstoupení</label>
-		<tooltip>Decoupling Pull Duration T2 * 0.1 Sec</tooltip>
-		<tooltip xml:lang="de">Abrückzeit T2 * 0,1 Sek</tooltip>
-		<tooltip xml:lang="nl">Terugrijtijd T2 * 0,1 s</tooltip>
-		<tooltip xml:lang="cs">Čas odstoupení pro odvěšení T2 * 0,1 s</tooltip>
+		<label>Removing Time backwards (CV 134)</label>
+		<label xml:lang="de">Abrückzeit rückw. (CV 134)</label>
+		<tooltip>Removing time disconnect backwards T3 * 0.1 Sec</tooltip>
+		<tooltip xml:lang="de">Abrückzeit bei Rückwärtsfahrt T3 * 0,1 Sek</tooltip>
 	</variable>
 	<variable item="Rangiertango PWM" CV="135" default="30">
 		<decVal/>

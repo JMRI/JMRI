@@ -15,7 +15,7 @@ package jmri.util;
 public class GetJavaProperty {
 
     // Main entry point
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         if (args.length < 1 || args[0].equals("-h")) {
             System.out.println("Provide the name of a system property as an argument");
             return;

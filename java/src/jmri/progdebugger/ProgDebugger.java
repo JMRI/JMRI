@@ -419,7 +419,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
         return configurator;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class);
+    private static final Logger log = LoggerFactory.getLogger(ProgDebugger.class);
 
 
     /**

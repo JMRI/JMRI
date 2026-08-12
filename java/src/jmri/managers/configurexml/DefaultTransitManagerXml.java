@@ -253,6 +253,6 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
         return InstanceManager.getDefault(TransitManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultTransitManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultTransitManagerXml.class);
 
 }

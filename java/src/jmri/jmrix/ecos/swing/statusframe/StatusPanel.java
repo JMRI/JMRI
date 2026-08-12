@@ -144,7 +144,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
+    public static class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemInfo"),
@@ -154,6 +154,6 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StatusPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(StatusPanel.class);
 
 }

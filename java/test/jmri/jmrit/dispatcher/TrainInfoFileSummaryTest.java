@@ -30,6 +30,6 @@ public class TrainInfoFileSummaryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainInfoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainInfoTest.class);
 
 }

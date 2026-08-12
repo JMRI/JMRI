@@ -1,5 +1,6 @@
 package jmri.jmrix.purejavacomm;
 
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.AbstractSerialPortController;
 
 /**
@@ -17,10 +18,9 @@ public class CommPortIdentifier {
         return new CommPortIdentifier(portName);
     }
 
-    public SerialPort open(String appName, int timeout) throws PortInUseException, NoSuchPortException {
-        String systemPrefix = appName;
+    public SerialPort open(SystemConnectionMemo memo, int timeout) throws PortInUseException, NoSuchPortException {
         jmri.jmrix.SerialPort serialPort = AbstractSerialPortController.activatePort(
-                systemPrefix, _portName, log, 1, jmri.jmrix.SerialPort.Parity.NONE);
+                memo, _portName, log, 1, jmri.jmrix.SerialPort.Parity.NONE);
 
         if (serialPort != null) {
             return new SerialPort(serialPort);

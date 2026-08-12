@@ -167,7 +167,9 @@ public class CarEditFrame extends RollingStockEditFrame {
             if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("loadNameNotExist",
                     car.getLoadName()), Bundle.getMessage("addLoad"),
                     JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
-                InstanceManager.getDefault(CarLoads.class).addName(car.getTypeName(), car.getLoadName());
+                carLoadEditFrame = new CarLoadEditFrame();
+                carLoadEditFrame.initComponents(car.getTypeName(),
+                        car.getLoadName());
             }
         }
         InstanceManager.getDefault(CarLoads.class).updateComboBox(car.getTypeName(), loadComboBox);
@@ -293,7 +295,9 @@ public class CarEditFrame extends RollingStockEditFrame {
         if (roadComboBox.getSelectedItem() == null) {
             return;
         }
-        super.save(carManager, isSave);
+        if (!super.save(carManager, isSave)) {
+            return;
+        }
         Car car = (Car) _rs;
         
         if (colorComboBox.getSelectedItem() != null) {

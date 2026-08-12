@@ -47,7 +47,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
         _nDataChars = Math.max(_nDataChars, n + 1);
     }
 
-    static public QsiMessage getAck(QsiReply r) {
+    public static QsiMessage getAck(QsiReply r) {
         // send ack to received (unsolicited) message m
         QsiMessage m = new QsiMessage(1);
         m.setElement(0, r.getElement(1));
@@ -163,7 +163,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
 
     // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
-    static public final int MAXSIZE = 515;
+    public static final int MAXSIZE = 515;
 
     // contents (private)
     private boolean _isBoot = false;

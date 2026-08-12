@@ -16,7 +16,7 @@ public class Z21RailComDataRequestFormatterTest extends AbstractMessageFormatter
 
         Z21Message msg = Z21Message.getLanRailComGetDataRequestMessage();
         Assertions.assertTrue(formatter.handlesMessage(msg));
-        Assertions.assertEquals(Bundle.getMessage("Z21_RAILCOM_GETDATA"), formatter.formatMessage(msg));
+        Assertions.assertEquals(Bundle.getMessage("Z21_RAILCOM_GETDATA",0), formatter.formatMessage(msg));
     }
 
     @Override

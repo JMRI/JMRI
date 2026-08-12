@@ -218,6 +218,8 @@ public class JTableToCsvActionTest  {
         assertThat(java.util.Arrays.equals(mainArray[0], mainArray2[0])).isTrue();
         assertThat(java.util.Arrays.equals(mainArray[1], mainArray2[1])).isTrue();
 
+        // Cleaning up nameless invisible frame created by creating a dialog with a null parent
+        JUnitUtil.resetWindows(false,false);
     }
     
     private String[][] arrayFromFile(File file) throws IOException {

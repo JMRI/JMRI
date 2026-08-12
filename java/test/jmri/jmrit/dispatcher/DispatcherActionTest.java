@@ -27,6 +27,6 @@ public class DispatcherActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DispatcherActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DispatcherActionTest.class);
 
 }

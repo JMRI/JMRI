@@ -503,6 +503,6 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     public void dispose() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgOpsModePane.class.getName());
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgOpsModePane.class.getName());
 
 }

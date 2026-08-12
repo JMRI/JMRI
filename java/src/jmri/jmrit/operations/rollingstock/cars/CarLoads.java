@@ -127,6 +127,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         JComboBox<String> box = new JComboBox<>();
         box.addItem(CarLoad.LOAD_TYPE_EMPTY);
         box.addItem(CarLoad.LOAD_TYPE_LOAD);
+        OperationsPanel.padComboBox(box);
         return box;
     }
 
@@ -533,8 +534,10 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             if (maxCommentLength < TrainManifestHeaderText.getStringHeader_Pickup_Comment().length()) {
                 maxCommentLength = TrainManifestHeaderText.getStringHeader_Pickup_Comment().length();
             }
-            log.info(Bundle.getMessage("InfoMaxLoadMessage", maxComment, maxCommentLength,
-                    carTypeName, carLoadName));
+            if (!maxComment.isBlank()) {
+                log.info(Bundle.getMessage("InfoMaxLoadMessage", maxComment, maxCommentLength,
+                        carTypeName, carLoadName));
+            }
         }
         return maxCommentLength;
     }
@@ -666,7 +669,11 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 for (Element eCarLoad : eCarLoads) {
                     if ((a = eCarLoad.getAttribute(Xml.NAME)) != null) {
                         String name = a.getValue();
-                        addName(type, name);
+                        if (name.trim().equals(TrainCommon.HYPHEN)) {
+                            log.error("Illegal load name ({}) for type ({})", name, type);
+                        } else {
+                            addName(type, name);
+                        }
                         if ((a = eCarLoad.getAttribute(Xml.PRIORITY)) != null) {
                             setPriority(type, name, a.getValue());
                         }
@@ -694,6 +701,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarLoads.class);
+    private static final Logger log = LoggerFactory.getLogger(CarLoads.class);
 
 }

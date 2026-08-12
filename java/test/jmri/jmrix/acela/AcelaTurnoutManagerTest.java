@@ -107,6 +107,6 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class);
+    private static final Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class);
 
 }

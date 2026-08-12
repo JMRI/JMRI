@@ -719,5 +719,5 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         // do nothing
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(TrackTableModel.class);
 }

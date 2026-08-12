@@ -64,9 +64,12 @@ public class RosterConfigManager extends AbstractPreferencesManager {
                 this.setDirectory(profile, preferences.get(DIRECTORY, this.getDirectory()));
             } catch (IllegalArgumentException ex) {
                 this.setInitialized(profile, true);
-                throw new InitializationException(
-                        Bundle.getMessage(Locale.ENGLISH, "IllegalRosterLocation", preferences.get(DIRECTORY, this.getDirectory())),
+                String unavailablePath = preferences.get(DIRECTORY, this.getDirectory());
+                log.warn("Roster location unavailable: {}", unavailablePath);
+                throw new RosterLocationUnavailableException(
+                        Bundle.getMessage(Locale.ENGLISH, "IllegalRosterLocation", unavailablePath),
                         ex.getMessage(),
+                        unavailablePath,
                         ex);
             }
             getRoster(profile).setRosterLocation(this.getDirectory());

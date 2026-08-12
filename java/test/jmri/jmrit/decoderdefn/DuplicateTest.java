@@ -11,9 +11,6 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Checks for duplicate Family-Model pairs in decoder files.
@@ -35,7 +32,7 @@ public class DuplicateTest {
         }
         log.debug("checked total of{}", models.size());
         if (failed) {
-            Assert.fail("test failed, see System.err");
+            Assertions.fail("test failed, see System.err");
         }
     }
 
@@ -86,5 +83,6 @@ public class DuplicateTest {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DuplicateTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DuplicateTest.class);
+
 }

@@ -38,5 +38,5 @@ public class LengthPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LengthPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LengthPanelTest.class);
 }

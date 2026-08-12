@@ -171,5 +171,5 @@ public class DefaultGlobalVariableManagerXml extends AbstractManagerXml {
         return InstanceManager.getDefault(GlobalVariableManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariableManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariableManagerXml.class);
 }

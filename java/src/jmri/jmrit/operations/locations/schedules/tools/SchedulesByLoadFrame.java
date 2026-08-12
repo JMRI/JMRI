@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.locations.schedules.tools;
 
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -22,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Frame to display spurs with schedules and their loads
  *
- * @author Dan Boudreau Copyright (C) 2012, 2015, 2021, 2025
+ * @author Dan Boudreau Copyright (C) 2012, 2015, 2021, 2025, 2026
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -95,6 +94,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         toolMenu.addSeparator();
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintSchedulesByTypeAndLoadAction(true, this));
+        toolMenu.add(new PrintSchedulesByTypeAndLoadAction(false, this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
@@ -102,7 +104,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // select first item to load contents
         typesComboBox.setSelectedIndex(0);
 
-        initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight250));
+        initMinimumSize(new Dimension(Control.panelWidth1025, Control.panelHeight250));
     }
 
     @Override
@@ -134,25 +136,35 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     }
 
     private void updateLocations() {
+        locationsPanel.removeAll();
         String type = (String) typesComboBox.getSelectedItem();
         String load = (String) loadsComboBox.getSelectedItem();
-        log.debug("Update locations for type ({}) load ({})", type, load);
-        locationsPanel.removeAll();
-        int x = 0;
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Spur")), 1, x);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 2, x);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("receiveTypeLoad")), 3, x);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("shipLoad")), 4, x);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 5, x++);
-
         // determine if load is default empty or load
         boolean defaultLoad = carLoads.getDefaultLoadName().equals(load) || carLoads.getDefaultEmptyName().equals(load);
+        log.debug("Update locations for type ({}) load ({})", type, load);
 
+        // build header
+        int row = 0;
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Spur")), 1, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 2, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Id")), 3, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("ScheduleMode")), 4, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Type")), 5, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Random")), 6, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Delivery")), 7, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Road")), 8, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")), 9, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")), 10, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Destination")), 11, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Track")), 12, row);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Pickup")), 13, row++);
+
+        // now load data
         for (Location location : locationManager.getLocationsByNameList()) {
             // only spurs have schedules
-            if (!location.hasSpurs())
+            if (!location.hasSchedules())
                 continue;
-            addItemLeft(locationsPanel, new JLabel(location.getName()), 0, x++);
+            addItemLeft(locationsPanel, new JLabel(location.getName()), 0, row++);
             // now look for a spur with a schedule
             for (Track spur : location.getTracksByNameList(Track.SPUR)) {
                 Schedule sch = spur.getSchedule();
@@ -182,37 +194,38 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         // is the schedule item valid?
                         String status = spur.checkScheduleValid();
                         if (!status.equals(Schedule.SCHEDULE_OKAY)) {
-                            addItemLeft(locationsPanel, new JLabel("  " + status), 0, x);
+                            JLabel errorSchedule = new JLabel("  " + status);
+                            errorSchedule.setForeground(Color.RED);
+                            addItemLeft(locationsPanel, errorSchedule, 0, row);
                         }
-                        addItemLeft(locationsPanel, new JLabel(spur.getName()), 1, x);
-                        addItemLeft(locationsPanel, new JLabel(spur.getScheduleName()), 2, x);
-                        // create string Receive(type, delivery, road, load)
-                        String s = si.getTypeName() +
-                                ", " +
-                                si.getSetoutTrainScheduleName() +
-                                ", " +
-                                si.getRoadName() +
-                                ", " +
-                                si.getReceiveLoadName();
-                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 3, x);
-                        // create string Ship(load, pickup)
-                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage(
-                                "Ship") + " (" + si.getShipLoadName() + ", " + si.getPickupTrainScheduleName() + ")"),
-                                4, x++);
-                        // now the destination and track
-                        if (si.getDestination() != null) {
-                            addItemLeft(locationsPanel,
-                                    new JLabel(si.getDestinationName() + " (" + si.getDestinationTrackName() + ")"), 5,
-                                    x - 1);
-                        }
+                        addItemLeft(locationsPanel, new JLabel(spur.getName()), 1, row);
+                        addItemLeft(locationsPanel, new JLabel(spur.getScheduleName()), 2, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getId()), 3, row);
+                        addItemLeft(locationsPanel, new JLabel(spur.getScheduleModeName()), 4, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getTypeName()), 5, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getRandom()), 6, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getSetoutTrainScheduleName()), 7, row);
+                        addItemLeft(locationsPanel, new JLabel(si.getRoadName()), 8, row);
                         // report if spur can't service the selected load
                         if (!allLoadsCheckBox.isSelected() &&
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                                 !spur.isLoadNameAndCarTypeAccepted(load, type)) {
-                            addItemLeft(locationsPanel,
-                                    new JLabel(Bundle.getMessage("spurNotTypeLoad", spur.getName(), type, load)), 3,
-                                    x++);
+                            JLabel warnLoad =
+                                    new JLabel(Bundle.getMessage("spurNotTypeLoad", spur.getName(), type, load));
+                            warnLoad.setForeground(Color.BLUE);
+                            addItemLeft(locationsPanel, warnLoad, 9, row);
+                        } else {
+                            addItemLeft(locationsPanel, new JLabel(si.getReceiveLoadName()), 9, row);
                         }
+                        addItemLeft(locationsPanel, new JLabel(si.getShipLoadName()), 10, row);
+                        // now the destination and track
+                        if (si.getDestination() != null) {
+                            addItemLeft(locationsPanel,
+                                    new JLabel(si.getDestinationName()), 11, row);
+                            addItemLeft(locationsPanel,
+                                    new JLabel(si.getDestinationTrackName()), 12, row);
+                        }
+                        addItemLeft(locationsPanel, new JLabel(si.getPickupTrainScheduleName()), 13, row++);
                     }
                 }
             }
@@ -220,6 +233,20 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         locationsPanel.revalidate();
         revalidate();
         repaint();
+    }
+
+    public String getCarType() {
+        if (allTypesCheckBox.isSelected()) {
+            return null;
+        }
+        return (String) typesComboBox.getSelectedItem();
+    }
+
+    public String getCarLoad() {
+        if (allLoadsCheckBox.isSelected()) {
+            return null;
+        }
+        return (String) loadsComboBox.getSelectedItem();
     }
 
     @Override
@@ -251,11 +278,12 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         if (e.getSource().getClass().equals(Schedule.class) ||
                 e.getSource().getClass().equals(LocationManager.class) ||
                 e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             updateLocations();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SchedulesByLoadFrame.class);
 
 }

@@ -1,6 +1,6 @@
 from javax.swing import JTable, JScrollPane, JFrame, JPanel, JComboBox,  BorderFactory, DefaultCellEditor, JLabel, UIManager, SwingConstants, JFileChooser
 from javax.swing.table import  TableCellRenderer, DefaultTableCellRenderer
-from java.awt.event import MouseAdapter,MouseEvent, WindowListener, WindowEvent
+from java.awt.event import MouseAdapter, MouseEvent, WindowListener, WindowEvent, WindowAdapter
 from java.awt import GridLayout, Dimension, BorderLayout, Color
 from javax.swing.table import AbstractTableModel, DefaultTableModel
 from java.lang.Object import getClass
@@ -10,6 +10,24 @@ from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
 import java.awt.Dimension
+from java.beans import PropertyChangeListener
+
+class StopDispatcherWindowListener(WindowAdapter):
+    def __init__(self, listener, model):
+        self.listener = listener
+        self.model = model
+    def windowClosing(self, event):
+        # print "StopDispatcherSystem: Window closing, removing ActiveTrainsTableListener."
+        if self.model is not None:
+            self.model.removeTableModelListener(self.listener)
+
+class ActiveTrainsTableListener(TableModelListener):
+    def __init__(self, parent):
+        self.parent = parent
+        # print "ActiveTrainsTableListener initialized"
+    def tableChanged(self, event):
+        # print "ActiveTrainsTableListener tableChanged event"
+        self.parent.populate_action(None)
 
 class createandshowGUI3(TableModelListener):
 
@@ -34,7 +52,17 @@ class createandshowGUI3(TableModelListener):
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
-
+        # print "Adding TableModelListener to DispatcherFrame ActiveTrainsTableModel"
+        if DF is not None:
+            self.activeTrainsTableModel = DF.activeTrainsTableModel
+            if self.activeTrainsTableModel is not None:
+                self.activeTrainsTableListener = ActiveTrainsTableListener(self)
+                self.activeTrainsTableModel.addTableModelListener(self.activeTrainsTableListener)
+                self.frame.addWindowListener(StopDispatcherWindowListener(self.activeTrainsTableListener, self.activeTrainsTableModel))
+            else:
+                print "Error: ActiveTrainsTableModel not found."
+        else:
+            print "Error: DispatcherFrame not found, listener not attached."
 
     def completeTablePanel1(self):
 
@@ -137,6 +165,7 @@ class createandshowGUI3(TableModelListener):
 
         self.model = None
         self.model = MyTableModel3()
+        # print "model created MyTableModel3"
         self.table = JTable(self.model)
         self.model.addTableModelListener(MyModelListener3(self, class_StopMaster));
         self.class_StopMaster = class_StopMaster
@@ -174,6 +203,7 @@ class createandshowGUI3(TableModelListener):
         self.completeTablePanel()
 
     def populate_action(self, event):
+        # print "populate_action called"
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         self.activeTrainsList = DF.getActiveTrainsList()
         trains_to_put_in_firstcol = self.activeTrainsList
@@ -257,11 +287,12 @@ class MyModelListener3(TableModelListener):
         self.class_StopMaster = class_StopMaster
         self.cancel = False
         self.logLevel = 0
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        self.java_active_trains_list = DF.getActiveTrainsList()
+        # DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        # self.java_active_trains_list = DF.getActiveTrainsList()
 
     def tableChanged(self, e) :
         [setup_train_col, del_setup_train_col,  block_col, direction_col, direction_change_col, active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        # print "tableChanged event: row={}, col={}, type={}".format(e.getFirstRow(), e.getColumn(), e.getType())
 
         global trains_allocated
         row = e.getFirstRow()
@@ -270,6 +301,9 @@ class MyModelListener3(TableModelListener):
         columnName = model.getColumnName(column)
         data = model.getValueAt(row, column)
         tablemodel = self.class_createandshowGUI3.model
+
+        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        self.java_active_trains_list = DF.getActiveTrainsList()
 
         if column == direction_change_col:
             train_name = str(model.getValueAt(row, setup_train_col))
@@ -459,12 +493,15 @@ class MyTableModel3 (DefaultTableModel):
                 self.data.pop(row)
 
     def populate(self):
-        global trains_allocated
+        # print "populate"
         global trains_allocated
         global trains_dispatched
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         java_active_trains_list = DF.getActiveTrainsList()
         java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
+        # print "Populate called. Active trains count: ", java_active_trains_list.size()
+        # print "trains_allocated (id={}): {}".format(id(trains_allocated), trains_allocated)
+        # print "trains_dispatched (id={}): {}".format(id(trains_dispatched), trains_dispatched)
         if self.logLevel > 0: print ("populate")
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
@@ -473,9 +510,11 @@ class MyTableModel3 (DefaultTableModel):
         transit = ""
         transit_name = ""
         route_name = ""
+        # print "trains_allocated", trains_allocated
         for setup_train in trains_allocated:
             active_train = [active_train for active_train in java_active_trains_list \
                             if active_train.getTrainName() == setup_train]
+            # print "Checking setup_train: ", setup_train, ". Found active: ", len(active_train)
             if self.logLevel > 0: print "active_train", active_train, "len(active_train)", len(active_train)
             block_names  = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == setup_train]
             if block_names != []:
@@ -487,6 +526,7 @@ class MyTableModel3 (DefaultTableModel):
 
                 active_train_name = active_train.getTrainName()
                 direction = trains[active_train_name]["direction"]
+                # print "active_train_name", active_train_name, "direction", direction, "trains[active_train_name]['direction']"
 
                 # print [block.getUserName() for block in blocks if block.getValue() == active_train_name]
                 # block = [block.getUserName() for block in blocks if block.getValue() == active_train_name][0]
@@ -496,23 +536,36 @@ class MyTableModel3 (DefaultTableModel):
                 if self.logLevel > 0: print "transit"  , transit
                 transit_name = transit[0].getUserName()
             else:
+                block_names  = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == setup_train]
+                if block_names != []:
+                    block = block_names[0]
+                else:
+                    block = ""
                 active_train = ""
                 active_train_name = ""
-                direction = ""
+                direction = trains[setup_train]["direction"]
                 transit_name = ""
-            if self.logLevel > 0: print("train", active_train)
+            if self.logLevel > 0: print("train0", setup_train, "direction", direction)
             if self.logLevel > 0: print("transit_name", transit_name)
             route_name = self.get_route(active_train_name)
             if self.logLevel > 0: print ("route_name", route_name)
-            self.data.append([setup_train, False, block, direction, False, active_train_name, transit_name, False, route_name, False])
+            if direction == "forward":
+                train_direction_displayed = "reverse"
+            else:
+                train_direction_displayed = "forward"
+            self.data.append([setup_train, False, block, train_direction_displayed, False, active_train_name, transit_name, False, route_name, False])
 
         active_trains_not_setup = [active_train_name for active_train_name in trains_dispatched \
                                    if active_train_name not in trains_allocated]
         for active_train_name in active_trains_not_setup:
             active_train = [active_train for active_train in java_active_trains_list \
                             if active_train.getTrainName() == active_train_name]
-            if active_train_name <> []:
-                block = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == active_train_name][0]
+            if active_train_name != "":
+                found_blocks = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == active_train_name]
+                if found_blocks:
+                    block = found_blocks[0]
+                else:
+                    block = ""
             else:
                 block = ""
             if len(active_train) > 0 :
@@ -526,12 +579,14 @@ class MyTableModel3 (DefaultTableModel):
             else:
                 active_train = ""
                 active_train_name = ""
-                direction = ""
+                direction = trains[active_train_name]["direction"]
                 transit_name = ""
-            if self.logLevel > 0: print("train", active_train_name)
+            if self.logLevel > 0: print("train", active_train_name, "direction", direction)
             route_name = self.get_route(active_train_name)
             if self.logLevel > 0: print ("route_name", route_name)
             self.data.append(["", False,  block, direction, False, active_train_name, transit_name, False, route_name, False])
+
+        # print "trains", trains
 
     def get_route(self, train_name):
         #look at all threads

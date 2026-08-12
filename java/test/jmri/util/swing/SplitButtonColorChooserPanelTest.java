@@ -36,6 +36,6 @@ public class SplitButtonColorChooserPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SplitButtonColorChooserPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SplitButtonColorChooserPanelTest.class);
 
 }

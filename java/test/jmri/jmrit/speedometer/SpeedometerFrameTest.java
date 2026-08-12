@@ -1,13 +1,13 @@
 package jmri.jmrit.speedometer;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of SpeedometerFrame
@@ -17,87 +17,56 @@ import org.junit.Assume;
 public class SpeedometerFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
-        Assert.assertNotNull("exists", frame);
+        assertNotNull(frame, "exists");
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testSetInputs(){
         // this test only checks to see that we don't throw an exception when
         // setting the input values.
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
         frame.setInputs("IS1","IS2","IS3","5280","5280");
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testVerifyInputsValid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
         // set the input values
         frame.setInputs("IS1","IS2","IS3","5280","5280");
-        // then use reflection to call verifyInputs
-        java.lang.reflect.Method verifyInputsValidMethod = null;
-        try {
-            verifyInputsValidMethod = frame.getClass().getDeclaredMethod("verifyInputs", boolean.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method verifyInputsValid in SpeedometerFrame class ");
-        }
 
-        // override the default permissions.
-        Assert.assertNotNull(verifyInputsValidMethod);
-        verifyInputsValidMethod.setAccessible(true);
-        try {
-           int valid = (int) verifyInputsValidMethod.invoke(frame,false);
-           Assert.assertEquals("Expected Valid Sensors",2,valid);
-        } catch(java.lang.IllegalAccessException ite){
-             Assert.fail("could not access method verifyInputsValid in SpeedometerFrame class");
-        } catch(java.lang.reflect.InvocationTargetException ite){
-             Throwable cause = ite.getCause();
-             Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
-        }
+        int valid = frame.verifyInputs(false);
+        assertEquals(2,valid, "Expected Valid Sensors");
+
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testVerifyInputsInValid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
         // don't set any values in the inputs.
-        // then use reflection to call verifyInputs
-        java.lang.reflect.Method verifyInputsValidMethod = null;
-        try {
-            verifyInputsValidMethod = frame.getClass().getDeclaredMethod("verifyInputs", boolean.class);
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method verifyInputsValid in SpeedometerFrame class ");
-        }
 
-        // override the default permissions.
-        Assert.assertNotNull(verifyInputsValidMethod);
-        verifyInputsValidMethod.setAccessible(true);
-        try {
-           int valid = (int) verifyInputsValidMethod.invoke(frame,false);
-           Assert.assertEquals("Expected Valid Sensors",0,valid);
-        } catch(java.lang.IllegalAccessException ite){
-             Assert.fail("could not access method verifyInputsValid in SpeedometerFrame class");
-        } catch(java.lang.reflect.InvocationTargetException ite){
-             Throwable cause = ite.getCause();
-             Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
-        }
+        int valid = frame.verifyInputs(false);
+        assertEquals(0,valid,"Expected Valid Sensors");
+
         JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"IS\".");
         JUnitAppender.assertErrorMessage("Start sensor invalid:");
+
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testStartButton(){
         // this test only checks to see that we don't throw an exception when
         // pressing the buttons and all information is filled in.
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerFrame frame = new SpeedometerFrame();
         frame.setVisible(true);
         SpeedometerScaffold operator = new SpeedometerScaffold();

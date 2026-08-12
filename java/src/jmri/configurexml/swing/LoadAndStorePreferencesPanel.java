@@ -24,9 +24,11 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
 
     private JCheckBox _excludeFileHistoryCheckBox;
     private JCheckBox _excludeMemoryIMCURRENTTIME_CheckBox;
+    private JCheckBox _excludeMemoryContents_CheckBox;
     private JCheckBox _excludeJmriVersionCheckBox;
     private JCheckBox _excludeTimebaseCheckBox;
     private JCheckBox _excludeFontExtensionsCheckBox;
+    private JCheckBox _shortenLayoutEditorWritesCheckBox;
 
     public LoadAndStorePreferencesPanel() {
         _preferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
@@ -48,9 +50,11 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         boolean didSet = true;
         _preferences.setExcludeFileHistory(_excludeFileHistoryCheckBox.isSelected());
         _preferences.setExcludeMemoryIMCURRENTTIME(_excludeMemoryIMCURRENTTIME_CheckBox.isSelected());
+        _preferences.setExcludeMemoryContents(_excludeMemoryContents_CheckBox.isSelected());
         _preferences.setExcludeJmriVersion(_excludeJmriVersionCheckBox.isSelected());
         _preferences.setExcludeTimebase(_excludeTimebaseCheckBox.isSelected());
         _preferences.setExcludeFontExtensions(_excludeFontExtensionsCheckBox.isSelected());
+        _preferences.setShortenLayoutEditorWrites(_shortenLayoutEditorWritesCheckBox.isSelected());
         return didSet;
     }
 
@@ -63,6 +67,9 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         _excludeMemoryIMCURRENTTIME_CheckBox = new JCheckBox(Bundle.getMessage("ExcludeMemoryIMCURRENTTIME"));
         _excludeMemoryIMCURRENTTIME_CheckBox.setSelected(_preferences.isExcludeMemoryIMCURRENTTIME());
 
+        _excludeMemoryContents_CheckBox = new JCheckBox(Bundle.getMessage("ExcludeMemoryContents"));
+        _excludeMemoryContents_CheckBox.setSelected(_preferences.isExcludeMemoryContents());
+
         _excludeJmriVersionCheckBox = new JCheckBox(Bundle.getMessage("ExcludeJmriVersion"));
         _excludeJmriVersionCheckBox.setSelected(_preferences.isExcludeJmriVersion());
 
@@ -72,14 +79,19 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         _excludeFontExtensionsCheckBox = new JCheckBox(Bundle.getMessage("ExcludeFontExtensions"));
         _excludeFontExtensionsCheckBox.setSelected(_preferences.isExcludeFontExtensions());
 
+        _shortenLayoutEditorWritesCheckBox = new JCheckBox(Bundle.getMessage("ShortenLayoutEditorWrites"));
+        _shortenLayoutEditorWritesCheckBox.setSelected(_preferences.isShortenLayoutEditorWrites());
+
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
 //        gridPanel.add(new JLabel());
         gridPanel.add(infoLabel);
         gridPanel.add(_excludeMemoryIMCURRENTTIME_CheckBox);
+        gridPanel.add(_excludeMemoryContents_CheckBox);
         gridPanel.add(_excludeJmriVersionCheckBox);
         gridPanel.add(_excludeFileHistoryCheckBox);
         gridPanel.add(_excludeTimebaseCheckBox);
         gridPanel.add(_excludeFontExtensionsCheckBox);
+        gridPanel.add(_shortenLayoutEditorWritesCheckBox);
 //        gridPanel.add(new jmri.swing.JTitledSeparator(Bundle.getMessage("IgnoreSeparator")));
 
         JPanel panel = new JPanel();

@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
@@ -18,8 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.setup.*;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
@@ -38,7 +38,7 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class TrainManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
-    static final String NONE = "";
+    protected static final String NONE = "";
 
     // Train frame attributes
     private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action
@@ -124,8 +124,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public void setOpenFileEnabled(boolean enable) {
         boolean old = _openFile;
         _openFile = enable;
-        setDirtyAndFirePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
-                : "false"); // NOI18N
+        setDirtyAndFirePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old, enable);
     }
 
     /**
@@ -138,8 +137,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public void setRunFileEnabled(boolean enable) {
         boolean old = _runFile;
         _runFile = enable;
-        setDirtyAndFirePropertyChange(RUN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
-                : "false"); // NOI18N
+        setDirtyAndFirePropertyChange(RUN_FILE_CHANGED_PROPERTY, old, enable);
     }
 
     /**
@@ -401,8 +399,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             train = new Train(Integer.toString(_id), name);
             int oldSize = getNumEntries();
             _trainHashTable.put(train.getId(), train);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    getNumEntries());
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
         }
         return train;
     }
@@ -420,6 +417,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         if (id > _id) {
             _id = id;
         }
+        train.addPropertyChangeListener(this);
         setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
     }
 
@@ -485,7 +483,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
 
     public Train getTrainBuilding() {
         for (Train train : getList()) {
-            if (train.getStatusCode() == Train.CODE_BUILDING) {
+            if (train.isBuilding()) {
                 log.debug("Train {} is currently building", train.getName());
                 return train;
             }
@@ -503,6 +501,24 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         for (Train train : getTrainsByReverseTimeList()) {
             if (train.isBuilt() && train.getDepartTimeMinutes() > 0) {
                 return train;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Used to determine if there's a train build after the train in question.
+     * @param train the train to be checked
+     * @return null or a train built after the train in question.
+     */
+    public Train getTrainBuiltAfter(Train train) {
+        List<Train> trains = getTrainsByReverseTimeList();
+        for (Train t : trains) {
+            if (train == t || train.getDepartTimeMinutes() == t.getDepartTimeMinutes()) {
+                break;
+            }
+            if (t.isBuilt()) {
+                return t;
             }
         }
         return null;
@@ -739,7 +755,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public JComboBox<Train> getTrainComboBox() {
         JComboBox<Train> box = new JComboBox<>();
         updateTrainComboBox(box);
-        OperationsPanel.padComboBox(box);
+        OperationsPanel.padComboBox(box, Control.max_len_string_train_name);
         return box;
     }
 
@@ -932,12 +948,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * Provides a list of trains ordered by arrival time to a location
+     * Provides a list of trains ordered by arrival time to a location. The list
+     * can contain a train multiple times if the train also services the
+     * location more than once.
      *
      * @param location The location
      * @return A list of trains ordered by arrival time.
      */
     public List<Train> getTrainsArrivingThisLocationList(Location location) {
+        return getTrainsArrivingThisLocationList(location, false);
+    }
+
+    public List<Train> getTrainsArrivingThisLocationList(Location location, boolean multiple) {
         // get a list of trains
         List<Train> out = new ArrayList<>();
         List<Integer> arrivalTimes = new ArrayList<>();
@@ -949,13 +971,22 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             if (route == null) {
                 continue; // no route for this train
             }
+            RouteLocation rlPrevious = null;
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                if (rlPrevious != null &&
+                        rl.getLocation().getSplitName().equals(rlPrevious.getLocation().getSplitName())) {
+                    continue;
+                }
+                // ignore back to back location with the same name
+                rlPrevious = rl;
                 if (rl.getSplitName().equals(location.getSplitName())) {
+                    boolean trainAdded = false;
                     int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
-                    // is already serviced then "-1"
-                    if (expectedArrivalTime == -1) {
+                    // is already serviced then -1
+                    if (expectedArrivalTime == Train.SERVICED) {
                         out.add(0, train); // place all trains that have already been serviced at the start
                         arrivalTimes.add(0, expectedArrivalTime);
+                        trainAdded = true;
                     } // if the train is in route, then expected arrival time is in minutes
                     else if (train.isTrainEnRoute()) {
                         for (int j = 0; j < out.size(); j++) {
@@ -964,11 +995,13 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                             if (t.isTrainEnRoute() && expectedArrivalTime < time) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
+                                trainAdded = true;
                                 break;
                             }
                             if (!t.isTrainEnRoute()) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
+                                trainAdded = true;
                                 break;
                             }
                         }
@@ -980,15 +1013,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                             if (!t.isTrainEnRoute() && expectedArrivalTime < time) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
+                                trainAdded = true;
                                 break;
                             }
                         }
                     }
-                    if (!out.contains(train)) {
+                    if (!trainAdded) {
                         out.add(train);
                         arrivalTimes.add(expectedArrivalTime);
                     }
-                    break; // done
+                    if (!multiple) {
+                        break; // done
+                    }
                 }
             }
         }
@@ -1064,8 +1100,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      * @param train the train wanting to be built
      * @return true if okay to build train
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-            justification="I18N of warning message")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of warning message")
     public boolean checkBuildOrder(Train train) {
         if (Setup.isBuildOnTime()) {
             Train t = getLastTrainBuiltByDepartureTime();
@@ -1195,6 +1231,24 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             log.info(Bundle.getMessage("InfoMaxName", trainName, _maxTrainNameLength));
         }
         return _maxTrainNameLength;
+    }
+
+    private final Hashtable<String, Integer> _HardcopyWriterHashTable = new Hashtable<>();
+
+    public Integer getHardcopyWriterLineLength(String fontName, Integer fontStyle, Integer fontsize, Dimension pagesize,
+            boolean isLandscape) {
+        return _HardcopyWriterHashTable.get(getHardcopyWriterKey(fontName, fontStyle, fontsize, pagesize, isLandscape));
+    }
+
+    public void setHardcopyWriterLineLength(String fontName, Integer fontStyle, Integer fontsize, Dimension pagesize,
+            boolean isLandscape, Integer charsPerLine) {
+        _HardcopyWriterHashTable.put(getHardcopyWriterKey(fontName, fontStyle, fontsize, pagesize, isLandscape),
+                charsPerLine);
+    }
+
+    private String getHardcopyWriterKey(String fontName, Integer fontStyle, Integer fontsize, Dimension pagesize,
+            boolean isLandscape) {
+        return fontName + fontStyle + fontsize + pagesize.width + (isLandscape ? "L" : "P");
     }
 
     public void load(Element root) {
@@ -1363,6 +1417,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("TrainManager sees property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(),
                 e.getNewValue());
+        if (e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY)) {
+            // reset max train name length
+            _maxTrainNameLength = 0;
+        }
     }
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

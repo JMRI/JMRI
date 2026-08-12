@@ -151,6 +151,6 @@ public class GotoActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GotoActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GotoActionTest.class);
 
 }

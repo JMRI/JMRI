@@ -116,5 +116,5 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PragotronClockFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PragotronClockFrameTest.class);
 }

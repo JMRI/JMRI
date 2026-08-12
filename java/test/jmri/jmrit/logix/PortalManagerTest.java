@@ -72,7 +72,7 @@ public class PortalManagerTest {
     public void testChangeNames() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
@@ -171,6 +171,6 @@ public class PortalManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PortalManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PortalManagerTest.class);
 
 }

@@ -360,17 +360,17 @@ public class PositionFile extends XmlFile {
         return readingFromElement(e.getChild("reading"));
     }
 
-    static public String defaultLocation() {
+    public static String defaultLocation() {
         String location = FileUtil.getUserFilesPath() + "rps" + File.separator;
         FileUtil.createDirectory(location);
         return location;
     }
 
-    static public String defaultFilename() {
+    public static String defaultFilename() {
         return defaultLocation() + "positions.xml";
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PositionFile.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionFile.class);
 
 }

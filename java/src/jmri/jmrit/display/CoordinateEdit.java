@@ -362,6 +362,7 @@ public class CoordinateEdit extends JmriJFrame {
             int x = ((Number) spinX.getValue()).intValue();
             int y = ((Number) spinY.getValue()).intValue();
             pl.setLocation(x, y);
+            pl.getEditor().resizePanelBounds(true);
             textX.setText("X: " + pl.getX());
             textY.setText("Y: " + pl.getY());
             dispose();
@@ -607,7 +608,7 @@ public class CoordinateEdit extends JmriJFrame {
         addSpinItems(false);
 
         okButton.addActionListener(e -> {
-            double s = ((Number) spinX.getValue()).doubleValue() / 100 * pl.getScale();
+            double s = ((Number) spinX.getValue()).doubleValue() / 100;
             pl.getEditor().setSelectionsScale(s, pl);
             textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), pl.getScale() * 100));
             dispose();

@@ -48,7 +48,7 @@ public class JsonMessageHttpService extends JsonHttpService {
                 if (server) {
                     try {
                         return doSchema(type, server,
-                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/message/message-server.json")), request.id);
+                                this.mapper.readTree(this.getClass().getClassLoader().getResourceAsStream("jmri/server/json/message/message-server.json")), request.id);
                     } catch (IOException ex) {
                         throw new JsonException(500, ex, request.id);
                     }

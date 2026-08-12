@@ -370,5 +370,5 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ExtraMenuTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(ExtraMenuTableModel.class);
 }

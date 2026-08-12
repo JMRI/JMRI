@@ -7,6 +7,6 @@ import jmri.jmrit.logixng.implementation.swing.*;
  */
 public class ModuleEditorMaleSocketSwing extends AbstractMaleSocketSwing {
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ModuleEditorMaleSocketSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ModuleEditorMaleSocketSwing.class);
     
 }

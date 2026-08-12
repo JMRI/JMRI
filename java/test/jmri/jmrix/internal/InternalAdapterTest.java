@@ -27,6 +27,6 @@ public class InternalAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InternalAdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(InternalAdapterTest.class);
 
 }

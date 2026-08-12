@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.*;
 
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
+
 import java.awt.Dimension;
 
 /**

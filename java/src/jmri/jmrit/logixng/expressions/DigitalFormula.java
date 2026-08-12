@@ -440,5 +440,5 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalFormula.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalFormula.class);
 }

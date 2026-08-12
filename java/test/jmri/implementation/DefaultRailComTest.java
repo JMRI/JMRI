@@ -53,7 +53,7 @@ public class DefaultRailComTest {
     @Test
     public void testRailComToReportString() {
         DefaultRailCom r = new DefaultRailCom("ID1234");
-        assertEquals( "Unknown Orientation Address 1234(L) ", r.toReportString(), "RailCom toReportString");
+        assertEquals( "Address 1234(L) Unknown Orientation ", r.toReportString(), "RailCom toReportString");
     }
 
     @Test
@@ -109,9 +109,9 @@ public class DefaultRailComTest {
     @Test
     public void testGetSetOrientation(){
         RailCom r = new DefaultRailCom("ID0415556BC1");
-        assertEquals( Sensor.UNKNOWN , r.getOrientation(), "getorientation is UNKNOWN at start");
-        r.setOrientation(RailCom.ORIENTA);
-        assertEquals( RailCom.ORIENTA , r.getOrientation(), "getorientation is RailCom.ORIENTA");
+        assertEquals( RailCom.Orientation.UNKNOWN , r.getOrientation(), "getorientation is UNKNOWN at start");
+        r.setOrientation(RailCom.Orientation.EAST);
+        assertEquals( RailCom.Orientation.EAST , r.getOrientation(), "getorientation is RailCom.EAST");
     }
 
     @Test
@@ -181,13 +181,13 @@ public class DefaultRailComTest {
     @Test
     public void testToReportString(){
         DefaultRailCom r = new DefaultRailCom("ID1234");
-        assertEquals( "Unknown Orientation Address 1234(L) " , r.toReportString(), "Basic Report String");
+        assertEquals( "Address 1234(L) Unknown Orientation " , r.toReportString(), "Basic Report String");
 
-        r.setOrientation(RailCom.ORIENTA);
-        assertEquals( "Orientation A Address 1234(L) " , r.toReportString(), "Report String ORIENTA");
+        r.setOrientation(RailCom.Orientation.EAST);
+        assertEquals( "Address 1234(L) East " , r.toReportString(), "Report String EAST");
 
-        r.setOrientation(RailCom.ORIENTB);
-        assertEquals( "Orientation B Address 1234(L) " , r.toReportString(), "Report String ORIENTB");
+        r.setOrientation(RailCom.Orientation.WEST);
+        assertEquals( "Address 1234(L) West " , r.toReportString(), "Report String WEST");
 
         r.setWaterLevel(2);
         r.setFuelLevel(3);
@@ -196,8 +196,8 @@ public class DefaultRailComTest {
         r.setActualTemperature(6);
         r.setActualLoad(7);
         r.setActualSpeed(8);
-        assertEquals( "Orientation B Address 1234(L) Water 2 Fuel 3 Location : 4 Routing No : 5 Temperature : 6 Load : 7 Speed : 8 "
-            , r.toReportString(), "Report String ORIENTB");
+        assertEquals( "Address 1234(L) West Water 2 Fuel 3 Location : 4 Routing No : 5 Temperature : 6 Load : 7 Speed : 8 "
+            , r.toReportString(), "Report String WEST");
 
     }
 

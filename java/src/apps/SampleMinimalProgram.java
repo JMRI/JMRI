@@ -6,10 +6,10 @@ import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 
-import apps.util.Log4JUtil;
-
 /**
  * A simple example of a "Faceless" (no gui) application
+ *
+ * To use it, uncomment the main() method.
  *
  * <hr>
  * This file is part of JMRI.
@@ -28,11 +28,14 @@ public class SampleMinimalProgram {
 
     static String name = "Faceless App";
 
+// Commented out since it's not normally used.
+// It's included as an example for anyone who wants to do their own program to launch JMRI.
+/*
     // Main entry point
     public static void main(String args[]) {
 
         initLog4J();
-        log.info("Startup: {}", Log4JUtil.startupInfo(name));
+        log.info("Startup: {}", apps.util.Log4JUtil.startupInfo(name));
 
         new SampleMinimalProgram(args);   // start the application class itself
 
@@ -42,6 +45,7 @@ public class SampleMinimalProgram {
         // for example.  The layout connection
         // is working at this point.
     }
+*/
 
     /**
      * Static method to return a first logging statement. Used for logging
@@ -50,7 +54,7 @@ public class SampleMinimalProgram {
      * @param program the name of the program
      * @return the logging statement including JMRI and Java versions
      */
-    static public String startupInfo(String program) {
+    public static String startupInfo(String program) {
         return (program + " version " + jmri.Version.name()
                 + " starts under Java " + System.getProperty("java.version", "<unknown>"));
     }
@@ -59,7 +63,7 @@ public class SampleMinimalProgram {
      * Static method to get Log4J working before the rest of JMRI starts up. In
      * a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
-    static protected void initLog4J() {
+    protected static void initLog4J() {
         // initialize log4j2 - from logging configuration file (lcf) only
         // if can find it!
         String configFile = "default_lcf.xml";
@@ -122,6 +126,6 @@ public class SampleMinimalProgram {
         log.info("Up!");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
 
 }

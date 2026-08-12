@@ -103,5 +103,5 @@ public class TextAreaFIFO extends JTextArea implements DocumentListener {
     public void dispose() {
         getDocument().removeDocumentListener( this );
     }
-    private final static Logger log = LoggerFactory.getLogger(TextAreaFIFO.class);
+    private static final Logger log = LoggerFactory.getLogger(TextAreaFIFO.class);
 }

@@ -44,6 +44,6 @@ public class SerialMonAction extends GrapevineSystemConnectionAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialMonAction.class);
 
 }

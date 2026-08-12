@@ -126,7 +126,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
+    public static class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
 
         public Default() {
             super("Open MRC Send Binary Command",

@@ -2,7 +2,6 @@ package jmri.jmrit.roster.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class RosterEntrySelectorPanelTest {
     @Test
     public void testCTor() {
         RosterEntrySelectorPanel t = new RosterEntrySelectorPanel();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -29,5 +28,5 @@ public class RosterEntrySelectorPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterEntrySelectorPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterEntrySelectorPanelTest.class);
 }

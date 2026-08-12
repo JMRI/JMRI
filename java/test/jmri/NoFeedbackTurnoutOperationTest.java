@@ -26,6 +26,6 @@ public class NoFeedbackTurnoutOperationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperationTest.class);
 
 }

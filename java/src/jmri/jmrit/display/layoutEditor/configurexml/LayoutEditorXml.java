@@ -178,6 +178,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         for (LayoutTrackView lv : p.getLevelXingViews())            {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLayoutSlipViews())           {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLayoutTurntableViews())      {storeOne(panel, lv); }
+        for (LayoutTrackView lv : p.getLayoutTraverserViews())      {storeOne(panel, lv); }
 
         // include Layout Shapes
         for (LayoutShape ls : p.getLayoutShapes()) {storeOne(panel, ls); }
@@ -617,6 +618,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // this so that individual item flags are set as saved
         panel.initView();
 
+
         // load the contents
         for (Element item : shared.getChildren()) {
             // get the class, hence the adapter object to do loading
@@ -702,6 +704,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.pack();
         panel.setLayoutDimensions(windowWidth, windowHeight, x, y, panelWidth, panelHeight);
         panel.setVisible(true);    // always show the panel
+
+        // make a pass over positionables, setting (re)setting their font style.
+        // This is to bypass a problem on Windows, where bold labels need to have
+        // this done after pack() to avoid sizing issues.
+        for (jmri.jmrit.display.Positionable label : panel.getContents()) {
+            var popup = label.getPopupUtility();
+            if (popup != null) { // encountered in some testing
+                popup.setFontStyle(popup.getFontStyle());
+            }
+        }
+        
         panel.resetDirty();
 
         // register the resulting panel for later configuration

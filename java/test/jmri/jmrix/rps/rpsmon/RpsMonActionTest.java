@@ -32,6 +32,6 @@ public class RpsMonActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsMonActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RpsMonActionTest.class);
 
 }

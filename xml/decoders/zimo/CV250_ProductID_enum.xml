@@ -18,6 +18,10 @@
 <!--    added some missing and new Zimo decoder                             -->
 <!-- version 1.2 - Ronald Kuhn - 2024-05-02                                 -->
 <!--    added new Zimo MS-decoder                             -->
+<!-- version 1.3 - Pierre Billon - 2026-07-31                              -->
+<!--    enabled MS001, the OEM MS decoder type; added MS481, MS501, MS920,  -->
+<!--    MS420 and MN150                                                     -->
+<!--    added the FS sound decoders FS850, FS890 and FS840              -->
 <!--                                                                        -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <enumChoice choice="Unknown" value ="0">
@@ -38,13 +42,21 @@
     <enumChoice choice="MS950" value = "9"/>
     <enumChoice choice="MS560" value = "10"/>
 
-    <!-- enumChoice choice="MS001" value = "11"/ Fleischmann Beilhack -->
+    <enumChoice choice="MS001 (OEM)" value = "11"/>
     <enumChoice choice="MS491" value = "12"/>
     <enumChoice choice="MS581" value = "13"/>
-       <enumChoice choice="MS540E24" value = "14"/>
-       <enumChoice choice="MN140E24" value = "119"/>
-       <enumChoice choice="MN250" value = "120"/>
-    <!-- enumChoice choice="MN150" value = "121"/ not available yet (2024-05-02) -->
+    <enumChoice choice="MS540E24" value = "14"/>
+	<enumChoice choice="MS591N18" value = "15"/>
+    <enumChoice choice="MS481" value = "16"/>
+    <enumChoice choice="MS501" value = "17"/>
+    <enumChoice choice="MS920" value = "18"/>
+    <enumChoice choice="MS420" value = "19"/>
+    <enumChoice choice="FS850" value = "64"/>
+    <enumChoice choice="FS890" value = "65"/>
+    <enumChoice choice="FS840" value = "66"/>
+    <enumChoice choice="MN140E24" value = "119"/>
+    <enumChoice choice="MN250" value = "120"/>
+    <enumChoice choice="MN150" value = "121"/>
     <enumChoice choice="MN160" value = "122"/>
     <enumChoice choice="MN340" value = "123"/>
     <enumChoice choice="MN170" value = "124"/>

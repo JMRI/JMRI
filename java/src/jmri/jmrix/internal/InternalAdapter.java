@@ -84,7 +84,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController {
 
     }
 
-    private final static Logger log = LoggerFactory
+    private static final Logger log = LoggerFactory
             .getLogger(InternalAdapter.class);
 
 }

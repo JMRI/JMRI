@@ -547,6 +547,6 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantManagerXml.class);
 
 }

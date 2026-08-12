@@ -1,7 +1,11 @@
 package apps;
 
-import org.junit.Assert;
+import java.util.Locale;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for the ConfigBundle class
@@ -10,25 +14,40 @@ import org.junit.jupiter.api.*;
  */
 public class ConfigBundleTest {
 
+    // This differs to BundleTest in that we are testing ConfigBundle.getMessage,
+    // instead of the normal Bundle.getMessage
+
     @Test
-    public void testGoodKeysMessage() {
-        Assert.assertEquals("File", ConfigBundle.getMessage("MenuFile"));
-        Assert.assertEquals("Turnout", ConfigBundle.getMessage("BeanNameTurnout"));
+    public void testGoodKeyMessage() {
+        assertEquals("File", ConfigBundle.getMessage("MenuFile"));
+        assertEquals("Turnout", ConfigBundle.getMessage("BeanNameTurnout"));
     }
 
     @Test
     public void testBadKeyMessage() {
-        Assert.assertThrows(java.util.MissingResourceException.class, () -> ConfigBundle.getMessage("FFFFFTTTTTTT"));
+        assertThrows(java.util.MissingResourceException.class, () -> ConfigBundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test
     public void testGoodKeysMessageArg() {
-        Assert.assertEquals("File", ConfigBundle.getMessage("MenuFile", new Object[]{}));
-        Assert.assertEquals("Turnout", ConfigBundle.getMessage("BeanNameTurnout", new Object[]{}));
+        assertEquals("File", ConfigBundle.getMessage("MenuFile", new Object[]{}));
+        assertEquals("Turnout", ConfigBundle.getMessage("BeanNameTurnout", new Object[]{}));
     }
 
     @Test
     public void testBadKeyMessageArg() {
-        Assert.assertThrows(java.util.MissingResourceException.class, () -> ConfigBundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
+        assertThrows(java.util.MissingResourceException.class, () -> ConfigBundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
+
+    @Test
+    public void testLocaleMessage() {
+        assertEquals("Scambio", ConfigBundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+    }
+
+    @Test
+    public void testLocaleMessageArg() {
+        assertEquals("Scambio", ConfigBundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        assertEquals("Informazioni su Test", ConfigBundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+    }
+
 }

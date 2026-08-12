@@ -202,5 +202,5 @@ public class EngineSetFrame extends RollingStockSetFrame<Engine> {
         }
     }
 
-    //    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class);
+    //    private static final Logger log = LoggerFactory.getLogger(EngineSetFrame.class);
 }

@@ -37,5 +37,5 @@ public class EcosSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosSensorManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosSensorManagerXml.class);
 }

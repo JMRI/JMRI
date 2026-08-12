@@ -46,6 +46,6 @@ public class EditConnectionPreferencesDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TabbedPreferencesFrameTest.class);
 
 }

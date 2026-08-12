@@ -27,6 +27,7 @@ public class PrintOptionFrame extends OperationsFrame {
         toolMenu.add(new EditManifestHeaderTextAction());
         toolMenu.add(new EditManifestTextAction());
         toolMenu.add(new EditSwitchListTextAction());
+        toolMenu.add(new EditDayToNameMapAction());
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N

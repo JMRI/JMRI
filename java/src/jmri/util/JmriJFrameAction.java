@@ -47,5 +47,5 @@ public class JmriJFrameAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameAction.class);
+    private static final Logger log = LoggerFactory.getLogger(JmriJFrameAction.class);
 }

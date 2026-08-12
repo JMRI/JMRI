@@ -17,6 +17,6 @@ public class BuildReportOptionActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BuildReportOptionActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BuildReportOptionActionTest.class);
 
 }

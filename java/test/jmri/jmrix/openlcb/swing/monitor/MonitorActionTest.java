@@ -44,6 +44,6 @@ public class MonitorActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MonitorActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MonitorActionTest.class);
 
 }

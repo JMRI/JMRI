@@ -37,6 +37,9 @@ public class SignalPairTest {
     public void testCtor() {
         getCPEandCB();
 
+        assertNotNull(mastMgr);
+        assertNotNull(portalMgr);
+
         jmri.SignalMast mast = mastMgr.getNamedBean("WestMainExit");
         assertNotNull( mast, "Mast exists");
         Portal portal = portalMgr.getPortal("West-WestExit");
@@ -78,6 +81,8 @@ public class SignalPairTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initOBlockManager();
+        mastMgr = null;
+        portalMgr = null;
     }
 
     @AfterEach
@@ -99,6 +104,6 @@ public class SignalPairTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalPairTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalPairTest.class);
 
 }

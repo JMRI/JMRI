@@ -1220,27 +1220,27 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     // Property Change keys relating to GUI status line
-    public final static String DPLX_PC_STAT_LN_UPDATE = "DPLXPCK_STAT_LN_UPDATE"; // NOI18N
-    public final static String DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR = "DPLXPCK_STAT_LN_ON_OVER_UPDATE"; // NOI18N
+    public static final String DPLX_PC_STAT_LN_UPDATE = "DPLXPCK_STAT_LN_UPDATE"; // NOI18N
+    public static final String DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR = "DPLXPCK_STAT_LN_ON_OVER_UPDATE"; // NOI18N
 
     // Property Change keys relating to validity of identity info
-    public final static String DPLX_PC_NAME_VALIDITY = "DPLXPCK_NAME_VALID"; // NOI18N
-    public final static String DPLX_PC_CHANNEL_VALIDITY = "DPLXPCK_CH_VALID"; // NOI18N
-    public final static String DPLX_PC_PASSWORD_VALIDITY = "DPLXPCK_PW_VALID"; // NOI18N
-    public final static String DPLX_PC_ID_VALIDITY = "DPLXPCK_ID_VALID"; // NOI18N
+    public static final String DPLX_PC_NAME_VALIDITY = "DPLXPCK_NAME_VALID"; // NOI18N
+    public static final String DPLX_PC_CHANNEL_VALIDITY = "DPLXPCK_CH_VALID"; // NOI18N
+    public static final String DPLX_PC_PASSWORD_VALIDITY = "DPLXPCK_PW_VALID"; // NOI18N
+    public static final String DPLX_PC_ID_VALIDITY = "DPLXPCK_ID_VALID"; // NOI18N
 
     // Property Change keys relating to identity info value changes
-    public final static String DPLX_PC_NAME_UPDATE = "DPLXPCK_NAME_UPDATE"; // NOI18N
-    public final static String DPLX_PC_CHANNEL_UPDATE = "DPLXPCK_CH_UPDATE"; // NOI18N
-    public final static String DPLX_PC_PASSWORD_UPDATE = "DPLXPCK_PW_UPDATE"; // NOI18N
-    public final static String DPLX_PC_ID_UPDATE = "DPLXPCK_ID_UPDATE"; // NOI18N
+    public static final String DPLX_PC_NAME_UPDATE = "DPLXPCK_NAME_UPDATE"; // NOI18N
+    public static final String DPLX_PC_CHANNEL_UPDATE = "DPLXPCK_CH_UPDATE"; // NOI18N
+    public static final String DPLX_PC_PASSWORD_UPDATE = "DPLXPCK_PW_UPDATE"; // NOI18N
+    public static final String DPLX_PC_ID_UPDATE = "DPLXPCK_ID_UPDATE"; // NOI18N
 
     // Property Change keys relating to Duplex Group Identity LocoNet messages
-    public final static String DPLX_PC_RCD_DPLX_IDENTITY_QUERY = "DPLXPCK_IDENTITY_QUERY"; // NOI18N
-    public final static String DPLX_PC_RCD_DPLX_IDENTITY_REPORT = "DPLXPCK_IDENTITY_REPORT"; // NOI18N
+    public static final String DPLX_PC_RCD_DPLX_IDENTITY_QUERY = "DPLXPCK_IDENTITY_QUERY"; // NOI18N
+    public static final String DPLX_PC_RCD_DPLX_IDENTITY_REPORT = "DPLXPCK_IDENTITY_REPORT"; // NOI18N
 
-    public final static String DPLX_IPL_DEVICE_DETAILS = "DPLEXID"; // NOI18N
-    public final static String DPLX_IPL_DEVICE_RESPONSE_DETAILS = "DPLEXDETAILS"; // NOI18N
+    public static final String DPLX_IPL_DEVICE_DETAILS = "DPLEXID"; // NOI18N
+    public static final String DPLX_IPL_DEVICE_RESPONSE_DETAILS = "DPLEXDETAILS"; // NOI18N
 
     /**
      * Connect this instance's LocoNetListener to the LocoNet Traffic Controller
@@ -1272,7 +1272,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     /*
      * This class is used for populating the IPL devices Table
      */
-    static protected class BasicIPLDeviceInfo {
+    protected static class BasicIPLDeviceInfo {
 
         protected BasicIPLDeviceInfo(String type, String serialNumber, String swVersion) {
             this.type = type;
@@ -1318,7 +1318,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     /*
      * This class is used for populating the Device Response Table
      */
-    static protected class BasicIPLDeviceResponseInfo {
+    protected static class BasicIPLDeviceResponseInfo {
 
         protected BasicIPLDeviceResponseInfo(String groupName, String channel, String password, String groupId) {
             this.groupName = groupName;
@@ -1347,6 +1347,6 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImpl.class);
 
 }

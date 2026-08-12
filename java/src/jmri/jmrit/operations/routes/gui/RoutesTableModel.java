@@ -13,9 +13,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.swing.JmriJOptionPane;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -33,7 +30,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     public static final int NAME_COLUMN = ID_COLUMN + 1;
     public static final int COMMENT_COLUMN = NAME_COLUMN + 1;
     public static final int DEPARTS_COLUMN = COMMENT_COLUMN + 1;
-    public static final int MIN_LENGTH_COLUMN = DEPARTS_COLUMN + 1;
+    public static final int TIME_COLUMN = DEPARTS_COLUMN + 1;
+    public static final int MIN_LENGTH_COLUMN = TIME_COLUMN + 1;
     public static final int MAX_LENGTH_COLUMN = MIN_LENGTH_COLUMN + 1;
     public static final int STATUS_COLUMN = MAX_LENGTH_COLUMN + 1;
     public static final int EDIT_COLUMN = STATUS_COLUMN + 1;
@@ -91,6 +89,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(380);
         table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DEPARTS_COLUMN).setPreferredWidth(75);
+        table.getColumnModel().getColumn(TIME_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(MIN_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(MAX_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
@@ -119,6 +118,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("Comment");
             case DEPARTS_COLUMN:
                 return Bundle.getMessage("DepartsDirection");
+            case TIME_COLUMN:
+                return Bundle.getMessage("Time");
             case MIN_LENGTH_COLUMN:
                 return Bundle.getMessage("MinLength");
             case MAX_LENGTH_COLUMN:
@@ -138,6 +139,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             case NAME_COLUMN:
             case COMMENT_COLUMN:
             case DEPARTS_COLUMN:
+            case TIME_COLUMN:
             case STATUS_COLUMN:
                 return String.class;
             case ID_COLUMN:
@@ -179,6 +181,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
                 return route.getComment();
             case DEPARTS_COLUMN:
                 return route.getDepartureDirection();
+            case TIME_COLUMN:
+                return getTime(route);
             case MIN_LENGTH_COLUMN:
                 return route.getRouteMinimumTrainLength();
             case MAX_LENGTH_COLUMN:
@@ -202,6 +206,20 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
                 break;
         }
     }
+    
+    private String getTime(Route route) {
+        if (route.getDepartsRouteLocation() != null &&
+                !route.getDepartsRouteLocation().getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
+            return route.getDepartsRouteLocation().getFormatedDepartureTime();
+        }
+        // check to see if there's a departure time anywhere in the route
+        for (RouteLocation rl : route.getLocationsBySequenceList()) {
+            if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
+                return Bundle.getMessage("ButtonYes");
+            }
+        }
+        return "";
+    }
 
     RouteEditFrame ref = null;
     protected static final String NEW_LINE = "\n"; // NOI18N
@@ -210,20 +228,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         log.debug("Edit route");
         if (ref != null) {
             ref.dispose();
-        }
-        Route route = sysList.get(row);
-        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
-            // list the built trains for this route
-            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
-            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
-                if (train.getRoute() == route && train.isBuilt()) {
-                    buf.append(NEW_LINE +
-                            Bundle.getMessage("TrainIsBuilt",
-                                    train.getName(), route.getName()));
-                }
-            }
-            JmriJOptionPane.showMessageDialog(null, buf.toString(), Bundle.getMessage("TrainBuilt"),
-                    JmriJOptionPane.WARNING_MESSAGE);
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(() -> {

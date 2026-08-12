@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp;
 
 /**
- * Abstract Configuration for a DCC++ Serial Connection.
+ * Abstract Configuration for a DCC-EX Serial Connection.
  *
  * @author Mark Underwood Copyright (C) 2015
  *

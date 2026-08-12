@@ -24,6 +24,6 @@ public class CatalogTreeLeafTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CatalogTreeLeafTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CatalogTreeLeafTest.class);
 
 }

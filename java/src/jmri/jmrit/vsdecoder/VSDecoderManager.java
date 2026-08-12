@@ -54,7 +54,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2025
+ * @author Klaus Killinger Copyright (C) 2018-2026
  */
 public class VSDecoderManager implements PropertyChangeListener {
 
@@ -1026,27 +1026,18 @@ public class VSDecoderManager implements PropertyChangeListener {
                             log.info(" TS lost, c1: {}, c2: {}, last track: {}", tsv.getConnect1(), tsv.getConnect2(), d.getLastTrack());
                             result = false;
                         }
-                        if (result) {
-                            d.setLastTrack(last);
-                            d.setReturnTrack(d.getLayoutTrack());
-                            d.setReturnLastTrack(d.getLayoutTrack());
-                            log.debug(" next track (layout track): {}, last track: {}", d.getLayoutTrack(), d.getLastTrack());
-                        }
-                    } else if (d.getLayoutTrack() instanceof LayoutTurnout
-                            || d.getLayoutTrack() instanceof LayoutSlip
-                            || d.getLayoutTrack() instanceof LevelXing
-                            || d.getLayoutTrack() instanceof LayoutTurntable) {
+                    } else {
                         // go to next track
                         if (d.nextLayoutTrack != null) {
                             d.setLayoutTrack(d.nextLayoutTrack);
                         } else { // OOPS! we're lost!
                             result = false;
                         }
-                        if (result) {
-                            d.setLastTrack(last);
-                            d.setReturnTrack(d.getLayoutTrack());
-                            d.setReturnLastTrack(d.getLayoutTrack());
-                        }
+                    }
+                    if (result) {
+                        d.setLastTrack(last);
+                        d.setReturnTrack(d.getLayoutTrack());
+                        d.setReturnLastTrack(d.getLayoutTrack());
                     }
                 }
             }
@@ -1159,7 +1150,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                     d.setDistance(0);
                                 }
                             }
-                            if ((d.getEngineSound().isEngineStarted() && actualspeed > 0.0f) || d.getLayoutTrack() instanceof LayoutTurntable) {
+                            if (d.getEngineSound().isEngineStarted()) {
                                 float speed_ms = actualspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale; // calculate the speed
                                 d.setDistance(d.getDistance() + speed_ms * check_time / 10.0); // d.getDistance() normally is 0, but can content an overflow
                                 d.navigate();

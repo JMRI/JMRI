@@ -1,40 +1,37 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of MemoryIconCoordinateEdit
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfHeadless
 public class MemoryIconCoordinateEditTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MemoryIconCoordinateEdit frame = new MemoryIconCoordinateEdit();
-        Assert.assertNotNull("exists", frame );
+        assertNotNull(frame,"exists");
     }
 
     @Test
     public void initCheck() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MemoryIconCoordinateEdit frame = new MemoryIconCoordinateEdit();
         Editor ef = new EditorScaffold();
         SensorIcon i = new SensorIcon(ef);
         // this test (currently) makes sure there are no exceptions
         // thrown when initComponents is called.
-        try {
-           frame.init("foo",i,false);
-        } catch( Exception e) {
-            Assert.fail("Exception " + e + " Thrown during init call ");
-        }
+        assertDoesNotThrow( () ->
+            frame.init("foo",i,false));
+        JUnitUtil.dispose(ef);
     }
 
     @BeforeEach

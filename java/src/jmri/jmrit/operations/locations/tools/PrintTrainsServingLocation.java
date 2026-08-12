@@ -23,7 +23,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
 public class PrintTrainsServingLocation {
 
     public static final String NEW_LINE = "\n"; // NOI18N
-    static final String TAB = "\t"; // NOI18N
+    protected static final String TAB = "\t"; // NOI18N
 
     boolean _isPreview;
     Location _location;
@@ -47,7 +47,8 @@ public class PrintTrainsServingLocation {
             title = _location.getName();
         }
         try (HardcopyWriter writer =
-                new HardcopyWriter(new Frame(), title, Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
+                new HardcopyWriter(new Frame(), title, null, null, Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72,
+                        .5 * 72, _isPreview, "", false, true, null, null)) {
 
             printTrains(writer);
 
@@ -146,5 +147,5 @@ public class PrintTrainsServingLocation {
         return TrainCommon.padAndTruncate(s, length);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsServingLocation.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintTrainsServingLocation.class);
 }

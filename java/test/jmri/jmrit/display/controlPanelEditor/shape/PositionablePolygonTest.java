@@ -22,6 +22,6 @@ public class PositionablePolygonTest extends PositionableShapeTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PositionablePolygonTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PositionablePolygonTest.class);
 
 }

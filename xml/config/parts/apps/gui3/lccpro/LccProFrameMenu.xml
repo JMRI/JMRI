@@ -165,6 +165,9 @@
         <mnemonic>w</mnemonic>
         <current>resettablecolumns</current>
     </node>
+    <node name="Set Backup Directory">
+        <current>setbackupdirectory</current>
+    </node>
   </node>
 
   <node name="Actions">

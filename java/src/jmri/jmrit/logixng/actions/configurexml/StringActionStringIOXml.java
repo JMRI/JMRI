@@ -54,5 +54,5 @@ public class StringActionStringIOXml extends jmri.managers.configurexml.Abstract
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIOXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIOXml.class);
 }

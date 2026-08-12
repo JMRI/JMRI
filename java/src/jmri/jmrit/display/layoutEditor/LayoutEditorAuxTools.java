@@ -25,12 +25,12 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2008
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class LayoutEditorAuxTools {
+public final class LayoutEditorAuxTools {
     // constants
 
     // operational instance variables
-    final private LayoutModels models;
-    final private List<LayoutConnectivity> cList = new ArrayList<>(); // LayoutConnectivity list
+    private final LayoutModels models;
+    private final List<LayoutConnectivity> cList = new ArrayList<>(); // LayoutConnectivity list
     private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
     private boolean initialized = false;
 
@@ -847,6 +847,16 @@ final public class LayoutEditorAuxTools {
                     );
                 }
                 curConnection = null;
+            } else if (HitPointType.isTraverserSlotHitType(typeCurConnection)) {
+                if (log.isInfoEnabled()) {
+                    log.warn("Layout Block: {}, found track type: {}, to " // NOI18N
+                                    + "Block: {}, is potentially assigned to traverser slot", // NOI18N
+                            layoutBlock.getDisplayName(),
+                            typeCurConnection,
+                            p.getBlock().getDisplayName()
+                    );
+                }
+                curConnection = null;
             } else {
                 // catch when some new type got added
                 log.error("Layout Block: {} found unknown track type: {}" // NOI18N
@@ -861,6 +871,6 @@ final public class LayoutEditorAuxTools {
     }   // addBeanSettings
 
     // initialize logging
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
 }

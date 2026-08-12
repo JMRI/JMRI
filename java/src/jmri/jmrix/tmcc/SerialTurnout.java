@@ -145,6 +145,6 @@ public class SerialTurnout extends AbstractTurnout {
         tc.sendSerialMessage(m, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialTurnout.class);
 
 }

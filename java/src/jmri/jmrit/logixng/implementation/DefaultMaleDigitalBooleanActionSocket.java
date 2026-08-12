@@ -198,6 +198,6 @@ public class DefaultMaleDigitalBooleanActionSocket
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalBooleanActionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalBooleanActionSocket.class);
 
 }

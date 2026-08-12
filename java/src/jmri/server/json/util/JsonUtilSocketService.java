@@ -55,9 +55,63 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
             case JSON.RAILROAD:
                 this.onRailroadNameMessage(type, data, request);
                 break;
+            case JSON.SESSION_LOGIN:
+                this.onSessionLoginMessage(type, data, request);
+                break;
+            case JSON.SESSION_LOGOUT:
+                this.onSessionLogoutMessage(type, data, request);
+                break;
             default:
                 this.connection.sendMessage(this.service.doPost(type, name, data, request), request.id);
                 break;
+        }
+    }
+
+    /**
+     * Process an incoming POST login message
+     *
+     * Extract username, password
+     * Check against authentication backend
+     *
+     * On success, send a response containing a valid token
+     * On Failure, send an exception message
+     *
+     * @param type Message type
+     * @param data JSON payload
+     * @param request The original request as received
+     * @throws IOException
+     * @throws JmriException
+     * @throws JsonException
+     */
+    private void onSessionLoginMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        String username = data.path("username").asText();
+        if (request.method.equals(JSON.POST)) {
+            log.debug("Processing login {} from socket service", username);
+            this.connection.sendMessage(this.service.doPost(type, username, data, request), request.id);
+        }
+//        this.connection.sendMessage(this.service.doGet(type, name, data, request), request.id);
+    }
+
+    /**
+     * Process an incoming POST logout message
+     *
+     * Extract credential
+     * Check against authentication backend
+     *
+     * On success, invalidate token. Send invalidated token.
+     * On Failure, send an exception message.
+     *
+     * @param type
+     * @param data
+     * @param request
+     * @throws IOException
+     * @throws JmriException
+     * @throws JsonException
+     */
+    private void onSessionLogoutMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        if (request.method.equals(JSON.POST)) {
+            // JMRI developers assess the risk of logging the token further down the stack as low
+            this.connection.sendMessage(this.service.doPost(type, data.path(JSON.USERNAME).asText(), data, request), request.id);
         }
     }
 

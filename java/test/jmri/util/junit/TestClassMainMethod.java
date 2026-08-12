@@ -46,9 +46,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 public class TestClassMainMethod {
 
     // Main entry point
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
-        justification = "method.invoke(null, Object[]) OK as this is a static class")
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         String className = args[args.length-1];  // last argument is class name
 
         // as a convenience, allow file names and paths

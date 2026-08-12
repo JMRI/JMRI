@@ -168,5 +168,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
 
     
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 }

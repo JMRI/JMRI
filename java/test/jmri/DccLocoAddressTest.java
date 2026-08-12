@@ -1,5 +1,7 @@
 package jmri;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,15 +33,15 @@ public class DccLocoAddressTest {
     @Test
     public void testValue3() {
         DccLocoAddress l = new DccLocoAddress(121, true);
-        Assertions.assertEquals(121, l.getNumber(), "number ");
-        Assertions.assertTrue( l.isLongAddress(), "long/short ");
+        assertEquals(121, l.getNumber(), "number ");
+        assertTrue( l.isLongAddress(), "long/short ");
     }
 
     @Test
     public void testCopy1() {
         DccLocoAddress l = new DccLocoAddress(new DccLocoAddress(121, true));
-        Assertions.assertEquals(121, l.getNumber(), "number ");
-        Assertions.assertTrue( l.isLongAddress(), "long/short ");
+        assertEquals(121, l.getNumber(), "number ");
+        assertTrue( l.isLongAddress(), "long/short ");
     }
 
     @Test
@@ -161,6 +163,16 @@ public class DccLocoAddressTest {
         DccLocoAddress l2 = new DccLocoAddress(4321, false);
 
         assertTrue( l1.hashCode() == l2.hashCode(), "equate ");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

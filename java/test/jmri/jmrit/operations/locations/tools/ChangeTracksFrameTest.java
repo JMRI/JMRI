@@ -75,5 +75,5 @@ public class ChangeTracksFrameTest extends OperationsTestCase {
     }
 
 
-    // private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);
 }

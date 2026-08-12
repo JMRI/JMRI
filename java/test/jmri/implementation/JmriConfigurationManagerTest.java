@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.profile.Profile;
@@ -12,10 +13,9 @@ import jmri.spi.PreferencesManager;
 import jmri.util.JUnitUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -61,7 +61,7 @@ public class JmriConfigurationManagerTest {
         InstanceManager.store(pmc, PreferencesManager.class);
         InstanceManager.store(pmc, PMC.class);
         assertThat(InstanceManager.getList(PreferencesManager.class)).containsExactly(pme, pmd, pma, pmb, pmc);
-        jcm.load((URL) null, false);
+        Assertions.assertTrue(jcm.load((URL) null, false));
         assertThat(initialized.size()).isEqualTo(5);
         assertThat(initialized.get(0)).isIn(pma, pmb);
         assertThat(initialized.get(1)).isIn(pma, pmb);

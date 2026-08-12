@@ -237,8 +237,8 @@ public class PrintCarRosterFrame extends OperationsFrame {
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5,
-                .5, .5, .5, _isPreview, "", isLandscape, true, null, null)) {
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), null, null,
+                fontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", isLandscape, true, null, null)) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 
@@ -583,5 +583,5 @@ public class PrintCarRosterFrame extends OperationsFrame {
                         1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCarRosterFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintCarRosterFrame.class);
 }

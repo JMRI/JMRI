@@ -117,5 +117,5 @@ public class Mx1CommandStation implements jmri.CommandStation {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1CommandStation.class);
+    // private static final Logger log = LoggerFactory.getLogger(Mx1CommandStation.class);
 }

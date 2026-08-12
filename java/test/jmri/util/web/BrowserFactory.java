@@ -26,7 +26,7 @@ import java.util.logging.Level;
  */
 public class BrowserFactory {
 
-    private final static Map<String, EventFiringWebDriver> drivers = new HashMap<>();
+    private static final Map<String, EventFiringWebDriver> drivers = new HashMap<>();
 
     /**
      * Factory method for getting browsers
@@ -86,6 +86,6 @@ public class BrowserFactory {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BrowserFactory.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BrowserFactory.class);
 
 }

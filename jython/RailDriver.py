@@ -156,7 +156,7 @@ try:
           global model
           model.removePropertyChangeListener(self)
 
-      if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
+      if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
           #print "Throttle Frame changed"
           self.addressPanel = event.newValue.getAddressPanel()
           self.controlPanel = event.newValue.getControlPanel()

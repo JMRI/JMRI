@@ -64,5 +64,5 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCsvNamedTableXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultCsvNamedTableXml.class);
 }

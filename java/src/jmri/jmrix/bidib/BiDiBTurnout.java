@@ -263,6 +263,6 @@ public class BiDiBTurnout extends AbstractTurnout implements BiDiBNamedBeanInter
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBTurnout.class);
 
 }

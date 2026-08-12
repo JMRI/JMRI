@@ -42,6 +42,6 @@ public class CanNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CanNamedPaneActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CanNamedPaneActionTest.class);
 
 }

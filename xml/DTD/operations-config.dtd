@@ -18,7 +18,7 @@
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | columnFormat | manifestFormat | vsd | reporters | switchList
- | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
+ | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat | dayNameMapping
  | pageOrientation | CATS | router | logger | manifestFileOptions | comments | display | headerLines)*>
  
 <!ELEMENT railRoad EMPTY>
@@ -56,6 +56,8 @@
 <!ELEMENT router EMPTY>
 <!ELEMENT logger EMPTY>
 <!ELEMENT CATS EMPTY>
+<!ELEMENT dayNameMapping (map)*>
+<!ELEMENT map (name | day)*>
 <!ELEMENT comments EMPTY>
 <!ELEMENT display EMPTY>
 <!ELEMENT headerLines EMPTY>
@@ -183,6 +185,7 @@
 <!ATTLIST tab length					CDATA #IMPLIED>
 <!ATTLIST tab tab2Length				CDATA #IMPLIED>
 <!ATTLIST tab tab3Length				CDATA #IMPLIED>
+<!ATTLIST tab manifestTabLength			CDATA #IMPLIED>
 
 <!ATTLIST manifest printLocComments		(true | false ) "false"> 
 <!ATTLIST manifest printValid			(true | false ) "true"> 
@@ -237,18 +240,23 @@
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
+<!ATTLIST dayNameMapping map		CDATA #IMPLIED>
+<!ATTLIST map day					CDATA #IMPLIED>
+<!ATTLIST map name					CDATA #IMPLIED>
+
 <!ATTLIST display showTrackMoves		(true | false ) "false">
 <!ATTLIST display showClones			(true | false ) "true">
 
 <!ATTLIST headerLines printHeaderLine1	(true | false ) "true">
 <!ATTLIST headerLines printHeaderLine2	(true | false ) "true">
 <!ATTLIST headerLines printHeaderLine3	(true | false ) "true">
+<!ATTLIST headerLines lineAdjustment	CDATA #IMPLIED>
 
 
 <!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model | hp
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
 | kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight | load_type | dcc_addr
-| division | last_train)*>
+| division | last_train | last_moved)*>
 
 <!ELEMENT road EMPTY>
 <!ELEMENT number EMPTY>
@@ -275,6 +283,7 @@
 <!ELEMENT dcc_addr EMPTY>
 <!ELEMENT division EMPTY>
 <!ELEMENT last_train EMPTY>
+<!ELEMENT last_moved EMPTY>
 
 <!ATTLIST road text				CDATA #IMPLIED>
 <!ATTLIST number text			CDATA #IMPLIED>
@@ -302,6 +311,7 @@
 <!ATTLIST dcc_addr text			CDATA #IMPLIED>
 <!ATTLIST division text			CDATA #IMPLIED>
 <!ATTLIST last_train text		CDATA #IMPLIED>
+<!ATTLIST last_moved text		CDATA #IMPLIED>
 
 <!ELEMENT manifestTextStrings (manifestForTrain | valid | scheduledWork 
 | workDepartureTime | workArrivalTime | noScheduledWork | noScheduledWorkRouteComment | departTime 
@@ -352,13 +362,14 @@
 <!ATTLIST cabooseChange text		CDATA #IMPLIED>
 <!ATTLIST locoCabooseChange text	CDATA #IMPLIED>
 
-<!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | departsAt | departsExpectedArrival
+<!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | trainVisits | departsAt | departsExpectedArrival
 | departedExpected | visitNumber | visitNumberDeparted | visitNumberTerminates | visitNumberTerminatesDeparted
 | visitNumberDone | trainDirectionChange | noCarPickUps | noCarSetOuts | trainDone | trainDepartsCars | trainDepartsLoads
 | switchListTrack | holdCar)*>
 
 <!ELEMENT switchListFor EMPTY>
 <!ELEMENT scheduledWorkTrain EMPTY>
+<!ELEMENT trainVisits EMPTY>
 <!ELEMENT departsAt EMPTY>
 <!ELEMENT departsExpectedArrival EMPTY>
 <!ELEMENT departedExpected EMPTY>
@@ -377,6 +388,7 @@
 <!ATTLIST switchListFor text			CDATA #IMPLIED>
 <!ATTLIST scheduledWorkTrain text		CDATA #IMPLIED>
 <!ATTLIST departsAt text				CDATA #IMPLIED>
+<!ATTLIST trainVisits text				CDATA #IMPLIED>
 <!ATTLIST departsExpectedArrival text	CDATA #IMPLIED>
 <!ATTLIST departedExpected text			CDATA #IMPLIED>
 <!ATTLIST visitNumber text				CDATA #IMPLIED>
@@ -391,7 +403,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt | display)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt | display | days)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
@@ -439,3 +451,6 @@
 
 <!ELEMENT speedHpt EMPTY>
 <!ATTLIST speedHpt MPH CDATA #IMPLIED>
+
+<!ELEMENT days EMPTY>
+<!ATTLIST days length CDATA #IMPLIED>

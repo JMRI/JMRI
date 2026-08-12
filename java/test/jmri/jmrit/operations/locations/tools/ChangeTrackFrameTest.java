@@ -93,5 +93,5 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
     }
 
 
-    // private final static Logger log = LoggerFactory.getLogger(ChangeTrackFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ChangeTrackFrameTest.class);
 }

@@ -70,6 +70,6 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestActionTest.class);
 
 }

@@ -39,7 +39,6 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
     private JPanel _panelTable;
     private JTextField _referenceTextField;
     private BeanSelectPanel<Memory> _memoryPanel;
-    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -80,11 +79,9 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
         }
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
-        _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -124,7 +121,6 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
             }
             _referenceTextField.setText(selectNamedBean.getReference());
             _memoryPanel.setDefaultNamedBean(selectNamedBean.getMemory());
-            _listenToMemoryCheckBox.setSelected(selectNamedBean.getListenToMemory());
             _localVariableTextField.setText(selectNamedBean.getLocalVariable());
             _formulaTextField.setText(selectNamedBean.getFormula());
         }
@@ -193,7 +189,6 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                     if (_memoryPanel.getNamedBean() != null) {
                         selectNamedBean.setMemory(_memoryPanel.getNamedBean());
                     }
-                    selectNamedBean.setListenToMemory(_listenToMemoryCheckBox.isSelected());
                     break;
                 case LocalVariable:
                     selectNamedBean.setLocalVariable(_localVariableTextField.getText());

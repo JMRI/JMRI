@@ -15,7 +15,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<project name="JMRI" default="debug" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+<project name="JMRI" default="debug" basedir="." xmlns:jacoco="antlib:org.jacoco.ant" xmlns:if="ant:if">
 
     <!-- basedir="." means all paths are relative to the top level -->
     <!-- directory in the project.  We expect that lib et al will  -->
@@ -146,13 +146,18 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jsoup-1.15.3.jar"/>
+        
         <pathelement location="${libdir}/jython-standalone-2.7.4.jar"/>
-        <pathelement location="${libdir}/slf4j-api-2.0.7.jar"/><!-- sl4fj API -->
-        <pathelement location="${libdir}/jul-to-slf4j-2.0.7.jar"/><!-- java.util.logging to sl4fj -->
-        <pathelement location="${libdir}/log4j-slf4j2-impl-2.20.0.jar"/><!-- sl4fj to log4j2 -->
-        <pathelement location="${libdir}/log4j-api-2.20.0.jar"/><!-- log4j2 API -->
-        <pathelement location="${libdir}/log4j-core-2.20.0.jar"/><!-- log4j2 Core -->
+
+        <!-- Logging -->
+        <pathelement location="${libdir}/slf4j-api-2.0.17.jar"/><!-- sl4fj API -->
+        <pathelement location="${libdir}/jul-to-slf4j-2.0.17.jar"/><!-- java.util.logging to sl4fj -->
+        <pathelement location="${libdir}/jcl-over-slf4j-2.0.17.jar"/><!-- java commons logging jcl to sl4fj -->
+        <pathelement location="${libdir}/log4j-over-slf4j-2.0.17.jar"/><!-- log4jv1 to sl4fj ( CATS ) -->
+        <pathelement location="${libdir}/log4j-slf4j2-impl-2.25.3.jar"/><!-- sl4fj to log4j2 -->
+        <pathelement location="${libdir}/log4j-api-2.25.3.jar"/><!-- log4j2 API -->
+        <pathelement location="${libdir}/log4j-core-2.25.3.jar"/><!-- log4j2 Core -->
+
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
@@ -161,12 +166,12 @@
         <pathelement location="${libdir}/jna-platform-5.13.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
-        <pathelement location="${libdir}/commons-logging-1.2.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.13.4.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.13.4.2.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.22.0.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.22.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.22.0.jar"/>
+        <pathelement location="${libdir}/jackson-datatype-jsr310-2.22.0.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
@@ -179,7 +184,11 @@
         <pathelement location="${libdir}/websocket-server-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/websocket-servlet-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.3.1.jar"/>
-        <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
+        <pathelement location="${libdir}/pi4j-core-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-plugin-raspberrypi-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-plugin-linuxfs-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-plugin-gpiod-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-library-gpiod-2.8.0.jar"/>
         <pathelement location="${libdir}/commons-io-2.11.0.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
@@ -271,7 +280,6 @@
         <pathelement location="${libdir}/jaxb-impl-2.3.2.jar"/>
         <pathelement location="${libdir}/jgoodies-binding-2.13.0.jar"/>
         <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
-        <pathelement location="${libdir}/jackson-datatype-jsr310-2.13.4.jar"/>
         <!-- //BiDiB -->
         <pathelement location="${libdir}/reflections-0.10.2.jar"/>
         <pathelement location="${libdir}/javassist-3.28.0-GA.jar"/>
@@ -281,6 +289,7 @@
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
+        <pathelement location="${libdir}/jsoup-1.15.3.jar"/> <!-- used in jmri.util.GenerateSearchIndexTest -->
         <pathelement location="${libdir}/junit-jupiter-5.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-console-standalone-1.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.13.4.jar"/>
@@ -327,8 +336,7 @@
 
     <!-- path containing jar files required while running tests -->
     <path id="test.jars.path">
-        <pathelement location="${libdir}/mockito-core-5.20.0.jar"/>
-        <pathelement location="${libdir}/mockito-junit-jupiter-5.20.0.jar"/>
+        <pathelement location="${libdir}/mockito-core-5.21.0.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.18.2.jar"/>
         <pathelement location="${libdir}/byte-buddy-agent-1.18.2.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
@@ -355,14 +363,9 @@
         <pathelement location="${libdir}/selenium-server-standalone-3.141.59.jar"/>
         <pathelement location="${libdir}/webdrivermanager-4.2.2.jar"/>
         <pathelement location="${libdir}/jarchivelib-1.0.0.jar"/>
-        <!-- Spring Mock and it's dependencies -->
-        <pathelement location="${libdir}/spring-test-5.1.14.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-core-5.1.14.RELEASE.jar"/>
-        <pathelement location="${libdir}/spring-web-5.1.14.RELEASE.jar"/>
         <!-- Assertj -->
-        <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
-        <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
-        <pathelement location="${libdir}/assertj-swing-junit-3.9.2.jar"/>
+        <pathelement location="${libdir}/assertj-core-3.27.7.jar"/>
+
     </path>
 
     <!-- path to run tests -->
@@ -486,10 +489,12 @@
         </filterset>
     </target>
 
-    <target name="check-ant-requirements"> <!-- check build system requirements, not for user use -->
-      <antversion property="ant-version-ok" atleast="1.8.0"/>
+    <!-- check build system requirements, not for user use -->
+    <!-- Used in the warnings and warnings-check targets -->
+    <target name="check-ant-requirements"> 
+      <antversion property="ant-version-ok" atleast="1.10.6"/>
       <antversion property="ant-version-actual"/>
-      <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
+      <fail unless="ant-version-ok" message="Minimum ant version required is 1.10.6, this is ${ant-version-actual}"/>
     </target>
 
     <target name="show-java-version"> <!-- check build system requirements, not for user use -->
@@ -616,6 +621,7 @@
         <!-- Copy top level resources to include in jar file -->
         <copy todir="${target}/resources/">
             <fileset dir="${resourcedir}" includes="*.gif"/>
+            <fileset dir="${resourcedir}" includes="decoderpro*"/>
         </copy>
         <copy todir="${target}">
             <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json">
@@ -740,7 +746,22 @@
         <attribute name="javac.target" default="${target}"/>
         <attribute name="javac.deprecation" default="${deprecation}"/>
         <attribute name="javac.classpath" default="compile.class.path"/>
+        <attribute name="is.test" default=""/>
         <sequential>
+        
+            <!-- Set property only if it's a test build AND metadata is missing -->
+            <!-- Test build - JUnitAppender uses a Log4J Plugin, saves unused argument warning in non-test builds -->
+            <!-- metadata missing - Graalvm does not trigger for incremental builds, saves unused argument warning -->
+            <local name="needs.log4j.args"/>
+            <condition property="needs.log4j.args">
+                <and>
+                    <not><equals arg1="@{is.test}" arg2=""/></not>
+                    <not>
+                        <available file="@{javac.target}/META-INF/native-image/log4j-generated/org.jmri/jmri" type="dir"/>
+                    </not>
+                </and>
+            </condition>
+
             <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
             <javac compiler="modern"
                    includes="@{javac.includes}"
@@ -751,6 +772,10 @@
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
+
+                <compilerarg value="-Alog4j.graalvm.groupId=org.jmri" if:set="needs.log4j.args"/>
+                <compilerarg value="-Alog4j.graalvm.artifactId=jmri" if:set="needs.log4j.args"/>
+
                 <compilerarg value="--release"/><compilerarg value="${jre_version}"/><!-- intentionally on one line, as these two go together-->
                 <compilerarg value="-proc:full"/>
                 <compilerarg value="-XDignore.symbol.file"/> <!-- suppresses sun.misc warnings on Java 9 -->
@@ -795,6 +820,7 @@
                 javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
+                is.test="true"
             />
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
@@ -814,6 +840,7 @@
                 javac.target="${target}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
+                is.test="true"
             />
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
@@ -832,6 +859,7 @@
                 javac.source="${graalsource}"
                 javac.target="${graaltarget}"
                 javac.deprecation="on"
+                is.test="true"
             />
     </target>
 
@@ -918,7 +946,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir '${testreport}'" />
             <arg value="--fail-if-no-tests" />
@@ -959,7 +986,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir ${testreport}" />
             <arg value="--fail-if-no-tests" />
@@ -1222,7 +1248,7 @@
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
-            <jvmarg value="-Xmx640m"/>
+            <jvmarg value="-Xmx2640m"/>
             <!-- This next is for DarkLAF -->
             <jvmarg value="--add-exports"/>
             <jvmarg value="java.desktop/sun.awt=ALL-UNNAMED"/>
@@ -1664,7 +1690,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
@@ -1737,7 +1762,7 @@
         <mkdir dir="${testreport}"/>
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
+            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter" >
                 <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1814,7 +1839,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
@@ -1832,7 +1856,7 @@
 
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
+            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter" >
                 <fileset dir="${testtarget}">
                     <include name="**/RunCucumberIT.class" />
                 </fileset>
@@ -2001,7 +2025,7 @@
              index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
           <manifest>
             <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
@@ -2527,7 +2551,6 @@
                 <exclude name=".metadata/.plugins/org.eclipse.core.resources/**" />
                 <exclude name="help/en/JavaHelpSearch/**" />
                 <exclude name="help/fr/JavaHelpSearch/**" />
-                <exclude name="web/app/node_modules/**" />
                 <exclude name=".git/**" />
                 <exclude name="target/**" />
             </fileset>
@@ -2621,16 +2644,13 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
-        </copy>
-        <copy todir="${dist.windows}/JMRI/">
-            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib"/>
         <copy todir="${dist.windows}/JMRI/lib" flatten="true">
@@ -2670,7 +2690,7 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,LccPro.app/"/>
@@ -2678,9 +2698,6 @@
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
-        </copy>
-        <copy todir="${dist.macosx}/JMRI/">
-            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <copy todir="${dist.macosx}/JMRI/">
             <fileset file="${dist.scripts}/JmriFaceless.command"/>
@@ -2757,14 +2774,11 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
-        </copy>
-        <copy todir="${dist.linux}/JMRI/">
-            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
         <copy todir="${dist.linux}/JMRI/lib" flatten="true">

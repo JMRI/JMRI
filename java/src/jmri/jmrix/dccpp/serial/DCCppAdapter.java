@@ -7,7 +7,7 @@ import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Com Port.
+ * Provide access to DCC-EX via a FTDI Virtual Com Port.
  *
  * @author Mark Underwood Copyright (C) 2015
  *
@@ -31,10 +31,10 @@ public class DCCppAdapter extends DCCppSerialPortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect DCC++ to {}", portName);
+            log.error("failed to connect DCC-EX to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting DCC++ to {} {}", portName, currentSerialPort);
+        log.info("Connecting DCC-EX to {} {}", portName, currentSerialPort);
 
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
@@ -52,7 +52,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
     }
 
     /**
-     * Set up all of the other objects to operate with a DCC++ device connected
+     * Set up all of the other objects to operate with a DCC-EX device connected
      * to this port.
      */
     @Override
@@ -120,6 +120,6 @@ public class DCCppAdapter extends DCCppSerialPortController {
     protected String[] validStartupDelays = new String[]{"1.5 seconds", "5 seconds", "10 seconds", "20 seconds", "30 seconds"};
     protected int[] validStartupDelayValues = new int[]{1500, 5000, 10000, 20000, 30000};
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
 
 }

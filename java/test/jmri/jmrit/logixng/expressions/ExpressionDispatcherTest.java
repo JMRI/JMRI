@@ -35,8 +35,6 @@ import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.jdom2.JDOMException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -269,7 +267,6 @@ public class ExpressionDispatcherTest extends AbstractDigitalExpressionTestBase 
         expressionDispatcher.propertyChange(new PropertyChangeEvent(this, "ActiveTrain", "", _myActiveTrainFileName));
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, IOException, JDOMException {
 
@@ -324,7 +321,6 @@ public class ExpressionDispatcherTest extends AbstractDigitalExpressionTestBase 
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();   // REMOVE THIS!!!

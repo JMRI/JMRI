@@ -127,6 +127,30 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         assertNotNull( f, "exists");
     }
 
+    /**
+     * redrawPanel() is called on every layout change, including every block
+     * occupancy change, so it must dirty the drawing area only and not the
+     * whole frame with its menu bar, tool bar and scroll bars.
+     */
+    @Test
+    public void testRedrawPanelDirtiesTargetPanelOnly() {
+        javax.swing.JComponent targetPanel = e.getTargetPanel();
+        assertNotNull( targetPanel, "target panel exists");
+
+        java.awt.Rectangle[] dirty = new java.awt.Rectangle[1];
+        // redrawPanel() and the check have to share one EDT task, otherwise a
+        // paint pass in between would have already cleared the dirty region
+        ThreadingUtil.runOnGUI( () -> {
+            javax.swing.RepaintManager rm = javax.swing.RepaintManager.currentManager(targetPanel);
+            rm.markCompletelyClean(targetPanel);
+            e.redrawPanel();
+            dirty[0] = rm.getDirtyRegion(targetPanel);
+        });
+
+        assertNotNull( dirty[0], "target panel has a dirty region");
+        assertFalse( dirty[0].isEmpty(), "target panel was marked dirty by redrawPanel");
+    }
+
     @Test
     @Override
     @Disabled("failing to set size on appveyor")
@@ -822,7 +846,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void checkMarkerMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuMarker"));
         assertNotNull( jmo, "Marker Menu Exists");
-        assertEquals( 3, jmo.getItemCount(), "Menu Item Count");
+        assertEquals( 5, jmo.getItemCount(), "Menu Item Count");
     }
 
     @Test
@@ -935,5 +959,5 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         assertTrue( h > 0, "scroll bound h");
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

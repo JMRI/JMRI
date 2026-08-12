@@ -132,8 +132,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
                 socketConn.setSoTimeout(READ_TIMEOUT);
             } catch (UnknownHostException e) {
                 ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
                 throw (e);
             }
             // get and save input stream
@@ -145,22 +145,22 @@ public class XnTcpAdapter extends XNetNetworkPortController {
             // Connection established.
             opened = true;
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_UP);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_UP);
 
         } // Report possible errors encountered while opening the connection
         catch (SocketException se) {
             log.error("Socket exception while opening TCP connection with {} trace follows", outName, se);
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             throw (se);
         }
         catch (IOException e) {
             log.error("Unexpected exception while opening TCP connection with {} trace follows", outName, e);
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             throw (e);
         }
     }
@@ -249,8 +249,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
         // If the error message was already posted, simply ignore this call
         if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             // Clear open status, in order to avoid issuing the error
             // message more than than once.
             opened = false;

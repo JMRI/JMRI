@@ -211,6 +211,6 @@ public class ForEachSwing extends AbstractDigitalActionSwing {
     public void dispose() {
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEachSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEachSwing.class);
 
 }

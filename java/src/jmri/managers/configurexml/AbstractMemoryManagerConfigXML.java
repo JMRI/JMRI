@@ -63,18 +63,20 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
                 var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
                 // store value if non-null; null values omitted
-                if (! (loadAndStorePreferences.isExcludeMemoryIMCURRENTTIME()
-                        && mName.equals("IMCURRENTTIME")) ) {
-                    Object obj = m.getValue();
-                    if (obj != null) {
-                        if (obj instanceof RosterEntry) {
-                            String valueClass = obj.getClass().getName();
-                            String value = ((RosterEntry) obj).getId();
-                            elem.setAttribute("value", value);
-                            elem.setAttribute("valueClass", valueClass);
-                        } else {
-                            String value = obj.toString();
-                            elem.setAttribute("value", value);
+                if (! (loadAndStorePreferences.isExcludeMemoryContents() )) {
+                    if (! (loadAndStorePreferences.isExcludeMemoryIMCURRENTTIME()
+                            && mName.equals("IMCURRENTTIME")) ) {
+                        Object obj = m.getValue();
+                        if (obj != null) {
+                            if (obj instanceof RosterEntry) {
+                                String valueClass = obj.getClass().getName();
+                                String value = ((RosterEntry) obj).getId();
+                                elem.setAttribute("value", value);
+                                elem.setAttribute("valueClass", valueClass);
+                            } else {
+                                String value = obj.toString();
+                                elem.setAttribute("value", value);
+                            }
                         }
                     }
                 }
@@ -158,6 +160,6 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         m.setValue(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class);
 
 }

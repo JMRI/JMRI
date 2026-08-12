@@ -131,5 +131,5 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractManagerXml.class);
 }

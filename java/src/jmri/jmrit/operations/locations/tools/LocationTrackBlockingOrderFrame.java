@@ -141,5 +141,5 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class);
 }

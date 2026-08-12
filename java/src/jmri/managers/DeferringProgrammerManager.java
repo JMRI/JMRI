@@ -181,5 +181,5 @@ public class DeferringProgrammerManager extends PropertyChangeSupport implements
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class);
 }

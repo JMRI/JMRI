@@ -315,24 +315,31 @@ public class OperationsPanel extends JPanel {
         return null;
     }
 
-    public static JPanel getColorChooserPanel(String text, JColorChooser chooser) {
-        return getColorChooserPanel(Bundle.getMessage("TextColor"), TrainCommon.getTextColor(text), chooser);
+    public JPanel getColorChooserPanel(String text, JColorChooser chooser, JCheckBox checkBox) {
+        return getColorChooserPanel(Bundle.getMessage("TextColor"),
+                TrainCommon.isTextUserModified(text) ? Color.BLACK : TrainCommon.getTextColor(text), chooser, checkBox);
     }
 
-    public static JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser) {
+    public JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser, JCheckBox checkBox) {
         JPanel pTextColorPanel = new JPanel();
         pTextColorPanel.setBorder(BorderFactory.createTitledBorder(title));
         chooser.setColor(color);
         AbstractColorChooserPanel commentColorPanels[] = {new SplitButtonColorChooserPanel()};
         chooser.setChooserPanels(commentColorPanels);
         chooser.setPreviewPanel(new JPanel());
+        pTextColorPanel.setLayout(new GridBagLayout());
+        addItem(pTextColorPanel, chooser, 0, 0);
         pTextColorPanel.add(chooser);
+        if (checkBox != null) {
+            checkBox.setText(Bundle.getMessage("BoldText"));
+            addItem(pTextColorPanel, checkBox, 0, 1);
+        }
         return pTextColorPanel;
     }
 
     public static void loadFontSizeComboBox(JComboBox<Integer> box) {
-        // load font sizes 7 through 18
-        for (int i = 7; i < 19; i++) {
+        // load font sizes 5 through 18
+        for (int i = 5; i < 19; i++) {
             box.addItem(i);
         }
         Dimension size = box.getPreferredSize();
@@ -340,5 +347,5 @@ public class OperationsPanel extends JPanel {
         box.setPreferredSize(size);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsPanel.class);
 }

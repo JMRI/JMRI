@@ -56,5 +56,5 @@ public class CsvImporter {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvImporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvImporter.class);
 }

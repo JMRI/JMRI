@@ -87,6 +87,6 @@ public class JsonDecodeSwing extends AbstractDigitalActionSwing {
     public void dispose() {
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonDecodeSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonDecodeSwing.class);
 
 }

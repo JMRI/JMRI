@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = HttpServlet.class)
 public class PanelServlet extends AbstractPanelServlet {
 
-    private final static Logger log = LoggerFactory.getLogger(PanelServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(PanelServlet.class);
 
     @Override
     protected String getPanelType() {

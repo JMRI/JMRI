@@ -1,14 +1,14 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -21,8 +21,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class SensorIconWindowTest {
 
     @Test
-    public void testPanelEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testPanelEditor() throws Positionable.DuplicateIdException {
 
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("SensorIconWindowTest.testPanelEditor");
@@ -38,7 +38,7 @@ public class SensorIconWindowTest {
 
         panel.setVisible(true);
 
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
+        assertEquals(Sensor.UNKNOWN, sn.getState(), "initial state");
 
         // Click icon change state to Active
         JComponentOperator co = new JComponentOperator(panel.getTargetPanel());
@@ -53,7 +53,7 @@ public class SensorIconWindowTest {
             return sn.getState() != Sensor.UNKNOWN;
         }, "state not still unknown after one click");
 
-        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
+        assertEquals(Sensor.INACTIVE, sn.getState(), "state after one click");
 
         // Click icon change state to inactive
         co.clickMouse(xloc,yloc,1);
@@ -62,7 +62,7 @@ public class SensorIconWindowTest {
             return sn.getState() != Sensor.INACTIVE;
         }, "state not still inactive after two clicks");
 
-        Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
+        assertEquals(Sensor.ACTIVE, sn.getState(), "state after two clicks");
 
         // close the panel editor frame
         JFrameOperator eo = new JFrameOperator(panel);
@@ -75,8 +75,8 @@ public class SensorIconWindowTest {
     }
 
     @Test
-    public void testLayoutEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testLayoutEditor() throws Positionable.DuplicateIdException {
 
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("SensorIconWindowTest.testLayoutEditor");
@@ -94,7 +94,7 @@ public class SensorIconWindowTest {
 
         panel.setVisible(true);
 
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
+        assertEquals(Sensor.UNKNOWN, sn.getState(), "initial state");
 
         // Click icon change state to Active
         JComponentOperator co = new JComponentOperator(panel.getTargetPanel());
@@ -116,7 +116,7 @@ public class SensorIconWindowTest {
             return sn.getState() != Sensor.UNKNOWN;
         }, "state not still unknown after one click");
 
-        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
+        assertEquals(Sensor.INACTIVE, sn.getState(), "state after one click");
 
         // Click icon change state to inactive
         co.clickMouse(xloc,yloc,1);
@@ -125,7 +125,7 @@ public class SensorIconWindowTest {
             return sn.getState() != Sensor.INACTIVE;
         }, "state not still inactive after two clicks");
 
-        Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
+        assertEquals(Sensor.ACTIVE, sn.getState(), "state after two clicks");
 
         // close the panel editor frame
         EditorFrameOperator to = new EditorFrameOperator(panel);
@@ -134,15 +134,15 @@ public class SensorIconWindowTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

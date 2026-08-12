@@ -318,6 +318,6 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     JList<String> mMfgList;
     ListSelectionListener mMfgListener;
 
-    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelListPane.class);
+    private static final Logger log = LoggerFactory.getLogger(CombinedLocoSelListPane.class);
 
 }

@@ -42,6 +42,6 @@ public class CbusBasicNodeTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusBasicNodeTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusBasicNodeTest.class);
 
 }

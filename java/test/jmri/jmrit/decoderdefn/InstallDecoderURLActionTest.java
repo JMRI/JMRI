@@ -3,7 +3,6 @@ package jmri.jmrit.decoderdefn;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class InstallDecoderURLActionTest {
     @Test
     public void testCTor() {
         InstallDecoderURLAction t = new InstallDecoderURLAction("Test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class InstallDecoderURLActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InstallDecoderURLActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(InstallDecoderURLActionTest.class);
 
 }

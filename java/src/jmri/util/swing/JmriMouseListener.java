@@ -7,7 +7,14 @@ import java.awt.event.MouseEvent;
  * This class is used to replace {@link java.awt.event.MouseEvent} with
  * {@link jmri.util.swing.JmriMouseEvent}.
  *
+ * Java 11 through 21 (at least)
+ * omits calling mouseClicked if the cursor has moved even a single pixel while the mouse
+ * is down. This results in mouse clicks feeling intermittent.
+ * This class replaces that behavior with a small dead zone, firing a mouseClicked
+ * event if the mouse has not moved very far between mousePressed and mouseReleased.
+ *
  * @author Daniel Bergqvist (C) 2022
+ * @author Bob Jacobsen (C) 2026
  */
 public interface JmriMouseListener extends java.util.EventListener {
 
@@ -20,17 +27,34 @@ public interface JmriMouseListener extends java.util.EventListener {
         return new java.awt.event.MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                listener.mouseClicked(new JmriMouseEvent(e));
+                // this is suppressed because mouseClicked is now
+                // originating in mouseReleased
+                //     listener.mouseClicked(new JmriMouseEvent(e));
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+                lastX = e.getX();
+                lastY = e.getY();
+                lastClickCount = e.getClickCount();
                 listener.mousePressed(new JmriMouseEvent(e));
             }
 
+            static final int DEADBAND2 = 4*4;  // 4 pixels, with drag theshold of 5
+            
             @Override
             public void mouseReleased(MouseEvent e) {
                 listener.mouseReleased(new JmriMouseEvent(e));
+                
+                // we manually check whether the mouse hasn't moved far, and
+                // if so this is interpreted as a click event.
+                if (Math.pow(e.getY()-lastY,2)+Math.pow(e.getX()-lastX,2) <= DEADBAND2) {
+                    listener.mouseClicked(new JmriMouseEvent(
+                        e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
+                        e.getX(), e.getY(), lastClickCount, e.isPopupTrigger(),
+                        e.getButton()
+                    ));
+                }
             }
 
             @Override
@@ -42,6 +66,8 @@ public interface JmriMouseListener extends java.util.EventListener {
             public void mouseExited(MouseEvent e) {
                 listener.mouseExited(new JmriMouseEvent(e));
             }
+            
+            int lastX, lastY, lastClickCount;
         };
     }
 

@@ -93,6 +93,6 @@ public class CbusEventBeanCellRenderer implements TableCellRenderer {
         pnl.add(tmp);
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventBeanCellRenderer.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventBeanCellRenderer.class);
     
 }

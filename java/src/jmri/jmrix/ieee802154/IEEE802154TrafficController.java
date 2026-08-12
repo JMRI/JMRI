@@ -311,6 +311,6 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
         nodeArray[numNodes] = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IEEE802154TrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(IEEE802154TrafficController.class);
 
 }

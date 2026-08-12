@@ -33,6 +33,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import java.awt.Color;
 
 import jmri.Block;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -685,8 +688,223 @@ public class ActivateTrainFrame extends JmriJFrame {
                 trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(false);
                 dccAddressSpinner.setVisible(false);
+                setSpeedProfileOptions(trainInfo, true);
         }
     }
+    
+
+    // MPH↔KMH conversion helpers
+    private static float mphToKmh(float mph) { return mph * 1.60934f; }
+    private static float kmhToMph(float kmh) { return kmh / 1.60934f; }
+
+    // Safe Bundle lookup with fallback; avoids MissingResourceException breaking the UI.
+    private static String bundleOrDefault(String key, String fallback) {
+        try {
+            return Bundle.getMessage(key);
+        } catch (Exception ex) {
+            return fallback;
+        }
+    }
+    
+
+     // Safe access to current layout scale ratio (prototype/model length ratio)
+     private float getScaleRatioSafe() {
+         return (_dispatcher.getScale() != null)
+                 ? (float) _dispatcher.getScale().getScaleRatio()
+                 : 1.0f; // CI-safe default
+     }
+    
+     // Do we have a concrete roster entry with a non-empty speed profile?
+     private boolean isConcreteSpeedProfileAvailable() {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return false;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         return re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0;
+     }
+    
+     // Convert throttle % -> scale mph (via mm/s from profile)
+     private float percentToScaleMph(float pct) {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedScaleMph;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
+         if (sp == null || sp.getProfileSize() < 1) return cachedScaleMph;
+    
+         float mms = sp.getSpeed(pct, true); // mm/s for this % (forward)
+         float scaleRatio = getScaleRatioSafe();
+         // mm/s -> m/s -> mph, then × scale ratio (scale speed)
+         return (mms / 1000.0f) * 2.236936f * scaleRatio;
+     }
+    
+     // Convert throttle % -> scale km/h
+     private float percentToScaleKmh(float pct) {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedScaleMph * 1.60934f;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
+         if (sp == null || sp.getProfileSize() < 1) return cachedScaleMph * 1.60934f;
+    
+         float mms = sp.getSpeed(pct, true);
+         float scaleRatio = getScaleRatioSafe();
+         // mm/s -> m/s -> km/h, then × scale ratio
+         return (mms / 1000.0f) * 3.6f * scaleRatio;
+     }
+    
+     // Convert target scale speed (mph or km/h) -> throttle % by inverting the profile via bisection
+     private float scaleSpeedToPercentFromProfile(float speedValue, boolean isKmh) {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedThrottlePercent;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
+         if (sp == null || sp.getProfileSize() < 1) return cachedThrottlePercent;
+    
+         float scaleRatio = getScaleRatioSafe();
+         // scale mph/kmh -> m/s -> mm/s (model), divide by scale ratio to remove scale
+         float mps = isKmh ? (speedValue / 3.6f) : (speedValue / 2.236936f);
+         float targetMms = (mps * 1000.0f) / scaleRatio;
+    
+         // Bisection in [0.0 .. 1.0] on sp.getSpeed(%)
+         float lo = 0.0f, hi = 1.0f;
+         for (int i = 0; i < 24; i++) {
+             float mid = 0.5f * (lo + hi);
+             float midMms = sp.getSpeed(mid, true);
+             if (midMms < targetMms) lo = mid; else hi = mid;
+         }
+         float pct = 0.5f * (lo + hi);
+         // Clamp to spinner's [%] domain 0.10 .. 1.00 (the UI model)
+         if (pct < 0.10f) pct = 0.10f;
+         if (pct > 1.00f) pct = 1.00f;
+         return pct;
+     }
+    
+     // Keep the sticky caches aligned with user's edits on the numeric spinner
+     private void updateMaxSpeedCachesFromSpinner() {
+         if (suppressMaxSpeedSpinnerEvents) {
+             return;
+         }
+         float v = ((Number) maxSpeedSpinner.getValue()).floatValue();
+         switch (lastMaxSpeedCapMode) {
+            case THROTTLE:
+                // Clamp percent [0.10 .. 1.00] before caching; editor "# %" multiplies by 100 for display
+                if (v < 0.10f) v = 0.10f;
+                if (v > 1.00f) v = 1.00f;
+                cachedThrottlePercent = v;
+                break;
+             case SCALE_MPH:  cachedScaleMph       = v;             break;
+             case SCALE_KMH:  cachedScaleMph       = kmhToMph(v);   break;
+             default: break;
+             }
+         }
+
+
+     // Format the min-reliable operating speed label in the user's preferred units.
+     // When the Max Speed dropdown is in SCALE_MPH or SCALE_KMH, show "scale mph" or "scale km/h" respectively.
+     // Otherwise, fall back to the existing localized profile conversion with units.
+     private String formatScaleSpeedWithPreferredUnits(float mms) {
+         Object sel = maxSpeedCapModeBox.getSelectedItem();
+         MaxSpeedCapMode mode = (sel instanceof MaxSpeedCapModeItem)
+                 ? ((MaxSpeedCapModeItem) sel).getValue()
+                 : MaxSpeedCapMode.THROTTLE;
+    
+         // Scale speed = actual speed × scale ratio (time same in model/prototype)
+        float scaleRatio = (_dispatcher.getScale() != null)
+            ? (float) _dispatcher.getScale().getScaleRatio()
+            : 1.0f; // CI-safe default
+    
+         if (mode == MaxSpeedCapMode.SCALE_MPH) {
+             // mm/s → m/s → mph, then × scaleRatio
+             float mph = (mms / 1000.0f) * 2.236936f * scaleRatio;
+             return String.format(
+                     Locale.getDefault(),
+                     "%.1f %s",
+                     mph,
+                     Bundle.getMessage("ScaleMilesPerHourShort")  // e.g., "scale mph"
+             );
+         } else if (mode == MaxSpeedCapMode.SCALE_KMH) {
+             // mm/s → m/s → km/h, then × scaleRatio
+             float kmh = (mms / 1000.0f) * 3.6f * scaleRatio;
+             return String.format(
+                     Locale.getDefault(),
+                     "%.1f %s",
+                     kmh,
+                     Bundle.getMessage("ScaleKilometresPerHourShort")  // e.g., "scale km/h"
+             );
+         }
+    
+         // Default: use JMRI's existing localised conversion (includes units)
+         return RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(mms);
+     }
+
+
+    // Switch the spinner model & editor format to match the selected cap mode
+    private void updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode mode) {
+        switch (mode) {
+            default:
+            case THROTTLE:
+                // 0.10 .. 1.00 (% throttle), step 0.01
+                maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
+                maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
+                maxSpeedUnitLabel.setText("%");
+                maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
+                break;
+            case SCALE_MPH:
+                // Typical scale speeds: 1 .. 200 mph, step 0.1
+                maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(60.0f), Float.valueOf(1.0f), Float.valueOf(200.0f), Float.valueOf(0.1f)));
+                maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
+                maxSpeedUnitLabel.setText(Bundle.getMessage("ScaleMilesPerHourShort"));
+                maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
+                break;
+            case SCALE_KMH:
+                // Typical scale speeds: 1 .. 320 km/h, step 0.1
+                maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(1.0f), Float.valueOf(320.0f), Float.valueOf(0.1f)));
+                maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
+                maxSpeedUnitLabel.setText(Bundle.getMessage("ScaleMilesPerHourShort"));
+                maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
+                break;
+        }   
+    }
+
+     // Enable/disable speed entries depending on speed-profile availability
+     private void updateMaxSpeedCapModeAvailability(boolean speedProfileAvailable) {
+         suppressMaxSpeedCapModeEvents = true;
+         try {
+             // Remember previous selection (if any)
+             MaxSpeedCapMode prevMode = null;
+             Object previous = maxSpeedCapModeBox.getSelectedItem();
+             if (previous instanceof MaxSpeedCapModeItem) {
+                 prevMode = ((MaxSpeedCapModeItem) previous).getValue();
+             }
+    
+             // Rebuild the dropdown model to include/exclude the speed options
+             maxSpeedCapModeBox.removeAllItems();
+             maxSpeedCapModeBox.addItem(
+                 new MaxSpeedCapModeItem(Bundle.getMessage("MaxSpeedLabel"), MaxSpeedCapMode.THROTTLE)
+             );
+            if (speedProfileAvailable) {
+                maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem(
+                    Bundle.getMessage("MaxSpeedScaleMph"), MaxSpeedCapMode.SCALE_MPH));
+                maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem(
+                    Bundle.getMessage("MaxSpeedScaleKmh"), MaxSpeedCapMode.SCALE_KMH));
+            }
+    
+             // Restore the previous mode if still valid; otherwise default to THROTTLE
+             int toSelect = 0; // THROTTLE
+             if (speedProfileAvailable && (prevMode == MaxSpeedCapMode.SCALE_MPH || prevMode == MaxSpeedCapMode.SCALE_KMH)) {
+                 toSelect = (prevMode == MaxSpeedCapMode.SCALE_MPH) ? 1 : 2;
+             }
+             maxSpeedCapModeBox.setSelectedIndex(toSelect);
+    
+             // Ensure spinner model matches the (programmatically) selected mode
+             Object cur = maxSpeedCapModeBox.getSelectedItem();
+             MaxSpeedCapMode mode = (cur instanceof MaxSpeedCapModeItem)
+                     ? ((MaxSpeedCapModeItem) cur).getValue()
+                     : MaxSpeedCapMode.THROTTLE;
+             updateMaxSpeedSpinnerModelForMode(mode);
+             lastMaxSpeedCapMode = mode;  // <— keep the tracker aligned with the programmatic selection
+         } finally {
+             suppressMaxSpeedCapModeEvents = false;
+         }
+     }
 
     private void initializeTrainTypeBox() {
         trainTypeBox.removeAllItems();
@@ -729,10 +947,19 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleInTransitClick() {
+        if (selectedTransit == null) {
+            // No transit yet; avoid NPE and present empty combos.
+            startingBlockBox.removeAllItems();
+            destinationBlockBox.removeAllItems();
+            return;
+        }
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
-            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
-                    .getMessage("NoEntryBlocks"), Bundle.getMessage("MessageTitle"),
-                    JmriJOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(
+                initiateFrame,
+                Bundle.getMessage("NoEntryBlocks"),
+                Bundle.getMessage("MessageTitle"),
+                JmriJOptionPane.INFORMATION_MESSAGE
+            );
             inTransitBox.setSelected(true);
         }
         initializeStartingBlockCombo();
@@ -741,9 +968,6 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleTrainSelectionChanged() {
-        if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMOPS")) {
-            return;
-        }
         int ix = trainSelectBox.getSelectedIndex();
         if (ix < 1) { // no train selected
             dccAddressSpinner.setEnabled(false);
@@ -763,9 +987,6 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleRosterSelectionChanged(ActionEvent e) {
-        if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMROSTER")) {
-            return;
-        }
         RosterEntry r ;
         int ix = rosterComboBox.getRosterEntryComboBox().getSelectedIndex();
         if (ix > 0) { // first item is "Select Loco" string
@@ -786,6 +1007,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         } else {
             setSpeedProfileOptions(trainInfo,false);
         }
+        ensureRampRateRendererInstalled();
+        enforcePhysicsRampSelectionAllowed();
+        rampRateBox.repaint();
+        handleMinReliableOperatingSpeedUpdate(); // update the min-speed label to reflect current units
     }
 
     private void handleDelayStartClick(ActionEvent e) {
@@ -1057,7 +1282,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             trainSelectBox.removeActionListener(al);
         }
         trainSelectBox.removeAllItems();
-        trainSelectBox.addItem("Select Train");
+        trainSelectBox.addItem(Bundle.getMessage("SelectTrain"));
         // initialize free trains from operations
         List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
         if (trains.size() > 0) {
@@ -1096,12 +1321,256 @@ public class ActivateTrainFrame extends JmriJFrame {
             stopBySpeedProfileCheckBox.setSelected(false);
 
         }
+        updateStopByDistanceEnable();
+        // Physics option is available iff speed profile UI is enabled (availability only)
+        updateRampPhysicsAvailability(b);
+        updateMaxSpeedCapModeAvailability(b);
     }
 
-    private void initializeStartingBlockCombo() {
+    // Map between Stop-by-distance units and Max Train Length units.
+    // Note: Max Train Length has no millimetres; ACTUAL_MM maps to ACTUALCM.
+    private TrainLengthUnits mapStopDistanceUnitsToTrainLengthUnits(StopDistanceUnits units) {
+        switch (units) {
+            case SCALE_FEET:
+                return TrainLengthUnits.TRAINLENGTH_SCALEFEET;
+            case SCALE_METERS:
+                return TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+            case ACTUAL_INCHES:
+                return TrainLengthUnits.TRAINLENGTH_ACTUALINCHS;
+            case ACTUAL_CM:
+            case ACTUAL_MM:
+            default:
+                return TrainLengthUnits.TRAINLENGTH_ACTUALCM;
+        }
+    }
+
+    private StopDistanceUnits mapTrainLengthUnitsToStopDistanceUnits(TrainLengthUnits units) {
+        switch (units) {
+            case TRAINLENGTH_SCALEFEET:
+                return StopDistanceUnits.SCALE_FEET;
+            case TRAINLENGTH_SCALEMETERS:
+                return StopDistanceUnits.SCALE_METERS;
+            case TRAINLENGTH_ACTUALINCHS:
+                return StopDistanceUnits.ACTUAL_INCHES;
+            case TRAINLENGTH_ACTUALCM:
+            default:
+                return StopDistanceUnits.ACTUAL_CM;
+        }
+    }
+
+    // Default Stop-by-distance units follow the current Max Train Length unit selection.
+    private StopDistanceUnits getPreferredStopDistanceUnitsFromMaxTrainLengthUnits() {
+        Object sel = trainLengthUnitsComboBox.getSelectedItem();
+        TrainLengthUnits units = (sel instanceof TrainLengthUnitsItem) ? ((TrainLengthUnitsItem) sel).getValue()
+                : TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+        return mapTrainLengthUnitsToStopDistanceUnits(units);
+    }
+
+    private void setStopByDistanceUnitsSelection(StopDistanceUnits units) {
+        for (int i = 0; i < stopByDistanceUnitsComboBox.getItemCount(); i++) {
+            Object o = stopByDistanceUnitsComboBox.getItemAt(i);
+            if (o instanceof StopDistanceUnitsItem && ((StopDistanceUnitsItem) o).getValue() == units) {
+                stopByDistanceUnitsComboBox.setSelectedIndex(i);
+                return;
+            }
+        }
+        if (stopByDistanceUnitsComboBox.getItemCount() > 0) {
+            stopByDistanceUnitsComboBox.setSelectedIndex(0);
+        }
+    }
+
+    private TrainLengthUnits getSelectedMaxTrainLengthUnitsSafe() {
+        Object sel = trainLengthUnitsComboBox.getSelectedItem();
+        return (sel instanceof TrainLengthUnitsItem) ? ((TrainLengthUnitsItem) sel).getValue()
+                : TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+    }
+
+    private StopDistanceUnits getSelectedStopByDistanceUnitsSafe() {
+        Object sel = stopByDistanceUnitsComboBox.getSelectedItem();
+        return (sel instanceof StopDistanceUnitsItem) ? ((StopDistanceUnitsItem) sel).getValue()
+                : StopDistanceUnits.ACTUAL_CM;
+    }
+
+    private void handleStopByDistanceUnitsComboSelectionChanged() {
+        handleStopByDistanceUnitsChanged();
+        if (suppressDistanceAndTrainLengthUnitSync) {
+            return;
+        }
+        TrainLengthUnits target = mapStopDistanceUnitsToTrainLengthUnits(getSelectedStopByDistanceUnitsSafe());
+        TrainLengthUnits current = getSelectedMaxTrainLengthUnitsSafe();
+        if (target == current) {
+            return;
+        }
+        suppressDistanceAndTrainLengthUnitSync = true;
+        try {
+            trainLengthUnitsComboBox.setSelectedItemByValue(target);
+        } finally {
+            suppressDistanceAndTrainLengthUnitSync = false;
+        }
+    }
+
+    private void handleTrainLengthUnitsComboSelectionChanged() {
+        handleTrainLengthUnitsChanged();
+        if (suppressDistanceAndTrainLengthUnitSync) {
+            return;
+        }
+        StopDistanceUnits target = mapTrainLengthUnitsToStopDistanceUnits(getSelectedMaxTrainLengthUnitsSafe());
+        StopDistanceUnits current = getSelectedStopByDistanceUnitsSafe();
+        if (target == current) {
+            return;
+        }
+        suppressDistanceAndTrainLengthUnitSync = true;
+        try {
+            setStopByDistanceUnitsSelection(target);
+        } finally {
+            suppressDistanceAndTrainLengthUnitSync = false;
+        }
+    }
+
+    private void updateStopByDistanceEnable() {
+        // Row is relevant only if Stop-by-speed-profile is available & selected
+        boolean baseOn = stopBySpeedProfileCheckBox.isEnabled() && stopBySpeedProfileCheckBox.isSelected();
+        stopByDistanceLabel.setEnabled(baseOn);
+        stopByDistanceEnableCheckBox.setEnabled(baseOn);
+
+        boolean distanceMode = baseOn && stopByDistanceEnableCheckBox.isSelected();
+
+        // Distance controls active only in distanceMode
+        stopByDistanceMmSpinner.setEnabled(distanceMode);
+        stopByDistanceUnitsComboBox.setEnabled(distanceMode);
+        stopByDistanceHead.setEnabled(distanceMode);
+        stopByDistanceTail.setEnabled(distanceMode);
+
+        // Stop-by-% into block is still meaningful even when distance stopping is enabled,
+        // because it applies to non-destination (intermediate) stops.
+        stopBySpeedProfileAdjustLabel.setEnabled(baseOn);
+        stopBySpeedProfileAdjustSpinner.setEnabled(baseOn);
+
+        // Tooltip: when distance stopping is enabled, clarify that the % adjustment still applies to non-destination stops.
+        String baseTip = Bundle.getMessage("StopBySpeedProfileAdjustHint");
+        if (distanceMode) {
+            stopBySpeedProfileAdjustSpinner.setToolTipText(
+                    bundleOrDefault("StopBySpeedProfileAdjustHintWithDistance", baseTip));
+        } else {
+            stopBySpeedProfileAdjustSpinner.setToolTipText(baseTip);
+        }
+    }
+
+   
+      // Dynamically adjust spinner precision & format to match selected units.
+      // NOTE: This does not convert units; that’s handled by handleStopByDistanceUnitsChanged().
+      private void updateStopByDistanceSpinnerModelForUnits(StopDistanceUnits units) {
+          // Preserve current display value while we swap models/editors
+          float displayValue = ((Number) stopByDistanceMmSpinner.getValue()).floatValue();
+    
+          float step;
+          String pattern;
+          switch (units) {
+              case ACTUAL_MM:
+                  step = 1.0f;          // whole millimetres
+                  pattern = "0";
+                  break;
+              case ACTUAL_CM:
+              default:
+                  step = 0.1f; // tenths of a centimetre (1 mm)
+                  pattern = "0.0";
+                  break;
+              case ACTUAL_INCHES:
+              case SCALE_METERS:
+              case SCALE_FEET:
+                  step = 0.01f;         // hundredths
+                  pattern = "0.00";
+                  break;
+          }
+    
+          // Keep wide range; only granularity changes
+          stopByDistanceMmSpinner.setModel(
+              new SpinnerNumberModel(Float.valueOf(displayValue),
+                                     Float.valueOf(0.0f),
+                                     Float.valueOf(1000000.0f),
+                                     Float.valueOf(step))
+          );
+          stopByDistanceMmSpinner.setEditor(new JSpinner.NumberEditor(stopByDistanceMmSpinner, pattern));
+      }     
+
+        private void handleStopByDistanceUnitsChanged() {
+            // Convert current display -> mm
+            float currentDisplay = ((Number) stopByDistanceMmSpinner.getValue()).floatValue();
+            float mm = convertStopDisplayToMm(currentStopDistanceUnits, currentDisplay);
+        
+            // Update selected units
+            currentStopDistanceUnits = stopByDistanceUnitsComboBox.getSelectedUnits();
+        
+            // Convert mm -> new display units
+            float newDisplay = convertMmToStopDisplay(currentStopDistanceUnits, mm);
+        
+            // Update precision & format for the new units, then show the new value
+            updateStopByDistanceSpinnerModelForUnits(currentStopDistanceUnits);
+            stopByDistanceMmSpinner.setValue(Float.valueOf(newDisplay));
+        }
+    
+      /*
+       * Convert underlying actual millimetres (mm) to the chosen display units.
+       * Uses the same scale concepts as the Max Train Length UI:
+       *  - "_dispatcher.getScale().getScaleRatio()" converts actual length to scale length
+       *  - inches <-> mm conversions use constants 25.4 and 3.28084 as in the train-length panel
+       */
+      private float convertMmToStopDisplay(StopDistanceUnits units, float mm) {
+          final float scaleRatio = (_dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
+          switch (units) {
+              case ACTUAL_MM:
+                  return mm;
+              case ACTUAL_CM:
+                  return mm / 10.0f;
+              case ACTUAL_INCHES:
+                  return mm / 25.4f;
+              case SCALE_METERS: {
+                  // actual metres to scale metres -> (mm / 1000) * scaleRatio
+                  float scaleMeters = (mm / 1000.0f) * scaleRatio;
+                  return scaleMeters;
+              }
+              case SCALE_FEET: {
+                  // scale feet = scale metres * 3.28084
+                  float scaleFeet = ((mm / 1000.0f) * scaleRatio) * 3.28084f;
+                  return scaleFeet;
+              }
+              default:
+                  return mm;
+          }
+      }
+    
+      /*
+       * Convert a displayed value in the chosen units back to underlying mm (actual).
+       */
+      private float convertStopDisplayToMm(StopDistanceUnits units, float value) {
+          final float scaleRatio = (_dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
+          switch (units) {
+              case ACTUAL_MM:
+                  return value;
+              case ACTUAL_CM:
+                  return value * 10.0f;
+              case ACTUAL_INCHES:
+                  return value * 25.4f;
+              case SCALE_METERS: {
+                  float mm = (value / scaleRatio) * 1000.0f;
+                  return mm;
+              }
+              case SCALE_FEET: {
+                  float mm = (value / 3.28084f / scaleRatio) * 1000.0f;
+                  return mm;
+              }
+              default:
+                  return value;
+          }
+      }
+     
+     private void initializeStartingBlockCombo() {
         String prevValue = (String)startingBlockBox.getSelectedItem();
         startingBlockBox.removeAllItems();
         startingBlockBoxList.clear();
+        if (selectedTransit == null) {
+            return;
+        }
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
             inTransitBox.setSelected(true);
         }
@@ -1390,6 +1859,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             default:
                 radioTrainsFromSetLater.setSelected(true);
         }
+        setTrainsFromOptions(info.getTrainsFrom());
         trainNameField.setText(info.getTrainUserName());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         inTransitBox.setSelected(info.getTrainInTransit());
@@ -1489,12 +1959,15 @@ public class ActivateTrainFrame extends JmriJFrame {
             resetWhenDoneBox.setSelected(false);
             throw new IllegalArgumentException(Bundle.getMessage("NoResetMessage"));
         }
-        int max = Math.round((float) maxSpeedSpinner.getValue()*100.0f);
-        int min = Math.round((float) minReliableOperatingSpeedSpinner.getValue()*100.0f);
-        if ((max-min) < 10) {
-            throw new IllegalArgumentException(Bundle.getMessage("Error49",
-                    maxSpeedSpinner.getValue(), minReliableOperatingSpeedSpinner.getValue()));
+        MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) maxSpeedCapModeBox.getSelectedItem()).getValue();
+        if (mode == MaxSpeedCapMode.THROTTLE) {
+            int max = Math.round(((Number) maxSpeedSpinner.getValue()).floatValue()*100.0f);
+            int min = Math.round(((Number) minReliableOperatingSpeedSpinner.getValue()).floatValue()*100.0f);
+            if ((max - min) < 10) {
+                throw new IllegalArgumentException(Bundle.getMessage("Error49", maxSpeedSpinner.getValue(), minReliableOperatingSpeedSpinner.getValue()));
+            }
         }
+        // In speed mode, we skip this percent-gap check; runtime will cap via the profile+scale conversion.
         return true;
     }
 
@@ -1714,18 +2187,322 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel minReliableOperatingSpeedLabel = new JLabel(Bundle.getMessage("MinReliableOperatingSpeedLabel"));
     private final JSpinner minReliableOperatingSpeedSpinner = new JSpinner();
     private final JLabel minReliableOperatingScaleSpeedLabel = new JLabel();
-    private final JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
     private final JSpinner maxSpeedSpinner = new JSpinner();
+    private final JComboBox<MaxSpeedCapModeItem> maxSpeedCapModeBox = new JComboBox<>();
+    private final JLabel maxSpeedUnitLabel = new JLabel("%"); // changes to "mph" or "km/h" when speed mode selected
+    // Suppress mode-change events while programmatically rebuilding the dropdown
+    private boolean suppressMaxSpeedCapModeEvents = false;
+    private boolean suppressMaxSpeedSpinnerEvents = false;
+    // Remember last user-visible mode so we can convert values on mode switches
+    private MaxSpeedCapMode lastMaxSpeedCapMode = MaxSpeedCapMode.THROTTLE;
+    private float cachedThrottlePercent = 1.0f; // spinner shows 0.10..1.00; we cache user's last % (0.0..1.0)
+    private float cachedScaleMph       = 100.0f; // default "sensible" scale speed (mph)
     private final JPanel pa2 = new JPanel();
     private final JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private final JComboBox<String> rampRateBox = new JComboBox<>();
+    private boolean suppressRampRateEvents = false;
+    // Remember last non-Physics selection so we can revert if Physics is disallowed
+    private String lastNonPhysicsRampSelection = null;
+    private boolean rampRateRendererInstalled = false;
+
     private final JPanel pa2a = new JPanel();
     private final JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
     private final JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
     private final JLabel stopBySpeedProfileLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
     private final JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
     private final JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
+    // Explicit override: ignore hardware Stop Sensors in Sections (default OFF = use sensors)
+    private final JCheckBox overrideStopSensorCheckBox = new JCheckBox(Bundle.getMessage("OverrideStopSensorLabel"));
     private final JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
+    private final JPanel pa2b = new JPanel();
+    private final JLabel stopByDistanceLabel = new JLabel(Bundle.getMessage("StopByDistanceLabel"));
+    private final JSpinner stopByDistanceMmSpinner = new JSpinner();
+    private final JRadioButton stopByDistanceHead = new JRadioButton(Bundle.getMessage("StopByDistanceHead"));
+    private final JRadioButton stopByDistanceTail = new JRadioButton(Bundle.getMessage("StopByDistanceTail"));
+    private final ButtonGroup stopByDistanceRefGroup = new ButtonGroup();
+    private final JCheckBox stopByDistanceEnableCheckBox = new JCheckBox();
+
+    private enum StopDistanceUnits {
+        ACTUAL_CM,
+        ACTUAL_MM,
+        ACTUAL_INCHES,
+        SCALE_METERS,
+        SCALE_FEET
+    }
+    
+    protected static class StopDistanceUnitsItem {
+        private final String key;
+        private final StopDistanceUnits value;
+        public StopDistanceUnitsItem(String text, StopDistanceUnits units) { this.key = text; this.value = units; }
+        @Override public String toString() { return key; }
+        public StopDistanceUnits getValue() { return value; }
+    }
+    
+    protected static class StopDistanceUnitsJCombo extends JComboBox<StopDistanceUnitsItem> {
+        public StopDistanceUnits getSelectedUnits() {
+            // getSelectedItem() is Object in Swing; use a narrow cast or index->getItemAt(i)
+            StopDistanceUnitsItem it = (StopDistanceUnitsItem) getSelectedItem();
+            return it != null ? it.getValue() : StopDistanceUnits.ACTUAL_CM;
+
+        }
+    }    
+    
+     // Helper: is "Physics" ramp selected?
+    private boolean isPhysicsRampSelected() {
+        // rampRateBox contains display strings from Bundle.getMessage(...)
+        String sel = (String) rampRateBox.getSelectedItem();
+        return sel != null && sel.equals(Bundle.getMessage("RAMP_PHYSICS"));
+    }
+
+    // Determine if the Physics ramp option should be allowed for the current context.
+    // Requirement: If a concrete roster entry has been selected (Trains From Roster, and an actual entry chosen),
+    // then Physics must only be selectable when that roster entry has physics metadata configured.
+    // Otherwise (e.g. Set Later, user-defined, ops trains, or no roster entry chosen yet), Physics remains selectable.
+    private boolean isPhysicsRampAllowedForCurrentContext() {
+        if (!radioTrainsFromRoster.isSelected()) {
+            return true;
+        }
+        Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+        if (!(sel instanceof RosterEntry)) {
+            // Either "Select Loco" placeholder or nothing selected yet: allow Physics.
+            return true;
+        }
+        return rosterEntryHasPhysicsParameters((RosterEntry) sel);
+    }
+
+    // Return true if the roster entry contains any non-default physics metadata.
+    // Defaults are all numeric fields == 0, traction type == DIESEL_ELECTRIC, mechanical transmission == false.
+    private boolean rosterEntryHasPhysicsParameters(RosterEntry re) {
+        if (re == null) {
+            return false;
+        }
+        boolean anyNumeric = (re.getPhysicsWeightKg() > 0.0f) ||
+                (re.getPhysicsPowerKw() > 0.0f) ||
+                (re.getPhysicsTractiveEffortKn() > 0.0f) ||
+                (re.getPhysicsMaxSpeedKmh() > 0.0f);
+        boolean anyNonDefaultTraction = (re.getPhysicsTractionType() != null &&
+                re.getPhysicsTractionType() != RosterEntry.TractionType.DIESEL_ELECTRIC);
+        boolean mech = re.isPhysicsMechanicalTransmission();
+        return anyNumeric || anyNonDefaultTraction || mech;
+    }
+
+    // Renderer that greys out the Physics option when present but not allowed.
+    private class RampRateCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+                boolean cellHasFocus) {
+            Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (value != null &&
+                    value.equals(Bundle.getMessage("RAMP_PHYSICS")) &&
+                    !isPhysicsRampAllowedForCurrentContext()) {
+                c.setForeground(Color.GRAY);
+            }
+            return c;
+        }
+    }
+
+    // Ensure the ramp-rate combobox has our custom renderer installed once.
+    private void ensureRampRateRendererInstalled() {
+        if (rampRateRendererInstalled) {
+            return;
+        }
+        rampRateBox.setRenderer(new RampRateCellRenderer());
+        rampRateRendererInstalled = true;
+    }
+
+    // If Physics is selected but disallowed, immediately revert selection to a safe non-Physics value.
+    private void enforcePhysicsRampSelectionAllowed() {
+        if (!isPhysicsRampSelected()) {
+            return;
+        }
+        if (isPhysicsRampAllowedForCurrentContext()) {
+            return;
+        }
+        suppressRampRateEvents = true;
+        try {
+            String fallback = lastNonPhysicsRampSelection;
+            if (fallback == null ||
+                    !comboContainsItem(rampRateBox, fallback) ||
+                    Bundle.getMessage("RAMP_PHYSICS").equals(fallback)) {
+                // Prefer Speed Profile if present, else first item.
+                String sp = Bundle.getMessage("RAMP_SPEEDPROFILE");
+                if (comboContainsItem(rampRateBox, sp)) {
+                    fallback = sp;
+                } else if (rampRateBox.getItemCount() > 0) {
+                    fallback = rampRateBox.getItemAt(0);
+                }
+            }
+            if (fallback != null) {
+                rampRateBox.setSelectedItem(fallback);
+            }
+        } finally {
+            suppressRampRateEvents = false;
+        }
+        pa2Physics.setVisible(false);
+    }
+
+    private boolean comboContainsItem(JComboBox<String> box, String item) {
+        if (item == null) {
+            return false;
+        }
+        for (int i = 0; i < box.getItemCount(); i++) {
+            String o = box.getItemAt(i);
+            if (item.equals(o)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+  
+     // Add/remove "Physics" in the ramp rate box depending on speed-profile being enabled & selected
+     // Preserve the previous selection if it still exists after the rebuild.
+     private void updateRampPhysicsAvailability(boolean speedProfileOn) {
+         // Snapshot current selection text (display label)
+         String prev = (String) rampRateBox.getSelectedItem();
+    
+         // Collect current items, excluding any existing "Physics" to avoid duplicates
+         java.util.List<String> toKeep = new java.util.ArrayList<>();
+         for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+             String it = rampRateBox.getItemAt(i);
+             if (!Bundle.getMessage("RAMP_PHYSICS").equals(it)) {
+                 toKeep.add(it);
+             }
+         }
+    
+         // Rebuild the list
+         rampRateBox.removeAllItems();
+         for (String it : toKeep) {
+             rampRateBox.addItem(it);
+         }
+         if (speedProfileOn) {
+             rampRateBox.addItem(Bundle.getMessage("RAMP_PHYSICS"));
+         }
+    
+         // Try to restore previous selection if it still exists
+         boolean restored = false;
+         if (prev != null) {
+             for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+                 if (prev.equals(rampRateBox.getItemAt(i))) {
+                     rampRateBox.setSelectedIndex(i);
+                     restored = true;
+                     break;
+                 }
+             }
+         }
+    
+         // If Physics was selected but is no longer available, fall back to SPEEDPROFILE (if present) or first item
+         if (!restored && prev != null && Bundle.getMessage("RAMP_PHYSICS").equals(prev) && !speedProfileOn) {
+             boolean set = false;
+             for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+                 String candidate = rampRateBox.getItemAt(i);
+                 if (Bundle.getMessage("RAMP_SPEEDPROFILE").equals(candidate)) {
+                     rampRateBox.setSelectedIndex(i);
+                     set = true;
+                     break;
+                 }
+             }
+             if (!set && rampRateBox.getItemCount() > 0) {
+                 rampRateBox.setSelectedIndex(0);
+             }
+         }
+    
+         // Physics panel visibility follows current selection
+         pa2Physics.setVisible(isPhysicsRampSelected());
+     }
+    
+     // Selection changed -> toggle physics panel
+     // Selection changed -> toggle physics panel
+     private void handleRampRateSelectionChanged() {
+         if (suppressRampRateEvents) {
+             return;
+         }
+         ensureRampRateRendererInstalled();
+         String sel = (String) rampRateBox.getSelectedItem();
+         if (sel == null) {
+             pa2Physics.setVisible(false);
+             return;
+         }
+         // Track last non-Physics choice for fallback
+         if (!sel.equals(Bundle.getMessage("RAMP_PHYSICS"))) {
+             lastNonPhysicsRampSelection = sel;
+         }
+         if (sel.equals(Bundle.getMessage("RAMP_PHYSICS")) && !isPhysicsRampAllowedForCurrentContext()) {
+             // Disallowed: revert immediately
+             enforcePhysicsRampSelectionAllowed();
+             rampRateBox.repaint();
+             return;
+         }
+         pa2Physics.setVisible(isPhysicsRampSelected());
+         rampRateBox.repaint();
+     }
+  
+    private final StopDistanceUnitsJCombo stopByDistanceUnitsComboBox = new StopDistanceUnitsJCombo();
+
+     // --- Physics "Additional train weight" UI + units ---
+     // Units: Metric tonnes (t), Long tons (imperial), Short tons (US)
+    
+     // Top-level enum: referenced across several methods
+     private enum AdditionalWeightUnits { METRIC_TONNES, LONG_TONS, SHORT_TONS }
+    
+     protected static class AdditionalWeightUnitsItem {
+         private final String key;
+         private final AdditionalWeightUnits value;
+         public AdditionalWeightUnitsItem(String text, AdditionalWeightUnits units) {
+             this.key = text;
+             this.value = units;
+         }
+         @Override public String toString() { return key; }
+         public AdditionalWeightUnits getValue() { return value; }
+     }
+    
+     protected static class AdditionalWeightUnitsJCombo extends JComboBox<AdditionalWeightUnitsItem> {
+         public AdditionalWeightUnits getSelectedUnits() {
+             AdditionalWeightUnitsItem it = (AdditionalWeightUnitsItem) getSelectedItem();
+             return it != null ? it.getValue() : AdditionalWeightUnits.METRIC_TONNES;
+         }
+     }
+
+     // Panel + controls
+     private final JPanel pa2Physics = new JPanel();
+     private final JLabel additionalWeightLabel = new JLabel(Bundle.getMessage("AdditionalTrainWeightLabel"));
+     private final JSpinner additionalWeightSpinner = new JSpinner();
+     private final AdditionalWeightUnitsJCombo additionalWeightUnitsComboBox = new AdditionalWeightUnitsJCombo();
+     
+     // Rolling resistance coefficient (dimensionless)
+     private final JLabel rollingResistanceCoeffLabel = new JLabel(Bundle.getMessage("RollingResistanceCoeffLabel"));
+     private final JSpinner rollingResistanceCoeffSpinner = new JSpinner();
+     
+    // Driver power (% of full power/regulator) used during acceleration when Physics ramp is selected
+    private final JLabel driverPowerPercentLabel = new JLabel(Bundle.getMessage("DriverPowerPercentLabel"));
+    private final JSpinner driverPowerPercentSpinner = new JSpinner();
+        
+     // Track current display units for conversion
+     private AdditionalWeightUnits currentAdditionalWeightUnits = AdditionalWeightUnits.METRIC_TONNES;
+    
+     // Unit conversions: all values stored to TrainInfo as metric tonnes
+     private static float convertTonnesToDisplay(AdditionalWeightUnits units, float tonnes) {
+         switch (units) {
+             case METRIC_TONNES: return tonnes;            // t
+             case LONG_TONS:     return tonnes / 1.0160469f; // 1 long ton ≈ 1.0160469 t
+             case SHORT_TONS:    return tonnes / 0.9071847f; // 1 short ton ≈ 0.9071847 t
+             default:            return tonnes;
+         }
+     }
+     private static float convertDisplayToTonnes(AdditionalWeightUnits units, float value) {
+         switch (units) {
+             case METRIC_TONNES: return value;            // t
+             case LONG_TONS:     return value * 1.0160469f;
+             case SHORT_TONS:    return value * 0.9071847f;
+             default:            return value;
+         }
+     }
+
+    // Track the “current UI units” so we can convert correctly when user changes the dropdown
+    private StopDistanceUnits currentStopDistanceUnits = StopDistanceUnits.ACTUAL_CM;
+    // Prevent recursion when synchronising Stop-by-distance units with Max Train Length units.
+    private boolean suppressDistanceAndTrainLengthUnitSync = false;
+
     private final JPanel pa3 = new JPanel();
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
     private final JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
@@ -1762,10 +2539,24 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
+    /* ComboBox item for speed-cap mode. */
+    protected enum MaxSpeedCapMode { THROTTLE, SCALE_MPH, SCALE_KMH }
+
+    protected static class MaxSpeedCapModeItem {
+        private final String key;
+        private final MaxSpeedCapMode value;
+        public MaxSpeedCapModeItem(String text, MaxSpeedCapMode mode) { this.key = text; this.value = mode; }
+        @Override public String toString() { return key; }
+        public MaxSpeedCapMode getValue() { return value; }
+    }
+
     public final TrainLengthUnitsJCombo trainLengthUnitsComboBox = new TrainLengthUnitsJCombo();
     private final JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
     private JLabel trainLengthAltLengthLabel; // I18N Label
     private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
+    // Track current units displayed in the spinner and suppress conversions during programmatic updates
+    private TrainLengthUnits currentTrainLengthUnits = TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+    private boolean suppressTrainLengthUnitsEvents = false;
 
     private void initializeAutoRunItems() {
         initializeRampCombo();
@@ -1777,10 +2568,126 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa1.add(speedFactorSpinner);
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
-        pa1.add(maxSpeedLabel);
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
-        maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
-        pa1.add(maxSpeedSpinner);
+     // Mode dropdown
+     maxSpeedCapModeBox.addItem(
+         new MaxSpeedCapModeItem(Bundle.getMessage("MaxSpeedLabel"), MaxSpeedCapMode.THROTTLE)
+     ); // default; speed entries added later when roster profile is available
+     pa1.add(maxSpeedCapModeBox);
+
+     // Initial spinner/editor state: throttle % mode
+     updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode.THROTTLE);
+
+     // Spinner + unit label (unit changes with dropdown)
+     pa1.add(maxSpeedSpinner);
+     pa1.add(maxSpeedUnitLabel);
+     maxSpeedSpinner.addChangeListener(e -> updateMaxSpeedCachesFromSpinner());
+
+      // --- Max Speed mode change: % <-> mph/km/h (with profile-aware conversions and sticky fallbacks) ---
+      maxSpeedCapModeBox.addActionListener(new java.awt.event.ActionListener() {
+          @Override
+          public void actionPerformed(java.awt.event.ActionEvent ev) {
+    
+              // Ignore programmatic changes while rebuilding the combo model.
+              if (suppressMaxSpeedCapModeEvents) {
+                  return;
+              }
+    
+              Object sel = maxSpeedCapModeBox.getSelectedItem();
+              if (!(sel instanceof MaxSpeedCapModeItem)) {
+                  // Transient state while the model is being rebuilt.
+                  return;
+              }
+    
+              // 1) Capture current spinner value and the previous/new modes.
+              float prevDisplay = ((Number) maxSpeedSpinner.getValue()).floatValue();
+              MaxSpeedCapMode prevMode = lastMaxSpeedCapMode;
+              MaxSpeedCapMode mode     = ((MaxSpeedCapModeItem) sel).getValue();
+    
+              // Keep our sticky caches aligned with what the user just had visible.
+              switch (prevMode) {
+                case THROTTLE:
+                    // Clamp percent [0.10 .. 1.00] before caching
+                    if (prevDisplay < 0.10f) prevDisplay = 0.10f;
+                    if (prevDisplay > 1.00f) prevDisplay = 1.00f;
+                    cachedThrottlePercent = prevDisplay;
+                    break;
+                  case SCALE_MPH:
+                      cachedScaleMph = prevDisplay;
+                      break;
+                  case SCALE_KMH:
+                      cachedScaleMph = kmhToMph(prevDisplay);
+                      break;
+                  default:
+                      break;
+              }
+    
+              // 2) Compute the new display value for the target mode.
+              float newDisplay = prevDisplay;
+    
+              // mph <-> km/h always converts the number, then clamps to the new spinner model.
+              if (prevMode == MaxSpeedCapMode.SCALE_KMH && mode == MaxSpeedCapMode.SCALE_MPH) {
+                  newDisplay = kmhToMph(prevDisplay);
+                  newDisplay = Math.max(1.0f, Math.min(200.0f, newDisplay)); // clamp to MPH model 1..200
+    
+              } else if (prevMode == MaxSpeedCapMode.SCALE_MPH && mode == MaxSpeedCapMode.SCALE_KMH) {
+                  newDisplay = mphToKmh(prevDisplay);
+                  newDisplay = Math.max(1.0f, Math.min(320.0f, newDisplay)); // clamp to KMH model 1..320
+    
+              // % -> mph/km/h : only convert if a concrete roster speed profile is available
+              } else if (prevMode == MaxSpeedCapMode.THROTTLE
+                      && (mode == MaxSpeedCapMode.SCALE_MPH || mode == MaxSpeedCapMode.SCALE_KMH)) {
+    
+                  if (isConcreteSpeedProfileAvailable()) {
+                      if (mode == MaxSpeedCapMode.SCALE_MPH) {
+                          newDisplay = percentToScaleMph(prevDisplay);
+                          newDisplay = Math.max(1.0f, Math.min(200.0f, newDisplay));
+                      } else {
+                          newDisplay = percentToScaleKmh(prevDisplay);
+                          newDisplay = Math.max(1.0f, Math.min(320.0f, newDisplay));
+                      }
+                  } else {
+                      // No profile: do NOT convert. Show the last sticky scale speed.
+                      newDisplay = (mode == MaxSpeedCapMode.SCALE_MPH)
+                              ? cachedScaleMph
+                              : mphToKmh(cachedScaleMph);
+                  }
+    
+              // mph/km/h -> % : only convert if a concrete roster speed profile is available
+              } else if ((prevMode == MaxSpeedCapMode.SCALE_MPH || prevMode == MaxSpeedCapMode.SCALE_KMH)
+                      && mode == MaxSpeedCapMode.THROTTLE) {
+    
+                  if (isConcreteSpeedProfileAvailable()) {
+                      if (prevMode == MaxSpeedCapMode.SCALE_MPH) {
+                          newDisplay = scaleSpeedToPercentFromProfile(prevDisplay, false); // mph -> %
+                      } else {
+                          newDisplay = scaleSpeedToPercentFromProfile(prevDisplay, true);  // km/h -> %
+                      }
+                      // Clamp to spinner's % model 0.10..1.00
+                      newDisplay = Math.max(0.10f, Math.min(1.00f, newDisplay));
+                  } else {
+                           // No profile: do NOT convert. Show the last sticky % value (clamped)
+                           newDisplay = cachedThrottlePercent;
+                           newDisplay = Math.max(0.10f, Math.min(1.00f, newDisplay));
+                         }  
+              } else {
+                  // Same-mode selection or THROTTLE->THROTTLE: keep numeric as-is
+              }
+    
+              // 3) Update spinner model/editor/unit to the new mode, then set the display value.
+                suppressMaxSpeedSpinnerEvents = true;
+                try {
+                    // Set the visible mode first so any incidental listeners see the correct mode
+                    lastMaxSpeedCapMode = mode;
+                
+                    // Now change the spinner model and the numeric value
+                    updateMaxSpeedSpinnerModelForMode(mode);
+                    maxSpeedSpinner.setValue(Float.valueOf(newDisplay));
+                } finally {
+                    suppressMaxSpeedSpinnerEvents = false;
+                }
+                handleMinReliableOperatingSpeedUpdate();
+          }
+        });
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         pa1.add(minReliableOperatingSpeedLabel);
         minReliableOperatingSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
@@ -1807,7 +2714,143 @@ public class ActivateTrainFrame extends JmriJFrame {
         stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
         pa2a.add(stopBySpeedProfileAdjustSpinner);
         stopBySpeedProfileAdjustSpinner.setToolTipText(Bundle.getMessage("StopBySpeedProfileAdjustHint"));
-        initiatePane.add(pa2a);
+        initiatePane.add(pa2a);       
+
+         // “Override stop sensor” (default OFF = use sensors when present).
+         // NOTE: No mutual exclusion with Stop-by-speed-profile or distance mode.
+         // When checked, ignore stop sensors and rely on distance/profile stopping.
+         // When unchecked, use sensors if present; runtime will slow within distance and finally stop at the sensor.
+         pa2a.add(overrideStopSensorCheckBox);
+         overrideStopSensorCheckBox.setToolTipText(Bundle.getMessage("OverrideStopSensorHint"));
+         overrideStopSensorCheckBox.addActionListener(ev -> {
+             // Keep UI coherent, but do NOT disable profile/distance options here.
+             updateStopByDistanceEnable();
+         });
+            
+        pa2b.add(stopByDistanceLabel);
+        pa2b.add(stopByDistanceEnableCheckBox);
+        
+        // Distance value first
+        stopByDistanceMmSpinner.setModel(
+            new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1000000.0f), Float.valueOf(0.1f))
+        );
+        stopByDistanceMmSpinner.setEditor(new JSpinner.NumberEditor(stopByDistanceMmSpinner, "0.0"));
+        stopByDistanceMmSpinner.setToolTipText(Bundle.getMessage("StopByDistanceHint"));
+        pa2b.add(stopByDistanceMmSpinner);
+        
+        // Units dropdown next 
+        stopByDistanceUnitsComboBox.addItem(
+                new StopDistanceUnitsItem(bundleOrDefault("StopByDistanceUnitsCm", "cm"), StopDistanceUnits.ACTUAL_CM));
+        stopByDistanceUnitsComboBox.addItem(
+            new StopDistanceUnitsItem(Bundle.getMessage("StopByDistanceUnitsMm"), StopDistanceUnits.ACTUAL_MM)
+        );
+        stopByDistanceUnitsComboBox.addItem(
+            new StopDistanceUnitsItem(Bundle.getMessage("StopByDistanceUnitsInch"), StopDistanceUnits.ACTUAL_INCHES)
+        );
+        stopByDistanceUnitsComboBox.addItem(
+            new StopDistanceUnitsItem(Bundle.getMessage("StopByDistanceUnitsScaleMeters"), StopDistanceUnits.SCALE_METERS)
+        );
+        stopByDistanceUnitsComboBox.addItem(
+            new StopDistanceUnitsItem(Bundle.getMessage("StopByDistanceUnitsScaleFeet"), StopDistanceUnits.SCALE_FEET)
+        );
+        pa2b.add(stopByDistanceUnitsComboBox);
+
+         // Initialize Physics visibility based on current availability (enabled state)
+         updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
+        
+        // Head/Tail radios last (to the right of the units dropdown)
+        stopByDistanceRefGroup.add(stopByDistanceHead);
+        stopByDistanceRefGroup.add(stopByDistanceTail);
+        
+        // Localised tooltips for Head/Tail reference selection
+        stopByDistanceHead.setToolTipText(Bundle.getMessage("StopByDistanceHeadHint"));
+        stopByDistanceTail.setToolTipText(Bundle.getMessage("StopByDistanceTailHint"));
+        
+        stopByDistanceHead.setSelected(true);
+        pa2b.add(stopByDistanceHead);
+        pa2b.add(stopByDistanceTail);
+        
+        initiatePane.add(pa2b);
+
+        // Event wiring:
+        // - Toggle mutually-exclusive mode (adjust% vs. distance) and availability
+        stopByDistanceEnableCheckBox.addActionListener(ev -> updateStopByDistanceEnable());
+        stopBySpeedProfileCheckBox.addActionListener(ev -> updateStopByDistanceEnable());
+    
+        // - Units change: convert current displayed value from old units to new, preserving the underlying mm value
+        stopByDistanceUnitsComboBox.addActionListener(ev -> handleStopByDistanceUnitsComboSelectionChanged());
+
+        updateStopByDistanceEnable();
+        StopDistanceUnits preferredStopUnits = getPreferredStopDistanceUnitsFromMaxTrainLengthUnits();
+        currentStopDistanceUnits = preferredStopUnits;
+        setStopByDistanceUnitsSelection(preferredStopUnits);
+        updateStopByDistanceSpinnerModelForUnits(preferredStopUnits);
+        pa2b.add(stopByDistanceUnitsComboBox);      
+
+         // --- Physics: Additional train weight panel ---
+         pa2Physics.setLayout(new FlowLayout());
+         pa2Physics.add(additionalWeightLabel);
+    
+         // Numeric spinner: wide range, fine step; display value depends on chosen units
+         additionalWeightSpinner.setModel(
+             new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.1f))
+         );
+         additionalWeightSpinner.setEditor(new JSpinner.NumberEditor(additionalWeightSpinner, "0.0"));
+         additionalWeightSpinner.setToolTipText(Bundle.getMessage("AdditionalTrainWeightHint"));
+         pa2Physics.add(additionalWeightSpinner);
+    
+         // Units dropdown (replaces a static label); conversions are UI-only; TrainInfo stores metric tonnes
+        additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem(Bundle.getMessage("AdditionalWeightUnitsMetricTonnes"), AdditionalWeightUnits.METRIC_TONNES));
+        additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem(Bundle.getMessage("AdditionalWeightUnitsLongTons"),   AdditionalWeightUnits.LONG_TONS));
+        additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem(Bundle.getMessage("AdditionalWeightUnitsShortTons"),  AdditionalWeightUnits.SHORT_TONS));
+        pa2Physics.add(additionalWeightUnitsComboBox);     
+         
+         // Rolling resistance coefficient (dimensionless, default 0.002)
+         rollingResistanceCoeffSpinner.setModel(
+             new SpinnerNumberModel(Float.valueOf(0.002f), Float.valueOf(0.000f), Float.valueOf(0.020f), Float.valueOf(0.0001f))
+         );
+         rollingResistanceCoeffSpinner.setEditor(new JSpinner.NumberEditor(rollingResistanceCoeffSpinner, "0.0000"));
+         rollingResistanceCoeffSpinner.setToolTipText(Bundle.getMessage("RollingResistanceCoeffHint"));
+         pa2Physics.add(rollingResistanceCoeffLabel);
+         pa2Physics.add(rollingResistanceCoeffSpinner);      
+
+          // Driver power during acceleration (% of full power); stored 0..1 in TrainInfo
+          driverPowerPercentSpinner.setModel(
+              new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(10.0f), Float.valueOf(100.0f), Float.valueOf(1.0f))
+          );
+          driverPowerPercentSpinner.setEditor(new JSpinner.NumberEditor(driverPowerPercentSpinner, "##0'%'"));
+          driverPowerPercentSpinner.setToolTipText(Bundle.getMessage("DriverPowerPercentHint"));
+          pa2Physics.add(driverPowerPercentLabel);
+          pa2Physics.add(driverPowerPercentSpinner);
+
+         // Rolling resistance coefficient (dimensionless, default 0.002)
+         rollingResistanceCoeffSpinner.setModel(
+             new SpinnerNumberModel(Float.valueOf(0.002f), Float.valueOf(0.000f), Float.valueOf(0.020f), Float.valueOf(0.0001f))
+         );
+         rollingResistanceCoeffSpinner.setEditor(new JSpinner.NumberEditor(rollingResistanceCoeffSpinner, "0.0000"));
+         rollingResistanceCoeffSpinner.setToolTipText(Bundle.getMessage("RollingResistanceCoeffHint"));
+         pa2Physics.add(rollingResistanceCoeffLabel);
+         pa2Physics.add(rollingResistanceCoeffSpinner);
+            
+         // Units change => convert displayed value to new units, preserving underlying tonnes
+         additionalWeightUnitsComboBox.addActionListener(ev -> {
+             float display = ((Number) additionalWeightSpinner.getValue()).floatValue();
+             float tonnes = convertDisplayToTonnes(currentAdditionalWeightUnits, display);
+             currentAdditionalWeightUnits = additionalWeightUnitsComboBox.getSelectedUnits();
+             float newDisplay = convertTonnesToDisplay(currentAdditionalWeightUnits, tonnes);
+             additionalWeightSpinner.setValue(Float.valueOf(newDisplay));
+         });
+    
+         // Initially hidden; becomes visible only when speed profile is ON and ramp == Physics
+         pa2Physics.setVisible(false);
+         initiatePane.add(pa2Physics);
+    
+        // Events to keep Physics option availability in sync with "Use speed profile"
+        useSpeedProfileCheckBox.addActionListener(ev -> {
+            // Show/hide Physics purely based on availability (enabled), not checkbox selection.
+            updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
+        });
+        rampRateBox.addActionListener(ev -> handleRampRateSelectionChanged());        
         pa3.setLayout(new FlowLayout());
         pa3.add(soundDecoderBox);
         soundDecoderBox.setToolTipText(Bundle.getMessage("SoundDecoderBoxHint"));
@@ -1819,7 +2862,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
         maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint")); // won't be updated while Dispatcher is open
         maxTrainLengthSpinner.addChangeListener( e -> handlemaxTrainLengthChangeUnitsLength());
-        trainLengthUnitsComboBox.addActionListener( e -> handlemaxTrainLengthChangeUnitsLength());
+        trainLengthUnitsComboBox.addActionListener(e -> handleTrainLengthUnitsComboSelectionChanged());
         trainLengthAltLengthLabel=new JLabel();
         pa4.setLayout(new FlowLayout());
         pa4.add(trainLengthLabel);
@@ -1846,15 +2889,33 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleMinReliableOperatingSpeedUpdate() {
-        float mROS = (float)minReliableOperatingSpeedSpinner.getValue();
+        // Read % as float
+        float mROS = ((Number) minReliableOperatingSpeedSpinner.getValue()).floatValue();
+        // Clear label by default
         minReliableOperatingScaleSpeedLabel.setText("");
-        if (useSpeedProfileCheckBox.isEnabled()) {
-            RosterEntry re = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
-            if (re != null && re.getSpeedProfile() != null &&  re.getSpeedProfile().getProfileSize() > 0) {
-                float mms = re.getSpeedProfile().getSpeed(mROS, true);
-                minReliableOperatingScaleSpeedLabel.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(mms));
-            }
+    
+        // Only attempt conversion when speed-profile UI is enabled
+        if (!useSpeedProfileCheckBox.isEnabled()) {
+            return;
         }
+    
+        // RosterEntryComboBox is JComboBox<Object>; first item is a String ("no selection").
+        Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+        if (!(sel instanceof RosterEntry)) {
+            // No roster entry selected yet; nothing to display
+            return;
+        }
+    
+        RosterEntry re = (RosterEntry) sel;
+        RosterSpeedProfile sp = re.getSpeedProfile();
+        if (sp == null || sp.getProfileSize() < 1) {
+            // No profile data; nothing to display
+            return;
+        }
+    
+        // Convert % -> mm/s, then format in the currently selected preferred units
+        float mms = sp.getSpeed(mROS, true);
+        minReliableOperatingScaleSpeedLabel.setText(formatScaleSpeedWithPreferredUnits(mms));
     }
 
     private void handlemaxTrainLengthChangeUnitsLength() {
@@ -1862,6 +2923,38 @@ public class ActivateTrainFrame extends JmriJFrame {
                 ((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue(),
                 (float) maxTrainLengthSpinner.getValue()));
     }
+
+     // Convert the displayed length when the user changes the units combo.
+     // We preserve the actual length by converting display -> scale meters -> new display units.
+     private void handleTrainLengthUnitsChanged() {
+         if (suppressTrainLengthUnitsEvents) {
+             // Programmatic change (e.g., file load): just refresh the alternate label.
+             handlemaxTrainLengthChangeUnitsLength();
+             return;
+         }
+         TrainLengthUnits newUnits =
+             ((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue();
+    
+         // 1) Capture the current display value and convert it to scale meters.
+         float currentDisplay = ((Number) maxTrainLengthSpinner.getValue()).floatValue();
+         float scaleMeters = maxTrainLengthToScaleMeters(currentTrainLengthUnits, currentDisplay);
+    
+         // 2) Convert the common baseline (scale meters) to the newly selected display units.
+         float newDisplay = scaleMetersToDisplay(newUnits, scaleMeters);
+    
+         // 3) Update spinner without re‑entering this handler; update current unit tracker.
+         suppressTrainLengthUnitsEvents = true;
+         try {
+             maxTrainLengthSpinner.setValue(Float.valueOf(newDisplay));
+             currentTrainLengthUnits = newUnits;
+         } finally {
+             suppressTrainLengthUnitsEvents = false;
+         }
+    
+         // 4) Keep the alternate-length label in sync.
+         handlemaxTrainLengthChangeUnitsLength();
+     }
+
 
     /**
      * Get an I18N String of the max TrainLength.
@@ -1892,14 +2985,17 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private float maxTrainLengthToScaleMeters(TrainLengthUnits fromUnits, float fromValue) {
         float value;
+        final float scaleRatio = (_dispatcher.getScale() != null)
+                ? (float) _dispatcher.getScale().getScaleRatio()
+                : 1.0f;
         // convert to meters.
         switch (fromUnits) {
             case TRAINLENGTH_ACTUALINCHS:
-                value = fromValue / 12.0f * (float) _dispatcher.getScale().getScaleRatio();
+                value = fromValue / 12.0f * scaleRatio;
                 value = value / 3.28084f;
                 break;
             case TRAINLENGTH_ACTUALCM:
-                value = fromValue / 100.0f * (float) _dispatcher.getScale().getScaleRatio();
+                value = fromValue / 100.0f * scaleRatio;
                 break;
            case TRAINLENGTH_SCALEFEET:
                value = fromValue / 3.28084f;
@@ -1913,24 +3009,57 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         return value;
     }
+    
+    /**
+     * Convert from scale meters to the requested display units.
+     */
+    private float scaleMetersToDisplay(TrainLengthUnits toUnits, float scaleMeters) {
+        final float scaleFactor = (_dispatcher.getScale() != null)
+                ? (float) _dispatcher.getScale().getScaleFactor()
+                : 1.0f; // CI-safe default
+    
+        switch (toUnits) {
+            case TRAINLENGTH_SCALEMETERS:
+                return scaleMeters;
+            case TRAINLENGTH_SCALEFEET:
+                return scaleMeters * 3.28084f;
+            case TRAINLENGTH_ACTUALINCHS:
+                // actual inches = scale meters × scaleFactor (scale→actual) × feet/m × 12 in/ft
+                return scaleMeters * scaleFactor * 3.28084f * 12.0f;
+            case TRAINLENGTH_ACTUALCM:
+                // actual cm = scale meters × scaleFactor (scale→actual) × 100 cm/m
+                return scaleMeters * scaleFactor * 100.0f;
+            default:
+                return scaleMeters;
+        }
+    }
 
-    /*
+    /**
      * Calculates the reciprocal unit. Actual to Scale and vice versa
      */
     private float maxTrainLengthCalculateAlt(TrainLengthUnits fromUnits, float fromValue) {
+        final float scaleRatio = (_dispatcher.getScale() != null)
+                ? (float) _dispatcher.getScale().getScaleRatio()
+                : 1.0f;
         switch (fromUnits) {
             case TRAINLENGTH_ACTUALINCHS:
                 // calc scale feet
-                return (float) jmri.util.MathUtil.granulize(fromValue / 12 * (float) _dispatcher.getScale().getScaleRatio(),0.1f);
+                return (float) jmri.util.MathUtil.granulize(fromValue / 12 * scaleRatio, 0.1f);
             case TRAINLENGTH_ACTUALCM:
                 // calc scale meter
-                return fromValue / 100 * (float) _dispatcher.getScale().getScaleRatio();
-            case TRAINLENGTH_SCALEFEET:
-                // calc actual inchs
-                return fromValue * 12 * (float) _dispatcher.getScale().getScaleFactor();
-           case TRAINLENGTH_SCALEMETERS:
-                // calc actual cm.
-                return fromValue * 100 * (float) _dispatcher.getScale().getScaleFactor();
+                return fromValue / 100 * scaleRatio;
+            case TRAINLENGTH_SCALEFEET: { // calc actual inches
+                final float scaleFactor = (_dispatcher.getScale() != null)
+                        ? (float) _dispatcher.getScale().getScaleFactor()
+                        : 1.0f;
+                return fromValue * 12.0f * scaleFactor;
+            }
+            case TRAINLENGTH_SCALEMETERS: { // calc actual cm.
+                final float scaleFactor = (_dispatcher.getScale() != null)
+                        ? (float) _dispatcher.getScale().getScaleFactor()
+                        : 1.0f;
+                return fromValue * 100.0f * scaleFactor;
+            }
            default:
                log.error("Invalid TrainLengthUnits has been updated, fix me");
         }
@@ -1948,32 +3077,101 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private void autoTrainInfoToDialog(TrainInfo info) {
         speedFactorSpinner.setValue(info.getSpeedFactor());
-        maxSpeedSpinner.setValue(info.getMaxSpeed());
+        // Choose mode by presence of scale km/h
+        boolean hasScaleKmh = info.getMaxSpeedScaleKmh() > 0.0f;
+        if (hasScaleKmh && useSpeedProfileCheckBox.isEnabled()) {
+            // Default to km/h display when loading from file
+            maxSpeedCapModeBox.setSelectedIndex(Math.min(2, maxSpeedCapModeBox.getItemCount()-1)); // item 2 is KMH when enabled
+            updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode.SCALE_KMH);
+            maxSpeedSpinner.setValue(info.getMaxSpeedScaleKmh());
+        } else {
+            maxSpeedCapModeBox.setSelectedIndex(0); // THROTTLE
+            updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode.THROTTLE);
+            maxSpeedSpinner.setValue(info.getMaxSpeed());
+        }
         minReliableOperatingSpeedSpinner.setValue(info.getMinReliableOperatingSpeed());
-        setComboBox(rampRateBox, info.getRampRate());
+        String rampLabel = normalizeRampLabel(info.getRampRate()); 
+
+         // Physics: set additional weight spinner (convert stored metric tonnes to current UI units)
+         currentAdditionalWeightUnits = AdditionalWeightUnits.METRIC_TONNES;
+         additionalWeightUnitsComboBox.setSelectedIndex(0);
+         additionalWeightSpinner.setValue(Float.valueOf(convertTonnesToDisplay(currentAdditionalWeightUnits, info.getAdditionalTrainWeightMetricTonnes())));       
+         additionalWeightUnitsComboBox.setSelectedIndex(0);
+         rollingResistanceCoeffSpinner.setValue(Float.valueOf(info.getRollingResistanceCoeff()));
+         
+         // Driver power % -> spinner uses 0..100; file stores 0..1
+         float dp = info.getDriverPowerPercent();
+         if (dp <= 0.0f) dp = 0.0f;
+         if (dp > 1.0f) dp = 1.0f;
+         driverPowerPercentSpinner.setValue(Float.valueOf(dp * 100.0f));
+    
+         // Physics availability & panel visibility based on current Speed-profile + ramp
+        useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
+        // Physics availability depends only on whether speed profile UI is enabled (availability), not on selection
+        updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
+        
+        // Now that the items are rebuilt, set the ramp selection using the normalized label
+        setComboBox(rampRateBox, rampLabel);
+        
+        // Physics weight row visibility follows the current ramp selection
+        pa2Physics.setVisible(isPhysicsRampSelected());
+
+      
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
-        trainLengthUnitsComboBox.setSelectedItemByValue(info.getTrainLengthUnits());
-        switch (info.getTrainLengthUnits()) {
-            case TRAINLENGTH_SCALEFEET:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet());
-                break;
-            case TRAINLENGTH_SCALEMETERS:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters());
-                break;
-            case TRAINLENGTH_ACTUALINCHS:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * (float)_dispatcher.getScale().getScaleFactor());
-                break;
-            case TRAINLENGTH_ACTUALCM:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * (float)_dispatcher.getScale().getScaleFactor());
-                break;
-            default:
-                maxTrainLengthSpinner.setValue(0.0f);
+        try {
+            trainLengthUnitsComboBox.setSelectedItemByValue(info.getTrainLengthUnits());
+            switch (info.getTrainLengthUnits()) {
+                case TRAINLENGTH_SCALEFEET:
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet());
+                    break;
+                case TRAINLENGTH_SCALEMETERS:
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters());
+                    break;
+                case TRAINLENGTH_ACTUALINCHS: {
+                    float sf = (_dispatcher.getScale() != null)
+                        ? (float)_dispatcher.getScale().getScaleFactor()
+                        : 1.0f; // CI-safe default
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * sf);
+                    break;
+                }
+                case TRAINLENGTH_ACTUALCM: {
+                    float sf = (_dispatcher.getScale() != null)
+                        ? (float)_dispatcher.getScale().getScaleFactor()
+                        : 1.0f; // CI-safe default
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * sf);
+                    break;
+                }
+    
+                default:
+                    maxTrainLengthSpinner.setValue(0.0f);
+            }
+        } finally {
+            suppressTrainLengthUnitsEvents = false;
         }
+        
         useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
         stopBySpeedProfileCheckBox.setSelected(info.getStopBySpeedProfile());
         stopBySpeedProfileAdjustSpinner.setValue(info.getStopBySpeedProfileAdjust());
+        overrideStopSensorCheckBox.setSelected(!info.getUseStopSensor());
+        updateStopByDistanceEnable();
+        stopByDistanceEnableCheckBox.setSelected(info.getStopByDistanceMm() > 0.0f);
+    
+        // Default Stop-by-distance units follow current Max Train Length units. Convert the stored mm to current display units.
+        StopDistanceUnits preferredStopUnits = getPreferredStopDistanceUnitsFromMaxTrainLengthUnits();
+        currentStopDistanceUnits = preferredStopUnits;
+        setStopByDistanceUnitsSelection(preferredStopUnits);
+        float displayValue = convertMmToStopDisplay(currentStopDistanceUnits, info.getStopByDistanceMm());
+        stopByDistanceMmSpinner.setValue(Float.valueOf(displayValue));
+        updateStopByDistanceSpinnerModelForUnits(currentStopDistanceUnits);
+    
+         if (info.getStopByDistanceRef() == TrainInfo.StopReference.TAIL) {
+             stopByDistanceTail.setSelected(true);
+         } else {
+             stopByDistanceHead.setSelected(true);
+         }
+         updateStopByDistanceEnable();
         fNumberLightSpinner.setValue(info.getFNumberLight());
         fNumberBellSpinner.setValue(info.getFNumberBell());
         fNumberHornSpinner.setValue(info.getFNumberHorn());
@@ -1983,9 +3181,40 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private void autoRunItemsToTrainInfo(TrainInfo info) {
         info.setSpeedFactor((float) speedFactorSpinner.getValue());
-        info.setMaxSpeed((float) maxSpeedSpinner.getValue());
+        MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) maxSpeedCapModeBox.getSelectedItem()).getValue();
+        if (mode == MaxSpeedCapMode.THROTTLE) {
+            // Throttle mode: write % (0.0..1.0) and clear scale-speed
+            info.setMaxSpeed((float) maxSpeedSpinner.getValue());
+            info.setMaxSpeedScaleKmh(0.0f);
+        } else if (mode == MaxSpeedCapMode.SCALE_MPH) {
+            // Convert mph → km/h for storage
+            float mph = ((Number) maxSpeedSpinner.getValue()).floatValue();
+            info.setMaxSpeedScaleKmh(mphToKmh(mph));
+            // Preserve existing throttle % (fallback) untouched
+        } else { // SCALE_KMH
+            float kmh = ((Number) maxSpeedSpinner.getValue()).floatValue();
+            info.setMaxSpeedScaleKmh(kmh);
+            // Preserve existing throttle % (fallback) untouched
+        }
         info.setMinReliableOperatingSpeed((float) minReliableOperatingSpeedSpinner.getValue());
         info.setRampRate((String) rampRateBox.getSelectedItem());
+         // Physics: when ramp == Physics, store additional weight (metric tonnes); else store 0.0f
+         if (isPhysicsRampSelected()) {
+             float display = ((Number) additionalWeightSpinner.getValue()).floatValue();
+             float tonnes = convertDisplayToTonnes(currentAdditionalWeightUnits, display);
+             info.setAdditionalTrainWeightMetricTonnes(tonnes);
+         } else {
+             info.setAdditionalTrainWeightMetricTonnes(0.0f);
+         }
+
+
+         // Driver power percent: only meaningful for Physics ramp, but we always persist (default 1.0 when not physics)
+         float dpct = ((Number) driverPowerPercentSpinner.getValue()).floatValue() / 100.0f;
+         if (dpct < 0.0f) dpct = 0.0f; else if (dpct > 1.0f) dpct = 1.0f;
+         info.setDriverPowerPercent(isPhysicsRampSelected() ? dpct : 1.0f);
+             
+         // Always store c_rr (independent of ramp selection)
+        info.setRollingResistanceCoeff(((Number) rollingResistanceCoeffSpinner.getValue()).floatValue());
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
         info.setTrainLengthUnits(((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue());
@@ -2000,13 +3229,66 @@ public class ActivateTrainFrame extends JmriJFrame {
             info.setUseSpeedProfile(false);
             info.setStopBySpeedProfile(false);
             info.setStopBySpeedProfileAdjust(1.0f);
-        }
-        info.setFNumberLight((int)fNumberLightSpinner.getValue());
-        info.setFNumberBell((int)fNumberBellSpinner.getValue());
-        info.setFNumberHorn((int)fNumberHornSpinner.getValue());
-    }
+        }       
 
-   private void initializeRampCombo() {
+         // Persist inverse of “Override stop sensor” (unchecked = use sensors)
+         info.setUseStopSensor(!overrideStopSensorCheckBox.isSelected());
+
+         // Only meaningful if Stop-by-speed-profile is enabled & selected
+         boolean baseOn = stopBySpeedProfileCheckBox.isEnabled() && stopBySpeedProfileCheckBox.isSelected();
+         if (baseOn && stopByDistanceEnableCheckBox.isSelected()) {
+             float displayValue = ((Number) stopByDistanceMmSpinner.getValue()).floatValue();
+             float mm = convertStopDisplayToMm(currentStopDistanceUnits, displayValue);
+    
+             info.setStopByDistanceMm(mm);
+             info.setStopByDistanceRef(stopByDistanceTail.isSelected()
+                 ? TrainInfo.StopReference.TAIL
+                 : TrainInfo.StopReference.HEAD);
+         } else {
+             info.setStopByDistanceMm(0.0f);
+             info.setStopByDistanceRef(TrainInfo.StopReference.HEAD);
+         }
+    
+            info.setFNumberLight((int)fNumberLightSpinner.getValue());
+            info.setFNumberBell((int)fNumberBellSpinner.getValue());
+            info.setFNumberHorn((int)fNumberHornSpinner.getValue());
+        }
+
+    // Map legacy ramp values (numeric codes or Bundle keys) to the current display label used in rampRateBox.
+     private String normalizeRampLabel(String raw) {
+         if (raw == null || raw.trim().isEmpty()) {
+             return Bundle.getMessage("RAMP_NONE");
+         }
+         String s = raw.trim();
+    
+         // Numeric legacy codes -> display labels; order must match AutoActiveTrain constants
+         if (s.matches("\\d+")) {
+             switch (Integer.parseInt(s)) {
+                 case 0: return Bundle.getMessage("RAMP_NONE");
+                 case 1: return Bundle.getMessage("RAMP_FAST");
+                 case 2: return Bundle.getMessage("RAMP_MEDIUM");
+                 case 3: return Bundle.getMessage("RAMP_MED_SLOW");
+                 case 4: return Bundle.getMessage("RAMP_SLOW");
+                 case 5: return Bundle.getMessage("RAMP_SPEEDPROFILE");
+                 case 6: return Bundle.getMessage("RAMP_PHYSICS");
+                 default: return Bundle.getMessage("RAMP_NONE");
+             }
+         }
+    
+         // Bundle key -> display label (e.g., "RAMP_MEDIUM")
+         if ("RAMP_NONE".equals(s))         return Bundle.getMessage("RAMP_NONE");
+         if ("RAMP_FAST".equals(s))         return Bundle.getMessage("RAMP_FAST");
+         if ("RAMP_MEDIUM".equals(s))       return Bundle.getMessage("RAMP_MEDIUM");
+         if ("RAMP_MED_SLOW".equals(s))     return Bundle.getMessage("RAMP_MED_SLOW");
+         if ("RAMP_SLOW".equals(s))         return Bundle.getMessage("RAMP_SLOW");
+         if ("RAMP_SPEEDPROFILE".equals(s)) return Bundle.getMessage("RAMP_SPEEDPROFILE");
+         if ("RAMP_PHYSICS".equals(s))      return Bundle.getMessage("RAMP_PHYSICS");
+    
+         // Otherwise assume it's already a localized display label
+         return s;
+     }
+  
+    private void initializeRampCombo() {
         rampRateBox.removeAllItems();
         rampRateBox.addItem(Bundle.getMessage("RAMP_NONE"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_FAST"));
@@ -2014,6 +3296,9 @@ public class ActivateTrainFrame extends JmriJFrame {
         rampRateBox.addItem(Bundle.getMessage("RAMP_MED_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SPEEDPROFILE"));
+        // Default fallback if Physics cannot be selected
+        lastNonPhysicsRampSelection = Bundle.getMessage("RAMP_SPEEDPROFILE");
+        rampRateBox.addItem(Bundle.getMessage("RAMP_PHYSICS")); // Visible only when speed-profile is enabled & selected
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
     }
 
@@ -2130,6 +3415,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         return true;
     }
+    
+    
 
     /*
      * ComboBox item.

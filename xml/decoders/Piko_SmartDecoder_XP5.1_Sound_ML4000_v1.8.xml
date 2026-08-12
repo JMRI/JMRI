@@ -16,9 +16,11 @@
     <!-- Version 1 - For Piko SmartDecoder XP5.1 Sound FW 1.8.x with SUSI Light Controller on board -->
     <!--             Supported decoder: PIKO56627-22 = PluX22 decoder KM ML4000 US #97442           -->
     <version author="Ulrich Gerlach" version="5" lastUpdated="2025-03-13"/>
-    <!-- Version 5 - Add CVs and pane for decorder informationen, set highVersionID=16 -->
+    <!-- Version 5 - Add CVs and pane for decorder informationen, set highVersionID="15"            -->
+    <version author="Ulrich Gerlach" version="6" lastUpdated="2026-04-04"/>
+    <!-- Version 6 - Set highVersionID="16"                                                         -->
     <decoder>
-        <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+        <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order">
             <model model="PIKO56627-22 KM ML4000-US V1.8" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56627-22" comment="Piko SmartDecoder XP5.1 Sound KM ML4000 (FW 1.8.0 - 1.16.0) US Version">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>

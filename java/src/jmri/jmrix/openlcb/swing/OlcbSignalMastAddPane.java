@@ -394,7 +394,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
-    static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
+    public static class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
 
         /**
          * {@inheritDoc}
@@ -423,6 +423,6 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSignalMastAddPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSignalMastAddPane.class);
 
 }

@@ -117,7 +117,7 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
                 root.put(JSON.METHOD, JSON.GET);
                 root.put(JSON.ID, request.id);
 
-                ObjectNode data = root.with(JSON.DATA);
+                ObjectNode data = root.withObject(JSON.DATA);
                 data.put(JSON.AUDIO_ICON_IDENTITY, _audioIcon.getIdentity());
                 data.put(JSON.AUDIO_COMMAND, command);
                 data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, numLoops);
@@ -130,5 +130,5 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonAudioIconSocketService.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonAudioIconSocketService.class);
 }

@@ -5,11 +5,12 @@ import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class BlockBossLogicProviderTest {
 
@@ -34,14 +35,15 @@ public class BlockBossLogicProviderTest {
     @Test
     public void GivenANewProvider_WhenGetEexistingByValidSignalHeadString_ThenABlockBossLogicObjectIsCreated_(){
         BlockBossLogic blockBossLogic = provider.provide("IH1");
-        assertThat(blockBossLogic).isNotNull();
+        assertNotNull(blockBossLogic);
     }
 
     @Test
     public void GivenANewProvider_WhenGetEexistingByValidSignalHead_ThenABlockBossLogicObjectIsCreated_(){
         SignalHead signalHead = signalHeadManager.getSignalHead("IH1");
+        assertNotNull(signalHead);
         BlockBossLogic blockBossLogic = provider.provide(signalHead);
-        assertThat(blockBossLogic).isNotNull();
+        assertNotNull(blockBossLogic);
     }
 
 }

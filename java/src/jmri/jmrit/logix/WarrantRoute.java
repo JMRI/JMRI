@@ -1343,7 +1343,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         return msg;
     }
 
-    static protected String pathIsValid(OBlock block, String pathName) {
+    protected static String pathIsValid(OBlock block, String pathName) {
         if (block == null) {
             return Bundle.getMessage("PathInvalid", pathName, "null");
         }
@@ -1547,7 +1547,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
      * @param tooltip  Bundle keyword for tooltip message
      * @return Panel containing Components
      */
-    static protected JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, JLabel label, String tooltip) {
+    protected static JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, JLabel label, String tooltip) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -1585,7 +1585,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
      * @param tooltip Bundle keyword for tooltip message
      * @return Panel containing Component
      */
-    static protected JPanel makeTextBoxPanel(JComponent comp, String label, String tooltip) {
+    protected static JPanel makeTextBoxPanel(JComponent comp, String label, String tooltip) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));

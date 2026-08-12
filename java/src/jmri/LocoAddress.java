@@ -26,6 +26,8 @@ public interface LocoAddress {
 
     Protocol getProtocol();
 
+    default boolean isConsistAddress() { return false; }
+    
     enum Protocol {
 
         DCC_SHORT("dcc_short", "ProtocolDCC_Short"), // NOI18N
@@ -47,7 +49,8 @@ public interface LocoAddress {
 
         String shortName;
         String peopleName;
-
+        boolean isConsist = false;
+        
         public String getShortName() {
             return shortName;
         }
@@ -56,7 +59,7 @@ public interface LocoAddress {
             return peopleName;
         }
 
-        static public Protocol getByShortName(String shName) {
+        public static Protocol getByShortName(String shName) {
             for (Protocol p : Protocol.values()) {
                 if (p.shortName.equals(shName)) {
                     return p;
@@ -65,7 +68,7 @@ public interface LocoAddress {
             throw new java.lang.IllegalArgumentException("argument value " + shName + " not valid");
         }
 
-        static public Protocol getByPeopleName(String pName) {
+        public static Protocol getByPeopleName(String pName) {
             for (Protocol p : Protocol.values()) {
                 if (p.peopleName.equals(pName)) {
                     return p;

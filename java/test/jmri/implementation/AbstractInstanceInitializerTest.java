@@ -3,7 +3,6 @@ package jmri.implementation;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class AbstractInstanceInitializerTest {
     @Test
     public void testCTor() {
         AbstractInstanceInitializer t = new AbstractInstanceInitializer();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class AbstractInstanceInitializerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractInstanceInitializerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractInstanceInitializerTest.class);
 
 }

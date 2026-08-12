@@ -86,7 +86,24 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>SlotMonitor update: 
+                <ul>
+                    <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
+                    <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
+                    <li>If purging is disabled in the Command Station so is slow scanning.</li>
+                      A value of -1 stops slowscanning.</li>
+                </ul>
+                <li>Remove some extra messages when configuring with the board-level tools
+                  in the LocoNet menu</li>
+                <li>Added a new programming facade "Digitrax OpSw Word Programming" for
+                  programming at the board level for e.g. DS64's.</li>
+                <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
+                <li>Add in-use count to the Slot Monitor.</li>
+                <li>Timeouts when programming the Op Switches on Digitrax boards (e.g. DS64, etc) will automatically be retried once.</li>
+                <li>Added interpretation of some BDL716 configuration messages to
+                  LocoNet Monitor.</li>
+                <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
+                <li>LocoNet Clock now uses the same throttle ID as the rest of JMRI, instead of (illegal) 00 00.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -139,6 +156,11 @@
                 <li></li>
             </ul>
 
+        <h4>Raspberry PI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>Roco z21/Z21</h4>
             <ul>
                 <li></li>
@@ -174,7 +196,7 @@
                 <li></li>
             </ul>
 
-        <h4>Zimo MXULF</h4>
+        <h4>Zimo</h4>
             <ul>
                 <li></li>
             </ul>
@@ -453,6 +475,10 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>Reduced CPU use when the layout is redrawn, for instance on every block
+                occupancy change: a redraw now repaints the drawing area only, instead of
+                the whole window including its menu bar, tool bar and scroll bars, and a
+                partial repaint no longer redraws the whole visible track plan.</li>
             <li></li>
         </ul>
 
@@ -494,6 +520,10 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+            <li>Sensor and MultiSensor icons now repaint only their own area of the panel
+                when their sensor changes state, instead of the whole window, reducing CPU
+                use on panels receiving frequent sensor events. The repainted area follows
+                the panel zoom level.</li>
             <li></li>
         </ul>
 
@@ -600,6 +630,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>Fixed high CPU use of the Turnout Table when the "graphic state" preference
+                is enabled: painting a state icon no longer resizes the row, which kept the
+                table repainting itself continuously once all turnouts were in a known state.
+                Rows are now also tall enough for the icons while turnouts are still in the
+                Unknown state.</li>
             <li></li>
         </ul>
 

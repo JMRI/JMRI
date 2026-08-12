@@ -197,15 +197,18 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         log.debug("{}: Wait for train to enter \"{}\".",
                                 _warrant.getDisplayName(), _synchBlock.getDisplayName());
                     }
-                    try {
-                        _synchLockObject.wait();
-                        _synchBlock = null;
-                    } catch (InterruptedException ie) {
-                        log.debug("InterruptedException during _waitForSync", ie);
-                        _warrant.debugInfo();
-                        Thread.currentThread().interrupt();
-                        _abort = true;
+                    // Re-check under lock: block may have fired between the outer check and here
+                    if (cmdBlockIdx > _warrant.getCurrentOrderIndex()) {
+                        try {
+                            _synchLockObject.wait();
+                        } catch (InterruptedException ie) {
+                            log.debug("InterruptedException during _waitForSync", ie);
+                            _warrant.debugInfo();
+                            Thread.currentThread().interrupt();
+                            _abort = true;
+                        }
                     }
+                    _synchBlock = null;
                 }
                 if (_abort) {
                     break;
@@ -331,6 +334,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 waitForSensor(ts.getNamedBeanHandle(), cmdVal);
                 break;
             case RUN_WARRANT:
+                // must run on the GUI thread because runWarrant() calls WarrantTableFrame.runTrain() directly
                 ThreadingUtil.runOnGUIEventually(() ->
                     runWarrant(ts.getNamedBeanHandle(), cmdVal));
                 break;
@@ -1152,6 +1156,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
 
         // send the messages on success of linked launch completion
+        // runs on CheckForTermination thread, not the GUI thread — avoid Swing calls here as they may cause race conditions or non-deterministic behavior
         private void checkerDone(Warrant oldWarrant, Warrant newWarrant) {
             OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             if (oldWarrant.getRunMode() != Warrant.MODE_NONE) {

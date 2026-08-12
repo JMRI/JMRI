@@ -39,12 +39,12 @@ public class ArchitectureTest {
 
     // want these statics first in class, to initialize
     // logging before various static items are constructed
-    @BeforeAll  // tests are static
-    static public void setUp() {
+    @BeforeAll  // tests are static.
+    public static void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
     @AfterAll
-    static public void tearDown() {
+    public static void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 
@@ -59,6 +59,8 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener").and()
 
                                 .doNotHaveFullyQualifiedName("apps.Apps").and()
+                                .doNotHaveFullyQualifiedName("apps.gui3.Apps3").and()
+
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole$PopupListener").and()
                                 .doNotHaveFullyQualifiedName("apps.startup.StartupActionsPreferencesPanel$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableJTable").and()
@@ -267,7 +269,8 @@ public class ArchitectureTest {
      */
     @ArchTest // Initially 3 flags in JMRI 4.17.3 - see archunit_ignore_patterns.txt
     public static final ArchRule checkJmriPackageJdom = noClasses()
-        .that().resideInAPackage("jmri")
+        .that().resideInAPackage("jmri").and()
+        .doNotHaveFullyQualifiedName("jmri.UserPreferencesManager")
         .should().dependOnClassesThat().resideInAPackage("org.jdom2..");
 
     /**

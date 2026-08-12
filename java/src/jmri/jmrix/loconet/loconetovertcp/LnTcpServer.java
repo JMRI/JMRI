@@ -194,6 +194,6 @@ public class LnTcpServer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTcpServer.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTcpServer.class);
 
 }

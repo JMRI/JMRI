@@ -11,9 +11,9 @@ import javax.annotation.Nonnull;
 @javax.annotation.concurrent.Immutable
 public class NamedBeanUsageReport {
 
-    final public String usageKey;
-    final public NamedBean usageBean;
-    final public String usageData;
+    public final String usageKey;
+    public final NamedBean usageBean;
+    public final String usageData;
 
     /**
      * Create report with the required key.

@@ -102,5 +102,5 @@ public class MqttSignalMastXml
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttSignalMastXml.class);
+    private static final Logger log = LoggerFactory.getLogger(MqttSignalMastXml.class);
 }

@@ -137,6 +137,6 @@ public class ConsistTest extends OperationsTestCase {
         Assert.assertFalse("Consist new Lead is not Engine 3 after3", cnew.isLead(e3));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConsistTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ConsistTest.class);
 
 }

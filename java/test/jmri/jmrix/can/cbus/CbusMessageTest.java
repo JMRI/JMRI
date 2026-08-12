@@ -768,6 +768,6 @@ public class CbusMessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusMessageTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusMessageTest.class);
 
 }

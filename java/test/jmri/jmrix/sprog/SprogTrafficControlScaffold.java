@@ -102,6 +102,6 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
         JUnitUtil.waitFor(() -> { return status() == false; },"Sprog STCS Thread did not terminate.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class);
 
 }

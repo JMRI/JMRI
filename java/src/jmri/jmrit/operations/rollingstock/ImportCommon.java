@@ -114,5 +114,5 @@ public abstract class ImportCommon extends Thread {
         return inputLine;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportCommon.class);
+    private static final Logger log = LoggerFactory.getLogger(ImportCommon.class);
 }

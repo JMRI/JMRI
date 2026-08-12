@@ -3,7 +3,6 @@ package apps.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * CreateButtonModelXmlTest.java
@@ -16,7 +15,7 @@ public class CreateButtonModelXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("CreateButtonModelXml constructor",new CreateButtonModelXml());
+      Assertions.assertNotNull(new CreateButtonModelXml(), "CreateButtonModelXml constructor");
     }
 
     @BeforeEach

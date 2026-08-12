@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class ClassMigrationManagerTest {
     @Test
     public void testCTor() {
         ClassMigrationManager t = new ClassMigrationManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class ClassMigrationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ClassMigrationManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ClassMigrationManagerTest.class);
 
 }

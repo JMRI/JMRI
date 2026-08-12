@@ -582,7 +582,7 @@ public class EngineManagerTest extends OperationsTestCase {
         e6.setLastDate(time); // one year ago.
 
         // now get engines by last move date.
-        List<Engine> engineList = manager.getByLastDateList(manager.getByIdList());
+        List<Engine> engineList = manager.getByLastDateList();
         Assert.assertEquals("Number of Engines by last move date", 6, engineList.size());
         Assert.assertEquals("1st engine in list by move date", e6, engineList.get(0));
         Assert.assertEquals("2nd engine in list by move date", e4, engineList.get(1));

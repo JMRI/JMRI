@@ -287,7 +287,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      * 
      * @param addr Turnout address
      */
-    final public void setAddressLastQueriedValue(Integer addr) {
+    public final void setAddressLastQueriedValue(Integer addr) {
         addressField.setLastQueriedValue(String.valueOf(addr));
     }
 
@@ -304,6 +304,6 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class);
 
 }

@@ -235,6 +235,6 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         return _prog.getCanWrite() && (Integer.parseInt(addr) <= 1024);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class);
+    private static final Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class);
 
 }

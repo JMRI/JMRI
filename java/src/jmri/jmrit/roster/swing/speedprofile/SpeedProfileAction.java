@@ -40,5 +40,5 @@ public class SpeedProfileAction extends JmriAbstractAction {
     @Override
     public jmri.util.swing.JmriPanel makePanel() { return null; } // not used by this classes actionPerformed, not migrated to new form yet
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedProfileAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedProfileAction.class);
 }

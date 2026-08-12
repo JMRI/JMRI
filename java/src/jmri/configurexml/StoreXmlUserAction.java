@@ -50,9 +50,16 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         if (cm == null) {
             log.error("Failed to make backup due to unable to get default configure manager");  // NOI18N
         } else {
-            cm.makeBackup(file);
+            boolean results = cm.makeBackup(file);
+            if (!results) {
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("BackupError", file.getPath())
+                            + System.lineSeparator() + Bundle.getMessage("ConsoleWindowHasInfo"),
+                        Bundle.getMessage("BackupError", ""),
+                        JmriJOptionPane.ERROR_MESSAGE);
+            }
             // and finally store
-            boolean results = cm.storeUser(file);
+            results = cm.storeUser(file);
             log.debug("store {}", results ? "was successful" : "failed");  // NOI18N
             if (!results) {
                 JmriJOptionPane.showMessageDialog(null,

@@ -33,7 +33,7 @@ public class GenerateSearchIndexTest {
 
 
     // The main() method is used when this class is run directly from ant
-    static public void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         new GenerateSearchIndexTest().generateSearchIndex();
     }
 
@@ -322,6 +322,6 @@ public class GenerateSearchIndexTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GenerateSearchIndexTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GenerateSearchIndexTest.class);
 
 }

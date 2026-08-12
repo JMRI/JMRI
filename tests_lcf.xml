@@ -82,7 +82,7 @@ the data is actually logged.
 
         <!-- Force classpath info into early log -->
         <Logger name="jmri.VersionTest" level="INFO"/>
-        <Logger name="jmri.ClassPathTest" level="INFO"/>
+        <!-- <Logger name="jmri.ClassPathTest" level="INFO"/> --><!-- uncomment to see output -->
 
         <!-- Needed for jmri.util.JUnitAppenderTest -->
         <Logger name="jmri.util.JUnitAppenderTest" level="INFO"/>

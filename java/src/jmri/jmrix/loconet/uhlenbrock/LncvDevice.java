@@ -80,6 +80,6 @@ public class LncvDevice {
         cvValue = val;
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(LncvDevice.class);
+    //private static final Logger log = LoggerFactory.getLogger(LncvDevice.class);
 
 }

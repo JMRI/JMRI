@@ -26,6 +26,6 @@ public class GlobalVariableInputIconTest extends PositionableJPanelTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MemoryInputIconTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MemoryInputIconTest.class);
 
 }

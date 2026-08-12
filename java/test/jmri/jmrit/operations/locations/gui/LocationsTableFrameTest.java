@@ -20,7 +20,7 @@ import jmri.util.*;
  */
 public class LocationsTableFrameTest extends OperationsTestCase {
 
-    final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+    static final int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     @Test
     public void testCtorFrame() {

@@ -39,7 +39,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static public String getMessage(String key) {
+    public static String getMessage(String key) {
         return getBundle().handleGetMessage(key);
     }
 
@@ -78,7 +78,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

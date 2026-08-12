@@ -4,6 +4,7 @@ import static jmri.server.json.JSON.DEFAULT;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
+import static jmri.server.json.JSON.PREFIX;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
@@ -35,14 +38,7 @@ public class JsonPowerHttpService extends JsonHttpService {
     public JsonNode doGet(String type, @CheckForNull String name, JsonNode parameters, JsonRequest request)
             throws JsonException {
         ObjectNode data = mapper.createObjectNode();
-        PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
-        if (name != null && !name.isEmpty()) {
-            for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
-                if (pm.getUserName().equals(name)) {
-                    manager = pm;
-                }
-            }
-        }
+        PowerManager manager = resolvePowerManager(name, parameters, request);
         if (manager != null) {
             data.put(NAME, manager.getUserName());
             switch (manager.getPower()) {
@@ -56,9 +52,10 @@ public class JsonPowerHttpService extends JsonHttpService {
                     data.put(STATE, UNKNOWN);
                     break;
             }
-            data.put(DEFAULT, false);
-            if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
-                data.put(DEFAULT, true);
+            data.put(DEFAULT, manager.equals(InstanceManager.getDefault(PowerManager.class)));
+            String managerPrefix = getPrefixForManager(manager);
+            if (managerPrefix != null) {
+                data.put(PREFIX, managerPrefix);
             }
         } else {
             // No PowerManager is defined; just report it as UNKNOWN
@@ -74,14 +71,7 @@ public class JsonPowerHttpService extends JsonHttpService {
         int state = data.path(STATE).asInt(UNKNOWN);
         if (state != UNKNOWN) {
             try {
-                PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
-                if (!name.isEmpty()) {
-                    for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
-                        if (pm.getUserName().equals(name)) {
-                            manager = pm;
-                        }
-                    }
-                }
+                PowerManager manager = resolvePowerManager(name, data, request);
                 if (manager != null) {
                     switch (state) {
                         case OFF:
@@ -100,6 +90,59 @@ public class JsonPowerHttpService extends JsonHttpService {
             }
         }
         return this.doGet(type, name, data, request);
+    }
+
+    /**
+     * Resolves the PowerManager to use for a request. Checks for a
+     * {@code prefix} field in {@code data} first (connection-specific routing),
+     * then falls back to matching by {@code name} (user name), then falls back
+     * to the default PowerManager. When {@code prefix} is present but does not
+     * match a known connection, throws a {@link JsonException} with HTTP 400.
+     *
+     * @param name    the power manager user name, or empty/null for default
+     * @param data    the JSON data node; may contain an optional {@code prefix} field
+     * @param request the originating request, used for locale and id in error messages
+     * @return the resolved PowerManager, or null if none is configured
+     * @throws JsonException if a prefix is supplied but does not match any known connection
+     */
+    @CheckForNull
+    private PowerManager resolvePowerManager(@CheckForNull String name, JsonNode data, JsonRequest request)
+            throws JsonException {
+        String prefix = data.path(PREFIX).asText();
+        if (!prefix.isEmpty()) {
+            SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
+                    .getSystemConnectionMemoForSystemPrefix(prefix);
+            if (memo != null && memo.provides(PowerManager.class)) {
+                return memo.get(PowerManager.class);
+            }
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                    Bundle.getMessage(request.locale, "ErrorUnknownPrefix", prefix), request.id);
+        }
+        if (name != null && !name.isEmpty()) {
+            for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
+                if (pm.getUserName().equals(name)) {
+                    return pm;
+                }
+            }
+        }
+        return InstanceManager.getNullableDefault(PowerManager.class);
+    }
+
+    /**
+     * Returns the system prefix of the connection that provides the given
+     * PowerManager, or null if no connection can be found for it.
+     *
+     * @param manager the PowerManager to look up
+     * @return system prefix string, or null
+     */
+    @CheckForNull
+    private String getPrefixForManager(PowerManager manager) {
+        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+            if (memo.provides(PowerManager.class) && manager.equals(memo.get(PowerManager.class))) {
+                return memo.getSystemPrefix();
+            }
+        }
+        return null;
     }
 
     @Override

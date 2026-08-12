@@ -3573,6 +3573,6 @@ public class ConditionalEditFrame extends ConditionalFrame {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalEditFrame.class);
 
 }

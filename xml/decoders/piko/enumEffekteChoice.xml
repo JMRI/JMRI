@@ -11,9 +11,10 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- 																		-->
+<!--                                                                        -->
 <!-- Version 1 - Include file for Piko SmartDecoder 4.1 and XP5.1 (11/2022) -->
 <!-- Version 2 - Add English translations                         (11/2023) -->
+<!-- Version 3 - Add Coupling and Servo effects                   (01/2026) -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<enumChoice choice="ohne Effekt">
 		<choice> 0: none Effect</choice>
@@ -101,6 +102,10 @@
 		<choice>37: Energy saving lamp</choice>
 		<choice xml:lang="de">37: Energiesparlampe</choice>
 	</enumChoice>
+	<enumChoice choice="38" value="38">
+		<choice>38: TV</choice>
+		<choice xml:lang="de">38: TV</choice>
+	</enumChoice>
 	<enumChoice choice="40" value="40">
 		<choice>40: Vaporizerr load-dependent</choice>
 		<choice xml:lang="de">40: Verdampfer lastabhängig</choice>
@@ -108,6 +113,10 @@
 	<enumChoice choice="41" value="41">
 		<choice>41: Vaporizer speed-dependent</choice>
 		<choice xml:lang="de">41: Verdampfer speedabhängig</choice>
+	</enumChoice>
+	<enumChoice choice="42" value="42">
+		<choice>42: Vaporizer permanenet</choice>
+		<choice xml:lang="de">42: Verdampfer dauerhaft an</choice>
 	</enumChoice>
 	<enumChoice choice="50" value="50">
 		<choice>50: Servo 1</choice>
@@ -124,6 +133,22 @@
 	<enumChoice choice="53" value="53">
 		<choice>53: Servo 4</choice>
 		<choice xml:lang="de">53: Servo 4</choice>
+	</enumChoice>
+	<enumChoice choice="54" value="54">
+		<choice>54: Servo 5</choice>
+		<choice xml:lang="de">54: Servo 5</choice>
+	</enumChoice>
+	<enumChoice choice="55" value="55">
+		<choice>55: Servo 6</choice>
+		<choice xml:lang="de">55: Servo 6</choice>
+	</enumChoice>
+	<enumChoice choice="60" value="60">
+		<choice>60: Front Coupling</choice>
+		<choice xml:lang="de">60: Kupplung vorn</choice>
+	</enumChoice>
+	<enumChoice choice="61" value="61">
+		<choice>61: Rear Coupling</choice>
+		<choice xml:lang="de">61: Kupplung hinten</choice>
 	</enumChoice>
 	<enumChoice choice="255" value="255">
 		<choice>255:Output/Effect off</choice>

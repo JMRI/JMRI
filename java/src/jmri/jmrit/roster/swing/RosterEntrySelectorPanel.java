@@ -18,6 +18,7 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
 
     private RosterEntryComboBox entryCombo;
     private RosterGroupComboBox groupCombo;
+    private boolean isHighlightingOnly = false;
 
     public RosterEntrySelectorPanel() {
         this(null, null);
@@ -47,11 +48,15 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
 
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
+
                 if (pce.getPropertyName().equals(RosterEntrySelector.SELECTED_ROSTER_ENTRIES)) {
+                    if (isHighlightingOnly) {
+                        fireHighlightedRosterEntriesPropertyChange(pce.getOldValue(), pce.getNewValue());
+                        return;
+                    }
                     fireSelectedRosterEntriesPropertyChange(pce.getOldValue(), pce.getNewValue());
                 }
             }
-
         });
     }
 
@@ -59,9 +64,17 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
         this.firePropertyChange(RosterEntrySelector.SELECTED_ROSTER_ENTRIES, oldValue, newValue);
     }
 
+    protected void fireHighlightedRosterEntriesPropertyChange(Object oldValue, Object newValue) {
+        this.firePropertyChange(RosterEntrySelector.HIGHLIGHTED_ROSTER_ENTRIES, oldValue, newValue);
+    }
+
     @Override
     public RosterEntry[] getSelectedRosterEntries() {
         return entryCombo.getSelectedRosterEntries();
+    }
+
+    public void setSelectedRosterEntry() {
+        entryCombo.setSelectedItem(entryCombo.getSelectedItem());
     }
 
     public void setSelectedRosterEntry(RosterEntry re) {
@@ -108,4 +121,25 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
     public void setNonSelectedItem(String itemText) {
         this.entryCombo.setNonSelectedItem(itemText);
     }
+
+    public int getRosterListSelectedIndex() {
+        return this.entryCombo.getSelectedIndex();
+    }
+
+    /**
+     * Set the roster entry combo box selected index,  no event will be fired to listeners.
+     * If required, entry has to be validated afterwardsby calling setSelectedRosterEntry()
+     * Used to set the selected roster entry from external controls without firing property change events.
+     *
+     * @param index the index to select in the roster entry combo box
+     */
+    public void setRosterListSelectedIndex(int index) {
+        if (index < 0 || index >= this.entryCombo.getItemCount()) {
+            return;
+        }
+        isHighlightingOnly = true;
+        this.entryCombo.setSelectedIndex(index);
+        isHighlightingOnly = false;
+    }
+
 }

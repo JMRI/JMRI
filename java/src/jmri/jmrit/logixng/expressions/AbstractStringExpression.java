@@ -90,5 +90,5 @@ public abstract class AbstractStringExpression extends AbstractBase
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringExpression.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringExpression.class);
 }

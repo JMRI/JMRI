@@ -591,7 +591,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     boolean isDecoderSelected() {
         return !dTree.isSelectionEmpty();
     }
-    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelTreePane.class);
+    private static final Logger log = LoggerFactory.getLogger(CombinedLocoSelTreePane.class);
 
     /**
      * The following has been taken from an example given in..

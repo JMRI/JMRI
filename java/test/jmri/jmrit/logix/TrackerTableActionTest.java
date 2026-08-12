@@ -47,7 +47,7 @@ public class TrackerTableActionTest {
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         ControlPanelEditor panel = (ControlPanelEditor) JmriJFrame.getFrame("Indicator Demo 1 Editor");
@@ -115,7 +115,7 @@ public class TrackerTableActionTest {
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         ControlPanelEditor panel = (ControlPanelEditor) JmriJFrame.getFrame("Indicator Demo 1 Editor");
@@ -170,7 +170,7 @@ public class TrackerTableActionTest {
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         ControlPanelEditor panel = (ControlPanelEditor) JmriJFrame.getFrame("Indicator Demo 1 Editor");

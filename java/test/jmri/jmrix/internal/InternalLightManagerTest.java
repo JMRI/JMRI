@@ -79,5 +79,5 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         JUnitUtil.tearDown();
     }
 
-    // private final static import org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalLightManagerTest.class);
+    // private static final import org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalLightManagerTest.class);
 }

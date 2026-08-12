@@ -145,7 +145,13 @@
         maximum speed as a fraction from 0 to 1.0
     </xs:documentation></xs:annotation>
     </xs:attribute>
-
+    <xs:attribute name="locoDataEnabled" type="trueFalseType"/>
+    <xs:attribute name="physicsTractionType" type="xs:string"/>
+    <xs:attribute name="physicsWeightKg" type="xs:float"/>
+    <xs:attribute name="physicsPowerKw" type="xs:float"/>
+    <xs:attribute name="physicsTractiveEffortKn" type="xs:float"/>
+    <xs:attribute name="physicsMaxSpeedKmh" type="xs:float"/>
+    <xs:attribute name="physicsMechanicalTransmission" type="trueFalseType"/>
   </xs:complexType>
 
   <xs:complexType name="LocoAddressType"><xs:sequence>

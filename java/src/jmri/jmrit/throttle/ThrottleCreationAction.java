@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.swing.JmriAbstractAction;
@@ -17,6 +18,17 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Create a new throttle.
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Glen Oberhauser
  */
@@ -88,8 +100,8 @@ public class ThrottleCreationAction extends JmriAbstractAction {
         if (BeanUtil.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
             group = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
-        ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame(connectionConfig);
-        tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(group);
+        ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame(connectionConfig);
+        tf.getRosterEntrySelector().setSelectedRosterGroup(group); 
         tf.toFront();
     }
 

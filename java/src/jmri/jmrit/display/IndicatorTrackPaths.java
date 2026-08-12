@@ -136,7 +136,8 @@ public class IndicatorTrackPaths {
             // don't paint loco icon 
             return;
         }
-        if (_loco != null || pt == null) {
+        // ed may have been disposed before this runOnGUIEventually callback fires
+        if (_loco != null || pt == null || !ed.isDisplayable()) {
             return;
         }
         trainName = trainName.trim();

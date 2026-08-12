@@ -158,6 +158,6 @@ public class OutputBits {
         return m;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OutputBits.class);
+    private static final Logger log = LoggerFactory.getLogger(OutputBits.class);
 
 }

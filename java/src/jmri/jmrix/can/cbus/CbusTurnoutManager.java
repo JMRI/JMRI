@@ -144,6 +144,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class);
 
 }

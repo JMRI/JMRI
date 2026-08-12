@@ -15,7 +15,7 @@
 <!ELEMENT dispatcheroptions (options)>
 
 <!ELEMENT options EMPTY >
-    <!ATTLIST options lename                  CDATA #IMPLIED>  
+    <!ATTLIST options lename                  CDATA #IMPLIED>
     <!ATTLIST options useconnectivity         CDATA #REQUIRED>
     <!ATTLIST options trainsfromroster        CDATA #REQUIRED>
     <!ATTLIST options trainsfromtrains        CDATA #REQUIRED>
@@ -35,4 +35,9 @@
     <!ATTLIST options usesignaltype           CDATA #REQUIRED>
     <!ATTLIST options minthrottleinterval     CDATA #REQUIRED>
     <!ATTLIST options fullramptime            CDATA #REQUIRED>
+    <!ATTLIST options trainsfrom              CDATA #REQUIRED>
+    <!ATTLIST options autorelease             CDATA #REQUIRED>
+    <!ATTLIST options useturnoutconnectiondelay  CDATA #REQUIRED>
+    <!ATTLIST options sslcheckdirectionsensors   CDATA #REQUIRED>
+    <!ATTLIST options stoppingspeedname       CDATA #REQUIRED>
 

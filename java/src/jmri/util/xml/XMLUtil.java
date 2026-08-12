@@ -97,7 +97,7 @@ import org.xml.sax.XMLReader;
  */
 public final class XMLUtil extends Object {
 
-    private final static Logger log = LoggerFactory.getLogger(XMLUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(XMLUtil.class);
 
     /*
         public static String toCDATA(String val) throws IOException {

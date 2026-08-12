@@ -47,7 +47,7 @@ public class JsonManifest extends TrainCommon {
     private final ObjectMapper mapper = new ObjectMapper();
     private final JsonUtil utilities = new JsonUtil(mapper);
 
-    private final static Logger log = LoggerFactory.getLogger(JsonManifest.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonManifest.class);
 
     public JsonManifest(Train train) {
         this.train = train;

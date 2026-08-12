@@ -78,6 +78,7 @@ public class LccProTable extends JmriPanel {
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         columnModel.getColumn(LccProTableModel.CONFIGURECOL).setCellRenderer(buttonRenderer);
         columnModel.getColumn(LccProTableModel.UPGRADECOL).setCellRenderer(buttonRenderer);
+        columnModel.getColumn(LccProTableModel.BACKUPCOL).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
             // don't want keystrokes to repeatedly fire buttons
             @Override

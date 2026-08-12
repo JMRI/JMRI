@@ -118,6 +118,8 @@ public class FirstTimeStartUpWizardTest {
         Assertions.assertNotEquals(0, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize(),
             "Font size should not be 0");
 
+        JUnitUtil.waitThreadTerminated("Start-Up Wizard Connect");
+
     }
 
     @Test
@@ -227,5 +229,5 @@ public class FirstTimeStartUpWizardTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class);
 }

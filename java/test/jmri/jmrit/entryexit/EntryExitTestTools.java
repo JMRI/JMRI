@@ -1,5 +1,7 @@
 package jmri.jmrit.entryexit;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 
 import jmri.*;
@@ -12,7 +14,7 @@ class EntryExitTestTools {
         HashMap<String, LayoutEditor> panels = new HashMap<>();
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
         java.io.File f = new java.io.File("java/test/jmri/jmrit/entryexit/load/EntryExitTest.xml");
-        cm.load(f);
+        assertTrue(cm.load(f));
 
         for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
             switch (panel.getLayoutName()) {
@@ -47,5 +49,5 @@ class EntryExitTestTools {
         return (src == null || pd == null) ? null : src.getDestForPoint(pd);
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EntryExitTestTools.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EntryExitTestTools.class);
 }

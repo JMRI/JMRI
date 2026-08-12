@@ -16,7 +16,7 @@ public class SensorWhereUsed {
      * @param sensor The sensor bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean sensor) {
+    public static JTextArea getWhereUsed(NamedBean sensor) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSensor"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, sensor.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

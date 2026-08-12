@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp;
 
 /**
- * Handle configuring an DCC++ layout connection via an DCCppStreamPortController
+ * Handle configuring an DCC-EX layout connection via an DCCppStreamPortController
  * adapter.
  * <p>
  * This uses the {@link DCCppStreamPortController} class to do the actual connection.
@@ -35,7 +35,7 @@ public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnec
         return Bundle.getMessage("DCCppStreamName");
     }
 
-    String manufacturerName = "DCC++"; // NOI18N
+    String manufacturerName = "DCC-EX"; // NOI18N
 
     @Override
     public String getManufacturer() {

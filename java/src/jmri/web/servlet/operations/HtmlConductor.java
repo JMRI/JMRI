@@ -25,7 +25,7 @@ import jmri.util.FileUtil;
  */
 public class HtmlConductor extends HtmlTrainCommon {
 
-    private final static Logger log = LoggerFactory.getLogger(HtmlConductor.class);
+    private static final Logger log = LoggerFactory.getLogger(HtmlConductor.class);
 
     public HtmlConductor(Locale locale, Train train) throws IOException {
         super(locale, train);
@@ -140,7 +140,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                         routeLocation.getFormatedDepartureTime())); // NOI18N
             } else if (Setup.isUseDepartureTimeEnabled()
                     && routeLocation != train.getTrainTerminatesRouteLocation()
-                    && !train.getExpectedDepartureTime(routeLocation).equals(Train.ALREADY_SERVICED)) {
+                    && !train.getExpectedArrivalTime(routeLocation).equals(Train.ALREADY_SERVICED)) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName, train  // NOI18N
                         .getExpectedDepartureTime(routeLocation)));
             } else if (!train.getExpectedArrivalTime(routeLocation).equals(Train.ALREADY_SERVICED)) {

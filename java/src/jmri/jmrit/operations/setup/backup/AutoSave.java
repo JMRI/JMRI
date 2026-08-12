@@ -15,7 +15,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class AutoSave {
 
-    static Thread autoSave = null;
+    private static Thread autoSave = null;
 
     public static synchronized void start() {
         if (Setup.isAutoSaveEnabled() && autoSave == null) {
@@ -79,5 +79,5 @@ public class AutoSave {
         autoSave = null; // done
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoSave.class);
+    private static final Logger log = LoggerFactory.getLogger(AutoSave.class);
 }

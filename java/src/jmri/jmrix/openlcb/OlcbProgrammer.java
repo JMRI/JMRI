@@ -361,5 +361,5 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbProgrammer.class);
 }

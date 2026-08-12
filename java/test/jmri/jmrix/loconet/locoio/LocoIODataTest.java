@@ -36,6 +36,6 @@ public class LocoIODataTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoIODataTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoIODataTest.class);
 
 }

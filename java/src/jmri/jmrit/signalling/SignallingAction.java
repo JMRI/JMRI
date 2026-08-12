@@ -39,6 +39,6 @@ public class SignallingAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignallingAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SignallingAction.class);
 
 }

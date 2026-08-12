@@ -508,5 +508,5 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     }
     
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutEditor.class);
 }

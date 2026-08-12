@@ -413,6 +413,6 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         public JPanel decorate(FemaleSocket femaleSocket, JPanel panel);
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
 
 }

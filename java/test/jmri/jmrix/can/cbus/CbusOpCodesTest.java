@@ -10,8 +10,11 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -25,43 +28,42 @@ public class CbusOpCodesTest {
     @Test
     public void testDecode() {
         CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_RESTP },0x12 ); // request e stop
-        Assert.assertEquals("CbusOpCodes.decode","",CbusOpCodes.decode(m));
-        Assert.assertEquals("CbusOpCodes.decodeopc","RESTP",CbusOpCodes.decodeopc(m));
+        assertEquals("",CbusOpCodes.decode(m),"CbusOpCodes.decode");
+        assertEquals("RESTP",CbusOpCodes.decodeopc(m), "CbusOpCodes.decodeopc");
 
         m.setElement(0, 0x18);
-        Assert.assertEquals("0x18 no current opc definition","",CbusOpCodes.decode(m));
+        assertEquals("",CbusOpCodes.decode(m),"0x18 no current opc definition");
         m.setElement(0, CbusConstants.CBUS_DKEEP);
         m.setElement(1, 0x04);
-        Assert.assertEquals("CBUS_DKEEP","Session: 4",CbusOpCodes.decode(m));
+        assertEquals("Session: 4",CbusOpCodes.decode(m),"CBUS_DKEEP");
 
         m.setElement(0, CbusConstants.CBUS_RLOC);
         m.setElement(1, 0x00);
         m.setElement(2, 0x2c);
-        Assert.assertEquals("CBUS_RLOC","Addr: 44(S)",CbusOpCodes.decode(m));
+        assertEquals("Addr: 44(S)",CbusOpCodes.decode(m),"CBUS_RLOC");
 
-        
-     
+
         m.setElement(0, CbusConstants.CBUS_ERR);
         m.setElement(1, 0xcc);
         m.setElement(2, 0x8f);
         m.setElement(3, 0x01);
-        Assert.assertEquals("CBUS_ERR 1","Loco stack full for address 3215(L)",CbusOpCodes.decode(m));
+        assertEquals("Loco stack full for address 3215(L)",CbusOpCodes.decode(m),"CBUS_ERR 1");
         m.setElement(3, 0x02);
-        Assert.assertEquals("CBUS_ERR 2","Loco address 3215(L) taken",CbusOpCodes.decode(m));
+        assertEquals("Loco address 3215(L) taken",CbusOpCodes.decode(m),"CBUS_ERR 2");
         m.setElement(3, 0x03);
-        Assert.assertEquals("CBUS_ERR 3","Session 204 not present on Command Station",CbusOpCodes.decode(m));
+        assertEquals("Session 204 not present on Command Station",CbusOpCodes.decode(m),"CBUS_ERR 3");
         m.setElement(3, 0x04);
-        Assert.assertEquals("CBUS_ERR 4","Consist empty for consist 204",CbusOpCodes.decode(m));
+        assertEquals("Consist empty for consist 204",CbusOpCodes.decode(m),"CBUS_ERR 4");
         m.setElement(3, 0x05);
-        Assert.assertEquals("CBUS_ERR 5","Loco not found for session 204",CbusOpCodes.decode(m));
+        assertEquals("Loco not found for session 204",CbusOpCodes.decode(m),"CBUS_ERR 5");
         m.setElement(3, 0x06);
-        Assert.assertEquals("CBUS_ERR 6","CAN bus error ",CbusOpCodes.decode(m));
+        assertEquals("CAN bus error ",CbusOpCodes.decode(m),"CBUS_ERR 6");
         m.setElement(3, 0x07);
-        Assert.assertEquals("CBUS_ERR 7","Invalid request for address 3215(L)",CbusOpCodes.decode(m));
+        assertEquals("Invalid request for address 3215(L)",CbusOpCodes.decode(m),"CBUS_ERR 7");
         m.setElement(3, 0x08);
-        Assert.assertEquals("CBUS_ERR 8","Throttle cancelled for session 204",CbusOpCodes.decode(m));
+        assertEquals("Throttle cancelled for session 204",CbusOpCodes.decode(m),"CBUS_ERR 8");
         m.setElement(3, 0x09);
-        Assert.assertEquals("CBUS_ERR 9","",CbusOpCodes.decode(m));
+        assertEquals("",CbusOpCodes.decode(m),"CBUS_ERR 9");
     }
 
     @Test
@@ -70,7 +72,7 @@ public class CbusOpCodesTest {
         m.setElement(0, CbusConstants.CBUS_DSPD);
         m.setElement(1, 0x01);
         m.setElement(2, 0x02);
-        Assert.assertEquals("CBUS_DSPD Translate","Session: 1 Speed 1 Reverse ",CbusOpCodes.decode(m));
+        assertEquals("Session: 1 Speed 1 Reverse ",CbusOpCodes.decode(m),"CBUS_DSPD Translate");
     }
 
     @Test
@@ -84,176 +86,171 @@ public class CbusOpCodesTest {
         send.setElement(4,  2); // time divider, 0 is stpeed, 1 is real time, 2 twice real, 3 thrice real
         send.setElement(5, 27); // day of month, 0-31
         send.setElement(6, 0xDB ); // Temperature as twos complement -127 to +127
-        
+
         String testStr = CbusOpCodes.decode(send);
-        Assertions.assertTrue(testStr.startsWith("Speed: x2 13:41"),"CBUS_FCLK Translate");
+        assertTrue(testStr.startsWith("Speed: x2 13:41"),"CBUS_FCLK Translate");
     }
-    
+
     @Test
     public void testNodeEventMessage() {
-    
         CanMessage m = new CanMessage( 1 );
         m.setElement(0, CbusConstants.CBUS_ACON);
         m.setElement(1, 0x01);
         m.setElement(2, 0x02);
         m.setElement(3, 0xd4);
         m.setElement(4, 0xac);
-        Assert.assertEquals("CBUS_ACON","NN:258 EN:54444 ",CbusOpCodes.decode(m));
-    
+        assertEquals("NN:258 EN:54444 ",CbusOpCodes.decode(m),"CBUS_ACON");
     }
-    
+
     @Test
     public void testDecodeCMDERR() {
-        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_CMDERR,12,34,01 },0x12  );
-        Assert.assertEquals("CBUS_CMDERR 1","NN:3106 ERROR : Command Not Supported.",CbusOpCodes.decode(m));
+        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_CMDERR,12,34,1 },0x12  );
+        assertEquals("NN:3106 ERROR : Command Not Supported.",CbusOpCodes.decode(m),"CBUS_CMDERR 1");
         m.setElement(3, 0xaa);
-        Assert.assertEquals("CBUS_CMDERR aa","NN:3106 ",CbusOpCodes.decode(m));
-    }    
+        assertEquals("NN:3106 ",CbusOpCodes.decode(m),"CBUS_CMDERR aa");
+    }
 
     @Test
     public void testDecodeextend() {
-        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_CMDERR,12,34,01 },0x12  );
-        Assert.assertEquals("CBUS_CMDERR false1","NN:3106 ERROR : Command Not Supported.",CbusOpCodes.decode(m));
-        Assert.assertTrue("m known",CbusOpCodes.isKnownOpc(m));
+        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_CMDERR,12,34,1 },0x12  );
+        assertEquals("NN:3106 ERROR : Command Not Supported.",CbusOpCodes.decode(m),"CBUS_CMDERR false1");
+        assertTrue(CbusOpCodes.isKnownOpc(m),"m known");
         m.setExtended(true);
-        Assert.assertFalse("m not known when extended",CbusOpCodes.isKnownOpc(m));
-        Assert.assertEquals("CBUS_CMDERR true",Bundle.getMessage("decodeUnknownExtended"),CbusOpCodes.decode(m));
+        assertFalse(CbusOpCodes.isKnownOpc(m),"m not known when extended");
+        assertEquals(Bundle.getMessage("decodeUnknownExtended"),CbusOpCodes.decode(m),"CBUS_CMDERR true");
     }
 
     @Test
-    public void testdecodeopc() {
+    public void testdecodeopcReserved() {
         CanMessage m = new CanMessage( new int[]{0x18 },0x12  );
-        Assert.assertEquals("decodeopc 1","Reserved opcode",CbusOpCodes.decodeopc(m));
-        Assert.assertEquals("decodeopc 2","Reserved opcode",CbusOpCodes.decodeopc(m));
+        assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
+            CbusOpCodes.decodeopc(m), "decodeopc 1");
         m.setExtended(true);
-        Assert.assertTrue("decodeopc 3",CbusOpCodes.decodeopc(m).isEmpty());
+        assertTrue(CbusOpCodes.decodeopc(m).isEmpty(),"decodeopc 3");
     }
-    
+
     @Test
     public void testDecodeopc() {
         CanMessage m = new CanMessage(1,11);
         for ( int i = 0; (i<258); i++ ) {
             m.setElement(0, i);
             if (OPCMAP.containsKey(i)) {
-                Assert.assertEquals("opc short text "+i,OPCMAP.get(i),CbusOpCodes.decodeopc(m));
+                assertEquals(OPCMAP.get(i),CbusOpCodes.decodeopc(m),"opc short text "+i);
             } else {
-                Assert.assertEquals("opc short text "+i,Bundle.getMessage("OPC_RESERVED"),CbusOpCodes.decodeopc(m));
+                assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
+                    CbusOpCodes.decodeopc(m),"opc short text "+i);
             }
         }
     }
-    
+
     @Test
     public void testextendedFrameTranslation(){
         // Outgoing control messages
         CanMessage m = new CanMessage( new int[]{5,1,2,3,0x0d,0,6,7},0x04  );
         m.setExtended(true);
-        Assert.assertEquals("extended 4  0","Bootloader: Do nothing",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Do nothing",CbusOpCodes.decode(m),"extended 4  0");
+
         m.setElement(5, 1);
-        Assert.assertEquals("extended 4  1","Bootloader: Issue soft reset, leave boot mode",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Issue soft reset, leave boot mode",CbusOpCodes.decode(m),"extended 4  1");
+
         m.setElement(5, 2);
-        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum and set address to 131,333",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Reset checksum and set address to 131,333",CbusOpCodes.decode(m),"extended 4  2");
+
         m.setElement(5, 3);
-        Assert.assertEquals("extended 4  3","Bootloader: Boot Check with checksum 1,798",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Check with checksum 1,798",CbusOpCodes.decode(m),"extended 4  3");
+
         m.setElement(5, 4);
-        Assert.assertEquals("extended 4  4","Bootloader: Verify boot mode",CbusOpCodes.decode(m));
-    
+        assertEquals("Bootloader: Verify boot mode",CbusOpCodes.decode(m),"extended 4  4");
+
         m.setElement(5, 5);
-        Assert.assertEquals("extended 4  5","Bootloader: Request device ID",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Request device ID",CbusOpCodes.decode(m),"extended 4  5");
+
         m.setElement(5, 6);
-        Assert.assertEquals("extended 4  6","Bootloader: Request bootloader ID",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Request bootloader ID",CbusOpCodes.decode(m),"extended 4  6");
+
         m.setElement(5, 7);
-        Assert.assertEquals("extended 4  7","Bootloader: Memory write enables",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Memory write enables",CbusOpCodes.decode(m),"extended 4  7");
+
         m.setElement(5, 8);
-        Assert.assertEquals("extended 4  8","Unknown Extended Frame",CbusOpCodes.decode(m));
-        
+        assertEquals("Unknown Extended Frame",CbusOpCodes.decode(m),"extended 4  8");
+
         // Outgoing dat amessages
         m.setHeader(5);
-        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 08 06 07",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Data : 05 01 02 03 0D 08 06 07",CbusOpCodes.decode(m),"extended 5 data");
+
         // Incoming control replies
         m = new CanMessage( new int[]{0},0x10000004 );
         m.setExtended(true);
-        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Command Error",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Command Error",CbusOpCodes.decode(m),"extended 10000004 0");
+
         m.setElement(0, 1);
-        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Command OK",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Command OK",CbusOpCodes.decode(m),"extended 10000004 1");
+
         m.setElement(0, 2);
-        Assert.assertEquals("extended 10000004 2","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Confirm",CbusOpCodes.decode(m),"extended 10000004 2");
+
         m.setElement(0, 3);
-        Assert.assertEquals("extended 10000004 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m),"extended 10000004 3");
+
         m.setElement(0, 4);
-        Assert.assertEquals("extended 10000004 4","Unknown Extended Frame",CbusOpCodes.decode(m));
-        
+        assertEquals("Unknown Extended Frame",CbusOpCodes.decode(m),"extended 10000004 4");
+
         m = new CanMessage( new int[]{5,4,3,2,1,0,0},0x10000004  );
         m.setExtended(true);
-        Assert.assertEquals("extended 10000004 5","Bootloader: Device ID",CbusOpCodes.decode(m));
+        assertEquals("Bootloader: Device ID",CbusOpCodes.decode(m),"extended 10000004 5");
 
         m = new CanMessage( new int[]{6,5,4,3,2},0x10000004  );
         m.setExtended(true);
-        Assert.assertEquals("extended 10000004 6","Bootloader: Bootloader ID",CbusOpCodes.decode(m));
+        assertEquals("Bootloader: Bootloader ID",CbusOpCodes.decode(m),"extended 10000004 6");
 
         // Incoming data replies
         m = new CanMessage( new int[]{0},0x10000005 );
         m.setExtended(true);
-        Assert.assertEquals("extended 10000005 0","Bootloader: Boot Data Error",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Data Error",CbusOpCodes.decode(m),"extended 10000005 0");
+
         m.setElement(0, 1);
-        Assert.assertEquals("extended 10000005 1","Bootloader: Boot Data OK",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Data OK",CbusOpCodes.decode(m),"extended 10000005 1");
+
         m.setElement(0, 2);
-        Assert.assertEquals("extended 10000005 2","Unknown Extended Frame",CbusOpCodes.decode(m));
-        
+        assertEquals("Unknown Extended Frame",CbusOpCodes.decode(m),"extended 10000005 2");
+
         m.setElement(0, 3);
-        Assert.assertEquals("extended 10000005 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
-        
+        assertEquals("Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m),"extended 10000005 3");
+
         m.setElement(0, 4);
-        Assert.assertEquals("extended 10000005 4","Unknown Extended Frame",CbusOpCodes.decode(m));
-        
+        assertEquals("Unknown Extended Frame",CbusOpCodes.decode(m),"extended 10000005 4");
     }
-    
+
     @Test
     public void testGlocTranslate(){
-    
-        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_GLOC,02,03,00},123 );
-        Assert.assertEquals("GLOC 0","Addr: 515(S) Flags: 0 Standard Request",CbusOpCodes.decode(m));
-    
+        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_GLOC,2,3,0},123 );
+        assertEquals("Addr: 515(S) Flags: 0 Standard Request",CbusOpCodes.decode(m),"GLOC 0");
+
         m.setElement(3, 1);
-        Assert.assertEquals("GLOC 1","Addr: 515(S) Flags: 1 Steal Request",CbusOpCodes.decode(m));
-        
+        assertEquals("Addr: 515(S) Flags: 1 Steal Request",CbusOpCodes.decode(m),"GLOC 1");
+
         m.setElement(3, 2);
-        Assert.assertEquals("GLOC 2","Addr: 515(S) Flags: 2 Share Request",CbusOpCodes.decode(m));
-        
+        assertEquals("Addr: 515(S) Flags: 2 Share Request",CbusOpCodes.decode(m), "GLOC 2");
+
         m.setElement(3, 3);
-        Assert.assertEquals("GLOC 3","Addr: 515(S) Flags: 3 Invalid Flags",CbusOpCodes.decode(m));
-        
+        assertEquals("Addr: 515(S) Flags: 3 Invalid Flags",CbusOpCodes.decode(m),"GLOC 3");
     }
-    
+
     @Test
     public void testGetMinPriority() {
-        Assert.assertTrue("Priority Fetched",CbusOpCodes.getOpcMinPriority(CbusConstants.CBUS_RTON)==1);
-        Assert.assertTrue("Default priority for unknown",CbusOpCodes.getOpcMinPriority(0x0f)==3); // unknown OPC
+        assertEquals(1,CbusOpCodes.getOpcMinPriority(CbusConstants.CBUS_RTON), "Priority Fetched");
+        assertEquals(3,CbusOpCodes.getOpcMinPriority(0x0f),"Default priority for unknown"); // unknown OPC
     }
-    
+
     @Test
     public void testKnownOPC() {
         CanMessage m = new CanMessage(1,11);
         m.setElement(0, CbusConstants.CBUS_ASOF);
-        Assert.assertTrue("m known",CbusOpCodes.isKnownOpc(m));
+        assertTrue(CbusOpCodes.isKnownOpc(m),"m known");
         m.setElement(0, 0x0f); // unknown OPC
-        Assert.assertFalse("m NOT known",CbusOpCodes.isKnownOpc(m));
-    
+        assertFalse(CbusOpCodes.isKnownOpc(m),"m NOT known");
     }
-    
+
     private static final Map<Integer, String> OPCMAP = createoMap();
 
     private static Map<Integer, String> createoMap() {
@@ -391,112 +388,112 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_ARSON3, "ARSON3"); // NOI18N
         result.put(CbusConstants.CBUS_ARSOF3, "ARSOF3"); // NOI18N
         result.put(CbusConstants.CBUS_EXTC6, "EXTC6"); // NOI18N
-        
+
         return Collections.unmodifiableMap(result);
     }
-    
+
     @Test
     public void testAllOpcForEvents() {
         for ( int i = 0; (i<256); i++ ) {
             if (eventOpcodes.contains(i) ) {
-                Assert.assertTrue("opc is event "+i,CbusOpCodes.isEvent(i));
+                assertTrue(CbusOpCodes.isEvent(i),"opc is event "+i);
             } else {
-                Assert.assertFalse("opc not event "+i,CbusOpCodes.isEvent(i));
+                assertFalse(CbusOpCodes.isEvent(i),"opc not event "+i);
             }
         }
     }
-    
+
     @Test
     public void testisEventNotRequest() {
         for ( int i = 0; (i<256); i++ ) {
             if (eventNotRequestOpCodes.contains(i) ) {
-                Assert.assertTrue("opc is event "+i,CbusOpCodes.isEventNotRequest(i));
+                assertTrue(CbusOpCodes.isEventNotRequest(i),"opc is event "+i);
             } else {
-                Assert.assertFalse("opc not event or request "+i,CbusOpCodes.isEventNotRequest(i));
+                assertFalse(CbusOpCodes.isEventNotRequest(i),"opc not event or request "+i);
             }
         }
     }
-    
+
     @Test
     public void testisDcc() {
         for ( int i = 0; (i<256); i++ ) {
             if (dccOpcodes.contains(i) ) {
-                Assert.assertTrue("opc is dcc "+i,CbusOpCodes.isDcc(i));
+                assertTrue(CbusOpCodes.isDcc(i),"opc is dcc "+i);
             } else {
-                Assert.assertFalse("opc not dcc "+i,CbusOpCodes.isDcc(i));
+                assertFalse(CbusOpCodes.isDcc(i),"opc not dcc "+i);
             }
         }
     }
-    
+
     @Test
     public void testisOnEvent() {
         for ( int i = 0; (i<256); i++ ) {
             if (onEvOpcodes.contains(i) ) {
-                Assert.assertTrue("opc is on event "+i,CbusOpCodes.isOnEvent(i));
+                assertTrue(CbusOpCodes.isOnEvent(i),"opc is on event "+i);
             } else {
-                Assert.assertFalse("opc not on event "+i,CbusOpCodes.isOnEvent(i));
+                assertFalse(CbusOpCodes.isOnEvent(i),"opc not on event "+i);
             }
         }
     }
-    
+
     @Test
     public void testisEventRequest() {
         for ( int i = 0; (i<256); i++ ) {
             if (evRequestOpcodes.contains(i) ) {
-                Assert.assertTrue("opc is request "+i,CbusOpCodes.isEventRequest(i));
+                assertTrue(CbusOpCodes.isEventRequest(i),"opc is request "+i);
             } else {
-                Assert.assertFalse("opc not request "+i,CbusOpCodes.isEventRequest(i));
+                assertFalse(CbusOpCodes.isEventRequest(i),"opc not request "+i);
             }
         }
     }
-    
+
     @Test
     public void testisShortEvent() {
         for ( int i = 0; (i<256); i++ ) {
             if (shortOpcodes.contains(i) ) {
-                Assert.assertTrue("opc is request "+i,CbusOpCodes.isShortEvent(i));
+                assertTrue(CbusOpCodes.isShortEvent(i),"opc is request "+i);
             } else {
-                Assert.assertFalse("opc not request "+i,CbusOpCodes.isShortEvent(i));
+                assertFalse(CbusOpCodes.isShortEvent(i),"opc not request "+i);
             }
         }
     }
 
     @Test
     public void testGetSpeedFromInt(){
-        Assert.assertEquals("speed 0","0",CbusOpCodes.getSpeedFromByte(0) );
-        Assert.assertEquals("speed 1","0 E Stop ",CbusOpCodes.getSpeedFromByte(1) );
-        Assert.assertEquals("speed 2","1",CbusOpCodes.getSpeedFromByte(2) );
-        Assert.assertEquals("speed 10","9",CbusOpCodes.getSpeedFromByte(10) );
-        Assert.assertEquals("speed 126","125",CbusOpCodes.getSpeedFromByte(126) );
-        Assert.assertEquals("speed 127","126",CbusOpCodes.getSpeedFromByte(127) );
-        Assert.assertEquals("speed 128","0",CbusOpCodes.getSpeedFromByte(128) );
-        Assert.assertEquals("speed 129","0 E Stop ",CbusOpCodes.getSpeedFromByte(129) );
-        Assert.assertEquals("speed 130","1",CbusOpCodes.getSpeedFromByte(130) );
-        Assert.assertEquals("speed 131","2",CbusOpCodes.getSpeedFromByte(131) );
-        Assert.assertEquals("speed 182","53",CbusOpCodes.getSpeedFromByte(182) );
-        Assert.assertEquals("speed 255","126",CbusOpCodes.getSpeedFromByte(255) );
+        assertEquals("0",CbusOpCodes.getSpeedFromByte(0),"speed 0");
+        assertEquals("0 E Stop ",CbusOpCodes.getSpeedFromByte(1),"speed 1");
+        assertEquals("1",CbusOpCodes.getSpeedFromByte(2),"speed 2");
+        assertEquals("9",CbusOpCodes.getSpeedFromByte(10),"speed 10");
+        assertEquals("125",CbusOpCodes.getSpeedFromByte(126),"speed 126");
+        assertEquals("126",CbusOpCodes.getSpeedFromByte(127),"speed 127");
+        assertEquals("0",CbusOpCodes.getSpeedFromByte(128),"speed 128");
+        assertEquals("0 E Stop ",CbusOpCodes.getSpeedFromByte(129),"speed 129");
+        assertEquals("1",CbusOpCodes.getSpeedFromByte(130),"speed 130");
+        assertEquals("2",CbusOpCodes.getSpeedFromByte(131),"speed 131");
+        assertEquals("53",CbusOpCodes.getSpeedFromByte(182),"speed 182");
+        assertEquals("126",CbusOpCodes.getSpeedFromByte(255),"speed 255");
     }
 
     @Test
     public void testGetDirectionFromByte() {
-        Assert.assertTrue("0 rev",CbusOpCodes.getDirectionFromByte(0).contains("Rev"));
-        Assert.assertTrue("1 rev",CbusOpCodes.getDirectionFromByte(1).contains("Rev"));
-        Assert.assertTrue("77 rev",CbusOpCodes.getDirectionFromByte(77).contains("Rev"));
-        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(127).contains("Rev"));
-        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(128).contains("For"));
-        Assert.assertTrue("129 rev",CbusOpCodes.getDirectionFromByte(129).contains("For"));
-        Assert.assertTrue("211 rev",CbusOpCodes.getDirectionFromByte(211).contains("For"));
-        Assert.assertTrue("255 rev",CbusOpCodes.getDirectionFromByte(255).contains("For"));
+        assertTrue(CbusOpCodes.getDirectionFromByte(0).contains("Rev"),"0 rev");
+        assertTrue(CbusOpCodes.getDirectionFromByte(1).contains("Rev"),"1 rev");
+        assertTrue(CbusOpCodes.getDirectionFromByte(77).contains("Rev"),"77 rev");
+        assertTrue(CbusOpCodes.getDirectionFromByte(127).contains("Rev"),"127 rev");
+        assertTrue(CbusOpCodes.getDirectionFromByte(128).contains("For"),"128 for");
+        assertTrue(CbusOpCodes.getDirectionFromByte(129).contains("For"),"129 for");
+        assertTrue(CbusOpCodes.getDirectionFromByte(211).contains("For"),"211 for");
+        assertTrue(CbusOpCodes.getDirectionFromByte(255).contains("For"),"255 for");
     }
 
     @Test
     public void testSpeedDirFromByte() {
-        Assert.assertEquals("speed 0"," Speed 0 Reverse ",CbusOpCodes.speedDirFromByte(0) );
-        Assert.assertEquals("speed 131"," Speed 2 Forward ",CbusOpCodes.speedDirFromByte(131) );
+        assertEquals(" Speed 0 Reverse ",CbusOpCodes.speedDirFromByte(0),"speed 0");
+        assertEquals(" Speed 2 Forward ",CbusOpCodes.speedDirFromByte(131),"speed 131");
     }
-    
+
     private static final Set<Integer> eventOpcodes = createEventOPC();
-    
+
     private static Set<Integer> createEventOPC() {
         Set<Integer> result = new HashSet<>();
 
@@ -510,7 +507,7 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_ASRQ);
         result.add(CbusConstants.CBUS_ARSON);
         result.add(CbusConstants.CBUS_ARSOF);
-        
+
         result.add(CbusConstants.CBUS_ACON1);
         result.add(CbusConstants.CBUS_ACOF1);
         result.add(CbusConstants.CBUS_ARON1);
@@ -519,16 +516,16 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_ASOF1);
         result.add(CbusConstants.CBUS_ARSON1);
         result.add(CbusConstants.CBUS_ARSOF1);
-        
+
         result.add(CbusConstants.CBUS_ACON2);
         result.add(CbusConstants.CBUS_ACOF2);
         result.add(CbusConstants.CBUS_ARON2);
-        result.add(CbusConstants.CBUS_AROF2);        
-        result.add(CbusConstants.CBUS_ASON2);        
+        result.add(CbusConstants.CBUS_AROF2);
+        result.add(CbusConstants.CBUS_ASON2);
         result.add(CbusConstants.CBUS_ASOF2);
         result.add(CbusConstants.CBUS_ARSON2);
         result.add(CbusConstants.CBUS_ARSOF2);
-        
+
         result.add(CbusConstants.CBUS_ACON3);
         result.add(CbusConstants.CBUS_ACOF3);
         result.add(CbusConstants.CBUS_ARON3);
@@ -537,7 +534,7 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_ASOF3);
         result.add(CbusConstants.CBUS_ARSON3);
         result.add(CbusConstants.CBUS_ARSOF3);
-        
+
         return Collections.unmodifiableSet(result);
     }
 
@@ -558,7 +555,7 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_ASOF);
         result.add(CbusConstants.CBUS_ARSON);
         result.add(CbusConstants.CBUS_ARSOF);
-        
+
         result.add(CbusConstants.CBUS_ACON1);
         result.add(CbusConstants.CBUS_ACOF1);
         result.add(CbusConstants.CBUS_ARON1);
@@ -567,16 +564,16 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_ASOF1);
         result.add(CbusConstants.CBUS_ARSON1);
         result.add(CbusConstants.CBUS_ARSOF1);
-        
+
         result.add(CbusConstants.CBUS_ACON2);
         result.add(CbusConstants.CBUS_ACOF2);
         result.add(CbusConstants.CBUS_ARON2);
-        result.add(CbusConstants.CBUS_AROF2);        
-        result.add(CbusConstants.CBUS_ASON2);        
+        result.add(CbusConstants.CBUS_AROF2);
+        result.add(CbusConstants.CBUS_ASON2);
         result.add(CbusConstants.CBUS_ASOF2);
         result.add(CbusConstants.CBUS_ARSON2);
         result.add(CbusConstants.CBUS_ARSOF2);
-        
+
         result.add(CbusConstants.CBUS_ACON3);
         result.add(CbusConstants.CBUS_ACOF3);
         result.add(CbusConstants.CBUS_ARON3);
@@ -585,7 +582,7 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_ASOF3);
         result.add(CbusConstants.CBUS_ARSON3);
         result.add(CbusConstants.CBUS_ARSOF3);
-        
+
         return Collections.unmodifiableSet(result);
     }
 
@@ -603,7 +600,7 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_KLOC);
         result.add(CbusConstants.CBUS_QLOC);
         result.add(CbusConstants.CBUS_DKEEP);
-        
+
         result.add(CbusConstants.CBUS_RLOC);
         result.add(CbusConstants.CBUS_QCON);
         result.add(CbusConstants.CBUS_ALOC);
@@ -615,34 +612,34 @@ public class CbusOpCodesTest {
         result.add(CbusConstants.CBUS_DFNON);
         result.add(CbusConstants.CBUS_DFNOF);
         result.add(CbusConstants.CBUS_SSTAT);
-        
+
         result.add(CbusConstants.CBUS_DFUN);
         result.add(CbusConstants.CBUS_GLOC);
         result.add(CbusConstants.CBUS_ERR);
-        
-        result.add(CbusConstants.CBUS_RDCC3);        
-        result.add(CbusConstants.CBUS_WCVO);        
+
+        result.add(CbusConstants.CBUS_RDCC3);
+        result.add(CbusConstants.CBUS_WCVO);
         result.add(CbusConstants.CBUS_WCVB);
         result.add(CbusConstants.CBUS_QCVS);
         result.add(CbusConstants.CBUS_PCVS);
-        
+
         result.add(CbusConstants.CBUS_RDCC4);
         result.add(CbusConstants.CBUS_WCVS);
         result.add(CbusConstants.CBUS_VCVS);
-        
+
         result.add(CbusConstants.CBUS_RDCC5);
         result.add(CbusConstants.CBUS_WCVOA);
-        
+
         result.add(CbusConstants.CBUS_RDCC6);
         result.add(CbusConstants.CBUS_PLOC);
         result.add(CbusConstants.CBUS_STAT);
         result.add(CbusConstants.CBUS_RSTAT);
-        
+
         return Collections.unmodifiableSet(result);
     }
 
     private static final Set<Integer> onEvOpcodes = createOnEv();
-    
+
     private static Set<Integer> createOnEv() {
         Set<Integer> result = new HashSet<>();
         // Opcodes with 4 data
@@ -673,7 +670,7 @@ public class CbusOpCodesTest {
     }
 
     private static final Set<Integer> evRequestOpcodes = createRequests();
-    
+
     private static Set<Integer> createRequests() {
         Set<Integer> result = new HashSet<>();
         // Opcodes with 4 data
@@ -684,7 +681,7 @@ public class CbusOpCodesTest {
     }
 
     private static final Set<Integer> shortOpcodes = createShort();
-    
+
     private static Set<Integer> createShort() {
         Set<Integer> result = new HashSet<>();
         // Opcodes with 4 data
@@ -725,6 +722,6 @@ public class CbusOpCodesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusOpCodesTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusOpCodesTest.class);
 
 }

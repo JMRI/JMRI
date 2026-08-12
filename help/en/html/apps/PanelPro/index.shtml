@@ -101,8 +101,32 @@
 
       <hr>
 
-      <p>Some tools, such as Operations, have an option to add additional items to the main
-      PanelPro menu.</p>
+      <p>Optional Main Menu Items</p>
+
+      <dl>
+        <dt>Operations</dt>
+        <dd>
+          <p>In OperationsPro Settings, enable <strong>Add Operations to Main Menu</strong>.  After
+          doing a save and restart, the main Operations menu will be located after the <em>Scripts</em>
+          menu item. For details see
+          <a href="../../../package/jmri/jmrit/operations/Operations.shtml#Settings">Settings</a>.</p>
+        </dd>
+
+        <dt><span class="since">since 5.15.6</span>Tables</dt>
+        <dd>
+          <p>The <strong>Tables Settings</strong> menu item at the end of the table list is used to
+          enable/disable the Tables item in the main menu.  A save and restart are needed to make
+          the change.</p>
+
+          <img src="images/tables_menu.png" alt="tables menu">
+
+          <p>When enabled, the <strong>Tables</strong> menu will be located between the <em>Tools</em>
+          and <em>Roster</em> menus.</p>
+        </dd>
+
+      </dl>
+
+      <hr>
 
       <p>PanelPro provides four separate ways to create Panels:</p>
 
@@ -341,7 +365,7 @@
       Prefix as set in the Preferences panel -&gt; Connections tab (e.g. LT1 for a turnout on the L
       LocoNet connection). As a second system connection is required to use a different prefix, it
       is simple to use more than one hardware system at the same time. See the page on <a href=
-      "../../doc/Technical/Names.shtml">Names & Naming</a> for more information.</p>
+      "../../doc/Technical/Names.shtml">Names &amp; Naming</a> for more information.</p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

@@ -44,5 +44,5 @@ abstract public class MrcPanel extends jmri.util.swing.JmriPanel implements MrcP
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(MrcPanel.class);
 }

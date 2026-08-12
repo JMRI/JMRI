@@ -49,7 +49,7 @@ public class BiDiBThrottleManager extends AbstractThrottleManager {
         // is active - JMRI completely forgets loco data after removing the last throttle
         // for that loco (see AbstactThottleManager, HasMap addressThrottles)
         // Perhaps we could fiddle with the dipose methods, but there is no example from
-        // other throttle manager. Instead, we use the variant from DCC++ here.
+        // other throttle manager. Instead, we use the variant from DCC-EX here.
         
         if (throttles.containsKey(address)) {
             log.debug("BiDiB throttle found.");
@@ -141,6 +141,6 @@ public class BiDiBThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBThrottleManager.class);
 
 }

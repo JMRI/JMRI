@@ -2,7 +2,6 @@ package jmri.jmrit.entryexit;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class StackNXPanelTest {
     @Test
     public void testCTor() {
         StackNXPanel t = new StackNXPanel();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class StackNXPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StackNXPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StackNXPanelTest.class);
 
 }

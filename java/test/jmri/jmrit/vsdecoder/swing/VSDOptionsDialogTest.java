@@ -33,6 +33,6 @@ public class VSDOptionsDialogTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDOptionsDialogTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialogTest.class.getName());
 
 }

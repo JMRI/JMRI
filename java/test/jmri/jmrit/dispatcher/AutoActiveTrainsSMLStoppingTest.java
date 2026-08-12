@@ -62,7 +62,7 @@ public class AutoActiveTrainsSMLStoppingTest {
 
         // load layout file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/DispatcherSMLStoppingLayout3.xml");
-        cm.load(f);
+        Assertions.assertTrue(cm.load(f));
 
         // insure logix etc fire up (This is an SSL Layout)
         // InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();

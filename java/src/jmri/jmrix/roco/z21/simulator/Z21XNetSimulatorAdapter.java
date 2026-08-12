@@ -19,9 +19,9 @@ public class Z21XNetSimulatorAdapter {
 
     private int csStatus;
     // status values from the z21 Documentation.
-    private final static int csEmergencyStop = 0x01;
+    private static final int csEmergencyStop = 0x01;
     // 0x00 means normal mode.
-    private final static int csNormalMode = 0x00;
+    private static final int csNormalMode = 0x00;
 
     // package protected array of Z21SimulatorLocoData objects.
     Z21SimulatorLocoData[] locoData;
@@ -468,5 +468,5 @@ public class Z21XNetSimulatorAdapter {
         return reply;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetSimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetSimulatorAdapter.class);
 }

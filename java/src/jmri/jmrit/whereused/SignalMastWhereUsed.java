@@ -17,7 +17,7 @@ public class SignalMastWhereUsed {
      * @param signalMast The signal mast bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean signalMast) {
+    public static JTextArea getWhereUsed(NamedBean signalMast) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalMast"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, signalMast.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

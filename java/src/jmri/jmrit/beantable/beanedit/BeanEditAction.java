@@ -142,7 +142,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         JScrollPane listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(250, 80));
         listScroller.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black)));
-        usage.addItem(new BeanEditItem(listScroller, Bundle.getMessage("ColumnLocation"), null));
+        usage.addItem(new BeanEditItem(listScroller, Bundle.getMessage("UsageLocation"), null));
 
         bei.add(usage);
         return usage;
@@ -693,6 +693,6 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanEditAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanEditAction.class);
 
 }

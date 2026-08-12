@@ -35,6 +35,6 @@ public class AbstractXNetSerialConnectionConfigTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractXNetSerialConnectionConfigTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractXNetSerialConnectionConfigTest.class);
 
 }

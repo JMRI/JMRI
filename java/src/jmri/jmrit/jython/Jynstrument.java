@@ -73,7 +73,12 @@ public abstract class Jynstrument extends JPanel {
             cnt.remove(this);
             cnt.repaint();
         }
-        quit();
+        try {
+            quit();
+        } catch (RuntimeException e) {
+            // catch any error in order to avoid breaking JMRI exit flow
+            log.error("While quiting Jynstrument.",e);
+        }
         setPopUpMenu(null);
     }
 
@@ -95,7 +100,7 @@ public abstract class Jynstrument extends JPanel {
 
     protected abstract void quit();
 
-    private final static Logger log = LoggerFactory.getLogger(Jynstrument.class);
+    private static final Logger log = LoggerFactory.getLogger(Jynstrument.class);
 
     public JPopupMenu getPopUpMenu() {
         return myPopUpMenu;
@@ -112,4 +117,5 @@ public abstract class Jynstrument extends JPanel {
     public Element getXml() {
         return null;
     }
+    
 }

@@ -158,6 +158,6 @@ public class DirectionPane extends JPanel {
         delaySpinner.setValue(cbl.getDelay());
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(DirectionPane.class);
+    // private static final Logger log = LoggerFactory.getLogger(DirectionPane.class);
     
 }

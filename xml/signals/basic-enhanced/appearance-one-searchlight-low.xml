@@ -9,6 +9,7 @@
     <year>2009</year>
     <year>2010</year>
     <year>2024</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
 
@@ -32,7 +33,7 @@
         <firstname>Bob</firstname>
         <surname>Jacobsen</surname>
       </personname>
-      <email>jake@physics.berkeley.edu</email>
+      <email>rgj1927@gmail.com</email>
     </author>
 
   </authorgroup>
@@ -44,6 +45,13 @@
       <date>2024-11-14</date>
       <authorinitials>JDP</authorinitials>
       <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
+    </revision>
+
+     <revision>
+      <revnumber>2.0</revnumber>
+      <date>2026-01-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>added alternate color-distinguished icon set</revremark>
     </revision>
 
   </revhistory>
@@ -60,12 +68,14 @@
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-287.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-G.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-290.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-Y.gif</imagelink>
     </appearance>
 
@@ -79,12 +89,14 @@
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-292.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-R.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-low-dark.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-dark.gif</imagelink>
     </appearance>
 
@@ -99,6 +111,7 @@
 
     <held>
       <aspect>Stop</aspect>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-low-held.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-held.gif</imagelink>
     </held>
 

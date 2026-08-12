@@ -272,6 +272,6 @@ public abstract class AbstractProgrammer extends PropertyChangeSupport implement
 
     javax.swing.Timer timer = null;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProgrammer.class);
 
 }

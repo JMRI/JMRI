@@ -6,9 +6,6 @@ import jmri.RailCom;
 import jmri.Sensor;
 import jmri.implementation.AbstractRailComReporter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Extend jmri.implementation.AbstractRailComReporter for Dcc4Pc Reporters.
  * Implementation for providing status of rail com decoders at this
@@ -108,7 +105,10 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
     }
 
     int state = Sensor.UNKNOWN;
-
+    
+    static final int REPRESENTS_RAILCOM_EAST = 0x10;
+    static final int REPRESENTS_RAILCOM_WEST = 0x20;
+        
     public void setRailComState(int ori) {
         if (state == ori) {
             return;
@@ -132,9 +132,12 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             cvNumber = -1;
             cvValues = new Hashtable<>();
             setReport(null);
-        } else if (ori == RailCom.ORIENTA || ori == RailCom.ORIENTB) {
+        } else if (ori == REPRESENTS_RAILCOM_EAST || ori == REPRESENTS_RAILCOM_WEST) {
             if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
-                ((RailCom) super.getCurrentReport()).setOrientation(state);
+                var orientation = RailCom.Orientation.EAST;
+                if (ori == REPRESENTS_RAILCOM_WEST) orientation = RailCom.Orientation.WEST;
+                
+                ((RailCom) super.getCurrentReport()).setOrientation(orientation);
             }
             firePropertyChange("currentReport", null, null);
         }
@@ -148,7 +151,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
             return ((RailCom) super.getCurrentReport()).getTagID();
         }
-        if ((getRailComState() < RailCom.ORIENTA) || (rcPacket[0] == null) || rcPacket[0].getPacket() == null) {
+        if ((getRailComState() < REPRESENTS_RAILCOM_EAST) || (rcPacket[0] == null) || rcPacket[0].getPacket() == null) {
             return "";
         }
         return "";
@@ -411,16 +414,16 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         return rcTag;
     }
 
-    public final static char ACK = 0x80;
-    public final static char ACK_1 = 0x81;
-    public final static char ACK_2 = 0x82;
-    public final static char ACK_3 = 0x83;
-    public final static char ACK_4 = 0x84;
-    public final static char ACK_5 = 0x85;
-    public final static char ACK_6 = 0x86;
-    public final static char ERROR = 0xFF;
+    public static final char ACK = 0x80;
+    public static final char ACK_1 = 0x81;
+    public static final char ACK_2 = 0x82;
+    public static final char ACK_3 = 0x83;
+    public static final char ACK_4 = 0x84;
+    public static final char ACK_5 = 0x85;
+    public static final char ACK_6 = 0x86;
+    public static final char ERROR = 0xFF;
 
-    private final static char[] decode = new char[]{
+    private static final char[] decode = new char[]{
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ACK_1,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0x33,
@@ -454,6 +457,6 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcReporter.class);
 
 }

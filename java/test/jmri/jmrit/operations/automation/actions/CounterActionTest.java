@@ -40,6 +40,6 @@ public class CounterActionTest extends OperationsTestCase {
         Assert.assertEquals("confirm counter incremented", "2", automationItem.getStatus());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HaltActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(HaltActionTest.class);
 
 }

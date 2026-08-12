@@ -35,7 +35,7 @@
       
       <a href="LccProMainWindow.png">
       <img src="LccProMainWindow.png" 
-        class="floatRight" height="251" width="472" alt="LccPro main window"></a>
+        class="floatRight" height="299" width="538" alt="LccPro main window"></a>
 
       <p>
       The main LccPro window is a table showing all the LCC nodes on your network.
@@ -43,9 +43,16 @@
       If the node supports it, there are "Configure" and "Upgrade"
       buttons that will open functional windows for 
       <a href="../../../jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml#configure">configuring the node</a>
-      and 
+      or 
       <a href="../../../jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">upgrading its firmware</a>
-      respectively.
+
+      <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.15.5.shtml">JMRI 5.15.5</a></span>
+      If a node supports it, the
+      "Backup" button on a row  will directly backup that node's configuration to a file.
+      You can have as many of these running in parallel as you'd like, so you
+      can just go down the column hitting the buttons to back up your entire network efficiently.
+      To set the directory where the backup(s) will be stored, 
+      use the "Set Backup Directory" action under the "Settings" menu.
       </p>
       
       <p>
@@ -61,8 +68,6 @@
       and LccPro will select the first row in the table with a matching
       name.  As you continue typing, this will narrow down to finally
       matching just the right entry. The search ignores the lower vs upper case.
-      
-
 
       <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.2.shtml">JMRI 5.11.2</a></span>
       <a name="nodegroups" id="nodegroups">
@@ -83,8 +88,16 @@
         <li>The
             <a href="../../../jmri/jmrix/openlcb/swing/stleditor/StlEditorPane.shtml">STL Editor</a>
       </ul>
-      It also includes a "Refresh" button that will reload the table
-      and a "Help" button that will bring you to this page.
+      It also includes 
+      <ul>
+        <li>a "Refresh" button that will reload the table from the network
+        <li>a "Print Table" button that will print the current contents of the node table,
+            including it's column sizing, sorting, etc
+        <li><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.15.5.shtml">JMRI 5.15.5</a></span>
+            an "Export CSV" button that will export the current contents of the node table
+            in comma-separated variable format and
+        <li>a "Help" button that will bring you to this page.
+      </ul>
       </p>
       
       <p>

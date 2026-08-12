@@ -39,6 +39,6 @@ public class AbstractSignalHeadManagerTest extends AbstractManagerTestBase<jmri.
     @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerTest.class);
 
 }

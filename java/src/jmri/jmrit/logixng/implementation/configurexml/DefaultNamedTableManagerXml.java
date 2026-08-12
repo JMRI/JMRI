@@ -171,5 +171,5 @@ public class DefaultNamedTableManagerXml extends AbstractManagerXml {
         return InstanceManager.getDefault(NamedTableManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultNamedTableManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultNamedTableManagerXml.class);
 }

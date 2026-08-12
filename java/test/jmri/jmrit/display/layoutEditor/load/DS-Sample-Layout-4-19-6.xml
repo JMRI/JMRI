@@ -2152,6 +2152,7 @@
       </points>
     </layoutShape>
   </LayoutEditor>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri May 15 15:57:59 PDT 2020" startsettime="no" />
   <filehistory>
     <operation>
       <type>Load OK</type>

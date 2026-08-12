@@ -49,8 +49,8 @@ public class PrintCarLoadsAction extends AbstractAction {
 
     public class CarLoadPrintOption {
 
-        static final String TAB = "\t"; // NOI18N
-        static final String NEW_LINE = "\n"; // NOI18N
+        protected static final String TAB = "\t"; // NOI18N
+        protected static final String NEW_LINE = "\n"; // NOI18N
 
         // no frame needed for now
         public CarLoadPrintOption() {
@@ -62,8 +62,9 @@ public class PrintCarLoadsAction extends AbstractAction {
 
             // obtain a HardcopyWriter to do this
             try (HardcopyWriter writer =
-                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarLoads"), Control.reportFontSize, .5,
-                            .5, .5, .5, _isPreview);) {
+                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarLoads"), null, null,
+                            Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", false, true,
+                            null, null)) {
 
                 writer.write(getHeader());
 
@@ -134,5 +135,5 @@ public class PrintCarLoadsAction extends AbstractAction {
         return TrainCommon.padAndTruncate(s, fieldSize) + " ";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class);
 }

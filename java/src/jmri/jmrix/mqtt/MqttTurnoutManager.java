@@ -94,5 +94,5 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
     MqttContentParser<Turnout> parser = null;
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnoutManager.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnoutManager.class);
 }

@@ -1,5 +1,7 @@
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -80,7 +82,7 @@ public class InstanceManagerTest {
         assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
     }
 
-    static public class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
+    public static class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
         public InstanceManagerInitCheck() {}
     }
 
@@ -254,6 +256,7 @@ public class InstanceManagerTest {
         }
 
         @Override
+        @SuppressFBWarnings("SLF4J_SIGN_ONLY_FORMAT") // using constant to confirm message
         public void dispose() {
             increaseDisposedCount();
             log.warn("{} {}", MESSAGE, times);
@@ -435,5 +438,5 @@ public class InstanceManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InstanceManagerTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InstanceManagerTest.class);
 }

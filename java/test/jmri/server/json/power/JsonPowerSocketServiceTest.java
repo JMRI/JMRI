@@ -2,6 +2,7 @@ package jmri.server.json.power;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
@@ -135,6 +137,110 @@ public class JsonPowerSocketServiceTest {
         assertNotNull(message);
         assertEquals(JsonPowerServiceFactory.POWER, message.path(JSON.TYPE).asText());
         assertEquals(JSON.UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asInt(-1));
+    }
+
+    /**
+     * Core regression test for the multi-connection isolation bug: a client
+     * that subscribed without a prefix (i.e. the JMRI web page power button)
+     * must NOT receive updates when an unrelated connection's power state
+     * changes — only updates for the default connection should arrive.
+     */
+    @Test
+    public void testDefaultClientIgnoresSecondConnection() throws IOException, JmriException, JsonException {
+        PowerManager defaultPm = InstanceManager.getDefault(PowerManager.class);
+        defaultPm.setPower(PowerManager.OFF);
+        InternalSystemConnectionMemo memo2 = new InternalSystemConnectionMemo("J", "Juliet", false);
+        PowerManager pm2 = memo2.get(PowerManager.class);
+        assertNotNull(pm2);
+        pm2.setPower(PowerManager.OFF);
+        InstanceManager.setDefault(PowerManager.class, defaultPm);
+
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonPowerSocketService service = new JsonPowerSocketService(connection);
+        // Client subscribes with no prefix — should track only the default manager
+        service.onMessage(JsonPowerServiceFactory.POWER, connection.getObjectMapper().createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        int messageCount = connection.getMessages().size();
+
+        // Change the second connection — client must NOT be notified
+        pm2.setPower(PowerManager.ON);
+        assertEquals(messageCount, connection.getMessages().size(),
+                "Client subscribed to default must not receive updates from second connection");
+
+        // Change the default connection — client MUST be notified
+        defaultPm.setPower(PowerManager.ON);
+        assertEquals(messageCount + 1, connection.getMessages().size(),
+                "Client subscribed to default must receive update when default connection changes");
+        assertEquals(JSON.ON, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+
+        service.onClose();
+    }
+
+    /**
+     * A client that subscribed with a specific prefix must only receive updates
+     * for that connection; changes to the default connection must be ignored.
+     */
+    @Test
+    public void testPrefixClientIgnoresDefaultConnection() throws IOException, JmriException, JsonException {
+        PowerManager defaultPm = InstanceManager.getDefault(PowerManager.class);
+        defaultPm.setPower(PowerManager.OFF);
+        InternalSystemConnectionMemo memo2 = new InternalSystemConnectionMemo("J", "Juliet", false);
+        PowerManager pm2 = memo2.get(PowerManager.class);
+        assertNotNull(pm2);
+        pm2.setPower(PowerManager.OFF);
+        InstanceManager.setDefault(PowerManager.class, defaultPm);
+
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonPowerSocketService service = new JsonPowerSocketService(connection);
+        ObjectNode data = connection.getObjectMapper().createObjectNode();
+        data.put(JSON.PREFIX, "J");
+        service.onMessage(JsonPowerServiceFactory.POWER, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        int messageCount = connection.getMessages().size();
+
+        // Change default connection — client subscribed to "J" must NOT be notified
+        defaultPm.setPower(PowerManager.ON);
+        assertEquals(messageCount, connection.getMessages().size(),
+                "Client subscribed to prefix J must not receive updates from default connection");
+
+        // Change "J" connection — client MUST be notified
+        pm2.setPower(PowerManager.ON);
+        assertEquals(messageCount + 1, connection.getMessages().size(),
+                "Client subscribed to prefix J must receive update when J connection changes");
+        assertEquals(JSON.ON, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+
+        service.onClose();
+    }
+
+    /**
+     * onList must subscribe to all connections; updates from any manager must
+     * be delivered to the client.
+     */
+    @Test
+    public void testListSubscribesToAllConnections() throws IOException, JmriException, JsonException {
+        PowerManager defaultPm = InstanceManager.getDefault(PowerManager.class);
+        defaultPm.setPower(PowerManager.OFF);
+        InternalSystemConnectionMemo memo2 = new InternalSystemConnectionMemo("J", "Juliet", false);
+        PowerManager pm2 = memo2.get(PowerManager.class);
+        assertNotNull(pm2);
+        pm2.setPower(PowerManager.OFF);
+        InstanceManager.setDefault(PowerManager.class, defaultPm);
+
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonPowerSocketService service = new JsonPowerSocketService(connection);
+        service.onList(JsonPowerServiceFactory.POWER, connection.getObjectMapper().createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        int messageCount = connection.getMessages().size();
+
+        // Both connections should trigger notifications after onList
+        defaultPm.setPower(PowerManager.ON);
+        assertEquals(messageCount + 1, connection.getMessages().size(),
+                "onList client must receive update from default connection");
+
+        pm2.setPower(PowerManager.ON);
+        assertEquals(messageCount + 2, connection.getMessages().size(),
+                "onList client must receive update from second connection");
+
+        service.onClose();
     }
 
     @BeforeEach

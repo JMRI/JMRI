@@ -95,7 +95,7 @@ public class SRCPPowerManager extends AbstractPowerManager<SRCPBusConnectionMemo
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPPowerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(SRCPPowerManager.class);
 
 }
 

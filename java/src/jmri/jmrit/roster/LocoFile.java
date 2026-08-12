@@ -367,8 +367,10 @@ public class LocoFile extends XmlFile {
             doc.addContent(0, p);
 
             // Add the variable info
-            Element values = existingElement.getChild("locomotive").getChild("values");
-            newLocomotive.addContent(values.clone());
+            if (existingElement!=null) {
+                Element values = existingElement.getChild("locomotive").getChild("values");
+                newLocomotive.addContent(values.clone());
+            }
 
             writeXML(pFile, doc);
         } catch (IOException ex) {
@@ -376,11 +378,11 @@ public class LocoFile extends XmlFile {
         }
     }
 
-    static public String getFileLocation() {
+    public static String getFileLocation() {
         return Roster.getDefault().getRosterFilesLocation();
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoFile.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoFile.class);
 
 }

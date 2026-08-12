@@ -297,6 +297,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccProgrammer.class);
 
 }

@@ -103,6 +103,6 @@ public class MouseInputAdapterInstallerTest {
 
     private static class JMAListener extends JmriMouseAdapter {}
 
-    // private final static Logger log = LoggerFactory.getLogger(MouseInputAdapterInstallerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MouseInputAdapterInstallerTest.class);
 
 }

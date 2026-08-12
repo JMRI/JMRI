@@ -1,10 +1,11 @@
 package jmri.jmrit.blockboss;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalHead;
-import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -177,9 +178,16 @@ public class BlockBossLogicTest {
     @Test
     public void testSimpleBlockNoSignal() {
         Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
-            Assertions.assertNull(new BlockBossLogic(null));});
+            var bbl = getThrowNpeBlockBossLogic();
+            Assertions.fail("Should have thrown NPE on line above, not created " + bbl);
+        });
         Assertions.assertNotNull(ex);
         Assertions.assertEquals("BlockBossLogic name cannot be null", ex.getMessage());
+    }
+
+    @SuppressFBWarnings("NP_NONNULL_PARAM_VIOLATION") // passing null to test exception
+    private BlockBossLogic getThrowNpeBlockBossLogic() {
+        return new BlockBossLogic(null);
     }
 
     // check for basic not-fail if empty signal name was set
@@ -317,13 +325,13 @@ public class BlockBossLogicTest {
 
     }
 
-    Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
-    SignalHead h1, h2, h3, h4;
-    BlockBossLogic p;
+    // Turnout t1, t2, t3;
+    private Sensor s1; //, s2, s3, s4, s5, s6, s7, s8, s9, s10;
+    private SignalHead h1, h2, h3, h4;
+    private BlockBossLogic p;
 
-    Thread testThread = null;
-    boolean forceInterrupt = false;
+    private Thread testThread = null;
+    private boolean forceInterrupt = false;
 
     protected void startLogic() {
         if (p != null) {
@@ -367,20 +375,20 @@ public class BlockBossLogicTest {
             BlockBossLogic.getStoppedObject(head);
         }
 
-        t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
-        t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
-        t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
+        // t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
+        // t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
+        // t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
 
         s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
-        s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
-        s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
-        s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
-        s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
-        s6 = InstanceManager.sensorManagerInstance().newSensor("IS6", "6");
-        s7 = InstanceManager.sensorManagerInstance().newSensor("IS7", "7");
-        s8 = InstanceManager.sensorManagerInstance().newSensor("IS8", "8");
-        s9 = InstanceManager.sensorManagerInstance().newSensor("IS9", "9");
-        s10 = InstanceManager.sensorManagerInstance().newSensor("IS10", "10");
+        // s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
+        // s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
+        // s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
+        // s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
+        // s6 = InstanceManager.sensorManagerInstance().newSensor("IS6", "6");
+        // s7 = InstanceManager.sensorManagerInstance().newSensor("IS7", "7");
+        // s8 = InstanceManager.sensorManagerInstance().newSensor("IS8", "8");
+        // s9 = InstanceManager.sensorManagerInstance().newSensor("IS9", "9");
+        // s10 = InstanceManager.sensorManagerInstance().newSensor("IS10", "10");
 
         h1 = new jmri.implementation.VirtualSignalHead("IH1", "1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h1);
@@ -401,8 +409,8 @@ public class BlockBossLogicTest {
 
     @AfterEach
     public void tearDown() {
-        t1=t2=t3=null;
-        s1=s2=s3=s4=s5=s6=s7=s8=s9=s10=null;
+        // t1=t2=t3=null;
+        s1=null; // s2=s3=s4=s5=s6=s7=s8=s9=s10=null;
         h1=h2=h3=h4=null;
         testThread = null;
         stopLogic();

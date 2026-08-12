@@ -21,8 +21,8 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
     /*
      * Default values and constraints.
      */
-    static public final int defaultInterval = 300;
-    static public final int defaultMaxTries = 1;
+    public static final int defaultInterval = 300;
+    public static final int defaultMaxTries = 1;
 
     public RawTurnoutOperation(String n, int i, int mt) {
         super(n, i, mt);
@@ -53,11 +53,11 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
         return defaultMaxTries;
     }
 
-    static public int getDefaultIntervalStatic() {
+    public static int getDefaultIntervalStatic() {
         return defaultInterval;
     }
 
-    static public int getDefaultMaxTriesStatic() {
+    public static int getDefaultMaxTriesStatic() {
         return defaultMaxTries;
     }
 

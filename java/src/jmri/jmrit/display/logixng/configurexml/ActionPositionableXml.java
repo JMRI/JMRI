@@ -121,5 +121,5 @@ public class ActionPositionableXml extends jmri.managers.configurexml.AbstractNa
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPositionableXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPositionableXml.class);
 }

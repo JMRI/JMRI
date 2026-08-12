@@ -70,8 +70,9 @@ public class PipeListenerTest {
             }
         });
 
-        if (ref.get() != null) {
-            throw ref.get();
+        var refGet = ref.get();
+        if (refGet != null) {
+            throw refGet;
         }
 
         JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
@@ -98,6 +99,6 @@ public class PipeListenerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PipeListenerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PipeListenerTest.class);
 
 }

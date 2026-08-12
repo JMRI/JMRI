@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -20,18 +18,17 @@ import jmri.util.ThreadingUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionBlock extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionBlock extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Block> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Block.class, InstanceManager.getDefault(BlockManager.class), this);
+                    this, Block.class, InstanceManager.getDefault(BlockManager.class));
 
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.SetOccupied, this);
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.SetOccupied);
 
     private final LogixNG_SelectString _selectBlockValue =
-            new LogixNG_SelectString(this, this);
+            new LogixNG_SelectString(this);
 
 
     public ActionBlock(String sys, String user)
@@ -182,22 +179,6 @@ public class ActionBlock extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-        _selectEnum.registerListeners();
-        _selectBlockValue.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-        _selectEnum.unregisterListeners();
-        _selectBlockValue.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -228,12 +209,6 @@ public class ActionBlock extends AbstractDigitalAction
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionBlock.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionBlock.class);
 
 }

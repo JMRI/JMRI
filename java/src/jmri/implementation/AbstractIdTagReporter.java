@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend AbstractReporter for IdTag reporters
  * <p>
- * This file is based on @{link jmri.jmrix.rfid.RfidReporter}
+ * This file is based on {@link jmri.jmrix.rfid.RfidReporter}
  *
  * @author Matthew Harris Copyright (c) 2011
  * @author Paul Bender Copyright (c) 2016, 2019
@@ -44,11 +44,11 @@ public class AbstractIdTagReporter extends AbstractReporter
             var entryexit = id.getProperty("entryexit");
             if (entryexit == null || ! entryexit.equals("exits")) {
                 Reporter r = id.getWhereLastSeen();
+                id.setWhereLastSeen(this);
                 if (r != null) {
                     log.trace("{} notifyPreviousReporter {}", id, r);
                     notifyPreviousReporter(r,id);
                 }
-                id.setWhereLastSeen(this);
                 log.trace("{} last seen here: {}",id, this.mSystemName);
             } else {
                 log.trace("{} skipping setWhereLastSeen on {} exits report", this, id);

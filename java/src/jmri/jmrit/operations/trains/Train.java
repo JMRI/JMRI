@@ -206,6 +206,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public static final String AUTO = Bundle.getMessage("Auto");
     public static final String AUTO_HPT = Bundle.getMessage("AutoHPT");
+    
+    // Train has serviced a location
+    public static final int SERVICED = -1;
 
     public Train(String id, String name) {
         //       log.debug("New train ({}) id: {}", name, id);
@@ -326,14 +329,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return train's departure time in the String format hh:mm or hh:mm AM/PM
      */
     public String getFormatedDepartureTime() {
-        // check to see if the route has a departure time
-        RouteLocation rl = getTrainDepartsRouteLocation();
-        if (rl != null && !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
-            // need to forward any changes to departure time
-            rl.removePropertyChangeListener(this);
-            rl.addPropertyChangeListener(this);
-            return rl.getFormatedDepartureTime();
-        }
         return (parseTime(getDepartTimeMinutes()));
     }
 
@@ -395,7 +390,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public String getExpectedArrivalTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
-        if (minutes == -1) {
+        if (minutes == Train.SERVICED) {
             return ALREADY_SERVICED;
         }
         log.debug("Expected arrival time for train ({}) at ({}), {} minutes", getName(), routeLocation.getName(),
@@ -411,15 +406,15 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public String getExpectedDepartureTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
-        if (minutes == -1) {
-            return ALREADY_SERVICED;
+        if (minutes == Train.SERVICED) {
+            minutes = 0; // provide the work time at routeLocation
         }
-        if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
+        if (routeLocation != null && !routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);
         }
         // figure out the work at this location, note that there can be
         // consecutive locations with the same name
-        if (getRoute() != null) {
+        if (routeLocation != null && getRoute() != null) {
             boolean foundRouteLocation = false;
             for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
                 if (rl == routeLocation) {
@@ -435,7 +430,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 }
             }
         }
-        log.debug("Expected departure time {} for train ({}) at ({})", minutes, getName(), routeLocation.getName());
+//        log.debug("Expected departure time {} for train ({}) at ({})", minutes, getName(), routeLocation.getName());
         return parseTime(minutes, isSortFormat);
     }
 
@@ -468,11 +463,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
         int minutes = 0;
         if (!isTrainEnRoute()) {
-            minutes += Integer.parseInt(getDepartureTimeMinute());
-            minutes += 60 * Integer.parseInt(getDepartureTimeHour());
-            minutes += 24 * 60 * Integer.parseInt(getDepartureTimeDay());
+            minutes += getDepartTimeMinutes();
         } else {
-            minutes = -1; // -1 means train has already served the location
+            minutes = SERVICED; // -1 means train has already served the location
         }
         // boolean trainAt = false;
         boolean trainLocFound = false;
@@ -507,14 +500,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     continue;
                 }
                 // now add the work at the location
-                minutes = minutes + getWorkTimeAtLocation(rl);
+                minutes += getWorkTimeAtLocation(rl);
             }
         }
         return minutes;
     }
 
     private int checkForDepartureTime(int minutes, RouteLocation rl) {
-        if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
+        if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             int departMinute = 24 * 60 * Integer.parseInt(rl.getDepartureTimeDay()) +
                     60 * Integer.parseInt(rl.getDepartureTimeHour()) +
                     Integer.parseInt(rl.getDepartureTimeMinute());
@@ -549,8 +542,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (isSortFormat) {
             d = "0:";
         }
+        
         if (days > 0) {
             d = Integer.toString(days) + ":";
+        }
+        
+        if (!isSortFormat) {
+            String nd = Setup.getDayToName(Integer.toString(days));
+            if (nd != null && !nd.isBlank()) {
+                d = nd + " ";
+            }
         }
 
         // AM_PM field
@@ -580,8 +581,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         int old = _requires;
         _requires = requires;
         if (old != requires) {
-            setDirtyAndFirePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, Integer.toString(old),
-                    Integer.toString(requires));
+            setDirtyAndFirePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, old, requires);
         }
     }
 
@@ -709,7 +709,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         RouteLocation old = _current;
         _current = location;
         if ((old != null && !old.equals(location)) || (old == null && location != null)) {
-            setDirtyAndFirePropertyChange(TRAIN_CURRENT_CHANGED_PROPERTY, old, location); // NOI18N
+            setDirtyAndFirePropertyChange(TRAIN_CURRENT_CHANGED_PROPERTY, old, location);
         }
     }
 
@@ -2022,7 +2022,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     private boolean isCarToStaging(PrintWriter buildReport, RouteLocation rldest, Car car) {
         if (rldest.getLocation().isStaging() &&
-                getStatusCode() == CODE_BUILDING &&
+                isBuilding() &&
                 getTerminationTrack() != null &&
                 getTerminationTrack().getLocation() == rldest.getLocation()) {
             if (debugFlag) {
@@ -2105,7 +2105,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     private boolean isRouteMovesAvailable(PrintWriter buildReport, RouteLocation rldest) {
-        if (getStatusCode() == CODE_BUILDING && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
+        if (isBuilding() && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
             setServiceStatus(Bundle.getMessage("trainNoMoves",
                     getName(), getRoute().getName(), rldest.getId(), rldest.getName()));
             if (debugFlag) {
@@ -2118,7 +2118,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     private boolean isTrainLengthOkay(PrintWriter buildReport, Car car, RouteLocation rldest, int length) {
-        if (getStatusCode() == CODE_BUILDING && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
+        if (isBuilding() && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
             setServiceStatus(Bundle.getMessage("trainExceedsMaximumLength",
                     getName(), getRoute().getName(), rldest.getId(), rldest.getMaxTrainLength(),
                     Setup.getLengthUnit().toLowerCase(), rldest.getName(), car.toString(),
@@ -2423,6 +2423,29 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
         }
         return hp;
+    }
+    
+    public int getNumberEngines(RouteLocation routeLocation) {
+        int numberEngines = 0;
+        Route route = getRoute();
+        if (route != null) {
+            for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                for (Engine eng : InstanceManager.getDefault(EngineManager.class).getList(this)) {
+                    if (eng.getRouteLocation() == rl) {
+                        numberEngines++;
+                    }
+                    if (eng.getRouteDestination() == rl) {
+                        numberEngines--;
+                    }
+                }
+                if (rl == routeLocation) {
+                    break;
+                }
+            }
+        }
+        
+        
+        return numberEngines;
     }
 
     /**
@@ -2809,7 +2832,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public String getComment() {
-        return TrainCommon.getTextColorString(getCommentWithColor());
+        return TrainCommon.getOnlyText(getCommentWithColor());
     }
 
     public String getCommentWithColor() {
@@ -2955,8 +2978,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _showTimes;
         _showTimes = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("showArrivalAndDepartureTimes", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("showArrivalAndDepartureTimes", old, enable); // NOI18N
         }
     }
 
@@ -2968,8 +2990,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _sendToTerminal;
         _sendToTerminal = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("send cars to terminal", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("send cars to terminal", old, enable); // NOI18N
         }
     }
 
@@ -2986,8 +3007,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _allowLocalMoves;
         _allowLocalMoves = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow local moves", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("allow local moves", old, enable); // NOI18N
         }
     }
 
@@ -2999,8 +3019,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _allowThroughCars;
         _allowThroughCars = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow through cars", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("allow through cars", old, enable); // NOI18N
         }
     }
 
@@ -3012,8 +3031,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _buildNormal;
         _buildNormal = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("build train normal", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("build train normal", old, enable); // NOI18N
         }
     }
 
@@ -3031,8 +3049,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _allowCarsReturnStaging;
         _allowCarsReturnStaging = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow cars to return to staging", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("allow cars to return to staging", old, enable); // NOI18N
         }
     }
 
@@ -3044,8 +3061,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _serviceAllCarsWithFinalDestinations;
         _serviceAllCarsWithFinalDestinations = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("TrainServiceAllCarsWithFinalDestinations", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("TrainServiceAllCarsWithFinalDestinations", old, enable); // NOI18N
         }
     }
 
@@ -3057,8 +3073,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _buildConsist;
         _buildConsist = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("TrainBuildConsist", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("TrainBuildConsist", old, enable); // NOI18N
         }
     }
 
@@ -3070,9 +3085,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _sendCarsWithCustomLoadsToStaging;
         _sendCarsWithCustomLoadsToStaging = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging", old, enable); // NOI18N
         }
+    }
+    
+    public boolean isBuilding() {
+        return getStatusCode() == CODE_BUILDING;
     }
 
     public void setBuilt(boolean built) {
@@ -3269,7 +3287,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _buildFailed;
         _buildFailed = status;
         if (old != status) {
-            setDirtyAndFirePropertyChange("buildFailed", old ? "true" : "false", status ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("buildFailed", old, status); // NOI18N
         }
     }
 
@@ -3423,7 +3441,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _printed;
         _printed = printed;
         if (old != printed) {
-            setDirtyAndFirePropertyChange("trainPrinted", old ? "true" : "false", printed ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("trainPrinted", old, printed); // NOI18N
         }
     }
 

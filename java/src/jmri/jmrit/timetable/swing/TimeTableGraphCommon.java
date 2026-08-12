@@ -65,8 +65,8 @@ public class TimeTableGraphCommon {
 
     final Font _stdFont = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
     final Font _smallFont = new Font(Font.SANS_SERIF, Font.PLAIN, 8);
-    final static BasicStroke gridstroke = new BasicStroke(0.5f);
-    final static BasicStroke stroke = new BasicStroke(2.0f);
+    static final BasicStroke gridstroke = new BasicStroke(0.5f);
+    static final BasicStroke stroke = new BasicStroke(2.0f);
 
     TimeTableDataManager _dataMgr;
     int _segmentId;
@@ -673,6 +673,6 @@ public class TimeTableGraphCommon {
         return _hourMap.get(hour) + (min * _sizeMinute);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableGraphCommon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableGraphCommon.class);
 
 }

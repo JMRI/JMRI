@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: EX-CommandStation (DCC-EX) Sensors</title>
   <!--#include virtual="/help/en/parts/Style.shtml" -->
-  <meta name="keywords" content="DCC-EX DCC++EX DCC++ sensors"></head>
+  <meta name="keywords" content="DCC-EX sensors"></head>
 <body>
   <!--#include virtual="/help/en/parts/Header.shtml" -->
 
@@ -41,7 +41,7 @@
       <ol>
         <li>Click the "Add" button</li>
 
-        <li>Make sure "DCC++" is selected in the System Name chooser. (Unfortunatly JMRI has not been updated yet to the EX-CommandStation name.)</li>
+        <li>Make sure "DCC-EX" is selected in the System Name chooser.</li>
 
         <li>Enter the sensor's ID value in the Hardware Address box</li>
 
@@ -77,16 +77,16 @@
           </tr>
         </tbody>
       </table>
-      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
       based on information from the Hardware help pages
       by Egbert Broerse @silverailscolo July 2017 -->
 
       <h3>3: Configure the Base Station</h3>
 
-      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store the Sensor ID and Arduino pin number in the Base Station.  (Unfortunatly JMRI has not been updated yet to the DCC-EX team name.)</p>
+      <p>Use the JMRI/DCC-EX "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store the Sensor ID and Arduino pin number in the Base Station.  (Unfortunatly JMRI has not been updated yet to the DCC-EX team name.)</p>
 
       <ol>
-        <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors & Turnouts")</li>
+        <li>From the DCC-EX Menu, choose "Configure Base Station" (or "Configure Sensors & Turnouts")</li>
 
         <li>Choose the "Sensors" tab</li>
 
@@ -111,7 +111,7 @@
 
       <h3>On Using the JMRI "Configure Base Station" Tool</h3>
 
-      <p>The "Configure Base Station" tool is a convenient way to program the Sensor, Turnout and Output tables in your Base Station. It is not, however, required to work with DCC++ within JMRI. You can, for example, set up your Base Station's tables using the DCC++ serial command interface, or the DCC++ Controller software. As long as the IDs assigned in the Base Station match the Hardware Address assigned in JMRI's Sensor Table, all will be well.</p>
+      <p>The "Configure Base Station" tool is a convenient way to program the Sensor, Turnout and Output tables in your Base Station. It is not, however, required to work with DCC-EX within JMRI. You can, for example, set up your Base Station's tables using the DCC-EX serial command interface, or the DCC-EX Controller software. As long as the IDs assigned in the Base Station match the Hardware Address assigned in JMRI's Sensor Table, all will be well.</p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class LoadXmlUserActionTest {
     @Test
     public void testCTor() {
         LoadXmlUserAction t = new LoadXmlUserAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -28,6 +27,6 @@ public class LoadXmlUserActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LoadXmlUserActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LoadXmlUserActionTest.class);
 
 }

@@ -4,7 +4,7 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid DCC++ Connection Types
+ * Returns a list of valid DCC-EX Connection Types
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
@@ -15,7 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = ConnectionTypeList.class)
 public class DCCppConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
-    public static final String DCCPP = "DCC++";
+    public static final String DCCPP = "DCC-EX";
 
     @Override
     public String[] getAvailableProtocolClasses() {

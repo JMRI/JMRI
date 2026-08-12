@@ -65,6 +65,6 @@ public class OpSessionLogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OpSessionLogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OpSessionLogTest.class);
 
 }

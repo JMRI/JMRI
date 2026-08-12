@@ -294,5 +294,5 @@ public final class UsbUtil {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(UsbUtil.class);
 }

@@ -66,15 +66,15 @@
       <p>To facilitate easy set up of Active Trains that are used more than once, Dispatcher
       provides for saving and loading train information from disk.</p>
 
-      <p>To save your train information to disk, click the <strong>Save Train Info...</strong>
+      <p>To save your train information to disk, click the <strong>Save Train Info&hellip;</strong>
       button after all selections and options have been set up but <em>before</em> clicking the
       <strong>Create</strong> button. This will bring up a small window allowing you to name the
       saved train information file. The name you enter will be normalized automatically with any
       non-alphanumeric characters replaced, and a .xml suffix added if needed. Train information
-      files are saved as .xml files in the <strong>dispatcher</strong> folder in the user's
+      files are saved as .xml files in the <strong>dispatcher/traininfo</strong> folder in the user's
       preferences area on disk.</p>
 
-      <p>To load previously saved train information, click the <strong>Load Train Info...</strong>
+      <p>To load previously saved train information, click the <strong>Load Train Info&hellip;</strong>
       button immediately after the Activate New Train window is displayed. This will bring up a
       small window allowing you to select the train information file to load from all the train
       information files in the dispatcher folder. When a train information file is loaded all items
@@ -91,7 +91,7 @@
       then saving the affected train info file.</p>
 
       <p>To permanently remove an unneeded Train Info file from the <strong>dispatcher</strong>
-      folder in your user preferences area, click the <strong>Delete...</strong> button, then
+      folder in your user preferences area, click the <strong>Delete&hellip;</strong> button, then
       select the train information file to be deleted.</p>
 
       <h2>Using the Activate New Train Window</h2>
@@ -99,22 +99,23 @@
       <p>To create a new <strong>Active Train</strong>, use the following procedure:</p>
 
       <p>A train name in the <strong>Train:</strong> field. Any short name that identifies the train may
-      be used, provided the name is not being used by another Active Train.<p>
-      The <strong>DCC Address</strong> must be a number in the range 1 - 9999.<br>
-          Note: If the train will not be run automatically, the dcc address need not be accurate.
-          This window is displayed if <strong>Trains from User Entry</strong> is selected as
-          Dispatcher's train source.</p>
+      be used, provided the name is not being used by another Active Train.</p>
+
+      <p>The <strong>DCC Address</strong> must be a number in the range 1 - 9999.<br>
+      Note: If the train will not be run automatically, the dcc address need not be accurate.
+      This window is displayed if <strong>Trains from User Entry</strong> is selected as
+      Dispatcher's train source.</p>
 
       <ol>
         <li>
-          <p>Click the <strong>New Train...</strong> button in the <strong><a href=
+          <p>Click the <strong>New Train&hellip;</strong> button in the <strong><a href=
           "Dispatcher.shtml">Dispatcher</a></strong> window, or the <strong>Create New Train</strong> menu item
           from the dispatcher menu in a Layout Editor Panel, to bring up the window shown below.</p>
           <img src="images/NewTrainWindow.png" alt="New train window">
         </li>
 
         <li>
-          <p>If you want to use saved Train information, click <strong>Load Train Info...</strong>
+          <p>If you want to use saved Train information, click <strong>Load Train Info&hellip;</strong>
           See <a href="#loadsave">above</a> for more on loading Train information.</p>
         </li>
 
@@ -220,29 +221,34 @@
               The user names start with <strong>#</strong>. It is possible to save the configuration
               as a train info file.</p>
             </dd>
+
+            <dt id="trainDetectionOptions">Train Detection Options <span class="since">since 5.7.5</span></dt>
+            <dd>
+              <p> This setting affects the ability of auto trains to stop. See autotrains for details.</p>
+              <ul>
+                <li><strong>Entire Train</strong> The entire train can be detected, no unoccupied
+                blocks between head and tail of the train. Sections and blocks within sections can be
+                reused as they become unoccupied.</li>
+
+                <li><strong>Head and Tail</strong> The head and tail are both detected but parts in
+                between may not be detected. Sections will only be reused after the tail has passed.
+                </li>
+
+                <li><a id="trainDetectionHeadOnly"></a><strong>Head Only</strong> Only the head of the
+                train can be detected. The same as <strong>Head and Tail</strong> with the addition
+                that section or any part of the section may not be reused if occupied.</li>
+              </ul>
+              <p>See <strong><a href="#trainlength">Train Length</a></strong> for more AutoTrain
+              stopping information.</p>
+            </dd>
           </dl>
         </li>
 
-        <li>
-          <a id="trainDetectionOptions"></a> Train Detection Options <span class="since">since 5.7.5</span>
-          <p> This settings effects the ability of auto trains to stop. See autotrains for details</p>
-          <ul>
-            <li><strong>Entire Train</strong> The entire train can be detected, no unoccupied blocks between head and
-            tail of the train. Sections and blocks within sections can be reused a soon as they become unoccupied.</li>
+        <li id="allocateOptions">
+          <p>As a train proceeds along the transit route, transit sections need to be allocated.
+          Note:  This only applies when the <strong>Auto Allocate</strong> option has been enabled.
+          <span class="since">since 4.9.5</span></p>
 
-            <li><strong>Head and Tail</strong> The head and tail are both detected but parts in between may not
-            be detected. Sections will only be reused after the tail has passed.
-            </li>
-
-            <li><a id="trainDetectionHeadOnly"></a><strong>Head Only</strong> Only the head of the train can be detected. The same as
-            <strong>Head and Tail</strong> with the addition that section or any part of the section may not be
-            reused if occupied.</li>
-          </ul>
-          <p>See also <strong><a href="#trainlength">Train Length</a></strong> for more AutoTrain stopping information.</p>
-        </li>
-
-        <li>
-          <a id="allocateOptions"></a> Allocation Options <span class="since">since 4.9.5</span>
           <ul>
             <li><strong>As Far As Pos</strong> (Allocate As Far As Possible) - Select to allow
             Dispatcher, when using Auto Allocation, to allocate as far ahead of the Train as
@@ -317,16 +323,30 @@
         </li>
 
         <li>Check <strong>Load this Train at Startup</strong> to have Dispatcher automatically load
-        this Train when Dispatcher starts. You must <strong>Save Train Info...</strong> for this
+        this Train when Dispatcher starts. You must <strong>Save Train Info&hellip;</strong> for this
         flag to take effect on the next start.</li>
 
-        <li>
+        <li id="new_auto_train">
           <p>Check <strong>Run Train Automatically</strong> to request that the Active Train be run
           automatically by the computer. If the Active Train is to be run manually by a human
           engineer, skip the next few steps; go directly to the third to last item of these
           instructions. Requesting <strong>Run Train Automatically</strong> will extend this window
           (see below) to display options that are only related to automatic running of trains.</p>
+
           <img src="images/NewTrainAutoWindow.png" alt="new train auto window">
+
+          <p><span class="since">since 5.15.4</span>An advanced feature has been added to Dispatcher
+          which uses physical characteristics of a locomotive to provide more realistic acceleration
+          and deceleration.  The characteristics are managed in the new
+          <a href="../../../../html/apps/DecoderPro/Roster.shtml#loco_data">Locomotive Data</a>
+          feature in the roster. Some other changes will be noted below.  The line in the blue box
+          is normally hidden.</p>
+
+
+
+
+
+
           <p><strong>Note:</strong> Requirements for automatic running are not validated until
           creation of an Active Train is requested.<br>
           More information about automatic running of Active Trains may be found in the
@@ -334,52 +354,54 @@
           help page.</p>
         </li>
 
+
         <li>
-          <p><strong><a href="#trainDetectionOptions">Train Detection</a> above</strong> effects train stopping. If <strong>Entire Train</strong> is selected, which
-          usually means that all cars in the train will have resistance wheels, trains can be stopped without using point sensors (Stopping Sensors in <strong><a href=
-          "../beantable/SectionAddEdit.shtml">Sections</a></strong>) or without using stopping by Speed Profile. If an automatically running
-          Active Train needs to stop in a Section, it will use a Stopping Sensor if one is present or the Speed Profile.
-          If neither is configured, and if <strong>Entire Train</strong> is selected and the train will fit in the Section (see
-          below), the train will stop when the previous Section becomes UNOCCUPIED. If <strong>Head and Tail</strong>,
-          <strong>Head Only</strong> is specified or if the train will not fit, the train is stopped when it enters the Section.</p>
+          <p id="locospeedcorrection">In the <strong>Loco Speed Correction:</strong> field, enter a
+          percentage (10 - 200%) to modify all train speed settings. If the locomotive runs
+          <em>normally</em>, enter 100%. If the locomotive runs slower than normal, enter a factor
+          between 100 and 200%. If the locomotive runs faster than normal, enter a factor less than
+          100%. This factor is designed to allow the user to compensate for differences between
+          locomotives.</p>
+
+          <p>The Correction factor is applied to all speed/throttle settings <strong>before</strong>
+          they are adjusted for the Minimum Throttle and Maximum Throttle. The default is 100.</p>
         </li>
 
         <li>
-          <p id="locospeedcorrection">In the <strong>Loco Speed Correction:</strong> field, enter a percentage (10 - 200%)
-          to modify all train speed settings. If the locomotive runs <em>normally</em>, enter 100%.
-          If the locomotive runs slower than normal, enter a factor between 100 and 200%. If the
-          locomotive runs faster than normal, enter a factor less than 100%. This factor is
-          designed to allow the user to compensate for differences between locomotives.
-          <br>The Correction factor is applied to all speed/throttle settings <strong>before</strong> they are adjusted for
-          the Minimum Throttle and Maximum Throttle.
-          <br>The default is 100.</p>
+          <p><span class="since">since 5.15.4</span>The <strong>Maximum Throttle:</strong> label has
+          been replaced by a dropdown with 3 selections.</p>
+
+          <ul>
+            <li>Maximum Throttle:</li>
+            <li>Maximum speed (mph)</li>
+            <li>Maximum speed (km/h)</li>
+          </ul>
+
+          <p>In the field, enter a number (10 - 100%) to limit the maximum throttle/speed for the
+          Active Train. This does not scale the throttle setting across the entire range, it only
+          limits the maximum value. To scale the setting though the entire
+          range use <strong><a href="#locospeedcorrection">Loco Speed Correction</a></strong>.</p>
+
+          <p>The value entered here is the starting value. It can be adjusted during
+          a transit. See <strong><a href="../beantable/ViewSpecialActions.shtml">Actions</a></strong>
+          in the Transit help. This can be used, for example, to slow an automatically running
+          Active Train when it passes through a town on the layout.</p>
+
+          <p>This must be at least 10 greater than the Minimum Throttle setting.
+          If a Roster entry is used the default is the Maximum set there, else the Maximum is 100.</p>
         </li>
 
         <li>
-          <p>In the <strong>Maximum Throttle:</strong> field, enter a number (10 - 100%) to
-          limit the maximum throttle for the Active Train. This does not scale the throttle setting across
-          the entire range, it only limits the maximum value. To scale the throttle setting though the entire
-          range use <strong><a href="#locospeedcorrection">Loco Speed Correction</a></strong>.
-          <br>The Maximum Throttle entered here is the starting value for the Maximum Throttle it can be adjusted during
-          a transit. see <strong><a href="../beantable/ViewSpecialActions.shtml">Actions</a></strong> in the
-          Transit. <strong>Actions</strong> This can be used, for example, to slow an automatically running Active Train
-          when it passes through a town on the layout.
-          <br>This must be at least 10 greater than the Minimum Throttle setting.
-          <br>If a Roster entry is used the default is the Maximum set there, else the Maximum is 100. </p>
+          <p>In the <strong>Minimum Throttle:</strong> field, enter a number (0 - 90%) to set the
+          Minimum Throttle setting to be used by the Active Train.  When starting from zero the first
+          throttle setting applied will be at least this.  When stopping the train using Ramping or
+          a Speed Profile the last step before Zero will at least this value.  Use this to deal with
+          locos that have settings below this value that though they may work they do not work reliably.</p>
+
+          <p>This must be at least 10 less than the Maximum Throttle setting. The default is zero.</p>
         </li>
 
-        <li>
-          <p>In the <strong>Minimum Throttle:</strong> field, enter a number (0 - 90%) to set
-          the Minimum Throttle setting to be used by the Active Train.
-          When starting from zero the first throttle setting applied will be at least this.
-          When stopping the train using Ramping or a Speed Profile the last step before Zero will at
-          least this value.
-          Use this to deal with locos that have settings below this value that though they may work they do not work reliably.
-          <br>This must be at least 10 less than the Maximum Throttle setting.
-          <br>The default is zero.</p>
-        </li>
-
-        <li>
+        <li id="ramp_rate">
           <p>Select a <strong>Ramp Rate</strong>. When a train running automatically needs to
           change speed, the computer can send the new speed to the locomotive immediately
           (RAMP_NONE), or it can <strong>Ramp</strong> the speed to its new value (change the speed
@@ -388,9 +410,18 @@
           decoders have features that can change speed gradually (this decoder option is named
           differently for different decoders). If the decoder is doing the desired job, select
           RAMP_NONE. If the loco is speed profiled then you may select <strong>Speed Profile</strong>
-          which will cause speed changes to take place over the length of the section or block.<br>
-          Otherwise select one of the ramp rates offered.<br>
+          which will cause speed changes to take place over the length of the section or block.
+          Otherwise select one of the ramp rates offered.
           </p>
+
+          <p><span class="since">since 5.15.4</span>The <strong>Physics</strong> option has been
+          added to the ramp rate dropdown.  When Physics is selected, the line in the blue box is
+          made visible.</p>
+
+          <p>If a locomotive has a Speed Profile <em>and</em> its locomotive data parameters have
+          been set in its roster entry, then you can select <strong>Physics</strong> in the ramp
+          rate dropdown. With this mode enabled, acceleration will be calculated automatically based
+          on the train's physical properties (e.g. power and weight).</p>
         </li>
 
         <li>
@@ -414,6 +445,43 @@
         </li>
 
         <li>
+          <p><span class="since">since 5.15.4</span>Set the <strong>Override stop sensors</strong>
+          option active to ignore section stop sensors and stop by using dead reckoning.</p>
+        </li>
+
+        <li>
+          <p><span class="since">since 5.15.4</span>The <strong>Stop by distance into destination
+          section</strong> option is used to control how far into the final transit section a train
+          should proceed before stopping.
+          This will override the <strong>Adjust</strong> parameter if it is set. If <strong>Head</strong>
+          is select the front of the train will stop this far into the section. If <strong>Tail</strong>
+          is selected, the rear of the train will stop this far into the section. The tail is based
+          on the maximum train length (see below) and will not work unless this has been set. If
+          there are stop sensors in the section, the train will decelerate to minimum speed within
+          the specified distance but stop whenever it reaches the stop sensor, whether this is before
+          or after the distance given unless <strong>Override stop sensors</strong> has been selected,
+          in which case the stop sensors will be ignored.</p>
+        </li>
+
+        <li>
+          <p><span class="since">since 5.15.4</span>
+          If <strong>Physics</strong> based ramping has been selected the options in the blue box
+          are made visible.</p>
+
+          <p>The options are used to specify the additional train weight, driver power applied % and
+          rolling resistance of the train. Use the additional train weight to set any weight of the
+          train over and above the weight set in the roster entry. For example, if the roster Entry
+          defines a locomotive, use the additional train weight to specify the weight of the whole
+          train including cargo/passengers.  If the weight in the roster entry is for a multiple
+          unit, use the additional weight to define the weight of any passengers.  The "driver power
+          applied" % sets how much power (in proportion to the maximum power available) that the
+          driver applies when accelerating the train to simulate the fact that drivers do not always
+          drive their trains as hard as possible.  The <strong>Rolling resistence</strong> option is
+          an advanced value that affects acceleration.  Changing the default value requires a good
+          understanding of the physics involved.</p>
+        </li>
+
+        <li>
           <p>Check <strong>Loco has sound decoder.</strong> if the locomotive has a sound decoder.
           If this item is not checked, <strong>Actions</strong> that require a sound decoder, such
           as ringing the bell or sounding the horn will be skipped.</p>
@@ -423,8 +491,9 @@
           <p>Check <strong>Run in reverse</strong> if the locomotive is to be run in reverse
           through the Transit. This should not be confused with the direction through the Transit,
           which is always FORWARD when the Active Train starts up. Checking this item is equivalent
-          to using the reverse setting on a manual throttle.<br>
-          This option allows a locomotive to back up through the Transit. For example, a local
+          to using the reverse setting on a manual throttle.</p>
+
+          <p>This option allows a locomotive to back up through the Transit. For example, a local
           moves out of a yard automatically in the forward direction to a siding, cars are switched
           manually, then the locomotive needs to back up automatically to the yard. This could be
           accomplished using two Active Trains, both running automatically. One would move the
@@ -434,26 +503,33 @@
           <em>reverse</em> are backwards in the locomotive.</p>
         </li>
 
-        <li>
-          <p><a id="trainlength"></a><strong>Maximum Train Length</strong>. Enter the maximum length
-          the train can have while traversing the Transit. The length can be entered in Actual
-          (measured with a ruler on the layout), inches or centimeters, or, scale (measured in real life),
-          feet or meters.
-		  <br>The default scale units as set in the <strong><a href="Options.shtml">Dispatcher Options</a></strong>
-          accessed from Dispatcher's <strong>Options</strong> menu. The converse value is calculated
-          and displayed to the right. You do not have to update the value if the layout scale or the
-          base layout measurements are changed to or from metric.
-          <br>It is important to enter a reasonable value for the maximum length as it used during stopping
-          or releasing sections <strong><a href="#trainDetectionHeadOnly">HEADONLY</a></strong>. When stopping but NOT stopping by Speed Profile or Stopping Sensor, if the length
-          of the train does not fit in a Block it is stopped immediately. Eise it is stopped as soon as
-          the preceding Block goes UNOCCUPIED. Remember this uses <em>debounce timings</em>, which
-          -if large- can result in the train over running the block if it only just fits.<br>
-          See also <strong><a href="#trainDetectionOptions">Train Detection</a></strong></p>
+        <li id="trainlength">
+          <p>Enter the <strong>Maximum Train Length</strong> for the train while traversing the
+          Transit. The length can be entered in actual (measured with a ruler on the layout), inches
+          or centimeters, or, scale (measured in real life), feet or meters.  It is important to
+          enter a reasonable value for the maximum length as it is used during stopping
+          and releasing sections.</p>
+
+          <p>The default scale units are set in <strong><a href="Options.shtml">Dispatcher Options</a></strong>
+          accessed from Dispatcher's <strong>Options</strong> menu. The converted value is calculated
+          and displayed to the right. The value does not need to be updated if the layout scale or
+          the base layout measurements are changed to or from metric.</p>
+
+          <p>When a train needs to stop, the train length, the section length and the detection option
+          are used if the section does not have a stopping sensor and <strong>Stop by Speed Profile</strong>
+          is not enabled.</p>
+
+          <p>If the <strong>Entire Train</strong> detection option is selected and the train will fit
+          in the section, the train will stop when the previous section becomes UNOCCUPIED, otherwise
+          the train will stop on entry to the section.  Note: This uses <em>debounce timings</em>,
+          which -if large- can result in the train over running the block if it only just fits.</p>
+
+          <p>See also <strong><a href="#trainDetectionOptions">Train Detection</a></strong></p>
         </li>
 
         <li>
           <p>If you want to save your entered train information for later use, click <strong>Save
-          Train Info...</strong> See <a href="#loadsave">above</a> for more information on saving
+          Train Info&hellip;</strong> See <a href="#loadsave">above</a> for more information on saving
           train information.</p>
         </li>
 

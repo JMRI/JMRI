@@ -992,6 +992,6 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class);
 
 }

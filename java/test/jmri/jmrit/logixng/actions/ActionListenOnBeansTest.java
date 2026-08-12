@@ -17,8 +17,6 @@ import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.script.swing.ScriptOutput;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -198,7 +196,6 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         actionWaitFor.setReleaseCondition(oldReleaseCondition);
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException {
         JUnitUtil.setUp();
@@ -272,7 +269,6 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

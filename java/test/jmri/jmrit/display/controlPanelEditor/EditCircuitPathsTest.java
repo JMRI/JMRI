@@ -60,5 +60,5 @@ public class EditCircuitPathsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditCircuitPathsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EditCircuitPathsTest.class);
 }

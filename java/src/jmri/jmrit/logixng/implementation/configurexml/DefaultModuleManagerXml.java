@@ -171,5 +171,5 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
         return InstanceManager.getDefault(ModuleManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModuleManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModuleManagerXml.class);
 }

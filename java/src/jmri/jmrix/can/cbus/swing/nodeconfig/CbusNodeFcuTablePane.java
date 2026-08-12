@@ -112,6 +112,6 @@ public class CbusNodeFcuTablePane extends JPanel {
         nodeTable = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeFcuTablePane.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeFcuTablePane.class);
 
 }
