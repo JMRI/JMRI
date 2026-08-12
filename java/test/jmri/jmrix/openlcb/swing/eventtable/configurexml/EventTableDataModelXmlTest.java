@@ -31,6 +31,9 @@ public class EventTableDataModelXmlTest {
             }
         };
         model.addMatch(new NodeID("1.1.1.1.2.2"), "named");
+        var targetEvent = new EventID("1.1.1.1.2.2.2.2");
+        
+        model.recordProducer(targetEvent, new NodeID("1.1.1.1.2.2"),"", false);
 
         try {
             cxml1.store();

@@ -118,6 +118,51 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
             values.addContent(element);
         }
 
+        // Loop through producer node <-> event ID associations
+        root.addContent(values = new Element("producers")); // NOI18N
+        for (var memo : model.memos) {
+            if (memo.eventID != null && memo.producer != null) {
+                var event = memo.eventID.toShortString();
+                var range = memo.rangeSuffix;
+                var producer = memo.producer.toString();
+                
+                var element = new Element("producer");
+                var eventElement = new Element("event");
+                eventElement.addContent(event);
+                var rangeElement = new Element("range");
+                rangeElement.addContent(range);
+                var producerElement = new Element("producer");
+                producerElement.addContent(producer);
+                element.addContent(eventElement);
+                element.addContent(rangeElement);
+                element.addContent(producerElement);
+                values.addContent(element);
+                
+            }
+        }
+
+        // Loop through consumer node <-> event ID associations
+        root.addContent(values = new Element("consumers")); // NOI18N
+        for (var memo : model.memos) {
+            if (memo.eventID != null && memo.consumer != null) {
+                var event = memo.eventID.toShortString();
+                var range = memo.rangeSuffix;
+                var producer = memo.consumer.toString();
+                
+                var element = new Element("consumer");
+                var eventElement = new Element("event");
+                eventElement.addContent(event);
+                var rangeElement = new Element("range");
+                rangeElement.addContent(range);
+                var consumerElement = new Element("consumer");
+                consumerElement.addContent(producer);
+                element.addContent(eventElement);
+                element.addContent(rangeElement);
+                element.addContent(consumerElement);
+                values.addContent(element);
+                
+            }
+        }
 
         writeXML(file, doc);
     }

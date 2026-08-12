@@ -366,7 +366,7 @@ public class EventTableDataModel extends AbstractTableModel {
      * @param rangeSuffix the range mask string or "" for single events
      * @param pcer true if this Producer was inferred from a PCER message, false if from a Producer Identified message
      */
-    void recordProducer(EventID eventID, NodeID nodeID, String rangeSuffix, boolean pcer) {
+    public void recordProducer(EventID eventID, NodeID nodeID, String rangeSuffix, boolean pcer) {
         log.debug("recordProducer of {} in {}", eventID, nodeID);
 
         // update if the model has been cleared
@@ -472,7 +472,7 @@ public class EventTableDataModel extends AbstractTableModel {
      * @param nodeID  Node that is known to consume the event
      * @param rangeSuffix the range mask string or "" for single events
      */
-    void recordConsumer(EventID eventID, NodeID nodeID, String rangeSuffix) {
+    public void recordConsumer(EventID eventID, NodeID nodeID, String rangeSuffix) {
         log.debug("recordConsumer of {} in {}", eventID, nodeID);
 
         // update if the model has been cleared
@@ -623,14 +623,14 @@ public class EventTableDataModel extends AbstractTableModel {
         return false;
     }
 
-    static class TripleMemo {
-        final EventID eventID;
-        final String  rangeSuffix;
-        // Event name is stored in an OlcbEventNameStore, see getValueAt()
-        NodeID producer;
-        String producerName;
-        NodeID consumer;
-        String consumerName;
+    static public class TripleMemo { // would like to use a record for this; public for testing
+        final public EventID eventID;
+        final public String  rangeSuffix;
+        // Event name is stored separately, see getValueAt()
+        public NodeID producer;
+        public String producerName;
+        public NodeID consumer;
+        public String consumerName;
 
         TripleMemo(EventID eventID, String rangeSuffix, NodeID producer, String producerName,
                     NodeID consumer, String consumerName) {
