@@ -497,6 +497,45 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
+    /**
+     * A LOCO_INFO_RESPONSE (0xE3) carrying a sub-type the throttle does not
+     * know about used to leave requestState stuck at THROTTLESTATSENT: the
+     * reply was consumed, so no timeout ever fired, and every command queued
+     * afterwards was held back forever.
+     */
+    @Test
+    public void testUnknownLocoInfoResponseSubtypeDoesNotStallQueue() {
+        int n = tc.outbound.size();
+        XNetThrottle t = (XNetThrottle) instance;
+        initThrottle(t, n);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 00 00 03 E0", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // answer with an unrecognized LOCO_INFO_RESPONSE sub-type.
+        XNetReply m = new XNetReply();
+        m.setElement(0, XNetConstants.LOCO_INFO_RESPONSE);
+        m.setElement(1, 0x60);  // neither LOCO_NOT_AVAILABLE, LOCO_FUNCTION_STATUS
+        m.setElement(2, 0x00);  // nor LOCO_FUNCTION_STATUS_HIGH
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x83);
+        t.message(m);
+
+        // the throttle has to be back to idle, so the next command reaches the
+        // traffic controller instead of piling up in the internal queue.
+        n = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+
+        assertEquals( n + 1, tc.outbound.size(),
+            "Speed message sent after unrecognized LOCO_INFO_RESPONSE sub-type");
+        assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(n).getElement(1),
+            "Throttle Set Speed Message");
+        t.throttleDispose();
+    }
+
     @Test
     public void testSendFunctionStatusInformationRequest() {
         int n = tc.outbound.size();
