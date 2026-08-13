@@ -20,6 +20,7 @@
 <!-- version 1.6 - Ronald Kuhn - add german translation -->
 <!-- version 1.7 - Pierre Billon, added 2nd Address checkboxes for function decoders, 26 Feb 2024 -->
 <!-- version 1.8 - Pierre Billon - Added French translations, 06 August 2026 -->
+<!-- version 1.9 - Ronald Kuhn - disable unused groups in some decoder, 12 August 2026 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Swiss Mapping V36+</name>
   <name xml:lang="fr">Mapping suisse V36+</name>
@@ -27,7 +28,7 @@
   <name xml:lang="cs">Švýcarské přiřazení</name>
   <name xml:lang="de">Schweizer Mapping</name>
   <name xml:lang="nl">Zwitserse Mapping</name>
-  <column>
+   <column>
 
     <row>   <!-- help/guidance text at top of pane -->
       <column>
@@ -47,7 +48,7 @@
          <text xml:lang="de">Die ausgewählten Funktionsausgänge werden bedient, wenn die Gruppe aktiv ist. Optional kann auf jeden ausgewählten Ausgang eine Dimmgruppe angewendet werden.</text>
           <text xml:lang="cs">Vybrané funkční výstupy fungují, když je aktivní skupina. Volitelně lze na každý vybraný výstup použít skupinu stmívání.</text>
         </label>
-		
+
         <label>
           <text>Any other group controlled by the M-key is modified (usually turned off) when this group defined in this row is active. </text>
           <text xml:lang="fr">Tout autre groupe commandé par la touche M est modifié (généralement désactivé) lorsque le groupe défini sur cette ligne est actif.</text>
@@ -131,7 +132,7 @@
               <label xml:lang="fr">Groupe  1  </label>
               <label xml:lang="it">Gruppo  1  </label>
               <label xml:lang="cs">Skupina  1  </label>
-              <label xml:lang="de">Gruppe  1 </label>
+              <label xml:lang="de">  Gruppe  1 </label>
               <label xml:lang="nl">Groep  1  </label>
             </display>
         </column>
@@ -219,7 +220,7 @@
             <label xml:lang="fr">Groupe  2  </label>
             <label xml:lang="it">Gruppo  2  </label>
             <label xml:lang="cs">Skupina  2  </label>
-            <label xml:lang="de">Gruppe  2  </label>
+            <label xml:lang="de">  Gruppe  2  </label>
             <label xml:lang="nl">Groep  2  </label>
          </display>
         </column>
@@ -287,7 +288,7 @@
               <label xml:lang="fr">Groupe  3  </label>
               <label xml:lang="it">Gruppo  3  </label>
               <label xml:lang="cs">Skupina  3  </label>
-              <label xml:lang="de">Gruppe  3  </label>
+              <label xml:lang="de">  Gruppe  3  </label>
               <label xml:lang="nl">Groep  3  </label>
             </display>
         </column>
@@ -354,7 +355,7 @@
           <label xml:lang="fr">Groupe  4  </label>
           <label xml:lang="it">Gruppo  4  </label>
           <label xml:lang="cs">Skupina  4  </label>
-          <label xml:lang="de">Gruppe  4  </label>
+          <label xml:lang="de">  Gruppe  4  </label>
           <label xml:lang="nl">Groep  4  </label>
         </display>
         <column>  <!-- spacer column -->
@@ -420,7 +421,7 @@
           <label xml:lang="fr">Groupe  5  </label>
           <label xml:lang="it">Gruppo  5  </label>
           <label xml:lang="cs">Skupina  5  </label>
-          <label xml:lang="de">Gruppe  5  </label>
+          <label xml:lang="de">  Gruppe  5  </label>
           <label xml:lang="nl">Groep  5  </label>
         </display>
         <column>  <!-- spacer column -->
@@ -483,7 +484,7 @@
           <label xml:lang="fr">Groupe  6  </label>
           <label xml:lang="it">Gruppo  6  </label>
           <label xml:lang="cs">Skupina  6  </label>
-          <label xml:lang="de">Gruppe  6  </label>
+          <label xml:lang="de">  Gruppe  6  </label>
           <label xml:lang="nl">Groep  6  </label>
         </display>
         <column>  <!-- spacer column -->
@@ -545,7 +546,7 @@
           <label xml:lang="fr">Groupe  7  </label>
           <label xml:lang="it">Gruppo  7  </label>
           <label xml:lang="cs">Skupina  7  </label>
-          <label xml:lang="de">Gruppe  7  </label>
+          <label xml:lang="de">  Gruppe  7  </label>
           <label xml:lang="nl">Groep  7  </label>
         </display>
         <column>  <!-- spacer column -->
@@ -607,7 +608,7 @@
           <label xml:lang="fr">Groupe  8  </label>
           <label xml:lang="it">Gruppo  8  </label>
           <label xml:lang="cs">Skupina  8  </label>
-          <label xml:lang="de">Gruppe  8  </label>
+          <label xml:lang="de">  Gruppe  8  </label>
           <label xml:lang="nl">Groep  8  </label>
         </display>
         <column>  <!-- spacer column -->
@@ -669,7 +670,7 @@
           <label xml:lang="fr">Groupe  9  </label>
           <label xml:lang="it">Gruppo  9  </label>
           <label xml:lang="cs">Skupina  9  </label>
-          <label xml:lang="de">Gruppe  9  </label>
+          <label xml:lang="de">  Gruppe  9  </label>
           <label xml:lang="nl">Groep  9  </label>
         </display>
         <column>  <!-- spacer column -->
@@ -693,6 +694,12 @@
                 <display item="Swiss Mapping Group 9 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 9 to 10 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 9 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 9 M-key Hibeam</variableref>
@@ -755,6 +762,12 @@
                 <display item="Swiss Mapping Group 10 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 9 to 10 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 10 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 10 M-key Hibeam</variableref>
@@ -1467,7 +1480,7 @@
       </column>
 	  </row>
       <row> <label> <text>   </text></label></row>  <!-- table readability spacing between row 5 and row 6 -->
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 6 A1 Fw" label="">
           <label></label>
@@ -1529,7 +1542,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 8 A1 Fw" label="">
           <label></label>
@@ -1560,7 +1573,7 @@
         </display>
       </column>
       </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 9 A1 Fw" label="">
           <label></label>
@@ -1591,7 +1604,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 10 A1 Fw" label="">
           <label></label>
@@ -1614,7 +1627,7 @@
       </column>
 	  </row>
       <row> <label> <text>   </text></label></row>  <!-- table readability spacing between row 10 and row 11 -->
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 11 A1 Fw" label="">
           <label></label>
@@ -1636,7 +1649,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 12 A1 Fw" label="">
           <label></label>
@@ -1658,7 +1671,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 13 A1 Fw" label="">
           <label></label>
@@ -1705,7 +1718,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 15 A1 Fw" label="">
           <label></label>
@@ -1728,7 +1741,7 @@
       </column>
 	  </row>
       <row> <label> <text>   </text></label></row>  <!-- table readability spacing between row 15 and row 16 -->
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 16 A1 Fw" label="">
           <label></label>
@@ -1750,7 +1763,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 17 A1 Fw" label="">
           <label></label>
@@ -1772,7 +1785,7 @@
         </display>
       </column>
 	  </row>
-	</group>  
+     </group>  
   </column>
 
   <column>  <!-- spacer column 3 to column 4 -->
@@ -1971,7 +1984,7 @@
       </column>
 	  </row>
       <row> <label> <text>   </text></label></row>  <!-- table readability spacing between row 5 and row 6 -->
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 6 A1 Fw DG" label="">
           <label></label>
@@ -2001,7 +2014,7 @@
           <label></label>
         </display>
       </column>
-	  </row>
+    </row>
     <row>
       <column>
         <display item="Swiss Mapping Group 7 A1 Fw DG" label="">
@@ -2033,7 +2046,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 8 A1 Fw DG" label="">
           <label></label>
@@ -2064,7 +2077,7 @@
         </display>
       </column>	  
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 9 A1 Fw DG" label="">
           <label></label>
@@ -2095,7 +2108,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 10 A1 Fw DG" label="">
           <label></label>
@@ -2127,7 +2140,7 @@
       </column>
 	  </row>
       <row> <label> <text>   </text></label></row>  <!-- table readability spacing between row 10 and row 11 -->
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 11 A1 Fw DG" label="">
           <label></label>
@@ -2158,7 +2171,7 @@
         </display>
       </column>
     </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 12 A1 Fw DG" label="">
           <label></label>
@@ -2189,7 +2202,7 @@
         </display>
       </column>
     </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 13 A1 Fw DG" label="">
           <label></label>
@@ -2222,7 +2235,7 @@
     </row>
     <group exclude="195,199,201,211,218,240">    <!-- hide stuff for decoders lacking these CVs, needed because of conditionals displaying text -->
 
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 14 A1 Fw DG" label="">
           <label></label>
@@ -2254,7 +2267,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 15 A1 Fw DG" label="">
           <label></label>
@@ -2286,7 +2299,7 @@
       </column>
 	  </row>
       <row> <label> <text>   </text></label></row>  <!-- table readability spacing between row 15 and row 16 -->
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 16 A1 Fw DG" label="">
           <label></label>
@@ -2317,7 +2330,7 @@
         </display>
       </column>
 	  </row>
-      <row>
+    <row>
       <column>
         <display item="Swiss Mapping Group 17 A1 Fw DG" label="">
           <label></label>
@@ -2348,13 +2361,13 @@
         </display>
       </column>
 	  </row>
-	</group>  
-  </column>
+     </group>  
+    </column>
 
 
 
-  </row>
-  <!--  end of two column tabular area-->
+    </row>
+    <!--  end of two column tabular area-->
 
 
 
@@ -2529,10 +2542,10 @@
     </display>
    </column>
   </row>
-      <row>
+    <row>
         <label>
           <text> </text>
         </label>
     </row>
-  </column>
+   </column>
 </pane>

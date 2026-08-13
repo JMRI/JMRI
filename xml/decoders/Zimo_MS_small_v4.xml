@@ -22,10 +22,10 @@
 
   <version author="Nigel Cliffe" version="1.2" lastUpdated="2023/04/21"/>
 
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.3" lastUpdated="2024/04/28"/>
+  <version author="Ronald Kuhn" version="1.3" lastUpdated="2024/04/28"/>
   <!-- v1.3,  added CV#250 with naming, MS560 and a small correction-->
 
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.4" lastUpdated="2024/05/02"/>
+  <version author="Ronald Kuhn" version="1.4" lastUpdated="2024/05/02"/>
   <!-- v1.4,  added new decoder versions -->
 
   <version author="Nigel Cliffe" version="1.5" lastUpdated="2025/03/14"/>
@@ -33,6 +33,8 @@
   <!--  added Zimo Scripting variables, CV837, CV843, CV981-1019  new pane for Zimo Scripting,  added decoder MS591N18, and removed comments to enable MS540E4-->
   <version author="Pierre Billon" version="1.7" lastUpdated="2026/08/05"/>
   <!-- v1.7 added some translations -->
+  <version author="Ronald Kuhn" version="1.8" lastUpdated="2026/08/12"/>
+  <!-- v1.8,  added replacement-feature -->
   
   <decoder>
   <!-- These version 4 families are gated to CV #7 = 4 exactly. CV #7 is the main software
@@ -42,7 +44,7 @@
     <family name="MS Sound (version 4+)" mfg="Zimo">
       <!-- MS001 is an OEM build (e.g. in the Fleischmann Beilhack). Physical data varies by locomotive,
            so none is declared; the maximum output count of the small MS decoders is used. -->
-      <model model="MS001 (OEM) version 4+" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="11" comment="OEM version of an MS sound decoder, factory-fitted by a model manufacturer and not sold separately. Physical characteristics vary by locomotive: outputs, connector, size and current ratings are not those of any catalogue MS decoder. The maximum number of outputs is offered here; your locomotive may use fewer.">
+      <model model="MS001 (OEM) version 4+" replacementModel="MS001 (OEM) version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="11" comment="OEM version of an MS sound decoder, factory-fitted by a model manufacturer and not sold separately. Physical characteristics vary by locomotive: outputs, connector, size and current ratings are not those of any catalogue MS decoder. The maximum number of outputs is offered here; your locomotive may use fewer.">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -95,7 +97,7 @@
         </output>
       </model>
 
-      <model model="MS440 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
+      <model model="MS440 version 4+" replacementModel="MS440 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -133,7 +135,7 @@
         <size length="30" width="15" height="4" units="mm"/>
       </model>
 
-      <model model="MS450 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="6">
+      <model model="MS450 version 4+" replacementModel="MS450 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="6">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -187,7 +189,7 @@
         <size length="30" width="15" height="4" units="mm"/>
       </model>
 
-      <model model="MS480 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
+      <model model="MS480 version 4+" replacementModel="MS480 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
         <output name="1" label="Front Light">
           <label xml:lang="fr">Feux avant</label>
           <label xml:lang="de">Licht vorne</label>
@@ -205,7 +207,7 @@
         <size length="19" width="11" height="3.1" units="mm"/>
       </model>
 
-      <model model="MS490 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="6" numFns="14" productID="3">
+      <model model="MS490 version 4+" replacementModel="MS490 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="6" numFns="14" productID="3">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -235,7 +237,7 @@
         <size length="19" width="8.6" height="2.9" units="mm"/>
       </model>
 
-      <model model="MS491 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="7" numFns="14" productID="12">
+      <model model="MS491 version 4+" replacementModel="MS491 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="7" numFns="14" productID="12">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -269,7 +271,7 @@
         <size length="19" width="7.8" height="2.8" units="mm"/>
       </model>
 
-      <model model="MS500 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="1">
+      <model model="MS500 version 4+" replacementModel="MS500 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="1">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -300,7 +302,7 @@
       </model>
 
 
-      <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14" connector="E24">
+      <model model="MS540E24 version 4+" replacementModel="MS540E24 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14" connector="E24">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -354,7 +356,7 @@
         <size length="19" width="8.7" height="2.8" units="mm"/>
       </model>
 
-      <model model="MS560 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="4" numFns="14" productID="10">
+      <model model="MS560 version 4+" replacementModel="MS560 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="4" numFns="14" productID="10">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -376,7 +378,7 @@
         <size length="27" width="14" height="2.6" units="mm"/>
       </model>
 
-      <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="5">
+      <model model="MS580N18 version 4+" replacementModel="MS580N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="5">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -412,7 +414,7 @@
         <size length="25" width="10.5" height="4" units="mm"/>
       </model>
 
-      <model model="MS581N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="9" numFns="14" productID="13">
+      <model model="MS581N18 version 4+" replacementModel="MS581N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="9" numFns="14" productID="13">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -453,7 +455,7 @@
         <size length="24,9" width="10" height="4" units="mm"/>
       </model>
 
-      <model model="MS590N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="7" numFns="14" productID="8">
+      <model model="MS590N18 version 4+" replacementModel="MS590N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="7" numFns="14" productID="8">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -485,9 +487,8 @@
         </output>
         <size length="15" width="9.5" height="3.3" units="mm"/>
       </model>
-      
-      
-      <model model="MS591N18 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="15">
+
+      <model model="MS591N18 version 4+" replacementModel="MS591N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="8" numFns="14" productID="15">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>

@@ -1,7 +1,7 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a freeze that could happen when changing the connection preferences.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -81,32 +81,13 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Fixed an issue where a throttle could stop sending speed and
-                    function commands for its locomotive after receiving an
-                    unrecognized locomotive information response, requiring a
-                    JMRI restart to recover.</li>
+                <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>SlotMonitor update: 
-                <ul>
-                    <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
-                    <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
-                    <li>If purging is disabled in the Command Station so is slow scanning.</li>
-                      A value of -1 stops slowscanning.</li>
-                </ul>
-                <li>Remove some extra messages when configuring with the board-level tools
-                  in the LocoNet menu</li>
-                <li>Added a new programming facade "Digitrax OpSw Word Programming" for
-                  programming at the board level for e.g. DS64's.</li>
-                <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
-                <li>Add in-use count to the Slot Monitor.</li>
-                <li>Timeouts when programming the Op Switches on Digitrax boards (e.g. DS64, etc) will automatically be retried once.</li>
-                <li>Added interpretation of some BDL716 configuration messages to
-                  LocoNet Monitor.</li>
-                <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
-                <li>LocoNet Clock now uses the same throttle ID as the rest of JMRI, instead of (illegal) 00 00.</li>
+                <li>Improved how threads are shutdown when changing connections
+                    in the settings.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -146,7 +127,10 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>If you enter an value that's outside the acceptable range
+                    in the configuration tool, the background will now turn
+                    blue to indicate that to you.</li>
+                <li>Improved how the buttons are laid out at the bottom of the CDI window</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -155,11 +139,6 @@
             </ul>
 
         <h4>RFID</h4>
-            <ul>
-                <li></li>
-            </ul>
-
-        <h4>Raspberry PI</h4>
             <ul>
                 <li></li>
             </ul>
@@ -179,11 +158,6 @@
                 <li></li>
             </ul>
 
-        <h4>SRCP</h4>
-            <ul>
-                <li></li>
-            </ul>
-
         <h4>TAMS</h4>
             <ul>
                 <li></li>
@@ -199,7 +173,7 @@
                 <li></li>
             </ul>
 
-        <h4>Zimo</h4>
+        <h4>Zimo MXULF</h4>
             <ul>
                 <li></li>
             </ul>
@@ -213,11 +187,6 @@
         <ul>
           <li></li>
         </ul>
-
-        <h4>AE Model</h4>
-            <ul>
-                <li></li>
-            </ul>
 
         <h4>Arnold</h4>
             <ul>
@@ -244,11 +213,6 @@
                 <li></li>
             </ul>
 
-        <h4>DCC Concepts</h4>
-            <ul>
-                <li></li>
-            </ul>
-
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -265,11 +229,6 @@
             </ul>
 
         <h4>ESU</h4>
-            <ul>
-                <li>Updated LokPiot 5 / LokSound 5 definitions for new output modes as of firmware version 5.14.183.</li>
-            </ul>
-
-        <h4>Hattoms</h4>
             <ul>
                 <li></li>
             </ul>
@@ -311,7 +270,8 @@
 
         <h4>Mistral Train Models</h4>
              <ul>
-                <li></li>
+                <li>Updated Lokommander II definitions. Implement CV114, 115 and 116 according to the firmware version. Firmware V3 : treat as binary and only support up to F8 Firmware V6 : treat as decimal and support up to F28
+                </li>
              </ul>
 
         <h4>MTH</h4>
@@ -334,22 +294,12 @@
                 <li></li>
             </ul>
 
-        <h4>Piko decoders</h4>
-            <ul>
-                <li></li>
-            </ul>
-
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
             </ul>
 
         <h4>QSI</h4>
-            <ul>
-                <li></li>
-            </ul>
-
-        <h4>Rampino Elektronic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -421,7 +371,9 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Added replacement-feature for v4.x MS/MN decoder</li>
+                <li>Added some features from CV27 for FS/MS/MN decoders, in particular HLU-Options</li>
+                <li>Minor optical corrections</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -429,30 +381,14 @@
                 <li></li>
             </ul>
 
-    <h3>Control Panel Editor</h3>
-        <a id="CPE" name="CPE"></a>
+    <h3>DecoderPro</h3>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
             <li></li>
         </ul>
-        <h4>Circuit Builder</h4>
-            <a id="CPE-CB" name="CPE-CB"></a>
-            <ul>
-                <li></li>
-            </ul>
-        <h4>Palette</h4>
-            <a id="CPE-P" name="CPE-P"></a>
-            <ul>
-                <li></li>
-            </ul>
 
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
-        <ul>
-            <li></li>
-        </ul>
-
-    <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
             <li></li>
         </ul>
@@ -478,23 +414,15 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Reduced CPU use when the layout is redrawn, for instance on every block
-                occupancy change: a redraw now repaints the drawing area only, instead of
-                the whole window including its menu bar, tool bar and scroll bars, and a
-                partial repaint no longer redraws the whole visible track plan.</li>
-            <li></li>
+            <li>Fixed the ability to connect turnouts by dragging and dropping. When end points
+            overlap, a track segment is automatically created. This works very nicely for creating
+            yard ladders.  The problem affected panels on Linux and Windows.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
                 <li></li>
             </ul>
-
-    <h3>LccPro</h3>
-        <a id="LccPro" name="LccPro"></a>
-        <ul>
-          <li></li>
-        </ul>
 
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
@@ -505,16 +433,24 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The functions <strong>round()</strong>, <strong>ceil()</strong>
+              and <strong>floor()</strong> has been added to the Math module.
+              All three rounds a floating point value. ceil() rounds up and
+              floor() rounds down.</li>
+          <li>The constant <strong>oblocks</strong> has been added to
+              the Layout module.</li>
           <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>Added a start-up action that will open the meters.</li>
+            <li>Add a MeterToMemory.py sample script that copies Meter
+                values to Memory variables</li>
         </ul>
 
-    <h3>OperationsPro</h3>
+    <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
@@ -523,18 +459,24 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Sensor and MultiSensor icons now repaint only their own area of the panel
-                when their sensor changes state, instead of the whole window, reducing CPU
-                use on panels receiving frequent sensor events. The repainted area follows
-                the panel zoom level.</li>
             <li></li>
         </ul>
 
-    <h3>Permissions</h3>
-        <a id="Permissions" name="Permissions"></a>
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Fixed the popup context menu on Linux.</li>
         </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -563,7 +505,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>New ThrottleBridgeF0F8.py for bridging a throttle between Lenz and Digitrax systems
+                including the F0 through F8 functions.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -633,11 +576,6 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed high CPU use of the Turnout Table when the "graphic state" preference
-                is enabled: painting a state icon no longer resizes the row, which kept the
-                table repainting itself continuously once all turnouts were in a known state.
-                Rows are now also tall enough for the icons while turnouts are still in the
-                Unknown state.</li>
             <li></li>
         </ul>
 
@@ -653,12 +591,6 @@
             <li></li>
         </ul>
 
-   <h3>Web Server</h3>
-        <a id="server" name="server"></a>
-        <ul>
-            <li>Improve how "show ? if unknown" works with background image.</li>
-        </ul>
-
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
@@ -671,14 +603,14 @@
             <li></li>
         </ul>
 
-   <h3>Virtual Sound Decoder</h3>
-        <a id="VSD" name="VSD"></a>
+   <h3>Web Server</h3>
+        <a id="server" name="server"></a>
         <ul>
             <li></li>
         </ul>
 
-   <h3>Z21 Server</h3>
-        <a id="Z21" name="Z21"></a>
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
         </ul>
