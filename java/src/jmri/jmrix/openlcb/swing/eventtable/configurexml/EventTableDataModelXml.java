@@ -17,6 +17,7 @@ import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.jmrix.openlcb.swing.eventtable.EventTableDataModel;
 import jmri.util.FileUtil;
 
+import org.openlcb.EventID;
 import org.openlcb.NodeID;
 
 /**
@@ -125,6 +126,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                 var event = memo.eventID.toShortString();
                 var range = memo.rangeSuffix;
                 var producer = memo.producer.toString();
+                var pname = memo.producerName;
                 
                 var element = new Element("producer");
                 var eventElement = new Element("event");
@@ -133,9 +135,12 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                 rangeElement.addContent(range);
                 var producerElement = new Element("producer");
                 producerElement.addContent(producer);
+                var pnameElement = new Element("pName");
+                pnameElement.addContent(pname);
                 element.addContent(eventElement);
                 element.addContent(rangeElement);
                 element.addContent(producerElement);
+                element.addContent(pnameElement);
                 values.addContent(element);
                 
             }
@@ -147,7 +152,8 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
             if (memo.eventID != null && memo.consumer != null) {
                 var event = memo.eventID.toShortString();
                 var range = memo.rangeSuffix;
-                var producer = memo.consumer.toString();
+                var consumer = memo.consumer.toString();
+                var cname = memo.consumerName;
                 
                 var element = new Element("consumer");
                 var eventElement = new Element("event");
@@ -155,10 +161,13 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                 var rangeElement = new Element("range");
                 rangeElement.addContent(range);
                 var consumerElement = new Element("consumer");
-                consumerElement.addContent(producer);
+                consumerElement.addContent(consumer);
+                var cnameElement = new Element("cName");
+                cnameElement.addContent(cname);
                 element.addContent(eventElement);
                 element.addContent(rangeElement);
                 element.addContent(consumerElement);
+                element.addContent(cnameElement);
                 values.addContent(element);
                 
             }
@@ -214,6 +223,24 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                 }
             }
         }
+
+        // Now read producer information
+        if (root.getChild("producers") != null) { // NOI18N
+            List<Element> producers = root.getChildren("producers");
+            log.debug("readFile sees {} producers elements", producers.size());
+            for (Element n : producers) {
+                List<Element> l = n.getChildren("producer"); // NOI18N
+                for (Element e : l) {
+                    String event = e.getChild("event").getText(); // NOI18N
+                    String range = e.getChild("range").getText(); // NOI18N
+                    String producer = e.getChild("producer").getText(); // NOI18N
+                    String pName = e.getChild("pName").getText(); // NOI18N
+
+                    model.recordProducer(new EventID(event), new NodeID(producer), range, false);
+                }
+            }
+        }
+
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXml.class);
