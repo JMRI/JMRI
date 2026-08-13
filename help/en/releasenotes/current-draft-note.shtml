@@ -81,7 +81,10 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>Fixed an issue where a throttle could stop sending speed and
+                    function commands for its locomotive after receiving an
+                    unrecognized locomotive information response, requiring a
+                    JMRI restart to recover.</li>
             </ul>
 
         <h4>LocoNet</h4>
@@ -263,7 +266,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Updated LokPiot 5 / LokSound 5 definitions for new output modes as of firmware version 5.14.183.</li>
             </ul>
 
         <h4>Hattoms</h4>
@@ -475,6 +478,10 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>Reduced CPU use when the layout is redrawn, for instance on every block
+                occupancy change: a redraw now repaints the drawing area only, instead of
+                the whole window including its menu bar, tool bar and scroll bars, and a
+                partial repaint no longer redraws the whole visible track plan.</li>
             <li></li>
         </ul>
 
@@ -516,6 +523,10 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+            <li>Sensor and MultiSensor icons now repaint only their own area of the panel
+                when their sensor changes state, instead of the whole window, reducing CPU
+                use on panels receiving frequent sensor events. The repainted area follows
+                the panel zoom level.</li>
             <li></li>
         </ul>
 
@@ -540,7 +551,8 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Importing a roster backup file (Import Complete Roster)
+                has been made faster and more reliable.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -622,6 +634,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>Fixed high CPU use of the Turnout Table when the "graphic state" preference
+                is enabled: painting a state icon no longer resizes the row, which kept the
+                table repainting itself continuously once all turnouts were in a known state.
+                Rows are now also tall enough for the icons while turnouts are still in the
+                Unknown state.</li>
             <li></li>
         </ul>
 
@@ -640,7 +657,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Improve how "show ? if unknown" works with background image.</li>
         </ul>
 
     <h3>Where Used</h3>
