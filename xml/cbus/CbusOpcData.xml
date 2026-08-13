@@ -109,7 +109,7 @@ filter = Enum of which categories apply in CbusFilter.java
   <CbusOpc hex="A4" minPri="2" name="VCVS" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_MD~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
   <CbusOpc hex="AB" minPri="3" name="HEARTB" decode="$2, ~OPC_SQ~: ,%1, ~OPC_ST~: ,%1, ~OPC_BT~: ,%1" filter="CFUNKNOWN"/>
   <CbusOpc hex="AC" minPri="3" name="SD" decode="$2, ~OPC_SI~: ,%1, ~OPC_SY~: ,%1, ~OPC_VN~: ,%1" filter="CFUNKNOWN"/>
-  <CbusOpc hex="AF" minPri="3" name="GRSP" decode="$2, ~OPC_OC~: , %1, ~OPC_SY~: ,%1, ~OPC_ER~: ,%1" filter="CFUNKNOWN"/>
+  <CbusOpc hex="AF" minPri="3" name="GRSP" decode="$2, ~OPC_OC~: ,%1, ~OPC_SY~: ,%1, ~OPC_ER~: ,%1" filter="CFUNKNOWN"/>
   <CbusOpc hex="B0" minPri="3" name="ACON1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFED1"/>
   <CbusOpc hex="B1" minPri="3" name="ACOF1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFED1"/>
   <CbusOpc hex="B2" minPri="3" name="REQEV" decode="$4, ~OPC_EV~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
@@ -125,7 +125,7 @@ filter = Enum of which categories apply in CbusFilter.java
   <CbusOpc hex="C0" minPri="2" name="RDCC5" decode="~OPC_RP~: ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFCS,CFCSLC"/>
   <CbusOpc hex="C1" minPri="2" name="WCVOA" decode="~OPC_AD~: ,^2, ~OPC_CV~: ,%2, ~OPC_MD~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
   <CbusOpc hex="C2" minPri="3" name="CABDAT" decode="~OPC_AD~: ,^2, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1" filter="CFDATA,CFCABDAT"/>
-  <CbusOpc hex="C7" minPri="3" name="DGN" decode="$2, ~OPC_SI~: ,%1, ~OPC_DC~: ,%1, ~OPC_VL~: ,%1" filter="CFUNKNOWN"/>
+  <CbusOpc hex="C7" minPri="3" name="DGN" decode="$2, ~OPC_SI~: ,%1, ~OPC_DC~: ,%1, ~OPC_VL~: ,%2" filter="CFUNKNOWN"/>
   <CbusOpc hex="CF" minPri="3" name="FCLK" decode="~OPC_FI~: ,%1, ~OPC_FH~: ,%1, ~OPC_FW~: ,%1, ~OPC_FD~: ,%1, ~OPC_FM~: ,%1, ~OPC_FT~: ,%1" filter="CFMISC,CFCLOCK"/>
   <CbusOpc hex="D0" minPri="3" name="ACON2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFED2"/>
   <CbusOpc hex="D1" minPri="3" name="ACOF2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFED2"/>
