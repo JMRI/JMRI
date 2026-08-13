@@ -115,14 +115,19 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     /**
-     * Create a new name to/from NodeID association
+     * Create a new name to/from NodeID association.
+     * <p>
+     * If a previous association exits, this one is ignored.
+     *
      * @param nodeID associated EventID
      * @param name  associated name
      */
     public void addMatch(NodeID nodeID, String name) {
-        nameToNodeId.put(name, nodeID);
-        nodeIdToName.put(nodeID, name);
-        log.trace("setting dirty true");
+        if (! (nameToNodeId.containsKey(name) || nodeIdToName.containsKey(nodeID) )) {
+            nameToNodeId.put(name, nodeID);
+            nodeIdToName.put(nodeID, name);
+            log.trace("setting dirty true");
+        }
     }
 
     /**

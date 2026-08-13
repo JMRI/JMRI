@@ -15,7 +15,7 @@ import org.openlcb.*;
 import org.openlcb.implementations.EventTable;
 
 /**
- * Tests for EventTable persistence
+ * Tests for EventTableDataModel persistence
  *
  * @author   Bob Jacobsen 2026
  */

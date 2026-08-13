@@ -7,6 +7,8 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.openlcb.*;
 import org.openlcb.implementations.EventTable;
@@ -17,6 +19,23 @@ import org.openlcb.implementations.EventTable;
  */
 public class EventTableDataModelTest {
 
+    // test handling of duplicate names in the name to/from node ID store
+    @Test
+    public void duplicateNodeNameTest() {
+        var node1 = new NodeID("1.2.3.4.5.6");
+        var node2 = new NodeID("6.5.4.3.2.1");
+        
+        model.addMatch(node1, "sample");
+        model.addMatch(node2, "sample");
+        
+        // The first match added should win
+        assertEquals(node1, model.getNodeID("sample"));
+        assertEquals("sample", model.getNodeName(node1));
+        assertTrue(model.hasNodeName(node1));
+        assertFalse(model.hasNodeName(node2));
+        
+    }
+    
     // test for adding produced events
     @Test
     public void tableModelLoadProducerTest() {
