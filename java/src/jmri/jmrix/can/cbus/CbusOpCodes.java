@@ -33,15 +33,8 @@ public class CbusOpCodes {
 
     /**
      * Return a string representation of a decoded CBUS Message.
-     * The codes used within CbusOpcData.xml are :
-     * <ul>
-     * <li>%n - replace byte(s) value where n is the number of CAN Frame bytes to combine.</li>
-     * <li>^2 - replace the next 2 bytes with Loco ID</li>
-     * <li>^S - replace with speed string from 1 byte</li>
-     * <li>$2 - replace next 2 bytes with node name</li>
-     * <li>$4 - replace next 4 bytes with event and node name combination</li>
-     * </ul>
-     * Used in CBUS Console Log
+     * See CbusOpcData.xml for replacement codes.
+     * Used in CBUS Console Log.
      * @param msg CbusMessage to be decoded Return String decoded message
      * @return decoded CBUS message
      */
