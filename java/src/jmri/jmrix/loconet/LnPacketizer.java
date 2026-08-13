@@ -108,16 +108,16 @@ public class LnPacketizer extends LnTrafficController {
         try {
             xmtList.add(msg);
             // save to queue if we want to remember it to check in receive handler
-            if(mLoconetUpdateSlotOnMessageCreation) {
+            if (mLoconetUpdateSlotOnMessageCreation) {
                 try {
                     if (log.isTraceEnabled()) { // avoid String building if not needed
                         log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
                     }
                     sentList.add(m);
                     if (log.isTraceEnabled()) { // avoid String building if not needed
-                        log.trace("notify listeners of message: {}", m);
+                        log.trace("queue message for notification: {}", m);
                     }
-                    notify(m);
+                    jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(m, this));
                 }
                 catch (RuntimeException e) {
                     log.warn("saving to sent messages list: unexpected exception: ", e);
@@ -342,9 +342,7 @@ public class LnPacketizer extends LnTrafficController {
                             if (log.isTraceEnabled()) { // avoid String building if not needed
                                 log.trace("queue message for notification: {}", msg);
                             }
-
-                            jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
-                        }
+                            jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));                        }
                     }
 
                     // done with this one
