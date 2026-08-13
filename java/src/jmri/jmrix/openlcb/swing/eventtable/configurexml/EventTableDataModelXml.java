@@ -4,16 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.HashSet;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
-import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrix.openlcb.OlcbConstants;
-import jmri.jmrix.openlcb.OlcbEventNameStore;
+//import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.jmrix.openlcb.swing.eventtable.EventTableDataModel;
 import jmri.util.FileUtil;
 
@@ -125,7 +122,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
 
         // Loop through producer node <-> event ID associations
         root.addContent(values = new Element("producers")); // NOI18N
-        for (var memo : model.memos) {
+        for (var memo : EventTableDataModel.memos) {
             if (memo.eventID != null && memo.producer != null) {
                 var event = memo.eventID.toShortString();
                 var range = memo.rangeSuffix;
@@ -152,7 +149,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
 
         // Loop through consumer node <-> event ID associations
         root.addContent(values = new Element("consumers")); // NOI18N
-        for (var memo : model.memos) {
+        for (var memo : EventTableDataModel.memos) {
             if (memo.eventID != null && memo.consumer != null) {
                 var event = memo.eventID.toShortString();
                 var range = memo.rangeSuffix;
@@ -238,7 +235,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                     String event = e.getChild("event").getText(); // NOI18N
                     String range = e.getChild("range").getText(); // NOI18N
                     String producer = e.getChild("producer").getText(); // NOI18N
-                    String pName = e.getChild("pName").getText(); // NOI18N
+                    //String pName = e.getChild("pName").getText(); // NOI18N
 
                     model.recordProducer(new EventID(event), new NodeID(producer), range, false);
                 }
@@ -255,7 +252,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                     String event = e.getChild("event").getText(); // NOI18N
                     String range = e.getChild("range").getText(); // NOI18N
                     String consumer = e.getChild("consumer").getText(); // NOI18N
-                    String cName = e.getChild("cName").getText(); // NOI18N
+                    //String cName = e.getChild("cName").getText(); // NOI18N
 
                     model.recordConsumer(new EventID(event), new NodeID(consumer), range);
                 }

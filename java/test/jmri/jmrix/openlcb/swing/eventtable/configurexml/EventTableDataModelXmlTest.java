@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb.swing.eventtable.configurexml;
 
 import java.util.ArrayList;
 
-import jmri.InstanceManager;
 import jmri.jmrix.openlcb.*;
 import jmri.jmrix.openlcb.swing.eventtable.EventTableDataModel;
 import jmri.util.JUnitUtil;
@@ -26,6 +25,7 @@ public class EventTableDataModelXmlTest {
     public void testSaveAndRestore() {
     
         var cxml1 = new EventTableDataModelXml(model) {
+            @Override
             protected String getModelFileDirectoryName() {
                 return "test";
             }
@@ -47,6 +47,7 @@ public class EventTableDataModelXmlTest {
         model = getModel(); // test load with a new one
 
         var cxml2 = new EventTableDataModelXml(model) {
+            @Override
             protected String getModelFileDirectoryName() {
                 return "test";
             }
@@ -117,6 +118,6 @@ public class EventTableDataModelXmlTest {
         JUnitUtil.tearDown();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXmlTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXmlTest.class);
 }
 

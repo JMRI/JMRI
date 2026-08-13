@@ -21,7 +21,7 @@
  * </ol>
  * <p>
  * This information  is persisted in an eventnames/eventTable.xml file within the 
- * current profile directory by the {@link EventTableDataModel} class. 
+ * current profile directory by the {@link jmri.jmrix.openlcb.swing.eventtable.EventTableDataModel} class. 
  * Since the information only changes once the Event Table tool
  * is open, it is only stored at shutdown if the Event Table has been opened.
  * <p>
