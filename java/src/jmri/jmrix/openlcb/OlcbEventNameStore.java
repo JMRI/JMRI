@@ -11,7 +11,7 @@ import org.openlcb.EventID;
 import org.openlcb.EventNameStore;
 
 /**
- * JMRI's implementation of part of the OpenLcb EventNameStore interface.
+ * JMRI's implementation of part of the OpenLcb {@link org.openlcb.EventNameStore} interface.
  *
  * @author Bob Jacobsen Copyright (C) 2024
  */

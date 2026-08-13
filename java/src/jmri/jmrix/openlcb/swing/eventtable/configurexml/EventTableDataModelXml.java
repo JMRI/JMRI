@@ -22,6 +22,10 @@ import org.openlcb.NodeID;
 
 /**
  * Persistence for the content of a EventTableDataModel
+ * <p>
+ * Note that this is explicitly invoked by 
+ * {@link jmri.jmrix.openlcb.swing.eventtable.EventTableDataModel}
+ * and is not invoked by the general "store all" mechanism used to store layout files.
  *
  * @author Bob Jacobsen Copyright (C) 2025, 2026
  */
@@ -191,7 +195,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
     }
 
     private String getModelDataFileName() {
-        return "eventtable.xml";
+        return "eventTable.xml";
     }
     
     private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
@@ -237,6 +241,23 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                     String pName = e.getChild("pName").getText(); // NOI18N
 
                     model.recordProducer(new EventID(event), new NodeID(producer), range, false);
+                }
+            }
+        }
+
+        // Now read consumer information
+        if (root.getChild("consumers") != null) { // NOI18N
+            List<Element> consumers = root.getChildren("consumers");
+            log.debug("readFile sees {} consumers elements", consumers.size());
+            for (Element n : consumers) {
+                List<Element> l = n.getChildren("consumer"); // NOI18N
+                for (Element e : l) {
+                    String event = e.getChild("event").getText(); // NOI18N
+                    String range = e.getChild("range").getText(); // NOI18N
+                    String consumer = e.getChild("consumer").getText(); // NOI18N
+                    String cName = e.getChild("cName").getText(); // NOI18N
+
+                    model.recordConsumer(new EventID(event), new NodeID(consumer), range);
                 }
             }
         }

@@ -31,9 +31,12 @@ public class EventTableDataModelXmlTest {
             }
         };
         model.addMatch(new NodeID("1.1.1.1.2.2"), "named");
-        var targetEvent = new EventID("1.1.1.1.2.2.2.2");
         
-        model.recordProducer(targetEvent, new NodeID("1.1.1.1.2.2"),"", false);
+        var targetEventP = new EventID("1.1.1.1.2.2.2.2");
+        model.recordProducer(targetEventP, new NodeID("1.1.1.1.2.2"),"", false);
+        
+        var targetEventC = new EventID("1.1.1.1.3.3.2.2");
+        model.recordConsumer(targetEventC, new NodeID("1.1.1.1.3.3"),"");
 
         try {
             cxml1.store();
@@ -42,7 +45,6 @@ public class EventTableDataModelXmlTest {
         }
     
         model = getModel(); // test load with a new one
-        EventTableDataModel.memos = new ArrayList<>(); // static content
 
         var cxml2 = new EventTableDataModelXml(model) {
             protected String getModelFileDirectoryName() {
@@ -53,6 +55,7 @@ public class EventTableDataModelXmlTest {
         cxml2.load();
         
         Assert.assertEquals(1, model.getNodeIDMatches().size());       
+        Assert.assertEquals(2, model.getRowCount()); // separate producer and consumer rows
     }
 
     final NodeID nidSource = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});

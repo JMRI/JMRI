@@ -16,6 +16,11 @@ import org.openlcb.implementations.*;
 
 /**
  * DataModel for the table in the EventTablePane
+ * <p>
+ * Persistence is handled via the 
+ * {@link jmri.jmrix.openlcb.swing.eventtable.configurexml} package.  Note that
+ * this class explicitly invokes persistence in the constructor and at shutdown;
+ * the general mechanism to store in panel files is not used here intentionally.
  *
  * @author Bob Jacobsen Copyright (C) 2023, 2026
  * @since 5.17.3
