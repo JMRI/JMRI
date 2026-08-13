@@ -30,9 +30,9 @@ import org.openlcb.swing.*;
 
 
 /**
- * Pane for displaying a table of relationships of nodes, producers and consumers
+ * Pane for displaying a table of relationships of nodes, producers and consumers.
  *
- * @author Bob Jacobsen Copyright (C) 2023
+ * @author Bob Jacobsen Copyright (C) 2023, 2026
  * @since 5.3.4
  */
 public class EventTablePane extends jmri.util.swing.JmriPanel

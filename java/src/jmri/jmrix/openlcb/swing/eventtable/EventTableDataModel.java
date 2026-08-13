@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.swing.*;
@@ -32,10 +34,19 @@ public class EventTableDataModel extends AbstractTableModel {
         this.stdEventTable = stdEventTable;
         this.nameStore = nameStore;
 
+        // listen for updated AlsoKnownAs (AKA) content
+        stdEventTable.addPropertyChangeListener(
+                eventInfoListener = (java.beans.PropertyChangeEvent e) -> {
+            eventInfoChanged(e);
+        });
+        // load stored contents
         loadNameStoreEventIDs();
         readDetails();
         
+        // arrange to store the current contents at shutdown
         initShutdownTask();
+        
+        
     }
 
     static final int COL_EVENTID = 0;
@@ -56,8 +67,11 @@ public class EventTableDataModel extends AbstractTableModel {
     TableRowSorter<EventTableDataModel> sorter;
     boolean popcornModeActive = false;
 
+    PropertyChangeListener eventInfoListener;
+    
     // static so the data remains available through a window close-open cycle
-    static public ArrayList<TripleMemo> memos = new ArrayList<>(); // public for testing
+    // public to allow access for testing; clean that up sometime with subclassing
+    public static ArrayList<TripleMemo> memos = new ArrayList<>(); // public for testing
 
     TripleMemo getTripleMemo(int row) {
         if (row >= memos.size()) {
@@ -70,8 +84,8 @@ public class EventTableDataModel extends AbstractTableModel {
     // Store for node name<->ID mapping
     // ********************************
  
-    private final Map<String, NodeID> nameToNodeId = new HashMap<>();
-    private final Map<NodeID, String> nodeIdToName = new HashMap<>();
+    private static final Map<String, NodeID> nameToNodeId = new HashMap<>();
+    private static final Map<NodeID, String> nodeIdToName = new HashMap<>();
 
 
     /**
@@ -139,7 +153,54 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     // ********************************
+    // Store for also-known-as event description information
+    // ********************************
 
+    public static final Map<EventID, Set<String>> eventToDescriptions = new HashMap<>(); // public for testing, fix that eventually
+
+    void updateAuxiliaryInformation(EventID event) {
+        log.trace("found extra info for {}", event);
+        var list = eventToDescriptions.get(event);
+        if (list == null) {
+            list = new HashSet<String>();
+            eventToDescriptions.put(event, list);
+        }
+        // make sure the list contains all the available desriptions
+        for (var entry : stdEventTable.getEventInfo(event).getAllEntries()) {
+            log.trace("   added: {}", entry.getDescription());
+            list.add(entry.getDescription());
+        }
+    }
+
+    public void addAuxiliaryInformation(EventID event, String description){
+        var list = eventToDescriptions.get(event);
+        if (list == null) {
+            list = new HashSet<String>();
+            eventToDescriptions.put(event, list);
+        }
+        list.add(description);
+    }
+    
+    public Set<String> getAuxiliaryInformation(EventID event) {
+        var retval = eventToDescriptions.get(event);
+        if (retval == null) {
+            retval = new HashSet<String>();
+            eventToDescriptions.put(event, retval);
+        }
+        return retval;
+    }
+
+    // ********************************
+
+    protected void eventInfoChanged(PropertyChangeEvent e) {
+        // looking for events added to the EventTable
+        if (e.getPropertyName().equals(EventTable.EVENT_ENTRY_ADDED)) {
+            // this is information added to an event
+            EventID event = (EventID)e.getNewValue();
+            updateAuxiliaryInformation(event);
+        }
+    }
+    
     protected void loadNameStoreEventIDs() {
         // are there events in the Name Store? If so, add them
         for (var eventID: nameStore.getMatches()) {
@@ -220,11 +281,11 @@ public class EventTableDataModel extends AbstractTableModel {
                 }
 
                 // scan the CD/CDI information as available
-                for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
+                for (var entry : getAuxiliaryInformation(memo.eventID)) {
                     if (!first) result.append("\n");
                     first = false;
                     height += lineIncrement;
-                    result.append(entry.getDescription());
+                    result.append(entry);
                 }
 
                 // set height for multi-line output in the cell

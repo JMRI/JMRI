@@ -25,6 +25,7 @@ import org.openlcb.NodeID;
  * and is not invoked by the general "store all" mechanism used to store layout files.
  *
  * @author Bob Jacobsen Copyright (C) 2025, 2026
+ * @since 5.17.3
  */
 public class EventTableDataModelXml extends XmlFile { // note final for testing
 
@@ -174,6 +175,22 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
             }
         }
 
+        // Store the event ID <-> Descriptions information
+        root.addContent(values = new Element("descriptions")); // NOI18N
+        for (var event : EventTableDataModel.eventToDescriptions.keySet()) {
+            for (var description : model.getAuxiliaryInformation(event) ) {
+                log.trace("for event {} write {}", event, description);
+                var eventElement = new Element("event");
+                eventElement.addContent(event.toShortString());
+                var descriptionElement = new Element("description");
+                descriptionElement.addContent(description);
+                var valueElement = new Element("value");
+                values.addContent(valueElement);
+                valueElement.addContent(eventElement);
+                valueElement.addContent(descriptionElement);
+            }
+        }
+
         writeXML(file, doc);
     }
 
@@ -255,6 +272,21 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                     //String cName = e.getChild("cName").getText(); // NOI18N
 
                     model.recordConsumer(new EventID(event), new NodeID(consumer), range);
+                }
+            }
+        }
+
+        // Now read descriptions information
+        if (root.getChild("descriptions") != null) { // NOI18N
+            List<Element> descriptions = root.getChildren("descriptions");
+            log.debug("readFile sees {} description elements", descriptions.size());
+            for (Element n : descriptions) {
+                List<Element> l = n.getChildren("value"); // NOI18N
+                for (Element e : l) {
+                    String event = e.getChild("event").getText(); // NOI18N
+                    String description = e.getChild("description").getText(); // NOI18N
+
+                    model.addAuxiliaryInformation(new EventID(event), description);
                 }
             }
         }
