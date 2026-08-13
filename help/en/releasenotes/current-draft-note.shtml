@@ -146,7 +146,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The Event Table now automatically persists its content so
+                    it can be used while disconnected from your main LCC network.</li>
             </ul>
 
         <h4>Powerline</h4>
