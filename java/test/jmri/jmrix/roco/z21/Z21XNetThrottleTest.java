@@ -251,6 +251,44 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // which sets the status back state back to idle..
     }
 
+    /**
+     * Z21 flavour of the parent test: the status request message and the
+     * commands queued behind it differ, but the stuck-state behaviour being
+     * checked is the one inherited from XNetThrottle.message(XNetReply).
+     */
+    @Override
+    @Test
+    @Timeout(1000)
+    public void testUnknownLocoInfoResponseSubtypeDoesNotStallQueue() {
+        int n = tc.outbound.size();
+        Z21XNetThrottle t = (Z21XNetThrottle) instance;
+        initThrottle(t, n);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 F0 00 03 10", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // answer with an unrecognized LOCO_INFO_RESPONSE sub-type, which the
+        // Z21 throttle hands over to the standard XpressNet handling.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE3);
+        m.setElement(1, 0x60);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x83);
+        t.message(m);
+
+        // the throttle has to be back to idle, so the next command reaches the
+        // traffic controller instead of piling up in the internal queue.
+        n = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+
+        assertEquals( n + 1, tc.outbound.size(),
+            "Speed message sent after unrecognized LOCO_INFO_RESPONSE sub-type");
+    }
+
     @Override
     @Test
     @Timeout(1000)

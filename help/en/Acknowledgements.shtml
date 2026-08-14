@@ -459,6 +459,9 @@
 
         <li>William C Gage provided an MRC decoder definition</li>
 
+        <li>Jonas Gahlert, <!-- crypticrelaxo -->
+        who worked on the Zimo KLUG support.
+
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3APugwash1+">Steve Gigiel</a>, <!-- Pugwash1 -->
          who fixed the XML definition of the block contents icon, and helped fix the Transit
         implementation of comments.</li>
@@ -891,9 +894,12 @@
         <li>Phill Perry, who contributed a decoder definition for the New York Byano Limited
         locomotive</li>
 
-        <li>Bruce Petrarca, who has started offering CDs so nobody else has to burn them and
+        <li>Bruce Petrarca, who offered CDs so nobody else had to burn them and
         provided decoder information for the Soundtraxx Diesel Tsunami</li>
 
+        <li>James Petts, <!-- jamespetts -->
+        who worked on train automation
+        
         <li>Bob Phillips provided an MRC decoder definition</li>
 
         <li>Alger Plke, <!-- AlgerP572 -->
@@ -1166,6 +1172,8 @@
 
         <li>Jack Walton, who created the Lenz LE080 decoder definition</li>
 
+        <li>Scott Walton, who worked on RFID and operations</li>
+
         <li>Steve Walton, <!-- swalton00 -->
         who fixed the tag sorting.
 
@@ -1190,6 +1198,9 @@
 
         <li>Donn Welton, who provided info on configuring a PowerBook for DecoderPro</li>
 
+        <li>Jeremey Wemple, <!-- wemps -->
+        who added SignalCab to the WiThrottle supported apps list.
+        
         <li>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder
         definition and 45-degree icons for panels, and helped fix a problem with over-running
         LocoNet command stations.</li>

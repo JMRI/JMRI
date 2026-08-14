@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- XML Schema for JMRI Speedometer support                                   -->
+<!-- XML Schema for the JMRI Speed Profile tool                             -->
 
-<!-- This schema is part of JMRI. Copyright 2011.                           -->
+<!-- This schema is part of JMRI. Copyright 2026.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,9 +14,6 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<!-- Distances changed to "float" in -9-3-3 version   -->
-
 
 <xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -31,62 +28,76 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
   <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
 
-  <xs:element name="speedometer-config">
+  <xs:element name="speedprofiler-config">
+
     <xs:annotation>
       <xs:documentation>
-        This is the schema representing the Speedometer information stored in "PanelProSpeedometer.xml"
+        This is the schema representing SpeedProfile information.
+        Since the "speedprofiler-config" XML is embedded in the "profile.xml" file,
+        this schema defintion is for reference.
+        To validate the content, copy the XML and create a temporary standalone XML file.
       </xs:documentation>
       <xs:appinfo>
-        <jmri:usingclass configurexml="false">jmri.jmrit.speedometer.SpeedometerFrame</jmri:usingclass>
+        <jmri:usingclass configurexml="false">jmri.jmrit.roster.swing.speedprofile.SpeedProfilePanel</jmri:usingclass>
       </xs:appinfo>
     </xs:annotation>
+
     <xs:complexType>
       <xs:sequence>
         <xs:element type="configurationType" name="configuration" minOccurs="0" maxOccurs="1"/>
         <xs:element type="sensorsType" name="sensors" minOccurs="0" maxOccurs="1"/>
+        <xs:element type="stepsType" name="steps" minOccurs="0" maxOccurs="1"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
   <xs:complexType name="configurationType">
-    <xs:annotation><xs:documentation>Speedometer configuration</xs:documentation></xs:annotation>
     <xs:sequence>
-      <xs:element name="useMetric" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="length" type="xs:float" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="createMissingSensors" type="trueFalseType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="lengthUnit" type="lengthUnitType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="sensordelay" type="xs:float" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:simpleType name="lengthUnitType">
+      <xs:restriction base="xs:string">
+          <xs:pattern value="MM|IN"/>
+      </xs:restriction>
+  </xs:simpleType>
 
   <xs:complexType name="sensorsType">
     <xs:annotation><xs:documentation>
       Sensor table with up to 3 sensor entries
     </xs:documentation></xs:annotation>
     <xs:sequence>
-      <xs:element name="sensor" type="sensorType" minOccurs="0" maxOccurs="3"/>
+      <xs:element type="sensorType" name="sensor" minOccurs="0" maxOccurs="3"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="sensorType">
     <xs:annotation><xs:documentation>
-      The "type" refers to the Java variable than contains a sensor system or user name
+      The "sensorname" refers to the Java variable than contains a sensor system or user name.
+      The "sensorvalue" is the system or user name for the sensor.
     </xs:documentation></xs:annotation>
     <xs:sequence>
-      <xs:element name="sensorName" type="beanNameType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="type" type="sensorTypeListType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="trigger" type="sensorTriggerType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="distance" type="xs:float" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="sensorname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="sensorvalue" type="xs:string" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:simpleType name="sensorTypeListType">
-      <xs:restriction base="xs:string">
-          <xs:enumeration value="StartSensor"/>
-          <xs:enumeration value="StopSensor1"/>
-          <xs:enumeration value="StopSensor2"/>
-      </xs:restriction>
-  </xs:simpleType>
+  <xs:complexType name="stepsType">
+    <xs:sequence>
+      <xs:element name="speedStepFrom" type="speedStepType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="speedStepTo" type="speedStepType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="speedStepIncr" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
 
-  <xs:simpleType name="sensorTriggerType">
-      <xs:restriction base="xs:string">
-          <xs:pattern value="entry|exit"/>
+  <xs:simpleType name="speedStepType">
+      <xs:restriction base="xs:integer">
+       <xs:minInclusive value = "0"/>
+       <xs:maxInclusive value = "128"/>
       </xs:restriction>
   </xs:simpleType>
 

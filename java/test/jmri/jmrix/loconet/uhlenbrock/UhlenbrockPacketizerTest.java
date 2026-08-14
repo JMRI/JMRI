@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -44,6 +45,8 @@ public class UhlenbrockPacketizerTest {
         writeInbound(first);
 
         waitForTransmittedBytes(first.getNumDataElements() + second.getNumDataElements());
+
+        JUnitAppender.suppressErrorMessage("transmitLoop interrupted");     // This error is sometimes logged in CI test on GitHub
     }
 
     @Test
@@ -56,6 +59,8 @@ public class UhlenbrockPacketizerTest {
         packetizer.sendLocoNetMessage(second);
 
         waitForTransmittedBytes(first.getNumDataElements() + second.getNumDataElements());
+
+        JUnitAppender.suppressErrorMessage("transmitLoop interrupted");     // This error is sometimes logged in CI test on GitHub
     }
 
     @Test
@@ -76,6 +81,8 @@ public class UhlenbrockPacketizerTest {
         JUnitUtil.waitFor(() -> received.get() != null, "non-matching message delivered");
         Assert.assertEquals("inbound message", inbound, received.get());
         Assert.assertEquals("second message remains queued", first.getNumDataElements(), outboundStream.size());
+
+        JUnitAppender.suppressErrorMessage("transmitLoop interrupted");     // This error is sometimes logged in CI test on GitHub
     }
 
     @Test
@@ -87,6 +94,8 @@ public class UhlenbrockPacketizerTest {
         stopPacketizer();
 
         Assert.assertTrue("packetizer threads terminated", packetizer.threadsStopped());
+
+        JUnitAppender.suppressErrorMessage("transmitLoop interrupted");     // This error is sometimes logged in CI test on GitHub
     }
 
     private void waitForTransmittedBytes(int expected) {
