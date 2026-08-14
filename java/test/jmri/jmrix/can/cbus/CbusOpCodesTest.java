@@ -14,6 +14,7 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -133,10 +134,12 @@ public class CbusOpCodesTest {
     }
 
     static IntStream opcRange() {
-        return IntStream.range(0, 258);
+        return IntStream.rangeClosed(0, 255);
     }
+
     @ParameterizedTest
     @MethodSource("opcRange")
+    @ValueSource(ints = {256, 257})
     public void testDecodeopc(int opc) {
         CanMessage m = new CanMessage(1,11);
         m.setElement(0, opc);
@@ -409,69 +412,63 @@ public class CbusOpCodesTest {
         return Collections.unmodifiableMap(result);
     }
 
-    @Test
-    public void testAllOpcForEvents() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (eventOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isEvent(i),"opc is event "+i);
-            } else {
-                assertFalse(CbusOpCodes.isEvent(i),"opc not event "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testAllOpcForEvents(int opc) {
+        if (eventOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isEvent(opc),"opc is event "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isEvent(opc),"opc not event "+opc);
         }
     }
 
-    @Test
-    public void testisEventNotRequest() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (eventNotRequestOpCodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isEventNotRequest(i),"opc is event "+i);
-            } else {
-                assertFalse(CbusOpCodes.isEventNotRequest(i),"opc not event or request "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisEventNotRequest(int opc) {
+        if (eventNotRequestOpCodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isEventNotRequest(opc),"opc is event "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isEventNotRequest(opc),"opc not event or request "+opc);
         }
     }
 
-    @Test
-    public void testisDcc() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (dccOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isDcc(i),"opc is dcc "+i);
-            } else {
-                assertFalse(CbusOpCodes.isDcc(i),"opc not dcc "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisDcc(int opc) {
+        if (dccOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isDcc(opc),"opc is dcc "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isDcc(opc),"opc not dcc "+opc);
         }
     }
 
-    @Test
-    public void testisOnEvent() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (onEvOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isOnEvent(i),"opc is on event "+i);
-            } else {
-                assertFalse(CbusOpCodes.isOnEvent(i),"opc not on event "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisOnEvent(int opc) {
+        if (onEvOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isOnEvent(opc),"opc is on event "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isOnEvent(opc),"opc not on event "+opc);
         }
     }
 
-    @Test
-    public void testisEventRequest() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (evRequestOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isEventRequest(i),"opc is request "+i);
-            } else {
-                assertFalse(CbusOpCodes.isEventRequest(i),"opc not request "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisEventRequest(int opc) {
+        if (evRequestOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isEventRequest(opc),"opc is request "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isEventRequest(opc),"opc not request "+opc);
         }
     }
 
-    @Test
-    public void testisShortEvent() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (shortOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isShortEvent(i),"opc is request "+i);
-            } else {
-                assertFalse(CbusOpCodes.isShortEvent(i),"opc not request "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisShortEvent(int opc) {
+        if (shortOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isShortEvent(opc),"opc is request "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isShortEvent(opc),"opc not request "+opc);
         }
     }
 
