@@ -163,7 +163,13 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         } catch (IOException ex) {
             log.error("Unable to read {}", filename, ex);
         } finally {
+            log.info("Writing roster index at end");
+            Roster.getDefault().writeRoster();
+            // use the new roster
+            Roster.getDefault().reloadRosterFile();
+
             ThreadingUtil.runOnGUIEventually(() -> {dialog.finish();});
+
             if (inputfile != null) {
                 try {
                     inputfile.close(); // zipper.close() is meaningless, see above, but this will do
@@ -277,8 +283,6 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             loadEntryFromElement(lroot);
             addToEntryToRoster();
 
-            // use the new roster
-            Roster.getDefault().reloadRosterFile();
         } catch (org.jdom2.JDOMException ex) {
             log.error("Unable to parse entry", ex);
         }
@@ -286,5 +290,14 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         return true;
     }
     
+    @Override
+    void addToEntryToRoster() {
+        // add the new entry to the roster
+        Roster.getDefault().addEntry(mToEntry);
+        // unlike the superclass method, this does not 
+        // write the full Roster until the end of the full import
+        // to improve speed.  
+    }
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupImportAction.class);
 }

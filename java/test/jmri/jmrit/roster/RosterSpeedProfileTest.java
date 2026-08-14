@@ -359,6 +359,24 @@ public class RosterSpeedProfileTest {
     }
 
     @Test
+    public void testconvertThrottleSettingToScaleSpeedWithShortUnits(){
+
+        SignalSpeedMap ssm = InstanceManager.getDefault(SignalSpeedMap.class);
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_NORMAL);
+        assertEquals("0.50 mm/s",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_THROTTLE);
+        assertEquals("0.50 mm/s",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_KMPH);
+        assertEquals("0.16 kph",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_MPH);
+        assertEquals("0.10 mph",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+    }
+
+    @Test
     public void testMmsToScaleSpeed(){
 
         org.jdom2.Element f1 = getLocoElement100();

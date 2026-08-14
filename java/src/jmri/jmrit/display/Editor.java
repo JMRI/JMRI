@@ -489,6 +489,36 @@ public abstract class Editor extends JmriJFrameWithPermissions
         setScrollbarScale(ratio);
     }
 
+    /**
+     * Repaint a limited area of the target panel.
+     * <p>
+     * The rectangle is given in panel (unscaled) coordinates, e.g. the bounds
+     * of a child of the target panel: children are laid out in unscaled
+     * coordinates while painting is scaled by the paint scale, so the dirty
+     * region is scaled here. The region is grown by a pixel on each side to
+     * cover rounding and antialiasing.
+     * <p>
+     * Use this instead of a full {@code repaint()} of the Editor frame when
+     * the changed area is known, e.g. to show a state change of a single
+     * icon. Safe to call from any thread, as it only posts a dirty region.
+     *
+     * @param rect area to repaint, in unscaled target panel coordinates
+     */
+    public void repaintTargetPanel(@Nonnull Rectangle rect) {
+        JLayeredPane panel = _targetPanel;
+        if (panel == null) { // too early in construction, fall back to a full repaint
+            repaint();
+            return;
+        }
+        double scale = _paintScale;
+        int x = (int) Math.floor(rect.x * scale) - 1;
+        int y = (int) Math.floor(rect.y * scale) - 1;
+        // +2 for the margin pixels, +1 for the flooring of x and y
+        int width = (int) Math.ceil(rect.width * scale) + 3;
+        int height = (int) Math.ceil(rect.height * scale) + 3;
+        panel.repaint(x, y, width, height);
+    }
+
     private ToolTipTimer _tooltipTimer;
 
     protected void setToolTip(ToolTip tt) {

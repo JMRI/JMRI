@@ -317,7 +317,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error("transmitLoop interrupted");
+                log.info("Transmit loop interrupted");
                 return;  // If we don't return here, xmtHandler.wait(wait) will be called again, which will cause a new InterruptedException, which results in a loop
             }
         }
