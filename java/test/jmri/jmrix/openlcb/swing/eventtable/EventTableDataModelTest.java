@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
+import java.beans.*;
 import java.util.*;
 
 import javax.swing.*;
@@ -95,6 +96,27 @@ public class EventTableDataModelTest {
         assertEquals("namedC", resultName);
     }
 
+    // test for notification of description for producer
+    @Test
+    public void tableModelDescNotifyTest() {
+
+        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedP");
+        assertEquals("namedP", model.getNodeName(new NodeID("1.1.1.1.2.2")));
+        
+        var targetEvent = new EventID("0F.1.1.1.2.2.2.2");
+        
+        model.recordProducer(targetEvent, new NodeID("1.1.1.1.2.2"),"", false);
+
+        var holder = eventTable.addEvent(targetEvent, "desc1");
+        model.eventInfoChanged(new PropertyChangeEvent(this, "UPDATED_EVENT_LIST", holder, null));
+
+        var resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
+        assertEquals("desc1", resultName);
+    }
+
+
+
+    // ***********   Infrastructure Below ************* 
         
     final NodeID nidSource = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
     MimicNodeStore store;
