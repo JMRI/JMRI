@@ -264,9 +264,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         // remove traffic connection
         memo.get(OlcbInterface.class).unRegisterMessageListener(monitor);
-        // drop model connections
-        model = null;
         monitor = null;
+        // drop model connections
+        model.dispose();
+        model = null;
         // and complete this
         super.dispose();
     }

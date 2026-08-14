@@ -177,7 +177,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
 
         // Store the event ID <-> Descriptions information
         root.addContent(values = new Element("descriptions")); // NOI18N
-        for (var event : EventTableDataModel.eventToDescriptions.keySet()) {
+        for (var event : model.getAuxiliaryKnownEvents()) {
             for (var description : model.getAuxiliaryInformation(event) ) {
                 log.trace("for event {} write {}", event, description);
                 var eventElement = new Element("event");

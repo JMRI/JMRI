@@ -1,6 +1,9 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
-import java.util.ArrayList;
+import java.util.*;
+
+import javax.swing.*;
+import javax.swing.table.*;
 
 import jmri.jmrix.openlcb.*;
 import jmri.util.JUnitUtil;
@@ -63,25 +66,33 @@ public class EventTableDataModelTest {
     // test for remembered node name of produced Event
     @Test
     public void tableModelProducerNameTest() {
-        model.addMatch(new NodeID("1.1.1.1.2.2"), "named");
+        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedP");
+        assertEquals("namedP", model.getNodeName(new NodeID("1.1.1.1.2.2")));
+        
         var targetEvent = new EventID("1.1.1.1.2.2.2.2");
         
         model.recordProducer(targetEvent, new NodeID("1.1.1.1.2.2"),"", false);
+
+        var resultNode = model.getValueAt(0, EventTableDataModel.COL_PRODUCER_NODE);
+        assertEquals("01.01.01.01.02.02", resultNode);
                 
-        var result = model.getValueAt(0, EventTableDataModel.COL_PRODUCER_NAME);
-        assertEquals("named", result);
+        var resultName = model.getValueAt(0, EventTableDataModel.COL_PRODUCER_NAME);
+        assertEquals("namedP", resultName);
     }
 
     // test for remembered node name of consumed Event
     @Test
     public void tableModelConsumerNameTest() {
-        model.addMatch(new NodeID("1.1.1.1.2.2"), "named");
+        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedC");
         var targetEvent = new EventID("1.1.1.1.2.2.2.2");
         
         model.recordConsumer(targetEvent, new NodeID("1.1.1.1.2.2"),"");
                 
-        var result = model.getValueAt(0, EventTableDataModel.COL_CONSUMER_NAME);
-        assertEquals("named", result);
+        var resultNode = model.getValueAt(0, EventTableDataModel.COL_CONSUMER_NODE);
+        assertEquals("01.01.01.01.02.02", resultNode);
+                
+        var resultName = model.getValueAt(0, EventTableDataModel.COL_CONSUMER_NAME);
+        assertEquals("namedC", resultName);
     }
 
         
@@ -107,11 +118,14 @@ public class EventTableDataModelTest {
             @Override
             protected void loadNameStoreEventIDs() {}
             @Override
-            public void readDetails() {}
+            public void loadModelData() {}
             @Override
             protected void initShutdownTask() {}
         };
-        EventTableDataModel.memos = new ArrayList<>(); // static content
+        var table = new JTable(model);
+        model.table = table;
+        model.sorter = new TableRowSorter<>(model);
+        EventTableDataModel.clearStatics();  // ensure static content starts empty
         
         return model;
     }
@@ -144,6 +158,6 @@ public class EventTableDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(EventTableDataModelTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelTest.class);
 
 }

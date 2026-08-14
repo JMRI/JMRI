@@ -1,12 +1,15 @@
 package jmri.jmrix.openlcb.swing.eventtable.configurexml;
 
-import java.util.ArrayList;
+import java.util.*;
+
+import javax.swing.*;
+import javax.swing.table.*;
 
 import jmri.jmrix.openlcb.*;
 import jmri.jmrix.openlcb.swing.eventtable.EventTableDataModel;
 import jmri.util.JUnitUtil;
 
-import org.jdom2.Element;
+// import org.jdom2.Element;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -30,14 +33,19 @@ public class EventTableDataModelXmlTest {
                 return "test";
             }
         };
-        model.addMatch(new NodeID("1.1.1.1.2.2"), "named");
+        
+        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedNode");
         
         var targetEventP = new EventID("1.1.1.1.2.2.2.2");
+        olcbStore.addMatch(targetEventP, "eventP");
         model.recordProducer(targetEventP, new NodeID("1.1.1.1.2.2"),"", false);
         
-        var targetEventC = new EventID("1.1.1.1.3.3.2.2");
+        var targetEventC = new EventID("0F.1.1.1.3.3.2.2");
+        olcbStore.addMatch(targetEventC, "eventC");
         model.recordConsumer(targetEventC, new NodeID("1.1.1.1.3.3"),"");
 
+        model.addAuxiliaryInformation(targetEventC, "describe C");
+        
         try {
             cxml1.store();
         } catch (Exception e) {
@@ -56,7 +64,22 @@ public class EventTableDataModelXmlTest {
         cxml2.load();
         
         Assert.assertEquals(1, model.getNodeIDMatches().size());       
+        Assert.assertEquals("namedNode", model.getNodeName(new NodeID("1.1.1.1.2.2")));       
+        Assert.assertEquals(new NodeID("1.1.1.1.2.2"), model.getNodeID("namedNode"));       
+
         Assert.assertEquals(2, model.getRowCount()); // separate producer and consumer rows
+
+        Assert.assertEquals("01.01.01.01.02.02.02.02", model.getValueAt(0,EventTableDataModel.COL_EVENTID));
+        Assert.assertEquals("namedNode", model.getValueAt(0,EventTableDataModel.COL_PRODUCER_NAME));
+        Assert.assertEquals("eventP", model.getValueAt(0,EventTableDataModel.COL_EVENTNAME));
+        Assert.assertEquals("Well-Known 01.01.01.01.02.02.02.02", model.getValueAt(0,EventTableDataModel.COL_CONTEXT_INFO));
+        
+
+        Assert.assertEquals("0F.01.01.01.03.03.02.02", model.getValueAt(1,EventTableDataModel.COL_EVENTID));
+        Assert.assertEquals("", model.getValueAt(1,EventTableDataModel.COL_PRODUCER_NAME));
+        Assert.assertEquals("eventC", model.getValueAt(1,EventTableDataModel.COL_EVENTNAME));
+        Assert.assertEquals("describe C", model.getValueAt(1,EventTableDataModel.COL_CONTEXT_INFO));
+
     }
 
     final NodeID nidSource = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
@@ -81,11 +104,14 @@ public class EventTableDataModelXmlTest {
             @Override
             protected void loadNameStoreEventIDs() {}
             @Override
-            public void readDetails() {}
+            public void loadModelData() {}
             @Override
             protected void initShutdownTask() {}
         };
-        EventTableDataModel.memos = new ArrayList<>(); // static content
+        var table = new JTable(model);
+        model.table = table;
+        model.sorter = new TableRowSorter<>(model);
+        EventTableDataModel.clearStatics();  // ensure static content starts empty
         
         return model;
     }
@@ -118,6 +144,6 @@ public class EventTableDataModelXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXmlTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXmlTest.class);
 }
 

@@ -41,37 +41,40 @@ public class EventTableDataModel extends AbstractTableModel {
         });
         // load stored contents
         loadNameStoreEventIDs();
-        readDetails();
+        
+        log.info("************************************");
+        log.info("Not loading model data for debugging");
+        log.info("************************************");
+        // loadModelData();
         
         // arrange to store the current contents at shutdown
         initShutdownTask();
         
-        
     }
 
-    static final int COL_EVENTID = 0;
-    static final int COL_EVENTNAME = 1;
-    static final int COL_TRIGGER = 2;
-    static final int COL_PRODUCER_NODE = 3;
-    static final int COL_PRODUCER_NAME = 4;
-    static final int COL_CONSUMER_NODE = 5;
-    static final int COL_CONSUMER_NAME = 6;
-    static final int COL_CONTEXT_INFO = 7;
-    static final int COL_COUNT = 8;
+    public static final int COL_EVENTID = 0;
+    public static final int COL_EVENTNAME = 1;
+    public static final int COL_TRIGGER = 2;
+    public static final int COL_PRODUCER_NODE = 3;
+    public static final int COL_PRODUCER_NAME = 4;
+    public static final int COL_CONSUMER_NODE = 5;
+    public static final int COL_CONSUMER_NAME = 6;
+    public static final int COL_CONTEXT_INFO = 7;
+    public static final int COL_COUNT = 8;
 
     MimicNodeStore store;
     EventTable stdEventTable;
     OlcbEventNameStore nameStore;
     IdTagManager tagManager;
-    JTable table;
-    TableRowSorter<EventTableDataModel> sorter;
+    public JTable table; // public for configurexml test
+    public TableRowSorter<EventTableDataModel> sorter; // public for configurexml test
     boolean popcornModeActive = false;
 
     PropertyChangeListener eventInfoListener;
     
     // static so the data remains available through a window close-open cycle
     // public to allow access for testing; clean that up sometime with subclassing
-    public static ArrayList<TripleMemo> memos = new ArrayList<>(); // public for testing
+    public static final ArrayList<TripleMemo> memos = new ArrayList<>(); // public for testing
 
     TripleMemo getTripleMemo(int row) {
         if (row >= memos.size()) {
@@ -80,6 +83,15 @@ public class EventTableDataModel extends AbstractTableModel {
         return memos.get(row);
     }
 
+    public static void clearStatics() {
+        // to be only used for testing, this clears all class-static information
+        nameToNodeId.clear();
+        nodeIdToName.clear();
+        
+        eventToDescriptions.clear();
+        memos.clear();
+    }
+    
     // ********************************
     // Store for node name<->ID mapping
     // ********************************
@@ -156,7 +168,7 @@ public class EventTableDataModel extends AbstractTableModel {
     // Store for also-known-as event description information
     // ********************************
 
-    public static final Map<EventID, Set<String>> eventToDescriptions = new HashMap<>(); // public for testing, fix that eventually
+    private static final Map<EventID, Set<String>> eventToDescriptions = new HashMap<>(); // public for testing, fix that eventually
 
     void updateAuxiliaryInformation(EventID event) {
         log.trace("found extra info for {}", event);
@@ -165,7 +177,7 @@ public class EventTableDataModel extends AbstractTableModel {
             list = new HashSet<String>();
             eventToDescriptions.put(event, list);
         }
-        // make sure the list contains all the available desriptions
+        // make sure the list contains all the available descriptions
         for (var entry : stdEventTable.getEventInfo(event).getAllEntries()) {
             log.trace("   added: {}", entry.getDescription());
             list.add(entry.getDescription());
@@ -190,14 +202,21 @@ public class EventTableDataModel extends AbstractTableModel {
         return retval;
     }
 
+    public Set<EventID> getAuxiliaryKnownEvents() {
+        return eventToDescriptions.keySet();
+    }
+    
     // ********************************
 
     protected void eventInfoChanged(PropertyChangeEvent e) {
+        log.info("eventInfoChanged {} {}", e.getPropertyName(), e.getNewValue());
         // looking for events added to the EventTable
         if (e.getPropertyName().equals(EventTable.EVENT_ENTRY_ADDED)) {
             // this is information added to an event
-            EventID event = (EventID)e.getNewValue();
-            updateAuxiliaryInformation(event);
+            var holder = (EventTable.EventTableEntryHolder)e.getNewValue();
+            updateAuxiliaryInformation(holder.getEntry().getEvent());
+            // and force update to get it drawn by the table
+            handleTableUpdate(-1, -1);  // this batches these
         }
     }
     
@@ -294,7 +313,9 @@ public class EventTableDataModel extends AbstractTableModel {
                     if (height < lineIncrement) {
                         height = height+lineIncrement; // when no lines, assume 1
                     }
-                    table.setRowHeight(viewRow, height);
+                    if (height != table.getRowHeight(viewRow)) { // avoid repeating repaint loop
+                        table.setRowHeight(viewRow, height);
+                    }
                 } else {
                     lineIncrement = -1;  // reload on next request, hoping for a viewed row
                 }
@@ -371,7 +392,7 @@ public class EventTableDataModel extends AbstractTableModel {
      */
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // Swing thread deconflicts
     void clear() {
-        memos = new ArrayList<>();
+        memos.clear();
         fireTableDataChanged();  // don't queue this one, must be immediate
     }
 
@@ -714,25 +735,44 @@ public class EventTableDataModel extends AbstractTableModel {
         }
     }
 
-    public void readDetails() {
-        log.debug("reading Node Name Details");
+    public void loadModelData() {
+        log.debug("reading Event Table model data");
         new EventTableDataModelXml(this).load();  // NOI18N
-        log.debug("...done reading Node Name details");
+        log.debug("...done reading Event Table model data");
     }
 
     private Runnable shutDownTask = null;
 
+    public void dispose() {
+        // this does _not_ deregister the shutdown task, 
+        // as that needs to happen at end of run to write
+        // any changes after this is closed.
+        //
+        // Instead, we just do a write here
+        log.debug("Start writing node name details...");
+        try {
+            writeNodeNameDetails();
+        } catch (java.io.IOException ioe) {
+            log.error("Exception writing event table data in dispose", ioe);
+        }
+        
+        // drop the external listeners
+        stdEventTable.removePropertyChangeListener(eventInfoListener);
+        
+    }
+    
+    
     protected void initShutdownTask(){
         // Create shutdown task to save
         log.debug("Register ShutDown task");
         if (this.shutDownTask == null) {
             this.shutDownTask = () -> {
                 // Save event name details prior to exit, if necessary
-                log.debug("Start writing node name details...");
+                log.debug("Start writing event table data...");
                 try {
                     writeNodeNameDetails();
                 } catch (java.io.IOException ioe) {
-                    log.error("Exception writing node name", ioe);
+                    log.error("Exception writing event table data", ioe);
                 }
             };
             InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
