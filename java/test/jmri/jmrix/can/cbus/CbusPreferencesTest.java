@@ -2,11 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,7 +14,7 @@ public class CbusPreferencesTest {
     @Test
     public void testCTor() {
         CbusPreferences t = new CbusPreferences();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
     }
 
     @BeforeEach
@@ -31,6 +27,6 @@ public class CbusPreferencesTest {
         JUnitUtil.tearDown();
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(CbusPreferences.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusPreferences.class);
 
 }
