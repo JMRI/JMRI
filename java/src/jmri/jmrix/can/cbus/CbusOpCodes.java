@@ -32,9 +32,9 @@ public class CbusOpCodes {
     }
 
     /**
-     * Return a string representation of a decoded CBUS Message
-     *
-     * Used in CBUS Console Log
+     * Return a string representation of a decoded CBUS Message.
+     * See CbusOpcData.xml for replacement codes.
+     * Used in CBUS Console Log.
      * @param msg CbusMessage to be decoded Return String decoded message
      * @return decoded CBUS message
      */
