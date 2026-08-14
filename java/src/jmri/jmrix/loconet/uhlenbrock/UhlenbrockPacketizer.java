@@ -72,9 +72,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
             msg[i] = (byte) m.getElement(i);
         }
 
-        if (log.isTraceEnabled()) {
-            log.trace("queue LocoNet packet: {}", m.toString());
-        }
+        log.trace("queue LocoNet packet: {}", m.toString());
         // queue the request
         try {
             xmtLocoNetList.add(m); // done first to make sure it's there before xmtList has an element
@@ -82,13 +80,9 @@ public class UhlenbrockPacketizer extends LnPacketizer {
             // save to queue if we want to remember it to check in receive handler
             if (mLoconetUpdateSlotOnMessageCreation) {
                 try {
-                    if (log.isTraceEnabled()) { // avoid String building if not needed
-                        log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
-                    }
+                    log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
                     sentList.add(m);
-                    if (log.isTraceEnabled()) { // avoid String building if not needed
-                        log.trace("queue message for notification: {}", m);
-                    }
+                    log.trace("queue message for notification: {}", m);
                     jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(m, this));
                 }
                 catch (RuntimeException e) {
@@ -219,21 +213,15 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     }
 
                     // message is complete, dispatch it !!
-                    if (log.isTraceEnabled()) { // avoid String building if not needed
-                        log.trace("message complete: {}", msg);
-                    }
+                    log.trace("message complete: {}", msg);
                         
                     if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
                             && trafficController.getSentList().contains(msg)) {
                         trafficController.getSentList().remove(msg);
-                        if (log.isTraceEnabled()) { // avoid String building if not needed
-                            log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
-                        }
+                        log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                     }
                     else {
-                        if (log.isTraceEnabled()) { // avoid String building if not needed
-                            log.trace("queue message for notification: {}", msg);
-                        }
+                        log.trace("queue message for notification: {}", msg);
 
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTc = trafficController;

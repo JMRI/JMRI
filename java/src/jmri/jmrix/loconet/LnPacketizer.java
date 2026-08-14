@@ -110,13 +110,9 @@ public class LnPacketizer extends LnTrafficController {
             // save to queue if we want to remember it to check in receive handler
             if (mLoconetUpdateSlotOnMessageCreation) {
                 try {
-                    if (log.isTraceEnabled()) { // avoid String building if not needed
-                        log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
-                    }
+                    log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
                     sentList.add(m);
-                    if (log.isTraceEnabled()) { // avoid String building if not needed
-                        log.trace("queue message for notification: {}", m);
-                    }
+                    log.trace("queue message for notification: {}", m);
                     jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(m, this));
                 }
                 catch (RuntimeException e) {
@@ -248,22 +244,16 @@ public class LnPacketizer extends LnTrafficController {
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
-                        if (log.isTraceEnabled()) { // avoid building string
-                            log.trace("Skipping: {}", Integer.toHexString(opCode)); // NOI18N
-                        }
+                        log.trace("Skipping: {}", Integer.toHexString(opCode)); // NOI18N
                     }
                     // here opCode is OK. Create output message
-                    if (log.isTraceEnabled()) { // avoid building string
-                        log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
-                    }
+                    log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
                     LocoNetMessage msg = null;
                     while (msg == null) {
                         try {
                             // Capture 2nd byte, always present
                             int byte2 = readByteProtected(istream) & 0xFF;
-                            if (log.isTraceEnabled()) { // avoid building string
-                                log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
-                            }                            // Decide length
+                            log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
                             int len = 2;
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:
@@ -304,9 +294,7 @@ public class LnPacketizer extends LnTrafficController {
                             for (int i = 2; i < len; i++) {
                                 // check for message-blocking error
                                 int b = readByteProtected(istream) & 0xFF;
-                                if (log.isTraceEnabled()) {
-                                    log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
-                                }
+                                log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
                                 if ((b & 0x80) != 0) {
                                     log.warn("LocoNet message with opCode: {} ended early. Expected length: {} seen length: {} unexpected byte: {}", Integer.toHexString(opCode), len, i, Integer.toHexString(b)); // NOI18N
                                     opCode = b;
@@ -327,21 +315,15 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // message is complete, dispatch it !!
                     {
-                        if (log.isTraceEnabled()) { // avoid String building if not needed
-                            log.trace("message complete: {}", msg);
-                        }
+                        log.trace("message complete: {}", msg);
                         
                         if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
                                 && trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
-                            if (log.isTraceEnabled()) { // avoid String building if not needed
-                                log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
-                            }
+                            log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                         }
                         else {
-                            if (log.isTraceEnabled()) { // avoid String building if not needed
-                                log.trace("queue message for notification: {}", msg);
-                            }
+                            log.trace("queue message for notification: {}", msg);
                             jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));                        }
                     }
 
@@ -410,15 +392,12 @@ public class LnPacketizer extends LnTrafficController {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            if (log.isDebugEnabled()) { // avoid work if not needed
-                                if (isXmtBusy()) log.debug("LocoNet port not ready to receive"); // NOI18N
-                                log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
-                            }
+                            if (isXmtBusy())
+                                log.debug("LocoNet port not ready to receive"); // NOI18N
+                            log.trace("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             ostream.write(msg);
                             ostream.flush();
-                            if (log.isTraceEnabled()) { // avoid String building if not needed
-                                log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
-                            }
+                            log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             messageTransmitted(msg);
                         } else {
                             // no stream connected
@@ -453,14 +432,10 @@ public class LnPacketizer extends LnTrafficController {
         if(getLoconetUpdateSlotOnMessageCreation() 
                 && getSentList().contains(m)) {
             getSentList().remove(m);
-            if (log.isTraceEnabled()) { // avoid String building if not needed
-                log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", m, getSentList().size());
-            }
+            log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", m, getSentList().size());
         }
         else {
-            if (log.isTraceEnabled()) { // avoid String building if not needed
-                log.trace("queue message for notification: {}", m);
-            }
+            log.trace("queue message for notification: {}", m);
             // message is queued for transmit, echo it when needed
             // return a notification via the queue to ensure end
             javax.swing.SwingUtilities.invokeLater(new Echo(this, m));

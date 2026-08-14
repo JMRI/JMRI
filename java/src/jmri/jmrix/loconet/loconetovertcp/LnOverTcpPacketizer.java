@@ -195,21 +195,15 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         }
 
                         // message is complete, dispatch it !!
-                        if (log.isTraceEnabled()) { // avoid String building if not needed
-                            log.trace("message complete: {}", msg);
-                        }
+                        log.trace("message complete: {}", msg);
                         
                         if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
                                 && trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
-                            if (log.isTraceEnabled()) { // avoid String building if not needed
-                                log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
-                            }
+                            log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                         }
                         else {
-                            if (log.isTraceEnabled()) { // avoid String building if not needed
-                                log.trace("queue message for notification: {}", msg);
-                            }
+                            log.trace("queue message for notification: {}", msg);
 
                             final LocoNetMessage thisMsg = msg;
                             final LnPacketizer thisTc = trafficController;
@@ -281,9 +275,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                                 }
                                 packet.append(hexString);
                             }
-                            if (log.isDebugEnabled()) { // Avoid building unneeded Strings
-                                log.debug("Write to LbServer: {}", packet.toString());
-                            }
+                            log.debug("Write to LbServer: {}", packet.toString());
                             packet.append("\r\n");
                             ostream.write(packet.toString().getBytes());
                             ostream.flush();
