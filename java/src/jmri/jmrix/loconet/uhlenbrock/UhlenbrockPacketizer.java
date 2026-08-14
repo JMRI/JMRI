@@ -79,15 +79,10 @@ public class UhlenbrockPacketizer extends LnPacketizer {
             xmtList.add(msg);
             // save to queue if we want to remember it to check in receive handler
             if (mLoconetUpdateSlotOnMessageCreation) {
-                try {
-                    log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
-                    sentList.add(m);
-                    log.trace("queue message for notification: {}", m);
-                    jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(m, this));
-                }
-                catch (RuntimeException e) {
-                    log.warn("saving to sent messages list: unexpected exception: ", e);
-                }
+                log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
+                sentList.add(m);
+                log.trace("queue message for notification: {}", m);
+                jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(m, this));
             }
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
