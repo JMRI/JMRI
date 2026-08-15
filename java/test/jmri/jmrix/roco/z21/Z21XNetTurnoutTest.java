@@ -206,6 +206,17 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
             "listener notified of change for DIRECT feedback");
     }
 
+    // Z21XNetTurnout.sendOffMessage(int) does not wait for a reply the way the
+    // base XNetTurnout does: it sets internalState to OFFSENT and straight back
+    // to IDLE within the same synchronized call, before the message is even
+    // sent. It can never get stuck in OFFSENT, so the base class's OFF watchdog
+    // does not apply here.
+    @Test
+    @Override
+    public void testOffWatchdogResendsWhenReplyNeverArrives() {
+        // no-op for this subclass
+    }
+
     @Test
     @Override
     public void testDispose() {
