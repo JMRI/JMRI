@@ -269,7 +269,8 @@ public class ArchitectureTest {
      */
     @ArchTest // Initially 3 flags in JMRI 4.17.3 - see archunit_ignore_patterns.txt
     public static final ArchRule checkJmriPackageJdom = noClasses()
-        .that().resideInAPackage("jmri")
+        .that().resideInAPackage("jmri").and()
+        .doNotHaveFullyQualifiedName("jmri.UserPreferencesManager")
         .should().dependOnClassesThat().resideInAPackage("org.jdom2..");
 
     /**

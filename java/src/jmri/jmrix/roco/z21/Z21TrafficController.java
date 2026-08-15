@@ -17,6 +17,10 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController implements Z21Interface {
 
+    // Z21 LAN Protocol Specification v1.13 section 1.3 allows combined datasets
+    // up to the Ethernet MTU payload: 1472 = 1500-byte MTU - IPv4 - UDP headers.
+    private static final int MAX_UDP_PAYLOAD = 1472;
+
     private java.net.InetAddress host;
     private int port;
 
@@ -262,12 +266,10 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         // threading to let other stuff happen
 
         // create a buffer to hold the incoming data.
-        byte[] buffer = new byte[100];  // the size here just needs to be longer
-        // than the longest protocol message.
-        // Otherwise, the receive will truncate.
+        byte[] buffer = new byte[MAX_UDP_PAYLOAD];
 
         // create the packet.
-        DatagramPacket receivePacket = new DatagramPacket(buffer, 100, host, port);
+        DatagramPacket receivePacket = new DatagramPacket(buffer, MAX_UDP_PAYLOAD, host, port);
 
         // and wait to receive data in the packet.
         try {

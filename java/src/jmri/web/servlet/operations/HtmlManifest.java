@@ -80,7 +80,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
                 // add route comment
                 if (!location.path(JSON.COMMENT).textValue().isBlank()) {
-                    builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), 
+                    builder.append(String.format(locale, strings.getProperty("RouteLocationComment"),
                             location.path(JSON.COMMENT).textValue()));
                 }
 
@@ -207,7 +207,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                                             .getProperty("NoScheduledWorkAtWithDepartureTime"), routeLocationName, // NOI18N
                                             train.getExpectedDepartureTime(routeLocation)));
                                 }
-                            }                           
+                            }
                         }
                         // add location comment
                         if (Setup.isPrintLocationCommentsEnabled()
@@ -231,7 +231,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         //copy the adds into a sortable arraylist
         ArrayList<JsonNode> adds = new ArrayList<JsonNode>();
         cars.path(JSON.ADD).forEach(adds::add);
-            
+
         //sort if requested
         if (adds.size() > 0 && Setup.isSortByTrackNameEnabled()) {
             adds.sort(Comparator.comparing(o -> o.path("location").path("track").path("userName").asText()));
@@ -302,12 +302,12 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected List<Car> getCarList(ArrayList<JsonNode> jnCars) {
         List<Car> cars = new ArrayList<>();
-        for (JsonNode kar : jnCars) { 
+        for (JsonNode kar : jnCars) {
             cars.add(getCar(kar));
         }
         return cars;
     }
-    
+
     protected Car getCar(JsonNode jnCar) {
         String id = jnCar.path(JSON.NAME).asText();
         Car car = InstanceManager.getDefault(CarManager.class).getById(id);
@@ -499,7 +499,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                     SPACE +
                     getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
         }
-        
+
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
 
@@ -531,9 +531,8 @@ public class HtmlManifest extends HtmlTrainCommon {
     private String getTrackComments(JsonNode tracks, JsonNode cars) {
         StringBuilder builder = new StringBuilder();
         if (tracks.size() > 0) {
-            Iterator<Entry<String, JsonNode>> iterator = tracks.fields();
-            while (iterator.hasNext()) {
-                Entry<String, JsonNode> track = iterator.next();
+            Set<Entry<String, JsonNode>> properties = tracks.properties();
+            for (var track : properties) {
                 boolean pickup = false;
                 boolean setout = false;
                 if (cars.path(JSON.ADD).size() > 0) {
@@ -570,7 +569,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected boolean isLocalMove(JsonNode car) {
-        return car.path(JsonOperations.IS_LOCAL).booleanValue();        
+        return car.path(JsonOperations.IS_LOCAL).booleanValue();
     }
 
     protected boolean isUtilityCar(JsonNode car) {

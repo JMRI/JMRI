@@ -350,6 +350,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printHeaderLine1 = true; // when true add header line 1 to manifest and switch lists
     private boolean printHeaderLine2 = true; // when true add header line 2 to manifest and switch lists
     private boolean printHeaderLine3 = true; // when true add header line 3 to manifest and switch lists
+    private int horizontalLineAdjustment = 0;
 
     private boolean printCabooseLoad = false; // when true print caboose load
     private boolean printPassengerLoad = false; // when true print passenger car load
@@ -1062,6 +1063,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static boolean isPrintHeaderLine3Enabled() {
         return getDefault().printHeaderLine3;
     }
+    
+    public static void setHorizontalLineAdjustment(int value) {
+        getDefault().horizontalLineAdjustment = value;
+    }
+    
+    public static int getHorizontalLineAdjustment() {
+        return getDefault().horizontalLineAdjustment;
+    }
 
     public static void setPrintCabooseLoadEnabled(boolean enable) {
         getDefault().printCabooseLoad = enable;
@@ -1574,6 +1583,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         return format;
     }
+    
+    public static String[] getPickupEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackPickupMessageFormat(getPickupEngineMessageFormat());
+    }
 
     public static String[] getPickupTwoColumnByTrackManifestMessageFormat() {
         return createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
@@ -1600,6 +1613,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             }
         }
         return format;
+    }
+    
+    public static String[] getDropEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackDropMessageFormat(getDropEngineMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackManifestMessageFormat() {
@@ -2163,6 +2180,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.PRINT_HEADER_LINE1, isPrintHeaderLine1Enabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADER_LINE2, isPrintHeaderLine2Enabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADER_LINE3, isPrintHeaderLine3Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.HORIZONTAL_LINE_ADJ, Integer.toString(getHorizontalLineAdjustment()));
 
         if (!getManifestLogoURL().equals(NONE)) {
             values = new Element(Xml.MANIFEST_LOGO);
@@ -2518,6 +2536,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String setting = a.getValue();
                 log.debug("missingCarFormat: {}", setting);
                 String[] keys = setting.split(",");
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setMissingCarMessageFormat(keys);
             }
@@ -2880,6 +2899,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE3)) != null) {
                 String enable = a.getValue();
                 setPrintHeaderLine3Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.HORIZONTAL_LINE_ADJ)) != null) {
+                String number = a.getValue();
+                try {
+                    setHorizontalLineAdjustment(Integer.parseInt(number));
+                } catch (NumberFormatException ne) {
+                    log.error("Horizontal line adjustment isn't a number");
+                }
             }
         }
         // get manifest logo

@@ -18,13 +18,13 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  * @author Daniel Bergqvist Copyright 2022
  */
 public class ActionCreateBeansFromTable extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private boolean _onlyCreatableTypes = true;
     private NamedBeanType _namedBeanType = NamedBeanType.Light;
     private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class), this);
+                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class));
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnSystemName = "";
     private String _rowOrColumnUserName = "";
@@ -421,30 +421,6 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        if (_listenersAreRegistered) return;
-
-        _selectNamedBean.registerListeners();
-        _listenersAreRegistered = true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        if (!_listenersAreRegistered) return;
-
-        _selectNamedBean.unregisterListeners();
-        _listenersAreRegistered = false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

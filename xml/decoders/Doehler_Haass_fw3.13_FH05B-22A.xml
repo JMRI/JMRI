@@ -12,6 +12,21 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.1" author="Pierre Billon" lastUpdated="20260725"/>
+  <!--  Firmware 3.13 completed and corrected:
+        - Added CV401-412 function swapping, documented by D&amp;H since firmware 3.12 or earlier
+          but never implemented for the non-sound decoders, and CV137 bit 6, which applies
+          those swappings to SUSI F1-F12 and was introduced in firmware 3.13.053. Both appear
+          on a new "Function Swapping" tab.
+        - Added the FH16A model, which D&amp;H document from firmware 3.15 but which runs this
+          firmware too.
+        - Declared the Motorola protocol on all four FH models; D&amp;H document MM1/MM2 support
+          for the FH series but it had never been listed.
+        - CV144 bits 3 and 4, the GPIO brake settings, were gated to product IDs that no model
+          in this file carries, so neither was ever shown. Now from cv144_bits1-4.xml.
+        - CV112 is no longer offered on the FH* series, which the D&amp;H CV table marks it as not
+          relevant for, and it carries the documented default of 15.
+        -->
   <version version="1.0" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230720"/>
   <!--  Creation (new firmware 3.13.053).
         Based on Doehler_Haass_fw3.12_FH05B-18-22A.xml
@@ -57,6 +72,55 @@
         <protocols>
           <protocol>dcc</protocol>
           <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="FH16A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug" maxInputVolts="30V" maxTotalCurrent="1.5A" connector="PluX16">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="1A">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="1A">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="AUX 5|(or SUSI ZCLK)" maxcurrent="20mA">
+          <label xml:lang="de">AUX 5</label>
+          <label xml:lang="ca">AUX 5</label>
+        </output>
+        <output name="8" label="AUX 6|(or SUSI ZDAT)" maxcurrent="20mA">
+          <label xml:lang="de">AUX 6</label>
+          <label xml:lang="ca">AUX 6</label>
+        </output>
+        <output name="9" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="10" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="15.9" width="10.9" height="2.3" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="FH18A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
@@ -104,6 +168,7 @@
         <protocols>
           <protocol>dcc</protocol>
           <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="FH22A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
@@ -153,6 +218,7 @@
         <protocols>
           <protocol>dcc</protocol>
           <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
     </family>
@@ -183,7 +249,8 @@
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
 <!-- relevant für FH ??? Start-->
       <!--              - Extra general options as of fw3.10 -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.10.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bits1-4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv112_fw3.12-3.14.xml"/>
 <!-- relevant für FH ??? Ende-->
       <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
@@ -212,6 +279,8 @@
       <!-- SECTION 17    - advanced function options as of fw3.06 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_adv_function_fw3.06.xml"/-->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_bit6_fw3.13.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv401-412.xml"/>
     </variables>
     <resets>
      <factReset label="Reset All CVs" CV="8" default="8">
@@ -230,6 +299,7 @@
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common_fw3.10.xml"/>
 <!-- relevant für FH ??? Ende-->
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_function_swapping_nonsound.xml"/>
   <!-- Pane(s) valid for some decoders only  -->
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>

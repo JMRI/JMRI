@@ -155,6 +155,12 @@ public class Z21XNetTurnout extends XNetTurnout {
             log.debug("Current Thread ID: {} Thread Name {}", java.lang.Thread.currentThread().getId(), java.lang.Thread.currentThread().getName());
         }
         XNetMessage msg = getOffMessage(state == _mThrown);
+        // Set internalState to OFFSENT before changing the known state;
+        // the parent class's state listener sends an OFF message of its own
+        // when it sees KnownState change while a command is still in flight,
+        // which would put a duplicate OFF on the wire.  This mirrors the
+        // ordering in XNetTurnout.sendOffMessage().
+        internalState = OFFSENT;
         // Set the known state to the commanded state.
         newKnownState(getCommandedState());
         internalState = IDLE;

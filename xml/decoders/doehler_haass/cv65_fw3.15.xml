@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV65 with the firmware 3.15 dual meaning.</revremark>
+    </revision>
+  </revhistory>
+  <!-- CV65 gained a second meaning in firmware 3.15, selected by CV60 bit 1. Replaces the     -->
+  <!-- definition in cv65_fw3.08.xml, which is excluded for the firmware 3.15 families.         -->
+  <variable item="Max Speed Braking Section 2" CV="65" default="12">
+    <decVal min="0" max="127"/>
+    <label>Speed step in braking sections</label>
+    <label xml:lang="fr">Cran de vitesse dans les sections de freinage</label>
+    <label xml:lang="de">Fahrstufe in Bremsabschnitten</label>
+    <tooltip>CV65: the maximum speed step in two-part SX braking sections (CV27 bits 6-7, CV60 bit 0), or the minimum speed step at which the brake ramp engages (CV60 bit 1, see CV154/CV155)</tooltip>
+    <tooltip xml:lang="fr">CV65 : le cran de vitesse maximal dans les sections de freinage SX en deux parties (CV27 bits 6-7, CV60 bit 0), ou le cran minimal à partir duquel la rampe de freinage agit (CV60 bit 1, voir CV154/CV155)</tooltip>
+    <tooltip xml:lang="de">CV65: die maximale Fahrstufe in zweiteiligen SX-Bremsabschnitten (CV27 Bits 6-7, CV60 Bit 0), oder die minimale Fahrstufe ab der die Bremsrampe aktiv wird (CV60 Bit 1, siehe CV154/CV155)</tooltip>
+  </variable>
+</variables>

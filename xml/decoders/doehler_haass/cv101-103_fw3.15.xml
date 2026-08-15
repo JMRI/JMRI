@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV101-103, AUX10-AUX12 function mapping, new in firmware 3.15.</revremark>
+    </revision>
+  </revhistory>
+  <!-- CV101-103 map AUX10, AUX11 and AUX12; new in firmware 3.15 and only on the DH21B,      -->
+  <!-- DH22B and DH24A (product IDs 201, 203, 204).                                            -->
+  <!-- The item names use the "F<n> controls output <m>" form so that the standard function     -->
+  <!-- map grid renders them as drop-downs, exactly as CV98/99 do for AUX7 and AUX8. Outputs    -->
+  <!-- 11, 12 and 13 are AUX10, AUX11 and AUX12 in the DH24A output list.                       -->
+  <variable item="F4 controls output 11" CV="101" default="12" include="201,203,204">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function mapping AUX10</label>
+    <label xml:lang="fr">Affectation de fonction AUX10</label>
+    <label xml:lang="de">Funktionszuordnung AUX10</label>
+    <tooltip>CV101: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV101 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV101: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="F4 controls output 12" CV="102" default="13" include="201,203,204">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function mapping AUX11</label>
+    <label xml:lang="fr">Affectation de fonction AUX11</label>
+    <label xml:lang="de">Funktionszuordnung AUX11</label>
+    <tooltip>CV102: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV102 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV102: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="F4 controls output 13" CV="103" default="14" include="201,203,204">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function mapping AUX12</label>
+    <label xml:lang="fr">Affectation de fonction AUX12</label>
+    <label xml:lang="de">Funktionszuordnung AUX12</label>
+    <tooltip>CV103: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV103 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV103: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+</variables>

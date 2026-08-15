@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.util;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.HashMap;
@@ -28,9 +27,6 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
     private final InUse _inUse;
     private final LogixNG_SelectTable _selectTable;
     private final int _numDecimals;
-    private final PropertyChangeListener _listener;
-    private boolean _listenToMemory;
-    private boolean _listenersAreRegistered;
     private final FormatterParserValidator _formatterParserValidator;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
@@ -42,24 +38,18 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectDouble(
-            @Nonnull AbstractBase base,
-            int numDecimals,
-            @Nonnull PropertyChangeListener listener) {
-
-        this(base, numDecimals, listener, new DefaultFormatterParserValidator());
+    public LogixNG_SelectDouble(@Nonnull AbstractBase base, int numDecimals) {
+        this(base, numDecimals, new DefaultFormatterParserValidator());
     }
 
     public LogixNG_SelectDouble(
             @Nonnull AbstractBase base,
             int numDecimals,
-            @Nonnull PropertyChangeListener listener,
             @Nonnull FormatterParserValidator formatterParserValidator) {
         _base = base;
         _inUse = () -> true;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
         _numDecimals = numDecimals;
-        _listener = listener;
         _formatterParserValidator = formatterParserValidator;
         _value = _formatterParserValidator.getInitialValue();
     }
@@ -69,7 +59,6 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
         copy.setValue(_value);
         copy.setLocalVariable(_localVariable);
         copy.setMemory(_memoryHandle);
-        copy.setListenToMemory(_listenToMemory);
         copy.setReference(_reference);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
@@ -151,14 +140,6 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
 
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
-    }
-
-    public void setListenToMemory(boolean listenToMemory) {
-        _listenToMemory = listenToMemory;
-    }
-
-    public boolean getListenToMemory() {
-        return _listenToMemory;
     }
 
     public void setFormula(@Nonnull String formula) throws ParserException {
@@ -269,7 +250,7 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
                 break;
 
             case Memory:
-                enumName = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
+                enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -293,32 +274,6 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
                 throw new IllegalArgumentException("invalid _addressing: " + _addressing.name());
         }
         return enumName;
-    }
-
-    /**
-     * Register listeners if this object needs that.
-     */
-    public void registerListeners() {
-        if (!_listenersAreRegistered
-                && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)
-                && _listenToMemory) {
-            _memoryHandle.getBean().addPropertyChangeListener("value", _listener);
-            _listenersAreRegistered = true;
-        }
-    }
-
-    /**
-     * Unregister listeners if this object needs that.
-     */
-    public void unregisterListeners() {
-        if (_listenersAreRegistered
-                && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)
-                && _listenToMemory) {
-            _memoryHandle.getBean().removePropertyChangeListener("value", _listener);
-            _listenersAreRegistered = false;
-        }
     }
 
     @Override

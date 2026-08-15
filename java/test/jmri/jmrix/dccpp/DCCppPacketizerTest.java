@@ -3,7 +3,10 @@ package jmri.jmrix.dccpp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -138,7 +141,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
 
         String body = "jA 4 A \"" + caption + "\"";
         p.tistream.write('<');
-        for (byte b : body.getBytes(java.nio.charset.StandardCharsets.US_ASCII)) {
+        for (byte b : body.getBytes(StandardCharsets.US_ASCII)) {
             p.tistream.write(b);
         }
         p.tistream.write('>');
@@ -162,6 +165,71 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
             log.warn("waitForReply saw an immediate return; is threading right?");
         }
         return i < 100;
+    }
+
+    // --- readFrameBody direct tests (no threading required) ---
+
+    @Test
+    public void testReadFrameBodyNormalMessage() throws IOException {
+        assertEquals("H 22 1", parseBody("H 22 1>"));
+    }
+
+    @Test
+    public void testReadFrameBodyQuotedGreaterThan() throws IOException {
+        assertEquals("jA 4 A \"Round > bend\"", parseBody("jA 4 A \"Round > bend\">"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastSimple() throws IOException {
+        assertEquals("* hello world *", parseBody("* hello world *>"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastWithGreaterThan() throws IOException {
+        assertEquals("* value > 16 *", parseBody("* value > 16 *>"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastWithNestedAngles() throws IOException {
+        // The actual failure case: DCC-EX rejects <V 1025 0> and embeds the
+        // command in the broadcast body — the '>' inside must not split the frame.
+        String body = "* Command format <V cv value> failed CHECK(cv 1 .. 1023)\n  <V 1025 0> *";
+        assertEquals(body, parseBody(body + ">"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastWithCommandContainingLessThan() throws IOException {
+        // '<' in a quoted arg inside the broadcast body, e.g. echo of <m 0 1 "voltage  < 16 ">.
+        String body = "* Command format <m 0 1 \"voltage  < 16 \"> failed *";
+        assertEquals(body, parseBody(body + ">"));
+    }
+
+    @Test
+    public void testInboundBroadcastMessage() throws IOException {
+        // Full pipeline test: verify broadcast frames reach parseReply and are recognised as diag replies.
+        DCCppPacketizer c = (DCCppPacketizer) tc;
+        DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
+        c.connectPort(p);
+        DCCppListenerScaffold l = new DCCppListenerScaffold();
+        c.addDCCppListener(~0, l);
+
+        String payload = "* Command format <V cv value> failed CHECK(cv 1 .. 1023)  <V 1025 0> *";
+        p.tistream.write('<');
+        for (byte b : payload.getBytes(StandardCharsets.US_ASCII)) {
+            p.tistream.write(b);
+        }
+        p.tistream.write('>');
+
+        assertTrue(waitForReply(l), "reply received");
+        assertEquals(payload, l.rcvdRply.toString(), "full body delivered");
+        assertTrue(l.rcvdRply.isDiagReply(), "reply parsed as diag");
+    }
+
+    /** Synchronous helper: feed raw bytes directly to readFrameBody and return the result. */
+    private String parseBody(String input) throws IOException {
+        DataInputStream is = new DataInputStream(
+            new ByteArrayInputStream(input.getBytes(StandardCharsets.US_ASCII)));
+        return ((DCCppPacketizer) tc).readFrameBody(is, 2048);
     }
 
     @Test

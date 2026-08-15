@@ -45,11 +45,11 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
         _train = train;
 
-        // row 2
+        // row 1
         JPanel pRow2 = new JPanel();
         pRow2.setLayout(new BoxLayout(pRow2, BoxLayout.X_AXIS));
 
-        // row 2a (train name)
+        // row 1a (train name)
         JPanel pTrainName = new JPanel();
         pTrainName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
         pTrainName.add(textTrainName);
@@ -58,14 +58,15 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         pRow2.add(pTrainDescription);
         pRow2.add(pRailRoadName);
 
+        // row 2a
         JPanel pLocation = new JPanel();
         pLocation.setLayout(new BoxLayout(pLocation, BoxLayout.X_AXIS));
 
-        // row 10b (train departure time)
+        // row 2b (train departure time)
         pTrainDepartureTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DepartTime")));
         pTrainDepartureTime.add(textTrainDepartureTime);
 
-        // row 10c (next location name)
+        // row 2c (next location name)
         JPanel pNextLocationName = new JPanel();
         pNextLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("NextLocation")));
         pNextLocationName.add(textNextLocationName);
@@ -161,7 +162,9 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     
                     updateTrackComments(rl, IS_MANIFEST);
                     
-                    textTrainStatusPane.setText(TrainCommon.getTrainMessage(_train, rl));
+                    String trainMessage = TrainCommon.getTrainMessage(_train, rl);
+                    textTrainStatusPane.setText(TrainCommon.getOnlyText(trainMessage));
+                    textTrainStatusPane.setForeground(TrainCommon.getTextColor(trainMessage));
                             
                     // check for locos
                     updateLocoPanes(rl);
@@ -171,6 +174,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 }
 
                 textStatus.setText(getStatus(rl, IS_MANIFEST));
+                textStatus.setForeground(getStatusColor());
 
                 // adjust move button text
                 if (rl == _train.getTrainTerminatesRouteLocation()) {

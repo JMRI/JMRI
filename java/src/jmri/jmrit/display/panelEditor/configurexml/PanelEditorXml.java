@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.configurexml.AbstractXmlAdapter;
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
@@ -91,10 +90,15 @@ public class PanelEditorXml extends AbstractXmlAdapter {
      * JFrame.
      *
      * @param shared Top level Element to unpack.
+     * @param perNode Top-level XML element containing the private, single-node
+     *                elements of the description
      * @return true if successful
+     * @throws JmriConfigureXmlException when a error prevents creating the objects as as
+     *                   required by the input XML
      */
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
+
         if (java.awt.GraphicsEnvironment.isHeadless()) {
             return true;
         }
@@ -199,7 +203,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                     result = false;
                 }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
-                    | jmri.configurexml.JmriConfigureXmlException | java.lang.reflect.InvocationTargetException e) {
+                    | java.lang.reflect.InvocationTargetException e) {
                 log.error("Exception while loading {}", item.getName(), e);
                 result = false;
             }

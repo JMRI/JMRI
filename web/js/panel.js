@@ -3269,6 +3269,16 @@ function $drawTurnout($widget) {
     var $eraseColor = $gPanel.backgroundcolor;
     var $eraseWidth = $gPanel.mainlinetrackwidth;
  
+    //erase Unknown circle by saving and restoring the to-be-covered pixels
+    if ($widget.showunknown == "yes") {
+        halfsize = $gPanel.turnoutcirclesize * SIZE // circle size is radius, so this is half the copied/restored area
+        if (! isDefined($widget.unknownSnippet)) {  // first pass through, we capture the base image
+            $widget.unknownSnippet = $gCtx.getImageData($widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize, halfsize * 2, halfsize * 2);
+        } else {
+            $gCtx.putImageData($widget.unknownSnippet, $widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize);
+        }
+    }
+
     //set colors and widths based on connected segments and blocks
     var $colorA = $getLegColor($gWidgets[$widget.connectaname], $widget.blockname);
     var $colorB = $getLegColor($gWidgets[$widget.connectbname], 
@@ -3296,6 +3306,7 @@ function $drawTurnout($widget) {
     //turnout A--+--B
     //            \-C
     if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT || $widget.type == WYE_TURNOUT) {
+        
         //always draw from a to cen
         $drawLineP(a, cen, $colorA, $widthA); //a to cen
 
@@ -3440,6 +3451,15 @@ function $drawTurnout($widget) {
             }
         }
     }
+    
+    if (($widget.showunknown == "yes") && ($widget.state == UNKNOWN)) {
+        // draw the unknown indicator
+        // colors are hard to manipulate in JS, so we draw the circle as the track color
+        // and the text as the background color, assuming that this will have contrast
+        $fillCircle($widget.xcen * 1, $widget.ycen * 1, $gPanel.turnoutcirclesize * SIZE, $colorA);
+        $drawText($widget.xcen * 1, $widget.ycen * 1, "?", $eraseColor, $gPanel.turnoutcirclesize * SIZE * 2); // * 2 because circle size is radius
+    }
+
 }   // function $drawTurnout($widget)
 
 // compute width of turnout leg based on connected segment, then block type
@@ -4183,6 +4203,21 @@ function $plotBezier(points, depth, displacement) {
         // draw right side Bezier
         $plotBezier(rightPoints, depth + 1, displacement);
     }
+}
+
+function $drawText($px, $py, $text, $color, $size) {
+    $gCtx.save();   // save current line width and color
+
+    // set color
+    $gCtx.fillStyle = $color;
+
+    $gCtx.font = 'bold '+$size+'px Arial';
+
+    // center the text on x,y and draw
+    metrics = $gCtx.measureText($text);
+    $gCtx.fillText($text, $px-metrics.width/2, $py+(metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent)/2);
+
+    $gCtx.restore();        // restore color and font back to default
 }
 
 function $point_log(prefix, p) {

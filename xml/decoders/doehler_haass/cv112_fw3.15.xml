@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV112 with the firmware 3.15 range of 0-127.</revremark>
+    </revision>
+  </revhistory>
+  <!-- Not relevant for the FH* series (product IDs 41, 150, 170, 192) or the PD05A (131),     -->
+  <!-- per the D&H CV table. Gated by product ID so the fragment behaves the same whichever    -->
+  <!-- definition includes it.                                                                -->
+  <!-- CV112 widened from 0-31 to 0-127 in firmware 3.15, and D&H renamed it from             -->
+  <!-- "Geschwindigkeitsminderung Analog" to "...Analogbetrieb". Replaces the definition in     -->
+  <!-- Vars_post2012_dc.xml, which is excluded for the firmware 3.15 families.                  -->
+  <variable CV="112" default="15" item="DC Brake Momentum" exclude="41,150,170,192,131">
+    <decVal min="0" max="127"/>
+    <label>Speed reduction in analog operation</label>
+    <label xml:lang="fr">Réduction de vitesse en mode analogique</label>
+    <label xml:lang="de">Geschwindigkeitsminderung Analogbetrieb</label>
+    <tooltip>CV112: 0 = small reduction … 127 = strong reduction</tooltip>
+    <tooltip xml:lang="fr">CV112 : 0 = faible réduction … 127 = forte réduction</tooltip>
+    <tooltip xml:lang="de">CV112: 0 = geringe Minderung … 127 = starke Minderung</tooltip>
+  </variable>
+</variables>

@@ -343,7 +343,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             trainDescriptionTextField.setText(_train.getRawDescription());
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
-            commentTextArea.setText(TrainCommon.getOnlyText(_train.getCommentWithColor()));
+            commentTextArea.setText(TrainCommon.isTextUserModified(_train.getCommentWithColor())
+                    ? _train.getCommentWithColor() : _train.getComment());
             cabooseRadioButton.setSelected(_train.isCabooseNeeded());
             fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();
@@ -452,6 +453,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             if (train == null) {
                 return;
             }
+            if (train.isBuilt()) {
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("BuiltTrain"),
+                        Bundle.getMessage("CanNotDeleteTrain"), JmriJOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (!_train.reset()) {
                 JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("TrainIsInRoute",
@@ -504,7 +511,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         return;
                     }
                 }
-                if (!_train.reset()) {
+                Train t = trainManager.getTrainBuiltAfter(train);
+                if (Setup.isBuildOnTime() && t != null) {
+                    JmriJOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("TrainAfterBuilt", t, train), Bundle.getMessage("CanNotResetTrain"),
+                            JmriJOptionPane.WARNING_MESSAGE);
+                } else if (!_train.reset()) {
                     JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("TrainIsInRoute",
                                     _train.getTrainTerminatesName()),
@@ -1037,25 +1049,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         ref = new RouteEditFrame();
         setChildFrame(ref);
-        Route route = null;
-        Object selected = routeBox.getSelectedItem();
-        if (selected != null) {
-            route = (Route) selected;
-        }
-        // warn user if train is built that they shouldn't edit the train's route
-        if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
-            // list the built trains for this route
-            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
-            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
-                if (train.getRoute() == route && train.isBuilt()) {
-                    buf.append(NEW_LINE +
-                            Bundle.getMessage("TrainIsBuilt",
-                                    train.getName(), route.getName()));
-                }
-            }
-            JmriJOptionPane.showMessageDialog(this, buf.toString(), Bundle.getMessage("BuiltTrain"),
-                    JmriJOptionPane.WARNING_MESSAGE);
-        }
+        Route route = (Route) routeBox.getSelectedItem();
         ref.initComponents(route, _train);
     }
 

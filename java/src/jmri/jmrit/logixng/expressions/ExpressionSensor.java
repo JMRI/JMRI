@@ -18,12 +18,12 @@ public class ExpressionSensor extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class), this);
+                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class));
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
     private final LogixNG_SelectEnum<SensorState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
+            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active);
 
 
     public ExpressionSensor(String sys, String user)
@@ -117,7 +117,6 @@ public class ExpressionSensor extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownState", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -127,7 +126,6 @@ public class ExpressionSensor extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownState", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

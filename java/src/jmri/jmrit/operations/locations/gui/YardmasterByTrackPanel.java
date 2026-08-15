@@ -200,7 +200,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Engine engine : engList) {
                         if (engine.getTrack() == _track) {
-                            JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader());
+                            JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
                             pPickups.add(header);
                             break;
@@ -211,7 +211,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     if (engine.getTrack() == _track) {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
-                        JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
+                        JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
                         setCheckBoxFont(checkBox, Setup.getPickupEngineColor());
                         pPickups.add(checkBox);
                         pickupEngine = true;
@@ -223,7 +223,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Engine engine : engList) {
                         if (engine.getDestinationTrack() == _track) {
-                            JLabel header = new JLabel(Tab + trainCommon.getDropEngineHeader());
+                            JLabel header = new JLabel(Tab + trainCommon.getDropEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
                             pSetouts.add(header);
                             break;
@@ -234,7 +234,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     if (engine.getDestinationTrack() == _track) {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
-                        JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
+                        JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
                         setCheckBoxFont(checkBox, Setup.getDropEngineColor());
                         pSetouts.add(checkBox);
                         setoutEngine = true;

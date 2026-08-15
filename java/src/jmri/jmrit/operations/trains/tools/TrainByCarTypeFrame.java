@@ -29,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     protected static final String POINTER = "    -->";
-    
+
     // train
     Train _train;
 
@@ -269,7 +269,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrackTrain)"));
                 } else if (!track.isTypeNameAccepted(carType)) {
                     op.setText(Bundle.getMessage("X(TrackType)"));
-                } else if (_car != null && !track.isRoadNameAccepted(_car.getRoadName())) {
+                } else if (_car != null &&
+                        !track.isRoadNameAndLoadTypeAccepted(_car.getRoadName(), _car.getLoadType())) {
                     op.setText(Bundle.getMessage("X(TrackRoad)"));
                 } else if (_car != null &&
                         _car.getTrack() != track &&
@@ -382,7 +383,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         carsComboBox.addItem(null);
         List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTypeList(carType);
         for (Car car : cars) {
-            carsComboBox.addItem(car);
+            if (!car.isClone()) {
+                carsComboBox.addItem(car);
+            }
         }
     }
 

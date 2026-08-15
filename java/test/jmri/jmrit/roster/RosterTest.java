@@ -7,7 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.awt.GraphicsEnvironment;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +19,10 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+import jmri.util.swing.JemmyUtil;
 
 import org.jdom2.JDOMException;
 import org.junit.jupiter.api.*;
@@ -293,6 +299,54 @@ public class RosterTest {
     }
 
     @Test
+    public void testWriteRosterCreatesBackupAndRemovesTemp(@TempDir File folder) throws IOException, JDOMException {
+        File rosterDir = new File(folder, "roster");
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(rosterDir, Roster.DEFAULT_ROSTER_INDEX);
+        File rosterFile = new File(rosterDir, Roster.DEFAULT_ROSTER_INDEX);
+        File backupFile = new File(rosterDir, Roster.DEFAULT_ROSTER_INDEX + ".bak");
+        File tempFile = new File(rosterDir, Roster.DEFAULT_ROSTER_INDEX + ".new");
+
+        r.writeRoster();
+        assertValidRosterFile(rosterFile);
+        assertFalse(tempFile.exists(), "temporary roster file should not remain after write");
+
+        r.writeRoster();
+        assertValidRosterFile(rosterFile);
+        assertTrue(backupFile.isFile(), "backup roster file should exist after replacing existing roster");
+        assertTrue(backupFile.length() > 0, "backup roster file should not be empty");
+        assertFalse(tempFile.exists(), "temporary roster file should not remain after replacement");
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testWriteRosterPreservesOriginalWhenTempWriteFails(@TempDir File folder) throws IOException {
+        File rosterDir = new File(folder, "roster");
+        FileUtil.createDirectory(rosterDir);
+        File rosterFile = new File(rosterDir, Roster.DEFAULT_ROSTER_INDEX);
+        File tempFile = new File(rosterDir, Roster.DEFAULT_ROSTER_INDEX + ".new");
+        String originalContents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<roster-config><roster/></roster-config>\n";
+        Files.write(rosterFile.toPath(), originalContents.getBytes(StandardCharsets.UTF_8));
+
+        Roster r = new Roster() {
+            @Override
+            void writeFile(File file) throws IOException {
+                Files.write(file.toPath(), "partial".getBytes(StandardCharsets.UTF_8));
+                throw new IOException("forced write failure");
+            }
+        };
+        r.setRosterLocation(rosterDir.getAbsolutePath());
+
+        writeRosterClosingErrorDialog(r);
+        JUnitAppender.assertErrorMessage("Exception while writing the new roster file, may not be complete");
+
+        assertEquals(originalContents,
+                new String(Files.readAllBytes(rosterFile.toPath()), StandardCharsets.UTF_8),
+                "failed write should leave existing roster unchanged");
+        assertFalse(tempFile.exists(), "partial temporary roster file should be removed");
+    }
+
+    @Test
     public void testAttributeAccess() throws IOException {
         // create a test roster & store in file
         Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()), "rosterTest.xml");
@@ -418,6 +472,33 @@ public class RosterTest {
         assertEquals(1.0, rp.getThrottleSetting(5000, false), 0.0);
         assertEquals(0.5, rp.getThrottleSetting(2500, false), 0.0);
         assertEquals(0.25, rp.getThrottleSetting(1250, false), 0.0);
+    }
+
+    private static void assertValidRosterFile(File rosterFile) throws IOException, JDOMException {
+        assertTrue(rosterFile.isFile(), "roster file should exist");
+        assertTrue(rosterFile.length() > 0, "roster file should not be empty");
+        Roster r = new Roster();
+        r.readFile(rosterFile.getAbsolutePath());
+    }
+
+    private static void writeRosterClosingErrorDialog(Roster r) {
+        Thread okButtonThread = null;
+        if (!GraphicsEnvironment.isHeadless()) {
+            String okButtonText = javax.swing.UIManager.getString("OptionPane.okButtonText");
+            if (okButtonText == null) {
+                okButtonText = "OK";
+            }
+            okButtonThread = JemmyUtil.createModalDialogOperatorThread(
+                    Bundle.getMessage("ErrorSavingTitle"),
+                    okButtonText);
+        }
+
+        r.writeRoster();
+
+        if (okButtonThread != null) {
+            Thread thread = okButtonThread;
+            JUnitUtil.waitFor(() -> !thread.isAlive(), "error dialog closed");
+        }
     }
 
     @BeforeEach

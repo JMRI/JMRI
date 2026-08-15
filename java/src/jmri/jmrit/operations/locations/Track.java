@@ -1060,14 +1060,18 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isRoadNameAccepted(String road) {
+        return isRoadNameAndLoadTypeAccepted(road, CarLoad.LOAD_TYPE_EMPTY) || isRoadNameAndLoadTypeAccepted(road, CarLoad.LOAD_TYPE_LOAD);
+    }
+    
+    public boolean isRoadNameAndLoadTypeAccepted(String road, String type) {
         if (getRoadOption().equals(ALL_ROADS)) {
             return true;
         }
         if (getRoadOption().equals(INCLUDE_ROADS)) {
-            return _roadList.contains(road);
+            return _roadList.contains(road) || _roadList.contains(road + CarRoads.SPLIT_CHAR + type);
         }
         // exclude!
-        return !_roadList.contains(road);
+        return !_roadList.contains(road) && !_roadList.contains(road + CarRoads.SPLIT_CHAR + type);
     }
 
     public boolean containsRoadName(String road) {
@@ -1578,11 +1582,6 @@ public class Track extends PropertyChangeSupport {
                     rs.getTypeName(), getLocation().getName(), getName()); // NOI18N
             return TYPE + " (" + rs.getTypeName() + ")";
         }
-        if (!isRoadNameAccepted(rs.getRoadName())) {
-            log.debug("Rolling stock ({}) road ({}) not accepted at location ({}, {}) wrong road", rs.toString(),
-                    rs.getRoadName(), getLocation().getName(), getName()); // NOI18N
-            return ROAD + " (" + rs.getRoadName() + ")";
-        }
         // now determine if there's enough space for the rolling stock
         int rsLength = rs.getTotalLength();
         // error check
@@ -1615,6 +1614,11 @@ public class Track extends PropertyChangeSupport {
             if (car.isLead()) {
                 rsLength = car.getKernel().getTotalLength();
             }
+            if (!isRoadNameAndLoadTypeAccepted(car.getRoadName(), car.getLoadType())) {
+                log.debug("car ({}) road ({}) not accepted at location ({}, {}) wrong road", rs.toString(),
+                        rs.getRoadName(), getLocation().getName(), getName()); // NOI18N
+                return ROAD + " (" + car.getRoadName() + ")";
+            }
             if (!isLoadNameAndCarTypeAccepted(car.getLoadName(), car.getTypeName())) {
                 log.debug("Car ({}) load ({}) not accepted at location ({}, {})", rs.toString(), car.getLoadName(),
                         getLocation(), getName()); // NOI18N
@@ -1626,6 +1630,11 @@ public class Track extends PropertyChangeSupport {
             Engine eng = (Engine) rs;
             if (eng.isLead()) {
                 rsLength = eng.getConsist().getTotalLength();
+            }
+            if (!isRoadNameAccepted(rs.getRoadName())) {
+                log.debug("Loco ({}) road ({}) not accepted at location ({}, {}) wrong road", rs.toString(),
+                        rs.getRoadName(), getLocation().getName(), getName()); // NOI18N
+                return ROAD + " (" + rs.getRoadName() + ")";
             }
         }
         if (rs.getTrack() != this &&

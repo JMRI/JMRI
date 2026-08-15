@@ -746,7 +746,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
             ThrottleFrame cf = this.getCurentThrottleController();
             ThrottleFrame nf = null;            
             for (ThrottleFrame tf : throttleFrames) {
-                if (tf.isRunning()) {
+                if ((tf != cf) && tf.isRunning()) {
                     nf = tf;
                 }
                 if ((tf == cf) && (nf != null)) { // return the last one found before the curent one

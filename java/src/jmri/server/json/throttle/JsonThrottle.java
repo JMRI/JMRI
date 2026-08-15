@@ -224,7 +224,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void onMessage(Locale locale, JsonNode data, JsonThrottleSocketService server) {
-        data.fields().forEachRemaining((entry) -> {
+        for (var entry : data.properties()) {
             String k = entry.getKey();
             JsonNode v = entry.getValue();
             switch (k) {
@@ -267,7 +267,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     // catch those
                     break;
             }
-        });
+        }
     }
 
     public void sendMessage(ObjectNode data) {

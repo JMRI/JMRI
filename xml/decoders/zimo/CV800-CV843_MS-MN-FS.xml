@@ -1,0 +1,1034 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - 24 Nov 2022.  Merging MX and MS series files to single unit for CVs700-899, Nigel Cliffe -->
+<!-- version 1.1  March 2025  Extended CV837 and added CV843 for Zimo-Scripting control,  Nigel Cliffe -->
+<!-- version 1.2  31 July 2026  Pierre Billon - renamed from CV700-CV899_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV738-843) Also: split - the shared CVs stay here, the sound CVs moved to CV738-CV836_MS-FS.xml -->
+<!-- version 1.3  06 August 2026  Pierre Billon - Added French and German translations -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <!-- CV839 and CV842 report the software and bootloader patch versions. They are read-only
+       build identifiers, of use only when reporting a fault to ZIMO, so they are deliberately
+       NOT placed on any pane - defined here purely so the values can be read when needed. -->
+  <variable CV="839" item="Software patch version" readOnly="yes" default="0">
+    <decVal min="0" max="255"/>
+    <label>Software patch version</label>
+    <label xml:lang="fr">Version du correctif logiciel</label>
+    <label xml:lang="de">Software-Patch-Version</label>
+  </variable>
+  <variable CV="842" item="Bootloader patch version" readOnly="yes" default="0">
+    <decVal min="0" max="255"/>
+    <label>Bootloader patch version</label>
+    <label xml:lang="fr">Version du correctif du bootloader</label>
+    <label xml:lang="de">Bootloader-Patch-Version</label>
+  </variable>
+
+  
+
+  
+ <variable item="Swiss Mapping Group 14 F-key" CV="800" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 14 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 14 Tasto F</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 14 tlačítko F</label>
+    <label xml:lang="nl">Zwitserse Mapping Groep 14 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 14 M-key" CV="801" mask="XXXVVVVV" exclude="">
+       
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Map to:</label> 
+    <label xml:lang="cs">Přiřazeno na:</label>
+  </variable>
+  <variable item="Swiss Mapping Group 14 M-key M+F" CV="801" mask="VXXXXXXX" exclude="">
+   
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>M+F</label>
+    <label xml:lang="cs">M+F</label>
+    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
+    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
+    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 14 M-key NotOff" CV="801" mask="XVVXXXXX" exclude="">
+   
+      <enumVal>
+        <enumChoice choice="None" value="0">
+          <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
+          <choice xml:lang="de">Aus</choice>
+          <choice xml:lang="cs">Vypnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Fw" value="2">
+          <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
+          <choice xml:lang="de">Vor an</choice>
+          <choice xml:lang="cs">Vpřed zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Rev" value="1">
+          <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
+          <choice xml:lang="de">Rück an</choice>
+          <choice xml:lang="cs">Vzad zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Both" value="3">
+          <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
+          <choice xml:lang="de">Beide an</choice>
+          <choice xml:lang="cs">Vše zapnuto</choice>
+        </enumChoice>
+    </enumVal>
+    <label>ON while</label>
+    <label xml:lang="cs">Když Zapnuto</label>
+    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
+    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
+    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 14 M-key Hibeam" CV="801"  exclude="">
+  
+      <enumVal> <!-- copy in for special value-->
+        <enumChoice choice="No">
+          <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
+          <choice xml:lang="cs">Ne</choice>
+        </enumChoice>
+        <enumChoice choice="Yes" value="255" >    <!--  -->
+          <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
+          <choice xml:lang="cs">Ano</choice>
+        </enumChoice>
+    </enumVal>
+    <label>Hibeam</label>
+    <label xml:lang="cs">Dálkové světlo</label>
+    <tooltip>M-key Hibeam (hides other options in CV801 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV801)</tooltip>
+    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV801)</tooltip>
+    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV801)</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A1 Fw" CV="802" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 14 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A1 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A1 Fw DG" CV="802" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A2 Fw" CV="803" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 14 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A2 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A2 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A2 Fw DG" CV="803" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A1 Rw" CV="804" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 14 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A1 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A1 Rw DG" CV="804" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A2 Rw" CV="805" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 14 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 14 A2 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 14 A2 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 14 A2 Rw DG" CV="805" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+
+ <variable item="Swiss Mapping Group 15 F-key" CV="806" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 15 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 15 Tasto F</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 15 tlačítko F</label>
+    <label xml:lang="nl">Zwitserse Mapping Groep 15 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 15 M-key" CV="807" mask="XXXVVVVV" exclude="">
+       
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Map to:</label> 
+    <label xml:lang="cs">Přiřazeno na:</label>
+  </variable>
+  <variable item="Swiss Mapping Group 15 M-key M+F" CV="807" mask="VXXXXXXX" exclude="">
+   
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>M+F</label>
+    <label xml:lang="cs">M+F</label>
+    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
+    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
+    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 15 M-key NotOff" CV="807" mask="XVVXXXXX" exclude="">
+   
+      <enumVal>
+        <enumChoice choice="None" value="0">
+          <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
+          <choice xml:lang="de">Aus</choice>
+          <choice xml:lang="cs">Vypnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Fw" value="2">
+          <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
+          <choice xml:lang="de">Vor an</choice>
+          <choice xml:lang="cs">Vpřed zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Rev" value="1">
+          <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
+          <choice xml:lang="de">Rück an</choice>
+          <choice xml:lang="cs">Vzad zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Both" value="3">
+          <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
+          <choice xml:lang="de">Beide an</choice>
+          <choice xml:lang="cs">Vše zapnuto</choice>
+        </enumChoice>
+    </enumVal>
+    <label>ON while</label>
+    <label xml:lang="cs">Když Zapnuto</label>
+    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
+    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
+    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 15 M-key Hibeam" CV="807"  exclude="">
+  
+      <enumVal> <!-- copy in for special value-->
+        <enumChoice choice="No">
+          <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
+          <choice xml:lang="cs">Ne</choice>
+        </enumChoice>
+        <enumChoice choice="Yes" value="255" >    <!--  -->
+          <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
+          <choice xml:lang="cs">Ano</choice>
+        </enumChoice>
+    </enumVal>
+    <label>Hibeam</label>
+    <label xml:lang="cs">Dálkové světlo</label>
+    <tooltip>M-key Hibeam (hides other options in CV807 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV807)</tooltip>
+    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV807)</tooltip>
+    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV807)</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A1 Fw" CV="808" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 15 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A1 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A1 Fw DG" CV="808" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A2 Fw" CV="809" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 15 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A2 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A2 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A2 Fw DG" CV="809" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A1 Rw" CV="810" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 15 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A1 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A1 Rw DG" CV="810" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A2 Rw" CV="811" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 15 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 15 A2 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 15 A2 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 15 A2 Rw DG" CV="811" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+
+ <variable item="Swiss Mapping Group 16 F-key" CV="812" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 16 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 16 Tasto F</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 16 tlačítko F</label>
+    <label xml:lang="nl">Zwitserse Mapping Groep 16 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 16 M-key" CV="813" mask="XXXVVVVV" exclude="">
+       
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Map to:</label> 
+    <label xml:lang="cs">Přiřazeno na:</label>
+  </variable>
+  <variable item="Swiss Mapping Group 16 M-key M+F" CV="813" mask="VXXXXXXX" exclude="">
+   
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>M+F</label>
+    <label xml:lang="cs">M+F</label>
+    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
+    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
+    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 16 M-key NotOff" CV="813" mask="XVVXXXXX" exclude="">
+   
+      <enumVal>
+        <enumChoice choice="None" value="0">
+          <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
+          <choice xml:lang="de">Aus</choice>
+          <choice xml:lang="cs">Vypnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Fw" value="2">
+          <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
+          <choice xml:lang="de">Vor an</choice>
+          <choice xml:lang="cs">Vpřed zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Rev" value="1">
+          <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
+          <choice xml:lang="de">Rück an</choice>
+          <choice xml:lang="cs">Vzad zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Both" value="3">
+          <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
+          <choice xml:lang="de">Beide an</choice>
+          <choice xml:lang="cs">Vše zapnuto</choice>
+        </enumChoice>
+    </enumVal>
+    <label>ON while</label>
+    <label xml:lang="cs">Když Zapnuto</label>
+    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
+    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
+    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 16 M-key Hibeam" CV="813"  exclude="">
+  
+      <enumVal> <!-- copy in for special value-->
+        <enumChoice choice="No">
+          <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
+          <choice xml:lang="cs">Ne</choice>
+        </enumChoice>
+        <enumChoice choice="Yes" value="255" >    <!--  -->
+          <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
+          <choice xml:lang="cs">Ano</choice>
+        </enumChoice>
+    </enumVal>
+    <label>Hibeam</label>
+    <label xml:lang="cs">Dálkové světlo</label>
+    <tooltip>M-key Hibeam (hides other options in CV813 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV813)</tooltip>
+    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV813)</tooltip>
+    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV813)</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A1 Fw" CV="814" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 16 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A1 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A1 Fw DG" CV="814" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A2 Fw" CV="815" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 16 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A2 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A2 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A2 Fw DG" CV="815" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A1 Rw" CV="816" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 16 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A1 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A1 Rw DG" CV="816" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A2 Rw" CV="817" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 16 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 16 A2 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 16 A2 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 16 A2 Rw DG" CV="817" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+
+ <variable item="Swiss Mapping Group 17 F-key" CV="818" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 17 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 17 Tasto F</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 17 tlačítko F</label>
+    <label xml:lang="nl">Zwitserse Mapping Groep 17 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 17 M-key" CV="819" mask="XXXVVVVV" exclude="">
+       
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Map to:</label> 
+    <label xml:lang="cs">Přiřazeno na:</label>
+  </variable>
+  <variable item="Swiss Mapping Group 17 M-key M+F" CV="819" mask="VXXXXXXX" exclude="">
+   
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>M+F</label>
+    <label xml:lang="cs">M+F</label>
+    <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
+    <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
+    <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 17 M-key NotOff" CV="819" mask="XVVXXXXX" exclude="">
+   
+      <enumVal>
+        <enumChoice choice="None" value="0">
+          <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
+          <choice xml:lang="de">Aus</choice>
+          <choice xml:lang="cs">Vypnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Fw" value="2">
+          <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
+          <choice xml:lang="de">Vor an</choice>
+          <choice xml:lang="cs">Vpřed zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Rev" value="1">
+          <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
+          <choice xml:lang="de">Rück an</choice>
+          <choice xml:lang="cs">Vzad zapnuto</choice>
+        </enumChoice>
+        <enumChoice choice="Both" value="3">
+          <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
+          <choice xml:lang="de">Beide an</choice>
+          <choice xml:lang="cs">Vše zapnuto</choice>
+        </enumChoice>
+    </enumVal>
+    <label>ON while</label>
+    <label xml:lang="cs">Když Zapnuto</label>
+    <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
+    <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
+    <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 17 M-key Hibeam" CV="819"  exclude="">
+  
+      <enumVal> <!-- copy in for special value-->
+        <enumChoice choice="No">
+          <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
+          <choice xml:lang="cs">Ne</choice>
+        </enumChoice>
+        <enumChoice choice="Yes" value="255" >    <!--  -->
+          <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
+          <choice xml:lang="cs">Ano</choice>
+        </enumChoice>
+    </enumVal>
+    <label>Hibeam</label>
+    <label xml:lang="cs">Dálkové světlo</label>
+    <tooltip>M-key Hibeam (hides other options in CV819 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV819)</tooltip>
+    <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV819)</tooltip>
+    <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV819)</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A1 Fw" CV="820" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 17 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A1 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A1 Fw DG" CV="820" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A2 Fw" CV="821" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 17 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A2 Avanti</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A2 vpřed</label>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A2 Fw DG" CV="821" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A1 Rw" CV="822" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 17 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A1 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A1 Rw DG" CV="822" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A2 Rw" CV="823" mask="XXXVVVVV" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 17 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 17 A2 Retro</label>
+    <label xml:lang="cs">Švýcarské přiřazení skupina 17 A2 vzad</label>
+  </variable>
+  <variable item="Swiss Mapping Group 17 A2 Rw DG" CV="823" mask="VVVXXXXX" exclude="">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
+    </enumVal>
+    <tooltip>"Off" means the function output is off - dimmed to 0% - without using a dimming group.</tooltip>
+    <tooltip xml:lang="fr">« Off » signifie que la sortie de fonction est éteinte - gradation à 0% - sans utiliser de groupe de gradation.</tooltip>
+    <tooltip xml:lang="de">„Off“ bedeutet, dass der Funktionsausgang aus ist - Dimmung auf 0% - ohne Dimm-Gruppe.</tooltip>
+  </variable>
+  
+  <variable CV="830" item="stopping distance fwd high">
+    <decVal/>
+    <label>Alternative Stopping Distance Fwd High Byte</label>
+    <label xml:lang="fr">Distance de freinage avant, octet de poids fort</label>
+    <label xml:lang="de">Bremsweg Vorwärts High</label>
+    <label xml:lang="cs">Brzdná dráha vpřed horní byte</label>
+  </variable>
+  <variable CV="831" item="stopping distance fwd low">
+    <decVal/>
+    <label>Alternative Stopping Distance Fwd Low Byte</label>
+    <label xml:lang="fr">Distance de freinage avant, octet de poids faible</label>
+    <label xml:lang="de">Bremsweg Vorwärts Low</label>
+    <label xml:lang="cs">Brzdná dráha vpřed dolní byte</label>
+  </variable>
+  <variable CV="832" item="stopping distance rev high">
+    <decVal/>
+    <label>Alternative Stopping Distance Rev High Byte</label>
+    <label xml:lang="fr">Distance de freinage arrière, octet de poids fort</label>
+    <label xml:lang="de">Bremsweg Rückwärts High</label>
+    <label xml:lang="cs">Brzdná dráha vzad horní byte</label>
+  </variable>
+  <variable CV="833" item="stopping distance rev low">
+    <decVal/>
+    <label>Alternative Stopping Distance Rev Low Byte</label>
+    <label xml:lang="fr">Distance de freinage arrière, octet de poids faible</label>
+    <label xml:lang="de">Bremsweg Rückwärts Low</label>
+    <label xml:lang="cs">Brzdná dráha vzad dolní byte</label>
+  </variable>
+  <variable CV="837" item="Script Running 1" mask="XXXXXXXV" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 1 Disable</label>
+    <label xml:lang="fr">Désactiver le script 1</label>
+    <label xml:lang="de">Script deaktivieren 1</label>
+    <label xml:lang="cs">Skript 1 zakázat</label>
+      <tooltip>Deactivate Script 1</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 1</tooltip>
+      <tooltip xml:lang="de">Script 1 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 1.</tooltip>
+  </variable>
+  <variable CV="837" item="Script Running 2" mask="XXXXXXVX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 2 Disable</label>
+    <label xml:lang="fr">Désactiver le script 2</label>
+    <label xml:lang="de">Script deaktivieren 2</label>
+    <label xml:lang="cs">Skript 2 zakázat</label>
+      <tooltip>Deactivate Script 2</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 2</tooltip>
+      <tooltip xml:lang="de">Script 2 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 2.</tooltip>
+  </variable>
+  <variable CV="837" item="Script Running 3" mask="XXXXXVXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 3 Disable</label>
+    <label xml:lang="fr">Désactiver le script 3</label>
+    <label xml:lang="de">Script deaktivieren 3</label>
+    <label xml:lang="cs">Skript 3 zakázat</label>
+      <tooltip>Deactivate Script 3</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 3</tooltip>
+      <tooltip xml:lang="de">Script 3 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 3.</tooltip>
+  </variable>
+  <variable CV="837" item="Script Running 4" mask="XXXXVXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 4 Disable</label>
+    <label xml:lang="fr">Désactiver le script 4</label>
+    <label xml:lang="de">Script deaktivieren 4</label>
+    <label xml:lang="cs">Skript 4 zakázat</label>
+      <tooltip>Deactivate Script 4</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 4</tooltip>
+      <tooltip xml:lang="de">Script 4 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 4.</tooltip>
+  </variable>
+  <variable CV="837" item="Script Running 5" mask="XXXVXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 5 Disable</label>
+    <label xml:lang="fr">Désactiver le script 5</label>
+    <label xml:lang="de">Script deaktivieren 5</label>
+    <label xml:lang="cs">Skript 5 zakázat</label>
+      <tooltip>Deactivate Script 5</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 5</tooltip>
+      <tooltip xml:lang="de">Script 5 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 5.</tooltip>
+  </variable>
+  <variable CV="837" item="Script Running 6" mask="XXVXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 6 Disable</label>
+    <label xml:lang="fr">Désactiver le script 6</label>
+    <label xml:lang="de">Script deaktivieren 6</label>
+    <label xml:lang="cs">Skript 6 zakázat</label>
+      <tooltip>Deactivate Script 6</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 6</tooltip>
+      <tooltip xml:lang="de">Script 6 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 6.</tooltip>
+  </variable>
+  <variable CV="837" item="Script Running 7" mask="XVXXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 7 Disable</label>
+    <label xml:lang="fr">Désactiver le script 7</label>
+    <label xml:lang="de">Script deaktivieren 7</label>
+    <label xml:lang="cs">Skript 7 zakázat</label>
+      <tooltip>Deactivate Script 7</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 7</tooltip>
+      <tooltip xml:lang="de">Script 7 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 7.</tooltip>
+  </variable>
+  <variable CV="837" item="Script Running 8" mask="VXXXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 8 Disable</label>
+    <label xml:lang="fr">Désactiver le script 8</label>
+    <label xml:lang="de">Script deaktivieren 8</label>
+    <label xml:lang="cs">Skript 8 zakázat</label>
+      <tooltip>Deactivate Script 8</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 8</tooltip>
+      <tooltip xml:lang="de">Script 8 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 8.</tooltip>
+  </variable>
+
+  
+  
+  
+  
+  <variable CV="840" item="Analog Mode Function Status - F13" mask="XXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F13</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F13</label>
+      <label xml:lang="fr">État de la fonction en analogique - F13</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F13</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F13</label>
+      <tooltip>Check to enable function F13 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F13 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F13 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F13 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="840" item="Analog Mode Function Status - F14" mask="XXXXXXVX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F14</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F14</label>
+      <label xml:lang="fr">État de la fonction en analogique - F14</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F14</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F14</label>
+      <tooltip>Check to enable function F14 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F14 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F14 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F14 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="840" item="Analog Mode Function Status - F15" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F15</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F15</label>
+      <label xml:lang="fr">État de la fonction en analogique - F15</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F15</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F15</label>
+      <tooltip>Check to enable function F15 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F15 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F15 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F15 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="840" item="Analog Mode Function Status - F16" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F16</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F16</label>
+      <label xml:lang="fr">État de la fonction en analogique - F16</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F16</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F16</label>
+      <tooltip>Check to enable function F16 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F16 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F16 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F16 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="840" item="Analog Mode Function Status - F17" mask="XXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+     <label>Analog Mode Function Status - F17</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F17</label>
+      <label xml:lang="fr">État de la fonction en analogique - F17</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F17</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F17</label>
+      <tooltip>Check to enable function F17 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F17 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F17 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F17 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="840" item="Analog Mode Function Status - F18" mask="XXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F18</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F18</label>
+      <label xml:lang="fr">État de la fonction en analogique - F18</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F18</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F18</label>
+      <tooltip>Check to enable function F18 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F18 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F18 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F18 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="840" item="Analog Mode Function Status - F19" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+     <label>Analog Mode Function Status - F19</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F19</label>
+      <label xml:lang="fr">État de la fonction en analogique - F19</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F19</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F19</label>
+      <tooltip>Check to enable function F19 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F19 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F19 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F19 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="840" item="Analog Mode Function Status - F20" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F20</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F20</label>
+      <label xml:lang="fr">État de la fonction en analogique - F20</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F20</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F20</label>
+      <tooltip>Check to enable function F20 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F20 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F20 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F20 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F21" mask="XXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F21</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F21</label>
+      <label xml:lang="fr">État de la fonction en analogique - F21</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F21</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F21</label>
+      <tooltip>Check to enable function F21 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F21 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F21 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F21 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F22" mask="XXXXXXVX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F22</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F22</label>
+      <label xml:lang="fr">État de la fonction en analogique - F22</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F22</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F22</label>
+      <tooltip>Check to enable function F22 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F22 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F22 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F22 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F23" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F23</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F23</label>
+      <label xml:lang="fr">État de la fonction en analogique - F23</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F23</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F23</label>
+      <tooltip>Check to enable function F23 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F23 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F23 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F23 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F24" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F24</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F24</label>
+      <label xml:lang="fr">État de la fonction en analogique - F24</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F24</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F24</label>
+      <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F24 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F24 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F24 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F25" mask="XXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+     <label>Analog Mode Function Status - F25</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F25</label>
+      <label xml:lang="fr">État de la fonction en analogique - F25</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F25</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F25</label>
+      <tooltip>Check to enable function F25 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F25 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F25 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F25 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F26" mask="XXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F26</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F26</label>
+      <label xml:lang="fr">État de la fonction en analogique - F26</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F26</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F26</label>
+      <tooltip>Check to enable function F26 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F26 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F26 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F26 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F27" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+     <label>Analog Mode Function Status - F27</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F27</label>
+      <label xml:lang="fr">État de la fonction en analogique - F27</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F27</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F27</label>
+      <tooltip>Check to enable function F27 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F27 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F27 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F27 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  <variable CV="841" item="Analog Mode Function Status - F28" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F28</label>
+      <label xml:lang="it">Stato Funzioni in Analogico - F28</label>
+      <label xml:lang="fr">État de la fonction en analogique - F28</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F28</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F28</label>
+      <tooltip>Check to enable function F28 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F28 en mode analogique</tooltip>
+      <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn F28 im Analogbetrieb eingeschaltet sein soll.</tooltip>
+      <tooltip xml:lang="cs">Zaškrtnutím povolíte funkci F28 když jednotka pracuje v režimu analogového napájení.</tooltip>
+  </variable>
+  
+  
+  <variable CV="843" item="Script Running 9" mask="XXXXXXXV" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 9 Disable</label>
+    <label xml:lang="fr">Désactiver le script 9</label>
+    <label xml:lang="de">Script deaktivieren 9</label>
+    <label xml:lang="cs">Skript 9 zakázat</label>
+      <tooltip>Deactivate Script 9</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 9</tooltip>
+      <tooltip xml:lang="de">Script 9 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 9.</tooltip>
+  </variable>
+  <variable CV="843" item="Script Running 10" mask="XXXXXXVX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 10 Disable</label>
+    <label xml:lang="fr">Désactiver le script 10</label>
+    <label xml:lang="de">Script deaktivieren 10</label>
+    <label xml:lang="cs">Skript 10 zakázat</label>
+      <tooltip>Deactivate Script 10</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 10</tooltip>
+      <tooltip xml:lang="de">Script 10 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 10.</tooltip>
+  </variable>
+  <variable CV="843" item="Script Running 11" mask="XXXXXVXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 11 Disable</label>
+    <label xml:lang="fr">Désactiver le script 11</label>
+    <label xml:lang="de">Script deaktivieren 11</label>
+    <label xml:lang="cs">Skript 11 zakázat</label>
+      <tooltip>Deactivate Script 11</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 11</tooltip>
+      <tooltip xml:lang="de">Script 11 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 11.</tooltip>
+  </variable>
+  <variable CV="843" item="Script Running 12" mask="XXXXVXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 12 Disable</label>
+    <label xml:lang="fr">Désactiver le script 12</label>
+    <label xml:lang="de">Script deaktivieren 12</label>
+    <label xml:lang="cs">Skript 12 zakázat</label>
+      <tooltip>Deactivate Script 12</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 12</tooltip>
+      <tooltip xml:lang="de">Script 12 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 12.</tooltip>
+  </variable>
+  <variable CV="843" item="Script Running 13" mask="XXXVXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 13 Disable</label>
+    <label xml:lang="fr">Désactiver le script 13</label>
+    <label xml:lang="de">Script deaktivieren 13</label>
+    <label xml:lang="cs">Skript 13 zakázat</label>
+      <tooltip>Deactivate Script 13</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 13</tooltip>
+      <tooltip xml:lang="de">Script 13 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 13.</tooltip>
+  </variable>
+  <variable CV="843" item="Script Running 14" mask="XXVXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 14 Disable</label>
+    <label xml:lang="fr">Désactiver le script 14</label>
+    <label xml:lang="de">Script deaktivieren 14</label>
+    <label xml:lang="cs">Skript 14 zakázat</label>
+      <tooltip>Deactivate Script 14</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 14</tooltip>
+      <tooltip xml:lang="de">Script 14 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 14.</tooltip>
+  </variable>
+  <variable CV="843" item="Script Running 15" mask="XVXXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 15 Disable</label>
+    <label xml:lang="fr">Désactiver le script 15</label>
+    <label xml:lang="de">Script deaktivieren 15</label>
+    <label xml:lang="cs">Skript 15 zakázat</label>
+      <tooltip>Deactivate Script 15</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 15</tooltip>
+      <tooltip xml:lang="de">Script 15 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 15.</tooltip>
+  </variable>
+  <variable CV="843" item="Script Running 16" mask="VXXXXXXX" default="0" exclude="">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Script 16 Disable</label>
+    <label xml:lang="fr">Désactiver le script 16</label>
+    <label xml:lang="de">Script deaktivieren 16</label>
+    <label xml:lang="cs">Skript 16 zakázat</label>
+      <tooltip>Deactivate Script 16</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 16</tooltip>
+      <tooltip xml:lang="de">Script 16 deaktivieren.</tooltip>
+      <tooltip xml:lang="cs">Deaktivace skriptu 16.</tooltip>
+  </variable>  
+  
+  
+
+</variables>

@@ -7,8 +7,11 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -36,17 +39,17 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_TOF},0x12);
         pwr.reply(r);
     }
-    
+
     @Override
     protected void sendOnReply() {
         hearOn();
-    }    
+    }
 
     @Override
     protected void sendOffReply() {
         hearOff();
     }
-    
+
     @Override
     protected boolean outboundIdleOK(int index) {
         return false;
@@ -78,77 +81,77 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Override
     protected void sendIdleReply() {
-        Assert.fail("Should not have been called");
+        fail("Should not have been called");
     }
-    
+
     @Test
     public void checkCanMessage() {
         // unused but needs to be there for CanListener
         jmri.jmrix.can.CanMessage m = new jmri.jmrix.can.CanMessage(new int[]{CbusConstants.CBUS_TON},0x12);
         pwr.message(m);
-        
+
     }
-    
-    
+
+
     @Test
     public void checkCanReplyExtendedRtr () throws jmri.JmriException {
-        
+
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_TOF},0x12);
         pwr.reply(r);
-        Assert.assertEquals("set off", PowerManager.OFF, p.getPower());
-        
+        assertEquals(PowerManager.OFF, p.getPower(),"set off");
+
         r = new CanReply( new int[]{CbusConstants.CBUS_TON},0x12);
         r.setExtended(true);
-        
+
         pwr.reply(r);
-        Assert.assertEquals("still off", PowerManager.OFF, p.getPower());
-        
+        assertEquals(PowerManager.OFF, p.getPower(),"still off");
+
         r.setExtended(false);
         r.setRtr(true);
         pwr.reply(r);
-        Assert.assertEquals("still off", PowerManager.OFF, p.getPower());
-        
+        assertEquals(PowerManager.OFF, p.getPower(),"still off");
+
         r.setRtr(false);
         pwr.reply(r);
-        Assert.assertEquals("on", PowerManager.ON, p.getPower());
-        Assert.assertEquals(0, controller.outbound.size());
-        
+        assertEquals(PowerManager.ON, p.getPower(),"on");
+        assertEquals(0, controller.outbound.size());
+
     }
-    
+
     @Test
     public void checkArstBehaviour () throws jmri.JmriException {
-        
+
         // Test effect of ARST on power state
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_TOF},0x12);
         pwr.reply(r);
-        Assert.assertEquals("set off before ARST", PowerManager.OFF, p.getPower());
-        
+        assertEquals(PowerManager.OFF, p.getPower(),"set off before ARST");
+
         r = new CanReply( new int[]{CbusConstants.CBUS_ARST},0x12);
         pwr.reply(r);
-        Assert.assertEquals("on after ARST", PowerManager.ON, p.getPower());
-        
+        assertEquals(PowerManager.ON, p.getPower(),"on after ARST");
+
         // Change from default behaviour
         memo.setPowerOnArst(false);
-        
+
         r = new CanReply( new int[]{CbusConstants.CBUS_TOF},0x12);
         pwr.reply(r);
-        Assert.assertEquals("set off before ARST", PowerManager.OFF, p.getPower());
-        
+        assertEquals(PowerManager.OFF, p.getPower(),"set off before ARST");
+
         r = new CanReply( new int[]{CbusConstants.CBUS_ARST},0x12);
         pwr.reply(r);
-        Assert.assertEquals("still off after ARST", PowerManager.OFF, p.getPower());
-        
+        assertEquals(PowerManager.OFF, p.getPower(),"still off after ARST");
+
     }
-    
+
     @Test
     public void checkName() {
-        Assert.assertNotNull(pwr.getUserName());
+        assertNotNull(pwr.getUserName());
     }
-    
+
     private CanSystemConnectionMemo memo;
     private CbusPowerManager pwr;
     private TrafficControllerScaffold controller;
-    
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -156,24 +159,23 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         controller = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(controller);
-        p = pwr = new CbusPowerManager(memo);        
-        
+        pwr = new CbusPowerManager(memo);
+        p = pwr;
+
     }
 
     @AfterEach
     public void tearDown() {
-        
+
         pwr.dispose();
-        
+
         memo.dispose();
         controller.terminateThreads();
         pwr = null;
         memo = null;
         controller = null;
-        
-        JUnitUtil.tearDown();
 
-        
+        JUnitUtil.tearDown();
     }
 
     // private static final Logger log = LoggerFactory.getLogger(CbusPowerManagerTest.class);

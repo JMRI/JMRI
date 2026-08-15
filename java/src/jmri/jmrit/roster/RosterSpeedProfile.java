@@ -188,21 +188,51 @@ public class RosterSpeedProfile {
      * @return a string with scale speed and units
      */
     public static String convertMMSToScaleSpeedWithUnits(float mms) {
+        return convertMMSToScaleSpeedWithUnits(mms, false);
+    }
+
+    /**
+     * Returns the scale speed format as I18N string with the units added given
+     * MilliMetres per Second.
+     * If the warrant preference is a percentage of
+     * normal or throttle will use meters per second.
+     * The Fast Clock Ratio is not used in the calculation.
+     *
+     * @param mms MilliMetres per second
+     * @param useShortUnits true for mph etc
+     * @return a string with scale speed and units
+     */
+    public static String convertMMSToScaleSpeedWithUnits(float mms, boolean useShortUnits) {
         int interp = InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
         float scale = InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         String formattedWithUnits;
         switch (interp) {
             case SignalSpeedMap.SPEED_MPH:
-                String unitsMph = Bundle.getMessage("mph");
+                String unitsMph;
+                if (useShortUnits) {
+                    unitsMph = Bundle.getMessage("shortmph");
+                } else {
+                    unitsMph = Bundle.getMessage("mph");
+                }
                 formattedWithUnits = String.format(Locale.getDefault(), "%.2f %s", mms * scale * MMS_TO_MPH, unitsMph);
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                String unitsKph = Bundle.getMessage("kph");
+                String unitsKph;
+                if (useShortUnits) {
+                    unitsKph = Bundle.getMessage("shortkph");
+                } else {
+                    unitsKph = Bundle.getMessage("kph");
+                }
                 formattedWithUnits = String.format(Locale.getDefault(), "%.2f %s", mms * scale * MMS_TO_KPH, unitsKph);
                 break;
             case SignalSpeedMap.PERCENT_THROTTLE:
             case SignalSpeedMap.PERCENT_NORMAL:
-                String unitsMms = Bundle.getMessage("mmps");
+                String unitsMms;
+                if (useShortUnits) {
+                    unitsMms = Bundle.getMessage("shortmmps");
+                } else {
+                    unitsMms = Bundle.getMessage("mmps");
+                }
                 formattedWithUnits = String.format(Locale.getDefault(), "%.2f %s", mms, unitsMms);
                 break;
             default:

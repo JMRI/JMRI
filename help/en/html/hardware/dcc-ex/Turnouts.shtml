@@ -17,7 +17,7 @@
 
       <h2 id="types">Types of DCC-EX Turnout/Points Control</h2>
 
-      <p>There are 3 ways to control a turnout/point via DCC-EX:</p>
+      <p>There are 4 ways to control a turnout/point via DCC-EX:</p>
 
       <ul>
         <li>Direct DCC Accessory Command ("a" command)</li>
@@ -25,6 +25,8 @@
         <li>Indexed control of a DCC Accessory via the Base Station's Turnout table ("T" command)</li>
 
         <li>Indexed control of an Arduino IO via the Base Station's Output table ("Z" command)</li>
+
+        <li>CS VPIN - direct VPIN control via the lowercase "z" command (DCC-EX v4.2.35+)</li>
       </ul>
 
       <p>For each control method, there are two things you must configure:</p>
@@ -243,6 +245,21 @@
 
       <p>Note: On JMRI versions 4.7.1 and earlier, if you choose "Save Outputs" you will <em>not</em> be given the opportunity to write the changes to the Base Station's EEPROM. To
       write to EEPROM, you must choose "Close" <em>instead</em> of "Save Changes".</p>
+
+      <h2>CS VPIN Control (DCC-EX v4.2.35+)</h2>
+
+      <p>CS VPIN mode drives a VPIN directly using the &lt;z vpin&gt; / &lt;z -vpin&gt; command -
+      no pre-configuration in the Base Station's output table is needed. The command station
+      resolves the VPIN via the EX-HAL layer at runtime, so it works with raw GPIO pins,
+      I2C expanders, servo controllers, and any other HAL device.</p>
+
+      <p>Set the Hardware Address to the VPIN number. On ESP32-based hardware (EX-CSB1),
+      VPINs 0-39 map directly to GPIO numbers with no extra HAL configuration. For other
+      devices use the VPIN assigned in your myHal.cpp.</p>
+
+      <p>In the Turnout Table, add the turnout, open Edit, go to the Feedback tab, and choose
+      "CS VPIN". THROWN sends &lt;z -vpin&gt; (LOW) and CLOSED sends &lt;z vpin&gt; (HIGH).
+      State updates optimistically on send with no reply from the command station.</p>
 
       <h2>General Notes</h2>
 

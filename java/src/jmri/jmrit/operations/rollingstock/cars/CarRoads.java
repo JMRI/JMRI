@@ -21,6 +21,8 @@ public class CarRoads extends RollingStockAttribute implements InstanceManagerAu
     private static final String ROADS = Bundle.getMessage("carRoadNames");
     public static final String CARROADS_CHANGED_PROPERTY = "CarRoads Length"; // NOI18N
     public static final String CARROADS_NAME_CHANGED_PROPERTY = "CarRoads Name"; // NOI18N
+    
+    public static final String SPLIT_CHAR = " & "; // used to combine road name and load type in tracks and trains
 
     public CarRoads() {
     }

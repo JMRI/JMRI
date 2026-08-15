@@ -394,6 +394,9 @@
         <li>Joe Ellis provided the DecoderPro configuration files for the Lenz LE077XF decoder and
         has done a fantastic job on the manual</li>
 
+        <li>Peter Ely and the PMRRM,
+        who helped with a number of LocoNet and LCC feature improvements.</li>
+        
         <li>Wayne Eric, who provided the MRC AD370 decoder definition</li>
 
         <li>Max Ettinger, who made JMRI work with the QSI Quantum Programmer on Windows and wrote
@@ -455,6 +458,9 @@
         </li>
 
         <li>William C Gage provided an MRC decoder definition</li>
+
+        <li>Jonas Gahlert, <!-- crypticrelaxo -->
+        who worked on the Zimo KLUG support.
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3APugwash1+">Steve Gigiel</a>, <!-- Pugwash1 -->
          who fixed the XML definition of the block contents icon, and helped fix the Transit
@@ -577,6 +583,9 @@
         </li>
 
         <li>Michael Homscheidt, who worked on the KPF-Zeller speedometer support.</li>
+
+        <li><a href="https://github.com/JMRI/JMRI/pulls/mvanhorn">Matt Van Horn</a>,
+        who fixed the shape level (z-order) of items on a web panel.</li>
 
         <li>Hornby Hobbys, who provided a full set of TTS manuals plus information regarding
         various CVs.</li>
@@ -885,9 +894,12 @@
         <li>Phill Perry, who contributed a decoder definition for the New York Byano Limited
         locomotive</li>
 
-        <li>Bruce Petrarca, who has started offering CDs so nobody else has to burn them and
+        <li>Bruce Petrarca, who offered CDs so nobody else had to burn them and
         provided decoder information for the Soundtraxx Diesel Tsunami</li>
 
+        <li>James Petts, <!-- jamespetts -->
+        who worked on train automation
+        
         <li>Bob Phillips provided an MRC decoder definition</li>
 
         <li>Alger Plke, <!-- AlgerP572 -->
@@ -1148,6 +1160,9 @@
 
         <li>Bryan Vianco provided two MRC decoder definitions</li>
 
+        <li>Adrien Virolleaud, <!-- avirolleaud -->
+        who improved the performance of the bean tables in graphics mode.</li>
+        
         <li>Didrik Voss, who provided the configuration information, including the default values,
         for the Hornby R8215 decoder <a id="W"></a>
         </li>
@@ -1156,6 +1171,8 @@
         Monitor</li>
 
         <li>Jack Walton, who created the Lenz LE080 decoder definition</li>
+
+        <li>Scott Walton, who worked on RFID and operations</li>
 
         <li>Steve Walton, <!-- swalton00 -->
         who fixed the tag sorting.
@@ -1181,6 +1198,9 @@
 
         <li>Donn Welton, who provided info on configuring a PowerBook for DecoderPro</li>
 
+        <li>Jeremey Wemple, <!-- wemps -->
+        who added SignalCab to the WiThrottle supported apps list.
+        
         <li>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder
         definition and 45-degree icons for panels, and helped fix a problem with over-running
         LocoNet command stations.</li>

@@ -1,13 +1,13 @@
 package jmri.jmrit.operations.automation.actions;
 
 import javax.swing.JComboBox;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.automation.Automation;
-import jmri.jmrit.operations.automation.AutomationItem;
-import jmri.jmrit.operations.automation.AutomationManager;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import jmri.jmrit.operations.automation.*;
 
 /**
  *
@@ -81,6 +81,23 @@ public class RunAutomationActionTest extends OperationsTestCase {
     }
     
     @Test
+    public void testActionNoSelectedAutomationItem() {
+        RunAutomationAction action = new RunAutomationAction();
+        Assert.assertNotNull("exists", action);
+        AutomationItem automationItem = new AutomationItem("TestId");
+        automationItem.setAction(action);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
+        
+        AutomationManager autoManager = InstanceManager.getDefault(AutomationManager.class);
+        Automation test = autoManager.newAutomation("TEST_AUTOMATION");
+        
+        automationItem.setAutomationToRun(test);
+        action.doAction();
+        Assert.assertFalse(automationItem.isActionRunning());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+    }
+    
+    @Test
     public void testAction() {
         RunAutomationAction action = new RunAutomationAction();
         Assert.assertNotNull("exists", action);
@@ -90,6 +107,8 @@ public class RunAutomationActionTest extends OperationsTestCase {
         
         AutomationManager autoManager = InstanceManager.getDefault(AutomationManager.class);
         Automation test = autoManager.newAutomation("TEST_AUTOMATION");
+        AutomationItem testItem = test.addItem();
+        testItem.setAction(new NoAction());
         
         automationItem.setAutomationToRun(test);
         action.doAction();

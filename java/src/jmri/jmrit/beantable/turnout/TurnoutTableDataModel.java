@@ -1,5 +1,9 @@
 package jmri.jmrit.beantable.turnout;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -616,6 +620,13 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         // and then set user prefs
         super.configureTable(tbl);
 
+        if (_graphicState) {
+            // make the rows tall enough for the state icons, once and outside of the
+            // renderer; must come after super.configureTable, which sets the row
+            // height for the buttons
+            tbl.setRowHeight(Math.max(tbl.getRowHeight(), ImageIconRenderer.getIconRowHeight()));
+        }
+
         columnModel.getColumnByModelIndex(FORGETCOL).setHeaderValue(null);
         columnModel.getColumnByModelIndex(QUERYCOL).setHeaderValue(null);
 
@@ -672,8 +683,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         // add extras, override BeanTableDataModel
         log.debug("Turnout configValueColumn (I am {})", super.toString());
         if (_graphicState) { // load icons, only once
-            table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // editor
-            table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
+            table.setDefaultEditor(JLabel.class, new ImageIconRenderer(closedText, thrownText)); // editor
+            table.setDefaultRenderer(JLabel.class, new ImageIconRenderer(closedText, thrownText)); // item class copied from SwitchboardEditor panel
         } else {
             super.configValueColumn(table); // classic text style state indication
         }
@@ -878,72 +889,36 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
      * Renderer and Editor are identical, as the cell contents
      * are not actually edited, only used to toggle state using
      * {@link #clickOn(Turnout)}.
-     *
+     * <p>
+     * A single label is reused for every cell and the icons are loaded once
+     * per JVM, so rendering a cell allocates nothing. The label ignores
+     * revalidate/repaint requests and the row height is set once in
+     * {@link #configureTable}: painting a cell must never schedule more
+     * painting, or the table repaints itself forever.
      */
-    class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+    static class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 
-        protected JLabel label;
-        protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
-        protected char beanTypeChar = 'T'; // for Turnout
-        protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
-        protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
-        protected BufferedImage onImage;
-        protected BufferedImage offImage;
-        protected ImageIcon onIcon;
-        protected ImageIcon offIcon;
-        protected int iconHeight = -1;
+        private static final String ROOT_PATH = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
+        private static final char BEAN_TYPE_CHAR = 'T'; // for Turnout
+        private static final String ON_ICON_PATH = ROOT_PATH + BEAN_TYPE_CHAR + "-on-s.png";
+        private static final String OFF_ICON_PATH = ROOT_PATH + BEAN_TYPE_CHAR + "-off-s.png";
+        private static ImageIcon onIcon = null;
+        private static ImageIcon offIcon = null;
+        private static int iconHeight = -1;
 
-        @Override
-        public java.awt.Component getTableCellRendererComponent(
-                JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
-            log.debug("Renderer Item = {}, State = {}", row, value);
-            if (iconHeight < 0) { // load resources only first time, either for renderer or editor
-                loadIcons();
-                log.debug("icons loaded");
-            }
-            return updateLabel((String) value, row, table);
-        }
+        private final StateLabel label = new StateLabel();
+        private final Color defaultForeground = label.getForeground();
+        private final String closedText;
+        private final String thrownText;
+        private final String unknownText = Bundle.getMessage("BeanStateUnknown");
+        private final String inconsistentText = Bundle.getMessage("BeanStateInconsistent");
+        private int row = -1; // row of the cell last rendered or edited
 
-        @Override
-        public java.awt.Component getTableCellEditorComponent(
-                JTable table, Object value, boolean isSelected,
-                int row, int column) {
-            log.debug("Renderer Item = {}, State = {}", row, value);
-            if (iconHeight < 0) { // load resources only first time, either for renderer or editor
-                loadIcons();
-                log.debug("icons loaded");
-            }
-            return updateLabel((String) value, row, table);
-        }
-
-        public JLabel updateLabel(String value, int row, JTable table) {
-            if (iconHeight > 0) { // if necessary, increase row height;
-                table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
-            }
-            if (value.equals(closedText) && onIcon != null) {
-                label = new JLabel(onIcon);
-                label.setVerticalAlignment(JLabel.BOTTOM);
-                log.debug("onIcon set");
-            } else if (value.equals(thrownText) && offIcon != null) {
-                label = new JLabel(offIcon);
-                label.setVerticalAlignment(JLabel.BOTTOM);
-                log.debug("offIcon set");
-            } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
-                label = new JLabel("X", JLabel.CENTER); // centered text alignment
-                label.setForeground(java.awt.Color.red);
-                log.debug("Turnout state inconsistent");
-                iconHeight = 0;
-            } else if (value.equals(Bundle.getMessage("BeanStateUnknown"))) {
-                label = new JLabel("?", JLabel.CENTER); // centered text alignment
-                log.debug("Turnout state unknown");
-                iconHeight = 0;
-            } else { // failed to load icon
-                label = new JLabel(value, JLabel.CENTER); // centered text alignment
-                log.warn("Error reading icons for TurnoutTable");
-                iconHeight = 0;
-            }
-            label.setToolTipText(value);
+        ImageIconRenderer(String closedText, String thrownText) {
+            this.closedText = closedText;
+            this.thrownText = thrownText;
+            label.setHorizontalAlignment(JLabel.CENTER);
+            // must stay the only anonymous class in ImageIconRenderer, see jmri.ArchitectureTest
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public final void mousePressed(MouseEvent evt) {
@@ -951,6 +926,65 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                     stopCellEditing();
                 }
             });
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+            log.debug("Renderer Item = {}, State = {}", row, value);
+            return updateLabel((String) value, row);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Component getTableCellEditorComponent(
+                JTable table, Object value, boolean isSelected,
+                int row, int column) {
+            log.debug("Editor Item = {}, State = {}", row, value);
+            return updateLabel((String) value, row);
+        }
+
+        protected JLabel updateLabel(String value, int row) {
+            this.row = row;
+            if (iconHeight < 0) { // load resources only first time, either for renderer or editor
+                loadIcons();
+                log.debug("icons loaded");
+            }
+            label.setForeground(defaultForeground); // reset a foreground left over from an INCONSISTENT cell
+            if (value.equals(closedText) && onIcon != null) {
+                label.setIcon(onIcon);
+                label.setText(null);
+                label.setVerticalAlignment(JLabel.BOTTOM);
+                log.debug("onIcon set");
+            } else if (value.equals(thrownText) && offIcon != null) {
+                label.setIcon(offIcon);
+                label.setText(null);
+                label.setVerticalAlignment(JLabel.BOTTOM);
+                log.debug("offIcon set");
+            } else if (value.equals(inconsistentText)) {
+                label.setIcon(null);
+                label.setText("X");
+                label.setForeground(Color.red);
+                label.setVerticalAlignment(JLabel.CENTER);
+                log.debug("Turnout state inconsistent");
+            } else if (value.equals(unknownText)) {
+                label.setIcon(null);
+                label.setText("?");
+                label.setVerticalAlignment(JLabel.CENTER);
+                log.debug("Turnout state unknown");
+            } else { // failed to load icon
+                label.setIcon(null);
+                label.setText(value);
+                label.setVerticalAlignment(JLabel.CENTER);
+                log.warn("Error reading icons for TurnoutTable");
+            }
+            label.setToolTipText(value);
             return label;
         }
 
@@ -961,27 +995,92 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         }
 
         /**
-         * Read and buffer graphics. Only called once for this table.
+         * Get the row height needed to fit the state icons, loading them if
+         * required. Used by {@link #configureTable} to size the rows once,
+         * outside of the render path.
          *
-         * @see #getTableCellEditorComponent(JTable, Object, boolean,
-         * int, int)
+         * @return required row height in pixels, 0 if the icons could not be read
          */
-        protected void loadIcons() {
+        static int getIconRowHeight() {
+            if (iconHeight < 0) {
+                loadIcons();
+            }
+            return Math.max(iconHeight - 5, 0);
+        }
+
+        /**
+         * Read and buffer graphics. Only called once per JVM, the icons are
+         * shared by all instances of this renderer.
+         */
+        private static synchronized void loadIcons() {
+            if (iconHeight >= 0) { // another instance already loaded the icons
+                return;
+            }
+            BufferedImage onImage = null;
+            BufferedImage offImage = null;
             try {
-                onImage = ImageIO.read(new File(onIconPath));
-                offImage = ImageIO.read(new File(offIconPath));
+                onImage = ImageIO.read(new File(ON_ICON_PATH));
+                offImage = ImageIO.read(new File(OFF_ICON_PATH));
             } catch (IOException ex) {
-                log.error("error reading image from {} or {}", onIconPath, offIconPath, ex);
+                log.error("error reading image from {} or {}", ON_ICON_PATH, OFF_ICON_PATH, ex);
+            }
+            if (onImage == null || offImage == null) { // ImageIO.read returns null for an unreadable file
+                log.error("error reading image from {} or {}", ON_ICON_PATH, OFF_ICON_PATH);
+                iconHeight = 0; // give up: render states as text, don't retry for every cell
+                return;
             }
             log.debug("Success reading images");
             int imageWidth = onImage.getWidth();
             int imageHeight = onImage.getHeight();
             // scale icons 50% to fit in table rows
-            java.awt.Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, java.awt.Image.SCALE_DEFAULT);
-            java.awt.Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, java.awt.Image.SCALE_DEFAULT);
+            Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+            Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
             onIcon = new ImageIcon(smallOnImage);
             offIcon = new ImageIcon(smallOffImage);
             iconHeight = onIcon.getIconHeight();
+        }
+
+        /**
+         * Label that ignores revalidate and repaint requests.
+         * <p>
+         * The rendered component stays a child of the table's
+         * CellRendererPane after painting, so a plain JLabel schedules a new
+         * repaint of the whole table each time its icon or text changes
+         * during a paint cycle. Same overrides as DefaultTableCellRenderer,
+         * except firePropertyChange, which BasicLabelUI needs to keep its
+         * view up to date.
+         */
+        private static class StateLabel extends JLabel {
+
+            @Override
+            public void revalidate() {
+                // ignored, see class comment
+            }
+
+            @Override
+            public void repaint() {
+                // ignored, see class comment
+            }
+
+            @Override
+            public void repaint(long tm) {
+                // ignored, see class comment
+            }
+
+            @Override
+            public void repaint(int x, int y, int width, int height) {
+                // ignored, see class comment
+            }
+
+            @Override
+            public void repaint(long tm, int x, int y, int width, int height) {
+                // ignored, see class comment
+            }
+
+            @Override
+            public void repaint(Rectangle r) {
+                // ignored, see class comment
+            }
         }
 
     } // end of ImageIconRenderer class
