@@ -116,17 +116,20 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected int internalState = IDLE;
 
     /**
-     * Interval, in milliseconds, after which a turnout still waiting for the
-     * reply to the OFF message it sent gives up and resends it.
+     * Interval, in milliseconds, after which a turnout still waiting for a
+     * reply gives up and resends the outstanding message - the initial ON
+     * command while COMMANDSENT, or the OFF that follows it while OFFSENT.
      * <p>
-     * A reply received while OFFSENT that isn't a solicited OK (an unsolicited
-     * broadcast, for example) is ignored rather than treated as a failure, so
-     * that a single broadcast doesn't trigger a spurious extra OFF. But if the
-     * real OK is genuinely lost, nothing else nudges the turnout out of OFFSENT:
-     * the traffic controller already considers that exchange closed, so no
-     * transport level timeout ever fires either. This watchdog is the fallback
-     * for that case, keeping the turnout responsive to new commands instead of
-     * leaving it stuck for the rest of the session.
+     * A reply received in either state that isn't the expected solicited
+     * message (an unsolicited broadcast, for example) is ignored rather than
+     * treated as a failure, so that a single broadcast doesn't trigger a
+     * spurious extra resend. But if the real reply is genuinely lost, nothing
+     * else nudges the turnout out of COMMANDSENT or OFFSENT: the traffic
+     * controller already considers that exchange closed, so no transport
+     * level timeout ever fires either. This watchdog is the fallback for that
+     * case, keeping the turnout responsive to new commands instead of leaving
+     * it stuck for the rest of the session. COMMANDSENT and OFFSENT are never
+     * outstanding at the same time, so one task/interval covers both waits.
      */
     protected static final int OFF_WATCHDOG_INTERVAL = 5000;
 
@@ -401,6 +404,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             internalState = lastMsg.getState();
             // and set lastMsg to null
             lastMsg = null;
+            if (internalState == COMMANDSENT) {
+                // now waiting for the reply that triggers the OFF message;
+                // arm the watchdog in case it never arrives
+                armOffWatchdog();
+            }
         }
     }
 
@@ -641,8 +649,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
-     * Arm the watchdog for the OFF message just sent. Any watchdog already
-     * armed is cancelled first, so a legitimate resend never trips a stale one.
+     * Arm the watchdog for the message just sent - the ON command going into
+     * COMMANDSENT, or the OFF going into OFFSENT. Any watchdog already armed
+     * is cancelled first, so a legitimate resend never trips a stale one.
      */
     private synchronized void armOffWatchdog() {
         cancelOffWatchdog();
@@ -657,7 +666,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
-     * Disarm the OFF watchdog, the turnout is no longer waiting on an OFF reply.
+     * Disarm the watchdog, the turnout is no longer waiting on a reply.
      */
     private synchronized void cancelOffWatchdog() {
         if (offWatchdogTask != null) {
@@ -667,24 +676,34 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
-     * The reply to the OFF message never arrived. Resend it rather than leave
-     * the turnout stuck in OFFSENT, ignoring every command until the end of
-     * the session.
+     * The reply we were waiting for never arrived. Resend the outstanding
+     * message rather than leave the turnout stuck ignoring every command
+     * until the end of the session: the OFF if we were in OFFSENT, or the
+     * original ON command if we were still in COMMANDSENT, waiting for it to
+     * even be acknowledged.
      *
      * @param task the expiring task, used to ignore an expiry already
-     *             superseded by a later OFF send
+     *             superseded by a later send
      */
     private synchronized void offWatchdogExpired(java.util.TimerTask task) {
         if (task != offWatchdogTask) {
-            return; // superseded, the OFF sent since owns the watchdog
+            return; // superseded, the send since then owns the watchdog
         }
         offWatchdogTask = null;
-        if (internalState != OFFSENT) {
-            return; // already resolved
+        if (internalState == OFFSENT) {
+            log.warn("Turnout {} - no reply to OFF message after {}ms, resending",
+                    mNumber, offWatchdogInterval);
+            sendOffMessage();
+        } else if (internalState == COMMANDSENT) {
+            log.warn("Turnout {} - no reply to command message after {}ms, resending",
+                    mNumber, offWatchdogInterval);
+            // back to IDLE so forwardCommandChangeToLayout()'s queueMessage()
+            // sends the resend immediately instead of just re-queuing it
+            // behind the still-outstanding (never confirmed) original
+            internalState = IDLE;
+            forwardCommandChangeToLayout(getCommandedState());
         }
-        log.warn("Turnout {} - no reply to OFF message after {}ms, resending",
-                mNumber, offWatchdogInterval);
-        sendOffMessage();
+        // any other state: already resolved by the time this fired, nothing to do
     }
 
     /**
