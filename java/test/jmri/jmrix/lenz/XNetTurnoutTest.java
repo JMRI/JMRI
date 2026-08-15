@@ -260,6 +260,51 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.THROWN, "Turnout goes THROWN");
     }
 
+    // Turnout number the watchdog's warn message logs. Normally the same
+    // number the turnout was constructed with (21, see setUp()), but
+    // EliteXNetTurnout shifts mNumber by one internally to work around a
+    // hardware off-by-one, so its subclass test overrides this.
+    protected int watchdogTurnoutNumber() {
+        return 21;
+    }
+
+    // Mirrors testOffWatchdogResendsWhenReplyNeverArrives, but for the wait
+    // one step earlier: COMMANDSENT, between sending the initial ON command
+    // and receiving whatever reply would trigger the OFF message. If that
+    // reply is genuinely lost, nothing else nudges the turnout out of
+    // COMMANDSENT either - same missing self-healing path, just at the
+    // other end of the sequence.
+    @Test
+    public void testCommandWatchdogResendsWhenReplyNeverArrives() {
+        assertEquals( Turnout.MONITORING, t.getFeedbackMode(), "Feedback Mode after set");
+        ((XNetTurnout) t).setOffWatchdogInterval(100);
+
+        int outboundBase = lnis.outbound.size();
+
+        t.setCommandedState(Turnout.THROWN);
+        checkThrownMsgSent();
+        // command station transmits the ON message; this is what moves the
+        // turnout into COMMANDSENT and arms the watchdog
+        ((XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size() - 1));
+
+        // nothing else ever arrives - no OK, no matching feedback broadcast
+        int expectedOutbound = outboundBase + 1;
+        assertEquals( expectedOutbound, lnis.outbound.size(), "no further message sent yet");
+
+        // the watchdog has to give up waiting and resend the ON message itself
+        JUnitUtil.waitFor(() -> lnis.outbound.size() > expectedOutbound, "watchdog resent the command message");
+        checkThrownMsgSent();
+        JUnitAppender.assertWarnMessageStartsWith("Turnout " + watchdogTurnoutNumber() + " - no reply to command message after");
+
+        // command station finally acknowledges the resent ON message
+        ((XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size() - 1));
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkThrownOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+
+        JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.THROWN, "Turnout goes THROWN");
+    }
+
     @Override
     @Test
     public void testDispose() {
