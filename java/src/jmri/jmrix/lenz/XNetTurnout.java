@@ -115,6 +115,27 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected static final int IDLE = 0;
     protected int internalState = IDLE;
 
+    /**
+     * Interval, in milliseconds, after which a turnout still waiting for the
+     * reply to the OFF message it sent gives up and resends it.
+     * <p>
+     * A reply received while OFFSENT that isn't a solicited OK (an unsolicited
+     * broadcast, for example) is ignored rather than treated as a failure, so
+     * that a single broadcast doesn't trigger a spurious extra OFF. But if the
+     * real OK is genuinely lost, nothing else nudges the turnout out of OFFSENT:
+     * the traffic controller already considers that exchange closed, so no
+     * transport level timeout ever fires either. This watchdog is the fallback
+     * for that case, keeping the turnout responsive to new commands instead of
+     * leaving it stuck for the rest of the session.
+     */
+    protected static final int OFF_WATCHDOG_INTERVAL = 5000;
+
+    @GuardedBy("this")
+    private java.util.TimerTask offWatchdogTask;
+
+    @GuardedBy("this")
+    private int offWatchdogInterval = OFF_WATCHDOG_INTERVAL;
+
     /* Static arrays to hold Lenz specific feedback mode information */
     static String[] modeNames = null;
     static int[] modeValues = null;
@@ -609,6 +630,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
         // Then send the message.
         tc.sendHighPriorityXNetMessage(msg, this);
+        armOffWatchdog();
     }
 
     protected synchronized XNetMessage getOffMessage(){
@@ -616,6 +638,63 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 getCommandedState() == _mClosed,
                 getCommandedState() == _mThrown,
                 false) );
+    }
+
+    /**
+     * Arm the watchdog for the OFF message just sent. Any watchdog already
+     * armed is cancelled first, so a legitimate resend never trips a stale one.
+     */
+    private synchronized void armOffWatchdog() {
+        cancelOffWatchdog();
+        java.util.TimerTask task = new java.util.TimerTask() {
+            @Override
+            public void run() {
+                offWatchdogExpired(this);
+            }
+        };
+        offWatchdogTask = task;
+        jmri.util.TimerUtil.schedule(task, offWatchdogInterval);
+    }
+
+    /**
+     * Disarm the OFF watchdog, the turnout is no longer waiting on an OFF reply.
+     */
+    private synchronized void cancelOffWatchdog() {
+        if (offWatchdogTask != null) {
+            offWatchdogTask.cancel();
+            offWatchdogTask = null;
+        }
+    }
+
+    /**
+     * The reply to the OFF message never arrived. Resend it rather than leave
+     * the turnout stuck in OFFSENT, ignoring every command until the end of
+     * the session.
+     *
+     * @param task the expiring task, used to ignore an expiry already
+     *             superseded by a later OFF send
+     */
+    private synchronized void offWatchdogExpired(java.util.TimerTask task) {
+        if (task != offWatchdogTask) {
+            return; // superseded, the OFF sent since owns the watchdog
+        }
+        offWatchdogTask = null;
+        if (internalState != OFFSENT) {
+            return; // already resolved
+        }
+        log.warn("Turnout {} - no reply to OFF message after {}ms, resending",
+                mNumber, offWatchdogInterval);
+        sendOffMessage();
+    }
+
+    /**
+     * Set how long this turnout waits for the reply to an OFF message before
+     * giving up and resending it. Takes effect on the next OFF message sent.
+     *
+     * @param interval interval in milliseconds
+     */
+    public synchronized void setOffWatchdogInterval(int interval) {
+        offWatchdogInterval = interval;
     }
 
     /**
@@ -651,6 +730,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     @Override
     public void dispose() {
         this.removePropertyChangeListener(_stateListener);
+        cancelOffWatchdog();
         super.dispose();
     }
 
@@ -724,6 +804,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     protected synchronized void sendQueuedMessage() {
 
+        // whatever internalState was waiting on (typically OFFSENT) is now
+        // resolved; a stale watchdog for it must not fire later.
+        cancelOffWatchdog();
         lastMsg = null;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message

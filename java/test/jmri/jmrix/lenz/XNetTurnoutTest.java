@@ -3,6 +3,7 @@ package jmri.jmrix.lenz;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.Turnout;
 
@@ -211,6 +212,51 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         assertEquals( expectedOutbound, lnis.outbound.size(),
                 "OFF acknowledgement must not trigger another OFF message");
 
+        JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.THROWN, "Turnout goes THROWN");
+    }
+
+    // When the OK reply to an OFF message is genuinely lost - replaced on the
+    // wire by an unsolicited broadcast, which is now ignored rather than
+    // treated as a failed OFF (see testMonitoringModeNoSpuriousOffOnUnsolicitedFeedback)
+    // - nothing else would ever nudge the turnout out of OFFSENT: the traffic
+    // controller already considers that exchange closed, so no transport level
+    // timeout fires either. The per-turnout watchdog is the only thing left to
+    // resend the OFF and keep the turnout responsive to later commands.
+    @Test
+    public void testOffWatchdogResendsWhenReplyNeverArrives() {
+        if (expectedOffMessages() == 0) {
+            return; // this system never sends an OFF message, nothing for the watchdog to guard
+        }
+        assertEquals( Turnout.MONITORING, t.getFeedbackMode(), "Feedback Mode after set");
+        ((XNetTurnout) t).setOffWatchdogInterval(100);
+
+        int outboundBase = lnis.outbound.size();
+
+        t.setCommandedState(Turnout.THROWN);
+        checkThrownMsgSent();
+        ((XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size() - 1));
+
+        // command station acknowledges the ON message; this is what triggers
+        // the OFF message and arms the watchdog
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        int expectedOutbound = outboundBase + 1 + expectedOffMessages();
+        assertEquals( expectedOutbound, lnis.outbound.size(), "OFF message sent after ON acknowledged");
+        checkThrownOffSent();
+
+        // only an unsolicited broadcast arrives after that - the real OK is lost
+        XNetReply broadcast = new XNetReply("42 05 02 46");
+        broadcast.setUnsolicited();
+        ((XNetTurnout) t).message(broadcast);
+        assertEquals( expectedOutbound, lnis.outbound.size(),
+                "unsolicited broadcast must not itself trigger a resend");
+
+        // the watchdog has to give up waiting and resend the OFF message itself
+        JUnitUtil.waitFor(() -> lnis.outbound.size() > expectedOutbound, "watchdog resent the OFF message");
+        checkThrownOffSent();
+        JUnitAppender.assertWarnMessageStartsWith("Turnout 21 - no reply to OFF message after");
+
+        // command station finally acknowledges the resent OFF
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
         JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.THROWN, "Turnout goes THROWN");
     }
 
