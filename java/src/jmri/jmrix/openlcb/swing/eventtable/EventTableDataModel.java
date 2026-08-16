@@ -35,10 +35,7 @@ public class EventTableDataModel extends AbstractTableModel {
         this.nameStore = nameStore;
 
         // listen for updated AlsoKnownAs (AKA) content
-        stdEventTable.addPropertyChangeListener(
-                eventInfoListener = (java.beans.PropertyChangeEvent e) -> {
-            eventInfoChanged(e);
-        });
+        stdEventTable.addPropertyChangeListener(eventInfoListener);
         // load stored contents
         loadNameStoreEventIDs();
         
@@ -70,8 +67,14 @@ public class EventTableDataModel extends AbstractTableModel {
     public TableRowSorter<EventTableDataModel> sorter; // public for configurexml test
     boolean popcornModeActive = false;
 
-    PropertyChangeListener eventInfoListener;
+    PropertyChangeListener eventInfoListener = (java.beans.PropertyChangeEvent e) -> {
+            eventInfoChanged(e);
+        };
     
+    PropertyChangeListener eventHandleListener = (java.beans.PropertyChangeEvent e) -> {
+            handleDescriptionChanged(e);
+        };
+        
     // static so the data remains available through a window close-open cycle
     // public to allow access for testing; clean that up sometime with subclassing
     public static final ArrayList<TripleMemo> memos = new ArrayList<>(); // public for testing
@@ -171,15 +174,13 @@ public class EventTableDataModel extends AbstractTableModel {
     private static final Map<EventID, Set<String>> eventToDescriptions = new HashMap<>(); // public for testing, fix that eventually
 
     void updateAuxiliaryInformation(EventID event) {
-        log.trace("found extra info for {}", event);
-        var list = eventToDescriptions.get(event);
-        if (list == null) {
-            list = new HashSet<String>();
-            eventToDescriptions.put(event, list);
-        }
+        log.warn("update/recreate event aka info for {}", event);
+        // make a new clear list
+        var list = new HashSet<String>();
+        eventToDescriptions.put(event, list);
         // make sure the list contains all the available descriptions
         for (var entry : stdEventTable.getEventInfo(event).getAllEntries()) {
-            log.trace("   added: {}", entry.getDescription());
+            log.warn("   added: {}", entry.getDescription());
             list.add(entry.getDescription());
         }
     }
@@ -208,6 +209,7 @@ public class EventTableDataModel extends AbstractTableModel {
     
     // ********************************
 
+    // invoked when EventTable.addEvent is called to add an eventID and description
     protected void eventInfoChanged(PropertyChangeEvent e) {
         log.info("eventInfoChanged {} {}", e.getPropertyName(), e.getNewValue());
         // looking for events added to the EventTable
@@ -215,9 +217,49 @@ public class EventTableDataModel extends AbstractTableModel {
             // this is information added to an event
             var holder = (EventTable.EventTableEntryHolder)e.getNewValue();
             updateAuxiliaryInformation(holder.getEntry().getEvent());
+            // register a listener on the EventInfo from the holder
+            holder.getList().addPropertyChangeListener(eventHandleListener);
             // and force update to get it drawn by the table
             handleTableUpdate(-1, -1);  // this batches these
         }
+    }
+
+    // invoked from EventTable when EventInfo has a description added or deleted,
+    // or a description is updated through the EventTableEntry 
+    protected void handleDescriptionChanged(PropertyChangeEvent e) {
+        switch (e.getPropertyName()) {
+            case EventTable.DESCRIPTION_ADDED :
+                handleDescriptionAdded(e);
+                break;
+            case EventTable.DESCRIPTION_REMOVED :
+                handleDescriptionRemoved(e);
+                break;
+            case EventTable.DESCRIPTION_UPDATED :
+                handleDescriptionUpdated(e);
+                break;
+            
+            
+            default: // we ignore other notifications
+                break;
+        }
+    }
+        
+    void handleDescriptionAdded(PropertyChangeEvent e){
+        log.warn("handleDescriptionAdded: {}", e.getPropertyName());
+        var info = (EventTable.EventInfo)e.getNewValue();
+        updateAuxiliaryInformation(info.getEventId());        
+    }
+    
+    void handleDescriptionRemoved(PropertyChangeEvent e){
+        log.warn("handleDescriptionRemoved: {}", e.getPropertyName());
+        var info = (EventTable.EventInfo)e.getNewValue();
+        updateAuxiliaryInformation(info.getEventId());        
+    }
+    
+    void handleDescriptionUpdated(PropertyChangeEvent e){
+        log.warn("handleDescriptionUpdated: {}", e.getPropertyName());
+        var info = (EventTable.EventInfo)e.getNewValue();
+        updateAuxiliaryInformation(info.getEventId());        
     }
     
     protected void loadNameStoreEventIDs() {

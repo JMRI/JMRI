@@ -107,11 +107,32 @@ public class EventTableDataModelTest {
         
         model.recordProducer(targetEvent, new NodeID("1.1.1.1.2.2"),"", false);
 
+        // the following line triggers addition to the model via a listener
         var holder = eventTable.addEvent(targetEvent, "desc1");
-        model.eventInfoChanged(new PropertyChangeEvent(this, "UPDATED_EVENT_LIST", holder, null));
 
         var resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
         assertEquals("desc1", resultName);
+        
+        // remove the description
+        log.warn("this doesn't distinquish 'remove by edit' and 'remove when window closes'");
+        holder.release();
+        
+        resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
+        assertEquals("", resultName);
+
+        // add a new one
+        holder.getList().add("desc2");
+        
+        resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
+        assertEquals("desc2", resultName);
+
+        // and update one
+        holder.getEntry().updateDescription("desc3");
+
+        resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
+        assertEquals("desc3", resultName);
+        
+        
     }
 
 
