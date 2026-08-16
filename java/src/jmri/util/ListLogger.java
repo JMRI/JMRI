@@ -58,6 +58,8 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public boolean add(E element) {
+        log.warn("add(element) called");
+        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
         return list.add(element);
     }
 
@@ -73,11 +75,15 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
+        log.warn("addAll(c) called");
+        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
         return list.addAll(c);
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
+        log.warn("addAll(index, c) called");
+        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
         return list.addAll(index, c);
     }
 
@@ -110,6 +116,8 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public void add(int index, E element) {
+        log.warn("add(index, element) called");
+        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
         list.add(index, element);
     }
 
