@@ -16,6 +16,7 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.ListLogger;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriJOptionPane;
@@ -70,11 +71,11 @@ import org.slf4j.MDC;
  */
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 
-    private static final List<Integer> updateReferences = new ArrayList<>(500);
+    private static final List<Integer> updateReferences = new ListLogger<>(new ArrayList<>(500));
 
     // might want to use the jmri ordered HashMap, so that we can add at the top
     // and remove at the bottom.
-    private final List<Integer> actedUponUpdates = new ArrayList<>(500);
+    private final List<Integer> actedUponUpdates = new ListLogger<>(new ArrayList<>(500));
 
     @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
     public void enableDeleteRouteLog() {
@@ -2110,7 +2111,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     // could still hold a valid through path.
                     for (int i = neighbours.size() - 1; i > -1; i--) {
                         // Need to ignore if the dest block is our neighour in this instance
-                        if ((neighbours.get(i).getBlock() != destBlock) && (neighbours.get(i).getBlock() != nextHop) 
+                        if ((neighbours.get(i).getBlock() != destBlock) && (neighbours.get(i).getBlock() != nextHop)
                             && validThroughPath(notifyingblk, neighbours.get(i).getBlock())) {
                             Block neighblock = neighbours.get(i).getBlock();
 
@@ -2264,7 +2265,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             addRouteLog.debug("Block {} is a traverser block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
             return; // Do not create through paths for a traverser
         }
-        
+
         Block newAdj = adj.getBlock();
         int packetFlow = adj.getPacketFlow();
 
