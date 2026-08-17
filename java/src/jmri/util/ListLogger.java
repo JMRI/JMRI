@@ -15,6 +15,7 @@ public class ListLogger<E extends Object> implements List<E> {
      * Log where it's called?
      */
     private static final boolean LOG = true;
+//    private static final boolean LOG = false;
     private static final boolean LOG_WHERE = false;
 
     private final List<E> list;

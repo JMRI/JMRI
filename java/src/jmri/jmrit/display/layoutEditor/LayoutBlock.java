@@ -71,6 +71,9 @@ import org.slf4j.MDC;
  */
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 
+    private static final int UPDATE_REFERENCE_SIZE_MAX = 500;
+    private static final int UPDATE_REFERENCE_SIZE_HALF_MAX = UPDATE_REFERENCE_SIZE_MAX / 2;
+
     private static final List<Integer> updateReferences = new ListLogger<>(new ArrayList<>(500));
 
     // might want to use the jmri ordered HashMap, so that we can add at the top
@@ -2613,9 +2616,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
          thus making sure if the packet gets back to us we do knowing with it.*/
         actedUponUpdates.add(lastID);
 
-        if (updateReferences.size() > 500) {
+        if (updateReferences.size() > UPDATE_REFERENCE_SIZE_MAX) {
             // log.info("flush update references");
-            updateReferences.subList(0, 250).clear();
+            updateReferences.subList(0, UPDATE_REFERENCE_SIZE_HALF_MAX).clear();
         }
 
         if (actedUponUpdates.size() > 500) {
