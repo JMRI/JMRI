@@ -482,6 +482,9 @@
                 occupancy change: a redraw now repaints the drawing area only, instead of
                 the whole window including its menu bar, tool bar and scroll bars, and a
                 partial repaint no longer redraws the whole visible track plan.</li>
+            <li>An unexpected error while restoring the saved block values no longer leaves
+                Layout Block routing uninitialized, and is now reported in the log instead
+                of passing unnoticed.</li>
             <li></li>
         </ul>
 
