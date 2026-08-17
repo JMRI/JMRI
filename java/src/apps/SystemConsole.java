@@ -1,38 +1,16 @@
 package apps;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.awt.event.*;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
@@ -420,10 +398,10 @@ public final class SystemConsole {
     /**
      * Set the console font size
      *
-     * @param size point size of font between 6 and 24 point
+     * @param size point size of font between 6 and 28 point
      */
     public void setFontSize(int size) {
-        updateFont(FONT_FAMILY, fontStyle, (fontSize = size < 6 ? 6 : size > 24 ? 24 : size));
+        updateFont(FONT_FAMILY, fontStyle, (fontSize = size < 6 ? 6 : size > 28 ? 28 : size));
     }
 
     /**
