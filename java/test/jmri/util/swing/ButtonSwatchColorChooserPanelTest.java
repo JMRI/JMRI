@@ -36,6 +36,6 @@ public class ButtonSwatchColorChooserPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ButtonSwatchColorChooserPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ButtonSwatchColorChooserPanelTest.class);
 
 }

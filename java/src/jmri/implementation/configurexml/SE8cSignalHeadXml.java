@@ -134,6 +134,6 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
+    private static final Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
 
 }

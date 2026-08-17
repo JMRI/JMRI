@@ -40,7 +40,7 @@ public class HtmlTrainCommon extends TrainCommon {
         location, track, both;
     }
 
-    static private final Logger log = LoggerFactory.getLogger(HtmlTrainCommon.class);
+    private static final Logger log = LoggerFactory.getLogger(HtmlTrainCommon.class);
 
     public HtmlTrainCommon(Locale locale, Train train) throws IOException {
         this.locale = locale;
@@ -170,7 +170,6 @@ public class HtmlTrainCommon extends TrainCommon {
         return String.format(strings.getProperty("EnginesList"), builder.toString());
     }
 
-    @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
@@ -194,7 +193,6 @@ public class HtmlTrainCommon extends TrainCommon {
         return String.format(locale, strings.getProperty("EnginesList"), builder.toString());
     }
 
-    @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");
@@ -317,6 +315,12 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (attribute.equals(Setup.LAST_TRAIN)) {
             return String.format(locale, strings.getProperty("LastTrain"),
                     StringEscapeUtils.escapeHtml4(rs.getLastTrainName()));
+        } else if (attribute.equals(Setup.LAST_MOVED)) {
+            return String.format(locale, strings.getProperty("LastMoved"),
+                    StringEscapeUtils.escapeHtml4(rs.getLastDate()));
+        } else if (attribute.equals(Setup.LAST_LOCATION)) {
+            return String.format(locale, strings.getProperty("LastLocation"),
+                    StringEscapeUtils.escapeHtml4(rs.getLastLocationName()));
         } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER)
                 || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR)
                 || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)

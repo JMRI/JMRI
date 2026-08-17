@@ -295,7 +295,9 @@ public class CarEditFrame extends RollingStockEditFrame {
         if (roadComboBox.getSelectedItem() == null) {
             return;
         }
-        super.save(carManager, isSave);
+        if (!super.save(carManager, isSave)) {
+            return;
+        }
         Car car = (Car) _rs;
         
         if (colorComboBox.getSelectedItem() != null) {

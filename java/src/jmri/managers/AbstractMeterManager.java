@@ -57,6 +57,6 @@ public class AbstractMeterManager extends AbstractManager<Meter>
         return Meter.class;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(AbstractMeterManager.class);
+//    private static final Logger log = LoggerFactory.getLogger(AbstractMeterManager.class);
 
 }

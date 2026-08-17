@@ -32,6 +32,6 @@ public class AbstractXNetSerialConnectionConfigXmlTest extends jmri.jmrix.config
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractXNetSerialConnectionConfigXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractXNetSerialConnectionConfigXmlTest.class);
 
 }

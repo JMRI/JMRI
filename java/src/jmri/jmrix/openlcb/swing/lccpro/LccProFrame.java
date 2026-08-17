@@ -113,7 +113,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     JComboBox<String> matchGroupName;   // required group name to display; index <= 0 is all
 
     final JLabel statusField = new JLabel();
-    final static Dimension summaryPaneDim = new Dimension(0, 170);
+    static final Dimension summaryPaneDim = new Dimension(0, 170);
 
     protected void additionsToToolBar() {
         getToolBar().add(Box.createHorizontalGlue());
@@ -622,8 +622,15 @@ public class LccProFrame extends TwoPaneTBWindow  {
             }
 
             try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
-                str.printRecord("Name", "ID", "Manufacturer", "Model", "Software", "Description");
                 var table = nodetable.getTable();
+                str.printRecord(
+                    table.getColumnName(LccProTableModel.NAMECOL),  // done this way in case columns have been reordered
+                    table.getColumnName(LccProTableModel.IDCOL),
+                    table.getColumnName(LccProTableModel.MFGCOL),
+                    table.getColumnName(LccProTableModel.MODELCOL),
+                    table.getColumnName(LccProTableModel.SVERSIONCOL),
+                    table.getColumnName(LccProTableModel.DESCRIPTIONCOL)
+                );
                 for (int row = 0; row < table.getRowCount(); row++) {
                     var name = table.getValueAt(row, LccProTableModel.NAMECOL);
                     var id = table.getValueAt(row, LccProTableModel.IDCOL);

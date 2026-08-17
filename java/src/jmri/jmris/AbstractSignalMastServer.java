@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractSignalMastServer {
 
     private final HashMap<String, SignalMastListener> signalMasts;
-    static private final Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class);
 
     public AbstractSignalMastServer(){
         signalMasts = new HashMap<>();

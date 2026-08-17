@@ -213,7 +213,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     @Override
     public final String getLongDescription(Locale locale) {
         String s = _object.getLongDescription(locale);
-        if (!_listen) {
+        // Only the innermost male socket should add "::: Listen"
+        if (!_listen && !(getObject() instanceof MaleSocket)) {
             s += " ::: " + Base.getNoListenString();
         }
         return s;

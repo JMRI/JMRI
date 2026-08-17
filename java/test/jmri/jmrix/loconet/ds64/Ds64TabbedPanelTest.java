@@ -26,6 +26,6 @@ public class Ds64TabbedPanelTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Ds64TabbedPanelTest.class);
 
 }

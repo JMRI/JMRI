@@ -78,7 +78,7 @@ public class GcSerialDriverAdapter extends GcPortController {
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting CAN to {} {}", portName, currentSerialPort);
-        
+
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
@@ -88,7 +88,7 @@ public class GcSerialDriverAdapter extends GcPortController {
 
         // get and save stream
         serialStream = currentSerialPort.getInputStream();
-        // this is referenced in several other methods, 
+        // this is referenced in several other methods,
         // so can't easily be removed.
 
         // report status
@@ -99,7 +99,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         return null; // indicates OK return
     }
 
-    /** 
+    /**
      * Local set up the flow contro, here to allow override
      */
     protected void localSetFlowControl() {
@@ -138,7 +138,7 @@ public class GcSerialDriverAdapter extends GcPortController {
     protected void resetupConnection() {
         if (!getSystemConnectionMemo().getTrafficController().status()) {
             getSystemConnectionMemo().getTrafficController().connectPort(this);
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(),
+            ConnectionStatus.instance().setConnectionState(getSystemConnectionMemo(),
                 ((getSystemConnectionMemo().getTrafficController().status() && status()) ? ConnectionStatus.CONNECTION_UP : ConnectionStatus.CONNECTION_DOWN));
         }
     }
@@ -338,7 +338,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         private final String portName;
         // After this many consecutive read attempts resulting in an exception we will terminate
         // the read thread and return the last exception to the reader.
-        private final static int MAX_IO_ERRORS_TO_ABORT = 10;
+        private static final int MAX_IO_ERRORS_TO_ABORT = 10;
         // Queue holding the buffered data.
         private final BlockingQueue<BufferEntry> readAhead = new LinkedBlockingQueue<>();
         // The last entry we got from the queue if there are still bytes we need to return from it.
@@ -409,6 +409,6 @@ public class GcSerialDriverAdapter extends GcPortController {
     // Stream wrapper that buffers the input bytes.
     private InputStream bufferedStream = null;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GcSerialDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GcSerialDriverAdapter.class);
 
 }

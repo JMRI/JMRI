@@ -41,12 +41,12 @@ public class PushbuttonPacket {
     /**
      * Valid stationary decoder names
      */
-    public final static String unknown = "None";
-    public final static String NCEname = "NCE_Rev_C";
-    public final static String CVP_1Bname = "CVP_AD4_1B";
-    public final static String CVP_2Bname = "CVP_AD4_2B";
+    public static final String unknown = "None";
+    public static final String NCEname = "NCE_Rev_C";
+    public static final String CVP_1Bname = "CVP_AD4_1B";
+    public static final String CVP_2Bname = "CVP_AD4_2B";
 
-    private final static String[] VALIDDECODERNAMES = {unknown, NCEname, CVP_1Bname,
+    private static final String[] VALIDDECODERNAMES = {unknown, NCEname, CVP_1Bname,
         CVP_2Bname};
 
     /**
@@ -138,5 +138,5 @@ public class PushbuttonPacket {
         return CVdata;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PushbuttonPacket.class);
+    private static final Logger log = LoggerFactory.getLogger(PushbuttonPacket.class);
 }

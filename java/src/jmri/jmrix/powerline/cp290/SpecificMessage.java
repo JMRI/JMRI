@@ -174,7 +174,7 @@ public class SpecificMessage extends SerialMessage {
     }
 
     // static methods to return a formatted message
-    static public SerialMessage getPoll(int addr) {
+    public static SerialMessage getPoll(int addr) {
         // eventually this will have to include logic for reading
         // various bytes on the card, but our supported
         // cards don't require that yet
@@ -187,14 +187,14 @@ public class SpecificMessage extends SerialMessage {
         return null;
     }
 
-    static public SpecificMessage getAddress(int housecode, int devicecode) {
+    public static SpecificMessage getAddress(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(2);
         m.setElement(0, 0x04);
         m.setElement(1, (X10Sequence.encode(housecode) << 4) + X10Sequence.encode(devicecode));
         return m;
     }
 
-    static public SpecificMessage getAddressDim(int housecode, int devicecode, int dimcode) {
+    public static SpecificMessage getAddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         if (dimcode > 0) {
             m.setElement(0, 0x04 | ((dimcode & 0x1f) << 3));
@@ -205,7 +205,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
+    public static SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         if (dimcode > 0) {
             m.setElement(0, 0x06 | ((dimcode & 0x1f) << 3));
@@ -216,7 +216,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getFunction(int housecode, int function) {
+    public static SpecificMessage getFunction(int housecode, int function) {
         SpecificMessage m = new SpecificMessage(2);
         m.setElement(0, 0x06);
         m.setElement(1, (X10Sequence.encode(housecode) << 4) + function);

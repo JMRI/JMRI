@@ -3622,14 +3622,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return null;
     }
 
-    final static int ADDITION = 0x00;
-    final static int UPDATE = 0x02;
-    final static int REMOVAL = 0x04;
+    static final int ADDITION = 0x00;
+    static final int UPDATE = 0x02;
+    static final int REMOVAL = 0x04;
 
-    final static int RXTX = 0x00;
-    final static int RXONLY = 0x02;
-    final static int TXONLY = 0x04;
-    final static int NONE = 0x08;
+    static final int RXTX = 0x00;
+    static final int RXONLY = 0x02;
+    static final int TXONLY = 0x04;
+    static final int NONE = 0x08;
     int metric = 100;
 
     private static class RoutingPacket {

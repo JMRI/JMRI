@@ -39,6 +39,6 @@ public class NodeConfigManagerAction extends AbstractAction {
         f.setLocation(20,40);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerAction.class);
+    private static final Logger log = LoggerFactory.getLogger(NodeConfigManagerAction.class);
 
 }

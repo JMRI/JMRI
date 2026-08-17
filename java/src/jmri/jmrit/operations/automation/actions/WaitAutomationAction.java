@@ -3,13 +3,17 @@ package jmri.jmrit.operations.automation.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.JComboBox;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.automation.Automation;
+import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Control;
 
-public class WaitAutomationAction extends RunAutomationAction implements PropertyChangeListener {
+public class WaitAutomationAction extends Action implements PropertyChangeListener {
 
     private static final int _code = ActionCodes.WAIT_AUTOMATION;
 
@@ -70,6 +74,16 @@ public class WaitAutomationAction extends RunAutomationAction implements Propert
             }
         }
     }
+    
+    @Override
+    public JComboBox<Automation> getComboBox() {
+        if (getAutomationItem() != null) {
+            JComboBox<Automation> cb = InstanceManager.getDefault(AutomationManager.class).getComboBox();
+            cb.setSelectedItem(getAutomationItem().getAutomationToRun());
+            return cb;
+        }
+        return null;
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -79,6 +93,6 @@ public class WaitAutomationAction extends RunAutomationAction implements Propert
         automationUpdate(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitAutomationAction.class);
+    private static final Logger log = LoggerFactory.getLogger(WaitAutomationAction.class);
 
 }

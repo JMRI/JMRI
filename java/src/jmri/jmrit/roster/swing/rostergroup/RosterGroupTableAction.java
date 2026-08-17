@@ -127,5 +127,5 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterGroupTableAction.class);
+    private static final Logger log = LoggerFactory.getLogger(RosterGroupTableAction.class);
 }

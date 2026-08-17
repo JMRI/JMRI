@@ -229,5 +229,5 @@ public class SE8cSignalHead extends DefaultSignalHead {
                 || (getHigh() != null && t.equals(getHigh().getBean()));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class);
+    private static final Logger log = LoggerFactory.getLogger(SE8cSignalHead.class);
 }

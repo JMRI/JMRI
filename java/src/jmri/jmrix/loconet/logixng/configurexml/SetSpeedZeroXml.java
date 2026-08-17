@@ -71,5 +71,5 @@ public class SetSpeedZeroXml extends jmri.managers.configurexml.AbstractNamedBea
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SetSpeedZeroXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SetSpeedZeroXml.class);
 }

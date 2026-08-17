@@ -41,20 +41,20 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     private final TrafficController tc;
 
     // column order needs to match list in column tooltips
-    static public final int EVENT_COLUMN = 0;
-    static public final int NODE_COLUMN = 1;
-    static public final int NAME_COLUMN = 2;
-    static public final int LATEST_TIMESTAMP_COLUMN = 3;
-    static public final int STATUS_REQUEST_BUTTON_COLUMN = 4;
-    static public final int LASTFEEDBACK_COLUMN = 5;
-    static public final int FEEDBACKOUTSTANDING_COLUMN = 6;
-    static public final int FEEDBACKREQUIRED_COLUMN = 7;
-    static public final int FEEDBACKTIMEOUT_COLUMN = 8;
-    static public final int FEEDBACKEVENT_COLUMN = 9;
-    static public final int FEEDBACKNODE_COLUMN = 10;
-    static public final int DELETE_BUTTON_COLUMN = 11;
+    public static final int EVENT_COLUMN = 0;
+    public static final int NODE_COLUMN = 1;
+    public static final int NAME_COLUMN = 2;
+    public static final int LATEST_TIMESTAMP_COLUMN = 3;
+    public static final int STATUS_REQUEST_BUTTON_COLUMN = 4;
+    public static final int LASTFEEDBACK_COLUMN = 5;
+    public static final int FEEDBACKOUTSTANDING_COLUMN = 6;
+    public static final int FEEDBACKREQUIRED_COLUMN = 7;
+    public static final int FEEDBACKTIMEOUT_COLUMN = 8;
+    public static final int FEEDBACKEVENT_COLUMN = 9;
+    public static final int FEEDBACKNODE_COLUMN = 10;
+    public static final int DELETE_BUTTON_COLUMN = 11;
 
-    static public final int MAX_COLUMN = 12;
+    public static final int MAX_COLUMN = 12;
 
     CbusEventRequestDataModel(CanSystemConnectionMemo memo, int row, int column) {
 

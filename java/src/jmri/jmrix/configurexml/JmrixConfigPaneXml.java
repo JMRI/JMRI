@@ -117,6 +117,6 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPaneXml.class);
+    private static final Logger log = LoggerFactory.getLogger(JmrixConfigPaneXml.class);
 
 }

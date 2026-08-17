@@ -40,6 +40,6 @@ public class LocoSelTreePaneTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoSelTreePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoSelTreePaneTest.class);
 
 }

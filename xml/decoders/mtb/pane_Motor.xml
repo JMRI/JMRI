@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Petr Sidlo 2026-05-20 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+    <name>Motor</name>
+    <name xml:lang="cs">Motor</name>
+
+    <column>
+        <display item="Accel" />
+        <display item="Decel" />
+        <label>
+            <text> </text>
+        </label>
+        <display item="Mode EMF" />
+        <label>
+            <text> </text>
+        </label>
+        <display item="Power failure timeout" />
+        <display item="Keepalive" />
+    </column>
+
+</pane>

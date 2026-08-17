@@ -13,7 +13,7 @@ import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Menu action to Export all JMRI Roster Entries as ROSTER() macro calls
- *  This adds a menu item to the "DCC++" menu. Taking this option opens a 
+ *  This adds a menu item to the "DCC-EX" menu. Taking this option opens a 
  *  window where the ROSTER() lines can be copied into your myAutomation.h 
  *  Syntax: ROSTER(999,"Loco Name","F0/F1/*F2/F3/F4/F5/F6/F7/F8")
  * NOTE: calls existing script for compatibility

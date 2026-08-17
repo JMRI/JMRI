@@ -72,5 +72,5 @@ public class StagingTableModel extends TrackTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StagingTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(StagingTableModel.class);
 }

@@ -39,6 +39,6 @@ public class BlockPathTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockPathTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BlockPathTableModelTest.class);
 
 }

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * Implements BiDiBPortController for the BiDiBOverTcp system network
  * connection.
  * <p>
- * This connects a DCC++ via a telnet connection. Normally controlled by the
+ * This connects a DCC-EX via a telnet connection. Normally controlled by the
  * DCCppTcpDriverFrame class.
  * 
  *
@@ -105,7 +105,7 @@ public class BiDiBOverTcpAdapter extends BiDiBNetworkPortController {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBOverTcpAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBOverTcpAdapter.class);
 
     
 }

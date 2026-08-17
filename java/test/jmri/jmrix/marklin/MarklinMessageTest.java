@@ -104,5 +104,5 @@ public class MarklinMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinMessageTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinMessageTest.class);
 }

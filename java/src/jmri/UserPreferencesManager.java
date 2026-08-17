@@ -8,6 +8,8 @@ import java.util.HashMap;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.jdom2.Element;
+
 /**
  * Interface for the User Preferences Manager.
  * <p>
@@ -20,6 +22,8 @@ import javax.annotation.Nonnull;
  * @author Kevin Dickerson Copyright (C) 2010
  */
 public interface UserPreferencesManager {
+
+    public static final String GENERIC_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/generic-details-5-15-8.xsd"; // NOI18N
 
     String PREFERENCES_UPDATED = "PreferencesUpdated"; // NOI18N
 
@@ -226,7 +230,7 @@ public interface UserPreferencesManager {
      */
     void showInfoMessage(@CheckForNull Component parentComponent, String title,
         String message, String classString, String item);
-    
+
     /**
      * Show an error message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
@@ -629,6 +633,21 @@ public interface UserPreferencesManager {
      * @return complete set of keys
      */
     java.util.Set<String> getPropertyKeys(String strClass);
+
+    /**
+     * Stores the element e to the user-interface.xml file.
+     * @param e the element to store
+     */
+    void storeElement(Element e);
+
+    /**
+     * Loads the element e from the user-interface.xml file.
+     * @param  elementName  the tag name of the element to load.
+     * @return the loaded element
+     * @throws IllegalArgumentException if there is no such element
+     */
+    @CheckForNull
+    Element loadElement(@Nonnull String elementName);
 
     /*
      Example informational message dialog box.

@@ -15,7 +15,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppNetworkPortController.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppNetworkPortController.class);
     
     protected DCCppNetworkPortController() {
         super(new DCCppSystemConnectionMemo());
@@ -118,12 +118,25 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     } // Maintained for compatibility with DCCpptPortController. Simply ignore calls !!!
 
     /**
-     * Customizable method to deal with resetting a system connection after a
-     * successful recovery of a connection.
+     * Reset the system connection after a successful recovery of a connection.
+     * Connects this Port to the memo DCCppTrafficController.
+     * Requests Power status update from connection after delay of 1500ms.
      */
     @Override
     protected void resetupConnection() {
         this.getSystemConnectionMemo().getDCCppTrafficController().connectPort(this);
+        jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+            this.getSystemConnectionMemo().getPowerManager().requestUpdateFromLayout();
+        }, 1500);
+    }
+
+    // Legacy "DCC++" remap for saved configs prior to the DCC++ -> DCC-EX rename (issue #15136).
+    @Override
+    public void setManufacturer(String manufacturer) {
+        if ("DCC++".equals(manufacturer)) {
+            manufacturer = DCCppConnectionTypeList.DCCPP;
+        }
+        super.setManufacturer(manufacturer);
     }
 
 }

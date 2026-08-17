@@ -68,5 +68,5 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
         super.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnoutEditorTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnoutEditorTest.class);
 }

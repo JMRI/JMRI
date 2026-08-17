@@ -10,49 +10,63 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.TimerUtil;
 
 /**
+ * A JLabel that displays whether a LCC/OpenLCB connection
+ * is currently active or not by making the word "Active"
+ * dark (enabled) or light (disabled).
  *
  * @author Bob Jacobsen
  */
 public class TrafficStatusLabel extends JLabel implements CanListener {
     
     private static final int INTERVAL = 200;
-    CanSystemConnectionMemo memo;
+    final CanSystemConnectionMemo memo;
+    
     TimerTask timertask;
+
     boolean active;
     
     public TrafficStatusLabel(CanSystemConnectionMemo memo) {
         super("Active");
         this.setEnabled(false);
         this.memo = memo;
-        this.active = false;
         
         // set up traffic listener
         memo.getTrafficController().addCanConsoleListener(this);
         
         // start the process
-        displayActive();
+        this.active = false;
+        setEnabled(false);
+    }
+    
+    TimerTask getNewTimerTask() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                active = false;
+                displayActive(); 
+            }
+        };
     }
     
     void traffic() {
-        if (timertask != null) { // only null at startup
+        if (timertask != null) {
             timertask.cancel();
+            timertask = null;
         }
         active = true;
         displayActive();
-    }
-    
-    void displayActive() {
-        if (active != isEnabled()) setEnabled(active); // reduce redisplays 
-        timertask = new TimerTask() {
-            @Override
-            public void run() {
-                active = false; displayActive(); 
-            }
-        };
-        TimerUtil.scheduleOnGUIThread(timertask, INTERVAL);
+        if (active) {
+            timertask = TimerUtil.scheduleOnGUIThread(getNewTimerTask(), INTERVAL); // return value kept for cancel
+        }
         
     }
 
+    void displayActive() {
+        if (active != isEnabled()) {
+            setEnabled(active); // `if` reduces redisplays 
+        }
+    }
+    
     @Override
     public synchronized void message(CanMessage l) {
         traffic();
@@ -63,5 +77,5 @@ public class TrafficStatusLabel extends JLabel implements CanListener {
         traffic();
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrafficStatusLabel.class);
+    //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrafficStatusLabel.class);
 }

@@ -73,5 +73,5 @@ public class TamsNamedPaneAction extends JmriNamedPaneAction implements SystemCo
         return new HashSet<>(Arrays.asList(TamsSystemConnectionMemo.class));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsNamedPaneAction.class);
+    // private static final Logger log = LoggerFactory.getLogger(TamsNamedPaneAction.class);
 }

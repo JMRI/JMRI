@@ -222,6 +222,21 @@ public class WarrantTest {
 
     }
 
+    protected static boolean atOrPastCommand(Warrant w, int minCmd) {
+        String m = w.getRunningMessage();
+        if (m == null) return false;
+        int i = m.lastIndexOf("Cmd #");
+        if (i < 0) return false;
+        String rest = m.substring(i + 5);
+        int dot = rest.indexOf('.');
+        if (dot < 0) return false;
+        try {
+            return Integer.parseInt(rest.substring(0, dot)) >= minCmd;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     protected static class WarrantListener implements PropertyChangeListener {
 
         Warrant warrant;

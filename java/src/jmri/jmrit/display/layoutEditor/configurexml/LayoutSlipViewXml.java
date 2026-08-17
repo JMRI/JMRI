@@ -19,7 +19,7 @@ public class LayoutSlipViewXml extends LayoutTrackViewXml {
     public LayoutSlipViewXml() {
     }
 
-    final static EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutSlip.TurnoutType.class);
+    static final EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutSlip.TurnoutType.class);
 
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml");
@@ -368,5 +368,5 @@ public class LayoutSlipViewXml extends LayoutTrackViewXml {
         return "";
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipViewXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipViewXml.class);
 }

@@ -620,6 +620,6 @@ public class BDL16Panel extends AbstractBoardProgPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BDL16Panel.class);
+    private static final Logger log = LoggerFactory.getLogger(BDL16Panel.class);
 
 }

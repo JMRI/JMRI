@@ -97,8 +97,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * that opsw[0] is not a legal OpSwitch.
      */
     protected boolean[] opsw = new boolean[65];
-    private final static int HALF_A_SECOND = 500;
-    private final static int FIFTIETH_OF_A_SECOND = 20; // 20 milliseconds = 1/50th of a second
+    private static final int HALF_A_SECOND = 500;
+    private static final int FIFTIETH_OF_A_SECOND = 20; // 20 milliseconds = 1/50th of a second
 
     private String boardTypeName;
 

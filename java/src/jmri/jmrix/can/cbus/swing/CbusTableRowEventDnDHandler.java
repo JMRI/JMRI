@@ -145,6 +145,6 @@ public class CbusTableRowEventDnDHandler extends TransferHandler implements Drag
         frame.dispose();
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusTableRowEventDnDHandler.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusTableRowEventDnDHandler.class);
 
 }

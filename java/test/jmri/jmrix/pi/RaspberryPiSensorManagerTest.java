@@ -1,8 +1,5 @@
 package jmri.jmrix.pi;
 
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioProvider;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -38,7 +35,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
         Assert.assertTrue("Pull Resistance Configurable", l.isPullResistanceConfigurable());
     }
 
-    private GpioProvider myProvider = null;
+    private PiGpioProviderScaffold myProvider = null;
 
     @Override
     @BeforeEach
@@ -46,33 +43,22 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
        JUnitUtil.setUp();
        JUnitUtil.resetInstanceManager();
        myProvider = new PiGpioProviderScaffold();
-       GpioFactory.setDefaultProvider(myProvider);
        l = new RaspberryPiSensorManager(new RaspberryPiSystemConnectionMemo());
     }
 
     @AfterEach
     public void tearDown() {
-        // unprovisionPin if it exists to allow reuse of GPIO pin in next test (without need to override test)
+        // unprovisionPin if it exists to allow reuse of GPIO pin in next test
         RaspberryPiSensor t1 = (RaspberryPiSensor) l.getSensor(getSystemName(getNumToTest1()));
-        if (t1 != null) {
-            t1.dispose();
-        }
+        if (t1 != null) { t1.dispose(); }
         t1 = (RaspberryPiSensor) l.getSensor(getSystemName(getNumToTest2()));
-        if (t1 != null) {
-            t1.dispose();
-        }
+        if (t1 != null) { t1.dispose(); }
         t1 = (RaspberryPiSensor) l.getSensor(getSystemName(1));
-        if (t1 != null) {
-            t1.dispose();
-        }
+        if (t1 != null) { t1.dispose(); }
         t1 = (RaspberryPiSensor) l.getSensor(getSystemName(2));
-        if (t1 != null) {
-            t1.dispose();
-        }
-        // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        if (t1 != null) { t1.dispose(); }
         Assertions.assertNotNull(myProvider);
         myProvider.shutdown();
-        // GpioFactory.setDefaultProvider(null);
         l.dispose();
 
         JUnitUtil.clearShutDownManager();

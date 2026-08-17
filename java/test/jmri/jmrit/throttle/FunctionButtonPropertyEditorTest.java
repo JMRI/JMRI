@@ -2,6 +2,8 @@ package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.jmrit.throttle.panels.FunctionButton;
+import jmri.jmrit.throttle.panels.FunctionButtonPropertyEditor;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

@@ -736,6 +736,6 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockManager.class);
+    private static final Logger log = LoggerFactory.getLogger(RollingStockManager.class);
 
 }

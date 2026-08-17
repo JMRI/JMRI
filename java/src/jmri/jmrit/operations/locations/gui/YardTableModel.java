@@ -72,5 +72,5 @@ public class YardTableModel extends TrackTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(YardTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(YardTableModel.class);
 }

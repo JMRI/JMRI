@@ -14,7 +14,7 @@ public class ScriptButtonPanel extends javax.swing.JPanel {
 
     private final Component parent;
     private final JFileChooser chooser;
-    private final static Logger log = LoggerFactory.getLogger(ScriptButtonPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(ScriptButtonPanel.class);
 
     /**
      * Creates new form ScriptButtonPanel

@@ -142,9 +142,8 @@ public class HardcopyWriter extends Writer implements Printable {
      *                                               cancelled.
      */
     public HardcopyWriter(Frame frame, String jobname, String fontName, Integer fontStyle, Integer fontsize,
-            double leftmargin, double rightmargin,
-            double topmargin, double bottommargin, boolean isPreview, String printerName, Boolean isLandscape,
-            Boolean isPrintHeader, Attribute sides, Dimension pagesize)
+            double leftmargin, double rightmargin, double topmargin, double bottommargin, boolean isPreview,
+            String printerName, Boolean isLandscape, Boolean isPrintHeader, Attribute sides, Dimension pagesize)
             throws HardcopyWriter.PrintCanceledException {
 
         initalize(frame, jobname, fontName, fontStyle, fontsize, leftmargin, rightmargin, topmargin, bottommargin,
@@ -310,6 +309,10 @@ public class HardcopyWriter extends Writer implements Printable {
 
         // compute date/time for header
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+        // short date when page width is less than 4"
+        if (width < DPI * 4) {
+            df = DateFormat.getDateInstance(DateFormat.SHORT);
+        }
         df.setTimeZone(TimeZone.getDefault());
         time = df.format(new Date());
 
@@ -844,7 +847,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * Refresh the font metrics after changing things like font, size, etc.
      */
     private void refreshMetrics() {
-        Rectangle2D bounds = font.getStringBounds("m".repeat(100), neutralFRC);
+        Rectangle2D bounds = font.getStringBounds("n".repeat(100), neutralFRC);
         charwidth = (float) (bounds.getWidth() / 100.0);
         LineMetrics lm = font.getLineMetrics("Your text here", neutralFRC);
         lineheight = lm.getHeight();
@@ -1034,7 +1037,7 @@ public class HardcopyWriter extends Writer implements Printable {
             record(new DrawString(s, (int) (x0 + (this.width - bounds.getWidth()) / 2), headery));
 
             bounds = headerfont.getStringBounds(time, frc);
-            record(new DrawString(time, (int) (x0 + width - bounds.getWidth()), headery));
+            record(new DrawString(time, (int) (x0 + width - bounds.getWidth() - 1), headery));
 
             // draw a line under the header
             int y = headery + headermetrics.getDescent() + 1;

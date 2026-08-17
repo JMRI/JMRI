@@ -194,6 +194,6 @@ public class TitledSpinner extends JPanel implements ChangeListener {
         return new Dimension(preferredWidth, preferredSize.height);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TitledSpinner.class);
+    private static final Logger log = LoggerFactory.getLogger(TitledSpinner.class);
 
 }

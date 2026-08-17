@@ -252,7 +252,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
         super.propertyChange(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EngineManager.class);
 
     @Override
     public void initialize() {

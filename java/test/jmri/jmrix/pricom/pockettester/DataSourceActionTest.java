@@ -27,6 +27,6 @@ public class DataSourceActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DataSourceActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DataSourceActionTest.class);
 
 }

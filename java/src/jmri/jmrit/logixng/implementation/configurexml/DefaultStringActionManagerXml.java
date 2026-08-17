@@ -190,5 +190,5 @@ public class DefaultStringActionManagerXml extends AbstractManagerXml {
         return InstanceManager.getDefault(jmri.jmrit.logixng.StringActionManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultStringActionManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultStringActionManagerXml.class);
 }

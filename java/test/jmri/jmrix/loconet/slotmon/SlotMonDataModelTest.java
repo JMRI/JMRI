@@ -37,6 +37,6 @@ public class SlotMonDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SlotMonDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SlotMonDataModelTest.class);
 
 }

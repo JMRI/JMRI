@@ -40,7 +40,7 @@ public class SchemaTestBase {
      * @param path the path to this directory
      * @return the stream of files to process
      */
-    static protected Stream<Arguments> setTestFilesBelowThisPath(String path) {
+    protected static Stream<Arguments> setTestFilesBelowThisPath(String path) {
         ArrayList<Arguments> files = new ArrayList<>();
         // the following are just tested for schema pass/fail, not load/store
         files.addAll(getFiles(new File(path+"/valid"), true, true).collect(Collectors.toList()));

@@ -125,6 +125,6 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnStreamPortController.class);
+    private static final Logger log = LoggerFactory.getLogger(LnStreamPortController.class);
 
 }

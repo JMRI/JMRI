@@ -91,5 +91,5 @@ public class Pr1WinExportAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Pr1WinExportAction.class);
+    private static final Logger log = LoggerFactory.getLogger(Pr1WinExportAction.class);
 }

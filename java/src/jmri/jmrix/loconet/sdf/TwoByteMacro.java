@@ -24,7 +24,7 @@ public class TwoByteMacro extends SdfMacro {
         return 2;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         // always match
         return new TwoByteMacro(buff.getAtIndexAndInc(), buff.getAtIndexAndInc());
     }

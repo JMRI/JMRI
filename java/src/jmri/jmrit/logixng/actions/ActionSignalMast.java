@@ -19,11 +19,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionSignalMast extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private final LogixNG_SelectNamedBean<SignalMast> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class));
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.Aspect;
@@ -41,7 +41,7 @@ public class ActionSignalMast extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<SignalMast> _selectExampleNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class));
 
 
     public ActionSignalMast(String sys, String user)
@@ -393,24 +393,6 @@ public class ActionSignalMast extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -446,6 +428,6 @@ public class ActionSignalMast extends AbstractDigitalAction
         _selectExampleNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalMast.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalMast.class);
 
 }

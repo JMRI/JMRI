@@ -217,5 +217,5 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
         loadLogixNG_Data(lv, element);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableViewXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableViewXml.class);
 }

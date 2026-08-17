@@ -28,6 +28,6 @@ public class AutomatTableFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutomatTableFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AutomatTableFrameTest.class);
 
 }

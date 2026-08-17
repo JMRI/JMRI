@@ -408,6 +408,6 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     private String[] nodeTypes = {"--", "SMINI", "SUSIC", "CPNODE", "PiNODE"};
     private String[] pollStatus = {"ERROR", "IDLE", "POLLING", "TIMEOUT", "INIT"};
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRInetManagerFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRInetManagerFrame.class);
     
 }

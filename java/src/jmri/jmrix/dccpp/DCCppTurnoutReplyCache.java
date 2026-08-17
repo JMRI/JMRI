@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement a feedback message cache for DCC++ turnouts.
+ * Implement a feedback message cache for DCC-EX turnouts.
  *
  * @author Paul Bender Copyright (C) 2012
  * @author Mark Underwood Copyright (C) 2015
@@ -113,7 +113,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
         log.debug("Notified of timeout on message '{}'", msg);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class);
 
 }
 

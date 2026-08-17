@@ -47,7 +47,13 @@ class LayoutEditorComponent extends JComponent {
                         if (!clipBounds.equals(g2.getClipBounds())) {
                             //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
                             //        clipBounds, g2.getClipBounds());
-                            g2.setClip(clipBounds);
+                            // intersect, never replace: clipBounds is the visible part of
+                            // the panel, used here to cull drawing, while the incoming clip
+                            // is the area Swing actually asked for. Replacing it would draw
+                            // track outside the dirty region, on top of higher level icons
+                            // that are not being repainted, as the target panel is a
+                            // JLayeredPane and so is not paint-optimized.
+                            g2.clip(clipBounds);
                         }
                     }
                 }
@@ -727,5 +733,5 @@ class LayoutEditorComponent extends JComponent {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorComponent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorComponent.class);
 }

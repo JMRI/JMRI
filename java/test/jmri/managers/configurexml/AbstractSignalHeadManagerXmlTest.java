@@ -27,6 +27,6 @@ public class AbstractSignalHeadManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXmlTest.class);
 
 }

@@ -327,5 +327,5 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockLogger.class);
+    private static final Logger log = LoggerFactory.getLogger(RollingStockLogger.class);
 }

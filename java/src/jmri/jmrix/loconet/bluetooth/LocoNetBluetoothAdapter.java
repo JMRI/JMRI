@@ -136,7 +136,8 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         }
 
         if (!opened) {
-            ConnectionStatus.instance().setConnectionState(null, portName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
                 log.error("Exception when connecting to {}", portName);
                 return exception[0].getLocalizedMessage();
@@ -251,6 +252,6 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         return portNameVector;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
 
 }

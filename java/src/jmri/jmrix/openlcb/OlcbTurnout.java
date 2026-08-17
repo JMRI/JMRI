@@ -326,6 +326,6 @@ public final class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2, memo);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbTurnout.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbTurnout.class);
 
 }

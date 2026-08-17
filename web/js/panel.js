@@ -3,7 +3,7 @@
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
  *    If no parm "name" passed, page will list links to available panels.
- *	  Include parm protect=yes to treat panel as read-only
+ *    Include parm protect=yes to treat panel as read-only
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.
  *    There are 5 "widgetFamily"s: text, input, icon, drawn and switch.  States are handled by storing member's
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
@@ -456,6 +456,21 @@ function processPanelXML($returnedData, $success, $xhr) {
                             jmri.getTurnout($widget["systemName"]);
                             break;
                         case "turnouticon" :
+                            $widget['name'] = $widget.turnout; //normalize name
+                            $widget.jsonType = "turnout"; // JSON object type
+                            $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+                            $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
+                            $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
+                            $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            jmri.getTurnout($widget["systemName"]);
+                            break;
+                        case "outputindicator" :   
                             $widget['name'] = $widget.turnout; //normalize name
                             $widget.jsonType = "turnout"; // JSON object type
                             $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
@@ -2498,6 +2513,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "logixngicon" :
         case "linkinglabel" :
         case "turnouticon" :
+        case "outputindicator" :
         case "sensoricon" :
         case "LightIcon" :
         case "multisensoricon" :
@@ -3253,6 +3269,16 @@ function $drawTurnout($widget) {
     var $eraseColor = $gPanel.backgroundcolor;
     var $eraseWidth = $gPanel.mainlinetrackwidth;
  
+    //erase Unknown circle by saving and restoring the to-be-covered pixels
+    if ($widget.showunknown == "yes") {
+        halfsize = $gPanel.turnoutcirclesize * SIZE // circle size is radius, so this is half the copied/restored area
+        if (! isDefined($widget.unknownSnippet)) {  // first pass through, we capture the base image
+            $widget.unknownSnippet = $gCtx.getImageData($widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize, halfsize * 2, halfsize * 2);
+        } else {
+            $gCtx.putImageData($widget.unknownSnippet, $widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize);
+        }
+    }
+
     //set colors and widths based on connected segments and blocks
     var $colorA = $getLegColor($gWidgets[$widget.connectaname], $widget.blockname);
     var $colorB = $getLegColor($gWidgets[$widget.connectbname], 
@@ -3280,6 +3306,7 @@ function $drawTurnout($widget) {
     //turnout A--+--B
     //            \-C
     if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT || $widget.type == WYE_TURNOUT) {
+        
         //always draw from a to cen
         $drawLineP(a, cen, $colorA, $widthA); //a to cen
 
@@ -3424,6 +3451,15 @@ function $drawTurnout($widget) {
             }
         }
     }
+    
+    if (($widget.showunknown == "yes") && ($widget.state == UNKNOWN)) {
+        // draw the unknown indicator
+        // colors are hard to manipulate in JS, so we draw the circle as the track color
+        // and the text as the background color, assuming that this will have contrast
+        $fillCircle($widget.xcen * 1, $widget.ycen * 1, $gPanel.turnoutcirclesize * SIZE, $colorA);
+        $drawText($widget.xcen * 1, $widget.ycen * 1, "?", $eraseColor, $gPanel.turnoutcirclesize * SIZE * 2); // * 2 because circle size is radius
+    }
+
 }   // function $drawTurnout($widget)
 
 // compute width of turnout leg based on connected segment, then block type
@@ -4167,6 +4203,21 @@ function $plotBezier(points, depth, displacement) {
         // draw right side Bezier
         $plotBezier(rightPoints, depth + 1, displacement);
     }
+}
+
+function $drawText($px, $py, $text, $color, $size) {
+    $gCtx.save();   // save current line width and color
+
+    // set color
+    $gCtx.fillStyle = $color;
+
+    $gCtx.font = 'bold '+$size+'px Arial';
+
+    // center the text on x,y and draw
+    metrics = $gCtx.measureText($text);
+    $gCtx.fillText($text, $px-metrics.width/2, $py+(metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent)/2);
+
+    $gCtx.restore();        // restore color and font back to default
 }
 
 function $point_log(prefix, p) {

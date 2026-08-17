@@ -95,6 +95,6 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastItemPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalMastItemPanel.class);
 
 }

@@ -29,7 +29,7 @@ public class XmlFileTest {
 
     // file urls are relative to the 
     // program directory
-    final static String testFileDir = "java" + File.separator
+    static final String testFileDir = "java" + File.separator
             + "test" + File.separator
             + "jmri" + File.separator
             + "util" + File.separator

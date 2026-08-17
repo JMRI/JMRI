@@ -120,6 +120,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String LANDSCAPE = Bundle.getMessage("Landscape");
     public static final String HALFPAGE = Bundle.getMessage("HalfPage");
     public static final String HANDHELD = Bundle.getMessage("HandHeld");
+    public static final String RECEIPT = Bundle.getMessage("Receipt");
 
     public static final String PAGE_NORMAL = Bundle.getMessage("PageNormal");
     public static final String PAGE_PER_TRAIN = Bundle.getMessage("PagePerTrain");
@@ -160,6 +161,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String PICKUP_COMMENT = Bundle.getMessage("PickUp_Msg");
     public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
     public static final String LAST_TRAIN = Bundle.getMessage("LastTrain");
+    public static final String LAST_MOVED = Bundle.getMessage("LastMoved");
+    public static final String LAST_LOCATION = Bundle.getMessage("LastLocation");
     public static final String BLANK = " "; // blank has be a character or a space
     public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
     public static final String TAB2 = Bundle.getMessage("Tab2");
@@ -186,10 +189,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     private static final String[] CAR_ATTRIBUTES = { ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS,
             COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
-            BLOCKING_ORDER, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN};
+            BLOCKING_ORDER, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
     
     private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER,
-            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS, LAST_TRAIN};
+            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
     /*
      * The print Manifest and switch list user selectable options are stored in the
      * xml file using the English translations.
@@ -197,7 +200,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
             "HP", "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
             "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "Blocking_Order", "RWE", "Comment",
-            "SetOut_Msg", "PickUp_Msg", "Hazardous", "LastTrain", "Tab", "Tab2", "Tab3"};
+            "SetOut_Msg", "PickUp_Msg", "Hazardous", "LastTrain", "LastMoved", "LastLocation", "Tab", "Tab2", "Tab3"};
 
     private int scale = HO_SCALE; // Default scale
     private int ratio = HO_RATIO;
@@ -269,6 +272,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int tab1CharLength = Control.max_len_string_attibute;
     private int tab2CharLength = 6; // arbitrary lengths
     private int tab3CharLength = 8;
+    private int manifestTabLength = 4; // plus one space
 
     private String manifestFormat = STANDARD_FORMAT;
     private boolean manifestEditorEnabled = false; // when true use text editor to view build report
@@ -346,6 +350,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printHeaderLine1 = true; // when true add header line 1 to manifest and switch lists
     private boolean printHeaderLine2 = true; // when true add header line 2 to manifest and switch lists
     private boolean printHeaderLine3 = true; // when true add header line 3 to manifest and switch lists
+    private int horizontalLineAdjustment = 0;
 
     private boolean printCabooseLoad = false; // when true print caboose load
     private boolean printPassengerLoad = false; // when true print passenger car load
@@ -1058,6 +1063,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static boolean isPrintHeaderLine3Enabled() {
         return getDefault().printHeaderLine3;
     }
+    
+    public static void setHorizontalLineAdjustment(int value) {
+        getDefault().horizontalLineAdjustment = value;
+    }
+    
+    public static int getHorizontalLineAdjustment() {
+        return getDefault().horizontalLineAdjustment;
+    }
 
     public static void setPrintCabooseLoadEnabled(boolean enable) {
         getDefault().printCabooseLoad = enable;
@@ -1241,6 +1254,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void setTab3length(int length) {
         getDefault().tab3CharLength = length;
+    }
+    
+    public static int getManifestTabLength() {
+        return getDefault().manifestTabLength;
+    }
+
+    public static void setManifestTablength(int length) {
+        getDefault().manifestTabLength = length;
     }
 
     public static String getManifestFormat() {
@@ -1562,6 +1583,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         return format;
     }
+    
+    public static String[] getPickupEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackPickupMessageFormat(getPickupEngineMessageFormat());
+    }
 
     public static String[] getPickupTwoColumnByTrackManifestMessageFormat() {
         return createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
@@ -1588,6 +1613,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             }
         }
         return format;
+    }
+    
+    public static String[] getDropEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackDropMessageFormat(getDropEngineMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackManifestMessageFormat() {
@@ -1850,6 +1879,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(LANDSCAPE);
         box.addItem(HALFPAGE);
         box.addItem(HANDHELD);
+        box.addItem(RECEIPT);
         OperationsPanel.padComboBox(box, LANDSCAPE.length());
         return box;
     }
@@ -2111,6 +2141,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.LENGTH, Integer.toString(getTab1Length()));
         values.setAttribute(Xml.TAB2_LENGTH, Integer.toString(getTab2Length()));
         values.setAttribute(Xml.TAB3_LENGTH, Integer.toString(getTab3Length()));
+        values.setAttribute(Xml.MANIFEST_TAB_LENGTH, Integer.toString(getManifestTabLength()));
 
         e.addContent(values = new Element(Xml.MANIFEST));
         values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2149,6 +2180,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.PRINT_HEADER_LINE1, isPrintHeaderLine1Enabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADER_LINE2, isPrintHeaderLine2Enabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADER_LINE3, isPrintHeaderLine3Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.HORIZONTAL_LINE_ADJ, Integer.toString(getHorizontalLineAdjustment()));
 
         if (!getManifestLogoURL().equals(NONE)) {
             values = new Element(Xml.MANIFEST_LOGO);
@@ -2504,6 +2536,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String setting = a.getValue();
                 log.debug("missingCarFormat: {}", setting);
                 String[] keys = setting.split(",");
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setMissingCarMessageFormat(keys);
             }
@@ -2727,6 +2760,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                     log.error("Tab 3 length ({}) isn't a valid number", a.getValue());
                 }
             }
+            if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.MANIFEST_TAB_LENGTH)) != null) {
+                String length = a.getValue();
+                log.debug("Manifest tab length: {}", length);
+                try {
+                    setManifestTablength(Integer.parseInt(length));
+                } catch (NumberFormatException ee) {
+                    log.error("Manifest tab length ({}) isn't a valid number", a.getValue());
+                }
+            }
         }
         if ((operations.getChild(Xml.MANIFEST) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_LOC_COMMENTS)) != null) {
@@ -2857,6 +2899,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE3)) != null) {
                 String enable = a.getValue();
                 setPrintHeaderLine3Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.HORIZONTAL_LINE_ADJ)) != null) {
+                String number = a.getValue();
+                try {
+                    setHorizontalLineAdjustment(Integer.parseInt(number));
+                } catch (NumberFormatException ne) {
+                    log.error("Horizontal line adjustment isn't a number");
+                }
             }
         }
         // get manifest logo

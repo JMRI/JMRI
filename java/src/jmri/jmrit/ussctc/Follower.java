@@ -19,7 +19,7 @@ import jmri.implementation.DefaultRoute;
 public class Follower implements Constants {
 
     static String routePrefix = InstanceManager.getDefault(jmri.RouteManager.class).getSystemNamePrefix();
-    final static String namePrefix = routePrefix + ":" + commonNamePrefix + "FOLLOWER" + commonNameSuffix; // NOI18N
+    static final String namePrefix = routePrefix + ":" + commonNamePrefix + "FOLLOWER" + commonNameSuffix; // NOI18N
 
     /**
      * Nobody can build anonymous object

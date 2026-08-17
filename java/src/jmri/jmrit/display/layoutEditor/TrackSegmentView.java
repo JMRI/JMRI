@@ -66,7 +66,7 @@ public class TrackSegmentView extends LayoutTrackView {
     // temporary reference to the Editor that will eventually be part of View
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
-    final private TrackSegment trackSegment;
+    private final TrackSegment trackSegment;
 
     // temporary?
     @Nonnull
@@ -3811,5 +3811,5 @@ public class TrackSegmentView extends LayoutTrackView {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentView.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentView.class);
 }

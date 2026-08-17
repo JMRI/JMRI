@@ -32,10 +32,6 @@ public class ConsistComboBox extends JComboBox<Object> implements ConsistListLis
 
     private void init() {
         setToolTipText(Bundle.getMessage("ConsistAddressBoxToolTip"));
-        initConsistList();
-        setSelectedIndex(0);
-        setRenderer(new ConsistListCellRenderer());
-        consistManager.addConsistListListener(this);
         if (!consistMgrInitFromXmlFile) {
             try {
                 new ConsistFile().readFile();
@@ -43,8 +39,12 @@ public class ConsistComboBox extends JComboBox<Object> implements ConsistListLis
             } catch (IOException | JDOMException e) {
                 log.warn("error reading consist file: {}", e.getMessage());
             }
-            consistMgrInitFromXmlFile =true;
+            consistMgrInitFromXmlFile = true;
         }
+        initConsistList();
+        setSelectedIndex(0);
+        setRenderer(new ConsistListCellRenderer());
+        consistManager.addConsistListListener(this);
     }
             
     public void dispose() {

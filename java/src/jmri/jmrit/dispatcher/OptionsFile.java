@@ -319,7 +319,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("trustknownturnouts", "" + (dispatcher.getTrustKnownTurnouts() ? "yes" : "no"));
         options.setAttribute("useturnoutconnectiondelay", "" + (dispatcher.getUseTurnoutConnectionDelay() ? "yes" : "no"));
         options.setAttribute("useoccupiedtrackspeed", "" + (dispatcher.getUseOccupiedTrackSpeed() ? "yes" : "no"));
-        options.setAttribute("setStrictTrainTracking", "" + (dispatcher.getUseStrictTrainTracking() ? "yes" : "no"));
+        options.setAttribute("usestricttraintracking", "" + (dispatcher.getUseStrictTrainTracking() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));
@@ -380,5 +380,5 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionsFile.class);
+    private static final Logger log = LoggerFactory.getLogger(OptionsFile.class);
 }

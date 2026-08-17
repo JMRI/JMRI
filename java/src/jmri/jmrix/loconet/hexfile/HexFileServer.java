@@ -125,6 +125,6 @@ public class HexFileServer {
     }
     private LnHexFilePort port = null;
 
-    private final static Logger log = LoggerFactory.getLogger(HexFileServer.class);
+    private static final Logger log = LoggerFactory.getLogger(HexFileServer.class);
 
 }

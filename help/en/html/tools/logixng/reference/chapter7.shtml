@@ -121,6 +121,37 @@
 
       <p>Tables are described in <a href="chapter11.shtml">Chapter 11 - Tables</a>.</p>
 
+      <h2 id="memory_reference">Memory Tab</h2>
+
+      <p>When the Memory tab is selected, a dropdown list of memory variables is displayed.  The
+      selected memory variable is then used as the reference.  This is easier than correctly typing
+      <strong><em>{mem name}</em></strong> in the Reference tab text field.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter7/memory_reference_listen_option.png">
+        <img src="images/chapter7/memory_reference_listen_option.png"
+        alt="Chapter 7 memory reference listen option"></a>
+      </div>
+
+      <div class="noted" id="listenRemoved"><span class="since">since 5.17.2</span>
+        <p>The <strong>Memory</strong> tab <strong>Listen</strong>
+        option has been removed.</p>
+
+        <p>This option was never documented.  A common misunderstanding was that
+        <strong>Listen</strong> was used for the referenced object, such as a turnout.  It actually
+        listened for changes to the memory variable itself. A side effect is that the ConditionalNG
+        could be triggered by changing the memory variable <strong>value</strong> even though the
+        actual referenced object had not changed.</p>
+
+        <p>If it is necessary to respond to changes to the memory variable, create a LogixNG
+        dedicated to that activity.</p>
+
+        <p>The change affects various <em>Actions</em> and <em>Expressions</em> that support indirect
+        references using the <strong>Memory</strong> tab. The option will always be disabled in the
+        layout data xml files. The only possible impact is that memory variable events will no longer
+        trigger the ConditionalNG if <strong>Listen</strong> was previously enabled.</p>
+      </div>
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2 id="indirect_accessing">Indirect addressing of NamedBeans</h2>

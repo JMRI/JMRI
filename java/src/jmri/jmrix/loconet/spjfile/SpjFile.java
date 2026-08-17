@@ -344,7 +344,7 @@ public class SpjFile {
      */
     public class Header {
 
-        final static int HEADERSIZE = 128; // bytes
+        static final int HEADERSIZE = 128; // bytes
 
         int type;
         int handle;
@@ -712,6 +712,6 @@ public class SpjFile {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpjFile.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpjFile.class);
 
 }

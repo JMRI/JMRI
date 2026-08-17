@@ -416,7 +416,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     // this manager is loaded on demand.
     static TranspondingTagManager tagManager;
 
-    static public TranspondingTagManager getIdTagManager() {
+    public static TranspondingTagManager getIdTagManager() {
         synchronized (LocoNetSystemConnectionMemo.class) { // since tagManager can be null, can't synch on that
             if (tagManager == null) {
                 tagManager = new TranspondingTagManager();
@@ -472,6 +472,6 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);
 
 }

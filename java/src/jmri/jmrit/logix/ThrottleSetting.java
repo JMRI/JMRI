@@ -315,7 +315,7 @@ public class ThrottleSetting {
         return command;
     }
 
-    static protected CommandValue getValueFromString(Command command, String valueStr) throws JmriException {
+    protected static CommandValue getValueFromString(Command command, String valueStr) throws JmriException {
         if (command == null) {
             throw new jmri.JmriException(Bundle.getMessage("badCommand", "Command missing "+valueStr));
         }

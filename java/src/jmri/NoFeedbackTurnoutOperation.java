@@ -20,8 +20,8 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
     /*
      * Default values and constraints.
      */
-    static public final int defaultInterval = 300;
-    static public final int defaultMaxTries = 2;
+    public static final int defaultInterval = 300;
+    public static final int defaultMaxTries = 2;
 
     public NoFeedbackTurnoutOperation(String n, int i, int mt) {
         super(n, i, mt);
@@ -52,11 +52,11 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
         return defaultMaxTries;
     }
 
-    static public int getDefaultIntervalStatic() {
+    public static int getDefaultIntervalStatic() {
         return defaultInterval;
     }
 
-    static public int getDefaultMaxTriesStatic() {
+    public static int getDefaultMaxTriesStatic() {
         return defaultMaxTries;
     }
 

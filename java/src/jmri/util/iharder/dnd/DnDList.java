@@ -186,6 +186,6 @@ public class DnDList<E>
         }
     }   // end drop
 
-    private final static Logger log = LoggerFactory.getLogger(DnDList.class);
+    private static final Logger log = LoggerFactory.getLogger(DnDList.class);
 
 }   // end class DnDList

@@ -15,6 +15,6 @@ public class AutoSaveTest extends OperationsTestCase {
         AutoSave.stop();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutoSaveTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AutoSaveTest.class);
 
 }

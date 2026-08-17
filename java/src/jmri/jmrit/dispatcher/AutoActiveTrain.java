@@ -809,6 +809,9 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
+                        _previousBlock = _currentBlock;
+                        _nextBlock = getNextBlock(b, as);
+                        _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                         stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
                     }
                 }
@@ -827,6 +830,9 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
+                        _previousBlock = _currentBlock;
+                        _nextBlock = getNextBlock(b, as);
+                        _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                         stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
                     }
                 } else {

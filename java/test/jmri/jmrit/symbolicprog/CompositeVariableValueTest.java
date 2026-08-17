@@ -355,7 +355,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
         return testVar;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CompositeVariableValueTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CompositeVariableValueTest.class);
 
     @BeforeEach
     @Override

@@ -128,6 +128,6 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RenumberFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(RenumberFrame.class);
 
 }

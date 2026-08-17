@@ -109,6 +109,6 @@ public class CbusEventTableXmlFile extends XmlFile {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventTableXmlFile.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusEventTableXmlFile.class);
 
 }

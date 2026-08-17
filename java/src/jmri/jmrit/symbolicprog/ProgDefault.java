@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProgDefault {
 
-    static public String[] findListOfProgFiles() {
+    public static String[] findListOfProgFiles() {
         // create an array of file names from prefs/programmers, count entries
         int np = 0;
         String[] sp = {};
@@ -92,13 +92,13 @@ public class ProgDefault {
         return sbox;
     }
 
-    synchronized static public String getDefaultProgFile() {
+    synchronized public static String getDefaultProgFile() {
         return InstanceManager.getDefault(ProgrammerConfigManager.class).getDefaultFile();
     }
 
-    synchronized static public void setDefaultProgFile(String s) {
+    synchronized public static void setDefaultProgFile(String s) {
         InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(s);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDefault.class);
+    private static final Logger log = LoggerFactory.getLogger(ProgDefault.class);
 }

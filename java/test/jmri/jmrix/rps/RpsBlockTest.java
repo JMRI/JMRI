@@ -29,6 +29,6 @@ public class RpsBlockTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsBlockTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RpsBlockTest.class);
 
 }

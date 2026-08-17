@@ -95,6 +95,7 @@ public class AutoTrainsMultiBlockStopTest {
 
         // *******************************************************************************
         //  Here start left to right train fits in deepest block
+        //  Also tests train done, and block tracking during stop.
         // *******************************************************************************
         d.loadTrainFromTrainInfo("FWDREV40.xml");
 
@@ -165,6 +166,9 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
             }, "Failed To restart 3 sections clear");
+        // set train to not restart
+        at.setResetWhenDone(false);
+
         JUnitUtil.setBeanStateAndWait( sensorBlock6, Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait( sensorBlock7, Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait( sensorBlock5, Sensor.ACTIVE);
@@ -201,7 +205,8 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Should have stop on block 2 inactive.");
-
+        JUnitUtil.waitFor(waitInterval);
+        assertEquals("DONE",at.getStatusText(),"Train is not set as done");
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval/2);

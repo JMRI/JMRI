@@ -99,8 +99,8 @@ public abstract class AbstractMonPane extends JmriPanel {
     String autoScrollCheck = this.getClass().getName() + ".AutoScroll"; // NOI18N
     String filterFieldCheck = this.getClass().getName() + ".FilterField"; // NOI18N
 
-    // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
+    // to find and remember the log file. Public for script access
+    public final javax.swing.JFileChooser logFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
 
     public AbstractMonPane() {
         super();
@@ -205,7 +205,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            final private static String PATTERN = "[0-9a-fA-F ]*+"; // typing inserts individual characters
+            private static final String PATTERN = "[0-9a-fA-F ]*+"; // typing inserts individual characters
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,

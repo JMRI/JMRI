@@ -398,6 +398,6 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(PiSprog3EditNVPane.class);
+    private static final Logger log = LoggerFactory.getLogger(PiSprog3EditNVPane.class);
 
 }

@@ -167,7 +167,7 @@ public class PortNameMapper {
         }
 
     }
-        private final static Logger log = LoggerFactory.getLogger(PortNameMapper.class);
+        private static final Logger log = LoggerFactory.getLogger(PortNameMapper.class);
 
 
 }

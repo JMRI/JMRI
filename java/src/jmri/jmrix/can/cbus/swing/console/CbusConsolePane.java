@@ -28,7 +28,7 @@ import jmri.util.swing.TextAreaFIFO;
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
 
     static int console_instance_num;
-    static final private int MAX_LINES = 5000;
+    private static final int MAX_LINES = 5000;
 
     private final ConcurrentLinkedDeque<CbusConsoleLogEntry> logBuffer;
 
@@ -43,7 +43,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     protected final CbusConsolePacketPane packetPane;
     protected final CbusSendEventPane sendPane;
     protected CbusConsoleDecodeOptionsPane decodePane;
-    protected final CbusConsoleLoggingPane logPane;
+    protected CbusConsoleLoggingPane logPane;
     public final CbusConsoleDisplayOptionsPane displayPane;
 
     // members for handling the CBUS interface
@@ -56,7 +56,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         statsPane = new CbusConsoleStatsPane(this);
         packetPane = new CbusConsolePacketPane(this);
         sendPane = new CbusSendEventPane(this);
-        logPane = new CbusConsoleLoggingPane(this);
         displayPane = new CbusConsoleDisplayOptionsPane(this);
 
     }
@@ -99,8 +98,11 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public void dispose() {
-        if (decodePane!=null) {
+        if (decodePane!=null) { // initComponents called
             decodePane.dispose();
+        }
+        if (logPane!=null) { // initComponents called
+            logPane.dispose();
         }
         displayPane.dispose();
         statsPane.dispose();
@@ -123,7 +125,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     public void initComponents(CanSystemConnectionMemo memo, boolean launchEvTable) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
+        if ( tc == null ) {
+            throw new IllegalArgumentException("TC Should not be null for memo.getTrafficController() " + memo.getUserName()
+            + "" + memo.getTrafficController() + " on GUI Thread " + ThreadingUtil.isGUIThread());
+        }
         decodePane = new CbusConsoleDecodeOptionsPane(this);
+        logPane = new CbusConsoleLoggingPane(this);
         if (launchEvTable){
             memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
         }
@@ -317,7 +324,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("CbusConsoleTitle"),
@@ -327,5 +334,5 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsolePane.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsolePane.class);
 }

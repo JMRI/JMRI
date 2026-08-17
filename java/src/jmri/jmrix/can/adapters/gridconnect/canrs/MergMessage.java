@@ -105,5 +105,5 @@ public class MergMessage extends GridConnectMessage {
         log.error("Byte Index {} out of range 0-7 for MergMessage data payload", n, new IllegalArgumentException());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergMessage.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergMessage.class);
 }

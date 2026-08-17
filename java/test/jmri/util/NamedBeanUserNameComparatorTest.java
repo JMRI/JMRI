@@ -293,5 +293,5 @@ public class NamedBeanUserNameComparatorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NamedBeanUserNameComparatorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NamedBeanUserNameComparatorTest.class);
 }

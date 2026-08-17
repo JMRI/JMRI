@@ -25,7 +25,7 @@ public class ChannelStart extends SdfMacro {
         return 2;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         if ((buff.getAtIndex() & 0xFF) != 0x81) {
             return null;
         }

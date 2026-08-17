@@ -493,5 +493,5 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditor.class);
 }

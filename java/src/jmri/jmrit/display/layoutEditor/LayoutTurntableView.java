@@ -44,9 +44,9 @@ public class LayoutTurntableView extends LayoutTrackView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurntableEditor(layoutEditor);
     }
 
-    final private LayoutTurntable turntable;
+    private final LayoutTurntable turntable;
 
-    final public LayoutTurntable getTurntable() { return turntable; }
+    public final LayoutTurntable getTurntable() { return turntable; }
 
     /**
      * Get a string that represents this object. This should only be used for
@@ -1183,5 +1183,5 @@ public class LayoutTurntableView extends LayoutTrackView {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableView.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableView.class);
 }

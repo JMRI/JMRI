@@ -18,5 +18,5 @@ public class LayoutRHXOverEditorTest extends LayoutXOverEditorTest {
         Assertions.assertNotNull(t);
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHOXOverEditorTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHOXOverEditorTest.class);
 }

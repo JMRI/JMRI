@@ -49,6 +49,6 @@ public class MergSD2SignalHeadTest extends AbstractSignalHeadTestBase {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadTest.class);
+    //private static final Logger log = LoggerFactory.getLogger(MergSD2SignalHeadTest.class);
 
 }

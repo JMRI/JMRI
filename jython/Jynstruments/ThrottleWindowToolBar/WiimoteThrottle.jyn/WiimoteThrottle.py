@@ -53,7 +53,7 @@ import java.util
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.beans.PropertyChangeListener as PropertyChangeListener
-import jmri.jmrit.throttle.AddressListener as AddressListener
+import jmri.jmrit.throttle.interfaces.AddressListener as AddressListener
 import javax.swing.Timer as Timer
 import java.awt.event.ActionListener as ActionListener
 import java.util.Calendar as Calendar
@@ -213,15 +213,15 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.addressPanel=self.getContext().getCurrentThrottleFrame().getAddressPanel();
+        self.addressPanel=self.getContext().getCurentThrottleController().getAddressPanel();
         self.addressPanel.addAddressListener(self) # change of throttle in Current frame
-        self.throttle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        self.throttle = self.getContext().getCurentThrottleController().getAddressPanel().getThrottle() # the throttle
         self.speedAction =  SpeedAction()  #Speed increase thread
         self.speedAction.setThrottle( self.throttle )
         self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
         self.speedTimer.setRepeats(True)
-        self.label = JButton(ImageIcon(self.getFolder() + "/WiimoteThrottle.png","WiiMote")) #label
-        self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
+            self.label = JButton(ImageIcon(self.getFolder() + "/WiimoteThrottle.png","WiiMote")) #label
+            self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         self.add(self.label)
         self.lastTimeButton1 = Calendar.getInstance().getTimeInMillis()
         self.lastTimeButton2 = Calendar.getInstance().getTimeInMillis()

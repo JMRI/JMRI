@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -8,11 +7,9 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -23,31 +20,31 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertTrue(("[5f8] 99 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        assertEquals("[5f8] 99 00 00 00 01",tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
     }
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertTrue(("[5f8] 98 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        assertEquals("[5f8] 98 00 00 00 01",tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
     }
 
     @Override
     public int numListeners() {
         return tcis.numListeners();
     }
-    
+
     public void checkNoMsgSent(int previousSize) {
-        Assert.assertTrue( previousSize == tcis.outbound.size() );
+        assertEquals( previousSize,tcis.outbound.size() );
     }
-    
+
     public void checkStatusRequestMsgSent() {
-        Assert.assertTrue(("[5f8] 9A 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
-    }    
+        assertEquals("[5f8] 9A 00 00 00 01",tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+    }
 
     public void checkLongStatusRequestMsgSent() {
-        Assert.assertTrue(("[5f8] 92 30 39 D4 31").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
-    } 
-    
+        assertEquals("[5f8] 92 30 39 D4 31",tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+    }
+
     @Test
     @Override
     public void testRequestUpdate() {
@@ -60,141 +57,140 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         checkLongStatusRequestMsgSent();
 
     }
-    
+
     @Test
     public void testRequestUpdateSensors() {
-        
+
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
         jmri.InstanceManager.setDefault(jmri.SensorManager.class,new CbusSensorManager(memo));
 
         t.requestUpdateFromLayout();
-        Assert.assertEquals(1,tcis.outbound.size());
+        assertEquals(1,tcis.outbound.size());
         tcis.outbound.clear();
 
-        Assertions.assertDoesNotThrow( () -> {
-            t.provideFirstFeedbackSensor("MS+54321");
-        });
+        assertDoesNotThrow( () ->
+            t.provideFirstFeedbackSensor("MS+54321"));
         t.setFeedbackMode("ONESENSOR");
         t.requestUpdateFromLayout();
-        Assert.assertEquals(2,tcis.outbound.size());
+        assertEquals(2,tcis.outbound.size());
         tcis.outbound.clear();
 
-        Assertions.assertDoesNotThrow( () -> {
-            t.provideSecondFeedbackSensor("MS+4545");
-        });
+        assertDoesNotThrow( () ->
+            t.provideSecondFeedbackSensor("MS+4545"));
         t.setFeedbackMode("TWOSENSOR");
         t.requestUpdateFromLayout();
-        Assert.assertEquals(3,tcis.outbound.size());
+        assertEquals(3,tcis.outbound.size());
         memo.dispose();
-    }    
+    }
 
     @Test
     public void testNullEvent() {
-        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> { t = new CbusTurnout("MT",null,tcis); });
-        
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+            t = new CbusTurnout("MT",null,tcis); });
+
         // On Java 11 and below, the message is null.
         // On Java 17 and above, the message is text.
         boolean messageIsCorrect = ex.getMessage() == null
                 || "Cannot invoke \"java.lang.CharSequence.length()\" because \"this.text\" is null".equals(ex.getMessage());
-        Assertions.assertTrue(messageIsCorrect);
+        assertTrue(messageIsCorrect);
     }
-    
+
     @Test
     public void testCTorShortEventSingle() {
         t = new CbusTurnout("MT","+7",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
 
     @Test
     public void testCTorShortEventSinglePlus() {
         t = new CbusTurnout("MT","+2",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
 
     @Test
     public void testCTorShortEventSingleMinus() {
         t = new CbusTurnout("MT","-2",tcis);
-        Assert.assertNotNull("exists",t);
-    }    
-    
+        assertNotNull(t,"exists");
+    }
+
     @Test
     public void testCTorShortEventDouble() {
         t = new CbusTurnout("MT","+1;-1",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
-    
-    
+
+
     @Test
     public void testLongEventSingleNoN() {
         t = new CbusTurnout("MT","+654e321",tcis);
-        Assert.assertNotNull("exists",t);
-    }    
+        assertNotNull(t,"exists");
+    }
 
     @Test
     public void testLongEventDoubleNoN() {
         t = new CbusTurnout("MT","-654e321;+123e456",tcis);
-        Assert.assertNotNull("exists",t);
-    }    
-    
+        assertNotNull(t,"exists");
+    }
+
     @Test
     public void testCTorLongEventSingle() {
         t = new CbusTurnout("MT","+n654e321",tcis);
-        Assert.assertNotNull("exists",t);
-    }    
-    
+        assertNotNull(t,"exists");
+    }
+
     @Test
     public void testCTorLongEventDouble() {
         t = new CbusTurnout("MT","+N299E17;-N123E456",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
-    
+
     @Test
     public void testCTorHexEventJustOpsCode() {
         t = new CbusTurnout("MT","X04;X05",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
 
     @Test
     public void testCTorHexEventOneByte() {
         t = new CbusTurnout("MT","X2301;X30FF",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
-    
+
     @Test
     public void testCTorHexEventTwoByte() {
         t = new CbusTurnout("MT","X410001;X56FFFF",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
 
     @Test
     public void testCTorHexEventThreeByte() {
         t = new CbusTurnout("MT","X6000010001;X72FFFFFF",tcis);
-        Assert.assertNotNull("exists",t);
-    }    
-    
+        assertNotNull(t,"exists");
+    }
+
     @Test
     public void testCTorHexEventFourByte() {
         t = new CbusTurnout("MT","X9000010001;X91FFFFFFFF",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
-    
+
     @Test
     public void testCTorHexEventFiveByte() {
         t = new CbusTurnout("MT","XB00D60010001;XB1FFFAAFFFFF",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
 
     @Test
     public void testCTorHexEventSixByte() {
         t = new CbusTurnout("MT","XD00D0060010001;XD1FFFAAAFFFFFE",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
-    
+
     @Test
     public void testCTorHexEventSevenByte() {
         t = new CbusTurnout("MT","XF00D0A0600100601;XF1FFFFAAFAFFFFFE",tcis);
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t,"exists");
     }
 
     @Test
@@ -208,8 +204,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(2, 0x00);
         m2.setElement(3, 0x00);
         m2.setElement(4, 0x07);
-        Assert.assertTrue("equals same", m1.equals(m2));
-        
+        assertEquals(m1,m2,"equals same");
+
     }
 
     @Test
@@ -223,8 +219,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(2, 0x00);
         m2.setElement(3, 0x00);
         m2.setElement(4, 0x07);
-        Assert.assertTrue("equals same", m1.equals(m2));
-        
+        assertEquals(m1,m2,"equals same");
+
     }
 
     @Test
@@ -238,8 +234,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(2, 0x31);
         m2.setElement(3, 0x30);
         m2.setElement(4, 0x39);
-        Assert.assertTrue("equals same", m1.equals(m2));
-        
+        assertEquals(m1,m2,"equals same");
+
     }
 
     @Test
@@ -253,10 +249,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(2, 0x31);
         m2.setElement(3, 0x30);
         m2.setElement(4, 0x39);
-        Assert.assertTrue("equals same", m1.equals(m2));
+        assertEquals(m1,m2,"equals same");
         m2.setElement(0, 0x90); // ACON OPC
-        Assert.assertFalse("not equals same", m1.equals(m2));
-        
+        assertNotEquals(m1,m2,"not equals same");
     }
 
     @Test
@@ -271,8 +266,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(2, 0x31);
         m2.setElement(3, 0x30);
         m2.setElement(4, 0x39);
-        Assert.assertTrue("equals same", m1.equals(m2));
-        
+        assertEquals(m1,m2,"equals same");
+
     }
 
     @Test
@@ -287,8 +282,8 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m2.setElement(2, 0x31);
         m2.setElement(3, 0x30);
         m2.setElement(4, 0x39);
-        Assert.assertTrue("equals same", m1.equals(m2));
-        
+        assertEquals(m1,m2,"equals same");
+
     }
 
     @Test
@@ -302,25 +297,25 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getKnownState() == Turnout.UNKNOWN); 
-        
+        assertEquals(Turnout.UNKNOWN,t.getKnownState());
+
         m.setElement(0, 0x90); // ACON OPC
         ((CbusTurnout)t).message(m);
         int val1 = t.getCommandedState();
-        Assert.assertTrue("turnout closed via canmessage",( val1 == Turnout.THROWN ) );
-        
+        assertEquals(Turnout.THROWN,val1,"turnout closed via canmessage");
+
         m.setElement(0, 0x91); // ACOF OPC
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
         t.setInverted(true);
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
-        
+        assertEquals(Turnout.THROWN,t.getCommandedState());
+
         m.setElement(0, 0x90); // ACON OPC
         t.setInverted(true);
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
     }
 
     @Test
@@ -334,24 +329,24 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.UNKNOWN);        
-        
+        assertEquals(Turnout.UNKNOWN,t.getCommandedState());
+
         r.setElement(0, 0x90); // ACON OPC
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
-        
+        assertEquals(Turnout.THROWN,t.getCommandedState());
+
         r.setElement(0, 0x91); // ACOF OPC
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
         t.setInverted(true);
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
-        
+        assertEquals(Turnout.THROWN,t.getCommandedState());
+
         r.setElement(0, 0x90); // ACON OPC
         t.setInverted(true);
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
 
     }
 
@@ -367,31 +362,31 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.UNKNOWN);        
-        
+        assertEquals(Turnout.UNKNOWN,t.getCommandedState());
+
         m.setElement(0, 0x98); // ASON OPC
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
-        
+        assertEquals(Turnout.THROWN,t.getCommandedState());
+
         m.setElement(0, 0x99); // ASOF OPC
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
         m.setElement(0, 0x98); // ASON OPC
         m.setExtended(true);
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
         m.setRtr(true);
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
         m.setExtended(false);
         ((CbusTurnout)t).message(m);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
     }
-    
+
     // with presence of node number should still resolve to short event turnout due to opc
     @Test
     public void testTurnoutCanReplyShortEvWithNode() throws jmri.JmriException {
@@ -404,27 +399,27 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.UNKNOWN);        
-        
+        assertEquals(Turnout.UNKNOWN,t.getCommandedState());
+
         r.setElement(0, 0x98); // ASON OPC
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
-        
+        assertEquals(Turnout.THROWN,t.getCommandedState());
+
         r.setElement(0, 0x99); // ASOF OPC
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
+
         r.setElement(0, 0x98); // ASON OPC
         r.setExtended(true);
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
         r.setExtended(false);
         r.setRtr(true);
         ((CbusTurnout)t).reply(r);
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
     }
 
     @Test
@@ -437,33 +432,33 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(2, 0x31);
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
-        
+
         t.setFeedbackMode("DELAYED");
         Assertions.assertEquals(Turnout.UNKNOWN, t.getKnownState());
-        
+
         ((CbusTurnout)t).message(m);
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); }, 
+        JUnitUtil.waitFor(()-> t.getKnownState() == Turnout.INCONSISTENT,
                 "Turnout message goes to INCONSISTENT before THROWN");
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, 
+        JUnitUtil.waitFor(()-> t.getKnownState() == Turnout.THROWN,
                 "Turnout.THROWN after delay");
-        
+
         m.setElement(0, 0x91); // ACOF OPC
         ((CbusTurnout)t).message(m);
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); }, 
+        JUnitUtil.waitFor(()-> t.getKnownState() == Turnout.INCONSISTENT,
                 "Turnout message goes to INCONSISTENT before CLOSED");
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
+        JUnitUtil.waitFor(()-> t.getKnownState() == Turnout.CLOSED,
                 "Turnout.CLOSED after delay");
-        
+
     }
-    
-    
+
+
     @Test
     public void testDelayedTurnoutThrownCanReply() throws jmri.JmriException {
-        
+
         t = new CbusTurnout("MT","+N54321E12345",tcis);
         t.setFeedbackMode("DELAYED");
         Assertions.assertEquals(Turnout.UNKNOWN, t.getKnownState());
-        
+
         CanReply m = new CanReply(tcis.getCanid());
         m.setNumDataElements(5);
         m.setElement(0, 0x90); // ACON OPC
@@ -471,21 +466,21 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         m.setElement(2, 0x31);
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
-        
+
         ((CbusTurnout)t).reply(m);
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); },
-            "thrown Turnout.INCONSISTENT didn't happen"); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, 
+        JUnitUtil.waitFor(()-> t.getKnownState() == Turnout.INCONSISTENT,
+            "thrown Turnout.INCONSISTENT didn't happen");
+        JUnitUtil.waitFor(()-> t.getKnownState() == Turnout.THROWN,
             "Turnout.THROWN didn't happen after delayed feedback");
 
     }
-    
+
     @Test
     public void testDelayedTurnoutClosedCanReply() throws jmri.JmriException {
-        
+
         t = new CbusTurnout("MT","+N54321E12345",tcis);
         t.setFeedbackMode("DELAYED");
-        
+
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
         r.setElement(0, 0x91); // ACOF OPC
@@ -493,20 +488,20 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r.setElement(2, 0x31);
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
-        
+
         ((CbusTurnout)t).reply(r);
         JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.INCONSISTENT); },
-            "closed Turnout.INCONSISTENT didn't happen"); 
-        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, 
+            "closed Turnout.INCONSISTENT didn't happen");
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); },
             " Turnout.CLOSED didn't happen after delayed feedback");
-        
+
     }
 
     @Test
     public void testQueryTurnoutFromCbus() throws jmri.JmriException {
-        
+
         t = new CbusTurnout("MT","+N54321E12345",tcis);
-        
+
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
         r.setElement(0, CbusConstants.CBUS_ACOF);
@@ -514,64 +509,68 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r.setElement(2, 0x31);
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
-        
+
         ((CbusTurnout)t).reply(r); // turnout will be closed off
-        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,t.getCommandedState());
+
         r.setElement(0, CbusConstants.CBUS_AREQ);
         ((CbusTurnout)t).reply(r); // turnout will be receive event status request
-        
-        Assert.assertEquals("AROF Request response sent","[5f8] 94 D4 31 30 39",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        
+
+        assertEquals("[5f8] 94 D4 31 30 39",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "AROF Request response sent");
+
         r.setElement(0, CbusConstants.CBUS_ACON);
         ((CbusTurnout)t).reply(r); // turnout will be thrown on
-        
+
         r.setElement(0, CbusConstants.CBUS_AREQ);
         ((CbusTurnout)t).reply(r); // turnout will be receive event status request
-        
-        Assert.assertEquals("ARON Request response sent","[5f8] 93 D4 31 30 39",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        
+
+        assertEquals("[5f8] 93 D4 31 30 39",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "ARON Request response sent");
+
         CbusTurnout tSplit = new CbusTurnout("MT","+5;-7",tcis);
-        
+
         r.setElement(0, CbusConstants.CBUS_ASON);
         r.setElement(1, 0x00);
         r.setElement(2, 0x00);
         r.setElement(3, 0x00);
         r.setElement(4, 0x05);
-        
+
         tSplit.reply(r); // turnout will be thrown on
-        
-        Assert.assertTrue(tSplit.getCommandedState() == Turnout.THROWN);
-        
+
+        assertEquals(Turnout.THROWN,tSplit.getCommandedState());
+
         r.setElement(0, CbusConstants.CBUS_AREQ);
         tSplit.reply(r); // turnout will be receive event status LONG request
-        
-        Assert.assertEquals("ARSON Request response sent","[5f8] 9D 00 00 00 05",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        
+
+        assertEquals("[5f8] 9D 00 00 00 05",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "ARSON Request response sent");
+
         // turnout will be receive event status request for 2nd half of split, the incorrect side
         int size = tcis.outbound.size();
         r.setElement(4, 0x07);
         tSplit.reply(r);
-        Assert.assertTrue("No response sent", size == tcis.outbound.size());
-        
+        assertEquals(size, tcis.outbound.size(), "No response sent");
+
         r.setElement(0, CbusConstants.CBUS_ASOF); // turnout will be thrown off
         tSplit.reply(r);
-        Assert.assertTrue(tSplit.getCommandedState() == Turnout.CLOSED);
-        
+        assertEquals(Turnout.CLOSED,tSplit.getCommandedState());
+
         r.setElement(0, CbusConstants.CBUS_ASRQ);
         r.setElement(4, 0x05);
         tSplit.reply(r); // turnout will be receive event status SHORT request
-        
-        Assert.assertEquals("ARSOF Request response sent","[5f8] 9E 00 00 00 05",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        
+
+        assertEquals("[5f8] 9E 00 00 00 05",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "ARSOF Request response sent");
+
         tSplit.dispose();
 
     }
-    
+
     private TrafficControllerScaffold tcis;
 
     @BeforeEach
@@ -593,5 +592,5 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.tearDown();
 
     }
-    // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusTurnoutTest.class);
 }

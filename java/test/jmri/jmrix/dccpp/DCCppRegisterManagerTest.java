@@ -27,6 +27,6 @@ public class DCCppRegisterManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppRegisterManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppRegisterManagerTest.class);
 
 }

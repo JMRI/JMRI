@@ -44,9 +44,9 @@ public class LayoutTraverserView extends LayoutTrackView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTraverserEditor(layoutEditor);
     }
 
-    final private LayoutTraverser traverser;
+    private final LayoutTraverser traverser;
 
-    final public LayoutTraverser getTraverser() { return traverser; }
+    public final LayoutTraverser getTraverser() { return traverser; }
 
     /**
      * Get a string that represents this object. This should only be used for
@@ -813,5 +813,5 @@ public class LayoutTraverserView extends LayoutTrackView {
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserView.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserView.class);
 }

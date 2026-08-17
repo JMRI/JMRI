@@ -82,7 +82,7 @@ public enum SpeedStepMode {
      * @return matching SpeedStepMode
      * @throws IllegalArgumentException if name does not correspond to a valid speed step mode.
      */
-    static public SpeedStepMode getByName(String name) {
+    public static SpeedStepMode getByName(String name) {
         for (SpeedStepMode s : SpeedStepMode.values()) {
             if (s.name.equals(name)) {
                 return s;
@@ -98,7 +98,7 @@ public enum SpeedStepMode {
      * @return matching SpeedStepMode
      * @throws IllegalArgumentException if name does not correspond to a valid speed step mode.
      */
-    static public SpeedStepMode getByDescription(String name) {
+    public static SpeedStepMode getByDescription(String name) {
         for (SpeedStepMode s : SpeedStepMode.values()) {
             if (s.description.equals(name)) {
                 return s;
@@ -107,7 +107,7 @@ public enum SpeedStepMode {
         throw new IllegalArgumentException("Invalid speed step mode: " + name);
     }
 
-    static public EnumSet<SpeedStepMode> getCompatibleModes(
+    public static EnumSet<SpeedStepMode> getCompatibleModes(
             EnumSet<SpeedStepMode> command_station_modes,
             EnumSet<SpeedStepMode> decoder_modes) {
         EnumSet<SpeedStepMode> result = command_station_modes.clone();
@@ -115,14 +115,14 @@ public enum SpeedStepMode {
         return result;
     }
 
-    static public SpeedStepMode bestCompatibleMode(
+    public static SpeedStepMode bestCompatibleMode(
             EnumSet<SpeedStepMode> command_station_modes,
             EnumSet<SpeedStepMode> decoder_modes) {
         EnumSet<SpeedStepMode> result = getCompatibleModes(command_station_modes, decoder_modes);
         return bestMode(result);
     }
 
-    static public SpeedStepMode bestMode(EnumSet<SpeedStepMode> modes) {
+    public static SpeedStepMode bestMode(EnumSet<SpeedStepMode> modes) {
         if(modes.contains(NMRA_DCC_128)) {
             return NMRA_DCC_128;
         } else if(modes.contains(TMCC1_32)) {
@@ -139,7 +139,7 @@ public enum SpeedStepMode {
         return UNKNOWN;
     }
 
-    static public EnumSet<SpeedStepMode> getCompatibleModesForProtocol(LocoAddress.Protocol protocol) {
+    public static EnumSet<SpeedStepMode> getCompatibleModesForProtocol(LocoAddress.Protocol protocol) {
         switch (protocol) {
             case DCC:
             case DCC_LONG:

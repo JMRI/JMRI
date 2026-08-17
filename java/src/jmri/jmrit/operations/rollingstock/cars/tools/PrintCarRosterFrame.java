@@ -583,5 +583,5 @@ public class PrintCarRosterFrame extends OperationsFrame {
                         1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCarRosterFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintCarRosterFrame.class);
 }

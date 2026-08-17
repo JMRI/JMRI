@@ -26,6 +26,6 @@ public class StoreAndCompareDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StoreAndCompareDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StoreAndCompareDialogTest.class);
 
 }

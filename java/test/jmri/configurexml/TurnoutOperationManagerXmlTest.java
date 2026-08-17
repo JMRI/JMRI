@@ -27,6 +27,6 @@ public class TurnoutOperationManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXmlTest.class);
 
 }

@@ -41,7 +41,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  */
 public class JUnitOperationsUtil {
 
-    private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+    private static final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     /**
      * Setup the operations test file names and test locations.
@@ -752,5 +752,5 @@ public class JUnitOperationsUtil {
         sm.deregister(operationShutdownTask);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
+    // private static final Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
 }

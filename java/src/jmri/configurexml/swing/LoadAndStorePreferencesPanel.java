@@ -28,6 +28,7 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
     private JCheckBox _excludeJmriVersionCheckBox;
     private JCheckBox _excludeTimebaseCheckBox;
     private JCheckBox _excludeFontExtensionsCheckBox;
+    private JCheckBox _shortenLayoutEditorWritesCheckBox;
 
     public LoadAndStorePreferencesPanel() {
         _preferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
@@ -53,6 +54,7 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         _preferences.setExcludeJmriVersion(_excludeJmriVersionCheckBox.isSelected());
         _preferences.setExcludeTimebase(_excludeTimebaseCheckBox.isSelected());
         _preferences.setExcludeFontExtensions(_excludeFontExtensionsCheckBox.isSelected());
+        _preferences.setShortenLayoutEditorWrites(_shortenLayoutEditorWritesCheckBox.isSelected());
         return didSet;
     }
 
@@ -77,6 +79,9 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         _excludeFontExtensionsCheckBox = new JCheckBox(Bundle.getMessage("ExcludeFontExtensions"));
         _excludeFontExtensionsCheckBox.setSelected(_preferences.isExcludeFontExtensions());
 
+        _shortenLayoutEditorWritesCheckBox = new JCheckBox(Bundle.getMessage("ShortenLayoutEditorWrites"));
+        _shortenLayoutEditorWritesCheckBox.setSelected(_preferences.isShortenLayoutEditorWrites());
+
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
 //        gridPanel.add(new JLabel());
         gridPanel.add(infoLabel);
@@ -86,6 +91,7 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         gridPanel.add(_excludeFileHistoryCheckBox);
         gridPanel.add(_excludeTimebaseCheckBox);
         gridPanel.add(_excludeFontExtensionsCheckBox);
+        gridPanel.add(_shortenLayoutEditorWritesCheckBox);
 //        gridPanel.add(new jmri.swing.JTitledSeparator(Bundle.getMessage("IgnoreSeparator")));
 
         JPanel panel = new JPanel();

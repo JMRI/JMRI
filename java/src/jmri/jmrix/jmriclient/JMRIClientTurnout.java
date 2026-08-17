@@ -56,7 +56,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     }
 
     //Set the mode information for JMRIClient Turnouts.
-    synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
+    synchronized private static void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
         // if it hasn't been done already, create static arrays to hold
         // the JMRIClient specific feedback information.
         if (modeNames == null) {
@@ -163,6 +163,6 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     public void message(JMRIClientMessage m) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(JMRIClientTurnout.class);
 
 }

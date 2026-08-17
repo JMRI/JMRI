@@ -17,6 +17,6 @@ public class JsonManifestTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonManifestTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JsonManifestTest.class);
 
 }

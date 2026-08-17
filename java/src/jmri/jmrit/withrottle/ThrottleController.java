@@ -749,6 +749,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         return SpeedStepMode.getByName(mode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleController.class);
+    private static final Logger log = LoggerFactory.getLogger(ThrottleController.class);
 
 }

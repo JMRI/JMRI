@@ -51,5 +51,5 @@ public class Dcc4PcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgr
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammerTest.class);
 }

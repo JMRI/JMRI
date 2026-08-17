@@ -399,6 +399,6 @@ public class CbusNodeBackupsPane extends CbusNodeConfigTab implements TableModel
         nodeOfInterest.removePropertyChangeListener(cbusNodeBackupTableModel);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeBackupsPane.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeBackupsPane.class);
     
 }

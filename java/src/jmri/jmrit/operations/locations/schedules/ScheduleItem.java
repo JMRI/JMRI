@@ -6,8 +6,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
@@ -16,7 +15,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2014
  */
-public class ScheduleItem extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
+public class ScheduleItem extends PropertyChangeSupport {
 
     public static final String NONE = ""; // NOI18N
 
@@ -48,8 +47,7 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public static final String DISPOSE = "scheduleItemDispose"; // NOI18N
 
     /**
-     *
-     * @param id ScheduleItem string id
+     * @param id   ScheduleItem string id
      * @param type car type for schedule
      */
     public ScheduleItem(String id, String type) {
@@ -86,17 +84,19 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
         _random = value;
         firePropertyChange("scheduleItemRandomValueChanged", old, value); // NOI18N
     }
-    
+
     /**
      * Method determines by random if a car is accepted by a scheduleItem
      * 
      * @return true if car is accepted by the scheduleItem
      */
     public boolean doRandom() {
-        // make an adjustment based on the number of cars of a given type
-        int numberOfCars = InstanceManager.getDefault(CarManager.class).getByTypeList(getTypeName()).size();
-        int adjustment = 100 + numberOfCars;
-        _calculatedRandom = adjustment * Math.random();
+        // make an adjustment based on the number of passes
+        int passes = 1;
+        if (Setup.isBuildAggressive()) {
+            passes = Setup.getNumberPasses();
+        }
+        _calculatedRandom = 100 * passes * Math.random();
         try {
             int value = Integer.parseInt(getRandom());
             log.debug("Selected random {}, created random {}", getRandom(), _calculatedRandom);
@@ -108,9 +108,9 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
         }
         return false;
     }
-    
+
     double _calculatedRandom;
-    
+
     public double getCalculatedRandom() {
         return _calculatedRandom;
     }
@@ -118,7 +118,7 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public String getSetoutTrainScheduleId() {
         return _setoutTrainScheduleId;
     }
-    
+
     public String getSetoutTrainScheduleName() {
         String name = "";
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
@@ -138,7 +138,7 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public String getPickupTrainScheduleId() {
         return _pickupTrainScheduleId;
     }
-    
+
     public String getPickupTrainScheduleName() {
         String name = "";
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
@@ -252,15 +252,7 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public void setDestination(Location destination) {
         Location old = _destination;
         _destination = destination;
-        String oldName = "null"; // NOI18N
-        if (old != null) {
-            oldName = old.getName();
-        }
-        String newName = "null"; // NOI18N
-        if (_destination != null) {
-            newName = _destination.getName();
-        }
-        firePropertyChange(DESTINATION_CHANGED_PROPERTY, oldName, newName);
+        firePropertyChange(DESTINATION_CHANGED_PROPERTY, old, destination);
     }
 
     public String getDestinationName() {
@@ -284,15 +276,7 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public void setDestinationTrack(Track track) {
         Track old = _trackDestination;
         _trackDestination = track;
-        String oldName = "null"; // NOI18N
-        if (old != null) {
-            oldName = old.getName();
-        }
-        String newName = "null"; // NOI18N
-        if (_trackDestination != null) {
-            newName = _trackDestination.getName();
-        }
-        firePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, oldName, newName);
+        firePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
     }
 
     public String getDestinationTrackName() {
@@ -316,8 +300,8 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public String getComment() {
         return _comment;
     }
-    
-    public void copyScheduleItem (ScheduleItem si) {
+
+    public void copyScheduleItem(ScheduleItem si) {
         setComment(si.getComment());
         setCount(si.getCount());
         setDestination(si.getDestination());
@@ -422,14 +406,6 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
         return e;
     }
 
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.SHOW_PROPERTY) {
-            log.debug("ScheduleItem ({}) id ({}) sees property change: ({}) old: ({}) new: ({})", getTypeName(),
-                    getId(), e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
-        }
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(ScheduleItem.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduleItem.class);
 
 }

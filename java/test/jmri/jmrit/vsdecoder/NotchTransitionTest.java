@@ -16,7 +16,7 @@ import org.junit.jupiter.api.*;
 public class NotchTransitionTest {
 
     private NotchTransition uut = null;
-    private final static String FILENAME = "java/test/jmri/jmrit/vsdecoder/test.wav";
+    private static final String FILENAME = "java/test/jmri/jmrit/vsdecoder/test.wav";
 
     @Test
     public void testCreateFull() {

@@ -24,6 +24,6 @@ public class ItemDialogTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ItemDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ItemDialogTest.class);
 
 }

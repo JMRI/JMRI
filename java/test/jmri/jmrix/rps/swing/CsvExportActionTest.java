@@ -32,6 +32,6 @@ public class CsvExportActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CsvExportActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CsvExportActionTest.class);
 
 }

@@ -65,7 +65,7 @@ public class Log4JUtil {
      * </ul>
      *
      */
-    static public void initLogging() {
+    public static void initLogging() {
         initLogging(System.getProperty(SYS_PROP_LCF_LOCATION, DEFAULT_LCF_NAME));
     }
 
@@ -77,7 +77,7 @@ public class Log4JUtil {
      *
      * @param controlfile the logging control file
      */
-    static public void initLogging(@Nonnull String controlfile) {
+    public static void initLogging(@Nonnull String controlfile) {
         initLog4J(controlfile);
     }
 
@@ -153,7 +153,7 @@ public class Log4JUtil {
 
     @SuppressWarnings("unchecked")
     @Nonnull
-    static public String startupInfo(@Nonnull String program) {
+    public static String startupInfo(@Nonnull String program) {
         log.info(LOG_HEADER);
         Logger logger = LogManager.getLogger();
         Map<String, Appender  > appenderMap = ((org.apache.logging.log4j.core.Logger) logger).getAppenders();
@@ -186,7 +186,7 @@ public class Log4JUtil {
      *
      * @see jmri.util.FileUtil#getPreferencesPath()
      */
-    static private void configureLogging(@Nonnull String configFile) {
+    private static void configureLogging(@Nonnull String configFile) {
         // System.out.println("Log4JUtil configureLogging " + configFile);
 
         // set the log4j config file location programatically

@@ -470,7 +470,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * @return inverted status
      */
     @Override
-    final public boolean getInverted() {
+    public final boolean getInverted() {
         return _inverted;
     }
 

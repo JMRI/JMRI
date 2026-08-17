@@ -1,5 +1,10 @@
 package jmri.jmrix.loconet.slotmon;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -24,48 +29,51 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
-    static public final int SLOTCOLUMN = 0;
-    static public final int ESTOPCOLUMN = 1;
-    static public final int ADDRCOLUMN = 2;
-    static public final int SPDCOLUMN = 3;
-    static public final int TYPECOLUMN = 4;
-    static public final int STATCOLUMN = 5;  // status: free, common, etc
-    static public final int DISPCOLUMN = 6;  // originally "dispatch" button, now "free"
-    static public final int CONSCOLUMN = 7;  // consist state
-    static public final int CONSISTADDRESS = 8; //consist address
-    static public final int THROTCOLUMN = 9;
-    static public final int DIRCOLUMN = 10;
-    static public final int F0COLUMN = 11;
-    static public final int F1COLUMN = 12;
-    static public final int F2COLUMN = 13;
-    static public final int F3COLUMN = 14;
-    static public final int F4COLUMN = 15;
-    static public final int F5COLUMN = 16;
-    static public final int F6COLUMN = 17;
-    static public final int F7COLUMN = 18;
-    static public final int F8COLUMN = 19;
-    static public final int F9COLUMN = 20;
-    static public final int F10COLUMN = 21;
-    static public final int F11COLUMN = 22;
-    static public final int F12COLUMN = 23;
-    static public final int F13COLUMN = 24;
-    static public final int F14COLUMN = 25;
-    static public final int F15COLUMN = 26;
-    static public final int F16COLUMN = 27;
-    static public final int F17COLUMN = 28;
-    static public final int F18COLUMN = 29;
-    static public final int F19COLUMN = 30;
-    static public final int F20COLUMN = 31;
-    static public final int F21COLUMN = 32;
-    static public final int F22COLUMN = 33;
-    static public final int F23COLUMN = 34;
-    static public final int F24COLUMN = 35;
-    static public final int F25COLUMN = 36;
-    static public final int F26COLUMN = 37;
-    static public final int F27COLUMN = 38;
-    static public final int F28COLUMN = 39;
+    public static final int SLOTCOLUMN = 0;
+    public static final int ESTOPCOLUMN = 1;
+    public static final int ADDRCOLUMN = 2;
+    public static final int SPDCOLUMN = 3;
+    public static final int TYPECOLUMN = 4;
+    public static final int STATCOLUMN = 5;  // status: free, common, etc
+    public static final int LASTUPDATE = 6;
+    public static final int DISPCOLUMN = 7;  // originally "dispatch" button, now "free"
+    public static final int CONSCOLUMN = 8;  // consist state
+    public static final int CONSISTADDRESS = 9; //consist address
+    public static final int THROTCOLUMN = 10;
+    public static final int DIRCOLUMN = 11;
+    public static final int F0COLUMN = 12;
+    public static final int F1COLUMN = 13;
+    public static final int F2COLUMN = 14;
+    public static final int F3COLUMN = 15;
+    public static final int F4COLUMN = 16;
+    public static final int F5COLUMN = 17;
+    public static final int F6COLUMN = 18;
+    public static final int F7COLUMN = 19;
+    public static final int F8COLUMN = 20;
+    public static final int F9COLUMN = 21;
+    public static final int F10COLUMN = 22;
+    public static final int F11COLUMN = 23;
+    public static final int F12COLUMN = 24;
+    public static final int F13COLUMN = 25;
+    public static final int F14COLUMN = 26;
+    public static final int F15COLUMN = 27;
+    public static final int F16COLUMN = 28;
+    public static final int F17COLUMN = 29;
+    public static final int F18COLUMN = 30;
+    public static final int F19COLUMN = 31;
+    public static final int F20COLUMN = 32;
+    public static final int F21COLUMN = 33;
+    public static final int F22COLUMN = 34;
+    public static final int F23COLUMN = 35;
+    public static final int F24COLUMN = 36;
+    public static final int F25COLUMN = 37;
+    public static final int F26COLUMN = 38;
+    public static final int F27COLUMN = 39;
+    public static final int F28COLUMN = 40;
 
-    //static public final int NUMCOLUMN = 40; Number of columns comes from the pane.
+ // Number of columns comes from the pane, but these constants are used when creating the table model.
+    public static final int NUMCOLUMN_LOCONETPROTOCOL_ONE = F8COLUMN + 1;
+    public static final int NUMCOLUMN_LOCONETPROTOCOL_TWO = F28COLUMN + 1;
 
     private int numRows = 128;
     private int columns;
@@ -120,7 +128,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case SLOTCOLUMN:
                 return Bundle.getMessage("SlotCol");
             case ESTOPCOLUMN:
-                return "";     // no heading, as button is clear
+                return Bundle.getMessage("ButtonEstop");     // no heading, as button is clear
             case ADDRCOLUMN:
                 return Bundle.getMessage("AddressCol");
             case SPDCOLUMN:
@@ -136,7 +144,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case DIRCOLUMN:
                 return Bundle.getMessage("DirectionCol");
             case DISPCOLUMN:
-                return "";     // no heading, as button is clear
+                return Bundle.getMessage("ButtonRelease");
             case F0COLUMN:
                 return Throttle.getFunctionString(0);
             case F1COLUMN:
@@ -174,7 +182,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F17COLUMN:
                 return Throttle.getFunctionString(17);
             case F18COLUMN:
-                return Throttle.getFunctionString(16);
+                return Throttle.getFunctionString(18);
             case F19COLUMN:
                 return Throttle.getFunctionString(19);
             case F20COLUMN:
@@ -197,6 +205,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return Throttle.getFunctionString(28);
             case THROTCOLUMN:
                 return Bundle.getMessage("ThrottleIDCol");
+            case LASTUPDATE:
+                return Bundle.getMessage("LastUpdate");
             default:
                 return "unknown"; // NOI18N
         }
@@ -215,6 +225,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case CONSCOLUMN:
             case DIRCOLUMN:
             case THROTCOLUMN:
+            case LASTUPDATE:
                 return String.class;
             case ESTOPCOLUMN:
             case DISPCOLUMN:
@@ -460,7 +471,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 int upper = (s.id() >> 7) & 0x7F;
                 int lower = s.id() & 0x7F;
                 return StringUtil.twoHexFromInt(upper) + " " + StringUtil.twoHexFromInt(lower);
-
+            case LASTUPDATE:
+                Instant instant = Instant.ofEpochMilli(s.getLastUpdateTime());
+                ZonedDateTime dateTime = instant.atZone(ZoneId.systemDefault());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String formattedDateTime = dateTime.format(formatter);
+                if (s.getSlowScanStartedAt() != 0) {
+                    formattedDateTime=Bundle.getMessage("LastUpdateSlowScan",formattedDateTime);
+                }
+                return formattedDateTime;
             default:
                 log.error("internal state inconsistent with table requst for {} {}", row, col);
                 return null;
@@ -493,6 +512,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
                 return new JTextField(7).getPreferredSize().width;
+            case LASTUPDATE:
+                return new JTextField("SS HH:MM:SS ").getPreferredSize().width;
             case F0COLUMN:
             case F1COLUMN:
             case F2COLUMN:
@@ -875,7 +896,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         javax.swing.SwingUtilities.invokeLater(new Notify(slotNum, this));
     }
 
-    static private class Notify implements Runnable {
+    private static class Notify implements Runnable {
 
         private final int _row;
         javax.swing.table.AbstractTableModel _model;

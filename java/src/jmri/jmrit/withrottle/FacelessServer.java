@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    private final static Logger log = LoggerFactory.getLogger(FacelessServer.class);
+    private static final Logger log = LoggerFactory.getLogger(FacelessServer.class);
 
     UserPreferencesManager userPreferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
 
@@ -31,8 +31,8 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     ZeroConfService service;
     boolean isListen = true;
     ServerSocket socket = null;
-    final private ArrayList<DeviceServer> deviceList = new ArrayList<>();
-    final private ArrayList<DeviceListener> deviceListenerList = new ArrayList<>();
+    private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
+    private final ArrayList<DeviceListener> deviceListenerList = new ArrayList<>();
     private int threadNumber = 1;
 
     FacelessServer() {

@@ -38,6 +38,6 @@ public class PiSprogOneSerialDriverAdapter
         return new int[]{115200};
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class);
+    // private static final Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class);
 
 }

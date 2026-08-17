@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class ConfigBundle extends apps.Bundle {
 
-    private final static String name = "apps.AppsConfigBundle"; // NOI18N
+    private static final String name = "apps.AppsConfigBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -78,7 +78,7 @@ public class ConfigBundle extends apps.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static ConfigBundle b = new ConfigBundle();
+    private static final ConfigBundle b = new ConfigBundle();
 
     @Override
     @CheckForNull

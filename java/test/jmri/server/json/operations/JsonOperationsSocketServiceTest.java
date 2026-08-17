@@ -480,18 +480,18 @@ public class JsonOperationsSocketServiceTest {
         InvalidJsonOperationsSocketService mock = new InvalidJsonOperationsSocketService(connection, new JsonOperationsHttpService(mapper));
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainById("1");
         assertEquals( 0, mock.invalidBeanListeners.size());
-        assertEquals( 0, train.getPropertyChangeListeners().length);
+        assertEquals( 1, train.getPropertyChangeListeners().length);
         InvalidJsonOperationsSocketService.InvalidBeanListener bl = mock.addInvalidBeanListener(train);
         // add listener to test that an IOException removes the listener
         // the listener would normally be added by onMessage, but that method creates
         // a valid listener, and we are not interested in that
         train.addPropertyChangeListener(bl);
         assertEquals( 1, mock.invalidBeanListeners.size());
-        assertEquals( 1, train.getPropertyChangeListeners().length);
+        assertEquals( 2, train.getPropertyChangeListeners().length);
         // throw JsonException on invalid type
         bl.propertyChange("invalid-type", (PropertyChangeEvent) null);
         assertEquals( 1, mock.invalidBeanListeners.size());
-        assertEquals( 1, train.getPropertyChangeListeners().length);
+        assertEquals( 2, train.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals( JsonException.ERROR, message.path(JSON.TYPE).asText());
@@ -502,10 +502,10 @@ public class JsonOperationsSocketServiceTest {
         // throw IOException
         connection.setThrowIOException(true);
         assertEquals( 1, mock.invalidBeanListeners.size());
-        assertEquals( 1, train.getPropertyChangeListeners().length);
+        assertEquals( 2, train.getPropertyChangeListeners().length);
         bl.propertyChange(JsonOperations.TRAIN, (PropertyChangeEvent) null);
         assertEquals( 0, mock.invalidBeanListeners.size());
-        assertEquals( 0, train.getPropertyChangeListeners().length);
+        assertEquals( 1, train.getPropertyChangeListeners().length);
     }
 
     @Test
@@ -558,7 +558,7 @@ public class JsonOperationsSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
-    static protected class InvalidJsonOperationsSocketService extends JsonOperationsSocketService {
+    protected static class InvalidJsonOperationsSocketService extends JsonOperationsSocketService {
 
         protected final HashMap<String, BeanListener<Train>> invalidBeanListeners = new HashMap<>();
         protected final InvalidBeansListener invalidBeansListener = new InvalidBeansListener();

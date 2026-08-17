@@ -12,13 +12,20 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.3" author="Pierre Billon" lastUpdated="20260725"/>
+  <!--  Two settings the D&amp;H CV table documents for this firmware but which were unreachable:
+        - CV144 bits 3 and 4, the GPIO brake settings, were gated to product IDs that no model
+          in this file carries, so neither was ever shown. Now from cv144_bits1-4.xml.
+        - CV112 is no longer offered on the FH* series or the PD05A, and carries the
+          documented default of 15. Now from cv112_fw3.12-3.14.xml.
+        -->
   <version version="1.2" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230731"/>
   <!--  Added update paths to newest fw 3.13.053 -->
-  <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+  <version version="1.1" author="Pierre Billon" lastUpdated="20210312"/>
   <!--  Removed Firmware pane (outdated since fw 3.06 and
         introduction of CVs260-265: fw info now on "DH Info" page)
         -->
-  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210308"/>
+  <version version="1" author="Pierre Billon" lastUpdated="20210308"/>
   <!--  Creation (new firmware 3.12.050).
         Based on Doehler_Haass_fw3.10-11_FH05B-18-22A.xml
         -->
@@ -189,7 +196,8 @@
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
 <!-- relevant für FH ??? Start-->
       <!--              - Extra general options as of fw3.10 -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.10.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_bits1-4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv112_fw3.12-3.14.xml"/>
 <!-- relevant für FH ??? Ende-->
       <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
       <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->

@@ -27,6 +27,6 @@ public class AudioUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AudioUtilTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AudioUtilTest.class);
 
 }

@@ -27,6 +27,6 @@ public class XmlFileLocationActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XmlFileLocationActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(XmlFileLocationActionTest.class);
 
 }

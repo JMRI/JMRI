@@ -60,6 +60,6 @@ public class ZTC611XNetPacketizer extends XNetPacketizer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(ZTC611XNetPacketizer.class);
 
 }

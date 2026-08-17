@@ -24,7 +24,7 @@ public class PacketGenAction extends DCCppSystemConnectionAction {
     }
 
     public PacketGenAction(jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo) {
-        this("Generate DCC++ message", memo);
+        this("Generate DCC-EX message", memo);
     }
 
     public PacketGenAction() {

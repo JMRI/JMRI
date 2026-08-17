@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>15</minor>
+    <test>7</test>
+    <modifier>plus</modifier>
+  </jmriversion>
+  <turnouts class="jmri.jmrix.dccpp.configurexml.DCCppTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="CS VPIN" inverted="false" automate="Off">
+      <systemName>DT33</systemName>
+    </turnout>
+  </turnouts>
+  <lights class="jmri.jmrix.dccpp.configurexml.DCCppLightManagerXml">
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>DL26</systemName>
+      <properties>
+        <property>
+          <key class="java.lang.String">LightMode</key>
+          <value class="java.lang.String">CS VPIN</value>
+        </property>
+      </properties>
+    </light>
+  </lights>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Mon Jun 09 00:00:00 MDT 2026</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Mon Jun 09 00:00:00 MDT 2026</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.15.7plus to test CS VPIN turnout and light persistence-->
+</layout-config>

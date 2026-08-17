@@ -44,57 +44,57 @@ public class LncvMessageContents {
     private final LncvCommand command;
 
     // LocoNet "LNCV format" helper definitions: length byte value for LNCV message
-    public final static int LNCV_LENGTH_ELEMENT_VALUE = 0x0f;
-    public final static int LNCV_LNMODULE_VALUE = 0x05;
-    public final static int LNCV_CS_SRC_VALUE = 0x01;
-    public final static int LNCV_PC_SRC_VALUE = 0x08;
-    public final static int LNCV_CSDEST_VALUE = 0x4b49;
-    public final static int LNCV_ALL = 0xffff; // decimal 65535
-    public final static int LNCV_ALL_MASK = 0xff00; // decimal 65535
+    public static final int LNCV_LENGTH_ELEMENT_VALUE = 0x0f;
+    public static final int LNCV_LNMODULE_VALUE = 0x05;
+    public static final int LNCV_CS_SRC_VALUE = 0x01;
+    public static final int LNCV_PC_SRC_VALUE = 0x08;
+    public static final int LNCV_CSDEST_VALUE = 0x4b49;
+    public static final int LNCV_ALL = 0xffff; // decimal 65535
+    public static final int LNCV_ALL_MASK = 0xff00; // decimal 65535
     // the valid range for module addresses (CV0) as per the LNCV spec.
-    public final static int LNCV_MIN_MODULEADDR = 0;
-    public final static int LNCV_MAX_MODULEADDR = 65534;
+    public static final int LNCV_MIN_MODULEADDR = 0;
+    public static final int LNCV_MAX_MODULEADDR = 65534;
 
     // LocoNet "LNCV format" helper definitions: indexes into the LocoNet message
-    public final static int LNCV_LENGTH_ELEMENT_INDEX = 1;
-    public final static int LNCV_SRC_ELEMENT_INDEX = 2;
-    public final static int LNCV_DST_L_ELEMENT_INDEX = 3;
-    public final static int LNCV_DST_H_ELEMENT_INDEX = 4;
-    public final static int LNCV_CMD_ELEMENT_INDEX = 5;
-    public final static int PXCT1_ELEMENT_INDEX = 6;
-    public final static int LNCV_ART_L_ELEMENT_INDEX = 7;
-    public final static int LNCV_ART_H_ELEMENT_INDEX = 8;
-    public final static int LNCV_CVN_L_ELEMENT_INDEX = 9;
-    public final static int LNCV_CVN_H_ELEMENT_INDEX = 10;
-    public final static int LNCV_MOD_L_ELEMENT_INDEX = 11; // val_l reply is in same positions as mod_l read
-    public final static int LNCV_MOD_H_ELEMENT_INDEX = 12; // val_h reply is in same positions as mod_h read
-    public final static int LNCV_CMDDATA_ELEMENT_INDEX = 13;
+    public static final int LNCV_LENGTH_ELEMENT_INDEX = 1;
+    public static final int LNCV_SRC_ELEMENT_INDEX = 2;
+    public static final int LNCV_DST_L_ELEMENT_INDEX = 3;
+    public static final int LNCV_DST_H_ELEMENT_INDEX = 4;
+    public static final int LNCV_CMD_ELEMENT_INDEX = 5;
+    public static final int PXCT1_ELEMENT_INDEX = 6;
+    public static final int LNCV_ART_L_ELEMENT_INDEX = 7;
+    public static final int LNCV_ART_H_ELEMENT_INDEX = 8;
+    public static final int LNCV_CVN_L_ELEMENT_INDEX = 9;
+    public static final int LNCV_CVN_H_ELEMENT_INDEX = 10;
+    public static final int LNCV_MOD_L_ELEMENT_INDEX = 11; // val_l reply is in same positions as mod_l read
+    public static final int LNCV_MOD_H_ELEMENT_INDEX = 12; // val_h reply is in same positions as mod_h read
+    public static final int LNCV_CMDDATA_ELEMENT_INDEX = 13;
     // Checksum = index 14
 
     //  helpers for decoding CV format 2 messages (no other OCP_PEER_XFER messages with length 0x0f)
-    public final static int LNCV_SRC_ELEMENT_MASK = 0x7f;
-    public final static int PXCT1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int LNCV_ART_L_ARTL7_CHECK_MASK = 0x01;
-    public final static int LNCV_ART_H_ARTH7_CHECK_MASK = 0x02;
-    public final static int LNCV_CVN_L_CVNL7_CHECK_MASK = 0x04;
-    public final static int LNCV_CVN_H_CVNH7_CHECK_MASK = 0x08;
-    public final static int LNCV_MOD_L_MODL7_CHECK_MASK = 0x10;
-    public final static int LNCV_MOD_H_MODH7_CHECK_MASK = 0x20;
-    public final static int LNCV_CMDDATA_DAT7_CHECK_MASK = 0x40;
+    public static final int LNCV_SRC_ELEMENT_MASK = 0x7f;
+    public static final int PXCT1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
+    public static final int LNCV_ART_L_ARTL7_CHECK_MASK = 0x01;
+    public static final int LNCV_ART_H_ARTH7_CHECK_MASK = 0x02;
+    public static final int LNCV_CVN_L_CVNL7_CHECK_MASK = 0x04;
+    public static final int LNCV_CVN_H_CVNH7_CHECK_MASK = 0x08;
+    public static final int LNCV_MOD_L_MODL7_CHECK_MASK = 0x10;
+    public static final int LNCV_MOD_H_MODH7_CHECK_MASK = 0x20;
+    public static final int LNCV_CMDDATA_DAT7_CHECK_MASK = 0x40;
 
     // LocoNet "LNCV format" helper definitions for data
-    //    public final static int LNCV_DATA_START = 0x00;
-    //    public final static int LNCV_DATA_END = 0x40;
-    public final static int LNCV_DATA_PROFF_MASK = 0x40;
-    public final static int LNCV_DATA_PRON_MASK = 0x80;
-    public final static int LNCV_DATA_LED1_MASK = 0xff;
-    public final static int LNCV_DATA_LED2_MASK = 0xfe;
-    public final static int LNCV_DATA_RO_MASK = 0x01;
+    //    public static final int LNCV_DATA_START = 0x00;
+    //    public static final int LNCV_DATA_END = 0x40;
+    public static final int LNCV_DATA_PROFF_MASK = 0x40;
+    public static final int LNCV_DATA_PRON_MASK = 0x80;
+    public static final int LNCV_DATA_LED1_MASK = 0xff;
+    public static final int LNCV_DATA_LED2_MASK = 0xfe;
+    public static final int LNCV_DATA_RO_MASK = 0x01;
 
     // helpers for decoding LNCV_CMD
-    public final static int LNCV_CMD_WRITE = 0x20;
-    public final static int LNCV_CMD_READ = 0x21;
-    public final static int LNCV_CMD_READ_REPLY = 0x1f; // reply to both LNCV_CMD_READ and ENTER_PROG_MOD (in which case CV0 VAL = MOD)
+    public static final int LNCV_CMD_WRITE = 0x20;
+    public static final int LNCV_CMD_READ = 0x21;
+    public static final int LNCV_CMD_READ_REPLY = 0x1f; // reply to both LNCV_CMD_READ and ENTER_PROG_MOD (in which case CV0 VAL = MOD)
     // reply to LNCV_CMD_WRITE = LACK, already defined as general LocoNet message type
 
 
@@ -690,6 +690,6 @@ public class LncvMessageContents {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LncvMessageContents.class);
+    private static final Logger log = LoggerFactory.getLogger(LncvMessageContents.class);
     
 }

@@ -180,5 +180,5 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
         p.unionToPanelBounds(s.getBounds());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutShapeXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutShapeXml.class);
 }

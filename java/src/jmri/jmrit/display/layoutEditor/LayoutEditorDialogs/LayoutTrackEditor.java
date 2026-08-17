@@ -33,7 +33,7 @@ abstract public class LayoutTrackEditor {
     // in type-specific *View classes
     // TODO: should be made not necessary
     @Nonnull
-    static public LayoutTrackEditor makeTrackEditor(@Nonnull LayoutTrack layoutTrack, @Nonnull LayoutEditor layoutEditor) {
+    public static LayoutTrackEditor makeTrackEditor(@Nonnull LayoutTrack layoutTrack, @Nonnull LayoutEditor layoutEditor) {
 
         if (layoutTrack instanceof LayoutTurnout) {
 
@@ -78,7 +78,7 @@ abstract public class LayoutTrackEditor {
      */
     abstract public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView);
 
-    final protected LayoutEditor layoutEditor;
+    protected final LayoutEditor layoutEditor;
 
     List<String> sensorList = new ArrayList<>();
 
@@ -158,5 +158,5 @@ abstract public class LayoutTrackEditor {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditor.class);
 }

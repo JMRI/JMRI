@@ -49,12 +49,12 @@ abstract public class Siglet {
      */
     abstract public void setOutput();
 
-    final public String getName() {
+    public final String getName() {
         return name;
     }
     private String name;
 
-    final public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -137,6 +137,6 @@ abstract public class Siglet {
 
     protected PropertyChangeEventQueue pq;
     protected Thread thread;
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Siglet.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Siglet.class);
 
 }

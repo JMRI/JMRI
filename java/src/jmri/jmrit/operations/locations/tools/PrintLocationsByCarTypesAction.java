@@ -29,8 +29,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintLocationsByCarTypesAction extends AbstractAction {
 
-    static final String NEW_LINE = "\n"; // NOI18N
-    static final String TAB = "\t"; // NOI18N
+    protected static final String NEW_LINE = "\n"; // NOI18N
+    protected static final String TAB = "\t"; // NOI18N
 
     public PrintLocationsByCarTypesAction(boolean preview) {
         super(preview ? Bundle.getMessage("MenuItemPreviewByType") : Bundle.getMessage("MenuItemPrintByType"));
@@ -90,5 +90,5 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);
 }

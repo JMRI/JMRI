@@ -91,11 +91,11 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     protected void createModel() {
         m = new BeanTableDataModel<SignalGroup>() {
             @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-            static public final int COMMENTCOL = 2;
+            public static final int COMMENTCOL = 2;
             @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-            static public final int DELETECOL = 3;
-            static public final int ENABLECOL = 4;
-            static public final int EDITCOL = 5; // default name: SETCOL
+            public static final int DELETECOL = 3;
+            public static final int ENABLECOL = 4;
+            public static final int EDITCOL = 5; // default name: SETCOL
 
             @Override
             public int getColumnCount() {

@@ -68,6 +68,6 @@ public class AnymaDMX_ConnectionConfigXml extends AbstractUsbConnectionConfigXml
         }
     }
 
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(AnymaDMX_ConnectionConfigXml.class);
 }

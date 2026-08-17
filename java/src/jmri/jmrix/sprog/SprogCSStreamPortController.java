@@ -89,7 +89,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
 
     // internal thread to check to see if the stream has data and
     // notify the Traffic Controller.
-    static protected class RcvCheck implements Runnable {
+    protected static class RcvCheck implements Runnable {
 
         private SprogTrafficController control;
         private DataInputStream in;
@@ -114,6 +114,6 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogCSStreamPortController.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogCSStreamPortController.class);
 
 }

@@ -120,6 +120,6 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(NceTurnoutManager.class);
 
 }

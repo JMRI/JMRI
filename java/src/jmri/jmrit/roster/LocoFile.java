@@ -378,11 +378,11 @@ public class LocoFile extends XmlFile {
         }
     }
 
-    static public String getFileLocation() {
+    public static String getFileLocation() {
         return Roster.getDefault().getRosterFilesLocation();
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoFile.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoFile.class);
 
 }

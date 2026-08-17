@@ -26,6 +26,6 @@ public class ClockMonPaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ClockMonPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ClockMonPaneTest.class);
 
 }

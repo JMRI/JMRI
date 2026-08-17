@@ -32,15 +32,15 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Block> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Block.class, InstanceManager.getDefault(BlockManager.class), this);
+                    this, Block.class, InstanceManager.getDefault(BlockManager.class));
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
     private final LogixNG_SelectEnum<BlockState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, BlockState.values(), BlockState.Occupied, this);
+            new LogixNG_SelectEnum<>(this, BlockState.values(), BlockState.Occupied);
 
     private final LogixNG_SelectString _selectBlockValue =
-            new LogixNG_SelectString(this, this);
+            new LogixNG_SelectString(this);
 
 
     public ExpressionBlock(String sys, String user)
@@ -201,9 +201,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
-            _selectNamedBean.registerListeners();
-            _selectEnum.registerListeners();
-            _selectBlockValue.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -213,9 +210,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(this);
-            _selectNamedBean.unregisterListeners();
-            _selectEnum.unregisterListeners();
-            _selectBlockValue.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -263,6 +257,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlock.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlock.class);
 
 }

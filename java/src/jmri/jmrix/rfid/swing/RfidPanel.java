@@ -43,5 +43,5 @@ abstract public class RfidPanel extends jmri.util.swing.JmriPanel implements Rfi
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RfidPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(RfidPanel.class);
 }

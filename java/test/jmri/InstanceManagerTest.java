@@ -82,7 +82,7 @@ public class InstanceManagerTest {
         assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
     }
 
-    static public class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
+    public static class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
         public InstanceManagerInitCheck() {}
     }
 
@@ -438,5 +438,5 @@ public class InstanceManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InstanceManagerTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InstanceManagerTest.class);
 }

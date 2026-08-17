@@ -2,6 +2,8 @@ package jmri.jmrit.throttle;
 
 import org.junit.jupiter.api.*;
 
+import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
+
 /**
  * Test simple functioning of LargePowerManagerButton
  *

@@ -22,6 +22,6 @@ public class TrainScheduleManagerTest extends OperationsTestCase {
         Assert.assertNotNull("ComboBox Available", t.getComboBox());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainScheduleManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainScheduleManagerTest.class);
 
 }

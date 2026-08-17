@@ -194,6 +194,6 @@ public class CbusCommandStationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger.Logger log = org.slf4j.Logger.LoggerFactory.getLogger(CbusCommandStationTest.class);
+    // private static final org.slf4j.Logger.Logger log = org.slf4j.Logger.LoggerFactory.getLogger(CbusCommandStationTest.class);
 
 }

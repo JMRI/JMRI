@@ -25,6 +25,6 @@ public class MessagePanelTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MessagePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MessagePanelTest.class);
 
 }

@@ -211,6 +211,6 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusSensor.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusSensor.class);
 
 }

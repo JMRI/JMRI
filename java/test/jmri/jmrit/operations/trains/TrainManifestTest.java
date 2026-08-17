@@ -49,5 +49,5 @@ public class TrainManifestTest extends OperationsTestCase {
         in.close();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainManifestTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainManifestTest.class);
 }

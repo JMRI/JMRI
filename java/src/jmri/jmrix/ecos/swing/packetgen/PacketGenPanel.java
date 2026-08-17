@@ -92,6 +92,6 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel {
         tc.sendEcosMessage(m, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
         
 }

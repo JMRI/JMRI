@@ -90,6 +90,7 @@ public class VSDNavigation {
                         d.setLastTrack(ts2.getConnect2());
                     } else {
                         log.warn(" EdgeConnector lost");
+                        result = false;
                     }
                 } else {
                     log.warn(" EdgeConnector is not linked");
@@ -288,23 +289,10 @@ public class VSDNavigation {
             d.distanceOnTrack = distanceOnTrack;
         }
 
-        if (result) { // not on this track
-            // go to next track
-            LayoutTrack last = d.getLayoutTrack();
-            if (d.nextLayoutTrack != null) {
-                d.setLayoutTrack(d.nextLayoutTrack);
-            } else { // OOPS! we're lost!
-                result = false;
-            }
-            if (result) {
-                d.setLastTrack(last);
-                d.setReturnTrack(d.getLayoutTrack());
-                d.setReturnLastTrack(d.getLayoutTrack());
-            }
-        }
         d.setTunnelState(tsv.isTunnelSideRight() || tsv.isTunnelSideLeft() || tsv.isTunnelHasEntry()
                 || tsv.isTunnelHasExit() ? true : false);
-        return result;
+
+        return finalCheck(result);
     }
 
     boolean navigateLayoutTurnout() {
@@ -502,21 +490,7 @@ public class VSDNavigation {
         }
         d.distanceOnTrack = distanceOnTrack;
 
-        if (result) { // not on this track
-            // go to next track
-            LayoutTrack last = d.getLayoutTrack();
-            if (d.nextLayoutTrack != null) {
-                d.setLayoutTrack(d.nextLayoutTrack);
-            } else { // OOPS! we're lost!
-                result = false;
-            }
-            if (result) {
-                d.setLastTrack(last);
-                d.setReturnTrack(d.getLayoutTrack());
-                d.setReturnLastTrack(d.getLayoutTrack());
-            }
-        }
-        return result;
+        return finalCheck(result);
     }
 
     // NOTE: LayoutSlip uses the checkForNonContiguousBlocks
@@ -699,21 +673,7 @@ public class VSDNavigation {
             d.distanceOnTrack = distanceOnTrack;
         }
 
-        if (result) { // not on this track
-            // go to next track
-            LayoutTrack last = d.getLayoutTrack();
-            if (d.nextLayoutTrack != null) {
-                d.setLayoutTrack(d.nextLayoutTrack);
-            } else { // OOPS! we're lost!
-                result = false;
-            }
-            if (result) {
-                d.setLastTrack(last);
-                d.setReturnTrack(d.getLayoutTrack());
-                d.setReturnLastTrack(d.getLayoutTrack());
-            }
-        }
-        return result;
+        return finalCheck(result);
     }
 
     boolean navigateLayoutTurntable() {
@@ -736,10 +696,7 @@ public class VSDNavigation {
 
         // some checks ...
         if (num_rays < 2) {
-            // A turntable must have a ray track at a 180 degree offset for each ray track
             log.warn("A turntable must have at least two ray tracks)");
-        } else if (num_rays %2 != 0) {
-            log.warn("A turntable must have an even number of rays");
         } else if (turntable.getPosition() < 0) {
             log.warn("Turntable position not set, pos: {}", turntable.getPosition()); // setting the correct position allows to continue
         } else {
@@ -753,10 +710,12 @@ public class VSDNavigation {
                 entryRay = angles.indexOf(MathUtil.wrap360(angles.get(currentPosition) + 180.0));
                 if (entryRay != -1) {
                     d.setLastTrack(turntable.getRayConnectOrdered(entryRay));
-                    d.nextLayoutTrack = turntable.getRayConnectIndexed(currentPosition);
                 } else {
-                    log.warn("Counter ray for ray track angle {} not found", angles.get(currentPosition));
+                    // no counter ray
+                    d.setLastTrack(null);
                 }
+                d.nextLayoutTrack = turntable.getRayConnectIndexed(currentPosition);
+                log.debug("entry ray: {}, pos: {}, last pos: {}, exit: {}", entryRay, currentPosition, lastTurntablePosition, turntable.getPosition());
             } else {
                 for (int i = 0; i < num_rays; i++) {
                     if (turntable.getRayConnectOrdered(i) == d.getLastTrack()) {
@@ -767,12 +726,16 @@ public class VSDNavigation {
             }
             exitRay = turntable.getPosition();
 
-            if (entryRay >= 0 && entryRay < num_rays && entryRay != exitRay) {
+            if (entryRay < num_rays && entryRay != exitRay) {
                 log.debug("entryray: {}, exitray: {}, current position: {}", entryRay, exitRay, currentPosition);
                 if (exitRay == currentPosition) {
-                    pStart = ttv.getRayCoordsIndexed(entryRay);
+                    if (entryRay != -1) {
+                        pStart = ttv.getRayCoordsIndexed(entryRay);
+                        d.setLastTrack(turntable.getRayConnectIndexed(entryRay));
+                    } else {
+                        pStart = ttv.getCoordsCenter();
+                    }
                     pEnd = ttv.getRayCoordsIndexed(currentPosition);
-                    d.setLastTrack(turntable.getRayConnectIndexed(entryRay));
                     d.nextLayoutTrack = turntable.getRayConnectIndexed(exitRay);
                     lastTurntablePosition = turntable.getPosition();
                     log.debug("Next layout track set to: {}, last track: {}", d.nextLayoutTrack, d.getLastTrack());
@@ -841,7 +804,6 @@ public class VSDNavigation {
                     } else {
                         log.warn("Traverser not aligned for exit. Current pos: {}, required for exit slot {}: {}", currentPosition, exitSlot, traverser.getSlotIndex(exitSlot));
                     }
-
                 }
             }
         }
@@ -859,12 +821,6 @@ public class VSDNavigation {
      */
     private boolean navigateComplexTrack(Point2D pStart, Point2D pEnd, double distanceOnTrack) {
         boolean result = false;
-        String tType = "";
-        if (d.getLayoutTrack() instanceof LayoutTraverser) {
-            tType = "Traverser";
-        } else {
-            tType = "Turntable";
-        }
 
         if (d.nextLayoutTrack != null) {
             d.setReturnLastTrack(d.nextLayoutTrack);
@@ -881,13 +837,13 @@ public class VSDNavigation {
                 d.setLocation(MathUtil.lerp(pStart, pEnd, ratio));
                 d.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(pEnd, pStart));
                 d.setDistance(0);
-            } else { // it's not on this track
+            } else {
                 d.setDistance(distanceOnTrack - distance);
                 distanceOnTrack = 0;
                 result = true; // move to next track
             }
-        } else { // OOPS! we're lost!
-            log.info("A {} setting caused a stop", tType); // correct position or change direction
+        } else {
+            log.info("A Turntable/Traverser setting caused a stop"); // correct position or change direction
             result = false;
             distanceOnTrack = 0;
             d.setDistance(0);
@@ -897,24 +853,7 @@ public class VSDNavigation {
         }
         d.distanceOnTrack = distanceOnTrack;
 
-        if (result) { // not on this track
-            // go to next track
-            log.debug("go to next layout track: {}", d.nextLayoutTrack);
-            LayoutTrack last = d.getLayoutTrack();
-            if (d.nextLayoutTrack != null) {
-                d.setLayoutTrack(d.nextLayoutTrack);
-                if (tType.equals("Turntable")) lastTurntablePosition = -1;
-            } else {
-                log.info("Lost a {} result", tType);
-                result = false;
-            }
-            if (result) {
-                d.setLastTrack(last);
-                d.setReturnTrack(d.getLayoutTrack());
-                d.setReturnLastTrack(d.getLayoutTrack());
-            }
-        }
-        return result;
+        return finalCheck(result);
     }
 
     private boolean navigate(List<Point2D> points, @CheckForNull LayoutTrack nextLayoutTrack) {
@@ -944,11 +883,16 @@ public class VSDNavigation {
             d.setDistance(0);
         }
         d.distanceOnTrack = distanceOnTrack;
+
+        return finalCheck(result);
+    }
+
+    private boolean finalCheck(boolean result) {
         if (result) { // not on this track
             // go to next track
             LayoutTrack last = d.getLayoutTrack();
-            if (nextLayoutTrack != null) {
-                d.setLayoutTrack(nextLayoutTrack);
+            if (d.nextLayoutTrack != null) {
+                d.setLayoutTrack(d.nextLayoutTrack);
             } else { // OOPS! we're lost!
                 result = false;
             }

@@ -32,6 +32,6 @@ public class PrintDecoderListActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintDecoderListActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintDecoderListActionTest.class);
 
 }

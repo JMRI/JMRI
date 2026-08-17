@@ -679,7 +679,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                     Bundle.getMessage("WarningTitle"), // NOI18N
                     JmriJOptionPane.YES_NO_OPTION);
             if (n == JmriJOptionPane.YES_OPTION) {
-                layoutTurntable.deleteRay(rayTrack);
+                if (layoutTurntable.isRayDeleteAllowed(rayTrack)) {
+                    layoutTurntable.deleteRay(rayTrack);
+                }
             }
         }
 
@@ -712,5 +714,5 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableEditor.class);
 }

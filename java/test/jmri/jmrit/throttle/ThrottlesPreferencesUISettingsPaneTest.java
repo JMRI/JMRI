@@ -3,6 +3,8 @@ package jmri.jmrit.throttle;
 import java.io.File;
 import java.io.IOException;
 
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferencesUISettingsPane;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;

@@ -649,7 +649,6 @@ public class CreateLogixNGTreeScaffold {
         actionClockRate.getSelectEnum().setMemory(memory2);
         actionClockRate.getSelectSpeed().setAddressing(NamedBeanAddressing.Memory);
         actionClockRate.getSelectSpeed().setMemory(memory1);
-        actionClockRate.getSelectSpeed().setListenToMemory(true);
 
         maleSocket = digitalActionManager.registerAction(actionClockRate);
         maleSocket.setEnabled(false);
@@ -3451,6 +3450,19 @@ public class CreateLogixNGTreeScaffold {
             maleSocket = digitalActionManager.registerAction(actionForEach);
             actionManySocket.getChild(indexAction++).connect(maleSocket);
         }
+
+
+        ForEachRoster actionForEachRoster =
+                new ForEachRoster(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionForEachRoster);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEachRoster = new ForEachRoster(digitalActionManager.getAutoSystemName(), null);
+        actionForEachRoster.setComment("A comment");
+        actionForEachRoster.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEachRoster);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
         ForEachWithDelay actionForEachWithDelay =
@@ -6426,6 +6438,6 @@ public class CreateLogixNGTreeScaffold {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CreateLogixNGTreeScaffold.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CreateLogixNGTreeScaffold.class);
 
 }

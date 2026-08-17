@@ -428,7 +428,7 @@ public class Track extends PropertyChangeSupport {
         int old = _length;
         _length = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+            setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
         }
     }
 
@@ -445,7 +445,7 @@ public class Track extends PropertyChangeSupport {
         int old = _minimumLength;
         _minimumLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange(MIN_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+            setDirtyAndFirePropertyChange(MIN_LENGTH_CHANGED_PROPERTY, old, length);
         }
     }
 
@@ -462,7 +462,7 @@ public class Track extends PropertyChangeSupport {
         int old = _maximumLength;
         _maximumLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, old, length);
         }
     }
 
@@ -480,8 +480,7 @@ public class Track extends PropertyChangeSupport {
         int old = _reserved;
         _reserved = reserved;
         if (old != reserved) {
-            setDirtyAndFirePropertyChange("trackReserved", Integer.toString(old), // NOI18N
-                    Integer.toString(reserved)); // NOI18N
+            setDirtyAndFirePropertyChange("trackReserved", old, reserved); // NOI18N
         }
     }
 
@@ -494,8 +493,7 @@ public class Track extends PropertyChangeSupport {
         _numberCarsEnRoute++;
         _reservedEnRoute = old + car.getTotalLength();
         if (old != _reservedEnRoute) {
-            setDirtyAndFirePropertyChange("trackAddReservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedEnRoute)); // NOI18N
+            setDirtyAndFirePropertyChange("trackAddReservedInRoute", old, _reservedEnRoute); // NOI18N
         }
     }
 
@@ -504,8 +502,7 @@ public class Track extends PropertyChangeSupport {
         _numberCarsEnRoute--;
         _reservedEnRoute = old - car.getTotalLength();
         if (old != _reservedEnRoute) {
-            setDirtyAndFirePropertyChange("trackDeleteReservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedEnRoute)); // NOI18N
+            setDirtyAndFirePropertyChange("trackDeleteReservedInRoute", old, _reservedEnRoute); // NOI18N
         }
     }
 
@@ -648,8 +645,7 @@ public class Track extends PropertyChangeSupport {
         int old = _usedLength;
         _usedLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange("trackUsedLength", Integer.toString(old), // NOI18N
-                    Integer.toString(length));
+            setDirtyAndFirePropertyChange("trackUsedLength", old, length);
         }
     }
 
@@ -661,8 +657,7 @@ public class Track extends PropertyChangeSupport {
         int old = _usedCloneLength;
         _usedCloneLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange("trackUsedCloneLength", Integer.toString(old), // NOI18N
-                    Integer.toString(length));
+            setDirtyAndFirePropertyChange("trackUsedCloneLength", old, length);
         }
     }
 
@@ -684,8 +679,7 @@ public class Track extends PropertyChangeSupport {
         int old = _ignoreUsedLengthPercentage;
         _ignoreUsedLengthPercentage = percentage;
         if (old != percentage) {
-            setDirtyAndFirePropertyChange(PLANNED_PICKUPS_CHANGED_PROPERTY, Integer.toString(old),
-                    Integer.toString(percentage));
+            setDirtyAndFirePropertyChange(PLANNED_PICKUPS_CHANGED_PROPERTY, old, percentage);
         }
     }
 
@@ -700,8 +694,7 @@ public class Track extends PropertyChangeSupport {
         int old = _numberRS;
         _numberRS = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("trackNumberRS", Integer.toString(old), // NOI18N
-                    Integer.toString(number)); // NOI18N
+            setDirtyAndFirePropertyChange("trackNumberRS", old, number); // NOI18N
         }
     }
 
@@ -712,8 +705,7 @@ public class Track extends PropertyChangeSupport {
         int old = _numberCars;
         _numberCars = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("trackNumberCars", Integer.toString(old), // NOI18N
-                    Integer.toString(number));
+            setDirtyAndFirePropertyChange("trackNumberCars", old, number); // NOI18N
         }
     }
 
@@ -724,8 +716,7 @@ public class Track extends PropertyChangeSupport {
         int old = _numberEngines;
         _numberEngines = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("trackNumberEngines", Integer.toString(old), // NOI18N
-                    Integer.toString(number));
+            setDirtyAndFirePropertyChange("trackNumberEngines", old, number); // NOI18N
         }
     }
 
@@ -796,8 +787,7 @@ public class Track extends PropertyChangeSupport {
             setReserved(getReserved() - rs.getTotalLength());
         }
         _reservedLengthPickups = _reservedLengthPickups + rs.getTotalLength();
-        setDirtyAndFirePropertyChange("trackPickupRS", Integer.toString(old), // NOI18N
-                Integer.toString(_pickupRS));
+        setDirtyAndFirePropertyChange("trackPickupRS", old, _pickupRS); // NOI18N
     }
 
     public void deletePickupRS(RollingStock rs) {
@@ -807,8 +797,7 @@ public class Track extends PropertyChangeSupport {
         }
         _reservedLengthPickups = _reservedLengthPickups - rs.getTotalLength();
         _pickupRS--;
-        setDirtyAndFirePropertyChange("trackDeletePickupRS", Integer.toString(old), // NOI18N
-                Integer.toString(_pickupRS));
+        setDirtyAndFirePropertyChange("trackDeletePickupRS", old, _pickupRS); // NOI18N
     }
 
     /**
@@ -834,7 +823,7 @@ public class Track extends PropertyChangeSupport {
             setReserved(getReserved() + rs.getTotalLength());
         }
         _reservedLengthSetouts = _reservedLengthSetouts + rs.getTotalLength();
-        setDirtyAndFirePropertyChange("trackAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
+        setDirtyAndFirePropertyChange("trackAddDropRS", old, _dropRS); // NOI18N
     }
 
     public void deleteDropRS(RollingStock rs) {
@@ -847,8 +836,7 @@ public class Track extends PropertyChangeSupport {
             setReserved(getReserved() - rs.getTotalLength());
         }
         _reservedLengthSetouts = _reservedLengthSetouts - rs.getTotalLength();
-        setDirtyAndFirePropertyChange("trackDeleteDropRS", Integer.toString(old), // NOI18N
-                Integer.toString(_dropRS));
+        setDirtyAndFirePropertyChange("trackDeleteDropRS", old, _dropRS); // NOI18N
     }
 
     public int getDropRS() {
@@ -875,12 +863,12 @@ public class Track extends PropertyChangeSupport {
         String old = _commentPickup;
         _commentPickup = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
 
     public String getCommentPickup() {
-        return TrainCommon.getTextColorString(getCommentPickupWithColor());
+        return TrainCommon.getOnlyText(getCommentPickupWithColor());
     }
 
     public String getCommentPickupWithColor() {
@@ -891,12 +879,12 @@ public class Track extends PropertyChangeSupport {
         String old = _commentSetout;
         _commentSetout = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
 
     public String getCommentSetout() {
-        return TrainCommon.getTextColorString(getCommentSetoutWithColor());
+        return TrainCommon.getOnlyText(getCommentSetoutWithColor());
     }
 
     public String getCommentSetoutWithColor() {
@@ -907,12 +895,12 @@ public class Track extends PropertyChangeSupport {
         String old = _commentBoth;
         _commentBoth = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
 
     public String getCommentBoth() {
-        return TrainCommon.getTextColorString(getCommentBothWithColor());
+        return TrainCommon.getOnlyText(getCommentBothWithColor());
     }
 
     public String getCommentBothWithColor() {
@@ -926,7 +914,7 @@ public class Track extends PropertyChangeSupport {
     public void setPrintManifestCommentEnabled(boolean enable) {
         boolean old = isPrintManifestCommentEnabled();
         _printCommentManifest = enable;
-        setDirtyAndFirePropertyChange("trackPrintManifestComment", old, enable);
+        setDirtyAndFirePropertyChange("trackPrintManifestComment", old, enable); // NOI18N
     }
 
     public boolean isPrintSwitchListCommentEnabled() {
@@ -936,7 +924,7 @@ public class Track extends PropertyChangeSupport {
     public void setPrintSwitchListCommentEnabled(boolean enable) {
         boolean old = isPrintSwitchListCommentEnabled();
         _printCommentSwitchList = enable;
-        setDirtyAndFirePropertyChange("trackPrintSwitchListComment", old, enable);
+        setDirtyAndFirePropertyChange("trackPrintSwitchListComment", old, enable); // NOI18N
     }
 
     /**
@@ -1002,8 +990,7 @@ public class Track extends PropertyChangeSupport {
         int old = _trainDir;
         _trainDir = direction;
         if (old != direction) {
-            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old),
-                    Integer.toString(direction));
+            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, old, direction);
         }
     }
 
@@ -1073,14 +1060,18 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isRoadNameAccepted(String road) {
+        return isRoadNameAndLoadTypeAccepted(road, CarLoad.LOAD_TYPE_EMPTY) || isRoadNameAndLoadTypeAccepted(road, CarLoad.LOAD_TYPE_LOAD);
+    }
+    
+    public boolean isRoadNameAndLoadTypeAccepted(String road, String type) {
         if (getRoadOption().equals(ALL_ROADS)) {
             return true;
         }
         if (getRoadOption().equals(INCLUDE_ROADS)) {
-            return _roadList.contains(road);
+            return _roadList.contains(road) || _roadList.contains(road + CarRoads.SPLIT_CHAR + type);
         }
         // exclude!
-        return !_roadList.contains(road);
+        return !_roadList.contains(road) && !_roadList.contains(road + CarRoads.SPLIT_CHAR + type);
     }
 
     public boolean containsRoadName(String road) {
@@ -1591,11 +1582,6 @@ public class Track extends PropertyChangeSupport {
                     rs.getTypeName(), getLocation().getName(), getName()); // NOI18N
             return TYPE + " (" + rs.getTypeName() + ")";
         }
-        if (!isRoadNameAccepted(rs.getRoadName())) {
-            log.debug("Rolling stock ({}) road ({}) not accepted at location ({}, {}) wrong road", rs.toString(),
-                    rs.getRoadName(), getLocation().getName(), getName()); // NOI18N
-            return ROAD + " (" + rs.getRoadName() + ")";
-        }
         // now determine if there's enough space for the rolling stock
         int rsLength = rs.getTotalLength();
         // error check
@@ -1628,6 +1614,11 @@ public class Track extends PropertyChangeSupport {
             if (car.isLead()) {
                 rsLength = car.getKernel().getTotalLength();
             }
+            if (!isRoadNameAndLoadTypeAccepted(car.getRoadName(), car.getLoadType())) {
+                log.debug("car ({}) road ({}) not accepted at location ({}, {}) wrong road", rs.toString(),
+                        rs.getRoadName(), getLocation().getName(), getName()); // NOI18N
+                return ROAD + " (" + car.getRoadName() + ")";
+            }
             if (!isLoadNameAndCarTypeAccepted(car.getLoadName(), car.getTypeName())) {
                 log.debug("Car ({}) load ({}) not accepted at location ({}, {})", rs.toString(), car.getLoadName(),
                         getLocation(), getName()); // NOI18N
@@ -1639,6 +1630,11 @@ public class Track extends PropertyChangeSupport {
             Engine eng = (Engine) rs;
             if (eng.isLead()) {
                 rsLength = eng.getConsist().getTotalLength();
+            }
+            if (!isRoadNameAccepted(rs.getRoadName())) {
+                log.debug("Loco ({}) road ({}) not accepted at location ({}, {}) wrong road", rs.toString(),
+                        rs.getRoadName(), getLocation().getName(), getName()); // NOI18N
+                return ROAD + " (" + rs.getRoadName() + ")";
             }
         }
         if (rs.getTrack() != this &&
@@ -1850,7 +1846,7 @@ public class Track extends PropertyChangeSupport {
     public void setBlockingOrder(int order) {
         int old = _blockingOrder;
         _blockingOrder = order;
-        setDirtyAndFirePropertyChange(TRACK_BLOCKING_ORDER_CHANGED_PROPERTY, old, order); // NOI18N
+        setDirtyAndFirePropertyChange(TRACK_BLOCKING_ORDER_CHANGED_PROPERTY, old, order);
     }
 
     /**
@@ -1875,7 +1871,7 @@ public class Track extends PropertyChangeSupport {
     public void setServiceOrder(String order) {
         String old = _order;
         _order = order;
-        setDirtyAndFirePropertyChange(SERVICE_ORDER_CHANGED_PROPERTY, old, order); // NOI18N
+        setDirtyAndFirePropertyChange(SERVICE_ORDER_CHANGED_PROPERTY, old, order);
     }
 
     /**
@@ -2403,13 +2399,13 @@ public class Track extends PropertyChangeSupport {
     public void addDestination(Location destination) {
         if (!_destinationIdList.contains(destination.getId())) {
             _destinationIdList.add(destination.getId());
-            setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, null, destination.getName()); // NOI18N
+            setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, null, destination.getName());
         }
     }
 
     public void deleteDestination(Location destination) {
         if (_destinationIdList.remove(destination.getId())) {
-            setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, destination.getName(), null); // NOI18N
+            setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, destination.getName(), null);
         }
     }
 
@@ -2456,7 +2452,7 @@ public class Track extends PropertyChangeSupport {
         String old = _destinationOption;
         _destinationOption = option;
         if (!option.equals(old)) {
-            setDirtyAndFirePropertyChange(DESTINATION_OPTIONS_CHANGED_PROPERTY, old, option); // NOI18N
+            setDirtyAndFirePropertyChange(DESTINATION_OPTIONS_CHANGED_PROPERTY, old, option);
         }
     }
 
@@ -3067,6 +3063,6 @@ public class Track extends PropertyChangeSupport {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Track.class);
+    private static final Logger log = LoggerFactory.getLogger(Track.class);
 
 }

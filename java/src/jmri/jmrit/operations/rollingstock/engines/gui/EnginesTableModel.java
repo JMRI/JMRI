@@ -649,5 +649,5 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnginesTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(EnginesTableModel.class);
 }

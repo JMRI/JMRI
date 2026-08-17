@@ -87,5 +87,5 @@ public class TimeTableCsvExportTest {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableCsvExportTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableCsvExportTest.class);
 }

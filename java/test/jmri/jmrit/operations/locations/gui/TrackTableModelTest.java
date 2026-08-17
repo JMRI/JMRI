@@ -14,6 +14,6 @@ public class TrackTableModelTest extends OperationsTestCase {
 //        Assert.assertNotNull("exists",t);
 //    }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackTableModelTest.class);
 
 }

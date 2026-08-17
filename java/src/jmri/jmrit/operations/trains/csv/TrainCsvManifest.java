@@ -177,5 +177,5 @@ public class TrainCsvManifest extends TrainCsvCommon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
 }

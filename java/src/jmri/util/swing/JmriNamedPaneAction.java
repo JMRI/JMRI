@@ -84,5 +84,5 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriNamedPaneAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriNamedPaneAction.class);
 }

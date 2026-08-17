@@ -24,5 +24,5 @@ public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.Abstra
         return null;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerXml.class);
 }

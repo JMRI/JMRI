@@ -27,6 +27,6 @@ public class JsonServerPreferencesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonServerPreferencesTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JsonServerPreferencesTest.class);
 
 }

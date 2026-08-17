@@ -98,6 +98,10 @@
         </li>
 
         <li>
+          <a href="#traversers">Traversers</a>
+        </li>
+
+        <li>
           <a href="#background">Backgrounds</a>
         </li>
 
@@ -295,6 +299,10 @@
 
         <li><strong>Track Segment</strong> - selects a piece of connecting track</li>
 
+        <li><strong>Turntable</strong> - selects a turntable</li>
+
+        <li><strong><span class="since">since 5.15.6</span>Traverser</strong> - selects a traverser</li>
+
         <li><strong>End Bumper</strong> - selects a connection point at the end of a track</li>
 
         <li><strong>Anchor Point</strong> - selects a connection point between two track
@@ -343,7 +351,7 @@
         <li><strong>Shape</strong> - Create an arbitrary shape</li>
       </ul>
 
-      <p>The top 13 items are used to create a track diagram, and are new with Layout Editor. The
+      <p>The top 15 items are used to create a track diagram, and are new with Layout Editor. The
       next 11 items are icon-based and are similar to corresponding icon items in Panel
       Editor.  <strong>Shape</strong> is used to create an image using two to nine
       points connected by lines, such as four points to create a rectangle.</p>
@@ -664,6 +672,10 @@
             <li><strong>Add Turntable</strong> - Selecting this item adds a turntable to the panel
             at the center of the panel. You can then drag it with the meta key pressed to any
             location on the panel.</li>
+
+            <li><span class="since">since 5.15.6</span><strong>Add Traverser</strong> - Selecting
+            this item adds a traverser to the panel at the center of the panel. You can then drag it
+            with the meta key pressed to any location on the panel.</li>
 
             <li><strong>Add Reporter Label...</strong> - Selecting this item brings up a dialog
             that allows entry of a Reporter name (system name or user name) and x, y coordinates of
@@ -1300,7 +1312,7 @@
 
       <p>A <strong>Track Segment</strong> is a two ended piece of track between two connection
       points. Connection points are found on anchor points, end bumpers, edge connectors, turnouts,
-      slips, cross overs, level crossings and turntables.</p>
+      slips, cross overs, level crossings, turntables and traversers.</p>
 
       <p>Anchor points have one connection point that accept two connections. All other connection
       points only accept one. End bumpers have one connection point. An Edge Connector only accepts
@@ -1450,17 +1462,46 @@
       added to a panel, and each turntable may have any number of ray tracks.</p>
 
       <p>A turntable is added to a panel by selecting <strong>Add Turntable</strong> in the panel's
-      Option menu. New turntables are placed at the center of the panel, and are moved to
-      desired locations by dragging its center point with the meta key pressed (right button drag
-      on Windows). When a turntable is added, it has four ray tracks located in up, down, left, and
-      right directions. The turntable's popup menu has two items. Selecting
-      <strong>Edit...</strong> brings up an Edit Turntable dialog, and selecting
-      <strong>Remove</strong> deletes the turntable and any track segments connected to it. Before
-      a turntable is actually deleted, the program asks for verification of that action.</p>
+      <strong>Options &rArr; Add</strong> menu. New turntables are placed at the center of the panel,
+      and are moved to desired locations by dragging its center point with the meta key pressed
+      (right button drag on Windows).  A turntable can also be added to a panel by selecting the
+      <strong>Turntable</strong> option in the toolbar and doing a shift-click at the desired
+      location on the panel.</p>
+
+      <p>When a turntable is added, it has four ray tracks located in up, down, left, and right
+      directions. The turntable's popup menu has two items. Selecting <strong>Edit&hellip;</strong> brings
+      up an Edit Turntable dialog, and selecting <strong>Delete</strong> deletes the turntable.
+      Before a turntable is actually deleted, the program asks for verification of that action.</p>
 
       <p>The Edit Turntable dialog allows the radius of the turntable circle to be changed, and
       provides for the addition and deletion of ray tracks. For more information on how to add and
-      delete ray tracks, see the help page of the Edit Turntable dialog.</p>
+      delete ray tracks, along with other options, see the
+      <a href="EditTurntable.shtml">Edit Turntable</a> help page.</p>
+
+      <h2 id="traversers"><span class="since">since 5.15.6</span>Traversers</h2>
+
+      <p>A Layout Editor traverser is a schematic representation of a <em>traverser / transfer table</em>
+      on the layout. The traverser is drawn as a rectangle with a variable number of track
+      connection pairs called <em>slots</em>.  A slot has two connections for track segments.
+      Most of the track segments will connect a slot connection to an end bumper.  Any number of
+      traversers can be added to a panel and each traverser may have any number of slots.</p>
+
+      <p>A traverser is added to a panel by selecting <strong>Add Traverser</strong> in the panel's
+      <strong>Options &rArr; Add</strong> menu. New traversers are placed at the center of the panel,
+      and are moved to the desired location by dragging its control point with the meta key pressed
+      (right button drag on Windows). A traverser can also be added to a panel by selecting
+      <strong>Traverser</strong> in the tool bar and shift-clicking on the desired location on the
+      panel.  When a traverser is added, it has two slot pairs.</p>
+
+      <p>The traverser's popup menu has two items. Selecting
+      <strong>Edit&hellip;</strong> brings up an Edit Traverser dialog, and selecting
+      <strong>Delete</strong> deletes the traverser. Before a traverser is actually deleted, the
+      program asks for verification of that action.</p>
+
+      <p>The Edit Traverser dialog is used to add, remove and configure slot pairs.
+      provides for the addition and deletion of ray tracks. For more information, see the help page
+      of the Edit Turntable dialog.  see the
+      <a href="EditTraverser.shtml">Edit Traverser</a> help page.</p>
 
       <h2 id="background">Backgrounds</h2>
 

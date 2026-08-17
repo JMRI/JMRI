@@ -241,6 +241,6 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         lengthSpinner.setValue(inch.isSelected() ? bean.getLengthIn() : bean.getLengthCm());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OBlockEditAction.class);
+    // private static final Logger log = LoggerFactory.getLogger(OBlockEditAction.class);
 
 }

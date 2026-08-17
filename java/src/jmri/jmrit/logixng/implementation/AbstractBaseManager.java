@@ -89,6 +89,22 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
+    public void deleteChildren(@Nonnull MaleSocket socket, @Nonnull String property) throws PropertyVetoException {
+        for (int i=socket.getChildCount()-1; i >= 0; i--) {
+            FemaleSocket child = socket.getChild(i);
+            if (child.isConnected()) {
+                MaleSocket maleSocket = child.getConnectedSocket();
+                maleSocket.getManager().deleteBean(maleSocket, property);
+                if (property.equals("DoDelete")) { // NOI18N
+                    child.disconnect();
+                }
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public void deregister(@Nonnull E s) {
         // A LogixNG action or expression is contained in one or more male
         // sockets. A male socket might be contained in another male socket.

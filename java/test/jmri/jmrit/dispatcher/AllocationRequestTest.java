@@ -30,6 +30,6 @@ public class AllocationRequestTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AllocationRequestTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AllocationRequestTest.class);
 
 }

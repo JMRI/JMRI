@@ -926,5 +926,5 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     //</editor-fold>
 
     //debugging logger
-    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedMatcher.class);
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedMatcher.class);
 }

@@ -189,5 +189,5 @@ public class Stop {
         return _seq + " :: " + station.getStationName();
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Stop.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Stop.class);
 }

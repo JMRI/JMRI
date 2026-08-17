@@ -41,6 +41,6 @@ public class PaneQualifier extends ArithmeticQualifier {
         return tabs.isEnabledAt(tabs.indexOfTab(name));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneQualifier.class);
+    private static final Logger log = LoggerFactory.getLogger(PaneQualifier.class);
 
 }

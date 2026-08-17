@@ -219,6 +219,6 @@ public class JmriServer {
         outStream.writeBytes("");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriServer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriServer.class);
 
 }

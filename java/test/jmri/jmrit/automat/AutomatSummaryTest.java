@@ -26,6 +26,6 @@ public class AutomatSummaryTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(AutomatSummaryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AutomatSummaryTest.class);
 
 }

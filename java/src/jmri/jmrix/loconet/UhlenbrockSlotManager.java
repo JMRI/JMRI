@@ -363,6 +363,6 @@ public class UhlenbrockSlotManager extends SlotManager {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManager.class);
+    private static final Logger log = LoggerFactory.getLogger(UhlenbrockSlotManager.class);
 
 }

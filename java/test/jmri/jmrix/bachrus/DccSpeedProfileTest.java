@@ -78,5 +78,5 @@ public class DccSpeedProfileTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DccSpeedProfileTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DccSpeedProfileTest.class);
 }

@@ -98,6 +98,7 @@ public class Car extends RollingStock {
         car.setCaboose(isCaboose());
         car.setFred(hasFred());
         car.setPassenger(isPassenger());
+        car.setUtility(isUtility());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
         car.loaded = true;
         return car;
@@ -107,7 +108,7 @@ public class Car extends RollingStock {
         boolean old = _hazardous;
         _hazardous = hazardous;
         if (!old == hazardous) {
-            setDirtyAndFirePropertyChange("car hazardous", old ? "true" : "false", hazardous ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car hazardous", old, hazardous); // NOI18N
         }
     }
 
@@ -132,7 +133,7 @@ public class Car extends RollingStock {
         boolean old = _passenger;
         _passenger = passenger;
         if (!old == passenger) {
-            setDirtyAndFirePropertyChange("car passenger", old ? "true" : "false", passenger ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car passenger", old, passenger); // NOI18N
         }
     }
 
@@ -144,7 +145,7 @@ public class Car extends RollingStock {
         boolean old = _fred;
         _fred = fred;
         if (!old == fred) {
-            setDirtyAndFirePropertyChange("car has fred", old ? "true" : "false", fred ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car has fred", old, fred); // NOI18N
         }
     }
 
@@ -256,8 +257,8 @@ public class Car extends RollingStock {
         if (track != null && track.isSpur() && !getScheduleItemId().equals(NONE)) {
             Schedule sch = track.getSchedule();
             if (sch == null) {
-                log.error("Schedule missing for car ({}) to spur ({}, {})", toString(), track.getLocation().getName(),
-                        track.getName());
+                log.error("Schedule {} missing for car ({}) to spur ({}, {})", getScheduleItemId(), toString(),
+                        track.getLocation().getName(), track.getName());
             } else {
                 si = sch.getItemById(getScheduleItemId());
             }
@@ -350,6 +351,15 @@ public class Car extends RollingStock {
         return _pickupScheduleId;
     }
 
+    /**
+     * Provides the train schedule name for pick up day if one available, or if
+     * assigned to a train the pick up time.
+     * 
+     * @return If assigned to a train, the car's pick up time. Otherwise if
+     *         there's a train schedule day/name assigned for pick up, the train
+     *         schedule name. Default train schedule names are Sunday through
+     *         Saturday.
+     */
     public String getPickupScheduleName() {
         if (getTrain() != null) {
             return getPickupTime();
@@ -580,7 +590,7 @@ public class Car extends RollingStock {
         boolean old = _caboose;
         _caboose = caboose;
         if (!old == caboose) {
-            setDirtyAndFirePropertyChange("car is caboose", old ? "true" : "false", caboose ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car is caboose", old, caboose); // NOI18N
         }
     }
 
@@ -592,7 +602,7 @@ public class Car extends RollingStock {
         boolean old = _utility;
         _utility = utility;
         if (!old == utility) {
-            setDirtyAndFirePropertyChange("car is utility", old ? "true" : "false", utility ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car is utility", old, utility); // NOI18N
         }
     }
 
@@ -847,7 +857,7 @@ public class Car extends RollingStock {
         // is car going to its final destination?
         removeCarFinalDestination();
         // now check to see if the track has a schedule
-        if (track != null && destinationTrack != track && loaded) {
+        if (track != null && destinationTrack != track && loaded && !isClone()) {
             status = track.scheduleNext(this);
             if (!status.equals(Track.OKAY)) {
                 return status;
@@ -875,8 +885,8 @@ public class Car extends RollingStock {
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
-    public void loadCarFinalDestination(ScheduleItem scheduleItem) {
-        if (scheduleItem != null) {
+    private void loadCarFinalDestination(ScheduleItem scheduleItem) {
+        if (scheduleItem != null && scheduleItem.getDestination() != null) {
             // set the car's final destination and track
             setFinalDestination(scheduleItem.getDestination());
             setFinalDestinationTrack(scheduleItem.getDestinationTrack());
@@ -1378,6 +1388,6 @@ public class Car extends RollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Car.class);
+    private static final Logger log = LoggerFactory.getLogger(Car.class);
 
 }

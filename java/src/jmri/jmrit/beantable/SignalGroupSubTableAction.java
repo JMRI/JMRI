@@ -833,8 +833,8 @@ public class SignalGroupSubTableAction {
             Bundle.getMessage("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
     private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
-    private final static String SET_TO_CLOSED = InstanceManager.getDefault(TurnoutManager.class).getClosedText();
-    private final static String SET_TO_THROWN = InstanceManager.getDefault(TurnoutManager.class).getThrownText();
+    private static final String SET_TO_CLOSED = InstanceManager.getDefault(TurnoutManager.class).getClosedText();
+    private static final String SET_TO_THROWN = InstanceManager.getDefault(TurnoutManager.class).getThrownText();
 
     private static String[] sensorInputModes = new String[]{Bundle.getMessage("SensorStateActive"), Bundle.getMessage("SensorStateInactive")};
     private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE};
@@ -1020,6 +1020,6 @@ public class SignalGroupSubTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class);
 
 }

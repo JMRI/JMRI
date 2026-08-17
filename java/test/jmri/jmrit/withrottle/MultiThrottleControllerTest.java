@@ -14,8 +14,8 @@ import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener.DecisionType;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrix.debugthrottle.DebugThrottle;
-import jmri.jmrit.throttle.ThrottlesPreferences;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 

@@ -167,8 +167,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
             ConnectionStatus.instance().setConnectionState(
-                    this.getSystemConnectionMemo().getUserName(),
-                    this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+                    this.getSystemConnectionMemo(),
+                    ConnectionStatus.CONNECTION_DOWN);
         }
         return pin;
     }
@@ -178,8 +178,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
             ConnectionStatus.instance().setConnectionState(
-                    this.getSystemConnectionMemo().getUserName(),
-                    this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+                    this.getSystemConnectionMemo(),
+                    ConnectionStatus.CONNECTION_DOWN);
         }
         return pout;
     }
@@ -196,8 +196,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         // of the command station simulation.
         log.debug("Simulator Thread Started");
         ConnectionStatus.instance().setConnectionState(
-                this.getSystemConnectionMemo().getUserName(),
-                this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+                this.getSystemConnectionMemo(),
+                ConnectionStatus.CONNECTION_UP);
         for (;;) {
             XNetMessage m = readMessage();
             log.debug("Simulator Thread received message {}", m);
@@ -216,8 +216,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         } catch (java.io.IOException e) {
             // should do something meaningful here.
             ConnectionStatus.instance().setConnectionState(
-                    this.getSystemConnectionMemo().getUserName(),
-                    this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+                    this.getSystemConnectionMemo(),
+                    ConnectionStatus.CONNECTION_DOWN);
 
         }
         setOutputBufferEmpty(true);
@@ -682,8 +682,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 outpipe.writeByte((byte) r.getElement(i));
             } catch (java.io.IOException ex) {
                 ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             }
         }
     }

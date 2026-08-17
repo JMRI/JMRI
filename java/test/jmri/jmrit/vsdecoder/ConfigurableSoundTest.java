@@ -26,6 +26,6 @@ public class ConfigurableSoundTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConfigurableSoundTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ConfigurableSoundTest.class);
 
 }

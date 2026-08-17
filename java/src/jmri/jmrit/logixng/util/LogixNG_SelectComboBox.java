@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.util;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.HashMap;
@@ -49,9 +48,6 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
     private final InUse _inUse;
     private Item[] _valuesArray;
     private final LogixNG_SelectTable _selectTable;
-    private final PropertyChangeListener _listener;
-    private boolean _listenToMemory;
-    private boolean _listenersAreRegistered;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private Item _value;
@@ -62,14 +58,12 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectComboBox(AbstractBase base, Item[] valuesArray,
-            Item initialValue, PropertyChangeListener listener) {
+    public LogixNG_SelectComboBox(AbstractBase base, Item[] valuesArray, Item initialValue) {
         _base = base;
         _inUse = () -> true;
         _valuesArray = valuesArray;
         _value = initialValue;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
-        _listener = listener;
     }
 
 
@@ -79,7 +73,6 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setMemory(_memoryHandle);
-        copy.setListenToMemory(_listenToMemory);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
     }
@@ -196,14 +189,6 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         return _memoryHandle;
     }
 
-    public void setListenToMemory(boolean listenToMemory) {
-        _listenToMemory = listenToMemory;
-    }
-
-    public boolean getListenToMemory() {
-        return _listenToMemory;
-    }
-
     public void setLocalVariable(@Nonnull String localVariable) {
         _localVariable = localVariable;
     }
@@ -309,7 +294,7 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
                 break;
 
             case Memory:
-                description = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
+                description = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -335,32 +320,6 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         return description;
     }
 
-    /**
-     * Register listeners if this object needs that.
-     */
-    public void registerListeners() {
-        if (!_listenersAreRegistered
-                && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)
-                && _listenToMemory) {
-            _memoryHandle.getBean().addPropertyChangeListener("value", _listener);
-            _listenersAreRegistered = true;
-        }
-    }
-
-    /**
-     * Unregister listeners if this object needs that.
-     */
-    public void unregisterListeners() {
-        if (_listenersAreRegistered
-                && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)
-                && _listenToMemory) {
-            _memoryHandle.getBean().removePropertyChangeListener("value", _listener);
-            _listenersAreRegistered = false;
-        }
-    }
-
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
@@ -383,5 +342,5 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectComboBox.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectComboBox.class);
 }

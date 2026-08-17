@@ -111,6 +111,6 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
         _selectWorkingDirectorySwing.dispose();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExecuteProgramSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExecuteProgramSwing.class);
 
 }

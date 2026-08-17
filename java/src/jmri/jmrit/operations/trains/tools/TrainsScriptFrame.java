@@ -241,5 +241,5 @@ public class TrainsScriptFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainsScriptFrame.class.getName());
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainsScriptFrame.class.getName());
 }

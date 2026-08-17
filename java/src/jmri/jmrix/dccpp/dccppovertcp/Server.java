@@ -267,6 +267,6 @@ public class Server {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Server.class);
+    private static final Logger log = LoggerFactory.getLogger(Server.class);
 
 }

@@ -72,22 +72,22 @@ public interface SignalAppearanceMap {
     /**
      * Constant representing the "held" aspect for a signal
      */
-    final static int HELD = 0;
+    static final int HELD = 0;
 
     /**
      * Constant representing the "permissive" aspect for a signal
      */
-    final static int PERMISSIVE = 1;
+    static final int PERMISSIVE = 1;
 
     /**
      * Constant representing the "danger" aspect for a signal
      */
-    final static int DANGER = 2;
+    static final int DANGER = 2;
 
     /**
      * Constant representing the "dark" aspect for a signal
      */
-    final static int DARK = 3;
+    static final int DARK = 3;
 
     /**
      * Get a list of potential aspects that we could set the SignalMast to,

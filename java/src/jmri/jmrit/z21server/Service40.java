@@ -25,7 +25,7 @@ public class Service40 {
     private static final String moduleIdent = "[Service 40] ";
     private static PropertyChangeListener changeListener = null;
 
-    private final static Logger log = LoggerFactory.getLogger(Service40.class);
+    private static final Logger log = LoggerFactory.getLogger(Service40.class);
 
 /**
  * Set a listener to be called on track power manager events.

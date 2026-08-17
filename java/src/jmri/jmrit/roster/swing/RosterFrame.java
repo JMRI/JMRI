@@ -54,6 +54,9 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
 import jmri.jmrit.throttle.*;
+import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
+import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -276,7 +279,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             if (!checkIfEntrySelected()) {
                 return;
             }
-            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
+            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
             tf.toFront();
             tf.setRosterEntry(re);
         });
@@ -592,6 +595,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange("groupspane", "setEnabled", enable);
         firePropertyChange("grouptable", "setEnabled", enable);
         firePropertyChange("deletegroup", "setEnabled", enable);
+        firePropertyChange("deletegroupcontents", "setEnabled", enable);
         firePropertyChange("addgroup", "setEnabled", enable);
     }
 
@@ -896,9 +900,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                             );
         } catch (java.awt.print.PrinterException ep) {
             log.error("While printing",ep);
-        }    
+        }
     }
-    
+
     /**
      * Match the first argument in the array against a locally-known method.
      *
@@ -1297,7 +1301,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             for (RosterEntry re : rtable.getSelectedRosterEntries()) {
                 ThrottleControllerUI tf;
                 if (tw == null) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tw = tf.getThrottleControllersContainer();
                 } else {
                     tf = tw.newThrottleController();
@@ -1306,6 +1310,15 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 tf.setRosterEntry(re);
             }
         });
+        popupMenu.add(menuItem);
+        menuItem = new JMenuItem(Bundle.getMessage("SimpleThrottle"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            ThrottleControllerUI tf =InstanceManager.getDefault(ThrottleFrameManager.class).createSimpleThrottleFrame(re);
+            tf.toFront();
+        });
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
 
@@ -1591,7 +1604,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         log.trace("start global check with {}, {}, {}", serModeProCon, gpm, (gpm != null ? gpm.isGlobalProgrammerAvailable() : "<none>"));
         if (serModeProCon != null && gpm != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(), serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getAdapter().getSystemConnectionMemo())) {
                 log.debug("GPM Connection online 1");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
@@ -1652,7 +1665,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(), opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getAdapter().getSystemConnectionMemo())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));

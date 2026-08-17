@@ -107,7 +107,7 @@ public class Engine extends RollingStock {
         String old = getHp();
         engineModels.setModelHorsepower(getModel(), hp);
         if (!old.equals(hp)) {
-            setDirtyAndFirePropertyChange(HP_CHANGED_PROPERTY, old, hp); // NOI18N
+            setDirtyAndFirePropertyChange(HP_CHANGED_PROPERTY, old, hp);
         }
     }
 
@@ -527,6 +527,6 @@ public class Engine extends RollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class);
+    private static final Logger log = LoggerFactory.getLogger(Engine.class);
 
 }

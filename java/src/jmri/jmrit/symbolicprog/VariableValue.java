@@ -723,6 +723,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public abstract CvValue[] usesCVs();
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(VariableValue.class);
+    private static final Logger log = LoggerFactory.getLogger(VariableValue.class);
 
 }

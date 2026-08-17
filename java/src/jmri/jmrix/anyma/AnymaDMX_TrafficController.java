@@ -151,7 +151,7 @@ public class AnymaDMX_TrafficController {
         }
     }
 
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(AnymaDMX_TrafficController.class);
 
 }

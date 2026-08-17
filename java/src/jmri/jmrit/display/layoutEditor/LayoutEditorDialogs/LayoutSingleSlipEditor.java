@@ -26,5 +26,5 @@ public class LayoutSingleSlipEditor extends LayoutSlipEditor {
     // expand and the code will be brought here
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlipEditor.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlipEditor.class);
 }

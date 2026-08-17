@@ -33,6 +33,6 @@ public class CbusNodeNVEditTablePaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditTablePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeNVEditTablePaneTest.class);
 
 }

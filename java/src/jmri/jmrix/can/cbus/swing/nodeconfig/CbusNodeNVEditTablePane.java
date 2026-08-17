@@ -249,6 +249,6 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditTablePane.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeNVEditTablePane.class);
 
 }

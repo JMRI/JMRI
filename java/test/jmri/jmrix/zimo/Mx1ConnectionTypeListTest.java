@@ -27,6 +27,6 @@ public class Mx1ConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1ConnectionTypeListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Mx1ConnectionTypeListTest.class);
 
 }

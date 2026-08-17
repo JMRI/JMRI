@@ -26,6 +26,6 @@ public class StartupModelCellRendererTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StartupModelCellRendererTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StartupModelCellRendererTest.class);
 
 }

@@ -104,6 +104,6 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class);
 
 }

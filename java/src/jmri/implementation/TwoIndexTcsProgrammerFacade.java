@@ -361,6 +361,6 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacade.class);
+    private static final Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacade.class);
 
 }

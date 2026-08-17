@@ -153,7 +153,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
     static volatile DefaultDigitalBooleanActionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultDigitalBooleanActionManager instance() {
+    public static DefaultDigitalBooleanActionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
@@ -175,6 +175,6 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);
 
 }

@@ -8,7 +8,7 @@ package jmri.jmrix.marklin.cdb.serialdriver;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = "CC-Schnitte 2.1"; // NOI18N
+    public static final String NAME = "CC-Schnitte 2.1"; // NOI18N
 
     /**
      * Create a connection configuration with a preexisting adapter. This is

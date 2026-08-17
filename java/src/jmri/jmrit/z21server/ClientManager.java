@@ -30,7 +30,7 @@ public class ClientManager implements ThrottleListener {
     private PropertyChangeListener clientListener = null; //the listener will be notified if a client is registered or unregistered
     public static float speedMultiplier = 1.0f / 128.0f;
 
-    private final static Logger log = LoggerFactory.getLogger(ClientManager.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientManager.class);
 
     private ClientManager() {
     }

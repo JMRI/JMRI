@@ -130,6 +130,6 @@ public class AcelaSignalHead extends DefaultSignalHead {
     String tSystemName; // System Name of this signal head
     int addr;         // output address
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSignalHead.class);
+    private static final Logger log = LoggerFactory.getLogger(AcelaSignalHead.class);
 
 }

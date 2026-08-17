@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ProfileUtils {
 
-    private final static Logger log = LoggerFactory.getLogger(ProfileUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(ProfileUtils.class);
 
     /**
      * Get the XMl configuration container for a given configuration profile.

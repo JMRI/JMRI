@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -13,11 +11,9 @@ import jmri.jmrit.logixng.util.LogixNG_SelectString;
  *
  * @author Daniel Bergqvist Copyright 2022
  */
-public class AnalogExpressionLocalVariable extends AbstractAnalogExpression
-        implements PropertyChangeListener {
+public class AnalogExpressionLocalVariable extends AbstractAnalogExpression {
 
-    private final LogixNG_SelectString _selectNamedBean =
-            new LogixNG_SelectString(this, this);
+    private final LogixNG_SelectString _selectNamedBean = new LogixNG_SelectString(this);
 
     public AnalogExpressionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -94,26 +90,6 @@ public class AnalogExpressionLocalVariable extends AbstractAnalogExpression
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (getTriggerOnChange()) {
-            getConditionalNG().execute();
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -123,6 +99,6 @@ public class AnalogExpressionLocalVariable extends AbstractAnalogExpression
         log.debug("getUsageReport :: AnalogExpressionLocalVariable: bean = {}, report = {}", cdl, report);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionLocalVariable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionLocalVariable.class);
 
 }

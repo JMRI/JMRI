@@ -412,7 +412,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @BeforeAll
     @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
-    static public void preClassInit() {
+    public static void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
 

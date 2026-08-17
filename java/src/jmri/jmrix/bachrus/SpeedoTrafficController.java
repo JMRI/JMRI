@@ -233,6 +233,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         this.reply = new SpeedoReply();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class);
 
 }

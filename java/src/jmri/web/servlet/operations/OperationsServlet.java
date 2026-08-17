@@ -46,7 +46,7 @@ public class OperationsServlet extends HttpServlet {
 
     private ObjectMapper mapper;
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsServlet.class);
 
     @Override
     public void init() throws ServletException {

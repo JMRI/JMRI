@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTcpPreferences extends PreferencesBean {
 
-    public final static String PORT = jmri.web.server.WebServerPreferences.PORT;
+    public static final String PORT = jmri.web.server.WebServerPreferences.PORT;
     private static final String PORT_NUMBER_KEY = "PortNumber";
     private static final String SETTINGS_FILE_NAME = "LocoNetOverTcpSettings.ini";
 
@@ -33,7 +33,7 @@ public class LnTcpPreferences extends PreferencesBean {
     }
 
     private int port = 1234;
-    private final static Logger log = LoggerFactory.getLogger(LnTcpPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTcpPreferences.class);
 
     public LnTcpPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());

@@ -50,7 +50,7 @@ public class AppsMainMenu {
     * @param pane    The JPanel to associate actions in menus with
     * @param windowHelpID The the help id to be assigned to Help / Window Help...
     */
-    static protected void createMenus(JMenuBar menuBar, WindowInterface wi, JPanel pane, String windowHelpID) {
+    protected static void createMenus(JMenuBar menuBar, WindowInterface wi, JPanel pane, String windowHelpID) {
         fileMenu(menuBar, wi);
         editMenu(menuBar, wi);
         toolsMenu(menuBar, wi);
@@ -80,7 +80,7 @@ public class AppsMainMenu {
         helpMenu(menuBar, wi, pane, windowHelpID);
     }
 
-    static private void fileMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void fileMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));  // NOI18N
         menuBar.add(fileMenu);
 
@@ -112,7 +112,7 @@ public class AppsMainMenu {
         }
     }
 
-    static private void editMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void editMenu(JMenuBar menuBar, WindowInterface wi) {
 
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));  // NOI18N
         menuBar.add(editMenu);
@@ -146,11 +146,11 @@ public class AppsMainMenu {
 
     }
 
-    static private void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new ToolsMenu(Bundle.getMessage("MenuTools")));  // NOI18N
     }
 
-    static private void tablesMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void tablesMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new TablesMenu());
     }
 
@@ -160,7 +160,7 @@ public class AppsMainMenu {
      * @param menuBar the menu bar to add the script menu to
      * @param wi      the window interface containing menuBar
      */
-    static private void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu scriptMenu = new JMenu(rb.getString("MenuScripting"));  // NOI18N
         scriptMenu.add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));  // NOI18N
         scriptMenu.add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));  // NOI18N
@@ -169,15 +169,15 @@ public class AppsMainMenu {
         menuBar.add(scriptMenu);
     }
 
-    static private void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new OperationsMenu());
     }
 
-    static private void rosterMenu(JMenuBar menuBar, WindowInterface wi, JPanel pane) {
+    private static void rosterMenu(JMenuBar menuBar, WindowInterface wi, JPanel pane) {
         menuBar.add(new RosterMenu(Bundle.getMessage("MenuRoster"), RosterMenu.MAINMENU, pane));  // NOI18N
     }
 
-    static private void panelMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void panelMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new PanelMenu());
     }
 
@@ -188,11 +188,11 @@ public class AppsMainMenu {
      * @param wi      ignored, but available for overriding methods to use if
      *                needed
      */
-    static private void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
+    private static void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);
     }
 
-    static private void debugMenu(JMenuBar menuBar, WindowInterface wi, JPanel pane) {
+    private static void debugMenu(JMenuBar menuBar, WindowInterface wi, JPanel pane) {
         menuBar.add(new DebugMenu(pane));
     }
 
@@ -208,7 +208,7 @@ public class AppsMainMenu {
 //         //devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
 //     }
 
-    static private void helpMenu(JMenuBar menuBar, WindowInterface wi, JPanel containedPane, String windowHelpID) {
+    private static void helpMenu(JMenuBar menuBar, WindowInterface wi, JPanel containedPane, String windowHelpID) {
         // create menu and standard items
         JMenu helpMenu = HelpUtil.makeHelpMenu(windowHelpID, true);
 
@@ -219,9 +219,9 @@ public class AppsMainMenu {
     /**
      * The application decided to quit, handle that.
      */
-    static private void handleQuit() {
+    private static void handleQuit() {
         AppsBase.handleQuit();
     }
 
-//     static private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsMainMenu.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsMainMenu.class);
 }

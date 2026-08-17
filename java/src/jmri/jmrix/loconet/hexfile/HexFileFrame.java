@@ -310,6 +310,6 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(HexFileFrame.class);
 
 }

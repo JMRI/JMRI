@@ -65,6 +65,6 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class);
+    private static final Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class);
 
 }

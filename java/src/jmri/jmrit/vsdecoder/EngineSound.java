@@ -118,7 +118,7 @@ public class EngineSound extends VSDSound {
         }
     }
 
-    static final public int calcEngineNotch(final float throttle) {
+    public static final int calcEngineNotch(final float throttle) {
         // This will convert to a value 0-8.
         int notch = ((int) Math.rint(throttle * 8)) + 1;
         if (notch < 1) {
@@ -128,7 +128,7 @@ public class EngineSound extends VSDSound {
         return notch;
     }
 
-    static final public int calcEngineNotch(final double throttle) {
+    public static final int calcEngineNotch(final double throttle) {
         // This will convert from a % to a value 0-8.
         int notch = ((int) Math.rint(throttle * 8)) + 1;
         if (notch < 1) {

@@ -319,5 +319,5 @@ public abstract class TrainCustomCommon {
         options.addContent(mc);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);
 }

@@ -34,7 +34,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     private final int _number;
     private final CanSystemConnectionMemo _memo;
 
-    static private final RailComManager railComManager = InstanceManager.getDefault(RailComManager.class);
+    private static final RailComManager railComManager = InstanceManager.getDefault(RailComManager.class);
 
     /**
      * Should all CbusReporters clear themselves after a timeout?

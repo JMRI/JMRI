@@ -16,7 +16,7 @@ public class ChunkyNumbersComparatorTest {
     // tests are final to make sure they're not overloaded (hence ignored) in any subclass
         
     @Test
-    final public void testAlphanumThenNumeric() {
+    public final void testAlphanumThenNumeric() {
         assertEquals(  0, ac.compare("ATSF 123", "ATSF 123"), "ATSF 123 = ATSF 123");
         assertEquals( -2, ac.compare("ATSF 123", "CN 123"),   "ATSF 123 < CN 123");
         assertEquals( -1, ac.compare("ATSF 123", "ATSF 456"), "ATSF 123 < ATSF 456");

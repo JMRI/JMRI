@@ -2,8 +2,9 @@ package jmri.jmrix.dccpp;
 
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
 
+import java.util.ArrayDeque;
 import java.util.Locale;
-import java.util.ArrayList;
+import java.util.Queue;
 
 import javax.annotation.Nonnull;
 import jmri.Turnout;
@@ -11,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement TurnoutManager for DCC++ systems.
+ * Implement TurnoutManager for DCC-EX systems.
  * <p>
  * System names are "DxppTnnn", where Dx is the system prefix and nnn is the turnout number without padding.
  *
@@ -22,10 +23,11 @@ import org.slf4j.LoggerFactory;
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
     protected DCCppTrafficController tc = null;
+    private final Queue<Integer> _pendingTurnoutIds = new ArrayDeque<>();
 
     /**
-     * Create a new DCC++ TurnoutManager.
-     * Has to register for DCC++ events.
+     * Create a new DCC-EX TurnoutManager.
+     * Has to register for DCC-EX events.
      *
      * @param memo the supporting system connection memo
      */
@@ -126,11 +128,12 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             }
         } else if (l.isTurnoutIDsReply()) {
             log.debug("received Turnout ID List message: '{}'", l);
-            ArrayList<Integer> ids = l.getTurnoutIDList();
-            for (Integer id : ids) { //request details for each id included in this message
-                tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDMsg(id), this);
-                tc.sendDCCppMessage(DCCppMessage.makeTurnoutImplMsg(id), this);
+            for (Integer id : l.getTurnoutIDList()) {
+                if (!_pendingTurnoutIds.contains(id)) {
+                    _pendingTurnoutIds.add(id);
+                }
             }
+            requestNextTurnoutDetail();
         } else if (l.isTurnoutIDReply()) {
             log.debug("received Turnout ID Detail message: '{}'", l);
             // parse message type
@@ -153,9 +156,17 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                     found.message(l); //forward message to turnout
                 }
             }
+            requestNextTurnoutDetail();
         }
     }
-    
+
+    private void requestNextTurnoutDetail() {
+        Integer id = _pendingTurnoutIds.poll();
+        if (id != null) {
+            tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDMsg(id), this);
+        }
+    }
+
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
      * Allows text other than "CLOSED" to be use with certain hardware system to
@@ -240,6 +251,6 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class);
 
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV144 bits 1-5 for firmware 3.14 and later.</revremark>
+    </revision>
+  </revhistory>
+  <!-- CV144 bit 5, new in firmware 3.14.095. Include only from firmware 3.14 definitions      -->
+  <!-- onwards, alongside cv144_bits1-4.xml.                                                    -->
+  <!-- It uses the generic item name "Advanced Group 1 Option 2" so that the standard Advanced   -->
+  <!-- pane displays it, next to bit 1 which uses "Advanced Group 1 Option 1". A decoder-        -->
+  <!-- specific item name would not appear on any standard pane.                                -->
+  <variable item="Advanced Group 1 Option 2" CV="144" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Deactivate temporary data storage</label>
+    <label xml:lang="fr">Désactiver la mémorisation temporaire des données</label>
+    <label xml:lang="de">Kurzzeitige Datenspeicherung deaktivieren</label>
+    <tooltip>bit 5 - since firmware 3.14.095. Disables restoring the last driving state.</tooltip>
+    <tooltip xml:lang="fr">bit 5 - depuis le firmware 3.14.095. Désactive la restauration du dernier état de marche.</tooltip>
+    <tooltip xml:lang="de">bit 5 - ab Firmware 3.14.095. Schaltet die Wiederherstellung des letzten Fahrzustandes aus.</tooltip>
+  </variable>
+</variables>

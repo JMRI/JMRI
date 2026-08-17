@@ -43,6 +43,6 @@ public class PiSprogNanoSerialDriverAdapter
         return new int[]{115200};
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class);
+    // private static final Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class);
 
 }

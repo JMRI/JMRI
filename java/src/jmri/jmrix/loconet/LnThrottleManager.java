@@ -621,6 +621,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LnThrottleManager.class);
 
 }

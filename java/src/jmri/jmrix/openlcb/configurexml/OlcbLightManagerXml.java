@@ -48,5 +48,5 @@ public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         return result;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(OlcbLightManagerXml.class);
 }

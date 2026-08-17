@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
 
@@ -15,11 +13,10 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ShutdownComputer extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ShutdownComputer extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<Operation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.ShutdownJMRI, this);
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.ShutdownJMRI);
 
 
     public ShutdownComputer(String sys, String user)
@@ -106,18 +103,6 @@ public class ShutdownComputer extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectEnum.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectEnum.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -142,11 +127,5 @@ public class ShutdownComputer extends AbstractDigitalAction
 
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShutdownComputer.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShutdownComputer.class);
 }

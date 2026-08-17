@@ -144,5 +144,5 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PickPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PickPanel.class);
 }

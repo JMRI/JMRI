@@ -576,5 +576,5 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         log.debug("TIMEOUT in transmitWait, mCurrentState:{} {} port dsr {} wait time {}", mCurrentState, state, port.isDSR(), waitTime);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);
 }

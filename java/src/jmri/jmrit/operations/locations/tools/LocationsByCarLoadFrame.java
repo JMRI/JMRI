@@ -23,9 +23,9 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class LocationsByCarLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    private final static String RECEIVE = "r";
-    private final static String SHIP = "s";
-    private final static String HYPHEN = "-";
+    private static final String RECEIVE = "r";
+    private static final String SHIP = "s";
+    private static final String HYPHEN = "-";
 
     LocationManager locationManager;
 

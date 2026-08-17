@@ -49,8 +49,8 @@ public class SerialNode extends AbstractNode {
      */
     static final int MAXSENSORS = 999;
 
-    static public final int MAXSEARCHLIGHTBYTES = 48;
-    static public final int MAXCARDLOCATIONBYTES = 64;
+    public static final int MAXSEARCHLIGHTBYTES = 48;
+    public static final int MAXCARDLOCATIONBYTES = 64;
 
     // class constants
     public static final int SMINI = 1;          // SMINI node type
@@ -1343,5 +1343,5 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialNode.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialNode.class);
 }

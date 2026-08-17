@@ -96,7 +96,7 @@ public class JsonBundle extends jmri.server.json.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static JsonBundle b = new JsonBundle();
+    private static final JsonBundle b = new JsonBundle();
 
     @Override
     @CheckForNull

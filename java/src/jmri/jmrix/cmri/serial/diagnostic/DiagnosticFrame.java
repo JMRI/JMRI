@@ -1330,5 +1330,5 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         super.windowClosing(e);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DiagnosticFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DiagnosticFrame.class);
 }

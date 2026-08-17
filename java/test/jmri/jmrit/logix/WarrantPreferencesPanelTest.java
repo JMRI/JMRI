@@ -25,6 +25,6 @@ public class WarrantPreferencesPanelTest extends PreferencesPanelTestBase<Warran
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(WarrantPreferencesPanelTest.class);
 
 }

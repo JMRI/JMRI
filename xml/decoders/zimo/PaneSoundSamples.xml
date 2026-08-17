@@ -5,8 +5,11 @@
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added german translation.   Ronald Kuhn, 26 Apr 2019 -->
   <!-- v1.2  added CV's 593-598 Nigel Cliffe 14 Feb 2022-->
+  <!-- v1.3  added switch input 4 sound sample (CV671) and the six sound connections (CV726-CV737), Pierre Billon, 31 July 2026 -->
+  <!-- v1.4  Added French translations, Pierre Billon, 06 August 2026 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Sound Samples</name>
+    <name xml:lang="fr">Échantillons sonores ZIMO</name>
     <name xml:lang="it">Livelli Suono</name>
     <name xml:lang="cs">Zvukové vzorky</name>
     <name xml:lang="de">ZIMO Sound Samples</name>
@@ -19,6 +22,7 @@
                     </label>
                     <label>
                         <text>Function Key Samples</text>
+                        <text xml:lang="fr">Sons de fonction</text>
                         <text xml:lang="cs">Funkční klávesy vzorky</text>
                         <text xml:lang="de">                            Funktions-Sounds</text>
                     </label>
@@ -27,6 +31,7 @@
                     </label>
                     <label>
                         <text>             Loop  Short                          Loop  Short</text>
+                        <text xml:lang="fr">             Boucle    Court                      Boucle    Court</text>
                         <text xml:lang="cs">             Smyčka  Krátká                       Smyčka  Krátká</text>
                         <text xml:lang="de">            Loop      Kurz                              Loop      Kurz</text>
                     </label>
@@ -542,6 +547,7 @@
         <column>
             <label>
                 <text>Automatic Sound Samples </text>
+                <text xml:lang="fr">Sons automatiques </text>
                 <text xml:lang="cs">Automatický zvuk vzorky</text>
                 <text xml:lang="de">                             Ablauf-Sounds</text>
             </label>
@@ -617,6 +623,7 @@
         <column>
             <label>
                 <text>Switch triggered sounds </text>
+                <text xml:lang="fr">Sons sur entrée </text>
                 <text xml:lang="it">Livello Suoni regolato da Ingresso</text>
                 <text xml:lang="cs">Spínač spouští zvuk</text>
                 <text xml:lang="de">           Schalteingang-Sounds</text>
@@ -636,8 +643,13 @@
             <label>
                 <text> </text>
             </label>
+            <display item="Switch input 4 Sound Sample"/>
+            <label>
+                <text> </text>
+            </label>
             <label>
                 <text>Randomly generated sound Samples</text>
+                <text xml:lang="fr">Sons aléatoires </text>
                 <text xml:lang="it">Suoni Casuali</text>
                 <text xml:lang="cs">Náhodně generované zvuky vzorky</text>
                 <text xml:lang="de">       Zufalls-Sounds</text>
@@ -647,6 +659,7 @@
             </label>
             <label>
                 <text>                   Drive   Stand</text>
+                <text xml:lang="fr">                   En marche   à l'arrêt</text>
                 <text xml:lang="cs">                            Jízda   Stání</text>
                 <text xml:lang="de">                   bei Fahrt im Stand</text>
             </label>
@@ -758,6 +771,74 @@
                     <text>     </text>
                 </label>
                 <display item="Z8 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>Sound connections</text>
+                <text xml:lang="fr">Liaisons sonores</text>
+                <text xml:lang="de">       Verknüpfungen</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 1 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 1 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 2 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 2 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 3 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 3 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 4 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 4 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 5 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 5 function output"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Connection 6 sound"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Connection 6 function output"/>
             </row>
             <label>
                 <text> </text>

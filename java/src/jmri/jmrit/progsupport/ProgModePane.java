@@ -120,6 +120,6 @@ public class ProgModePane extends ProgModeSelector {
         mOpsPane = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgModePane.class);
+    private static final Logger log = LoggerFactory.getLogger(ProgModePane.class);
 
 }

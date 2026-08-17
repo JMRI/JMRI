@@ -232,6 +232,6 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogExpressionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogExpressionSocket.class);
 
 }

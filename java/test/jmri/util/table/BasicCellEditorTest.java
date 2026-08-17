@@ -26,6 +26,6 @@ public class BasicCellEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BasicCellEditorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BasicCellEditorTest.class);
 
 }

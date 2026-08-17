@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from DCC++ messages. The "DCCppInterface" side
+ * Converts Stream-based I/O to/from DCC-EX messages. The "DCCppInterface" side
  * sends/receives DCCppMessage objects. The connection to a DCCppPortController
  * is via a pair of *Streams, which then carry sequences of characters for
  * transmission.
@@ -118,7 +118,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
             ((DCCppPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
-            log.warn("DCC++ port not ready to send");
+            log.warn("DCC-EX port not ready to send");
             return false;
         }
     }
@@ -137,41 +137,48 @@ public class DCCppPacketizer extends DCCppTrafficController {
     // TODO: Can this method be folded back up into the parent DCCppTrafficController class?
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
-        int i;
-        StringBuilder m = new StringBuilder();
         log.trace("loading characters from port");
-
         if (!(msg instanceof DCCppReply)) {
-            log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
+            log.error("loadChars called on non-DCCppReply msg!");
             return;
         }
-
         byte char1 = readByteProtected(istream);
         while (char1 != '<') {
-            // Spin waiting for '<'
             char1 = readByteProtected(istream);
-            if (char1 != '<') {
-                log.trace("skipping char: ({})", (char) char1);
-            }
+            if (char1 != '<') log.trace("skipping char: ({})", (char) char1);
         }
         log.trace("Message started");
-        // Pick up the rest of the command
-        for (i = 0; i < msg.maxSize(); i++) {
-            char1 = readByteProtected(istream);
-            if (char1 == '>') {
-                log.debug("Received: '{}'", m);
-                // NOTE: Cast is OK because we checked runtime type of msg above.
-                ((DCCppReply) msg).parseReply(m.toString());
-                return;
-            } else {
-                m.append((char) char1);
-                log.trace("msg char[{}]: {} ({})", i, char1, (char) char1);
-            }
-        }
-        log.warn("msg size {} exceeded before end of msg char '>' encountered.", msg.maxSize());
-        log.warn("msg truncated to: '{}'", m);
+        String body = readFrameBody(istream, msg.maxSize());
+        log.debug("Received: '{}'", body);
+        ((DCCppReply) msg).parseReply(body);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
+    /** Reads one frame body after {@code <}: broadcast ({@code <* *>}) or regular up to {@code >}. */
+    String readFrameBody(java.io.DataInputStream istream, int maxSize) throws java.io.IOException {
+        StringBuilder body = new StringBuilder();
+        byte ch = readByteProtected(istream);
+        body.append((char) ch);
+        boolean broadcast = (ch == '*');
+        boolean prevStar = broadcast;
+        boolean inQuotes = false;
+
+        while (body.length() < maxSize) {
+            ch = readByteProtected(istream);
+            if (broadcast) {
+                if (prevStar && ch == '>') {
+                    return body.toString(); // drop > only; trailing * stays in body for parseDCCppReply
+                }
+                prevStar = (ch == '*');
+            } else {
+                if (ch == '"') inQuotes = !inQuotes;
+                else if (ch == '>' && !inQuotes) return body.toString();
+            }
+            body.append((char) ch);
+        }
+        log.warn("msg size {} exceeded before end of msg encountered.", maxSize);
+        return body.toString();
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
 
 }

@@ -194,9 +194,12 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                         throw new LocoNetMessageException();
                     }
 
-                    if (msg.equals(lastMessage)) {
-                        log.debug("We have our returned message and can send back out our next instruction");
-                        mCurrentState = NOTIFIEDSTATE;
+                    synchronized (xmtHandler) {
+                        if (mCurrentState == WAITMSGREPLYSTATE && msg.equals(lastMessage)) {
+                            log.debug("We have our returned message and can send back out our next instruction");
+                            mCurrentState = NOTIFIEDSTATE;
+                            xmtHandler.notify();
+                        }
                     }
 
                     // message is complete, dispatch it !!
@@ -274,11 +277,13 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                             while (!controller.okToSend()) {
                                 Thread.yield();
                             }
+                            synchronized (xmtHandler) {
+                                mCurrentState = WAITMSGREPLYSTATE;
+                            }
                             ostream.write(msg);
                             ostream.flush();
                             log.debug("end write to stream");
                             messageTransmitted(msg);
-                            mCurrentState = WAITMSGREPLYSTATE;
                             transmitWait(defaultWaitTimer, WAITMSGREPLYSTATE);
                         } else {
                             // no stream connected
@@ -312,7 +317,8 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error("transmitLoop interrupted");
+                log.info("Transmit loop interrupted");
+                return;  // If we don't return here, xmtHandler.wait(wait) will be called again, which will cause a new InterruptedException, which results in a loop
             }
         }
         log.debug("Timeout in transmitWait, mCurrentState: {}", mCurrentState);
@@ -351,6 +357,6 @@ public class UhlenbrockPacketizer extends LnPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
 
 }

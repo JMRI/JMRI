@@ -524,6 +524,22 @@ abstract public class AbstractPortController implements PortAdapter {
      * {@inheritDoc}
      */
     @Override
+    public boolean getAllowConnectionRecovery() {
+        return allowConnectionRecovery;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAllowConnectionRecovery(boolean allow) {
+        allowConnectionRecovery = allow;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setReconnectMaxInterval(int maxInterval) {
         reconnectMaxInterval = maxInterval;
     }
@@ -634,6 +650,6 @@ abstract public class AbstractPortController implements PortAdapter {
         this.connectionMemo = connectionMemo;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractPortController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractPortController.class);
 
 }

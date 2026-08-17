@@ -426,6 +426,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return m.getNumDataElements(); // All are same length as message
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 
 }

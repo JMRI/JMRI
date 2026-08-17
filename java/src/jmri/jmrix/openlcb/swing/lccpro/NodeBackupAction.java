@@ -34,6 +34,8 @@ class NodeBackupAction {
     static JFileChooser directoryChooser = new JFileChooser();
     static final String PREFNAME = "backupDirectory";
     
+    static boolean fileConfigured;
+    
     static {
         directoryChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         directoryChooser.setDialogTitle(Bundle.getMessage("ChooseADirectory"));
@@ -43,21 +45,30 @@ class NodeBackupAction {
         var dirPref = prefsMgr.getProperty(NodeBackupAction.class.getName(), PREFNAME);
         if (dirPref != null) {
             directoryChooser.setSelectedFile(new File(dirPref.toString()));
+            fileConfigured = true;
+        } else {
+            fileConfigured = false;
         }
 
     }
     
-    static public void showOpenDialog(Component here) {
+    public static void showOpenDialog(Component here) {
         var response = directoryChooser.showOpenDialog(here);
         
         if (response == JFileChooser.APPROVE_OPTION) {
             String directory = directoryChooser.getSelectedFile().getAbsolutePath();
             var prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
             prefsMgr.setProperty(NodeBackupAction.class.getName(), PREFNAME, directory);
+            fileConfigured = true;
         }
     }
     
     public void doBackup(MimicNodeStore.NodeMemo nodememo, CanSystemConnectionMemo memo, String name) {
+        
+        if (!fileConfigured) {
+            showOpenDialog(null); // no Component in this case
+        }
+        
         var node = nodememo.getNodeID();
         _name = name;
         log.info("Backup {} '{}' ", node.toString(), _name);    

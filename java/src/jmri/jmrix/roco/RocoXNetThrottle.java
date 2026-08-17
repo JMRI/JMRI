@@ -96,6 +96,6 @@ public class RocoXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
  
     // register for notification
-    private final static Logger log = LoggerFactory.getLogger(RocoXNetThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(RocoXNetThrottle.class);
 
 }

@@ -54,7 +54,7 @@ public class SampleMinimalProgram {
      * @param program the name of the program
      * @return the logging statement including JMRI and Java versions
      */
-    static public String startupInfo(String program) {
+    public static String startupInfo(String program) {
         return (program + " version " + jmri.Version.name()
                 + " starts under Java " + System.getProperty("java.version", "<unknown>"));
     }
@@ -63,7 +63,7 @@ public class SampleMinimalProgram {
      * Static method to get Log4J working before the rest of JMRI starts up. In
      * a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
-    static protected void initLog4J() {
+    protected static void initLog4J() {
         // initialize log4j2 - from logging configuration file (lcf) only
         // if can find it!
         String configFile = "default_lcf.xml";
@@ -126,6 +126,6 @@ public class SampleMinimalProgram {
         log.info("Up!");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
 
 }

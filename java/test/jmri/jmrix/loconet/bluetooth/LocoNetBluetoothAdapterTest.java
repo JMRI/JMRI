@@ -27,6 +27,6 @@ public class LocoNetBluetoothAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapterTest.class);
 
 }

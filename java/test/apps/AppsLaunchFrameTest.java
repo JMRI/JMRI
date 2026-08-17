@@ -37,5 +37,5 @@ public class AppsLaunchFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AppsLaunchFrameTest.class);
 }

@@ -17,6 +17,8 @@ public class LnClockControlTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo c = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        lnis.setSystemConnectionMemo(c);
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_DCS050);
 
         LnClockControl t = new LnClockControl(c);
         Assert.assertNotNull("exists",t);
@@ -28,6 +30,9 @@ public class LnClockControlTest {
     public void testCtorTwoArg() {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo c = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        lnis.setSystemConnectionMemo(c);
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_DCS050);
 
         LnClockControl t = new LnClockControl(slotmanager, lnis, null);
 
@@ -41,6 +46,8 @@ public class LnClockControlTest {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo c = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        lnis.setSystemConnectionMemo(c);
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_DCS050);
 
         // allow actual write
         jmri.InstanceManager.getDefault(jmri.Timebase.class).setSynchronize(true, false);
@@ -66,6 +73,8 @@ public class LnClockControlTest {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo c = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+        lnis.setSystemConnectionMemo(c);
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_DCS050);
 
         // allow actual write
         jmri.InstanceManager.getDefault(jmri.Timebase.class).setSynchronize(true, false);
@@ -97,6 +106,6 @@ public class LnClockControlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnClockControlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LnClockControlTest.class);
 
 }

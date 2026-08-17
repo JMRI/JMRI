@@ -111,5 +111,5 @@ public class CsPane extends JPanel {
         return _id;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CsPane.class);
+    private static final Logger log = LoggerFactory.getLogger(CsPane.class);
 }

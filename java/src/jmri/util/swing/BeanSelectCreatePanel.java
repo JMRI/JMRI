@@ -253,6 +253,6 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
     }
 
     //initialize logging
-    private final static Logger log = LoggerFactory.getLogger(BeanSelectCreatePanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(BeanSelectCreatePanel.class.getName());
 
 }

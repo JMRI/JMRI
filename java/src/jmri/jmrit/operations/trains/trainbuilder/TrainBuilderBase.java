@@ -220,7 +220,6 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(ONE, BLANK_LINE);
             addLine(ONE, Setup.getComment());
         }
-        addLine(ONE, BLANK_LINE);
     }
 
     protected void setUpRoute() throws BuildFailedException {
@@ -252,6 +251,7 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showTrainBuildOptions() {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+        addLine(FIVE, BLANK_LINE);
         addLine(FIVE, Bundle.getMessage("MenuItemBuildOptions") + ":");
         if (Setup.isBuildAggressive()) {
             if (Setup.isBuildOnTime()) {
@@ -349,16 +349,17 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(FIVE, Bundle.getMessage("CheckCarDestination"));
             }
         }
-        addLine(FIVE, BLANK_LINE);
     }
 
     /*
      * Show the enabled and disabled build options for this train.
      */
     protected void showSpecificTrainBuildOptions() {
+        addLine(FIVE, BLANK_LINE);
         addLine(FIVE,
                 Bundle.getMessage("buildOptionsForTrain", getTrain().getName()));
         showSpecificTrainBuildOptions(true);
+        addLine(FIVE, BLANK_LINE);
         addLine(FIVE, Bundle.getMessage("buildDisabledOptionsForTrain", getTrain().getName()));
         showSpecificTrainBuildOptions(false);
     }
@@ -398,7 +399,6 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(SEVEN, Bundle.getMessage("BuildConsistHPT", Setup.getHorsePowerPerTon()));
             }
         }
-        addLine(FIVE, BLANK_LINE);
     }
 
     /**
@@ -443,7 +443,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected void showAndInitializeTrainRoute() throws BuildFailedException {
         int requestedCarMoves = 0; // how many cars were asked to be moved
         // TODO: DAB control minimal build by each train
-
+        addLine(ONE, BLANK_LINE);
         addLine(THREE,
                 Bundle.getMessage("buildTrainRoute", getTrain().getName(), getTrain().getRoute().getName()));
 
@@ -545,7 +545,6 @@ public class TrainBuilderBase extends TrainCommon {
 
         getTrain().setNumberCarsRequested(requestedCarMoves); // save number of car
         // moves requested
-        addLine(ONE, BLANK_LINE);
     }
 
     /**
@@ -553,9 +552,9 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showIfLocalSwitcher() {
         if (getTrain().isLocalSwitcher()) {
+            addLine(THREE, BLANK_LINE);
             addLine(THREE, Bundle.getMessage("buildTrainIsSwitcher", getTrain().getName(),
                     TrainCommon.splitString(getTrain().getTrainDepartsName())));
-            addLine(THREE, BLANK_LINE);
         }
     }
 
@@ -568,6 +567,7 @@ public class TrainBuilderBase extends TrainCommon {
      * changes in the route.
      */
     protected void showTrainRequirements() {
+        addLine(ONE, BLANK_LINE);
         addLine(ONE, Bundle.getMessage("TrainRequirements"));
         if (getTrain().isBuildConsistEnabled() && Setup.getHorsePowerPerTon() > 0) {
             addLine(ONE,
@@ -654,7 +654,6 @@ public class TrainBuilderBase extends TrainCommon {
                     Bundle.getMessage("buildTrainRequiresFRED", getTrain().getTrainDepartsName(),
                             getTrain().getCabooseRoad()));
         }
-        addLine(ONE, BLANK_LINE);
     }
 
     protected void showTrainCarRoads() {
@@ -713,6 +712,8 @@ public class TrainBuilderBase extends TrainCommon {
             if (selected != null) {
                 addLine(FIVE, Bundle.getMessage("buildUserSelectedDeparture", selected.getName(),
                         selected.getLocation().getName()));
+            } else {
+                addLine(FIVE, Bundle.getMessage("buildUserCanceledDeparture"));
             }
             return selected;
         } else if (validTracks.size() == 1) {
@@ -782,7 +783,6 @@ public class TrainBuilderBase extends TrainCommon {
                 remove(car); // remove this car from the list
             }
         }
-        addLine(SEVEN, BLANK_LINE);
     }
 
     /**
@@ -1579,7 +1579,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         addLine(SEVEN, Bundle.getMessage("buildExcludeCarByInterchange", car.toString(),
-                car.getTypeName(), car.getTrackType(), car.getLocationName(), car.getTrackName()));
+                car.getTypeName(), car.getTrackTypeName(), car.getLocationName(), car.getTrackName()));
         return false;
     }
 
@@ -2128,7 +2128,7 @@ public class TrainBuilderBase extends TrainCommon {
                 if (!terminateStageTrack.isRoadNameAccepted(road)) {
                     addLine(FIVE,
                             Bundle.getMessage("buildStagingTrackRoad", terminateStageTrack.getLocation().getName(),
-                                    terminateStageTrack.getName(), road));
+                                    terminateStageTrack.getName(), road, ""));
                     return false;
                 }
             }
@@ -2429,24 +2429,24 @@ public class TrainBuilderBase extends TrainCommon {
      * Checks to see if track has an alternate and can be used
      * 
      * @param car       the car being dropped
-     * @param testTrack the destination track
+     * @param track the destination track
      * @return true if track has an alternate and can be used
      */
-    protected boolean checkForAlternate(Car car, Track testTrack) {
-        if (testTrack.getAlternateTrack() != null &&
-                car.getTrack() != testTrack.getAlternateTrack() &&
-                checkTrainCanDrop(car, testTrack.getAlternateTrack())) {
+    protected boolean checkForAlternate(Car car, Track track) {
+        if (track.getAlternateTrack() != null &&
+                car.getTrack() != track.getAlternateTrack() &&
+                checkTrainCanDrop(car, track.getAlternateTrack())) {
             addLine(SEVEN,
-                    Bundle.getMessage("buildTrackFullHasAlternate", testTrack.getLocation().getName(),
-                            testTrack.getName(), testTrack.getAlternateTrack().getName()));
-            String status = car.checkDestination(testTrack.getLocation(), testTrack.getAlternateTrack());
+                    Bundle.getMessage("buildTrackFullHasAlternate", track.getLocation().getName(),
+                            track.getName(), track.getAlternateTrack().getName()));
+            String status = car.checkDestination(track.getLocation(), track.getAlternateTrack());
             if (status.equals(Track.OKAY)) {
                 return true;
             }
             addLine(SEVEN,
                     Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
-                            testTrack.getAlternateTrack().getTrackTypeName(),
-                            testTrack.getLocation().getName(), testTrack.getAlternateTrack().getName(),
+                            track.getAlternateTrack().getTrackTypeName(),
+                            track.getLocation().getName(), track.getAlternateTrack().getName(),
                             status));
         }
         return false;
@@ -2657,7 +2657,7 @@ public class TrainBuilderBase extends TrainCommon {
         if (checkForPickUps(car, rl, false)) {
             addLine(SEVEN, Bundle.getMessage("buildNoPickupLaterTrack", car.toString(), rld.getName(),
                     car.getTrackName(), rld.getId(), car.getTrack().getLength() - car.getTrack().getUsedLength(),
-                    Setup.getLengthUnit().toLowerCase()));
+                    Setup.getLengthUnit().toLowerCase(), car.getTrackName()));
             return false;
         }
         // are there any other cars being pull from the same track, route location, and train?
@@ -2753,10 +2753,10 @@ public class TrainBuilderBase extends TrainCommon {
                             car.getTypeName()));
             return false;
         }
-        if (!stageTrack.isRoadNameAccepted(car.getRoadName())) {
+        if (!stageTrack.isRoadNameAndLoadTypeAccepted(car.getRoadName(), car.getLoadType())) {
             addLine(SEVEN,
                     Bundle.getMessage("buildStagingTrackRoad", stageTrack.getLocation().getName(), stageTrack.getName(),
-                            car.getRoadName()));
+                            car.getRoadName(), car.getLoadType()));
             return false;
         }
         // Departing and returning to same location in staging?
@@ -3047,6 +3047,7 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showTracksNotQuickService() {
         if (Setup.isBuildOnTime()) {
+            addLine(FIVE, BLANK_LINE);
             addLine(FIVE, Bundle.getMessage("buildTracksNotQuickService"));
             for (Track track : locationManager.getTracks(null)) {
                 if (!track.isQuickServiceEnabled()) {
@@ -3055,8 +3056,31 @@ public class TrainBuilderBase extends TrainCommon {
                             track.getName()));
                 }
             }
-            addLine(FIVE, BLANK_LINE);
         }
+    }
+    
+    protected boolean checkRouteLocation(RouteLocation rl) {
+        if (getTrain().isLocationSkipped(rl)) {
+            addLine(ONE,
+                    Bundle.getMessage("buildLocSkipped", rl.getName(), rl.getId(), getTrain().getName()));
+            return false;
+        }
+        if (!rl.isPickUpAllowed() && !rl.isLocalMovesAllowed()) {
+            addLine(ONE,
+                    Bundle.getMessage("buildLocNoPickups", getTrain().getRoute().getName(), rl.getId(), rl.getName()));
+            return false;
+        }
+        // no pick ups from staging unless at the start of the train's route
+        if (rl != getTrain().getTrainDepartsRouteLocation() && rl.getLocation().isStaging()) {
+            addLine(ONE, Bundle.getMessage("buildNoPickupsFromStaging", rl.getName()));
+            return false;
+        }
+        // the next check provides a build report message if there's an
+        // issue with the train direction
+        if (!checkPickUpTrainDirection(rl)) {
+            return false;
+        }
+        return true;
     }
 
     /**

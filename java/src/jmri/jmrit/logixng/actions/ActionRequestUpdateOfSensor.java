@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -15,12 +13,11 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class ActionRequestUpdateOfSensor extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionRequestUpdateOfSensor extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class), this);
+                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class));
 
 
     public ActionRequestUpdateOfSensor(String sys, String user)
@@ -91,26 +88,8 @@ public class ActionRequestUpdateOfSensor extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
@@ -118,5 +97,5 @@ public class ActionRequestUpdateOfSensor extends AbstractDigitalAction
     public void disposeMe() {
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateOfSensor.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateOfSensor.class);
 }

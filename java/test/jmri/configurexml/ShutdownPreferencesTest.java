@@ -26,6 +26,6 @@ public class ShutdownPreferencesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ShutdownPreferencesTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ShutdownPreferencesTest.class);
 
 }

@@ -44,5 +44,5 @@ public class SimpleClockAction extends JmriAbstractAction {
     @Override
     public jmri.util.swing.JmriPanel makePanel() { return null; } // not used here
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleClockAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleClockAction.class);
 }

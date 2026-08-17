@@ -111,6 +111,6 @@ public class PaneOpsProgFrameTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PaneOpsProgFrameTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(PaneOpsProgFrameTest.class.getName());
 
 }

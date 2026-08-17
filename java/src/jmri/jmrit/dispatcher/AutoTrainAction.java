@@ -822,5 +822,5 @@ public class AutoTrainAction {
         private TransitSectionAction _tsa = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainAction.class);
+    private static final Logger log = LoggerFactory.getLogger(AutoTrainAction.class);
 }

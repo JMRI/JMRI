@@ -36,6 +36,6 @@ public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammerTest.class);
 
 }

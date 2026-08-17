@@ -27,6 +27,6 @@ public class PR2AdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PR2AdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PR2AdapterTest.class);
 
 }

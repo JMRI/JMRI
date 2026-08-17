@@ -82,6 +82,6 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
         return Bundle.getMessage("AddReporterEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsReporterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(RpsReporterManager.class);
 
 }

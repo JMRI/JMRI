@@ -1102,5 +1102,5 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainBuilderEngines.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainBuilderEngines.class);
 }

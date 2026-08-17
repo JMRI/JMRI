@@ -113,6 +113,6 @@ public class MarklinPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinPowerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinPowerManagerTest.class);
 
 }

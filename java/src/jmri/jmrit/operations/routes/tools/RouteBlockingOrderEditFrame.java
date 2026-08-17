@@ -182,5 +182,5 @@ public class RouteBlockingOrderEditFrame extends OperationsFrame implements java
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteBlockingOrderEditFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteBlockingOrderEditFrame.class);
 }

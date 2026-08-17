@@ -159,6 +159,6 @@ public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProg
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1OpsModeProgrammer.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1OpsModeProgrammer.class);
 
 }

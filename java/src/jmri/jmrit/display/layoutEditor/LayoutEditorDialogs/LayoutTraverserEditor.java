@@ -190,9 +190,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         // Add listeners
         editLayoutTraverserAddSlotButton.addActionListener(this::addTrackPairPressed);
         editLayoutTraverserSegmentEditBlockButton.addActionListener(this::editLayoutTraverserEditBlockPressed);
-        for (FocusListener fl : slotOffsetTextField.getFocusListeners()) {
-            slotOffsetTextField.removeFocusListener(fl);
-        }
         slotOffsetTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -207,19 +204,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                 } catch (NumberFormatException ex) {
                     // ignore invalid input
                 }
-            }
-        });
-        slotOffsetTextField.addActionListener((ActionEvent e) -> {
-            try {
-                double offset = Double.parseDouble(slotOffsetTextField.getText());
-                if (!jmri.util.MathUtil.equals(layoutTraverser.getSlotOffset(), offset)) {
-                    layoutTraverser.setSlotOffset(offset);
-                    updateSlotPanel();
-                    layoutEditor.redrawPanel();
-                    layoutEditor.setDirty();
-                }
-            } catch (NumberFormatException ex) {
-                // ignore invalid input
             }
         });
         for (ActionListener al : orientationComboBox.getActionListeners()) {
@@ -590,12 +574,17 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             disabledCheckBoxA = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxA.setSelected(slotA.isDisabled());
             disabledCheckBoxA.addActionListener((ActionEvent e) -> {
-                if (disabledCheckBoxA.isSelected() && (slotA.getConnect() != null)) {
-                    JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
-                            Bundle.getMessage("ErrorTraverserSlotConnected"),
-                            Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    disabledCheckBoxA.setSelected(false);
+                if (disabledCheckBoxA.isSelected()) {
+                    var msg = layoutTraverser.isSlotConnectionClear(slotA);
+                    if (msg.length() > 0) {
+                        msg.insert(0, Bundle.getMessage("TV_Message_Header"));
+                        msg.append(Bundle.getMessage("TV_Message_Slot_Disable"));
+                        JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
+                                msg.toString(),
+                                Bundle.getMessage("ErrorTitle"),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        disabledCheckBoxA.setSelected(false);
+                    }
                 }
                 slotA.setDisabled(disabledCheckBoxA.isSelected());
                 layoutEditor.redrawPanel();
@@ -631,12 +620,16 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             disabledCheckBoxB = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxB.setSelected(slotB.isDisabled());
             disabledCheckBoxB.addActionListener((ActionEvent e) -> {
-                if (disabledCheckBoxB.isSelected() && (slotB.getConnect() != null)) {
-                    JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
-                            Bundle.getMessage("ErrorTraverserSlotConnected"),
-                            Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    disabledCheckBoxB.setSelected(false);
+                if (disabledCheckBoxB.isSelected()) {
+                    var msg = layoutTraverser.isSlotConnectionClear(slotB);
+                    if (msg.length() > 0) {
+                        msg.insert(0, Bundle.getMessage("TV_Message_Header"));
+                        JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
+                                msg.toString(),
+                                Bundle.getMessage("ErrorTitle"),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        disabledCheckBoxB.setSelected(false);
+                    }
                 }
                 slotB.setDisabled(disabledCheckBoxB.isSelected());
                 layoutEditor.redrawPanel();
@@ -707,11 +700,13 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
         private void delete() {
             int n = JmriJOptionPane.showConfirmDialog(null,
-                    Bundle.getMessage("Question7"),
+                    Bundle.getMessage("Question8s"),
                     Bundle.getMessage("WarningTitle"),
                     JmriJOptionPane.YES_NO_OPTION);
             if (n == JmriJOptionPane.YES_OPTION) {
-                layoutTraverser.deleteTrackPair(pairIndex);
+                if (layoutTraverser.isSlotDeleteAllowed(pairIndex)) {
+                    layoutTraverser.deleteTrackPair(pairIndex);
+                }
             }
         }
 
@@ -735,5 +730,5 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserEditor.class);
 }

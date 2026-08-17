@@ -3,6 +3,8 @@ package jmri.jmrit.throttle;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
+import jmri.jmrit.throttle.list.ThrottlesListPanel;
+
 /**
  * Test simple functioning of ThrottlesListPanel
  *

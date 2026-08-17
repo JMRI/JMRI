@@ -436,7 +436,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return TrainCommon.splitString(getTrackName());
     }
     
-    public String getTrackType() {
+    public String getTrackTypeName() {
         if (getTrack() != null) {
             return getTrack().getTrackTypeName();
         }
@@ -739,7 +739,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _clone;
         _clone = clone;
         if (!old == clone) {
-            setDirtyAndFirePropertyChange("clone", old ? "true" : "false", clone ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("clone", old, clone); // NOI18N
         }
     }
 
@@ -759,7 +759,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         Division old = _division;
         _division = division;
         if (old != _division) {
-            setDirtyAndFirePropertyChange("homeDivisionChange", old, division);
+            setDirtyAndFirePropertyChange("homeDivisionChange", old, division); // NOI18N
         }
     }
 
@@ -826,8 +826,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         int old = _moves;
         _moves = moves;
         if (old != moves) {
-            setDirtyAndFirePropertyChange("rolling stock moves", Integer.toString(old), // NOI18N
-                    Integer.toString(moves));
+            setDirtyAndFirePropertyChange("rolling stock moves", old, moves); // NOI18N
         }
     }
 
@@ -1161,6 +1160,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return format.format(_lastDate);
     }
 
+    public static final int DATE_TIME_LENGTH = 19;
     /**
      * Provides the last date when this rolling stock was moved
      *
@@ -1201,7 +1201,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets the last date when this rolling stock was moved. This method is used
      * only for loading data from a file. Use setLastDate(Date) instead.
      *
-     * @param date yyyy/MM/dd HH:mm:ss, MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
+     * @param date MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
      *             or MM/dd/yyyy HH:mm
      */
     public void setLastDate(String date) {
@@ -1275,8 +1275,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _locationUnknown;
         _locationUnknown = unknown;
         if (!old == unknown) {
-            setDirtyAndFirePropertyChange("car location known", old ? "true" : "false", unknown ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car location known", old, unknown); // NOI18N
         }
     }
 
@@ -1299,8 +1298,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _outOfService;
         _outOfService = outOfService;
         if (!old == outOfService) {
-            setDirtyAndFirePropertyChange("car out of service", old ? "true" : "false", outOfService ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car out of service", old, outOfService); // NOI18N
         }
     }
 
@@ -1316,8 +1314,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _selected;
         _selected = selected;
         if (!old == selected) {
-            setDirtyAndFirePropertyChange("selected", old ? "true" : "false", selected ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("selected", old, selected); // NOI18N
         }
     }
 
@@ -1333,7 +1330,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _comment;
         _comment = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange(COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
 
@@ -1405,10 +1402,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      */
     protected void destroyCloneReset(RollingStock rs) {
         rs.setLocation(getLocation(), getTrack(), RollingStock.FORCE);
-        rs.setRouteDestination(null); // clear rd
+        rs.setRouteDestination(null);
         rs.setLastTrain(getLastTrain());
         rs.setLastRouteId(getLastRouteId());
         rs.setLastDate(getLastDate());
+        rs.setLastLocationId(getLastLocationId());
+        rs.setLastTrackId(getLastTrackId());
         rs.setMoves(getMoves());
     }
 
@@ -1757,6 +1756,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStock.class);
+    private static final Logger log = LoggerFactory.getLogger(RollingStock.class);
 
 }

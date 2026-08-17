@@ -28,6 +28,6 @@ public class Lnsv2MessageContentsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Lnsv2MessageContentsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Lnsv2MessageContentsTest.class);
 
 }

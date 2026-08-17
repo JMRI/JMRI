@@ -57,8 +57,8 @@ public class AttributeTableModelTest {
     }
 
     // create a standard test roster
-    private final static int NENTRIES = 3;
-    private final static int NKEYS = 4;
+    private static final int NENTRIES = 3;
+    private static final int NKEYS = 4;
 
     @BeforeEach
     public void setUp() {

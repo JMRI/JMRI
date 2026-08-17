@@ -17,7 +17,7 @@ public class MemoryWhereUsed {
      * @param memory The memory bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean memory) {
+    public static JTextArea getWhereUsed(NamedBean memory) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameMemory"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, memory.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

@@ -272,5 +272,5 @@ public class IBLnPacketizer extends LnPacketizer {
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IBLnPacketizer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IBLnPacketizer.class);
 }

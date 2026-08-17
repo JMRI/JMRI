@@ -56,6 +56,6 @@ public class HexFileSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HexFileSystemConnectionMemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HexFileSystemConnectionMemo.class);
 
 }

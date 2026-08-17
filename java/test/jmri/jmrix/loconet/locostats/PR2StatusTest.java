@@ -27,6 +27,6 @@ public class PR2StatusTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PR2StatusTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PR2StatusTest.class);
 
 }

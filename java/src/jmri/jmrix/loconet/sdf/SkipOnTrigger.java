@@ -42,7 +42,7 @@ public class SkipOnTrigger extends SdfMacro {
         return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")"; // NOI18N
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         if ((buff.getAtIndex() & 0xFC) != 0x04) {
             return null;
         }

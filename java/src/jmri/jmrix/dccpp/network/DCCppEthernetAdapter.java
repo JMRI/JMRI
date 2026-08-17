@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to DCC++ Base Station via Ethernet. NOTES: By default,
+ * Provide access to DCC-EX Base Station via Ethernet. NOTES: By default,
  * the LIUSBEthernet has an IP address of 192.168.0.200 and listens to port
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
@@ -37,12 +37,26 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
+        // Recover automatically from a dropped connection by default; retry indefinitely.
+        allowConnectionRecovery = true;
+        reconnectMaxAttempts = -1;
+    }
+
+    @Override
+    public void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection to {}:{} lost. Attempting to recover...", getHostName(), getPort());
+        }
+        super.recover();
     }
     
     @Override
     public void connect() throws java.io.IOException {
         super.connect();
         log.debug("openPort called");
+        // Set a read timeout so the receive loop detects a dead connection
+        // rather than blocking indefinitely. Value is 3x the keepAlive interval.
+        setConnectionTimeout((int) (keepAliveTimeoutValue * 3));
         keepAliveTimer();
     }
     
@@ -79,6 +93,15 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         new DCCppInitializationManager(this.getSystemConnectionMemo());
     }
     
+    @Override
+    protected void closeConnection() {
+        if (keepAliveTimer != null) {
+            keepAliveTimer.cancel();
+            keepAliveTimer = null;
+        }
+        super.closeConnection();
+    }
+
     /**
      * Set up the keepAliveTimer, and start it.
      */
@@ -89,7 +112,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // When the timer times out, send a heartbeat (status request on DCC++, max num slots request on DCC-EX
+                    // When the timer times out, send a heartbeat (status request on DCC-EX, max num slots request on DCC-EX
                     DCCppTrafficController tc = DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
                     DCCppCommandStation cs = tc.getCommandStation();
                     if (cs.isMaxNumSlotsMsgSupported()) {
@@ -112,7 +135,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      */
     @Override
     public void setMdnsConfigure(boolean autoconfig) {
-        log.debug("Setting DCC++ Ethernet adapter autoconfiguration to: {}", autoconfig);
+        log.debug("Setting DCC-EX Ethernet adapter autoconfiguration to: {}", autoconfig);
         mDNSConfigure = autoconfig;
     }
     
@@ -133,7 +156,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      */
     @Override
     public void autoConfigure() {
-        log.info("Configuring DCC++ interface via JmDNS");
+        log.info("Configuring DCC-EX interface via JmDNS");
         if (getHostName().equals(DEFAULT_IP_ADDRESS)) {
             setHostName(""); // reset the hostname to none.
         }
@@ -195,6 +218,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         return Bundle.getMessage("defaultMDNSServiceType");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class);
 
 }

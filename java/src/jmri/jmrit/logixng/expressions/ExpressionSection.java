@@ -24,12 +24,12 @@ public class ExpressionSection extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Section> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Section.class, InstanceManager.getDefault(SectionManager.class), this);
+                    this, Section.class, InstanceManager.getDefault(SectionManager.class));
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
     private final LogixNG_SelectEnum<SectionState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, SectionState.values(), SectionState.Free, this);
+            new LogixNG_SelectEnum<>(this, SectionState.values(), SectionState.Free);
 
     public ExpressionSection(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -86,7 +86,12 @@ public class ExpressionSection extends AbstractDigitalExpression
 
         SectionState checkSectionState = _selectEnum.evaluateEnum(conditionalNG);
 
-        int currentState = section.getState();
+        int currentState = 0;
+        if (_selectEnum.getEnum() == SectionState.Occupied) {
+            currentState = section.getOccupancy();
+        } else {
+            currentState = section.getState();
+        }
 
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentState == checkSectionState.getID();
@@ -134,9 +139,24 @@ public class ExpressionSection extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (_selectEnum.getEnum() == SectionState.Occupied) {
+            if (!_selectNamedBean.isDirectAddressing()) {
+                log.error("The section occupied expression requires a 'Direct' section reference");
+                return;
+            }
+
+            if (_selectNamedBean.getBean() == null) {
+                log.error("The section occupied expression requires a selected section");
+                return;
+            }
+
+            // Sections are not active until Section.initializeBlocks is invoked by Dispatcher.
+            // Section.getNumBlocks is a public method that will invoke Section.initializeBlocks if needed.
+            _selectNamedBean.getBean().getNumBlocks();
+        }
+
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -146,7 +166,6 @@ public class ExpressionSection extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -165,7 +184,9 @@ public class ExpressionSection extends AbstractDigitalExpression
     public enum SectionState {
         Free(Section.FREE, Bundle.getMessage("Section_StateFree")),
         Forward(Section.FORWARD, Bundle.getMessage("Section_StateForward")),
-        Reverse(Section.REVERSE, Bundle.getMessage("Section_StateReverse"));
+        Reverse(Section.REVERSE, Bundle.getMessage("Section_StateReverse")),
+        Separator1(-1, Base.SEPARATOR),
+        Occupied(Section.OCCUPIED, Bundle.getMessage("Section_StateOccupied"));
 
         private final int _id;
         private final String _text;
@@ -192,6 +213,6 @@ public class ExpressionSection extends AbstractDigitalExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSection.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSection.class);
 
 }

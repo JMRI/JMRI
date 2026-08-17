@@ -45,7 +45,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
     protected List<RosterEntry> _excludedItems = new ArrayList<RosterEntry>();
     protected RosterEntry[] _currentSelection = null;
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class);
+    private static final Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class);
 
     /**
      * Create a combo box with the default Roster and all entries in the active
@@ -457,6 +457,6 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
                 this.getSelectedRosterEntries(true));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBoxTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterEntryComboBoxTest.class);
 
 }

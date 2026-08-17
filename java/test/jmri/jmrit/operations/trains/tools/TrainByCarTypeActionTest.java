@@ -63,7 +63,7 @@ public class TrainByCarTypeActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(TrainByCarTypeActionTest.class);
 
 }

@@ -30,6 +30,6 @@ public class WarrantManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WarrantManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(WarrantManagerTest.class);
 
 }

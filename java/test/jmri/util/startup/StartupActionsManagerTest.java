@@ -26,6 +26,6 @@ public class StartupActionsManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StartupActionsManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StartupActionsManagerTest.class);
 
 }

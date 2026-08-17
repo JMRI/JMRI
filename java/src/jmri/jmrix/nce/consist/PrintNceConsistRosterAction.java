@@ -65,6 +65,6 @@ public class PrintNceConsistRosterAction extends AbstractAction {
         writer.close();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintNceConsistRosterAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintNceConsistRosterAction.class);
 
 }

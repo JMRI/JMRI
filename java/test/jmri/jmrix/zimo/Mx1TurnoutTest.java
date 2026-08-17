@@ -76,6 +76,6 @@ public class Mx1TurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1TurnoutTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Mx1TurnoutTest.class);
 
 }

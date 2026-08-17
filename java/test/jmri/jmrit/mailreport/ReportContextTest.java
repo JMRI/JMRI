@@ -47,6 +47,6 @@ public class ReportContextTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ReportContextTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ReportContextTest.class);
 
 }

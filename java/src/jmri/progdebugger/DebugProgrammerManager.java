@@ -64,5 +64,5 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DebugProgrammerManager.class);
 }

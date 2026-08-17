@@ -17,7 +17,7 @@ public class RouteWhereUsed {
      * @param route The route bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean route) {
+    public static JTextArea getWhereUsed(NamedBean route) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameRoute"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, route.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

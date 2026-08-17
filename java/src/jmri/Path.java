@@ -211,7 +211,7 @@ public class Path implements Comparable<Path> {
      * @param d the direction
      * @return the direction description
      */
-    static public String decodeDirection(int d) {
+    public static String decodeDirection(int d) {
         if (d == NONE) {
             return Bundle.getMessage("None"); // UI strings i18n using NamedBeanBundle.properties
         }
@@ -322,7 +322,7 @@ public class Path implements Comparable<Path> {
         return (_length / 25.4f);
     }
 
-    static private void appendOne(StringBuffer b, String t) {
+    private static void appendOne(StringBuffer b, String t) {
         if (b.length() != 0) {
             b.append(", ");
         }
@@ -516,5 +516,5 @@ public class Path implements Comparable<Path> {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Path.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Path.class);
 }

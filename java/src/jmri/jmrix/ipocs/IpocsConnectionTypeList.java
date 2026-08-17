@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 @org.openide.util.lookup.ServiceProvider(service = jmri.jmrix.ConnectionTypeList.class)
 public class IpocsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
-  public final static String IPOCSMR = "IPOCSMR";
+  public static final String IPOCSMR = "IPOCSMR";
 
   public IpocsConnectionTypeList() {
     super();

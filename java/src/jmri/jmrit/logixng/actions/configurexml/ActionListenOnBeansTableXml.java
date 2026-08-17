@@ -121,5 +121,5 @@ public class ActionListenOnBeansTableXml extends jmri.managers.configurexml.Abst
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansTableXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansTableXml.class);
 }

@@ -34,6 +34,6 @@ public class LnPr2ThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LnPr2ThrottleManagerTest.class);
 
 }

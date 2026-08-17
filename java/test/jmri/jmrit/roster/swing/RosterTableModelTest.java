@@ -6,10 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import javax.swing.JTable;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntryImplementations;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.XTableColumnModel;
 
 import org.junit.jupiter.api.*;
 
@@ -89,6 +92,9 @@ public class RosterTableModelTest {
     @Test
     public void testGetValueAt() {
         RosterTableModel t = new RosterTableModel();
+        var table = new JTable(t);
+        table.setColumnModel(new XTableColumnModel());
+        t.setAssociatedTable(table);
 
         assertEquals("id 1", t.getValueAt(0, RosterTableModel.IDCOL));
         assertEquals(12, (int)t.getValueAt(0, RosterTableModel.ADDRESSCOL));
@@ -115,7 +121,11 @@ public class RosterTableModelTest {
 
     @Test
     public void testSetValueAt() {
-        RosterTableModel t = new RosterTableModel(true); // editable
+        RosterTableModel t = new RosterTableModel(true); //editable
+        var table = new JTable(t);
+        table.setColumnModel(new XTableColumnModel());
+        t.setAssociatedTable(table);
+
         assertEquals("id 1", t.getValueAt(0, RosterTableModel.IDCOL));
         t.setValueAt("A New Id 1", 0, RosterTableModel.IDCOL);
         t.setValueAt("A New Id 1", 0, RosterTableModel.IDCOL);
@@ -179,7 +189,10 @@ public class RosterTableModelTest {
         Roster.getDefault().getEntry(1).deleteAttribute("key c");
         Roster.getDefault().getEntry(1).deleteAttribute("key d");
         
-        RosterTableModel t = new RosterTableModel(true); // set Editable
+        RosterTableModel t = new RosterTableModel(true); // set editable
+        var table = new JTable(t);
+        table.setColumnModel(new XTableColumnModel());
+        t.setAssociatedTable(table);
 
         // hard-coded value is number of columns expected
         // 14 normal columns + 2 attribute columns

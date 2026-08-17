@@ -623,7 +623,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         super.propertyChange(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarManager.class);
+    private static final Logger log = LoggerFactory.getLogger(CarManager.class);
 
     @Override
     public void initialize() {

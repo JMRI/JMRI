@@ -27,11 +27,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private final LogixNG_SelectNamedBean<Memory> _selectOtherMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private MemoryOperation _memoryOperation = MemoryOperation.Equal;
     private CompareType _compareType = CompareType.NumberOrString;
@@ -341,7 +341,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
             if (_listenToOtherMemory) {
                 _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
             }
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -354,7 +353,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
             if (_listenToOtherMemory) {
                 _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
             }
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -434,6 +432,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
         _selectOtherMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionMemory.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionMemory.class);
 
 }

@@ -31,6 +31,6 @@ public class BusyDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BusyDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BusyDialogTest.class);
 
 }

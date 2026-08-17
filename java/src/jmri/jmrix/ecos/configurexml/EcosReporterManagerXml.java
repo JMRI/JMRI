@@ -27,6 +27,6 @@ public class EcosReporterManagerXml extends jmri.managers.configurexml.AbstractR
         return loadReporters(shared);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(EcosReporterManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(EcosReporterManagerXml.class);
 
 }

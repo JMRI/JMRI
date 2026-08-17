@@ -85,6 +85,6 @@ public class WavBufferTest {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(WavBufferTest.class);
+    //private static final Logger log = LoggerFactory.getLogger(WavBufferTest.class);
 
 }

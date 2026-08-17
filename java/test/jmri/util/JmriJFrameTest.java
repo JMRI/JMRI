@@ -26,6 +26,6 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriJFrameTest.class);
 
 }

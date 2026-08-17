@@ -26,6 +26,6 @@ public class Z21serverCreationActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WiThrottleCreationActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(WiThrottleCreationActionTest.class);
 
 }

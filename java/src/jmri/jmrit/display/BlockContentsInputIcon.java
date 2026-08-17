@@ -267,5 +267,5 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         namedBlock = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsInputIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(BlockContentsInputIcon.class);
 }

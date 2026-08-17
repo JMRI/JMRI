@@ -24,6 +24,6 @@ public class DccConsistManagerTest extends jmri.implementation.AbstractConsistMa
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DccConsistManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DccConsistManagerTest.class);
 
 }

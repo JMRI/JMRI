@@ -15,101 +15,188 @@
       <h1>Roster Speed Profiling</h1>
 
       <p>The Speed Profiling tool is designed to create a profile of a loco at various speed steps
-      to help with the automatic running of a loco within JMRI using either <a href=
-      "../../../dispatcher/NewTrain.shtml">DispatcherPro</a> or <a href=
-      "../../../logix/SpeedChanges.shtml">Warrants</a>.<br>
-      Primary goal is to help getting a loco to stop within a specific distance using a known
-      Throttle setting.</p>
+      to help with the automatic running of a loco within JMRI using either
+      <a href="../../../dispatcher/NewTrain.shtml">DispatcherPro</a> or
+      <a href="../../../logix/SpeedChanges.shtml">Warrants</a>. The primary goal is getting a loco
+      to stop, or change speed (Ramping) within a specific distance using known Throttle settings.</p>
 
-      <p>The tool is accessed through the Roster -&gt; Speed Profiling menu item.<br>
-      It works on the principle of timing a loco over a known distance at a given speed step, in
-      both the forward and reverse direction. Currently it requires three sensors which monitor the
-      occupancy around a section of track. Ideally the section of track that the timed runs are
-      performed over should be straight, and a minimum of 1 Meter long; the longer the length the
-      better the result. For this profiling to work correctly, acceleration/deacceleration should
-      be disabled in the loco decoder.</p>
+      <p>The tool is accessed through PanelPro's <strong>Roster &rArr; Speed Profiling</strong> menu
+      item or DecoderPro's <strong>Actions &rArr; Speed Profiling</strong> menu item.
+
+      <p>It works on the principle of timing a loco over a known distance at a given speed step, in
+      both the forward and reverse directions. It requires three sensors which monitor the
+      occupancy around three contiguous sections of track. Ideally the middle section of track that
+      the timed runs are performed over should be straight, and a minimum of 1 meter long; the longer
+      the length the better the result. For this profiling to work correctly, acceleration/deceleration
+      should be disabled in the loco decoder.</p>
+
       <a href="images/SpeedProfilingPane.png"><img src="images/SpeedProfilingPane.png" class=
-      "floatRight" width="419" height="367" alt="Speed Profiling pane in in JMRI 4.12"></a>
+      "floatRight"alt="Speed Profiling pane"></a>
+
       <h3>Settings</h3>
 
       <ul>
-        <li><strong>Block Length</strong> - This is the length in Millimeters of the middle section
-        which the timed run will be measured.</li>
+        <li><strong>Block Length</strong> - This is the length of the middle section where the timed
+        run will be measured.  The value is either <strong>millimeters (mm)</strong> or
+        <strong>inches (in)</strong> depending on the selected unit of measure. <strong>Note</strong>:
+        Changing the unit of measure <strong><em>does not</em></strong> change the value. A new
+        length value will need to be entered.</li>
 
-        <li><strong>Start Sensor</strong> - This is the initial section of track that the loco will
-        start its initial run from.</li>
+        <li><strong>Sensor Delay Adjust (milli secs)</strong> - The elapsed time can be reduced to
+        compensate for sensor delays.</li>
 
-        <li><strong>Block Sensor</strong> - This is the sensor related to the section of track that
-        the timed run will be taken over</li>
+        <li><strong>Create Sensors if Not Defined</strong> - Normally a PanelPro layout data xml
+        file is loaded which includes the three occupancy sensors. If the three sensors have been
+        defined with only system names and the preferences have been saved using
+        <strong>Save Preferences</strong>, the sensors can be automatically created when the
+        <strong>Speed Profiling</strong> tool is started.</li>
 
-        <li><strong>Finish Sensor</strong> - This sensor related to the section track immediately
-        after the timed section.</li>
+        <li><strong>Start Sensor</strong> - This is the occupancy sensor for the initial section of
+        track that the loco will start its initial run from.</li>
 
-        <li><strong>Roster Entry</strong> - Select the loco that the profiling is to be performed
-        on.</li>
+        <li><strong>Block Sensor</strong> - This is the occupancy sensor for the timed section of
+        track.  The timing starts when this sensor becomes active.</li>
 
-        <li><strong>Start</strong> - Starts the profiling</li>
+        <li><strong>Finish Sensor</strong> - This is the occupancy sensor for the section of track
+        immediately after the timed section.  The timing stops when this sensor becomes active.</li>
 
-        <li><strong>Test</strong> - Test the existing Speed Profile (see below)</li>
+        <li><strong>Roster Entry</strong> - Select the loco to be profiled.  When the entry is
+        selected a temporary throttle is used to determine speed step mode being used.</li>
 
-        <li><strong>Cancel</strong> - Cancels a profiling or test run</li>
+        <li><strong>Throttle Type</strong> - Displays the DCC address and speed steps that will be
+        used by the profiling process.</li>
 
-        <li><strong>View</strong> - Opens a table of the speed profile</li>
+        <li><strong>Start</strong> - Starts the profiling process.</li>
+
+        <li><strong>Test</strong> - Test the existing Speed Profile (see below).</li>
+
+        <li><strong>Cancel</strong> - Cancels a profiling or test run.</li>
+
+        <li><strong>View New</strong> - Opens a table of the speed profile captured in the current
+        session.</li>
+
+        <li><strong>View Merged</strong> - Opens a table of the speed profile captured in the current
+        session merged with the current profile.</li>
+
+        <li><strong>View Current</strong> - Opens a table of the speed profile currently saved in
+        the roster entry.</li>
+
+        <li><strong>Profile Start Step</strong> - The first speed step to profile.</li>
+
+        <li><strong>Profile End Step</strong> - The last speed step to profile.</li>
+
+        <li><strong>Increment/Decrement Steps by</strong> - The amount is added or subtracted to get
+        the next step.  The label <strong>Increment/Decrement</strong> will automatically change
+        depending on whether the start step is greater or less than the finish step.</li>
+
+        <li>The speed step values must be greater than zero and must not exceed the Maximum number
+        of speed steps for the throttle.  If values are not entered they start at 1 and finish at
+        Max Speed Steps, incrementing by 1.</li>
       </ul>
+
+      <h3>Profiling</h3>
 
       <p>To profile the loco, fill the above details into the pane, place the loco in the starting
       section facing forwards towards (but not <em>on</em>) the track Block that the timed run will
-      be taken over, then press [Start].</p>
+      be taken over, then press <strong>Start</strong>.</p>
       <img src="images/SpeedProfilingTerms.png" width="377" height="89" alt=
       "Speed Profiling Setup">
       <p>What happens is that the tool will set the loco off running in the forward direction at
-      speed step 1, when it activates the timed section sensor it starts a timer. Once the finish
-      section sensor is activated the timer is stopped, and the speed is calculated in Millimetres
-      per Second, this is then recorded against the roster. The tool will then ensure that the loco
+      the <strong>Profile Start Step</strong>. When it activates the timed section sensor it starts
+      a timer. Once the finish section sensor is activated the timer is stopped, and the speed is
+      calculated in Millimeters per Second. This is then recorded in the <strong>New</strong> profile table.
+      The tool will then ensure that the loco
       is clear of the timed section sensor, then repeat the procedure again but in the reverse
       direction. Once the loco is back at the initial start section, the whole procedure is
-      repeated again for the next speed step, this occurs until a profile of all speed steps has
+      repeated again for the next speed step, this occurs until the <strong>Profile End Step</strong> has
       been completed.</p>
 
       <p>Profiles can be made with fewer speed steps by choosing the steps to start and end on, and
-      how many steps to increment to the next sampling step. When a starting step is larger than 4
+      how many steps to increment/decrement to the next sampling step. When a starting step is larger than 4
       be sure to place the loco in a position that will allow it to achieve full speed before
       reaching the block sensor.</p>
 
-      <p>The "Save Merged" button combines and saves whatever profiling has been done with the
-      existing speed profile in the Roster.<br>
-      The "Save New" button overwrites any existing speed profile.<br>
-      The "Clear New Data" button disards the most recent results, allowing you to test after a
-      less successful try.<br>
-      Click "Delete Current Profile" to remove any Speed Profile from the Roster entry.<br>
-      "Save Sensors" is handy to store newly added Sensors to your configuration file.</p>
+      <p>The first four buttons at the bottom are used to manage the speed profile within a roster
+      entry.</p>
+
+      <dl>
+        <dt>Clear New Data</dt>
+        <dd>Discard the most recent results.</dd>
+
+        <dt>Save Merged</dt>
+        <dd>Combines and saves whatever profiling has been done with the existing speed profile in
+        the Roster entry.</dd>
+
+        <dt>Save New</dt>
+        <dd>Add a new speed profile or replace an existing speed profile in the Roster entry.</dd>
+
+        <dt>Delete Current Profile</dt>
+        <dd>Remove any Speed Profile from the Roster entry.</dd>
+
+        <dt>Save Preferences</dt>
+        <dd>Store the basic settings and sensor names to the configuration file. These will be used
+        when starting a new Speed Profile session.</dd>
+
+      </dl>
+
+      <h5>Profiling Status</h5>
+
+      <p>While the profiling process is running, a series of messages is displayed in the lower left
+      portion of the window.  This is the initial message while waiting for the middle sensor to
+      become active.</p>
+
+      <img src="images/profile_status.png" alt="profiling status display">
+
+      <p>Once the middle sensor becomes active, the message changes to show the current step and
+      direction:  <strong>Profiling Step (Forward) 1 of 121</strong>.</p>
+
+      <p>When the destination sensor becomes active, the timing is done, but loco has to clear the
+      middle section before it can be stopped: <strong>Waiting for Loco to clear Block Sensor...</strong>.
 
       <h3>Testing</h3>
 
       <p>Having completed the profiling, it is possible to test a Profile. Place the loco in the
       starting Block again, facing forward toward the timed Block, ideally some distance away from
-      it. Enter a starting speed number in the Test Data - Step box, then press [Test].<br>
-      What will occur is that the tool will set the loco off running at the given speed step over
+      it. Enter a starting speed number in the Test Data - Step box, then press <strong>Test</strong>.</p>
+
+      <p>
+      What will occur is that the tool will set the loco running at the given speed step over
       the Test Block, stop and reverse at the same Step. Measured speed will be reported in the
-      Forward and Reverse boxes.<br>
-      Results will vary especially at the higher speed steps, where you will more likely experience
+      Forward and Reverse boxes.</p>
+
+      <p>Results will vary especially at the higher speed steps, where you will more likely experience
       an over run.</p>
+
       <img src="images/SpeedProfileTable.png" width="619" height="445" class="floatRight" alt=
       "Speed Profiling Setup">
+
       <h3>Viewing</h3>
 
       <p>Click one of the buttons in the View area to open a table showing the profile values for
       either the New Profiling results, Current stored in the Roster or a combination of both.
       Cells in the table contain the speeds attained by the loco for each throttle step in both
-      directions.<br>
-      The default speeds are in millimeters per second as measured layout track speed. These values
+      directions.</p>
+
+      <p>The default speeds are in millimeters per second as measured layout track speed. These values
       can be converted to scale speeds by selecting either of the "Miles/hr" or "Kilometers/hr"
-      (per Hour) radio buttons over the table.<br>
-      The Factor column is the ratio of track speed (mm/sec) to throttle setting (from 0.0 to
-      1.0).<br>
-      In the example (using simulated timings) cells with unexpected (non-incrementing) values are
+      (per Hour) radio buttons over the table.</p>
+
+      <p>The Factor column is the ratio of track speed (mm/sec) to throttle setting (from 0.0 to
+      1.0).</p>
+
+      <p>In the example (using simulated timings) cells with unexpected (non-incrementing) values are
       marked in red. Such cells are editable to correct the value or the whole row for that step
       can be deleted. Normally the red instruction will not display.</p>
+
+      <p>The default <strong>Units</strong> selection is set using <strong>Preferences &rArr; Warrants</strong>.</p>
+
+      <img src="images/speed_names.png" alt=
+      "Warrant speed names">
+
+      <p>This setting is also used by the <strong>Test</strong> results. If <strong>Miles/hr</strong>
+      or <strong>Kilometers/hr</strong> are selected the layout scale also needs to be selected in
+      Warrants preferences.</p>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>

@@ -330,6 +330,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(SRCPTrafficController.class);
 
 }

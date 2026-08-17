@@ -70,12 +70,12 @@ public class LockLogger {
     Map<Object, String> statusMap = new LinkedHashMap<>();
 
     // static while we decide whether to access via scripts
-    final public String logMemoryName;
-    final public Memory memory;
+    public final String logMemoryName;
+    public final Memory memory;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",
     justification = "Findbugs got this one wrong.  The 'log' variable needs to be protected "+
                     "because it's accessed in anonymous subclasses in the `Lock` class which override "+
                     "the `log()` method")
-    protected final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
+    protected static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LockLogger.class);
 }

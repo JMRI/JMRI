@@ -1,6 +1,11 @@
 package jmri.swing;
 
+import java.io.*;
+import java.util.Comparator;
+
+import jmri.NamedBean;
 import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
@@ -29,7 +34,7 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkSuccessColor() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         ConnectionLabel action = new ConnectionLabel(config);
         assertEquals( java.awt.Color.BLACK, action.getForeground(), "Color for Success");
     }
@@ -37,7 +42,7 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkUnknownColor() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UNKNOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UNKNOWN);
         ConnectionLabel action = new ConnectionLabel(config);
         // unknown is currently the same color as up.
         assertEquals( java.awt.Color.BLACK, action.getForeground(), "Color for Unknown");
@@ -46,7 +51,7 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkFailColor() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         ConnectionLabel action = new ConnectionLabel(config);
         assertEquals( java.awt.Color.RED, action.getForeground(), "Color for Failure");
     }
@@ -54,24 +59,37 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkColorOnChangeFromSuccess() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         ConnectionLabel action = new ConnectionLabel(config);
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         assertEquals( java.awt.Color.RED, action.getForeground(), "Color for Failure after success");
     }
 
     @Test
     @DisabledIfHeadless
     public void checkColorOnChangeFromFailure() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         ConnectionLabel action = new ConnectionLabel(config);
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         assertEquals( java.awt.Color.BLACK, action.getForeground(), "Color for Failure after success");
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+
+        DefaultSystemConnectionMemo memo = new DefaultSystemConnectionMemo("T", "Test") {
+            @Override
+            protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+                return null;
+            }
+        };
+
         config = new jmri.jmrix.AbstractConnectionConfig() {
             @Override
             protected void checkInitDone() {
@@ -123,7 +141,33 @@ public class ConnectionLabelTest {
 
             @Override
             public jmri.jmrix.PortAdapter getAdapter() {
-                return null;
+
+                return new jmri.jmrix.AbstractPortController(memo) {
+
+                    @Override
+                    public DataInputStream getInputStream() {
+                        return null;
+                    }
+
+                    @Override
+                    public DataOutputStream getOutputStream() {
+                        return null;
+                    }
+
+                    @Override
+                    public String getCurrentPortName() {
+                        return null;
+                    }
+
+                    @Override
+                    public void configure() {
+                    }
+
+                    @Override
+                    public void connect() throws IOException {
+                    }
+
+                };
             }
 
             @Override
@@ -135,6 +179,8 @@ public class ConnectionLabelTest {
 
     @AfterEach
     public void tearDown() {
+        config.setDisabled(true);
+        config = null;
         JUnitUtil.tearDown();
     }
 

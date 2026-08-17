@@ -291,5 +291,5 @@ public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements 
         p.setSimplePreferenceState(getClass().getName() + SHOWRTR_CB, showRtrCheckBox.isSelected());
     }
     
-    // private final static org.slf4j.Logger log = LoggerFactory.getLogger(CbusConsoleDecodeOptionsPane.class);
+    // private static final org.slf4j.Logger log = LoggerFactory.getLogger(CbusConsoleDecodeOptionsPane.class);
 }

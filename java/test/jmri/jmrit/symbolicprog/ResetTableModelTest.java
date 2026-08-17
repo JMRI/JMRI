@@ -32,6 +32,6 @@ public class ResetTableModelTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ResetTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ResetTableModelTest.class);
 
 }

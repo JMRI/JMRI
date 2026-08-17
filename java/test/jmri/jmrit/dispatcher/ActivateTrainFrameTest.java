@@ -104,5 +104,5 @@ public class ActivateTrainFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ActivateTrainFrameTest.class);
 }

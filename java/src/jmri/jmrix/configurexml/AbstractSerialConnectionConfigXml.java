@@ -100,6 +100,10 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
             handleException(status, "opening connection", null, null, null);
             // now force end to operation
             log.debug("load failed");
+            // Load configuration despite the failure to let the user change
+            // the connection type while keeping the configuration. This is
+            // important for C/MRI connections.
+            unpackElement(shared, perNode);
             return false;
         }
 

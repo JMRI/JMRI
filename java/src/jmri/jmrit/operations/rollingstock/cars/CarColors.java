@@ -77,6 +77,6 @@ public class CarColors extends RollingStockAttribute implements InstanceManagerA
         super.firePropertyChange(p, old, n);
     }
         
-    private final static Logger log = LoggerFactory.getLogger(CarColors.class);
+    private static final Logger log = LoggerFactory.getLogger(CarColors.class);
 
 }

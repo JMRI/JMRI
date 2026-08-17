@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
-    public final static String NAME = "CAN via GridConnect Network Interface";
+    public static final String NAME = "CAN via GridConnect Network Interface";
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -122,6 +122,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
 }

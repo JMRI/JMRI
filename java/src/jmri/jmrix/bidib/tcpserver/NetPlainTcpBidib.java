@@ -143,6 +143,6 @@ public class NetPlainTcpBidib {
         log.info("Stop the TCP server finished.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetPlainTcpBidib.class);
+    private static final Logger log = LoggerFactory.getLogger(NetPlainTcpBidib.class);
     
 }

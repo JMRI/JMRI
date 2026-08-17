@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FileLineEndingsCheck {
 
-    private final static Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
+    private static final Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
 
     public static Iterable<File> data() {
         return getFiles(new File("."),
@@ -129,7 +129,7 @@ public class FileLineEndingsCheck {
     private static boolean setup = false;
 
     @BeforeAll // want to reduce burden
-    static public void setUp() {
+    public static void setUp() {
         if (!setup) {
             JUnitUtil.setUp();
             setup = true;
@@ -137,7 +137,7 @@ public class FileLineEndingsCheck {
     }
 
     @AfterAll // want to reduce burden
-    static public void tearDown() {
+    public static void tearDown() {
         JUnitUtil.tearDown();
     }
 }

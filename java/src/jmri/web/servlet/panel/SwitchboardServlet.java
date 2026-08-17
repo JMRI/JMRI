@@ -136,6 +136,6 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         return "ERROR JSON support not implemented";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);
 
 }

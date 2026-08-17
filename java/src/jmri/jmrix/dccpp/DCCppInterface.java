@@ -1,17 +1,17 @@
 package jmri.jmrix.dccpp;
 
 /**
- * DCCppInterface defines the general connection to a DCC++ layout.
+ * DCCppInterface defines the general connection to a DCC-EX layout.
  * <p>
- * Use this interface to send messages to a DCC++ layout. Classes implementing
- * the DCCppListener interface can register here to receive incoming DCC++
+ * Use this interface to send messages to a DCC-EX layout. Classes implementing
+ * the DCCppListener interface can register here to receive incoming DCC-EX
  * messages as events.
  * <p>
  * The jmri.jrmix.dccpp.DCCppTrafficControler provides the first implementation of
  * this interface.
  * <p>
  * How do you locate an implemenation of this interface? That's an interesting
- * question. This is inherently DCC++ specific, so it would be inappropriate to
+ * question. This is inherently DCC-EX specific, so it would be inappropriate to
  * put it in the jmri.InterfaceManager. And Java interfaces can't have static
  * members, so we can't provide an implementation() member. For now, we use a
  * static implementation member in the DCCppTrafficController implementation to
@@ -31,7 +31,7 @@ package jmri.jmrix.dccpp;
 public interface DCCppInterface {
 
     /**
-     * Request a message be sent to the attached DCC++. Return is immediate,
+     * Request a message be sent to the attached DCC-EX. Return is immediate,
      * with the message being queued for eventual sending.  If you're interested
      * in a reply, you need to register a DCCppListener object to watch the
      * message stream. When sending, you specify (in 2nd parameter) who
@@ -43,7 +43,7 @@ public interface DCCppInterface {
     void sendDCCppMessage(DCCppMessage msg, DCCppListener replyTo);
 
     /**
-     * Request notification of things happening on the DCC++.
+     * Request notification of things happening on the DCC-EX.
      * <p>
      * The same listener can register multiple times with different masks.
      * (Multiple registrations with a single mask value are equivalent to a

@@ -110,6 +110,6 @@ public class GotoSuccessActionTest extends OperationsTestCase {
         Assert.assertEquals("last automation item", automationItem2, automation.getLastAutomationItem());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GotoSuccessActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GotoSuccessActionTest.class);
 
 }

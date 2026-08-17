@@ -28,6 +28,6 @@ public class CbusNodeTimerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeEventManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeEventManagerTest.class);
 
 }

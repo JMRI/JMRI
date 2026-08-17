@@ -35,6 +35,6 @@ public class TestWaitsForever {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TestWaitsForever.class);
+    // private static final Logger log = LoggerFactory.getLogger(TestWaitsForever.class);
 
 }

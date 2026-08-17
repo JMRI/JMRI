@@ -26,6 +26,6 @@ public class StartupPauseFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StartupPauseFactoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StartupPauseFactoryTest.class);
 
 }

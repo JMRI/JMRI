@@ -292,6 +292,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         return ac.compare(suffix1, suffix2);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class);
 
 }

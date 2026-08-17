@@ -33,6 +33,6 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MergConnectionConfigTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MergConnectionConfigTest.class);
 
 }

@@ -116,6 +116,6 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRosterAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintRosterAction.class);
 
 }

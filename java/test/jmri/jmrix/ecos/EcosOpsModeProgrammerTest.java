@@ -35,6 +35,6 @@ public class EcosOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EcosProgrammerTest.class);
 
 }

@@ -247,5 +247,5 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
         super.propertyChange(e);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class);
 }

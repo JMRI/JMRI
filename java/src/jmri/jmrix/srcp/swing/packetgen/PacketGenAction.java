@@ -41,5 +41,5 @@ public class PacketGenAction extends SRCPSystemConnectionAction {
             f.setVisible(true);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 }

@@ -75,6 +75,6 @@ public class GenerateSwitchListChangesAction extends Action {
         // no cancel for this action
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GenerateSwitchListChangesAction.class);
+    private static final Logger log = LoggerFactory.getLogger(GenerateSwitchListChangesAction.class);
 
 }

@@ -321,7 +321,6 @@ public class CvValue extends AbstractValue implements ProgListener {
             _reading = true;
             _confirm = false;
             try {
-                //mProgrammer.readCV(_num, this);
                 mProgrammer.readCV(_num, this, this.getValue());
             } catch (Exception e) {
                 if (status != null) {
@@ -492,6 +491,6 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CvValue.class);
+    private static final Logger log = LoggerFactory.getLogger(CvValue.class);
 
 }

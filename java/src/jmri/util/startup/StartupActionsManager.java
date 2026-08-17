@@ -40,10 +40,10 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     private final HashMap<Class<? extends StartupModel>, StartupModelFactory> factories = new HashMap<>();
     private boolean isDirty = false;
     private boolean restartRequired = false;
-    public final static String STARTUP = "startup"; // NOI18N
-    public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd"; // NOI18N
-    public final static String NAMESPACE_OLD = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
+    public static final String STARTUP = "startup"; // NOI18N
+    public static final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd"; // NOI18N
+    public static final String NAMESPACE_OLD = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
+    private static final Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
 
     public StartupActionsManager() {
         super();

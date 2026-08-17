@@ -335,7 +335,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemEvRequestMon"),
@@ -345,6 +345,6 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventRequestTablePane.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusEventRequestTablePane.class);
 
 }

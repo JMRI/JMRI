@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.jmrix.loconet.LnNetworkPortController;
+import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
     public LnTcpDriverAdapter(LocoNetSystemConnectionMemo m) {
         super(m);
+        allowConnectionRecovery = true;
+        reconnectMaxAttempts = -1; // retry indefinitely
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
@@ -35,6 +38,25 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
     public LnTcpDriverAdapter() {
         this(new LocoNetSystemConnectionMemo());
+    }
+
+    @Override
+    public void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection to {}:{} lost. Attempting to recover...", getHostName(), getPort());
+        }
+        super.recover();
+    }
+
+    // after reconnect, reattach the packetizer's streams and restart the receive thread
+    @Override
+    protected void resetupConnection() {
+        LnTrafficController tc = getSystemConnectionMemo().getLnTrafficController();
+        if (tc instanceof LnOverTcpPacketizer) {
+            LnOverTcpPacketizer packets = (LnOverTcpPacketizer) tc;
+            packets.connectPort(this);
+            packets.restartRcvThread();
+        }
     }
 
     /**
@@ -71,9 +93,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         return opened;
     }
 
-    // private control members
-    private final boolean opened = false;
-
     @Override
     public void configureOption1(String value) {
         super.configureOption1(value);
@@ -81,6 +100,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         setCommandStationType(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTcpDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTcpDriverAdapter.class);
 
 }

@@ -160,6 +160,6 @@ public class WaitTrainTerminatedActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WaitTrainTerminatedActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(WaitTrainTerminatedActionTest.class);
 
 }

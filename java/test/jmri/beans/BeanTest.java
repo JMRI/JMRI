@@ -20,7 +20,7 @@ public class BeanTest {
     private boolean changed;
     private Bean bean;
     private PropertyChangeListener listener;
-    private final static String PROPERTY = "property";
+    private static final String PROPERTY = "property";
 
     @Test
     public void testAddPropertyChangeListener_PropertyChangeListener() {

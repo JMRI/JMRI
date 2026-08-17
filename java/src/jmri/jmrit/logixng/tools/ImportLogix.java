@@ -88,6 +88,6 @@ public class ImportLogix {
         return _logixNG;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLogix.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLogix.class);
 
 }

@@ -16,6 +16,6 @@ public class PoolTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PoolTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PoolTest.class);
 
 }

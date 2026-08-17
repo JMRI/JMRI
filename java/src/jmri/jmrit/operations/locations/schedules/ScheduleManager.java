@@ -80,10 +80,9 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
         if (schedule == null && !name.isBlank()) {
             _id++;
             schedule = new Schedule(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
+            int oldSize = _scheduleHashTable.size();
             _scheduleHashTable.put(schedule.getId(), schedule);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _scheduleHashTable.size());
         }
         return schedule;
     }
@@ -94,14 +93,14 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
      * @param schedule The Schedule to add.
      */
     public void register(Schedule schedule) {
-        Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
+        int oldSize = _scheduleHashTable.size();
         _scheduleHashTable.put(schedule.getId(), schedule);
         // find last id created
         int id = Integer.parseInt(schedule.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _scheduleHashTable.size());
     }
 
     /**
@@ -114,9 +113,9 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
             return;
         }
         schedule.dispose();
-        Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
+        int oldSize = _scheduleHashTable.size();
         _scheduleHashTable.remove(schedule.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _scheduleHashTable.size());
     }
 
     /**
@@ -365,7 +364,7 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduleManager.class);
 
     @Override
     public void initialize() {

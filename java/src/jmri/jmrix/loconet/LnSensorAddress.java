@@ -245,6 +245,6 @@ public class LnSensorAddress {
         return prefix + "S" + (asInt() / 16) + letter + digit;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(LnSensorAddress.class);
 
 }

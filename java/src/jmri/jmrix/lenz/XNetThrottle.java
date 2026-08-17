@@ -43,8 +43,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected int address;
 
     // Get the number of valid functions from the software version number.
-    // Declared static private so it can be called as an argument to super(..)
-    static private int numberOfFuns(XNetTrafficController controller) {
+    // Declared private static so it can be called as an argument to super(..)
+    private static int numberOfFuns(XNetTrafficController controller) {
         int version = (int) controller.getCommandStation().getCommandStationSoftwareVersionBCD();
         if (version < 0x40) return 29;  // 0 - 28
         return 69;                      // 0 - 68
@@ -714,6 +714,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     // And then we want to request the Function Momentary Status
                     // for functions F13-F28
                     sendFunctionHighMomentaryStatusRequest();
+                } else {
+                    // The reply to the outstanding request has been consumed,
+                    // so no timeout will ever fire for it.  Without this
+                    // branch an unrecognized subtype leaves requestState stuck
+                    // (never returns to THROTTLEIDLE) and every command queued
+                    // afterwards is silently held back forever.
+                    log.debug("Unhandled LOCO_INFO_RESPONSE subtype {} while in THROTTLESTATSENT, resuming queue",
+                            l.getElement(1));
+                    requestState = THROTTLEIDLE;
+                    sendQueuedMessage();
                 }
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */

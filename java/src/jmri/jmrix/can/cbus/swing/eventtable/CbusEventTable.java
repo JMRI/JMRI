@@ -76,12 +76,12 @@ public class CbusEventTable extends JScrollPane implements TableModelListener {
         
     }
     
-    private final static int[] EVENT_COL_MENU = new int[]{CbusEventTableDataModel.NAME_COLUMN,
+    private static final int[] EVENT_COL_MENU = new int[]{CbusEventTableDataModel.NAME_COLUMN,
         CbusEventTableDataModel.NODE_COLUMN, CbusEventTableDataModel.EVENT_COLUMN,CbusEventTableDataModel.NODENAME_COLUMN,
         CbusEventTableDataModel.COMMENT_COLUMN, 
          CbusEventTableDataModel.STLR_ON_COLUMN,CbusEventTableDataModel.STLR_OFF_COLUMN};
     
-    private final static int[] LATEST_COL_MENU = new int[]{
+    private static final int[] LATEST_COL_MENU = new int[]{
         CbusEventTableDataModel.STATE_COLUMN, CbusEventTableDataModel.CANID_COLUMN,
         CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN, CbusEventTableDataModel.EVENT_DAT_1 ,
         CbusEventTableDataModel.EVENT_DAT_2 , CbusEventTableDataModel.EVENT_DAT_3
@@ -248,6 +248,6 @@ public class CbusEventTable extends JScrollPane implements TableModelListener {
         eventDragHandler.dispose();
     }
 
- //   private final static Logger log = LoggerFactory.getLogger(CbusNodeEventTablePane.class);
+ //   private static final Logger log = LoggerFactory.getLogger(CbusNodeEventTablePane.class);
 
 }

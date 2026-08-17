@@ -647,6 +647,6 @@ public class Automation extends PropertyChangeSupport implements PropertyChangeL
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Automation.class);
+    private static final Logger log = LoggerFactory.getLogger(Automation.class);
 
 }

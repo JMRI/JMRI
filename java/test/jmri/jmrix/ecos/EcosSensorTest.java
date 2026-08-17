@@ -36,6 +36,6 @@ public class EcosSensorTest extends jmri.implementation.AbstractSensorTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosSensorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EcosSensorTest.class);
 
 }

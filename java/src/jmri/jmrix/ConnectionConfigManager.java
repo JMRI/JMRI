@@ -43,14 +43,14 @@ import org.slf4j.LoggerFactory;
 public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
-    private final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
-    public final static String CONNECTIONS = "connections"; // NOI18N
-    public final static String CONNECTION = "connection"; // NOI18N
-    public final static String CLASS = "class"; // NOI18N
-    public final static String USER_NAME = "userName"; // NOI18N
-    public final static String SYSTEM_NAME = "systemPrefix"; // NOI18N
-    public final static String MANUFACTURER = "manufacturer"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManager.class);
+    private static final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
+    public static final String CONNECTIONS = "connections"; // NOI18N
+    public static final String CONNECTION = "connection"; // NOI18N
+    public static final String CLASS = "class"; // NOI18N
+    public static final String USER_NAME = "userName"; // NOI18N
+    public static final String SYSTEM_NAME = "systemPrefix"; // NOI18N
+    public static final String MANUFACTURER = "manufacturer"; // NOI18N
+    private static final Logger log = LoggerFactory.getLogger(ConnectionConfigManager.class);
 
     @Override
     public void initialize(Profile profile) throws HasConnectionButUnableToConnectException {

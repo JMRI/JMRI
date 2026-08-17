@@ -26,6 +26,6 @@ public class SearchBarTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SearchBarTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SearchBarTest.class);
 
 }

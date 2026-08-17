@@ -64,6 +64,6 @@ public class TamsInterfaceScaffold extends TamsTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsInterfaceScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsInterfaceScaffold.class);
 
 }

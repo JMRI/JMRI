@@ -22,7 +22,7 @@ public class Pr4SelectPane extends jmri.jmrix.loconet.pr3.swing.Pr3SelectPane {
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+    public static class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemPr4ModeSelect"),
@@ -32,6 +32,6 @@ public class Pr4SelectPane extends jmri.jmrix.loconet.pr3.swing.Pr3SelectPane {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(Pr4SelectPane.class);
+//    private static final Logger log = LoggerFactory.getLogger(Pr4SelectPane.class);
 
 }

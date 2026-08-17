@@ -154,6 +154,6 @@ public class PaperUtils {
         return (match != null) ? match.toString() : null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaperUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(PaperUtils.class);
 
 }

@@ -115,6 +115,6 @@ public class AssignmentTableModel extends AbstractTableModel {
      // nothing is stored here
   }
 
-    private final static Logger log = LoggerFactory.getLogger(AssignmentTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(AssignmentTableModel.class);
 
 }

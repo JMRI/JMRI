@@ -44,6 +44,6 @@ public class NceMessageCheckTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceMessageCheckTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceMessageCheckTest.class);
 
 }

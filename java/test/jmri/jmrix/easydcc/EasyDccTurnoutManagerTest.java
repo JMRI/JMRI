@@ -48,6 +48,6 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class);
 
 }

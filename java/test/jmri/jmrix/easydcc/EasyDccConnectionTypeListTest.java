@@ -27,6 +27,6 @@ public class EasyDccConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccConnectionTypeListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EasyDccConnectionTypeListTest.class);
 
 }

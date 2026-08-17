@@ -50,6 +50,6 @@ public class MqttSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assertions.assertEquals("INACTIVE", new String(a.getLastPayload()), "payload");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MqttSensorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MqttSensorTest.class);
 
 }

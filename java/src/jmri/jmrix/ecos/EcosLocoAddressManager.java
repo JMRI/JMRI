@@ -913,6 +913,6 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
         return Bundle.getMessage("EcosLocoAddresses");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class);
 
 }

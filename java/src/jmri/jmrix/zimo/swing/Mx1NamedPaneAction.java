@@ -73,5 +73,5 @@ public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction impl
         return new HashSet<>(Arrays.asList(Mx1SystemConnectionMemo.class));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1NamedPaneAction.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1NamedPaneAction.class);
 }

@@ -462,7 +462,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     }
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "Public accessibility for script to override warning")
-    static public boolean dontWarnJavaScript = false;
+    public static boolean dontWarnJavaScript = false;
             // The jython/DontWarnJavaScript.py script will disable the warning
     
     /**

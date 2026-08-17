@@ -27,6 +27,6 @@ public class PowerPanelActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PowerPanelActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PowerPanelActionTest.class);
 
 }

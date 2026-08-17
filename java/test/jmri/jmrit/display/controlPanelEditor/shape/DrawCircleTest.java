@@ -60,6 +60,6 @@ public class DrawCircleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DrawCircleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DrawCircleTest.class);
 
 }

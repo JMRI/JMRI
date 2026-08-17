@@ -63,6 +63,6 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XpaTrafficControlScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(XpaTrafficControlScaffold.class);
 
 }

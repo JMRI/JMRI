@@ -77,6 +77,6 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AcelaLightManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AcelaLightManagerTest.class);
 
 }

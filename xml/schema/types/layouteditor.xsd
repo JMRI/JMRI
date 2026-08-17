@@ -43,6 +43,7 @@
         <xs:element name="positionablepoint"  type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="trainicon"          type="EditorTrainIconType"         minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="turnouticon"        type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="outputindicator"    type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensoricon"         type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"         type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="globalVariableIcon" type="EditorGlobalVariableIconType" minOccurs="0" maxOccurs="unbounded" />
@@ -66,6 +67,7 @@
         <xs:element name="layoutShape"        type="EditorLayoutShapeType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="logixngicon"        type="EditorLogixNGIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="audioicon"          type="EditorAudioIconType"         minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="dccex_virtual_lcd"  type="EditorDccExVirtualLcdIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required" />

@@ -163,14 +163,17 @@ public final class TimerUtil {
      * If time is in the past, the task is scheduled for immediate execution.
      * @param task task to be scheduled.
      * @param time time at which task is to be executed.
+     * @return Actual scheduled task; use this if you need to cancel
      */
-    public static void scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date time) {
+    public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date time) {
         synchronized (commonTimer) {
+            var gtask = gtask(task);
             try {
-                commonTimer.schedule(gtask(task), time);
+                commonTimer.schedule(gtask, time);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }
+            return gtask;
         }
     }
 
@@ -182,14 +185,17 @@ public final class TimerUtil {
      * @param task   task to be scheduled.
      * @param firstTime First time at which task is to be executed.
      * @param period time in milliseconds between successive task executions.
+     * @return Actual scheduled task; use this if you need to cancel
      */
-    public static void scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
+    public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
         synchronized (commonTimer) {
+            var gtask = gtask(task);
             try {
-                commonTimer.schedule(gtask(task), firstTime, period);
+                commonTimer.schedule(gtask, firstTime, period);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }
+            return gtask;
         }
     }
 
@@ -198,14 +204,17 @@ public final class TimerUtil {
      * after the specified delay.
      * @param task  task to be scheduled.
      * @param delay delay in milliseconds before task is to be executed.
+     * @return Actual scheduled task; use this if you need to cancel
      */
-    public static void scheduleOnGUIThread(@Nonnull TimerTask task, long delay) {
+    public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, long delay) {
         synchronized (commonTimer) {
+            var gtask = gtask(task);
             try {
-                commonTimer.schedule(gtask(task), delay);
+                commonTimer.schedule(gtask, delay);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }
+            return gtask;
         }
     }
 
@@ -217,14 +226,17 @@ public final class TimerUtil {
      * @param task   task to be scheduled.
      * @param delay  delay in milliseconds before task is to be executed.
      * @param period time in milliseconds between successive task executions.
+     * @return Actual scheduled task; use this if you need to cancel
      */
-    public static void scheduleOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
+    public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
         synchronized (commonTimer) {
+            var gtask = gtask(task);
             try {
-                commonTimer.schedule(gtask(task), delay, period);
+                commonTimer.schedule(gtask, delay, period);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }
+            return gtask;
         }
     }
 
@@ -236,14 +248,17 @@ public final class TimerUtil {
      * @param task   task to be scheduled.
      * @param firstTime First time at which task is to be executed.
      * @param period time in milliseconds between successive task executions.
+     * @return Actual scheduled task; use this if you need to cancel
      */
-    public static void scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
+    public static @Nonnull TimerTask scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
         synchronized (commonTimer) {
+            var gtask = gtask(task);
             try {
-                commonTimer.schedule(gtask(task), firstTime, period);
+                commonTimer.schedule(gtask, firstTime, period);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }
+            return gtask;
         }
     }
 
@@ -255,14 +270,17 @@ public final class TimerUtil {
      * @param task   task to be scheduled.
      * @param delay  delay in milliseconds before task is to be executed.
      * @param period time in milliseconds between successive task executions.
+     * @return Actual scheduled task; use this if you need to cancel
      */
-    public static void scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
+    public static @Nonnull TimerTask scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
         synchronized (commonTimer) {
+            var gtask = gtask(task);
             try {
                 commonTimer.schedule(gtask(task), delay, period);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }
+            return gtask;
         }
     }
 
@@ -385,7 +403,6 @@ public final class TimerUtil {
             }
         }
     }
-
 
     static final Timer commonTimer = new Timer("JMRI Common Timer", true);
 

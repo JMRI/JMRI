@@ -19,7 +19,7 @@ import org.slf4j.MDC;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class LayoutBlockConnectivityTools {
+public final class LayoutBlockConnectivityTools {
 
     public LayoutBlockConnectivityTools() {
     }
@@ -62,9 +62,9 @@ final public class LayoutBlockConnectivityTools {
         METRIC,
         DISTANCE
     }
-    
+
     private static final int ttlSize = 50;
-    
+
 
     /**
      * Determines if a pair of NamedBeans (Signalhead, Signalmast or Sensor)
@@ -484,7 +484,7 @@ final public class LayoutBlockConnectivityTools {
          if(!dest.getProtectingBlocks().isEmpty()){
          destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
          }*/
-         
+
         List<LayoutBlock> destList = new ArrayList<>();
 
          // may throw JmriException here
@@ -526,7 +526,7 @@ final public class LayoutBlockConnectivityTools {
     public List<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, Routing pathMethod) throws jmri.JmriException {
         lastErrorMessage = "Unknown Error Occured";
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-        
+
         if (!lbm.isAdvancedRoutingEnabled()) {
             log.debug("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
@@ -1029,7 +1029,7 @@ final public class LayoutBlockConnectivityTools {
                 }
             }
         }
-        // ----- End Turntable Path Discovery -----
+        // ----- End Turntable/Traverser Path Discovery -----
 
         // ----- Begin General Path Discovery (excluding turntable masts) -----
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
@@ -1171,6 +1171,16 @@ final public class LayoutBlockConnectivityTools {
                         }
                         return destinations;
                     }
+
+                    // Case 2: Source is an Approach Mast for one of the slots
+                    for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+                        if (sourceMast.equals(slot.getApproachMast())) {
+                            log.debug("Source is an approach mast for traverser {}", traverser.getName());
+                            List<NamedBean> destinations = new ArrayList<>();
+                            if (traverser.getBufferMast() != null) destinations.add(traverser.getBufferMast());
+                            return destinations;
+                        }
+                    }
                 }
             }
         }
@@ -1179,7 +1189,7 @@ final public class LayoutBlockConnectivityTools {
         List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
         List<NamedBean> ret = new ArrayList<>();
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
-        
+
         // may throw JmriException here
         for (LayoutBlock lb : lProtecting) {
             ret.addAll(discoverPairDest(source, lb, lFacing, beanList, pathMethod));
@@ -1386,6 +1396,6 @@ final public class LayoutBlockConnectivityTools {
         }
     }
 
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(LayoutBlockConnectivityTools.class);
 }

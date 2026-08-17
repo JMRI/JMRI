@@ -330,5 +330,5 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         removePropertyChangeTrainSchedules();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainsScheduleTableModel.class);
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- version 1 - 2026-07-25 - PB - gate the AUX 7+ note by product ID and include the DH24A -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
@@ -25,10 +26,13 @@
         <label>
           <text> </text>
         </label>
-        <group include="DH21B (firmware 3.13.053+),DH22B (firmware 3.13.053+)">
+        <!-- Gated by productID: 201 = DH21B, 203 = DH22B, 204 = DH24A. Product IDs are stable
+             across firmware versions, unlike the model names. -->
+        <group include="201,203,204">
         <label>
-          <text>With types DH21B and DH22B, the F-button for AUX 7 and AUX 8 is selected from a list!</text>
-          <text xml:lang="de">Bei den Typen DH21B und DH22B wird die F-Taste für AUX 7 und AUX 8 aus einer Liste gewählt!</text>
+          <text>With types DH21B, DH22B and DH24A, the F-button for AUX 7 and above is selected from a list!</text>
+          <text xml:lang="fr">Sur les DH21B, DH22B et DH24A, la touche F pour AUX 7 et au-delà se choisit dans une liste !</text>
+          <text xml:lang="de">Bei den Typen DH21B, DH22B und DH24A wird die F-Taste für AUX 7 und höher aus einer Liste gewählt!</text>
         </label>
         </group>
         <label>

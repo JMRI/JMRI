@@ -36,13 +36,27 @@ public class TrainCommonTest extends OperationsTestCase {
     @Test
     public void testGetTextColorString() {
         String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW);
-        Assert.assertEquals("text", "Test Color Text", TrainCommon.getTextColorString(testString));
+        Assert.assertEquals("text", "Test Color Text", TrainCommon.getOnlyText(testString));
+        Assert.assertEquals("text is not bold", false, TrainCommon.isTextBold(testString));
     }
 
     @Test
     public void testGetTextColor() {
         String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW);
         Assert.assertEquals("text", Color.YELLOW, TrainCommon.getTextColor(testString));
+    }
+    
+    @Test
+    public void testGetTextBoldString() {
+        String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW, true);
+        Assert.assertEquals("text is bold", true, TrainCommon.isTextBold(testString));
+    }
+    
+    
+    @Test
+    public void testGetTextNotBoldString() {
+        String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW, false);
+        Assert.assertEquals("text is not bold", false, TrainCommon.isTextBold(testString));
     }
     
     @Test

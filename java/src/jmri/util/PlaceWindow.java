@@ -279,5 +279,5 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
         return loc;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PlaceWindow.class);
+    private static final Logger log = LoggerFactory.getLogger(PlaceWindow.class);
 }

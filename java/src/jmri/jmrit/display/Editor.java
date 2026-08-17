@@ -22,6 +22,8 @@ import javax.swing.event.ListSelectionEvent;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import javax.annotation.CheckForNull;
+
 import jmri.*;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
@@ -131,11 +133,11 @@ public abstract class Editor extends JmriJFrameWithPermissions
     private boolean _showToolTip = true;
 //    private boolean _showCoordinates = true;
 
-    final public static int OPTION_POSITION = 1;
-    final public static int OPTION_CONTROLS = 2;
-    final public static int OPTION_HIDDEN = 3;
-    final public static int OPTION_TOOLTIP = 4;
-//    final public static int OPTION_COORDS = 5;
+    public static final int OPTION_POSITION = 1;
+    public static final int OPTION_CONTROLS = 2;
+    public static final int OPTION_HIDDEN = 3;
+    public static final int OPTION_TOOLTIP = 4;
+//    public static final int OPTION_COORDS = 5;
 
     private boolean _globalSetsLocal = true;    // pre 2.9.6 behavior
     private boolean _useGlobalFlag = false;     // pre 2.9.6 behavior
@@ -240,6 +242,26 @@ public abstract class Editor extends JmriJFrameWithPermissions
             _newIcon = NamedIcon.getIconByName(url);
         }
         return _newIcon;
+    }
+
+    private String getDisableLocoMarkerPopupRef() {
+        return "DisableLocoMarkerPopup__"+getWindowFrameRef();
+    }
+
+    public void setLocoMarkerPopupDisabled(boolean value) {
+        var prefsMgr = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
+        if (prefsMgr.isPresent()) {
+            prefsMgr.get().setCheckboxPreferenceState(getDisableLocoMarkerPopupRef(), value);
+        }
+    }
+
+    public boolean isLocoMarkerPopupDisabled() {
+        var prefsMgr = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
+        if (prefsMgr.isPresent()) {
+            return prefsMgr.get().getCheckboxPreferenceState(getDisableLocoMarkerPopupRef(), false);
+        } else {
+            return false;
+        }
     }
 
     public class UrlErrorDialog extends JDialog {
@@ -465,6 +487,36 @@ public abstract class Editor extends JmriJFrameWithPermissions
         double ratio = newScale / _paintScale;
         _paintScale = newScale;
         setScrollbarScale(ratio);
+    }
+
+    /**
+     * Repaint a limited area of the target panel.
+     * <p>
+     * The rectangle is given in panel (unscaled) coordinates, e.g. the bounds
+     * of a child of the target panel: children are laid out in unscaled
+     * coordinates while painting is scaled by the paint scale, so the dirty
+     * region is scaled here. The region is grown by a pixel on each side to
+     * cover rounding and antialiasing.
+     * <p>
+     * Use this instead of a full {@code repaint()} of the Editor frame when
+     * the changed area is known, e.g. to show a state change of a single
+     * icon. Safe to call from any thread, as it only posts a dirty region.
+     *
+     * @param rect area to repaint, in unscaled target panel coordinates
+     */
+    public void repaintTargetPanel(@Nonnull Rectangle rect) {
+        JLayeredPane panel = _targetPanel;
+        if (panel == null) { // too early in construction, fall back to a full repaint
+            repaint();
+            return;
+        }
+        double scale = _paintScale;
+        int x = (int) Math.floor(rect.x * scale) - 1;
+        int y = (int) Math.floor(rect.y * scale) - 1;
+        // +2 for the margin pixels, +1 for the flooring of x and y
+        int width = (int) Math.ceil(rect.width * scale) + 3;
+        int height = (int) Math.ceil(rect.height * scale) + 3;
+        panel.repaint(x, y, width, height);
     }
 
     private ToolTipTimer _tooltipTimer;
@@ -1897,6 +1949,12 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     public void putItem(@Nonnull Positionable l) throws Positionable.DuplicateIdException {
+        putItem(l, false);
+    }
+
+    public void putItem(@Nonnull Positionable l, boolean factoryPositionable)
+            throws Positionable.DuplicateIdException {
+
         ThreadingUtil.runOnGUI( () -> {
             l.invalidate();
             l.setPositionable(true);
@@ -2011,6 +2069,10 @@ public abstract class Editor extends JmriJFrameWithPermissions
 
     public IconAdder getIconEditor(String name) {
         return _iconEditorFrame.get(name).getEditor();
+    }
+
+    public void putIconEditor(String name, Editor.JFrameItem frame) {
+        _iconEditorFrame.put(name, frame);
     }
 
     /**
@@ -2919,7 +2981,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      * @param editor parent frame of the image frame
      * @return JFrame connected to the editor,  to be filled with icons
      */
-    protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
+    public JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
         log.debug("makeAddIconFrame for {}, add= {}, table= {}", name, add, table);
         String txt;
         String bundleName;
@@ -3669,7 +3731,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      *
      * @param obj the object to locate
      */
-    protected abstract void setNextLocation(Positionable obj);
+    public abstract void setNextLocation(Positionable obj);
 
     /**
      * After construction, initialize all the widgets to their saved config
@@ -3683,6 +3745,12 @@ public abstract class Editor extends JmriJFrameWithPermissions
      * @param p the item to copy
      */
     protected abstract void copyItem(Positionable p);
+
+    @CheckForNull
+    public Rectangle2D resizePanelBounds(boolean forceFlag) {
+        // Do nothing. This method is overridden by LayoutEditor.
+        return null;
+    }
 
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();

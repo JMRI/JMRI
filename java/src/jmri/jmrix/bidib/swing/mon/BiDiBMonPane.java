@@ -201,7 +201,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
             case BidibLibrary.MSG_BOOST_DIAGNOSTIC:
             {
                 BoostDiagnosticResponse m = (BoostDiagnosticResponse)message;
-                line = "Voltage: " + m.getVoltage() + " mV, Current: " + m.getCurrent() + " mA, Temperature: " + m.getTemperature() + " °C";
+                line = "Voltage: " + m.getVoltage() + " mV, Current: " + m.getCurrent().getCurrent() + " mA, Temperature: " + m.getTemperature() + " °C";
             }
                 break;
             case BidibLibrary.MSG_BOOST_STAT:
@@ -808,7 +808,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
     /**
      * Nested class to create one of these using old-style defaults.
      */
-//    static public class Default extends BiDiBNamedPaneAction {
+//    public static class Default extends BiDiBNamedPaneAction {
 //
 //        public Default() {
 //            super(Bundle.getMessage("MonitorXTitle", "RFID Device"),
@@ -818,6 +818,6 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
 //        }
 //    }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBMonPane.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBMonPane.class);
 
 }

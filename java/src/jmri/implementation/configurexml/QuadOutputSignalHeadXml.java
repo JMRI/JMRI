@@ -81,6 +81,6 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QuadOutputSignalHeadXml.class);
+    private static final Logger log = LoggerFactory.getLogger(QuadOutputSignalHeadXml.class);
 
 }

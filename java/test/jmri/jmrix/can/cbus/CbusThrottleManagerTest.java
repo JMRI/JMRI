@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.jmrit.throttle.ThrottlesPreferences;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
@@ -926,6 +926,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusThrottleManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusThrottleManagerTest.class);
 
 }

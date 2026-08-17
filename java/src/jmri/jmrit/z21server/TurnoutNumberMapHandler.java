@@ -28,10 +28,10 @@ import org.slf4j.LoggerFactory;
 public class TurnoutNumberMapHandler implements PropertyChangeListener {
     
     private static TurnoutNumberMapHandler instance;
-    public final static String beanProperty = "Z21TurnoutMap";
+    public static final String beanProperty = "Z21TurnoutMap";
 
     // NOTE: This list should match the classes used in NumberMapFrame.java
-    private final static Class<?>[] mgrList = {
+    private static final Class<?>[] mgrList = {
         TurnoutManager.class,
         RouteManager.class,
         LightManager.class,
@@ -230,6 +230,6 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
     }
 
     
-    private final static Logger log = LoggerFactory.getLogger(TurnoutNumberMapHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(TurnoutNumberMapHandler.class);
 
 }

@@ -98,23 +98,23 @@ public class Lnsv1MessageContents {
     // Helper to calculate LocoIO Sensor address from returned data is in LocoNetMessage
 
     // LocoNet "SV 1 format" helper definitions: indexes into the LocoNet message
-    public final static int SV1_SV_SRC_L_ELEMENT_INDEX = 2;
-    public final static int SV1_SV_DST_L_ELEMENT_INDEX = 3;
-    public final static int SV1_SV_DST_H_ELEMENT_INDEX = 4;
-    public final static int SV1_SVX1_ELEMENT_INDEX = 5;
-    public final static int SV1_SV_CMD_ELEMENT_INDEX = 6;
-    public final static int SV1_SVX2_ELEMENT_INDEX = 10;
+    public static final int SV1_SV_SRC_L_ELEMENT_INDEX = 2;
+    public static final int SV1_SV_DST_L_ELEMENT_INDEX = 3;
+    public static final int SV1_SV_DST_H_ELEMENT_INDEX = 4;
+    public static final int SV1_SVX1_ELEMENT_INDEX = 5;
+    public static final int SV1_SV_CMD_ELEMENT_INDEX = 6;
+    public static final int SV1_SVX2_ELEMENT_INDEX = 10;
 
     // decoding SV format 1 messages (versus other OCP_PEER_XFER messages with length 0x10) uses m.getPeerXfrData()
-    public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x00;
-    public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10; // LNSV0 mask
-    public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x00; // LNSV1 mask
+    public static final int SV1_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
+    public static final int SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x00;
+    public static final int SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
+    public static final int SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10; // LNSV0 mask
+    public static final int SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x00; // LNSV1 mask
 
     // helpers for decoding SV_CMD, compare to ENUM Sv1Command below
-    public final static int SV_CMD_WRITE_ONE = 0x01;
-    public final static int SV_CMD_READ_ONE = 0x02;
+    public static final int SV_CMD_WRITE_ONE = 0x01;
+    public static final int SV_CMD_READ_ONE = 0x02;
 
     /**
      * Create a new Lnsv1MessageContents object from a LocoNet message.
@@ -747,6 +747,6 @@ public static LocoNetMessage createSv1ReadRequest(int dst, int subAddress, int s
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Lnsv1MessageContents.class);
+    private static final Logger log = LoggerFactory.getLogger(Lnsv1MessageContents.class);
 
 }

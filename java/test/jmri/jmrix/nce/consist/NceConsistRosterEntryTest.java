@@ -27,6 +27,6 @@ public class NceConsistRosterEntryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceConsistRosterEntryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceConsistRosterEntryTest.class);
 
 }

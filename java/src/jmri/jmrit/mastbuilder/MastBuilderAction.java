@@ -37,6 +37,6 @@ public class MastBuilderAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MastBuilderAction.class);
+    private static final Logger log = LoggerFactory.getLogger(MastBuilderAction.class);
 
 }

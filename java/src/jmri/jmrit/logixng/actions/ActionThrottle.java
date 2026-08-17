@@ -581,6 +581,6 @@ public final class ActionThrottle extends AbstractDigitalAction
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottle.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottle.class);
 
 }

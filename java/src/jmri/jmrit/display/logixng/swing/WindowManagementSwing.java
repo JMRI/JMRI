@@ -280,6 +280,6 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WindowToFrontSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WindowToFrontSwing.class);
 
 }

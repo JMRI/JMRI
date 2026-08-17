@@ -1442,7 +1442,7 @@ public class LocoNetSlot {
     }
 
     // data values to echo slot contents
-    final private int slot;   // <SLOT#> is the number of the slot that was read.
+    private final int slot;   // <SLOT#> is the number of the slot that was read.
     private boolean isInitialized; // set when full initilization is complete with the throttle ID.
     private int loconetProtocol; // protocol used by the slot.
     private SlotType slotType; // system, loco, unknown
@@ -1463,9 +1463,10 @@ public class LocoNetSlot {
     private int _pcmd;  // hold pcmd and pstat for programmer
 
     private long lastUpdateTime; // Time of last update for detecting stale slots
+    private long slowScanStartedAt; // Time slow scan started if zero no slow scan running
 
     // data members to hold contact with the slot listeners
-    final private List<SlotListener> slotListeners = new ArrayList<>();
+    private final List<SlotListener> slotListeners = new ArrayList<>();
 
     /**
      * Registers a slot listener if it is not already registered.
@@ -1498,6 +1499,28 @@ public class LocoNetSlot {
      */
     public long getLastUpdateTime() {
         return lastUpdateTime;
+    }
+
+    /**
+     * Returns the timestamp when this LocoNetSlot started to be slowscan
+     * due to lack of sure and certain status.
+     * Returns Zero if slow scan not active.
+     *
+     * @return timestamp when slow scan started, 0 if not active
+     */
+    public long getSlowScanStartedAt() {
+        return slowScanStartedAt;
+    }
+
+    /**
+     * sets the timestamp when this LocoNetSlot started to be slowscan
+     * due to lack of sure and certain status.
+     *
+     * @param timestamp when slow scan started, 0 to deactivate
+     */
+    public void setSlowScanStartedAt(long timestamp) {
+        slowScanStartedAt = timestamp;
+        notifySlotListeners();
     }
 
     /**
@@ -1758,5 +1781,5 @@ public class LocoNetSlot {
         stat = val & 0x7F;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSlot.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetSlot.class);
 }

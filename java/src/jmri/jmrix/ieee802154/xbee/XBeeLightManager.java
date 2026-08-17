@@ -199,6 +199,6 @@ public class XBeeLightManager extends AbstractLightManager {
         return Bundle.getMessage("AddEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XBeeLightManager.class);
 
 }

@@ -28,6 +28,6 @@ public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class);
 
 }

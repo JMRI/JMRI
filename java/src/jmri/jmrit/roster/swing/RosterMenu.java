@@ -8,13 +8,12 @@ import jmri.jmrit.roster.CopyRosterItemAction;
 import jmri.jmrit.roster.DeleteRosterItemAction;
 import jmri.jmrit.roster.ExportRosterItemAction;
 import jmri.jmrit.roster.FullBackupExportAction;
+import jmri.jmrit.roster.GroupBackupExportAction;
 import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.ImportRosterItemAction;
 import jmri.jmrit.roster.PrintListAction;
 import jmri.jmrit.roster.PrintRosterAction;
 import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a context-specific menu for handling the Roster.
@@ -34,19 +33,19 @@ public class RosterMenu extends JMenu {
      * main menu of the program, away from any GUI that can select or use a
      * RosterEntry.
      */
-    static public final int MAINMENU = 1;
+    public static final int MAINMENU = 1;
 
     /**
      * Ctor argument defining that the menu object will be used as a menu on a
      * GUI object that can select a RosterEntry.
      */
-    static public final int SELECTMENU = 2;
+    public static final int SELECTMENU = 2;
 
     /**
      * Ctor argument defining that the menu object will be used as a menu on a
      * GUI object that is dealing with a single RosterEntry.
      */
-    static public final int ENTRYMENU = 3;
+    public static final int ENTRYMENU = 3;
 
     /**
      * Create a menu of Roster tools.
@@ -85,6 +84,9 @@ public class RosterMenu extends JMenu {
         AbstractAction deleteGroupAction = new DeleteRosterGroupAction(Bundle.getMessage("MenuGroupDelete"), pWho);
         deleteGroupAction.setEnabled(false);
 
+        AbstractAction deleteGroupContentsAction = new DeleteRosterGroupContentsAction(Bundle.getMessage("MenuGroupDeleteContents"), pWho);
+        deleteGroupContentsAction.setEnabled(false);
+
         AbstractAction createGroupAction = new CreateRosterGroupAction(Bundle.getMessage("MenuGroupCreate"), pWho);
         createGroupAction.setEnabled(false);
 
@@ -99,6 +101,9 @@ public class RosterMenu extends JMenu {
 
         AbstractAction rosterExportAction = new FullBackupExportAction(Bundle.getMessage("MenuFullExport"), pWho);
         rosterExportAction.setEnabled(false);
+
+        AbstractAction rosterGroupExportAction = new GroupBackupExportAction(Bundle.getMessage("MenuGroupExport"), pWho);
+        rosterGroupExportAction.setEnabled(false);
 
         AbstractAction rosterImportAction = new FullBackupImportAction(Bundle.getMessage("MenuFullImport"), pWho);
         rosterImportAction.setEnabled(false);
@@ -120,9 +125,11 @@ public class RosterMenu extends JMenu {
         JMenu groupMenu = new JMenu(Bundle.getMessage("MenuRosterGroups"));
         groupMenu.add(createGroupAction);
         groupMenu.add(deleteGroupAction);
+        groupMenu.add(deleteGroupContentsAction);
         groupMenu.add(rosterGroupTableAction);
         groupMenu.add(rosterEntryToGroupAction);
         groupMenu.add(removeRosterEntryToGroupAction);
+        groupMenu.add(rosterGroupExportAction);
 
         add(dp3Action);
         addSeparator();
@@ -140,6 +147,7 @@ public class RosterMenu extends JMenu {
         add(groupMenu);
         addSeparator();
         add(rosterExportAction);
+        add(rosterGroupExportAction);
         add(rosterImportAction);
         add(speedProfileAction);
 
@@ -153,6 +161,7 @@ public class RosterMenu extends JMenu {
                 exportAction.setEnabled(true);
                 copyAction.setEnabled(true);
                 deleteGroupAction.setEnabled(true);
+                deleteGroupContentsAction.setEnabled(true);
                 createGroupAction.setEnabled(true);
                 rosterEntryToGroupAction.setEnabled(true);
                 removeRosterEntryToGroupAction.setEnabled(true);
@@ -162,6 +171,7 @@ public class RosterMenu extends JMenu {
                 previewListAction.setEnabled(true);
                 rosterGroupTableAction.setEnabled(true);
                 rosterExportAction.setEnabled(true);
+                rosterGroupExportAction.setEnabled(true);
                 rosterImportAction.setEnabled(true);
                 speedProfileAction.setEnabled(true);
                 break;
@@ -176,6 +186,6 @@ public class RosterMenu extends JMenu {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterMenu.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterMenu.class);
 
 }

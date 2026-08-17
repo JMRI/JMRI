@@ -33,6 +33,6 @@ public class SteamSoundTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SteamSoundTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SteamSoundTest.class);
 
 }

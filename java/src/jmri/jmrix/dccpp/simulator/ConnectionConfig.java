@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp.simulator;
 
 /**
- * Handle configuring a DCC++ layout connection via a DCCppSimulator
+ * Handle configuring a DCC-EX layout connection via a DCCppSimulator
  * adapter.
  * <p>
  * This uses the {@link DCCppSimulatorAdapter} class to do the actual connection.
@@ -35,10 +35,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     @Override
     public String name() {
-        return "DCC++ Simulator";
+        return "DCC-EX Simulator";
     }
 
-    String manufacturerName = "DCC++";
+    String manufacturerName = "DCC-EX";
 
     @Override
     public String getManufacturer() {

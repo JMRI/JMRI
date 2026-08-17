@@ -22,7 +22,7 @@ public class OperationsProStartAutomation extends AbstractDigitalAction
         implements PropertyChangeListener {
 
     private final LogixNG_SelectComboBox _selectAutomation =
-            new LogixNG_SelectComboBox(this, new AutomationItem[]{}, null, this);
+            new LogixNG_SelectComboBox(this, new AutomationItem[]{}, null);
 
     private final AutomationManager _automationManager;
     private final List<AutomationItem> _automationList = new ArrayList<>();
@@ -102,18 +102,6 @@ public class OperationsProStartAutomation extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectAutomation.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectAutomation.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (AutomationManager.LISTLENGTH_CHANGED_PROPERTY.equals(evt.getPropertyName())) {
             updateList();
@@ -154,5 +142,5 @@ public class OperationsProStartAutomation extends AbstractDigitalAction
         }
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSensor.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSensor.class);
 }

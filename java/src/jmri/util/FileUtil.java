@@ -31,37 +31,37 @@ public final class FileUtil {
     /**
      * Portable reference to items in the JMRI program directory.
      */
-    static public final String PROGRAM = "program:"; // NOI18N
+    public static final String PROGRAM = "program:"; // NOI18N
     /**
      * Portable reference to the JMRI user's files and preferences directory.
      */
-    static public final String PREFERENCES = "preference:"; // NOI18N
+    public static final String PREFERENCES = "preference:"; // NOI18N
     /**
      * Portable reference to the JMRI applications preferences directory.
      */
-    static public final String SETTINGS = "settings:"; // NOI18N
+    public static final String SETTINGS = "settings:"; // NOI18N
     /**
      * Portable reference to the user's home directory.
      */
-    static public final String HOME = "home:"; // NOI18N
+    public static final String HOME = "home:"; // NOI18N
     /**
      * Portable reference to the current profile directory.
      */
-    static public final String PROFILE = "profile:"; // NOI18N
+    public static final String PROFILE = "profile:"; // NOI18N
     /**
      * Portable reference to the current scripts directory.
      */
-    static public final String SCRIPTS = "scripts:"; // NOI18N
+    public static final String SCRIPTS = "scripts:"; // NOI18N
     /**
      * The portable file path component separator.
      */
-    static public final char SEPARATOR = '/'; // NOI18N
+    public static final char SEPARATOR = '/'; // NOI18N
 
     /**
      * The types of locations to use when falling back on default locations in
      * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      */
-    static public enum Location {
+    public static enum Location {
         INSTALLED, USER, ALL, NONE
     }
 
@@ -79,7 +79,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public File getFile(@Nonnull String path) throws FileNotFoundException {
+    public static File getFile(@Nonnull String path) throws FileNotFoundException {
         return FileUtilSupport.getDefault().getFile(path);
     }
 
@@ -98,7 +98,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public File getFile(@CheckForNull Profile profile, @Nonnull String path) throws FileNotFoundException {
+    public static File getFile(@CheckForNull Profile profile, @Nonnull String path) throws FileNotFoundException {
         return FileUtilSupport.getDefault().getFile(profile, path);
     }
 
@@ -115,7 +115,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public URI getURI(@Nonnull String path) throws FileNotFoundException {
+    public static URI getURI(@Nonnull String path) throws FileNotFoundException {
         return FileUtilSupport.getDefault().getURI(path);
     }
 
@@ -132,7 +132,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public URL getURL(@Nonnull String path) throws FileNotFoundException {
+    public static URL getURL(@Nonnull String path) throws FileNotFoundException {
         return FileUtilSupport.getDefault().getURL(path);
     }
 
@@ -146,7 +146,7 @@ public final class FileUtil {
      */
     @CheckForNull
     @CheckReturnValue
-    static public URL getURL(@Nonnull URI uri) {
+    public static URL getURL(@Nonnull URI uri) {
         return FileUtilSupport.getDefault().getURL(uri);
     }
 
@@ -170,7 +170,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root) throws IllegalArgumentException {
+    public static Set<File> findFiles(@Nonnull String name, @Nonnull String root) throws IllegalArgumentException {
         return FileUtilSupport.getDefault().findFiles(name, root);
     }
 
@@ -195,7 +195,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public Set<File> findFiles(@Nonnull String name, @Nonnull String root, @Nonnull Location location) {
+    public static Set<File> findFiles(@Nonnull String name, @Nonnull String root, @Nonnull Location location) {
         return FileUtilSupport.getDefault().findFiles(name, root, location);
     }
 
@@ -229,7 +229,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getExternalFilename(@Nonnull String pName) {
+    public static String getExternalFilename(@Nonnull String pName) {
         return FileUtilSupport.getDefault().getExternalFilename(pName);
     }
 
@@ -263,7 +263,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getExternalFilename(@CheckForNull Profile profile, @Nonnull String pName) {
+    public static String getExternalFilename(@CheckForNull Profile profile, @Nonnull String pName) {
         return FileUtilSupport.getDefault().getExternalFilename(profile, pName);
     }
 
@@ -276,7 +276,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getAbsoluteFilename(@Nonnull String path) {
+    public static String getAbsoluteFilename(@Nonnull String path) {
         return FileUtilSupport.getDefault().getAbsoluteFilename(path);
     }
 
@@ -289,7 +289,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getAbsoluteFilename(@CheckForNull Profile profile, @Nonnull String path) {
+    public static String getAbsoluteFilename(@CheckForNull Profile profile, @Nonnull String path) {
         return FileUtilSupport.getDefault().getAbsoluteFilename(profile, path);
     }
 
@@ -306,7 +306,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nonnull File file) {
+    public static String getPortableFilename(@Nonnull File file) {
         return FileUtilSupport.getDefault().getPortableFilename(file);
     }
 
@@ -336,7 +336,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nonnull File file, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
+    public static String getPortableFilename(@Nonnull File file, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
         return FileUtilSupport.getDefault().getPortableFilename(file, ignoreUserFilesPath, ignoreProfilePath);
     }
 
@@ -352,7 +352,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nonnull String filename) {
+    public static String getPortableFilename(@Nonnull String filename) {
         return FileUtilSupport.getDefault().getPortableFilename(filename);
     }
 
@@ -382,7 +382,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nonnull String filename, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
+    public static String getPortableFilename(@Nonnull String filename, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
         return FileUtilSupport.getDefault().getPortableFilename(filename, ignoreUserFilesPath, ignoreProfilePath);
     }
 
@@ -400,7 +400,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file) {
+    public static String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, file);
     }
 
@@ -431,7 +431,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file, boolean ignoreUserFilesPath,
+    public static String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file, boolean ignoreUserFilesPath,
             boolean ignoreProfilePath) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, file, ignoreUserFilesPath, ignoreProfilePath);
     }
@@ -449,7 +449,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename) {
+    public static String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, filename);
     }
 
@@ -480,7 +480,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename,
+    public static String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename,
             boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, filename, ignoreUserFilesPath, ignoreProfilePath);
     }
@@ -491,7 +491,7 @@ public final class FileUtil {
      * @param filename the name to test
      * @return true if filename is portable
      */
-    static public boolean isPortableFilename(@Nonnull String filename) {
+    public static boolean isPortableFilename(@Nonnull String filename) {
         return FileUtilSupport.getDefault().isPortableFilename(filename);
     }
 
@@ -502,7 +502,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getHomePath() {
+    public static String getHomePath() {
         return FileUtilSupport.getDefault().getHomePath();
     }
 
@@ -516,7 +516,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getUserFilesPath() {
+    public static String getUserFilesPath() {
         return FileUtilSupport.getDefault().getUserFilesPath();
     }
 
@@ -530,7 +530,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getUserFilesPath(@CheckForNull Profile profile) {
+    public static String getUserFilesPath(@CheckForNull Profile profile) {
         return FileUtilSupport.getDefault().getUserFilesPath(profile);
     }
 
@@ -541,7 +541,7 @@ public final class FileUtil {
      * @param profile The profile to use as a base
      * @param path    The path to the user's files directory
      */
-    static public void setUserFilesPath(@CheckForNull Profile profile, @Nonnull String path) {
+    public static void setUserFilesPath(@CheckForNull Profile profile, @Nonnull String path) {
         FileUtilSupport.getDefault().setUserFilesPath(profile, path);
     }
 
@@ -555,7 +555,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getProfilePath() {
+    public static String getProfilePath() {
         return FileUtilSupport.getDefault().getProfilePath();
     }
 
@@ -569,7 +569,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getProfilePath(@CheckForNull Profile profile) {
+    public static String getProfilePath(@CheckForNull Profile profile) {
         return FileUtilSupport.getDefault().getProfilePath(profile);
     }
 
@@ -593,7 +593,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPreferencesPath() {
+    public static String getPreferencesPath() {
         return FileUtilSupport.getDefault().getPreferencesPath();
     }
 
@@ -607,7 +607,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getProgramPath() {
+    public static String getProgramPath() {
         return FileUtilSupport.getDefault().getProgramPath();
     }
 
@@ -619,7 +619,7 @@ public final class FileUtil {
      *
      * @param path the path to the JMRI installation
      */
-    static public void setProgramPath(@Nonnull String path) {
+    public static void setProgramPath(@Nonnull String path) {
         FileUtilSupport.getDefault().setProgramPath(new File(path));
     }
 
@@ -633,7 +633,7 @@ public final class FileUtil {
      *
      * @param path the path to the JMRI installation
      */
-    static public void setProgramPath(@Nonnull File path) {
+    public static void setProgramPath(@Nonnull File path) {
         FileUtilSupport.getDefault().setProgramPath(path);
     }
 
@@ -646,7 +646,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public URI findExternalFilename(@Nonnull String path) {
+    public static URI findExternalFilename(@Nonnull String path) {
         return FileUtilSupport.getDefault().findExternalFilename(path);
     }
 
@@ -666,7 +666,7 @@ public final class FileUtil {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public InputStream findInputStream(@Nonnull String path) {
+    public static InputStream findInputStream(@Nonnull String path) {
         return FileUtilSupport.getDefault().findInputStream(path);
     }
 
@@ -683,7 +683,7 @@ public final class FileUtil {
      * @see #findInputStream(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public InputStream findInputStream(@Nonnull String path, @Nonnull String... searchPaths) {
+    public static InputStream findInputStream(@Nonnull String path, @Nonnull String... searchPaths) {
         return FileUtilSupport.getDefault().findInputStream(path, searchPaths);
     }
 
@@ -699,7 +699,7 @@ public final class FileUtil {
      * @see #findInputStream(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public InputStream findInputStream(@Nonnull String path, Location locations) {
+    public static InputStream findInputStream(@Nonnull String path, Location locations) {
         return FileUtilSupport.getDefault().findInputStream(path, locations);
     }
 
@@ -715,7 +715,7 @@ public final class FileUtil {
      * @see #findInputStream(java.lang.String)
      * @see #findInputStream(java.lang.String, java.lang.String...)
      */
-    static public InputStream findInputStream(@Nonnull String path, Location locations, @Nonnull String... searchPaths) {
+    public static InputStream findInputStream(@Nonnull String path, Location locations, @Nonnull String... searchPaths) {
         return FileUtilSupport.getDefault().findInputStream(path, locations, searchPaths);
     }
 
@@ -726,7 +726,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getUserResourcePath() {
+    public static String getUserResourcePath() {
         return FileUtilSupport.getDefault().getUserResourcePath();
     }
 
@@ -743,7 +743,7 @@ public final class FileUtil {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public URI findURI(@Nonnull String path) {
+    public static URI findURI(@Nonnull String path) {
         return FileUtilSupport.getDefault().findURI(path);
     }
 
@@ -766,7 +766,7 @@ public final class FileUtil {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public URI findURI(@Nonnull String path, @Nonnull String... searchPaths) {
+    public static URI findURI(@Nonnull String path, @Nonnull String... searchPaths) {
         return FileUtilSupport.getDefault().findURI(path, searchPaths);
     }
 
@@ -783,7 +783,7 @@ public final class FileUtil {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public URI findURI(@Nonnull String path, @Nonnull Location locations) {
+    public static URI findURI(@Nonnull String path, @Nonnull Location locations) {
         return FileUtilSupport.getDefault().findURI(path, locations);
     }
 
@@ -828,7 +828,7 @@ public final class FileUtil {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location)
      * @see #findURI(java.lang.String, java.lang.String...)
      */
-    static public URI findURI(@Nonnull String path, @Nonnull Location locations, @Nonnull String... searchPaths) {
+    public static URI findURI(@Nonnull String path, @Nonnull Location locations, @Nonnull String... searchPaths) {
         return FileUtilSupport.getDefault().findURI(path, locations, searchPaths);
     }
 
@@ -847,7 +847,7 @@ public final class FileUtil {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public URL findURL(@Nonnull String path) {
+    public static URL findURL(@Nonnull String path) {
         return FileUtilSupport.getDefault().findURL(path);
     }
 
@@ -865,7 +865,7 @@ public final class FileUtil {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public URL findURL(@Nonnull String path, @Nonnull String... searchPaths) {
+    public static URL findURL(@Nonnull String path, @Nonnull String... searchPaths) {
         return FileUtilSupport.getDefault().findURL(path, searchPaths);
     }
 
@@ -882,7 +882,7 @@ public final class FileUtil {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    static public URL findURL(@Nonnull String path, @Nonnull Location locations) {
+    public static URL findURL(@Nonnull String path, @Nonnull Location locations) {
         return FileUtilSupport.getDefault().findURL(path, locations);
     }
 
@@ -919,7 +919,7 @@ public final class FileUtil {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location)
      * @see #findURL(java.lang.String, java.lang.String...)
      */
-    static public URL findURL(@Nonnull String path, @Nonnull Location locations, @Nonnull String... searchPaths) {
+    public static URL findURL(@Nonnull String path, @Nonnull Location locations, @Nonnull String... searchPaths) {
         return FileUtilSupport.getDefault().findURL(path, locations, searchPaths);
     }
 
@@ -930,7 +930,7 @@ public final class FileUtil {
      * @return a URI or null if the conversion would have caused a
      *         {@link java.net.URISyntaxException}
      */
-    static public URI urlToURI(@Nonnull URL url) {
+    public static URI urlToURI(@Nonnull URL url) {
         return FileUtilSupport.getDefault().urlToURI(url);
     }
 
@@ -945,7 +945,7 @@ public final class FileUtil {
      * @return a URL or null if the conversion would have caused a
      *         MalformedURLException
      */
-    static public URL fileToURL(@Nonnull File file) {
+    public static URL fileToURL(@Nonnull File file) {
         return FileUtilSupport.getDefault().fileToURL(file);
     }
 
@@ -955,14 +955,14 @@ public final class FileUtil {
      * @return the JAR file containing the JMRI library or null if not running
      *         from a JAR file
      */
-    static public JarFile jmriJarFile() {
+    public static JarFile jmriJarFile() {
         return FileUtilSupport.getDefault().getJmriJarFile();
     }
 
     /**
      * Log all paths at the INFO level.
      */
-    static public void logFilePaths() {
+    public static void logFilePaths() {
         FileUtilSupport.getDefault().logFilePaths();
     }
 

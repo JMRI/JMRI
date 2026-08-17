@@ -72,7 +72,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     transient SignalMastLogic sml;
 
-    final static int NXMESSAGEBOXCLEARTIMEOUT = 30;
+    static final int NXMESSAGEBOXCLEARTIMEOUT = 30;
 
     /**
      * public for testing purposes.
@@ -844,11 +844,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
 
         // The block list for an interlocking NX still has the facing block if there are no signals.
-        boolean facing = getSource().getStart().getUseExtraColor();
+        LayoutBlock facing = getSource().getStart();
         for (LayoutBlock blk : routeDetails) {
-            if (facing) {
-                // skip the facing block when there is an active NX pair immediately before this one.
-                facing = false;
+            if (blk == facing) {
+                // Skip the facing block if it is still in the block list.
                 continue;
             }
             if ((getEntryExitType() == EntryExitPairs.FULLINTERLOCK)) {
@@ -1021,7 +1020,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         List<LayoutBlock> blocks = new ArrayList<>();
                         String errorMessage = null;
                         try {
-                            blocks = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                            blocks = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
                         } catch (Exception e) {
                             errorMessage = e.getMessage();
                             //can be considered normal if no free route is found
@@ -1058,7 +1057,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                     List<LayoutBlock> blocks = new ArrayList<>();
                                     String errorMessage = null;
                                     try {
-                                        blocks = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                                        blocks = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
                                     } catch (Exception e) {
                                         errorMessage = e.getMessage();
                                         //can be considered normal if no free route is found

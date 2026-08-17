@@ -20,7 +20,7 @@ import jmri.util.swing.*;
  */
 public class LoadDemoAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(LoadDemoAction.class);
 
     public LoadDemoAction() {
         super(Bundle.getMessage("LoadDemo"));

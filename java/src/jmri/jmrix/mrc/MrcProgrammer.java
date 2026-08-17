@@ -267,5 +267,5 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         notifyProgListenerEnd(temp,value,status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class);
+    private static final Logger log = LoggerFactory.getLogger(MrcProgrammer.class);
 }

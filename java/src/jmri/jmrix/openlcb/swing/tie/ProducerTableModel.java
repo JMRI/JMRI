@@ -207,6 +207,6 @@ public class ProducerTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProducerTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(ProducerTableModel.class);
 
 }

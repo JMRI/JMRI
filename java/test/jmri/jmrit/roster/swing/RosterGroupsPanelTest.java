@@ -30,5 +30,5 @@ public class RosterGroupsPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterGroupsPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterGroupsPanelTest.class);
 }
