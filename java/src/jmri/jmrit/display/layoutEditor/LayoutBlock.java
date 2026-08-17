@@ -71,7 +71,7 @@ import org.slf4j.MDC;
  */
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 
-    private static final int UPDATE_REFERENCE_SIZE_MAX = 500;
+    private static final int UPDATE_REFERENCE_SIZE_MAX = 4;  // Very small for testing
     private static final int UPDATE_REFERENCE_SIZE_HALF_MAX = UPDATE_REFERENCE_SIZE_MAX / 2;
 
     private static final List<Integer> updateReferences = new ListLogger<>(new ArrayList<>(500));
