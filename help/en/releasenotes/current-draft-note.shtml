@@ -639,6 +639,11 @@
                 table repainting itself continuously once all turnouts were in a known state.
                 Rows are now also tall enough for the icons while turnouts are still in the
                 Unknown state.</li>
+            <li>Bean tables are now updated on the GUI thread when a bean changes on another
+                thread, for instance on a message from the layout. They were updated on the
+                reporting thread, which could corrupt the table's own state, and a row that
+                had moved or been removed in the meantime could raise an exception or mark
+                the wrong row as changed.</li>
             <li></li>
         </ul>
 

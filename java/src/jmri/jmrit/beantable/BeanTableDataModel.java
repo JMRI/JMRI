@@ -23,6 +23,7 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.ThreadingUtil;
 import jmri.util.davidflanagan.OriginalHardcopyWriter;
 import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
@@ -132,15 +133,44 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             // a value changed.  Find it, to avoid complete redraw
             if (e.getSource() instanceof NamedBean) {
                 String name = ((NamedBean) e.getSource()).getSystemName();
-                int row = sysNameList.indexOf(name);
-                log.debug("Update cell {},{} for {}", row, VALUECOL, name);
-                // since we can add columns, the entire row is marked as updated
-                try {
-                    fireTableRowsUpdated(row, row);
-                } catch (Exception ex) {
-                    log.error("Exception updating table", ex);
-                }
+                updateOnGUI(() -> {
+                    // the row has to be found here rather than when the event
+                    // arrived: updateNameList() may have run in between, which
+                    // would make a row number taken earlier point elsewhere
+                    int row = sysNameList.indexOf(name);
+                    log.debug("Update cell {},{} for {}", row, VALUECOL, name);
+                    if (row >= 0 && row < getRowCount()) {
+                        // since we can add columns, the entire row is marked as updated
+                        try {
+                            fireTableRowsUpdated(row, row);
+                        } catch (Exception ex) {
+                            log.error("Exception updating table", ex);
+                        }
+                    }
+                });
             }
+        }
+    }
+
+    /**
+     * Run a table update on the GUI thread.
+     * <p>
+     * NamedBean notifications are delivered on whichever thread changed the
+     * bean, often a layout connection's receive thread, while a table model and
+     * its listeners may only be touched on the GUI thread.
+     * <p>
+     * When this already is the GUI thread the update is run right away, so that
+     * an update requested there still takes effect before the caller continues.
+     * Otherwise it is queued rather than waited for, which keeps a connection's
+     * receive thread from blocking on the GUI thread.
+     *
+     * @param update the update to run
+     */
+    protected static void updateOnGUI(@Nonnull ThreadingUtil.ThreadAction update) {
+        if (ThreadingUtil.isGUIThread()) {
+            update.run();
+        } else {
+            ThreadingUtil.runOnGUIEventually(update);
         }
     }
 

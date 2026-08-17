@@ -1,9 +1,17 @@
 package jmri.jmrit.beantable;
 
+import java.beans.PropertyChangeEvent;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
+
 import jmri.Manager;
 import jmri.ProvidingManager;
 import jmri.NamedBean;
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -168,6 +176,49 @@ public abstract class AbstractBeanTableDataModelBase<B extends NamedBean> {
         nb.setUserName("NB UserName");
         assertEquals("NB Not Found via getByUserName",nb,t.getByUserName("NB UserName"));
         assertEquals("NB Not Found via getBySystemName",nb,t.getBySystemName(nb.getSystemName()));
+    }
+
+    /**
+     * A bean the table does not list must not produce a row update: its index
+     * in the name list is -1, which as a row number means TableModelEvent.HEADER_ROW.
+     */
+    @Test
+    public void testPropertyChangeBeanNotInTable() {
+        createBean(); // ensure there is a row 0
+        AtomicInteger headerEvents = new AtomicInteger();
+        t.addTableModelListener(e -> {
+            if (e.getFirstRow() == TableModelEvent.HEADER_ROW) {
+                headerEvents.incrementAndGet();
+            }
+        });
+
+        NamedBean notInTable = new jmri.implementation.DefaultIdTag("ID_NOT_IN_TABLE");
+        t.propertyChange(new PropertyChangeEvent(notInTable, "KnownState", 0, 1));
+
+        assertEquals("no header row update for a bean not in the table", 0, headerEvents.get());
+    }
+
+    /**
+     * Bean notifications arrive on whichever thread changed the bean, but the
+     * table model may only be updated on the GUI thread.
+     */
+    @Test
+    public void testPropertyChangeUpdatesOnGuiThread() throws InterruptedException {
+        NamedBean nb = createBean();
+        AtomicBoolean notified = new AtomicBoolean(false);
+        AtomicBoolean onGuiThread = new AtomicBoolean(false);
+        t.addTableModelListener(e -> {
+            onGuiThread.set(SwingUtilities.isEventDispatchThread());
+            notified.set(true);
+        });
+
+        Thread other = new Thread(() -> t.propertyChange(
+                new PropertyChangeEvent(nb, "KnownState", 0, 1)), "not the GUI thread");
+        other.start();
+        other.join();
+
+        JUnitUtil.waitFor(notified::get, "table model notified of the change");
+        assertTrue("table model updated on the GUI thread", onGuiThread.get());
     }
 
     /**

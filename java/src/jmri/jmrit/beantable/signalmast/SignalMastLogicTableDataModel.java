@@ -122,30 +122,34 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
         } else if (e.getSource() instanceof SignalMastLogic) {
             SignalMastLogic logic = (SignalMastLogic) e.getSource();
             if (matchPropertyName(e)) {
+                updateOnGUI(() -> {
+                    for (int i = 0; i < getSMLList().size(); i++) {
+                        Hashtable<SignalMastLogic, SignalMast> b = getSMLList().get(i);
+                        Enumeration<SignalMastLogic> en = b.keys();
+                        while (en.hasMoreElements()) {
+                            SignalMastLogic sm = en.nextElement();
+                            if (sm == logic) {
+                                fireTableRowsUpdated(i, i);
+                            }
+                        }
+                    }
+                });
+            }
+        } else if (e.getSource() instanceof SignalMast) {
+            SignalMast sigMast = (SignalMast) e.getSource();
+            updateOnGUI(() -> {
                 for (int i = 0; i < getSMLList().size(); i++) {
                     Hashtable<SignalMastLogic, SignalMast> b = getSMLList().get(i);
                     Enumeration<SignalMastLogic> en = b.keys();
                     while (en.hasMoreElements()) {
                         SignalMastLogic sm = en.nextElement();
-                        if (sm == logic) {
+                        //SignalMast dest = b.get(sm);
+                        if (sm.getSourceMast() == sigMast) {
                             fireTableRowsUpdated(i, i);
                         }
                     }
                 }
-            }
-        } else if (e.getSource() instanceof SignalMast) {
-            SignalMast sigMast = (SignalMast) e.getSource();
-            for (int i = 0; i < getSMLList().size(); i++) {
-                Hashtable<SignalMastLogic, SignalMast> b = getSMLList().get(i);
-                Enumeration<SignalMastLogic> en = b.keys();
-                while (en.hasMoreElements()) {
-                    SignalMastLogic sm = en.nextElement();
-                    //SignalMast dest = b.get(sm);
-                    if (sm.getSourceMast() == sigMast) {
-                        fireTableRowsUpdated(i, i);
-                    }
-                }
-            }
+            });
         }
     }
 
