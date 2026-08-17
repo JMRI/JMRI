@@ -378,6 +378,20 @@
             </ul>
           </li>
 
+          <li>
+            <ul>
+              <li>VLCB (extensions to CBUS)</li>
+
+              <li>Services</li>
+
+              <li>Diagnostics</li>
+
+              <li>Long Messages</li>
+
+              <li>Heart Beat</li>
+            </ul>
+          </li>
+
           <li>Misc.
             <ul>
               <li>Network Commands</li>
