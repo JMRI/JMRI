@@ -21,7 +21,11 @@ public class ListLogger<E extends Object> implements List<E> {
     private final List<E> list;
 
     public ListLogger(List<E> list) {
-        log("ListLogger created");
+        this(list, true);
+    }
+
+    public ListLogger(List<E> list, boolean logCreation) {
+        if (logCreation) log("ListLogger created");
         this.list = list;
     }
 
@@ -149,7 +153,7 @@ public class ListLogger<E extends Object> implements List<E> {
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         log("subList() called");
-        return list.subList(fromIndex, toIndex);
+        return new ListLogger(list.subList(fromIndex, toIndex), false);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ListLogger.class);
