@@ -14,7 +14,7 @@ public class ListLogger<E extends Object> implements List<E> {
     /**
      * Should we sleep?
      */
-    private static final boolean DO_SLEEP = false;
+    private static final boolean SLEEP = false;
 
     /**
      * Should we log the calls?
@@ -116,7 +116,7 @@ public class ListLogger<E extends Object> implements List<E> {
     public void clear() {
         try {
             log("clear() called. Start wait.");
-            if (DO_SLEEP) Thread.sleep(2000);
+            if (SLEEP) Thread.sleep(2000);
             list.clear();
         } catch (InterruptedException e) {
             log.warn("Interrupted during sleep");
