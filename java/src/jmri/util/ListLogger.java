@@ -14,20 +14,24 @@ public class ListLogger<E extends Object> implements List<E> {
     /**
      * Log where it's called?
      */
+    private static final boolean LOG = true;
     private static final boolean LOG_WHERE = false;
 
     private final List<E> list;
 
     public ListLogger(List<E> list) {
-        log.warn("ListLogger created");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("ListLogger created");
         this.list = list;
+    }
+
+    private void log(String message) {
+        if (LOG) log.warn(message);
+        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
     }
 
     @Override
     public int size() {
-        log.warn("size() called");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("size() called");
         return list.size();
     }
 
@@ -58,8 +62,7 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public boolean add(E element) {
-        log.warn("add(element) called");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("add(element) called");
         return list.add(element);
     }
 
@@ -75,15 +78,13 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        log.warn("addAll(c) called");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("addAll(c) called");
         return list.addAll(c);
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        log.warn("addAll(index, c) called");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("addAll(index, c) called");
         return list.addAll(index, c);
     }
 
@@ -99,8 +100,7 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public void clear() {
-        log.warn("clear() called");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("clear() called");
         list.clear();
     }
 
@@ -116,8 +116,7 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public void add(int index, E element) {
-        log.warn("add(index, element) called");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("add(index, element) called");
         list.add(index, element);
     }
 
@@ -148,8 +147,7 @@ public class ListLogger<E extends Object> implements List<E> {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        log.warn("subList() called");
-        if (LOG_WHERE) LoggingUtil.shortenStacktrace(new Exception()).printStackTrace();
+        log("subList() called");
         return list.subList(fromIndex, toIndex);
     }
 
