@@ -215,7 +215,7 @@
         <enumVal xmlns:xi="http://www.w3.org/2001/XInclude"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-
+            <enumChoice choice="Not defined" value="1"/>
             <enumChoice choice="Function" value="2"/>
             <enumChoice choice="Headlight" value="3"/>
             <enumChoice choice="Interior Light" value="4"/>
