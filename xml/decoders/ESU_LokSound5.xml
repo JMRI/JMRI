@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnOutputs.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnDescription.xsl"?>
 <!-- Copyright (C) JMRI 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -26,6 +27,7 @@
     <!-- ver10 add "LokSound 5 micro DCC Direct Atlas S2" and "LokSound 5 nano DCC Next18" -->
     <!-- ver11 Declare E24 interface on LokSound 5 nano DCC -->
     <!-- ver12 move function output CVs to xsl -->
+    <!-- ver13 add function icon/description pane --> 
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
     <version author="Dave Heap" version="2" lastUpdated="20200410"/>
     <version author="Dave Heap" version="3" lastUpdated="20200726"/>
@@ -38,6 +40,7 @@
     <version author="Heiko Rosemann" version="10" lastUpdated="20240901"/>
     <version author="Pierre Billon" version="11" lastUpdated="20260727"/>
     <version author="Heiko Rosemann" version="12" lastUpdated="20260806"/>
+    <version author="Michael Richardson" version="13" lastUpdated="20260816"/>
 
     <decoder>
         <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
