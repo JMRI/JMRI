@@ -19,7 +19,6 @@ public class ListLogger<E extends Object> implements List<E> {
     private static final boolean LOG_WHERE = false;
 
     private final List<E> list;
-    private volatile boolean listAddedTo = false;
 
     public ListLogger(List<E> list) {
         this(list, true);
@@ -69,7 +68,6 @@ public class ListLogger<E extends Object> implements List<E> {
     @Override
     public boolean add(E element) {
         log("add(element) called");
-        listAddedTo = true;
         return list.add(element);
     }
 
@@ -86,14 +84,12 @@ public class ListLogger<E extends Object> implements List<E> {
     @Override
     public boolean addAll(Collection<? extends E> c) {
         log("addAll(c) called");
-        listAddedTo = true;
         return list.addAll(c);
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
         log("addAll(index, c) called");
-        listAddedTo = true;
         return list.addAll(index, c);
     }
 
@@ -111,9 +107,7 @@ public class ListLogger<E extends Object> implements List<E> {
     public void clear() {
         try {
             log("clear() called. Start wait.");
-            listAddedTo = false;
             Thread.sleep(2000);
-            if (listAddedTo) throw new ConcurrentModificationException("List added to during clear()");
             list.clear();
         } catch (InterruptedException e) {
             log.warn("Interrupted during sleep");
@@ -133,7 +127,6 @@ public class ListLogger<E extends Object> implements List<E> {
     @Override
     public void add(int index, E element) {
         log("add(index, element) called");
-        listAddedTo = true;
         list.add(index, element);
     }
 
