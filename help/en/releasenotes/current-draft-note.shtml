@@ -267,7 +267,7 @@
         <h4>ESU</h4>
             <ul>
                 <li>Updated LokPiot 5 / LokSound 5 definitions for new output modes as of firmware version 5.14.183.</li>
-                <li>Added new Function Key pane that includes icons and settings associated with function keys.</li>
+                <li>Added new Function Key pane that includes icon index and description and settings associated with function keys.</li>
             </ul>
 
         <h4>Hattoms</h4>
