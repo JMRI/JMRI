@@ -12,11 +12,20 @@ import java.util.*;
 public class ListLogger<E extends Object> implements List<E> {
 
     /**
-     * Log where it's called?
+     * Should we sleep?
+     */
+    private static final boolean DO_SLEEP = false;
+
+    /**
+     * Should we log the calls?
      */
     private static final boolean LOG = true;
-//    private static final boolean LOG = false;
+
+    /**
+     * Log where it's called?
+     */
     private static final boolean LOG_WHERE = false;
+
 
     private final List<E> list;
 
@@ -107,7 +116,7 @@ public class ListLogger<E extends Object> implements List<E> {
     public void clear() {
         try {
             log("clear() called. Start wait.");
-            Thread.sleep(2000);
+            if (DO_SLEEP) Thread.sleep(2000);
             list.clear();
         } catch (InterruptedException e) {
             log.warn("Interrupted during sleep");
