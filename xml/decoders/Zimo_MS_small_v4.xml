@@ -97,7 +97,7 @@
         </output>
       </model>
 
-      <model model="MS440 version 4+" replacementModel="MS440 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
+      <model model="MS440 version 4+" replacementModel="MS440C version 5+|MS440D version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
