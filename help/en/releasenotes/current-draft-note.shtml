@@ -91,6 +91,13 @@
                     the wire - replaced on the wire by an unsolicited broadcast, for
                     instance - nothing brought the turnout back to idle again: it
                     ignored every later command for the rest of the session.</li>
+                <li>A throttle waiting for a reply which never arrives now gives up
+                    and resumes sending: after 5 seconds once the connection has
+                    nothing left in hand, 15 seconds otherwise. On a serial XpressNet
+                    connection a broadcast message arriving while a command is in
+                    flight could be taken for that command's reply, leaving the
+                    throttle waiting forever and silently holding back every
+                    command queued afterwards for the rest of the session.</li>
             </ul>
 
         <h4>LocoNet</h4>
@@ -488,6 +495,9 @@
                 occupancy change: a redraw now repaints the drawing area only, instead of
                 the whole window including its menu bar, tool bar and scroll bars, and a
                 partial repaint no longer redraws the whole visible track plan.</li>
+            <li>An unexpected error while restoring the saved block values no longer leaves
+                Layout Block routing uninitialized, and is now reported in the log instead
+                of passing unnoticed.</li>
             <li></li>
         </ul>
 
@@ -533,6 +543,10 @@
                 when their sensor changes state, instead of the whole window, reducing CPU
                 use on panels receiving frequent sensor events. The repainted area follows
                 the panel zoom level.</li>
+            <li>Fixed a NullPointerException in a Memory icon displaying a roster entry,
+                which could be thrown when the memory value changed while the icon was
+                being updated. The exception propagated out to the caller, so a script or
+                automaton writing to that memory could be stopped by it.</li>
             <li></li>
         </ul>
 
@@ -645,6 +659,11 @@
                 table repainting itself continuously once all turnouts were in a known state.
                 Rows are now also tall enough for the icons while turnouts are still in the
                 Unknown state.</li>
+            <li>Bean tables are now updated on the GUI thread when a bean changes on another
+                thread, for instance on a message from the layout. They were updated on the
+                reporting thread, which could corrupt the table's own state, and a row that
+                had moved or been removed in the meantime could raise an exception or mark
+                the wrong row as changed.</li>
             <li></li>
         </ul>
 

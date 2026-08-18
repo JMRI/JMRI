@@ -216,7 +216,12 @@ public abstract class AbstractMRTrafficController {
 
     protected abstract AbstractMRListener pollReplyHandler();
 
-    protected AbstractMRListener mLastSender = null;
+    // Written by the transmit thread when a message is handed to the port, read
+    // by the receive thread to decide who the next reply belongs to.  It has to
+    // be volatile: without it the receive thread may keep observing a stale
+    // sender and deliver replies to a listener which is no longer the one
+    // waiting for them.
+    protected volatile AbstractMRListener mLastSender = null;
 
     protected volatile int mCurrentMode;
     public static final int NORMALMODE = 1;
@@ -325,6 +330,23 @@ public abstract class AbstractMRTrafficController {
     }
 
     protected abstract void forwardReply(AbstractMRListener client, AbstractMRReply m);
+
+    /**
+     * Report whether this traffic controller is at rest: no message waiting for
+     * a reply, and nothing left to send.
+     * <p>
+     * A listener still waiting for a reply while this returns true is waiting
+     * for something which will never arrive, because the exchange it belongs to
+     * has already been closed by another reply. Intended for watchdogs and
+     * diagnostics: the answer is a best effort snapshot taken without locking,
+     * not a state guaranteed to hold beyond the call.
+     *
+     * @return true if nothing is outstanding and nothing is queued
+     */
+    public boolean isAtRest() {
+        int state = mCurrentState;
+        return (state == IDLESTATE || state == NOTIFIEDSTATE) && msgQueue.isEmpty();
+    }
 
     /**
      * Messages to be transmitted.
