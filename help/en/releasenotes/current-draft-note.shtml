@@ -85,6 +85,12 @@
                     function commands for its locomotive after receiving an
                     unrecognized locomotive information response, requiring a
                     JMRI restart to recover.</li>
+                <li>A turnout waiting for a reply which never arrives now gives up after
+                    5 seconds and resends its outstanding message. When the reply to a
+                    turnout command, or to the OFF message that follows it, was lost on
+                    the wire - replaced on the wire by an unsolicited broadcast, for
+                    instance - nothing brought the turnout back to idle again: it
+                    ignored every later command for the rest of the session.</li>
             </ul>
 
         <h4>LocoNet</h4>
