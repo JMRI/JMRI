@@ -1,5 +1,7 @@
 package apps.systemconsole;
 
+import apps.SystemConsole;
+
 import java.awt.Font;
 import java.util.*;
 import java.util.prefs.BackingStoreException;
@@ -7,16 +9,15 @@ import java.util.prefs.Preferences;
 
 import javax.annotation.Nonnull;
 
-import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import apps.SystemConsole;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
+
+import org.openide.util.lookup.ServiceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manage preferences for the {@link apps.SystemConsole}.

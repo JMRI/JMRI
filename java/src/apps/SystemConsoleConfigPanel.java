@@ -1,5 +1,8 @@
 package apps;
 
+import apps.SystemConsole.Scheme;
+import apps.systemconsole.SystemConsolePreferencesManager;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -7,13 +10,11 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import org.openide.util.lookup.ServiceProvider;
-
-import apps.SystemConsole.Scheme;
-import apps.systemconsole.SystemConsolePreferencesManager;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JComboBoxUtil;
+
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Allow certain elements of the System Console to be configured.

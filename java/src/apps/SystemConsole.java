@@ -1,5 +1,7 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -10,7 +12,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
