@@ -114,14 +114,13 @@ public class EventTableDataModelTest {
         assertEquals("desc1", resultName);
         
         // remove the description
-        log.warn("this doesn't distinquish 'remove by edit' and 'remove when window closes'");
-        holder.release();
+        holder.erase();
         
         resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
         assertEquals("", resultName);
 
-        // add a new one
-        holder.getList().add("desc2");
+        // add a new one - which creates a new holder object
+        holder = holder.getList().add("desc2");
         
         resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
         assertEquals("desc2", resultName);
@@ -130,9 +129,13 @@ public class EventTableDataModelTest {
         holder.getEntry().updateDescription("desc3");
 
         resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
-        assertEquals("desc3", resultName);
+        assertEquals("desc3", resultName);       
+
+        // release the holder, which leaves description data
+        holder.release();
         
-        
+        resultName = model.getValueAt(0, EventTableDataModel.COL_CONTEXT_INFO);
+        assertEquals("desc3", resultName);       
     }
 
 

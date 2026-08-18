@@ -231,8 +231,8 @@ public class EventTableDataModel extends AbstractTableModel {
             case EventTable.DESCRIPTION_ADDED :
                 handleDescriptionAdded(e);
                 break;
-            case EventTable.DESCRIPTION_REMOVED :
-                handleDescriptionRemoved(e);
+            case EventTable.DESCRIPTION_ERASED :
+                handleDescriptionErased(e);
                 break;
             case EventTable.DESCRIPTION_UPDATED :
                 handleDescriptionUpdated(e);
@@ -250,8 +250,8 @@ public class EventTableDataModel extends AbstractTableModel {
         updateAuxiliaryInformation(info.getEventId());        
     }
     
-    void handleDescriptionRemoved(PropertyChangeEvent e){
-        log.warn("handleDescriptionRemoved: {}", e.getPropertyName());
+    void handleDescriptionErased(PropertyChangeEvent e){
+        log.warn("handleDescriptionErased: {}", e.getPropertyName());
         var info = (EventTable.EventInfo)e.getNewValue();
         updateAuxiliaryInformation(info.getEventId());        
     }
