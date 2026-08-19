@@ -46,6 +46,11 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         return 0; // We do not send off messages to the Elite
     }
 
+    @Override
+    protected int watchdogTurnoutNumber() {
+        return 22; // EliteXNetTurnout shifts mNumber by one internally
+    }
+
     // Test the XNetTurnout message sequence.
     @Test
     @Override

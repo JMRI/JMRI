@@ -255,13 +255,15 @@ public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataMode
         if (!e.getPropertyName().contains("Lit") || e.getPropertyName().contains("Held") || e.getPropertyName().contains("ValidStatesChanged")) {
             if (e.getSource() instanceof NamedBean) {
                 String name = ((NamedBean) e.getSource()).getSystemName();
-                if (log.isDebugEnabled()) {
-                    log.debug("Update cell {}, {} for {}", sysNameList.indexOf(name), VALUECOL, name);
-                }
-                // since we can add columns, the entire row is marked as updated
-                int row = sysNameList.indexOf(name);
-                this.fireTableRowsUpdated(row, row);
-                clearAppearanceVector(row); // activate this method below
+                updateOnGUI(() -> {
+                    int row = sysNameList.indexOf(name);
+                    log.debug("Update cell {}, {} for {}", row, VALUECOL, name);
+                    if (row >= 0 && row < getRowCount()) {
+                        // since we can add columns, the entire row is marked as updated
+                        this.fireTableRowsUpdated(row, row);
+                        clearAppearanceVector(row); // activate this method below
+                    }
+                });
             }
         }
         super.propertyChange(e);

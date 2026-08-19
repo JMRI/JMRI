@@ -7,6 +7,7 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -287,6 +288,70 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
         assertEquals( n + 1, tc.outbound.size(),
             "Speed message sent after unrecognized LOCO_INFO_RESPONSE sub-type");
+    }
+
+    /**
+     * Z21 flavour of the parent test. Speed and function commands are queued
+     * with the THROTTLEIDLE state here, so the outstanding request holding the
+     * queue back is a status request rather than a speed command.
+     */
+    @Override
+    @Test
+    @Timeout(1000)
+    public void testWatchdogRestartsQueueWhenReplyNeverArrives() {
+        int n = tc.outbound.size();
+        Z21XNetThrottle t = (Z21XNetThrottle) instance;
+        initThrottle(t, n);
+        t.setWatchdogInterval(100);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 F0 00 03 10", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // no reply at all: the next command is held back in the internal queue.
+        final int held = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( held, tc.outbound.size(),
+            "Speed message held back while waiting for the status reply");
+
+        // the watchdog has to give up and restart the queue.
+        JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        JUnitAppender.assertWarnMessageStartsWith(
+            "Throttle 3 - traffic controller at rest with a reply still due");
+    }
+
+    /**
+     * Z21 flavour of the parent test, using a status request as the message
+     * left unanswered for the same reason.
+     */
+    @Override
+    @Test
+    @Timeout(1000)
+    public void testWatchdogRecoversFromUnretransmittedCsBusy() {
+        int n = tc.outbound.size();
+        Z21XNetThrottle t = (Z21XNetThrottle) instance;
+        initThrottle(t, n);
+        t.setWatchdogInterval(100);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 F0 00 03 10", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // the command station answers busy, and nothing else ever comes.
+        t.message(new XNetReply("61 81 E0"));
+
+        final int held = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( held, tc.outbound.size(),
+            "Speed message held back while waiting for the status reply");
+
+        JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        JUnitAppender.assertWarnMessageStartsWith(
+            "Throttle 3 - traffic controller at rest with a reply still due");
     }
 
     @Override
