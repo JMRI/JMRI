@@ -530,6 +530,10 @@
                 when their sensor changes state, instead of the whole window, reducing CPU
                 use on panels receiving frequent sensor events. The repainted area follows
                 the panel zoom level.</li>
+            <li>Fixed a NullPointerException in a Memory icon displaying a roster entry,
+                which could be thrown when the memory value changed while the icon was
+                being updated. The exception propagated out to the caller, so a script or
+                automaton writing to that memory could be stopped by it.</li>
             <li></li>
         </ul>
 
