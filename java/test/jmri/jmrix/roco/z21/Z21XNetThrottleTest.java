@@ -318,6 +318,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
         // the watchdog has to give up and restart the queue.
         JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        t.throttleDispose();
         JUnitAppender.assertWarnMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
     }
@@ -350,6 +351,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
             "Speed message held back while waiting for the status reply");
 
         JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        t.throttleDispose();
         JUnitAppender.assertWarnMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
     }

@@ -545,6 +545,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * destination of a reply again. The watchdog has to break that loop.
      */
     @Test
+    @Timeout(10)
     public void testWatchdogRestartsQueueWhenReplyNeverArrives() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
@@ -567,12 +568,12 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
         assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(held).getElement(1),
             "Throttle Set Speed Message");
+
+        // dispose before checking the log, so the watchdog armed for the speed
+        // message cannot add a message of its own while the check runs.
+        t.throttleDispose();
         JUnitAppender.assertWarnMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
-
-        // acknowledge, so the watchdog armed for the speed message is disarmed.
-        t.message(new XNetReply("01 04 05"));
-        t.throttleDispose();
     }
 
     /**
@@ -582,6 +583,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * a reply nobody will send.
      */
     @Test
+    @Timeout(10)
     public void testWatchdogRecoversFromUnretransmittedCsBusy() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
@@ -603,11 +605,9 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             "Function message held back while waiting for the speed reply");
 
         JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        t.throttleDispose();
         JUnitAppender.assertWarnMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
-
-        t.message(new XNetReply("01 04 05"));
-        t.throttleDispose();
     }
 
     /**
@@ -618,6 +618,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * traffic controller is still running.
      */
     @Test
+    @Timeout(10)
     public void testWatchdogWaitsLongerWhileTrafficControllerIsBusy() {
         XNetInterfaceScaffold busy = new XNetInterfaceScaffold(new LenzCommandStation() {
             @Override
@@ -635,6 +636,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.setWatchdogInterval(100);
 
         int n = busy.outbound.size();
+        // measure from here: the watchdog is armed by the request just below.
+        long start = System.currentTimeMillis();
         t.sendStatusInformationRequest();
         assertEquals( n + 1, busy.outbound.size(), "Throttle Information Request Message sent");
 
@@ -643,18 +646,18 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         assertEquals( held, busy.outbound.size(),
             "Speed message held back while waiting for the status reply");
 
-        long start = System.currentTimeMillis();
         JUnitUtil.waitFor(() -> busy.outbound.size() > held, "watchdog restarted the queue");
         long waited = System.currentTimeMillis() - start;
+
+        // dispose first: this traffic controller is never at rest, so the
+        // watchdog armed for the message just sent would keep going.
+        t.throttleDispose();
+        busy.terminateThreads();
 
         // the short deadline is 100ms, the long one three times that.
         assertTrue( waited >= 250,
             "watchdog held off for the longer deadline, waited only " + waited + "ms");
         JUnitAppender.assertWarnMessageStartsWith("Throttle 4 - no reply after");
-
-        t.message(new XNetReply("01 04 05"));
-        t.throttleDispose();
-        busy.terminateThreads();
     }
 
     @Test

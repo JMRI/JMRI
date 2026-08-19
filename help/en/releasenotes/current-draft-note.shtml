@@ -126,6 +126,9 @@
                     flight could be taken for that command's reply, leaving the
                     throttle waiting forever and silently holding back every
                     command queued afterwards for the rest of the session.</li>
+                <li>Roco and Z21 throttles now stop their timers when they are
+                    disposed of, instead of leaving them running for the rest of
+                    the session.</li>
             </ul>
 
         <h4>LocoNet</h4>
