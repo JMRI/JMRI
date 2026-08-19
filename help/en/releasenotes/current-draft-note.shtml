@@ -89,7 +89,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>SlotMonitor update: 
+                <li>SlotMonitor update:
                 <ul>
                     <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
                     <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
@@ -687,6 +687,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fix the <strong>Current Config file</strong> path in <strong>Help &rArr; File Locations</strong>.</li>
         </ul>
 
