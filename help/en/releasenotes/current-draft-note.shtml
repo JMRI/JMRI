@@ -85,6 +85,16 @@
                     function commands for its locomotive after receiving an
                     unrecognized locomotive information response, requiring a
                     JMRI restart to recover.</li>
+                <li>A throttle waiting for a reply which never arrives now gives up
+                    and resumes sending: after 5 seconds once the connection has
+                    nothing left in hand, 15 seconds otherwise. On a serial XpressNet
+                    connection a broadcast message arriving while a command is in
+                    flight could be taken for that command's reply, leaving the
+                    throttle waiting forever and silently holding back every
+                    command queued afterwards for the rest of the session.</li>
+                <li>Roco and Z21 throttles now stop their timers when they are
+                    disposed of, instead of leaving them running for the rest of
+                    the session.</li>
             </ul>
 
         <h4>LocoNet</h4>
