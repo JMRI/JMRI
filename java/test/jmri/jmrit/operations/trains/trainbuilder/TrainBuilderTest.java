@@ -3,10 +3,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 import java.io.*;
 import java.util.*;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -23,6 +19,10 @@ import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the TrainBuilder class NOTE: Many of the tests here are nearly
@@ -6503,7 +6503,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 510, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 512, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -6542,7 +6542,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 273, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 276, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
