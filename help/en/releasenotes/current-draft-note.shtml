@@ -366,7 +366,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Add Kato OEM decoder</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -421,7 +421,9 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Added replacement-feature for v4.x MS/MN decoder</li>
+                <li>Added some features from CV27 for FS/MS/MN decoders, in particular HLU-Options</li>
+                <li>Minor optical corrections</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -530,6 +532,10 @@
                 when their sensor changes state, instead of the whole window, reducing CPU
                 use on panels receiving frequent sensor events. The repainted area follows
                 the panel zoom level.</li>
+            <li>Fixed a NullPointerException in a Memory icon displaying a roster entry,
+                which could be thrown when the memory value changed while the icon was
+                being updated. The exception propagated out to the caller, so a script or
+                automaton writing to that memory could be stopped by it.</li>
             <li></li>
         </ul>
 
@@ -692,4 +698,3 @@
         <ul>
             <li></li>
         </ul>
-
