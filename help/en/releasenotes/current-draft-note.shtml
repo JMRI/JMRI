@@ -26,7 +26,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Updated CBUS op-code definitions with the new VLCB op-codes so they
+                    show up nicely in the CBUS Console.</li>
             </ul>
 
         <h4>C/MRI</h4>
