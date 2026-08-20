@@ -366,7 +366,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Add Kato OEM decoder</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -484,6 +484,10 @@
                 partial repaint no longer redraws the whole visible track plan.</li>
             <li>Fixed an occasional Concurrent Modification Exception error in the
                 LayoutBlock class during startup.</li>
+            <li>An unexpected error while restoring the saved block values no longer leaves
+                Layout Block routing uninitialized, and is now reported in the log instead
+                of passing unnoticed.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -528,6 +532,10 @@
                 when their sensor changes state, instead of the whole window, reducing CPU
                 use on panels receiving frequent sensor events. The repainted area follows
                 the panel zoom level.</li>
+            <li>Fixed a NullPointerException in a Memory icon displaying a roster entry,
+                which could be thrown when the memory value changed while the icon was
+                being updated. The exception propagated out to the caller, so a script or
+                automaton writing to that memory could be stopped by it.</li>
             <li></li>
         </ul>
 
