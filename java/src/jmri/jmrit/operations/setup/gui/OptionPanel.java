@@ -348,10 +348,11 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
         Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
         Setup.setSaveTrainManifestsEnabled(saveTrainManifestCheckBox.isSelected());
-        Setup.setValueEnabled(valueCheckBox.isSelected());
-        Setup.setValueLabel(valueTextField.getText());
-        Setup.setRfidEnabled(rfidCheckBox.isSelected());
-        Setup.setRfidLabel(rfidTextField.getText());
+        Setup.setValueEnabled(valueCheckBox.isSelected() && !valueTextField.getText().isBlank());
+        // value and rfid text fields can not be blank
+        Setup.setValueLabel(valueTextField.getText().isBlank() ? Bundle.getMessage("Value") : valueTextField.getText());
+        Setup.setRfidEnabled(rfidCheckBox.isSelected() && !rfidTextField.getText().isBlank());
+        Setup.setRfidLabel(rfidTextField.getText().isBlank() ? Bundle.getMessage("RFID") : rfidTextField.getText());
         // Logging enabled?
         Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
         Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());

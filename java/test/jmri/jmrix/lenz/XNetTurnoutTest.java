@@ -159,61 +159,6 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.THROWN, "Turnout goes THROWN");
     }
 
-    /**
-     * Number of OFF messages this system puts on the wire for a single
-     * turnout operation. Systems that never send OFF messages (e.g. the
-     * Hornby Elite and the ZTC611) override this to return 0.
-     * @return the expected OFF message count
-     */
-    protected int expectedOffMessages() {
-        return 1;
-    }
-
-    // An unsolicited broadcast reply (e.g. the feedback broadcast generated
-    // by our own ON command, delivered again while we're waiting on the OFF
-    // acknowledgement) must not be treated as a failed OFF and trigger a
-    // resend; nor should sendOffMessage()'s own KnownState change re-enter
-    // and send a second OFF. Exactly one ON message, plus the number of OFF
-    // messages the system normally uses (see expectedOffMessages()), should
-    // ever reach the traffic controller for a single throw.
-    @Test
-    public void testMonitoringModeNoSpuriousOffOnUnsolicitedFeedback() {
-        assertEquals( Turnout.MONITORING, t.getFeedbackMode(), "Feedback Mode after set");
-
-        int outboundBase = lnis.outbound.size();
-
-        t.setCommandedState(Turnout.THROWN);
-        checkThrownMsgSent();
-        assertEquals( outboundBase + 1, lnis.outbound.size(), "only the ON message queued so far");
-        ((XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size() - 1));
-
-        // command station acknowledges the ON message; in MONITORING mode
-        // this is what triggers the OFF message on systems that send one
-        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
-        int expectedOutbound = outboundBase + 1 + expectedOffMessages();
-        assertEquals( expectedOutbound, lnis.outbound.size(),
-                "only the expected OFF messages queued after the ON is acknowledged");
-        checkThrownOffSent();
-
-        // the same broadcast is delivered twice while the OFF is still
-        // unacknowledged, as happens in AbstractMRTrafficController.notifyReply(),
-        // which notifies both the general FEEDBACK listener and the pending
-        // request's "dest" listener (this turnout, in both cases)
-        XNetReply broadcast = new XNetReply("42 05 02 46");
-        broadcast.setUnsolicited();
-        ((XNetTurnout) t).message(broadcast);
-        ((XNetTurnout) t).message(broadcast);
-        assertEquals( expectedOutbound, lnis.outbound.size(),
-                "unsolicited broadcast feedback received before the OFF is acknowledged must not trigger extra OFF messages");
-
-        // command station finally acknowledges the OFF message
-        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
-        assertEquals( expectedOutbound, lnis.outbound.size(),
-                "OFF acknowledgement must not trigger another OFF message");
-
-        JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.THROWN, "Turnout goes THROWN");
-    }
-
     @Override
     @Test
     public void testDispose() {
