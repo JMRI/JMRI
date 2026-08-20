@@ -482,7 +482,8 @@
                 occupancy change: a redraw now repaints the drawing area only, instead of
                 the whole window including its menu bar, tool bar and scroll bars, and a
                 partial repaint no longer redraws the whole visible track plan.</li>
-            <li></li>
+            <li>Fixed an occasional Concurrent Modification Exception error in the
+                LayoutBlock class during startup.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
