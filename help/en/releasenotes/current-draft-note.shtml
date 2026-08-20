@@ -421,7 +421,9 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Added replacement-feature for v4.x MS/MN decoder</li>
+                <li>Added some features from CV27 for FS/MS/MN decoders, in particular HLU-Options</li>
+                <li>Minor optical corrections</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -696,4 +698,3 @@
         <ul>
             <li></li>
         </ul>
-
