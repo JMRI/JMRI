@@ -197,7 +197,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // Options
         JPanel pOption = new JPanel();
         pOption.setLayout(new GridBagLayout());
-        pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptions")));
+        pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutAdditionalOptions")));
         addItemLeft(pOption, saveTrainManifestCheckBox, 1, 1);
         addItemLeft(pOption, valueCheckBox, 1, 2);
         addItemLeft(pOption, valueTextField, 2, 2);

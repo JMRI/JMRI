@@ -2,10 +2,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.util.*;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -17,6 +13,10 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.BuildFailedException;
 import jmri.jmrit.operations.trains.Train;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains methods for cars when building a train.
@@ -1947,7 +1947,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
     protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         car = checkQuickServiceArrival(car, rld, track);
         addLine(THREE,
-                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
+                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName(), rld.getId()));
         car.setDestination(track.getLocation(), track, Car.FORCE);
         int length = car.getTotalLength();
         int weightTons = car.getAdjustedWeightTons();
