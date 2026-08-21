@@ -63,7 +63,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected boolean _supportsCVHints = false; // Support for CV read hint values
     private boolean _multipleThrottles = true;  // Support for multiple throttles
     private boolean _powerOnArst = true;        // Turn power on if ARST opcode received
-    
+
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     protected TrafficController tm;
@@ -169,6 +169,24 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
                     manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
                     break;
                 case ConfigurationManager.OPENLCB:
+
+                    String cp = System.getProperty("java.class.path");
+                    String[] cpSorted = cp.split(":");
+                    java.util.Arrays.sort(cpSorted);
+                    for (var s : cpSorted) {
+                        System.out.format("Classpath: %s%n", s);
+                    }
+//                    System.out.format("Version: %s%n", org.openlcb.Version.libVersion());
+
+                    var packages = ClassLoader.getSystemClassLoader().getDefinedPackages();
+                    java.util.Arrays.sort(packages, (Package t1, Package t2) -> t1.getName().compareTo(t2.getName()));
+                    for (var p : packages) {
+                        System.out.format("Package: %s%n", p.getName());
+                    }
+
+                    System.exit(0);
+
+                    System.out.format("Daniel: Version: %s%n", org.openlcb.Version.libVersion());
                     manager = new jmri.jmrix.openlcb.OlcbConfigurationManager(this);
                     break;
                 case ConfigurationManager.RAWCAN:
