@@ -96,14 +96,10 @@ public class LnStreamPortPacketizer extends LnPacketizer {
                             if (!streamController.okToSend()) {
                                 log.debug("LocoNet port not ready to receive"); // NOI18N
                             }
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
-                                log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
-                            }
+                            log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             ostream.write(msg);
                             ostream.flush();
-                            if (log.isTraceEnabled()) { // avoid String building if not needed
-                                log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
-                            }
+                            log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             messageTransmitted(msg);
                         } else {
                             // no stream connected

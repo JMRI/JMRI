@@ -72,13 +72,18 @@ public class UhlenbrockPacketizer extends LnPacketizer {
             msg[i] = (byte) m.getElement(i);
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("queue LocoNet packet: {}", m.toString());
-        }
+        log.trace("queue LocoNet packet: {}", m.toString());
         // queue the request
         try {
             xmtLocoNetList.add(m); // done first to make sure it's there before xmtList has an element
             xmtList.add(msg);
+            // save to queue if we want to remember it to check in receive handler
+            if (mLoconetUpdateSlotOnMessageCreation) {
+                log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
+                sentList.add(m);
+                log.trace("queue message for notification: {}", m);
+                jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(m, this));
+            }
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }
@@ -203,16 +208,23 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     }
 
                     // message is complete, dispatch it !!
-                    {
-                        log.debug("queue message for notification");
-                        //log.debug("-------------------Uhlenbrock IB-COM LocoNet message RECEIVED: {}", msg.toString());
+                    log.trace("message complete: {}", msg);
+                        
+                    if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
+                            && trafficController.getSentList().contains(msg)) {
+                        trafficController.getSentList().remove(msg);
+                        log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                    }
+                    else {
+                        log.trace("queue message for notification: {}", msg);
+
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTc = thisTc;
-
+                            
                             @Override
                             public void run() {
                                 myTc.notify(msgForLater);

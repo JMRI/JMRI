@@ -75,17 +75,13 @@ public class LnPacketizerStrict extends LnPacketizer {
                         log.trace("Skipping: {}", Integer.toHexString(opCode)); // NOI18N
                     }
                     // here opCode is OK. Create output message
-                    if (log.isTraceEnabled()) {
-                        log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
-                    }
+                    log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
                     LocoNetMessage msg = null;
                     while (msg == null) {
                         try {
                             // Capture 2nd byte, always present
                             int byte2 = readByteProtected(istream) & 0xFF;
-                            if (log.isTraceEnabled()) {
-                                log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
-                            }   // Decide length
+                            log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
                             int len = 2;
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:
@@ -120,9 +116,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                             for (int i = 2; i < len; i++) {
                                 // check for message-blocking error
                                 int b = readByteProtected(istream) & 0xFF;
-                                if (log.isTraceEnabled()) {
-                                    log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
-                                }
+                                log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
                                 if ((b & 0x80) != 0) {
                                     log.warn("LocoNet message with opCode: {} ended early. Expected length: {} seen length: {} unexpected byte: {}", Integer.toHexString(opCode), len, i, Integer.toHexString(b)); // NOI18N
                                     opCode = b;
@@ -143,9 +137,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                     }
                     // message is complete, dispatch it !!
                     {
-                        if (log.isDebugEnabled()) { // avoid String building if not needed
-                            log.debug("queue message for notification: {}", msg.toString());  // NOI18N
-                        }
+                        log.trace("message complete: {}", msg);
+                        
                         // check for XmtHandler waiting on return values
                         if (waitForMsg != null) {
                             if (waitForMsg.equals(msg)) {
@@ -175,7 +168,15 @@ public class LnPacketizerStrict extends LnPacketizer {
                             reTryRequired = true;
                             // check for waiting on echo
                         }
-                        jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
+                        if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
+                                && trafficController.getSentList().contains(msg)) {
+                            trafficController.getSentList().remove(msg);
+                            log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                        }
+                        else {
+                            log.trace("queue message for notification: {}", msg);
+                            jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
+                        }
                     }
                     // done with this one
                 } catch (LocoNetMessageException e) {
@@ -248,9 +249,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                             if (!controller.okToSend()) {
                                 log.debug("LocoNet port not ready to receive"); // NOI18N
                             }
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
-                                log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
-                            }
+                            log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             // get it started
                             reTryRequired = true;
                             int reTryCount = 0;
@@ -265,9 +264,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     // we do it this way as during our sleep the waitBusy time can be reset
                                     int waitTime = waitBusy;
                                     waitBusy = 0;
-                                    //if (log.isDebugEnabled()) {
                                     //    log.debug("waitBusy");
-                                    //}
                                     // for now so we know how prevalent this is over a long time span
                                     log.warn("Waitbusy");
                                     try {
@@ -278,9 +275,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 }
                                 ostream.write(msg);
                                 ostream.flush();
-                                if (log.isTraceEnabled()) {
-                                    log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
-                                }
+                                log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                                 // loop waiting for echo message and or LACK
                                 // minimal sleeps so as to exit fast
                                 waitCount = 0;

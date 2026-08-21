@@ -195,23 +195,30 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         }
 
                         // message is complete, dispatch it !!
-                        if (log.isDebugEnabled()) {
-                            log.debug("queue message for notification");
+                        log.trace("message complete: {}", msg);
+                        
+                        if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
+                                && trafficController.getSentList().contains(msg)) {
+                            trafficController.getSentList().remove(msg);
+                            log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                         }
+                        else {
+                            log.trace("queue message for notification: {}", msg);
 
-                        final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTc = trafficController;
-                        // return a notification via the queue to ensure end
-                        Runnable r = new Runnable() {
-                            LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTc = thisTc;
-
-                            @Override
-                            public void run() {
-                                myTc.notify(msgForLater);
-                            }
-                        };
-                        javax.swing.SwingUtilities.invokeLater(r);
+                            final LocoNetMessage thisMsg = msg;
+                            final LnPacketizer thisTc = trafficController;
+                            // return a notification via the queue to ensure end
+                            Runnable r = new Runnable() {
+                                LocoNetMessage msgForLater = thisMsg;
+                                LnPacketizer myTc = thisTc;
+                                
+                                @Override
+                                public void run() {
+                                    myTc.notify(msgForLater);
+                                }
+                            };
+                            javax.swing.SwingUtilities.invokeLater(r);
+                        }
                     }
                     // done with this one
                 } catch (LocoNetMessageException e) {
@@ -268,9 +275,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                                 }
                                 packet.append(hexString);
                             }
-                            if (log.isDebugEnabled()) { // Avoid building unneeded Strings
-                                log.debug("Write to LbServer: {}", packet.toString());
-                            }
+                            log.debug("Write to LbServer: {}", packet.toString());
                             packet.append("\r\n");
                             ostream.write(packet.toString().getBytes());
                             ostream.flush();
