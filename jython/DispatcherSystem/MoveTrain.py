@@ -1756,10 +1756,10 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             result = self.od.customQuestionMessage2str(msg, title, "forward", "reverse")
             if self.od.CLOSED_OPTION == True:
                 OptionDialog().displayMessage("Sorry Can't Cancel at this point")
-        if result == "reverse":
-            train_direction = "forward"
-        else:
-            train_direction = "reverse"
+        # First registration: stored direction is throttle polarity for this
+        # move (the dialog answer). Do not invert here; last-moved is updated
+        # after a completed hop in set_direction(). See GitHub issue 15407.
+        train_direction = result
 
         # if in_siding:
         #     if result == "reverse":
@@ -2307,12 +2307,6 @@ class createandshowGUI(TableModelListener):
             train_direction = self.model.data[row][direction]
             train_length = self.model.data[row][length]
             train_speed_factor = self.model.data[row][speed_factor]
-
-            result = train_direction
-            if result == "forward":
-                train_direction = "reverse"
-            else:
-                train_direction = "forward"
             if self.logLevel > 3: print "train_name", train_name,"train_direction", train_direction
 
             if train_name != "" and train_name != None and block_name != "" and block_name != None:
@@ -2543,12 +2537,7 @@ class MyTableModel (DefaultTableModel):
                 current_speed_factor_str = engine.getComment()
                 train = trains[train_name]
                 result = train["direction"]
-                # print "train[direction] loading to put in dropdown", result
-                if result == "forward":
-                    train_direction = "reverse"
-                else:
-                    train_direction = "forward"
-                # print "train", train, train_direction
+                train_direction = result
             items_to_put_in_dropdown.append([train_name,block_name,train_direction, False, train_length, current_speed_factor ])
 
         # print "items_to_put_in_dropdown", items_to_put_in_dropdown
