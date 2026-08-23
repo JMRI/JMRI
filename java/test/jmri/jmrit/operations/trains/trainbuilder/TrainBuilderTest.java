@@ -21319,13 +21319,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train);
         Assert.assertTrue("train status", train.isBuilt());
 
-        // confirm 6 clones created
-        Assert.assertEquals("cars worked", 8, train.getNumberCarsWorked());
-        Assert.assertEquals("number cars", 10, cmanager.getNumEntries());
+        // confirm clones created
+        Assert.assertEquals("cars worked", 4, train.getNumberCarsWorked());
+        Assert.assertEquals("number cars", 6, cmanager.getNumEntries());
         
-        // each car was moved 4 times
-        Assert.assertEquals("moves", 4, c1.getMoves());
-        Assert.assertEquals("moves", 14, c2.getMoves());
+        // each car was moved 2 times
+        Assert.assertEquals("moves", 2, c1.getMoves());
+        Assert.assertEquals("moves", 12, c2.getMoves());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
