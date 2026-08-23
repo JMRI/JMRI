@@ -1772,8 +1772,8 @@ public class Track extends PropertyChangeSupport {
                             r.getLocationName(), r.getTrackName(), r.getPickupTime());
                     // Rolling stock pulled by the train being built also free up track space
                 } else if (r.getPickupTime().equals(RollingStock.NONE) &&
-                        r.getTrain() == train &&
-                        r.getLastTrain() != train) {
+                        r.getTrain() == train && 
+                        train.checkPullTiming(r)) {
                     trackSpaceAvalable = trackSpaceAvalable + r.getTotalLength();
                     log.debug("Rolling stock ({}) length {}, pull from ({}, {})", r.toString(), r.getTotalLength(),
                             r.getLocationName(), r.getTrackName());

@@ -7,8 +7,6 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import org.jdom2.Element;
-
 import jmri.InstanceManager;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
@@ -30,6 +28,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.jdom2.Element;
 
 /**
  * Represents a train on the layout
@@ -123,6 +123,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _leg3Road = NONE; // engine road name 3rd leg
     protected String _leg3Model = NONE; // engine model 3rd leg
     protected String _leg3CabooseRoad = NONE; // road name for caboose 3rd leg
+    
+    protected RouteLocation _rlBuilding; // during build current route location
 
     // engine change and helper options
     public static final int CHANGE_ENGINES = 1; // change engines
@@ -3873,6 +3875,35 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return getDepartureTrack().getDropRS() > 0;
         }
         return false;
+    }
+    
+    public void setCurrentBuildRouteLocation (RouteLocation rl) {
+        _rlBuilding = rl;
+    }
+    
+    public RouteLocation getCurrentBuildRouteLocation() {
+        return _rlBuilding;
+    }
+    
+    /**
+     * Used to determine if rolling stock was pulled before the current build
+     * route location. If rolling stock before pulled current route location,
+     * track space is available.
+     * 
+     * @param rs rolling stock to be tested
+     * @return true if rolling stock was pulled
+     */
+    public boolean checkPullTiming(RollingStock rs) {
+        // go thought the train's route to determine if rolling stock was already pulled.
+        for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
+            if (rl == getCurrentBuildRouteLocation()) {
+                return false;
+            }
+            if (rl == rs.getRouteLocation()) {
+                break;
+            }
+        }
+        return true;
     }
 
     public void dispose() {
