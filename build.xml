@@ -2309,25 +2309,10 @@
 
     </target>
 
+    <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />
+
     <!-- Requires Graphviz from http://www.graphviz.org -->
-    <!-- FIELD REPORT (Andrew Deak): the plantuml taskdef used to sit at
-         the top level of build.xml (not inside any target), so Ant
-         resolved it while just PARSING the file, before any target was
-         even chosen. lib/ is excluded from this repo (vendored jars
-         aren't version-controlled here), so plantuml.jar never exists on
-         a fresh checkout, and with the taskdef at top level EVERY
-         target, including totally unrelated ones like
-         tests-warnings-check, run by the Static Analysis CI workflow,
-         failed with "taskdef class ... cannot be found" before doing
-         anything at all. Confirmed live: removing plantuml.jar and
-         running `ant -p` reproduced the exact CI failure. Moving the
-         taskdef here, into this target (the only place it's actually
-         used, since javadoc-uml depends on this target too), makes it
-         load lazily: unrelated targets are unaffected, and only invoking
-         "plantuml"/"javadoc-uml" without the jar fails, which is the
-         only case where it should. -->
     <target name="plantuml">
-        <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />
         <plantuml output="${doctarget}" >
         <fileset dir="${source}">
                 <include name="jmri/**/*.java"/>
