@@ -1735,7 +1735,7 @@ public class Track extends PropertyChangeSupport {
                         trackSpaceAvalable, _rs.toString(), _rs.getTotalLength(), _rs.getTrain(), _rs.getPickupTime(),
                         Setup.getDwellTime());
             }
-             trackSpaceAvalable = results;
+            trackSpaceAvalable = results;
         }
         log.debug("Available space {} for track ({}, {}) rs ({}) length: {}", trackSpaceAvalable,
                 this.getLocation().getName(), this.getName(), rs.toString(), rsLength);
@@ -1772,9 +1772,8 @@ public class Track extends PropertyChangeSupport {
                             r.getLocationName(), r.getTrackName(), r.getPickupTime());
                     // Rolling stock pulled by the train being built also free up track space
                 } else if (r.getPickupTime().equals(RollingStock.NONE) &&
-                        r.getTrain() == train) {
-                    // DAB 8/22/2026 removed the last train restriction
-//                        r.getLastTrain() != train) {
+                        r.getTrain() == train &&
+                        r.getLastTrain() != train) {
                     trackSpaceAvalable = trackSpaceAvalable + r.getTotalLength();
                     log.debug("Rolling stock ({}) length {}, pull from ({}, {})", r.toString(), r.getTotalLength(),
                             r.getLocationName(), r.getTrackName());
