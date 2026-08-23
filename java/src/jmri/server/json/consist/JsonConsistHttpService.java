@@ -107,6 +107,7 @@ public class JsonConsistHttpService extends JsonHttpService {
                 DccLocoAddress engineAddress =
                         new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
                 if (!consist.contains(engineAddress)) {
+                    removeFromOtherConsists(engineAddress, address);
                     consist.add(engineAddress, engine.path(FORWARD).asBoolean());
                 }
                 consist.setPosition(engineAddress, engine.path(POSITION).asInt());
@@ -124,6 +125,33 @@ public class JsonConsistHttpService extends JsonHttpService {
             throw new JsonException(500, ex.getLocalizedMessage(), request.id);
         }
         return this.getConsist(address, request);
+    }
+
+    /**
+     * FIELD REPORT: nothing previously stopped an engine already claimed
+     * by one consist from silently being added to a second one too --
+     * confirmed reachable through this exact JSON path (independent of
+     * the layout-rescan duplicate-consist bugs fixed elsewhere in
+     * LocoNetConsistManager). Removes the engine from any OTHER consist
+     * that currently has it before it gets added here, so an operator
+     * who forgot to release an engine from an old consist can just grab
+     * it into a new one rather than being blocked -- while still
+     * guaranteeing an engine is never a member of two consists at once.
+     *
+     * @param engineAddress the engine about to be added
+     * @param excludeConsistAddress the consist it's being added to (skip
+     *                               this one, it's not "other")
+     */
+    private void removeFromOtherConsists(DccLocoAddress engineAddress, LocoAddress excludeConsistAddress) {
+        for (LocoAddress otherConsistAddress : new ArrayList<>(this.manager.getConsistList())) {
+            if (otherConsistAddress.equals(excludeConsistAddress)) {
+                continue;
+            }
+            Consist other = this.manager.getConsist(otherConsistAddress);
+            if (other.contains(engineAddress)) {
+                other.remove(engineAddress);
+            }
+        }
     }
 
     @Override

@@ -169,6 +169,16 @@ public abstract class AbstractThrottleManagerTestBase {
         ThrottleListen throtListen = new ThrottleListen();
         tm.requestThrottle(addr, throtListen, true);
         JUnitUtil.waitFor(()-> (tm.getThrottleInfo(addr, Throttle.ISFORWARD) != null), "reply didn't arrive");
+        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
+        // now defers notifyThrottleFound() via SwingUtilities.invokeLater()
+        // (fixes a real StackOverflow from synchronous re-entrant
+        // requestThrottle() calls -- see its field comment), so
+        // throttleFoundResult can still be false for a moment after
+        // getThrottleInfo() is already populated (that's set earlier,
+        // synchronously, in the same method). Wait for the listener
+        // callback specifically rather than assuming it's atomic with the
+        // info becoming available.
+        JUnitUtil.waitFor(() -> throttleFoundResult, "throttle found callback didn't arrive");
 
         assertTrue(throttleFoundResult);
         assertFalse( throttleNotFoundResult );

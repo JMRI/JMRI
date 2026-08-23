@@ -479,16 +479,34 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         if (a == null) {
             log.debug("notifyThrottleKnown with zero-length listeners: {}", addr);
         } else {
+            Addresses adsFinal = ads;
             for (int i = 0; i < a.size(); i++) {
                 ThrottleListener l = a.get(i).getListener();
+                BasicRosterEntry re = a.get(i).getRosterEntry();
                 log.debug("Notify listener {} of {}", (i + 1), a.size() );
-                l.notifyThrottleFound(throttle);
-                addressThrottles.get(addr).incrementUse();
-                addressThrottles.get(addr).addListener(l);
-                if (ads != null && a.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
-                    throttle.setRosterEntry(a.get(i).getRosterEntry());
-                }
-                updateNumUsers(addr, addressThrottles.get(addr).getUseCount());
+                // FIELD REPORT: l.notifyThrottleFound(throttle) used to fire
+                // right here, synchronously, still nested inside the
+                // requestThrottle() call that led to this. If a listener
+                // reacts to a mismatched/unexpected throttle by calling
+                // requestThrottle() again, and that address is stuck
+                // "already known" with the wrong throttle cached, every
+                // retry synchronously re-enters this exact method with no
+                // base case -- requestThrottle() -> notifyThrottleKnown() ->
+                // notifyThrottleFound() -> requestThrottle() -> ... until
+                // the stack overflows. Confirmed in the field. Deferring
+                // breaks the call stack chain so no listener can recurse
+                // through this path.
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    l.notifyThrottleFound(throttle);
+                    synchronized (AbstractThrottleManager.this) {
+                        addressThrottles.get(addr).incrementUse();
+                        addressThrottles.get(addr).addListener(l);
+                        if (adsFinal != null && re != null && throttle.getRosterEntry() == null) {
+                            throttle.setRosterEntry(re);
+                        }
+                        updateNumUsers(addr, addressThrottles.get(addr).getUseCount());
+                    }
+                });
             }
             throttleListeners.remove(addr);
         }

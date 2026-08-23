@@ -129,7 +129,19 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             @Override
             public void run() {
                 int attempts = 1; // already tried once above
-                int maxAttempts = 10;
+                // Was 10 (10s total) -- too short for a command station
+                // that's still working through a backlog of rapid
+                // sequential slot requests, e.g. building/tearing down a
+                // large command-station consist one engine at a time.
+                // Field-observed on a DCS52: the 20th of 20 back-to-back
+                // slot requests timed out and was abandoned by JMRI, yet
+                // the Slot Monitor later showed the command station HAD
+                // allocated a valid slot for it -- the response just
+                // arrived after JMRI's window closed, not because the
+                // slot/address was invalid. This thread is a dedicated
+                // background thread (not the AWT/LocoNet receive thread),
+                // so waiting longer here is safe.
+                int maxAttempts = 20;
                 while (attempts <= maxAttempts) {
                     try {
                         Thread.sleep(1000); // wait one second
@@ -145,9 +157,25 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
                     attempts++;
                 }
                 log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
-                failedThrottleRequest(address, "Failed to get response from command station");
-                requestOutstanding = false;
-                processQueuedThrottleSetupRequest();
+                // FIELD REPORT: failedThrottleRequest() dispatches to a
+                // listener's notifyFailedThrottleRequest(), which threw an
+                // uncaught NullPointerException in the field (a consist
+                // object touching its own already-nulled bookkeeping after
+                // being disposed). Since requestOutstanding=false and
+                // processQueuedThrottleSetupRequest() were below the
+                // throwing call, one bad listener permanently wedged EVERY
+                // future throttle request for the rest of the session --
+                // requestOutstanding stuck true forever, with nothing left
+                // to ever drain the queue. This manager's own bookkeeping
+                // must never depend on a listener behaving.
+                try {
+                    failedThrottleRequest(address, "Failed to get response from command station");
+                } catch (RuntimeException ex) {
+                    log.error("Listener threw while handling failed throttle request for {} -- continuing anyway", address, ex);
+                } finally {
+                    requestOutstanding = false;
+                    processQueuedThrottleSetupRequest();
+                }
             }
         }
 
