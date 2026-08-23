@@ -262,7 +262,26 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         if (needToRemove.isEmpty()) {
             return;
         }
+        // FIELD REPORT (Andrew Deak): if the consist's own address is
+        // queued here alongside genuine followers, it must always be
+        // drained LAST, never just because it happens to be at the
+        // front of the queue (e.g. queued first, before followers, by
+        // a caller that removes the lead before its followers -- see
+        // the field report on removeFromCSConsist()'s lead==follow
+        // guard). Freeing the lead's slot before every other queued
+        // follower has actually been unlinked -- not just requested --
+        // would orphan their real LocoNet link. Prefer any non-lead
+        // entry first; only take the lead's own entry once it's the
+        // only thing left in the queue.
         DccLocoAddress locoAddress = needToRemove.get(0);
+        if (locoAddress.equals(consistAddress) && needToRemove.size() > 1) {
+            for (DccLocoAddress candidate : needToRemove) {
+                if (!candidate.equals(consistAddress)) {
+                    locoAddress = candidate;
+                    break;
+                }
+            }
+        }
         needToRemove.remove(locoAddress);
         if (consistType == ADVANCED_CONSIST) {
             removeFromAdvancedConsist(locoAddress);
@@ -451,7 +470,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             needToRemove.add(locoAddress);
             return;
         }
-        if(consistList == null || (consistList.size()==1 && locoAddress.equals(consistAddress))){
+        if(consistList == null || (locoAddress.equals(consistAddress) && (consistList.isEmpty() || consistList.size()==1))){
           // there is only one address in this consist, no reason to
           // unlink -- but the slot is still marked In Use/Common from
           // when the consist was built, so fetch it and free it
@@ -469,9 +488,55 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
           // the same case as "sole remaining member" -- just free the
           // slot. Without this, consistList.size() NPE'd here and the
           // lead engine's slot never got freed, staying stuck "In Use".
+          //
+          // FIELD REPORT: consistList.isEmpty() (size 0, not null) is a
+          // related but distinct case, added after confirming it live --
+          // removeFromConsistList() strips an address from consistList
+          // SYNCHRONOUSLY the instant its remove() is called, regardless
+          // of whether the real async LocoNet unlink for it has actually
+          // completed yet. So once every member (including the lead
+          // itself, if its own removal was deferred below rather than
+          // processed immediately) has at least been REQUESTED, consistList
+          // reads back empty well before the lead's deferred removal is
+          // actually retried -- size()==1 alone would never match at that
+          // point, and this needs the same "just free the slot" treatment.
           pendingSlotAddress = locoAddress;
           slotManager.slotFromLocoAddress(locoAddress.getNumber(), this);
           consistRequestState = FREESLOTSTATE;
+          return;
+        }
+        if (locoAddress.equals(consistAddress)) {
+          // FIELD REPORT (Andrew Deak, confirmed live against a real
+          // DCS52 across 3 separate test consists): leadSlot is cached
+          // once at construction and never updated. Removing the
+          // consist's OWN address here while other real members are
+          // STILL tracked (the branch above didn't apply) would fall
+          // through to the generic unlink path below, which resolves
+          // BOTH "lead" and "follow" to that exact same cached leadSlot
+          // object -- there's nothing else to unlink the lead's own
+          // identity from. unlinkSlots()'s lead==follow guard (built for
+          // a different, degenerate self-link scenario) then fires:
+          // logs a CONSIST_ERROR/DELETE_ERROR and returns with NO
+          // LocoNet message ever sent and no retry -- permanently
+          // leaving this slot exactly as it was, stuck "In Use" in the
+          // Slot Monitor (confirmed live, visible there with Consist
+          // status "top"). Triggered whenever a caller removes the
+          // lead's own address before its followers are gone (e.g. a
+          // firmware doing an explicit per-engine teardown pass, lead
+          // first, ahead of the final consist delete) -- not just a
+          // hypothetical. Re-queuing here defers the lead's own removal
+          // until it's genuinely the sole remaining member (the branch
+          // above), the only order that's safe: freeing the lead's slot
+          // while real followers are still LocoNet-linked to it BY SLOT
+          // NUMBER on the actual hardware would orphan their physical
+          // link, corrupting the consist on the command station even
+          // though JMRI's own bookkeeping would look fine. Safe to defer
+          // indefinitely here rather than looping back through
+          // processQueuedWork() immediately -- nothing has changed yet,
+          // so an immediate retry would just hit this exact same branch
+          // again. Whichever other member's removal completes next will
+          // drain this via processQueuedWork() once it's genuinely safe.
+          needToRemove.add(locoAddress);
           return;
         }
         pendingSlotAddress = locoAddress;
