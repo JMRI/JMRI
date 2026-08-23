@@ -25,6 +25,12 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void requestThrottleTest(){
        Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
+          // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (see
+          // its field comment -- fixes a real StackOverflow from synchronous
+          // re-entrant requestThrottle() calls), so the throttle notification is
+          // no longer written synchronously within initThrottle() itself.
+          JUnitUtil.waitFor(() -> !sb.toString().isEmpty(), "wait for throttle notification");
           confirmThrottleRequestSucceeded();
        });
        assertThat(thrown).withFailMessage("failed requesting throttle").isNull();
@@ -58,6 +64,14 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void sendStatusStandardTest(){
        Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          // FIELD REPORT (Andrew Deak): without this wait, the deferred
+          // notifyThrottleFound() from initThrottle() above (see the field
+          // report in requestThrottleTest()) can race with sendStatus()
+          // below and append its own success text to sb AFTER the "499
+          // ERROR" text this test expects, breaking confirmThrottleErrorStatusSent()'s
+          // endsWith() check depending purely on timing. Let the
+          // acquisition's own notification land first.
+          JUnitUtil.waitFor(() -> !sb.toString().isEmpty(), "wait for throttle notification");
           ats.sendStatus(new DccLocoAddress(42,false));
        });
        assertThat(thrown).withFailMessage("failed sending status").isNull();
@@ -69,6 +83,10 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void sendStatusTest(){
         Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          // FIELD REPORT (Andrew Deak): see the field report in requestThrottleTest()
+          // above -- notifyThrottleFound() is now deferred, so this isn't written
+          // synchronously within initThrottle().
+          JUnitUtil.waitFor(() -> !sb.toString().isEmpty(), "wait for throttle notification");
           confirmThrottleRequestSucceeded();
           ((JmriSRCPThrottleServer)ats).sendStatus(1,42);
           confirmThrottleStatusSent();

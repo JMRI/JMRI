@@ -32,10 +32,12 @@ public class MultiThrottleStealTest {
         throttle.canceledThrottleRequest("L1234");
         // the device then confirms the steal.
         throttle.handleMessage("SL1234<;>L1234");
-        // and the sequence continues as normal.
+        // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
+        // is NOT enough -- see the field report in testRefuseOneStealOne()
+        // below for why. Wait for the actual last packet sent instead.
         jmri.util.JUnitUtil.waitFor(() -> {
-            return tcls.hasAddressBeenFound();
-        }, " Address not found");
+            return "MAAL1234<;>s1".equals(cis.getLastPacket());
+        }, "wait for throttle status packet");
         Assert.assertTrue("Address Found", tcls.hasAddressBeenFound());
         // then release it.
         throttle.handleMessage("-L1234<;>r");
@@ -62,6 +64,19 @@ public class MultiThrottleStealTest {
         throttle.canceledThrottleRequest("L4321");
         // the device then confirms the steal.
         throttle.handleMessage("SL4321<;>L4321");
+        // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
+        // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
+        // from the now-deferred AbstractThrottleManager callback) notifies
+        // listeners (setting this flag) BEFORE its own later
+        // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
+        // run, all synchronously within the same method but AFTER the flag
+        // flips. Confirmed live: intermittently observed a stray in-progress
+        // packet (e.g. a function-state packet) as the "last packet" instead
+        // of the release ack sent moments later in this test, depending
+        // purely on exactly when this wait's polling happened to land
+        // relative to that still-in-progress call. Wait for the actual last
+        // packet that method sends instead.
+        JUnitUtil.waitFor(() -> "MAAL4321<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
         // and the sequence continues as normal.
         Assert.assertTrue("Address Found", tcls.hasAddressBeenFound());
         // then release it.

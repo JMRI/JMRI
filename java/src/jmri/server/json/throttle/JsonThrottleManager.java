@@ -28,35 +28,46 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
         // do nothing
     }
 
-    public Collection<JsonThrottle> getThrottles() {
-        return this.throttles.values();
+    // FIELD REPORT (Andrew Deak): these two maps used to only ever be
+    // touched from a single thread at a time (everything, including
+    // notifyThrottleFound(), ran synchronously nested inside the original
+    // calling thread). Now that AbstractThrottleManager.notifyThrottleKnown()
+    // defers notifyThrottleFound() to the EDT via SwingUtilities.invokeLater()
+    // (see its field comment), that deferred callback and whatever thread is
+    // handling a fresh JSON request can genuinely touch these maps at the
+    // same time -- confirmed live: a ConcurrentModificationException inside
+    // computeIfAbsent() from exactly this race. Synchronized on `this`
+    // throughout since this manager is itself a singleton and none of these
+    // methods call back into each other across instances.
+    public synchronized Collection<JsonThrottle> getThrottles() {
+        return new ArrayList<>(this.throttles.values());
     }
 
-    public void put(DccLocoAddress address, JsonThrottle throttle) {
+    public synchronized void put(DccLocoAddress address, JsonThrottle throttle) {
         this.throttles.put(address, throttle);
     }
 
-    public void put(JsonThrottle throttle, JsonThrottleSocketService service) {
+    public synchronized void put(JsonThrottle throttle, JsonThrottleSocketService service) {
         this.services.computeIfAbsent(throttle, v -> new ArrayList<>()).add(service);
     }
 
-    public boolean containsKey(DccLocoAddress address) {
+    public synchronized boolean containsKey(DccLocoAddress address) {
         return this.throttles.containsKey(address);
     }
 
-    public JsonThrottle get(DccLocoAddress address) {
+    public synchronized JsonThrottle get(DccLocoAddress address) {
         return this.throttles.get(address);
     }
 
-    public void remove(DccLocoAddress address) {
+    public synchronized void remove(DccLocoAddress address) {
         this.throttles.remove(address);
     }
 
-    public List<JsonThrottleSocketService> getServers(JsonThrottle throttle) {
+    public synchronized List<JsonThrottleSocketService> getServers(JsonThrottle throttle) {
         return this.services.computeIfAbsent(throttle, v -> new ArrayList<>());
     }
 
-    public void remove(JsonThrottle throttle, JsonThrottleSocketService server) {
+    public synchronized void remove(JsonThrottle throttle, JsonThrottleSocketService server) {
         this.getServers(throttle).remove(server);
     }
 

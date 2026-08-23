@@ -497,13 +497,28 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 // breaks the call stack chain so no listener can recurse
                 // through this path.
                 javax.swing.SwingUtilities.invokeLater(() -> {
+                    // FIELD REPORT (Andrew Deak): setRosterEntry() used to run
+                    // AFTER notifyThrottleFound() here -- harmless back when
+                    // notifyThrottleFound() fired synchronously nested inside
+                    // requestThrottle() (the roster entry was already attached
+                    // by the time any *later* code ran), but now that this
+                    // whole block is itself the deferred callback, a listener
+                    // that inspects the throttle's roster entry DURING its own
+                    // notifyThrottleFound() (e.g. JsonThrottle.sendStatus(),
+                    // which includes the roster entry ID in its status message
+                    // when present) always saw null -- confirmed live via a
+                    // JSON throttle status message missing its rosterEntry
+                    // field. Moved before the notify call so the throttle is
+                    // fully set up before any listener sees it.
+                    synchronized (AbstractThrottleManager.this) {
+                        if (adsFinal != null && re != null && throttle.getRosterEntry() == null) {
+                            throttle.setRosterEntry(re);
+                        }
+                    }
                     l.notifyThrottleFound(throttle);
                     synchronized (AbstractThrottleManager.this) {
                         addressThrottles.get(addr).incrementUse();
                         addressThrottles.get(addr).addListener(l);
-                        if (adsFinal != null && re != null && throttle.getRosterEntry() == null) {
-                            throttle.setRosterEntry(re);
-                        }
                         updateNumUsers(addr, addressThrottles.get(addr).getUseCount());
                     }
                 });

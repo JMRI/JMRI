@@ -84,6 +84,12 @@ public class JsonThrottleTest {
         JsonNode data = connection.getObjectMapper().createObjectNode().put(JSON.ADDRESS, 1234);
         JsonThrottle jsonThrottle = JsonThrottle.getThrottle("42", data, service, 42);
         assertNotNull( jsonThrottle, "JsonThrottle exists");
+        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
+        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (fixes
+        // a real StackOverflow from synchronous re-entrant requestThrottle()
+        // calls -- see its field comment), so this is no longer available
+        // synchronously right after getThrottle() returns.
+        JUnitUtil.waitFor(() -> jsonThrottle.getThrottle() != null, "wait for throttle found");
         Throttle throttle = jsonThrottle.getThrottle();
         assertNotNull( throttle, "has Throttle");
 

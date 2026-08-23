@@ -63,6 +63,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 0xb4, 0x6f, 0x7f, 0x5B});
         lnis.sendTestMessage(cmdStationReply);
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         DccThrottle throttle = throtListen.getThrottle();
         Assertions.assertNotNull(throttle, "have created a throttle");
         Assertions.assertTrue(throttle.getClass() == LocoNetThrottle.class,"is LnThrottle");
@@ -111,6 +117,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis.sendTestMessage(cmdStationReply);
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         DccThrottle throttle = throtListen.getThrottle();
 
         assertNotNull(throttle, "have created a throttle");
@@ -178,6 +190,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis.sendTestMessage(cmdStationReply);
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         DccThrottle throttle = throtListen.getThrottle();
 
         Assertions.assertNotNull(throttle, "have created a throttle");
@@ -295,6 +313,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         assertEquals( "EF 0E 08 30 00 00 00 07 00 02 00 71 02 00",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "Write Throttle ID");
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         DccThrottle throttle = throtListen.getThrottle();
 
         assertNotNull( throttle, "Throttle should be created and non-null");
@@ -326,6 +350,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         assertEquals( "EF 0E 08 30 01 00 00 07 00 02 00 71 02 00",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "Write Throttle ID");
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         Assertions.assertNotNull(throtListen.getThrottle(), "Throttle should be created and non-null");
         tm.releaseThrottle(throtListen.getThrottle(), throtListen);
     }
@@ -355,6 +385,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         assertEquals( "EF 0E 08 30 03 00 00 07 00 02 00 71 02 00",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "Write Throttle ID");
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         assertNotNull( throtListen.getThrottle(), "Throttle should be created and non-null");
         tm.releaseThrottle(throtListen.getThrottle(), throtListen);
     }
@@ -396,12 +432,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             (lnis.outbound.elementAt(lnis.outbound.size()-1).toString())),
             "Write Throttle ID");
 
+        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
+        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (fixes
+        // a real StackOverflow from synchronous re-entrant requestThrottle()
+        // calls -- see its field comment), so this is no longer available
+        // synchronously even after waiting for the LocoNet message above.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         assertNotNull( throtListen.getThrottle(), "Throttle should be created and non-null");
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
         tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
 
+        JUnitUtil.waitFor(() -> throtListen2.getThrottle() != null, "wait for second throttle found");
         assertNotNull( throtListen2.getThrottle(), "Throttle should be created and non-null");
         assertEquals( throtListen.getThrottle(), throtListen2.getThrottle(),
             "both throttle users point to the same throttle object");
@@ -466,6 +509,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         assertEquals( "EF 0E 09 30 04 00 00 07 00 02 00 71 02 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "Write Throttle ID");
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         assertNotNull( throtListen.getThrottle(), "Throttle should be created and non-null");
 
         lnis.outbound.clear();
@@ -474,6 +523,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
 
+        JUnitUtil.waitFor(() -> throtListen2.getThrottle() != null, "wait for second throttle found");
         assertNotNull( throtListen2.getThrottle(), "Throttle should be created and non-null");
         assertEquals( throtListen.getThrottle(), throtListen2.getThrottle(),
             "both throttle users point to the same throttle object");
@@ -567,12 +617,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         assertEquals("EF 0E 0A 30 05 00 00 07 00 02 00 71 02 00",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "Write Throttle ID");
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         assertNotNull(throtListen.getThrottle(), "Throttle should be created and non-null");
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
         tm.requestThrottle(261, throtListen2, true);  // An additional user of the same throttle
 
+        JUnitUtil.waitFor(() -> throtListen2.getThrottle() != null, "wait for second throttle found");
         assertNotNull(throtListen2.getThrottle(), "Throttle should be created and non-null");
         assertEquals(throtListen.getThrottle(), throtListen2.getThrottle(),
             "both throttle users point to the same throttle object");
@@ -590,6 +647,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         tm.requestThrottle(261, throtListen3, true);  // An additional user of the same throttle
 
+        JUnitUtil.waitFor(() -> throtListen3.getThrottle() != null, "wait for third throttle found");
         assertNotNull(throtListen3.getThrottle(), "Throttle should be created and non-null");
         assertEquals(throtListen.getThrottle(), throtListen3.getThrottle(),
             "both throttle users point to the same throttle object");
@@ -664,12 +722,19 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         assertEquals( "EF 0E 0B 30 06 00 00 07 00 02 00 71 02 00",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "Write Throttle ID");
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         assertNotNull(throtListen.getThrottle(), "Throttle should be created and non-null");
 
         int netTxMsgCount = lnis.outbound.size()-1;
 
         tm.requestThrottle(262, throtListen2, true);  // An additional user of the same throttle
 
+        JUnitUtil.waitFor(() -> throtListen2.getThrottle() != null, "wait for second throttle found");
         assertNotNull(throtListen2.getThrottle(), "Throttle should be created and non-null");
         assertEquals( throtListen.getThrottle(), throtListen2.getThrottle(),
             "both throttle users point to the same throttle object");
@@ -745,6 +810,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 0xb4, 0x6f, 0x7f, 0x5B});
         lnis.sendTestMessage(cmdStationReply);
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant the LocoNet message above is sent.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         DccThrottle throttle4 = throtListen.getThrottle();
 
         assertNotNull(throttle4, "have created a throttle4");
