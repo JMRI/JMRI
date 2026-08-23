@@ -95,7 +95,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
-                    if (car.getTrain() == getTrain()) {
+                    // if destination track in quick service, car moved to location
+                    if (car.getTrain() == getTrain() || car.getLocation() == rld.getLocation()) {
                         foundCaboose = true;
                     }
                 } else if (findDestinationAndTrack(car, rl, rld)) {
@@ -256,7 +257,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
-                    if (car.getTrain() == getTrain()) {
+                    // if destination track in quick service, car moved to location
+                    if (car.getTrain() == getTrain() || car.getLocation() == rld.getLocation()) {
                         foundCarWithFred = true;
                     }
                 } else if (findDestinationAndTrack(car, rl, rld)) {

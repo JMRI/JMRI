@@ -21270,6 +21270,65 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * Confirm that tracks can be used multiple time by the same train.
+     */
+    @Test
+    public void testOnTimeMultipleUse() {
+        // build in aggressive mode
+        Setup.setBuildAggressive(true);
+        // improve test coverage by using on time mode
+        Setup.setBuildOnTime(true);
+        Setup.setDwellTime(0);
+        
+        Train train = tmanager.newTrain("Test_Multiple_Use");
+
+        // Create a route that moves a car multiple times
+        // Acton -> Boston -> Acton -> Boston -> Acton
+        // cars are expected to set out and pull at each location
+        Route route = rmanager.newRoute("ABBAABBA");
+        train.setRoute(route);
+
+        Location acton = lmanager.newLocation("Acton");
+        route.addLocation(acton);
+        Track actonYard = acton.addTrack("yard track", Track.YARD);
+        actonYard.setLength(100);
+        actonYard.setQuickServiceEnabled(true);
+        
+        Location boston = lmanager.newLocation("Boston");
+        route.addLocation(boston);
+        Track bostonYard = boston.addTrack("yard track", Track.YARD);
+        bostonYard.setLength(100);
+        bostonYard.setQuickServiceEnabled(true);
+        
+        // this will pull the car
+        route.addLocation(boston);
+        // car should then move back to Acton
+        route.addLocation(acton);
+        route.addLocation(acton);
+        // back to Boston
+        route.addLocation(boston);
+        route.addLocation(boston);
+        // back to Acton
+        route.addLocation(acton);
+        
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Boxcar", "40", actonYard, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", actonYard, 10);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue("train status", train.isBuilt());
+
+        // confirm clones created
+        Assert.assertEquals("cars worked", 8, train.getNumberCarsWorked());
+        Assert.assertEquals("number cars", 10, cmanager.getNumEntries());
+        
+        // each car was moved 4 times
+        Assert.assertEquals("moves", 4, c1.getMoves());
+        Assert.assertEquals("moves", 14, c2.getMoves());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     @Test
     public void testQuickLoadTurnAlternateTrackWait() {
