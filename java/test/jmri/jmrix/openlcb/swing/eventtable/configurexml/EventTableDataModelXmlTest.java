@@ -1,7 +1,5 @@
 package jmri.jmrix.openlcb.swing.eventtable.configurexml;
 
-import java.util.*;
-
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -52,6 +50,7 @@ public class EventTableDataModelXmlTest {
             Assert.fail("got unexpected Exception");
         }
     
+        // Now test read
         model = getModel(); // test load with a new one
 
         var cxml2 = new EventTableDataModelXml(model) {
@@ -70,12 +69,75 @@ public class EventTableDataModelXmlTest {
         Assert.assertEquals(2, model.getRowCount()); // separate producer and consumer rows
 
         Assert.assertEquals("01.01.01.01.02.02.02.02", model.getValueAt(0,EventTableDataModel.COL_EVENTID));
+        Assert.assertEquals("01.01.01.01.02.02", model.getValueAt(0,EventTableDataModel.COL_PRODUCER_NODE));
+        Assert.assertEquals("namedNode", model.getValueAt(0,EventTableDataModel.COL_PRODUCER_NAME));
+        Assert.assertEquals("eventP", model.getValueAt(0,EventTableDataModel.COL_EVENTNAME));
+        Assert.assertEquals("Well-Known 01.01.01.01.02.02.02.02", model.getValueAt(0,EventTableDataModel.COL_CONTEXT_INFO));
+
+        Assert.assertEquals("0F.01.01.01.03.03.02.02", model.getValueAt(1,EventTableDataModel.COL_EVENTID));
+        Assert.assertEquals("", model.getValueAt(1,EventTableDataModel.COL_PRODUCER_NODE));
+        Assert.assertEquals("", model.getValueAt(1,EventTableDataModel.COL_PRODUCER_NAME));
+        Assert.assertEquals("eventC", model.getValueAt(1,EventTableDataModel.COL_EVENTNAME));
+        Assert.assertEquals("describe C", model.getValueAt(1,EventTableDataModel.COL_CONTEXT_INFO));
+
+    }
+
+    @Test
+    public void testSaveAndRestoreDifferentNodeID() {
+    
+        var cxml1 = new EventTableDataModelXml(model) {
+            @Override
+            protected String getModelFileDirectoryName() {
+                return "test";
+            }
+        };
+        
+        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedNode");
+        
+        var targetEventP = new EventID("1.1.1.1.2.2.2.2");
+        olcbStore.addMatch(targetEventP, "eventP");
+        model.recordProducer(targetEventP, new NodeID("1.1.1.1.2.2"),"", false);
+        
+        var targetEventC = new EventID("0F.1.1.1.3.3.2.2");
+        olcbStore.addMatch(targetEventC, "eventC");
+        model.recordConsumer(targetEventC, new NodeID("1.1.1.1.3.3"),"");
+
+        model.addAuxiliaryInformation(targetEventC, "describe C");
+        
+        try {
+            cxml1.store();
+        } catch (Exception e) {
+            Assert.fail("got unexpected Exception");
+        }
+    
+        // Now test read with a different nodeID associated with the node name
+        model = getModel(); // test load with a new one
+
+        model.addMatch(new NodeID("8.8.1.1.2.2"), "namedNode"); // different node from what was stored
+
+        var cxml2 = new EventTableDataModelXml(model) {
+            @Override
+            protected String getModelFileDirectoryName() {
+                return "test";
+            }
+        };
+
+        cxml2.load();
+        
+        Assert.assertEquals(1, model.getNodeIDMatches().size());       
+        Assert.assertEquals("namedNode", model.getNodeName(new NodeID("8.8.1.1.2.2")));       
+        Assert.assertEquals(new NodeID("8.8.1.1.2.2"), model.getNodeID("namedNode"));       
+
+        Assert.assertEquals(2, model.getRowCount()); // separate producer and consumer rows
+
+        Assert.assertEquals("01.01.01.01.02.02.02.02", model.getValueAt(0,EventTableDataModel.COL_EVENTID));
+        Assert.assertEquals("08.08.01.01.02.02", model.getValueAt(0,EventTableDataModel.COL_PRODUCER_NODE));
         Assert.assertEquals("namedNode", model.getValueAt(0,EventTableDataModel.COL_PRODUCER_NAME));
         Assert.assertEquals("eventP", model.getValueAt(0,EventTableDataModel.COL_EVENTNAME));
         Assert.assertEquals("Well-Known 01.01.01.01.02.02.02.02", model.getValueAt(0,EventTableDataModel.COL_CONTEXT_INFO));
         
-
         Assert.assertEquals("0F.01.01.01.03.03.02.02", model.getValueAt(1,EventTableDataModel.COL_EVENTID));
+        Assert.assertEquals("", model.getValueAt(1,EventTableDataModel.COL_PRODUCER_NODE));
         Assert.assertEquals("", model.getValueAt(1,EventTableDataModel.COL_PRODUCER_NAME));
         Assert.assertEquals("eventC", model.getValueAt(1,EventTableDataModel.COL_EVENTNAME));
         Assert.assertEquals("describe C", model.getValueAt(1,EventTableDataModel.COL_CONTEXT_INFO));
@@ -144,6 +206,6 @@ public class EventTableDataModelXmlTest {
         JUnitUtil.tearDown();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXmlTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelXmlTest.class);
 }
 

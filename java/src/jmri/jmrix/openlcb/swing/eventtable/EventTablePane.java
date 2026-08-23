@@ -72,7 +72,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.groupStore = InstanceManager.getDefault(OlcbNodeGroupStore.class);
         this.mimcStore = memo.get(MimicNodeStore.class);
         EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
-        if (stdEventTable == null) log.warn("no OLCB EventTable found");
 
         model = new EventTableDataModel(mimcStore, stdEventTable, nameStore);
         sorter = new TableRowSorter<>(model);
@@ -479,7 +478,22 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
      * @param e Needed for signature of method, but ignored here
      */
     public void writeToCsvFile(ActionEvent e) {
+        var file = getCsvWriteFile();
+        
+        if (file == null) {
+            log.info("Event Table CVS write aborted");
+            return;
+        }
+        log.debug("start to export to CSV file {}", file);
 
+        csvWriteOperation(file);
+    }
+
+    /**
+     * User selection of file for doing CSV write.
+     * @return selected output file or null for aborted
+     */
+    File getCsvWriteFile() {
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
@@ -490,34 +504,38 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         int retVal = fileChooser.showSaveDialog(this);
 
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            if (log.isDebugEnabled()) {
-                log.debug("start to export to CSV file {}", file);
-            }
+            return fileChooser.getSelectedFile();
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Actual write of the CSV file
+     */
+    void csvWriteOperation(File file) {
+        try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+            str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
+                            "Consumer Node", "Consumer Node Name", "Paths");                
+            for (int i = 0; i < model.getRowCount(); i++) {
 
-            try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
-                str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
-                                "Consumer Node", "Consumer Node Name", "Paths");                
-                for (int i = 0; i < model.getRowCount(); i++) {
+                str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTID));
+                str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTNAME));
+                str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NODE));
+                str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NAME));
+                str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NODE));
+                str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NAME));
 
-                    str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTID));
-                    str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTNAME));
-                    str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NODE));
-                    str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NAME));
-                    str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NODE));
-                    str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NAME));
-
-                    String[] contexts = model.getValueAt(i, EventTableDataModel.COL_CONTEXT_INFO).toString().split("\n"); // multi-line cell
-                    for (String context : contexts) {
-                        str.print(context);
-                    }
-                    
-                    str.println();
+                String[] contexts = model.getValueAt(i, EventTableDataModel.COL_CONTEXT_INFO).toString().split("\n"); // multi-line cell
+                for (String context : contexts) {
+                    str.print(context);
                 }
-                str.flush();
-            } catch (IOException ex) {
-                log.error("Error writing file", ex);
+                
+                str.println();
             }
+            str.flush();
+        } catch (IOException ex) {
+            log.error("Error writing file", ex);
         }
     }
 
@@ -527,6 +545,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
      */
     public void readFromCsvFile(ActionEvent e) {
 
+        File file = getCsvReadFile();
+        
+        csvReadOperation(file);
+    }
+
+    File getCsvReadFile() {
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
@@ -540,37 +564,49 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             if (log.isDebugEnabled()) {
                 log.debug("start to read from CSV file {}", file);
             }
-
-            try (Reader in = new FileReader(file)) {
-                Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
-                
-                for (CSVRecord record : records) {
-                    String eventIDname = record.get(0);
-                     // Is the 1st column really an event ID
-                    EventID eid;
-                    try {
-                        eid = new EventID(eventIDname);
-                    } catch (IllegalArgumentException e1) {
-                        // really shouldn't happen, as table manages column contents
-                        log.warn("Column 0 doesn't contain an EventID: {}", eventIDname);
-                        continue;
-                    }
-                    // here we have a valid EventID, assign the name if currently blank
-                    if (! isEventNamePresent(eid)) {
-                        String eventName = record.get(1);
-                        nameStore.addMatch(eid, eventName);
-                    }         
-                }
-                log.debug("File reading complete");
-                // cause the table to update
-                model.fireTableDataChanged();
-                
-            } catch (IOException ex) {
-                log.error("Error reading file", ex);
-            }
+            return file;
+        } else {
+            return null;
         }
     }
-
+    
+    void csvReadOperation(File file) {
+        try (Reader in = new FileReader(file)) {
+            boolean first = true;
+            Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
+            
+            for (CSVRecord record : records) {
+                // skip the first record, as it's the column titles
+                if (first) {
+                    first = false;
+                    continue;
+                }
+                
+                String eventIDname = record.get(0);
+                 // Is the 1st column really an event ID
+                EventID eid;
+                try {
+                    eid = new EventID(eventIDname);
+                } catch (IllegalArgumentException e1) {
+                    // really shouldn't happen, as table manages column contents
+                    log.warn("Column 0 doesn't contain an EventID name: {}", eventIDname);
+                    continue;
+                }
+                // here we have a valid EventID, assign the name if currently blank
+                if (! isEventNamePresent(eid)) {
+                    String eventName = record.get(1);
+                    nameStore.addMatch(eid, eventName);
+                }         
+            }
+            log.debug("File reading complete");
+            // cause the table to update
+            model.fireTableDataChanged();
+            
+        } catch (IOException ex) {
+            log.error("Error reading file", ex);
+        }
+    }
+    
     /**
      * Check whether a Event Name tag is defined or not.
      * Check for other uses before changing this.

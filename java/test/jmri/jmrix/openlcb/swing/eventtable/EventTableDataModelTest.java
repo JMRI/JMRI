@@ -1,8 +1,5 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
-import java.beans.*;
-import java.util.*;
-
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -40,6 +37,22 @@ public class EventTableDataModelTest {
         
     }
     
+    // test for remembered event name
+    @Test
+    public void tableModelEventNameTest() {
+        var targetEvent = new EventID("1.1.1.1.2.2.2.2");
+
+        olcbStore.addMatch(targetEvent, "namedEvent");
+        assertEquals("namedEvent", olcbStore.getEventName(targetEvent));
+        
+        model = getModel();  // to load the names
+        
+        assertEquals(1, EventTableDataModel.getMemos().size());
+        
+        var resultName = model.getValueAt(0, EventTableDataModel.COL_EVENTNAME);
+        assertEquals("namedEvent", resultName);
+    }
+
     // test for adding produced events
     @Test
     public void tableModelLoadProducerTest() {
@@ -159,10 +172,11 @@ public class EventTableDataModelTest {
         if (model != null) {
             model.deregisterShutdownTask();
         }
+
+        EventTableDataModel.clearStatics();  // ensure static content starts empty
+
         model = new EventTableDataModel(store, eventTable, olcbStore){
             // kill default persistence
-            @Override
-            protected void loadNameStoreEventIDs() {}
             @Override
             public void loadModelData() {}
             @Override
@@ -171,7 +185,6 @@ public class EventTableDataModelTest {
         var table = new JTable(model);
         model.table = table;
         model.sorter = new TableRowSorter<>(model);
-        EventTableDataModel.clearStatics();  // ensure static content starts empty
         
         return model;
     }
@@ -204,6 +217,6 @@ public class EventTableDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTableDataModelTest.class);
 
 }

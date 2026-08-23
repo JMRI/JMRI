@@ -39,9 +39,7 @@ public class EventTableDataModel extends AbstractTableModel {
         // load stored contents
         loadNameStoreEventIDs();
         
-        log.info("************************************");
-        log.info("Not loading model data for debugging");
-        log.info("************************************");
+        log.info("\n#######################\nNot loading model data for debugging\n#######################");
         // loadModelData();
         
         // arrange to store the current contents at shutdown
@@ -77,8 +75,10 @@ public class EventTableDataModel extends AbstractTableModel {
         
     // static so the data remains available through a window close-open cycle
     // public to allow access for testing; clean that up sometime with subclassing
-    public static final ArrayList<TripleMemo> memos = new ArrayList<>(); // public for testing
+    static final ArrayList<TripleMemo> memos = new ArrayList<>();
 
+    public static List<TripleMemo> getMemos() { return memos; }  // public for testing
+    
     TripleMemo getTripleMemo(int row) {
         if (row >= memos.size()) {
             return null;
@@ -174,13 +174,13 @@ public class EventTableDataModel extends AbstractTableModel {
     private static final Map<EventID, Set<String>> eventToDescriptions = new HashMap<>(); // public for testing, fix that eventually
 
     void updateAuxiliaryInformation(EventID event) {
-        log.warn("update/recreate event aka info for {}", event);
+        log.debug("update/recreate event aka info for {}", event);
         // make a new clear list
         var list = new HashSet<String>();
         eventToDescriptions.put(event, list);
         // make sure the list contains all the available descriptions
         for (var entry : stdEventTable.getEventInfo(event).getAllEntries()) {
-            log.warn("   added: {}", entry.getDescription());
+            log.trace("   added: {}", entry.getDescription());
             list.add(entry.getDescription());
         }
     }
@@ -245,26 +245,28 @@ public class EventTableDataModel extends AbstractTableModel {
     }
         
     void handleDescriptionAdded(PropertyChangeEvent e){
-        log.warn("handleDescriptionAdded: {}", e.getPropertyName());
+        log.debug("handleDescriptionAdded: {}", e.getPropertyName());
         var info = (EventTable.EventInfo)e.getNewValue();
         updateAuxiliaryInformation(info.getEventId());        
     }
     
     void handleDescriptionErased(PropertyChangeEvent e){
-        log.warn("handleDescriptionErased: {}", e.getPropertyName());
+        log.debug("handleDescriptionErased: {}", e.getPropertyName());
         var info = (EventTable.EventInfo)e.getNewValue();
         updateAuxiliaryInformation(info.getEventId());        
     }
     
     void handleDescriptionUpdated(PropertyChangeEvent e){
-        log.warn("handleDescriptionUpdated: {}", e.getPropertyName());
+        log.debug("handleDescriptionUpdated: {}", e.getPropertyName());
         var info = (EventTable.EventInfo)e.getNewValue();
         updateAuxiliaryInformation(info.getEventId());        
     }
     
     protected void loadNameStoreEventIDs() {
         // are there events in the Name Store? If so, add them
+        log.debug("loadNameStoreEventIDs with {}", nameStore.getMatches().size());
         for (var eventID: nameStore.getMatches()) {
+            log.trace("      checking {}", eventID);
             var memo = new TripleMemo(
                                 eventID,
                                 "",
@@ -278,10 +280,12 @@ public class EventTableDataModel extends AbstractTableModel {
             for (var check : memos) {
                 if (memo.eventID.equals(check.eventID)) {
                     found = true;
+                    log.trace("          found!");
                     break;
                 }
             }
             if (! found) {
+                log.trace("          loading!");
                 memos.add(memo);
             }
         }

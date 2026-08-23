@@ -123,7 +123,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
 
         // Loop through producer node <-> event ID associations
         root.addContent(values = new Element("producers")); // NOI18N
-        for (var memo : EventTableDataModel.memos) {
+        for (var memo : EventTableDataModel.getMemos()) {
             if (memo.eventID != null && memo.producer != null) {
                 var event = memo.eventID.toShortString();
                 var range = memo.rangeSuffix;
@@ -150,7 +150,7 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
 
         // Loop through consumer node <-> event ID associations
         root.addContent(values = new Element("consumers")); // NOI18N
-        for (var memo : EventTableDataModel.memos) {
+        for (var memo : EventTableDataModel.getMemos()) {
             if (memo.eventID != null && memo.consumer != null) {
                 var event = memo.eventID.toShortString();
                 var range = memo.rangeSuffix;
@@ -252,9 +252,17 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                     String event = e.getChild("event").getText(); // NOI18N
                     String range = e.getChild("range").getText(); // NOI18N
                     String producer = e.getChild("producer").getText(); // NOI18N
-                    //String pName = e.getChild("pName").getText(); // NOI18N
+                    String pName = e.getChild("pName").getText(); // NOI18N
+                    
+                    // having those, we see if there's a node ID associated with the name
+                    NodeID newNodeID = null;
+                    if (! pName.isEmpty()) newNodeID = model.getNodeID(pName);
+                    if (newNodeID == null) {
+                        // no, use the ID from the file
+                        newNodeID = new NodeID(producer);
+                    }
 
-                    model.recordProducer(new EventID(event), new NodeID(producer), range, false);
+                    model.recordProducer(new EventID(event), newNodeID, range, false);
                 }
             }
         }
@@ -269,9 +277,17 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                     String event = e.getChild("event").getText(); // NOI18N
                     String range = e.getChild("range").getText(); // NOI18N
                     String consumer = e.getChild("consumer").getText(); // NOI18N
-                    //String cName = e.getChild("cName").getText(); // NOI18N
+                    String cName = e.getChild("cName").getText(); // NOI18N
 
-                    model.recordConsumer(new EventID(event), new NodeID(consumer), range);
+                    // having those, we see if there's a node ID associated with the name
+                    NodeID newNodeID = null;
+                    if (! cName.isEmpty()) newNodeID = model.getNodeID(cName);
+                    if (newNodeID == null) {
+                        // no, use the ID from the file
+                        newNodeID = new NodeID(consumer);
+                    }
+
+                    model.recordConsumer(new EventID(event), newNodeID, range);
                 }
             }
         }
