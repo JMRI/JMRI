@@ -69,11 +69,8 @@ public class JsonThrottleSocketServiceTest {
         // get the throttle
         data.put(JSON.NAME, "42").put(JSON.ADDRESS, 42);
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
-        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (fixes
-        // a real StackOverflow from synchronous re-entrant requestThrottle()
-        // calls -- see its field comment), so the throttle-found status message
-        // is no longer sent synchronously within onMessage() itself.
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
         JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
         assertEquals( 1, manager.getThrottles().size(), "One throttle");
         JsonNode message = connection.getMessage();
@@ -181,11 +178,8 @@ public class JsonThrottleSocketServiceTest {
         data.put(JSON.NAME, "42").put(JsonRoster.ROSTER_ENTRY, 42);
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         assertEquals( 1, manager.getThrottles().size(), "One throttle");
-        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
-        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (see
-        // its field comment -- fixes a real StackOverflow from synchronous
-        // re-entrant requestThrottle() calls), so this is no longer available
-        // synchronously right after onMessage() returns.
+        // Throttle acquisition is deferred (see AbstractThrottleManager),
+        // so not available synchronously right after onMessage() returns.
         JUnitUtil.waitFor(() -> manager.get(new DccLocoAddress(3, false)).getThrottle() != null, "wait for throttle found");
         Throttle throttle = manager.get(new DccLocoAddress(3, false)).getThrottle();
         throttle.setFunctionMomentary( 0, !re.getFunctionLockable(0));
@@ -274,11 +268,8 @@ public class JsonThrottleSocketServiceTest {
         // get the throttle by JsonThrottle.THROTTLE produces WARN client1
         service1.onMessage(JsonThrottle.THROTTLE, data1.put(JSON.ADDRESS, 3), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         JUnitAppender.assertWarnMessage("JSON throttle \"client1\" requested using \"throttle\" instead of \"name\"");
-        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
-        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (see
-        // its field comment -- fixes a real StackOverflow from synchronous
-        // re-entrant requestThrottle() calls), so the throttle status message is
-        // no longer sent synchronously within onMessage() itself.
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
         JUnitUtil.waitFor(() -> !connection1.getMessages().isEmpty(), "wait for throttle status message");
         JsonNode message1 = connection1.getMessage();
         assertNotNull(message1);
@@ -393,11 +384,8 @@ public class JsonThrottleSocketServiceTest {
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
         assertEquals(1, manager.getThrottles().size(), "One throttle acquired");
 
-        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
-        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (see
-        // its field comment -- fixes a real StackOverflow from synchronous
-        // re-entrant requestThrottle() calls), so the throttle status message is
-        // no longer sent synchronously within onMessage() itself.
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
         JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
         JsonNode message = connection.getMessage();
         assertNotNull(message);

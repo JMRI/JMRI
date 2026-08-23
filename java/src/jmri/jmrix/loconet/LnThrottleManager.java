@@ -75,12 +75,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("requestThrottleSetup: address {}, control {}", address, control);
-        // FIELD REPORT (Andrew Deak): checking requestOutstanding and then
-        // setting it true used to be two separate, unsynchronized steps --
-        // see the field report on requestOutstanding's declaration for why
-        // that's a real, reproduced race, not just a hypothetical. Must be
-        // atomic: only one caller may ever win the "handle this now" path
-        // for a given moment.
+        // Checking requestOutstanding and setting it true must be atomic --
+        // see its declaration below for the race this closes.
         boolean handleNow;
         synchronized (this) {
             if (requestOutstanding) {
@@ -111,8 +107,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
      * a LocoNetThrottle.
      */
     protected void processQueuedThrottleSetupRequest() {
-        // FIELD REPORT (Andrew Deak): same atomicity requirement as
-        // requestThrottleSetup() above.
+        // Same atomicity requirement as requestThrottleSetup() above.
         boolean handleNow;
         synchronized (this) {
             if (!requestOutstanding && (requestList.size() != 0 )) {
@@ -159,17 +154,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             public void run() {
                 int attempts = 1; // already tried once above
                 // Was 10 (10s total) -- too short for a command station
-                // that's still working through a backlog of rapid
-                // sequential slot requests, e.g. building/tearing down a
-                // large command-station consist one engine at a time.
-                // Field-observed on a DCS52: the 20th of 20 back-to-back
-                // slot requests timed out and was abandoned by JMRI, yet
-                // the Slot Monitor later showed the command station HAD
-                // allocated a valid slot for it -- the response just
-                // arrived after JMRI's window closed, not because the
-                // slot/address was invalid. This thread is a dedicated
-                // background thread (not the AWT/LocoNet receive thread),
-                // so waiting longer here is safe.
+                // still working through a backlog of rapid sequential slot
+                // requests (e.g. building/tearing down a large consist).
+                // This is a dedicated background thread, so waiting longer
+                // here is safe.
                 int maxAttempts = 20;
                 while (attempts <= maxAttempts) {
                     try {
@@ -186,17 +174,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
                     attempts++;
                 }
                 log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
-                // FIELD REPORT: failedThrottleRequest() dispatches to a
-                // listener's notifyFailedThrottleRequest(), which threw an
-                // uncaught NullPointerException in the field (a consist
-                // object touching its own already-nulled bookkeeping after
-                // being disposed). Since requestOutstanding=false and
-                // processQueuedThrottleSetupRequest() were below the
-                // throwing call, one bad listener permanently wedged EVERY
-                // future throttle request for the rest of the session --
-                // requestOutstanding stuck true forever, with nothing left
-                // to ever drain the queue. This manager's own bookkeeping
-                // must never depend on a listener behaving.
+                // A listener throwing out of notifyFailedThrottleRequest()
+                // must not skip the cleanup below -- otherwise
+                // requestOutstanding stays stuck true forever and wedges
+                // every future throttle request for the rest of the session.
                 try {
                     failedThrottleRequest(address, "Failed to get response from command station");
                 } catch (RuntimeException ex) {
@@ -221,47 +202,26 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
 
     volatile Thread retrySetupThread;
 
-    // FIELD REPORT (Andrew Deak): the address a pending slot request was
-    // actually made for. notifyChangedSlot() previously just trusted
-    // whatever slot it was handed as "the one we asked for" -- since this
-    // manager registers itself as a single shared SlotListener for
-    // whatever address it's currently requesting (requestOutstanding
-    // serializes one acquisition at a time), a stale or delayed slot
-    // response from an EARLIER, already-completed request arriving late
-    // could get misattributed to the address currently being requested.
-    // Confirmed live on a real DCS52 under rapid back-to-back requests
-    // (building a multi-engine consist): requesting a throttle for one
-    // address returned a status report for a DIFFERENT, earlier-tested
-    // address instead -- same class of bug LocoNetConsist.
-    // unexpectedSlotAddress() already guards against for consist slot
-    // requests specifically, just never added here for general
-    // individual throttle acquisition. Set right before each request
-    // fires (including retries, same address), checked in
-    // notifyChangedSlot() before acting on the response. Unlike
-    // LocoNetConsist's guard, a mismatch here doesn't need its own
-    // retry-queue -- RetrySetup already re-issues the request every
-    // second for up to 20 attempts regardless, so simply ignoring the
-    // mismatched response lets that existing mechanism recover
-    // naturally.
+    // Address a pending slot request was actually made for. This manager
+    // is a single shared SlotListener for whatever address it's currently
+    // requesting, so a stale/delayed response from an earlier, already-
+    // completed request can otherwise get misattributed to the current
+    // one. Checked in notifyChangedSlot() before acting on a response; a
+    // mismatch is simply ignored since RetrySetup already re-issues the
+    // request every second regardless.
     private volatile DccLocoAddress pendingRequestAddress = null;
 
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<>(5);
 
     Hashtable<Integer, LocoNetSlot> slotForAddress;
     LinkedBlockingQueue<ThrottleRequest> requestList;
-    // FIELD REPORT (Andrew Deak): volatile, and only ever check-and-set
-    // together with pendingRequestAddress inside synchronized(this) (see
-    // requestThrottleSetup()/processQueuedThrottleSetupRequest()) --
-    // confirmed live this was a genuine, pre-existing, unsynchronized
-    // check-then-act race: the EDT (building/tearing down a consist,
-    // which itself calls requestThrottle() for each member) and a
-    // separate thread handling a direct JSON throttle request can both
-    // observe this false at the same instant and both proceed, each
-    // overwriting pendingRequestAddress -- the SECOND caller's address
-    // then gets checked against by the FIRST caller's actual slot
-    // response, and vice versa. Not just a hypothetical: reproduced live
-    // against a real DCS52 building a multi-engine consist while
-    // separately requesting individual throttles for its members.
+    // volatile, and only ever check-and-set together with
+    // pendingRequestAddress inside synchronized(this) -- see
+    // requestThrottleSetup()/processQueuedThrottleSetupRequest(). Without
+    // that, two threads (e.g. the EDT building a consist and a separate
+    // JSON throttle request) can both observe this false at once and both
+    // proceed, each overwriting pendingRequestAddress and getting checked
+    // against the other's slot response.
     volatile boolean requestOutstanding = false;
 
     /**
@@ -301,12 +261,10 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
         // This is invoked only if the SlotManager knows that the LnThrottleManager is
         // interested in the address associated with this slot.
 
-        // FIELD REPORT (Andrew Deak): reject a response that doesn't match
-        // what we're actually currently waiting for -- see the field
-        // report on pendingRequestAddress above. Ignoring rather than
-        // acting on it lets RetrySetup's existing 1-second retry loop
-        // recover naturally instead of silently completing the wrong
-        // address's acquisition with someone else's slot data.
+        // Reject a response that doesn't match what's actually being
+        // waited for (see pendingRequestAddress above) -- RetrySetup's
+        // 1-second retry loop recovers naturally rather than this
+        // silently completing the wrong address's acquisition.
         DccLocoAddress expected = pendingRequestAddress;
         if (expected != null && s.locoAddr() != expected.getNumber()) {
             log.warn("notifyChangedSlot(): requested slot for {} but got slot {} for address {} instead -- ignoring stale/mismatched response",

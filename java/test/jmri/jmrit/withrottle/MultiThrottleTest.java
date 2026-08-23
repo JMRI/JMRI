@@ -36,14 +36,9 @@ public class MultiThrottleTest {
        // tests setting the address from the input.  
        // Does not include the prefix.
        throttle.handleMessage("+S1<;>S1");
-       // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
-       // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (see
-       // its field comment -- fixes a real StackOverflow from synchronous
-       // re-entrant requestThrottle() calls), so this is no longer available
-       // synchronously right after handleMessage() returns. Waiting on
-       // hasAddressBeenFound() alone isn't enough here -- it can flip true in
-       // an earlier queued Swing event than the one that actually sends this
-       // specific status packet, so wait on the packet itself.
+       // Throttle acquisition is now deferred (see AbstractThrottleManager),
+       // so wait for the actual status packet rather than assuming it's
+       // available synchronously right after handleMessage() returns.
        JUnitUtil.waitFor(() -> "MAAS1<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        assertEquals( "MAAS1<;>s1",cis.getLastPacket(), "outgoing message after throttle request");
        assertTrue( tcls.hasAddressBeenFound(), "Address Found");
@@ -64,16 +59,9 @@ public class MultiThrottleTest {
     public void testSetAndReleaseLongAddress(){
        // set the address
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        assertTrue( tcls.hasAddressBeenFound(), "Address Found");
        // then release it.
@@ -86,16 +74,9 @@ public class MultiThrottleTest {
     public void testSetAndDispatchLongAddress(){
        // set the address
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        assertTrue( tcls.hasAddressBeenFound(), "Address Found");
        // then dispatch it.
@@ -107,16 +88,9 @@ public class MultiThrottleTest {
     @Test
     public void testSetVelocityChange() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // then send a speed change.
        throttle.handleMessage("AL1234<;>V42");
@@ -128,16 +102,9 @@ public class MultiThrottleTest {
     @Test
     public void testSetEStop() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // then send EStop.
        throttle.handleMessage("AL1234<;>X");
@@ -147,16 +114,9 @@ public class MultiThrottleTest {
     @Test
     public void testSetIdle() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // then send EStop.
        throttle.handleMessage("AL1234<;>I");
@@ -167,16 +127,9 @@ public class MultiThrottleTest {
     @Test
     public void testSetFunction() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>F11");
@@ -188,16 +141,9 @@ public class MultiThrottleTest {
     @Test
     public void testForceFunction() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>f11");
@@ -209,16 +155,9 @@ public class MultiThrottleTest {
     @Test
     public void testMomentaryFunction() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>m128");
@@ -232,16 +171,9 @@ public class MultiThrottleTest {
     @Test
     public void testSetDirection() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>R0");
@@ -253,16 +185,9 @@ public class MultiThrottleTest {
     @Test
     public void testSetSpeedStepMode() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>s1");
@@ -274,16 +199,9 @@ public class MultiThrottleTest {
     @Test
     public void testQuit() {
        throttle.handleMessage("+L1234<;>L1234");
-       // FIELD REPORT (Andrew Deak): waiting on hasAddressBeenFound() alone
-       // is NOT enough -- ThrottleController.notifyThrottleFound() (invoked
-       // from the now-deferred AbstractThrottleManager callback) notifies
-       // listeners (setting this flag) BEFORE its own later
-       // sendCurrentSpeed()/sendCurrentDirection()/sendSpeedStepMode() calls
-       // run, all synchronously within the same method but AFTER the flag
-       // flips. Confirmed live: intermittently observed an EARLIER packet
-       // (or none of the later ones) depending purely on exactly when this
-       // wait's polling happened to land relative to that still-in-progress
-       // call. Wait for the actual last packet that method sends instead.
+       // hasAddressBeenFound() alone isn't enough -- it flips true before
+       // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+       // run, so wait for the actual last packet those send instead.
        JUnitUtil.waitFor(() -> "MAAL1234<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>Q");

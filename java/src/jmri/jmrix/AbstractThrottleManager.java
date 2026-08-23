@@ -484,32 +484,17 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 ThrottleListener l = a.get(i).getListener();
                 BasicRosterEntry re = a.get(i).getRosterEntry();
                 log.debug("Notify listener {} of {}", (i + 1), a.size() );
-                // FIELD REPORT: l.notifyThrottleFound(throttle) used to fire
-                // right here, synchronously, still nested inside the
-                // requestThrottle() call that led to this. If a listener
-                // reacts to a mismatched/unexpected throttle by calling
-                // requestThrottle() again, and that address is stuck
-                // "already known" with the wrong throttle cached, every
-                // retry synchronously re-enters this exact method with no
-                // base case -- requestThrottle() -> notifyThrottleKnown() ->
-                // notifyThrottleFound() -> requestThrottle() -> ... until
-                // the stack overflows. Confirmed in the field. Deferring
-                // breaks the call stack chain so no listener can recurse
-                // through this path.
+                // Deferred via invokeLater() -- calling notifyThrottleFound()
+                // synchronously here can recurse indefinitely if a listener
+                // reacts by calling requestThrottle() again on an address
+                // stuck "already known" with the wrong throttle cached.
                 javax.swing.SwingUtilities.invokeLater(() -> {
-                    // FIELD REPORT (Andrew Deak): setRosterEntry() used to run
-                    // AFTER notifyThrottleFound() here -- harmless back when
-                    // notifyThrottleFound() fired synchronously nested inside
-                    // requestThrottle() (the roster entry was already attached
-                    // by the time any *later* code ran), but now that this
-                    // whole block is itself the deferred callback, a listener
-                    // that inspects the throttle's roster entry DURING its own
-                    // notifyThrottleFound() (e.g. JsonThrottle.sendStatus(),
-                    // which includes the roster entry ID in its status message
-                    // when present) always saw null -- confirmed live via a
-                    // JSON throttle status message missing its rosterEntry
-                    // field. Moved before the notify call so the throttle is
-                    // fully set up before any listener sees it.
+                    // setRosterEntry() must run BEFORE notifyThrottleFound()
+                    // here -- since this whole block is itself the deferred
+                    // callback, a listener that inspects the roster entry
+                    // during its own notifyThrottleFound() (e.g.
+                    // JsonThrottle.sendStatus()) would otherwise always see
+                    // null.
                     synchronized (AbstractThrottleManager.this) {
                         if (adsFinal != null && re != null && throttle.getRosterEntry() == null) {
                             throttle.setRosterEntry(re);

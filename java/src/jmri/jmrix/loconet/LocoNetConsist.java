@@ -26,17 +26,10 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // report on removeFromCSConsist() below for why this exists.
     private ArrayList<DccLocoAddress> needToRemove = null;
 
-    // FIELD REPORT: the address a pending LINKSTAGETWOSTATE/
-    // UNLINKSTAGEONESTATE/FREESLOTSTATE slot request was actually made
-    // for. notifyChangedSlot() previously just trusted whatever slot
-    // object it was handed as "the one we asked for" -- on a live
-    // LocoNet bus with a physical throttle simultaneously holding more
-    // than one address (confirmed field case: a UT6 throttle with an
-    // old address still active alongside the new one being grabbed,
-    // both sharing one throttle ID), a slot response for the WRONG
-    // address arrived and got linked into the consist instead of the
-    // one actually requested. Set right before each request fires,
-    // checked in notifyChangedSlot() before acting on the response.
+    // Address the current pending slot request is for. notifyChangedSlot()
+    // checks a response against this before acting on it -- a single
+    // throttle can hold more than one address on a live LocoNet bus, so a
+    // mismatched response must never be linked in as the requested engine.
     private DccLocoAddress pendingSlotAddress = null;
     // Bounds the mismatch-triggered retry in unexpectedSlotAddress()
     // below so a genuinely dead/unreachable address can't retry
@@ -179,12 +172,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      * Remove an address from the internal Consist list object.
      */
     private synchronized void removeFromConsistList(DccLocoAddress locoAddress) {
-        // FIELD REPORT: called from notifyFailedThrottleRequest(), which
-        // fires asynchronously (from LnThrottleManager's retry thread)
-        // and can arrive well after dispose() already nulled these out --
-        // NPE'd here and, worse, took down LnThrottleManager's own
-        // bookkeeping with it (see the try/finally added around
-        // failedThrottleRequest() in LnThrottleManager.java).
+        // Can already be null if dispose() ran first -- this is also
+        // reached asynchronously from LnThrottleManager's retry thread.
         if (consistDir == null || consistList == null) {
             return;
         }
@@ -262,17 +251,10 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         if (needToRemove.isEmpty()) {
             return;
         }
-        // FIELD REPORT (Andrew Deak): if the consist's own address is
-        // queued here alongside genuine followers, it must always be
-        // drained LAST, never just because it happens to be at the
-        // front of the queue (e.g. queued first, before followers, by
-        // a caller that removes the lead before its followers -- see
-        // the field report on removeFromCSConsist()'s lead==follow
-        // guard). Freeing the lead's slot before every other queued
-        // follower has actually been unlinked -- not just requested --
-        // would orphan their real LocoNet link. Prefer any non-lead
-        // entry first; only take the lead's own entry once it's the
-        // only thing left in the queue.
+        // The consist's own address, if queued, must always drain LAST --
+        // freeing its slot before every other queued follower is actually
+        // unlinked (not just requested) would orphan their real LocoNet
+        // link. Prefer any non-lead entry first.
         DccLocoAddress locoAddress = needToRemove.get(0);
         if (locoAddress.equals(consistAddress) && needToRemove.size() > 1) {
             for (DccLocoAddress candidate : needToRemove) {
@@ -302,31 +284,15 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             consistRequestState = IDLESTATE;
             return;
         }
-        // FIELD REPORT: draining the next queued item here directly
-        // (delayedRemove()/delayedAdd()) caused a real StackOverflowError.
-        // AbstractThrottleManager.requestThrottle() calls back
-        // SYNCHRONOUSLY (same call stack) when the address's throttle is
-        // already known/cached (see its "already exists" branch) -- so
-        // once enough addresses were already known (which happens fast
-        // once a session has touched a lot of addresses, as this one
-        // has), draining the queue synchronously recursed: drain -> fire
-        // request -> synchronous callback -> drain next -> fire ->
-        // callback -> ... with no base case, until the stack overflowed
-        // and the whole operation silently aborted -- explaining engines
-        // that never got a real slot with zero error logged. Deferring
-        // via invokeLater() breaks the call stack chain: each item runs
-        // on a fresh event, not nested inside the previous one's.
+        // Deferred via invokeLater() -- draining synchronously here can
+        // recurse indefinitely and stack-overflow, since requestThrottle()
+        // calls back synchronously when a throttle is already cached, with
+        // no base case to stop the chain.
         javax.swing.SwingUtilities.invokeLater(() -> {
             synchronized (LocoNetConsist.this) {
                 // Must reset to IDLESTATE before draining the next item --
-                // removeFromCSConsist()/the add path both check this field
-                // to decide fire-now vs queue-again. Leaving it at
-                // whatever busy value the PREVIOUS operation set made
-                // every deferred drain see "still busy" and silently
-                // re-queue the item instead of ever processing it -- the
-                // lead engine (queued last, since dispose() processes it
-                // last) would re-queue itself indefinitely and never
-                // actually get freed, staying stuck "In Use" forever.
+                // otherwise it sees "still busy" and re-queues instead of
+                // processing, looping forever without ever completing.
                 consistRequestState = IDLESTATE;
                 if (!needToRemove.isEmpty()) {
                     delayedRemove();
@@ -425,16 +391,10 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             locoAddress, consistAddress, directionNormal);
         if(consistList.size()<=1 && locoAddress.equals(consistAddress)){
           // there is only one address in this consist, no reason to link.
-          // FIELD REPORT: this used to just return here, leaving
-          // consistRequestState untouched and the rest of needToWrite
-          // undrained -- since add()'s locoAddress==consistAddress check
-          // uses reference equality and the JSON/GUI paths always
-          // construct a fresh DccLocoAddress, the lead's own address
-          // routes through here (as a queued no-op) almost every time,
-          // silently dead-ending the queue chain before any real
-          // follower engine ever got processed. processQueuedWork()
-          // keeps the chain moving exactly like every other exit point
-          // in this class does.
+          // Must still call processQueuedWork() here -- add()'s reference
+          // equality check means the lead's own address reaches this
+          // no-op branch almost every time, and without this the queue
+          // chain dead-ends before any real follower is ever processed.
           notifyConsistListeners(locoAddress,ConsistListener.OPERATION_SUCCESS);
           processQueuedWork();
           return;
@@ -451,21 +411,10 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     public synchronized void removeFromCSConsist(DccLocoAddress locoAddress) {
         log.debug("Remove Locomotive {} from Standard Consist {}.", locoAddress, consistAddress);
-        // FIELD REPORT: dispose() (called by delConsist(), i.e. deleting a
-        // whole consist from the Consist Tool panel or the JSON DELETE
-        // endpoint) loops calling remove() synchronously for every member
-        // with no pacing at all -- unlike add(), which already checks
-        // this same consistRequestState field and queues into
-        // needToWrite when something's in flight. Without an equivalent
-        // guard here, every member's slot request fired at once, all
-        // sharing this ONE consistRequestState field (each overwriting
-        // the last), and unlike the add path there is no retry for a
-        // dropped slot request. Field-tested on a real DCS52 deleting a
-        // 19-engine consist: every slot request but the first was lost,
-        // and every member stayed fully "In Use"/linked in the Slot
-        // Monitor -- the delete silently did nothing for 18 of 19
-        // engines. Queuing here, exactly like add() does, serializes
-        // removals one at a time via delayedRemove().
+        // dispose() removes every member synchronously with no pacing, all
+        // sharing this one consistRequestState field -- without queuing
+        // here (like add() already does), concurrent slot requests
+        // overwrite each other and most removals are silently lost.
         if (consistRequestState != IDLESTATE) {
             needToRemove.add(locoAddress);
             return;
@@ -477,65 +426,32 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
           // directly rather than leaving it stuck (see FREESLOTSTATE
           // in notifyChangedSlot()).
           //
-          // FIELD REPORT: consistList == null happens when this call
-          // arrives via the needToRemove queue for the LEAD's own
-          // address -- dispose() enqueues it last (it's index 0,
-          // processed last by the size-1-down-to-0 loop), and by the
-          // time the deferred invokeLater() actually runs it,
-          // dispose()'s loop has already finished and nulled consistList
-          // out. There's nothing left to unlink against either way (every
-          // other member was already processed first), so this is really
-          // the same case as "sole remaining member" -- just free the
-          // slot. Without this, consistList.size() NPE'd here and the
-          // lead engine's slot never got freed, staying stuck "In Use".
-          //
-          // FIELD REPORT: consistList.isEmpty() (size 0, not null) is a
-          // related but distinct case, added after confirming it live --
-          // removeFromConsistList() strips an address from consistList
-          // SYNCHRONOUSLY the instant its remove() is called, regardless
-          // of whether the real async LocoNet unlink for it has actually
-          // completed yet. So once every member (including the lead
-          // itself, if its own removal was deferred below rather than
-          // processed immediately) has at least been REQUESTED, consistList
-          // reads back empty well before the lead's deferred removal is
-          // actually retried -- size()==1 alone would never match at that
-          // point, and this needs the same "just free the slot" treatment.
+          // consistList == null covers the lead's own deferred removal
+          // arriving after dispose()'s loop has already finished and
+          // nulled it out; consistList.isEmpty() covers the same "nothing
+          // left to unlink against" case but before the null reset --
+          // removeFromConsistList() strips an address synchronously the
+          // instant remove() is called, regardless of whether the real
+          // async unlink completed, so this can read back empty before
+          // the lead's own deferred removal is retried. Both need the
+          // same "just free the slot" treatment as the sole-member case.
           pendingSlotAddress = locoAddress;
           slotManager.slotFromLocoAddress(locoAddress.getNumber(), this);
           consistRequestState = FREESLOTSTATE;
           return;
         }
         if (locoAddress.equals(consistAddress)) {
-          // FIELD REPORT (Andrew Deak, confirmed live against a real
-          // DCS52 across 3 separate test consists): leadSlot is cached
-          // once at construction and never updated. Removing the
-          // consist's OWN address here while other real members are
-          // STILL tracked (the branch above didn't apply) would fall
-          // through to the generic unlink path below, which resolves
-          // BOTH "lead" and "follow" to that exact same cached leadSlot
-          // object -- there's nothing else to unlink the lead's own
-          // identity from. unlinkSlots()'s lead==follow guard (built for
-          // a different, degenerate self-link scenario) then fires:
-          // logs a CONSIST_ERROR/DELETE_ERROR and returns with NO
-          // LocoNet message ever sent and no retry -- permanently
-          // leaving this slot exactly as it was, stuck "In Use" in the
-          // Slot Monitor (confirmed live, visible there with Consist
-          // status "top"). Triggered whenever a caller removes the
-          // lead's own address before its followers are gone (e.g. a
-          // firmware doing an explicit per-engine teardown pass, lead
-          // first, ahead of the final consist delete) -- not just a
-          // hypothetical. Re-queuing here defers the lead's own removal
-          // until it's genuinely the sole remaining member (the branch
-          // above), the only order that's safe: freeing the lead's slot
-          // while real followers are still LocoNet-linked to it BY SLOT
-          // NUMBER on the actual hardware would orphan their physical
-          // link, corrupting the consist on the command station even
-          // though JMRI's own bookkeeping would look fine. Safe to defer
-          // indefinitely here rather than looping back through
-          // processQueuedWork() immediately -- nothing has changed yet,
-          // so an immediate retry would just hit this exact same branch
-          // again. Whichever other member's removal completes next will
-          // drain this via processQueuedWork() once it's genuinely safe.
+          // leadSlot is cached once at construction and never updated, so
+          // removing the lead's own address while other members are still
+          // tracked would fall through to the generic unlink path below
+          // and resolve BOTH lead and follow to that same slot object --
+          // tripping unlinkSlots()'s lead==follow guard, which sends no
+          // LocoNet message and never retries, permanently stranding the
+          // slot as "In Use". Deferring here until the lead is genuinely
+          // the last member left (the branch above) is the only safe
+          // order: freeing its slot while followers are still linked to
+          // it by slot number on the real hardware would corrupt the
+          // consist there even though JMRI's own bookkeeping looks fine.
           needToRemove.add(locoAddress);
           return;
         }
@@ -682,13 +598,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      * requested (pendingSlotAddress) before acting on it as though it
      * were the follower/lead engine we asked for.
      *
-     * FIELD REPORT: on a live LocoNet bus, a single physical throttle
-     * can simultaneously hold more than one address (confirmed case: a
-     * UT6 with an old address still active alongside a new one just
-     * grabbed, both sharing one throttle ID). Without this check, a
-     * slot response for the WRONG address got linked into a consist in
-     * place of the one actually requested -- silently building the
-     * wrong consist rather than failing visibly.
+     * A single physical throttle can hold more than one address on a live
+     * LocoNet bus, so a slot response isn't guaranteed to match what was
+     * requested -- acting on it unchecked can link the wrong engine in.
      *
      * @return true if the response was unexpected and should NOT be
      *         acted on (already cleaned up and queue continued)
@@ -698,20 +610,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             return false;
         }
         if (s.locoAddr() != pendingSlotAddress.getNumber()) {
-            // FIELD REPORT: this used to just drop the pending
-            // add/remove entirely on a mismatch -- correct for
-            // preventing corruption, but for REMOVALS specifically that
-            // left JMRI's own bookkeeping (already updated synchronously
-            // in remove()) permanently out of sync with the real
-            // hardware: JMRI would report an engine as freed/removed
-            // while it stayed fully linked on the actual DCS52.
-            // Confirmed in the field: releasing an engine from a
-            // consist, where the removal's slot response got a mismatch,
-            // left it reporting "removed" in /json/consists while the
-            // Slot Monitor still showed it fully linked. Re-queuing
-            // (ahead of whatever else is pending, so it's retried next)
-            // instead of dropping fixes that -- bounded by
-            // consecutiveSlotMismatches so a genuinely dead/unreachable
+            // Re-queue rather than drop on a mismatch -- for removals
+            // specifically, dropping left JMRI's bookkeeping (already
+            // updated synchronously in remove()) out of sync with the
+            // real hardware, reporting an engine freed while it stayed
+            // linked. Bounded by consecutiveSlotMismatches so a dead
             // address can't retry forever.
             DccLocoAddress missed = pendingSlotAddress;
             boolean wasRemoval = (consistRequestState == UNLINKSTAGEONESTATE || consistRequestState == FREESLOTSTATE);

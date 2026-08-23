@@ -28,17 +28,10 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
         // do nothing
     }
 
-    // FIELD REPORT (Andrew Deak): these two maps used to only ever be
-    // touched from a single thread at a time (everything, including
-    // notifyThrottleFound(), ran synchronously nested inside the original
-    // calling thread). Now that AbstractThrottleManager.notifyThrottleKnown()
-    // defers notifyThrottleFound() to the EDT via SwingUtilities.invokeLater()
-    // (see its field comment), that deferred callback and whatever thread is
-    // handling a fresh JSON request can genuinely touch these maps at the
-    // same time -- confirmed live: a ConcurrentModificationException inside
-    // computeIfAbsent() from exactly this race. Synchronized on `this`
-    // throughout since this manager is itself a singleton and none of these
-    // methods call back into each other across instances.
+    // Synchronized throughout: notifyThrottleFound() is now deferred to the
+    // EDT (see AbstractThrottleManager), so that deferred callback and a
+    // thread handling a fresh JSON request can touch these maps at the
+    // same time. getThrottles() returns a copy since callers iterate it.
     public synchronized Collection<JsonThrottle> getThrottles() {
         return new ArrayList<>(this.throttles.values());
     }

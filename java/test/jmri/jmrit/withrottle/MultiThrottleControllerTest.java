@@ -42,11 +42,8 @@ public class MultiThrottleControllerTest {
         // tests setting the address from the input.
         // Does not include the prefix.
         assertTrue( controller.sort("S1"), "Continue after address");
-        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
-        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (see
-        // its field comment -- fixes a real StackOverflow from synchronous
-        // re-entrant requestThrottle() calls), so this is no longer available
-        // synchronously right after sort() returns.
+        // Throttle acquisition is now deferred (see AbstractThrottleManager),
+        // so not available synchronously right after sort() returns.
         JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(), "Address Found");
     }

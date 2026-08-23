@@ -131,13 +131,8 @@ public class RosterSpeedProfileTest {
         ThrottleListen throtListen = new ThrottleListen();
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
         assertTrue( tm.requestThrottle(rF1, throtListen, false) );
-        // FIELD REPORT (Andrew Deak): AbstractThrottleManager.notifyThrottleKnown()
-        // now defers notifyThrottleFound() via SwingUtilities.invokeLater() (see
-        // its field comment -- fixes a real StackOverflow from synchronous
-        // re-entrant requestThrottle() calls), so throtListen.throttle is no
-        // longer available synchronously right after requestThrottle() returns
-        // -- without this wait, testScene() below NPE'd calling methods on a
-        // still-null throttle.
+        // Throttle acquisition is deferred (see AbstractThrottleManager) --
+        // without this wait, testScene() below NPE'd on a still-null throttle.
         JUnitUtil.waitFor(() -> throtListen.throttle != null, "wait for throttle found");
         stmLimit = stm.numSteps;
         resultSummary.testTotalCount = 0;
