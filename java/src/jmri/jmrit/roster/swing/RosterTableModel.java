@@ -414,6 +414,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         String valueToSet = (String) value;
         switch (col) {
             case IDCOL:
+                // don't allow setting to existing ID
+                if (Roster.getDefault().getEntryForId(valueToSet)!=null) {
+                    return;
+                }
+                // here unique
                 re.setId(valueToSet);
                 break;
             case ROADNAMECOL:
