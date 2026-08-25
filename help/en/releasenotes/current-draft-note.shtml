@@ -700,4 +700,8 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Fix the <strong>Current Config file</strong> path in <strong>Help &rArr; File Locations</strong>.</li>
+            <li>The startup option <strong>Wait for LogixNG Module</strong> has been added.
+                It evaluates a LogixNG Digital Expression Module over and over again and
+                waits until the module returns true. This is useful if you need to wait
+                for some condition during the startup of JMRI.</li>
         </ul>
