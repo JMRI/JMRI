@@ -416,6 +416,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             case IDCOL:
                 // don't allow setting to existing ID
                 if (Roster.getDefault().getEntryForId(valueToSet)!=null) {
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(associatedTable, Bundle.getMessage("MessageIdAlreadyPresent"));
                     return;
                 }
                 // here unique
