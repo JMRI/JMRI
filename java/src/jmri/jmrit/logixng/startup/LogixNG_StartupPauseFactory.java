@@ -16,7 +16,7 @@ import jmri.util.swing.JmriJOptionPane;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Factory for {@link apps.startup.LogixNG_StartupPauseModel} objects.
+ * Factory for {@link LogixNG_StartupPauseModel} objects.
  *
  * @author Randall Wood     (C) 2016
  * @author Daniel Bergqvist (C) 2026
