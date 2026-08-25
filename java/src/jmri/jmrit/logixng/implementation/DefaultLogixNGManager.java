@@ -547,6 +547,13 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
+    public boolean evaluateModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException {
+        return DefaultConditionalNG.evaluateModule(module, parameters);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public FemaleSocket getErrorHandlingModuleSocket() {
         return AbstractMaleSocket.getErrorHandlingModuleSocket();
     }

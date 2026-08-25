@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
@@ -163,17 +164,59 @@ public class DefaultConditionalNG extends AbstractBase
 
         LogixNG_Thread thread = LogixNG_Thread.getThread(LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
         ConditionalNG conditionalNG = new DefaultConditionalNG("IQC0000000", null);
-        InternalFemaleSocket socket = new InternalFemaleSocket(conditionalNG, module, parameters);
+        InternalFemaleActionSocket socket = new InternalFemaleActionSocket(conditionalNG, module, parameters);
         thread.runOnLogixNGEventually(() -> { internalExecute(conditionalNG, socket); });
     }
 
-    private static class InternalFemaleSocket extends DefaultFemaleDigitalActionSocket {
+    /**
+     * Executes a LogixNG Module.
+     * @param module      The module to be executed
+     * @param parameters  The parameters
+     * @return            The return value of the evaluation of the module
+     * @throws IllegalArgumentException when needed
+     */
+    public static boolean evaluateModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException {
+
+        if (module == null) {
+            throw new IllegalArgumentException("The parameter \"module\" is null");
+        }
+        if (!(module.getRootSocket() instanceof DefaultFemaleDigitalExpressionSocket)) {
+            throw new IllegalArgumentException("The module " + module.getDisplayName() + " is not a DigitalExpressionModule");
+        }
+        if (parameters == null) {
+            throw new IllegalArgumentException("The parameter \"parameters\" is null");
+        }
+
+        LogixNG_Thread thread = LogixNG_Thread.getThread(LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+        ConditionalNG conditionalNG = new DefaultConditionalNG("IQC0000000", null);
+        InternalFemaleExpressionSocket socket = new InternalFemaleExpressionSocket(conditionalNG, module, parameters);
+        AtomicBoolean result = new AtomicBoolean(false);
+        AtomicBoolean completed = new AtomicBoolean(false);
+        thread.runOnLogixNGEventually(() -> {
+            result.set(internalEvaluate(conditionalNG, socket));
+            completed.set(true);
+        });
+
+        while (!completed.get()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                log.warn("Evaluation of LogixNG Module was prematurely aborted");
+                return false;
+            }
+        }
+
+        return result.get();
+    }
+
+    private static class InternalFemaleActionSocket extends DefaultFemaleDigitalActionSocket {
 
         private final ConditionalNG _conditionalNG;
         private final Module _module;
         private final Map<String, Object> _parameters;
 
-        public InternalFemaleSocket(ConditionalNG conditionalNG, Module module, Map<String, Object> parameters) {
+        public InternalFemaleActionSocket(ConditionalNG conditionalNG, Module module, Map<String, Object> parameters) {
             super(null, new FemaleSocketListener(){
                 @Override
                 public void connected(FemaleSocket socket) {
@@ -214,6 +257,59 @@ public class DefaultConditionalNG extends AbstractBase
 
                 ((DefaultFemaleDigitalActionSocket)socket).execute();
                 _conditionalNG.setSymbolTable(oldSymbolTable);
+            }
+        }
+    }
+
+    private static class InternalFemaleExpressionSocket extends DefaultFemaleDigitalExpressionSocket {
+
+        private final ConditionalNG _conditionalNG;
+        private final Module _module;
+        private final Map<String, Object> _parameters;
+
+        public InternalFemaleExpressionSocket(ConditionalNG conditionalNG, Module module, Map<String, Object> parameters) {
+            super(null, new FemaleSocketListener(){
+                @Override
+                public void connected(FemaleSocket socket) {
+                    // Do nothing
+                }
+
+                @Override
+                public void disconnected(FemaleSocket socket) {
+                    // Do nothing
+                }
+            }, "A");
+            _conditionalNG = conditionalNG;
+            _module = module;
+            _parameters = parameters;
+        }
+
+        @Override
+        public boolean evaluate() throws JmriException {
+            FemaleSocket socket = _module.getRootSocket();
+            if (!(socket instanceof DefaultFemaleDigitalExpressionSocket)) {
+                throw new IllegalArgumentException("The module " + _module.getDisplayName() + " is not a DigitalExpressionModule");
+            }
+
+            synchronized(this) {
+                SymbolTable oldSymbolTable = _conditionalNG.getSymbolTable();
+                DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(_conditionalNG);
+                List<Module.ParameterData> _parameterData = new ArrayList<>();
+                for (Module.Parameter p : _module.getParameters()) {
+                    _parameterData.add(new Module.ParameterData(
+                            p.getName(), SymbolTable.InitialValueType.None, "",
+                            Module.ReturnValueType.None, ""));
+                }
+                newSymbolTable.createSymbols(_conditionalNG.getSymbolTable(), _parameterData);
+                for (var entry : _parameters.entrySet()) {
+                    newSymbolTable.setValue(entry.getKey(), entry.getValue());
+                }
+                _conditionalNG.setSymbolTable(newSymbolTable);
+
+                boolean result = ((DefaultFemaleDigitalExpressionSocket)socket).evaluate();
+                _conditionalNG.setSymbolTable(oldSymbolTable);
+
+                return result;
             }
         }
     }
@@ -283,6 +379,72 @@ public class DefaultConditionalNG extends AbstractBase
 
             conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
         }
+    }
+
+    private static boolean internalEvaluate(ConditionalNG conditionalNG, FemaleDigitalExpressionSocket femaleSocket) {
+
+        boolean result = false;
+
+        if (conditionalNG.isEnabled()) {
+            DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
+
+            try {
+                conditionalNG.setCurrentConditionalNG(conditionalNG);
+
+                conditionalNG.setSymbolTable(newSymbolTable);
+
+                LogixNG logixNG = conditionalNG.getLogixNG();
+                InlineLogixNG inlineLogixNG = null;
+                if (logixNG != null) {
+                    inlineLogixNG = logixNG.getInlineLogixNG();
+                }
+                if (inlineLogixNG != null) {
+                    List<SymbolTable.VariableData> localVariables = new ArrayList<>();
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__InlineLogixNG__", SymbolTable.InitialValueType.String,
+                            inlineLogixNG.getNameString()));
+//                    localVariables.add(new SymbolTable.VariableData(
+//                            "__PositionableId__", SymbolTable.InitialValueType.String,
+//                            inlineLogixNG.getId()));
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__Editor__", SymbolTable.InitialValueType.String,
+                            inlineLogixNG.getEditorName()));
+                    newSymbolTable.createSymbols(localVariables);
+                }
+
+                result = femaleSocket.evaluate();
+            } catch (AbortConditionalNG_IgnoreException | ReturnException | ExitException e) {
+                // A AbortConditionalNG_IgnoreException should be ignored.
+                // A Return action in a ConditionalNG causes a ReturnException so this is okay.
+                // An Exit action in a ConditionalNG causes a ExitException so this is okay.
+            } catch (ValidationErrorException e) {
+                ThreadingUtil.runOnGUI(()->
+                        JOptionPane.showMessageDialog(null,
+                                e.getMessage(),
+                                Bundle.getMessage("LogixNG_ValidationError"),
+                                JOptionPane.ERROR_MESSAGE)
+                );
+            } catch (PassThruException e) {
+                // This happens due to a a Break action or a Continue action that isn't handled.
+                log.info("ConditionalNG {} was aborted during execute: {}",
+                        conditionalNG.getSystemName(), e.getCause(), e.getCause());
+            } catch (AbortConditionalNGExecutionException e) {
+                if (InstanceManager.getDefault(LogixNGPreferences.class).getShowSystemNameInException()) {
+                    log.warn("ConditionalNG {} was aborted during execute in the item {}: {}",
+                            conditionalNG.getSystemName(), e.getMaleSocket().getSystemName(), e.getCause(), e.getCause());
+                } else {
+                    log.warn("ConditionalNG {} was aborted during execute: {}",
+                            conditionalNG.getSystemName(), e.getCause(), e.getCause());
+                }
+            } catch (JmriException | RuntimeException e) {
+                log.warn("ConditionalNG {} got an exception during execute: {}",
+                        conditionalNG.getSystemName(), e, e);
+            }
+
+            conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
+        }
+
+        return result;
     }
 
     private static class ExecuteTask implements ThreadingUtil.ThreadAction {

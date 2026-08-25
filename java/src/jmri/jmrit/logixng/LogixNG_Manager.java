@@ -311,6 +311,18 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
             throws IllegalArgumentException;
 
     /**
+     * Evaluates a LogixNG Digital Expression Module.
+     * Note that the module must be a Digital Action Module.
+     * @param module      The module to be executed
+     * @param parameters  The parameters
+     * @return            The return value of the evaluation of the module
+     * @throws IllegalArgumentException If module or parameters is null or if module
+     *                    is not a DigitalExpressionModule.
+     */
+    boolean evaluateModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException;
+
+    /**
      * Get the female socket of the error handling module.
      * @return the socket.
      */
