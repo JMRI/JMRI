@@ -1,13 +1,18 @@
 package jmri.jmrit.logixng.startup;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.CheckForNull;
+import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
+import jmri.util.ThreadingUtil;
 import jmri.util.startup.AbstractStartupModel;
 
 /**
@@ -57,6 +62,40 @@ public class LogixNG_StartupPauseModel extends AbstractStartupModel {
 
     @Override
     public void performAction() throws JmriException {
+        AtomicBoolean abort = new AtomicBoolean();
+        AtomicReference<JFrame> frameRef = new AtomicReference<>();
+
+        // Give the user an ability to abort
+        if (!GraphicsEnvironment.isHeadless()) {
+            ThreadingUtil.runOnGUI(() -> {
+                JFrame frame = new JFrame("Waiting for LogixNG Module");
+                JLabel labelAbort = new JLabel(Bundle.getMessage("WaitForLogixNGModule_AbortInfo"));
+                JButton buttonAbort = new JButton(Bundle.getMessage("WaitForLogixNGModule_Abort"));
+                buttonAbort.addActionListener(e -> {
+                    log.error("Daniel");
+                    abort.set(true);
+                });
+                JPanel panel = new JPanel();
+                panel.add(labelAbort);
+                panel.add(buttonAbort);
+                frame.setContentPane(panel);
+                frame.pack();
+
+                // Center the window and pad the frame size slightly
+                Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+                Rectangle winDim = frame.getBounds();
+                winDim.height = winDim.height + 50;
+                winDim.width = winDim.width + 50;
+                frame.setLocation((screenDim.width - winDim.width) / 2,
+                        (screenDim.height - winDim.height) / 2);
+                frame.setSize(winDim.width, winDim.height);
+
+                frame.setVisible(true);
+
+                frameRef.set(frame);
+            });
+        }
+
         // We need to ensure that all the LogixNGs are setup
         InstanceManager.getDefault(LogixNG_Manager.class).setupAllLogixNGs();
 
@@ -70,7 +109,11 @@ public class LogixNG_StartupPauseModel extends AbstractStartupModel {
                     boolean result = InstanceManager.getDefault(LogixNG_Manager.class)
                             .evaluateModule(module, parameters);
                     log.info("Waiting for LogixNG Module \"{}\" to return true. Last result: {}", module.getDisplayName(), result);
-                    if (result) return;
+                    if (result) break;
+                    if (abort.get()) {
+                        log.warn("Aborted by user");
+                        break;
+                    }
                     Thread.sleep(100);
                 }
             } catch (InterruptedException ex) {
@@ -78,6 +121,11 @@ public class LogixNG_StartupPauseModel extends AbstractStartupModel {
                 // this does not throw an error displayed to the user; should it?
                 log.info("Pause in startup actions interrupted.");
             }
+        }
+
+        JFrame frame = frameRef.get();
+        if (frame != null) {
+            frame.dispose();
         }
     }
 
