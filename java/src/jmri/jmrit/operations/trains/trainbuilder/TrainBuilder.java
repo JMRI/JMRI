@@ -559,7 +559,6 @@ public class TrainBuilder extends TrainBuilderCars {
 
             _completedMoves = 0; // moves completed for this location
             _reqNumOfMoves = rl.getMaxCarMoves() - rl.getCarMoves();
-            getTrain().setCurrentBuildRouteLocation(rl);
 
             if (!normal) {
                 if (rl == getTrain().getTrainDepartsRouteLocation()) {

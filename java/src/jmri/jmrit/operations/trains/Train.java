@@ -123,8 +123,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _leg3Road = NONE; // engine road name 3rd leg
     protected String _leg3Model = NONE; // engine model 3rd leg
     protected String _leg3CabooseRoad = NONE; // road name for caboose 3rd leg
-    
-    protected RouteLocation _rlBuilding; // during build current route location
 
     // engine change and helper options
     public static final int CHANGE_ENGINES = 1; // change engines
@@ -3877,30 +3875,23 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return false;
     }
     
-    public void setCurrentBuildRouteLocation (RouteLocation rl) {
-        _rlBuilding = rl;
-    }
-    
-    public RouteLocation getCurrentBuildRouteLocation() {
-        return _rlBuilding;
-    }
-    
     /**
      * Used to determine if rolling stock was pulled before the current build
      * route location. If rolling stock before pulled current route location,
      * track space is available.
+     * @param rs The rolling stock to be placed
      * 
-     * @param rs rolling stock to be tested
+     * @param r rolling stock to be tested for timing
      * @return true if rolling stock was pulled
      */
-    public boolean checkPullTiming(RollingStock rs) {
+    public boolean checkPullTiming(RollingStock rs, RollingStock r) {
         // go thought the train's route to determine if rolling stock was already pulled.
         for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
-            if (rl == getCurrentBuildRouteLocation()) {
-                return false;
-            }
-            if (rl == rs.getRouteLocation()) {
+            if (rl == r.getRouteLocation()) {
                 break;
+            }
+            if (rl == rs.getRouteDestination()) {
+                return false;
             }
         }
         return true;
