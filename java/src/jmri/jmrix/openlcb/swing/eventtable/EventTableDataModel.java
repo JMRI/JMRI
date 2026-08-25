@@ -2,6 +2,8 @@ package jmri.jmrix.openlcb.swing.eventtable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
@@ -12,6 +14,10 @@ import jmri.jmrix.openlcb.*;
 import jmri.jmrix.openlcb.swing.eventtable.configurexml.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
@@ -778,6 +784,72 @@ public class EventTableDataModel extends AbstractTableModel {
             this.producerName = producerName;
             this.consumer = consumer;
             this.consumerName = consumerName;
+        }
+    }
+
+    /**
+     * Actual write of the CSV file
+     */
+    void csvWriteOperation(File file) {
+        try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+            str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
+                            "Consumer Node", "Consumer Node Name", "Paths");                
+            for (int i = 0; i < getRowCount(); i++) {
+
+                str.print(getValueAt(i, COL_EVENTID));
+                str.print(getValueAt(i, COL_EVENTNAME));
+                str.print(getValueAt(i, COL_PRODUCER_NODE));
+                str.print(getValueAt(i, COL_PRODUCER_NAME));
+                str.print(getValueAt(i, COL_CONSUMER_NODE));
+                str.print(getValueAt(i, COL_CONSUMER_NAME));
+
+                String[] contexts = getValueAt(i, COL_CONTEXT_INFO).toString().split("\n"); // multi-line cell
+                for (String context : contexts) {
+                    str.print(context);
+                }
+                
+                str.println();
+            }
+            str.flush();
+        } catch (IOException ex) {
+            log.error("Error writing file", ex);
+        }
+    }
+
+    void csvReadOperation(File file) {
+        try (Reader in = new FileReader(file)) {
+            boolean first = true;
+            Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
+            
+            for (CSVRecord record : records) {
+                // skip the first record, as it's the column titles
+                if (first) {
+                    first = false;
+                    continue;
+                }
+                
+                String eventIDname = record.get(0);
+                 // Is the 1st column really an event ID
+                EventID eid;
+                try {
+                    eid = new EventID(eventIDname);
+                } catch (IllegalArgumentException e1) {
+                    // really shouldn't happen, as table manages column contents
+                    log.warn("Column 0 doesn't contain an EventID name: {}", eventIDname);
+                    continue;
+                }
+                // here we have a valid EventID, assign the name if currently blank
+                if (! nameStore.hasEventName(eid)) {
+                    String eventName = record.get(1);
+                    nameStore.addMatch(eid, eventName);
+                }         
+            }
+            log.debug("File reading complete");
+            // cause the table to update
+            fireTableDataChanged();
+            
+        } catch (IOException ex) {
+            log.error("Error reading file", ex);
         }
     }
 

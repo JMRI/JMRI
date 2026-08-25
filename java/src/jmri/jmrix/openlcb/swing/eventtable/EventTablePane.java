@@ -3,7 +3,6 @@ package jmri.jmrix.openlcb.swing.eventtable;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.util.*;
 
@@ -19,10 +18,6 @@ import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.swing.MultiLineCellRenderer;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
@@ -486,7 +481,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         }
         log.debug("start to export to CSV file {}", file);
 
-        csvWriteOperation(file);
+        model.csvWriteOperation(file);
     }
 
     /**
@@ -511,35 +506,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
     
     /**
-     * Actual write of the CSV file
-     */
-    void csvWriteOperation(File file) {
-        try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
-            str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
-                            "Consumer Node", "Consumer Node Name", "Paths");                
-            for (int i = 0; i < model.getRowCount(); i++) {
-
-                str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTID));
-                str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTNAME));
-                str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NODE));
-                str.print(model.getValueAt(i, EventTableDataModel.COL_PRODUCER_NAME));
-                str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NODE));
-                str.print(model.getValueAt(i, EventTableDataModel.COL_CONSUMER_NAME));
-
-                String[] contexts = model.getValueAt(i, EventTableDataModel.COL_CONTEXT_INFO).toString().split("\n"); // multi-line cell
-                for (String context : contexts) {
-                    str.print(context);
-                }
-                
-                str.println();
-            }
-            str.flush();
-        } catch (IOException ex) {
-            log.error("Error writing file", ex);
-        }
-    }
-
-    /**
      * Read event names from a CSV file
      * @param e Needed for signature of method, but ignored here
      */
@@ -547,7 +513,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         File file = getCsvReadFile();
         
-        csvReadOperation(file);
+        model.csvReadOperation(file);
     }
 
     File getCsvReadFile() {
@@ -567,43 +533,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             return file;
         } else {
             return null;
-        }
-    }
-    
-    void csvReadOperation(File file) {
-        try (Reader in = new FileReader(file)) {
-            boolean first = true;
-            Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
-            
-            for (CSVRecord record : records) {
-                // skip the first record, as it's the column titles
-                if (first) {
-                    first = false;
-                    continue;
-                }
-                
-                String eventIDname = record.get(0);
-                 // Is the 1st column really an event ID
-                EventID eid;
-                try {
-                    eid = new EventID(eventIDname);
-                } catch (IllegalArgumentException e1) {
-                    // really shouldn't happen, as table manages column contents
-                    log.warn("Column 0 doesn't contain an EventID name: {}", eventIDname);
-                    continue;
-                }
-                // here we have a valid EventID, assign the name if currently blank
-                if (! isEventNamePresent(eid)) {
-                    String eventName = record.get(1);
-                    nameStore.addMatch(eid, eventName);
-                }         
-            }
-            log.debug("File reading complete");
-            // cause the table to update
-            model.fireTableDataChanged();
-            
-        } catch (IOException ex) {
-            log.error("Error reading file", ex);
         }
     }
     

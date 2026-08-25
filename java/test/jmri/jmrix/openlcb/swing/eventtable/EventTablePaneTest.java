@@ -37,7 +37,7 @@ public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         testPanel.model.recordConsumer(new EventID("1.2.3.4.5.6.7.8"), new NodeID("1.2.3.4.5.6"), "");
         
         // write a temporary CSV file
-        testPanel.csvWriteOperation(new File("temp/eventNameTable.csv"));
+        testPanel.model.csvWriteOperation(new File("temp/eventNameTable.csv"));
         
         // clear the state
         testPanel.model = getModel();   
@@ -56,7 +56,7 @@ public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         testPanel.nameStore = olcbStore;
         
         // read that back
-        testPanel.csvReadOperation(new File("temp/eventNameTable.csv"));
+        testPanel.model.csvReadOperation(new File("temp/eventNameTable.csv"));
         
         // and check the event name mapping
         var resultName = model.getValueAt(0, EventTableDataModel.COL_EVENTNAME);

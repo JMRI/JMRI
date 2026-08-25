@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.swing.eventtable;
 
+import java.io.File;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -151,6 +153,47 @@ public class EventTableDataModelTest {
         assertEquals("desc3", resultName);       
     }
 
+
+    @Test
+    public void CsvWriteReadTest() {
+        // first add some system content
+        olcbStore.addMatch(new EventID("1.2.3.4.5.6.7.8"), "namedEvent");
+        
+        // create objects to test
+        model = getModel();  
+        
+        // load more content directly to model
+        model.addMatch(new NodeID("1.2.3.4.5.6"), "namedNode");
+               
+        model.recordProducer(new EventID("1.2.3.4.5.6.7.8"), new NodeID("1.2.3.4.5.6"), "", false);
+        model.recordConsumer(new EventID("1.2.3.4.5.6.7.8"), new NodeID("1.2.3.4.5.6"), "");
+        
+        // write a temporary CSV file
+        model.csvWriteOperation(new File("temp/eventNameTable.csv"));
+        
+        // clear the state
+        model = getModel();   
+        
+        olcbStore.deregisterShutdownTask();
+        olcbStore = new OlcbEventNameStore() {
+            @Override 
+            public void readDetails() {
+                // don't read the eventNames.xml file
+            }
+            @Override
+            public void writeEventNameDetails() {
+                // don't write the eventNames.xml file
+            }
+        };        
+        
+        // read that back
+        model.csvReadOperation(new File("temp/eventNameTable.csv"));
+        
+        // and check the event name mapping
+        var resultName = model.getValueAt(0, EventTableDataModel.COL_EVENTNAME);
+        assertEquals("namedEvent", resultName);
+        
+    }
 
 
     // ***********   Infrastructure Below ************* 
