@@ -32,17 +32,20 @@ public class EventTableDataModelXmlTest {
             }
         };
         
-        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedNode");
-        
+        // the event name store is separately set up from this configureXML write/read
         var targetEventP = new EventID("1.1.1.1.2.2.2.2");
         olcbStore.addMatch(targetEventP, "eventP");
+
+        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedNode");
         model.recordProducer(targetEventP, new NodeID("1.1.1.1.2.2"),"", false);
         
         var targetEventC = new EventID("0F.1.1.1.3.3.2.2");
         olcbStore.addMatch(targetEventC, "eventC");
         model.recordConsumer(targetEventC, new NodeID("1.1.1.1.3.3"),"");
 
-        model.addAuxiliaryInformation(targetEventC, "describe C");
+        model.addAuxiliaryInformation(targetEventC, "describe C1");
+        model.addAuxiliaryInformation(targetEventC, "describe C2");
+        model.addAuxiliaryInformation(targetEventC, "describe C3");
         
         try {
             cxml1.store();
@@ -78,7 +81,7 @@ public class EventTableDataModelXmlTest {
         Assert.assertEquals("", model.getValueAt(1,EventTableDataModel.COL_PRODUCER_NODE));
         Assert.assertEquals("", model.getValueAt(1,EventTableDataModel.COL_PRODUCER_NAME));
         Assert.assertEquals("eventC", model.getValueAt(1,EventTableDataModel.COL_EVENTNAME));
-        Assert.assertEquals("describe C", model.getValueAt(1,EventTableDataModel.COL_CONTEXT_INFO));
+        Assert.assertEquals("describe C1\ndescribe C2\ndescribe C3", model.getValueAt(1,EventTableDataModel.COL_CONTEXT_INFO));
 
     }
 
@@ -92,10 +95,11 @@ public class EventTableDataModelXmlTest {
             }
         };
         
-        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedNode");
-        
+        // the event name store is separately set up from this configureXML write/read
         var targetEventP = new EventID("1.1.1.1.2.2.2.2");
         olcbStore.addMatch(targetEventP, "eventP");
+
+        model.addMatch(new NodeID("1.1.1.1.2.2"), "namedNode");
         model.recordProducer(targetEventP, new NodeID("1.1.1.1.2.2"),"", false);
         
         var targetEventC = new EventID("0F.1.1.1.3.3.2.2");
@@ -161,6 +165,7 @@ public class EventTableDataModelXmlTest {
         if (model != null) {
             model.deregisterShutdownTask();
         }
+
         model = new EventTableDataModel(store, eventTable, olcbStore){
             // kill default persistence
             @Override
@@ -183,8 +188,6 @@ public class EventTableDataModelXmlTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         
-        store = new MimicNodeStore(connection, nidSource);
-        eventTable = new EventTable();
         olcbStore = new OlcbEventNameStore() {
             @Override 
             public void readDetails() {
@@ -195,6 +198,9 @@ public class EventTableDataModelXmlTest {
                 // don't write the eventNames.xml file
             }
         };
+
+        store = new MimicNodeStore(connection, nidSource);
+        eventTable = new EventTable();
 
         model = getModel();
     }
