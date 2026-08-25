@@ -479,34 +479,20 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         if (a == null) {
             log.debug("notifyThrottleKnown with zero-length listeners: {}", addr);
         } else {
-            Addresses adsFinal = ads;
             for (int i = 0; i < a.size(); i++) {
                 ThrottleListener l = a.get(i).getListener();
-                BasicRosterEntry re = a.get(i).getRosterEntry();
                 log.debug("Notify listener {} of {}", (i + 1), a.size() );
-                // Deferred via invokeLater() -- calling notifyThrottleFound()
-                // synchronously here can recurse indefinitely if a listener
-                // reacts by calling requestThrottle() again on an address
-                // stuck "already known" with the wrong throttle cached.
-                javax.swing.SwingUtilities.invokeLater(() -> {
-                    // setRosterEntry() must run BEFORE notifyThrottleFound()
-                    // here -- since this whole block is itself the deferred
-                    // callback, a listener that inspects the roster entry
-                    // during its own notifyThrottleFound() (e.g.
-                    // JsonThrottle.sendStatus()) would otherwise always see
-                    // null.
-                    synchronized (AbstractThrottleManager.this) {
-                        if (adsFinal != null && re != null && throttle.getRosterEntry() == null) {
-                            throttle.setRosterEntry(re);
-                        }
-                    }
-                    l.notifyThrottleFound(throttle);
-                    synchronized (AbstractThrottleManager.this) {
-                        addressThrottles.get(addr).incrementUse();
-                        addressThrottles.get(addr).addListener(l);
-                        updateNumUsers(addr, addressThrottles.get(addr).getUseCount());
-                    }
-                });
+                // setRosterEntry() must run BEFORE notifyThrottleFound() here --
+                // a listener that inspects the roster entry during its own
+                // notifyThrottleFound() (e.g. JsonThrottle.sendStatus()) would
+                // otherwise always see null.
+                if (ads != null && a.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
+                    throttle.setRosterEntry(a.get(i).getRosterEntry());
+                }
+                l.notifyThrottleFound(throttle);
+                addressThrottles.get(addr).incrementUse();
+                addressThrottles.get(addr).addListener(l);
+                updateNumUsers(addr, addressThrottles.get(addr).getUseCount());
             }
             throttleListeners.remove(addr);
         }
