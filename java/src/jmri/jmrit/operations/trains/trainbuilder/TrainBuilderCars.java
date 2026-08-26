@@ -1183,6 +1183,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     car.toString(), track.getLocation().getName(), track.getName()));
             return false;
         }
+        car.setRouteDestination(null);
         String status = car.checkDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {
@@ -1482,6 +1483,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // the correct destination name
         for (int k = routeIndex; k < getRouteList().size(); k++) {
             rld = getRouteList().get(k);
+            car.setRouteDestination(rld); // for timing
             // if car can be picked up later at same location, skip
             if (checkForLaterPickUp(car, rl, rld)) {
                 addLine(SEVEN, BLANK_LINE);
@@ -1718,6 +1720,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // now search for a destination for this car
         for (int k = start; k < routeEnd; k++) {
             rld = getRouteList().get(k);
+            car.setRouteDestination(rld); // for timing
             // if car can be picked up later at same location, set flag
             if (checkForLaterPickUp(car, rl, rld)) {
                 multiplePickup = true;

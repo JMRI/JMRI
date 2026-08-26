@@ -2969,9 +2969,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destinations
         Assert.assertEquals("Car destination", bostonSpur2, c1.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur2, c2.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, c3.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, c4.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonYard2, c5.getDestinationTrack());
+        // timing such that there isn't room for the kernel
+        Assert.assertEquals("Car destination", bostonYard2, c3.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonYard2, c4.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonYard2, c6.getDestinationTrack());
 
         Assert.assertEquals("Car destination", actonSpur1, c7.getDestinationTrack());
@@ -2984,8 +2985,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", null, c12.getDestinationTrack());
 
         // check that cars in yard have a final destination Boston spur 2
-        Assert.assertEquals("Car destination", bostonSpur2, c5.getFinalDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, c6.getFinalDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, c3.getFinalDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, c4.getFinalDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -21097,6 +21098,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         RouteLocation boston2 = route.getRouteLocationBySequenceNumber(5);
         boston2.setMaxCarMoves(12);
+        boston2.setDropAllowed(false);
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());

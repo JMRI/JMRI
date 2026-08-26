@@ -8,10 +8,6 @@ import java.util.*;
 import javax.print.attribute.standard.Sides;
 import javax.swing.JComboBox;
 
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
@@ -24,6 +20,10 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.web.server.WebServerPreferences;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Operations settings.
@@ -530,7 +530,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
     
     public static int getDwellTime() {
-        return getDefault().dwellTime;
+        if (isBuildOnTime()) {
+            return getDefault().dwellTime;
+        }
+        return 0;
     }
 
     public static void setDwellTime(int minutes) {
@@ -2196,7 +2199,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.NUMBER_PASSES, Integer.toString(getNumberPasses()));
         values.setAttribute(Xml.ON_TIME, isBuildOnTime() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.DWELL_TIME, Integer.toString(getDwellTime()));
+        if (isBuildOnTime()) {
+            values.setAttribute(Xml.DWELL_TIME, Integer.toString(getDwellTime()));
+        }
 
         values.setAttribute(Xml.ALLOW_LOCAL_INTERCHANGE, isLocalInterchangeMovesEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.ALLOW_LOCAL_SPUR, isLocalSpurMovesEnabled() ? Xml.TRUE : Xml.FALSE);

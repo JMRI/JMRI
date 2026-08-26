@@ -1666,6 +1666,12 @@ public class Track extends PropertyChangeSupport {
 
                 return Bundle.getMessage("lengthIssue",
                         LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
+            } else {
+                // is track space available due to timing?
+                String status = checkQuickServiceTrack(rs, rsLength);
+                if (!status.equals(DISABLED)) {
+                    return status;
+                }
             }
         }
         return OKAY;
@@ -1689,35 +1695,50 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * @return true if there's space available due when cars are being pulled.
-     *         Allows new cars to be spotted to a quick service track after
-     *         pulls are completed by previous trains. Therefore the train being
-     *         built has to have a departure time that is later than the cars
-     *         being pulled from this track. Also includes track space created
-     *         by car pick ups by the train being built, but not delivered by
-     *         the train being built.
+     * Used to determine if this track has space based on when rolling stock are
+     * set out and pulled. Rolling stock in rains that are already built have
+     * departure and set out times. Rolling stock assigned to the train being
+     * built get their times after the train is built. Therefore this code uses
+     * where in the train's route to deal with rolling stock assigned to the
+     * train being built. The rolling stock rs, has a route destination, that is
+     * where in the train's route the program is attempting to drop the rolling
+     * stock.
+     * 
+     * @return true if there's space available for the rolling stock rs. Allows
+     *         rolling stock to be spotted to a track after pulls are completed
+     *         by previous trains. Therefore the train being built has to have a
+     *         arrival time that is later than the rolling stock being pulled
+     *         from this track. Also includes track space created by rolling
+     *         stock pick ups by the train being built, but not delivered by the
+     *         train being built.
      */
     private String checkQuickServiceTrack(RollingStock rs, int rsLength) {
-        if (!isQuickServiceEnabled() || !Setup.isBuildOnTime()) {
-            return DISABLED;
-        }
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainBuilding();
-        if (train == null) {
+        if (train == null || rs.getRouteDestination() == null) {
             return DISABLED;
         }
 
-        // car and locos assigned to trains must be pulled before this train departs
-        int trainDepartureTimeMinutes = TrainCommon.convertStringTime(train.getDepartureTime());
+        // car and locos assigned to trains must be pulled before or when this train arrives
+        int trainArrivalTimeMinutes = train.getExpectedTravelTimeInMinutes(rs.getRouteDestination());
+
+        // reservedLengthSetouts includes clones
+        int reserved = getReservedLengthSetouts();
+        // ignore reserved if quick service, car moved to track, ignore clones
+        if (isQuickServiceEnabled()) {
+            reserved = 0;
+        }
 
         // note that used can be larger than track length
-        int trackSpaceAvalable = getLength() - getTotalUsedLength();
-        log.debug("track ({}) space available at start: {}", this.getName(), trackSpaceAvalable);
+        int trackSpaceAvalable = getLength() - getTotalUsedLength() - reserved;
+        log.debug("Track ({}, {}) space available at start: {} for rolling stock {}, destination ({}) id {}",
+                getLocation().getName(), getName(), trackSpaceAvalable, rs.toString(), rs.getRouteDestination(),
+                rs.getRouteDestination().getId());
 
         if (trackSpaceAvalable < rsLength) {
             // determine due to timing if there's space for this rolling stock
             CarManager carManager = InstanceManager.getDefault(CarManager.class);
             List<RollingStock> list = new ArrayList<RollingStock>(carManager.getList(this));
-            int results = checkForTrackSpace(rs, rsLength, train, list, trackSpaceAvalable, trainDepartureTimeMinutes);
+            int results = checkForTrackSpace(rs, rsLength, train, list, trackSpaceAvalable, trainArrivalTimeMinutes);
             if (results == TIMING_ISSUE) {
                 return Bundle.getMessage("lengthIssueCar", LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(),
                         trackSpaceAvalable, _rs.toString(), _rs.getTotalLength(), _rs.getTrain(), _rs.getPickupTime(),
@@ -1729,7 +1750,7 @@ public class Track extends PropertyChangeSupport {
             // now check engines
             EngineManager engManager = InstanceManager.getDefault(EngineManager.class);
             List<RollingStock> list = new ArrayList<RollingStock>(engManager.getList(this));
-            int results = checkForTrackSpace(rs, rsLength, train, list, trackSpaceAvalable, trainDepartureTimeMinutes);
+            int results = checkForTrackSpace(rs, rsLength, train, list, trackSpaceAvalable, trainArrivalTimeMinutes);
             if (results == TIMING_ISSUE) {
                 return Bundle.getMessage("lengthIssueEng", LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(),
                         trackSpaceAvalable, _rs.toString(), _rs.getTotalLength(), _rs.getTrain(), _rs.getPickupTime(),
@@ -1753,9 +1774,9 @@ public class Track extends PropertyChangeSupport {
             int trackSpaceAvalable, int trainDepartureTimeMinutes) {
         for (RollingStock r : list) {
             log.debug(
-                    "Rolling stock ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})",
-                    r.toString(), r.getTotalLength(), r.getLocationName(), r.getTrackName(),
-                    r.getPickupTime(), r.getRouteDestination(), r.getTrain(), r.getLastTrain());
+                    "Rolling stock ({}) length {}, track ({}, {}) pick up time {}, to ({}) train ({}), last train ({})",
+                    r.toString(), r.getTotalLength(), r.getLocationName(), r.getTrackName(), r.getPickupTime(),
+                    r.getRouteDestination(), r.getTrain(), r.getLastTrain());
             if (r.getRouteDestination() != null) {
                 // Rolling stock pulled by previous trains will free up track space
                 if (!r.getPickupTime().equals(RollingStock.NONE)) {
@@ -1768,15 +1789,15 @@ public class Track extends PropertyChangeSupport {
                     }
                     trackSpaceAvalable = trackSpaceAvalable + r.getTotalLength();
                     log.debug("Rolling stock ({}) length {}, pull from ({}, {}) at {}", r.toString(),
-                            r.getTotalLength(),
-                            r.getLocationName(), r.getTrackName(), r.getPickupTime());
+                            r.getTotalLength(), r.getLocationName(), r.getTrackName(), r.getPickupTime());
                     // Rolling stock pulled by the train being built also free up track space
                 } else if (r.getPickupTime().equals(RollingStock.NONE) &&
-                        r.getTrain() == train && 
-                        train.checkPullTiming(r)) {
+                        r.getTrain() == train &&
+                        train.checkPullTiming(rs, r)) {
                     trackSpaceAvalable = trackSpaceAvalable + r.getTotalLength();
-                    log.debug("Rolling stock ({}) length {}, pull from ({}, {})", r.toString(), r.getTotalLength(),
-                            r.getLocationName(), r.getTrackName());
+                    log.debug("Rolling stock ({}) length {}, pull from ({}, {}) at route Location ({}) id {}",
+                            r.toString(), r.getTotalLength(), r.getLocationName(), r.getTrackName(),
+                            r.getRouteLocation(), r.getRouteLocation().getId());
                 }
                 if (trackSpaceAvalable >= rsLength) {
                     break;
