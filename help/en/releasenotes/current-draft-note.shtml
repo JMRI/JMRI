@@ -457,7 +457,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Roster entries are to have unique IDs.  Due to a previous oversight,
+                you could directly change the entry in the DecoderPro table to create
+                a duplicate. You can still edit the ID, but creating entries with
+                duplicate IDs are no longer allowed.</li>
         </ul>
 
    <h3>Dispatcher</h3>
