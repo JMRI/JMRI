@@ -1727,10 +1727,12 @@ public class Track extends PropertyChangeSupport {
         if (isQuickServiceEnabled()) {
             reserved = 0;
         }
-        
+
         // note that used can be larger than track length
         int trackSpaceAvalable = getLength() - getTotalUsedLength() - reserved;
-        log.debug("track ({}) space available at start: {}", this.getName(), trackSpaceAvalable);
+        log.debug("Track ({}, {}) space available at start: {} for rolling stock {}, destination ({}) id {}",
+                getLocation().getName(), getName(), trackSpaceAvalable, rs.toString(), rs.getRouteDestination(),
+                rs.getRouteDestination().getId());
 
         if (trackSpaceAvalable < rsLength) {
             // determine due to timing if there's space for this rolling stock
@@ -1772,9 +1774,9 @@ public class Track extends PropertyChangeSupport {
             int trackSpaceAvalable, int trainDepartureTimeMinutes) {
         for (RollingStock r : list) {
             log.debug(
-                    "Rolling stock ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})",
-                    r.toString(), r.getTotalLength(), r.getLocationName(), r.getTrackName(),
-                    r.getPickupTime(), r.getRouteDestination(), r.getTrain(), r.getLastTrain());
+                    "Rolling stock ({}) length {}, track ({}, {}) pick up time {}, to ({}) train ({}), last train ({})",
+                    r.toString(), r.getTotalLength(), r.getLocationName(), r.getTrackName(), r.getPickupTime(),
+                    r.getRouteDestination(), r.getTrain(), r.getLastTrain());
             if (r.getRouteDestination() != null) {
                 // Rolling stock pulled by previous trains will free up track space
                 if (!r.getPickupTime().equals(RollingStock.NONE)) {
@@ -1787,15 +1789,15 @@ public class Track extends PropertyChangeSupport {
                     }
                     trackSpaceAvalable = trackSpaceAvalable + r.getTotalLength();
                     log.debug("Rolling stock ({}) length {}, pull from ({}, {}) at {}", r.toString(),
-                            r.getTotalLength(),
-                            r.getLocationName(), r.getTrackName(), r.getPickupTime());
+                            r.getTotalLength(), r.getLocationName(), r.getTrackName(), r.getPickupTime());
                     // Rolling stock pulled by the train being built also free up track space
                 } else if (r.getPickupTime().equals(RollingStock.NONE) &&
-                        r.getTrain() == train && 
+                        r.getTrain() == train &&
                         train.checkPullTiming(rs, r)) {
                     trackSpaceAvalable = trackSpaceAvalable + r.getTotalLength();
-                    log.debug("Rolling stock ({}) length {}, pull from ({}, {})", r.toString(), r.getTotalLength(),
-                            r.getLocationName(), r.getTrackName());
+                    log.debug("Rolling stock ({}) length {}, pull from ({}, {}) at route Location ({}) id {}",
+                            r.toString(), r.getTotalLength(), r.getLocationName(), r.getTrackName(),
+                            r.getRouteLocation(), r.getRouteLocation().getId());
                 }
                 if (trackSpaceAvalable >= rsLength) {
                     break;

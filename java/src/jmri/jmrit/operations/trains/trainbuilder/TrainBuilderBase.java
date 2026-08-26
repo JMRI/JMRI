@@ -2469,10 +2469,12 @@ public class TrainBuilderBase extends TrainCommon {
             if (rle == rld) {
                 break;
             }
+            car.setRouteDestination(rle); // for timing
             if (rle.getName().equals(rld.getName()) &&
                     (rle.getCarMoves() < rle.getMaxCarMoves()) &&
                     rle.isDropAllowed() &&
-                    checkDropTrainDirection(car, rle, trackTemp)) {
+                    checkDropTrainDirection(car, rle, trackTemp) &&
+                    trackTemp.isRollingStockAccepted(car).equals(Track.OKAY)) {
                 log.debug("Found an earlier drop for car ({}) destination ({})", car.toString(), rle.getName()); // NOI18N
                 return rle; // earlier drop in train's route
             }
