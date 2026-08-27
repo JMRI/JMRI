@@ -57,12 +57,20 @@ public class SerialNode extends AbstractNode {
     public static final int USIC_SUSIC = 2;     // USIC/SUSIC node type
     public static final int CPNODE = 3;         // cpNode Control Point (Arduino) node type  c2
     public static final int CPMEGA = 4;         // Open Source Node (OSN)  e.g Mega2560 R3 c2
+    public static final int ESP32NODE = 5;      // ESP32Node: self-contained ESP32 CMRI-over-WiFi node,
+                                                 // 8 MCP23017 I2C expanders (0x20-0x27), 16 bytes of
+                                                 // output/input, no onboard I/O of its own -- unlike
+                                                 // CPNODE/CPMEGA, so its cards are numbered starting at
+                                                 // 0 with no reserved onboard byte offset. See DiagnosticFrame
+                                                 // and NodeConfigManagerFrame for where CPNODE's onboard
+                                                 // offset lives; ESP32NODE deliberately does not use it.
 
     public static final int NDP_USICSUSIC24 = 78; // 'N' USIC/SUSIC 24 bit cards
     public static final int NDP_USICSUSIC32 = 88; // 'X' USIC/SUSIC 32 bit cards
     public static final int NDP_SMINI       = 77; // 'M' SMINI      24 bit cards
     public static final int NDP_CPNODE      = 67; // 'C' CPNODE      8 bit cards
     public static final int NDP_CPMEGA      = 79; // 'O' CPMEGA      8 bit cards
+    public static final int NDP_ESP32NODE   = 69; // 'E' ESP32Node   8 bit cards
 
     public static final byte INPUT_CARD = 1;    // USIC/SUSIC input card type for specifying location
     public static final byte OUTPUT_CARD = 2;   // USIC/SUSIC output card type for specifying location
@@ -315,6 +323,10 @@ public class SerialNode extends AbstractNode {
           case CPMEGA:    if(result<1)  //c2
                             warn("CPMEGA node with "+result+" INPUT cards");
           break;
+          case ESP32NODE: // no minimum -- all 16 ports default to OUTPUT and can be
+                           // reconfigured to INPUT (or NOT CONNECTED) individually,
+                           // unlike CPNODE/CPMEGA which always have fixed onboard bytes
+          break;
           default:
           break;
         }
@@ -361,6 +373,10 @@ public class SerialNode extends AbstractNode {
            case CPMEGA:     //c2
            if(result<1)
              warn("CPMEGA node with "+result+" OUTPUT cards");
+           break;
+           case ESP32NODE:
+           if(result<1)
+             warn("ESP32Node with "+result+" OUTPUT cards");
            break;
            default:
          }
@@ -458,6 +474,33 @@ public class SerialNode extends AbstractNode {
             cardTypeLocation[6] = NO_CARD;
             cardTypeLocation[7] = NO_CARD;
             for (int i=8;i<MAXCARDLOCATIONBYTES;i++)
+            {
+             cardTypeLocation[i] = NO_CARD;
+            }
+          break;
+
+          case ESP32NODE:
+            nodeType = type;
+            bitsPerCard = 8;
+
+            // ESP32Node has NO onboard I/O of its own (unlike CPNODE's 2 input +
+            // 2 output onboard bytes, or CPMEGA's 1 onboard input byte) -- it is a
+            // self-contained ESP32 board whose only I/O comes from up to 8 external
+            // MCP23017 I2C expanders at addresses 0x20-0x27, 2 bytes (ports A/B)
+            // each = 16 real cards. All 16 default to OUTPUT here (matching the
+            // firmware's own default of every IOX port starting as OUTPUT); the
+            // node-config UI lets the user change individual cards to INPUT or
+            // NOT CONNECTED afterward, same as CPNODE/CPMEGA's IOX expansion cards.
+            // Because there's no reserved onboard offset, card 0 in this array IS
+            // the first real card (chip at 0x20, port A) -- no "+2"-style skip is
+            // needed anywhere this type is handled (see DiagnosticFrame,
+            // NodeConfigManagerFrame, which special-case CPNODE's onboard offset
+            // and must NOT apply it to ESP32NODE).
+            for (int i=0;i<16;i++)
+            {
+             cardTypeLocation[i] = OUTPUT_CARD;
+            }
+            for (int i=16;i<MAXCARDLOCATIONBYTES;i++)
             {
              cardTypeLocation[i] = NO_CARD;
             }
@@ -955,6 +998,8 @@ public class SerialNode extends AbstractNode {
             break;
             case CPMEGA:      initBytes[0] = NDP_CPMEGA;  // 'O'   c2
             break;
+            case ESP32NODE:   initBytes[0] = NDP_ESP32NODE;  // 'E'
+            break;
 
             default:
         }
@@ -1094,6 +1139,48 @@ public class SerialNode extends AbstractNode {
          *  <NDP><dH><dL><cpOPTS1><cpOPTS2><cpNI><cpNO> <rfe 8>
          */
            case CPMEGA:
+                          nInitBytes = 3;
+                           // -------------------------
+                           // Pack the two option bytes
+                           // -------------------------
+                           for (int i=0,j=0;i<2;i++,j+=8)
+                           {
+                              code = cpnodeOptions[j];
+                              code = code + (cpnodeOptions[j+1]*2);
+                              code = code + (cpnodeOptions[j+2]*4);
+                              code = code + (cpnodeOptions[j+3]*8);
+                              code = code + (cpnodeOptions[j+4]*16);
+                              code = code + (cpnodeOptions[j+5]*32);
+                              code = code + (cpnodeOptions[j+6]*64);
+                              code = code + (cpnodeOptions[j+7]*128);
+                              initBytes[nInitBytes] = (byte)code;
+                              nInitBytes++;
+                           }
+                           // -------------------------------------
+                           // Configured input and output byte count
+                           // -------------------------------------
+                           initBytes[nInitBytes++] = (byte)numInputCards();
+                           initBytes[nInitBytes++] = (byte)numOutputCards();
+
+                           // --------------------------
+                           // future to be defined bytes
+                           // --------------------------
+                           for (int i=nInitBytes; i<INITMSGLEN+1; i++)
+                           {
+                            initBytes[i] = (byte)0xFF;
+                            nInitBytes++;
+                           }
+
+            break;
+
+         /* ESP32Node specific part of initialization byte array -- same layout as
+          * CPNODE/CPMEGA (options bytes + I/O counts); ESP32Node just has no
+          * onboard-reserved cards, so numInputCards()/numOutputCards() report
+          * purely user-configured MCP23017 ports.
+          *    0   1   2    3        4        5     6     7 - 12
+          *  <NDP><dH><dL><cpOPTS1><cpOPTS2><cpNI><cpNO> <rfe 8>
+          */
+           case ESP32NODE:
                           nInitBytes = 3;
                            // -------------------------
                            // Pack the two option bytes

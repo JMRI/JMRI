@@ -52,6 +52,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected boolean isSMINI = false;
     protected boolean isUSIC_SUSIC = true;
     protected boolean isCPNODE = false;
+    protected boolean isESP32NODE = false;
     // Here add other node types
     protected int numOutputCards = 2;
     protected int numInputCards = 1;
@@ -593,6 +594,22 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                   numIOXOutputCards= 0;
                   nodeText1.setText("CPMEGA - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard"));
                 break;
+                case SerialNode.ESP32NODE:
+                  // No onboard cards at all (unlike CPNODE's 2+2), so unlike CPNODE's
+                  // "numOutputCards - 2" here, IOX counts equal the raw counts directly.
+                  bitsPerCard = testNode.getNumBitsPerCard();
+                  numInputCards = testNode.numInputCards();
+                  numOutputCards = testNode.numOutputCards();
+                  numIOXInputCards = numInputCards;
+                  numIOXOutputCards= numOutputCards;
+                  if(numInputCards > 1) s1 = "s";
+                  if(numOutputCards > 1) s2 = "s";
+                  nodeText1.setText("  ESP32Node - " + bitsPerCard + " " +Bundle.getMessage("BitsPerCard"));
+                  nodeText2.setText(numInputCards + " " + Bundle.getMessage("InputCard") + s1 +
+                                    ", " + numOutputCards + " " + Bundle.getMessage("OutputCard") + s2 +
+                                    "  IOX: " + numIOXInputCards + " " + Bundle.getMessage("InputsTitle") +
+                                    ", " + numIOXOutputCards + " " + Bundle.getMessage("OutputsTitle"));
+                break;
                 default:
                   nodeText1.setText("Unknown Node Type "+testNodeType);
                 break;            
@@ -673,6 +690,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         isSMINI = (type == SerialNode.SMINI);
         isUSIC_SUSIC = (type == SerialNode.USIC_SUSIC);
         isCPNODE = (type == SerialNode.CPNODE);
+        isESP32NODE = (type == SerialNode.ESP32NODE);
         // Here insert code for other type nodes
         // initialize numInputCards, numOutputCards, and numCards
         numOutputCards = testNode.numOutputCards();
@@ -688,7 +706,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             return (false);
         }
         // Check for consistency with Node definition
-        if (isUSIC_SUSIC) {
+        // ESP32Node has no onboard-reserved cards (unlike CPNODE below), so it
+        // takes the same un-offset, direct-index validation path as USIC_SUSIC.
+        if (isUSIC_SUSIC || isESP32NODE) {
             if ((outCardNum < 0) || (outCardNum >= numCards)) {
                 statusText1.setText(Bundle.getMessage("DiagnosticError5", Integer.toString(numCards - 1)));
                 statusText1.setVisible(true);
