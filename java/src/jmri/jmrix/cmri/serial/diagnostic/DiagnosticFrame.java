@@ -728,12 +728,19 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             statusText1.setVisible(true);
             return (false);
         }
-        // ESP32Node has no onboard-reserved cards, but its cards are still
-        // numbered 1-based (Card 1 = 0x20/A) to match how people naturally
-        // count cards -- so like CPNODE's +2, everywhere ESP32Node looks up
-        // a raw cardTypeLocation array index it adds 1 to the user-typed
-        // card number, just a smaller offset since there's no onboard I/O.
-        if (isESP32NODE && (!testNode.isOutputCard(outCardNum+1))) {
+        // ESP32Node's typed Out Card field is 1-based (Card 1 = the first real
+        // card, 0x20/A) to match its on-screen "Card N" label -- unlike
+        // CPNODE's field above, which is 0-based internally even though its
+        // label shows +2. So the typed number converts to a raw
+        // cardTypeLocation index via -1, not +2 or +1. Card 1 typed -> raw
+        // index 0. Guard against 0 or negative input first (raw index -1
+        // would be an ArrayIndexOutOfBoundsException, not just "not a card").
+        if (isESP32NODE && (outCardNum < 1)) {
+            statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+            statusText1.setVisible(true);
+            return (false);
+        }
+        if (isESP32NODE && (!testNode.isOutputCard(outCardNum-1))) {
             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
             statusText1.setVisible(true);
             return (false);
@@ -794,7 +801,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         if (testNodeType == SerialNode.CPNODE)
          begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;
         else if (testNodeType == SerialNode.ESP32NODE)
-         begOutByte = (testNode.getOutputCardIndex(outCardNum+1)) * portsPerCard;
+         begOutByte = (testNode.getOutputCardIndex(outCardNum-1)) * portsPerCard;
         else
          begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
 
@@ -1293,11 +1300,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         }
         else if (testNodeType == SerialNode.ESP32NODE)
         {
-            if (!testNode.isOutputCard(outCardNum+1)) {
+            if ((outCardNum < 1) || (!testNode.isOutputCard(outCardNum-1))) {
              statusText1.setText(Bundle.getMessage("DiagnosticError6"));
              return;
             }
-            begOutByte = (testNode.getOutputCardIndex(outCardNum+1)) * portsPerCard;
+            begOutByte = (testNode.getOutputCardIndex(outCardNum-1)) * portsPerCard;
         }
         else
         {
