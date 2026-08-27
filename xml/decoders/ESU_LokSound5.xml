@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnOutputs.xsl"?>
-<?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnDescription.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/esu/v4fnDescription.xsl"?>
 <!-- Copyright (C) JMRI 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
