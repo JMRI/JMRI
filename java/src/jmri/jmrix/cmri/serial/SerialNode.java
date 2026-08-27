@@ -60,10 +60,13 @@ public class SerialNode extends AbstractNode {
     public static final int ESP32NODE = 5;      // ESP32Node: self-contained ESP32 CMRI-over-WiFi node,
                                                  // 8 MCP23017 I2C expanders (0x20-0x27), 16 bytes of
                                                  // output/input, no onboard I/O of its own -- unlike
-                                                 // CPNODE/CPMEGA, so its cards are numbered starting at
-                                                 // 0 with no reserved onboard byte offset. See DiagnosticFrame
-                                                 // and NodeConfigManagerFrame for where CPNODE's onboard
-                                                 // offset lives; ESP32NODE deliberately does not use it.
+                                                 // CPNODE/CPMEGA, its cardTypeLocation[] array has no
+                                                 // reserved onboard-byte slots (index 0 IS the first real
+                                                 // card), but user-facing "Card N" numbers displayed in
+                                                 // DiagnosticFrame/NodeConfigManagerFrame are still 1-based
+                                                 // (Card 1 = 0x20/A) via a small +1 display offset there,
+                                                 // matching how people naturally count cards -- a smaller,
+                                                 // separate offset from CPNODE's +2 (2 onboard output bytes).
 
     public static final int NDP_USICSUSIC24 = 78; // 'N' USIC/SUSIC 24 bit cards
     public static final int NDP_USICSUSIC32 = 88; // 'X' USIC/SUSIC 32 bit cards

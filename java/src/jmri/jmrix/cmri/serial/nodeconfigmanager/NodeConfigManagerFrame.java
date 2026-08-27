@@ -2459,9 +2459,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             String val = "     ";
             // ESP32Node has no onboard-reserved cards (unlike CPNODE's 2 onboard
             // OUTPUT bytes, which is why the diagnostic dialog and this label both
-            // add 2 for CPNODE) -- so its Card column starts at 0, matching its
-            // cardTypeLocation array index directly, with no offset at all.
-            int cardLabelOffset = (nodeType == SerialNode.ESP32NODE) ? 0 : 2;
+            // add 2 for CPNODE) -- but it's still numbered 1-based (Card 1 = first
+            // real card) to match how people naturally count cards, hence +1 here
+            // (cpNodeOnboard, the actual array-index skip used below for cardType[],
+            // stays 0 for ESP32Node -- this offset is display-only).
+            int cardLabelOffset = (nodeType == SerialNode.ESP32NODE) ? 1 : 2;
             switch (c) {
                 case CARD_COLUMN:
                     val = Integer.toString(r+cardLabelOffset);

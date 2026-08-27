@@ -706,9 +706,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             return (false);
         }
         // Check for consistency with Node definition
-        // ESP32Node has no onboard-reserved cards (unlike CPNODE below), so it
-        // takes the same un-offset, direct-index validation path as USIC_SUSIC.
-        if (isUSIC_SUSIC || isESP32NODE) {
+        if (isUSIC_SUSIC) {
             if ((outCardNum < 0) || (outCardNum >= numCards)) {
                 statusText1.setText(Bundle.getMessage("DiagnosticError5", Integer.toString(numCards - 1)));
                 statusText1.setVisible(true);
@@ -726,6 +724,16 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             return (false);
         }
         if (isCPNODE && (!testNode.isOutputCard(outCardNum+2))) {
+            statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+            statusText1.setVisible(true);
+            return (false);
+        }
+        // ESP32Node has no onboard-reserved cards, but its cards are still
+        // numbered 1-based (Card 1 = 0x20/A) to match how people naturally
+        // count cards -- so like CPNODE's +2, everywhere ESP32Node looks up
+        // a raw cardTypeLocation array index it adds 1 to the user-typed
+        // card number, just a smaller offset since there's no onboard I/O.
+        if (isESP32NODE && (!testNode.isOutputCard(outCardNum+1))) {
             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
             statusText1.setVisible(true);
             return (false);
@@ -783,10 +791,12 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // complete initialization of output card
         portsPerCard = (testNode.getNumBitsPerCard()) / 8;
 
-        if (testNodeType != SerialNode.CPNODE)        
-         begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
+        if (testNodeType == SerialNode.CPNODE)
+         begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;
+        else if (testNodeType == SerialNode.ESP32NODE)
+         begOutByte = (testNode.getOutputCardIndex(outCardNum+1)) * portsPerCard;
         else
-         begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;        
+         begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
 
         endOutByte = begOutByte + portsPerCard - 1;
         nOutBytes = numOutputCards * portsPerCard;
@@ -1273,21 +1283,29 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         }
         outCardNum = Integer.parseInt(writeCardField.getText());        
         
-        if (testNodeType != SerialNode.CPNODE)   
-        {
-            if (!testNode.isOutputCard(outCardNum)) {
-             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
-             return;                          
-            }
-            begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
-        }
-        else
+        if (testNodeType == SerialNode.CPNODE)
         {
             if (!testNode.isOutputCard(outCardNum+2)) {
              statusText1.setText(Bundle.getMessage("DiagnosticError6"));
-             return;   
+             return;
             }
-            begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard; 
+            begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;
+        }
+        else if (testNodeType == SerialNode.ESP32NODE)
+        {
+            if (!testNode.isOutputCard(outCardNum+1)) {
+             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+             return;
+            }
+            begOutByte = (testNode.getOutputCardIndex(outCardNum+1)) * portsPerCard;
+        }
+        else
+        {
+            if (!testNode.isOutputCard(outCardNum)) {
+             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+             return;
+            }
+            begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
         }
         // Zero the output buffer
         int zero = (invertWriteButton.isSelected()) ? -1:0; 
