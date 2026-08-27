@@ -21,13 +21,13 @@ import jmri.server.json.JsonRequest;
  * Reports real LocoNet loco-slot table usage (used/free/total) for the
  * active connection's command station.
  *
- * FIELD REPORT (Andrew Deak): read-only -- iterates the SlotManager's
- * already in-memory slot array, sending no new LocoNet traffic of its
- * own. "total" reflects the connected command station's real per-model
- * capacity (from the same LnCommandStationType data JMRI already uses to
- * auto-detect the connection), not JMRI's generic upper bound, which is
- * sized for the largest command station JMRI knows about and would
- * overstate real capacity for anything smaller.
+ * Read-only -- iterates the SlotManager's already in-memory slot array,
+ * sending no new LocoNet traffic of its own. "total" reflects the
+ * connected command station's real per-model capacity (from the same
+ * LnCommandStationType data JMRI already uses to auto-detect the
+ * connection), not JMRI's generic upper bound, which is sized for the
+ * largest command station JMRI knows about and would overstate real
+ * capacity for anything smaller.
  *
  * @author Andrew Deak Copyright (C) 2026
  */
@@ -53,16 +53,11 @@ public class JsonLoconetSlotUsageHttpService extends JsonHttpService {
             LocoNetSlot s = sm.slot(i);
             if (s.getSlotType() == SlotType.LOCO) {
                 total++;
-                // FIELD REPORT (Andrew Deak): an Idle slot (dispatched or
-                // released, address still resident but not actively driven)
-                // is capacity the command station will reclaim for the next
-                // engine added -- confirmed live against a real DCS52 after
-                // dispatching an engine from the handset: the slot showed
-                // "Idle" in the Slot Monitor, but this endpoint kept
-                // reporting it as used, so a client polling "free" never saw
-                // the slot come back. Only In-Use/Common hold a live,
-                // actively-driven address that isn't available for a
-                // different loco.
+                // An Idle slot (dispatched or released, address still
+                // resident but not actively driven) is capacity the command
+                // station will reclaim for the next engine added. Only
+                // In-Use/Common hold a live, actively-driven address that
+                // isn't available for a different loco.
                 int status = s.slotStatus() & LnConstants.LOCOSTAT_MASK;
                 if (status == LnConstants.LOCO_IN_USE || status == LnConstants.LOCO_COMMON) {
                     used++;
@@ -92,11 +87,10 @@ public class JsonLoconetSlotUsageHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
-        // FIELD REPORT (Andrew Deak): caught by JsonSchemaServiceCacheTest,
-        // which every JSON service must satisfy -- an unrecognized type must
-        // throw, not silently return this service's own schema regardless
-        // of what was asked for. Matches the same pattern used by every
-        // other JsonHttpService (e.g. JsonIdTagHttpService).
+        // An unrecognized type must throw, not silently return this
+        // service's own schema regardless of what was asked for -- matches
+        // the pattern used by every other JsonHttpService (e.g.
+        // JsonIdTagHttpService).
         if (LOCONET_SLOT_USAGE.equals(type)) {
             return doSchema(type, server,
                     "jmri/server/json/loconet/loconetSlotUsage-server.json",

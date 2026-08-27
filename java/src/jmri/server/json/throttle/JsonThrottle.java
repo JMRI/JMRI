@@ -73,19 +73,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     private DccLocoAddress address = null;
     private String connectionPrefix = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
-    // FIELD REPORT (Andrew Deak): see the FIELD REPORT on onMessage() below --
-    // a command combining acquisition with speed/direction/function fields
-    // in one message (the common pattern for any client mirroring another
-    // throttle's state, e.g. LCC consist-emulation over individual
-    // throttles) used to be silently dropped entirely if it arrived before
-    // notifyThrottleFound() completed. Confirmed live: acquiring and setting
-    // speed+direction in one message for a never-before-seen address left
-    // the throttle at its old/default state, not the requested one -- no
-    // crash (that was already fixed), but the actual command was just lost.
-    // Queuing the one most recent pre-acquisition command and replaying it
-    // once the throttle is actually ready fixes this without touching the
-    // separate, already-correct "ignore after release" behavior (see
-    // everAcquired below -- only the FIRST acquisition gets this treatment).
+    // Holds the one most recent command received before acquisition
+    // completes, so it can be replayed once the throttle is actually ready
+    // instead of being dropped -- only the FIRST acquisition gets this
+    // treatment (see everAcquired), which is separate from the "ignore
+    // after release" behavior.
     private JsonNode pendingData;
     private JsonThrottleSocketService pendingServer;
     private boolean everAcquired = false;
@@ -240,18 +232,14 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void onMessage(Locale locale, JsonNode data, JsonThrottleSocketService server) {
-        // FIELD REPORT: this.throttle is null from construction until the
-        // async ThrottleListener callback (notifyThrottleFound(), below)
-        // sets it, and null again after release(). A client that sends a
-        // throttle command (speed/function/direction) in either window --
-        // confirmed live, reproducibly, from a WiFi throttle client that
-        // subscribes and sends quickly after connecting -- NPE'd on
-        // whatever field it processed first (setSpeedSetting/setIsForward/
-        // getFunctions all dereference this.throttle unconditionally).
-        // Ignoring rather than crashing the WebSocket handler. If this is
-        // still waiting on the FIRST acquisition (not a post-release
-        // message), queue it for replay in notifyThrottleFound() instead of
-        // dropping it -- see the field report on pendingData above.
+        // this.throttle is null from construction until the async
+        // ThrottleListener callback (notifyThrottleFound(), below) sets it,
+        // and null again after release(). A command received during either
+        // window is ignored here rather than crashing (every field handler
+        // below dereferences this.throttle unconditionally). If this is
+        // before the FIRST acquisition, queue it for replay in
+        // notifyThrottleFound() instead of dropping it -- see pendingData
+        // above.
         if (this.throttle == null) {
             if (!this.everAcquired) {
                 log.warn("onMessage(): received a command for {} before its throttle was available -- queuing for replay once acquired",
@@ -286,21 +274,12 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     this.throttle.setIsForward(v.asBoolean());
                     break;
                 case RELEASE:
-                    // FIELD REPORT (Andrew Deak): server.release(this) nulls
-                    // out this.throttle (see the FIELD REPORT above onMessage()).
-                    // Using break here (not return, unlike ESTOP just above)
-                    // let the loop keep iterating remaining fields in the SAME
-                    // message against a now-null throttle -- confirmed live:
-                    // a message with an unrecognized field (e.g.
-                    // "isLongAddress", never explicitly handled below)
-                    // processed AFTER "release" fell through to the default
-                    // case's unconditional this.throttle.getFunctions() and
-                    // NPE'd, killing the whole WebSocket connection. JSON
-                    // object field order isn't guaranteed, so any client
-                    // (not just one sending fields in an unusual order) could
-                    // hit this. Stopping immediately, matching ESTOP's own
-                    // rationale for not processing further commands after a
-                    // terminal action.
+                    // server.release(this) nulls out this.throttle. Returning
+                    // immediately (matching ESTOP above) stops the loop from
+                    // processing any remaining fields in this message against
+                    // a now-null throttle -- JSON object field order isn't
+                    // guaranteed, so a field after "release" could otherwise
+                    // still be reached.
                     server.release(this);
                     return;
                 case STATUS:
@@ -380,10 +359,10 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         throttle.addPropertyChangeListener(this);
         this.speedSteps = throttle.getSpeedStepMode().numSteps;
         this.sendStatus();
-        // FIELD REPORT (Andrew Deak): replay whatever command arrived before
-        // this.throttle was ready -- see the field report on pendingData
-        // above. Applied after sendStatus() so a client watching for state
-        // changes sees the acquisition first, then the requested command.
+        // Replay whatever command arrived before this.throttle was ready --
+        // see pendingData above. Applied after sendStatus() so a client
+        // watching for state changes sees the acquisition first, then the
+        // requested command.
         if (this.pendingData != null) {
             JsonNode replay = this.pendingData;
             JsonThrottleSocketService replayServer = this.pendingServer;

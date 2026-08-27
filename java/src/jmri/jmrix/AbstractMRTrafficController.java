@@ -1079,12 +1079,8 @@ public abstract class AbstractMRTrafficController {
             if (threadStopRequest) return;
             log.error("Unexpected exception in invokeAndWait", ie);
         } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
-            // FIELD REPORT (Andrew Deak): neither branch here passed the
-            // exception as the log call's actual last argument, so SLF4J
-            // never printed a trace -- every exception thrown by any
-            // listener during reply dispatch was silently discarded. For
-            // InvocationTargetException, log the wrapped cause (the real
-            // failure), not the reflection wrapper itself.
+            // For InvocationTargetException, log the wrapped cause (the
+            // real failure), not the reflection wrapper itself.
             Throwable toLog = (e instanceof java.lang.reflect.InvocationTargetException && e.getCause() != null)
                     ? e.getCause() : e;
             log.error("Unexpected exception in invokeAndWait", toLog);

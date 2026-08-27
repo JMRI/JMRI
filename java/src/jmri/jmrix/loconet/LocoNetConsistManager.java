@@ -101,35 +101,22 @@ public class LocoNetConsistManager extends AbstractConsistManager {
                 if (log.isDebugEnabled()) {
                     log.debug(" Slot {} Address {} consist status {}", i, address, LnConstants.CONSIST_STAT(s.consistStatus()));
                 }
-                // FIELD REPORT: this used to also match CONSIST_MID here.
+                // Only CONSIST_TOP is treated as a consist top here.
                 // CONSIST_MID means a locomotive that has a lead above it
                 // AND another member pointing to it below -- normal for
                 // any chain of 3+ members. It is a MEMBER, never its own
-                // top -- the second pass below already correctly handles
-                // CONSIST_MID by following its pointer to its real lead
-                // (line ~126). Treating it as a top here as well created
-                // a phantom duplicate top-level consist for every
-                // mid-chain member: confirmed in the field with a
-                // 5-engine consist where the middle engine ended up
-                // registered as BOTH a member of the real consist AND its
-                // own separate one-engine "consist", corrupting JMRI's
-                // consist list and the Consist Tool display.
+                // top -- the second pass below handles CONSIST_MID by
+                // following its pointer to its real lead.
                 if (s.consistStatus() == LnConstants.CONSIST_TOP) {
                     // this is a consist top, add it to the list, if it is not there
                     // already.
                     //
-                    // FIELD REPORT: also guard against this address
-                    // already being tracked as a MEMBER of some other
-                    // consist. A locomotive mid-way through being linked
-                    // into a consist can briefly still report CONSIST_TOP
-                    // on the wire (it hasn't been linked yet) -- if a
-                    // layout rescan lands in that exact window, it
-                    // registers a phantom standalone consist for an
-                    // address our own in-progress build is about to claim
-                    // as a member, corrupting the consist list (confirmed
-                    // in the field: an engine ended up listed under two
-                    // different consists at once). Skip if some other
-                    // already-tracked consist already claims it.
+                    // Also skip if this address is already tracked as a
+                    // MEMBER of some other consist -- a locomotive mid-way
+                    // through being linked into a consist can briefly still
+                    // report CONSIST_TOP on the wire before it's linked, so
+                    // this avoids registering a phantom standalone consist
+                    // for an address already claimed elsewhere.
                     if (!consistTable.containsKey(address) && !isAlreadyConsistMember(address)) {
                         if (log.isDebugEnabled()) {
                             log.debug("Adding Consist with Address {} due to command station read", address);
@@ -154,23 +141,12 @@ public class LocoNetConsistManager extends AbstractConsistManager {
                     // slot which it has a pointer to (the slot pointer is stored in
                     // the slot's speed).
                     //
-                    // FIELD REPORT: this used to trust that pointer blindly.
-                    // On a command station that's had a lot of addresses
-                    // reused across many separate consist builds (confirmed
-                    // in the field after a long test session), a slot's
-                    // "speed" pointer can still reference a slot number that
-                    // USED to be some earlier, now-defunct consist's lead --
-                    // the pointer itself doesn't get cleared just because
-                    // that old lead relationship ended. Blindly following it
-                    // created a phantom consist keyed to whatever address now
-                    // happens to occupy that stale slot number, with this
-                    // member wrongly attached to it (observed: a phantom
-                    // consist "8002" whose only member was "8006", neither
-                    // of which had anything to do with each other -- 8002
-                    // just happened to be sitting in the slot that some
-                    // earlier test's pointer still referenced). Now verifies
-                    // the pointed-to slot is ACTUALLY a live top/mid right
-                    // now before trusting it as this member's real lead.
+                    // Verifies the pointed-to slot is ACTUALLY a live top/mid
+                    // right now before trusting it as this member's real
+                    // lead -- a slot's "speed" pointer can still reference a
+                    // slot number that used to be some earlier, now-defunct
+                    // consist's lead, since the pointer itself doesn't get
+                    // cleared just because that old lead relationship ended.
                     LocoNetSlot leadSlot = sm.slot(s.speed());
                     if (leadSlot.consistStatus() == LnConstants.CONSIST_TOP || leadSlot.consistStatus() == LnConstants.CONSIST_MID) {
                         DccLocoAddress lead = new DccLocoAddress(leadSlot.locoAddr(), LnThrottleManager.isLongAddress(leadSlot.locoAddr()));

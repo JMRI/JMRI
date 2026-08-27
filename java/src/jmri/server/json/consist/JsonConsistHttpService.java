@@ -128,14 +128,9 @@ public class JsonConsistHttpService extends JsonHttpService {
     }
 
     /**
-     * FIELD REPORT: nothing previously stopped an engine already claimed
-     * by one consist from silently being added to a second one too --
-     * confirmed reachable through this exact JSON path (independent of
-     * the layout-rescan duplicate-consist bugs fixed elsewhere in
-     * LocoNetConsistManager). Removes the engine from any OTHER consist
-     * that currently has it before it gets added here, so an operator
-     * who forgot to release an engine from an old consist can just grab
-     * it into a new one rather than being blocked -- while still
+     * Removes engineAddress from any OTHER consist that currently has it,
+     * so an operator who forgot to release an engine from an old consist
+     * can grab it into a new one instead of being blocked, while still
      * guaranteeing an engine is never a member of two consists at once.
      *
      * @param engineAddress the engine about to be added

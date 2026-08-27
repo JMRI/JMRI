@@ -14,14 +14,10 @@ import jmri.server.json.JsonSocketService;
  * is answered the same way as the HTTP GET, with no held subscription
  * state to release on close.
  *
- * FIELD REPORT (Andrew Deak): a null socket service was considered
- * instead, since this type has no ongoing subscription need, but
- * JsonClientHandler registers whatever getSocketService() returns into
- * every type's dispatch set unconditionally -- a null entry there would
- * NPE the first time a WebSocket client sent this type, the same class
- * of bug fixed elsewhere in this session (AbstractThrottleManager,
- * JsonThrottle). A real, minimal implementation avoids that risk
- * entirely.
+ * A real, minimal implementation is used here rather than a null socket
+ * service, since JsonClientHandler registers whatever getSocketService()
+ * returns into every type's dispatch set unconditionally -- a null entry
+ * there would NPE the first time a WebSocket client sent this type.
  *
  * @author Andrew Deak Copyright (C) 2026
  */

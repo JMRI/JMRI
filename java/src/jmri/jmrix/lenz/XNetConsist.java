@@ -156,18 +156,8 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
-            // FIELD REPORT (Andrew Deak): consistDir.get(address) returns a
-            // Boolean, auto-unboxed to primitive boolean here -- NPEs
-            // whenever address isn't (or is no longer) a key in the map.
-            // Confirmed live via the XPressNet Simulator: this threw inside
-            // the remove-reply callback (message() -> resetRosterEntryCVValue()
-            // -> here), silently discarded before this session's logging fix
-            // (see AbstractMRTrafficController.distributeReply()) because the
-            // exception happens on the EDT during reply dispatch, several
-            // frames away from any caller that could see it directly. The
-            // sibling EasyDccConsist class already guards this exact same
-            // lookup with getOrDefault(address, false); this one just never
-            // got the same treatment.
+            // consistDir.get(address) returns a Boolean, auto-unboxed to
+            // primitive boolean here.
             return consistDir.getOrDefault(address, false);
         } else {
             log.error(CONSIST_TYPE_NOT_SUPPORTED);
@@ -450,19 +440,12 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     @Override
     public synchronized void message(XNetReply l) {
-        // FIELD REPORT (Andrew Deak): confirmed live via the XPressNet
-        // Simulator -- DccConsist.dispose() loops over every remaining
-        // engine calling remove() synchronously, but XNetConsist.remove()
-        // for ADVANCED_CONSIST is fire-and-forget (sends the XNet message
-        // and returns immediately; the actual list/state update only
-        // happens later, in this callback). dispose() doesn't wait for
-        // those replies before nulling out consistList/consistDir --
-        // confirmed: deleting a 5-engine consist produced exactly 5
-        // clustered NPEs a moment later, once the simulator's replies for
-        // all 5 in-flight removes finally arrived against an
-        // already-disposed object. A disposed consist has consistList set
-        // to null (see dispose()), so that's used here as the signal to
-        // ignore any reply that arrives too late to matter.
+        // remove() for ADVANCED_CONSIST is fire-and-forget: it sends the
+        // XNet message and returns immediately, with the actual list/state
+        // update happening later in this callback. dispose() does not wait
+        // for those replies before nulling out consistList, so a reply for
+        // an already-disposed consist must be ignored here rather than
+        // acting on torn-down state.
         if (consistList == null) {
             log.debug("Ignoring reply for consist {} -- already disposed", consistAddress);
             return;

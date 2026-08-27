@@ -225,17 +225,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
                 locoAddress.isLongAddress(),
                 consistAddress.getNumber(),
                 directionNormal);
-        // FIELD REPORT (Andrew Deak): consistControl() returns null instead
-        // of throwing whenever either address fails its own validity check
-        // -- confirmed live: an Advanced Consist address above the short-
-        // address range (consist addresses are always validated as short,
-        // regardless of the locomotive's own long/short form) returned null
-        // here, and the unguarded contents.length below NPE'd. That NPE
-        // propagated all the way up through the JSON WebSocket handler and
-        // closed the client's entire connection (confirmed: JMRI logged
-        // "Unanticipated error" and sent a close frame) -- one bad request
-        // took down the whole session, not just that operation. Every other
-        // failure path in this class reports CONSIST_ERROR instead.
+        // consistControl() returns null instead of throwing whenever either
+        // address fails its own validity check.
         if (contents == null) {
             log.error("Unable to build advanced consist control packet for {} / consist {} -- invalid address",
                     locoAddress, consistAddress);
@@ -249,16 +240,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         msg.setElement(3, '5');
         int j = 4;
         for (int i = 0; i < contents.length; i++) {
-            // FIELD REPORT (Andrew Deak, tested against real EasyDCC
-            // hardware): the buffer is sized 3 chars per content byte
-            // (" XX" -- space then two hex digits), but this used to
-            // pre-increment j before writing the space, then write the
-            // hex digits AT THE SAME j -- immediately overwriting the
-            // space it just wrote, and (because of the pre-increment)
-            // leaving the position before it never written to at all.
-            // The actual message sent to the command station ended up
-            // with garbage/uninitialized bytes interspersed with the
-            // hex fields instead of clean " XX XX XX..." formatting.
+            // the buffer is sized 3 chars per content byte (" XX" -- space
+            // then two hex digits).
             msg.setElement(j, ' ');
             msg.addIntAsTwoHex(contents[i] & 0xFF, j + 1);
             j += 3;
@@ -280,9 +263,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         byte[] contents = jmri.NmraPacket.consistControl(locoAddress.getNumber(),
                 locoAddress.isLongAddress(),
                 0, true);
-        // FIELD REPORT (Andrew Deak): see the matching null-check in
-        // addToAdvancedConsist() -- same NPE-into-dropped-connection risk
-        // if locoAddress itself is invalid.
+        // consistControl() returns null instead of throwing whenever
+        // locoAddress fails its own validity check (see addToAdvancedConsist()).
         if (contents == null) {
             log.error("Unable to build advanced consist control packet to remove {} -- invalid address", locoAddress);
             notifyConsistListeners(locoAddress, ConsistListener.CONSIST_ERROR);
@@ -295,16 +277,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         msg.setElement(3, '5');
         int j = 4;
         for (int i = 0; i < contents.length; i++) {
-            // FIELD REPORT (Andrew Deak, tested against real EasyDCC
-            // hardware): the buffer is sized 3 chars per content byte
-            // (" XX" -- space then two hex digits), but this used to
-            // pre-increment j before writing the space, then write the
-            // hex digits AT THE SAME j -- immediately overwriting the
-            // space it just wrote, and (because of the pre-increment)
-            // leaving the position before it never written to at all.
-            // The actual message sent to the command station ended up
-            // with garbage/uninitialized bytes interspersed with the
-            // hex fields instead of clean " XX XX XX..." formatting.
+            // the buffer is sized 3 chars per content byte (" XX" -- space
+            // then two hex digits).
             msg.setElement(j, ' ');
             msg.addIntAsTwoHex(contents[i] & 0xFF, j + 1);
             j += 3;
