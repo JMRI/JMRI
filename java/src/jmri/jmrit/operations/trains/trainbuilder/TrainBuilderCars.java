@@ -544,6 +544,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
 
         showCarServiceOrder(car); // car on FIFO or LIFO track?
 
+        car.setRouteDestinationTiming(null); // for timing
+        
         // is car departing staging and generate custom load?
         if (!generateCarLoadFromStaging(car)) {
             if (!generateCarLoadStagingToStaging(car) &&
@@ -1183,7 +1185,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     car.toString(), track.getLocation().getName(), track.getName()));
             return false;
         }
-        car.setRouteDestination(null);
+        car.setRouteDestinationTiming(null); // for timing
         String status = car.checkDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {
@@ -1483,7 +1485,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // the correct destination name
         for (int k = routeIndex; k < getRouteList().size(); k++) {
             rld = getRouteList().get(k);
-            car.setRouteDestination(rld); // for timing
+            car.setRouteDestinationTiming(rld); // for timing
             // if car can be picked up later at same location, skip
             if (checkForLaterPickUp(car, rl, rld)) {
                 addLine(SEVEN, BLANK_LINE);
@@ -1720,7 +1722,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // now search for a destination for this car
         for (int k = start; k < routeEnd; k++) {
             rld = getRouteList().get(k);
-            car.setRouteDestination(rld); // for timing
+            car.setRouteDestinationTiming(rld); // for timing
             // if car can be picked up later at same location, set flag
             if (checkForLaterPickUp(car, rl, rld)) {
                 multiplePickup = true;
@@ -2007,11 +2009,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * issue of having cars placed at the alternate when the spur's cars get
      * pulled by this train, but cars were sent to the alternate because the
      * spur was full at the time it was tested.
+     * @param rl route location were the cars are to be redirected if possible.
      *
      * @return true if one or more cars were redirected
      * @throws BuildFailedException if coding issue
      */
-    protected boolean redirectCarsFromAlternateTrack() throws BuildFailedException {
+    protected boolean redirectCarsFromAlternateTrack(RouteLocation rl) throws BuildFailedException {
         // code check, should be aggressive
         if (!Setup.isBuildAggressive()) {
             throw new BuildFailedException("ERROR coding issue, should be using aggressive mode");
@@ -2036,6 +2039,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             log.debug("Car ({}) alternate track ({}) has final destination track ({}) location ({})", car.toString(),
                     car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
+            car.setRouteDestinationTiming(rl); // for timing
             if ((alternate.isYard() || alternate.isInterchange()) &&
                     car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack())
                             .equals(Track.OKAY) &&

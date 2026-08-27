@@ -3890,7 +3890,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             if (rl == r.getRouteLocation()) {
                 break;
             }
-            if (rl == rs.getRouteDestination()) {
+            if (rl == rs.getRouteDestinationTiming()) {
                 return false;
             }
         }
