@@ -689,7 +689,7 @@
         <ul>
             <li>Improve how "show ? if unknown" works with background image.</li>
             <li>Fixed a NullPointerException in the JSON servlet when a POST, PUT, or
-                DELETE request arrived with no Content-Type header, instead of returning
+                DELETE request arrived with no Content-Type header, so it now returns
                 a proper JSON error response.</li>
             <li>Fixed a JSON schema validation gap where requesting an unrecognized
                 type from the LocoNet slot usage service could silently return the
