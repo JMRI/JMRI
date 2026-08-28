@@ -932,7 +932,18 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                             }
                         }
                     }
-                    statusText2.setText(st.reverse().toString()); //statusText2
+                    // Was st.reverse().toString() -- that reversed the WHOLE
+                    // string char-by-char, which flipped bit order within
+                    // each byte to MSB-left/LSB-right AND (for multi-byte
+                    // cards) reversed the order the byte-groups themselves
+                    // appeared in. As curOutBit climbed 0->7, the "1" in the
+                    // reversed string moved right-to-left, not left-to-right.
+                    // Dropping the reversal displays the string exactly as
+                    // built above: bit0 leftmost within each byte (ascending,
+                    // matching the convention used elsewhere in this project),
+                    // byte begOutByte's group leftmost for multi-byte cards --
+                    // so the walking-bit test now visibly sweeps left to right.
+                    statusText2.setText(st.toString()); //statusText2
                     statusText2.setVisible(true);
                     // update bit pattern for next entry
                     curOutBit++;
