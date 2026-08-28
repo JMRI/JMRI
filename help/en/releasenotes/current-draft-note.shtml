@@ -703,4 +703,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Fix the <strong>Current Config file</strong> path in <strong>Help &rArr; File Locations</strong>.</li>
+            <li>The <strong>Single Step Upgrade</strong> help page describes an alternate process to
+            upgrade from JMRI 3.x or 4.x using Java 1.8 to a current 5.x release using Java 21.</li>
         </ul>
