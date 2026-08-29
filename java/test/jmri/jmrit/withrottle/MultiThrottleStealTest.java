@@ -32,10 +32,11 @@ public class MultiThrottleStealTest {
         throttle.canceledThrottleRequest("L1234");
         // the device then confirms the steal.
         throttle.handleMessage("SL1234<;>L1234");
-        // and the sequence continues as normal.
+        // hasAddressBeenFound() alone isn't enough -- see testRefuseOneStealOne()
+        // below for why. Wait for the actual last packet sent instead.
         jmri.util.JUnitUtil.waitFor(() -> {
-            return tcls.hasAddressBeenFound();
-        }, " Address not found");
+            return "MAAL1234<;>s1".equals(cis.getLastPacket());
+        }, "wait for throttle status packet");
         Assert.assertTrue("Address Found", tcls.hasAddressBeenFound());
         // then release it.
         throttle.handleMessage("-L1234<;>r");
@@ -62,6 +63,10 @@ public class MultiThrottleStealTest {
         throttle.canceledThrottleRequest("L4321");
         // the device then confirms the steal.
         throttle.handleMessage("SL4321<;>L4321");
+        // hasAddressBeenFound() alone isn't enough -- it flips true before
+        // notifyThrottleFound()'s own later sendCurrentSpeed()/etc. calls
+        // run, so wait for the actual last packet those send instead.
+        JUnitUtil.waitFor(() -> "MAAL4321<;>s1".equals(cis.getLastPacket()), "wait for throttle status packet");
         // and the sequence continues as normal.
         Assert.assertTrue("Address Found", tcls.hasAddressBeenFound());
         // then release it.

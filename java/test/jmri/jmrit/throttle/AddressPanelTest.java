@@ -34,6 +34,9 @@ public class AddressPanelTest {
         AddressPanel panel = new AddressPanel(tm);
         assertEquals( 0, tm.getThrottleUsageCount(locoAddress), "Throttle is used 0 times");
         panel.setAddress(locoAddress, false);
+        // Throttle acquisition (and its usage-count update) is now deferred
+        // (see AbstractThrottleManager), so not available synchronously.
+        JUnitUtil.waitFor(() -> tm.getThrottleUsageCount(locoAddress) == 1, "wait for throttle acquired");
         assertEquals( 1, tm.getThrottleUsageCount(locoAddress), "Throttle is used 1 times");
         PropertyChangeEvent pce = new PropertyChangeEvent(this,"ThrottleConnected", true, false);
         panel.propertyChange(pce);
