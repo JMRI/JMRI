@@ -56,6 +56,12 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
 
         tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
 
+        // FIELD REPORT (Andrew Deak): notifyThrottleKnown() now defers
+        // notifyThrottleFound() via SwingUtilities.invokeLater() (see its
+        // field comment -- fixes a real StackOverflow from synchronous
+        // re-entrant requestThrottle() calls), so this is no longer
+        // available the instant requestThrottle() returns.
+        JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         throtListen.getThrottle().setSpeedSetting(0.5f);
 
         lnis.outbound.clear();
@@ -106,6 +112,10 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
 
         tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
 
+        // FIELD REPORT (Andrew Deak): see the matching comment in
+        // testShareSingleLnThrottleScenario1() above -- notifyThrottleFound()
+        // is now deferred, so this isn't available synchronously.
+        JUnitUtil.waitFor(() -> throtListen2.getThrottle() != null, "wait for second throttle found");
         tm.dispatchThrottle(throtListen2.getThrottle(), throtListen2); // this fails as loco is in use on multiple throttles
         tm.releaseThrottle(throtListen.getThrottle(), throtListen);
 
