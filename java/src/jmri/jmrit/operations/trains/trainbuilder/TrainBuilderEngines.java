@@ -816,7 +816,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * @return true if destination track found and set
      */
     protected boolean setEngineDestination(Engine engine, RouteLocation rl, RouteLocation rld) {
-        engine.setRouteDestination(rld); // for timing
+        engine.setRouteDestinationTiming(rld); // for timing
         // engine to staging?
         if (rld == getTrain().getTrainTerminatesRouteLocation() && getTerminateStagingTrack() != null) {
             String status =

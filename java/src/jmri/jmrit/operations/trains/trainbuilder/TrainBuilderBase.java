@@ -2469,7 +2469,7 @@ public class TrainBuilderBase extends TrainCommon {
             if (rle == rld) {
                 break;
             }
-            car.setRouteDestination(rle); // for timing
+            car.setRouteDestinationTiming(rle); // for timing
             if (rle.getName().equals(rld.getName()) &&
                     (rle.getCarMoves() < rle.getMaxCarMoves()) &&
                     rle.isDropAllowed() &&

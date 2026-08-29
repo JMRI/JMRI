@@ -611,7 +611,7 @@ public class TrainBuilder extends TrainBuilderCars {
 
                 // we might have freed up space at a spur that has an alternate
                 // track
-                if (redirectCarsFromAlternateTrack()) {
+                if (redirectCarsFromAlternateTrack(rl)) {
                     addLine(SEVEN, BLANK_LINE);
                 }
             }

@@ -1714,12 +1714,12 @@ public class Track extends PropertyChangeSupport {
      */
     private String checkQuickServiceTrack(RollingStock rs, int rsLength) {
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainBuilding();
-        if (train == null || rs.getRouteDestination() == null) {
+        if (train == null || rs.getRouteDestinationTiming() == null) {
             return DISABLED;
         }
 
         // car and locos assigned to trains must be pulled before or when this train arrives
-        int trainArrivalTimeMinutes = train.getExpectedTravelTimeInMinutes(rs.getRouteDestination());
+        int trainArrivalTimeMinutes = train.getExpectedTravelTimeInMinutes(rs.getRouteDestinationTiming());
 
         // reservedLengthSetouts includes clones
         int reserved = getReservedLengthSetouts();
@@ -1730,10 +1730,8 @@ public class Track extends PropertyChangeSupport {
 
         // note that used can be larger than track length
         int trackSpaceAvalable = getLength() - getTotalUsedLength() - reserved;
-        log.debug("Track ({}, {}) space available at start: {} for rolling stock {}, destination ({}) id {}",
-                getLocation().getName(), getName(), trackSpaceAvalable, rs.toString(), rs.getRouteDestination(),
-                rs.getRouteDestination().getId());
-
+        log.debug("Track ({}, {}) space available at start: {} for rolling stock {}, destination ({})",
+                getLocation().getName(), getName(), trackSpaceAvalable, rs.toString(), rs.getRouteDestinationTiming());
         if (trackSpaceAvalable < rsLength) {
             // determine due to timing if there's space for this rolling stock
             CarManager carManager = InstanceManager.getDefault(CarManager.class);
@@ -1776,7 +1774,7 @@ public class Track extends PropertyChangeSupport {
             log.debug(
                     "Rolling stock ({}) length {}, track ({}, {}) pick up time {}, to ({}) train ({}), last train ({})",
                     r.toString(), r.getTotalLength(), r.getLocationName(), r.getTrackName(), r.getPickupTime(),
-                    r.getRouteDestination(), r.getTrain(), r.getLastTrain());
+                    r.getRouteDestinationTiming(), r.getTrain(), r.getLastTrain());
             if (r.getRouteDestination() != null) {
                 // Rolling stock pulled by previous trains will free up track space
                 if (!r.getPickupTime().equals(RollingStock.NONE)) {
