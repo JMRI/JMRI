@@ -33,6 +33,12 @@
         <h4>C/MRI</h4>
             <ul>
                 <li>Extend the possible reply length to support very large SUSIC installs.</li>
+                <li>Added a new node type, <strong>ESP32Node</strong>, for self-contained
+                    ESP32-based CMRI-over-WiFi nodes using MCP23017 I/O expander chips.</li>
+                <li>Network (TCP) connections now automatically attempt to reconnect if the
+                    connection is lost, instead of requiring a manual reconnect.</li>
+                <li>Fixed the direction the bit pattern moves in the CMRI diagnostic Output
+                    Test window, which was displaying right to left instead of left to right.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -137,7 +143,8 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Network (TCP) connections now automatically attempt to reconnect if the
+                    connection is lost, instead of requiring a manual reconnect.</li>
             </ul>
 
         <h4>Oak Tree</h4>
