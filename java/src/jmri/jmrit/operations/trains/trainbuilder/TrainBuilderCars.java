@@ -544,7 +544,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
 
         showCarServiceOrder(car); // car on FIFO or LIFO track?
 
-        car.setRouteDestinationTiming(null); // for timing
+        car.setRouteDestinationTiming(rl); // for timing
         
         // is car departing staging and generate custom load?
         if (!generateCarLoadFromStaging(car)) {

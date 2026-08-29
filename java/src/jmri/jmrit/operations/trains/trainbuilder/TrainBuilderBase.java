@@ -2428,7 +2428,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Checks to see if track has an alternate and can be used
      * 
-     * @param car       the car being dropped
+     * @param car   the car being dropped
      * @param track the destination track
      * @return true if track has an alternate and can be used
      */
@@ -2999,7 +2999,7 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(ONE, BLANK_LINE);
         }
     }
-    
+
     protected void finshBuildReport() {
         // done building
         if (_warnings > 0) {
@@ -3060,7 +3060,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
     }
-    
+
     protected boolean checkRouteLocation(RouteLocation rl) {
         if (getTrain().isLocationSkipped(rl)) {
             addLine(ONE,
@@ -3109,8 +3109,7 @@ public class TrainBuilderBase extends TrainCommon {
                 // was the rolling stock delivered using this route location?
                 if (rs.getRouteDestination() == rl) {
                     addLine(FIVE,
-                            Bundle.getMessage("buildRouteLocation", rs.toString(),
-                                    rs.getTrack().getTrackTypeName(),
+                            Bundle.getMessage("buildRouteLocation", rs.toString(), rs.getTrack().getTrackTypeName(),
                                     rs.getLocationName(), rs.getTrackName(), getTrain().getName(), rl.getName(),
                                     rl.getId()));
                     addLine(FIVE, BLANK_LINE);
