@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup.gui;
 
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
@@ -147,7 +148,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         pDwellTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDwellTime")));
         addItem(pDwellTime, dwellTimeTextField, 0, 0);
         pBuild.add(pDwellTime);
-
+        
         // Switcher Service
         JPanel pSwitcher = new JPanel();
         pSwitcher.setLayout(new GridBagLayout());
@@ -197,7 +198,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // Options
         JPanel pOption = new JPanel();
         pOption.setLayout(new GridBagLayout());
-        pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptions")));
+        pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutAdditionalOptions")));
         addItemLeft(pOption, saveTrainManifestCheckBox, 1, 1);
         addItemLeft(pOption, valueCheckBox, 1, 2);
         addItemLeft(pOption, valueTextField, 2, 2);
@@ -253,12 +254,12 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // disable staging option if normal mode
         stagingAvailCheckBox.setEnabled(!buildNormal.isSelected());
         numberPassesComboBox.setEnabled(!buildNormal.isSelected());
-        dwellTimeTextField.setEnabled(buildOnTime.isSelected());
+        dwellTimeTextField.setEnabled(Setup.isBuildOnTime() && buildOnTime.isSelected());
         tryNormalStagingCheckBox.setEnabled(!buildNormal.isSelected());
     }
 
     @Override
-    public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void radioButtonActionPerformed(ActionEvent ae) {
         log.debug("radio button selected");
         // can't change the build option if there are trains built
         if (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilt()) {
@@ -277,7 +278,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
     // Save button
     @Override
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void buttonActionPerformed(ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             this.savePreferences();
             var topLevelAncestor = getTopLevelAncestor();
@@ -288,7 +289,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
-    protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+    protected void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == routerCheckBox) {
             setRouterCheckBoxesEnabled();
         }
@@ -322,10 +323,12 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setBuildAggressive(buildAggressive.isSelected() || buildOnTime.isSelected());
         Setup.setNumberPasses((Integer) numberPassesComboBox.getSelectedItem());
         Setup.setBuildOnTime(buildOnTime.isSelected());
-        try {
-            Setup.setDwellTime(Integer.parseInt(dwellTimeTextField.getText()));
-        } catch (NumberFormatException e) {
-            log.error("Dwell Time {} must be a number", dwellTimeTextField.getText());
+        if (isBuildOnTime) {
+            try {
+                Setup.setDwellTime(Integer.parseInt(dwellTimeTextField.getText()));
+            } catch (NumberFormatException e) {
+                log.error("Dwell Time {} must be a number", dwellTimeTextField.getText());
+            }
         }
         // local switcher options
         Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
@@ -363,6 +366,8 @@ public class OptionPanel extends OperationsPreferencesPanel {
         OperationsXml.save();
         // bring up the quick service tool
         if (!isBuildOnTime && buildOnTime.isSelected()) {
+            dwellTimeTextField.setText(Integer.toString(Setup.getDwellTime()));
+            dwellTimeTextField.setEnabled(buildOnTime.isSelected());
             LocationsByQuickServiceFrame f = new LocationsByQuickServiceFrame();
             f.initComponents();
         }

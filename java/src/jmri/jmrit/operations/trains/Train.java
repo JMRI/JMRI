@@ -7,8 +7,6 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import org.jdom2.Element;
-
 import jmri.InstanceManager;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
@@ -30,6 +28,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.jdom2.Element;
 
 /**
  * Represents a train on the layout
@@ -3873,6 +3873,28 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return getDepartureTrack().getDropRS() > 0;
         }
         return false;
+    }
+    
+    /**
+     * Used to determine if rolling stock was pulled before the current build
+     * route location. If rolling stock before pulled current route location,
+     * track space is available.
+     * @param rs The rolling stock to be placed
+     * 
+     * @param r rolling stock to be tested for timing
+     * @return true if rolling stock was pulled
+     */
+    public boolean checkPullTiming(RollingStock rs, RollingStock r) {
+        // go thought the train's route to determine if rolling stock was already pulled.
+        for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
+            if (rl == r.getRouteLocation()) {
+                break;
+            }
+            if (rl == rs.getRouteDestinationTiming()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void dispose() {

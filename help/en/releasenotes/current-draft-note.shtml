@@ -26,12 +26,13 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Updated CBUS op-code definitions with the new VLCB op-codes so they
+                    show up nicely in the CBUS Console.</li>
             </ul>
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Extend the possible reply length to support very large SUSIC installs.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -85,11 +86,14 @@
                     function commands for its locomotive after receiving an
                     unrecognized locomotive information response, requiring a
                     JMRI restart to recover.</li>
+                <li>Fixed a consist-handling bug in XNetConsist affecting rapid
+                    add/remove/delete cycles from an external JSON client, matching
+                    the equivalent LocoNet fix.</li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>SlotMonitor update: 
+                <li>SlotMonitor update:
                 <ul>
                     <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
                     <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
@@ -107,6 +111,14 @@
                   LocoNet Monitor.</li>
                 <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
                 <li>LocoNet Clock now uses the same throttle ID as the rest of JMRI, instead of (illegal) 00 00.</li>
+                <li>Fixed several consist-handling bugs that could leave a LocoNet consist in an
+                    inconsistent state after rapid add/remove/delete operations from an external
+                    JSON client (e.g. a WiFi throttle panel), including cases that could report a
+                    consist change as failed when it had actually succeeded.</li>
+                <li>Added a new JSON service, <code>loconetSlotUsage</code>, that reports live
+                    LocoNet slot usage (used/free/total) over both the HTTP and WebSocket JSON
+                    APIs, so external clients can detect slot exhaustion before a consist or
+                    throttle operation fails.</li>
                 <li>Added a LocoNet option to update slot status at LocoNet message creation and ignore echos of our own messages.</li>
             </ul>
 
@@ -457,7 +469,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Roster entries are to have unique IDs.  Due to a previous oversight,
+                you could directly change the entry in the DecoderPro table to create
+                a duplicate. You can still edit the ID, but creating entries with
+                duplicate IDs are no longer allowed.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -485,6 +500,8 @@
                 occupancy change: a redraw now repaints the drawing area only, instead of
                 the whole window including its menu bar, tool bar and scroll bars, and a
                 partial repaint no longer redraws the whole visible track plan.</li>
+            <li>Fixed an occasional Concurrent Modification Exception error in the
+                LayoutBlock class during startup.</li>
             <li>An unexpected error while restoring the saved block values no longer leaves
                 Layout Block routing uninitialized, and is now reported in the log instead
                 of passing unnoticed.</li>
@@ -626,7 +643,14 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fixed a race condition where a newly-acquired throttle could be handed
+                to listeners before its roster entry was attached, so a listener could
+                briefly see a throttle with no roster entry. The roster entry is now
+                set before listeners are notified.</li>
+            <li>Applied the same consist-handling fixes made for LocoNet and XPressNet
+                to EasyDccConsist, for parity across consist-capable systems.</li>
+            <li>Fixed a thread-safety bug in the JSON throttle manager where simultaneous
+                JSON client connections could corrupt throttle bookkeeping.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -668,6 +692,12 @@
         <a id="server" name="server"></a>
         <ul>
             <li>Improve how "show ? if unknown" works with background image.</li>
+            <li>Fixed a NullPointerException in the JSON servlet when a POST, PUT, or
+                DELETE request arrived with no Content-Type header, so it now returns
+                a proper JSON error response.</li>
+            <li>Fixed a JSON schema validation gap where requesting an unrecognized
+                type from the LocoNet slot usage service could silently return the
+                wrong schema instead of an error.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -697,5 +727,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fix the <strong>Current Config file</strong> path in <strong>Help &rArr; File Locations</strong>.</li>
+            <li>The <strong>Single Step Upgrade</strong> help page describes an alternate process to
+            upgrade from JMRI 3.x or 4.x using Java 1.8 to a current 5.x release using Java 21.</li>
         </ul>

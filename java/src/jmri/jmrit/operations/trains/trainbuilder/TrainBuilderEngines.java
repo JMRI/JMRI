@@ -3,10 +3,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -17,6 +13,10 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.BuildFailedException;
 import jmri.jmrit.operations.trains.Train;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains methods for engines when building a train.
@@ -816,6 +816,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * @return true if destination track found and set
      */
     protected boolean setEngineDestination(Engine engine, RouteLocation rl, RouteLocation rld) {
+        engine.setRouteDestinationTiming(rld); // for timing
         // engine to staging?
         if (rld == getTrain().getTrainTerminatesRouteLocation() && getTerminateStagingTrack() != null) {
             String status =

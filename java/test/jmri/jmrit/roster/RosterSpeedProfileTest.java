@@ -131,6 +131,9 @@ public class RosterSpeedProfileTest {
         ThrottleListen throtListen = new ThrottleListen();
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
         assertTrue( tm.requestThrottle(rF1, throtListen, false) );
+        // Throttle acquisition is deferred (see AbstractThrottleManager) --
+        // without this wait, testScene() below NPE'd on a still-null throttle.
+        JUnitUtil.waitFor(() -> throtListen.throttle != null, "wait for throttle found");
         stmLimit = stm.numSteps;
         resultSummary.testTotalCount = 0;
         for (float testDistance = fromDistanceMm; testDistance <= toDistanceMm; testDistance += byDistanceMm) {
