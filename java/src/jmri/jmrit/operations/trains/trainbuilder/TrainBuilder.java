@@ -601,7 +601,7 @@ public class TrainBuilder extends TrainBuilderCars {
             // moves. This will perform local moves at this location, services
             // off spot tracks, only in aggressive mode and at least one car
             // has a new destination
-            if (Setup.isBuildAggressive() && saveReqMoves != _reqNumOfMoves) {
+            if (Setup.isBuildAggressive() && saveReqMoves != _reqNumOfMoves || Setup.isBuildOnTime()) {
                 log.debug("Perform extra pass at location ({})", rl.getName());
                 // use up to half of the available moves left for this location
                 if (_reqNumOfMoves < (rl.getMaxCarMoves() - rl.getCarMoves()) / 2) {

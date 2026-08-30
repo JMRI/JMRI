@@ -1367,6 +1367,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public String getSetoutTime() {
+        if (getTrain() != null && getTrain().isBuilding() && getRouteDestination() != null) {
+            _setoutTime = getTrain().getExpectedArrivalTime(getRouteDestination(), true);
+        }
         if (getTrain() != null) {
             return _setoutTime;
         }
