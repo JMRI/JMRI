@@ -505,6 +505,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         ColumnNumber colorder = ColumnNumber.values()[col];
         switch (colorder) {
             case SLOTCOLUMN:
+            case JMRITHROTTLECOUNT:
                 return new JTextField(3).getPreferredSize().width;
             case ESTOPCOLUMN:
                 return new JButton(Bundle.getMessage("ButtonEstop")).getPreferredSize().width;
@@ -528,8 +529,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
                 return new JTextField(7).getPreferredSize().width;
-            case JMRITHROTTLECOUNT:
-                return new JTextField(3).getPreferredSize().width;
             case LASTUPDATE:
                 return new JTextField("SS HH:MM:SS ").getPreferredSize().width;
             case F0COLUMN:
