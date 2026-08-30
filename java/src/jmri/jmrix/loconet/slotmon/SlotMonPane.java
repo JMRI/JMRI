@@ -1,5 +1,9 @@
 package jmri.jmrix.loconet.slotmon;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -21,6 +25,7 @@ import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.swing.JmriJTablePersistenceManager;
+import jmri.util.MenuScroller;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
@@ -79,11 +84,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-        int columns = SlotMonDataModel.NUMCOLUMN_LOCONETPROTOCOL_TWO ;
-        if (memo.getSlotManager().getLoconetProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
-            columns = SlotMonDataModel.NUMCOLUMN_LOCONETPROTOCOL_ONE ;
-        }
-        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), columns, memo);
+        boolean hideColumnsF9toF28 = true; //(memo.getSlotManager().getLoconetProtocol() != LnConstants.LOCONETPROTOCOL_TWO);
+        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), memo);
         slotTable = new JTable(slotModel);
         slotTable.setColumnModel(new XTableColumnModel());
         slotTable.createDefaultColumnsFromModel();
@@ -120,13 +122,14 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         slotTable.sizeColumnsToFit(-1);
 
         // install a button renderer & editor in the "DISP" column for freeing a slot
-        setColumnToHoldButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.DISPCOLUMN));
+        setColumnToHoldButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.DISPCOLUMN.ordinal()));
 
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
-        setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ESTOPCOLUMN));
+        setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.ESTOPCOLUMN.ordinal()));
 
         // Install a numeric format for ConsistAddress
-        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.CONSISTADDRESS));
+        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.CONSISTADDRESS.ordinal()));
+        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.JMRITHROTTLECOUNT.ordinal()));
 
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
             // unable to persist because Default class provides no mechanism to
@@ -139,6 +142,16 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
             }
         });
 
+        // Hide functions F9 thru F28 if not used.
+        if (hideColumnsF9toF28) {
+            XTableColumnModel tcm = (XTableColumnModel) slotTable.getColumnModel();
+            for (int ixCol = SlotMonDataModel.columnNumber.F9COLUMN.ordinal() ;
+                    ixCol <= SlotMonDataModel.columnNumber.F28COLUMN.ordinal() ;
+                    ixCol ++ ) {
+                TableColumn tc = tcm.getColumnByModelIndex(ixCol);
+                tcm.setColumnVisible(tc, false);
+            }
+        }
         // add listener object so checkboxes functio
         refreshAllButton.addActionListener((ActionEvent e) -> {
             slotModel.refreshSlots();
@@ -320,11 +333,11 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile")); // NOI18N
         fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvAll")),
             null, slotModel, "Slot_Monitor_All.csv", new int[]{
-            SlotMonDataModel.ESTOPCOLUMN})); // NOI18N
+            SlotMonDataModel.columnNumber.ESTOPCOLUMN.ordinal()})); // NOI18N
         fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvView")),
             slotTable, slotModel, "Slot_Monitor_View.csv", new int[]{
-            SlotMonDataModel.ESTOPCOLUMN})); // NOI18N
-        return fileMenu;
+            SlotMonDataModel.columnNumber.ESTOPCOLUMN.ordinal()})); // NOI18N
+     return fileMenu;
     }
 
     // methods to communicate with SlotManager
@@ -389,7 +402,9 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
                 popupMenu.add(menuItem);
             }
         }
+        MenuScroller.setScrollerFor(popupMenu,10,200,0,0);
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
+
     }
 
     /**

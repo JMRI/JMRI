@@ -99,6 +99,8 @@
                     <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
                     <li>If purging is disabled in the Command Station so is slow scanning.</li>
                       A value of -1 stops slowscanning.</li>
+                    <li>Added a column to show the number of JMRI Throttles sharing a slot.</li>
+                    <li>Updated SlotMon help screen.</li>
                 </ul>
                 <li>Remove some extra messages when configuring with the board-level tools
                   in the LocoNet menu</li>
