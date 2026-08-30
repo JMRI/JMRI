@@ -29,7 +29,7 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
-    enum columnNumber {SLOTCOLUMN,
+    enum ColumnNumber {SLOTCOLUMN,
     ESTOPCOLUMN,
     ADDRCOLUMN,
     SPDCOLUMN,
@@ -82,7 +82,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         this.memo = memo;
 
         // number of columns
-        this.columns = columnNumber.MAXCOLUMN.ordinal();
+        this.columns = ColumnNumber.MAXCOLUMN.ordinal();
         // set number of rows;
         numRows = row;
 
@@ -122,7 +122,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public String getColumnName(int col) {
-        columnNumber colorder = columnNumber.values()[col];
+        ColumnNumber colorder = ColumnNumber.values()[col];
         switch (colorder) {
             case SLOTCOLUMN:
                 return Bundle.getMessage("SlotCol");
@@ -215,7 +215,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public Class<?> getColumnClass(int col) {
-        columnNumber colorder = columnNumber.values()[col];
+        ColumnNumber colorder = ColumnNumber.values()[col];
         switch (colorder) {
             case SLOTCOLUMN:
             case ADDRCOLUMN:
@@ -271,7 +271,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public boolean isCellEditable(int row, int col) {
         LocoNetSlot s = memo.getSlotManager().slot(row);
-        columnNumber colorder = columnNumber.values()[col];
+        ColumnNumber colorder = ColumnNumber.values()[col];
         switch (colorder) {
             case ESTOPCOLUMN:
             case DISPCOLUMN:
@@ -320,7 +320,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             return null;
         }
 
-        columnNumber colorder = columnNumber.values()[col];
+        ColumnNumber colorder = ColumnNumber.values()[col];
         switch (colorder) {
             case SLOTCOLUMN:  // slot number
                 return row;
@@ -502,7 +502,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public int getPreferredWidth(int col) {
-        columnNumber colorder = columnNumber.values()[col];
+        ColumnNumber colorder = ColumnNumber.values()[col];
         switch (colorder) {
             case SLOTCOLUMN:
                 return new JTextField(3).getPreferredSize().width;
@@ -577,7 +577,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             return;
         }
 
-        columnNumber colorder = columnNumber.values()[col];
+        ColumnNumber colorder = ColumnNumber.values()[col];
         switch (colorder) {
             case ESTOPCOLUMN:
                 log.debug("Start estop in slot {}", row);
@@ -971,11 +971,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             log.error("slot pointer was null for slot row: {} col: {}", row, col);
             return;
         }
-        boolean tempF0 = (col == columnNumber.F0COLUMN.ordinal()) ? !slot.isF0() : slot.isF0();
-        boolean tempF1 = (col == columnNumber.F1COLUMN.ordinal()) ? !slot.isF1() : slot.isF1();
-        boolean tempF2 = (col == columnNumber.F2COLUMN.ordinal()) ? !slot.isF2() : slot.isF2();
-        boolean tempF3 = (col == columnNumber.F3COLUMN.ordinal()) ? !slot.isF3() : slot.isF3();
-        boolean tempF4 = (col == columnNumber.F4COLUMN.ordinal()) ? !slot.isF4() : slot.isF4();
+        boolean tempF0 = (col == ColumnNumber.F0COLUMN.ordinal()) ? !slot.isF0() : slot.isF0();
+        boolean tempF1 = (col == ColumnNumber.F1COLUMN.ordinal()) ? !slot.isF1() : slot.isF1();
+        boolean tempF2 = (col == ColumnNumber.F2COLUMN.ordinal()) ? !slot.isF2() : slot.isF2();
+        boolean tempF3 = (col == ColumnNumber.F3COLUMN.ordinal()) ? !slot.isF3() : slot.isF3();
+        boolean tempF4 = (col == ColumnNumber.F4COLUMN.ordinal()) ? !slot.isF4() : slot.isF4();
 
         int new_dirf = ((slot.isForward() ? 0 : LnConstants.DIRF_DIR)
                 | (tempF0 ? LnConstants.DIRF_F0 : 0)
@@ -1016,10 +1016,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * @param row  grid row
      */
     protected void sendFunctionGroup2(LocoNetSlot slot, int col, int row) {
-        boolean tempF5 = (col == columnNumber.F5COLUMN.ordinal()) ? !slot.isF5() : slot.isF5();
-        boolean tempF6 = (col == columnNumber.F6COLUMN.ordinal()) ? !slot.isF6() : slot.isF6();
-        boolean tempF7 = (col == columnNumber.F7COLUMN.ordinal()) ? !slot.isF7() : slot.isF7();
-        boolean tempF8 = (col == columnNumber.F8COLUMN.ordinal()) ? !slot.isF8() : slot.isF8();
+        boolean tempF5 = (col == ColumnNumber.F5COLUMN.ordinal()) ? !slot.isF5() : slot.isF5();
+        boolean tempF6 = (col == ColumnNumber.F6COLUMN.ordinal()) ? !slot.isF6() : slot.isF6();
+        boolean tempF7 = (col == ColumnNumber.F7COLUMN.ordinal()) ? !slot.isF7() : slot.isF7();
+        boolean tempF8 = (col == ColumnNumber.F8COLUMN.ordinal()) ? !slot.isF8() : slot.isF8();
 
         int new_snd = ((tempF8 ? LnConstants.SND_F8 : 0)
                 | (tempF7 ? LnConstants.SND_F7 : 0)
@@ -1062,10 +1062,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      */
      protected void sendFunctionGroup3(LocoNetSlot slot, int col, int row) {
         // LocoNet practice is to send F9-F12 as a DCC packet
-        boolean tempF9 = (col == columnNumber.F9COLUMN.ordinal()) ? !slot.isF9() : slot.isF9();
-        boolean tempF10 = (col == columnNumber.F10COLUMN.ordinal()) ? !slot.isF10() : slot.isF10();
-        boolean tempF11 = (col == columnNumber.F11COLUMN.ordinal()) ? !slot.isF11() : slot.isF11();
-        boolean tempF12 = (col == columnNumber.F12COLUMN.ordinal()) ? !slot.isF12() : slot.isF12();
+        boolean tempF9 = (col == ColumnNumber.F9COLUMN.ordinal()) ? !slot.isF9() : slot.isF9();
+        boolean tempF10 = (col == ColumnNumber.F10COLUMN.ordinal()) ? !slot.isF10() : slot.isF10();
+        boolean tempF11 = (col == ColumnNumber.F11COLUMN.ordinal()) ? !slot.isF11() : slot.isF11();
+        boolean tempF12 = (col == ColumnNumber.F12COLUMN.ordinal()) ? !slot.isF12() : slot.isF12();
         byte[] result = jmri.NmraPacket.function9Through12Packet(slot.locoAddr(), (slot.locoAddr() >= 128),
                 tempF9, tempF10, tempF11, tempF12);
 
@@ -1082,14 +1082,14 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      */
     protected void sendFunctionGroup4(LocoNetSlot slot, int col, int row) {
         // LocoNet practice is to send F13-F20 as a DCC packet
-        boolean tempF13 = (col == columnNumber.F13COLUMN.ordinal()) ? !slot.isF13() : slot.isF13();
-        boolean tempF14 = (col == columnNumber.F14COLUMN.ordinal()) ? !slot.isF14() : slot.isF14();
-        boolean tempF15 = (col == columnNumber.F15COLUMN.ordinal()) ? !slot.isF15() : slot.isF15();
-        boolean tempF16 = (col == columnNumber.F16COLUMN.ordinal()) ? !slot.isF16() : slot.isF16();
-        boolean tempF17 = (col == columnNumber.F17COLUMN.ordinal()) ? !slot.isF17() : slot.isF17();
-        boolean tempF18 = (col == columnNumber.F18COLUMN.ordinal()) ? !slot.isF18() : slot.isF18();
-        boolean tempF19 = (col == columnNumber.F19COLUMN.ordinal()) ? !slot.isF19() : slot.isF19();
-        boolean tempF20 = (col == columnNumber.F20COLUMN.ordinal()) ? !slot.isF20() : slot.isF20();
+        boolean tempF13 = (col == ColumnNumber.F13COLUMN.ordinal()) ? !slot.isF13() : slot.isF13();
+        boolean tempF14 = (col == ColumnNumber.F14COLUMN.ordinal()) ? !slot.isF14() : slot.isF14();
+        boolean tempF15 = (col == ColumnNumber.F15COLUMN.ordinal()) ? !slot.isF15() : slot.isF15();
+        boolean tempF16 = (col == ColumnNumber.F16COLUMN.ordinal()) ? !slot.isF16() : slot.isF16();
+        boolean tempF17 = (col == ColumnNumber.F17COLUMN.ordinal()) ? !slot.isF17() : slot.isF17();
+        boolean tempF18 = (col == ColumnNumber.F18COLUMN.ordinal()) ? !slot.isF18() : slot.isF18();
+        boolean tempF19 = (col == ColumnNumber.F19COLUMN.ordinal()) ? !slot.isF19() : slot.isF19();
+        boolean tempF20 = (col == ColumnNumber.F20COLUMN.ordinal()) ? !slot.isF20() : slot.isF20();
         byte[] result = jmri.NmraPacket.function13Through20Packet(slot.locoAddr(), (slot.locoAddr() >= 128),
                 tempF13, tempF14, tempF15, tempF16,
                 tempF17, tempF18, tempF19, tempF20);
@@ -1108,14 +1108,14 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     protected void sendFunctionGroup5(LocoNetSlot slot, int col, int row) {
         // LocoNet practice is to send F21-F28 as a DCC packet
         // LocoNet practice is to send F13-F20 as a DCC packet
-        boolean tempF21 = (col == columnNumber.F21COLUMN.ordinal()) ? !slot.isF21() : slot.isF21();
-        boolean tempF22 = (col == columnNumber.F22COLUMN.ordinal()) ? !slot.isF22() : slot.isF22();
-        boolean tempF23 = (col == columnNumber.F23COLUMN.ordinal()) ? !slot.isF23() : slot.isF23();
-        boolean tempF24 = (col == columnNumber.F24COLUMN.ordinal()) ? !slot.isF24() : slot.isF24();
-        boolean tempF25 = (col == columnNumber.F25COLUMN.ordinal()) ? !slot.isF25() : slot.isF25();
-        boolean tempF26 = (col == columnNumber.F26COLUMN.ordinal()) ? !slot.isF26() : slot.isF26();
-        boolean tempF27 = (col == columnNumber.F27COLUMN.ordinal()) ? !slot.isF27() : slot.isF27();
-        boolean tempF28 = (col == columnNumber.F28COLUMN.ordinal()) ? !slot.isF28() : slot.isF28();
+        boolean tempF21 = (col == ColumnNumber.F21COLUMN.ordinal()) ? !slot.isF21() : slot.isF21();
+        boolean tempF22 = (col == ColumnNumber.F22COLUMN.ordinal()) ? !slot.isF22() : slot.isF22();
+        boolean tempF23 = (col == ColumnNumber.F23COLUMN.ordinal()) ? !slot.isF23() : slot.isF23();
+        boolean tempF24 = (col == ColumnNumber.F24COLUMN.ordinal()) ? !slot.isF24() : slot.isF24();
+        boolean tempF25 = (col == ColumnNumber.F25COLUMN.ordinal()) ? !slot.isF25() : slot.isF25();
+        boolean tempF26 = (col == ColumnNumber.F26COLUMN.ordinal()) ? !slot.isF26() : slot.isF26();
+        boolean tempF27 = (col == ColumnNumber.F27COLUMN.ordinal()) ? !slot.isF27() : slot.isF27();
+        boolean tempF28 = (col == ColumnNumber.F28COLUMN.ordinal()) ? !slot.isF28() : slot.isF28();
         byte[] result = jmri.NmraPacket.function21Through28Packet(slot.locoAddr(), (slot.locoAddr() >= 128),
                 tempF21, tempF22, tempF23, tempF24,
                 tempF25, tempF26, tempF27, tempF28);
@@ -1132,13 +1132,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * @param row  grid row
      */
     protected void sendExpFunctionGroup1(LocoNetSlot slot, int col, int row) {
-        boolean tempF0 = (col == columnNumber.F0COLUMN.ordinal()) ? !slot.isF0() : slot.isF0();
-        boolean tempF1 = (col == columnNumber.F1COLUMN.ordinal()) ? !slot.isF1() : slot.isF1();
-        boolean tempF2 = (col == columnNumber.F2COLUMN.ordinal()) ? !slot.isF2() : slot.isF2();
-        boolean tempF3 = (col == columnNumber.F3COLUMN.ordinal()) ? !slot.isF3() : slot.isF3();
-        boolean tempF4 = (col == columnNumber.F4COLUMN.ordinal()) ? !slot.isF4() : slot.isF4();
-        boolean tempF5 = (col == columnNumber.F5COLUMN.ordinal()) ? !slot.isF5() : slot.isF5();
-        boolean tempF6 = (col == columnNumber.F6COLUMN.ordinal()) ? !slot.isF6() : slot.isF6();
+        boolean tempF0 = (col == ColumnNumber.F0COLUMN.ordinal()) ? !slot.isF0() : slot.isF0();
+        boolean tempF1 = (col == ColumnNumber.F1COLUMN.ordinal()) ? !slot.isF1() : slot.isF1();
+        boolean tempF2 = (col == ColumnNumber.F2COLUMN.ordinal()) ? !slot.isF2() : slot.isF2();
+        boolean tempF3 = (col == ColumnNumber.F3COLUMN.ordinal()) ? !slot.isF3() : slot.isF3();
+        boolean tempF4 = (col == ColumnNumber.F4COLUMN.ordinal()) ? !slot.isF4() : slot.isF4();
+        boolean tempF5 = (col == ColumnNumber.F5COLUMN.ordinal()) ? !slot.isF5() : slot.isF5();
+        boolean tempF6 = (col == ColumnNumber.F6COLUMN.ordinal()) ? !slot.isF6() : slot.isF6();
         int new_F0F6 = ((tempF5 ? 0b00100000 : 0) | (tempF6 ? 0b01000000 : 0)
                 | (tempF0 ? LnConstants.DIRF_F0 : 0)
                 | (tempF1 ? LnConstants.DIRF_F1 : 0)
@@ -1161,13 +1161,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * @param row  grid row
      */
     protected void sendExpFunctionGroup2(LocoNetSlot slot, int col, int row) {
-        boolean tempF7 = (col == columnNumber.F7COLUMN.ordinal()) ? !slot.isF7() : slot.isF7();
-        boolean tempF8 = (col == columnNumber.F8COLUMN.ordinal()) ? !slot.isF8() : slot.isF8();
-        boolean tempF9 = (col == columnNumber.F9COLUMN.ordinal()) ? !slot.isF9() : slot.isF9();
-        boolean tempF10 = (col == columnNumber.F10COLUMN.ordinal()) ? !slot.isF10() : slot.isF10();
-        boolean tempF11 = (col == columnNumber.F11COLUMN.ordinal()) ? !slot.isF11() : slot.isF11();
-        boolean tempF12 = (col == columnNumber.F12COLUMN.ordinal()) ? !slot.isF12() : slot.isF12();
-        boolean tempF13 = (col == columnNumber.F13COLUMN.ordinal()) ? !slot.isF13() : slot.isF13();
+        boolean tempF7 = (col == ColumnNumber.F7COLUMN.ordinal()) ? !slot.isF7() : slot.isF7();
+        boolean tempF8 = (col == ColumnNumber.F8COLUMN.ordinal()) ? !slot.isF8() : slot.isF8();
+        boolean tempF9 = (col == ColumnNumber.F9COLUMN.ordinal()) ? !slot.isF9() : slot.isF9();
+        boolean tempF10 = (col == ColumnNumber.F10COLUMN.ordinal()) ? !slot.isF10() : slot.isF10();
+        boolean tempF11 = (col == ColumnNumber.F11COLUMN.ordinal()) ? !slot.isF11() : slot.isF11();
+        boolean tempF12 = (col == ColumnNumber.F12COLUMN.ordinal()) ? !slot.isF12() : slot.isF12();
+        boolean tempF13 = (col == ColumnNumber.F13COLUMN.ordinal()) ? !slot.isF13() : slot.isF13();
             int new_F7F13 = ((tempF7 ? 0b00000001 : 0) | (tempF8 ? 0b00000010 : 0)
                     | (tempF9  ? 0b00000100 : 0)
                     | (tempF10 ? 0b00001000 : 0)
@@ -1191,13 +1191,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * @param row  grid row
      */
     protected void sendExpFunctionGroup3(LocoNetSlot slot, int col, int row) {
-        boolean tempF14 = (col == columnNumber.F14COLUMN.ordinal()) ? !slot.isF14() : slot.isF14();
-        boolean tempF15 = (col == columnNumber.F15COLUMN.ordinal()) ? !slot.isF15() : slot.isF15();
-        boolean tempF16 = (col == columnNumber.F16COLUMN.ordinal()) ? !slot.isF16() : slot.isF16();
-        boolean tempF17 = (col == columnNumber.F17COLUMN.ordinal()) ? !slot.isF17() : slot.isF17();
-        boolean tempF18 = (col == columnNumber.F18COLUMN.ordinal()) ? !slot.isF18() : slot.isF18();
-        boolean tempF19 = (col == columnNumber.F19COLUMN.ordinal()) ? !slot.isF19() : slot.isF19();
-        boolean tempF20 = (col == columnNumber.F20COLUMN.ordinal()) ? !slot.isF20() : slot.isF20();
+        boolean tempF14 = (col == ColumnNumber.F14COLUMN.ordinal()) ? !slot.isF14() : slot.isF14();
+        boolean tempF15 = (col == ColumnNumber.F15COLUMN.ordinal()) ? !slot.isF15() : slot.isF15();
+        boolean tempF16 = (col == ColumnNumber.F16COLUMN.ordinal()) ? !slot.isF16() : slot.isF16();
+        boolean tempF17 = (col == ColumnNumber.F17COLUMN.ordinal()) ? !slot.isF17() : slot.isF17();
+        boolean tempF18 = (col == ColumnNumber.F18COLUMN.ordinal()) ? !slot.isF18() : slot.isF18();
+        boolean tempF19 = (col == ColumnNumber.F19COLUMN.ordinal()) ? !slot.isF19() : slot.isF19();
+        boolean tempF20 = (col == ColumnNumber.F20COLUMN.ordinal()) ? !slot.isF20() : slot.isF20();
         int new_F14F20 = ((tempF14 ? 0b00000001 : 0) | (tempF15 ? 0b00000010 : 0)
                 | (tempF16  ? 0b00000100 : 0)
                 | (tempF17 ? 0b00001000 : 0)
@@ -1220,14 +1220,14 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * @param row  grid row
      */
     protected void sendExpFunctionGroup4(LocoNetSlot slot, int col, int row) {
-        boolean tempF21 = (col == columnNumber.F21COLUMN.ordinal()) ? !slot.isF21() : slot.isF21();
-        boolean tempF22 = (col == columnNumber.F22COLUMN.ordinal()) ? !slot.isF22() : slot.isF22();
-        boolean tempF23 = (col == columnNumber.F23COLUMN.ordinal()) ? !slot.isF23() : slot.isF23();
-        boolean tempF24 = (col == columnNumber.F24COLUMN.ordinal()) ? !slot.isF24() : slot.isF24();
-        boolean tempF25 = (col == columnNumber.F25COLUMN.ordinal()) ? !slot.isF25() : slot.isF25();
-        boolean tempF26 = (col == columnNumber.F26COLUMN.ordinal()) ? !slot.isF26() : slot.isF26();
-        boolean tempF27 = (col == columnNumber.F27COLUMN.ordinal()) ? !slot.isF27() : slot.isF27();
-        boolean tempF28 = (col == columnNumber.F28COLUMN.ordinal()) ? !slot.isF28() : slot.isF28();
+        boolean tempF21 = (col == ColumnNumber.F21COLUMN.ordinal()) ? !slot.isF21() : slot.isF21();
+        boolean tempF22 = (col == ColumnNumber.F22COLUMN.ordinal()) ? !slot.isF22() : slot.isF22();
+        boolean tempF23 = (col == ColumnNumber.F23COLUMN.ordinal()) ? !slot.isF23() : slot.isF23();
+        boolean tempF24 = (col == ColumnNumber.F24COLUMN.ordinal()) ? !slot.isF24() : slot.isF24();
+        boolean tempF25 = (col == ColumnNumber.F25COLUMN.ordinal()) ? !slot.isF25() : slot.isF25();
+        boolean tempF26 = (col == ColumnNumber.F26COLUMN.ordinal()) ? !slot.isF26() : slot.isF26();
+        boolean tempF27 = (col == ColumnNumber.F27COLUMN.ordinal()) ? !slot.isF27() : slot.isF27();
+        boolean tempF28 = (col == ColumnNumber.F28COLUMN.ordinal()) ? !slot.isF28() : slot.isF28();
         int new_F14F20 = ((tempF21 ? 0b00000001 : 0) |
                 (tempF22 ? 0b00000010 : 0) |
                 (tempF23 ? 0b00000100 : 0) |

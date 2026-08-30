@@ -118,14 +118,14 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         slotTable.sizeColumnsToFit(-1);
 
         // install a button renderer & editor in the "DISP" column for freeing a slot
-        setColumnToHoldButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.DISPCOLUMN.ordinal()));
+        setColumnToHoldButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ColumnNumber.DISPCOLUMN.ordinal()));
 
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
-        setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.ESTOPCOLUMN.ordinal()));
+        setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ColumnNumber.ESTOPCOLUMN.ordinal()));
 
         // Install a numeric format for ConsistAddress
-        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.CONSISTADDRESS.ordinal()));
-        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.columnNumber.JMRITHROTTLECOUNT.ordinal()));
+        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ColumnNumber.CONSISTADDRESS.ordinal()));
+        setColumnForBlankWhenZero(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ColumnNumber.JMRITHROTTLECOUNT.ordinal()));
 
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
             // unable to persist because Default class provides no mechanism to
@@ -141,8 +141,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         // Hide functions F9 thru F28 if not used.
         if (hideColumnsF9toF28) {
             XTableColumnModel tcm = (XTableColumnModel) slotTable.getColumnModel();
-            for (int ixCol = SlotMonDataModel.columnNumber.F9COLUMN.ordinal() ;
-                    ixCol <= SlotMonDataModel.columnNumber.F28COLUMN.ordinal() ;
+            for (int ixCol = SlotMonDataModel.ColumnNumber.F9COLUMN.ordinal() ;
+                    ixCol <= SlotMonDataModel.ColumnNumber.F28COLUMN.ordinal() ;
                     ixCol ++ ) {
                 TableColumn tc = tcm.getColumnByModelIndex(ixCol);
                 tcm.setColumnVisible(tc, false);
@@ -329,10 +329,10 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile")); // NOI18N
         fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvAll")),
             null, slotModel, "Slot_Monitor_All.csv", new int[]{
-            SlotMonDataModel.columnNumber.ESTOPCOLUMN.ordinal()})); // NOI18N
+            SlotMonDataModel.ColumnNumber.ESTOPCOLUMN.ordinal()})); // NOI18N
         fileMenu.add(new JTableToCsvAction((Bundle.getMessage("ExportCsvView")),
             slotTable, slotModel, "Slot_Monitor_View.csv", new int[]{
-            SlotMonDataModel.columnNumber.ESTOPCOLUMN.ordinal()})); // NOI18N
+            SlotMonDataModel.ColumnNumber.ESTOPCOLUMN.ordinal()})); // NOI18N
      return fileMenu;
     }
 
