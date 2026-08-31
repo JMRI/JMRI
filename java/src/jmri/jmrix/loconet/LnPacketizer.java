@@ -311,20 +311,19 @@ public class LnPacketizer extends LnTrafficController {
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
-                    {
-                        log.trace("message complete: {}", msg);
-
-                        // check if this message was supposed to be ignored
-                        // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
-                        if(trafficController.getSentList().contains(msg)) {
-                            trafficController.getSentList().remove(msg);
-                            log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
-                        }
-                        else {
-                            log.trace("queue message for notification: {}", msg);
-                            jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));                        }
+                    log.trace("message complete: {}", msg);
+                    
+                    // check if this message was supposed to be ignored
+                    // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
+                    if(trafficController.getSentList().contains(msg)) {
+                        trafficController.getSentList().remove(msg);
+                        log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                     }
-
+                    else {
+                        log.trace("queue message for notification: {}", msg);
+                        jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
+                    }
+                    
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
@@ -427,8 +426,9 @@ public class LnPacketizer extends LnTrafficController {
  
         LocoNetMessage m = new LocoNetMessage(msg);
         
-        if(getLoconetUpdateSlotOnMessageCreation() 
-                && getSentList().contains(m)) {
+        // check if this message was supposed to be ignored
+        // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
+        if(getSentList().contains(m)) {
             getSentList().remove(m);
             log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", m, getSentList().size());
         }
