@@ -256,7 +256,9 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
                     
                     // having those, we see if there's a node ID associated with the name
                     NodeID newNodeID = null;
-                    if (! pName.isEmpty()) newNodeID = model.getNodeID(pName);
+                    if (! pName.isEmpty()) {
+                        newNodeID = model.getNodeID(pName);
+                    }
                     if (newNodeID == null) {
                         // no, use the ID from the file
                         newNodeID = new NodeID(producer);
@@ -281,7 +283,9 @@ public class EventTableDataModelXml extends XmlFile { // note final for testing
 
                     // having those, we see if there's a node ID associated with the name
                     NodeID newNodeID = null;
-                    if (! cName.isEmpty()) newNodeID = model.getNodeID(cName);
+                    if (! cName.isEmpty()) {
+                        newNodeID = model.getNodeID(cName);
+                    }
                     if (newNodeID == null) {
                         // no, use the ID from the file
                         newNodeID = new NodeID(consumer);

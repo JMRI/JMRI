@@ -45,8 +45,8 @@ public class EventTableDataModel extends AbstractTableModel {
         // load stored contents
         loadNameStoreEventIDs();
         
-        log.info("\n#######################\nNot loading model data for debugging\n#######################");
-        // loadModelData();
+        // log.info("\n#######################\nNot loading model data for debugging\n#######################");
+        loadModelData();
         
         // arrange to store the current contents at shutdown
         initShutdownTask();
@@ -135,7 +135,14 @@ public class EventTableDataModel extends AbstractTableModel {
      */
     public NodeID getNodeID(String name) {
         var nid = nameToNodeId.get(name);
-        if (nid == null) return new NodeID(name);
+        if (nid == null) {
+            try {
+                return new NodeID(name);
+            } catch (NumberFormatException e) {
+                // not a proper format for a node ID, return null
+                return null;
+            }
+        }
         return nid;    
     }
 
