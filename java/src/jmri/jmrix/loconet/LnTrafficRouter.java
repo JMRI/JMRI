@@ -42,14 +42,16 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      * Forward a preformatted LocoNetMessage to the actual interface.
      *
      * @param m Message to send; will be updated with CRC
+     * @param requestIgnoreEcho Notify listeners on enqueing message, ignore echo from line.
+     *             Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
      */
     @Override
-    public void sendLocoNetMessage(LocoNetMessage m) {
+    public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho) {
         // update statistics
         transmittedMsgCount++;
 
         // forward message
-        destination.sendLocoNetMessage(m);
+        destination.sendLocoNetMessage(m, requestIgnoreEcho);
     }
 
     /**

@@ -84,9 +84,11 @@ public class LnPacketizer extends LnTrafficController {
      * to a byte array and queued for transmission.
      *
      * @param m Message to send; will be updated with CRC
+     * @param requestIgnoreEcho Notify listeners on enqueing message, ignore echo from line.
+     *             Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
      */
     @Override
-    public void sendLocoNetMessage(LocoNetMessage m) {
+    public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho) {
 
         // update statistics
         transmittedMsgCount++;
@@ -108,7 +110,7 @@ public class LnPacketizer extends LnTrafficController {
         try {
             xmtList.add(msg);
             // save to queue if we want to remember it to check in receive handler
-            if (mLoconetUpdateSlotOnMessageCreation) {
+            if (mLoconetUpdateSlotOnMessageCreation && requestIgnoreEcho) {
                 log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
                 sentList.add(m);
                 log.trace("queue message for notification: {}", m);
@@ -311,9 +313,10 @@ public class LnPacketizer extends LnTrafficController {
                     // message is complete, dispatch it !!
                     {
                         log.trace("message complete: {}", msg);
-                        
-                        if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
-                                && trafficController.getSentList().contains(msg)) {
+
+                        // check if this message was supposed to be ignored
+                        // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
+                        if(trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
                             log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                         }

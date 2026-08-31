@@ -102,9 +102,23 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * Implementations should update the transmit count statistic.
      *
      * @param m message to send; will be updated with CRC
+     * @param requestIgnoreEcho If true: Notify listeners on enqueing message, ignore echo from line.
+     *             Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
      */
     @Override
-    abstract public void sendLocoNetMessage(LocoNetMessage m);
+    abstract public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho);
+
+    /**
+     * Forward a preformatted LocoNetMessage to the actual interface.
+     * <p>
+     * Implementations should update the transmit count statistic.
+     *
+     * @param m message to send; will be updated with CRC
+     */
+    @Override
+    public void sendLocoNetMessage(LocoNetMessage m) {
+        sendLocoNetMessage(m, false);
+    }
 
     // The methods to implement adding and removing listeners
 

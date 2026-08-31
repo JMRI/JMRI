@@ -55,9 +55,11 @@ public class UhlenbrockPacketizer extends LnPacketizer {
      * to a byte array and queued for transmission.
      *
      * @param m Message to send; will be updated with CRC
+     * @param requestIgnoreEcho If true: Notify listeners on enqueing message, ignore echo from line.
+     *             Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
      */
     @Override
-    public void sendLocoNetMessage(LocoNetMessage m) {
+    public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho) {
         log.debug("add to queue message {}", m.toString());
         // update statistics
         transmittedMsgCount++;
@@ -78,7 +80,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
             xmtLocoNetList.add(m); // done first to make sure it's there before xmtList has an element
             xmtList.add(msg);
             // save to queue if we want to remember it to check in receive handler
-            if (mLoconetUpdateSlotOnMessageCreation) {
+            if (mLoconetUpdateSlotOnMessageCreation && requestIgnoreEcho) {
                 log.trace("add LocoNet packet {} to sentList. Now {} packets in sentList.", m, sentList.size());
                 sentList.add(m);
                 log.trace("queue message for notification: {}", m);
