@@ -2,10 +2,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.util.*;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -17,6 +13,10 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.BuildFailedException;
 import jmri.jmrit.operations.trains.Train;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains methods for cars when building a train.
@@ -95,7 +95,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
-                    if (car.getTrain() == getTrain()) {
+                    // if destination track in quick service, car moved to location
+                    if (car.getTrain() == getTrain() || car.getLocation() == rld.getLocation()) {
                         foundCaboose = true;
                     }
                 } else if (findDestinationAndTrack(car, rl, rld)) {
@@ -256,7 +257,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
-                    if (car.getTrain() == getTrain()) {
+                    // if destination track in quick service, car moved to location
+                    if (car.getTrain() == getTrain() || car.getLocation() == rld.getLocation()) {
                         foundCarWithFred = true;
                     }
                 } else if (findDestinationAndTrack(car, rl, rld)) {
@@ -1181,6 +1183,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     car.toString(), track.getLocation().getName(), track.getName()));
             return false;
         }
+        car.setRouteDestination(null);
         String status = car.checkDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {
@@ -1480,6 +1483,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // the correct destination name
         for (int k = routeIndex; k < getRouteList().size(); k++) {
             rld = getRouteList().get(k);
+            car.setRouteDestination(rld); // for timing
             // if car can be picked up later at same location, skip
             if (checkForLaterPickUp(car, rl, rld)) {
                 addLine(SEVEN, BLANK_LINE);
@@ -1716,6 +1720,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // now search for a destination for this car
         for (int k = start; k < routeEnd; k++) {
             rld = getRouteList().get(k);
+            car.setRouteDestination(rld); // for timing
             // if car can be picked up later at same location, set flag
             if (checkForLaterPickUp(car, rl, rld)) {
                 multiplePickup = true;
@@ -1947,7 +1952,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
     protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         car = checkQuickServiceArrival(car, rld, track);
         addLine(THREE,
-                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
+                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName(), rld.getId()));
         car.setDestination(track.getLocation(), track, Car.FORCE);
         int length = car.getTotalLength();
         int weightTons = car.getAdjustedWeightTons();

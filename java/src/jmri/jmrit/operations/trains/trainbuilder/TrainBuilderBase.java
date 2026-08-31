@@ -4,8 +4,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import org.apache.commons.lang3.StringUtils;
-
 import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
@@ -21,6 +19,8 @@ import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Methods to support the TrainBuilder class.
@@ -2469,10 +2469,12 @@ public class TrainBuilderBase extends TrainCommon {
             if (rle == rld) {
                 break;
             }
+            car.setRouteDestination(rle); // for timing
             if (rle.getName().equals(rld.getName()) &&
                     (rle.getCarMoves() < rle.getMaxCarMoves()) &&
                     rle.isDropAllowed() &&
-                    checkDropTrainDirection(car, rle, trackTemp)) {
+                    checkDropTrainDirection(car, rle, trackTemp) &&
+                    trackTemp.isRollingStockAccepted(car).equals(Track.OKAY)) {
                 log.debug("Found an earlier drop for car ({}) destination ({})", car.toString(), rle.getName()); // NOI18N
                 return rle; // earlier drop in train's route
             }
@@ -3121,10 +3123,7 @@ public class TrainBuilderBase extends TrainCommon {
                 // determine when the clone is going to be delivered
                 int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());
                 // in aggressive mode the dwell time is 0
-                int dwellTime = 0;
-                if (Setup.isBuildOnTime()) {
-                    dwellTime = Setup.getDwellTime();
-                }
+                int dwellTime = Setup.getDwellTime();
                 if (cloneSetoutTimeMinutes + dwellTime > trainArrivalTimeMinutes) {
                     String earliest = convertMinutesTime(cloneSetoutTimeMinutes + dwellTime);
                     addLine(FIVE, Bundle.getMessage("buildDeliveryTiming", rs.toString(),

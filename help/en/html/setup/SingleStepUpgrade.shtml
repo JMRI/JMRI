@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Single Step Upgrade</title><!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1 id="Top">Single Step Upgrade</h1>
+
+      <p>The <strong>Single Step Upgrade</strong> is designed to upgrade JMRI running 3.x or 4.x
+      using Java 1.8 to the current 5.x version of JMRI using Java 21.
+
+      <ol>
+        <li><a href="#backup">Backup existing JMRI data.</a></li>
+        <li><a href="#remove">Uninstall/remove the old JMRI and Java.</a></li>
+        <li><a href="#install">Install Java 21 and the latest production JMRI.</a></li>
+        <li><a href="#configure">Start PanelPro and configure the default profile.</a></li>
+        <li><a href="#copy">Copy the old data to the new <strong>User Files Location</strong>.</a></li>
+      </ol>
+
+      <p>The goal is a <strong>clean</strong> user data configuration using the existing data. The
+      process eliminates old intermediate data created by some of the JMRI upgrades.</p>
+
+      <p>A basic feature of JMRI is that the OS file system is usually invisible to the user. The
+      various tools know where the data is and how to manage the data.  This process requires a
+      basic understanding of the OS file manager including renaming directories and copying files.</p>
+
+      <h3 id="backup">1 &mdash; Backup</h3>
+
+      <p>Since the existing preferences will be replaced by default values, screenshots of important
+      preferences should be captured.  The main ones are the <strong>Connections</strong>,
+      <strong>Defaults</strong> and <strong>Start Up</strong> actions.  Depending the installed JMRI
+      version, a <strong>CMRI</strong> connection might contain the node definitions.</p>
+
+      <p>The JMRI file locations are listed at <strong>Help &rArr; File Locations</strong>. A
+      screenshot is recommended for reference.</p>
+
+      <p>The JMRI user data is stored at the <strong>Settings Location</strong>.  With PanelPro and
+      DecoderPro stopped, use the file manager to append the current date to the settings location,
+      such as <strong><em>JMRI_260815</em></strong>. The default settings locations are:</p>
+      <ul>
+        <li>Windows: C:\Users\&lt;username&gt;\JMRI</li>
+        <li>Linux: /home/&lt;username&gt;/.jmri</li>
+        <li>Mac: /Users/&lt;username&gt;/Library/Preferences/JMRI</li>
+      </ul>
+
+      <p>If custom items, such as icons or scripts, have been added to the JMRI <strong>Install
+      Location</strong>, they need to be copied to a safe location.</p>
+
+      <h3 id="remove">2 &mdash; Uninstall/Remove</h3>
+
+      <h5>JMRI</h5>
+
+      <dl>
+        <dt>Windows</dt>
+        <dd>Use the Windows Control Panel to uninstall JMRI.  When it is done, remove the residual
+        JMRI directory, normally located at <strong><em>C:\Program Files (x86)\JMRI</em></strong>.</dd>
+
+        <dt>Linux</dt>
+        <dd>Delete the JMRI directory at the <strong>Install Location</strong>, frequently located
+        at <strong><em>/home/&lt;username&gt;/JMRI</em></strong>.</dd>
+
+        <dt>Mac</dt>
+        <dd>Delete the JMRI directory at the <strong>Install Location</strong>, normally located at
+        <strong><em>/Applications/JMRI</em></strong>.</dd>
+      </dl>
+
+      <h5>Java</h5>
+
+      <p>Java version 1.8 or earlier must be removed.</p>
+
+      <p>For Windows and Linux look at the uninstall instructions at
+      <a href="https://www.jmri.org/java/">https://www.jmri.org/java/</a>.</p>
+
+      <p>For Macs, use the instructions at
+      <a href="https://www.java.com/en/download/help/mac_uninstall_java.html">https://www.java.com/en/download/help/mac_uninstall_java.html</a>.</p>
+
+      <h3 id="install">3 &mdash; Install</h3>
+
+      <p>Install Java 21 using the instructions at
+      <a href="https://www.jmri.org/java/">https://www.jmri.org/java/</a>.</p>
+
+      <p>Download and install a recent version of JMRI.</p>
+
+      <h3 id="configure">4 &mdash; Configure</h3>
+
+      <p>To simplify the copy actions, use PanelPro for the first run.  This will create the
+      <strong>My JMRI Railroad</strong> profile.  Use the simulation option when defining the layout
+      connection.</p>
+
+      <p><img class="image-border" src="images/first_run.png" alt="first run directory"></p>
+
+      <p>If the layout uses multiple profiles or custom profile names, use <strong>Preferences &rArr;
+      Config Profiles</strong> to create additional profiles.</p>
+
+      <p>Use <strong>Help &rArr; File Locations</strong> to get a screenshot of the <strong>new</strong>
+      File Locations.</p>
+
+      <h3 id="copy">5 &mdash; Copy</h3>
+
+      <p>When moving the data from the renamed <strong>Settings Location</strong>, use the OS file
+      manager <strong>Copy</strong> process, not the <strong>Move</strong> process.  This insures that
+      the orignal data in the <strong>JMRI_&lt;date&gt;</strong> directory is not affected.</p>
+
+      <p>The following details apply to typical JMRI features.</p>
+
+      <dl>
+        <dt>Roster</dt>
+        <dd>
+          <p>The <strong>roster</strong> directory and its contents are copied to the new <strong>User
+          Files Location</strong>.</p>
+
+          <p>After starting DecoderPro or PanelPro, create the <strong>roster.xml</strong> index file.</p>
+
+          <ul>
+            <li>DecoderPro: <strong>Actions &rArr; Recreate Roster Index</strong></li>
+            <li>PanelPro: <strong>Debug &rArr; Rebuild Roster</strong></li>
+          </ul>
+        </dd>
+
+        <dt style="margin-top: 1em">Layout Configuration Data</dt>
+        <dd>
+          <p>The main file is the layout data configuration xml file, aka <strong>panel file</strong>.
+          The file is copied to the new <strong>User Files Location</strong>.</p>
+        </dd>
+
+        <dt>Custom Icons</dt>
+        <dd>
+          <p>Custom icons should be in the old <strong>User Files Location</strong> <strong>resources</strong>
+          directory. If so, copy the <strong>resources</strong> directory and its contents to the
+          new <strong>User Files Location</strong>.</p>
+
+          <p>If they were in the old <strong>install</strong> location, create a <strong>resources</strong>
+          directory in the new <strong>User Files Location</strong> and copy them there.  When the
+          layout data xml file is loaded, an error dialog is displayed. The dialog has an option of
+          changing the file path for custom icons.  If the relative path to the custom icon is the
+          same, this can done by replacing <strong>program:</strong> with <strong>preference:</strong>.</p>
+
+          <p><img class="image-border" src="images/fix-icon-reference.png" alt="fix icon references"></p>
+
+          <p>When the path has been fixed, click on <strong>Continue</strong>. After the loading
+          process is done, use <strong>File &rArr; Store ALL table content and panels&hellip;</strong>
+          to retain the changes. Using a new file name is recommended.</p>
+
+        </dd>
+
+        <dt>Custom Scripts</dt>
+          <dd>
+            <p>Copy custom Jython scripts.  If they were in the old <strong>Install Location</strong>,
+            copy them to the new <strong>User Files Location</strong>.  It is likely the scripts
+            will have errors.  Use the JMRI System Console, <strong>Help &rArr; System Console</strong>,
+            to watch for script errors.</p>
+          </dd>
+
+        <dt>Operations</dt>
+        <dd>
+          <p>The <strong>operations</strong> directory and its contents are copied to the new
+          <strong>User Files Location</strong>.</p>
+        </dd>
+
+        <dt>Dispatcher</dt>
+        <dd>
+          <p>The <strong>dispatcheroptions.xml</strong> file and the
+          <strong>dispatcher</strong> directory and its contents are copied to the new
+          <strong>User Files Location</strong>.</p>
+        </dd>
+
+        <dt>CMRI Node Configuration</dt>
+        <dd>
+          <p>As of JMRI 4.4, the CMRI node definitions are contained in the <strong>profile/profile.xml</strong>
+          file located at the old <strong>Profile Location</strong>.  Prior to JMRI 3.8, they were
+          in the <strong>PanelProConfig2.xml</strong> file in the old <strong>Settings Location</strong>.
+          Between JMRI 3.8 and JMRI 4.4, they were in the <strong>ProfileConfig.xml</strong> file in
+          the old <strong>User Files Location</strong>.</p>
+
+          <p>The CMRI configuration data is added to the CMRI connection definition.</p>
+
+          <p><img class="image-border" src="images/cmri-config.png" alt="cmri config"></p>
+
+          <p>With careful editing it should be possible to copy the old CMRI located between the two
+          connection lines to the new profile.xml.  The unknown factor is whether the data format
+          has changed. The image shows the current data format.</p>
+        </dd>
+
+      </dl>
+
+
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

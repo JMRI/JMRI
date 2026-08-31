@@ -9,6 +9,7 @@
 <!-- version 1.4 02 May 2024  Ronald Kuhn - new decoder excluded   -->
 <!-- version 1.5  31 July 2026  Pierre Billon - renamed from CV1-CV99_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV7-97). Excluded MS491 and MS591N18 from mfx, both stated non-mfx-able by ZIMO Also: added CV99 (RailCom ID 7 transmissions), CV100 and CV101 (asymmetry voltage and its correction factor) and CV102 (SUSI slave 3); corrected the CV9 default from 0 to 55; excluded the FS890N18 from mfx, stated non-mfx-able by ZIMO; renamed from CV7-CV97_MS-MN-FS.xml to match the range now held -->
 <!-- version 1.6  06 August 2026  Pierre Billon - Added French and German translations -->
+<!-- version 1.7  13 August 2026  Ronald Kuhn - Added options for CV27 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -481,10 +482,9 @@
     <label xml:lang="de">Bremszeitvariation verwenden</label>
   </variable>
 
-
-  <variable item="Direction Dependent stops with asymmetrical DCC" CV="27" mask="XXXXVVVV">
+  <variable item="Direction Dependent stops with asymmetrical DCC" CV="27" mask="XXXXXXVV">
     <enumVal>
-      <enumChoice choice="Does Not Stop">
+      <enumChoice choice="Does Not Stop"> 
         <choice>Does Not Stop</choice>
         <choice xml:lang="fr">Pas de freinage</choice>
         <choice xml:lang="it">Non si ferma</choice>
@@ -513,22 +513,79 @@
         <choice xml:lang="de">Bremsen in beiden Richtungen</choice>
       </enumChoice>
     </enumVal>
-    <label>Direction Dependent stops with asymmetrical DCC</label>
+    <label>ABC Direction Dependent stops with asymmetrical DCC</label>
     <label xml:lang="fr">Configuration de freinage</label>
     <label xml:lang="it">Fermata dipendente da direzione con DCC asimmetrico</label>
     <label xml:lang="cs">Směrově závislé zastavování při nesymetrickém DCC</label>
-    <label xml:lang="de">Bremskonfiguration</label>
+    <label xml:lang="de">ABC Bremskonfiguration</label>
+
     <tooltip>Brake on DC detect</tooltip>
     <tooltip xml:lang="fr">Freinage sur tension DCC asymétrique</tooltip>
-    <tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
+    <tooltip xml:lang="de">ABC Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
   </variable>
-   <variable item="Asymmetric DCC shuttle" CV="27" mask="XVXXXXXX">
+  <variable item="HLU active" CV="27" mask="XXXXXVXX" default="1">
+     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>HLU active</label>
+    <label xml:lang="fr">Influence HLU sur les trains</label>
+    <!--label xml:lang="it">Fermata dipendente da direzione con DCC asimmetrico</label>
+    <label xml:lang="cs">Směrově závislé zastavování při nesymetrickém DCC</label-->
+    <label xml:lang="de">HLU Anhalten</label>
+    <tooltip>Enable / Disable ZIMO HLU</tooltip>
+    <tooltip xml:lang="fr">Activer / désactiver ZIMO HLU</tooltip>
+    <tooltip xml:lang="de">ZIMO HLU aktivieren / deaktivieren</tooltip>
+
+  </variable>
+  <variable item="Brake mode" CV="27" mask="XXVVXXXX">
+    <enumVal>
+      <enumChoice choice="No function"> 
+        <choice>No function</choice>
+        <choice xml:lang="fr">Sans fonction</choice>
+        <choice xml:lang="it">Nessuna funzione</choice>
+        <choice xml:lang="cs">Žádná funkce</choice>
+        <choice xml:lang="de">Keine Funktion</choice>
+      </enumChoice>
+      <enumChoice choice="DC braking section, if polarity is reversed">
+        <choice>DC braking section, if polarity is reversed</choice>
+        <choice xml:lang="fr">Section de freinage en courant continu, en cas d'inversion de polarité</choice>
+        <choice xml:lang="it">Sezione di frenatura in corrente continua, in caso di inversione di polarità</choice>
+        <choice xml:lang="cs">Brzdicí část stejnosměrného proudu v případě obrácené polarity</choice>
+        <choice xml:lang="de">Gleichstrom-Bremsabschnitt, wenn Polarität entgegengesetzt</choice>
+      </enumChoice>
+      <enumChoice choice="DC braking section, if polarity is equal">
+        <choice>DC braking section, if polarity is equal</choice>
+        <choice xml:lang="fr">Section de freinage en courant continu, si la polarité est identique</choice>
+        <choice xml:lang="it">Sezione di frenatura in corrente continua, se la polarità è uguale</choice>
+        <choice xml:lang="cs">Brzdicí část stejnosměrného proudu, pokud je polarita stejná</choice>
+        <choice xml:lang="de">Gleichstrom-Bremsabschnitt, wenn Polarität gleich</choice>
+      </enumChoice>
+      <enumChoice choice="stopping when DC voltage independent of the polarity">
+        <choice>stopping when DC voltage independent of the polarity</choice>
+        <choice xml:lang="fr">Arrêt lorsque la tension continue est indépendante de la polarité</choice>
+        <choice xml:lang="it">Arresto in presenza di tensione continua indipendentemente dalla polarità</choice>
+        <choice xml:lang="cs">Zastavení při stejnosměrném napětí bez ohledu na polaritu</choice>
+        <choice xml:lang="de">Anhalten bei Gleichspannung</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Brake mode</label>
+    <label xml:lang="fr">Modes de freinage</label>
+    <label xml:lang="it">Modalità di frenata</label>
+    <label xml:lang="cs">Režimy brzdění</label>
+    <label xml:lang="de">Brems-Modi</label>
+    <tooltip>DC Brake sections (Märklin brake section)</tooltip>
+    <tooltip xml:lang="fr">Blocs de freinage à courant continu (bloc de freinage Märklin)</tooltip>
+    <tooltip xml:lang="it">Sezioni di frenatura CC (sezione di frenatura Märklin)</tooltip>
+    <tooltip xml:lang="cs">Brzdové sekce DC (brzdová sekce Märklin)</tooltip>
+    <tooltip xml:lang="de">DC (Gleichstrom) - Bremsabschnitte ("Märklin Bremsstrecke")</tooltip>
+  </variable>
+  <variable item="Asymmetric DCC shuttle" CV="27" mask="XVXXXXXX">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Asymmetric DCC Shuttle</label>
       <label xml:lang="fr">Signal DCC asymétrique</label>
       <label xml:lang="de">Asymmetrisches DCC-Signal</label>
+      <tooltip>"Lenz ABC"</tooltip>
+      <tooltip xml:lang="de">"Lenz ABC"</tooltip>
   </variable>
-  <variable CV="27" item="Activate Residence Time" default="0" mask="XVXXXXXX">
+  <variable item="Activate Residence Time" CV="27" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Activate residence time</label>
     <label xml:lang="de">Aktivieren der Aufenthaltszeit</label>
@@ -537,6 +594,7 @@
     <tooltip xml:lang="de">PROVISORISCH ab SW-Version 38.00</tooltip>
     <tooltip xml:lang="cs">PROVIZORNÍ od SW verze 38.00</tooltip>
   </variable>
+
   <variable item="RailCom channel 1 (Broadcast)" CV="28" default="1" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom channel 1 (Broadcast)</label>

@@ -206,6 +206,11 @@ public enum CbusFilterType {
      * VLCB OPCs.
      */
     CFVLCB(Bundle.getMessage("VLCB"),null),
+    CFSVC(Bundle.getMessage("Services"),CFVLCB),
+    CFDIAG(Bundle.getMessage("Diagnostics"),CFVLCB),
+    CFLONGMSG(Bundle.getMessage("LongMessages"),CFVLCB),
+    CFHEARTB(Bundle.getMessage("HeartBeat"),CFVLCB),
+    CFENACK(Bundle.getMessage("EventAck"),CFEVENT),
 
     /**
      * Miscellaneous (category head)

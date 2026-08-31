@@ -3,10 +3,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 import java.io.*;
 import java.util.*;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -23,6 +19,10 @@ import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the TrainBuilder class NOTE: Many of the tests here are nearly
@@ -2969,9 +2969,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm car destinations
         Assert.assertEquals("Car destination", bostonSpur2, c1.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur2, c2.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, c3.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, c4.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonYard2, c5.getDestinationTrack());
+        // timing such that there isn't room for the kernel
+        Assert.assertEquals("Car destination", bostonYard2, c3.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonYard2, c4.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonYard2, c6.getDestinationTrack());
 
         Assert.assertEquals("Car destination", actonSpur1, c7.getDestinationTrack());
@@ -2984,8 +2985,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car destination", null, c12.getDestinationTrack());
 
         // check that cars in yard have a final destination Boston spur 2
-        Assert.assertEquals("Car destination", bostonSpur2, c5.getFinalDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, c6.getFinalDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, c3.getFinalDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, c4.getFinalDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -6503,7 +6504,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 510, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 512, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -6542,7 +6543,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 273, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 276, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -21097,6 +21098,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         RouteLocation boston2 = route.getRouteLocationBySequenceNumber(5);
         boston2.setMaxCarMoves(12);
+        boston2.setDropAllowed(false);
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
@@ -21268,6 +21270,65 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "NoBags", c3.getLoadName());
         Assert.assertEquals("load", "NoBags", c6.getLoadName());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Confirm that tracks can be used multiple time by the same train.
+     */
+    @Test
+    public void testOnTimeMultipleUse() {
+        // build in aggressive mode
+        Setup.setBuildAggressive(true);
+        // improve test coverage by using on time mode
+        Setup.setBuildOnTime(true);
+        Setup.setDwellTime(0);
+        
+        Train train = tmanager.newTrain("Test_Multiple_Use");
+
+        // Create a route that moves a car multiple times
+        // Acton -> Boston -> Acton -> Boston -> Acton
+        // cars are expected to set out and pull at each location
+        Route route = rmanager.newRoute("ABBAABBA");
+        train.setRoute(route);
+
+        Location acton = lmanager.newLocation("Acton");
+        route.addLocation(acton);
+        Track actonYard = acton.addTrack("yard track", Track.YARD);
+        actonYard.setLength(100);
+        actonYard.setQuickServiceEnabled(true);
+        
+        Location boston = lmanager.newLocation("Boston");
+        route.addLocation(boston);
+        Track bostonYard = boston.addTrack("yard track", Track.YARD);
+        bostonYard.setLength(100);
+        bostonYard.setQuickServiceEnabled(true);
+        
+        // this will pull the car
+        route.addLocation(boston);
+        // car should then move back to Acton
+        route.addLocation(acton);
+        route.addLocation(acton);
+        // back to Boston
+        route.addLocation(boston);
+        route.addLocation(boston);
+        // back to Acton
+        route.addLocation(acton);
+        
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Boxcar", "40", actonYard, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", actonYard, 10);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue("train status", train.isBuilt());
+
+        // confirm clones created
+        Assert.assertEquals("cars worked", 8, train.getNumberCarsWorked());
+        Assert.assertEquals("number cars", 10, cmanager.getNumEntries());
+        
+        // each car was moved 4 times
+        Assert.assertEquals("moves", 4, c1.getMoves());
+        Assert.assertEquals("moves", 14, c2.getMoves());
+        
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 

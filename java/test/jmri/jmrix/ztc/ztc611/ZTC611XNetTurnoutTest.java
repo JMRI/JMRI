@@ -28,11 +28,6 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         // We do not send off messages to the ZTC 611
     }
 
-    @Override
-    protected int expectedOffMessages() {
-        return 0; // We do not send off messages to the ZTC 611
-    }
-
     // Test the XNetTurnout message sequence.
     @Test
     @Override

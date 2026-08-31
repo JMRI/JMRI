@@ -146,7 +146,7 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        
+
         <pathelement location="${libdir}/jython-standalone-2.7.4.jar"/>
 
         <!-- Logging -->
@@ -491,7 +491,7 @@
 
     <!-- check build system requirements, not for user use -->
     <!-- Used in the warnings and warnings-check targets -->
-    <target name="check-ant-requirements"> 
+    <target name="check-ant-requirements">
       <antversion property="ant-version-ok" atleast="1.10.6"/>
       <antversion property="ant-version-actual"/>
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.10.6, this is ${ant-version-actual}"/>
@@ -748,7 +748,7 @@
         <attribute name="javac.classpath" default="compile.class.path"/>
         <attribute name="is.test" default=""/>
         <sequential>
-        
+
             <!-- Set property only if it's a test build AND metadata is missing -->
             <!-- Test build - JUnitAppender uses a Log4J Plugin, saves unused argument warning in non-test builds -->
             <!-- metadata missing - Graalvm does not trigger for incremental builds, saves unused argument warning -->
@@ -1310,7 +1310,7 @@
             depends="debug, copyfiles">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.DecoderPro.DecoderPro"/>
-            <param name="antargline" value="DecoderProConfig2.xml"/>
+            <param name="antargline" value="DecoderProConfig2.properties"/>
         </antcall>
     </target>
 
@@ -1319,7 +1319,7 @@
             depends="debug, copyfiles">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.gui3.lccpro.LccPro"/>
-            <param name="antargline" value="LccProConfig.xml"/>
+            <param name="antargline" value="LccProConfig.properties"/>
         </antcall>
     </target>
 
@@ -1328,7 +1328,7 @@
             depends="debug, copyfiles">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.gui3.dp3.DecoderPro3"/>
-            <param name="antargline" value="DecoderProConfig3.xml"/>
+            <param name="antargline" value="DecoderProConfig3.properties"/>
         </antcall>
     </target>
 
@@ -1337,7 +1337,7 @@
             depends="debug">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.PanelPro.PanelPro"/>
-            <param name="antargline" value="PanelProConfig2.xml"/>
+            <param name="antargline" value="PanelProConfig2.properties"/>
         </antcall>
     </target>
 
@@ -1346,7 +1346,7 @@
             depends="debug">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.SoundPro.SoundPro"/>
-            <param name="antargline" value="SoundProConfig2.xml"/>
+            <param name="antargline" value="SoundProConfig2.properties"/>
         </antcall>
     </target>
 
@@ -1371,7 +1371,7 @@
             description="build and run build and run InstallTest app">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.InstallTest.InstallTest"/>
-            <param name="antargline" value="InstallTestConfig2.xml"/>
+            <param name="antargline" value="InstallTestConfig2.properties"/>
         </antcall>
     </target>
 
@@ -1388,7 +1388,7 @@
             description="build and run build and run JmriFaceless app">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.JmriFaceless"/>
-            <param name="antargline" value="JmriFacelessConfig3.xml"/>
+            <param name="antargline" value="JmriFacelessConfig3.properties"/>
         </antcall>
     </target>
 
@@ -2161,7 +2161,7 @@
             <!-- <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" /> redirection issue as of 2024-09-16 -->
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
-            
+
             <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.37/" />
 
             <!-- <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>  redirected to next line -->

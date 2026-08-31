@@ -978,6 +978,9 @@
          who created the Slackware repository version of JMRI, worked on
          WiThrottle protocol issues and has provided several decoder file updates.</li>
 
+        <li>Sven Rosvall, <!-- SvenRosvall -->
+        who worked on the CBUS and VLCB support.
+        
         <li>Klaus Ruebsam, who was hosting German and English JMRI discussion groups on his
           http://www.dcc-portal.net/ website.
         </li>

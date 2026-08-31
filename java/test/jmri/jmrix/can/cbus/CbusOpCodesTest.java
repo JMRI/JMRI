@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -129,17 +133,21 @@ public class CbusOpCodesTest {
         assertTrue(CbusOpCodes.decodeopc(m).isEmpty(),"decodeopc 3");
     }
 
-    @Test
-    public void testDecodeopc() {
+    static IntStream opcRange() {
+        return IntStream.rangeClosed(0, 255);
+    }
+
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    @ValueSource(ints = {256, 257})
+    public void testDecodeopc(int opc) {
         CanMessage m = new CanMessage(1,11);
-        for ( int i = 0; (i<258); i++ ) {
-            m.setElement(0, i);
-            if (OPCMAP.containsKey(i)) {
-                assertEquals(OPCMAP.get(i),CbusOpCodes.decodeopc(m),"opc short text "+i);
-            } else {
-                assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
-                    CbusOpCodes.decodeopc(m),"opc short text "+i);
-            }
+        m.setElement(0, opc);
+        if (OPCMAP.containsKey(opc)) {
+            assertEquals(OPCMAP.get(opc),CbusOpCodes.decodeopc(m),"opc short text "+opc);
+        } else {
+            assertEquals("Reserved opcode " + m.toMonitorString().toUpperCase(),
+                CbusOpCodes.decodeopc(m),"opc short text "+opc);
         }
     }
 
@@ -315,12 +323,16 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_RQNPN, "RQNPN"); // NOI18N
         result.put(CbusConstants.CBUS_NUMEV, "NUMEV"); // NOI18N
         result.put(CbusConstants.CBUS_CANID, "CANID"); // NOI18N
+        result.put(CbusConstants.VLCB_MODE, "MODE"); // NOI18N
+        result.put(CbusConstants.VLCB_RQSD, "RQSD"); // NOI18N
         result.put(CbusConstants.CBUS_EXTC2, "EXTC2"); // NOI18N
         result.put(CbusConstants.CBUS_RDCC3, "RDCC3"); // NOI18N
         result.put(CbusConstants.CBUS_WCVO, "WCVO"); // NOI18N
         result.put(CbusConstants.CBUS_WCVB, "WCVB"); // NOI18N
         result.put(CbusConstants.CBUS_QCVS, "QCVS"); // NOI18N
         result.put(CbusConstants.CBUS_PCVS, "PCVS"); // NOI18N
+        result.put(CbusConstants.VLCB_RDGN, "RDGN"); // NOI18N
+        result.put(CbusConstants.VLCB_NVSETRD, "NVSETRD"); // NOI18N
         result.put(CbusConstants.CBUS_ACON, "ACON"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF, "ACOF"); // NOI18N
         result.put(CbusConstants.CBUS_AREQ, "AREQ"); // NOI18N
@@ -340,7 +352,9 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_RDCC4, "RDCC4"); // NOI18N
         result.put(CbusConstants.CBUS_WCVS, "WCVS"); // NOI18N
         result.put(CbusConstants.CBUS_VCVS, "VCVS"); // NOI18N
-        result.put(CbusConstants.CBUS_CABDAT, "CABDAT"); // NOI18N
+        result.put(CbusConstants.VLCB_HEARTB, "HEARTB"); // NOI18N
+        result.put(CbusConstants.VLCB_SD, "SD"); // NOI18N
+        result.put(CbusConstants.VLCB_GRSP, "GRSP"); // NOI18N
         result.put(CbusConstants.CBUS_ACON1, "ACON1"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF1, "ACOF1"); // NOI18N
         result.put(CbusConstants.CBUS_REQEV, "REQEV"); // NOI18N
@@ -355,6 +369,8 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_EXTC4, "EXTC4"); // NOI18N
         result.put(CbusConstants.CBUS_RDCC5, "RDCC5"); // NOI18N
         result.put(CbusConstants.CBUS_WCVOA, "WCVOA"); // NOI18N
+        result.put(CbusConstants.CBUS_CABDAT, "CABDAT"); // NOI18N
+        result.put(CbusConstants.VLCB_DGN, "DGN"); // NOI18N
         result.put(CbusConstants.CBUS_FCLK, "FCLK"); // NOI18N
         result.put(CbusConstants.CBUS_ACON2, "ACON2"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF2, "ACOF2"); // NOI18N
@@ -371,6 +387,10 @@ public class CbusOpCodesTest {
         result.put(CbusConstants.CBUS_PLOC, "PLOC"); // NOI18N
         result.put(CbusConstants.CBUS_NAME, "NAME"); // NOI18N
         result.put(CbusConstants.CBUS_STAT, "STAT"); // NOI18N
+        result.put(CbusConstants.VLCB_ENACK, "ENACK"); // NOI18N
+        result.put(CbusConstants.VLCB_ESD, "ESD"); // NOI18N
+        result.put(CbusConstants.CBUS_DTXC, "DTXC"); // NOI18N
+        result.put(CbusConstants.VLCB_LM, "LM"); // NOI18N
         result.put(CbusConstants.CBUS_PARAMS, "PARAMS"); // NOI18N
         result.put(CbusConstants.CBUS_ACON3, "ACON3"); // NOI18N
         result.put(CbusConstants.CBUS_ACOF3, "ACOF3"); // NOI18N
@@ -392,69 +412,63 @@ public class CbusOpCodesTest {
         return Collections.unmodifiableMap(result);
     }
 
-    @Test
-    public void testAllOpcForEvents() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (eventOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isEvent(i),"opc is event "+i);
-            } else {
-                assertFalse(CbusOpCodes.isEvent(i),"opc not event "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testAllOpcForEvents(int opc) {
+        if (eventOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isEvent(opc),"opc is event "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isEvent(opc),"opc not event "+opc);
         }
     }
 
-    @Test
-    public void testisEventNotRequest() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (eventNotRequestOpCodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isEventNotRequest(i),"opc is event "+i);
-            } else {
-                assertFalse(CbusOpCodes.isEventNotRequest(i),"opc not event or request "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisEventNotRequest(int opc) {
+        if (eventNotRequestOpCodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isEventNotRequest(opc),"opc is event "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isEventNotRequest(opc),"opc not event or request "+opc);
         }
     }
 
-    @Test
-    public void testisDcc() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (dccOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isDcc(i),"opc is dcc "+i);
-            } else {
-                assertFalse(CbusOpCodes.isDcc(i),"opc not dcc "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisDcc(int opc) {
+        if (dccOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isDcc(opc),"opc is dcc "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isDcc(opc),"opc not dcc "+opc);
         }
     }
 
-    @Test
-    public void testisOnEvent() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (onEvOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isOnEvent(i),"opc is on event "+i);
-            } else {
-                assertFalse(CbusOpCodes.isOnEvent(i),"opc not on event "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisOnEvent(int opc) {
+        if (onEvOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isOnEvent(opc),"opc is on event "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isOnEvent(opc),"opc not on event "+opc);
         }
     }
 
-    @Test
-    public void testisEventRequest() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (evRequestOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isEventRequest(i),"opc is request "+i);
-            } else {
-                assertFalse(CbusOpCodes.isEventRequest(i),"opc not request "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisEventRequest(int opc) {
+        if (evRequestOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isEventRequest(opc),"opc is request "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isEventRequest(opc),"opc not request "+opc);
         }
     }
 
-    @Test
-    public void testisShortEvent() {
-        for ( int i = 0; (i<256); i++ ) {
-            if (shortOpcodes.contains(i) ) {
-                assertTrue(CbusOpCodes.isShortEvent(i),"opc is request "+i);
-            } else {
-                assertFalse(CbusOpCodes.isShortEvent(i),"opc not request "+i);
-            }
+    @ParameterizedTest
+    @MethodSource("opcRange")
+    public void testisShortEvent(int opc) {
+        if (shortOpcodes.contains(opc) ) {
+            assertTrue(CbusOpCodes.isShortEvent(opc),"opc is request "+opc);
+        } else {
+            assertFalse(CbusOpCodes.isShortEvent(opc),"opc not request "+opc);
         }
     }
 
