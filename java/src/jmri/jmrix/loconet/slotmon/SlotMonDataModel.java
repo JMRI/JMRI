@@ -976,7 +976,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
         msg.setElement(1, slot.getSlot());
         msg.setElement(2, new_dirf);       // 1 here is estop
-        memo.getLnTrafficController().sendLocoNetMessage(msg);
+        memo.getLnTrafficController().sendLocoNetMessage(msg, true);
         // Delay here allows command station time to xmit on the rails.
         try {
             Thread.sleep(100);
@@ -1019,7 +1019,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         msg.setOpCode(LnConstants.OPC_LOCO_SND);
         msg.setElement(1, slot.getSlot());
         msg.setElement(2, new_snd);       // 1 here is estop
-        memo.getLnTrafficController().sendLocoNetMessage(msg);
+        memo.getLnTrafficController().sendLocoNetMessage(msg, true);
         // Delay here allows command station time to xmit on the rails.
         try {
             Thread.sleep(100);
@@ -1132,7 +1132,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F0F6);
-            memo.getLnTrafficController().sendLocoNetMessage(msg);
+            memo.getLnTrafficController().sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -1161,7 +1161,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 msg.setElement(2,slot.getSlot() & 0b01111111);
                 msg.setElement(3,slot.id() & 0x7F);
                 msg.setElement(4, new_F7F13);
-                memo.getLnTrafficController().sendLocoNetMessage(msg);
+                memo.getLnTrafficController().sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -1191,7 +1191,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F14F20);
-            memo.getLnTrafficController().sendLocoNetMessage(msg);
+            memo.getLnTrafficController().sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -1226,7 +1226,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         msg.setElement(2, slot.getSlot() &  0x7F);
         msg.setElement(3, slot.id() & 0x7F);
         msg.setElement(4, new_F14F20);
-        memo.getLnTrafficController().sendLocoNetMessage(msg);
+        memo.getLnTrafficController().sendLocoNetMessage(msg, true);
     }
 
     // gets called on SlotMonPane.dispose
