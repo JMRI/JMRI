@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import java.awt.*;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
@@ -8,11 +10,6 @@ import java.util.*;
 import java.util.List;
 
 import javax.swing.JLabel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
@@ -26,6 +23,9 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
 import jmri.util.ColorUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common routines for trains
@@ -1661,7 +1661,7 @@ public class TrainCommon {
             return padAndTruncateIfNeeded(car.getPickupComment(),
                     InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength());
         } else if (attribute.equals(Setup.KERNEL)) {
-            return padAndTruncateIfNeeded(car.getKernelName(),
+            return padAndTruncateIfNeeded(splitString(car.getKernelName()),
                     InstanceManager.getDefault(KernelManager.class).getMaxNameLength());
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
             if (car.isLead()) {

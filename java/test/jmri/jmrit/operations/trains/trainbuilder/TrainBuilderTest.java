@@ -2993,10 +2993,11 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
     /**
      * Test alternate track aggressive mode. Checks to see if cars are
-     * redirected from alternate track to spur. Test with tracks in quick service mode.
+     * redirected from alternate track to spur. Test with tracks in quick
+     * service mode.
      */
     @Test
     public void testAlternateTrackAggressiveModeQuickService() {
@@ -3011,6 +3012,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location acton = rlActon.getLocation();
         Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonSpur2 = acton.getTrackByName("Acton Spur 2", null);
         Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
         Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
 
@@ -3035,7 +3037,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // provide an alternate track for the spur
         bostonSpur2.setAlternateTrack(bostonYard2);
-        
+
         // set both tracks quick service
         bostonSpur2.setQuickServiceEnabled(true);
         bostonYard2.setQuickServiceEnabled(true);
@@ -3073,7 +3075,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        Assert.assertEquals("number of cars serviced by train", 14, train1.getNumberCarsWorked());
+        Assert.assertEquals("number of cars serviced by train", 15, train1.getNumberCarsWorked());
 
         // confirm clone creation
         Car clone1 = cmanager.getByRoadAndNumber("CP", "10" + Car.CLONE + "0001");
@@ -3087,59 +3089,55 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotNull(clone4);
         Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0004");
         Assert.assertNotNull(clone5);
-        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0008");
+        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0007");
         Assert.assertNotNull(clone6);
-        
-        // CP 10, CP 20, CP 30 and CP 40 moved twice
-        Car clone1a = cmanager.getByRoadAndNumber("CP", "10" + Car.CLONE + "0005");
-        Assert.assertNotNull(clone1a);
-        Car clone2a = cmanager.getByRoadAndNumber("CP", "20" + Car.CLONE + "0006");
-        Assert.assertNotNull(clone2a);
-        Car clone3a = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0007");
+
+        // CP 30 CP 40 and CP 50 moved twice
+        Car clone3a = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0005");
         Assert.assertNotNull(clone3a);
         // clone4 in a kernel with clone3
-        Car clone4a = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0007");
+        Car clone4a = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0005");
         Assert.assertNotNull(clone4a);
-        
+        Car clone5a = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0006");
+        Assert.assertNotNull(clone5a);
+
         // confirm car destinations
-        Assert.assertEquals("Car destination", bostonYard2, clone1.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonYard2, clone2.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, clone1.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, clone2.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonYard2, clone3.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonYard2, clone4.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonYard2, clone5.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonYard2, clone6.getDestinationTrack());
-        
-        Assert.assertEquals("Car destination", bostonSpur2, clone1a.getDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, clone2a.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, clone6.getDestinationTrack());
+
         Assert.assertEquals("Car destination", bostonSpur2, clone3a.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur2, clone4a.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, clone5a.getDestinationTrack());
 
         Assert.assertEquals("Car destination", actonSpur1, c7.getDestinationTrack());
         Assert.assertEquals("Car destination", actonSpur1, c8.getDestinationTrack());
-        Assert.assertEquals("Car destination", actonSpur1, c9.getDestinationTrack());
-        Assert.assertEquals("Car destination", actonSpur1, c10.getDestinationTrack());
+        Assert.assertEquals("Car destination", actonSpur2, c9.getDestinationTrack());
+        Assert.assertEquals("Car destination", actonSpur2, c10.getDestinationTrack());
 
         // check that cars in yard have a final destination Boston spur 2
-        Assert.assertEquals("Car destination", bostonSpur2, c5.getFinalDestinationTrack());
-        Assert.assertEquals("Car destination", bostonSpur2, c6.getFinalDestinationTrack());
-        
+        Assert.assertEquals("Car destination", bostonSpur2, clone3.getFinalDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, clone4.getFinalDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, clone5.getFinalDestinationTrack());
+
         // confirm where in the train's route the cars were pulled
-        Assert.assertEquals("route location", rlBoston2, clone1a.getRouteLocation());
-        Assert.assertEquals("route location", rlBoston2, clone2a.getRouteLocation());
         Assert.assertEquals("route location", rlBoston2, clone3a.getRouteLocation());
         Assert.assertEquals("route location", rlBoston2, clone4a.getRouteLocation());
+        Assert.assertEquals("route location", rlBoston2, clone5a.getRouteLocation());
 
         // confirm car locations
         Assert.assertEquals("Car location", bostonSpur2, c1.getTrack());
         Assert.assertEquals("Car location", bostonSpur2, c2.getTrack());
         Assert.assertEquals("Car location", bostonSpur2, c3.getTrack());
         Assert.assertEquals("Car location", bostonSpur2, c4.getTrack());
-        Assert.assertEquals("Car location", bostonYard2, c5.getTrack());
-        Assert.assertEquals("Car location", bostonYard2, c6.getTrack());
-        
+        Assert.assertEquals("Car location", bostonSpur2, c5.getTrack());
+        Assert.assertEquals("Car location", bostonSpur2, c6.getTrack());
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-
 
     /**
      * Test cars out of service and location unknown.
@@ -21464,7 +21462,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rlBoston1.setMaxCarMoves(20);
         rlChelmsford2.setMaxCarMoves(4);
         rlBoston2.setMaxCarMoves(20);
-        
+
         // room for 3 cars
         chelmsfordSpur1.setLength(150);
 
@@ -21499,7 +21497,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotNull(clone9);
         Car clone10 = cmanager.getByRoadAndNumber("CP", "100" + Car.CLONE + "0011");
         Assert.assertNotNull(clone10);
-        
+
         // create later in the build
         Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0013");
         Assert.assertNotNull(clone5);
@@ -23889,6 +23887,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setGenerateCsvManifestEnabled(true);
         Setup.setStagingAllowReturnEnabled(true);
         Setup.setPrintHeadersEnabled(true);
+        Setup.setManifestOrientation(Setup.LANDSCAPE);
+        Setup.setManifestFontSize(7);
         // use all of the car attributes when creating Manifests
         Setup.setDropManifestMessageFormat(Setup.getCarAttributes());
         Setup.setPickupManifestMessageFormat(Setup.getCarAttributes());
