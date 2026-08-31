@@ -27,7 +27,7 @@ public class LocoNetThrottledTransmitterTest {
     public void testMemoCtor() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
         Assertions.assertNotNull(
-            new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS), false);
+            new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS, false));
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
