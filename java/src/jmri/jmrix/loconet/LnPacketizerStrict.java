@@ -168,8 +168,9 @@ public class LnPacketizerStrict extends LnPacketizer {
                             reTryRequired = true;
                             // check for waiting on echo
                         }
-                        if(trafficController.getLoconetUpdateSlotOnMessageCreation() 
-                                && trafficController.getSentList().contains(msg)) {
+                        // check if this message was supposed to be ignored
+                        // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
+                        if(trafficController.getSentList().contains(msg)) {
                             trafficController.getSentList().remove(msg);
                             log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
                         }
