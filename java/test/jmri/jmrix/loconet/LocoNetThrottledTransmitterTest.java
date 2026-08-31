@@ -27,7 +27,7 @@ public class LocoNetThrottledTransmitterTest {
     public void testMemoCtor() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
         Assertions.assertNotNull(
-            new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS));
+            new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS), false);
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
@@ -36,11 +36,11 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testMemoComparable() {
-        LocoNetThrottledTransmitter.Memo m50   = new LocoNetThrottledTransmitter.Memo(null, 50, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m100a = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m100b = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m200a = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m200b = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m50   = new LocoNetThrottledTransmitter.Memo(null, 50, TimeUnit.MILLISECONDS, false);
+        LocoNetThrottledTransmitter.Memo m100a = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS, false);
+        LocoNetThrottledTransmitter.Memo m100b = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS, false);
+        LocoNetThrottledTransmitter.Memo m200a = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS, false);
+        LocoNetThrottledTransmitter.Memo m200b = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS, false);
 
         Assert.assertNotNull("exists", m100b);
         Assert.assertNotNull("exists", m200b);
