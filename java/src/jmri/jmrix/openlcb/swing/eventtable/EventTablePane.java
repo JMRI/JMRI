@@ -68,6 +68,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.mimcStore = memo.get(MimicNodeStore.class);
         EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
 
+        UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
+
         model = new EventTableDataModel(mimcStore, stdEventTable, nameStore);
         sorter = new TableRowSorter<>(model);
 
@@ -231,6 +233,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         // hook up to receive traffic
         monitor = new Monitor(model);
         memo.get(OlcbInterface.class).registerMessageListener(monitor);
+
+        // set options
+        showRequiresLabel.setSelected(pm.getSimplePreferenceState(requireLabelChecked));
+        showRequiresMatch.setSelected(pm.getSimplePreferenceState(requireBothPCChecked));
+        filter();
     }
 
     public EventTablePane() {
@@ -250,12 +257,20 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         matchGroupName.setVisible(matchGroupName.getItemCount() > 1);
     }
 
+    String requireLabelChecked = this.getClass().getName() + ".requireLabelChecked"; // NOI18N
+    String requireBothPCChecked = this.getClass().getName() + ".requireBothPCChecked"; // NOI18N
+
     @Override
     public void dispose() {
         // Save the column layout
         InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
            tpm.stopPersisting(table);
         });
+        // save checkbox properties
+        UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
+        pm.setSimplePreferenceState(requireLabelChecked, showRequiresLabel.isSelected());
+        pm.setSimplePreferenceState(requireBothPCChecked, showRequiresMatch.isSelected());
+
         // remove traffic connection
         memo.get(OlcbInterface.class).unRegisterMessageListener(monitor);
         monitor = null;
