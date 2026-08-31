@@ -25,6 +25,9 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void requestThrottleTest(){
        Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          // Throttle acquisition is deferred (see AbstractThrottleManager),
+          // so this isn't written synchronously within initThrottle().
+          JUnitUtil.waitFor(() -> !sb.toString().isEmpty(), "wait for throttle notification");
           confirmThrottleRequestSucceeded();
        });
        assertThat(thrown).withFailMessage("failed requesting throttle").isNull();
@@ -58,6 +61,10 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void sendStatusStandardTest(){
        Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          // Without this wait, the deferred acquisition notification from
+          // initThrottle() can race with sendStatus() below and append its
+          // success text after the "499 ERROR" text this test expects.
+          JUnitUtil.waitFor(() -> !sb.toString().isEmpty(), "wait for throttle notification");
           ats.sendStatus(new DccLocoAddress(42,false));
        });
        assertThat(thrown).withFailMessage("failed sending status").isNull();
@@ -69,6 +76,8 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void sendStatusTest(){
         Throwable thrown = catchThrowable( () -> {
           ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          // Throttle acquisition is deferred (see AbstractThrottleManager).
+          JUnitUtil.waitFor(() -> !sb.toString().isEmpty(), "wait for throttle notification");
           confirmThrottleRequestSucceeded();
           ((JmriSRCPThrottleServer)ats).sendStatus(1,42);
           confirmThrottleStatusSent();

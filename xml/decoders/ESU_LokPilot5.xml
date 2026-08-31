@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?transform-xslt href="http://jmri.org/xml/decoders/esu/v5fnOutputs.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/esu/v4fnDescription.xsl"?>
 <!-- Copyright (C) JMRI 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -34,6 +35,8 @@
     <version author="Heiko Rosemann" version="9" lastUpdated="20260805"/>
     <!-- ver10 move function output CVs to xsl -->
     <version author="Heiko Rosemann" version="10" lastUpdated="20260806"/>
+    <!-- ver11 adds Function icon pane -->
+    <version author="Michael Richardson" version="11" lastUpdated="20260826"/>
 
     <decoder>
         <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">

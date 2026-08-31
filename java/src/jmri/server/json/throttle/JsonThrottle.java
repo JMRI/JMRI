@@ -73,6 +73,14 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     private DccLocoAddress address = null;
     private String connectionPrefix = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
+    // Holds the one most recent command received before acquisition
+    // completes, so it can be replayed once the throttle is actually ready
+    // instead of being dropped -- only the FIRST acquisition gets this
+    // treatment (see everAcquired), which is separate from the "ignore
+    // after release" behavior.
+    private JsonNode pendingData;
+    private JsonThrottleSocketService pendingServer;
+    private boolean everAcquired = false;
 
     protected JsonThrottle(DccLocoAddress address, JsonThrottleSocketService server) {
         this.address = address;
@@ -224,6 +232,30 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void onMessage(Locale locale, JsonNode data, JsonThrottleSocketService server) {
+        // this.throttle is null from construction until the async
+        // ThrottleListener callback (notifyThrottleFound(), below) sets it,
+        // and null again after release(). A command received during either
+        // window is ignored here rather than crashing (every field handler
+        // below dereferences this.throttle unconditionally). If this is
+        // before the FIRST acquisition, queue it for replay in
+        // notifyThrottleFound() instead of dropping it -- see pendingData
+        // above.
+        if (this.throttle == null) {
+            if (!this.everAcquired) {
+                log.warn("onMessage(): received a command for {} before its throttle was available -- queuing for replay once acquired",
+                        this.address);
+                this.pendingData = data;
+                this.pendingServer = server;
+            } else {
+                log.warn("onMessage(): received a command for {} after its throttle was released -- ignoring",
+                        this.address);
+            }
+            return;
+        }
+        applyFields(data, server);
+    }
+
+    private void applyFields(JsonNode data, JsonThrottleSocketService server) {
         for (var entry : data.properties()) {
             String k = entry.getKey();
             JsonNode v = entry.getValue();
@@ -242,8 +274,14 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     this.throttle.setIsForward(v.asBoolean());
                     break;
                 case RELEASE:
+                    // server.release(this) nulls out this.throttle. Returning
+                    // immediately (matching ESTOP above) stops the loop from
+                    // processing any remaining fields in this message against
+                    // a now-null throttle -- JSON object field order isn't
+                    // guaranteed, so a field after "release" could otherwise
+                    // still be reached.
                     server.release(this);
-                    break;
+                    return;
                 case STATUS:
                     this.sendStatus(server);
                     break;
@@ -252,7 +290,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                 case PREFIX:
                 case THROTTLE:
                 case ROSTER_ENTRY:
-                    // no action for address, name, prefix, or throttle property
+                case IS_LONG_ADDRESS:
+                    // no action for address, name, prefix, throttle, or
+                    // isLongAddress property -- isLongAddress previously
+                    // fell through to default (see the field report on
+                    // RELEASE above for how that combination crashed).
                     break;
                 default:
                     for ( int i = 0; i< this.throttle.getFunctions().length; i++ ) {
@@ -313,9 +355,21 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     public void notifyThrottleFound(DccThrottle throttle) {
         log.debug("Found throttle {}", throttle.getLocoAddress());
         this.throttle = throttle;
+        this.everAcquired = true;
         throttle.addPropertyChangeListener(this);
         this.speedSteps = throttle.getSpeedStepMode().numSteps;
         this.sendStatus();
+        // Replay whatever command arrived before this.throttle was ready --
+        // see pendingData above. Applied after sendStatus() so a client
+        // watching for state changes sees the acquisition first, then the
+        // requested command.
+        if (this.pendingData != null) {
+            JsonNode replay = this.pendingData;
+            JsonThrottleSocketService replayServer = this.pendingServer;
+            this.pendingData = null;
+            this.pendingServer = null;
+            applyFields(replay, replayServer);
+        }
     }
 
     @Override

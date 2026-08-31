@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsPanel;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * 
@@ -69,7 +70,7 @@ public abstract class RollingStockGroupManager extends PropertyChangeSupport {
     public int getMaxNameLength() {
         int maxLength = 0;
         for (String name : getNameList()) {
-            if (name.length() > maxLength) {
+            if (TrainCommon.splitString(name).length() > maxLength) {
                 maxLength = name.length();
             }
         }

@@ -816,7 +816,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * @return true if destination track found and set
      */
     protected boolean setEngineDestination(Engine engine, RouteLocation rl, RouteLocation rld) {
-        engine.setRouteDestination(rld); // for timing
+        engine.setRouteDestinationTiming(rld); // for timing
         // engine to staging?
         if (rld == getTrain().getTrainTerminatesRouteLocation() && getTerminateStagingTrack() != null) {
             String status =
@@ -941,10 +941,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         addLine(FIVE,
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                         track.getLocation().getName(), track.getName(), cloneEng.toString(), engine.toString()));
-        // for timing, use arrival times for the train that is building
-        // other trains will use their departure time, loaded when creating the Manifest
-        String expectedArrivalTime = getTrain().getExpectedArrivalTime(rld, true);
-        cloneEng.setSetoutTime(expectedArrivalTime);
         // remember where in the route the car was delivered
         engine.setRouteDestination(rld);
         return cloneEng; // return clone

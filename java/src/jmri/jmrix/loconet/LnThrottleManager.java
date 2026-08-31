@@ -75,18 +75,30 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("requestThrottleSetup: address {}, control {}", address, control);
-        if (requestOutstanding) {
+        // Checking requestOutstanding and setting it true must be atomic --
+        // see its declaration below for the race this closes.
+        boolean handleNow;
+        synchronized (this) {
+            if (requestOutstanding) {
+                handleNow = false;
+            } else {
+                requestOutstanding = true;
+                handleNow = true;
+            }
+        }
+        if (handleNow) {
+           // handle this now
+           processThrottleSetupRequest(address, control);
+        } else {
            try {
               // queue this request for later.
               requestList.put(new ThrottleRequest(address,control));
            } catch (InterruptedException ie) {
               log.error("Interrupted while trying to store throttle request");
-              requestOutstanding = false;
+              synchronized (this) {
+                  requestOutstanding = false;
+              }
            }
-        } else {
-           // handle this now
-           requestOutstanding = true;
-           processThrottleSetupRequest(address, control);
         }
      }
 
@@ -95,14 +107,25 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
      * a LocoNetThrottle.
      */
     protected void processQueuedThrottleSetupRequest() {
-        if (!requestOutstanding && (requestList.size() != 0 )) {
-           requestOutstanding = true;
+        // Same atomicity requirement as requestThrottleSetup() above.
+        boolean handleNow;
+        synchronized (this) {
+            if (!requestOutstanding && (requestList.size() != 0 )) {
+                requestOutstanding = true;
+                handleNow = true;
+            } else {
+                handleNow = false;
+            }
+        }
+        if (handleNow) {
            try {
               ThrottleRequest tr = requestList.take();
               processThrottleSetupRequest(tr.getAddress(), tr.getControl());
            } catch (InterruptedException ie) {
               log.error("Interrupted while trying to process process throttle request");
-              requestOutstanding = false;
+              synchronized (this) {
+                  requestOutstanding = false;
+              }
            }
         }
      }
@@ -114,6 +137,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
      * @param control whether the throttle object wants to control the loco
      */
     private void processThrottleSetupRequest(LocoAddress address, boolean control) {
+        pendingRequestAddress = new DccLocoAddress(address.getNumber(), isLongAddress(address.getNumber()));
         slotManager.slotFromLocoAddress(address.getNumber(), this);  //first try
 
         class RetrySetup implements Runnable { // setup for retries and failure check
@@ -129,7 +153,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             @Override
             public void run() {
                 int attempts = 1; // already tried once above
-                int maxAttempts = 10;
+                // Was 10 (10s total) -- too short for a command station
+                // still working through a backlog of rapid sequential slot
+                // requests (e.g. building/tearing down a large consist).
+                // This is a dedicated background thread, so waiting longer
+                // here is safe.
+                int maxAttempts = 20;
                 while (attempts <= maxAttempts) {
                     try {
                         Thread.sleep(1000); // wait one second
@@ -145,9 +174,19 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
                     attempts++;
                 }
                 log.error("No response to slot request for {} after {} attempts.", address, attempts - 1); // NOI18N
-                failedThrottleRequest(address, "Failed to get response from command station");
-                requestOutstanding = false;
-                processQueuedThrottleSetupRequest();
+                // A listener throwing out of notifyFailedThrottleRequest()
+                // must not skip the cleanup below -- otherwise
+                // requestOutstanding stays stuck true forever and wedges
+                // every future throttle request for the rest of the session.
+                try {
+                    failedThrottleRequest(address, "Failed to get response from command station");
+                } catch (RuntimeException ex) {
+                    log.error("Listener threw while handling failed throttle request for {} -- continuing anyway", address, ex);
+                } finally {
+                    requestOutstanding = false;
+                    pendingRequestAddress = null;
+                    processQueuedThrottleSetupRequest();
+                }
             }
         }
 
@@ -163,11 +202,27 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
 
     volatile Thread retrySetupThread;
 
+    // Address a pending slot request was actually made for. This manager
+    // is a single shared SlotListener for whatever address it's currently
+    // requesting, so a stale/delayed response from an earlier, already-
+    // completed request can otherwise get misattributed to the current
+    // one. Checked in notifyChangedSlot() before acting on a response; a
+    // mismatch is simply ignored since RetrySetup already re-issues the
+    // request every second regardless.
+    private volatile DccLocoAddress pendingRequestAddress = null;
+
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<>(5);
 
     Hashtable<Integer, LocoNetSlot> slotForAddress;
     LinkedBlockingQueue<ThrottleRequest> requestList;
-    boolean requestOutstanding = false;
+    // volatile, and only ever check-and-set together with
+    // pendingRequestAddress inside synchronized(this) -- see
+    // requestThrottleSetup()/processQueuedThrottleSetupRequest(). Without
+    // that, two threads (e.g. the EDT building a consist and a separate
+    // JSON throttle request) can both observe this false at once and both
+    // proceed, each overwriting pendingRequestAddress and getting checked
+    // against the other's slot response.
+    volatile boolean requestOutstanding = false;
 
     /**
      * LocoNet does have a Dispatch function.
@@ -205,6 +260,17 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
         log.debug("notifyChangedSlot - slot {}, slotStatus {}", s.getSlot(), Integer.toHexString(s.slotStatus()));
         // This is invoked only if the SlotManager knows that the LnThrottleManager is
         // interested in the address associated with this slot.
+
+        // Reject a response that doesn't match what's actually being
+        // waited for (see pendingRequestAddress above) -- RetrySetup's
+        // 1-second retry loop recovers naturally rather than this
+        // silently completing the wrong address's acquisition.
+        DccLocoAddress expected = pendingRequestAddress;
+        if (expected != null && s.locoAddr() != expected.getNumber()) {
+            log.warn("notifyChangedSlot(): requested slot for {} but got slot {} for address {} instead -- ignoring stale/mismatched response",
+                    expected, s.getSlot(), s.locoAddr());
+            return;
+        }
 
         // need to check to see if the slot is in a suitable state for creating a throttle.
         if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
@@ -268,6 +334,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
              slotForAddress.remove(s.locoAddr());
          }
          requestOutstanding = false;
+         pendingRequestAddress = null;
          processQueuedThrottleSetupRequest();
      }
 
@@ -313,6 +380,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             slotForAddress.remove(address);
         }
         requestOutstanding = false;
+        pendingRequestAddress = null;
         processQueuedThrottleSetupRequest();
     }
 
@@ -470,6 +538,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             slotForAddress.remove(address.getNumber());
         }
         requestOutstanding = false;
+        pendingRequestAddress = null;
         processQueuedThrottleSetupRequest();
     }
 
@@ -500,6 +569,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
             slotForAddress.remove(loconumber);
         }
         requestOutstanding = false;
+        pendingRequestAddress = null;
         processQueuedThrottleSetupRequest();
     }
 

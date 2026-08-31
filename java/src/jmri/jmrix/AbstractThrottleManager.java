@@ -482,12 +482,16 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             for (int i = 0; i < a.size(); i++) {
                 ThrottleListener l = a.get(i).getListener();
                 log.debug("Notify listener {} of {}", (i + 1), a.size() );
-                l.notifyThrottleFound(throttle);
-                addressThrottles.get(addr).incrementUse();
-                addressThrottles.get(addr).addListener(l);
+                // setRosterEntry() must run BEFORE notifyThrottleFound() here --
+                // a listener that inspects the roster entry during its own
+                // notifyThrottleFound() (e.g. JsonThrottle.sendStatus()) would
+                // otherwise always see null.
                 if (ads != null && a.get(i).getRosterEntry() != null && throttle.getRosterEntry() == null) {
                     throttle.setRosterEntry(a.get(i).getRosterEntry());
                 }
+                l.notifyThrottleFound(throttle);
+                addressThrottles.get(addr).incrementUse();
+                addressThrottles.get(addr).addListener(l);
                 updateNumUsers(addr, addressThrottles.get(addr).getUseCount());
             }
             throttleListeners.remove(addr);
