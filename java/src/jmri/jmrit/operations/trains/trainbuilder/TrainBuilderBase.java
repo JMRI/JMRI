@@ -3127,15 +3127,15 @@ public class TrainBuilderBase extends TrainCommon {
                     String earliest = convertMinutesTime(cloneSetoutTimeMinutes + dwellTime);
                     addLine(FIVE, Bundle.getMessage("buildDeliveryTiming", rs.toString(),
                             clone.getSetoutTime(), rs.getTrack().getTrackTypeName(), rs.getLocationName(),
-                            rs.getTrackName(), clone.getTrainName(), getTrain().getName(), trainExpectedArrival,
-                            dwellTime, earliest));
+                            rs.getTrackName(), clone.getTrainName(), clone.getRouteDestination().getId(),
+                            getTrain().getName(), trainExpectedArrival, dwellTime, earliest));
                     addLine(FIVE, BLANK_LINE);
                     return false;
                 } else {
                     addLine(SEVEN, Bundle.getMessage("buildCloneDeliveryTiming", clone.toString(),
                             clone.getSetoutTime(), rs.getTrack().getTrackTypeName(), rs.getLocationName(),
-                            rs.getTrackName(), clone.getTrainName(), getTrain().getName(), trainExpectedArrival,
-                            dwellTime, rs.toString()));
+                            rs.getTrackName(), clone.getTrainName(), clone.getRouteDestination().getId(),
+                            getTrain().getName(), trainExpectedArrival, dwellTime, rs.toString()));
                 }
             }
         }
