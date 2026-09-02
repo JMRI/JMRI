@@ -775,8 +775,8 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     public static class TripleMemo { // would like to use a record for this; public for testing
-        final public EventID eventID;
-        final public String  rangeSuffix;
+        public final EventID eventID;
+        public final String  rangeSuffix;
         // Event name is stored separately, see getValueAt()
         public NodeID producer;
         public String producerName;
