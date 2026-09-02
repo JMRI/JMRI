@@ -21,7 +21,7 @@
         -->
   <version version="1.8" author="Ronald Kuhn" lastUpdated="20230731"/>
   <!--  Added update paths to newest fw 3.13.053 -->
-  <version version="1.7" author="Ronald Kuhn" lastted="20230721"/>
+  <version version="1.7" author="Ronald Kuhn" lastUpdated="20230721"/>
   <!--  change file for CV13 because PD05A does not support analog  -->
   <version version="1.6" author="Alain Le Marchand, AlanUS.forum@gmail.com" lastUpdated="20220416"/>
   <!--  Added PD10MU definition -->
