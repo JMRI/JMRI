@@ -29,6 +29,11 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
+/**
+ * ColumnNumber
+ * This enum defines the default column order.
+ * F0COLUMN thru F28COLUMN must be kept in a block and in order.
+ */
     enum ColumnNumber {SLOTCOLUMN,
     ESTOPCOLUMN,
     ADDRCOLUMN,
