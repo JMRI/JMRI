@@ -280,7 +280,8 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>PD series disabled until an update 3.15+ is available</li>
+                <li>Added a "replacement" function for some decoders</li>
             </ul>
 
         <h4>ESU</h4>

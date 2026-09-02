@@ -22,7 +22,7 @@
   <!--  Added update paths to newest fw 3.12.050 -->
   <version version="4" author="Alain Le Marchand" lastUpdated="2019-07-28"/>
   <!--  Simplified productID for PD05 and PD12: no more version indicated -->
-    <version version="3" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
+    <version version="3" author="Ronald Kuhn" lastUpdated="2016-12-14"/>
   <!--  New Firmware 3.06 and 3.07 with new CV's and added translation to german -->
   <version version="2" author="Pierre Billon" lastUpdated="20151018"/>
   <!--  Merged DH05C, DH10C, DH12A, DH16A, DH18A, DH21A, DH22A def files (same CV characteristics) -->
