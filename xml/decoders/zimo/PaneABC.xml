@@ -7,215 +7,202 @@
 <!-- version 1.3 - Ronald Kuhn - a small visual correction -->
 <!-- version 1.4 - Pierre Billon - 2026-07-31 - added the measured asymmetry voltage (CV100) and its correction factor (CV101) -->
 <!-- version 1.5 - Pierre Billon - 2026-08-06 - Added French and German translations -->
+<!-- version 1.6 - Ronald Kuhn - 2026-08-13 - newly designed with grid for more clarity -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>ABC</name>
   <column>
+   <label>
+    <text> </text>
+   </label>
+    <row>
+     <grid gridx="0" gridy="NEXT" weightx="3" anchor="LINE_END">
+      <griditem insets="2,0,2,0">
+       <display item="MAN Key Extension (Disable HLU or ABC signal control)"/>
+      </griditem>
+      <griditem>
+       <display item="Direction Dependent stops with asymmetrical DCC"/>
+      </griditem>
+      <griditem>
+       <display item="Distance controlled stopping"/>
+      </griditem>
+
+
+      <griditem>
+       <display item="Brake mode"/>
+      </griditem>
+
+      <griditem>
+       <display item="HLU active"/>
+      </griditem>
+
+
+     </grid> 
+    </row>
+     <label>
+      <text> </text>
+     </label>
+    <row>
+     <grid gridx="0" gridy="NEXT" weightx="3" anchor="LINE_END">
+      <griditem>
+       <display item="Distance controlled stopping Distance"/>
+      </griditem>
+      <griditem gridx="1" gridy="0" anchor="LINE_START">
+       <display item="Distance controlled stopping Distance" format="hslider" label=""/>
+      </griditem>
+      <griditem>
+       <display item="Distance controlled stopping speed correction (ABC)"/>
+      </griditem>
+      <griditem gridx="1" gridy="1" anchor="LINE_START">
+       <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label=""/>
+      </griditem>
+      <griditem>
+       <display item="Distance controlled stopping speed correction (HLU)"/>
+      </griditem>
+      <griditem gridx="1" gridy="2" anchor="LINE_START">
+       <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider"/>
+      </griditem>
+     </grid> 
+    </row>
+     <label>
+      <text> </text>
+     </label>
+    <row>
+     <grid gridx="0" gridy="NEXT" weightx="3" anchor="LINE_END">
+      <griditem>
+       <display item="stopping distance fwd high"/>
+      </griditem>
+      <griditem gridx="1" gridy="0" anchor="LINE_START">
+       <display item="stopping distance fwd high" label="" format="hslider"/>
+      </griditem>
+      <griditem>
+       <display item="stopping distance fwd low"/>
+      </griditem>
+      <griditem gridx="1" gridy="1" anchor="LINE_START">
+       <display item="stopping distance fwd low" label="" format="hslider"/>
+      </griditem>
+      <griditem>
+       <display item="stopping distance rev high"/>
+      </griditem>
+      <griditem gridx="1" gridy="2" anchor="LINE_START">
+       <display item="stopping distance rev high" label="" format="hslider"/>
+      </griditem>
+      <griditem>
+       <display item="stopping distance rev low"/>
+      </griditem>
+      <griditem gridx="1" gridy="3" anchor="LINE_START">
+       <display item="stopping distance rev low" label="" format="hslider"/>
+      </griditem>
+     </grid> 
+    </row>
+     <label>
+      <text> </text>
+     </label>
+    <row>
+     <grid gridx="0" gridy="NEXT" weightx="3" anchor="LINE_END">
+      <griditem>
+       <display item="Signal Dependent Acceleration"/>
+      </griditem>
+      <griditem>
+       <display item="Signal Dependent Deceleration"/>
+      </griditem>
+      <griditem>
+       <display item="Signal Dependent Reaction Time"/>
+      </griditem>
+      <griditem gridx="1">
        <label>
-        <text> </text>
+        <text>   </text>
        </label>
-    <display item="MAN Key Extension (Disable HLU or ABC signal control)">
-       <!--label>Set Function Key to Disable ABC Signal Control</label>
-       <label xml:lang="it">Tasto funzione per disabilitare controllo segnale ABC</label>
-       <label xml:lang="cs">Nastavení funkční klávesy pro zakázání řízení signálem ABC</label>
-       <label xml:lang="de">F-Taste zum Deaktivieren von ABC</label-->
-    </display>
-    <display item="Direction Dependent stops with asymmetrical DCC"/>
-    <label>
+      </griditem>
+      <griditem gridx="2" gridy="0" gridheight="2" anchor="LINE_START">
+       <label>
+        <text>&lt;html&gt;Entered value multiplied by 0.4 seconds is the additional accel/decel&lt;br&gt;added to the normal CV3 and CV4 setting, for speed changes due to ABC</text>
+        <text xml:lang="fr">&lt;html&gt;La valeur saisie, multipliée par 0,4 seconde,&lt;br&gt;donne l'accélération/décélération&lt;br&gt;ajoutée aux CV3 et CV4 normaux, pour les changements de vitesse dus à l'ABC</text>
+        <text xml:lang="it">&lt;html&gt;Il valore x 0,4 è il valore sommato a CV3 e CV4&lt;br&gt;per cambio velocità per ABC</text>
+        <text xml:lang="cs">&lt;html&gt;zadaná hodnota vynásobená 0,4 sekundy je další zrychlení/zpomalení&lt;br&gt;přidané k základnímu nastavení v CV3 a CV4 pro rychlost změn v důsledku ABC</text>
+        <text xml:lang="de">&lt;html&gt;Der eingegebene Wert, multipliziert mit 0,4, wird den Werten in&lt;br&gt;CV3 und CV4 hinzugerechnet und verändert die Geschwindigkeit bei ABC.</text>
+       </label>
+      </griditem>
+     </grid> 
+    </row>
+     <label>
       <text> </text>
-    </label>
-    <display item="Distance controlled stopping"/>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <column>
-        <row>
-          <display item="Distance controlled stopping Distance"/>
-          <display item="Distance controlled stopping Distance" format="hslider" label=""/>
-        </row>
-        <row>
-          <display item="Distance controlled stopping speed correction (ABC)"/>
-          <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label=""/>
-        </row>
-        <row>
-          <display item="Distance controlled stopping speed correction (HLU)"/>
-          <display item="Distance controlled stopping speed correction (HLU)" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="stopping distance fwd high">
-          </display>
-          <display item="stopping distance fwd high" label="" format="hslider">
-            <label> </label>
-          </display>
-          </row>
-        <row>
-          <display item="stopping distance fwd low">
-          </display>
-          <display item="stopping distance fwd low" label="" format="hslider">
-            <label/>
-          </display>
-        </row>
-        <row>
-          <display item="stopping distance rev high">
-          </display>
-          <display item="stopping distance rev high" label="" format="hslider">
-            <label/>
-          </display>
-        </row>
-        <row>
-          <display item="stopping distance rev low">
-          </display>
-          <display item="stopping distance rev low" label="" format="hslider">
-            <label/>
-          </display>
-        </row>
-      </column>
-    </row>
-    <row>
-
-      <column>
-
-      </column>
-      <column>
-
-      </column>
-    </row>
-    
-    <row>
-      <column>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Signal Dependent Acceleration"/>
-        <display item="Signal Dependent Deceleration"/>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Signal Dependent Reaction Time"/>
-        <label>
-          <text> </text>
-        </label>
-      </column>
-      <column>
-        <label>
-          <text>   </text>
-        </label>
-      </column>
-      <column>
-        <label>
-          <text>Entered value multiplied by 0.4 seconds is the additional accel/decel</text>
-          <text xml:lang="fr">La valeur saisie, multipliée par 0,4 seconde, donne l'accélération/décélération</text>
-          <text xml:lang="it">Il valore x 0,4 è il valore sommato a CV3 e CV4</text>
-          <text xml:lang="cs">zadaná hodnota vynásobená 0,4 sekundy je další zrychlení/zpomalení</text>
-          <text xml:lang="de">Der eingegebene Wert, multipliziert mit 0,4, wird den Werten in</text>
-        </label>
-        <label>
-          <text>added to the normal CV3 and CV4 setting, for speed changes due to ABC</text>
-          <text xml:lang="fr">ajoutée aux CV3 et CV4 normaux, pour les changements de vitesse dus à l'ABC</text>
-          <text xml:lang="it">per cambio velocità per ABC</text>
-          <text xml:lang="cs">přidané k základnímu nastavení v CV3 a CV4 pro rychlost změn v důsledku ABC</text>
-          <text xml:lang="de">CV3 und CV4 hinzugerechnet und verändert die Geschwindigkeit bei ABC.</text>
-        </label>
-        <label>
-          <text> </text>
-        </label>
-        <label>
-          <text> </text>
-        </label>
-        <label>
-          <text> </text>
-        </label>
-      </column>
-    </row>
-    <row>
-      <column>
-        <display item="Asymmetrical DCC Threshold"/>
-        <display item="Current asymmetry voltage"/>
-        <display item="Asymmetry voltage correction factor"/>
-        <label>
-          <text> </text>
-        </label>
-      </column>
-      <column>
-        <label>
-          <text>    </text>
-        </label>
-      </column>
-      <column>
-        <row>
-          <column>
-            <label>
-              <text>Hundreds digit = sensitivity</text>
-              <text xml:lang="fr">Chiffre des centaines = sensibilité</text>
-              <text xml:lang="it">Centinaia = sensibilità</text>
-              <text xml:lang="cs">Stovky = citlivost</text>
-              <text xml:lang="de">Hunderterstelle = Sensibilität</text>
-            </label>
-          </column>
-          <column>
-            <label>
-              <text>    </text>
-            </label>
-          </column>
-          <column>
-            <label>
-              <text>0 = Fast recognition</text>
-              <text xml:lang="fr">0 = détection rapide</text>
-              <text xml:lang="it">0 = Alta</text>
-              <text xml:lang="cs">0 = Rychlé rozpoznání</text>
-              <text xml:lang="de">0 = Schnell</text>
-            </label>
-            <label>
-              <text>1 = Normal recognition (0.5s)</text>
-              <text xml:lang="fr">1 = détection normale (0,5 s)</text>
-              <text xml:lang="it">1 = Normale (0,5 sec)</text>
-              <text xml:lang="cs">1 = Normální (0,5 sekundy)</text>
-              <text xml:lang="de">1 = Normal (0,5 sec)</text>
-            </label>
-            <label>
-              <text>2 = Slow recognition (1s)</text>
-              <text xml:lang="fr">2 = détection lente (1 s)</text>
-              <text xml:lang="it">2 = Bassa (1 sec)</text>
-              <text xml:lang="cs">2 = Pomalé rozpoznání (1 sekunda)</text>
-              <text xml:lang="de">2 = Langsam (1 sec)</text>
-            </label>
-          </column>
-        </row>
-        <label>
-          <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
-          <text xml:lang="fr">Chiffres des dizaines et des unités = seuil d'asymétrie en dixièmes de volt</text>
-          <text xml:lang="it">Decine e Unità = Soglia asimmetrica in decimi di Volt</text>
-          <text xml:lang="cs">Desítky a jednotky = prahová hodnoty asymetrie v desetinách voltu</text>
-          <text xml:lang="de">Zehner- und Einerstelle = Asymmetrie-Schwelle in Zehntel-Volt.</text>
-        </label>
-      </column>
-    </row>
+     </label>
     <separator/>
-    <label>
-          <text> </text>
-    </label>
+     <label>
+      <text> </text>
+     </label>
     <row>
-      <column>
-        <display item="Signal Dependent Reaction Time"/>
-        <label>
-          <text> </text>
-        </label>
-      </column>
-      
+     <grid gridx="0" weightx="4" anchor="LINE_END">
+      <griditem gridheight="4">
+        <display item="Asymmetrical DCC Threshold"/>
+      </griditem>
+      <griditem gridheight="4">
+        <display item="Current asymmetry voltage"/>
+      </griditem>
+      <griditem gridheight="4">
+        <display item="Asymmetry voltage correction factor"/>
+      </griditem>
+      <griditem gridx="1">
+       <label>
+        <text>   </text>
+       </label>
+      </griditem>
+      <griditem gridx="2" gridheight="3" anchor="LINE_START">
+       <label>
+        <text>Hundreds digit = sensitivity</text>
+        <text xml:lang="fr">Chiffre des centaines = sensibilité</text>
+        <text xml:lang="it">Centinaia = sensibilità</text>
+        <text xml:lang="cs">Stovky = citlivost</text>
+        <text xml:lang="de">Hunderterstelle = Sensibilität</text>
+       </label>
+      </griditem>
+      <griditem gridx="3">
+       <label>
+        <text>   </text>
+       </label>
+      </griditem>
+      <griditem gridx="4">
+       <label>
+        <text>&lt;html&gt;0 = Fast recognition&lt;br&gt;1 = Normal recognition (0.5s)&lt;br&gt;2 = Slow recognition (1s)</text>
+        <text xml:lang="fr">&lt;html&gt;0 = détection rapide&lt;br&gt;1 = détection normale (0,5 s)&lt;br&gt;2 = détection lente (1 s)</text>
+        <text xml:lang="it">&lt;html&gt;0 = Alta&lt;br&gt;1 = Normale (0,5 sec)&lt;br&gt;2 = Bassa (1 sec)</text>
+        <text xml:lang="cs">&lt;html&gt;0 = Rychlé rozpoznání&lt;br&gt;1 = Normální (0,5 sekundy)&lt;br&gt;2 = Pomalé rozpoznání (1 sekunda)</text>
+        <text xml:lang="de">&lt;html&gt;0 = Schnell&lt;br&gt;1 = Normal (0,5 sec)&lt;br&gt;2 = Langsam (1 sec)</text>
+       </label>
+      </griditem>
+      <griditem gridx="2" gridy="4" gridwidth="4">
+       <label>
+        <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
+        <text xml:lang="fr">Chiffres des dizaines et des unités = seuil d'asymétrie en dixièmes de volt</text>
+        <text xml:lang="it">Decine e Unità = Soglia asimmetrica in decimi di Volt</text>
+        <text xml:lang="cs">Desítky a jednotky = prahová hodnoty asymetrie v desetinách voltu</text>
+        <text xml:lang="de">Zehner- und Einerstelle = Asymmetrie-Schwelle in Zehntel-Volt.</text>
+       </label>
+      </griditem>
+     </grid> 
     </row>
-        <separator/>
-    <label>
-          <text> </text>
-    </label>
+     <label>
+      <text> </text>
+     </label>
+    <separator/>
+     <label>
+      <text> </text>
+     </label>
     <row>
-      <column>
-         <display item="Asymmetric DCC shuttle"/>
-         <display item="ABC Shuttle Wait Time"/>
-         <display item="ABC Shuttle Intermediate Wait Time"/>
-      </column>
+     <grid gridx="0" weightx="4" anchor="LINE_END">
+      <griditem>
+       <display item="Asymmetric DCC shuttle"/>
+      </griditem>
+      <griditem>
+       <display item="ABC Shuttle Wait Time"/>
+      </griditem>
+      <griditem>
+       <display item="ABC Shuttle Intermediate Wait Time"/>
+      </griditem>
+     </grid> 
     </row>
+   <label>
+    <text> </text>
+   </label>
   </column>
 </pane>

@@ -4,8 +4,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import org.apache.commons.lang3.StringUtils;
-
 import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
@@ -21,6 +19,8 @@ import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Methods to support the TrainBuilder class.
@@ -2428,7 +2428,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Checks to see if track has an alternate and can be used
      * 
-     * @param car       the car being dropped
+     * @param car   the car being dropped
      * @param track the destination track
      * @return true if track has an alternate and can be used
      */
@@ -2469,10 +2469,12 @@ public class TrainBuilderBase extends TrainCommon {
             if (rle == rld) {
                 break;
             }
+            car.setRouteDestinationTiming(rle); // for timing
             if (rle.getName().equals(rld.getName()) &&
                     (rle.getCarMoves() < rle.getMaxCarMoves()) &&
                     rle.isDropAllowed() &&
-                    checkDropTrainDirection(car, rle, trackTemp)) {
+                    checkDropTrainDirection(car, rle, trackTemp) &&
+                    trackTemp.isRollingStockAccepted(car).equals(Track.OKAY)) {
                 log.debug("Found an earlier drop for car ({}) destination ({})", car.toString(), rle.getName()); // NOI18N
                 return rle; // earlier drop in train's route
             }
@@ -2997,7 +2999,7 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(ONE, BLANK_LINE);
         }
     }
-    
+
     protected void finshBuildReport() {
         // done building
         if (_warnings > 0) {
@@ -3058,7 +3060,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
     }
-    
+
     protected boolean checkRouteLocation(RouteLocation rl) {
         if (getTrain().isLocationSkipped(rl)) {
             addLine(ONE,
@@ -3107,8 +3109,7 @@ public class TrainBuilderBase extends TrainCommon {
                 // was the rolling stock delivered using this route location?
                 if (rs.getRouteDestination() == rl) {
                     addLine(FIVE,
-                            Bundle.getMessage("buildRouteLocation", rs.toString(),
-                                    rs.getTrack().getTrackTypeName(),
+                            Bundle.getMessage("buildRouteLocation", rs.toString(), rs.getTrack().getTrackTypeName(),
                                     rs.getLocationName(), rs.getTrackName(), getTrain().getName(), rl.getName(),
                                     rl.getId()));
                     addLine(FIVE, BLANK_LINE);
@@ -3121,23 +3122,20 @@ public class TrainBuilderBase extends TrainCommon {
                 // determine when the clone is going to be delivered
                 int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());
                 // in aggressive mode the dwell time is 0
-                int dwellTime = 0;
-                if (Setup.isBuildOnTime()) {
-                    dwellTime = Setup.getDwellTime();
-                }
+                int dwellTime = Setup.getDwellTime();
                 if (cloneSetoutTimeMinutes + dwellTime > trainArrivalTimeMinutes) {
                     String earliest = convertMinutesTime(cloneSetoutTimeMinutes + dwellTime);
                     addLine(FIVE, Bundle.getMessage("buildDeliveryTiming", rs.toString(),
                             clone.getSetoutTime(), rs.getTrack().getTrackTypeName(), rs.getLocationName(),
-                            rs.getTrackName(), clone.getTrainName(), getTrain().getName(), trainExpectedArrival,
-                            dwellTime, earliest));
+                            rs.getTrackName(), clone.getTrainName(), clone.getRouteDestination().getId(),
+                            getTrain().getName(), trainExpectedArrival, dwellTime, earliest));
                     addLine(FIVE, BLANK_LINE);
                     return false;
                 } else {
                     addLine(SEVEN, Bundle.getMessage("buildCloneDeliveryTiming", clone.toString(),
                             clone.getSetoutTime(), rs.getTrack().getTrackTypeName(), rs.getLocationName(),
-                            rs.getTrackName(), clone.getTrainName(), getTrain().getName(), trainExpectedArrival,
-                            dwellTime, rs.toString()));
+                            rs.getTrackName(), clone.getTrainName(), clone.getRouteDestination().getId(),
+                            getTrain().getName(), trainExpectedArrival, dwellTime, rs.toString()));
                 }
             }
         }

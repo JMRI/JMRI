@@ -504,7 +504,7 @@ CP="${CP}.:classes:target/classes:jmri.jar"
 # add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
-# add contents of the user settings / lib directory, if anything 
+# add contents of the user settings / lib directory, if anything
 mkdir -p ${settingsdir}/lib
 if [ ! -z "$(ls -A ${settingsdir}/lib)" ]; then
     CP="${CP}:$( ls -m ${settingsdir}/lib/*.jar | tr -d ' \n' | tr ',' ':' )"
@@ -541,7 +541,7 @@ if [ "$APPNAME" != "$DEFAULT_APP_NAME" -o -n "${CONFIGNAME}" ] ; then
     if [ -z "${CONFIGNAME}" ] ; then
         CONFIGNAME=$( echo $APPNAME | tr -d '[:space:]' | tr -d '=' )
     fi
-    CONFIGFILE="-Dorg.jmri.Apps.configFilename=${CONFIGNAME}Config.xml"
+    CONFIGFILE="-Dorg.jmri.Apps.configFilename=${CONFIGNAME}Config.properties"
     [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'" | tee -a ${launcher_log}
 fi
 
@@ -603,10 +603,10 @@ RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
 
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
- 
+
     trap 'kill -TERM $PID' TERM INT
     trap 'kill -HUP $PID' HUP
-    
+
     if [ "$OS" = "macosx" ] ; then
         "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS} &
         PID=$!
@@ -614,7 +614,7 @@ while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
         "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS} &
         PID=$!
     fi
-    
+
     wait $PID
     trap - TERM INT HUP
     wait $PID

@@ -99,7 +99,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#CarRouting">Car Routing Options</a></li>
                     <li><a href="#LoggingOptions">Logging Options</a></li>
                     <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
-                    <li><a href="#Options">Options</a>
+                    <li><a href="#Options">Additional Options</a>
                       <ul>
                         <li><a href="#SaveTrainManifests">Save Train Manifests, Build
                             Reports, and Switch Lists</a></li>
@@ -1908,7 +1908,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         </tr>
       </table>
 
-      <h3 id="Options">Options</h3>
+      <h3 id="Options">Additional Options</h3>
 
       <h4 id="SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</h4>
       When the option "Save Train Manifests, Build Reports, and Switch Lists" is selected,

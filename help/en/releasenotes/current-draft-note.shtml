@@ -26,12 +26,19 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Updated CBUS op-code definitions with the new VLCB op-codes so they
+                    show up nicely in the CBUS Console.</li>
             </ul>
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>Extend the possible reply length to support very large SUSIC installs.</li>
+                <li>Added a new node type, <strong>ESP32Node</strong>, for self-contained
+                    ESP32-based CMRI-over-WiFi nodes using MCP23017 I/O expander chips.</li>
+                <li>Network (TCP) connections now automatically attempt to reconnect if the
+                    connection is lost, instead of requiring a manual reconnect.</li>
+                <li>Fixed the direction the bit pattern moves in the CMRI diagnostic Output
+                    Test window, which was displaying right to left instead of left to right.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -85,16 +92,21 @@
                     function commands for its locomotive after receiving an
                     unrecognized locomotive information response, requiring a
                     JMRI restart to recover.</li>
+                <li>Fixed a consist-handling bug in XNetConsist affecting rapid
+                    add/remove/delete cycles from an external JSON client, matching
+                    the equivalent LocoNet fix.</li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>SlotMonitor update: 
+                <li>SlotMonitor update:
                 <ul>
                     <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
                     <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
                     <li>If purging is disabled in the Command Station so is slow scanning.</li>
                       A value of -1 stops slowscanning.</li>
+                    <li>Added a column to show the number of JMRI Throttles sharing a slot.</li>
+                    <li>Updated SlotMon help screen.</li>
                 </ul>
                 <li>Remove some extra messages when configuring with the board-level tools
                   in the LocoNet menu</li>
@@ -107,6 +119,14 @@
                   LocoNet Monitor.</li>
                 <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
                 <li>LocoNet Clock now uses the same throttle ID as the rest of JMRI, instead of (illegal) 00 00.</li>
+                <li>Fixed several consist-handling bugs that could leave a LocoNet consist in an
+                    inconsistent state after rapid add/remove/delete operations from an external
+                    JSON client (e.g. a WiFi throttle panel), including cases that could report a
+                    consist change as failed when it had actually succeeded.</li>
+                <li>Added a new JSON service, <code>loconetSlotUsage</code>, that reports live
+                    LocoNet slot usage (used/free/total) over both the HTTP and WebSocket JSON
+                    APIs, so external clients can detect slot exhaustion before a consist or
+                    throttle operation fails.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -136,7 +156,8 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Network (TCP) connections now automatically attempt to reconnect if the
+                    connection is lost, instead of requiring a manual reconnect.</li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -268,6 +289,7 @@
         <h4>ESU</h4>
             <ul>
                 <li>Updated LokPiot 5 / LokSound 5 definitions for new output modes as of firmware version 5.14.183.</li>
+                <li>Added new Function Key pane that includes icon index and description and settings associated with function keys.</li>
             </ul>
 
         <h4>Hattoms</h4>
@@ -367,7 +389,8 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Add Kato OEM decoder</li>
+                <li>Add BLU-1100 models</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -422,7 +445,9 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Added replacement-feature for v4.x MS/MN decoder</li>
+                <li>Added some features from CV27 for FS/MS/MN decoders, in particular HLU-Options</li>
+                <li>Minor optical corrections</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -455,7 +480,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Roster entries are to have unique IDs.  Due to a previous oversight,
+                you could directly change the entry in the DecoderPro table to create
+                a duplicate. You can still edit the ID, but creating entries with
+                duplicate IDs are no longer allowed.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -483,6 +511,11 @@
                 occupancy change: a redraw now repaints the drawing area only, instead of
                 the whole window including its menu bar, tool bar and scroll bars, and a
                 partial repaint no longer redraws the whole visible track plan.</li>
+            <li>Fixed an occasional Concurrent Modification Exception error in the
+                LayoutBlock class during startup.</li>
+            <li>An unexpected error while restoring the saved block values no longer leaves
+                Layout Block routing uninitialized, and is now reported in the log instead
+                of passing unnoticed.</li>
             <li></li>
         </ul>
 
@@ -528,6 +561,10 @@
                 when their sensor changes state, instead of the whole window, reducing CPU
                 use on panels receiving frequent sensor events. The repainted area follows
                 the panel zoom level.</li>
+            <li>Fixed a NullPointerException in a Memory icon displaying a roster entry,
+                which could be thrown when the memory value changed while the icon was
+                being updated. The exception propagated out to the caller, so a script or
+                automaton writing to that memory could be stopped by it.</li>
             <li></li>
         </ul>
 
@@ -617,7 +654,14 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fixed a race condition where a newly-acquired throttle could be handed
+                to listeners before its roster entry was attached, so a listener could
+                briefly see a throttle with no roster entry. The roster entry is now
+                set before listeners are notified.</li>
+            <li>Applied the same consist-handling fixes made for LocoNet and XPressNet
+                to EasyDccConsist, for parity across consist-capable systems.</li>
+            <li>Fixed a thread-safety bug in the JSON throttle manager where simultaneous
+                JSON client connections could corrupt throttle bookkeeping.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -659,6 +703,12 @@
         <a id="server" name="server"></a>
         <ul>
             <li>Improve how "show ? if unknown" works with background image.</li>
+            <li>Fixed a NullPointerException in the JSON servlet when a POST, PUT, or
+                DELETE request arrived with no Content-Type header, so it now returns
+                a proper JSON error response.</li>
+            <li>Fixed a JSON schema validation gap where requesting an unrecognized
+                type from the LocoNet slot usage service could silently return the
+                wrong schema instead of an error.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -688,6 +738,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fix the <strong>Current Config file</strong> path in <strong>Help &rArr; File Locations</strong>.</li>
+            <li>The <strong>Single Step Upgrade</strong> help page describes an alternate process to
+            upgrade from JMRI 3.x or 4.x using Java 1.8 to a current 5.x release using Java 21.</li>
         </ul>
-

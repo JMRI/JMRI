@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/esu/v4fnDescription.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -66,6 +66,9 @@
     <version author="Dave Heap" version="22" lastUpdated="20200726"/>
     <!-- ver23 disable Reset to Defaults-->
     <version author="Dave Heap" version="23" lastUpdated="20200818"/>
+    <!-- ver24 adds Function icon pane -->
+    <version author="Michael Richardson" version="24" lastUpdated="20260826"/>
+    
     <decoder>
         <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound Select" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554492,33554511,33554527,33554569">

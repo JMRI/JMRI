@@ -22,6 +22,7 @@
 
   <version author="Pierre Billon" version="1" lastUpdated="2026/07/31"/>
   <version author="Pierre Billon" version="1.1" lastUpdated="2026/08/06"/>
+  <version author="Ronald Kuhn" version="1.2" lastUpdated="2026/08/11"/>
 
   <decoder>
     <family name="MN Non-Sound (version 5+)" mfg="Zimo">
@@ -63,6 +64,7 @@
         </output>
         <size length="14" width="8.7" height="2.3" units="mm"/>
       </model>
+
       <model model="MN150 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1.0A" maxTotalCurrent="0.5A" formFactor="N" numOuts="4" numFns="14" productID="121">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -204,6 +206,7 @@
         </output>
         <size length="9.9" width="7.5" height="2.1" units="mm"/>
       </model>
+
       <model model="MN300 version 5+" lowVersionID="5" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.0A" formFactor="H0" numOuts="8" numFns="14" productID="125">
         <output name="1" label="Front Light">
           <label xml:lang="fr">Feux avant</label>
@@ -360,7 +363,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV201-CV249_MS-MN-FS.xml"/>
 
 
-      <variable CV="7" item="Decoder Version" readOnly="yes" default="4">
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="5">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>
