@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.1" author="Ronald Kuhn" lastUpdated="20260828"/>
+  <!-- replacementModel added and small change -->
   <version version="1" author="Pierre Billon" lastUpdated="20260725"/>
   <!--  Creation (new firmware 3.14.095).
         Based on Doehler_Haass_fw3.13_FH05B-22A.xml
@@ -23,7 +25,7 @@
         -->
   <decoder>
     <family name="Function Decoders (firmware 3.14+)" mfg="Doehler und Haass">
-      <model model="FH05B (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+      <model model="FH05B (firmware 3.14.095+)" replacementModel="FH05B (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from September 2025" maxInputVolts="30V" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -65,7 +67,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="FH16A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug" maxInputVolts="30V" maxTotalCurrent="1.5A" connector="PluX16">
+      <model model="FH16A (firmware 3.14.095+)" replacementModel="FH16A (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug with update from September 2025" maxInputVolts="30V" maxTotalCurrent="1.5A" connector="PluX16">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -113,7 +115,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="FH18A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
+      <model model="FH18A (firmware 3.14.095+)" replacementModel="FH05B (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="170" comment="FH18A with update from September 2025" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="Next18">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
@@ -161,7 +163,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="FH22A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
+      <model model="FH22A (firmware 3.14.095+)" replacementModel="FH18A (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="192" comment="FH22A with update from September 2025" maxInputVolts="30V" maxTotalCurrent="2.0A" connector="PluX22">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
           <label xml:lang="ca">Llum Frontal</label>
