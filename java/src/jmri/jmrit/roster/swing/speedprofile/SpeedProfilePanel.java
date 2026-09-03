@@ -222,8 +222,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         testDataPanel.add(new MakeLabelPanel("LabelTestStep", speedStepTest));
         speedStepTest.setToolTipText(Bundle.getMessage("StepTestToolTip"));
         speedStepTestFwd.setEditable(false);
+        speedStepTestFwd.setPreferredSize(new JTextField("99999.99 WWWWW ").getPreferredSize());
         testDataPanel.add(new MakeLabelPanel("LabelTestStepFwd", speedStepTestFwd));
         speedStepTestFwd.setToolTipText(Bundle.getMessage("ForwardTestToolTip"));
+        speedStepTestRev.setPreferredSize(new JTextField("99999.99 WWWWW ").getPreferredSize());
         speedStepTestRev.setEditable(false);
         testDataPanel.add(new MakeLabelPanel("LabelTestStepRev", speedStepTestRev));
         speedStepTestRev.setToolTipText(Bundle.getMessage("ReverseTestToolTip"));
@@ -941,8 +943,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 t.setSpeedSetting(0.0f);
                 if (!profile) {
                     // there are only the 2 fields on screen to be updated after a test
-                    speedStepTestFwd.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedFwd));
-                    speedStepTestRev.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedRev));
+                    speedStepTestFwd.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedFwd,true));
+                    speedStepTestRev.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedRev,true));
                 }
                 releaseThrottle();
                 //updateSpeedProfileWithResults();
@@ -1350,6 +1352,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     private void doLoad() {
         Element root;
 
+        //set default
+        lengthUnitMm.setSelected(true);
+
         log.debug("Check if there's anything to load");
         try {
             root = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(ProfileManager.getDefault().getActiveProfile())
@@ -1394,9 +1399,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                         log.warn("Invalid field in PanelProSpeedProfiler.xml");
                 }
             }
-        }
-        if (lengthUnit.getSelection() == null) {
-            lengthUnitMm.setSelected(true);
         }
         // Now read sensor information
         if (root.getChild("sensors") != null) {

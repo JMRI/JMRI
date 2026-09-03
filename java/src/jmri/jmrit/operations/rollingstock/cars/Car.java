@@ -4,9 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
@@ -16,6 +13,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a car on the layout
@@ -100,6 +100,8 @@ public class Car extends RollingStock {
         car.setPassenger(isPassenger());
         car.setUtility(isUtility());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+        car.setFinalDestination(getFinalDestination());
+        car.setFinalDestinationTrack(getFinalDestinationTrack());
         car.loaded = true;
         return car;
     }
@@ -1132,6 +1134,19 @@ public class Car extends RollingStock {
             InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
             carManager.deregister(this);
         }
+    }
+  
+    /**
+     * Returns a clone's original car.
+     * @param clone requesting the original
+     * @return car that created the clone.
+     */
+    public Car getOriginal(Car clone) {
+        CarManager carManager = InstanceManager.getDefault(CarManager.class);
+        // get the original car's road and number
+        String[] number = getNumber().split(Car.CLONE_REGEX);
+        Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
+        return car;
     }
 
     @Override

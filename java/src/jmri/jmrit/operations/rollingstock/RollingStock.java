@@ -5,9 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.*;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
@@ -20,6 +17,9 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
@@ -65,6 +65,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected Train _train = null;
     protected RouteLocation _routeLocation = null;
     protected RouteLocation _routeDestination = null;
+    protected RouteLocation _routeDestinationTiming = null;
     protected Division _division = null;
     protected boolean _clone = false;
     protected int _cloneOrder = 9999999;
@@ -1253,6 +1254,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
+    
+    public void setRouteDestinationTiming(RouteLocation routeDestination) {
+        _routeDestinationTiming = routeDestination;
+    }
+    
+    public RouteLocation getRouteDestinationTiming() {
+        return _routeDestinationTiming;
+    }
 
     public void setOwnerName(String owner) {
         String old = _owner;
@@ -1358,6 +1367,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public String getSetoutTime() {
+        if (getTrain() != null && getTrain().isBuilding() && getRouteDestination() != null) {
+            _setoutTime = getTrain().getExpectedArrivalTime(getRouteDestination(), true);
+        }
         if (getTrain() != null) {
             return _setoutTime;
         }

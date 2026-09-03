@@ -21,7 +21,7 @@
   <!--   File is not tested cause no decoder of this type is in my collection.               -->
   <!--   If you find any errors please contact me by mail.                                   -->
   <!--                                                                                       -->
-  <version author="PB, pierre.bln@me.com" version="1" lastUpdated="20130806"/>
+  <version author="PB" version="1" lastUpdated="20130806"/>
   <!-- This decoder configuration file is based on Zimo_Unified_software_MX640v28.xml                     -->
   <!-- Changed CV100-CV152.xml to CV100-CV152version30.xml, removed sound-related panes/vars              -->
   <decoder>

@@ -37,7 +37,7 @@ public class XNetOpsModeRequestMessageFormatter implements XPressNetMessageForma
         } else {
             message = "XNetMessageOpsModeBitWrite";
         }
-        return Bundle.getMessage(message, ((m.getElement(6) & 0x08) >> 3), (1 + m.getElement(5) + ((m.getElement(4) & 0x03) << 8)), (m.getElement(6) & 0x07), LenzCommandStation.calcLocoAddress(m.getElement(2), m.getElement(3)));
+        return Bundle.getMessage(message, ((m.getElement(6) & 0x08) >> 3), (1 + (0xFF & m.getElement(5)) + ((m.getElement(4) & 0x03) << 8)), (m.getElement(6) & 0x07), LenzCommandStation.calcLocoAddress(m.getElement(2), m.getElement(3)));
     }
 
     private static String getWriteString(Message m) {
@@ -47,7 +47,7 @@ public class XNetOpsModeRequestMessageFormatter implements XPressNetMessageForma
         } else if ((m.getElement(4) & 0xE4) == 0xE4) {
             message = "XNetMessageOpsModeByteVerify";
         }
-        return Bundle.getMessage(message, m.getElement(6), (1 + m.getElement(5) + ((m.getElement(4) & 0x03) << 8)), LenzCommandStation.calcLocoAddress(m.getElement(2), m.getElement(3)));
+        return Bundle.getMessage(message, m.getElement(6), (1 + (0xFF & m.getElement(5)) + ((m.getElement(4) & 0x03) << 8)), LenzCommandStation.calcLocoAddress(m.getElement(2), m.getElement(3)));
     }
 
 }

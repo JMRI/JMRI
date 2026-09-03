@@ -379,6 +379,7 @@
     <label xml:lang="de">Funktionszuordnung Verzögerungen ausschalten</label>
     <label xml:lang="ca">Funció per desactivar les temporitzacions</label>
     <tooltip>CV133: switches off the acceleration and deceleration rates (CV3/CV4). 0=>Off, 1-28=>F1-F28, 29=>F0</tooltip>
+    <tooltip xml:lang="fr">CV133 : désactive les temporisations d'accélération et de freinage (CV3/CV4). 0=>Off, 1-28=>F1-F28, 29=>F0</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;0 = deaktiviert, 1 … 28 = F1 … F28, 29 = F0 (Licht)&lt;br&gt;Nur bei CV137 Bit 4 = 1&lt;/html&gt;</tooltip>
   </variable>
 </variables>

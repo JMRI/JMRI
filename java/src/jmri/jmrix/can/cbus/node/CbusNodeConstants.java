@@ -326,6 +326,9 @@ public class CbusNodeConstants {
         result.put(85, "CANCABPE");
         result.put(86, "CANSMARTTD");
         result.put(87, "CANARGB");
+        result.put(88, "CANCDU_U");
+        result.put(89, "CANGATEX");
+        result.put(90, "CANGATEXL");
 
         result.put(252, "VLCB");
         result.put(253, "CANUSB"); // NOI18N
@@ -513,6 +516,9 @@ public class CbusNodeConstants {
         result.put(85, "Cab2 with pot or encoder");
         result.put(86, "Smart train detector");
         result.put(87, "Addressable LEDs");
+        result.put(88, "CANCDU (universal)");
+        result.put(89, "Logic module using boolean logic gates");
+        result.put(90, "Extended version of CANGATEX");
 
         result.put(252, "All VLCB modules have the same ID");
         result.put(253, "USB interface");

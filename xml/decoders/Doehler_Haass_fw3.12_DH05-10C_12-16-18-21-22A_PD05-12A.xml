@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version version="1.9" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20260725"/>
+  <version version="1.9" author="Pierre Billon" lastUpdated="20260725"/>
   <!--  Two settings the D&amp;H CV table documents for this firmware but which were unreachable:
         - CV144 bits 3 and 4, the GPIO brake settings, were gated to product IDs that no model
           in this file carries, so neither was ever shown. Now from cv144_bits1-4.xml.
@@ -27,17 +27,17 @@
   <!--  Added PD10MU definition -->
   <version version="1.5" author="Marc Fournier, forfoum@videotron.ca" lastUpdated="20211103"/>
   <!--  Added DH14B definitions for this latest Fw version -->
-  <version version="1.4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20211008"/>
+  <version version="1.4" author="Pierre Billon" lastUpdated="20211008"/>
   <!--  Added DH06A definitions for this latest Fw version -->
-  <version version="1.3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210911"/>
+  <version version="1.3" author="Pierre Billon" lastUpdated="20210911"/>
   <!--  Added 2nd Generation DH05C and DH10C (more outputs), fixed SUSI mapping pane -->
-  <version version="1.2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210319"/>
+  <version version="1.2" author="Pierre Billon" lastUpdated="20210319"/>
   <!--  Fixed missing additional outputs for some decoders -->
-  <version version="1.1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210312"/>
+  <version version="1.1" author="Pierre Billon" lastUpdated="20210312"/>
   <!--  Removed Firmware pane (outdated since fw 3.06 and
         introduction of CVs260-265: fw info now on "DH Info" page)
         -->
-  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20210308"/>
+  <version version="1" author="Pierre Billon" lastUpdated="20210308"/>
   <!--  Creation (new firmware 3.12.050).
         Based on Doehler_Haass_fw3.11_DH05-10C_12-16-18-21-22A_PD05-12A.xml
         -->

@@ -1077,9 +1077,13 @@ public abstract class AbstractMRTrafficController {
             }
         } catch (InterruptedException ie) {
             if (threadStopRequest) return;
-            log.error("Unexpected exception in invokeAndWait: {}{}", ie, ie.toString());
+            log.error("Unexpected exception in invokeAndWait", ie);
         } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait: {}{}", e, e.toString());
+            // For InvocationTargetException, log the wrapped cause (the
+            // real failure), not the reflection wrapper itself.
+            Throwable toLog = (e instanceof java.lang.reflect.InvocationTargetException && e.getCause() != null)
+                    ? e.getCause() : e;
+            log.error("Unexpected exception in invokeAndWait", toLog);
             return;
         }
         log.debug("dispatch thread invoked");

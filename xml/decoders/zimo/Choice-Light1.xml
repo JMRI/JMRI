@@ -4,6 +4,7 @@
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="Standard on/off function output">
        <choice>Standard on/off function output</choice>
+       <choice xml:lang="fr">Sortie de fonction marche/arrêt standard</choice>
        <choice xml:lang="it">Uscita Standard On/Off</choice>
        <choice xml:lang="cs">Standardní zapnout/vypnout funkční výstup</choice>
        <choice xml:lang="de">Standard An/Aus</choice>
@@ -22,21 +23,24 @@
       </enumChoice>
       <enumChoice choice="Flashing Headlight">
         <choice>Flashing Headlight</choice>
+        <choice xml:lang="fr">Feux clignotants</choice>
         <choice xml:lang="it">Luci Lampeggianti</choice>
         <choice xml:lang="cs">Zábleskové dálkové světlo</choice>
-        <choice xml:lang="de">Flashing Headlight</choice>
+        <choice xml:lang="de">Blinkendes Spitzenlicht</choice>
       </enumChoice>
       <enumChoice choice="Single Pulse Strobe">
         <choice>Single Pulse Strobe</choice>
+        <choice xml:lang="fr">Flash simple</choice>
         <choice xml:lang="it">Lampeggiante Singolo Impulso</choice>
         <choice xml:lang="cs">Jednoimpulsový stroboskop</choice>
-        <choice xml:lang="de">Single Pulse Strobe</choice>
+        <choice xml:lang="de">Einzelblitz</choice>
       </enumChoice>
       <enumChoice choice="Double Pulse Strobe">
         <choice>Double Pulse Strobe</choice>
+        <choice xml:lang="fr">Flash double</choice>
         <choice xml:lang="it">Lampeggiante Doppio Impulso</choice>
         <choice xml:lang="cs">Dvouimpulsový stroboskop</choice>
-        <choice xml:lang="de">Double Pulse Strobe</choice>
+        <choice xml:lang="de">Doppelblitz</choice>
       </enumChoice>
       <enumChoice choice="Rotary Beacon">
         <choice>Rotary Beacon</choice>
@@ -52,24 +56,28 @@
       </enumChoice>
       <enumChoice choice="Ditch Light Type 1, right">
         <choice>Ditch Light Type 1, right</choice>
+        <choice xml:lang="fr">Ditch Light type 1, droite</choice>
         <choice xml:lang="it">Luce Ditch tipo 1, destro</choice>
         <choice xml:lang="cs">Návěstní světlo typ 1, pravé</choice>
         <choice xml:lang="de">Ditch Light Type 1, rechts</choice>
       </enumChoice>
       <enumChoice choice="Ditch Light Type 1, left">
         <choice>Ditch Light Type 1, left</choice>
+        <choice xml:lang="fr">Ditch Light type 1, gauche</choice>
         <choice xml:lang="it">Luce Ditch tipo 1, sinistro</choice>
         <choice xml:lang="cs">Návěstní světlo typ 1, levé</choice>
         <choice xml:lang="de">Ditch Light Type 1, links</choice>
       </enumChoice>
       <enumChoice choice="Ditch Light Type 2, right">
         <choice>Ditch Light Type 2, right</choice>
+        <choice xml:lang="fr">Ditch Light type 2, droite</choice>
         <choice xml:lang="it">Luce Ditch tipo 2, destro</choice>
         <choice xml:lang="cs">Návěstní světlo typ 2, pravé</choice>
         <choice xml:lang="de">Ditch Light Type 2, rechts</choice>
       </enumChoice>
       <enumChoice choice="Ditch Light Type 2, left">
         <choice>Ditch Light Type 2, left</choice>
+        <choice xml:lang="fr">Ditch Light type 2, gauche</choice>
         <choice xml:lang="it">Luce Ditch tipo 2, sinistro</choice>
         <choice xml:lang="cs">Návěstní světlo typ 2, levé</choice>
         <choice xml:lang="de">Ditch Light Type 2, links</choice>

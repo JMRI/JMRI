@@ -15,7 +15,7 @@
   <version version="1" author="Ronald Kuhn ronald@wirkuhns.de" lastUpdated="20170716"/>
   <!-- 1 2017/07/16 Creation 
         First decoder template for the Rautenhaus decoder range.
-        Based on D&H DHP250-file created by Pierre Billon, pierre.bln@me.com
+        Based on D&H DHP250-file created by Pierre Billon
   -->
   <decoder>
     <family name="Train Decoders v11" mfg="Rautenhaus Digital Vertrieb">

@@ -168,6 +168,7 @@
     <label xml:lang="de">Entscheidungsschwelle für Asymmetrie</label>
     <label xml:lang="ca">Llindar de senyal assimètric</label>
     <tooltip>&lt;html&gt;Default value 6 corresponds approximately to 0.7 volt asymmetry&lt;br&gt;and thus to the forward voltage of a silicon diode.&lt;br&gt;Values smaller 3 are not useful, values greater 6 on demand.&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="fr">&lt;html&gt;La valeur par défaut 6 correspond à environ 0,7 volt d'asymétrie,&lt;br&gt;soit la tension directe d'une diode au silicium.&lt;br&gt;Les valeurs inférieures à 3 sont inutiles, les valeurs supérieures à 6 selon les besoins.&lt;/html&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Der Standardwert 6 entspricht in etwa 0,7 Volt Asymmetrie&lt;br&gt; und damit der Vorwärtsspannung einer Siliciumdiode.&lt;br&gt; Werte kleiner als 3 sind nicht sinnvoll, Werte größer als 6 bei Bedarf.&lt;/html&gt;</tooltip>
   </variable>
 </variables>

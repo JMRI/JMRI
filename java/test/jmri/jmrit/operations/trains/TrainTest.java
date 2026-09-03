@@ -1,8 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -12,6 +9,9 @@ import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
@@ -4651,7 +4651,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
         Assert.assertEquals("c6 destination 3", "Westford Yard 1", c6.getDestinationTrackName());
         Assert.assertEquals("c7 destination 3", "Harvard Yard 1", c7.getDestinationTrackName());
-        Assert.assertEquals("c8 destination 3", "Arlington Spur", c8.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 3", "", c8.getDestinationTrackName());
 
         Assert.assertEquals("c9 destination 3", "", c9.getDestinationTrackName());
         Assert.assertEquals("c10 destination 3", "Chelmsford Yard 1", c10.getDestinationTrackName());
@@ -4681,7 +4681,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c5 location", "Harvard Yard 2", c5.getTrackName());
         Assert.assertEquals("c6 location", "Westford Yard 1", c6.getTrackName());
         Assert.assertEquals("c7 location", "Harvard Yard 1", c7.getTrackName());
-        Assert.assertEquals("c8 location", "Arlington Spur", c8.getTrackName());
+        Assert.assertEquals("c8 location", "Arlington Yard 1", c8.getTrackName());
 
         Assert.assertEquals("c9 location", "Arlington Alternate Track", c9.getTrackName());
         Assert.assertEquals("c10 location", "Chelmsford Yard 1", c10.getTrackName());

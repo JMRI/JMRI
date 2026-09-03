@@ -2596,25 +2596,29 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     Integer getNextPacketID() {
         Integer lastID;
 
-        if (updateReferences.isEmpty()) {
-            lastID = 0;
-        } else {
-            int lastIDPos = updateReferences.size() - 1;
-            lastID = updateReferences.get(lastIDPos) + 1;
+        synchronized (updateReferences) {
+            if (updateReferences.isEmpty()) {
+                lastID = 0;
+            } else {
+                int lastIDPos = updateReferences.size() - 1;
+                lastID = updateReferences.get(lastIDPos) + 1;
+            }
+    
+            if (lastID > 2000) {
+                lastID = 0;
+            }
+            updateReferences.add(lastID);
         }
-
-        if (lastID > 2000) {
-            lastID = 0;
-        }
-        updateReferences.add(lastID);
 
         /*As we are originating a packet, we will added to the acted upion list
          thus making sure if the packet gets back to us we do knowing with it.*/
         actedUponUpdates.add(lastID);
 
-        if (updateReferences.size() > 500) {
-            // log.info("flush update references");
-            updateReferences.subList(0, 250).clear();
+        synchronized (updateReferences) {
+            if (updateReferences.size() > 500) {
+                // log.info("flush update references");
+                updateReferences.subList(0, 250).clear();
+            }
         }
 
         if (actedUponUpdates.size() > 500) {

@@ -214,6 +214,11 @@
                 <display item="ESU Sensor 2a" layout="above" label="OR"/>
                 <display item="ESU Sensor 2a" layout="above" format="hslider"/>
             </row>
+            <separator/>
+            <display item="Class light logic colors" layout="above" format="radiobuttons"/>
+            <label>
+                <text> </text>
+            </label>
         </column>
     </group>
     <group include="MBW Silberling,Bachmann MK2F">
