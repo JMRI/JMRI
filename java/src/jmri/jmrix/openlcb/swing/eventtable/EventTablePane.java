@@ -324,7 +324,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
-        model.clear();
+        model.clearAllPresentNodes();
 
         model.loadNameStoreEventIDs();
         model.handleTableUpdate(-1, -1);

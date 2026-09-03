@@ -456,6 +456,37 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     /**
+     * Remove all existing data from currently-present nodes, generally just in advance of an update
+     */
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // Swing thread deconflicts
+    void clearAllPresentNodes() {
+        var presentNodeIDs = new HashSet<NodeID>();
+        for (var nodeMemo : store.getNodeMemos()) {
+            presentNodeIDs.add(nodeMemo.getNodeID());
+        }
+
+        var memosToRemove = new ArrayList<TripleMemo>();
+        for (var tripleMemo : memos) {
+            if (presentNodeIDs.contains(tripleMemo.producer)) {
+                tripleMemo.producer = null;
+                tripleMemo.producerName = null;
+            }
+            if (presentNodeIDs.contains(tripleMemo.consumer)) {
+                tripleMemo.consumer = null;
+                tripleMemo.consumerName = null;
+            }
+            if (tripleMemo.producer == null && tripleMemo.consumer == null) {
+                memosToRemove.add(tripleMemo);
+            }
+        }
+        for (var tripleMemo : memosToRemove) {
+            memos.remove(tripleMemo);
+        }
+        
+        fireTableDataChanged();  // don't queue this one, must be immediate
+    }
+
+    /**
      * Notify the table that the contents have changed.
      * To reduce CPU load, this batches the changes
      * @param start first row changed; -1 means entire table (not used yet)

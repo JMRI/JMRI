@@ -111,6 +111,24 @@ public class EventTableDataModelTest {
         assertEquals("namedC", resultName);
     }
 
+    @Test
+    public void clearPresentNodesTest() {
+        var targetEvent = new EventID("1.1.1.1.2.2.2.2");
+
+        store.addNode(new NodeID("1.1.1.1.2.1"));
+        store.addNode(new NodeID("1.1.1.1.2.3"));
+        
+        model.recordConsumer(targetEvent, new NodeID("1.1.1.1.2.1"),"");
+        model.recordConsumer(targetEvent, new NodeID("1.1.1.1.2.2"),"");
+        model.recordConsumer(targetEvent, new NodeID("1.1.1.1.2.3"),"");
+        model.recordConsumer(targetEvent, new NodeID("1.1.1.1.2.4"),"");
+        model.recordConsumer(targetEvent, new NodeID("1.1.1.1.2.5"),"");
+
+        model.clearAllPresentNodes();
+        
+        assertEquals(3, EventTableDataModel.memos.size());
+    }
+
     // test for notification of description for producer
     @Test
     public void tableModelDescNotifyTest() {
@@ -155,7 +173,7 @@ public class EventTableDataModelTest {
 
 
     @Test
-    public void CsvWriteReadTest() {
+    public void csvWriteReadTest() {
         // first add some system content
         olcbStore.addMatch(new EventID("1.2.3.4.5.6.7.8"), "namedEvent");
         
