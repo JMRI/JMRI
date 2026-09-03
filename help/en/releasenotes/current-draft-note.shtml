@@ -169,6 +169,7 @@
             <ul>
                 <li>The Event Table now automatically persists its content so
                     it can be used while disconnected from your main LCC network.</li>
+                <li>Support for the configuration display "checkbox" hint has been added.</li>
             </ul>
 
         <h4>Powerline</h4>
