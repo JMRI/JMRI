@@ -168,7 +168,9 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>The Event Table now automatically persists its content so
-                    it can be used while disconnected from your main LCC network.</li>
+                    it can be used while disconnected from your main LCC network.
+                    For example, you could load the Event Table at your club, 
+                    then open that same profile at home and see all the same contents.</li>
                 <li>Support for the configuration display "checkbox" hint has been added.</li>
             </ul>
 

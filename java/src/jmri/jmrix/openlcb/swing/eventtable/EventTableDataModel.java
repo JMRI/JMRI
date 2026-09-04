@@ -45,7 +45,6 @@ public class EventTableDataModel extends AbstractTableModel {
         // load stored contents
         loadNameStoreEventIDs();
         
-        // log.info("\n#######################\nNot loading model data for debugging\n#######################");
         loadModelData();
         
         // arrange to store the current contents at shutdown
