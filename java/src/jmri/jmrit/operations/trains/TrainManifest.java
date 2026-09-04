@@ -6,9 +6,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -20,6 +17,9 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train's manifest. User has the ability to modify the text of the
@@ -77,7 +77,15 @@ public class TrainManifest extends TrainCommon {
                 newLine(fileOut, schName);
             }
             if (!train.getCommentWithColor().equals(Train.NONE)) {
-                newLine(fileOut, train.getCommentWithColor());
+                RouteLocation drl = train.getTrainDepartsRouteLocation();
+                newLine(fileOut, MessageFormat.format(messageFormatText = train.getCommentWithColor(),
+                        new Object[]{train.getSplitName(), train.getDescription(), train.getTrainDepartsName(),
+                                train.getFormatedDepartureTime(), train.getTrainDepartsDirection(),
+                                train.getTrainTerminatesName(), train.getNumberCarsInTrain(drl),
+                                train.getNumberLoadedCarsInTrain(drl), train.getNumberEmptyCarsInTrain(drl),
+                                train.getTrainLength(drl), Setup.getLengthUnit().toLowerCase(),
+                                train.getTrainWeight(drl), train.getLeadEngineRoadAndNumber(),
+                                train.getLeadEngineDccAddress()}));
             }
             if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(Route.NONE)) {
                 newLine(fileOut, train.getRoute().getComment());
