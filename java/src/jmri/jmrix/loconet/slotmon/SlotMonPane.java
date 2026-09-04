@@ -352,7 +352,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     }
 
 
-    class TableRendererToBlankToNA extends DefaultTableCellRenderer {
+    static class TableRendererToBlankToNA extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
                 int row, int column) {
