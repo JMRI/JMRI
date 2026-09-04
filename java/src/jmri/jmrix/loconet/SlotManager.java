@@ -10,6 +10,7 @@ import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.CommandStation;
+import jmri.NmraPacket;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
@@ -207,10 +208,34 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             m.setElement(5 + i, packet[i] & 0x7F);
         }
 
+        boolean requestIgnoreEcho = false;
+
+        // check if this is an F0-F4 packet
+        // NMRA S-9.2.1 (2022) 2.3.4
+        if ((NmraPacket.extractInstruction(packet) & 0xE0) == 0x80) {
+            requestIgnoreEcho = true;
+            log.debug("f0-f4 DCC IMM packet -> request ignore echo");
+        }
+        // check if this is an F5-F8 packet or F9-F12 packet
+        // NMRA S-9.2.1 (2022) 2.3.5
+        if ((NmraPacket.extractInstruction(packet) & 0xE0) == 0xA0) {
+            requestIgnoreEcho = true;
+            log.debug("f5-f8 or f9-f12 DCC IMM packet -> request ignore echo");
+        }
+        // check if this is one of the higher function control packets
+        // NMRA S-9.2.1 (2022) 2.3.6.2 - 2.3.6.11
+        // but not a binary state control instruction (short)
+        // not NMRA S-9.2.1 (2022) 2.3.6.1
+        if ((NmraPacket.extractInstruction(packet) & 0xF8) == 0xD8 
+            && NmraPacket.extractInstruction(packet) != 0xDD) {
+            requestIgnoreEcho = true;
+            log.debug("higher function DCC IMM packet -> request ignore echo");
+        }
+
         if (throttledTransmitter != null) {
-            throttledTransmitter.sendLocoNetMessage(m);
+            throttledTransmitter.sendLocoNetMessage(m, requestIgnoreEcho);
         } else {
-            tc.sendLocoNetMessage(m);
+            tc.sendLocoNetMessage(m, requestIgnoreEcho);
         }
         return true;
     }

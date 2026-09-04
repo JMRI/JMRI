@@ -77,7 +77,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         disposed = true;
 
         // put a shutdown request on the queue after any existing
-        Memo m = new Memo(null, nowMSec(), TimeUnit.MILLISECONDS) {
+        Memo m = new Memo(null, nowMSec(), TimeUnit.MILLISECONDS, false) {
             @Override
             boolean requestsShutDown() {
                 return true;
@@ -113,6 +113,14 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
      */
     @Override
     public void sendLocoNetMessage(LocoNetMessage msg) {
+        sendLocoNetMessage(msg, false);
+    }
+
+    /**
+     * Accept a message to be sent after suitable delay.
+     */
+    @Override
+    public void sendLocoNetMessage(LocoNetMessage msg, boolean requestIgnoreEcho) {
         if (disposed) {
             log.error("Message sent after queue disposed");
             return;
@@ -120,7 +128,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
         long sendTime = calcSendTimeMSec();
 
-        Memo m = new Memo(msg, sendTime, TimeUnit.MILLISECONDS);
+        Memo m = new Memo(msg, sendTime, TimeUnit.MILLISECONDS, requestIgnoreEcho);
         queue.add(m);
 
     }
@@ -173,7 +181,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
                     if (log.isDebugEnabled()) {
                         log.debug("forwarding message: {}", m.getMessage());
                     }
-                    controller.sendLocoNetMessage(m.getMessage());
+                    controller.sendLocoNetMessage(m.getMessage(), m.getRequestIgnoreEcho());
                     // and go round again
                 } catch (InterruptedException e) {
                     // request to terminate
@@ -192,9 +200,10 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
     static class Memo implements Delayed {
 
-        public Memo(LocoNetMessage msg, long endTime, TimeUnit unit) {
+        public Memo(LocoNetMessage msg, long endTime, TimeUnit unit, boolean requestIgnoreEcho) {
             this.msg = msg;
             this.endTimeMsec = unit.toMillis(endTime);
+            this.requestIgnoreEcho = requestIgnoreEcho;
         }
 
         LocoNetMessage getMessage() {
@@ -205,8 +214,13 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
             return false;
         }
 
+        boolean getRequestIgnoreEcho() {
+            return requestIgnoreEcho;
+        }
+        
         long endTimeMsec;
         LocoNetMessage msg;
+        boolean requestIgnoreEcho;
 
         @Override
         public long getDelay(TimeUnit unit) {
