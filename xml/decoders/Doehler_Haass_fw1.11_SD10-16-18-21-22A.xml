@@ -16,7 +16,7 @@
 <!--  Firmware 1.11.069 now identified  -->
 <version version="1.1" author="Pierre Billon" lastUpdated="20210312"/>
 <!--  Added update paths to newest fw 1.12.050 -->
-<version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2020-05-02"/>
+<version version="1" author="Ronald Kuhn" lastUpdated="2020-05-02"/>
 <!-- Creation
     Decoder template for the Doehler & Haass combo sound decoder
     with Firmware v1.11
