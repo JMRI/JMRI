@@ -132,7 +132,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String BUILD_REPORT_VERY_DETAILED = "7";
 
     // the following are converted to English spelling when storing to file, see KEYS below
-    public static final String ROAD = Bundle.getMessage("Road"); // the supported message format options
+    public static final String ORDER = Bundle.getMessage("Order"); // the supported message format options
+    public static final String ROAD = Bundle.getMessage("Road");
     public static final String NUMBER = Bundle.getMessage("Number");
     public static final String TYPE = Bundle.getMessage("Type");
     public static final String MODEL = Bundle.getMessage("Model");
@@ -167,7 +168,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
     public static final String TAB2 = Bundle.getMessage("Tab2");
     public static final String TAB3 = Bundle.getMessage("Tab3");
-    
+
     public static final String BOX = " [ ] "; // NOI18N
 
     // these are for the utility printing when using tabs
@@ -187,15 +188,17 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String FEET_ABV = Bundle.getMessage("FeetAbbreviation");
     public static final String METER_ABV = Bundle.getMessage("MeterAbbreviation");
 
-    private static final String[] CAR_ATTRIBUTES = { ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS,
-            COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
-            BLOCKING_ORDER, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
-    
-    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER,
-            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
+    private static final String[] CAR_ATTRIBUTES =
+            {ORDER, ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+                    DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, BLOCKING_ORDER,
+                    COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
+
+    private static final String[] ENGINE_ATTRIBUTES =
+            {ORDER, ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER, TRACK, LOCATION, DESTINATION,
+                    COMMENT, DCC_ADDRESS, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
     /*
-     * The print Manifest and switch list user selectable options are stored in the
-     * xml file using the English translations.
+     * The print Manifest and switch list user selectable options are stored in
+     * the xml file using the English translations.
      */
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
             "HP", "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
@@ -227,21 +230,21 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private Color pickupColor = Color.black;
     private Color dropColor = Color.black;
     private Color localColor = Color.black;
-    private String[] pickupEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT };
-    private String[] dropEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT };
-    private String[] pickupManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            COMMENT, PICKUP_COMMENT };
-    private String[] dropManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-            COMMENT, DROP_COMMENT };
-    private String[] localManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            DESTINATION, COMMENT };
-    private String[] pickupSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            COMMENT, PICKUP_COMMENT };
-    private String[] dropSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-            COMMENT, DROP_COMMENT };
-    private String[] localSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            DESTINATION, COMMENT };
-    private String[] missingCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT };
+    private String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
+    private String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
+    private String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            COMMENT, PICKUP_COMMENT};
+    private String[] dropManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
+            COMMENT, DROP_COMMENT};
+    private String[] localManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            DESTINATION, COMMENT};
+    private String[] pickupSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            COMMENT, PICKUP_COMMENT};
+    private String[] dropSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
+            COMMENT, DROP_COMMENT};
+    private String[] localSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            DESTINATION, COMMENT};
+    private String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
     private String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
     private String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
     private String pickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
@@ -320,7 +323,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     private boolean aggressiveBuild = false; // when true subtract car length from track reserve length
     private int numberPasses = 2; // the number of passes in train builder
-    private boolean onTimeBuild = false;    // when true on time mode
+    private boolean onTimeBuild = false; // when true on time mode
     private int dwellTime = 60; // time in minutes before allowing track reuse
     private boolean allowLocalInterchangeMoves = false; // when true local C/I to C/I moves are allowed
     private boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
@@ -355,7 +358,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printCabooseLoad = false; // when true print caboose load
     private boolean printPassengerLoad = false; // when true print passenger car load
     private boolean showTrackMoves = false; // when true show track moves in table
-    
+
     private Hashtable<String, String> hashTableDayToName = new Hashtable<>();
 
     // property changes
@@ -492,8 +495,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * When true, router checks that the car's destination is serviced by departure
-     * track. Very restrictive, not recommended.
+     * When true, router checks that the car's destination is serviced by
+     * departure track. Very restrictive, not recommended.
      * 
      * @return true if enabled.
      */
@@ -520,7 +523,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setNumberPasses(int number) {
         getDefault().numberPasses = number;
     }
-    
+
     public static boolean isBuildOnTime() {
         return getDefault().onTimeBuild;
     }
@@ -528,7 +531,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setBuildOnTime(boolean enabled) {
         getDefault().onTimeBuild = enabled;
     }
-    
+
     public static int getDwellTime() {
         if (isBuildOnTime()) {
             return getDefault().dwellTime;
@@ -569,11 +572,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * Controls staging track selection, when true, the terminus staging track has
-     * to have the same characteristics as the train.
+     * Controls staging track selection, when true, the terminus staging track
+     * has to have the same characteristics as the train.
      *
-     * @param enabled when true, the terminal staging track must service the same
-     *                car types, loads, etc. as the train
+     * @param enabled when true, the terminal staging track must service the
+     *                same car types, loads, etc. as the train
      */
     public static void setStagingTrainCheckEnabled(boolean enabled) {
         getDefault().trainIntoStagingCheck = enabled;
@@ -918,9 +921,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * When true switch list shows all trains visiting a location, even if the train
-     * doesn't have any work at that location. When false, switch lists only report
-     * a train if it has work at the location.
+     * When true switch list shows all trains visiting a location, even if the
+     * train doesn't have any work at that location. When false, switch lists
+     * only report a train if it has work at the location.
      *
      * @return When true show all trains visiting a location.
      */
@@ -929,8 +932,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * Used to determine if there's spaces or form feed between trains and locations
-     * when printing switch lists. see getSwitchListPageFormatComboBox()
+     * Used to determine if there's spaces or form feed between trains and
+     * locations when printing switch lists. see
+     * getSwitchListPageFormatComboBox()
      *
      * @param format PAGE_NORMAL, PAGE_PER_TRAIN, or PAGE_PER_VISIT
      */
@@ -1066,11 +1070,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static boolean isPrintHeaderLine3Enabled() {
         return getDefault().printHeaderLine3;
     }
-    
+
     public static void setHorizontalLineAdjustment(int value) {
         getDefault().horizontalLineAdjustment = value;
     }
-    
+
     public static int getHorizontalLineAdjustment() {
         return getDefault().horizontalLineAdjustment;
     }
@@ -1186,7 +1190,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static Sides getPrintDuplexSides() {
         return getDefault().sides;
     }
-    
+
     public static void setPrintDuplexSides(Sides sides) {
         getDefault().sides = sides;
     }
@@ -1258,7 +1262,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setTab3length(int length) {
         getDefault().tab3CharLength = length;
     }
-    
+
     public static int getManifestTabLength() {
         return getDefault().manifestTabLength;
     }
@@ -1274,7 +1278,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     /**
      * Sets the format for manifests
      * 
-     * @param format STANDARD_FORMAT, TWO_COLUMN_FORMAT, or TWO_COLUMN_TRACK_FORMAT
+     * @param format STANDARD_FORMAT, TWO_COLUMN_FORMAT, or
+     *               TWO_COLUMN_TRACK_FORMAT
      */
     public static void setManifestFormat(String format) {
         getDefault().manifestFormat = format;
@@ -1520,8 +1525,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * Gets the manifest format for utility cars. The car's road, number, and color
-     * are not printed.
+     * Gets the manifest format for utility cars. The car's road, number, and
+     * color are not printed.
      *
      * @return Utility car format
      */
@@ -1586,7 +1591,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         return format;
     }
-    
+
     public static String[] getPickupEngineTwoColumnByTrackMessageFormat() {
         return createTwoColumnByTrackPickupMessageFormat(getPickupEngineMessageFormat());
     }
@@ -1617,7 +1622,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         return format;
     }
-    
+
     public static String[] getDropEngineTwoColumnByTrackMessageFormat() {
         return createTwoColumnByTrackDropMessageFormat(getDropEngineMessageFormat());
     }
@@ -1925,9 +1930,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     *
-     * @return JComboBox loaded with the strings (North, South, East, West) showing
-     *         the available train directions for this railroad
+     * @return JComboBox loaded with the strings (North, South, East, West)
+     *         showing the available train directions for this railroad
      */
     public static JComboBox<String> getTrainDirectionComboBox() {
         JComboBox<String> box = new JComboBox<>();
@@ -2023,13 +2027,13 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             return 0; // return unknown
         }
     }
-    
+
     public static void setDayToName(String day, String name) {
         if (name != null) {
             getDefault().hashTableDayToName.put(day, name);
         }
     }
-    
+
     public static String getDayToName(String day) {
         return getDefault().hashTableDayToName.get(day);
     }
@@ -3253,7 +3257,6 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     /**
      * Converts the xml key to the proper locale text
-     *
      */
     private static void keyToStringConversion(String[] keys) {
         for (int i = 0; i < keys.length; i++) {
@@ -3288,8 +3291,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /*
-     * The xml attributes stored using the English translation. This converts the
-     * attribute to the appropriate key for language conversion.
+     * The xml attributes stored using the English translation. This converts
+     * the attribute to the appropriate key for language conversion.
      */
     private static void xmlAttributeToKeyConversion(String[] format) {
         for (int i = 0; i < format.length; i++) {

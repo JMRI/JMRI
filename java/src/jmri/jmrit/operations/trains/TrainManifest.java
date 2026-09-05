@@ -94,6 +94,9 @@ public class TrainManifest extends TrainCommon {
             List<Engine> engineList = engineManager.getByTrainBlockingList(train);
             List<Car> carList = carManager.getByTrainDestinationList(train);
             log.debug("Train has {} cars assigned to it", carList.size());
+            
+            // the order locos and cars are added to the train
+            _order = 0;
 
             boolean hadWork = false;
             String previousRouteLocationName = null;
