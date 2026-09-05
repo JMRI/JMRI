@@ -488,6 +488,10 @@
                 you could directly change the entry in the DecoderPro table to create
                 a duplicate. You can still edit the ID, but creating entries with
                 duplicate IDs are no longer allowed.</li>
+            <li>Fixed a bug introduced in JMRI 5.17.2 which would sometimes
+                cause DecoderPro to write incorrect output addresses to a DS64</li>
+            <li>You can now change the board ID of e.g. DS64 and similar boards in DecoderPro
+                as mentioned in the Basic panel for those.</li>
         </ul>
 
    <h3>Dispatcher</h3>
