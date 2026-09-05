@@ -124,13 +124,13 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
-##### log4j-api-2.25.3.jar, log4j-core-2.25.3.jar
-- version 2.25.3
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.25.3
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.25.3
+##### log4j-api-2.25.4.jar, log4j-core-2.25.4.jar
+- version 2.25.4
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.25.4
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.25.4
 
-##### log4j-slf4j2-impl-2.25.3.jar
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.25.3
+##### log4j-slf4j2-impl-2.25.4.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.25.4
 - slf4j bridge to log4j2
 
 ##### slf4j-api-2.0.17.jar
