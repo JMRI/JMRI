@@ -19,9 +19,9 @@
         - CV112 is no longer offered on the FH* series or the PD05A, and carries the
           documented default of 15. Now from cv112_fw3.12-3.14.xml.
         -->
-  <version version="1.8" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230731"/>
+  <version version="1.8" author="Ronald Kuhn" lastUpdated="20230731"/>
   <!--  Added update paths to newest fw 3.13.053 -->
-  <version version="1.7" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="20230721"/>
+  <version version="1.7" author="Ronald Kuhn" lastUpdated="20230721"/>
   <!--  change file for CV13 because PD05A does not support analog  -->
   <version version="1.6" author="Alain Le Marchand, AlanUS.forum@gmail.com" lastUpdated="20220416"/>
   <!--  Added PD10MU definition -->
