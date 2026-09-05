@@ -223,7 +223,7 @@ public class EventTableDataModel extends AbstractTableModel {
 
     // invoked when EventTable.addEvent is called to add an eventID and description
     protected void eventInfoChanged(PropertyChangeEvent e) {
-        log.info("eventInfoChanged {} {}", e.getPropertyName(), e.getNewValue());
+        log.trace("eventInfoChanged {} {}", e.getPropertyName(), e.getNewValue());
         // looking for events added to the EventTable
         if (e.getPropertyName().equals(EventTable.EVENT_ENTRY_ADDED)) {
             // this is information added to an event
