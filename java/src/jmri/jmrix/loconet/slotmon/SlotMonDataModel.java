@@ -406,8 +406,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 }
             case CONSISTADDRESS:
                 if (s.isSystemSlot()) {
-                    // makes no sense to decode
-                    return Bundle.getMessage("SlotDataNotApplicable");
+                    // makes no sense to decode flag to rendered NA
+                    return -1;
                 }
                 switch (s.consistStatus()) {
                     case LnConstants.CONSIST_TOP:
