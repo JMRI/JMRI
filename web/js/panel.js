@@ -832,7 +832,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (isDefined($widget.colWidth)) { 
                                     $widget.styles['width'] = $widget.colWidth + "em";
                                 //} else {
-                                    //$widget.styles['width'] = "5em"; //removed to let mci autosize
+                                    //$widget.styles['width'] = "5em"; //removed to let memoryComboIcon autosize to fit contents
                                 }
                             }
                             var items = $(this).find('itemList').children('item');
