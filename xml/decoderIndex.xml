@@ -3777,7 +3777,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DH06A">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DH06A.xml">
         <model model="DH06A" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A" comment="DH06A for Köf with no analog support">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
