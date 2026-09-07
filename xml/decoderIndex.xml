@@ -3038,7 +3038,7 @@
         <model model="DS54" lowVersionID="65" />
         <comment xml:lang="it">DS54 is a stationary decoder, but it can be programmed in the usual way</comment>
       </family>
-      <family name="Function Decoders (old)" mfg="Doehler und Haass" file="Doehler_Haass_FFn_decoders_old.xml">
+      <family name="Function Decoders (old)" mfg="Doehler und Haass" file="Doehler_Haass_function_decoders_old.xml">
         <model model="DHF250" lowVersionID="1" highVersionID="1" numOuts="2" numFns="9" productID="DHF250" comment="without cable">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
