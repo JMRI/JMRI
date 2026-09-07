@@ -25,9 +25,9 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file for decoder with FW v40                                                  -->
   <!--                                                                                       -->
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.1" lastUpdated="2022/10/30"/>
+  <version author="Ronald Kuhn" version="1.1" lastUpdated="2022/10/30"/>
   <!-- v1.1,  add Fade-in and Fade-out for effect 88,89,90 -->
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.2" lastUpdated="2024/04/05"/>
+  <version author="Ronald Kuhn" version="1.2" lastUpdated="2024/04/05"/>
   <!-- v1.2,  seperated Decoder Hardware Versions and added new level CVs-->
   
   
