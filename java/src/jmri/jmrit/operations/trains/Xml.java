@@ -195,7 +195,8 @@ public class Xml {
 
     // TrainManifestHeaderText.java
     protected static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
-    protected static final String ROAD = "road"; // the supported message format options // NOI18N
+    protected static final String ORDER = "order"; // NOI18N
+    protected static final String ROAD = "road"; // NOI18N
     protected static final String NUMBER = "number"; // NOI18N
     protected static final String ENGINE_NUMBER = "engineNumber"; // NOI18N
     protected static final String TYPE = "type"; // NOI18N

@@ -68,6 +68,8 @@ public class TrainCommon {
     protected CarManager carManager = InstanceManager.getDefault(CarManager.class);
     protected EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
     protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+    
+    protected int _order;
 
     // for switch lists
     protected boolean _pickupCars; // true when there are pickups
@@ -180,6 +182,7 @@ public class TrainCommon {
     }
 
     private void pickupEngine(PrintWriter file, Engine engine, boolean isManifest) {
+        engine.setOrder(++_order + HYPHEN + engine.getRouteDestination().getSequenceNumber());
         StringBuffer buf = new StringBuffer(padAndTruncateIfNeeded(Setup.getPickupEnginePrefix(),
                 isManifest ? Setup.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
         String[] format = Setup.getPickupEngineMessageFormat();
@@ -920,6 +923,7 @@ public class TrainCommon {
     }
 
     private void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean isManifest) {
+        car.setOrder(++_order + HYPHEN + car.getRouteDestination().getSequenceNumber());
         if (car.isLocalMove()) {
             return; // print nothing local move, see dropCar
         }
@@ -1723,7 +1727,9 @@ public class TrainCommon {
 
     private String getRollingStockAttribute(RollingStock rs, String attribute, boolean isPickup, boolean isLocal) {
         try {
-            if (attribute.equals(Setup.NUMBER)) {
+            if (attribute.equals(Setup.ORDER)) {
+                return padAndTruncateIfNeeded(rs.getOrder(), 5);
+            } else if (attribute.equals(Setup.NUMBER)) {
                 return padAndTruncateIfNeeded(splitString(rs.getNumber()), Control.max_len_string_print_road_number);
             } else if (attribute.equals(Setup.ROAD)) {
                 String road = rs.getRoadName().split(HYPHEN)[0];
@@ -2024,7 +2030,10 @@ public class TrainCommon {
             if (attribute.equals(Setup.BLANK)) {
                 continue;
             }
-            if (attribute.equals(Setup.ROAD)) {
+            if (attribute.equals(Setup.ORDER)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Order(),
+                        5) + SPACE);
+            } else if (attribute.equals(Setup.ROAD)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Road(),
                         InstanceManager.getDefault(CarRoads.class).getMaxNameLength()) + SPACE);
             } else if (attribute.equals(Setup.NUMBER) && !isEngine) {
