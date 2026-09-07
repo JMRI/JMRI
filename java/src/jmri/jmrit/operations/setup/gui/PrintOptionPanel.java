@@ -1,9 +1,12 @@
 package jmri.jmrit.operations.setup.gui;
 
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.print.attribute.standard.Sides;
 import javax.swing.*;
@@ -584,12 +587,98 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         }
     }
 
+    /*
+     * Creates a dialog to select where to place a new message box
+     */
     private void addComboBox(JPanel panel, List<JComboBox<String>> list, JComboBox<String> box) {
-        list.add(box);
-        panel.add(box, list.size());
-        panel.revalidate();
-        pManifest.revalidate();
+        final JDialog dialog = new JDialog();
+        dialog.setLayout(new BorderLayout());
+        dialog.setTitle(Bundle.getMessage("AddMessageComboboxTip"));
+        dialog.setSize(600, 600);
+        
+        JPanel radioPane = new JPanel();
+        radioPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+        dialog.add(radioPane, BorderLayout.NORTH);
+        
+        JRadioButton start = new JRadioButton(Bundle.getMessage("Start"));
+        JRadioButton middle = new JRadioButton(Bundle.getMessage("Middle"));
+        JRadioButton end = new JRadioButton(Bundle.getMessage("End"));
+        
+        ButtonGroup group = new ButtonGroup();
+        group.add(start);
+        group.add(middle);
+        group.add(end);
+        
+        radioPane.add(start);
+        radioPane.add(middle);
+        radioPane.add(end);
+        
+        end.setSelected(true);
+        
+        JPanel indexPane = new JPanel();
+        indexPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+        dialog.add(indexPane);
+        
+        JSpinner spinIndex = new JSpinner(new SpinnerNumberModel(list.size(), 0, list.size(), 1));
+        indexPane.add(spinIndex);
+             
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                spinIndex.setValue(0);
+            }
+        });
+        
+        middle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                spinIndex.setValue(list.size()/2);
+            }
+        });
+        
+        end.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                spinIndex.setValue(list.size());
+            }
+        });
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+        dialog.add(buttonPane, BorderLayout.SOUTH);
+
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
+        okayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                int index = (int) spinIndex.getValue();
+                list.add(index, box);
+                panel.add(box, index + 1);
+                panel.revalidate();
+                pManifest.revalidate();
+                dialog.dispose();
+                return;
+            }
+        });
+        buttonPane.add(okayButton);
+
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                dialog.dispose();
+                return;
+            }
+        });
+        buttonPane.add(cancelButton);
+
+        dialog.setModal(true);
+        dialog.pack();
+        dialog.setSize(2 * dialog.getWidth(), dialog.getHeight());
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
+
 
     private void removeComboBox(JPanel panel, List<JComboBox<String>> list) {
         for (int i = 0; i < list.size(); i++) {
