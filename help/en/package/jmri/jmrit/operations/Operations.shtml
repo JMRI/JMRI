@@ -3326,7 +3326,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       route will not be picked up by any train using that same route. Another train with a different
       route is required to pick up the cars. This includes transferring cars from a through freight
       to a local switcher. For example, you might have a branch line that picks up and set out cars
-      from a terminal. By defining the track as a classification/interchange track, once the branch
+      from a location. By defining the track as a classification/interchange track, once the branch
       line train delivers the cars, they will remain there until the main line train stops to
       service the classification/interchange track. Same goes for a <a href="#SwitcherService">local
         switcher</a>, cars dropped off at a location with a C/I track will remain there until the local
@@ -5890,6 +5890,72 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         line, where "8" is the font size you want. Complete the size change by placing
         &lt;/FONTSIZE&gt; at the end of the lines you want resized.</p>
 
+      <p>The train comment also allows for text substitutions. The table below provides a
+        summary of the available substitutions.
+      
+      <table>
+        <tr>
+          <th>Substitute</th>
+          <th>Text</th>
+        </tr>
+        <tr>
+          <td>{0}</td>
+          <td>Train Name</td>
+        </tr>
+        <tr>
+          <td>{1}</td>
+          <td>Train Description</td>
+        </tr>
+        <tr>
+          <td>{2}</td>
+          <td>Train Departure Name</td>
+        </tr>
+        <tr>
+          <td>{3}</td>
+          <td>Train Departure Time</td>
+        </tr>
+        <tr>
+          <td>{4}</td>
+          <td>Train Departure Direction</td>
+        </tr>
+        <tr>
+          <td>{5}</td>
+          <td>Train Terminal Name</td>
+        </tr>
+        <tr>
+          <td>{6}</td>
+          <td>Number of Cars in Train</td>
+        </tr>
+        <tr>
+          <td>{7}</td>
+          <td>Number of Loaded Cars in Train</td>
+        </tr>
+        <tr>
+          <td>{8}</td>
+          <td>Number of Empty Cars in Train</td>
+        </tr>
+        <tr>
+          <td>{9}</td>
+          <td>Train Length</td>
+        </tr>
+        <tr>
+          <td>{10}</td>
+          <td>Unit of Length</td>
+        </tr>
+        <tr>
+          <td>{11}</td>
+          <td>Train Weight</td>
+        </tr>
+        <tr>
+          <td>{12}</td>
+          <td>Lead Locomotive</td>
+        </tr>
+        <tr>
+          <td>{13}</td>
+          <td>Lead Locomotive DCC Address</td>
+        </tr>
+      </table>
+
       <h4 id="TrainReset">Reset Train</h4>
       The "Reset Train" button allows you to remove locomotives and cars that have been assigned to
       a train. Useful when you want to try various build options and don't what to physically move
@@ -7005,7 +7071,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         If a train fails to build, the "Action" button will change its text to "Report". Pressing
         "Report" will print or preview the <a href="#BuildReports">build report</a> for this train.
         Whenever a train fails to build, a build failure message will appear. If you want to disable
-        this feature deselect the checkbox "Build Messages".
+        this feature deselect the checkbox "Messages".
       </p>
 
       <p>
@@ -7016,21 +7082,22 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         checkbox is deselected, only trains that have the "Build" checkbox selected are shown.</p>
 
       <h3 id="BuildingTrainsStaging">Building Trains from Staging</h3>
-      There are several options for controlling how trains depart staging, see <a
-        href="#DepartingStagingRoute">Departing Staging Route</a> for additional details.
+      There are several options for controlling how trains depart staging, see
+      <a href="#DepartingStagingRoute">Departing Staging Route</a> for additional details.
+
       <p>
         When building a train from staging, the program will attempt to find destinations for all of
         the rolling stock departing the staging track. If the program fails to find appropriate
-        destinations, it will report a build failure and prompt you to remove the rolling stock that
-        the program couldn't find destinations for. If you answer yes to the car removal, the
-        program will leave the cars in staging but without a track assignment. You should as soon as
-        possible move the cars without a staging track assignment to a another track in staging, or
-        the layout. The other option is to simply remove the cars from the layout by removing the
-        car's location in the <a href="#CarsSet">Set Car</a> window. Also on a build failure, the
-        program will ask if you want to release the rolling stock that has been assigned to the
-        train. Answering "yes" will allow another train to depart with those locomotives and cars
-        out of staging. A "no" will keep the locomotives and cars assigned to the train that failed
-        to build.
+        destinations, it will report a build failure and if the <a href="#Trains">Messages</a>
+        checkbox is selected, prompt you to remove the rolling stock that the program couldn't find
+        destinations for. If you answer yes to the car removal, the program will leave the cars in
+        staging but without a track assignment. You should as soon as possible move the cars without
+        a staging track assignment to a another track in staging, or the layout. The other option is
+        to simply remove the cars from the layout by removing the car's location in the <a
+          href="#CarsSet">Set Car</a> window. Also on a build failure, the program will ask if you
+        want to release the rolling stock that has been assigned to the train. Answering "yes" will
+        allow another train to depart with those locomotives and cars out of staging. A "no" will
+        keep the locomotives and cars assigned to the train that failed to build.
       </p>
 
       <p style="page-break-after: always">
@@ -7547,7 +7614,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         delivered. It is better to build and print twelve trains and then later find out that only
         nine trains completed their runs. You would then terminate nine trains, and leave the other
         three for next time. Or if you wish you could <a href="#TrainReset">reset</a> any trains
-        that didn't depart from their terminal. Reseting trains really isn't necessary, the trains
+        that didn't depart from their origin. Reseting trains really isn't necessary, the trains
         that didn't run during this session could run the during the next session.
       </p>
 

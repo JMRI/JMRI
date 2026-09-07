@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.1" author="Ronald Kuhn" lastUpdated="20260828"/>
+  <!-- PD series disabled until an update is available  -->
   <version version="1" author="Pierre Billon" lastUpdated="20260725"/>
   <!--  Creation (new firmware 3.15.016).
         Based on Doehler_Haass_fw3.14_DH05-24A_PD05-21A.xml
@@ -900,6 +902,8 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
+
+<!-- deactivated until an update is available
       <model model="PD05A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
@@ -1127,6 +1131,8 @@
           <protocol>dcc</protocol>
         </protocols>
       </model>
+-->
+
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

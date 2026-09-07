@@ -330,6 +330,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         // tool tips
         resetButton.setToolTipText(Bundle.getMessage("TipTrainReset"));
         autoSelectButton.setToolTipText(Bundle.getMessage("AutoSelectTip"));
+        commentTextArea.setToolTipText(Bundle.getMessage("TrainCommentTip"));
 
         // build menu
         JMenuBar menuBar = new JMenuBar();

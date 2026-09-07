@@ -264,6 +264,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                 numOutputBits = bitsPerCard * numOutputCards;
                 nodeType = "CPMEGA - ";
                 break;
+            case SerialNode.ESP32NODE:
+                numInputBits = bitsPerCard * numInputCards;
+                numOutputBits = bitsPerCard * numOutputCards;
+                nodeType = "ESP32Node - ";
+                break;
             default:
                 break;
         }

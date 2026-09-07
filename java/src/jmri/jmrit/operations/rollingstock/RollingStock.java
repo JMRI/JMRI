@@ -34,12 +34,13 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public static final int MAX_BLOCKING_ORDER = 100;
     public static final boolean FORCE = true; // ignore length, type, etc. when setting car's track
     protected static final String DEFAULT_WEIGHT = "0";
-    
+
     public static final String CLONE = TrainCommon.HYPHEN + "(Clone)"; // NOI18N
     // parentheses are special chars
     public static final String CLONE_REGEX = TrainCommon.HYPHEN + "\\(Clone\\)"; // NOI18N
 
     protected String _id = NONE;
+    protected String _order = NONE;
     protected String _number = NONE;
     protected String _road = NONE;
     protected String _type = NONE;
@@ -106,8 +107,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public RollingStock() {
-        _lastDate = (new java.util.GregorianCalendar()).getGregorianChange(); // set to change date of the Gregorian
-                                                                              // Calendar.
+        // set to change date of the Gregorian Calendar.
+        _lastDate = (new java.util.GregorianCalendar()).getGregorianChange();
     }
 
     public RollingStock(String road, String number) {
@@ -127,9 +128,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public String getId() {
         return _id;
     }
-    
+
     public abstract RollingStock copy();
-    
+
     public RollingStock copy(RollingStock rs) {
         rs.setBuilt(getBuilt());
         rs.setColor(getColor());
@@ -154,7 +155,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Set the rolling stock identification or road number
      *
      * @param number The rolling stock road number.
-     *
      */
     public void setNumber(String number) {
         String oldNumber = _number;
@@ -214,9 +214,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected boolean _lengthChange = false; // used for loco length change
 
     /**
-     * Sets the body length of the rolling stock. For example, a 40' boxcar would be
-     * entered as 40 feet. Coupler length is added by the program when determining
-     * if a car could fit on a track.
+     * Sets the body length of the rolling stock. For example, a 40' boxcar
+     * would be entered as 40 feet. Coupler length is added by the program when
+     * determining if a car could fit on a track.
      * 
      * @see #getTotalLength()
      * @param length the body length in feet or meters
@@ -226,7 +226,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (!old.equals(length)) {
             // adjust used length if rolling stock is at a location
             if (getLocation() != null && getTrack() != null) {
-                getLocation().setUsedLength(getLocation().getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+                getLocation().setUsedLength(
+                        getLocation().getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
                 getTrack().setUsedLength(getTrack().getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
                 if (getDestination() != null && getDestinationTrack() != null && !_lengthChange) {
                     _lengthChange = true; // prevent recursive loop, and we want the "old" engine length
@@ -250,7 +251,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * gets the body length of the rolling stock
      * 
      * @return length in feet or meters
-     * 
      * @see #getTotalLength()
      */
     public String getLength() {
@@ -269,7 +269,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     /**
      * Returns the length of the rolling stock including the couplers
      *
-     * 
      * @return total length of the rolling stock in feet or meters
      */
     public int getTotalLength() {
@@ -289,7 +288,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     *
      * @param weight rolling stock weight in ounces.
      */
     public void setWeight(String weight) {
@@ -343,13 +341,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Set the date that the rolling stock was built. Use 4 digits for the year, or
-     * the format MM-YY where MM is the two digit month, and YY is the last two
-     * years if the rolling stock was built in the 1900s. Use MM-YYYY for units
-     * build after 1999.
+     * Set the date that the rolling stock was built. Use 4 digits for the year,
+     * or the format MM-YY where MM is the two digit month, and YY is the last
+     * two years if the rolling stock was built in the 1900s. Use MM-YYYY for
+     * units build after 1999.
      *
      * @param built The string built date.
-     *
      */
     public void setBuilt(String built) {
         String old = _built;
@@ -364,8 +361,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     *
-     * @return location unknown symbol, out of service symbol, or none if car okay
+     * @return location unknown symbol, out of service symbol, or none if car
+     *         okay
      */
     public String getStatus() {
         return (isLocationUnknown() ? "<?> " : (isOutOfService() ? "<O> " : NONE)); // NOI18N
@@ -386,7 +383,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
-    
+
     public String getSplitLocationName() {
         return TrainCommon.splitString(getLocationName());
     }
@@ -408,8 +405,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Set the rolling stock's location and track. Doesn't do any checking and does
-     * not fire a property change. Used exclusively by the Router code. Use
+     * Set the rolling stock's location and track. Doesn't do any checking and
+     * does not fire a property change. Used exclusively by the Router code. Use
      * setLocation(Location, Track) instead.
      *
      * @param track to place the rolling stock on.
@@ -432,11 +429,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
-    
+
     public String getSplitTrackName() {
         return TrainCommon.splitString(getTrackName());
     }
-    
+
     public String getTrackTypeName() {
         if (getTrack() != null) {
             return getTrack().getTrackTypeName();
@@ -474,8 +471,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *
      * @param location The Location.
      * @param track    (yard, spur, staging, or interchange track)
-     * @param force    when true place rolling stock ignore track length, type, and
-     *                 road
+     * @param force    when true place rolling stock ignore track length, type,
+     *                 and road
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, "road" if rolling stock road isn't acceptable, or
      *         "length" if the rolling stock length didn't fit.
@@ -543,14 +540,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Used to confirm that a track is associated with a location, and that rolling
-     * stock can be placed on track.
+     * Used to confirm that a track is associated with a location, and that
+     * rolling stock can be placed on track.
      * 
      * @param location The location
      * @param track    The track, can be null
-     * @return OKAY if track exists at location and rolling stock can be placed on
-     *         track, ERROR_TRACK if track isn't at location, other if rolling stock
-     *         can't be placed on track.
+     * @return OKAY if track exists at location and rolling stock can be placed
+     *         on track, ERROR_TRACK if track isn't at location, other if
+     *         rolling stock can't be placed on track.
      */
     public String testLocation(Location location, Track track) {
         if (track == null) {
@@ -566,7 +563,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets rolling stock destination on the layout
      *
      * @param destination The Location.
-     *
      * @param track       (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
@@ -579,10 +575,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets rolling stock destination on the layout
      *
      * @param destination The Location.
-     *
      * @param track       (yard, spur, staging, or interchange track)
-     * @param force       when true ignore track length, type, and road when setting
-     *                    destination
+     * @param force       when true ignore track length, type, and road when
+     *                    setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
      */
@@ -645,7 +640,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *
      * @param destination The Location.
      * @param track       The Track at destination.
-     *
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
      */
     public String checkDestination(Location destination, Track track) {
@@ -671,9 +665,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Sets rolling stock destination without reserving destination track space or
-     * drop count. Does not fire a property change. Used by car router to test
-     * destinations. Use setDestination(Location, Track) instead.
+     * Sets rolling stock destination without reserving destination track space
+     * or drop count. Does not fire a property change. Used by car router to
+     * test destinations. Use setDestination(Location, Track) instead.
      *
      * @param destination for the rolling stock
      */
@@ -687,7 +681,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
-    
+
     public String getSplitDestinationName() {
         return TrainCommon.splitString(getDestinationName());
     }
@@ -701,11 +695,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     /**
      * Sets rolling stock destination track without reserving destination track
-     * space or drop count. Used by car router to test destinations. Does not fire a
-     * property change. Use setDestination(Location, Track) instead.
+     * space or drop count. Used by car router to test destinations. Does not
+     * fire a property change. Use setDestination(Location, Track) instead.
      *
      * @param track The Track for set out at destination.
-     *
      */
     public void setDestinationTrack(Track track) {
         if (track != null) {
@@ -724,7 +717,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
-    
+
     public String getSplitDestinationTrackName() {
         return TrainCommon.splitString(getDestinationTrackName());
     }
@@ -795,23 +788,23 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public String getLastLocationId() {
         return _lastLocationId;
     }
-    
+
     public String getLastLocationName() {
         Location location = locationManager.getLocationById(getLastLocationId());
         if (location != null) {
-           return location.getName(); 
+            return location.getName();
         }
         return NONE;
     }
-    
+
     public void setLastTrackId(String id) {
         _lastTrackId = id;
     }
-    
+
     public String getLastTrackId() {
         return _lastTrackId;
     }
-    
+
     public String getLastTrackName() {
         Location location = locationManager.getLocationById(getLastLocationId());
         if (location != null) {
@@ -839,7 +832,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets the train that will service this rolling stock.
      *
      * @param train The Train.
-     *
      */
     public void setTrain(Train train) {
         Train old = _train;
@@ -905,7 +897,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         // a couple of error checks before setting the route location
         if (getLocation() == null && routeLocation != null) {
             log.debug("WARNING rolling stock ({}) does not have an assigned location", this); // NOI18N
-        } else if (routeLocation != null && getLocation() != null && !routeLocation.getName().equals(getLocation().getName())) {
+        } else if (routeLocation != null &&
+                getLocation() != null &&
+                !routeLocation.getName().equals(getLocation().getName())) {
             log.error("ERROR route location name({}) not equal to location name ({}) for rolling stock ({})",
                     routeLocation.getName(), getLocation().getName(), this); // NOI18N
         }
@@ -942,8 +936,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Sets the id of the route that was used to set out the rolling stock. Used to
-     * determine if the rolling stock can be pick ups from an interchange track.
+     * Sets the id of the route that was used to set out the rolling stock. Used
+     * to determine if the rolling stock can be pick ups from an interchange
+     * track.
      *
      * @param id The route id.
      */
@@ -956,8 +951,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Sets the value (cost, price) for this rolling stock. Currently has nothing to
-     * do with operations. But nice to have.
+     * Sets the value (cost, price) for this rolling stock. Currently has
+     * nothing to do with operations. But nice to have.
      *
      * @param value a string representing what this item is worth.
      */
@@ -1135,8 +1130,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     * Provides the last date when this rolling stock was moved, or was reset from a
-     * built train, as a string.
+     * Provides the last date when this rolling stock was moved, or was reset
+     * from a built train, as a string.
      *
      * @return date
      */
@@ -1162,6 +1157,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public static final int DATE_TIME_LENGTH = 19;
+
     /**
      * Provides the last date when this rolling stock was moved
      *
@@ -1179,7 +1175,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets the last date when this rolling stock was moved
      *
      * @param date The Date when this rolling stock was last moved.
-     *
      */
     public void setLastDate(Date date) {
         Date old = _lastDate;
@@ -1202,8 +1197,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets the last date when this rolling stock was moved. This method is used
      * only for loading data from a file. Use setLastDate(Date) instead.
      *
-     * @param date MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
-     *             or MM/dd/yyyy HH:mm
+     * @param date MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa, or MM/dd/yyyy HH:mm
      */
     public void setLastDate(String date) {
         Date d = TrainCommon.convertStringToDate(date);
@@ -1227,8 +1221,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     /**
      * Set where in a train's route this rolling stock will be set out.
      *
-     * @param routeDestination the location where the rolling stock is to leave the
-     *                         train.
+     * @param routeDestination the location where the rolling stock is to leave
+     *                         the train.
      */
     public void setRouteDestination(RouteLocation routeDestination) {
         if (routeDestination != null &&
@@ -1254,11 +1248,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         return NONE;
     }
-    
+
     public void setRouteDestinationTiming(RouteLocation routeDestination) {
         _routeDestinationTiming = routeDestination;
     }
-    
+
     public RouteLocation getRouteDestinationTiming() {
         return _routeDestinationTiming;
     }
@@ -1289,7 +1283,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     *
      * @return true when car's location is unknown
      */
     public boolean isLocationUnknown() {
@@ -1312,7 +1305,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     *
      * @return true when rolling stock is out of service
      */
     public boolean isOutOfService() {
@@ -1328,7 +1320,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
-     *
      * @return true when rolling stock is selected
      */
     public boolean isSelected() {
@@ -1374,6 +1365,18 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             return _setoutTime;
         }
         return NONE;
+    }
+
+    /**
+     * Used when building Manifest
+     * @param order the order rolling stock is added to train
+     */
+    public void setOrder(String order) {
+        _order = order;
+    }
+    
+    public String getOrder() {
+        return _order;
     }
 
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
@@ -1588,7 +1591,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Add XML elements to represent this Entry.
      *
      * @param e Element for car or engine store.
-     *
      * @return Contents in a JDOM Element
      */
     protected org.jdom2.Element store(org.jdom2.Element e) {

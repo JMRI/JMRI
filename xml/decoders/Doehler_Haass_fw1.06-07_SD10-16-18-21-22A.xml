@@ -16,12 +16,12 @@
 <!--  Firmware 1.08.027 and 1.09.117 identified by the 1.07 models, which have no definition of their own  -->
 <version version="1.1" author="Pierre Billon" lastUpdated="20210312"/>
 <!--  Added update paths to newest fw 1.12.050 -->
-<version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
+<version version="1" author="Ronald Kuhn" lastUpdated="2016-12-14"/>
 <!-- 1 2016/07/10 Creation
     Decoder template for the Doehler & Haass combo sound decoder
     with Firmware v1.06 and 1.07.
 -->
-<version version="1.1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2020-04-28"/>
+<version version="1.1" author="Ronald Kuhn" lastUpdated="2020-04-28"/>
 <!--
     small correction for CV153 - wasn't on a pane
 -->

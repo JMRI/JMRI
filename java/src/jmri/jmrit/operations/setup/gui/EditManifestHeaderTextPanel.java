@@ -22,6 +22,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
 
     // car and engine attributes
+    JTextField order_TextField = new JTextField(25);
     JTextField road_TextField = new JTextField(25);
     JTextField number_TextField = new JTextField(25);
     JTextField engineNumber_TextField = new JTextField(25);
@@ -58,7 +59,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
     JCheckBox printHeaderLine1 = new JCheckBox(Bundle.getMessage("PrintHeaderLine1"));
     JCheckBox printHeaderLine2 = new JCheckBox(Bundle.getMessage("PrintHeaderLine2"));
     JCheckBox printHeaderLine3 = new JCheckBox(Bundle.getMessage("PrintHeaderLine3"));
-    
+
     JSpinner spinnerLine = new JSpinner(new SpinnerNumberModel(0, -10, 10, 1));
 
     public EditManifestHeaderTextPanel() {
@@ -82,7 +83,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         addItemLeft(pLineOptions, printHeaderLine2, 0, 1);
         addItemLeft(pLineOptions, printHeaderLine3, 0, 2);
         pHeaderLineOptions.add(pLineOptions);
-        
+
         JPanel pHorzontailLineAdjment = new JPanel();
         pHorzontailLineAdjment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintLineAdjustment")));
         pHorzontailLineAdjment.add(spinnerLine);
@@ -95,6 +96,12 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         spinnerLine.setValue(Setup.getHorizontalLineAdjustment());
 
         pManifest.add(pHeaderLineOptions);
+
+        JPanel pOrder_TextField = new JPanel();
+        pOrder_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Order")));
+        pOrder_TextField.add(order_TextField);
+        order_TextField.setText(TrainManifestHeaderText.getStringHeader_Order());
+        pManifest.add(pOrder_TextField);
 
         JPanel pRoad_TextField = new JPanel();
         pRoad_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Road")));
@@ -175,13 +182,13 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pLast_Train_TextField.add(last_train_TextField);
         last_train_TextField.setText(TrainManifestHeaderText.getStringHeader_Last_Train());
         pManifest.add(pLast_Train_TextField);
-        
+
         JPanel pLast_Moved_TextField = new JPanel();
         pLast_Moved_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LastMoved")));
         pLast_Moved_TextField.add(last_moved_TextField);
         last_moved_TextField.setText(TrainManifestHeaderText.getStringHeader_Last_Moved());
         pManifest.add(pLast_Moved_TextField);
-        
+
         JPanel pLast_Location_TextField = new JPanel();
         pLast_Location_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LastLocation")));
         pLast_Location_TextField.add(last_location_TextField);
@@ -306,6 +313,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
             printHeaderLine2.setSelected(true);
             printHeaderLine3.setSelected(true);
             spinnerLine.setValue(0);
+            order_TextField.setText(Bundle.getMessage("Order"));
             road_TextField.setText(Bundle.getMessage("Road"));
             number_TextField.setText(Bundle.getMessage("Number"));
             engineNumber_TextField.setText(Bundle.getMessage("Number"));
@@ -366,6 +374,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         Setup.setPrintHeaderLine3Enabled(printHeaderLine3.isSelected());
         Setup.setHorizontalLineAdjustment((Integer) spinnerLine.getValue());
         // car and engine attributes
+        TrainManifestHeaderText.setStringHeader_Order(order_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Road(road_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Number(number_TextField.getText());
         TrainManifestHeaderText.setStringHeader_EngineNumber(engineNumber_TextField.getText());
@@ -411,6 +420,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
                 Setup.isPrintHeaderLine2Enabled() == printHeaderLine2.isSelected() &&
                 Setup.isPrintHeaderLine3Enabled() == printHeaderLine3.isSelected() &&
                 Setup.getHorizontalLineAdjustment() == (Integer) spinnerLine.getValue() &&
+                TrainManifestHeaderText.getStringHeader_Order().equals(order_TextField.getText()) &&
                 TrainManifestHeaderText.getStringHeader_Road().equals(road_TextField.getText()) &&
                 TrainManifestHeaderText.getStringHeader_Number().equals(number_TextField.getText()) &&
                 TrainManifestHeaderText.getStringHeader_EngineNumber().equals(engineNumber_TextField.getText()) &&

@@ -33,6 +33,12 @@
         <h4>C/MRI</h4>
             <ul>
                 <li>Extend the possible reply length to support very large SUSIC installs.</li>
+                <li>Added a new node type, <strong>ESP32Node</strong>, for self-contained
+                    ESP32-based CMRI-over-WiFi nodes using MCP23017 I/O expander chips.</li>
+                <li>Network (TCP) connections now automatically attempt to reconnect if the
+                    connection is lost, instead of requiring a manual reconnect.</li>
+                <li>Fixed the direction the bit pattern moves in the CMRI diagnostic Output
+                    Test window, which was displaying right to left instead of left to right.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
@@ -99,6 +105,8 @@
                     <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
                     <li>If purging is disabled in the Command Station so is slow scanning.</li>
                       A value of -1 stops slowscanning.</li>
+                    <li>Added a column to show the number of JMRI Throttles sharing a slot.</li>
+                    <li>Updated SlotMon help screen.</li>
                 </ul>
                 <li>Remove some extra messages when configuring with the board-level tools
                   in the LocoNet menu</li>
@@ -148,7 +156,8 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Network (TCP) connections now automatically attempt to reconnect if the
+                    connection is lost, instead of requiring a manual reconnect.</li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -158,7 +167,11 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The Event Table now automatically persists its content so
+                    it can be used while disconnected from your main LCC network.
+                    For example, you could load the Event Table at your club, 
+                    then open that same profile at home and see all the same contents.</li>
+                <li>Support for the configuration display "checkbox" hint has been added.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -273,7 +286,8 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>PD series disabled until an update 3.15+ is available</li>
+                <li>Added a "replacement" function for some decoders</li>
             </ul>
 
         <h4>ESU</h4>
@@ -380,6 +394,7 @@
         <h4>SoundTraxx</h4>
             <ul>
                 <li>Add Kato OEM decoder</li>
+                <li>Add BLU-1100 models</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -473,6 +488,10 @@
                 you could directly change the entry in the DecoderPro table to create
                 a duplicate. You can still edit the ID, but creating entries with
                 duplicate IDs are no longer allowed.</li>
+            <li>Fixed a bug introduced in JMRI 5.17.2 which would sometimes
+                cause DecoderPro to write incorrect output addresses to a DS64</li>
+            <li>You can now change the board ID of e.g. DS64 and similar boards in DecoderPro
+                as mentioned in the Basic panel for those.</li>
         </ul>
 
    <h3>Dispatcher</h3>

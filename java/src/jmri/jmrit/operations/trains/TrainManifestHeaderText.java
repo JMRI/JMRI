@@ -6,12 +6,13 @@ import org.jdom2.Element;
 /**
  * Loads and stores the manifest header text strings.
  *
- * @author Daniel Boudreau Copyright (C) 2014
+ * @author Daniel Boudreau Copyright (C) 2014, 2026
  *
  */
 public class TrainManifestHeaderText {
 
-    private static String road = Bundle.getMessage("Road"); // the supported message format options
+    private static String order = Bundle.getMessage("Order");
+    private static String road = Bundle.getMessage("Road");
     private static String number = Bundle.getMessage("Number");
     private static String engine_number = Bundle.getMessage("Number");
     private static String type = Bundle.getMessage("Type");
@@ -42,6 +43,14 @@ public class TrainManifestHeaderText {
     private static String lastMoved = Bundle.getMessage("LastMoved");
     private static String lastLocation = Bundle.getMessage("LastLocation");
 
+    public static String getStringHeader_Order() {
+        return order;
+    }
+
+    public static void setStringHeader_Order(String s) {
+        order = s;
+    }
+    
     public static String getStringHeader_Road() {
         return road;
     }
@@ -287,6 +296,10 @@ public class TrainManifestHeaderText {
         Element values;
         Element e = new Element(Xml.MANIFEST_HEADER_TEXT_STRINGS);
         // only save strings that have been modified
+        if (!getStringHeader_Order().equals(Bundle.getMessage("Order"))) {
+            e.addContent(values = new Element(Xml.ORDER));
+            values.setAttribute(Xml.TEXT, getStringHeader_Order());
+        }
         if (!getStringHeader_Road().equals(Bundle.getMessage("Road"))) {
             e.addContent(values = new Element(Xml.ROAD));
             values.setAttribute(Xml.TEXT, getStringHeader_Road());
@@ -417,6 +430,11 @@ public class TrainManifestHeaderText {
             return;
         }
         Attribute a;
+        if (emts.getChild(Xml.ORDER) != null) {
+            if ((a = emts.getChild(Xml.ORDER).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Order(a.getValue());
+            }
+        }
         if (emts.getChild(Xml.ROAD) != null) {
             if ((a = emts.getChild(Xml.ROAD).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Road(a.getValue());

@@ -4,10 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.text.NumberFormat;
 import java.util.*;
 
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.*;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
@@ -17,6 +13,10 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the cars.
@@ -122,6 +122,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     }
 
     // The special sort options for cars
+    private static final int BY_LOAD_TYPE = 29;
     private static final int BY_LOAD = 30;
     private static final int BY_KERNEL = 31;
     private static final int BY_RWE = 32; // Return When Empty
@@ -138,10 +139,12 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     private static final int BY_SPLIT_LOCATION = 41;
     private static final int BY_SPLIT_DESTINATION = 42;
 
-    // add car options to sort comparator
     @Override
     protected java.util.Comparator<Car> getComparator(int attribute) {
         switch (attribute) {
+            case BY_LOAD_TYPE:
+                // load types "Empty" and "Load", load goes before empty
+                return (c1, c2) -> (c2.getLoadType().compareToIgnoreCase(c1.getLoadType()));
             case BY_LOAD:
                 return (c1, c2) -> (c1.getLoadName().compareToIgnoreCase(c2.getLoadName()));
             case BY_KERNEL:
@@ -290,7 +293,8 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<Car> byFinal = getByList(getList(train), BY_SPLIT_FINAL_DEST);
+        List<Car> byLoadType = getByList(getList(train), BY_LOAD_TYPE);
+        List<Car> byFinal = getByList(byLoadType, BY_SPLIT_FINAL_DEST);
         List<Car> byLocation = getByList(byFinal, BY_SPLIT_LOCATION);
         List<Car> byHazard = getByList(byLocation, BY_HAZARD);
         List<Car> byDestination = getByList(byHazard, BY_SPLIT_DESTINATION);

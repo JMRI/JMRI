@@ -877,10 +877,10 @@ public class TrainBuilderEngines extends TrainBuilderBase {
     private void addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track) {
         _lastEngine = engine; // needed in case there's a engine change in the
                               // train's route
-        engine = checkQuickServiceArrival(engine, rld, track);
         if (getTrain().getLeadEngine() == null) {
             getTrain().setLeadEngine(engine); // load lead engine
         }
+        engine = checkQuickServiceArrival(engine, rld, track);
         addLine(ONE, Bundle.getMessage("buildEngineAssigned", engine.toString(), rl.getName(),
                 rld.getName(), track.getName()));
         engine.setDestination(track.getLocation(), track, Engine.FORCE);
