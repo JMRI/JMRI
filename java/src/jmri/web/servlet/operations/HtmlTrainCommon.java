@@ -395,8 +395,6 @@ public class HtmlTrainCommon extends TrainCommon {
         // italic
         text = text.replace("&lt;i&gt;", "<i>");
         text = text.replace("&lt;/i&gt;", "</i>");
-        // remove size change
-        text = TrainCommon.getTextSizeString(text);
         return text;
     }
 }
