@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.*;
@@ -7,7 +9,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -577,9 +578,9 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                     JmriJOptionPane.ERROR_MESSAGE);
             // update location only if it has changed
         } else if (rs.getLocation() == null ||
-                !rs.getLocation().equals(locationBox.getSelectedItem()) ||
+                rs.getLocation() != locationBox.getSelectedItem() ||
                 rs.getTrack() == null ||
-                !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
+                rs.getTrack() != trackLocationBox.getSelectedItem()) {
             setLocationAndTrack(rs);
         }
     }
