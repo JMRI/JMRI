@@ -138,8 +138,20 @@ public class SplitVariableValue extends VariableValue
 
         // have to do when list is complete
         for (int i = 0; i < cvCount; i++) {
-            cvList.get(i).thisCV.addPropertyChangeListener(this);
-            cvList.get(i).thisCV.setState(ValueState.FROMFILE);
+            var thisCV = cvList.get(i).thisCV;
+
+            // only add property listener once
+            boolean alreadyDone = false;
+            for (int j = 0; j < i; j++) {
+                if (thisCV.equals(cvList.get(j).thisCV) ) {
+                    alreadyDone = true;
+                    break;
+                }
+            }
+            if (! alreadyDone) {
+                thisCV.addPropertyChangeListener(this);
+            }
+            thisCV.setState(ValueState.FROMFILE);
         }
     }
 
@@ -725,6 +737,7 @@ public class SplitVariableValue extends VariableValue
         log.debug("Variable={} source={}; property {} changed from {} to {}", _name, e.getSource().toString(), e.getPropertyName(), e.getOldValue(),e.getNewValue());
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && e.getNewValue().equals(Boolean.FALSE)) {
+            log.debug("*** Busy -> false transition from {}", e.getSource());
             // busy transitions drive the state
             if (_progState != IDLE) {
                 log.debug("Variable={} source={}; getState() = {}", _name, e.getSource().toString(), (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
@@ -739,7 +752,7 @@ public class SplitVariableValue extends VariableValue
                     retry = 0;
                     if (Math.abs(_progState) < cvCount) {   // read next CV
                         _progState++;
-                        log.debug("Reading CV={}", cvList.get(Math.abs(_progState) - 1).cvName);
+                        log.debug("Reading CV={} with state {}", cvList.get(Math.abs(_progState) - 1).cvName, _progState);
                         (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
                     } else {  // finally done, set not busy
                         log.debug("Variable={}; Busy goes false with success READING _progState {}", _name, _progState);
