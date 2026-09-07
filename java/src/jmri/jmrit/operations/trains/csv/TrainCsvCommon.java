@@ -3,8 +3,6 @@ package jmri.jmrit.operations.trains.csv;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.csv.CSVPrinter;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -16,6 +14,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.FileUtil;
+
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Contains the csv operators for manifests and switch lists
@@ -125,8 +125,8 @@ public class TrainCsvCommon extends TrainCommon {
 
     protected final void printTrainComment(CSVPrinter fileOut, Train train) throws IOException {
         if (!train.getComment().equals(Train.NONE)) {
-            String textColorName = TrainCommon.getTextColorName(train.getCommentWithColor());
-            String[] comments = train.getComment().split(NEW_LINE);
+            String textColorName = train.getCommentColorName();
+            String[] comments = train.getCommentCurrent().split(NEW_LINE);
             for (String comment : comments) {
                 fileOut.printRecord("TC", Bundle.getMessage("csvTrainComment"), comment, textColorName); // NOI18N
             }

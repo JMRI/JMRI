@@ -34,7 +34,6 @@ public class Xml {
     protected static final String LOAD_FROM_STAGING = "loadFromStaging"; // NOI18N
     protected static final String WAIT = "wait"; // NOI18N
     protected static final String PICKUP_SCHEDULE_ID = "pickupId"; // NOI18N
-    protected static final String ORDER = "order"; // NOI18N
     protected static final String SCHEDULE_ID = "scheduleId"; // NOI18N
     protected static final String NEXT_LOAD = "nextLoad"; // NOI18N
     protected static final String NEXT_DEST_ID = "nextDestId"; // NOI18N

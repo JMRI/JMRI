@@ -2563,6 +2563,7 @@ public class TrainCommon {
         string = getTextSizeString(string);
         string = getTextColorString(string);
         string = getTextBoldString(string);
+        string = getTextItalicString(string);
         return string;
     }
 

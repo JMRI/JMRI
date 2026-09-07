@@ -625,7 +625,7 @@ public class Car extends RollingStock {
         if (getRouteLocation() == null || getRouteDestination() == null) {
             return false;
         }
-        if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
+        if (getRouteLocation() == getRouteDestination() && getTrack() != null) {
             return true;
         }
         if (getTrain().isLocalSwitcher() &&
@@ -653,7 +653,7 @@ public class Car extends RollingStock {
                         return false;
                     }
                 }
-                if (getRouteLocation().equals(rl)) {
+                if (getRouteLocation() == rl) {
                     foundRl = true;
                 }
             }
