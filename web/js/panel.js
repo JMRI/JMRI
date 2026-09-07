@@ -831,8 +831,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if (isUndefined($widget.styles.width)) { //set missing width
                                 if (isDefined($widget.colWidth)) { 
                                     $widget.styles['width'] = $widget.colWidth + "em";
-                                } else {
-                                    $widget.styles['width'] = "5em";
+                                //} else {
+                                    //$widget.styles['width'] = "5em"; //removed to let mci autosize
                                 }
                             }
                             var items = $(this).find('itemList').children('item');
