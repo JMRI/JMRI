@@ -1454,6 +1454,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         } else {
             log.warn("no id attribute in rolling stock element when reading operations");
         }
+        if ((a = e.getAttribute(Xml.ORDER)) != null) {
+            _order = a.getValue();
+        }
         if ((a = e.getAttribute(Xml.ROAD_NUMBER)) != null) {
             _number = a.getValue();
         }
@@ -1650,6 +1653,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (!getTrainName().equals(NONE)) {
             e.setAttribute(Xml.TRAIN, getTrainName());
             e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
+            e.setAttribute(Xml.ORDER, getOrder());
         }
         if (!getLastTrainName().equals(NONE)) {
             e.setAttribute(Xml.LAST_TRAIN, getLastTrainName());

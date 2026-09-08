@@ -253,11 +253,12 @@
 <!ATTLIST headerLines lineAdjustment	CDATA #IMPLIED>
 
 
-<!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model | hp
+<!ELEMENT manifestHeaderTextStrings (order | road | number | engineNumber | type | model | hp
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
 | kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight | load_type | dcc_addr
 | division | last_train | last_moved)*>
 
+<!ELEMENT order EMPTY>
 <!ELEMENT road EMPTY>
 <!ELEMENT number EMPTY>
 <!ELEMENT engineNumber EMPTY>
@@ -285,6 +286,7 @@
 <!ELEMENT last_train EMPTY>
 <!ELEMENT last_moved EMPTY>
 
+<!ATTLIST order text			CDATA #IMPLIED>
 <!ATTLIST road text				CDATA #IMPLIED>
 <!ATTLIST number text			CDATA #IMPLIED>
 <!ATTLIST engineNumber text		CDATA #IMPLIED>

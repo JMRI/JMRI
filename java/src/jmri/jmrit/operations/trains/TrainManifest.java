@@ -77,15 +77,7 @@ public class TrainManifest extends TrainCommon {
                 newLine(fileOut, schName);
             }
             if (!train.getCommentWithColor().equals(Train.NONE)) {
-                RouteLocation drl = train.getTrainDepartsRouteLocation();
-                newLine(fileOut, MessageFormat.format(messageFormatText = train.getCommentWithColor(),
-                        new Object[]{train.getSplitName(), train.getDescription(), train.getTrainDepartsName(),
-                                train.getFormatedDepartureTime(), train.getTrainDepartsDirection(),
-                                train.getTrainTerminatesName(), train.getNumberCarsInTrain(drl),
-                                train.getNumberLoadedCarsInTrain(drl), train.getNumberEmptyCarsInTrain(drl),
-                                train.getTrainLength(drl), Setup.getLengthUnit().toLowerCase(),
-                                train.getTrainWeight(drl), train.getLeadEngineRoadAndNumber(),
-                                train.getLeadEngineDccAddress()}));
+                newLine(fileOut, train.getCommentCurrentWithColor());
             }
             if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(Route.NONE)) {
                 newLine(fileOut, train.getRoute().getComment());

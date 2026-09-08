@@ -2830,6 +2830,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             setDirtyAndFirePropertyChange("trainComment", old, comment); // NOI18N
         }
     }
+    
+    public String getCommentCurrentWithColor() {
+        return commentCurrent(getCommentWithColor());
+    }
+    
+    public String getCommentCurrent() {
+        return commentCurrent(getComment());
+    }
 
     public String getComment() {
         return TrainCommon.getOnlyText(getCommentWithColor());
@@ -2837,6 +2845,33 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public String getCommentWithColor() {
         return _comment;
+    }
+    
+    public Color getCommentColor() {
+        return TrainCommon.getTextColor(getCommentWithColor());
+    }
+    
+    public String getCommentColorName() {
+        return TrainCommon.getTextColorName(getCommentWithColor());
+    }
+    
+    private String commentCurrent(String comment) {
+        RouteLocation crl = getCurrentRouteLocation();
+        if (crl == null) {
+            crl = getTrainDepartsRouteLocation();
+        }
+        return getCommentCurrent(comment, crl);
+    }
+    
+    public String getCommentCurrent(String comment, RouteLocation crl) {
+        return MessageFormat.format(comment,
+                new Object[]{getSplitName(), getDescription(), getTrainDepartsName(),
+                        getFormatedDepartureTime(), getTrainDepartsDirection(),
+                        getTrainTerminatesName(), getNumberCarsInTrain(crl),
+                        getNumberLoadedCarsInTrain(crl), getNumberEmptyCarsInTrain(crl),
+                        getTrainLength(crl), Setup.getLengthUnit().toLowerCase(),
+                        getTrainWeight(crl), getLeadEngineRoadAndNumber(),
+                        getLeadEngineDccAddress()});
     }
 
     /**

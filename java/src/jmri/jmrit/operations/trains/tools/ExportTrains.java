@@ -5,9 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -15,6 +12,9 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Exports the train roster into a comma delimited file (CSV). Only trains that
@@ -92,10 +92,10 @@ public class ExportTrains extends XmlFile {
                 if (train.getRoute() != null) {
                     routeName = train.getRoute().getName();
                 }
-                fileOut.printRecord(train.getName(), train.getDescription(), train.getDepartureTime(), 
+                fileOut.printRecord(train.getName(), train.getDescription(), train.getDepartureTime(),
                         train.getExpectedDepartureTime(train.getTrainTerminatesRouteLocation(), true), routeName,
                         train.getTrainDepartsName(), train.getTrainTerminatesName(), train.getStatus(),
-                        train.getComment(), TrainCommon.formatStringToCommaSeparated(train.getLocoTypeNames()),
+                        train.getCommentCurrent(), TrainCommon.formatStringToCommaSeparated(train.getLocoTypeNames()),
                         TrainCommon.formatStringToCommaSeparated(train.getCarTypeNames()), getCarRoadOption(train),
                         getCarRoads(train), getCabooseRoadOption(train), getCabooseRoads(train),
                         getLocoRoadOption(train), getLocoRoads(train), getLoadOption(train),
