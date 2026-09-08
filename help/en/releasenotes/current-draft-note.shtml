@@ -718,6 +718,10 @@
             <li>Fixed a JSON schema validation gap where requesting an unrecognized
                 type from the LocoNet slot usage service could silently return the
                 wrong schema instead of an error.</li>
+            <li>Layout Editor panels displayed via Chrome and Chromium browsers
+                would show small notches in the track lines near turnouts and 
+                crossovers.  This was not present on other browsers.  Adding
+                a round cap to the end of the drawn lines reduces this effect.
         </ul>
 
     <h3>Where Used</h3>
