@@ -3994,7 +3994,7 @@ function $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
     $gCtx.moveTo($p1x, $p1y);
     $gCtx.lineTo($p2x, $p2y);
 
-    //$gCtx.lineCap = 'round'; 
+    $gCtx.lineCap = 'round'; 
     
     $gCtx.stroke();
 
