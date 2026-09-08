@@ -3038,7 +3038,7 @@
         <model model="DS54" lowVersionID="65" />
         <comment xml:lang="it">DS54 is a stationary decoder, but it can be programmed in the usual way</comment>
       </family>
-      <family name="Function Decoders (old)" mfg="Doehler und Haass" file="Doehler_Haass_FFn_decoders_old.xml">
+      <family name="Function Decoders (old)" mfg="Doehler und Haass" file="Doehler_Haass_function_decoders_old.xml">
         <model model="DHF250" lowVersionID="1" highVersionID="1" numOuts="2" numFns="9" productID="DHF250" comment="without cable">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -3064,7 +3064,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Sound Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_fw1.06-07_SD10-16-18-21-22A.xml">
+      <family name="Sound Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.06-07_SD10-16-18-21-22A.xml">
         <!--family name="Combo sound decoders" mfg="Doehler und Haass"-->
         <model model="SD10A (firmware 1.06+)" replacementModel="SD10A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="026" highVersionID="026" numOuts="6" numFns="16" productID="SD10A_1.06" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from March 2016">
           <output name="1" label="Front|Light" />
@@ -3239,7 +3239,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Sound Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_fw1.10_SD10-16-18-21-22A.xml">
+      <family name="Sound Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.10_SD10-16-18-21-22A.xml">
         <model model="SD10A (firmware 1.10+)" replacementModel="SD10A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="048" highVersionID="048" numOuts="6" numFns="16" productID="SD10A_1.10" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from April 2018">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3322,7 +3322,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Sound Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_fw1.11_SD10-16-18-21-22A.xml">
+      <family name="Sound Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.11_SD10-16-18-21-22A.xml">
         <model model="SD10A (firmware 1.11+)" replacementModel="SD10A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="098" highVersionID="098" numOuts="6" numFns="16" productID="SD10A_1.11" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from October 2018">
           <versionCV lowVersionID="69" highVersionID="69" comment="firmware 1.11.069" />
           <output name="1" label="Front|Light" />
@@ -3410,7 +3410,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Sound Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_fw1.12_SD05-10-16-18-21-22A.xml">
+      <family name="Sound Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.12_SD05-10-16-18-21-22A.xml">
         <model model="SD05A (firmware 1.12+)" replacementModel="SD05A (firmware 1.13+)" replacementFamily="query:Sound Decoders (2022)" lowVersionID="050" highVersionID="050" numOuts="8" numFns="16" productID="205" comment="SD05A-0 / SD05A-1 / SD05A-3 from July 2020">
           <!--lowVersionID="098" highVersionID="098"-->
           <output name="1" label="Front|Light" />
@@ -3528,7 +3528,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Sound Decoders (2022)" mfg="Doehler und Haass" file="Doehler_Haass_fw1.13_SD05-22A.xml">
+      <family name="Sound Decoders (2022)" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.13_SD05-22A.xml">
         <model model="SD05A (firmware 1.13+)" lowVersionID="112" highVersionID="112" numOuts="8" numFns="16" productID="205" comment="SD05A-0 / SD05A-1 / SD05A-3 from July 2020">
           <versionCV lowVersionID="101" highVersionID="101" comment="firmware 1.13.101, not a regular release" />
           <!--lowVersionID="098" highVersionID="098"-->
@@ -3653,7 +3653,7 @@
           </protocols>
         </model>
       </family>
-      <family name="SUSI sound modules (2022)" mfg="Doehler und Haass" file="Doehler_Haass_fw1.15_SH05-10A.xml">
+      <family name="SUSI sound modules (2022)" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.15_SH05-10A.xml">
         <model model="SH05A (firmware 1.15.112+)" lowVersionID="112" highVersionID="112" numOuts="2" numFns="30" productID="50" comment="SH05A with firmware 1.15 or later">
           <output name="1" label="AUX|1" />
           <output name="2" label="AUX|2" />
@@ -3667,7 +3667,7 @@
           <output name="2" label="AUX|2" />
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DH05-10AB.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DH05-10AB.xml">
         <model model="DH05A/B" lowVersionID="1" highVersionID="2" numOuts="4" numFns="16" productID="DH05AB" comment="DH05A/B-0 / DH05A/B-1 / DH05A/B-3">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3701,7 +3701,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DH05-10C_12-16-18A.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DH05-10C_12-16-18A.xml">
         <model model="DH05C" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="4" numFns="16" productID="DH05C" comment="DH05C-0 / DH05C-1 / DH05C-3">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3777,7 +3777,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DH06A.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DH06A.xml">
         <model model="DH06A" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A" comment="DH06A for Köf with no analog support">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3796,7 +3796,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DHP160.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DHP160.xml">
         <model model="DHP160/161/163" lowVersionID="8" highVersionID="8" numOuts="3" numFns="16" productID="DHP160" comment="DHP160 / DHP161 / DHP163">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3815,7 +3815,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DHP250.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DHP250.xml">
         <model model="DHP250/252/253" lowVersionID="8" highVersionID="8" numOuts="6" numFns="16" productID="DHP250" comment="DHP250/252/253">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3831,7 +3831,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_DHP260.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_DHP260.xml">
         <model model="DHP260" lowVersionID="8" highVersionID="8" numOuts="6" numFns="16" productID="DHP260" comment="DHP260">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3847,7 +3847,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_FH05A.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_FH05A.xml">
         <model model="FH05A" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="FH05A" comment="FH05A-0 / FH05A-1 / FH05A-3">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3865,7 +3865,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.02_generic.xml">
+      <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.02_generic.xml">
         <model model="Generic" numOuts="6" numFns="16" productID="generic" comment="Generic profile for unknown or unlisted decoders">
           <protocols>
             <protocol>dcc</protocol>
@@ -3873,7 +3873,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH05-10A.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_DH05-10A.xml">
         <model model="DH05A v1.10 (firmware 3.03+)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="DH05A_3.03" comment="DH05A-0 / DH05A-1 / DH05A-3 with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3907,7 +3907,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH05-10B.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_DH05-10B.xml">
         <model model="DH05B v2.08 (firmware 3.03+)" lowVersionID="2" highVersionID="2" numOuts="4" numFns="16" productID="DH05B_3.03" comment="DH05B-0 / DH05B-1 / DH05B-3 with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -3941,7 +3941,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH05-10C_12-16-18-21A.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_DH05-10C_12-16-18-21A.xml">
         <model model="DH05C v3.03 (firmware 3.03+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH05C_3_03" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4031,7 +4031,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DH06A.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_DH06A.xml">
         <model model="DH06A v3.03 (firmware 3.03+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="3" highVersionID="3" numOuts="3" numFns="16" productID="DH06A_3.03" comment="DH06A for Köf with no analog support, with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4050,7 +4050,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DHP160.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_DHP160.xml">
         <model model="DHP160/161/163 v8.10 (firmware 3.03+)" lowVersionID="8" highVersionID="8" numOuts="3" numFns="16" productID="DHP160_3.03" comment="DHP160 / DHP161 / DHP163 with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4069,7 +4069,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DHP250.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_DHP250.xml">
         <model model="DHP250/252/253 v8.10 (firmware 3.03+)" lowVersionID="8" highVersionID="8" numOuts="6" numFns="16" productID="DHP250_3.03" comment="DHP250/252/253 with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4085,7 +4085,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_DHP260.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_DHP260.xml">
         <model model="DHP260 v8.10 (firmware 3.03+)" lowVersionID="8" highVersionID="8" numOuts="6" numFns="16" productID="DHP260_3.03" comment="DHP260 with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4101,7 +4101,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_FH05A.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_FH05A.xml">
         <model model="FH05A v1.10 (firmware 3.03+)" lowVersionID="1" highVersionID="1" numOuts="6" numFns="16" productID="FH05A_3.03" comment="FH05A-0 / FH05A-1 / FH05A-3 with update from 15 Jan 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4119,7 +4119,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.03_generic.xml">
+      <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.03_generic.xml">
         <model model="Generic DH v3.03 (firmware 3.03+)" numOuts="6" numFns="16" productID="GenericDH_3.03" comment="Generic DH profile for unknown or unlisted decoders with update from 15 Jan 2014">
           <protocols>
             <protocol>dcc</protocol>
@@ -4127,7 +4127,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH05-10A.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_DH05-10A.xml">
         <model model="DH05A v1.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="16" productID="DH05A_3.04" comment="DH05A-0 / DH05A-1 / DH05A-3 with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4161,7 +4161,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH05-10B.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_DH05-10B.xml">
         <model model="DH05B v2.09 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="16" productID="DH05B_3.04" comment="DH05B-0 / DH05B-1 / DH05B-3 with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4195,7 +4195,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH05-10C_12-16-18-21-22A.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_DH05-10C_12-16-18-21-22A.xml">
         <model model="DH05C v3.04 (firmware 3.04+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH05C_3_04" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4306,7 +4306,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DH06A.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_DH06A.xml">
         <model model="DH06A v3.04 (firmware 3.04+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="3" numFns="16" productID="DH06A_3.04" comment="DH06A for Köf with no analog support, with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4326,7 +4326,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DHP160.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_DHP160.xml">
         <model model="DHP160/161/163 v8.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="3" numFns="16" productID="DHP160_3.04" comment="DHP160 / DHP161 / DHP163 with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4345,7 +4345,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DHP250.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_DHP250.xml">
         <model model="DHP250/252/253 v8.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DHP250_3.04" comment="DHP250/252/253 with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4361,7 +4361,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_DHP260.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_DHP260.xml">
         <model model="DHP260 v8.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DHP260_3.04" comment="DHP260 with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4377,7 +4377,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_FH05A.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_FH05A.xml">
         <model model="FH05A v1.11 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="FH05A_3.04" comment="FH05A-0 / FH05A-1 / FH05A-3 with update from 31 May 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4395,7 +4395,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.04_generic.xml">
+      <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.04_generic.xml">
         <model model="Generic DH v3.04 (firmware 3.04+)" numOuts="6" numFns="16" productID="GenericDH_3.04" comment="Generic DH profile for unknown or unlisted decoders with update from 31 May 2014">
           <protocols>
             <protocol>dcc</protocol>
@@ -4404,7 +4404,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.05_DH05-10C_12-16-18-21-22A.xml">
+      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.05_DH05-10C_12-16-18-21-22A.xml">
         <model model="DH05C v3.05.104 (firmware 3.05+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="DH05C_2014_10" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from October 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4733,7 +4733,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.05_DH06A.xml">
+      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.05_DH06A.xml">
         <model model="DH06A v3.05.104 (firmware 3.05+)" replacementModel="DH06A (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="3" numFns="16" productID="DH06A_2014.10" comment="DH06A for Köf with no analog support, with update from October 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4789,7 +4789,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.05_FH05A.xml">
+      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.05_FH05A.xml">
         <model model="FH05A v1.12.104 (firmware 3.05+)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="FH05A_2014.10" comment="FH05A-0 / FH05A-1 / FH05A-3 with update from October 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4807,7 +4807,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.05_FH05B.xml">
+      <family name="Function Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.05_FH05B.xml">
         <model model="FH05B v3.05.15 (firmware 3.05+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="15" highVersionID="15" numOuts="6" numFns="16" productID="FH05B_2014.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2014">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -4825,7 +4825,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.05_generic.xml">
+      <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.05_generic.xml">
         <model model="Generic DH v3.05 (firmware 3.05+)" numOuts="6" numFns="16" productID="GenericDH_2014.10" comment="Generic DH profile for unknown or unlisted decoders with update from October 2014">
           <protocols>
             <protocol>dcc</protocol>
@@ -4834,7 +4834,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.06-07_DH05-10C_12-16-18-21-22A_PD12A.xml">
+      <family name="Train Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.06-07_DH05-10C_12-16-18-21-22A_PD12A.xml">
         <model model="DH05C v3.06.26 (firmware 3.06+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="DH05C_2016_03" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from March 2016">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -5092,7 +5092,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.06-07_FH05B-22A.xml">
+      <family name="Function Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.06-07_FH05B-22A.xml">
         <model model="FH05B v3.06.26 (firmware 3.06+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="FH05B_2016.03" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from March 2016">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -5170,7 +5170,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (2017)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.08-09_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
+      <family name="Train Decoders (2017)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.08-09_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
         <model model="DH05C v3.08.27 (firmware 3.08+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH05C_2017_02" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from February 2017">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -5437,7 +5437,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.10-11_FH05B-18-22A.xml">
+      <family name="Function Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.10-11_FH05B-18-22A.xml">
         <model model="FH05B v3.10.48 (firmware 3.10+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="6" numFns="16" productID="FH05B_2018.04" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from April 2018">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -5547,7 +5547,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.10_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
+      <family name="Train Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.10_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
         <model model="DH05C v3.10.48 (firmware 3.10+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="6" numFns="16" productID="DH05C_2018_04" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from April 2018">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -5686,7 +5686,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.11_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
+      <family name="Train Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.11_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
         <model model="DH05C v3.11.98 (firmware 3.11+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="DH05C_2018_09" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from September 2018">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -5825,7 +5825,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.12_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
+      <family name="Train Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.12_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
         <model model="DH05C (firmware 3.12.050+)" replacementModel="DH05C (firmware 3.13.053+)" replacementFamily="query:Train Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -6045,7 +6045,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.12_FH05B-18-22A.xml">
+      <family name="Function Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.12_FH05B-18-22A.xml">
         <model model="FH05B (firmware 3.12.050+)" replacementModel="FH05B (firmware 3.13.053+)" replacementFamily="query:Function Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -6101,7 +6101,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (2023)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.13_DH05-22B_PD05-21A.xml">
+      <family name="Train Decoders (2023)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.13_DH05-22B_PD05-21A.xml">
         <model model="DH05C (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -6539,7 +6539,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (2023)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.13_FH05B-22A.xml">
+      <family name="Function Decoders (2023)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.13_FH05B-22A.xml">
         <model model="FH05B (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -6615,7 +6615,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.14+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.14_DH05-24A_PD05-21A.xml">
+      <family name="Train Decoders (firmware 3.14+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.14_DH05-24A_PD05-21A.xml">
         <model model="DH05C (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -7053,7 +7053,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (firmware 3.14+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.14_FH05B-22A.xml">
+      <family name="Function Decoders (firmware 3.14+)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.14_FH05B-22A.xml">
         <model model="FH05B (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -7129,7 +7129,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Train Decoders (firmware 3.15+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.15_DH05-24A_PD05-21A.xml">
+      <family name="Train Decoders (firmware 3.15+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.15_DH05-24A_PD05-21A.xml">
         <model model="DH05C (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -7567,7 +7567,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (firmware 3.15+)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.15_FH05B-22A.xml">
+      <family name="Function Decoders (firmware 3.15+)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.15_FH05B-22A.xml">
         <model model="FH05B (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -7643,7 +7643,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sd_SD18A.xml">
+      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.00-04_SD18A.xml">
         <model model="SD18A (firmware 1.00+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.00" comment="SD18A with original firmware">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -7731,7 +7731,7 @@
           </protocols>
         </model>
       </family>
-      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sd_SD21A.xml">
+      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.00-04_SD21A.xml">
         <model model="SD21A (firmware 1.01+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
@@ -7796,7 +7796,7 @@
           </protocols>
         </model>
       </family>
-      <family name="SUSI sound modules" mfg="Doehler und Haass" file="Doehler_Haass_susi_sd_SH10A.xml">
+      <family name="SUSI sound modules" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.00_SH10A.xml">
         <model model="SH10A (firmware 1.00+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" />
         <model model="SH10A (firmware 1.01+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.01" comment="SH10A with firmware 1.01 or later" />
         <model model="SH10A (firmware 1.02+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.02" comment="SH10A with firmware 1.02 or later" />
@@ -7833,7 +7833,7 @@
           <output name="2" label="AUX|2" />
         </model>
       </family>
-      <family name="SUSI sound modules (2020)" mfg="Doehler und Haass" file="Doehler_Haass_susi_sd_fw1.14_SH05-10A.xml">
+      <family name="SUSI sound modules (2020)" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.14_SH05-10A.xml">
         <model model="SH05A (firmware 1.14.050+)" replacementModel="SH05A (firmware 1.15.112+)" replacementFamily="query:SUSI sound modules (2022)" lowVersionID="50" highVersionID="50" numOuts="2" numFns="30" productID="50" comment="SH05A with firmware 1.14 or later">
           <output name="1" label="AUX|1" />
           <output name="2" label="AUX|2" />

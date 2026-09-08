@@ -15,9 +15,9 @@
   <version author="Ronald Kuhn" version="1.2" lastUpdated="20200502"/>
   <!-- v1.2,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <!-- v1.3,  include CV's 190-191, Ulrich Gerlach 25 March 2023        --> 
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.1" lastUpdated="20190429"/>
+  <version author="Ronald Kuhn" version="1.1" lastUpdated="20190429"/>
   <!-- deleted wrong Servo-options from file-version 1                                       -->
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1" lastUpdated="20190407"/>
+  <version author="Ronald Kuhn" version="1" lastUpdated="20190407"/>
   <!-- This decoder configuration file is based on other Zimo non-sound decoders             -->
   <!-- Tested on a MX616, which reported v37.8 firmware and                                  -->
   <!-- decoderID 195 (which matches manuals), on 25 April 2019 (RK)                          -->
