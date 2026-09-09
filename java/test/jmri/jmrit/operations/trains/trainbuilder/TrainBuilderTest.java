@@ -21570,10 +21570,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c7 = JUnitOperationsUtil.createAndPlaceCar("CP", "70", "Boxcar", "40", actonYard2, 16);
         Car c8 = JUnitOperationsUtil.createAndPlaceCar("CP", "80", "Boxcar", "40", actonYard2, 17);
 
-        // load two cars with bags
-        c3.setLoadName("Bags");
-        c6.setLoadName("Bags");
-
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
@@ -21588,9 +21584,11 @@ public class TrainBuilderTest extends OperationsTestCase {
         sch1Item1.setWait(1);
         bostonSpur1.setSchedule(schedule);
 
-        // get rid of the other tracks at Boston
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
-        boston.deleteTrack(bostonSpur2);
+        bostonSpur2.setQuickServiceEnabled(true);
+        bostonSpur2.setLength(60); // room for one car
+
+        // get rid of the other tracks at Boston
         Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
         boston.deleteTrack(bostonYard1);
         Track bostonYard2 = boston.getTrackByName("Boston Yard 2", null);
@@ -21603,6 +21601,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         // force all boxcars to Boston
         Location chelmsford = route.getRouteLocationBySequenceNumber(3).getLocation();
         chelmsford.deleteTypeName("Boxcar");
+        
+        // load two cars with bags
+        c3.setLoadName("Bags");
+        c6.setLoadName("Bags");
+
+        // confirm that final destination get's removed
+        c4.setFinalDestination(boston);
+        c6.setFinalDestination(boston);
 
         // define the train
         Train train1 = tmanager.newTrain("TestQuickTurnLoadWait");
@@ -21611,16 +21617,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        // the program should create 2 new cars
-        Assert.assertEquals("should be 2 cars worked", 2, train1.getNumberCarsWorked());
-        Assert.assertEquals("should be cars", 8, cmanager.getNumEntries());
+        // the program should create 3 new cars
+        Assert.assertEquals("cars worked", 3, train1.getNumberCarsWorked());
+        Assert.assertEquals("total cars", 9, cmanager.getNumEntries());
 
-        // two cars should now be at Boston
+        // three cars should now be at Boston
         Assert.assertEquals("new location", "Boston", c3.getLocationName());
+        Assert.assertEquals("new location", "Boston", c4.getLocationName());
         Assert.assertEquals("new location", "Boston", c6.getLocationName());
 
+        // confirm final destination removed
+        Assert.assertNull(c3.getFinalDestination());
+        Assert.assertNull(c4.getFinalDestination());
+        Assert.assertNull(c6.getFinalDestination());
+
         // the other four should have stayed
-        Assert.assertEquals("destination", "", c4.getDestinationName());
         Assert.assertEquals("destination", "", c5.getDestinationName());
         Assert.assertEquals("destination", "", c7.getDestinationName());
         Assert.assertEquals("destination", "", c8.getDestinationName());
@@ -21635,7 +21646,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm clone creation
         Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001");
         Assert.assertNotNull(clone3);
-        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0002");
+        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002");
+        Assert.assertNotNull(clone4);
+        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0003");
         Assert.assertNotNull(clone6);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
@@ -21652,14 +21665,15 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm clone destruction
         Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0002"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0003"));
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
         // confirm no clones created
-        Assert.assertEquals("should be 2 cars worked", 2, train1.getNumberCarsWorked());
-        Assert.assertEquals("should be cars", 6, cmanager.getNumEntries());
+        Assert.assertEquals("cars worked", 4, train1.getNumberCarsWorked());
+        Assert.assertEquals("total cars", 7, cmanager.getNumEntries());
 
         Assert.assertEquals("location", "Boston", c3.getLocationName());
         Assert.assertEquals("location", "Boston", c6.getLocationName());

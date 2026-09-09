@@ -857,7 +857,7 @@ public class Car extends RollingStock {
             return status;
         }
         // is car going to its final destination?
-        removeCarFinalDestination();
+        removeCarFinalDestination(getDestination(), getDestinationTrack());
         // now check to see if the track has a schedule
         if (track != null && destinationTrack != track && loaded && !isClone()) {
             status = track.scheduleNext(this);
@@ -900,12 +900,9 @@ public class Car extends RollingStock {
     /*
      * remove the car's final destination if sent to that destination
      */
-    private void removeCarFinalDestination() {
-        if (getDestination() != null &&
-                getDestination().equals(getFinalDestination()) &&
-                getDestinationTrack() != null &&
-                (getDestinationTrack().equals(getFinalDestinationTrack()) ||
-                        getFinalDestinationTrack() == null)) {
+    public void removeCarFinalDestination(Location location, Track track) {
+        if (location == getFinalDestination() &&
+                track == getFinalDestinationTrack()) {
             setFinalDestination(null);
             setFinalDestinationTrack(null);
         }
