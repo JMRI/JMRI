@@ -103,7 +103,7 @@
                 <ul>
                     <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
                     <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
-                    <li>If purging is disabled in the Command Station so is slow scanning.</li>
+                    <li>If purging is disabled in the Command Station so is slow scanning.
                       A value of -1 stops slowscanning.</li>
                     <li>Added a column to show the number of JMRI Throttles sharing a slot.</li>
                     <li>Updated SlotMon help screen.</li>
@@ -560,7 +560,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improvements to the add message combobox in the "Manifest Print Options" window. 
+            You can now select where you want the combobox added.</li>
+            <li>New Manifest and switch list item called "Order" in the message combobox. You 
+            can now show the order or sequence locos and cars are added to the train.
+            <li>Train comments has been improved to allow substitutions. See help for details.</li>
+            <li>Improvements to "On Time" with regards to alternate tracks and spurs.</li>
+            <li>The "Edit Car and Locomotive" windows now requests confirmation when changing the road or number.</li>
         </ul>
 
    <h3>Panel Editor</h3>
