@@ -184,6 +184,7 @@ public class BiDiBPowerManager implements PowerManager {
             public void speed(byte[] address, int messageNum, AddressData addressData, int speed) {
                 //Node node = tc.getFirstCommandStationNode();
                 //log.trace("speed: node UID: {}, node addr: {}, msg node addr: {}, address: {}, speed: {}", node.getUniqueId(), node.getAddr(), address, addressData, speed);
+                log.trace("speed: msg node addr: {}, address: {}, speed: {}", address, addressData, speed);
                 //if (NodeUtils.isAddressEqual(node.getAddr(), address)) {
                     //log.debug("SPEED was signalled, node addr: {}, speed: {}, loco: {}", node.getAddr(), speed, addressData);
                 //}

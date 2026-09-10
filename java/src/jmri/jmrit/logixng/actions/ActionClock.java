@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -20,13 +18,12 @@ import jmri.util.ThreadingUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionClock extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionClock extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<ClockState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClock, this);
+            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClock);
     private final LogixNG_SelectInteger _selectValue =
-            new LogixNG_SelectInteger(this, this, new TimeFormatterParserValidator());
+            new LogixNG_SelectInteger(this, new TimeFormatterParserValidator());
 
 
     public ActionClock(String sys, String user)
@@ -147,26 +144,6 @@ public class ActionClock extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectEnum.registerListeners();
-        _selectValue.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectEnum.unregisterListeners();
-        _selectValue.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

@@ -1,6 +1,7 @@
 package jmri.jmrit.operations;
 
-import java.awt.*;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -77,17 +78,9 @@ public class OperationsFrame extends JmriJFrame {
     protected void addItemWidth(JPanel p, JComponent c, int width, int x, int y) {
         this.getContentPane().addItemWidth(p, c, width, x, y);
     }
-    
-    protected JPanel getColorChooserPanel(String text, JColorChooser chooser) {
-        return this.getContentPane().getColorChooserPanel(text, chooser);
-    }
 
     protected JPanel getColorChooserPanel(String text, JColorChooser chooser, JCheckBox checkBox) {
         return this.getContentPane().getColorChooserPanel(text, chooser, checkBox);
-    }
-    
-    protected JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser, JCheckBox checkBox) {
-        return this.getContentPane().getColorChooserPanel(title, color, chooser, checkBox);
     }
 
     /**

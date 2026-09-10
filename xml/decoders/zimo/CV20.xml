@@ -25,6 +25,7 @@
   <variable CV="20" item="Extended Consist Address">
     <decVal max="102"/>
     <label>Extended Consist Address</label>
+    <label xml:lang="fr">Adresse d'UM étendue</label>
     <label xml:lang="de">Erweiterte Verbundadresse</label>
     <label xml:lang="cs">Rozšířená adresa soupravy</label>
     <tooltip xml:lang="de">Der Wert aus CV20 * 100 wird zum Wert aus CV19 dazu addiert = Lange Verbundadresse.</tooltip>

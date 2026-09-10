@@ -19,11 +19,11 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class DigitalCallModule extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private final LogixNG_SelectNamedBean<Module> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Module.class, InstanceManager.getDefault(ModuleManager.class), this);
+                    this, Module.class, InstanceManager.getDefault(ModuleManager.class));
     private final List<ParameterData> _parameterData = new ArrayList<>();
 
     public DigitalCallModule(String sys, String user)
@@ -157,24 +157,6 @@ public class DigitalCallModule extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

@@ -118,7 +118,7 @@ public class PanelPro extends Apps {
 
         Apps.setStartupInfo("PanelPro");
 
-        setConfigFilename("PanelProConfig2.xml", args);
+        setConfigFilename("PanelProConfig2.properties", args);
         PanelPro p = new PanelPro();
         JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(p, f);

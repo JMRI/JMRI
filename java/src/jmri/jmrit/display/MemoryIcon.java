@@ -456,8 +456,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
             if (flipRosterIcon) {
                 flipIcon(NamedIcon.HORIZONTALFLIP);
             }
-            jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
-            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), jmri.Throttle.ISFORWARD);
+            // use the roster parameter, not the re field: displayState() can clear
+            // re from another thread between the assignment above and here
+            jmri.InstanceManager.throttleManagerInstance().attachListener(roster.getDccLocoAddress(), this);
+            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(roster.getDccLocoAddress(), jmri.Throttle.ISFORWARD);
             if (isForward != null) {
                 if (!(Boolean) isForward) {
                     flipIcon(NamedIcon.HORIZONTALFLIP);

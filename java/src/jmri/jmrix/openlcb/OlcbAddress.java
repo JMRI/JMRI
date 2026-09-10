@@ -353,7 +353,7 @@ public final class OlcbAddress {
 
     /**
      * Provide as dotted pairs.
-     * @return dotted pair form off string.
+     * @return dotted pair form of string.
      */
     public String toDottedString() {
         String retval = "";

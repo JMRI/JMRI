@@ -566,6 +566,11 @@
 
         <li><strong>Reverse:</strong> Evaluate to true if the selected section is being used by
         a transit and is set for the reverse direction.</li>
+
+        <li><strong>Occupied:</strong> Evaluate to true if any blocks in the selected section are
+        occupied.  <strong>Note:</strong> This option is not dependent on transit or dispatcher
+        states.  For example, a group of blocks can be in a section that defines a route which then
+        has an occupancy state.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -766,7 +771,7 @@
 
       <p>The <strong>Timer</strong> expression returns <strong>False</strong> until some time has
       passed. It then returns <strong>True</strong> once and the timer starts again. This expression
-      is intended to be used together with the <a href="chapter5#sequence_id">Sequence</a> action.
+      is intended to be used together with the <a href="chapter5.shtml#sequence_id">Sequence</a> action.
       This makes it possible to have sequence steps based on time durations.</p>
 
       <div style="margin-left: 2em;">

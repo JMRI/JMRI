@@ -1,9 +1,14 @@
 package jmri.jmrix.dccpp;
 
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 import java.util.Locale;
 import jmri.Light;
+import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
+import jmri.SelectionPropertyDescriptor;
 import jmri.managers.AbstractLightManager;
 
 /**
@@ -106,6 +111,32 @@ public class DCCppLightManager extends AbstractLightManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddOutputEntryToolTip");
+    }
+
+    public static final String DCCPP_LIGHT_MODE_KEY = "LightMode"; // NOI18N
+
+    private static final String[] DCCPP_LIGHT_MODE_TIPS = {
+        "Standard DCC accessory decoder command <a>",       // NOI18N
+        "CS VPIN pin control <z> (DCC-EX v4.2.35+)"        // NOI18N
+    };
+
+    @Override
+    @Nonnull
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
+        l.add(new SelectionPropertyDescriptor(
+                DCCPP_LIGHT_MODE_KEY, DCCppLight.MODE_NAMES, DCCPP_LIGHT_MODE_TIPS,
+                DCCppLight.MODE_NAMES[0]) {
+            @Override
+            public String getColumnHeaderText() {
+                return "Mode";
+            }
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return (bean instanceof DCCppLight);
+            }
+        });
+        return l;
     }
 
 }

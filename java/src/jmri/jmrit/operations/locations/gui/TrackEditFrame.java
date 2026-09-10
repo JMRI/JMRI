@@ -162,10 +162,6 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         // row 1
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-        JScrollPane p1Pane = new JScrollPane(p1);
-        p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        p1Pane.setMinimumSize(new Dimension(300, 3 * trackNameTextField.getPreferredSize().height));
-        p1Pane.setBorder(BorderFactory.createTitledBorder(""));
 
         // row 1a
         JPanel pName = new JPanel();
@@ -287,7 +283,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         addItem(panelButtons, addTrackButton, 1, 0);
         addItem(panelButtons, saveTrackButton, 2, 0);
 
-        panels.add(p1Pane);
+        panels.add(p1);
         panels.add(paneCheckBoxes);
         panels.add(panelRoadAndLoadStatus);
         panels.add(panelOrder);
@@ -301,9 +297,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
         panels.add(panelComment);
         panels.add(readerPanel);
-        panels.add(panelButtons);
 
         getContentPane().add(pane);
+        getContentPane().add(panelButtons);
 
         // setup buttons
         addButtonAction(setButton);

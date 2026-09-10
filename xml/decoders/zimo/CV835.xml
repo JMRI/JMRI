@@ -25,9 +25,11 @@
   <variable CV="835" item="Quick Select Shift key" exclude="130,177,195,197,199,201,211,218,240">
     <decVal max="32"/>
     <label>Quick Select Shift key</label>
+    <label xml:lang="fr">Touche Set+1 étendue</label>
     <label xml:lang="de">Set+1 Taste erweitern</label>
     <label xml:lang="cs">Shift tlačítko pro rychlý výběr</label>
     <tooltip>Shift key to switch between sound sets.</tooltip>
+    <tooltip xml:lang="fr">Touche de commutation entre les Sets de sons.</tooltip>
     <tooltip xml:lang="de">Set+1 Taste erweitern.</tooltip>
     <tooltip xml:lang="cs">Shift tlačítko pro přepínaní mezi sadami zvuků.</tooltip>
   </variable>

@@ -32,6 +32,18 @@ public class EditorScaffold extends Editor {
         this(name, true, true);
     }
 
+    /**
+     * The last rectangle passed to {@link #repaintTargetPanel(java.awt.Rectangle)},
+     * in unscaled target panel coordinates, for test verification.
+     */
+    public java.awt.Rectangle lastRepaintRect = null;
+
+    @Override
+    public void repaintTargetPanel(java.awt.Rectangle rect) {
+        lastRepaintRect = new java.awt.Rectangle(rect);
+        super.repaintTargetPanel(rect);
+    }
+
     /*
      * ********************* Abstract Methods ***********************
      */
@@ -91,7 +103,7 @@ public class EditorScaffold extends Editor {
      *
      */
     @Override
-    protected void setNextLocation(Positionable obj){
+    public void setNextLocation(Positionable obj){
     }
 
     /**

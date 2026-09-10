@@ -37,7 +37,6 @@ public class LogixNG_SelectComboBoxSwing {
     private JPanel _panelTable;
     private JTextField _referenceTextField;
     private BeanSelectPanel<Memory> _memoryPanel;
-    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -68,11 +67,9 @@ public class LogixNG_SelectComboBoxSwing {
         _panelTable = _selectTableSwing.createPanel(selectComboBox.getSelectTable());
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
-        _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -121,7 +118,6 @@ public class LogixNG_SelectComboBoxSwing {
         }
         _referenceTextField.setText(selectComboBox.getReference());
         _memoryPanel.setDefaultNamedBean(selectComboBox.getMemory());
-        _listenToMemoryCheckBox.setSelected(selectComboBox.getListenToMemory());
         _localVariableTextField.setText(selectComboBox.getLocalVariable());
         _formulaTextField.setText(selectComboBox.getFormula());
 
@@ -181,7 +177,6 @@ public class LogixNG_SelectComboBoxSwing {
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
                 selectComboBox.setAddressing(NamedBeanAddressing.Memory);
                 selectComboBox.setMemory(_memoryPanel.getNamedBean());
-                selectComboBox.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectComboBox.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectComboBox.setLocalVariable(_localVariableTextField.getText());

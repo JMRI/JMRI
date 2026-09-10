@@ -664,7 +664,7 @@ public final class InstanceManager {
      *                      Please don't create any more of these
      * ****************************************************************************/
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default light manager. May not be the only instance.
      */
@@ -673,7 +673,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default memory manager. May not be the only instance.
      */
@@ -682,7 +682,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default sensor manager. May not be the only instance.
      */
@@ -691,7 +691,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default turnout manager. May not be the only instance.
      */
@@ -700,7 +700,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default throttle manager. May not be the only instance.
      */

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Consist</name>
+  <name xml:lang="fr">UM (unité multiple)</name>
   <name xml:lang="ca">Multi-Tracció</name>
   <name xml:lang="it">Consist (Multi-Trazione)</name>
   <name xml:lang="de">Consist (Mehrfachtraktion)</name>
@@ -89,6 +90,7 @@
     </label>
     <label>
       <text>Will decoder respond to function requests at consist address?</text>
+      <text xml:lang="fr">Le décodeur répond-il aux commandes de fonction sur l'adresse d'UM ?</text>
       <text xml:lang="de">Wird der Dekoder auf Funktionen an die Adresse der Mehrfachtraktion (Consist) reagieren?</text>
       <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
       <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?</text>

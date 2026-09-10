@@ -13,10 +13,12 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software V32+, Mark Waters 26 Jan 2015 -->
 <!-- version 1.1  Extended for "inverted" function labels, by adding 128 to invert the chosen function.   Used in Swiss Mapping  --> 
-<!-- version 1.1     Nigel Cliffe, 21 Jan 2024  --> 
+<!-- version 1.1     Nigel Cliffe, 21 Jan 2024  -->
+<!-- version 1.2     Pierre Billon, Added French translations, 06 Aug 2026  -->
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
         <choice xml:lang="cs">Žádný</choice>
@@ -114,90 +116,148 @@
       
       <enumChoice choice="Invert F0" value="157">
         <choice>Invert F0</choice>
+        <choice xml:lang="fr">F0 inversé</choice>
+        <choice xml:lang="de">F0 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F1" value="129">
         <choice>Invert F1</choice>
+        <choice xml:lang="fr">F1 inversé</choice>
+        <choice xml:lang="de">F1 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F2">
         <choice>Invert F2</choice>
+        <choice xml:lang="fr">F2 inversé</choice>
+        <choice xml:lang="de">F2 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F3">
         <choice>Invert F3</choice>
+        <choice xml:lang="fr">F3 inversé</choice>
+        <choice xml:lang="de">F3 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F4">
         <choice>Invert F4</choice>
+        <choice xml:lang="fr">F4 inversé</choice>
+        <choice xml:lang="de">F4 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F5">
         <choice>Invert F5</choice>
+        <choice xml:lang="fr">F5 inversé</choice>
+        <choice xml:lang="de">F5 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F6">
         <choice>Invert F6</choice>
+        <choice xml:lang="fr">F6 inversé</choice>
+        <choice xml:lang="de">F6 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F7">
         <choice>Invert F7</choice>
+        <choice xml:lang="fr">F7 inversé</choice>
+        <choice xml:lang="de">F7 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F8">
         <choice>Invert F8</choice>
+        <choice xml:lang="fr">F8 inversé</choice>
+        <choice xml:lang="de">F8 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F9">
         <choice>Invert F9</choice>
+        <choice xml:lang="fr">F9 inversé</choice>
+        <choice xml:lang="de">F9 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F10">
         <choice>Invert F10</choice>
+        <choice xml:lang="fr">F10 inversé</choice>
+        <choice xml:lang="de">F10 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F11">
         <choice>Invert F11</choice>
+        <choice xml:lang="fr">F11 inversé</choice>
+        <choice xml:lang="de">F11 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F12">
         <choice>Invert F12</choice>
+        <choice xml:lang="fr">F12 inversé</choice>
+        <choice xml:lang="de">F12 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F13">
         <choice>Invert F13</choice>
+        <choice xml:lang="fr">F13 inversé</choice>
+        <choice xml:lang="de">F13 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F14">
         <choice>Invert F14</choice>
+        <choice xml:lang="fr">F14 inversé</choice>
+        <choice xml:lang="de">F14 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F15">
         <choice>Invert F15</choice>
+        <choice xml:lang="fr">F15 inversé</choice>
+        <choice xml:lang="de">F15 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F16">
         <choice>Invert F16</choice>
+        <choice xml:lang="fr">F16 inversé</choice>
+        <choice xml:lang="de">F16 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F17">
         <choice>Invert F17</choice>
+        <choice xml:lang="fr">F17 inversé</choice>
+        <choice xml:lang="de">F17 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F18">
         <choice>Invert F18</choice>
+        <choice xml:lang="fr">F18 inversé</choice>
+        <choice xml:lang="de">F18 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F19">
         <choice>Invert F19</choice>
+        <choice xml:lang="fr">F19 inversé</choice>
+        <choice xml:lang="de">F19 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F20">
         <choice>Invert F20</choice>
+        <choice xml:lang="fr">F20 inversé</choice>
+        <choice xml:lang="de">F20 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F21">
         <choice>Invert F21</choice>
+        <choice xml:lang="fr">F21 inversé</choice>
+        <choice xml:lang="de">F21 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F22">
         <choice>Invert F22</choice>
+        <choice xml:lang="fr">F22 inversé</choice>
+        <choice xml:lang="de">F22 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F23">
         <choice>Invert F23</choice>
+        <choice xml:lang="fr">F23 inversé</choice>
+        <choice xml:lang="de">F23 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F24">
         <choice>Invert F24</choice>
+        <choice xml:lang="fr">F24 inversé</choice>
+        <choice xml:lang="de">F24 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F25">
         <choice>Invert F25</choice>
+        <choice xml:lang="fr">F25 inversé</choice>
+        <choice xml:lang="de">F25 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F26">
         <choice>Invert F26</choice>
+        <choice xml:lang="fr">F26 inversé</choice>
+        <choice xml:lang="de">F26 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F27">
         <choice>Invert F27</choice>
+        <choice xml:lang="fr">F27 inversé</choice>
+        <choice xml:lang="de">F27 invertiert</choice>
       </enumChoice>
       <enumChoice choice="Invert F28">
         <choice>Invert F28</choice>
+        <choice xml:lang="fr">F28 inversé</choice>
+        <choice xml:lang="de">F28 invertiert</choice>
       </enumChoice>
       
 </enumChoiceGroup>

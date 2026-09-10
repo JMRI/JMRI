@@ -42,6 +42,9 @@ public class MultiThrottleControllerTest {
         // tests setting the address from the input.
         // Does not include the prefix.
         assertTrue( controller.sort("S1"), "Continue after address");
+        // Throttle acquisition is now deferred (see AbstractThrottleManager),
+        // so not available synchronously right after sort() returns.
+        JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(), "Address Found");
     }
 
@@ -50,6 +53,7 @@ public class MultiThrottleControllerTest {
         // tests setting the address from the input.
         // Does not include the prefix.
         assertTrue( controller.sort("L1234"), "Continue after address");
+        JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(), "Address Found");
     }
 
@@ -57,6 +61,7 @@ public class MultiThrottleControllerTest {
     public void testSetAndReleaseLongAddress() {
         // set the address
         assertTrue( controller.sort("L1234"), "Continue after address");
+        JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(), "Address Found");
         // then release it.
         assertTrue( controller.sort("r"), "Continue after release");
@@ -67,6 +72,7 @@ public class MultiThrottleControllerTest {
     public void testSetAndDispatchLongAddress() {
         // set the address
         assertTrue( controller.sort("L1234"), "Continue after address");
+        JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(), "Address Found");
         // then dispatch it.
         assertTrue( controller.sort("d"), "Continue after release");
@@ -291,6 +297,7 @@ public class MultiThrottleControllerTest {
         InstanceManager.getDefault(ThrottlesPreferences.class).setSilentShare(true);
 
         assertTrue( controller.sort("L279"),"request address 279L");
+        JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(),"throttle created");
 
         assertTrue( controller.sort("r"), "request loco released");
@@ -312,6 +319,7 @@ public class MultiThrottleControllerTest {
         InstanceManager.getDefault(ThrottlesPreferences.class).setSilentShare(true);
 
         assertTrue( controller.sort("L280"),"request address 280L");
+        JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(),"throttle created");
         assertEquals( DecisionType.SHARE, tm.lastResponse, "a share response was sent");
 
@@ -323,6 +331,7 @@ public class MultiThrottleControllerTest {
         InstanceManager.getDefault(ThrottlesPreferences.class).setSilentSteal(true);
 
         assertTrue( controller.sort("L281"),"request address 281L");
+        JUnitUtil.waitFor(() -> tcls.hasAddressBeenFound(), "wait for address found");
         assertTrue( tcls.hasAddressBeenFound(),"throttle created");
         assertEquals( DecisionType.STEAL, tm.lastResponse, "a steal response was sent");
 

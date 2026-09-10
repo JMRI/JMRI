@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -20,13 +18,12 @@ import jmri.util.ThreadingUtil;
  * @author Dave Sand Copyright 2021
  * @author Daniel Bergqvist Copyright 2022
  */
-public class ActionClockRate extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionClockRate extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<ClockState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockRate, this);
+            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockRate);
     private final LogixNG_SelectDouble _selectSpeed =
-            new LogixNG_SelectDouble(this, 3, this, new DefaultFormatterParserValidator());
+            new LogixNG_SelectDouble(this, 3, new DefaultFormatterParserValidator());
 
 
     public ActionClockRate(String sys, String user)
@@ -149,26 +146,6 @@ public class ActionClockRate extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectEnum.registerListeners();
-        _selectSpeed.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectEnum.unregisterListeners();
-        _selectSpeed.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

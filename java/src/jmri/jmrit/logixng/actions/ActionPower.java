@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -16,11 +14,10 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionPower extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionPower extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<PowerState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, PowerState.values(), PowerState.On, this);
+            new LogixNG_SelectEnum<>(this, PowerState.values(), PowerState.On);
 
 
     public ActionPower(String sys, String user)
@@ -94,18 +91,6 @@ public class ActionPower extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectEnum.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectEnum.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -144,12 +129,6 @@ public class ActionPower extends AbstractDigitalAction
             return _text;
         }
 
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPower.class);

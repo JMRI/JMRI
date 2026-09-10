@@ -5,6 +5,7 @@ import java.util.List;
 
 import jmri.NmraPacket;
 import jmri.*;
+import jmri.jmrix.loconet.SlotManager.CsOpSwValue;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -1450,6 +1451,143 @@ public class SlotManagerTest {
         assertEquals( "BB 05 00 00",
             lnis.outbound.elementAt(0).toString(),
             "Request read slot 5");
+    }
+
+    @Test
+    public void testSlot127DCS240() {
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_DCS240);
+        // check all null , slot 127 not seen
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+        assertEquals(90, slotmanager.getEffectiveslowScanInterval(), "SlowScanInterval is default");
+
+        // check all Thrown
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x00, 0x00, 0x00, 0x00,
+                0x47,
+                0x00, 0x00, 0x00, 0x00, 0x06}));
+        for (int i = 1; i<65; i++) {
+            assertEquals(CsOpSwValue.THROWN, slotmanager.getCsOpSw(i), "CSOPSW " + i + " Thrown");
+        }
+        assertEquals(90, slotmanager.getEffectiveslowScanInterval(), "SlowScanInterval is still default");
+        //Check all closed
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x7f, 0x7f, 0x7f, 0x7f,
+                0x47,
+                0x7f, 0x7f, 0x7f, 0x7f, 0x06}));
+        for (int i = 1; i<65; i++) {
+            // OpSw 8,16,24 etc are always Thrown as they are x80 of the opsw byte.
+            if ((i % 8) != 0 )
+                assertEquals(CsOpSwValue.CLOSED, slotmanager.getCsOpSw(i), "CSOPSW " + i + " Closed");
+        }
+        // opsw 14 closed - disabled slowscan
+        assertEquals(-1, slotmanager.getEffectiveslowScanInterval(), "SlowScanInterval is disabled");
+        // opsw 14 thrown, 13 Closed double pruge time
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x7f, 0x5f, 0x7f, 0x7f,
+                0x47,
+                0x7f, 0x7f, 0x7f, 0x7f, 0x06}));
+        assertEquals(180, slotmanager.getEffectiveslowScanInterval(), "SlowScanInterval is double");
+
+        slotmanager.slowScanIntervalOveride = 200;
+        assertEquals(200, slotmanager.getEffectiveslowScanInterval(), "SlowScanInterval is 200");
+
+        // reality check
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x00, 0x43, 0x3D, 0x44,
+                0x47,
+                0x01, 0x10, 0x00, 0x1D, 0x06}));
+        int[] thrownSlots = {1,2,3,4,5,6,7,8,
+                11,12,13,14,16,
+                18,23,24,
+                25,26,28,29,30,32,
+                34,35,36,37,38,39,40,
+                41,42,43,44,46,47,48,
+                49,50,51,52,53,54,55,56,
+                58,62,63,64 };
+        for (int i : thrownSlots) {
+            assertEquals(CsOpSwValue.THROWN, slotmanager.getCsOpSw(i), "CSOPSW " + i + " thrown");
+        }
+        int[] closedSlots = {9,10,15,
+                17,19,20,21,22,
+                27,31,
+                33,
+                45,
+                57,59,60,61 };
+        for (int i : closedSlots) {
+            assertEquals(CsOpSwValue.CLOSED, slotmanager.getCsOpSw(i), "CSOPSW " + i + " closed");
+        }
+    }
+
+    @Test
+    public void testSlot127Ulhen() {
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2);
+        // check all null , slot 127 not seen
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+        // check all Thrown
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x00, 0x00, 0x00, 0x00,
+                0x47,
+                0x00, 0x00, 0x00, 0x00, 0x06}));
+        // check all null , slot 127 not seen
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+        //Check all closed
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x7f, 0x7f, 0x7f, 0x7f,
+                0x47,
+                0x7f, 0x7f, 0x7f, 0x7f, 0x06}));
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+        // reality check
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x00, 0x43, 0x3D, 0x44,
+                0x47,
+                0x01, 0x10, 0x00, 0x1D, 0x06}));
+        // check all null , slot 127 not seen
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+    }
+
+    @Test
+    public void testSlot127PR4STandAlone() {
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_PR4_ALONE);
+        // check all null , slot 127 not seen
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+        // check all Thrown
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x00, 0x00, 0x00, 0x00,
+                0x47,
+                0x00, 0x00, 0x00, 0x00, 0x06}));
+        // check all null , slot 127 not seen
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+        //Check all closed
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x7f, 0x7f, 0x7f, 0x7f,
+                0x47,
+                0x7f, 0x7f, 0x7f, 0x7f, 0x06}));
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
+        // reality check
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7F,
+                0x00, 0x43, 0x3D, 0x44,
+                0x47,
+                0x01, 0x10, 0x00, 0x1D, 0x06}));
+        // check all null , slot 127 not seen
+        for (int i = 1; i<129; i++) {
+            assertEquals(slotmanager.getCsOpSw(i), null, "CSOPSW " + i + "null");
+        }
     }
 
     @Test

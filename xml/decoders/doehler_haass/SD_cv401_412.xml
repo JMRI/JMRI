@@ -36,61 +36,73 @@
   <variable CV="401" item="Function Swapping F1" default="1" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F1</label>
+    <label xml:lang="fr">Permutation de fonction F1</label>
     <label xml:lang="de">Funktionsvertauschung F1</label>
   </variable>
   <variable CV="402" item="Function Swapping F2" default="2" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F2</label>
+    <label xml:lang="fr">Permutation de fonction F2</label>
     <label xml:lang="de">Funktionsvertauschung F2</label>
   </variable>
   <variable CV="403" item="Function Swapping F3" default="3" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F3</label>
+    <label xml:lang="fr">Permutation de fonction F3</label>
     <label xml:lang="de">Funktionsvertauschung F3</label>
   </variable>
   <variable CV="404" item="Function Swapping F4" default="4" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F4</label>
+    <label xml:lang="fr">Permutation de fonction F4</label>
     <label xml:lang="de">Funktionsvertauschung F4</label>
   </variable>
   <variable CV="405" item="Function Swapping F5" default="5" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F5</label>
+    <label xml:lang="fr">Permutation de fonction F5</label>
     <label xml:lang="de">Funktionsvertauschung F5</label>
   </variable>
   <variable CV="406" item="Function Swapping F6" default="6" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F6</label>
+    <label xml:lang="fr">Permutation de fonction F6</label>
     <label xml:lang="de">Funktionsvertauschung F6</label>
   </variable>
   <variable CV="407" item="Function Swapping F7" default="7" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F7</label>
+    <label xml:lang="fr">Permutation de fonction F7</label>
     <label xml:lang="de">Funktionsvertauschung F7</label>
   </variable>
   <variable CV="408" item="Function Swapping F8" default="8" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F8</label>
+    <label xml:lang="fr">Permutation de fonction F8</label>
     <label xml:lang="de">Funktionsvertauschung F8</label>
   </variable>
   <variable CV="409" item="Function Swapping F9" default="9" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F9</label>
+    <label xml:lang="fr">Permutation de fonction F9</label>
     <label xml:lang="de">Funktionsvertauschung F9</label>
   </variable>
   <variable CV="410" item="Function Swapping F10" default="10" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F10</label>
+    <label xml:lang="fr">Permutation de fonction F10</label>
     <label xml:lang="de">Funktionsvertauschung F10</label>
   </variable>
   <variable CV="411" item="Function Swapping F11" default="11" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F11</label>
+    <label xml:lang="fr">Permutation de fonction F11</label>
     <label xml:lang="de">Funktionsvertauschung F11</label>
   </variable>
   <variable CV="412" item="Function Swapping F12" default="12" exclude="SUSI sound modules">
     <decVal/>
     <label>Function Swapping F12</label>
+    <label xml:lang="fr">Permutation de fonction F12</label>
     <label xml:lang="de">Funktionsvertauschung F12</label>
   </variable>
   <!-- END SIMILAR CV --> 

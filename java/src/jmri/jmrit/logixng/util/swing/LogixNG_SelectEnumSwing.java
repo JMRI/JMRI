@@ -29,7 +29,7 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
     private final JDialog _dialog;
     private final LogixNG_SelectTableSwing _selectTableSwing;
-    
+
     private LogixNG_SelectEnumSwing_EnumDialog<E> _enumDialog;
     private E[] _enumArray;
 
@@ -43,7 +43,6 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
     private JPanel _panelTable;
     private JTextField _referenceTextField;
     private BeanSelectPanel<Memory> _memoryPanel;
-    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -80,12 +79,10 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         }
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
         _panelMemory.add(createEnumDialogButton());
-        _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -140,7 +137,6 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
             }
             _referenceTextField.setText(selectEnum.getReference());
             _memoryPanel.setDefaultNamedBean(selectEnum.getMemory());
-            _listenToMemoryCheckBox.setSelected(selectEnum.getListenToMemory());
             _localVariableTextField.setText(selectEnum.getLocalVariable());
             _formulaTextField.setText(selectEnum.getFormula());
         }
@@ -148,13 +144,13 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         panel.add(_tabbedPane);
         return panel;
     }
-    
+
     public JButton createEnumDialogButton() {
         JButton enumDialogButton = new JButton(Bundle.getMessage("LogixNG_SelectEnumSwing_ButtonEnumDialog"));  // NOI18N
         enumDialogButton.addActionListener(this::showEnumDialog);
         return enumDialogButton;
     }
-    
+
     public void showEnumDialog(ActionEvent e) {
         if (_enumDialog != null) {
             _enumDialog.setVisible(true);
@@ -212,7 +208,6 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
                 selectEnum.setAddressing(NamedBeanAddressing.Memory);
                 selectEnum.setMemory(_memoryPanel.getNamedBean());
-                selectEnum.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectEnum.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectEnum.setLocalVariable(_localVariableTextField.getText());

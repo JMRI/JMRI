@@ -216,6 +216,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     myRegex = "";
                 }
                 break;
+            case DCCppConstants.OUTPUT_CMD_LC:
+                if ((match(toString(), DCCppConstants.OUTPUT_CMD_LC_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.OUTPUT_CMD_LC_REGEX;
+                } else {
+                    myRegex = "";
+                }
+                break;
             case DCCppConstants.OPS_WRITE_CV_BYTE:
                 if ((match(toString(), DCCppConstants.PROG_WRITE_BYTE_V4_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.PROG_WRITE_BYTE_V4_REGEX;
@@ -437,6 +444,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += getTOIDString();
                 } else {
                     text = "Unmatched Turnout Cmd: " + toString();
+                }
+                break;
+            case DCCppConstants.OUTPUT_CMD_LC:
+                if (isOutputCmdLCMessage()) {
+                    text = "Pin Cmd: ";
+                    text += "VPIN: " + getOutputCmdLCVpinInt();
+                    text += ", State: " + (getOutputCmdLCStateBool() ? "HIGH" : "LOW");
+                } else {
+                    text = "Unmatched Pin Cmd: " + toString();
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
@@ -928,6 +944,34 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     //public boolean isOutputCmdMessage() { return(this.getOpCodeChar() == DCCppConstants.OUTPUT_CMD); }
     public boolean isOutputCmdMessage() {
         return (this.match(DCCppConstants.OUTPUT_CMD_REGEX) != null);
+    }
+
+    public boolean isOutputCmdLCMessage() {
+        return (this.match(DCCppConstants.OUTPUT_CMD_LC_REGEX) != null);
+    }
+
+    /**
+     * Vpin number from a lower-case pin control message {@code <z [-]vpin>}.
+     * Returns the absolute vpin; use {@link #getOutputCmdLCStateBool} for the sign.
+     */
+    public int getOutputCmdLCVpinInt() {
+        if (this.isOutputCmdLCMessage()) {
+            return Math.abs(getValueInt(1));
+        }
+        log.error("Pin Parser called on non-Pin message type {}", this.getOpCodeChar());
+        return 0;
+    }
+
+    /**
+     * State from a lower-case pin control message {@code <z [-]vpin>}.
+     * True = HIGH ({@code <z vpin>}); false = LOW ({@code <z -vpin>}).
+     */
+    public boolean getOutputCmdLCStateBool() {
+        if (this.isOutputCmdLCMessage()) {
+            return getValueInt(1) > 0;
+        }
+        log.error("Pin Parser called on non-Pin message type {}", this.getOpCodeChar());
+        return false;
     }
 
     public boolean isOutputAddMessage() {
@@ -1859,6 +1903,28 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m.myMessage.append(" ").append(id);
         m.myMessage.append(" ").append(state ? "1" : "0");
         m.myRegex = DCCppConstants.OUTPUT_CMD_REGEX;
+
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    /**
+     * Build a lower-case pin control command {@code <z vpin>} (HIGH) or {@code <z -vpin>} (LOW).
+     * Requires no pre-definition on the command station; added in DCC-EX v4.2.35.
+     *
+     * @param vpin  the virtual pin number (uint16)
+     * @param state true to drive the pin HIGH ({@code <z vpin>}),
+     *              false to drive it LOW ({@code <z -vpin>})
+     * @return the assembled message, or null if vpin is out of range
+     */
+    public static DCCppMessage makeOutputCmdMsgLC(int vpin, boolean state) {
+        if (vpin < 1 || vpin > DCCppConstants.MAX_VPIN) {
+            return (null);
+        }
+
+        DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_CMD_LC);
+        m.myMessage.append(" ").append(state ? vpin : -vpin);
+        m.myRegex = DCCppConstants.OUTPUT_CMD_LC_REGEX;
 
         m._nDataChars = m.toString().length();
         return (m);

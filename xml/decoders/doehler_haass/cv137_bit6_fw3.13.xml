@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV137 bit 6, introduced in firmware 3.13.053.</revremark>
+    </revision>
+  </revhistory>
+  <!-- CV137 bit 6 was introduced in firmware 3.13.053, so it is kept out of the shared      -->
+  <!-- cv137.xml (which is also used by firmware 3.05-3.12 and by the sound decoders).       -->
+  <!-- Include this fragment only from firmware 3.13 and later definitions.                  -->
+  <!-- Not relevant for the PD* series - excluded by productID (130-134).                    -->
+  <variable CV="137" item="Adopt function swapping for SUSI" mask="XVXXXXXX" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Adopt function interchanges (CV401ff.) for SUSI F1-F12</label>
+    <label xml:lang="fr">Appliquer les permutations de fonction (CV401ss.) aux SUSI F1-F12</label>
+    <label xml:lang="de">Funktionsvertauschungen (CV401ff.) für SUSI F1-F12 übernehmen</label>
+    <tooltip>bit 6 - since firmware 3.13.053</tooltip>
+    <tooltip xml:lang="fr">bit 6 - depuis le firmware 3.13.053</tooltip>
+    <tooltip xml:lang="de">bit 6 - ab Firmware 3.13.053</tooltip>
+  </variable>
+</variables>

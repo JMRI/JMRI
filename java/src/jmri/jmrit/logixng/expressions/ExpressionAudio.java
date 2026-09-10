@@ -26,7 +26,7 @@ public class ExpressionAudio extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Audio> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Audio.class, InstanceManager.getDefault(AudioManager.class), this);
+                    this, Audio.class, InstanceManager.getDefault(AudioManager.class));
 
     private boolean _hasChangedState = false;
 
@@ -271,7 +271,6 @@ public class ExpressionAudio extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -281,7 +280,6 @@ public class ExpressionAudio extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

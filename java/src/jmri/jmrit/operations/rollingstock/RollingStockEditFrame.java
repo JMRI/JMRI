@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.*;
@@ -7,7 +9,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -24,11 +25,9 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for edit of rolling stock. The common elements are: road, road number,
  * type, blocking, length, location and track, groups (Kernel or Consist)
- * weight, color, built, owner, comment.
- * 
- * The edit engine frame currently doesn't show blocking or color.
- * 
- * Engines and cars have different type, length, and group managers.
+ * weight, color, built, owner, comment. The edit engine frame currently doesn't
+ * show blocking or color. Engines and cars have different type, length, and
+ * group managers.
  *
  * @author Dan Boudreau Copyright (C) 2018
  */
@@ -479,7 +478,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (rNum.length() > Control.max_len_string_road_number) {
             JmriJOptionPane.showMessageDialog(this,
                     MessageFormat.format(getRb().getString("RoadNumMustBeLess"),
-                            new Object[] { Control.max_len_string_road_number + 1 }),
+                            new Object[]{Control.max_len_string_road_number + 1}),
                     getRb().getString("RoadNumTooLong"), JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -502,7 +501,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         return true;
     }
 
-    protected <T extends RollingStock> void save(RollingStockManager<T> manager, boolean isSave) {
+    protected <T extends RollingStock> boolean save(RollingStockManager<T> manager, boolean isSave) {
         // if the rolling stock's road or number changes, it needs a new id
         if (isSave &&
                 _rs != null &&
@@ -510,6 +509,14 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                         !_rs.getNumber().equals(roadNumberTextField.getText()))) {
             String road = (String) roadComboBox.getSelectedItem();
             String number = roadNumberTextField.getText();
+            int results = JmriJOptionPane.showOptionDialog(this,
+                    Bundle.getMessage("rsAreYouSure", _rs.getRoadName(), _rs.getNumber(), road, number),
+                    Bundle.getMessage("rsChangeNumberRoad"), JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (results != JmriJOptionPane.YES_OPTION) {
+                return false;
+            }
+
             _rs.setRoadName(road);
             _rs.setNumber(number);
         }
@@ -561,17 +568,19 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             textRfidSystemName.setText(_rs.getRfid());
         }
         autoTrackCheckBox.setEnabled(true);
+        return true;
     }
-    
+
     protected void checkAndSetLocationAndTrack(RollingStock rs) {
         if (locationBox.getSelectedItem() != null && trackLocationBox.getSelectedItem() == null) {
-            JmriJOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb().getString("rsCanNotLoc"),
+            JmriJOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"),
+                    getRb().getString("rsCanNotLoc"),
                     JmriJOptionPane.ERROR_MESSAGE);
             // update location only if it has changed
         } else if (rs.getLocation() == null ||
-                !rs.getLocation().equals(locationBox.getSelectedItem()) ||
+                rs.getLocation() != locationBox.getSelectedItem() ||
                 rs.getTrack() == null ||
-                !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
+                rs.getTrack() != trackLocationBox.getSelectedItem()) {
             setLocationAndTrack(rs);
         }
     }
@@ -588,13 +597,13 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                 log.debug("Can't set rolling stock's location because of {}", status);
                 JmriJOptionPane.showMessageDialog(this,
                         MessageFormat.format(getRb().getString("rsCanNotLocMsg"),
-                                new Object[] { rs.toString(), status }),
+                                new Object[]{rs.toString(), status}),
                         getRb().getString("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
                 // does the user want to force the rolling stock to this track?
                 int results = JmriJOptionPane.showOptionDialog(this,
                         MessageFormat.format(getRb().getString("rsForce"),
-                                new Object[] { rs.toString(), (Track) trackLocationBox.getSelectedItem() }),
-                        MessageFormat.format(getRb().getString("rsOverride"), new Object[] { status }),
+                                new Object[]{rs.toString(), (Track) trackLocationBox.getSelectedItem()}),
+                        MessageFormat.format(getRb().getString("rsOverride"), new Object[]{status}),
                         JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (results == JmriJOptionPane.YES_OPTION) {
                     log.debug("Force rolling stock to track");

@@ -117,7 +117,7 @@ public class JsonAudioIconSocketService extends JsonSocketService<JsonAudioIconH
                 root.put(JSON.METHOD, JSON.GET);
                 root.put(JSON.ID, request.id);
 
-                ObjectNode data = root.with(JSON.DATA);
+                ObjectNode data = root.withObject(JSON.DATA);
                 data.put(JSON.AUDIO_ICON_IDENTITY, _audioIcon.getIdentity());
                 data.put(JSON.AUDIO_COMMAND, command);
                 data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, numLoops);

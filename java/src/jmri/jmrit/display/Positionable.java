@@ -293,6 +293,8 @@ public interface Positionable extends Cloneable, InlineLogixNG {
     void doMouseExited(JmriMouseEvent event);
 
     // The following are common for all JComponents
+    Rectangle getBounds();
+
     Rectangle getBounds(Rectangle r);
 
     boolean contains(int x, int y);
@@ -310,6 +312,8 @@ public interface Positionable extends Cloneable, InlineLogixNG {
     void setLocation(Point p);
 
     void setSize(int width, int height);
+
+    void setSize(Dimension d);
 
     void setVisible(boolean b);
 

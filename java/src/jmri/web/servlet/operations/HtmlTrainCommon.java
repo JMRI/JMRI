@@ -9,10 +9,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -23,6 +19,10 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -170,7 +170,6 @@ public class HtmlTrainCommon extends TrainCommon {
         return String.format(strings.getProperty("EnginesList"), builder.toString());
     }
 
-    @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
@@ -187,14 +186,13 @@ public class HtmlTrainCommon extends TrainCommon {
     protected String pickupEngines(List<Engine> engines, RouteLocation location) {
         StringBuilder builder = new StringBuilder();
         for (Engine engine : engines) {
-            if (engine.getRouteLocation().equals(location) && !engine.getTrackName().isEmpty()) {
+            if (engine.getRouteLocation() == location && !engine.getTrackName().isEmpty()) {
                 builder.append(pickupEngine(engine));
             }
         }
         return String.format(locale, strings.getProperty("EnginesList"), builder.toString());
     }
 
-    @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");
@@ -276,7 +274,9 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     protected String getRollingStockAttribute(RollingStock rs, String attribute, boolean isPickup, boolean isLocal) {
-        if (attribute.equals(Setup.NUMBER)) {
+        if (attribute.equals(Setup.ORDER)) {
+            return rs.getOrder();
+        } else if (attribute.equals(Setup.NUMBER)) {
             return splitString(rs.getNumber());
         } else if (attribute.equals(Setup.ROAD)) {
             return StringEscapeUtils.escapeHtml4(rs.getRoadName().split(TrainCommon.HYPHEN)[0]);
@@ -288,8 +288,8 @@ public class HtmlTrainCommon extends TrainCommon {
             return Integer.toString(rs.getAdjustedWeightTons());
         } else if (attribute.equals(Setup.COLOR)) {
             return rs.getColor();
-        } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)
-                || (attribute.equals(Setup.TRACK) && isPickup)) {
+        } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal) ||
+                (attribute.equals(Setup.TRACK) && isPickup)) {
             if (rs.getTrack() != null) {
                 return String.format(locale, strings.getProperty("FromTrack"), StringEscapeUtils.escapeHtml4(rs
                         .getSplitTrackName()));
@@ -298,8 +298,8 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {
             return ""; // we don't have the car's origin, so nothing to return
             // Note that the JSON database does have the car's origin, so this could be fixed.
-//            return String.format(locale, strings.getProperty("FromLocation"), StringEscapeUtils.escapeHtml4(rs
-//                    .getLocationName()));
+            //            return String.format(locale, strings.getProperty("FromLocation"), StringEscapeUtils.escapeHtml4(rs
+            //                    .getLocationName()));
         } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
             return String.format(locale, strings.getProperty("ToLocation"), StringEscapeUtils
                     .escapeHtml4(rs.getSplitDestinationName()));
@@ -385,11 +385,16 @@ public class HtmlTrainCommon extends TrainCommon {
     public static String convertToHTMLColor(String text) {
         // convert line feeds
         text = text.replace("\n", "<br>");
-
+        // color
         text = text.replace("&lt;FONT color=&quot;", "<p style=\"color: ");
         text = text.replace("&quot;&gt;", "\">");
         text = text.replace("&lt;/FONT&gt;", "");
-
+        // bold
+        text = text.replace("&lt;b&gt;", "<b>");
+        text = text.replace("&lt;/b&gt;", "</b>");  
+        // italic
+        text = text.replace("&lt;i&gt;", "<i>");
+        text = text.replace("&lt;/i&gt;", "</i>");
         return text;
     }
 }

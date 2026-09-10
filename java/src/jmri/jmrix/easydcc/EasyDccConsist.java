@@ -225,6 +225,14 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
                 locoAddress.isLongAddress(),
                 consistAddress.getNumber(),
                 directionNormal);
+        // consistControl() returns null instead of throwing whenever either
+        // address fails its own validity check.
+        if (contents == null) {
+            log.error("Unable to build advanced consist control packet for {} / consist {} -- invalid address",
+                    locoAddress, consistAddress);
+            notifyConsistListeners(locoAddress, ConsistListener.CONSIST_ERROR);
+            return;
+        }
         EasyDccMessage msg = new EasyDccMessage(4 + 3 * contents.length);
         msg.setOpCode('S');
         msg.setElement(1, ' ');
@@ -232,10 +240,11 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         msg.setElement(3, '5');
         int j = 4;
         for (int i = 0; i < contents.length; i++) {
-            j++;
+            // the buffer is sized 3 chars per content byte (" XX" -- space
+            // then two hex digits).
             msg.setElement(j, ' ');
-            msg.addIntAsTwoHex(contents[i] & 0xFF, j);
-            j += 2;
+            msg.addIntAsTwoHex(contents[i] & 0xFF, j + 1);
+            j += 3;
         }
 
         // send it
@@ -254,6 +263,13 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         byte[] contents = jmri.NmraPacket.consistControl(locoAddress.getNumber(),
                 locoAddress.isLongAddress(),
                 0, true);
+        // consistControl() returns null instead of throwing whenever
+        // locoAddress fails its own validity check (see addToAdvancedConsist()).
+        if (contents == null) {
+            log.error("Unable to build advanced consist control packet to remove {} -- invalid address", locoAddress);
+            notifyConsistListeners(locoAddress, ConsistListener.CONSIST_ERROR);
+            return;
+        }
         EasyDccMessage msg = new EasyDccMessage(4 + 3 * contents.length);
         msg.setOpCode('S');
         msg.setElement(1, ' ');
@@ -261,10 +277,11 @@ public class EasyDccConsist extends jmri.implementation.DccConsist {
         msg.setElement(3, '5');
         int j = 4;
         for (int i = 0; i < contents.length; i++) {
-            j++;
+            // the buffer is sized 3 chars per content byte (" XX" -- space
+            // then two hex digits).
             msg.setElement(j, ' ');
-            msg.addIntAsTwoHex(contents[i] & 0xFF, j);
-            j += 2;
+            msg.addIntAsTwoHex(contents[i] & 0xFF, j + 1);
+            j += 3;
         }
 
         // send it

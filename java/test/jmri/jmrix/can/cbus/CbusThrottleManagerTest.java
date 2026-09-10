@@ -875,6 +875,10 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
                 Throttle.getFunctionString(i));
         }
         assertNull( tm.getThrottleInfo(addr,"NOT A VARIABLE"), "NULL");
+        // Usage-count tracking is updated in the same deferred callback as
+        // throttle acquisition (see AbstractThrottleManager), so it can
+        // still be 0 for a moment after getThrottleInfo() is populated.
+        JUnitUtil.waitFor(() -> tm.getThrottleUsageCount(addr) == 1, "wait for throttle usage count");
         assertEquals( 1, tm.getThrottleUsageCount(addr), "throttle use 1 addr");
         assertEquals( 1, tm.getThrottleUsageCount(42,false), "throttle use 1 int b");
         assertEquals( 0, tm.getThrottleUsageCount(77,true), "throttle use 0");

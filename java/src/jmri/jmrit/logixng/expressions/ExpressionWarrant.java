@@ -26,7 +26,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Warrant> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Warrant.class, InstanceManager.getDefault(WarrantManager.class), this);
+                    this, Warrant.class, InstanceManager.getDefault(WarrantManager.class));
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private WarrantState _warrantState = WarrantState.RouteAllocated;
@@ -254,7 +254,6 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -264,7 +263,6 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

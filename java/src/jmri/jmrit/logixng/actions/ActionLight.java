@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -26,15 +24,14 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ActionLight extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionLight extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Light> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Light.class, InstanceManager.getDefault(LightManager.class), this);
+                    this, Light.class, InstanceManager.getDefault(LightManager.class));
 
     private final LogixNG_SelectEnum<LightState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, LightState.values(), LightState.On, this);
+            new LogixNG_SelectEnum<>(this, LightState.values(), LightState.On);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -265,20 +262,6 @@ public class ActionLight extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-        _selectEnum.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-        _selectEnum.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -344,12 +327,6 @@ public class ActionLight extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLight.class);

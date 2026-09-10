@@ -38,6 +38,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2026-07-27</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>CV361 and CV961 defaults corrected to 7</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2023-07-22</date>
       <authorinitials>RK</authorinitials>
@@ -95,13 +101,13 @@
   </variable>
   <!-- END SIMILAR CV -->
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->
-  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="9" item="Sound Option 21" exclude="SUSI sound modules,SUSI sound modules (2020),SUSI sound modules (2022)">
+  <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="7" item="Sound Option 21" exclude="SUSI sound modules,SUSI sound modules (2020),SUSI sound modules (2022)">
   <decVal min="0" max="14"/>
   <label xml:lang="fr">Seuil ZVS</label>
   <label xml:lang="de">Schwellenwert ZVS</label>
   <label xml:lang="ca">Límit ZVS</label>
    </variable>
-  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2022),SH10A_1.00">
+  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="7" item="Sound Option 21" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),Sound Decoders (2020),Sound Decoders (2022),SH10A_1.00">
   <decVal min="0" max="14"/>
   <label xml:lang="fr">Seuil ZVS</label>
   <label xml:lang="de">Schwellenwert ZVS</label>

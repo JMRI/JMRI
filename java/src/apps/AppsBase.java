@@ -165,9 +165,6 @@ public abstract class AppsBase {
         try {
             // GUI should use ProfileManagerDialog.getStartingProfile here
             if (ProfileManager.getStartingProfile() != null) {
-                // Manually setting the configFilename property since calling
-                // Apps.setConfigFilename() does not reset the system property
-                System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 if (profile != null) {
                     log.info("Starting with profile {}", profile.getId());

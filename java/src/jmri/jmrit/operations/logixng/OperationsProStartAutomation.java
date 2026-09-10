@@ -22,7 +22,7 @@ public class OperationsProStartAutomation extends AbstractDigitalAction
         implements PropertyChangeListener {
 
     private final LogixNG_SelectComboBox _selectAutomation =
-            new LogixNG_SelectComboBox(this, new AutomationItem[]{}, null, this);
+            new LogixNG_SelectComboBox(this, new AutomationItem[]{}, null);
 
     private final AutomationManager _automationManager;
     private final List<AutomationItem> _automationList = new ArrayList<>();
@@ -98,18 +98,6 @@ public class OperationsProStartAutomation extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectAutomation.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectAutomation.unregisterListeners();
     }
 
     /** {@inheritDoc} */

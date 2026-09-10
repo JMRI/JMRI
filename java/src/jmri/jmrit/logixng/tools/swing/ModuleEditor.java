@@ -50,7 +50,8 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
                 EnableClipboard.EnableClipboard,
                 EnableRootRemoveCutCopy.DisableRootRemoveCutCopy,
                 EnableRootPopup.EnableRootPopup,
-                EnableExecuteEvaluate.EnableExecuteEvaluate
+                EnableExecuteEvaluate.EnableExecuteEvaluate,
+                EnableChangeUsernameForRoot.DisableChangeUsername
         );
 
         this.beanTableDataModel = m;

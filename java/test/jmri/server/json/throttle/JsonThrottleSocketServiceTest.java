@@ -69,6 +69,9 @@ public class JsonThrottleSocketServiceTest {
         // get the throttle
         data.put(JSON.NAME, "42").put(JSON.ADDRESS, 42);
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
+        JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
         assertEquals( 1, manager.getThrottles().size(), "One throttle");
         JsonNode message = connection.getMessage();
         assertNotNull(message);
@@ -175,11 +178,18 @@ public class JsonThrottleSocketServiceTest {
         data.put(JSON.NAME, "42").put(JsonRoster.ROSTER_ENTRY, 42);
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         assertEquals( 1, manager.getThrottles().size(), "One throttle");
+        // Throttle acquisition is deferred (see AbstractThrottleManager),
+        // so not available synchronously right after onMessage() returns.
+        JUnitUtil.waitFor(() -> manager.get(new DccLocoAddress(3, false)).getThrottle() != null, "wait for throttle found");
         Throttle throttle = manager.get(new DccLocoAddress(3, false)).getThrottle();
         throttle.setFunctionMomentary( 0, !re.getFunctionLockable(0));
         throttle.setFunctionMomentary( 1, !re.getFunctionLockable(1));
         assertFalse( throttle.getFunctionMomentary(0), "F0 is not momentary");
         assertTrue( throttle.getFunctionMomentary(1), "F1 is momentary");
+        // the throttle-found status message itself may still be in flight even
+        // though the throttle object above is already set (see field report) --
+        // wait for it to actually arrive rather than assuming it's already queued.
+        JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals( 3, message.path(JSON.DATA).path(JSON.ADDRESS).asInt(), "Address");
@@ -258,6 +268,9 @@ public class JsonThrottleSocketServiceTest {
         // get the throttle by JsonThrottle.THROTTLE produces WARN client1
         service1.onMessage(JsonThrottle.THROTTLE, data1.put(JSON.ADDRESS, 3), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         JUnitAppender.assertWarnMessage("JSON throttle \"client1\" requested using \"throttle\" instead of \"name\"");
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
+        JUnitUtil.waitFor(() -> !connection1.getMessages().isEmpty(), "wait for throttle status message");
         JsonNode message1 = connection1.getMessage();
         assertNotNull(message1);
         assertEquals( 1, message1.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt(), "One client");
@@ -371,6 +384,9 @@ public class JsonThrottleSocketServiceTest {
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
         assertEquals(1, manager.getThrottles().size(), "One throttle acquired");
 
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
+        JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals(42, message.path(JSON.DATA).path(JSON.ADDRESS).asInt(), "Address");

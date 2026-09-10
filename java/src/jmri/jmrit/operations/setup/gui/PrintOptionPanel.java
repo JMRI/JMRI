@@ -1,9 +1,12 @@
 package jmri.jmrit.operations.setup.gui;
 
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.print.attribute.standard.Sides;
 import javax.swing.*;
@@ -20,7 +23,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of manifest and switch list print options
  *
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013, 2025
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013, 2025, 2026
  */
 public class PrintOptionPanel extends OperationsPreferencesPanel implements java.beans.PropertyChangeListener {
 
@@ -51,6 +54,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JButton deleteSwitchListDropComboboxButton = new JButton(DELETE);
     JButton addSwitchListLocalComboboxButton = new JButton(ADD);
     JButton deleteSwitchListLocalComboboxButton = new JButton(DELETE);
+    JButton addMiaComboboxButton = new JButton(ADD);
+    JButton deleteMiaComboboxButton = new JButton(DELETE);
 
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(Bundle.getMessage("TabFormat"));
@@ -117,6 +122,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     List<JComboBox<String>> switchListCarPickupMessageList = new ArrayList<>();
     List<JComboBox<String>> switchListCarDropMessageList = new ArrayList<>();
     List<JComboBox<String>> switchListLocalMessageList = new ArrayList<>();
+    List<JComboBox<String>> miaMessageList = new ArrayList<>();
 
     // manifest panels
     JPanel pManifest = new JPanel();
@@ -131,6 +137,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JPanel pSwPickup = new JPanel();
     JPanel pSwDrop = new JPanel();
     JPanel pSwLocal = new JPanel();
+    
+    JPanel pMia = new JPanel();
 
     public PrintOptionPanel() {
 
@@ -336,6 +344,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pManifest.add(pManifestSwtichListOptions);
         pManifest.add(p2);
         pManifest.add(pCommentMia);
+        pManifest.add(pMia);
 
         // row 11
         JPanel pControl = new JPanel();
@@ -409,6 +418,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addButtonAction(deleteSwitchListDropComboboxButton);
         addButtonAction(addSwitchListLocalComboboxButton);
         addButtonAction(deleteSwitchListLocalComboboxButton);
+        
+        addButtonAction(addMiaComboboxButton);
+        addButtonAction(deleteMiaComboboxButton);
 
         addCheckBoxAction(tabFormatCheckBox);
         addCheckBoxAction(formatSwitchListCheckBox);
@@ -487,6 +499,13 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         }
         if (ae.getSource() == deleteSwitchListLocalComboboxButton) {
             removeComboBox(pSwLocal, switchListLocalMessageList);
+        }
+        
+        if (ae.getSource() == addMiaComboboxButton) {
+            addComboBox(pMia, miaMessageList, Setup.getCarMessageComboBox());
+        }
+        if (ae.getSource() == deleteMiaComboboxButton) {
+            removeComboBox(pMia, miaMessageList);
         }
 
         if (ae.getSource() == saveButton) {
@@ -568,12 +587,98 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         }
     }
 
+    /*
+     * Creates a dialog to select where to place a new message box
+     */
     private void addComboBox(JPanel panel, List<JComboBox<String>> list, JComboBox<String> box) {
-        list.add(box);
-        panel.add(box, list.size());
-        panel.revalidate();
-        pManifest.revalidate();
+        final JDialog dialog = new JDialog();
+        dialog.setLayout(new BorderLayout());
+        dialog.setTitle(Bundle.getMessage("AddMessageComboboxTip"));
+        dialog.setSize(600, 600);
+        
+        JPanel radioPane = new JPanel();
+        radioPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+        dialog.add(radioPane, BorderLayout.NORTH);
+        
+        JRadioButton start = new JRadioButton(Bundle.getMessage("Start"));
+        JRadioButton middle = new JRadioButton(Bundle.getMessage("Middle"));
+        JRadioButton end = new JRadioButton(Bundle.getMessage("End"));
+        
+        ButtonGroup group = new ButtonGroup();
+        group.add(start);
+        group.add(middle);
+        group.add(end);
+        
+        radioPane.add(start);
+        radioPane.add(middle);
+        radioPane.add(end);
+        
+        end.setSelected(true);
+        
+        JPanel indexPane = new JPanel();
+        indexPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+        dialog.add(indexPane);
+        
+        JSpinner spinIndex = new JSpinner(new SpinnerNumberModel(list.size(), 0, list.size(), 1));
+        indexPane.add(spinIndex);
+             
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                spinIndex.setValue(0);
+            }
+        });
+        
+        middle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                spinIndex.setValue(list.size()/2);
+            }
+        });
+        
+        end.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                spinIndex.setValue(list.size());
+            }
+        });
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+        dialog.add(buttonPane, BorderLayout.SOUTH);
+
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
+        okayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                int index = (int) spinIndex.getValue();
+                list.add(index, box);
+                panel.add(box, index + 1);
+                panel.revalidate();
+                pManifest.revalidate();
+                dialog.dispose();
+                return;
+            }
+        });
+        buttonPane.add(okayButton);
+
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                dialog.dispose();
+                return;
+            }
+        });
+        buttonPane.add(cancelButton);
+
+        dialog.setModal(true);
+        dialog.pack();
+        dialog.setSize(2 * dialog.getWidth(), dialog.getHeight());
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
+
 
     private void removeComboBox(JPanel panel, List<JComboBox<String>> list) {
         for (int i = 0; i < list.size(); i++) {
@@ -721,6 +826,22 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         }
         pSwLocal.add(addSwitchListLocalComboboxButton);
         pSwLocal.add(deleteSwitchListLocalComboboxButton);
+        
+        // MIA message format
+        pMia.removeAll();
+        pMia.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutMisplacedCar")));
+        miaMessageList.clear();
+        String[] miaFormat = Setup.getMissingCarMessageFormat();
+        // dummy entry so add/delete ComboBox works correctly
+        pMia.add(new JLabel(" "));
+        for (String f : miaFormat) {
+            JComboBox<String> cb = Setup.getCarMessageComboBox();
+            cb.setSelectedItem(f);
+            pMia.add(cb);
+            miaMessageList.add(cb);
+        }
+        pMia.add(addMiaComboboxButton);
+        pMia.add(deleteMiaComboboxButton);
     }
 
     private void loadFontSizeComboBox() {
@@ -839,6 +960,13 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
             format[i] = (String) cb.getSelectedItem();
         }
         Setup.setLocalSwitchListMessageFormat(format);
+        // save MIA message format
+        format = new String[miaMessageList.size()];
+        for (int i = 0; i < miaMessageList.size(); i++) {
+            JComboBox<?> cb = miaMessageList.get(i);
+            format[i] = (String) cb.getSelectedItem();
+        }
+        Setup.setMissingCarMessageFormat(format);
         // hazardous comment
         Setup.setHazardousMsg(hazardousTextField.getText());
         // misplaced car comment
@@ -997,8 +1125,20 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
             JComboBox<?> cb = switchListLocalMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        return !Setup.getSwitchListLocalPrefix().equals(this.switchListLocalPrefix.getText()) ||
-                !Arrays.equals(Setup.getLocalSwitchListMessageFormat(), format);
+        if (!Setup.getSwitchListLocalPrefix().equals(this.switchListLocalPrefix.getText()) ||
+                !Arrays.equals(Setup.getLocalSwitchListMessageFormat(), format)) {
+            return true;
+        }
+        // Mia message format
+        format = new String[miaMessageList.size()];
+        for (int i = 0; i < miaMessageList.size(); i++) {
+            JComboBox<?> cb = miaMessageList.get(i);
+            format[i] = (String) cb.getSelectedItem();
+        }
+        if (!Arrays.equals(Setup.getMissingCarMessageFormat(), format)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

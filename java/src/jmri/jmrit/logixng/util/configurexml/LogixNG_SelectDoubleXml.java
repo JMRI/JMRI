@@ -37,7 +37,8 @@ public class LogixNG_SelectDoubleXml {
         if (memory != null) {
             doubleElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        doubleElement.addContent(new Element("listenToMemory").addContent(selectDouble.getListenToMemory() ? "yes" : "no"));
+        // Not used anymore. It's kept to not change old tables and panels files
+        doubleElement.addContent(new Element("listenToMemory").addContent("no"));
         if (selectDouble.getLocalVariable() != null && !selectDouble.getLocalVariable().isEmpty()) {
             doubleElement.addContent(new Element("localVariable").addContent(selectDouble.getLocalVariable()));
         }
@@ -78,11 +79,6 @@ public class LogixNG_SelectDoubleXml {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectDouble.setMemory(m);
                     else selectDouble.removeMemory();
-                }
-
-                Element listenToMemoryElem = doubleElement.getChild("listenToMemory");
-                if (listenToMemoryElem != null) {
-                    selectDouble.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
                 }
 
                 elem = doubleElement.getChild("localVariable");

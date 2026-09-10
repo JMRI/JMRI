@@ -1,12 +1,14 @@
 package jmri.jmrit.operations.setup.gui;
 
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.locations.tools.LocationsByQuickServiceFrame;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
@@ -101,7 +103,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         dwellTimeTextField.setText(Integer.toString(Setup.getDwellTime()));
         rfidTextField.setText(Setup.getRfidLabel());
         valueTextField.setText(Setup.getValueLabel());
-        
+
         // add tool tips
         saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
         rfidTextField.setToolTipText(Bundle.getMessage("EnterNameRfidTip"));
@@ -140,13 +142,13 @@ public class OptionPanel extends OperationsPreferencesPanel {
         pPasses.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutNumberPasses")));
         addItem(pPasses, numberPassesComboBox, 0, 0);
         pBuild.add(pPasses);
-        
+
         JPanel pDwellTime = new JPanel();
         pDwellTime.setLayout(new GridBagLayout());
         pDwellTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDwellTime")));
         addItem(pDwellTime, dwellTimeTextField, 0, 0);
         pBuild.add(pDwellTime);
-
+        
         // Switcher Service
         JPanel pSwitcher = new JPanel();
         pSwitcher.setLayout(new GridBagLayout());
@@ -196,7 +198,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // Options
         JPanel pOption = new JPanel();
         pOption.setLayout(new GridBagLayout());
-        pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptions")));
+        pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutAdditionalOptions")));
         addItemLeft(pOption, saveTrainManifestCheckBox, 1, 1);
         addItemLeft(pOption, valueCheckBox, 1, 2);
         addItemLeft(pOption, valueTextField, 2, 2);
@@ -228,7 +230,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         buildGroup.add(buildNormal);
         buildGroup.add(buildAggressive);
         buildGroup.add(buildOnTime);
-        
+
         addRadioButtonAction(buildNormal);
         addRadioButtonAction(buildAggressive);
         addRadioButtonAction(buildOnTime);
@@ -252,12 +254,12 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // disable staging option if normal mode
         stagingAvailCheckBox.setEnabled(!buildNormal.isSelected());
         numberPassesComboBox.setEnabled(!buildNormal.isSelected());
-        dwellTimeTextField.setEnabled(buildOnTime.isSelected());
+        dwellTimeTextField.setEnabled(Setup.isBuildOnTime() && buildOnTime.isSelected());
         tryNormalStagingCheckBox.setEnabled(!buildNormal.isSelected());
     }
 
     @Override
-    public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void radioButtonActionPerformed(ActionEvent ae) {
         log.debug("radio button selected");
         // can't change the build option if there are trains built
         if (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilt()) {
@@ -276,7 +278,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
     // Save button
     @Override
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void buttonActionPerformed(ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             this.savePreferences();
             var topLevelAncestor = getTopLevelAncestor();
@@ -287,7 +289,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
-    protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+    protected void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == routerCheckBox) {
             setRouterCheckBoxesEnabled();
         }
@@ -317,13 +319,16 @@ public class OptionPanel extends OperationsPreferencesPanel {
     @Override
     public void savePreferences() {
         // build option
+        boolean isBuildOnTime = Setup.isBuildOnTime();
         Setup.setBuildAggressive(buildAggressive.isSelected() || buildOnTime.isSelected());
         Setup.setNumberPasses((Integer) numberPassesComboBox.getSelectedItem());
         Setup.setBuildOnTime(buildOnTime.isSelected());
-        try {
-            Setup.setDwellTime(Integer.parseInt(dwellTimeTextField.getText()));
-        } catch (NumberFormatException e) {
-            log.error("Dwell Time {} must be a number", dwellTimeTextField.getText());
+        if (isBuildOnTime) {
+            try {
+                Setup.setDwellTime(Integer.parseInt(dwellTimeTextField.getText()));
+            } catch (NumberFormatException e) {
+                log.error("Dwell Time {} must be a number", dwellTimeTextField.getText());
+            }
         }
         // local switcher options
         Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
@@ -346,10 +351,11 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
         Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
         Setup.setSaveTrainManifestsEnabled(saveTrainManifestCheckBox.isSelected());
-        Setup.setValueEnabled(valueCheckBox.isSelected());
-        Setup.setValueLabel(valueTextField.getText());
-        Setup.setRfidEnabled(rfidCheckBox.isSelected());
-        Setup.setRfidLabel(rfidTextField.getText());
+        Setup.setValueEnabled(valueCheckBox.isSelected() && !valueTextField.getText().isBlank());
+        // value and rfid text fields can not be blank
+        Setup.setValueLabel(valueTextField.getText().isBlank() ? Bundle.getMessage("Value") : valueTextField.getText());
+        Setup.setRfidEnabled(rfidCheckBox.isSelected() && !rfidTextField.getText().isBlank());
+        Setup.setRfidLabel(rfidTextField.getText().isBlank() ? Bundle.getMessage("RFID") : rfidTextField.getText());
         // Logging enabled?
         Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
         Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());
@@ -357,7 +363,14 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // VSD
         Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
         // write the file
-        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
+        OperationsXml.save();
+        // bring up the quick service tool
+        if (!isBuildOnTime && buildOnTime.isSelected()) {
+            dwellTimeTextField.setText(Integer.toString(Setup.getDwellTime()));
+            dwellTimeTextField.setEnabled(buildOnTime.isSelected());
+            LocationsByQuickServiceFrame f = new LocationsByQuickServiceFrame();
+            f.initComponents();
+        }
     }
 
     @Override

@@ -93,8 +93,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         }
         // check for valid name
         String s = addTextBox.getText();
-        s = s.trim();
-        if (s.isEmpty()) {
+        if (s.isBlank()) {
             return; // done
         }
         if (ae.getSource() == addButton) {

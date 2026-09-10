@@ -181,13 +181,43 @@ class AlmirTest {
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x02, 0x00, 0x10, 0x00, 0x00, 0x02, 0x08, 0x74, 0x02, 0x02, 0x06, 0x03, 0x04, 0x03});
-        Assert.assertEquals(" ALM task 2 test 7 - reporting routes capabilities 2",
-                "Device DS74 (s/n 0x302) in Slow motion mode (routes currently enabled), using turnout addresses 516 thru 519, with 8 routes of 8 entries per route, may be configured using ALM messaging.\n",
+        Assert.assertEquals(" ALM task 99 test 1 - reporting routes capabilities 2",
+                "Device DS74 (s/n 0x302) in Slow motion mode (routes currently enabled),"
+                        + " using turnout addresses 516 thru 519, with 8 routes of 8 entries"
+                        + " per route, may be configured using ALM messaging.\n",
                 Almir.interpretAlmRoutes(l));
 
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x02, 0x00, 0x20, 0x00, 0x00, 0x02, 0x08, 0x7c, 0x04, 0x02, 0x06, 0x03, 0x04, 0x03});
-        Assert.assertEquals(" ALM task 2 test 7 - reporting routes capabilities 2",
-                "Device DS78V (s/n 0x302) in Servo (2-position) mode (routes currently enabled), using turnout addresses 516 thru 523, with 16 routes of 8 entries per route, may be configured using ALM messaging.\n",
+        Assert.assertEquals(" ALM task 99 test 2 - reporting routes capabilities 2",
+                "Device DS78V (s/n 0x302) in Servo (2-position) mode (routes currently enabled),"
+                        + " using turnout addresses 516 thru 523, with 16 routes of 8 entries"
+                        + " per route, may be configured using ALM messaging.\n",
+                Almir.interpretAlmRoutes(l));
+
+        l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x02, 0x00, 0x10, 0x00, 0x00, 0x02, 0x08, 0x46, 0x00, 0x02, 0x06, 0x03, 0x04, 0x03});
+        Assert.assertEquals(" ALM task 99 test 3 - reporting routes capabilities 2",
+                "Device SE74 (s/n 0x302) in SE8C-compatible mode (routes currently"
+                        + " enabled), using turnout addresses 516 thru 551, with 64 routes"
+                        + " of 16 entries per route, may be configured using ALM messaging.\n",
+                Almir.interpretAlmRoutes(l));
+
+        l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x02, 0x00, 0x10, 0x00, 0x00, 0x02, 0x08, 0x46, 0x20, 0x02, 0x06, 0x03, 0x04, 0x03});
+        Assert.assertEquals(" ALM task 99 test 4 - reporting routes capabilities 2",
+                "Device SE74 (s/n 0x302) in Aspect mode (routes currently enabled), using"
+                        + " turnout addresses 516 thru 519, with 64 routes of 16 entries"
+                        + " per route, may be configured using ALM messaging.\n",
+                Almir.interpretAlmRoutes(l));
+
+        l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x02, 0x00, 0x02, 0x00, 0x01, 0x02, 0x02, 0x43, 0x00, 0x02, 0x06, 0x03, 0x04, 0x03});
+        Assert.assertEquals(" ALM task 99 test 5 - reporting routes capabilities 2",
+                "Device BDL716 (s/n 0x302), using Base Address 516, may be configured"
+                        + " using ALM messaging.\n",
+                Almir.interpretAlmRoutes(l));
+
+        l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x02, 0x00, 0x01, 0x00, 0x00, 0x02, 0x04, 0x4a, 0x40, 0x02, 0x06, 0x0b, 0x00, 0x03});
+        Assert.assertEquals(" ALM task 99 test 6 - reporting routes capabilities 2",
+                "Device PM74 (s/n 0x302), using Base Address 12, may be configured"
+                        + " using ALM messaging.\n",
                 Almir.interpretAlmRoutes(l));
 
     }

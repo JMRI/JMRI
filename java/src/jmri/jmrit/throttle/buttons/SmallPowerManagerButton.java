@@ -1,5 +1,8 @@
 package jmri.jmrit.throttle.buttons;
 
+import javax.annotation.CheckForNull;
+
+import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
@@ -21,14 +24,31 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class SmallPowerManagerButton extends PowerManagerButton {
 
+    /**
+     * Create a SmallPowerManagerButton for a given Power Manager.
+     * @param fullText true if displaying text and graphic, false for graphic only.
+     * @param powerMgr The PowerManager to monitor and control.
+     */
+    public SmallPowerManagerButton(boolean fullText, @CheckForNull PowerManager powerMgr) {
+        super(fullText, powerMgr);
+    }
+
+    /**
+     * Create a Small Power Manager Button for the default Power Manager.
+     * @param fullText true if displaying text and graphic, false for graphic only.
+     */
     public SmallPowerManagerButton(Boolean fullText) {
         super(fullText);
     }
 
+    /**
+     * Create a Small Power Manager Button for the default Power Manager,
+     * displaying text and graphic.
+     */
     public SmallPowerManagerButton() {
         super();
     }
-    
+
     @Override
     protected void initComponents() {
         setBorderPainted(false);
@@ -38,6 +58,7 @@ public class SmallPowerManagerButton extends PowerManagerButton {
     protected void loadIcons() {
         setPowerOnIcon(new NamedIcon("resources/icons/throttles/GreenPowerLED.gif", "resources/icons/throttles/GreenPowerLED.gif"));
         setPowerOffIcon(new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "resources/icons/throttles/RedPowerLED.gif"));
+        setPowerIdleIcon(new NamedIcon("resources/icons/throttles/YellowPowerLED.gif", "resources/icons/throttles/YellowPowerLED.gif"));
         setPowerUnknownIcon(new NamedIcon("resources/icons/throttles/YellowPowerLED.gif", "resources/icons/throttles/YellowPowerLED.gif"));
     }
 

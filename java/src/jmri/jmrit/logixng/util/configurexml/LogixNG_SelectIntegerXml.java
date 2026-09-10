@@ -37,7 +37,8 @@ public class LogixNG_SelectIntegerXml {
         if (memory != null) {
             intElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        intElement.addContent(new Element("listenToMemory").addContent(selectInt.getListenToMemory() ? "yes" : "no"));
+        // Not used anymore. It's kept to not change old tables and panels files
+        intElement.addContent(new Element("listenToMemory").addContent("no"));
         if (selectInt.getLocalVariable() != null && !selectInt.getLocalVariable().isEmpty()) {
             intElement.addContent(new Element("localVariable").addContent(selectInt.getLocalVariable()));
         }
@@ -78,11 +79,6 @@ public class LogixNG_SelectIntegerXml {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectInt.setMemory(m);
                     else selectInt.removeMemory();
-                }
-
-                Element listenToMemoryElem = intElement.getChild("listenToMemory");
-                if (listenToMemoryElem != null) {
-                    selectInt.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
                 }
 
                 elem = intElement.getChild("localVariable");

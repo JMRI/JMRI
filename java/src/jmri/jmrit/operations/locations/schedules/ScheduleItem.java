@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
@@ -91,10 +91,12 @@ public class ScheduleItem extends PropertyChangeSupport {
      * @return true if car is accepted by the scheduleItem
      */
     public boolean doRandom() {
-        // make an adjustment based on the number of cars of a given type
-        int numberOfCars = InstanceManager.getDefault(CarManager.class).getByTypeList(getTypeName()).size();
-        int adjustment = 100 + numberOfCars;
-        _calculatedRandom = adjustment * Math.random();
+        // make an adjustment based on the number of passes
+        int passes = 1;
+        if (Setup.isBuildAggressive()) {
+            passes = Setup.getNumberPasses();
+        }
+        _calculatedRandom = 100 * passes * Math.random();
         try {
             int value = Integer.parseInt(getRandom());
             log.debug("Selected random {}, created random {}", getRandom(), _calculatedRandom);

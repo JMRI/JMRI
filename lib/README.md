@@ -124,13 +124,13 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
-##### log4j-api-2.25.3.jar, log4j-core-2.25.3.jar
-- version 2.25.3
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.25.3
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.25.3
+##### log4j-api-2.25.4.jar, log4j-core-2.25.4.jar
+- version 2.25.4
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.25.4
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.25.4
 
-##### log4j-slf4j2-impl-2.25.3.jar
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.25.3
+##### log4j-slf4j2-impl-2.25.4.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.25.4
 - slf4j bridge to log4j2
 
 ##### slf4j-api-2.0.17.jar
@@ -153,7 +153,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.8.6 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.6/openlcb-0.8.6.jar
- - with PRs through #303 pre-release https://github.com/openlcb/OpenLCB_Java/pull/303
+ - with PRs through #307 pre-release https://github.com/openlcb/OpenLCB_Java/pull/307
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -177,7 +177,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - see <jdom.org>
 - from Maven Central https://mvnrepository.com/artifact/org.jdom/jdom2/2.0.6.1
 
-##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
+##### jackson-annotations-2.22.jar, jackson-core-2.22.0.jar, jackson-databind-2.22.0.jar, jackson-datatype-jsr310-2.22.0.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 

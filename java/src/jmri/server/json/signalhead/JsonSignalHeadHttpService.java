@@ -41,7 +41,7 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
     @Override
     protected ObjectNode doGet(SignalHead signalHead, String name, String type, JsonRequest request) throws JsonException {
         ObjectNode root = this.getNamedBean(signalHead, name, type, request); // throws JsonException if signalHead == null
-        ObjectNode data = root.with(DATA);
+        ObjectNode data = root.withObject(DATA);
         if (signalHead != null) {
             data.put(LIT, signalHead.getLit());
             data.put(APPEARANCE, signalHead.getAppearance());
@@ -83,11 +83,11 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
             }
         }
         if (data.path(LIT).isTextual()) {
-            signalHead.setLit(data.path(LIT).asBoolean());            
+            signalHead.setLit(data.path(LIT).asBoolean());
         }
         if (data.path(TOKEN_HELD).isTextual()) {
-            signalHead.setHeld(data.path(TOKEN_HELD).asBoolean());            
-        }        
+            signalHead.setHeld(data.path(TOKEN_HELD).asBoolean());
+        }
         return this.doGet(type, name, data, request);
     }
 

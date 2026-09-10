@@ -26,6 +26,11 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
     @Override
+    public int maxSize() {
+        return 520;  // large enough to include any reasonable SUSIC contents
+    }
+
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < getNumDataElements(); i++) {

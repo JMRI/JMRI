@@ -208,7 +208,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
     }
 
     /**
-     * Gets a JComboBox loaded with schedules starting with null.
+     * Gets a JComboBox loaded with schedules.
      *
      * @return JComboBox with a list of schedules.
      */
