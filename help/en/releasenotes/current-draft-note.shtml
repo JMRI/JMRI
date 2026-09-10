@@ -99,25 +99,6 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>SlotMonitor update:
-                <ul>
-                    <li>Add ability to hide / move columns. N.B. if you open 2 or more SlotMonitors this is only effective on the first one.</li>
-                    <li>If Extended purge time is enabled in the Command Station the Slow scan for slots is extended.</li>
-                    <li>If purging is disabled in the Command Station so is slow scanning.
-                      A value of -1 stops slowscanning.</li>
-                    <li>Added a column to show the number of JMRI Throttles sharing a slot.</li>
-                    <li>Updated SlotMon help screen.</li>
-                </ul>
-                <li>Remove some extra messages when configuring with the board-level tools
-                  in the LocoNet menu</li>
-                <li>Added a new programming facade "Digitrax OpSw Word Programming" for
-                  programming at the board level for e.g. DS64's.</li>
-                <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
-                <li>Add in-use count to the Slot Monitor.</li>
-                <li>Timeouts when programming the Op Switches on Digitrax boards (e.g. DS64, etc) will automatically be retried once.</li>
-                <li>Added interpretation of some BDL716 configuration messages to
-                  LocoNet Monitor.</li>
-                <li>Made some LocoNet-specific programming mode constants public so the can be accessed from scripts.</li>
                 <li>LocoNet Clock now uses the same throttle ID as the rest of JMRI, instead of (illegal) 00 00.</li>
                 <li>Fixed several consist-handling bugs that could leave a LocoNet consist in an
                     inconsistent state after rapid add/remove/delete operations from an external
@@ -492,7 +473,7 @@
             <li>Fixed a bug introduced in JMRI 5.17.2 which would sometimes
                 cause DecoderPro to write incorrect output addresses to a DS64</li>
             <li>You can now change the board ID of e.g. DS64 and similar boards in DecoderPro
-                as mentioned in the Basic panel for those.</li>
+                as mentioned on the Basic panel for those.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -754,6 +735,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Fix the <strong>Current Config file</strong> path in <strong>Help &rArr; File Locations</strong>.</li>
-            <li>The <strong>Single Step Upgrade</strong> help page describes an alternate process to
+            <li>The <strong><a href="https://www.jmri.org/help/en/html/setup/SingleStepUpgrade.shtml">Single Step Upgrade</a></strong> help page describes an alternate process to
             upgrade from JMRI 3.x or 4.x using Java 1.8 to a current 5.x release using Java 21.</li>
         </ul>
