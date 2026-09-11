@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.17.1plus+jake+20260808T1706Z+Rfc9b4c42c23 on Sat Aug 08 13:06:41 EDT 2026-->
-  <decoderIndex version="723">
+  <!--Written by JMRI version 5.17.2plus+jake+20260911T1705Z+Rb3df2d90e1f on Fri Sep 11 13:06:18 EDT 2026-->
+  <decoderIndex version="725">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -3064,6 +3064,649 @@
           </protocols>
         </model>
       </family>
+      <family name="Function Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.05_FH05B.xml">
+        <model model="FH05B v3.05.15 (firmware 3.05+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="15" highVersionID="15" numOuts="6" numFns="16" productID="FH05B_2014.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2014">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)" />
+          <!-- New from fw3.03  -->
+          <output name="6" label="AUX 4|(or SUSI ZDAT)" />
+          <!-- New from fw3.03  -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.06-07_FH05B-22A.xml">
+        <model model="FH05B v3.06.26 (firmware 3.06+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="FH05B_2016.03" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from March 2016">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A v3.06.26 (firmware 3.06+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="FH22A_2016.03" comment="FH22A with update from March 2016">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH05B v3.07.66 (firmware 3.07+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="FH05B_2016.06" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from June 2016">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A v3.07.66 (firmware 3.07+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="FH22A_2016.06" comment="FH22A with update from June 2016">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.10-11_FH05B-18-22A.xml">
+        <model model="FH05B v3.10.48 (firmware 3.10+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="6" numFns="16" productID="FH05B_2018.04" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from April 2018">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH18A v3.10.48 (firmware 3.10+)" replacementModel="FH18A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH18A_2018.04" comment="FH18A with update from April 2018">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A v3.10.48 (firmware 3.10+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH22A_2018.04" comment="FH22A with update from April 2018">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH05B v3.11.98 (firmware 3.11+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="FH05B_2018.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2018">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH18A v3.11.98 (firmware 3.11+)" replacementModel="FH18A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH18A_2018.10" comment="FH18A with update from October 2018">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A v3.11.98 (firmware 3.11+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH22A_2018.10" comment="FH22A with update from October 2018">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.12_FH05B-18-22A.xml">
+        <model model="FH05B (firmware 3.12.050+)" replacementModel="FH05B (firmware 3.13.053+)" replacementFamily="query:Function Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH18A (firmware 3.12.050+)" replacementModel="FH18A (firmware 3.13.053+)" replacementFamily="query:Function Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A (firmware 3.12.050+)" replacementModel="FH22A (firmware 3.13.053+)" replacementFamily="query:Function Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function Decoders (2023)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.13_FH05B-22A.xml">
+        <model model="FH05B (firmware 3.13.053+)" replacementModel="FH05B (firmware 3.14.095+)" replacementFamily="query:Function Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2023">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH16A (firmware 3.13.053+)" replacementModel="FH16A (firmware 3.14.095+)" replacementFamily="query:Function Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH18A (firmware 3.13.053+)" replacementModel="FH18A (firmware 3.14.095+)" replacementFamily="query:Function Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2023">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A (firmware 3.13.053+)" replacementModel="FH22A (firmware 3.14.095+)" replacementFamily="query:Function Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2023">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function Decoders (firmware 3.14+)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.14_FH05B-22A.xml">
+        <model model="FH05B (firmware 3.14.095+)" replacementModel="FH05B (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from September 2025">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH16A (firmware 3.14.095+)" replacementModel="FH16A (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug with update from September 2025">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH18A (firmware 3.14.095+)" replacementModel="FH05B (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="170" comment="FH18A with update from September 2025">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A (firmware 3.14.095+)" replacementModel="FH18A (firmware 3.15.016+)" replacementFamily="query:Function Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="192" comment="FH22A with update from September 2025">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function Decoders (firmware 3.15+)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.15_FH05B-22A.xml">
+        <model model="FH05B (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH16A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH18A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
+          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="FH22A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="AUX 5|(or SUSI ZCLK)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="8" label="AUX 6|(or SUSI ZDAT)">
+            <!-- New from fw3.03  -->
+          </output>
+          <output name="9" label="Dimmed|Lights" />
+          <output name="10" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.00-04_SD18A.xml">
+        <model model="SD18A (firmware 1.00+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.00" comment="SD18A with original firmware">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="|" />
+          <!-- not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- not available for this decoder -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
+        <model model="SD18A (firmware 1.01+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="16" productID="SD18A_1.01" comment="SD18A with firmware 1.01">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="|" />
+          <!-- not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- not available for this decoder -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SD18A (firmware 1.02+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="4" numFns="16" productID="SD18A_1.02" comment="SD18A with July 2014 firmware">
+          <versionCV lowVersionID="84" highVersionID="84" comment="firmware 1.02.084" />
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="|" />
+          <!-- not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- not available for this decoder -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SD18A (firmware 1.03+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD18A_1.03" comment="SD18A with October 2014 firmware">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)" />
+          <!-- New from fw1.03  -->
+          <output name="6" label="AUX 4|(or SUSI ZDAT)" />
+          <!-- New from fw1.03  -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SD18A (firmware 1.04+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD18A_1.04" comment="SD18A with May 2015 firmware">
+          <versionCV lowVersionID="115" highVersionID="115" comment="firmware 1.05.115 has no dedicated definition; this is the nearest earlier CV set" />
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX 3|(or SUSI ZCLK)" />
+          <!-- New from fw1.03  -->
+          <output name="6" label="AUX 4|(or SUSI ZDAT)" />
+          <!-- New from fw1.03, changed from fw1.04  -->
+          <output name="7" label="Dimmed Lights|(or AUX 5)" />
+          <output name="8" label="Shunting Speed|(or AUX 6)" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.00-04_SD21A.xml">
+        <model model="SD21A (firmware 1.01+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SD21A (firmware 1.02+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="6" numFns="16" productID="SD21A_1.02" comment="SD21A with July 2014 firmware">
+          <versionCV lowVersionID="84" highVersionID="84" comment="firmware 1.02.084" />
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SD21A (firmware 1.03+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD21A_1.03" comment="SD21A with October 2014 firmware">
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SD21A (firmware 1.04+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD21A_1.04" comment="SD21A with May 2015 firmware">
+          <versionCV lowVersionID="115" highVersionID="115" comment="firmware 1.05.115 has no dedicated definition; this is the nearest earlier CV set" />
+          <output name="1" label="Front|Light" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" />
+          <output name="4" label="AUX|2" />
+          <output name="5" label="AUX|3" />
+          <output name="6" label="AUX|4" />
+          <!-- AUX 5 - 6 from fw1.04  -->
+          <output name="7" label="Dimmed Lights|(or AUX 5)" />
+          <output name="8" label="Shunting Speed|(or AUX 6)" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
       <family name="Sound Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.06-07_SD10-16-18-21-22A.xml">
         <!--family name="Combo sound decoders" mfg="Doehler und Haass"-->
         <model model="SD10A (firmware 1.06+)" replacementModel="SD10A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="026" highVersionID="026" numOuts="6" numFns="16" productID="SD10A_1.06" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from March 2016">
@@ -3651,6 +4294,53 @@
             <protocol>selectrix</protocol>
             <protocol>motorola</protocol>
           </protocols>
+        </model>
+      </family>
+      <family name="SUSI sound modules" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.00_SH10A.xml">
+        <model model="SH10A (firmware 1.00+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" />
+        <model model="SH10A (firmware 1.01+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.01" comment="SH10A with firmware 1.01 or later" />
+        <model model="SH10A (firmware 1.02+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.02" comment="SH10A with firmware 1.02 or later" />
+        <model model="SH10A (firmware 1.03+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.03" comment="SH10A with firmware 1.03 or later" />
+        <model model="SH10A (firmware 1.04+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.04" comment="SH10A with firmware 1.04 or later" />
+        <model model="SH10A (firmware 1.05+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.05" comment="SH10A with firmware 1.05 or later" />
+        <model model="SH10A (firmware 1.06+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" />
+        <model model="SH10A (firmware 1.07+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="2" numFns="30" productID="SH10A_1.07" comment="SH10A with firmware 1.07 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+        <model model="SH10A (firmware 1.08+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="2" numFns="30" productID="SH10A_1.08" comment="SH10A with firmware 1.08 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+        <model model="SH10A (firmware 1.09+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="56" highVersionID="56" numOuts="2" numFns="30" productID="SH10A_1.09" comment="SH10A with firmware 1.09 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+        <model model="SH10A (firmware 1.10+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="27" highVersionID="27" numOuts="2" numFns="30" productID="SH10A_1.10" comment="SH10A with firmware 1.10 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+        <model model="SH10A (firmware 1.11+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="117" highVersionID="117" numOuts="2" numFns="30" productID="SH10A_1.11" comment="SH10A with firmware 1.11 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+        <model model="SH10A (firmware 1.12+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="48" highVersionID="48" numOuts="2" numFns="30" productID="SH10A_1.12" comment="SH10A with firmware 1.12 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+        <model model="SH10A (firmware 1.13+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="98" highVersionID="98" numOuts="2" numFns="30" productID="SH10A_1.13" comment="SH10A with firmware 1.13 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+      </family>
+      <family name="SUSI sound modules (2020)" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.14_SH05-10A.xml">
+        <model model="SH05A (firmware 1.14.050+)" replacementModel="SH05A (firmware 1.15.112+)" replacementFamily="query:SUSI sound modules (2022)" lowVersionID="50" highVersionID="50" numOuts="2" numFns="30" productID="50" comment="SH05A with firmware 1.14 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
+        </model>
+        <model model="SH10A (firmware 1.14.050+)" replacementModel="SH10A (firmware 1.15.112+)" replacementFamily="query:SUSI sound modules (2022)" lowVersionID="50" highVersionID="50" numOuts="2" numFns="30" productID="100" comment="SH10A with firmware 1.14 or later">
+          <output name="1" label="AUX|1" />
+          <output name="2" label="AUX|2" />
         </model>
       </family>
       <family name="SUSI sound modules (2022)" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.15_SH05-10A.xml">
@@ -4807,24 +5497,6 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.05_FH05B.xml">
-        <model model="FH05B v3.05.15 (firmware 3.05+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="15" highVersionID="15" numOuts="6" numFns="16" productID="FH05B_2014.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2014">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)" />
-          <!-- New from fw3.03  -->
-          <output name="6" label="AUX 4|(or SUSI ZDAT)" />
-          <!-- New from fw3.03  -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-      </family>
       <family name="Train Decoders (firmware 3.05 - Oct 2014)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.05_generic.xml">
         <model model="Generic DH v3.05 (firmware 3.05+)" numOuts="6" numFns="16" productID="GenericDH_2014.10" comment="Generic DH profile for unknown or unlisted decoders with update from October 2014">
           <protocols>
@@ -5092,84 +5764,6 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (2016)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.06-07_FH05B-22A.xml">
-        <model model="FH05B v3.06.26 (firmware 3.06+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="6" numFns="16" productID="FH05B_2016.03" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from March 2016">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A v3.06.26 (firmware 3.06+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="26" highVersionID="26" numOuts="8" numFns="16" productID="FH22A_2016.03" comment="FH22A with update from March 2016">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH05B v3.07.66 (firmware 3.07+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="6" numFns="16" productID="FH05B_2016.06" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from June 2016">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A v3.07.66 (firmware 3.07+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="66" highVersionID="66" numOuts="8" numFns="16" productID="FH22A_2016.06" comment="FH22A with update from June 2016">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-      </family>
       <family name="Train Decoders (2017)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.08-09_DH05-10C_12-16-18-21-22A_PD05-12A.xml">
         <model model="DH05C v3.08.27 (firmware 3.08+)" replacementModel="DH05C (firmware 3.12.050+)" replacementFamily="query:Train Decoders (2020)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH05C_2017_02" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from February 2017">
           <output name="1" label="Front|Light" />
@@ -5434,116 +6028,6 @@
           <output name="8" label="Shunting|Speed" />
           <protocols>
             <protocol>dcc</protocol>
-          </protocols>
-        </model>
-      </family>
-      <family name="Function Decoders (2018)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.10-11_FH05B-18-22A.xml">
-        <model model="FH05B v3.10.48 (firmware 3.10+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="6" numFns="16" productID="FH05B_2018.04" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from April 2018">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH18A v3.10.48 (firmware 3.10+)" replacementModel="FH18A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH18A_2018.04" comment="FH18A with update from April 2018">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A v3.10.48 (firmware 3.10+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="48" highVersionID="48" numOuts="8" numFns="18" productID="FH22A_2018.04" comment="FH22A with update from April 2018">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH05B v3.11.98 (firmware 3.11+)" replacementModel="FH05B (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="FH05B_2018.10" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from October 2018">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH18A v3.11.98 (firmware 3.11+)" replacementModel="FH18A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH18A_2018.10" comment="FH18A with update from October 2018">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A v3.11.98 (firmware 3.11+)" replacementModel="FH22A (firmware 3.12.050+)" replacementFamily="query:Function Decoders (2020)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="18" productID="FH22A_2018.10" comment="FH22A with update from October 2018">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
           </protocols>
         </model>
       </family>
@@ -6045,64 +6529,8 @@
           </protocols>
         </model>
       </family>
-      <family name="Function Decoders (2020)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.12_FH05B-18-22A.xml">
-        <model model="FH05B (firmware 3.12.050+)" replacementModel="FH05B (firmware 3.13.053+)" replacementFamily="query:Function Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH18A (firmware 3.12.050+)" replacementModel="FH18A (firmware 3.13.053+)" replacementFamily="query:Function Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A (firmware 3.12.050+)" replacementModel="FH22A (firmware 3.13.053+)" replacementFamily="query:Function Decoders (2023)" lowVersionID="50" highVersionID="50" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-      </family>
       <family name="Train Decoders (2023)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.13_DH05-22B_PD05-21A.xml">
-        <model model="DH05C (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from May 2020">
+        <model model="DH05C (firmware 3.13.053+)" replacementModel="DH05C (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6121,7 +6549,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH05C Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 2nd Generation with update from May 2020">
+        <model model="DH05C Gen. 2 (firmware 3.13.053+)" replacementModel="DH05C Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 2nd Generation with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6140,7 +6568,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH06A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020">
+        <model model="DH06A (firmware 3.13.053+)" replacementModel="DH06A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="Onboard|LED" />
@@ -6157,7 +6585,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="DH06A Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020">
+        <model model="DH06A Gen. 2 (firmware 3.13.053+)" replacementModel="DH06A Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="Onboard|LED" />
@@ -6174,7 +6602,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="DH10C (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2020">
+        <model model="DH10C (firmware 3.13.053+)" replacementModel="DH10C (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6193,7 +6621,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH10C Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 2nd Generation with update from May 2020">
+        <model model="DH10C Gen. 2 (firmware 3.13.053+)" replacementModel="DH10C Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 2nd Generation with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6212,7 +6640,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH12A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="120" comment="DH12A with update from May 2020">
+        <model model="DH12A (firmware 3.13.053+)" replacementModel="DH12A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="120" comment="DH12A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6227,7 +6655,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH14B (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="141" comment="DH14B with update from May 2020">
+        <model model="DH14B (firmware 3.13.053+)" replacementModel="DH14B (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="141" comment="DH14B with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6242,7 +6670,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH16A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from May 2020">
+        <model model="DH16A (firmware 3.13.053+)" replacementModel="DH16A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6257,7 +6685,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH16A Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from May 2020">
+        <model model="DH16A Gen. 2 (firmware 3.13.053+)" replacementModel="DH16A Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6272,7 +6700,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH18A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="180" comment="DH18A with update from May 2020">
+        <model model="DH18A (firmware 3.13.053+)" replacementModel="DH18A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="180" comment="DH18A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6289,7 +6717,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH18A Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="180" comment="DH18A with update from May 2020">
+        <model model="DH18A Gen. 2 (firmware 3.13.053+)" replacementModel="DH18A Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="180" comment="DH18A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6306,7 +6734,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH21A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="200" comment="DH21A with update from May 2020">
+        <model model="DH21A (firmware 3.13.053+)" replacementModel="DH21A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="200" comment="DH21A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6323,7 +6751,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH21A Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="200" comment="DH21A with update from May 2020">
+        <model model="DH21A Gen. 2 (firmware 3.13.053+)" replacementModel="DH21A Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="200" comment="DH21A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6340,7 +6768,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH21B (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="10" numFns="16" productID="201" comment="DH21B">
+        <model model="DH21B (firmware 3.13.053+)" replacementModel="DH21B (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="10" numFns="16" productID="201" comment="DH21B with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6359,7 +6787,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH22A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="202" comment="DH22A with update from May 2020">
+        <model model="DH22A (firmware 3.13.053+)" replacementModel="DH22A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="202" comment="DH22A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6376,7 +6804,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH22A Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="202" comment="DH22A with update from May 2020">
+        <model model="DH22A Gen. 2 (firmware 3.13.053+)" replacementModel="DH22A Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="202" comment="DH22A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6393,7 +6821,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH22B (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="10" numFns="16" productID="203" comment="DH22B">
+        <model model="DH22B (firmware 3.13.053+)" replacementModel="DH22B (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="10" numFns="16" productID="203" comment="DH22B with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6412,7 +6840,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH24A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="13" numFns="16" productID="204" comment="DH24A, 24-pin E24 direct plug. AUX10-12 cannot be mapped on this firmware (CV101-103 exist from firmware 3.15)">
+        <model model="DH24A (firmware 3.13.053+)" replacementModel="DH24A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="13" numFns="16" productID="204" comment="DH24A, 24-pin E24 direct plug. AUX10-12 cannot be mapped on this firmware (CV101-103 exist from firmware 3.15)">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6434,7 +6862,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DHSP10A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="110" comment="DHSP10A-0 / -1 / -2 / -3 / -4, with integrated buffer capacitor (16 V, 470 uF)">
+        <model model="DHSP10A (firmware 3.13.053+)" replacementModel="DHSP10A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="110" comment="DHSP10A-0 / -1 / -2 / -3 / -4, with integrated buffer capacitor (16 V, 470 uF)">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6451,7 +6879,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="PD05A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020">
+        <model model="PD05A (firmware 3.13.053+)" replacementModel="PD05A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="7" label="Dimmed|Lights" />
@@ -6461,7 +6889,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="PD05A Gen. 2 (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020">
+        <model model="PD05A Gen. 2 (firmware 3.13.053+)" replacementModel="PD05A Gen. 2 (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="7" label="Dimmed|Lights" />
@@ -6471,7 +6899,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="PD06A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3">
+        <model model="PD06A (firmware 3.13.053+)" replacementModel="PD06A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="7" label="Dimmed|Lights" />
@@ -6483,7 +6911,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="PD10MU (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="130" comment="PD10MU-3 / PD10MU-4 commissioned by DM-Toys">
+        <model model="PD10MU (firmware 3.13.053+)" replacementModel="PD10MU (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="130" comment="PD10MU-3 / PD10MU-4 commissioned by DM-Toys">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6494,7 +6922,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD12A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2020">
+        <model model="PD12A (firmware 3.13.053+)" replacementModel="PD12A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6505,7 +6933,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD18A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="134" comment="PD18A">
+        <model model="PD18A (firmware 3.13.053+)" replacementModel="PD18A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="134" comment="PD18A with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6516,7 +6944,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD18MU (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="134" comment="PD18MU">
+        <model model="PD18MU (firmware 3.13.053+)" replacementModel="PD18MU (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="134" comment="PD18MU commissioned by DM-Toys">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6527,7 +6955,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD21A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="133" comment="PD21A-4">
+        <model model="PD21A (firmware 3.13.053+)" replacementModel="PD21A (firmware 3.14.095+)" replacementFamily="query:Train Decoders (firmware 3.14+)" lowVersionID="53" highVersionID="53" numOuts="4" numFns="16" productID="133" comment="PD21A-4 with update from May 2023">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6536,87 +6964,11 @@
           <output name="8" label="Shunting|Speed" />
           <protocols>
             <protocol>dcc</protocol>
-          </protocols>
-        </model>
-      </family>
-      <family name="Function Decoders (2023)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.13_FH05B-22A.xml">
-        <model model="FH05B (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH16A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH18A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A (firmware 3.13.053+)" lowVersionID="53" highVersionID="53" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
           </protocols>
         </model>
       </family>
       <family name="Train Decoders (firmware 3.14+)" mfg="Doehler und Haass" file="Doehler_Haass_train_fw3.14_DH05-24A_PD05-21A.xml">
-        <model model="DH05C (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from May 2020">
+        <model model="DH05C (firmware 3.14.095+)" replacementModel="DH05C (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6635,7 +6987,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH05C Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 2nd Generation with update from May 2020">
+        <model model="DH05C Gen. 2 (firmware 3.14.095+)" replacementModel="DH05C Gen. 2 (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="52" comment="DH05C-0 / DH05C-1 / DH05C-3 2nd Generation with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6654,7 +7006,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH06A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020">
+        <model model="DH06A (firmware 3.14.095+)" replacementModel="DH06A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="Onboard|LED" />
@@ -6671,7 +7023,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="DH06A Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020">
+        <model model="DH06A Gen. 2 (firmware 3.14.095+)" replacementModel="DH06A Gen. 2 (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="Onboard|LED" />
@@ -6688,7 +7040,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="DH10C (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2020">
+        <model model="DH10C (firmware 3.14.095+)" replacementModel="DH10C (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6707,7 +7059,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH10C Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 2nd Generation with update from May 2020">
+        <model model="DH10C Gen. 2 (firmware 3.14.095+)" replacementModel="DH10C Gen. 2 (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 2nd Generation with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6726,7 +7078,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH12A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="120" comment="DH12A with update from May 2020">
+        <model model="DH12A (firmware 3.14.095+)" replacementModel="DH12A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="120" comment="DH12A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6741,7 +7093,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH14B (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="141" comment="DH14B with update from May 2020">
+        <model model="DH14B (firmware 3.14.095+)" replacementModel="DH14B (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="141" comment="DH14B with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6756,7 +7108,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH16A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from May 2020">
+        <model model="DH16A (firmware 3.14.095+)" replacementModel="DH16A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6771,7 +7123,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH16A Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from May 2020">
+        <model model="DH16A Gen. 2 (firmware 3.14.095+)" replacementModel="DH16A Gen. 2 (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6786,7 +7138,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH18A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="180" comment="DH18A with update from May 2020">
+        <model model="DH18A (firmware 3.14.095+)" replacementModel="DH18A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="180" comment="DH18A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6803,7 +7155,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH18A Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="180" comment="DH18A with update from May 2020">
+        <model model="DH18A Gen. 2 (firmware 3.14.095+)" replacementModel="DH18A Gen. 2 (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="180" comment="DH18A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6820,7 +7172,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH21A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="200" comment="DH21A with update from May 2020">
+        <model model="DH21A (firmware 3.14.095+)" replacementModel="DH21A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="200" comment="DH21A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6837,7 +7189,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH21A Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="200" comment="DH21A with update from May 2020">
+        <model model="DH21A Gen. 2 (firmware 3.14.095+)" replacementModel="DH21A Gen. 2 (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="200" comment="DH21A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6854,7 +7206,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH21B (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="10" numFns="16" productID="201" comment="DH21B">
+        <model model="DH21B (firmware 3.14.095+)" replacementModel="DH21B (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="10" numFns="16" productID="201" comment="DH21B">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6873,7 +7225,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH22A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="202" comment="DH22A with update from May 2020">
+        <model model="DH22A (firmware 3.14.095+)" replacementModel="DH22A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="202" comment="DH22A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6890,7 +7242,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH22A Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="202" comment="DH22A with update from May 2020">
+        <model model="DH22A Gen. 2 (firmware 3.14.095+)" replacementModel="DH22A Gen. 2 (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="202" comment="DH22A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6907,7 +7259,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH22B (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="10" numFns="16" productID="203" comment="DH22B">
+        <model model="DH22B (firmware 3.14.095+)" replacementModel="DH22B (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="10" numFns="16" productID="203" comment="DH22B">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6926,7 +7278,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DH24A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="13" numFns="16" productID="204" comment="DH24A, 24-pin E24 direct plug. AUX10-12 cannot be mapped on this firmware (CV101-103 exist from firmware 3.15)">
+        <model model="DH24A (firmware 3.14.095+)" replacementModel="DH24A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="13" numFns="16" productID="204" comment="DH24A, 24-pin E24 direct plug. AUX10-12 cannot be mapped on this firmware (CV101-103 exist from firmware 3.15)">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6948,7 +7300,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="DHSP10A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="110" comment="DHSP10A-0 / -1 / -2 / -3 / -4, with integrated buffer capacitor (16 V, 470 uF)">
+        <model model="DHSP10A (firmware 3.14.095+)" replacementModel="DHSP10A (firmware 3.15.016+)" replacementFamily="query:Train Decoders (firmware 3.15+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="110" comment="DHSP10A-0 / -1 / -2 / -3 / -4, with integrated buffer capacitor (16 V, 470 uF)">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -6965,7 +7317,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="PD05A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020">
+        <model model="PD05A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="7" label="Dimmed|Lights" />
@@ -6975,7 +7327,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="PD05A Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020">
+        <model model="PD05A Gen. 2 (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="7" label="Dimmed|Lights" />
@@ -6985,7 +7337,7 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
-        <model model="PD06A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3">
+        <model model="PD06A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="7" label="Dimmed|Lights" />
@@ -7008,7 +7360,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD12A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2020">
+        <model model="PD12A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -7019,7 +7371,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD18A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="134" comment="PD18A">
+        <model model="PD18A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="134" comment="PD18A with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -7030,7 +7382,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD18MU (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="134" comment="PD18MU">
+        <model model="PD18MU (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="134" comment="PD18MU commissioned by DM-Toys">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -7041,7 +7393,7 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
-        <model model="PD21A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="133" comment="PD21A-4">
+        <model model="PD21A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="4" numFns="16" productID="133" comment="PD21A-4 with update from September 2025">
           <output name="1" label="Front|Light" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" />
@@ -7050,82 +7402,6 @@
           <output name="8" label="Shunting|Speed" />
           <protocols>
             <protocol>dcc</protocol>
-          </protocols>
-        </model>
-      </family>
-      <family name="Function Decoders (firmware 3.14+)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.14_FH05B-22A.xml">
-        <model model="FH05B (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH16A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH18A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A (firmware 3.14.095+)" lowVersionID="95" highVersionID="95" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
           </protocols>
         </model>
       </family>
@@ -7479,369 +7755,235 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="PD05A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="PD05A Gen. 2 (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="PD06A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="PD10MU (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="130" comment="PD10MU-3 / PD10MU-4 commissioned by DM-Toys">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-          </protocols>
-        </model>
-        <model model="PD12A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-          </protocols>
-        </model>
-        <model model="PD18A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="134" comment="PD18A">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-          </protocols>
-        </model>
-        <model model="PD18MU (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="134" comment="PD18MU">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-          </protocols>
-        </model>
-        <model model="PD21A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="133" comment="PD21A-4">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-          </protocols>
-        </model>
-      </family>
-      <family name="Function Decoders (firmware 3.15+)" mfg="Doehler und Haass" file="Doehler_Haass_function_fw3.15_FH05B-22A.xml">
-        <model model="FH05B (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="6" numFns="16" productID="41" comment="FH05B-0 / FH05B-1 / FH05B-3 with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="6" label="AUX 4|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH16A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="16" productID="150" comment="FH16A-4, PluX16 direct plug">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH18A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="18" productID="170" comment="FH18A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)" />
-          <output name="8" label="AUX 6|(or SUSI ZDAT)" />
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="FH22A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="8" numFns="18" productID="192" comment="FH22A with update from May 2020">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="AUX 5|(or SUSI ZCLK)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="8" label="AUX 6|(or SUSI ZDAT)">
-            <!-- New from fw3.03  -->
-          </output>
-          <output name="9" label="Dimmed|Lights" />
-          <output name="10" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-      </family>
-      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.00-04_SD18A.xml">
-        <model model="SD18A (firmware 1.00+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.00" comment="SD18A with original firmware">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="|" />
-          <!-- not available for this decoder -->
-          <output name="6" label="|" />
-          <!-- not available for this decoder -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-          </protocols>
-        </model>
-        <model model="SD18A (firmware 1.01+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="4" numFns="16" productID="SD18A_1.01" comment="SD18A with firmware 1.01">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="|" />
-          <!-- not available for this decoder -->
-          <output name="6" label="|" />
-          <!-- not available for this decoder -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="SD18A (firmware 1.02+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="4" numFns="16" productID="SD18A_1.02" comment="SD18A with July 2014 firmware">
-          <versionCV lowVersionID="84" highVersionID="84" comment="firmware 1.02.084" />
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="|" />
-          <!-- not available for this decoder -->
-          <output name="6" label="|" />
-          <!-- not available for this decoder -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="SD18A (firmware 1.03+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD18A_1.03" comment="SD18A with October 2014 firmware">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)" />
-          <!-- New from fw1.03  -->
-          <output name="6" label="AUX 4|(or SUSI ZDAT)" />
-          <!-- New from fw1.03  -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="SD18A (firmware 1.04+)" replacementModel="SD18A (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD18A_1.04" comment="SD18A with May 2015 firmware">
-          <versionCV lowVersionID="115" highVersionID="115" comment="firmware 1.05.115 has no dedicated definition; this is the nearest earlier CV set" />
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX 3|(or SUSI ZCLK)" />
-          <!-- New from fw1.03  -->
-          <output name="6" label="AUX 4|(or SUSI ZDAT)" />
-          <!-- New from fw1.03, changed from fw1.04  -->
-          <output name="7" label="Dimmed Lights|(or AUX 5)" />
-          <output name="8" label="Shunting Speed|(or AUX 6)" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-      </family>
-      <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sound_fw1.00-04_SD21A.xml">
-        <model model="SD21A (firmware 1.01+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="SD21A_1.01" comment="SD21A with firmware 1.01">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="SD21A (firmware 1.02+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="74" highVersionID="74" numOuts="6" numFns="16" productID="SD21A_1.02" comment="SD21A with July 2014 firmware">
-          <versionCV lowVersionID="84" highVersionID="84" comment="firmware 1.02.084" />
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="SD21A (firmware 1.03+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="104" highVersionID="104" numOuts="6" numFns="16" productID="SD21A_1.03" comment="SD21A with October 2014 firmware">
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-        <model model="SD21A (firmware 1.04+)" replacementModel="SD21A-4 (firmware 1.12+)" replacementFamily="query:Sound Decoders (2020)" lowVersionID="055" highVersionID="055" numOuts="6" numFns="16" productID="SD21A_1.04" comment="SD21A with May 2015 firmware">
-          <versionCV lowVersionID="115" highVersionID="115" comment="firmware 1.05.115 has no dedicated definition; this is the nearest earlier CV set" />
-          <output name="1" label="Front|Light" />
-          <output name="2" label="Rear|Light" />
-          <output name="3" label="AUX|1" />
-          <output name="4" label="AUX|2" />
-          <output name="5" label="AUX|3" />
-          <output name="6" label="AUX|4" />
-          <!-- AUX 5 - 6 from fw1.04  -->
-          <output name="7" label="Dimmed Lights|(or AUX 5)" />
-          <output name="8" label="Shunting Speed|(or AUX 6)" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-          </protocols>
-        </model>
-      </family>
-      <family name="SUSI sound modules" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.00_SH10A.xml">
-        <model model="SH10A (firmware 1.00+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" />
-        <model model="SH10A (firmware 1.01+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.01" comment="SH10A with firmware 1.01 or later" />
-        <model model="SH10A (firmware 1.02+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.02" comment="SH10A with firmware 1.02 or later" />
-        <model model="SH10A (firmware 1.03+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.03" comment="SH10A with firmware 1.03 or later" />
-        <model model="SH10A (firmware 1.04+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.04" comment="SH10A with firmware 1.04 or later" />
-        <model model="SH10A (firmware 1.05+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.05" comment="SH10A with firmware 1.05 or later" />
-        <model model="SH10A (firmware 1.06+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" />
-        <model model="SH10A (firmware 1.07+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="2" numFns="30" productID="SH10A_1.07" comment="SH10A with firmware 1.07 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-        <model model="SH10A (firmware 1.08+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" numOuts="2" numFns="30" productID="SH10A_1.08" comment="SH10A with firmware 1.08 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-        <model model="SH10A (firmware 1.09+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="56" highVersionID="56" numOuts="2" numFns="30" productID="SH10A_1.09" comment="SH10A with firmware 1.09 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-        <model model="SH10A (firmware 1.10+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="27" highVersionID="27" numOuts="2" numFns="30" productID="SH10A_1.10" comment="SH10A with firmware 1.10 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-        <model model="SH10A (firmware 1.11+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="117" highVersionID="117" numOuts="2" numFns="30" productID="SH10A_1.11" comment="SH10A with firmware 1.11 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-        <model model="SH10A (firmware 1.12+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="48" highVersionID="48" numOuts="2" numFns="30" productID="SH10A_1.12" comment="SH10A with firmware 1.12 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-        <model model="SH10A (firmware 1.13+)" replacementModel="SH10A (firmware 1.14.050+)" replacementFamily="query:SUSI sound modules (2020)" lowVersionID="98" highVersionID="98" numOuts="2" numFns="30" productID="SH10A_1.13" comment="SH10A with firmware 1.13 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-      </family>
-      <family name="SUSI sound modules (2020)" mfg="Doehler und Haass" file="Doehler_Haass_susi_fw1.14_SH05-10A.xml">
-        <model model="SH05A (firmware 1.14.050+)" replacementModel="SH05A (firmware 1.15.112+)" replacementFamily="query:SUSI sound modules (2022)" lowVersionID="50" highVersionID="50" numOuts="2" numFns="30" productID="50" comment="SH05A with firmware 1.14 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
-        <model model="SH10A (firmware 1.14.050+)" replacementModel="SH10A (firmware 1.15.112+)" replacementFamily="query:SUSI sound modules (2022)" lowVersionID="50" highVersionID="50" numOuts="2" numFns="30" productID="100" comment="SH10A with firmware 1.14 or later">
-          <output name="1" label="AUX|1" />
-          <output name="2" label="AUX|2" />
-        </model>
+        <!-- deactivated until an update is available
+      <model model="PD05A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="5.0" width="7.9" height="2.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="PD05A Gen. 2 (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="2" numFns="16" productID="131" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="5.2" width="8.0" height="2.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="PD06A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="132" comment="PD06A-0 / PD06A-3" maxInputVolts="18V" maxMotorCurrent="0.2A/6V" maxTotalCurrent="0.5A" connector="Wires">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <size length="6.8" width="11.4" height="2.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="PD10MU (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="130" comment="PD10MU-3 / PD10MU-4 commissioned by DM-Toys" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="11.7" width="8.5" height="1.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD12A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="24.2" width="11.0" height="2.4" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD18A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="134" comment="PD18A" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="23.8" width="10.8" height="2.0" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD18MU (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="134" comment="PD18MU" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="9.0" width="9.7" height="2.9" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD21A (firmware 3.15.016+)" lowVersionID="16" highVersionID="16" numOuts="4" numFns="16" productID="133" comment="PD21A-4" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="21MTC">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="21.2" width="15.5" height="2.9" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+-->
       </family>
       <family name="Bachmann" mfg="Electronic Solutions Ulm GmbH" file="ESU_Bachmann_3_function.xml">
         <model model="EZ Command 3 function decoder (36-553)" numOuts="3" numFns="5">
@@ -9183,7 +9325,7 @@
         <model show="no" model="LokSound Select PCC trolley steetcar" numOuts="12" extFnsESU="V4" productID="73418" />
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <!-- Copyright (C) JMRI 2019 All rights reserved -->
-        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="3,1" label="Momentum off" />
           <output name="3,2" label="Shunting Mode" />
           <output name="3,3" label="Dynamic brake" />
@@ -9207,7 +9349,7 @@
         </functionlabels>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <!-- Copyright (C) JMRI 2019 All rights reserved -->
-        <soundlabels xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+        <soundlabels xmlns:docbook="http://docbook.org/ns/docbook" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <soundlabel num="25">
             <text>Random sounds</text>
             <text xml:lang="de">Zufallssound</text>
@@ -20997,6 +21139,11 @@
         </functionlabels>
       </family>
       <family name="Blunami Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Diesel decoders" file="SoundTraxx_Blu_Diesel.xml">
+        <model model="BLU-1100 Alco Diesels" numOuts="4" numFns="30" productID="2168" comment="Model 885603" />
+        <model model="BLU-1100 Baldwin Diesels" numOuts="4" numFns="30" productID="2169" comment="Model 885604" />
+        <model model="BLU-1100 EMD Diesels" numOuts="4" numFns="30" productID="2166" comment="Model 885601" />
+        <model model="BLU-1100 EMD-2 Diesels" numOuts="4" numFns="30" productID="2170" comment="Model 885621" />
+        <model model="BLU-1100 GE Diesels" numOuts="4" numFns="30" productID="2167" comment="Model 885602" />
         <model model="BLU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" productID="2160" comment="Model 885611" />
         <model model="BLU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" productID="2161" comment="Model 885612" />
         <model model="BLU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" productID="2158" comment="Model 885609" />
@@ -21078,6 +21225,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Electric decoders" file="SoundTraxx_Blu_Electric.xml">
+        <model model="BLU-1100 Electric" numOuts="4" numFns="30" productID="2171" comment="Model 886601" />
         <model model="BLU-21PNEM8 Electric" numOuts="8" numFns="30" productID="2163" comment="Model 886603" />
         <model model="BLU-2200 Electric" numOuts="6" numFns="30" productID="2144" comment="Model 886602" />
         <model model="BLU-4408 Electric" numOuts="8" numFns="30" productID="2151" comment="Model 886604" />
@@ -21142,6 +21290,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Steam decoders" file="SoundTraxx_Blu_Steam.xml">
+        <model model="BLU-1100 Steam-2" numOuts="4" numFns="30" productID="2164" comment="Model 884606" />
         <model model="BLU-21PNEM8 Steam-2" numOuts="8" numFns="30" productID="2157" comment="Model 884608" />
         <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" productID="2138" comment="Model 884607" />
         <model model="BLU-4408 Steam-2" numOuts="8" numFns="30" productID="2145" comment="Model 884609" />
@@ -22984,6 +23133,64 @@
           <functionlabel num="23" lockable="true">All Aboard</functionlabel>
           <functionlabel num="26" lockable="true">RPM+</functionlabel>
           <functionlabel num="27" lockable="true">RPM-</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Tsunami2 Diesel OEM Kato" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Kato.xml">
+        <model model="TSU-KN2 ALC42" numOuts="6" numFns="30" productID="16387" />
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Airhorn| ">
+          <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8" />
+        <output name="10" label="General|Service" />
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode" />
+        <output name="14" label="Ind/Train|Brake" />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true">RPM+</functionlabel>
+          <functionlabel num="6" lockable="true">RPM-</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Grade Crossing</functionlabel>
+          <functionlabel num="10" lockable="true">Straight to Eight</functionlabel>
+          <functionlabel num="11" lockable="true">Ind/Train Brake</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Select</functionlabel>
+          <functionlabel num="13" lockable="true">Coupler</functionlabel>
+          <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="15" lockable="true">Handbrake</functionlabel>
+          <functionlabel num="16" lockable="true">HEP Mode</functionlabel>
+          <functionlabel num="17" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="18" lockable="true">General Service</functionlabel>
+          <functionlabel num="19" lockable="true">Straight to Idle</functionlabel>
+          <functionlabel num="20" lockable="true">Auxiliary HEP Generator</functionlabel>
+          <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
+          <functionlabel num="22" lockable="true">Cab Chatter</functionlabel>
+          <functionlabel num="23" lockable="true">All Aboard</functionlabel>
+          <functionlabel num="24" lockable="true">FX3: Diesel-light</functionlabel>
+          <functionlabel num="25" lockable="true">FX4: Diesel-light</functionlabel>
         </functionlabels>
       </family>
       <family name="Tsunami2 Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the -retail- version Tsunami2 Electric decoders" file="SoundTraxx_Tsu2_Electric.xml">
@@ -28112,6 +28319,41 @@
           <output name="4" label="AUX2" />
           <output name="5" label="Shunting|gear" />
           <output name="6" label="Acceleration|and brake delay off" />
+        </model>
+      </family>
+      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" highVersionID="62" file="TAMS_LD_G_42-2.xml">
+        <model model="LD-G-42.2 (solder)" numOuts="9" numFns="29" productID="41-04480">
+          <!--without wires-->
+          <output name="1" label="F0f|(White)" />
+          <output name="2" label="F0r (Yellow)" />
+          <output name="3" label="AUX1" />
+          <output name="4" label="AUX2" />
+          <output name="5" label="UPS" />
+          <output name="6" label="Stop with function" />
+          <output name="7" label="Shunting|gear" />
+          <output name="8" label="Acceleration|and brake delay off" />
+        </model>
+        <model model="LD-G-42.2 (wires)" numOuts="9" numFns="29" productID="41-04481">
+          <!-- wires-->
+          <output name="1" label="F0f|(White)" />
+          <output name="2" label="F0r|(Yellow)" />
+          <output name="3" label="AUX1" />
+          <output name="4" label="AUX2" />
+          <output name="5" label="UPS" />
+          <output name="6" label="Stop with function" />
+          <output name="7" label="Shunting|gear" />
+          <output name="8" label="Acceleration|and brake delay off" />
+        </model>
+        <model model="LD-G-42.2 NEM652" numOuts="9" numFns="29" productID="41-04482" lowVersionID="14">
+          <!-- NEM 652 -->
+          <output name="1" label="F0f|(White)" />
+          <output name="2" label="F0r|(Yellow)" />
+          <output name="3" label="AUX1" />
+          <output name="4" label="AUX2" />
+          <output name="5" label="UPS" />
+          <output name="6" label="Stop with function" />
+          <output name="7" label="Shunting|gear" />
+          <output name="8" label="Acceleration|and brake delay off" />
         </model>
       </family>
       <family name="Digital LED Boards (WIB)" mfg="Tams Elektronik GmbH" lowVersionID="14" comment="Tams WIB-31, WIB-32, WIB-33" file="TAMS_WIB-30.xml">
@@ -37502,7 +37744,7 @@
         </model>
       </family>
       <family name="MN Non-Sound (version 4+)" mfg="Zimo" file="Zimo_MN_small_v4.xml">
-        <model model="MN140E24 version 4+" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="119">
+        <model model="MN140E24 version 4+" replacementModel="MN140E24 version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="119">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37512,7 +37754,7 @@
           <output name="7" label="FO 5" />
           <output name="8" label="FO 6" />
         </model>
-        <model model="MN160 version 4+" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="122">
+        <model model="MN160 version 4+" replacementModel="MN160 version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="122">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37520,7 +37762,7 @@
           <output name="5" label="FO 3" />
           <output name="6" label="FO 4" />
         </model>
-        <model model="MN170 version 4+" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="124">
+        <model model="MN170 version 4+" replacementModel="MN170 version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="124">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37530,7 +37772,7 @@
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
         </model>
-        <model model="MN180N18 version 4+" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="127">
+        <model model="MN180N18 version 4+" replacementModel="MN180N18 version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="127">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37538,13 +37780,13 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MN250 version 4+" lowVersionID="4" highVersionID="4" numOuts="4" numFns="14" productID="120">
+        <model model="MN250 version 4+" replacementModel="MN250 version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="4" numFns="14" productID="120">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
         </model>
-        <model model="MN300 version 4+" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="125">
+        <model model="MN300 version 4+" replacementModel="MN300 version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="125">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37554,7 +37796,7 @@
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
         </model>
-        <model model="MN330 version 4+" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="126">
+        <model model="MN330 version 4+" replacementModel="MN330 version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="126">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37568,7 +37810,7 @@
           <output name="11" label="FO 9 (+5V)" />
           <output name="12" label="FO 10 (+5V)" />
         </model>
-        <model model="MN340C version 4+" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="123">
+        <model model="MN340C version 4+" replacementModel="MN340C version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="123">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37576,7 +37818,7 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MN340D version 4+" lowVersionID="4" highVersionID="4" numOuts="10" numFns="14" productID="123">
+        <model model="MN340D version 4+" replacementModel="MN340D version 5+" replacementFamily="query:MN Non-Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="10" numFns="14" productID="123">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37684,7 +37926,7 @@
         </model>
       </family>
       <family name="MS Sound (version 4+)" mfg="Zimo" file="Zimo_MS_large_v4.xml">
-        <model model="MS950 version 4+" lowVersionID="4" highVersionID="4" numOuts="14" numFns="14" productID="9">
+        <model model="MS950 version 4+" replacementModel="MS950 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="14" numFns="14" productID="9">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37700,7 +37942,7 @@
           <output name="13" label="FO 11 (+5V)" />
           <output name="14" label="FO 12 (+5V)" />
         </model>
-        <model model="MS990 version 4+" lowVersionID="4" highVersionID="4" numOuts="15" numFns="14" productID="7">
+        <model model="MS990 version 4+" replacementModel="MS990 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="15" numFns="14" productID="7">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37767,7 +38009,7 @@
       <family name="MS Sound (version 4+)" mfg="Zimo" file="Zimo_MS_small_v4.xml">
         <!-- MS001 is an OEM build (e.g. in the Fleischmann Beilhack). Physical data varies by locomotive,
            so none is declared; the maximum output count of the small MS decoders is used. -->
-        <model model="MS001 (OEM) version 4+" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="11" comment="OEM version of an MS sound decoder, factory-fitted by a model manufacturer and not sold separately. Physical characteristics vary by locomotive: outputs, connector, size and current ratings are not those of any catalogue MS decoder. The maximum number of outputs is offered here; your locomotive may use fewer.">
+        <model model="MS001 (OEM) version 4+" replacementModel="MS001 (OEM) version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="11" comment="OEM version of an MS sound decoder, factory-fitted by a model manufacturer and not sold separately. Physical characteristics vary by locomotive: outputs, connector, size and current ratings are not those of any catalogue MS decoder. The maximum number of outputs is offered here; your locomotive may use fewer.">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37781,7 +38023,7 @@
           <output name="11" label="FO 9" />
           <output name="12" label="FO 10" />
         </model>
-        <model model="MS440 version 4+" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="4">
+        <model model="MS440 version 4+" replacementModel="MS440C version 5+|MS440D version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="4">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37791,7 +38033,7 @@
           <output name="7" label="FO 5" />
           <output name="8" label="FO 6" />
         </model>
-        <model model="MS450 version 4+" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="6">
+        <model model="MS450 version 4+" replacementModel="MS450 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="6">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37805,7 +38047,7 @@
           <output name="11" label="FO 9 (+5V)" />
           <output name="12" label="FO 10 (+5V)" />
         </model>
-        <model model="MS480 version 4+" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="2">
+        <model model="MS480 version 4+" replacementModel="MS480 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="2">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37815,7 +38057,7 @@
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
         </model>
-        <model model="MS490 version 4+" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="3">
+        <model model="MS490 version 4+" replacementModel="MS490 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="3">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37823,7 +38065,7 @@
           <output name="5" label="FO 3" />
           <output name="6" label="FO 4" />
         </model>
-        <model model="MS491 version 4+" lowVersionID="4" highVersionID="4" numOuts="7" numFns="14" productID="12">
+        <model model="MS491 version 4+" replacementModel="MS491 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="7" numFns="14" productID="12">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37832,7 +38074,7 @@
           <output name="6" label="FO 4" />
           <output name="7" label="FO 5" />
         </model>
-        <model model="MS500 version 4+" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="1">
+        <model model="MS500 version 4+" replacementModel="MS500 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="6" numFns="14" productID="1">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37840,7 +38082,7 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="14">
+        <model model="MS540E24 version 4+" replacementModel="MS540E24 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="12" numFns="14" productID="14">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37854,13 +38096,13 @@
           <output name="11" label="FO 9 (+5V)" />
           <output name="12" label="FO 10 (+5V)" />
         </model>
-        <model model="MS560 version 4+" lowVersionID="4" highVersionID="4" numOuts="4" numFns="14" productID="10">
+        <model model="MS560 version 4+" replacementModel="MS560 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="4" numFns="14" productID="10">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1 (+5v)" />
           <output name="4" label="FO 2 (+5v)" />
         </model>
-        <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="5">
+        <model model="MS580N18 version 4+" replacementModel="MS580N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="5">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37870,7 +38112,7 @@
           <output name="7" label="FO 5 (LED)" />
           <output name="8" label="FO 6 (LED)" />
         </model>
-        <model model="MS581N18 version 4+" lowVersionID="4" highVersionID="4" numOuts="9" numFns="14" productID="13">
+        <model model="MS581N18 version 4+" replacementModel="MS581N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="9" numFns="14" productID="13">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37881,7 +38123,7 @@
           <output name="6" label="FO 6 (+5v)" />
           <output name="9" label="FO 7 (+5v)" />
         </model>
-        <model model="MS590N18 version 4+" lowVersionID="4" highVersionID="4" numOuts="7" numFns="14" productID="8">
+        <model model="MS590N18 version 4+" replacementModel="MS590N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="7" numFns="14" productID="8">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37890,7 +38132,7 @@
           <output name="6" label="FO 4 (+5v)" />
           <output name="7" label="FO 5 (+5v)" />
         </model>
-        <model model="MS591N18 version 4+" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="15">
+        <model model="MS591N18 version 4+" replacementModel="MS591N18 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" numOuts="8" numFns="14" productID="15">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37905,6 +38147,20 @@
         <!-- MS001 is an OEM build (e.g. in the Fleischmann Beilhack). Physical data varies by locomotive,
            so none is declared; the maximum output count of the small MS decoders is used. -->
         <model model="MS001 (OEM) version 5+" lowVersionID="5" highVersionID="42" numOuts="12" numFns="14" productID="11" comment="OEM version of an MS sound decoder, factory-fitted by a model manufacturer and not sold separately. Physical characteristics vary by locomotive: outputs, connector, size and current ratings are not those of any catalogue MS decoder. The maximum number of outputs is offered here; your locomotive may use fewer.">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <output name="11" label="FO 9" />
+          <output name="12" label="FO 10" />
+        </model>
+        <model model="MS420 version 5+" lowVersionID="5" highVersionID="42" numOuts="12" numFns="14" productID="19">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37943,38 +38199,6 @@
           <output name="9" label="FO 7 (+5V)" />
           <output name="10" label="FO 8 (+5V)" />
         </model>
-        <model model="MS420 version 5+" lowVersionID="5" highVersionID="42" numOuts="12" numFns="14" productID="19">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-          <output name="11" label="FO 9" />
-          <output name="12" label="FO 10" />
-        </model>
-        <model model="MS481 version 5+" lowVersionID="5" highVersionID="42" numOuts="8" numFns="14" productID="16">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5V)" />
-          <output name="8" label="FO 6 (+5V)" />
-        </model>
-        <model model="MS501 version 5+" lowVersionID="5" highVersionID="42" numOuts="6" numFns="14" productID="17">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5V)" />
-          <output name="6" label="FO 4 (+5V)" />
-        </model>
         <model model="MS450 version 5+" lowVersionID="5" highVersionID="42" numOuts="12" numFns="14" productID="6">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -37998,6 +38222,16 @@
           <output name="6" label="FO 4" />
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MS481 version 5+" lowVersionID="5" highVersionID="42" numOuts="8" numFns="14" productID="16">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5V)" />
+          <output name="8" label="FO 6 (+5V)" />
         </model>
         <model model="MS490 version 5+" lowVersionID="5" highVersionID="42" numOuts="6" numFns="14" productID="3">
           <output name="1" label="Front Light" />
@@ -38023,6 +38257,14 @@
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MS501 version 5+" lowVersionID="5" highVersionID="42" numOuts="6" numFns="14" productID="17">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5V)" />
+          <output name="6" label="FO 4 (+5V)" />
         </model>
         <model model="MS540E24 version 5+" lowVersionID="5" highVersionID="42" numOuts="12" numFns="14" productID="14">
           <output name="1" label="Front Light" />
