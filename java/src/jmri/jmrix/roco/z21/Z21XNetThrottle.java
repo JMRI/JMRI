@@ -272,20 +272,6 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
         }
     }
 
-    /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
-     * <p>
-     * This is quite problematic, because a using object doesn't know when it's
-     * the last user.
-     */
-    @Override
-    public void throttleDispose() {
-        active = false;
-        stopStatusTimer();
-        finishRecord();
-    }
-
     // register for notification
     private static final Logger log = LoggerFactory.getLogger(Z21XNetThrottle.class);
 

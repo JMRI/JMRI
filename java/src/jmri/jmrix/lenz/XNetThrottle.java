@@ -26,6 +26,38 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected java.util.TimerTask statusTask;   // Timer Task used to periodically get current
     // status of the throttle when throttle not available.
     protected static final int statTimeoutValue = 1000; // Interval to check the
+
+    /**
+     * Default interval, in milliseconds, after which a throttle still waiting
+     * for the reply to the message it sent gives up and restarts its queue,
+     * provided the traffic controller reports itself at rest.
+     * <p>
+     * When the traffic controller has nothing outstanding and nothing queued
+     * while this throttle is still waiting, the reply it waits for is already
+     * gone - typically delivered to another listener because a broadcast
+     * message was taken for it. No delay can make it arrive, so there is
+     * nothing to gain by waiting longer.
+     * <p>
+     * That state is otherwise absorbing: a throttle which is not idle never
+     * hands another message to the traffic controller, so it never becomes the
+     * current destination again, so it can never receive the reply that would
+     * release it. Every command queued afterwards is held back for the lifetime
+     * of the session.
+     */
+    protected static final int THROTTLE_WATCHDOG_INTERVAL = 5000;
+
+    /**
+     * Unconditional deadline, in milliseconds, expressed as a multiple of
+     * {@link #THROTTLE_WATCHDOG_INTERVAL}.
+     * <p>
+     * While the traffic controller is busy, a reply can legitimately be late:
+     * the message may still be queued behind a message of its own which is
+     * consuming its full timeout. This longer deadline stays clear of that, and
+     * every retransmission re-arms the watchdog, so a message being retried
+     * never trips it.
+     */
+    protected static final int THROTTLE_WATCHDOG_MAX_MULTIPLE = 3;
+
     @GuardedBy("this")
     protected XNetTrafficController tc;
 
@@ -38,9 +70,37 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected static final int THROTTLEHIGHSTATSENT = 16;  // Sent Status request for F13-F28
     protected static final int THROTTLEHIGHMOMSTATSENT = 32;  // Sent Momentary Status request for F13-F28
 
-    protected int requestState = THROTTLEIDLE;
+    // Written by the receive thread in message(), by the GUI thread in
+    // queueMessage() and read by the watchdog timer thread, so it has to be
+    // volatile for the watchdog to observe the current state rather than a
+    // stale one.
+    protected volatile int requestState = THROTTLEIDLE;
 
     protected int address;
+
+    // Watchdog for the reply to the message currently handed to the traffic
+    // controller.  Null when no message is outstanding.
+    @GuardedBy("this")
+    private java.util.TimerTask watchdogTask;
+
+    @GuardedBy("this")
+    private int watchdogInterval = THROTTLE_WATCHDOG_INTERVAL;
+
+    // When the message the watchdog is guarding was handed to the traffic
+    // controller, so that a re-check can tell how long the wait has lasted.
+    @GuardedBy("this")
+    private long watchdogArmedAt;
+
+    // Cleared by throttleDispose().  A disposed throttle never arms its
+    // watchdog again, not even from a timer which was already running when it
+    // was disposed of.  Read from the timer thread, hence volatile.
+    private volatile boolean watchdogEnabled = true;
+
+    // Set once the watchdog has reported this throttle stuck, cleared by any
+    // reply.  A command station which stopped answering altogether is then
+    // reported once instead of every time the watchdog restarts the queue.
+    @GuardedBy("this")
+    private boolean watchdogReported;
 
     // Get the number of valid functions from the software version number.
     // Declared private static so it can be called as an argument to super(..)
@@ -470,7 +530,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     @Override
     public void throttleDispose() {
         active = false;
+        watchdogEnabled = false;
         stopStatusTimer();
+        cancelWatchdog();
         finishRecord();
     }
 
@@ -547,6 +609,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         // First, we want to see if this throttle is waiting for a message
         //or not.
         log.debug("Throttle {} - received message {}", getDccAddress(), l);
+        synchronized (this) {
+            // the command station is answering again, a later silence is worth
+            // reporting anew.
+            watchdogReported = false;
+        }
         if (requestState == THROTTLEIDLE) {
             log.trace("Current throttle status is THROTTLEIDLE");
             // We haven't sent anything, but we might be told someone else
@@ -777,6 +844,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             // the traffic controller.
             synchronized (this) {
                 tc.sendXNetMessage(msg, this);
+                // the reply is expected again, restart the watchdog from here
+                armWatchdog();
             }
         } else {
             // Try to send the next queued message,  if one is available.
@@ -1060,6 +1129,123 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
     }
 
+    /**
+     * Arm the watchdog for the message just handed to the traffic controller.
+     * <p>
+     * Any watchdog already armed is cancelled first, so the delay is always
+     * counted from the most recent transmission and a legitimate retransmission
+     * never trips it.
+     */
+    protected synchronized void armWatchdog() {
+        cancelWatchdog();
+        if (!watchdogEnabled) {
+            return; // disposed of, nothing is waiting for a reply any more
+        }
+        watchdogArmedAt = System.currentTimeMillis();
+        scheduleWatchdog(watchdogInterval);
+    }
+
+    private synchronized void scheduleWatchdog(long delay) {
+        java.util.TimerTask task = new java.util.TimerTask() {
+            @Override
+            public void run() {
+                watchdogExpired(this);
+            }
+        };
+        watchdogTask = task;
+        jmri.util.TimerUtil.schedule(task, delay);
+    }
+
+    /**
+     * Disarm the watchdog, the throttle is no longer waiting for a reply.
+     */
+    protected synchronized void cancelWatchdog() {
+        if (watchdogTask != null) {
+            watchdogTask.cancel();
+            watchdogTask = null;
+        }
+    }
+
+    /**
+     * The reply to the outstanding message never arrived. Return to idle and
+     * restart the queue, otherwise this throttle would stay silent until the
+     * end of the session.
+     *
+     * @param task the expiring task, used to ignore an expiry which a later
+     *             transmission has already superseded
+     */
+    private synchronized void watchdogExpired(java.util.TimerTask task) {
+        if (task != watchdogTask) {
+            return; // superseded, the message sent since owns the watchdog
+        }
+        watchdogTask = null;
+        if (!watchdogEnabled || requestState == THROTTLEIDLE) {
+            return;
+        }
+        long waited = System.currentTimeMillis() - watchdogArmedAt;
+        long maxWait = (long) watchdogInterval * THROTTLE_WATCHDOG_MAX_MULTIPLE;
+        if (tc.isAtRest()) {
+            // Nothing is in flight and nothing is queued, so the reply this
+            // throttle is waiting for is already gone.  Waiting longer cannot
+            // help: this is the state the whole watchdog exists for.
+            if (watchdogAlreadyReported()) {
+                log.debug("Throttle {} - traffic controller at rest with a reply still due after"
+                        + " {}ms in state {}, restarting the queue", getDccAddress(), waited, requestState);
+            } else {
+                log.warn("Throttle {} - traffic controller at rest with a reply still due after"
+                        + " {}ms in state {}, restarting the queue", getDccAddress(), waited, requestState);
+            }
+        } else if (waited >= maxWait) {
+            if (watchdogAlreadyReported()) {
+                log.debug("Throttle {} - no reply after {}ms in state {}, restarting the queue",
+                        getDccAddress(), waited, requestState);
+            } else {
+                log.warn("Throttle {} - no reply after {}ms in state {}, restarting the queue",
+                        getDccAddress(), waited, requestState);
+            }
+        } else {
+            // The traffic controller still has work in hand, the reply may yet
+            // be legitimately late.  Look again later, up to the hard deadline.
+            scheduleWatchdog(Math.min(watchdogInterval, maxWait - waited));
+            return;
+        }
+        requestState = THROTTLEIDLE;
+        sendQueuedMessage();
+    }
+
+    /**
+     * Tell whether this stuck episode has already been reported, and mark it
+     * reported.
+     * <p>
+     * The first expiry is worth a warning: a reply was lost and the queue had
+     * to be restarted. Until a reply is received again, further expiries only
+     * repeat that the command station is still not answering, which would
+     * otherwise put a warning in the log every
+     * {@value #THROTTLE_WATCHDOG_INTERVAL} milliseconds for as long as the
+     * throttle exists.
+     *
+     * @return true if a warning has already been issued since the last reply
+     */
+    @GuardedBy("this")
+    private boolean watchdogAlreadyReported() {
+        boolean reported = watchdogReported;
+        watchdogReported = true;
+        return reported;
+    }
+
+    /**
+     * Set how long this throttle waits for a reply, once the traffic controller
+     * is at rest, before giving up and restarting its queue. While the traffic
+     * controller is busy the throttle waits up to
+     * {@value #THROTTLE_WATCHDOG_MAX_MULTIPLE} times as long.
+     * Takes effect on the next message sent.
+     *
+     * @param interval interval in milliseconds
+     */
+    public synchronized void setWatchdogInterval(int interval) {
+        watchdogInterval = interval;
+    }
+
     @Override
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, XNetThrottleManager.isLongAddress(address));
@@ -1088,10 +1274,18 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             requestState = msg.getState();
             tc.sendXNetMessage(msg.getMsg(), this);
+            if (requestState == THROTTLEIDLE) {
+                // a message sent without waiting for its reply, e.g. Z21
+                cancelWatchdog();
+            } else {
+                // a reply is expected, guard against never getting one
+                armWatchdog();
+            }
         } else {
             log.debug("message queue empty");
             // if the queue is empty, set the state to idle.
             requestState = THROTTLEIDLE;
+            cancelWatchdog();
         }
     }
 
