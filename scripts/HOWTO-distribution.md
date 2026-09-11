@@ -343,13 +343,13 @@ This section describes in detail the process for creating the release note for a
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.17.1-SNAPSHOT/5.17.3-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.17.2-SNAPSHOT/5.17.3-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=1/release.build=2/g release.properties
+        sed -i.bak s/release.build=2/release.build=3/g release.properties
         head -10 release.properties
 ```
  - Check that both those edits left 5.17.3 defined in the two files
