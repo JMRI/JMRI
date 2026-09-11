@@ -289,7 +289,8 @@
             <ul>
                 <li>PD series disabled until an update 3.15+ is available</li>
                 <li>Added a "replacement" function for some decoders</li>
-                <li>D&H files have been renamed for sorting in the decoder selection window</li>
+                <li>D &amp; H files have been renamed for sorting in the decoder selection window</li>
+                <li>Decoder files renamed for sorted display</li>
             </ul>
 
         <h4>ESU</h4>
@@ -453,6 +454,7 @@
             <ul>
                 <li>Added replacement-feature for v4.x MS/MN decoder</li>
                 <li>Added some features from CV27 for FS/MS/MN decoders, in particular HLU-Options</li>
+                <li>The ‘small’ decoders MX600, 615, 616, 617, MN150, 160 and 250 do not support servos: CV and Pane servos are excluded</li>
                 <li>Minor optical corrections</li>
             </ul>
 
