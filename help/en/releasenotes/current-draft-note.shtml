@@ -127,6 +127,7 @@
                     LocoNet slot usage (used/free/total) over both the HTTP and WebSocket JSON
                     APIs, so external clients can detect slot exhaustion before a consist or
                     throttle operation fails.</li>
+                <li>Added a LocoNet option to update slot status at LocoNet message creation and ignore echos of our own messages.</li>
             </ul>
 
         <h4>Maple</h4>

@@ -42,7 +42,10 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         options.put(option1Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
         options.put(option2Name, new Option(Bundle.getMessage("TurnoutHandling"),
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
-    }
+        options.put("LoconetUpdateSlotOnMessageCreation",                                       // NOI18N
+                new Option(Bundle.getMessage("LoconetUpdateSlotOnMessageCreationLabel"),        // I18N
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} ));  // I18N
+     }
 
     @Override
     public Vector<String> getPortNames() {
@@ -178,6 +181,7 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         setTurnoutHandling(getOptionState(option2Name));
         // connect to a packetizing traffic controller
         LnPacketizer packets = new LnPacketizer(this.getSystemConnectionMemo());
+        packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
         packets.connectPort(this);
 
         // create memo

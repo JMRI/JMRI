@@ -76,14 +76,10 @@ public class IBLnPacketizer extends LnPacketizer {
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readNextByteFromUSB() & 0xFF)) & 0x80) == 0) {
-                        if (log.isDebugEnabled()) { // Avoid building unneeded Strings
-                            log.debug("Skipping: {}", Integer.toHexString(opCode));
-                        }
+                        log.debug("Skipping: {}", Integer.toHexString(opCode));
                     }
                     // here opCode is OK. Create output message
-                    if (log.isDebugEnabled()) { // Avoid building unneeded Strings
-                        log.debug("Start message with opcode: {}", Integer.toHexString(opCode));
-                    }
+                    log.debug("Start message with opcode: {}", Integer.toHexString(opCode));
                     LocoNetMessage msg = null;
                     while (msg == null) {
                         try {
@@ -155,17 +151,24 @@ public class IBLnPacketizer extends LnPacketizer {
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
-                    {
-                        if (log.isDebugEnabled()) {
-                            log.debug("queue message for notification");
-                        }
+                    log.trace("message complete: {}", msg);
+                        
+                    // check if this message was supposed to be ignored
+                    // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
+                    if(trafficController.getSentList().contains(msg)) {
+                        trafficController.getSentList().remove(msg);
+                        log.trace("found packet {} in sentList, ignoring. {} packets in sentList remaining.", msg, trafficController.getSentList().size());
+                    }
+                    else {
+                        log.trace("queue message for notification: {}", msg);
+
                         final LocoNetMessage thisMsg = msg;
                         final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTc = thisTc;
-
+                            
                             @Override
                             public void run() {
                                 myTc.notify(msgForLater);
