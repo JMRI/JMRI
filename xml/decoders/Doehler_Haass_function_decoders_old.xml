@@ -19,6 +19,8 @@
          No reset on this model (confirmed by manufacturer) -->
   <version version="3" author="Pierre Billon" lastUpdated="20260805"/>
   <!-- 3 Added some translations   -->
+  <version version="3.1" author="Ronald Kuhn" lastUpdated="20260911"/>
+  <!-- 3.1 Decoder files renamed for sorted display   -->
   <decoder>
     <family name="Function Decoders (old)" mfg="Doehler und Haass">
       <model model="DHF250" lowVersionID="1" highVersionID="1" numOuts="2" numFns="9" productID="DHF250" comment="without cable" maxInputVolts="30V" maxTotalCurrent="1.0A" connector="other">
