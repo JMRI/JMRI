@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.17.2plus+jake+20260911T1705Z+Rb3df2d90e1f on Fri Sep 11 13:06:18 EDT 2026-->
-  <decoderIndex version="725">
+  <!--Written by JMRI version 5.17.3plus+jake+20260911T2134Z+Rd7f572827aa on Fri Sep 11 17:34:13 EDT 2026-->
+  <decoderIndex version="727">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -28319,41 +28319,6 @@
           <output name="4" label="AUX2" />
           <output name="5" label="Shunting|gear" />
           <output name="6" label="Acceleration|and brake delay off" />
-        </model>
-      </family>
-      <family name="Lokdecoder Serie 42" mfg="Tams Elektronik GmbH" highVersionID="62" file="TAMS_LD_G_42-2.xml">
-        <model model="LD-G-42.2 (solder)" numOuts="9" numFns="29" productID="41-04480">
-          <!--without wires-->
-          <output name="1" label="F0f|(White)" />
-          <output name="2" label="F0r (Yellow)" />
-          <output name="3" label="AUX1" />
-          <output name="4" label="AUX2" />
-          <output name="5" label="UPS" />
-          <output name="6" label="Stop with function" />
-          <output name="7" label="Shunting|gear" />
-          <output name="8" label="Acceleration|and brake delay off" />
-        </model>
-        <model model="LD-G-42.2 (wires)" numOuts="9" numFns="29" productID="41-04481">
-          <!-- wires-->
-          <output name="1" label="F0f|(White)" />
-          <output name="2" label="F0r|(Yellow)" />
-          <output name="3" label="AUX1" />
-          <output name="4" label="AUX2" />
-          <output name="5" label="UPS" />
-          <output name="6" label="Stop with function" />
-          <output name="7" label="Shunting|gear" />
-          <output name="8" label="Acceleration|and brake delay off" />
-        </model>
-        <model model="LD-G-42.2 NEM652" numOuts="9" numFns="29" productID="41-04482" lowVersionID="14">
-          <!-- NEM 652 -->
-          <output name="1" label="F0f|(White)" />
-          <output name="2" label="F0r|(Yellow)" />
-          <output name="3" label="AUX1" />
-          <output name="4" label="AUX2" />
-          <output name="5" label="UPS" />
-          <output name="6" label="Stop with function" />
-          <output name="7" label="Shunting|gear" />
-          <output name="8" label="Acceleration|and brake delay off" />
         </model>
       </family>
       <family name="Digital LED Boards (WIB)" mfg="Tams Elektronik GmbH" lowVersionID="14" comment="Tams WIB-31, WIB-32, WIB-33" file="TAMS_WIB-30.xml">
