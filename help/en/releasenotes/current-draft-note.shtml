@@ -700,6 +700,8 @@
         <a id="server" name="server"></a>
         <ul>
             <li>Improve how "show ? if unknown" works with background image.</li>
+            <li>Improve how Layout Editor cross-overs are drawn to avoid ghost lines
+                on the unselected direction of the crossover.</li>
             <li>Fixed a NullPointerException in the JSON servlet when a POST, PUT, or
                 DELETE request arrived with no Content-Type header, so it now returns
                 a proper JSON error response.</li>

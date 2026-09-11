@@ -3265,9 +3265,8 @@ function $drawTurnout($widget) {
         return;
     }
  
-    //set erase color and width
+    //set erase color
     var $eraseColor = $gPanel.backgroundcolor;
-    var $eraseWidth = $gPanel.mainlinetrackwidth;
  
     //erase Unknown circle by saving and restoring the to-be-covered pixels
     if ($widget.showunknown == "yes") {
@@ -3338,12 +3337,27 @@ function $drawTurnout($widget) {
         var cd = $point_midpoint(c, d);
 
         if ($widget.state == CLOSED || $widget.state == THROWN) {
-            $drawLineP(a, b, $eraseColor, $eraseWidth);      //erase A to B
-            $drawLineP(c, d, $eraseColor, $eraseWidth);      //erase C to D
-            $drawLineP(ab, cd, $eraseColor, $eraseWidth);    //erase midAB to midDC
-            $drawLineP(a, c, $eraseColor, $eraseWidth);      //erase A to C
-            $drawLineP(b, d, $eraseColor, $eraseWidth);      //erase B to D
-            if ($widget.state == $widget.continuing) {
+ 
+            // erase any existing lines
+            $drawLineP(a, ab, $eraseColor, $widthA+1);    //A to mid ab
+            $drawLineP(b, ab, $eraseColor, $widthB+1);    //B to mid ab
+            $drawLineP(c, cd, $eraseColor, $widthC+1);    //C to mid cd
+            $drawLineP(d, cd, $eraseColor, $widthD+1);    //D to mid cd
+            if ($widget.type == DOUBLE_XOVER) {
+                $drawLineP(a, cen, $eraseColor, $widthA+1);   //A to cen
+                $drawLineP(b, cen, $eraseColor, $widthB+1);   //B to cen
+                $drawLineP(c, cen, $eraseColor, $widthC+1);   //C to cen
+                $drawLineP(d, cen, $eraseColor, $widthD+1);   //D to cen
+            } else if ($widget.type == RH_XOVER) {
+                $drawLineP(ab, cen, $eraseColor, $widthA+1);  //midAB to cen
+                $drawLineP(cen, cd, $eraseColor, $widthC+1);  //cen to midDC
+            } else {  //LH_XOVER
+                $drawLineP(ab, cen, $eraseColor, $widthB+1);  //midAB to cen
+                $drawLineP(cen, cd, $eraseColor, $widthD+1);  //cen to midDC
+            }
+
+ 
+             if ($widget.state == $widget.continuing) {
                 //draw closed legs
                 $drawLineP(a, ab, $colorA, $widthA);    //A to mid ab
                 $drawLineP(b, ab, $colorB, $widthB);    //B to mid ab
