@@ -1720,6 +1720,9 @@ public class Track extends PropertyChangeSupport {
 
         // car and locos assigned to trains must be pulled before or when this train arrives
         int trainArrivalTimeMinutes = train.getExpectedTravelTimeInMinutes(rs.getRouteDestinationTiming());
+        if (trainArrivalTimeMinutes == Train.NOT_PART_ROUTE) {
+            return DISABLED;
+        }
 
         // reservedLengthSetouts includes clones
         int reserved = getReservedLengthSetouts();
