@@ -566,7 +566,7 @@ if [ "$OS" = "macosx" ] ; then
     fi
 fi
 
-OPTIONS="${jmri_options} -noverify"
+OPTIONS="${jmri_options}"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
 OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:target/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"

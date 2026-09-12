@@ -653,6 +653,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The "noverify" option has been removed from the JMRI program
+                launchers so that JMRI can use Java 27 and later.</li>
         </ul>
 
