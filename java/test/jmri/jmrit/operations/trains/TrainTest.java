@@ -4433,7 +4433,7 @@ public class TrainTest extends OperationsTestCase {
         rte1.addLocation(loc5);
 
         // Create train
-        Train train1 = trainManager.newTrain("Harvard to Westford Aggressive");
+        Train train1 = trainManager.newTrain("Harvard to Westford Aggressive 1");
         train1.setRoute(rte1);
 
         // Place engines
@@ -4534,7 +4534,7 @@ public class TrainTest extends OperationsTestCase {
 
         // now try with a train returning to staging, test alternate track feature
         // Create train
-        Train train2 = trainManager.newTrain("Westford to Harvard Aggressive");
+        Train train2 = trainManager.newTrain("Westford to Harvard Aggressive 2");
         Route rte2 = routeManager.copyRoute(rte1, "Route 4 Harvard", true);
         train2.setRoute(rte2);
         train2.setRequirements(Train.CABOOSE);
@@ -4651,7 +4651,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
         Assert.assertEquals("c6 destination 3", "Westford Yard 1", c6.getDestinationTrackName());
         Assert.assertEquals("c7 destination 3", "Harvard Yard 1", c7.getDestinationTrackName());
-        Assert.assertEquals("c8 destination 3", "", c8.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 3", "Arlington Spur", c8.getDestinationTrackName());
 
         Assert.assertEquals("c9 destination 3", "", c9.getDestinationTrackName());
         Assert.assertEquals("c10 destination 3", "Chelmsford Yard 1", c10.getDestinationTrackName());
@@ -4681,7 +4681,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c5 location", "Harvard Yard 2", c5.getTrackName());
         Assert.assertEquals("c6 location", "Westford Yard 1", c6.getTrackName());
         Assert.assertEquals("c7 location", "Harvard Yard 1", c7.getTrackName());
-        Assert.assertEquals("c8 location", "Arlington Yard 1", c8.getTrackName());
+        Assert.assertEquals("c8 location", "Arlington Spur", c8.getTrackName());
 
         Assert.assertEquals("c9 location", "Arlington Alternate Track", c9.getTrackName());
         Assert.assertEquals("c10 location", "Chelmsford Yard 1", c10.getTrackName());
