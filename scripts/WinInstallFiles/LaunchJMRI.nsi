@@ -560,7 +560,7 @@ Section "Main"
     StrCpy $JMRIOPTIONS '$JMRIOPTIONS -Dorg.jmri.profile="$JMRIPROFILE"'
 
   contOptions:
-  StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
+  StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djogamp.gluegen.UseTempJarCache=false"
