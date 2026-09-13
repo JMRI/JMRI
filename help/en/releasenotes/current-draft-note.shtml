@@ -458,7 +458,13 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>The default border for Memory Input Icons has been set to "no border" so that
+                users can configure whatever border they want.  Previously, there was
+                always a "shadow line" border placed with the user-specified border.</li>
+            <li>The popup menu for Memory Input Icons now lets you set the number of 
+                columns that the GUI will display. Note that the fixed width
+                interacts with selection:  If you select a wider fixed width,
+                blank areas will display on either side.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -623,7 +629,16 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Some improvements to how the Memory Input icons are handled on panels:
+                <ul>
+                    <li>The padding on the end of the icon now agrees with what's
+                        on the parent JMRI panel.
+                    <li>The drop shadow on the web has been dropped to 
+                        make the appearance agree with the parent JMRI panel.
+                    <li>The default border now agrees with the border on the
+                        parent JMRI panel.
+                </ul>
+            </li>
         </ul>
 
     <h3>Where Used</h3>

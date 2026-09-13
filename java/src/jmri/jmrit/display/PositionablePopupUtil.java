@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -135,6 +136,40 @@ public class PositionablePopupUtil {
         edit.add(CoordinateEdit.getFixedSizeEditAction(_parent));
 
         popup.add(edit);
+        
+        // Handle special case of columns in a MemoryInputIcon.
+        // This is done via reflection to avoid passing a parameter
+        // through a large number of call layers.
+        if (_parent instanceof MemoryInputIcon) {
+            var icon = (MemoryInputIcon) _parent;
+            edit = new JMenu(Bundle.getMessage("EditColumns"));
+            jmi = edit.add("Columns = "+icon.getNumColumns());
+            jmi.setEnabled(false);
+
+            var setColumns = new JMenuItem(Bundle.getMessage("EditSetColumns"));
+            setColumns.addActionListener((ActionEvent event) -> {
+                Component component = null;
+                if (_parent instanceof Component) {
+                    component = (Component) _parent;
+                }
+                String newValue = jmri.util.swing.JmriJOptionPane.showInputDialog(
+                    component,
+                    Bundle.getMessage("EditSetDialog"),
+                    ""+icon.getNumColumns()
+                );
+                int update = 0;
+                try {
+                    update = Integer.valueOf(newValue);
+                } catch (NumberFormatException e) { // ill-formed or canceled input
+                    update = icon.getNumColumns();
+                }
+                icon.setNumColumns(update);
+                icon.revalidate();  // put new size into effect
+            });
+            edit.add(setColumns);
+            
+            popup.add(edit);
+        }
     }
 
     public void setTextMarginMenu(JPopupMenu popup) {
