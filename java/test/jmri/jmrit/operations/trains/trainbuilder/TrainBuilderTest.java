@@ -16746,7 +16746,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
         Assert.assertEquals("c6 destination 3", "Westford Yard 1", c6.getDestinationTrackName());
         Assert.assertEquals("c7 destination 3", "Harvard Yard 1", c7.getDestinationTrackName());
-        Assert.assertEquals("c8 destination 3", "", c8.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 3", "Acton Spur", c8.getDestinationTrackName());
 
         Assert.assertEquals("c9 destination 3", "", c9.getDestinationTrackName());
         Assert.assertEquals("c10 destination 3", "Chelmsford Yard 1", c10.getDestinationTrackName());
@@ -16772,7 +16772,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("c5 location", "Harvard Yard 2", c5.getTrackName());
         Assert.assertEquals("c6 location", "Westford Yard 1", c6.getTrackName());
         Assert.assertEquals("c7 location", "Harvard Yard 1", c7.getTrackName());
-        Assert.assertEquals("c8 location", "Acton Yard 1", c8.getTrackName());
+        Assert.assertEquals("c8 location", "Acton Spur", c8.getTrackName());
 
         Assert.assertEquals("c9 location", "Acton Alternate Track", c9.getTrackName());
         Assert.assertEquals("c10 location", "Chelmsford Yard 1", c10.getTrackName());
@@ -21606,9 +21606,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setLoadName("Bags");
         c6.setLoadName("Bags");
 
-        // confirm that final destination get's removed
+        // confirm that final destination is removed
         c4.setFinalDestination(boston);
+        c5.setFinalDestination(boston);
         c6.setFinalDestination(boston);
+        
+        c5.setFinalDestinationTrack(bostonSpur2);
 
         // define the train
         Train train1 = tmanager.newTrain("TestQuickTurnLoadWait");
@@ -21631,7 +21634,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNull(c4.getFinalDestination());
         Assert.assertNull(c6.getFinalDestination());
 
-        // the other four should have stayed
+        // the other 3 should have stayed
         Assert.assertEquals("destination", "", c5.getDestinationName());
         Assert.assertEquals("destination", "", c7.getDestinationName());
         Assert.assertEquals("destination", "", c8.getDestinationName());
@@ -21671,15 +21674,25 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        // confirm no clones created
         Assert.assertEquals("cars worked", 4, train1.getNumberCarsWorked());
         Assert.assertEquals("total cars", 7, cmanager.getNumEntries());
+        
+        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0004");
+        Assert.assertNotNull(clone5);
 
         Assert.assertEquals("location", "Boston", c3.getLocationName());
+        Assert.assertEquals("location", "Boston", c5.getLocationName());
         Assert.assertEquals("location", "Boston", c6.getLocationName());
 
         Assert.assertEquals("destionation", "Acton", c3.getDestinationName());
+        Assert.assertEquals("destionation", "Acton", c4.getDestinationName());
         Assert.assertEquals("destionation", "Acton", c6.getDestinationName());
+        
+        Assert.assertEquals("destionation", "Boston", clone5.getDestinationName());
+        
+        Assert.assertEquals("final destionation", "", c5.getFinalDestinationName());
+        Assert.assertEquals("final dest track", "", c5.getFinalDestinationTrackName());
+        
         // car's load should NoBags
         Assert.assertEquals("load", "NoBags", c3.getLoadName());
         Assert.assertEquals("load", "NoBags", c6.getLoadName());

@@ -1186,7 +1186,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     car.toString(), track.getLocation().getName(), track.getName()));
             return false;
         }
-        car.setRouteDestinationTiming(null); // for timing
         String status = car.checkDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {

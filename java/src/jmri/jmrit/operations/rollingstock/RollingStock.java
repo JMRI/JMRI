@@ -1394,6 +1394,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 setLastTrain(getTrain()); // save the last train moving this rs
                 setTrain(null); // this must come after setDestination (route id is set)
                 setMoves(getMoves() + 1); // bump count
+                setPickupTime(NONE);
             } else {
                 log.debug("Rolling stock ({}) is in train ({}) leaves location ({}) destination ({})", this,
                         getTrainName(), current.getName(), next.getName());

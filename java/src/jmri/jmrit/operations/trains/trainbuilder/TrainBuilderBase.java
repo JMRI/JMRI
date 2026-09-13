@@ -986,10 +986,11 @@ public class TrainBuilderBase extends TrainCommon {
                             car.updateLoad(car.getTrack()); // has the wait
                                                             // count reached 0?
                         }
-                        String newLoad = car.getLoadName();
-                        if (!oldLoad.equals(newLoad)) {
-                            addLine(SEVEN, Bundle.getMessage("buildCarLoadChangedWait", car.toString(),
-                                    car.getTypeName(), oldLoad, newLoad));
+                        if (!oldLoad.equals(car.getLoadName())) {
+                            addLine(SEVEN,
+                                    Bundle.getMessage("buildCarLoadChangedWait", car.toString(), car.getTypeName(),
+                                            oldLoad, car.getLoadName(), car.getFinalDestinationName(),
+                                            car.getFinalDestinationTrackName()));
                         }
                     }
                     remove(car);

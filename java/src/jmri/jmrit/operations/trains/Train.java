@@ -209,6 +209,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     
     // Train has serviced a location
     public static final int SERVICED = -1;
+    public static final int NOT_PART_ROUTE = -2;
 
     public Train(String id, String name) {
         //       log.debug("New train ({}) id: {}", name, id);
@@ -490,10 +491,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 // add wait time
                 minutes += rl.getWait();
                 // add travel time if new location
-                RouteLocation next = routeList.get(i + 1);
-                if (next != null &&
-                        !rl.getSplitName().equals(next.getSplitName())) {
-                    minutes += Setup.getTravelTime();
+                try {
+                    RouteLocation next = routeList.get(i + 1);
+                    if (next != null &&
+                            !rl.getSplitName().equals(next.getSplitName())) {
+                        minutes += Setup.getTravelTime();
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    return NOT_PART_ROUTE;
                 }
                 // don't count work if there's a departure time
                 if (i == 0 || !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
@@ -1875,6 +1880,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // now see if the train's route services the car's destination
         for (int k = rLocations.indexOf(rLoc); k < rLocations.size(); k++) {
             RouteLocation rldest = rLocations.get(k);
+            car.setRouteDestinationTiming(rldest);
             if (rldest.getName().equals(car.getDestinationName()) &&
                     (rldest.isDropAllowed() && !car.isLocalMove() ||
                             rldest.isLocalMovesAllowed() && car.isLocalMove()) &&
