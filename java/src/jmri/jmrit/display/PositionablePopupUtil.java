@@ -157,14 +157,16 @@ public class PositionablePopupUtil {
                     Bundle.getMessage("EditSetDialog"),
                     ""+icon.getNumColumns()
                 );
-                int update = 0;
-                try {
-                    update = Integer.valueOf(newValue);
-                } catch (NumberFormatException e) { // ill-formed or canceled input
-                    update = icon.getNumColumns();
+                if (newValue != null) { // if not cancelled by user
+                    int update = 0;
+                    try {
+                        update = Integer.parseInt(newValue);
+                    } catch (NumberFormatException e) { // ill-formed input
+                        update = icon.getNumColumns();
+                    }
+                    icon.setNumColumns(update);
+                    icon.revalidate();  // put new size into effect
                 }
-                icon.setNumColumns(update);
-                icon.revalidate();  // put new size into effect
             });
             edit.add(setColumns);
             
