@@ -389,8 +389,9 @@ public class LnPacketizer extends LnTrafficController {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            if (isXmtBusy())
+                            if (isXmtBusy()) {
                                 log.debug("LocoNet port not ready to receive"); // NOI18N
+                            }
                             log.trace("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             ostream.write(msg);
                             ostream.flush();
