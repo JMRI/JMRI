@@ -118,6 +118,10 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
     /**
      * Accept a message to be sent after suitable delay.
+     *
+     * @param msg  Message to send; will be updated with CRC
+     * @param requestIgnoreEcho  If true: Notify listeners on enqueing message, ignore echo from line.
+     *                           Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
      */
     @Override
     public void sendLocoNetMessage(LocoNetMessage msg, boolean requestIgnoreEcho) {
@@ -217,7 +221,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         boolean getRequestIgnoreEcho() {
             return requestIgnoreEcho;
         }
-        
+
         long endTimeMsec;
         LocoNetMessage msg;
         boolean requestIgnoreEcho;

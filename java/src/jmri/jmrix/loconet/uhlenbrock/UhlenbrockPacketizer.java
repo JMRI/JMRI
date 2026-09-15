@@ -54,9 +54,9 @@ public class UhlenbrockPacketizer extends LnPacketizer {
      * Checksum is computed and overwritten here, then the message is converted
      * to a byte array and queued for transmission.
      *
-     * @param m Message to send; will be updated with CRC
-     * @param requestIgnoreEcho If true: Notify listeners on enqueing message, ignore echo from line.
-     *             Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
+     * @param m  Message to send; will be updated with CRC
+     * @param requestIgnoreEcho  If true: Notify listeners on enqueing message, ignore echo from line.
+     *                           Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
      */
     @Override
     public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho) {
@@ -211,7 +211,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
 
                     // message is complete, dispatch it !!
                     log.trace("message complete: {}", msg);
-                        
+
                     // check if this message was supposed to be ignored
                     // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
                     if(trafficController.getSentList().contains(msg)) {
@@ -227,7 +227,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTc = thisTc;
-                            
+
                             @Override
                             public void run() {
                                 myTc.notify(msgForLater);
