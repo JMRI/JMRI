@@ -1,11 +1,10 @@
 package jmri.jmrit.display;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.annotation.Nonnull;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,9 +18,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.util.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display and input a Memory value in a TextField.
  * <p>
@@ -29,13 +25,125 @@ import org.slf4j.LoggerFactory;
  * what it finds.
  *
  * @author Pete Cressman Copyright (c) 2009
+ * @author Bob Jacobsen  Copyright (c) 2026
  * @since 2.7.2
  */
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
 
-    JTextField _textBox = new JTextField();
+    JTextField _textBox = new JTextField(){
+    
+        // Painting is already inside the scalled MemoryInputIcon, so 
+        // doesn't need to be scaled again
+
+        // Are mouse events translated by enclosing class?
+        @Override
+        public void processMouseEvent(MouseEvent e) {
+            // log.info("processMouseEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
+            super.processMouseEvent(translateMouseEvent(e));
+        }
+        @Override
+        public void processMouseMotionEvent(MouseEvent e) {
+            // log.info("processMouseMotionEvent at {},{} scaled by {}", e.getX(), e.getY(), getScale());
+            super.processMouseMotionEvent(translateMouseEvent(e));
+        }
+        public boolean contains(int x, int y) {
+            double scale = getScale();
+            int logicalX = (int) Math.round(x / scale);
+            int logicalY = (int) Math.round(y / scale);
+            
+            boolean retval = logicalX >= 0 && logicalX < getWidth() && logicalY >= 0 && logicalY < getHeight();
+            // log.info("confirm {} at {},{} scaled by {}", retval, x, y, scale);
+            return retval;
+        }
+
+        MouseEvent translateMouseEvent(MouseEvent e) {
+            double scale = getScale();
+            int scaledX = (int) Math.round(e.getX() / scale);
+            int scaledY = (int) Math.round(e.getY() / scale);
+            return new MouseEvent(
+                this, 
+                e.getID(),
+                e.getWhen(),
+                e.getModifiersEx(),
+                scaledX, scaledY,
+                e.getClickCount(),
+                e.isPopupTrigger(),
+                e.getButton()
+            );
+        }
+    };
+    
     int _nCols;
 
+    // ==========
+    // These are in the memory input icon itself - TODO: MOVE TO SUPER CLASS!
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        // Scale the rendering context
+        g2d.scale(getScale(), getScale());
+        super.paintComponent(g2d);
+        g2d.dispose();
+    }
+//     @Override
+//     public void processMouseEvent(MouseEvent e) {
+//         // log.info("MII processMouseEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
+//         super.processMouseEvent(translateMouseEvent(e));
+//     }
+//     @Override
+//     public void processMouseMotionEvent(MouseEvent e) {
+//         // log.info("MII processMouseMotionEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
+//         super.processMouseMotionEvent(translateMouseEvent(e));
+//     }
+    public boolean contains(int x, int y) {
+        double scale = getScale();
+        int logicalX = (int) Math.round(x / scale);
+        int logicalY = (int) Math.round(y / scale);
+        
+        boolean retval = logicalX >= 0 && logicalX < getWidth() && logicalY >= 0 && logicalY < getHeight();
+        // log.info("MII confirm {} at {},{} scaled by {}", retval, x, y, scale);
+        return retval;
+    }
+    MouseEvent translateMouseEvent(MouseEvent e) {
+        double scale = getScale();
+        int scaledX = (int) Math.round(e.getX() / scale);
+        int scaledY = (int) Math.round(e.getY() / scale);
+        return new MouseEvent(
+            this, 
+            e.getID(),
+            e.getWhen(),
+            e.getModifiersEx(),
+            scaledX, scaledY,
+            e.getClickCount(),
+            e.isPopupTrigger(),
+            e.getButton()
+        );
+    }
+
+    int originalX, originalY;
+    
+    @Override 
+    public int getX() { return originalX; }
+    @Override 
+    public int getY() { return originalY; }
+    @Override
+    public void setLocation(int x, int y) {
+        originalX = x;
+        originalY = y;
+        double scale = getScale();
+        super.setLocation((int)Math.round(scale*x), (int)Math.round(scale*y));
+    }
+    @Override
+    public void setLocation(Point p) {
+        this.setLocation(p.x, p.y);
+    }
+    @Override
+    public Point getLocation() {
+        return new Point(originalX, originalY);
+    }
+    
+    // =========
+    
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
 
@@ -84,7 +192,14 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     @Override
     public void mouseExited(JmriMouseEvent e) {
         updateMemory();
+        e.consume();
         super.mouseExited(e);
+    }
+
+    @Override
+    public void mouseMoved(JmriMouseEvent e) {
+        e.consume();
+        updateMemory();
     }
 
     /**
@@ -168,11 +283,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
-    }
-
-    @Override
-    public void mouseMoved(JmriMouseEvent e) {
-        updateMemory();
     }
 
     private void updateMemory() {
@@ -267,5 +377,5 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         namedMemory = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(MemoryInputIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryInputIcon.class);
 }

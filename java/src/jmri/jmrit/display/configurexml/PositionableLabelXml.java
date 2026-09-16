@@ -19,13 +19,11 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableLabel objects
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
+ * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2026
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -729,5 +727,5 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PositionableLabelXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelXml.class);
 }

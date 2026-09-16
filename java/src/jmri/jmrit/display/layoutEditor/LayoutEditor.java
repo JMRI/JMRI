@@ -216,15 +216,17 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // PositionableLabel's
     private List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); // BlockContents Label List
-    private List<BlockContentsInputIcon> blockContentsInputList = new ArrayList<>(); // BlockContents Input List
     private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
-    private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
-    private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
     private List<SensorIcon> sensorList = new ArrayList<>();                    // Sensor Icons
     private List<TurnoutIcon> turnoutList = new ArrayList<>();                  // Turnout _Icons_
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
+    // PositionableJPanel's
+    private List<BlockContentsInputIcon> blockContentsInputList = new ArrayList<>(); // BlockContents Input List
+    private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
+    private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
+    
     // Factory generated positionables
     private List<Positionable> factoryPositionables = new ArrayList<>();
 
@@ -2290,6 +2292,16 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             leToolBarPanel.zoomLabel.setText(String.format(Locale.getDefault(), "x%1$,.2f", newZoom));
 
+            // set the scale and position for PositionableJPanel items
+            // TODO: ALL OF THE POSITIONABLEJPANEL SUBCLASSES NEED TO BE HERE OR A GENERAL MECHANISM IS NEEDED
+                for (var item : memoryInputList) {
+                log.info("setScale {} for {}",newZoom, item);
+                item.setScale(newZoom);
+                log.info("position {},{}", item.getX(), item.getY());
+                // setting the location handle the zooming  TODO: BETTER APPROACH?
+                item.setLocation(item.getX(), item.getY());
+            }
+
             // save the window specific saved zoom user preference
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent( prefsMgr ->
                 prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor));
@@ -3172,9 +3184,12 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Check whether an input icon text field is or is becoming active.
-     * This is based on:
-     * - The event component is an input icon instance.
-     * - The mouse event indicates a plain button press.
+     * This is based on: <ul>
+     *      <li>The event component is an input icon instance.
+     *      <li>The mouse event indicates a plain button press.
+     * </ul>
+     * This is done because these are expected to manage
+     * their own mouse events, including handling zooming.
      * @param event The mouse event.
      * @return true when active.
      */
@@ -3205,6 +3220,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Override
     public void mousePressed(JmriMouseEvent event) {
         if (isInputTextBox(event)) {
+            // these manage their own mouse events
             return;
         }
 
@@ -3913,6 +3929,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         super.setToolTip(null);
 
         if (isInputTextBox(event)) {
+            // these manage their own mouse events
             return;
         }
 
@@ -4484,6 +4501,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Override
     public void mouseClicked(@Nonnull JmriMouseEvent event) {
         if (isInputTextBox(event)) {
+            // these manage their own mouse events
             return;
         }
 

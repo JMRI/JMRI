@@ -32,6 +32,11 @@ import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.JmriMouseMotionListener;
 
 /**
+ * Base class for editor icons that handle their own input events, e.g.
+ * {@link MemoryInputIcon} and similar.
+ * <p>
+ * Works with subclasses to handle mouse events, position and size when zoomed.
+ *
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author Bob Jacobsen copyright (C) 2009
  */
