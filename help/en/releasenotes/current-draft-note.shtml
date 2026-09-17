@@ -126,7 +126,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The "Make Sensor" and "Make Turnout" buttons in the configuration
+                    panel used to require a non-empty description field to put a 
+                    user name on the Sensor/Turnout they'd create. Absent that, they
+                    wouldn't appear. A description is no longer required; if one
+                    is not present, the Sensor or Turnout will be created without 
+                    a user name.</li>
             </ul>
 
         <h4>Powerline</h4>
