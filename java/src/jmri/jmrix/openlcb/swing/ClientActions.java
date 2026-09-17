@@ -129,7 +129,7 @@ public class ClientActions {
                 button.addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        log.info("make sensor MS{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc.getText());
+                        log.info("make sensor MS{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc!=null ? mdesc.getText() : "<none>");
                         jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
                                 .provideSensor(memo.getSystemPrefix() + "S" + mevt1.getEventIDAsDottedString() + ";" + mevt2.getEventIDAsDottedString());
                         if (mdesc != null && mdesc.getText().length() > 0) {
@@ -149,7 +149,7 @@ public class ClientActions {
                 button.addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        log.info("make turnout MT{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc.getText());
+                        log.info("make turnout MT{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc!=null ? mdesc.getText() : "<none>");
                         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
                                 .provideTurnout(memo.getSystemPrefix() + "T" + mevt1.getEventIDAsDottedString() + ";" + mevt2.getEventIDAsDottedString());
                         if (mdesc != null && mdesc.getText().length() > 0) {
