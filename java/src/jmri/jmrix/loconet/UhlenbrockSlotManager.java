@@ -360,6 +360,7 @@ public class UhlenbrockSlotManager extends SlotManager {
     synchronized protected void doEndOfProgramming() {
         log.debug("Uhlenbrock doEndOfProgramming");
         tc.sendLocoNetMessage(stopIBComPT());
+        super.doEndOfProgramming();
     }
 
     // initialize logging

@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem where an Intellibox-II would
+                    have power on/off problems after CV programming.</li>
             </ul>
 
         <h4>Maple</h4>
