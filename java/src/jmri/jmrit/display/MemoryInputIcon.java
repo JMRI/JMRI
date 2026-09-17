@@ -35,45 +35,32 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         // Painting is already inside the scalled MemoryInputIcon, so 
         // doesn't need to be scaled again
 
-        // Are mouse events translated by enclosing class?
+        // rescale the pointer location of mouse events
         @Override
         public void processMouseEvent(MouseEvent e) {
             // log.info("processMouseEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
+            // translateMouseEvent is obtained from the enclosing class
             super.processMouseEvent(translateMouseEvent(e));
         }
         @Override
         public void processMouseMotionEvent(MouseEvent e) {
             // log.info("processMouseMotionEvent at {},{} scaled by {}", e.getX(), e.getY(), getScale());
+            // translateMouseEvent is obtained from the enclosing class
             super.processMouseMotionEvent(translateMouseEvent(e));
         }
+        
+        // rescale detection of the bounds of the field
+        @Override
         public boolean contains(int x, int y) {
             double scale = getScale();
             int logicalX = (int) Math.round(x / scale);
             int logicalY = (int) Math.round(y / scale);
             
             boolean retval = logicalX >= 0 && logicalX < getWidth() && logicalY >= 0 && logicalY < getHeight();
-            // log.info("confirm {} at {},{} scaled by {}", retval, x, y, scale);
             return retval;
-        }
-
-        MouseEvent translateMouseEvent(MouseEvent e) {
-            double scale = getScale();
-            int scaledX = (int) Math.round(e.getX() / scale);
-            int scaledY = (int) Math.round(e.getY() / scale);
-            return new MouseEvent(
-                this, 
-                e.getID(),
-                e.getWhen(),
-                e.getModifiersEx(),
-                scaledX, scaledY,
-                e.getClickCount(),
-                e.isPopupTrigger(),
-                e.getButton()
-            );
         }
     };
     
-    int _nCols;
 
     // ==========
     // These are in the memory input icon itself - TODO: MOVE TO SUPER CLASS!
@@ -85,16 +72,18 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         super.paintComponent(g2d);
         g2d.dispose();
     }
-//     @Override
-//     public void processMouseEvent(MouseEvent e) {
-//         // log.info("MII processMouseEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
-//         super.processMouseEvent(translateMouseEvent(e));
-//     }
-//     @Override
-//     public void processMouseMotionEvent(MouseEvent e) {
-//         // log.info("MII processMouseMotionEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
-//         super.processMouseMotionEvent(translateMouseEvent(e));
-//     }
+
+    @Override
+    public void processMouseEvent(MouseEvent e) {
+        // log.info("MII processMouseEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
+        super.processMouseEvent(translateMouseEvent(e));
+    }
+    @Override
+    public void processMouseMotionEvent(MouseEvent e) {
+        // log.info("MII processMouseMotionEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
+        super.processMouseMotionEvent(translateMouseEvent(e));
+    }
+    @Override
     public boolean contains(int x, int y) {
         double scale = getScale();
         int logicalX = (int) Math.round(x / scale);
@@ -109,7 +98,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         int scaledX = (int) Math.round(e.getX() / scale);
         int scaledY = (int) Math.round(e.getY() / scale);
         return new MouseEvent(
-            this, 
+            (Component)e.getSource(), 
             e.getID(),
             e.getWhen(),
             e.getModifiersEx(),
@@ -149,6 +138,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     private final java.awt.event.MouseListener _mouseListener = JmriMouseListener.adapt(this);
     private final java.awt.event.MouseMotionListener _mouseMotionListener = JmriMouseMotionListener.adapt(this);
+
+    int _nCols;
 
     public MemoryInputIcon(int nCols, Editor editor) {
         super(editor);
@@ -192,14 +183,15 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     @Override
     public void mouseExited(JmriMouseEvent e) {
         updateMemory();
-        e.consume();
+        // TODO: understand e.consume();
         super.mouseExited(e);
     }
 
     @Override
     public void mouseMoved(JmriMouseEvent e) {
-        e.consume();
+        // TODO: understand e.consume();
         updateMemory();
+        super.mouseMoved(e);
     }
 
     /**

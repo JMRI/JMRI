@@ -2299,6 +2299,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 item.setScale(newZoom);
                 log.info("position {},{}", item.getX(), item.getY());
                 // setting the location handle the zooming  TODO: BETTER APPROACH?
+                //item.setLocation((int)Math.round(item.getX()*newZoom), (int)Math.round(item.getY()*newZoom));
                 item.setLocation(item.getX(), item.getY());
             }
 
@@ -3745,13 +3746,20 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         PositionableJPanel result = null;
         int level = 0;
-
+        
+        log.info("checkJPanelPopUps at {},{}", loc.getX(), loc.getY());
+        
+        // This does it's check in the current-zoom space
+        
         for (int i = memoryInputList.size() - 1; i >= 0; i--) {
             PositionableJPanel s = memoryInputList.get(i);
-            double x = s.getX();
-            double y = s.getY();
-            double w = s.getWidth();
-            double h = s.getHeight();
+            double scale = s.getScale();
+            double x = s.getX()/scale;
+            double y = s.getY()/scale;
+            double w = s.getWidth()/scale;
+            double h = s.getHeight()/scale;
+
+            log.info(" compare to {}-{}, {}-{}", x, x+w, y, y+h);
 
             Rectangle2D r = new Rectangle2D.Double(x, y, w, h);
 
@@ -4489,7 +4497,12 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         addPopupItems(popup, event);
 
-        popup.show((Component) p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
+        log.info("show popup: mouse at {},{} getXY at {},{}, zoom {}", 
+                event.getX(),event.getY(),
+                p.getX(), p.getY(),
+                getZoom() );
+
+        popup.show((Component)p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
                 p.getHeight() / 2 + (int) ((getZoom() - 1.0) * p.getY()));
 
         /*popup.show((Component)pt, event.getX(), event.getY());*/
@@ -5325,7 +5338,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         List<Positionable> selections = getSelectedItems(event);
         Positionable selection = null;
         int numSel = selections.size();
-
+ 
         if (numSel > 0) {
             selection = selections.get(0);
         }
