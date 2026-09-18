@@ -346,6 +346,28 @@ public class UhlenbrockSlotManager extends SlotManager {
         return m;
     }
 
+    /**
+     * This is overridden solely to shorten the delay to 2 seconds
+     */
+    @Override
+    protected void restartEndOfProgrammingTimer() {
+        final int delay = 2000;
+        if (mProgEndSequence) {
+            if (mPowerTimer == null) {
+                mPowerTimer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        doEndOfProgramming();
+                    }
+                });
+            }
+            mPowerTimer.stop();
+            mPowerTimer.setInitialDelay(delay);
+            mPowerTimer.setRepeats(false);
+            mPowerTimer.start();
+        }
+    }
+
     // internal method to remember who's using the programmer
     // Note: Overridden in order to also call the startIBComPT method
     @Override
