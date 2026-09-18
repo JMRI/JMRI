@@ -38,13 +38,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         // rescale the pointer location of mouse events
         @Override
         public void processMouseEvent(MouseEvent e) {
-            // log.info("processMouseEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
             // translateMouseEvent is obtained from the enclosing class
             super.processMouseEvent(translateMouseEvent(e));
         }
         @Override
         public void processMouseMotionEvent(MouseEvent e) {
-            // log.info("processMouseMotionEvent at {},{} scaled by {}", e.getX(), e.getY(), getScale());
             // translateMouseEvent is obtained from the enclosing class
             super.processMouseMotionEvent(translateMouseEvent(e));
         }
@@ -75,12 +73,10 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     @Override
     public void processMouseEvent(MouseEvent e) {
-        // log.info("MII processMouseEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
         super.processMouseEvent(translateMouseEvent(e));
     }
     @Override
     public void processMouseMotionEvent(MouseEvent e) {
-        // log.info("MII processMouseMotionEvent at {},{} scaled by", e.getX(), e.getY(), getScale());
         super.processMouseMotionEvent(translateMouseEvent(e));
     }
     @Override
@@ -90,7 +86,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         int logicalY = (int) Math.round(y / scale);
         
         boolean retval = logicalX >= 0 && logicalX < getWidth() && logicalY >= 0 && logicalY < getHeight();
-        // log.info("MII confirm {} at {},{} scaled by {}", retval, x, y, scale);
         return retval;
     }
     MouseEvent translateMouseEvent(MouseEvent e) {
@@ -151,10 +146,13 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _textBox.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
+                log.trace("Key Listener fired");
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
                     updateMemory();
                 }
+                // specical case for LayoutEditor -> Redraw the content
+                getEditor().getTargetPanel().repaint();
             }
         });
         _textBox.setColumns(_nCols);
