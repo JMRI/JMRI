@@ -66,6 +66,8 @@ public class LayoutTraverser extends LayoutTrack {
 
     public final List<SlotTrack> slotList = new ArrayList<>(); // list of Slot Track objects
 
+    private int lastBridgeOrientation = 0; // 0 = Centered/Unknown, 1 = Left, 2 = Right
+
     /**
      * Get a string that represents this object. This should only be used for
      * debugging.
@@ -392,9 +394,11 @@ public class LayoutTraverser extends LayoutTrack {
     public void setSlotTurnout(int index, @CheckForNull String turnoutName, int state) {
         // Partners in a pair share a lane and thus share a single turnout command.
         int pairBase = (index / 2) * 2;
-        if (pairBase + 1 < slotList.size()) {
+        if (pairBase < slotList.size()) {
             slotList.get(pairBase).setTurnout(turnoutName, state);
-            slotList.get(pairBase + 1).setTurnout(turnoutName, state);
+            if (pairBase + 1 < slotList.size()) {
+                slotList.get(pairBase + 1).setTurnout(turnoutName, state);
+            }
         } else {
             log.error("{}.setSlotTurnout({}, {}, {}); Attempt to add Turnout control to a non-existent slot track pair",
                     getName(), index, turnoutName, state);
@@ -1023,8 +1027,8 @@ public class LayoutTraverser extends LayoutTrack {
                         // Update the traverser's position indicator.
                         if (lastKnownIndex != connectionIndex) {
                              lastKnownIndex = connectionIndex;
-                             models.redrawPanel();
-                             models.setDirty();
+//                             models.redrawPanel();
+//                             models.setDirty();
                         }
                         // Command all other slot turnouts (other lanes) to CLOSED.
                         for (int i = 0; i < LayoutTraverser.this.slotList.size(); i += 2) {
@@ -1047,10 +1051,13 @@ public class LayoutTraverser extends LayoutTrack {
                         }
                         if (allClosed && lastKnownIndex != -1) {
                             lastKnownIndex = -1; // All lanes are closed, blank the bridge
-                            models.redrawPanel();
-                            models.setDirty();
+//                            models.redrawPanel();
+//                            models.setDirty();
                         }
                     }
+                    // 🎨 Unified redraw: handles THROWN, CLOSED, and cascading changes across all tracks
+                    models.redrawPanel();
+                    models.setDirty();
                 };
             }
             if (turnoutName != null) {
