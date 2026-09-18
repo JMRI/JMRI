@@ -87,7 +87,7 @@ public class LnCommandStationTypeTest {
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE_EXT_TERM.getProgPowersOff());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getProgPowersOff());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getProgPowersOff());
-        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getProgPowersOff());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getProgPowersOff());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getProgPowersOff());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getProgPowersOff());
     }
