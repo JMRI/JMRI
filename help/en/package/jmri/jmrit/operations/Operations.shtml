@@ -1332,9 +1332,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         Note that train turns servicing locations on both the outbound and inbound legs, will in
-        most cases pull the cars delivered on the outbound leg on the return leg. Use interchange
-        tracks and <a href="#Schedules">spurs/schedules</a> with wait times to hold cars, or <a
-          href="#RestrictingTrackToCertainTrains">restrict the car pick ups by train or route</a>.
+        some cases pull the cars delivered on the outbound leg on the return leg. If the train on
+        the return leg arrives after the cars set out time plus the dell time, those cars might be
+        pulled based on their move counts. If the train arrives before the cars set out time plus
+        dell time, the cars will be ignored and not pulled. To prevent pulls on the return leg, use
+        interchange tracks, or <a href="#Schedules">spurs/schedules</a> with wait times, or <a
+          href="#RestrictingTrackToCertainTrains">restrict car pick ups by train or route</a>.
+      </p>
+
+      <p>
         The program also prevents a car set out at a <a href="#EditRoute">route location</a> to be
         pulled by the same route location. This isn't an issue unless you use the same route for
         multiple trains and expect a later train using the same route to pull the car. If you want
@@ -1374,8 +1380,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
         and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
         Also recommended is that you use <a href="#AutoBackup">Auto Backup</a>. This will allow the
-        developers to reproduce any problems you encounter while using the new On Time mode of
+        developers to reproduce any issues you encounter while using the new On Time mode of
         OperationsPro&trade;.
+      </p>
+
+      <p>
+        For more detailed information concerning On Time mode, see <a
+          href="OperationsProOnTime.shtml">JMRI: OperationsPro On Time</a>
       </p>
 
       <h4>Number of Passes During Build</h4>

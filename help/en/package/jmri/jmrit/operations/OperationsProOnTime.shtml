@@ -4,8 +4,7 @@
 <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
 <title>JMRI: OperationsPro On Time</title>
 <meta name="author" content="Dan Boudreau">
-<meta name="keywords"
-  content="JMRI Help OperationsPro On Time operations">
+<meta name="keywords" content="JMRI Help OperationsPro On Time operations">
 <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -13,7 +12,188 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>JMRI: OperationsPro&trade;</h1>
+      <h1>JMRI: OperationsPro&trade; On Time</h1>
+
+      The JMRI OperationsPro&trade; On Time mode of operations allows the creation of Manifests and
+      switch lists showing the movement of cars traveling on multiple trains, or several movements
+      using a single train.
+
+      <h3>On Time</h3>
+
+      On Time is an advanced mode of OperationsPro&trade; that was introduced in January of 2026. It
+      is an extension of Aggressive mode. When using On Time mode the use of a real or fast clock to
+      dictate train movement is recommended since cars and locomotives can be assigned to more than
+      one train. To use On Time, your trains must run on schedule, departing in the same order they
+      were built. Trains should depart at the correct departure time, and they should complete their
+      work reasonably close to the times provided on the train Manifests. When running
+      OperationsPro&trade; in On Time mode, tracks that have <a
+        href="Operations.shtml#InterchangeQuickService">Quick Service</a> enabled can be reused
+      based on when cars are set out and picked up. Cars and locomotives can travel on multiple
+      trains with train departure times up to 31 days. Therefore you can create sessions that span
+      days, weeks, or even a month!
+
+      <p>
+        Note that train turns servicing locations on both the outbound and inbound legs, will in
+        some cases pull the cars delivered on the outbound leg on the return leg. If the train on
+        the return leg arrives after the cars set out time plus the dell time, those cars might be
+        pulled based on their move counts. If the train arrives before the cars set out time plus
+        dell time, the cars will be ignored and not pulled. To prevent pulls on the return leg, use
+        interchange tracks, or <a href="Operations.shtml#Schedules">spurs/schedules</a> with wait
+        times, or <a href="Operations.shtml#RestrictingTrackToCertainTrains">restrict car pick
+          ups by train or route</a>.
+      </p>
+
+      <p>
+        The program also prevents a car set out at a <a href="Operations.shtml#EditRoute">route
+          location</a> to be pulled by the same route location. This isn't an issue unless you use the
+        same route for multiple trains and expect a later train using the same route to pull the
+        car. If you want the car to be pulled, <a href="Operations.shtml#CopyRoute">copy the
+          route</a>, and use the copied route for the later train.
+      </p>
+
+      <p>
+        One restriction when using On Time mode, is that trains must be built, run and terminated in
+        chronological order. You can always run a single train to completion without conflict as
+        long as the train departs in the order built. This is a good way to confirm how long it
+        takes a train to complete its run. Make adjustments to the train <a
+          href="Operations.shtml#Settings">switch time, travel time</a>, or to the train's <a
+          href="Operations.shtml#EditRoute">route</a> to increase or decrease travel times. The
+        closer the printed Manifest times are to the actual times the better. Having accurate times
+        will help avoid conflicts with track space and car exchanges between trains.
+      </p>
+
+      <p>
+        Also note that if you need to reset your trains, reset the last built trains first, or use
+        the <a href="Operations.shtml#Trains">reset all</a> trains button.
+      </p>
+
+      <p>
+        When selecting On Time mode, a new column named "Done" in the <a
+          href="Operations.shtml#Trains">Trains</a> window will appear. The "Done" column shows when
+        a built train will complete its work. This is useful when determining if a future train will
+        have access to the the train's rolling stock. Once a train departs using the <a
+          href="Operations.shtml#Trains">Move</a> button, the "Done" column then shows the estimated
+        number of days, hours and minutes it should take to complete the train's work.
+      </p>
+
+      <p>
+        To help troubleshoot timing problems with your cars using the On Time mode, it is
+        recommended that you show the "Last Train" on your Manifests and switch lists for car pick
+        ups. This way if a car isn't found, you'll at least know which train was supposed to drop
+        off the car. You should also enable train, car and engine <a
+          href="Operations.shtml#LoggingOptions">logging</a>, and <a
+          href="Operations.shtml#SaveTrainManifests">Save Train Manifests, Build Reports, and
+          Switch Lists</a>. Also recommended is that you use <a href="Operations.shtml#AutoBackup">Auto
+          Backup</a>. This will allow the developers to reproduce any issues you encounter while using
+        the new On Time mode of OperationsPro&trade;.
+      </p>
+
+      <h3>Getting Started</h3>
+
+      To place OperationsPro&trade; into On Time mode, go to the "Settings" window, and under
+      "Tools" select "Options". With all trains reset or terminated, select the "On Time" radio
+      button and press "Save".
+
+      <p>
+        <img src="images/SettingsOptionsOnTime.png" alt="">
+      </p>
+
+      <p>After selecting the "On Time" radio button, a text field called "Dwell Time" is enabled
+        with a default value of 60 minutes. Dwell time is the number of extra minutes the program
+        will use to determine when a track has available space, or when a car or locomotive is
+        available for pick up. For example, if a car is pulled at 1:30 PM and the dwell time is 60
+        minutes, the track space vacated by the car is available at 2:30 PM. For car pick ups, if a
+        car is set out at 2:10 PM and the dwell time is 60 minutes, the car can be pulled by another
+        train at or after 3:10. You would normally set the dwell time greater than your worst
+        operator's completion time for a train. For example, if some of your operators normally
+        finish their runs 30 minutes late, you would set the dwell time to 30 or more minutes. Dwell
+        time helps prevent the frustration of not having the track space or car available from a
+        previous train delivery. However, high dwell times will cause less cars to be moved in a
+        given time.</p>
+
+      <p>
+        A new window called <a href="Operations.shtml#ModifyLocationsByQuickService">Modify
+          Locations and Tracks by Quick Service</a> should appear which will allow you to modify your
+        tracks for quick service. Only tracks enabled for quick service are reused based on train
+        timing when using the On Time mode. If a track isn't configured for quick service, a car
+        spotted there during the build isn't available for other trains until the train delivering
+        the car is terminated.
+      </p>
+
+      <p>Press the "Select All" button followed by "Save".
+      <p>
+        <img src="images/ModifyLocationsQuickServiceOnTime.png" alt="">
+      </p>
+
+      <h3>Example Turn</h3>
+
+      The following is an example of a simple turn were the same cars are dropped off and pulled by
+      a single train. The train will depart Bakersfield travel to Danville and Fremont and return to
+      Bakersfield while working Danville on the return leg. To create this train we loaded the demo
+      files. Then we created the train "BFB" with the following route, and to keep things simple,
+      we'll only allow the train to carry boxcars.
+
+      <p>
+        <img src="images/RouteTurnOnTime.png" alt="">
+      </p>
+
+      After we build train "BFB" we get the following Manifest. Four cars are spotted at Danville,
+      but none of the four are pulled on the return leg. We'll need to look at the build report for
+      train "BFB" to understand why.
+
+      <p>
+        <img src="images/ManifestTurnOnTime1.png" alt="">
+      </p>
+
+      Let's focus on the first boxcar delivered to Danville, NH 41516. Searching the build report we
+      find for NH 41516 the following:
+
+      <p>
+        <img src="images/BuildReportTurnOnTime1.png" alt="" style="width: 75%; height: auto;">
+      </p>
+
+      So we see the program created the clone "NH 41516-(Clone)0006" and the car NH 41516 was moved
+      to Danville. The clone was then assigned to train "BFB". The program is using the "hyphen"
+      feature when creating a clone road number. This means only the "41516" part of the clone's
+      number will be shown on a Manifest or switch list. Looking further into the build report we
+      see the following:
+
+      <p>
+        <img src="images/BuildReportTurnOnTime2.png" alt="" style="width: 75%; height: auto;">
+      </p>
+
+      It states that car NH 41516 will be delivered at 0:09:04, where the first "0" is today, and
+      09:04 is 9:04AM. The build report also states that the train arrives at the second Danville at
+      9:30AM, and that the car can be pulled at or after 10:04AM. So we'll modify the train's route
+      to depart Fremont at 10:00AM with 4 minutes of travel time. This should allow car NH 41516 can
+      be pulled on the return leg at Danville.
+
+      <p>
+        <img src="images/RouteTurn2OnTime.png" alt="">
+      </p>
+
+      Now the train Manifest becomes:
+
+      <p>
+        <img src="images/ManifestTurnOnTime2.png" alt="">
+      </p>
+
+      If we look at the Cars window, and do a sort by number, we can see that NH 41516 appears three
+      times in italic font. The first line without a train assignment, shows where car NH 41516 will
+      be when the train "BFB" terminates. The next line shows the "Clone 0006" for NH 41516, and
+      that the car is at Bakersfield and will be delivered to Danville. The third line shows that
+      "Clone 0009" will be pulled from Danville on the return leg and delivered to Bakersfield with
+      a load name "L&lt;oad&gt;". The track "#67 Seeley's Milling Co" is a spur, so when car NH
+      41516 is placed there by the program, the load changes from "L&lt;oad&gt;" to "E&lt;mpty&gt;"
+      as shown on the first line.
+
+      <p>
+        <img src="images/CarsOnTime.png" alt="">
+      </p>
+
+      End of OperationsPro On Time help
+
+
 
     </div>
   </div>
