@@ -34,6 +34,7 @@ import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.tracktiles.TrackTile;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.jmrit.logixng.GlobalVariable;
 import jmri.swing.NamedBeanComboBox;
@@ -9254,6 +9255,50 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             log.error("wrong type {} {} found {}", to, to.getClass(), lv);
         }
         throw new IllegalArgumentException("Wrong type: " + to.getClass());
+    }
+
+    /**
+     * For placing a next tile aligned with a previous tile.
+     * Get the orientation of the previous tile connected to the specified LayoutTrack.
+     * This helper method determines the tile orientation from a connected track segment
+     * to support tile-based layout construction.
+     *
+     * @param reference the LayoutTrack to get the previous tile orientation for
+     * @param ignoreNonTile if true, skip tracks that are not tile-based
+     * @return the orientation in degrees, or null if no previous tile orientation found
+     */
+    public Double getPreviousTileOrientation(LayoutTrack reference, boolean ignoreNonTile) {
+        // Check if reference is a PositionablePoint
+        if (reference instanceof PositionablePoint) {
+            PositionablePointView referenceView = getPositionablePointView((PositionablePoint) reference);
+            Point2D referencePoint = referenceView.getCoordsCenter();
+            LayoutTrack connected = ((PositionablePoint) reference).getConnect1();
+            if (connected == null) {
+                connected = ((PositionablePoint) reference).getConnect2();
+            }
+            if (connected == null) {
+                return null;
+            }
+            // spotbugs says unnecessary to check if we now have a TrackSegment
+            TrackSegment ts = (TrackSegment) connected;
+            TrackSegmentView tsv = getTrackSegmentView(ts);
+            TrackTile tile = tsv.getTile();
+            if (ignoreNonTile && tile == null) {
+                return null;
+            }
+            // Identify if connected side is a or b
+            Point2D ep1 = getCoords(((TrackSegment) connected).getConnect1(), ((TrackSegment) connected).getType1());
+            Point2D ep2 = getCoords(((TrackSegment) connected).getConnect2(), ((TrackSegment) connected).getType2());
+            if (ep1.equals(referencePoint)) {
+                // connected at end A
+                return tsv.getOrientationAtA();
+            } else if (ep2.equals(referencePoint)) {
+                // connected at end B
+                return tsv.getOrientationAtB();
+            }
+        }
+        // TODO: Handle if reference is a Turnout
+        return null;
     }
 
     // temporary
