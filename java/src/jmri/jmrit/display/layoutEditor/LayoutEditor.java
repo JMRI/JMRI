@@ -35,6 +35,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.tracktiles.TrackTile;
+import jmri.tracktiles.TrackTilePath;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.jmrit.logixng.GlobalVariable;
 import jmri.swing.NamedBeanComboBox;
@@ -168,6 +169,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private boolean turnoutDrawUnselectedLeg = true;
     private boolean autoAssignBlocks = false;
+    // TODO: Make this configurable
+    private double mmToGridFactor = 1.0;
 
     // Tools menu items
     private final JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
@@ -232,6 +235,10 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     private JCheckBoxMenuItem disableLocoMarkerPopupMenuItem;
 
     public final LayoutEditorViewContext gContext = new LayoutEditorViewContext(); // public for now, as things work access changes
+
+    public double getMmToGridFactor() {
+        return mmToGridFactor;
+    }
 
     @Nonnull
     public List<SensorIcon> getSensorList() {
@@ -3971,10 +3978,77 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else if (leToolBarPanel.edgeButton.isSelected()) {
                     addEdgeConnector();
                 } else if (leToolBarPanel.trackButton.isSelected()) {
-                    if ((beginTrack != null) && (foundTrack != null)
-                            && (beginTrack != foundTrack)) {
-                        addTrackSegment();
-                        _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                    boolean curveDirection = leToolBarPanel.isTileCurveLeft();
+                    if (leToolBarPanel.isTileSelected()) {
+                        if ((beginTrack != null) && (beginTrack != foundTrack)) {
+                            // Get the "orientation at start point" either from the previous tile or from the drag direction
+                            // For curved tiles this is *not* where the endpoint will be.
+                            Double angle = getPreviousTileOrientation(beginTrack, true);
+                            log.debug("getPreviousTileOrientation returned: {}", angle);
+                            if (angle == null) {
+                                // Get cursor drag direction from button down to release
+                                log.debug("Calculating orientation from beginLocation={} to currentPoint={}", beginLocation, currentPoint);
+                                angle = LayoutTileMath.calcStraightOrientation(beginLocation, currentPoint);
+                                log.debug("calcStraightOrientation returned: {}", angle);
+
+                                // If calculation failed (NaN), use default east orientation
+                                if (Double.isNaN(angle)) {
+                                    log.debug("Orientation calculation failed, using default 0° (east)");
+                                    angle = 0.0; // Default to east orientation
+                                }
+
+                                // For new tiles without previous connection, the curve direction
+                                // should be based on the toolbar setting directly
+                                // (the drag direction determines orientation, toolbar setting determines left/right)
+                                log.debug("New tile: using curve direction from toolbar: {}", curveDirection ? "left" : "right");
+                            } else {
+                                angle = angle - 180.0; // Reverse direction of B to A
+                            }
+                            // Now we have the angle at the start point of the new tile
+                            TrackTile tile = leToolBarPanel.getSelectedTrackTile();
+                            // Track segment tiles always have only one path AB. Other types may have many paths.
+                            TrackTilePath tilePath = tile.getPathById("AB");
+                            log.debug("Tile: {}, TilePath: {}, mmToGridFactor: {}", tile.getPartCode(), tilePath != null ? tilePath.toString() : "null", mmToGridFactor);
+                            if (tilePath != null) {
+                                Point2D endPoint = tilePath.getPathEndpoint(beginLocation, angle, !curveDirection, mmToGridFactor);
+                                log.debug("Tile mode: beginLocation={}, angle={}°, endPoint={}", beginLocation, angle, endPoint);
+                                // Check if there is an existing anchor point at the calculated endpoint.
+                                // Side effect, populates foundTrack and foundHitPointType.
+                                findLayoutTracksHitPoint(endPoint);
+                                if (foundTrack == null) {
+                                    // Not found, create an anchor point at the calculated endpoint
+                                    foundTrack = addAnchor(endPoint);
+                                    foundHitPointType = HitPointType.POS_POINT;
+                                }
+                                // Update currentPoint to the calculated endpoint for proper track creation
+                                currentPoint = endPoint;
+                                // Store the computed curve direction for use in track segment creation
+                                boolean actualCurveDirection = !curveDirection; // Store the inverted value used for endpoint calculation
+                                // internally should now add Track between beginTrack and foundTrack
+                                addTrackSegment();
+                                // After creating track segment, set the correct curve direction for visual rendering
+                                if (newTrack != null) {
+                                    TrackSegmentView tsv = getTrackSegmentView(newTrack);
+                                    if (tsv != null && tsv.hasTile()) {
+                                        TrackTile trackTile = tsv.getTile();
+                                        if (trackTile != null) {
+                                            TrackTilePath path = trackTile.getPathById("AB");
+                                            if (path != null && path.isCurved()) {
+                                                tsv.setFlip(actualCurveDirection); // Use the same direction as endpoint calculation
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                        }
+                    } else {
+                        // Traditional mode - Add Track between two connection points
+                        if ((beginTrack != null) && (foundTrack != null)
+                                && (beginTrack != foundTrack)) {
+                            addTrackSegment();
+                            _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                        }
                     }
                     beginTrack = null;
                     foundTrack = null;
@@ -5686,6 +5760,10 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 newTrack,
                 this
         );
+        // Set the selected tile from the toolbar
+        tsv.setTile(leToolBarPanel.getSelectedTrackTile());
+        // If the tile is curved, set isCircle to true and get the curve details from the tile
+        tsv.setCurveFromTile();
         addLayoutTrack(newTrack, tsv);
 
         setDirty();
