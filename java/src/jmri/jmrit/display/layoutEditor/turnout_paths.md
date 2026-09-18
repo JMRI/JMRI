@@ -28,18 +28,18 @@ A ==**== B       A ==**== B
 
 ```
    Wye
-      B
+      B  (closed / continuing)
      //
 A ==**
      \\
-      C
+      C  (thrown / diverging)
 ```
 
 **Valid Routes:**
-- **A-B** (ROUTE_AB) - throat to left leg (thrown)
-- **A-C** (ROUTE_AC) - throat to right leg (closed)
+- **A-B** (ROUTE_AB) - throat to right leg, active when the turnout is closed (continuing route)
+- **A-C** (ROUTE_AC) - throat to left leg, active when the turnout is thrown (diverging route)
 
-*Note: Both B and C are diverging routes; no "straight through" path exists.*
+*Note: On a wye both legs diverge geometrically, but the route roles still follow the standard convention - B is the closed/continuing leg and C is the thrown/diverging leg (same as ROUTE_AB/ROUTE_AC for RH and LH turnouts).*
 
 ### Double Crossover (Double XOver)
 
