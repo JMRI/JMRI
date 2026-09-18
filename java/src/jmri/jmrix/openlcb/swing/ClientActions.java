@@ -129,10 +129,10 @@ public class ClientActions {
                 button.addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        log.info("make sensor MS{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc.getText());
+                        log.info("make sensor MS{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc!=null ? mdesc.getText() : "<none>");
                         jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
                                 .provideSensor(memo.getSystemPrefix() + "S" + mevt1.getEventIDAsDottedString() + ";" + mevt2.getEventIDAsDottedString());
-                        if (mdesc.getText().length() > 0) {
+                        if (mdesc != null && mdesc.getText().length() > 0) {
                             sensor.setUserName(mdesc.getText());
                         }
                     }
@@ -149,10 +149,10 @@ public class ClientActions {
                 button.addActionListener(new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        log.info("make turnout MT{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc.getText());
+                        log.info("make turnout MT{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc!=null ? mdesc.getText() : "<none>");
                         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
                                 .provideTurnout(memo.getSystemPrefix() + "T" + mevt1.getEventIDAsDottedString() + ";" + mevt2.getEventIDAsDottedString());
-                        if (mdesc.getText().length() > 0) {
+                        if (mdesc != null && mdesc.getText().length() > 0) {
                             turnout.setUserName(mdesc.getText());
                         }
                     }
@@ -162,8 +162,8 @@ public class ClientActions {
                     final NamedEventIdTextField mevt2 = evt2;
                 });
                 if (!haveButtons && buttonsCountTowardAllButtons) {
-                    log.debug("create Make Turnout/Sensor buttons, starting with {}", desc.getText());
-                    log.debug("events {} {}", evt1.getText(), evt2.getText());
+                    log.debug("create Make Turnout/Sensor buttons, starting with {}", desc!=null ? desc.getText() : "<none>");
+                    log.debug("       events {} {}", evt1.getText(), evt2.getText());
                     
                     haveButtons = true;
                     cdiPanel.addButtonToFooter(buttonForList(sensorButtonList, Bundle.getMessage("CdiPanelMakeAllSensors")));
@@ -185,8 +185,9 @@ public class ClientActions {
                 if (gpane != null 
                         && evt1 != null && !evt1.getText().isEmpty() 
                         && evt2 != null && !evt2.getText().isEmpty()
-                        && desc != null && !desc.getText().isEmpty()) {
-                    log.debug("handleGroupPaneEnd for {}", desc.getText());
+                        // no longer checking for existence of a description field
+                        ) {
+                    log.debug("handleGroupPaneEnd for {}", desc!=null ? desc.getText() : "<none>");
                     installButtonsOnEndOfGroup(pane, true);
                 }
             }
