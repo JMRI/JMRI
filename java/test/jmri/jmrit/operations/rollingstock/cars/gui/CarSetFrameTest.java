@@ -224,10 +224,10 @@ public class CarSetFrameTest extends OperationsTestCase {
         }, "not null");
         JmriJFrame adf = JmriJFrame.getFrame("Add Division");
         Assert.assertNotNull(adf);
-        
+
         // no divisions yet (Null)
         Assert.assertEquals("number of items", 1, f.divisionComboBox.getItemCount());
-        
+
         // add a division
         DivisionEditFrame def = (DivisionEditFrame)adf;
         JFrameOperator jfo = new JFrameOperator(def.getTitle());
@@ -243,7 +243,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         adf = JmriJFrame.getFrame("Add Division");
         Assert.assertNull(adf);
     }
-    
+
     @Test
     public void testLoadChange() {
         Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
@@ -253,38 +253,38 @@ public class CarSetFrameTest extends OperationsTestCase {
         CarSetFrame f = new CarSetFrame();
         f.initComponents();
         f.load(car);
-        
+
         // car has two loads "E" and "L"
         Assert.assertEquals("default loads", 2, f.loadComboBox.getItemCount());
         Assert.assertEquals("default loads", 1, f.loadReturnWhenEmptyBox.getItemCount());
         Assert.assertEquals("default loads", 1, f.loadReturnWhenLoadedBox.getItemCount());
-        
+
         // create a new load for car, type "load"
         CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
         carLoads.addName("Boxcar", "NewLoad");
-        
+
         Assert.assertEquals("loads", 3, f.loadComboBox.getItemCount());
         Assert.assertEquals("empty loads", 1, f.loadReturnWhenEmptyBox.getItemCount());
         Assert.assertEquals("load loads", 2, f.loadReturnWhenLoadedBox.getItemCount());
-        
+
         // change new load to type "empty"
         carLoads.setLoadType("Boxcar", "NewLoad", CarLoad.LOAD_TYPE_EMPTY);
         Assert.assertEquals("loads", 3, f.loadComboBox.getItemCount());
         Assert.assertEquals("empty loads", 2, f.loadReturnWhenEmptyBox.getItemCount());
         Assert.assertEquals("load loads", 1, f.loadReturnWhenLoadedBox.getItemCount());
-        
+
         // confirm that wait and schedule id get updated when load changes
         car.setWait(1);
         car.setScheduleItemId("someId");
-        
+
         // Confirm load change
         f.loadComboBox.setSelectedItem("NewLoad");
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        
+
         Assert.assertEquals("load change", "NewLoad", car.getLoadName());
         Assert.assertEquals("Wait", 0, car.getWait());
         Assert.assertEquals("Schedule id", Car.NONE, car.getScheduleItemId());
-        
+
         JUnitUtil.dispose(f);
     }
 
@@ -330,7 +330,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("Items in final track combobox", 6, f.finalDestTrackBox.getItemCount());
         car.setFinalDestination(null);
         Assert.assertEquals("Items in final track combobox", 0, f.finalDestTrackBox.getItemCount());
-        
+
         // RWE
         Assert.assertEquals("Items in RWE track combobox", 0, f.trackReturnWhenEmptyBox.getItemCount());
         car.setReturnWhenEmptyDestination(loc);
@@ -339,7 +339,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("Items in RWE track combobox", 6, f.trackReturnWhenEmptyBox.getItemCount());
         car.setReturnWhenEmptyDestination(null);
         Assert.assertEquals("Items in RWE track combobox", 0, f.trackReturnWhenEmptyBox.getItemCount());
-        
+
         // RWL
         Assert.assertEquals("Items in RWL track combobox", 0, f.trackReturnWhenLoadedBox.getItemCount());
         car.setReturnWhenLoadedDestination(loc);
@@ -351,7 +351,7 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarSetFrameIgnoreCheckBoxes() {
         JUnitOperationsUtil.initOperationsData();
@@ -371,44 +371,44 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.destReturnWhenEmptyBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreRWECheckBox);
         Assert.assertFalse(f.destReturnWhenEmptyBox.isEnabled());
-        
+
         Assert.assertTrue(f.destReturnWhenLoadedBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreRWLCheckBox);
         Assert.assertFalse(f.destReturnWhenLoadedBox.isEnabled());
-        
+
         Assert.assertTrue(f.loadComboBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreLoadCheckBox);
         Assert.assertFalse(f.loadComboBox.isEnabled());
-        
+
         Assert.assertTrue(f.divisionComboBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreDivisionCheckBox);
         Assert.assertFalse(f.divisionComboBox.isEnabled());
-     
+
         Assert.assertTrue(f.kernelComboBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreKernelCheckBox);
         Assert.assertFalse(f.kernelComboBox.isEnabled());
-        
+
         // now restore
         Assert.assertFalse(f.destReturnWhenEmptyBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreRWECheckBox);
         Assert.assertTrue(f.destReturnWhenEmptyBox.isEnabled());
-        
+
         Assert.assertFalse(f.destReturnWhenLoadedBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreRWLCheckBox);
         Assert.assertTrue(f.destReturnWhenLoadedBox.isEnabled());
-        
+
         Assert.assertFalse(f.loadComboBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreLoadCheckBox);
         Assert.assertTrue(f.loadComboBox.isEnabled());
-        
+
         Assert.assertFalse(f.divisionComboBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreDivisionCheckBox);
         Assert.assertTrue(f.divisionComboBox.isEnabled());
-     
+
         Assert.assertFalse(f.kernelComboBox.isEnabled());
         JemmyUtil.enterClickAndLeave(f.ignoreKernelCheckBox);
-        Assert.assertTrue(f.kernelComboBox.isEnabled()); 
-     
+        Assert.assertTrue(f.kernelComboBox.isEnabled());
+
         JUnitUtil.dispose(f);
     }
 
@@ -466,14 +466,14 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         // confirm car's track didn't change
         Assert.assertEquals("car's track", track2, car.getTrack());
-        
+
         // again, but Yes
         Thread t3 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("rsCanNotLoc"),
                 Bundle.getMessage("ButtonOK"));
         Thread t4 = JemmyUtil.createModalDialogOperatorThread(
             MessageFormat.format(Bundle.getMessage("rsOverride"), new Object[]{"type (Boxcar)"}),
             Bundle.getMessage("ButtonYes"));
-        
+
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         JUnitUtil.waitFor(() -> {
             return !t3.isAlive();
@@ -483,7 +483,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         JUnitUtil.waitFor(() -> {
             return !t4.isAlive();
         },"rsOverride yes dialogue thread 4 complete");
-        
+
 
         Assert.assertEquals("car's track", track1, car.getTrack());
 
@@ -494,12 +494,12 @@ public class CarSetFrameTest extends OperationsTestCase {
     public void testAppySchedule() {
         JUnitOperationsUtil.initOperationsData();
         JUnitOperationsUtil.createSchedules();
-        
+
         // create new loads for car
         CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
         carLoads.addName("Boxcar", "Empty");
         carLoads.addName("Boxcar", "Metal");
-        
+
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location location = lmanager.getLocationByName("North Industries");
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
@@ -544,22 +544,22 @@ public class CarSetFrameTest extends OperationsTestCase {
         JUnitUtil.waitFor(() -> {
             return !t2.isAlive();
         },"fail dialogue thread complete");
-        
+
         // confirm that car's track didn't change
         Assert.assertEquals("car's track", track, car.getTrack());
-        
+
         // Now change car load so applying schedule will work
 
         JComboBoxOperator lcbo = new JComboBoxOperator(jfo,new NameComponentChooser("loadComboBox"));
-        lcbo.setSelectedItem("Empty");     
+        lcbo.setSelectedItem("Empty");
         tlb.setSelectedItem(track2);
         jfo.getQueueTool().waitEmpty();
-        
+
         Thread t3 = JemmyUtil.createModalDialogOperatorThread(MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"), track2.getName(),
                 track2.getScheduleName()),
                 Bundle.getMessage("ButtonYes"));
 
-        
+
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
 
         JUnitUtil.waitFor(() -> {
@@ -572,7 +572,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("car's new load name", "Metal", car.getLoadName());
         Assert.assertEquals("car's new final destination", location, car.getFinalDestination());
         Assert.assertEquals("car's new final destination track", track, car.getFinalDestinationTrack());
-        
+
         JUnitUtil.dispose(f);
     }
 
@@ -671,6 +671,9 @@ public class CarSetFrameTest extends OperationsTestCase {
         jfo.waitClosed();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
+
+        // GitHub CI workflows doesn't have a default printer
+        JUnitAppender.suppressWarnMessage("No default printer found");
     }
 
     @Test
@@ -1072,7 +1075,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         jfo.waitClosed();
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
     @Test
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
