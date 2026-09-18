@@ -12,6 +12,10 @@
             "type": "string",
             "description": "Old name of engine if road or number has changed"
         },
+        "order": {
+            "type": "string",
+            "description": "The engine order"
+        },
         "road": {
             "type": "string",
             "description": "The engine owning railroad"

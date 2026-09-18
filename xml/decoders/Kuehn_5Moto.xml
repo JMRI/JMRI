@@ -15,9 +15,9 @@
   <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/01/30"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
   <version author="Alain Le Marchand" version="3" lastUpdated="2014/07/20"/>
-  <version author="ronald@wirkuhns.de" version="4" lastUpdated="2016/05/07"/>
+  <version author="Ronald Kuhn" version="4" lastUpdated="2016/05/07"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="2018/12/203"/>
-  <version author="ronald@wirkuhns.de" version="6" lastUpdated="2024/04/05"/>
+  <version author="Ronald Kuhn" version="6" lastUpdated="2024/04/05"/>
   <!-- Version 2 - Fixed manufacturer label from "Kuehn" to "Kuehn Ing." as per current decoderIndex.xml file (Alain Le Marchand) -->
   <!-- Version 3 - Refactoring (xinclude and standard panes) + fix CV55 interpretation (Alain Le Marchand) -->
   <!-- Version 3.1 - add translation (Enzo Fortuna) -->

@@ -33,7 +33,6 @@
   <!-- v1.6.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_v36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
   <!-- v1.7,  added version 37 firmware capabilities,  Ronald Kuhn, 24 Apr 2019              -->
   <!--        File is not tested cause no decoder of this type is in my collection.          -->
-  <!--        If you find any errors please contact me by mail (ronald@wirkuhns.de)          -->
   <!-- v1.8,  added MX648 Rev C,D,  Ronald Kuhn, 25 Jun 2019                                 -->
   <!-- v1.9,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020                      -->
   <!-- v1.10, include CV's 190-191, Ulrich Gerlach 25 March 2023                             --> 

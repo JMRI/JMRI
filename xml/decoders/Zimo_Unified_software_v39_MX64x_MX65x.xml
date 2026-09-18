@@ -33,15 +33,15 @@
   <!-- v1.5,  updated to hide V34 as v34 updates are included in v32 files   Mark Waters, 03 Jan 2016 -->
   <!-- v1.6,  version 36 Firmware based on hidden v34, no other changes, as no updated documents from ZIMO updated to allow FW version up to 40, Alain Carasso, 29 Jul 2017 -->
   <!-- v1.6.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_v36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.7" lastUpdated="2020/05/02"/>
+  <version author="Ronald Kuhn" version="1.7" lastUpdated="2020/05/02"/>
   <!-- v1.7,  added version 37 firmware capabilities,  Ronald Kuhn, 28 Feb 2018 -->
   <!-- v1.8,  merged MX64x/MX65x-Decoder and added version 39 firmware capabilities,  Ronald Kuhn, 02 May 2020 -->
   <version author="Pierre Billon" version="1.8" lastUpdated="2021/03/06"/>
   <!-- v1.9,  added sound decoder MX605 (special Kato version for N-scale ICE 4) . Due to the combination with MX605FL & MX605SL installed in same engine, Front/rear lights and FO 1 for interior lighting listed as functons of this decoder,  Pierre Billon, 06 Mar 2021 -->
   <!-- v1.9.1,  added replacement-options version 40 firmware capabilities,  Ronald Kuhn, 30 November 2021 -->
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.9.2" lastUpdated="2022/10/30"/>
+  <version author="Ronald Kuhn" version="1.9.2" lastUpdated="2022/10/30"/>
   <!-- v1.9.2,  add Fade-in and Fade-out for effect 88,89,90 -->
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.9.3" lastUpdated="2023/05/13"/>
+  <version author="Ronald Kuhn" version="1.9.3" lastUpdated="2023/05/13"/>
   <!-- v1.9.3,  correct highVersionID to "39" -->
 
   <decoder>

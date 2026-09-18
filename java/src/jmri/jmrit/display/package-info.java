@@ -27,7 +27,6 @@ interface IndicatorTrack
 Positionable <-- PositionableJComponent
 Positionable <-- PositionableLabel
 Positionable <-- PositionableJPanel
-Positionable <-- PositionableIcon
 
 Positionable <-- IndicatorTrack
 
@@ -52,6 +51,17 @@ PositionableIcon <|-- SensorIcon
 PositionableIcon <|-- SignalHeadIcon
 PositionableIcon <|-- SignalMastIcon
 PositionableIcon <|-- TurnoutIcon
+
+PositionableJPanel <|-- BlockContentsInputIcon
+PositionableJPanel <|-- GlobalVariableInputIcon
+PositionableJPanel <|-- GlobalVariableSpinnerIcon
+PositionableJPanel <|-- LogixNGTableIcon
+PositionableJPanel <|-- MemoryInputIcon
+PositionableJPanel <|-- MemorySpinnerIcon
+PositionableJPanel <|-- MemoryOrGVComboIcon
+
+MemoryOrGVComboIcon <|-- GlobalVariableComboIcon
+MemoryOrGVComboIcon <|-- MemoryComboIcon
 
 @end
  */

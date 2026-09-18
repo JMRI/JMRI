@@ -39,6 +39,9 @@ This executable was generated using NSIS version 3.09 with the "Special build"
 called "Large strings".  This was downloaded from nsis.sourceforge.io in early 
 December, 2023.
 
+For more on this, see the discussion in GitHub Issue #15449
+https://github.com/JMRI/JMRI/pull/15449
+
 3. How should I make a new LaunchJMRI.exe?
 
 (See LaunchJMRI.exe item 1. above!)

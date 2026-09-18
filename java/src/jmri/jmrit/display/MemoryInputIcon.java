@@ -59,6 +59,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             }
         });
         _textBox.setColumns(_nCols);
+        _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));

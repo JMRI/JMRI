@@ -359,8 +359,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             textTrainCommentPane.setVisible(false);
         } else {
             textTrainCommentPane.setVisible(true);
-            textTrainCommentPane.setText(_train.getComment());
-            textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getCommentWithColor()));
+            textTrainCommentPane.setText(_train.getCommentCurrent());
+            textTrainCommentPane.setForeground(_train.getCommentColor());
         }
     }
 
