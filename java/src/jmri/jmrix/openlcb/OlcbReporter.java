@@ -46,8 +46,8 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
 
     // the four cases for the MS bits in the report
     private static final int REPORTER_UNOCCUPIED_EXIT = 0;
-    private static final int REPORTER_OCCUPIED_FORWARD_ENTRY = 0x1;
-    private static final int REPORTER_OCCUPIED_BACKWARD_ENTRY = 0x2;
+    private static final int REPORTER_OCCUPIED_WEST_ENTRY = 0x1;
+    private static final int REPORTER_OCCUPIED_EAST_ENTRY = 0x2;
     private static final int REPORTER_OCCUPIED_UNKNOWN_ENTRY = 0x3;
 
     /// Mask for the address bits of the reporter.
@@ -267,29 +267,27 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
             isConsist = false;
         }
         
-        RailCom.Direction direction;
+        RailCom.Orientation orientation;
         
-        int directionBits = (int)(reportBits >> 14) & 0x3;
+        int orientationBits = (int)(reportBits >> 14) & 0x3;
         
-        switch ( directionBits ) {
-            case REPORTER_UNOCCUPIED_EXIT:
-                direction = RailCom.Direction.UNKNOWN;
+        switch ( orientationBits ) {
+            case REPORTER_OCCUPIED_WEST_ENTRY:
+                orientation = RailCom.Orientation.WEST;
                 break;
-            case REPORTER_OCCUPIED_FORWARD_ENTRY:
-                direction = RailCom.Direction.FORWARD;
+            case REPORTER_OCCUPIED_EAST_ENTRY:
+                orientation = RailCom.Orientation.EAST;
                 break;
-            case REPORTER_OCCUPIED_BACKWARD_ENTRY:
-                direction = RailCom.Direction.BACKWARD;
-                break;
-            default:        // needed to keep static checker happy
             case REPORTER_OCCUPIED_UNKNOWN_ENTRY:
-                direction = RailCom.Direction.UNKNOWN;
+            case REPORTER_UNOCCUPIED_EXIT:
+            default:        // needed to keep static checker happy
+                orientation = RailCom.Orientation.UNKNOWN;
                 break;
         }
 
         // address 0x3800 is a special case:  Arrival means reporter is unoccupied, departure is ignored
         if (addressBits == 0x3800) {
-            if (directionBits == REPORTER_UNOCCUPIED_EXIT) {
+            if (orientationBits == REPORTER_UNOCCUPIED_EXIT) {
                 return;
             } else {
                 log.trace("{} clearing collection", this);
@@ -300,15 +298,14 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
 
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
 
-        if (!isEntry || directionBits == REPORTER_UNOCCUPIED_EXIT) {
+        if (!isEntry || orientationBits == REPORTER_UNOCCUPIED_EXIT) {
             log.trace("{} removes tag {}", this,  tag);
             entrySet.remove(tag);
             return; // having cleared the reporter earlier
         }
         
         entrySet.add(tag);
-        tag.setOrientation(RailCom.Orientation.UNKNOWN);
-        tag.setDirection(direction);
+        tag.setOrientation(orientation);
         tag.setDccAddress(new DccLocoAddress(address, protocol, isConsist));
         notify(tag);
     }

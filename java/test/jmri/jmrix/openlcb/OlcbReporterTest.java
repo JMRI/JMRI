@@ -42,6 +42,8 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         RailCom report = (RailCom) r.getCurrentReport();
         Assert.assertNotNull("Object type mismatch", report);
         Assert.assertEquals("Loco address mismatch",256, report.getLocoAddress().getNumber());
+        Assert.assertEquals("Orientation mismatch", RailCom.Orientation.UNKNOWN, report.getOrientation());
+        Assert.assertEquals("Direction should not be set", RailCom.Direction.UNKNOWN, report.getDirection());
 
         // Exit.
         Message m = new ProducerIdentifiedMessage(ti.iface.getNodeId(), new EventID("01.02.03.04.05.06.C1.00"), EventState.Invalid);
@@ -49,6 +51,32 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         ti.flush();
 
         Assert.assertNull("Report should have disappeared", r.getCurrentReport());
+    }
+
+    @Test
+    public void testOrientationForward() {
+        // FORWARD entry (0x4100 -> bit 14 set, address 256)
+        ti.sendMessage(":X195B4123N0102030405064100;");
+        ti.flush();
+        Assert.assertEquals("Report mismatch", "RD256", r.getCurrentReport().toString());
+        RailCom report = (RailCom) r.getCurrentReport();
+        Assert.assertNotNull("Object type mismatch", report);
+        Assert.assertEquals("Loco address mismatch", 256, report.getLocoAddress().getNumber());
+        Assert.assertEquals("Orientation mismatch", RailCom.Orientation.WEST, report.getOrientation());
+        Assert.assertEquals("Direction should not be set", RailCom.Direction.UNKNOWN, report.getDirection());
+    }
+
+    @Test
+    public void testOrientationReverse() {
+        // REVERSE entry (0x8100 -> bit 15 set, address 256)
+        ti.sendMessage(":X195B4123N0102030405068100;");
+        ti.flush();
+        Assert.assertEquals("Report mismatch", "RD256", r.getCurrentReport().toString());
+        RailCom report = (RailCom) r.getCurrentReport();
+        Assert.assertNotNull("Object type mismatch", report);
+        Assert.assertEquals("Loco address mismatch", 256, report.getLocoAddress().getNumber());
+        Assert.assertEquals("Orientation mismatch", RailCom.Orientation.EAST, report.getOrientation());
+        Assert.assertEquals("Direction should not be set", RailCom.Direction.UNKNOWN, report.getDirection());
     }
 
     @Test
