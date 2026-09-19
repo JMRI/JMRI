@@ -313,21 +313,26 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
      * that still considers this reporter its current location (i.e. {@code candidate.getWhereLastSeen() == this}).
      * If no such locomotive exists but the block is not empty (for example, if other locomotives
      * were temporarily seen in bridging or nested detectors), it falls back to the most recently
-     * entered tag remaining in the block. If no tags remain, {@code notify(null)} clears the report.
+     * entered tag remaining in the block without stealing {@code whereLastSeen}.
+     * If no tags remain, {@code notify(null)} clears the report.
      */
     private void updateCurrentReportAfterExit() {
-        IdTag fallback = null;
+        if (entryOrder.isEmpty()) {
+            notify(null);
+            return;
+        }
         for (int i = entryOrder.size() - 1; i >= 0; i--) {
             IdTag candidate = entryOrder.get(i);
             if (candidate.getWhereLastSeen() == this) {
-                fallback = candidate;
-                break;
+                notify(candidate);
+                return;
             }
         }
-        if (fallback == null && !entryOrder.isEmpty()) {
-            fallback = entryOrder.get(entryOrder.size() - 1);
-        }
-        notify(fallback);
+        // Fall back to the most recently entered remaining tag without modifying its
+        // whereLastSeen or notifying the reporter where it was seen elsewhere.
+        IdTag fallback = entryOrder.get(entryOrder.size() - 1);
+        setReport(fallback);
+        setState(IdTag.SEEN);
     }
 
     /**
