@@ -2610,7 +2610,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      *
      * @param register Register Number for the loco assigned address.
      * @param address is the locomotive address.
-     * @param isForward true is loco direction is forwards, false if reverse.
+     * @param isForward true if loco direction is forwards, false if reverse.
      * @return message to send e stop to the specified address.
      */
     public static DCCppMessage makeAddressedEmergencyStop(int register, int address, boolean isForward) {
@@ -2635,7 +2635,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * Note: This just sends a THROTTLE command with speed = -1
      *
-     * @param isForward true is loco direction is forwards, false if reverse.
+     * @param isForward true if loco direction is forwards, false if reverse.
      * @param address is the locomotive address.
      * @return message to send e stop to the specified address.
      */
