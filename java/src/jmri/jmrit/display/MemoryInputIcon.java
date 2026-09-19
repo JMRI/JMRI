@@ -30,8 +30,7 @@ import jmri.util.swing.*;
  */
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
 
-    JTextField _textBox = new JTextField(){
-    
+    class PositionableJPanelJTextField extends JTextField {
         // Painting is already inside the scalled MemoryInputIcon, so 
         // doesn't need to be scaled again
 
@@ -57,8 +56,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             boolean retval = logicalX >= 0 && logicalX < getWidth() && logicalY >= 0 && logicalY < getHeight();
             return retval;
         }
-    };
+    }
     
+    JTextField _textBox = new PositionableJPanelJTextField();
 
     // ==========
     // These are in the memory input icon itself - TODO: MOVE TO SUPER CLASS!
@@ -353,6 +353,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         } else {
             _textBox.setText("");
         }
+        // and redraw
+        getEditor().getTargetPanel().repaint();
     }
 
     @Override
