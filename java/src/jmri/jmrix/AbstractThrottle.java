@@ -122,7 +122,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @return speed
      */
     @Override
-    public synchronized float getSpeedSetting() {
+    public final synchronized float getSpeedSetting() {
         return speedSetting;
     }
 
@@ -175,7 +175,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @return true if locomotive is running forward
      */
     @Override
-    public boolean getIsForward() {
+    public final boolean getIsForward() {
         return isForward;
     }
 
