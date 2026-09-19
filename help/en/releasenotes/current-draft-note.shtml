@@ -86,6 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
+                <li>A LocoNet connection now reconnects if the connection goes down and then comes up again.</li>
                 <li></li>
             </ul>
 

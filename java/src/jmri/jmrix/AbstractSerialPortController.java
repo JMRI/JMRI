@@ -80,8 +80,34 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
+    protected void reconnectFromLoop(int retryNum){
+        try {
+            connect();
+            if (opened) {
+                super.reconnect();
+            }
+        } catch (IOException ex) {
+            log.trace("restart failed", ex); // main warning to log.error done within connect();
+            // if returned on exception stops thread and connection attempts
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void connect() throws java.io.IOException {
         openPort(mPort, "JMRI app");
+        if (currentSerialPort == null) {
+            log.debug("currentSerialPort is null");
+            // openPort failed to open the port. "opened" might have been set
+            // to true despite failure to open the port so we set it to false.
+            opened = false;
+        }
+        if (opened) {
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
+        }
     }
 
     /**
@@ -645,7 +671,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Each port adapter should handle this and it should be abstract.
      */
     @Override
-    protected void resetupConnection(){}
+    protected void resetupConnection() {}
 
     /**
      * Is the serial port open?
@@ -671,6 +697,45 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         outputStream.replaceStream(OutputStream.nullOutputStream());
         currentSerialPort = serialPort;
         oldSerialPort.closePort();
+    }
+
+    /**
+     * Close the serial port.
+     * If the serial port isn't closed, the hardware might fail to open the
+     * same port again. For example, if the serial port is /dev/rfcomm0 and
+     * it's not closed, once the hardware reinitializes the port, it might be
+     * /dev/rfcomm1 instead.
+     */
+    public void closePort() {
+        try {
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            log.warn("Exception during close stream", e);
+        }
+        if (currentSerialPort != null) {
+            currentSerialPort.closePort();
+        } else {
+            log.warn("Cannot close serial port. It's null");
+        }
+    }
+
+    /**
+     * Attempts to reconnect to a failed port.
+     * Starts a reconnect thread
+     */
+    @Override
+    protected void reconnect() {
+        // If the connection is already open, then we shouldn't try a re-connect.
+        if (opened || !allowConnectionRecovery) {
+            return;
+        }
+        try {
+            connect();
+            super.reconnect();
+        } catch (IOException e) {
+            log.warn("Error during reconnect", e);
+        }
     }
 
     /**

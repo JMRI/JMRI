@@ -15,6 +15,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected LnPortController(LocoNetSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
         setManufacturer(LnConnectionTypeList.DIGITRAX);
+
+        allowConnectionRecovery = true;
+        reconnectMaxAttempts = -1; // retry indefinitely
     }
 
     /**
@@ -117,7 +120,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         mLoconetProtocolAutoDetect = (value.equals("Yes") || value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
         log.debug("Loconet XPSlots: {}", mLoconetProtocolAutoDetect); // NOI18N
     }
-    
+
     public void setInterrogateOnStart(String value) {
         // default (most common state) is on, so just check for No
         mInterrogateAtStart = !(value.equals("No") || value.equals(Bundle.getMessage("ButtonNo")));
@@ -127,6 +130,25 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+
+    @Override
+    public final void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection lost. Attempting to recover...");
+        }
+        super.recover();
+    }
+
+    // after reconnect, reattach the packetizer's streams and restart the receive thread
+    @Override
+    protected final void resetupConnection() {
+        LnTrafficController tc = getSystemConnectionMemo().getLnTrafficController();
+        if (tc instanceof LnPacketizer) {
+            LnPacketizer packets = (LnPacketizer) tc;
+            packets.connectPort(this);
+            packets.restartRcvThread();
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(LnPortController.class);
