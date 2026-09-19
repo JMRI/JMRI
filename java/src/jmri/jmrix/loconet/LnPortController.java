@@ -132,6 +132,25 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
+    @Override
+    public final void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection lost. Attempting to recover...");
+        }
+        super.recover();
+    }
+
+    // after reconnect, reattach the packetizer's streams and restart the receive thread
+    @Override
+    protected final void resetupConnection() {
+        LnTrafficController tc = getSystemConnectionMemo().getLnTrafficController();
+        if (tc instanceof LnPacketizer) {
+            LnPacketizer packets = (LnPacketizer) tc;
+            packets.connectPort(this);
+            packets.restartRcvThread();
+        }
+    }
+
     private static final Logger log = LoggerFactory.getLogger(LnPortController.class);
 
 }

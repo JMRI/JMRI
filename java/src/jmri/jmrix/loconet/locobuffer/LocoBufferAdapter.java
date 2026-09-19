@@ -116,25 +116,6 @@ public class LocoBufferAdapter extends LnPortController {
         return currentSerialPort.getCTS();
     }
 
-    @Override
-    public void recover() {
-        if (allowConnectionRecovery && opened) {
-            log.info("Connection lost. Attempting to recover...");
-        }
-        super.recover();
-    }
-
-    // after reconnect, reattach the packetizer's streams and restart the receive thread
-    @Override
-    protected void resetupConnection() {
-        LnTrafficController tc = getSystemConnectionMemo().getLnTrafficController();
-        if (tc instanceof LnPacketizer) {
-            LnPacketizer packets = (LnPacketizer) tc;
-            packets.connectPort(this);
-            packets.restartRcvThread();
-        }
-    }
-
     /**
      * Set up all of the other objects to operate with a LocoBuffer connected to
      * this port.
