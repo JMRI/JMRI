@@ -53,6 +53,14 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         //}
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasExitReports() {
+        return true;
+    }
+
     private void setIdentifiersFromSystemName(String systemName){
         String moduleAddressText = Z21CanBusAddress.getEncoderAddressString(systemName,_memo.getSystemPrefix());
         try{

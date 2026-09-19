@@ -97,6 +97,11 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
         }
     }
 
+    @Override
+    public void notifySeenElsewhere(IdTag tag, Reporter newReporter) {
+        reporter.notifySeenElsewhere(tag, newReporter);
+    }
+
     /**
      * {@inheritDoc}
      *

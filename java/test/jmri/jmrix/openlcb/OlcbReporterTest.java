@@ -128,8 +128,128 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         ti.sendMessage(":X195B4123N010203040507C100;");
         ti.flush();
 
+        // Moving to another reporter does not remove 256 from r's collection since OpenLCB has explicit exit events
+        Assert.assertEquals("expect 1 in reporter", 1, ((OlcbReporter)r).getCollection().size());
+        Assert.assertEquals("expect 1 in r2", 1, ((OlcbReporter)r2).getCollection().size());
+
+        // Explicit exit from r removes 256 from r
+        Message m = new ProducerIdentifiedMessage(ti.iface.getNodeId(), new EventID("01.02.03.04.05.06.C1.00"), EventState.Invalid);
+        ti.iface.getOutputConnection().put(m, null);
+        ti.flush();
+
         Assert.assertEquals("expect 0 in reporter", 0, ((OlcbReporter)r).getCollection().size());
-        
+        Assert.assertNull("Report should have cleared on exit", r.getCurrentReport());
+        // r2 still holds 256
+        Assert.assertEquals("expect 1 in r2", 1, ((OlcbReporter)r2).getCollection().size());
+        Assert.assertNotNull("r2 should still report 256", r2.getCurrentReport());
+    }
+
+    @Test
+    public void testBridgingBlocks() {
+        // Loco 256 enters reporter 1
+        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.flush();
+        Assert.assertEquals("RD256", r.getCurrentReport().toString());
+        Assert.assertEquals(1, ((OlcbReporter) r).getCollection().size());
+
+        // Loco 256 enters reporter 2 (bridging both blocks)
+        var rman = ti.configurationManager.getReporterManager();
+        var r2 = rman.provideReporter("01.02.03.04.05.07.00.00");
+        ((OlcbReporter) r2).finishLoad();
+
+        ti.sendMessage(":X195B4123N010203040507C100;");
+        ti.flush();
+
+        // Both reporters hold loco 256 simultaneously
+        Assert.assertEquals(1, ((OlcbReporter) r).getCollection().size());
+        Assert.assertEquals(1, ((OlcbReporter) r2).getCollection().size());
+        Assert.assertEquals("RD256", r.getCurrentReport().toString());
+        Assert.assertEquals("RD256", r2.getCurrentReport().toString());
+
+        // Exit from reporter 1
+        Message m = new ProducerIdentifiedMessage(ti.iface.getNodeId(), new EventID("01.02.03.04.05.06.C1.00"), EventState.Invalid);
+        ti.iface.getOutputConnection().put(m, null);
+        ti.flush();
+
+        Assert.assertEquals(0, ((OlcbReporter) r).getCollection().size());
+        Assert.assertNull(r.getCurrentReport());
+        Assert.assertEquals(1, ((OlcbReporter) r2).getCollection().size());
+        Assert.assertEquals("RD256", r2.getCurrentReport().toString());
+    }
+
+    @Test
+    public void testMultipleLocosOrderedFallback() {
+        // Loco 256 enters r
+        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.flush();
+        Assert.assertEquals("RD256", r.getCurrentReport().toString());
+
+        // Loco 257 enters r
+        ti.sendMessage(":X195B4123N010203040506C101;");
+        ti.flush();
+        Assert.assertEquals("RD257", r.getCurrentReport().toString());
+        Assert.assertEquals(2, ((OlcbReporter) r).getCollection().size());
+
+        // Exit loco 257
+        Message m = new ProducerIdentifiedMessage(ti.iface.getNodeId(), new EventID("01.02.03.04.05.06.C1.01"), EventState.Invalid);
+        ti.iface.getOutputConnection().put(m, null);
+        ti.flush();
+
+        // Collection has 1 left, and report falls back to 256
+        Assert.assertEquals(1, ((OlcbReporter) r).getCollection().size());
+        Assert.assertEquals("RD256", r.getCurrentReport().toString());
+    }
+
+    @Test
+    public void testFallbackWhereLastSeen() {
+        // 100 enters r
+        ti.sendMessage(":X195B4123N010203040506C064;"); // 0x64 = 100
+        ti.flush();
+        // 200 enters r
+        ti.sendMessage(":X195B4123N010203040506C0C8;"); // 0xc8 = 200
+        ti.flush();
+        // 300 enters r
+        ti.sendMessage(":X195B4123N010203040506C12C;"); // 0x12c = 300
+        ti.flush();
+        Assert.assertEquals("RD300", r.getCurrentReport().toString());
+        Assert.assertEquals(3, ((OlcbReporter) r).getCollection().size());
+
+        // 200 is seen at r2 (whereLastSeen becomes r2)
+        var rman = ti.configurationManager.getReporterManager();
+        var r2 = rman.provideReporter("01.02.03.04.05.07.00.00");
+        ((OlcbReporter) r2).finishLoad();
+        ti.sendMessage(":X195B4123N010203040507C0C8;");
+        ti.flush();
+
+        // Now 300 exits r
+        Message m = new ProducerIdentifiedMessage(ti.iface.getNodeId(), new EventID("01.02.03.04.05.06.C1.2C"), EventState.Invalid);
+        ti.iface.getOutputConnection().put(m, null);
+        ti.flush();
+
+        // r should fall back to 100 because 100 still has whereLastSeen == r, whereas 200 was seen at r2
+        Assert.assertEquals("RD100", r.getCurrentReport().toString());
+        Assert.assertEquals(2, ((OlcbReporter) r).getCollection().size());
+    }
+
+    @Test
+    public void testBoosterAndLocalDetector() {
+        var rman = ti.configurationManager.getReporterManager();
+        var localReporter = rman.provideReporter("01.02.03.04.05.07.00.00");
+        ((OlcbReporter) localReporter).finishLoad();
+
+        // Global booster detector (r) receives 256
+        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.flush();
+
+        // Local block detector receives 256
+        ti.sendMessage(":X195B4123N010203040507C100;");
+        ti.flush();
+
+        // Both reporters simultaneously report loco 256 in collection and non-empty current report
+        Assert.assertEquals(1, ((OlcbReporter) r).getCollection().size());
+        Assert.assertEquals(1, ((OlcbReporter) localReporter).getCollection().size());
+        Assert.assertEquals("RD256", r.getCurrentReport().toString());
+        Assert.assertEquals("RD256", localReporter.getCurrentReport().toString());
     }
 
     @Test
