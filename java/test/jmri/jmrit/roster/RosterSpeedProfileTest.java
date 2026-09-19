@@ -131,6 +131,9 @@ public class RosterSpeedProfileTest {
         ThrottleListen throtListen = new ThrottleListen();
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
         assertTrue( tm.requestThrottle(rF1, throtListen, false) );
+        // Throttle acquisition is deferred (see AbstractThrottleManager) --
+        // without this wait, testScene() below NPE'd on a still-null throttle.
+        JUnitUtil.waitFor(() -> throtListen.throttle != null, "wait for throttle found");
         stmLimit = stm.numSteps;
         resultSummary.testTotalCount = 0;
         for (float testDistance = fromDistanceMm; testDistance <= toDistanceMm; testDistance += byDistanceMm) {
@@ -355,6 +358,24 @@ public class RosterSpeedProfileTest {
 
         setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_MPH);
         assertEquals("0.10 Miles/Hour",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+
+    }
+
+    @Test
+    public void testconvertThrottleSettingToScaleSpeedWithShortUnits(){
+
+        SignalSpeedMap ssm = InstanceManager.getDefault(SignalSpeedMap.class);
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_NORMAL);
+        assertEquals("0.50 mm/s",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_THROTTLE);
+        assertEquals("0.50 mm/s",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_KMPH);
+        assertEquals("0.16 kph",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_MPH);
+        assertEquals("0.10 mph",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
 
     }
 

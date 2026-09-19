@@ -134,7 +134,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             log.debug("Node {} NET Options Written = {}", node.nodeAddress, value);
 
             // cpNode Options  Classic CMRI nodes do not have options
-            if (node.getNodeType() == SerialNode.CPNODE || node.getNodeType() == SerialNode.CPMEGA) {
+            if (node.getNodeType() == SerialNode.CPNODE || node.getNodeType() == SerialNode.CPMEGA
+                    || node.getNodeType() == SerialNode.ESP32NODE) {
                 value = new StringBuilder();
                 for (int i = 0; i < SerialNode.NUMCPNODEOPTS; i++) {
                     value.append(Integer.toHexString((node.getcpnodeOpts(i) & 0xF)));
@@ -287,7 +288,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 node.setCardTypeLocation(j, (ctl.charAt(j) - '0'));
             }
 
-            if (type == SerialNode.CPNODE || type == SerialNode.CPMEGA) {
+            if (type == SerialNode.CPNODE || type == SerialNode.CPMEGA || type == SerialNode.ESP32NODE) {
                 // cpNode Options
                 if (findParmValue(n, "cpnodeoptions") != null) {
                     opts = findParmValue(n, "cpnodeoptions");

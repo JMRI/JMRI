@@ -179,7 +179,9 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
     @Override
     protected void save(boolean isSave) {
-        super.save(engineManager, isSave);
+        if (!super.save(engineManager, isSave)) {
+            return;
+        }
         Engine engine = (Engine) _rs;
         
         checkAndSetLocationAndTrack(engine);

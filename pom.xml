@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.17.1-SNAPSHOT</version>
+    <version>5.17.3-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -21,7 +21,7 @@
         <!-- this is a custom version, see lib/README.md -->
         <jemmy.version>RELEASE125</jemmy.version>
         <slf4j.version>2.0.17</slf4j.version>
-        <log4j.version>2.25.3</log4j.version>
+        <log4j.version>2.25.4</log4j.version>
         <jackson-core.version>2.22.0</jackson-core.version>
         <jackson-databind.version>2.22.0</jackson-databind.version>
         <jackson-annotations.version>2.22</jackson-annotations.version>

@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1.0 - Ronald Kuhn, CVs for Decoder without 1K EEPROM, 05 April 2024 -->
+<!-- version 1.1 - Pierre Billon, Added French translations, 05 August 2026 -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   
@@ -117,16 +118,19 @@
   <variable CV="353" item="Automatic Shut-down of Smoke Generator" default="0">
     <decVal min="0" max="252"/>
     <label>Automatic Shut-down of Smoke Generator</label>
+    <label xml:lang="fr">Temps d'extinction automatique du générateur de fumée</label>
     <label xml:lang="it">Spegnimento automatico generatore Fumo</label>
     <label xml:lang="de">Rauchgenerator Laufzeit</label>
     <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
     <tooltip>0 to 252, 25sec per unit</tooltip>
+    <tooltip xml:lang="fr">0 à 252, 25 s par unité</tooltip>
     <tooltip xml:lang="de">0 bis 252, 25 sec pro Einheit</tooltip>
     <tooltip xml:lang="cs">0 až 252, 25 sekund na jednotku</tooltip>
   </variable>
   <variable CV="355" item="Fan Speed at Standstill" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>
     <label>Fan Speed at Standstill</label>
+    <label xml:lang="fr">Ventilateur de fumée : régime à l'arrêt</label>
     <label xml:lang="it">Velocità Ventole da fermo</label>
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei Stillstand</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při stání</label>
@@ -135,16 +139,19 @@
     <enumVal>
         <enumChoice choice="0">
         <choice>no</choice>
+        <choice xml:lang="fr">non</choice>
         <choice xml:lang="de">nein</choice>
         <choice xml:lang="cs">Ne</choice>
       </enumChoice>
       <enumChoice choice="1">
         <choice>yes</choice>
+        <choice xml:lang="fr">oui</choice>
         <choice xml:lang="de">ja</choice>
         <choice xml:lang="cs">Ano</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
+    <label xml:lang="fr">Éclats lumineux avec le son du graduateur</label>
     <label xml:lang="cs">Blikání světel pri zvuku kontroleru</label>
   </variable>
 

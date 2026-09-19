@@ -3072,7 +3072,15 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Override
     public void redrawPanel() {
-        repaint();
+        JComponent targetPanel = getTargetPanel();
+        if (targetPanel != null) {
+            // repaint only the drawing area, not the whole frame with its
+            // menu bar, tool bar and scroll bars, none of which this changes
+            targetPanel.repaint();
+        } else {
+            // too early in construction to have a target panel yet
+            repaint();
+        }
     }
 
     /**

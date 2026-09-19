@@ -18,6 +18,7 @@
 <!-- version 1.4 - Nigel Cliffe. Added masks to group members (A1 Fwd, A2 Fwd, A1 Rev, A2 Rev) and dimming group selection. Added dimming levels,  14 Feb 2021 -->
 <!-- version 1.5 - Ronald Kuhn, add german translation, 29 November 2021-->
 <!-- version 1.6 - Pierre Billon - 2026-07-31 - tooltip on the dimming group selectors explaining the new "Off" value (6) added to Choice-DG.xml, tested on an MX620N -->
+<!-- version 1.7 - Pierre Billon - 2026-08-06 - Added French and German translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>
@@ -63,6 +64,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -75,21 +77,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
          <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -97,6 +103,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -129,6 +136,7 @@
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV431 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV431)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV431)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV431)</tooltip>
   </variable>
@@ -242,6 +250,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -255,21 +264,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -277,6 +290,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -289,16 +303,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV437 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV437)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV437)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV437)</tooltip>
   </variable>
@@ -412,6 +431,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -425,21 +445,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -447,6 +471,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -459,16 +484,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV443 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV443)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV443)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV443)</tooltip>
   </variable>
@@ -581,6 +611,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -594,21 +625,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -616,6 +651,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -628,16 +664,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV449 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV449)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV449)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV449)</tooltip>
   </variable>
@@ -750,6 +791,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -763,21 +805,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -785,6 +831,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -797,16 +844,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV455 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV455)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV455)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV455)</tooltip>
   </variable>
@@ -919,6 +971,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -932,21 +985,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -954,6 +1011,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -966,16 +1024,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV461 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV461)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV461)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV461)</tooltip>
   </variable>
@@ -1088,6 +1151,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -1101,21 +1165,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -1123,6 +1191,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -1135,16 +1204,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV467 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV467)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV467)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV467)</tooltip>
   </variable>
@@ -1257,6 +1331,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -1270,21 +1345,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -1292,6 +1371,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -1304,16 +1384,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV473 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV473)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV473)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV473)</tooltip>
   </variable>
@@ -1426,6 +1511,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -1439,21 +1525,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -1461,6 +1551,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -1473,16 +1564,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV479 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV479)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV479)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV479)</tooltip>
   </variable>
@@ -1595,6 +1691,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -1608,21 +1705,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -1630,6 +1731,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -1642,16 +1744,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV485 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV485)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV485)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV485)</tooltip>
   </variable>
@@ -1756,6 +1863,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -1768,21 +1876,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -1790,6 +1902,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -1802,16 +1915,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV491 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV491)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV491)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV491)</tooltip>
   </variable>
@@ -1911,6 +2029,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -1923,21 +2042,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -1945,6 +2068,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -1957,16 +2081,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV497 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV497)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV497)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV497)</tooltip>
   </variable>
@@ -2066,6 +2195,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -2078,21 +2208,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -2100,6 +2234,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -2112,16 +2247,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV503 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV503)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV503)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV503)</tooltip>
   </variable>
@@ -2221,6 +2361,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -2233,21 +2374,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -2255,6 +2400,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -2267,16 +2413,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV801 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV801)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV801)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV801)</tooltip>
   </variable>
@@ -2376,6 +2527,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -2388,21 +2540,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -2410,6 +2566,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -2422,16 +2579,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV807 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV807)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV807)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV807)</tooltip>
   </variable>
@@ -2531,6 +2693,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -2543,21 +2706,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -2565,6 +2732,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -2577,16 +2745,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV813 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV813)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV813)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV813)</tooltip>
   </variable>
@@ -2686,6 +2859,7 @@
     <label>M+F</label>
     <label xml:lang="cs">M+F</label>
     <tooltip>the outputs listed under A1 and A2 should only switch ON if the F and M key are both ON.</tooltip>
+    <tooltip xml:lang="fr">Les sorties listées sous A1 et A2 ne doivent s'activer que si les touches F et M sont toutes deux actives.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
   </variable>
@@ -2698,21 +2872,25 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="cs">Vypnuto</choice>
           <choice xml:lang="de">Aus</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
           <choice xml:lang="de">Vor an</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
           <choice xml:lang="de">Rück an</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
           <choice xml:lang="de">Beide an</choice>
         </enumChoice>
@@ -2720,6 +2898,7 @@
     <label>ON while</label>
     <label xml:lang="cs">Když Zapnuto</label>
     <tooltip>M-key outputs shall not be turned OFF if the F-key is ON and driving direction</tooltip>
+    <tooltip xml:lang="fr">Les sorties de la touche M ne doivent pas être désactivées si la touche F est active et le sens de marche défini.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
   </variable>
@@ -2732,16 +2911,21 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="fr">Oui</choice>
+          <choice xml:lang="de">Ja</choice>
           <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>
     <label xml:lang="cs">Dálkové světlo</label>
     <tooltip>M-key Hibeam (hides other options in CV819 )</tooltip>
+    <tooltip xml:lang="fr">Plein phares touche M (masque les autres options du CV819)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV819)</tooltip>
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV819)</tooltip>
   </variable>

@@ -4,9 +4,6 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.locations.Location;
@@ -17,6 +14,9 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Router for car movement. This code attempts to find a way (a route) to move a
@@ -99,6 +99,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         c.setFinalDestination(destination);
         c.setFinalDestinationTrack(track);
         c.setScheduleItemId(car.getScheduleItemId());
+        c.setRouteDestinationTiming(car.getRouteDestinationTiming());
         boolean results = setDestination(c, train, buildReport);
         c.setDestination(null, null); // clear router car destinations
         c.setFinalDestinationTrack(null);
@@ -345,6 +346,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     clone.getDestinationName(), clone.getDestinationTrackName()));
             _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{testTrain.getName()});
             return true; // car can be routed, but not by this train!
+        }
+        // adjust car timing for the car.setDestination
+        if (car.getRouteDestinationTiming() == null || car.getRouteDestinationTiming().getSequenceNumber() < clone.getRouteDestinationTiming().getSequenceNumber()) {
+            car.setRouteDestinationTiming(clone.getRouteDestinationTiming());
         }
         _status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
         if (_status.equals(Track.OKAY)) {
@@ -1244,9 +1249,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             clone.setLength(Integer.toString(car.getKernel().getTotalLength() - RollingStock.COUPLERS));
         }
         clone.setTrack(car.getTrack());
-        clone.setFinalDestination(car.getFinalDestination());
         // don't set the clone's final destination track, that will record the
         // car as being inbound
+        clone.setFinalDestinationTrack(null);
         // next two items is where the clone is different
         clone.setDestination(car.getFinalDestination());
         // note that final destination track can be null

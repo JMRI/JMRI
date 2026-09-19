@@ -22,6 +22,9 @@
        a family spanning several files is normal (Zimo Unified software spans 82). -->
 
   <version author="Pierre Billon" version="1" lastUpdated="2026/07/31"/>
+  <version author="Pierre Billon" version="1.1" lastUpdated="2026/08/06"/>
+  <version author="Ronald Kuhn" version="1.2" lastUpdated="2026/08/12"/>
+  <!-- v1.2,  added replacement-feature -->
 
   <decoder>
   <!-- These version 4 families are gated to CV #7 = 4 exactly. CV #7 is the main software
@@ -29,16 +32,16 @@
        The open-ended range that used to live here (4 to 42) has moved to the version 5
        families, which keep one catch-all so a future 6.x decoder still identifies. -->
     <family name="MS Sound (version 4+)" mfg="Zimo">
-      <model model="MS950 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="14" numFns="14" productID="9">
+      <model model="MS950 version 4+" replacementModel="MS950 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="14" numFns="14" productID="9">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>
@@ -91,16 +94,16 @@
         <size length="30" width="15" height="4" units="mm"/>
       </model>
 
-      <model model="MS990 version 4+" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="15" numFns="14" productID="7">
+      <model model="MS990 version 4+" replacementModel="MS990 version 5+" replacementFamily="query:MS Sound (version 5+)" lowVersionID="4" highVersionID="4" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="G" numOuts="15" numFns="14" productID="7">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
-          <label xml:lang="fr">Feu avant</label>
+          <label xml:lang="fr">Feux avant</label>
         </output>
         <output name="2" label="Rear Light">
           <label xml:lang="de">Lrück</label>
           <label xml:lang="cs">Zadní světla</label>
-          <label xml:lang="fr">Feu arrière</label>
+          <label xml:lang="fr">Feux arrière</label>
         </output>
         <output name="3" label="FO 1">
           <label xml:lang="de">FA1</label>

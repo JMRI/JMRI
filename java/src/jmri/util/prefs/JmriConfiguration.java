@@ -64,6 +64,27 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
         return null;
     }
     
+    // migrate to new (2026) schema from older netbeans.org one upon rewriting profile.xml
+    void updateDocumentSchema(Element root) {
+
+        // remove previous namespace definition on the root element
+        root.getOwnerDocument().renameNode(root, null, root.getLocalName());
+
+        // manually adjust attributes
+        root.removeAttribute("xmlns:xsi");
+        root.removeAttributeNS(null, "xmlns");
+        root.removeAttribute("xmlns");
+        root.removeAttribute("xsi");
+        root.removeAttribute("xsi:noNamespaceSchemaLocation");
+        root.removeAttribute("noNamespaceSchemaLocation");
+        root.setAttribute("xmlns:xsi",
+                "http://www.w3.org/2001/XMLSchema-instance");
+        root.setAttribute("xsi:noNamespaceSchemaLocation",
+                "http://jmri.org/xml/schema/auxiliary-configuration.xsd");
+        root.setAttribute("xmlns",
+                "");
+    }
+    
     @Override
     public Element getConfigurationFragment(final String elementName, final String namespace, final boolean shared) {
         return ThreadingUtil.runOnGUIwithReturn(() -> {
@@ -78,6 +99,9 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
                     return null;
                 }
                 Element root = persistentDocument.getDocumentElement();
+
+                updateDocumentSchema(root);
+
                 return XMLUtil.findElement(root, elementName, namespace);
             }
         });
@@ -123,6 +147,9 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
                     }
                 }
                 root.insertBefore(root.getOwnerDocument().importNode(fragment, true), ref);
+                
+                updateDocumentSchema(root);
+                
                 try {
                     this.backup(shared);
                     try (final OutputStream os = new FileOutputStream(file)) {
@@ -159,6 +186,9 @@ public abstract class JmriConfiguration implements AuxiliaryConfiguration {
                         if (toRemove != null) {
                             root.removeChild(toRemove);
                             this.backup(shared);
+
+                            updateDocumentSchema(root);
+                
                             if (root.getElementsByTagName("*").getLength() > 0) {
                                 // NOI18N
                                 try (final OutputStream os = new FileOutputStream(file)) {

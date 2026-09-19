@@ -1,5 +1,5 @@
-# Listen to all sensors, printing an info line when they change state.
-#  If the sensor has a "matching" block, print some block detail and speak
+# Listen to all sensors, writing an info line when they change state.
+#  If the sensor has a "matching" block, write the block detail and speak
 #  the most useful attributes audibly.  
 #  This is useful for validating occupancy and block setup and wiring
 #
@@ -7,9 +7,12 @@
 # based on SensorLog.py and BlockLister.py
 # Part of the JMRI distribution
 
+import jmri
 import java
 import java.beans
-import jmri
+import org.slf4j.LoggerFactory
+
+log = org.slf4j.LoggerFactory.getLogger("jmri.jmrit.jython.exec.script.BlockOccupancyAnnouncer")
 
 # Define routine to map status numbers to text
 def stateName(state) :
@@ -32,10 +35,15 @@ def cvtBlockStateToText(state) :
         rep = rep + "Unoccupied "
     return rep
 
-# use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
+# use powershell command in windows command to "speak" some text
 def speak(msg) :
     #uncomment next line for speech (Jenkins doesn't like this command)
     #java.lang.Runtime.getRuntime().exec('C:\\Progra~2\\nircmd\\nircmd speak text "' + msg +'"')
+    sc = 'powershell -Command "Add-Type -AssemblyName System.speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(\'' + msg +'\')"' #uncomment this line for Windows
+    #sc = 'say "' + msg +'"' #uncomment this line for macOS
+    #sc = 'espeak "' + msg +'"' #uncomment thbis line for Linux
+    java.lang.Runtime.getRuntime().exec(sc)
+    log.info( msg )
     return
     
 # Define the sensor listener: 
@@ -52,7 +60,7 @@ class SensorListener(java.beans.PropertyChangeListener):
         mesg += " to "+stateName(event.newValue)
 
         #look for block based on our naming convention, and speak some info if found
-        block_name = "ILB" + sensor_num
+        block_name = "B" + sensor_num
         b = blocks.getByUserName(block_name)
         if (b != None) :
             block_length = str(round(b.getLengthIn())).rstrip('0').rstrip('.') + " inches "
@@ -63,7 +71,7 @@ class SensorListener(java.beans.PropertyChangeListener):
                 #spoken_mesg += cvtBlockStateToText(b.getState()) + ", "
                 spoken_mesg += block_length
                 speak(spoken_mesg)
-        print mesg
+        log.info(mesg)
     return
     
 listener = SensorListener()
@@ -75,18 +83,18 @@ listener = SensorListener()
 class ManagerListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
     list = event.source.getNamedBeanSet()
-    for sensor in list :
-        sensor.removePropertyChangeListener(listener)
-        sensor.addPropertyChangeListener(listener)
+    for s in list :
+        s.removePropertyChangeListener(listener)
+        s.addPropertyChangeListener(listener)
 
 # Attach the sensor manager listener
+sensors.removePropertyChangeListener(ManagerListener())
 sensors.addPropertyChangeListener(ManagerListener())
 
 # For the sensors that exist, attach a sensor listener
 list = sensors.getNamedBeanSet()
-for i in list :
-    sensor.addPropertyChangeListener(listener)
+for s in list :
+    s.removePropertyChangeListener(listener)
+    s.addPropertyChangeListener(listener)
 
 speak("block occupancy announcer started")
-
- 

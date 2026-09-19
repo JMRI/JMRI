@@ -34,7 +34,7 @@ public final class JmriConfigurationProvider extends AbstractConfigurationProvid
 
     private final JmriConfiguration configuration;
 
-    public static final String NAMESPACE = "http://www.netbeans.org/ns/auxiliary-configuration/1"; // NOI18N
+    public static final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration.xsd"; // NOI18N
 
     static {
         try {

@@ -32,8 +32,22 @@ public interface LocoNetInterface {
      * with the message being queued for eventual sending.  If you're interested
      * in a reply, you need to register a LocoNetListener object to watch the
      * message stream.
+     *
+     * @param msg message to send; will be updated with CRC
      */
     void sendLocoNetMessage(LocoNetMessage msg);
+
+    /*
+     * Request a message be sent to the attached LocoNet. Return is immediate,
+     * with the message being queued for eventual sending.  If you're interested
+     * in a reply, you need to register a LocoNetListener object to watch the
+     * message stream.
+     *
+     * @param msg message to send; will be updated with CRC
+     * @param requestIgnoreEcho If true: Notify listeners on enqueing message, ignore echo from line.
+     *             Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
+     */
+    void sendLocoNetMessage(LocoNetMessage msg, boolean requestIgnoreEcho);
 
     /**
      * Request notification of things happening on the LocoNet.

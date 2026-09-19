@@ -11,7 +11,8 @@
   <!-- v1.0 of Zimo MS-series fork from MX-series files,  Nigel Cliffe, 23 Nov 2022 -->
   <!-- v1.1   merge in various CV's for Swiss Mapping into correct numerical sequence,  Nigel Cliffe, 24 Nov 2022 -->  
   <!-- v1.2   added german translation,  Ronald Kuhn, 22 June 2023 -->  
-<!-- version 1.0  31 July 2026  Pierre Billon - split out of CV500-CV602_MS-MN-FS.xml: Swiss Mapping dimming values and special configurations Also: added the missing French and German labels -->
+<!-- version 2.0  31 July 2026  Pierre Billon - split out of CV500-CV602_MS-MN-FS.xml: Swiss Mapping dimming values and special configurations Also: added the missing French and German labels -->
+<!-- version 2.1  06 August 2026  Pierre Billon - Added French and German translations -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
@@ -83,26 +84,27 @@
       <enumVal>
         <enumChoice choice="None" value="0">
           <choice>Off</choice>
+          <choice xml:lang="fr">Off</choice>
           <choice xml:lang="de">Aus</choice>
           <choice xml:lang="cs">Vypnuto</choice>
         </enumChoice>
         <enumChoice choice="Fw" value="2">
           <choice>Fwd on</choice>
+          <choice xml:lang="fr">Av. on</choice>
           <choice xml:lang="de">Vor an</choice>
           <choice xml:lang="cs">Vpřed zapnuto</choice>
-          <choice xml:lang="fr">Allumé en marche avant</choice>
         </enumChoice>
         <enumChoice choice="Rev" value="1">
           <choice>Rev on</choice>
+          <choice xml:lang="fr">Arr. on</choice>
           <choice xml:lang="de">Rück an</choice>
           <choice xml:lang="cs">Vzad zapnuto</choice>
-          <choice xml:lang="fr">Allumé en marche arrière</choice>
         </enumChoice>
         <enumChoice choice="Both" value="3">
           <choice>All on</choice>
+          <choice xml:lang="fr">Tout on</choice>
           <choice xml:lang="de">Beide an</choice>
           <choice xml:lang="cs">Vše zapnuto</choice>
-          <choice xml:lang="fr">Tous allumés</choice>
         </enumChoice>
     </enumVal>
     <label>ON while</label>
@@ -119,6 +121,8 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="fr">Non</choice>
+          <choice xml:lang="de">Nein</choice>
           <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->

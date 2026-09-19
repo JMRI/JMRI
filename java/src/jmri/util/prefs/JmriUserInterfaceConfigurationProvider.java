@@ -35,8 +35,6 @@ public final class JmriUserInterfaceConfigurationProvider extends AbstractConfig
 
     private final Configuration configuration;
 
-    public static final String NAMESPACE = "http://www.netbeans.org/ns/auxiliary-configuration/1"; // NOI18N
-
     static {
         try {
             DocumentBuilderFactory.newInstance().newDocumentBuilder();

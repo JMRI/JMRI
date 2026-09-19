@@ -489,6 +489,10 @@
         <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupAction</adapter>
         <current>deletegroup</current>
     </node>
+    <node name="Delete Roster Group Contents">
+        <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupContentsAction</adapter>
+        <current>deletegroupcontents</current>
+    </node>
     <node>separator</node><!-- separator -->
     <node name="Add Roster Entry to Group...">
 	    <name xml:lang="de">Eintrag einer Lokparkgruppe hinzufügen</name>

@@ -129,10 +129,19 @@ div#panelFooter span.info {
     font-size: 80%;
 }
 
-div.MemoryInputIconXml, div.MemorySpinnerIconXml {
+div.MemorySpinnerIconXml {
     padding: 1px 1em 1px 1em;
     min-width: 4em;
     border:  solid black 1px;
+    text-align: center;
+}
+
+.MemoryInputIconXml {
+    padding: 1px 1px 1px 1px;
+    min-width: 4em;
+    box-shadow: none;
+    -webkit-appearance: none;
+    border:  none;
     text-align: center;
 }
 

@@ -12,21 +12,25 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software V32+, Mark Waters 26 Jan 2015 -->
+<!-- version 2 - Added French translations, Pierre Billon 05 Aug 2026 -->
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
         <choice xml:lang="cs">Žádný</choice>
       </enumChoice>
       <enumChoice choice="Front Light" value="14">
         <choice>Front Light</choice>
+        <choice xml:lang="fr">Feux avant</choice>
         <choice xml:lang="it">Luce frontale</choice>
         <choice xml:lang="de">Lvor</choice>
         <choice xml:lang="cs">Přední světla</choice>
       </enumChoice>
       <enumChoice choice="Rear Light" value="15">
         <choice>Rear Light</choice>
+        <choice xml:lang="fr">Feux arrière</choice>
         <choice xml:lang="it">Luce retro</choice>
         <choice xml:lang="de">Lrück</choice>
         <choice xml:lang="cs">Zadní světla</choice>

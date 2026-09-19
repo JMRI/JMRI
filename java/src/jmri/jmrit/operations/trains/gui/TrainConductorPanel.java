@@ -5,9 +5,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -16,6 +13,9 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Conductor Panel. Shows work for a train one location at a time.
@@ -144,6 +144,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             initialize();
             if (_train != null && _train.getRoute() != null) {
                 textTrainName.setText(_train.getIconName());
+                loadTrainComment();
                 RouteLocation rl = _train.getCurrentRouteLocation();
                 if (rl != null) {
                     loadRouteLocationComment(rl);

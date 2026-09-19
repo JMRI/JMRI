@@ -102,6 +102,10 @@ public class JsonOperations {
      */
     public static final String HP = "hp";
     /**
+     * {@value #ORDER}
+     */
+    public static final String ORDER = "order";
+    /**
      * {@value #ROAD}
      */
     public static final String ROAD = "road";

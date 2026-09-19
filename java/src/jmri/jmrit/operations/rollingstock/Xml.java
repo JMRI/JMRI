@@ -27,6 +27,7 @@ public class Xml {
     protected static final String FALSE = "false"; // NOI18N
 
     // RollingStock.java
+    protected static final String ORDER = "order"; // NOI18N
     protected static final String ROAD_NUMBER = "roadNumber"; // NOI18N
     protected static final String ROAD_NAME = "roadName"; // NOI18N
     protected static final String COLOR = "color"; // NOI18N

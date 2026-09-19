@@ -41,27 +41,32 @@
   <variable CV="460" default="0" item="Effect for AUX3">
     <enumVal>
     <enumChoice choice="No effect">
-      <choice>Kein Effect</choice>
+      <choice>No effect</choice>
+      <choice xml:lang="fr">Pas d'effet</choice>
       <choice xml:lang="de">Kein Effekt</choice>
       <choice xml:lang="nl">Geen effect</choice>
     </enumChoice>
     <enumChoice choice="Dim">
       <choice>Dim</choice>
+      <choice xml:lang="fr">Atténuation</choice>
       <choice xml:lang="de">Dimmen</choice>
       <choice xml:lang="nl">Dimmen</choice>
     </enumChoice>
     <enumChoice choice="Fade in">
       <choice>Fade in</choice>
+      <choice xml:lang="fr">Fondu à l'ouverture</choice>
       <choice xml:lang="de">Einblenden</choice>
       <choice xml:lang="nl">In blenden-</choice>
     </enumChoice>
     <enumChoice choice="Fade out">
       <choice>Fade out</choice>
+      <choice xml:lang="fr">Fondu à la fermeture</choice>
       <choice xml:lang="de">Ausblenden</choice>
       <choice xml:lang="nl">Uit blenden</choice>
     </enumChoice>
     <enumChoice choice="Marsligh-">
-      <choice>Marsligh-</choice>
+      <choice>Marslight</choice>
+      <choice xml:lang="fr">Marslight</choice>
       <choice xml:lang="de">Marsligh</choice>
       <choice xml:lang="nl">Marsligh</choice>
     </enumChoice>
@@ -72,31 +77,37 @@
     </enumChoice>
     <enumChoice choice="strobe">
       <choice>strobe</choice>
+      <choice xml:lang="fr">Flash</choice>
       <choice xml:lang="de">Blitz</choice>
       <choice xml:lang="nl">Flitz</choice>
     </enumChoice>
     <enumChoice choice="double strobe">
       <choice>double strobe</choice>
+      <choice xml:lang="fr">Double flash</choice>
       <choice xml:lang="de">Doppel Blitz</choice>
       <choice xml:lang="nl">Dubbele flitz</choice>
     </enumChoice>
     <enumChoice choice="-">
-      <choice>Dynamic smoke generator,</choice>
+      <choice>Dynamic smoke generator</choice>
+      <choice xml:lang="fr">Générateur de fumée dynamique</choice>
       <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
       <choice xml:lang="nl">dynamische rookgenerator</choice>
     </enumChoice>
     <enumChoice choice="Firebox (red)">
       <choice>Firebox (red)</choice>
+      <choice xml:lang="fr">Foyer (rouge)</choice>
       <choice xml:lang="de">Feuerbüchse (rot)</choice>
       <choice xml:lang="nl">Vuurkist (rood)</choice>
     </enumChoice>
     <enumChoice choice="-">
       <choice>Firebox (orange)</choice>
+      <choice xml:lang="fr">Foyer (orange)</choice>
       <choice xml:lang="de">Feuerbüchse (orange)</choice>
       <choice xml:lang="nl">Vuurkist (oranje)</choice>
     </enumChoice>
     </enumVal>
     <label>Effect for AUX3</label>
+    <label xml:lang="fr">Effet pour AUX3</label>
     <label xml:lang="de">Effekt für AUX3</label>
     <label xml:lang="nl">Effect voor AUX3</label>
   </variable>
@@ -109,27 +120,32 @@
   <variable CV="462" default="0" item="Effect for AUX4">
     <enumVal>
     <enumChoice choice="No effect">
-      <choice>Kein Effect</choice>
+      <choice>No effect</choice>
+      <choice xml:lang="fr">Pas d'effet</choice>
       <choice xml:lang="de">Kein Effekt</choice>
       <choice xml:lang="nl">Geen effect</choice>
     </enumChoice>
     <enumChoice choice="Dim">
       <choice>Dim</choice>
+      <choice xml:lang="fr">Atténuation</choice>
       <choice xml:lang="de">Dimmen</choice>
       <choice xml:lang="nl">Dimmen</choice>
     </enumChoice>
     <enumChoice choice="Fade in">
       <choice>Fade in</choice>
+      <choice xml:lang="fr">Fondu à l'ouverture</choice>
       <choice xml:lang="de">Einblenden</choice>
       <choice xml:lang="nl">In blenden-</choice>
     </enumChoice>
     <enumChoice choice="Fade out">
       <choice>Fade out</choice>
+      <choice xml:lang="fr">Fondu à la fermeture</choice>
       <choice xml:lang="de">Ausblenden</choice>
       <choice xml:lang="nl">Uit blenden</choice>
     </enumChoice>
     <enumChoice choice="Marsligh-">
-      <choice>Marsligh-</choice>
+      <choice>Marslight</choice>
+      <choice xml:lang="fr">Marslight</choice>
       <choice xml:lang="de">Marsligh</choice>
       <choice xml:lang="nl">Marsligh</choice>
     </enumChoice>
@@ -140,31 +156,37 @@
     </enumChoice>
     <enumChoice choice="strobe">
       <choice>strobe</choice>
+      <choice xml:lang="fr">Flash</choice>
       <choice xml:lang="de">Blitz</choice>
       <choice xml:lang="nl">Flitz</choice>
     </enumChoice>
     <enumChoice choice="double strobe">
       <choice>double strobe</choice>
+      <choice xml:lang="fr">Double flash</choice>
       <choice xml:lang="de">Doppel Blitz</choice>
       <choice xml:lang="nl">Dubbele flitz</choice>
     </enumChoice>
     <enumChoice choice="-">
-      <choice>Dynamic smoke generator,</choice>
+      <choice>Dynamic smoke generator</choice>
+      <choice xml:lang="fr">Générateur de fumée dynamique</choice>
       <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
       <choice xml:lang="nl">dynamische rookgenerator</choice>
     </enumChoice>
     <enumChoice choice="Firebox (red)">
       <choice>Firebox (red)</choice>
+      <choice xml:lang="fr">Foyer (rouge)</choice>
       <choice xml:lang="de">Feuerbüchse (rot)</choice>
       <choice xml:lang="nl">Vuurkist (rood)</choice>
     </enumChoice>
     <enumChoice choice="-">
       <choice>Firebox (orange)</choice>
+      <choice xml:lang="fr">Foyer (orange)</choice>
       <choice xml:lang="de">Feuerbüchse (orange)</choice>
       <choice xml:lang="nl">Vuurkist (oranje)</choice>
     </enumChoice>
     </enumVal>
     <label>Effect for AUX4</label>
+    <label xml:lang="fr">Effet pour AUX4</label>
     <label xml:lang="de">Effekt für AUX4</label>
     <label xml:lang="nl">Effect voor AUX4</label>
   </variable>
@@ -177,27 +199,32 @@
   <variable CV="464" default="0" item="Effect for AUX5">
     <enumVal>
     <enumChoice choice="No effect">
-      <choice>Kein Effect</choice>
+      <choice>No effect</choice>
+      <choice xml:lang="fr">Pas d'effet</choice>
       <choice xml:lang="de">Kein Effekt</choice>
       <choice xml:lang="nl">Geen effect</choice>
     </enumChoice>
     <enumChoice choice="Dim">
       <choice>Dim</choice>
+      <choice xml:lang="fr">Atténuation</choice>
       <choice xml:lang="de">Dimmen</choice>
       <choice xml:lang="nl">Dimmen</choice>
     </enumChoice>
     <enumChoice choice="Fade in">
       <choice>Fade in</choice>
+      <choice xml:lang="fr">Fondu à l'ouverture</choice>
       <choice xml:lang="de">Einblenden</choice>
       <choice xml:lang="nl">In blenden-</choice>
     </enumChoice>
     <enumChoice choice="Fade out">
       <choice>Fade out</choice>
+      <choice xml:lang="fr">Fondu à la fermeture</choice>
       <choice xml:lang="de">Ausblenden</choice>
       <choice xml:lang="nl">Uit blenden</choice>
     </enumChoice>
     <enumChoice choice="Marsligh-">
-      <choice>Marsligh-</choice>
+      <choice>Marslight</choice>
+      <choice xml:lang="fr">Marslight</choice>
       <choice xml:lang="de">Marsligh</choice>
       <choice xml:lang="nl">Marsligh</choice>
     </enumChoice>
@@ -208,31 +235,37 @@
     </enumChoice>
     <enumChoice choice="strobe">
       <choice>strobe</choice>
+      <choice xml:lang="fr">Flash</choice>
       <choice xml:lang="de">Blitz</choice>
       <choice xml:lang="nl">Flitz</choice>
     </enumChoice>
     <enumChoice choice="double strobe">
       <choice>double strobe</choice>
+      <choice xml:lang="fr">Double flash</choice>
       <choice xml:lang="de">Doppel Blitz</choice>
       <choice xml:lang="nl">Dubbele flitz</choice>
     </enumChoice>
     <enumChoice choice="-">
-      <choice>Dynamic smoke generator,</choice>
+      <choice>Dynamic smoke generator</choice>
+      <choice xml:lang="fr">Générateur de fumée dynamique</choice>
       <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
       <choice xml:lang="nl">dynamische rookgenerator</choice>
     </enumChoice>
     <enumChoice choice="Firebox (red)">
       <choice>Firebox (red)</choice>
+      <choice xml:lang="fr">Foyer (rouge)</choice>
       <choice xml:lang="de">Feuerbüchse (rot)</choice>
       <choice xml:lang="nl">Vuurkist (rood)</choice>
     </enumChoice>
     <enumChoice choice="-">
       <choice>Firebox (orange)</choice>
+      <choice xml:lang="fr">Foyer (orange)</choice>
       <choice xml:lang="de">Feuerbüchse (orange)</choice>
       <choice xml:lang="nl">Vuurkist (oranje)</choice>
     </enumChoice>
     </enumVal>
     <label>Effect for AUX5</label>
+    <label xml:lang="fr">Effet pour AUX5</label>
     <label xml:lang="de">Effekt für AUX5</label>
     <label xml:lang="nl">Effect voor AUX5</label>
   </variable>
@@ -245,27 +278,32 @@
   <variable CV="466" default="0" item="Effect for AUX6">
     <enumVal>
     <enumChoice choice="No effect">
-      <choice>Kein Effect</choice>
+      <choice>No effect</choice>
+      <choice xml:lang="fr">Pas d'effet</choice>
       <choice xml:lang="de">Kein Effekt</choice>
       <choice xml:lang="nl">Geen effect</choice>
     </enumChoice>
     <enumChoice choice="Dim">
       <choice>Dim</choice>
+      <choice xml:lang="fr">Atténuation</choice>
       <choice xml:lang="de">Dimmen</choice>
       <choice xml:lang="nl">Dimmen</choice>
     </enumChoice>
     <enumChoice choice="Fade in">
       <choice>Fade in</choice>
+      <choice xml:lang="fr">Fondu à l'ouverture</choice>
       <choice xml:lang="de">Einblenden</choice>
       <choice xml:lang="nl">In blenden-</choice>
     </enumChoice>
     <enumChoice choice="Fade out">
       <choice>Fade out</choice>
+      <choice xml:lang="fr">Fondu à la fermeture</choice>
       <choice xml:lang="de">Ausblenden</choice>
       <choice xml:lang="nl">Uit blenden</choice>
     </enumChoice>
     <enumChoice choice="Marsligh-">
-      <choice>Marsligh-</choice>
+      <choice>Marslight</choice>
+      <choice xml:lang="fr">Marslight</choice>
       <choice xml:lang="de">Marsligh</choice>
       <choice xml:lang="nl">Marsligh</choice>
     </enumChoice>
@@ -276,31 +314,37 @@
     </enumChoice>
     <enumChoice choice="strobe">
       <choice>strobe</choice>
+      <choice xml:lang="fr">Flash</choice>
       <choice xml:lang="de">Blitz</choice>
       <choice xml:lang="nl">Flitz</choice>
     </enumChoice>
     <enumChoice choice="double strobe">
       <choice>double strobe</choice>
+      <choice xml:lang="fr">Double flash</choice>
       <choice xml:lang="de">Doppel Blitz</choice>
       <choice xml:lang="nl">Dubbele flitz</choice>
     </enumChoice>
     <enumChoice choice="-">
-      <choice>Dynamic smoke generator,</choice>
+      <choice>Dynamic smoke generator</choice>
+      <choice xml:lang="fr">Générateur de fumée dynamique</choice>
       <choice xml:lang="de">Dynamicher Raucherzeuger</choice>
       <choice xml:lang="nl">dynamische rookgenerator</choice>
     </enumChoice>
     <enumChoice choice="Firebox (red)">
       <choice>Firebox (red)</choice>
+      <choice xml:lang="fr">Foyer (rouge)</choice>
       <choice xml:lang="de">Feuerbüchse (rot)</choice>
       <choice xml:lang="nl">Vuurkist (rood)</choice>
     </enumChoice>
     <enumChoice choice="-">
       <choice>Firebox (orange)</choice>
+      <choice xml:lang="fr">Foyer (orange)</choice>
       <choice xml:lang="de">Feuerbüchse (orange)</choice>
       <choice xml:lang="nl">Vuurkist (oranje)</choice>
     </enumChoice>
     </enumVal>
     <label>Effect for AUX6</label>
+    <label xml:lang="fr">Effet pour AUX6</label>
     <label xml:lang="de">Effekt für AUX6</label>
     <label xml:lang="nl">Effect voor AUX6</label>
   </variable>

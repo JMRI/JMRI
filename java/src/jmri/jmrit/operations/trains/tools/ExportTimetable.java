@@ -6,9 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.Location;
@@ -21,6 +18,9 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Provides an export to the Timetable feature.
@@ -247,7 +247,7 @@ public class ExportTimetable extends XmlFile {
                     defaultSpeed,
                     train.getDepartTimeMinutes(),
                     "0",
-                    train.getComment());
+                    train.getCommentCurrent());
 
             // reset train types
             if (type > 4) {

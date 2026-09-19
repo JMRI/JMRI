@@ -14,8 +14,6 @@ import jmri.jmrit.roster.ImportRosterItemAction;
 import jmri.jmrit.roster.PrintListAction;
 import jmri.jmrit.roster.PrintRosterAction;
 import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a context-specific menu for handling the Roster.
@@ -86,6 +84,9 @@ public class RosterMenu extends JMenu {
         AbstractAction deleteGroupAction = new DeleteRosterGroupAction(Bundle.getMessage("MenuGroupDelete"), pWho);
         deleteGroupAction.setEnabled(false);
 
+        AbstractAction deleteGroupContentsAction = new DeleteRosterGroupContentsAction(Bundle.getMessage("MenuGroupDeleteContents"), pWho);
+        deleteGroupContentsAction.setEnabled(false);
+
         AbstractAction createGroupAction = new CreateRosterGroupAction(Bundle.getMessage("MenuGroupCreate"), pWho);
         createGroupAction.setEnabled(false);
 
@@ -124,6 +125,7 @@ public class RosterMenu extends JMenu {
         JMenu groupMenu = new JMenu(Bundle.getMessage("MenuRosterGroups"));
         groupMenu.add(createGroupAction);
         groupMenu.add(deleteGroupAction);
+        groupMenu.add(deleteGroupContentsAction);
         groupMenu.add(rosterGroupTableAction);
         groupMenu.add(rosterEntryToGroupAction);
         groupMenu.add(removeRosterEntryToGroupAction);
@@ -159,6 +161,7 @@ public class RosterMenu extends JMenu {
                 exportAction.setEnabled(true);
                 copyAction.setEnabled(true);
                 deleteGroupAction.setEnabled(true);
+                deleteGroupContentsAction.setEnabled(true);
                 createGroupAction.setEnabled(true);
                 rosterEntryToGroupAction.setEnabled(true);
                 removeRosterEntryToGroupAction.setEnabled(true);
@@ -183,6 +186,6 @@ public class RosterMenu extends JMenu {
     }
 
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(RosterMenu.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterMenu.class);
 
 }

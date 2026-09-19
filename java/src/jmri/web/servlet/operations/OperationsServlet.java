@@ -2,32 +2,33 @@ package jmri.web.servlet.operations;
 
 import static jmri.web.servlet.ServletUtil.*;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import org.apache.commons.text.StringEscapeUtils;
-import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.openide.util.lookup.ServiceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -165,10 +166,10 @@ public class OperationsServlet extends HttpServlet {
                     train.getIconName(),
                     StringEscapeUtils.escapeHtml4(train.getDescription()),
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
-                    HtmlTrainCommon.convertToHTMLColor(StringEscapeUtils.escapeHtml4(train.getCommentWithColor())),
+                    HtmlTrainCommon.convertToHTMLColor(StringEscapeUtils
+                            .escapeHtml4(TrainCommon.getTextSizeString(train.getCommentCurrentWithColor()))),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
-                    HtmlTrainCommon.convertToHTMLColor(manifest.getLocations())
-            ));
+                    HtmlTrainCommon.convertToHTMLColor(manifest.getLocations())));
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
             log.debug("Getting manifest JSON code for train {}", id);
             JsonNode manifest = this.mapper.readTree(new JsonManifest(train).getFile());

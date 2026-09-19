@@ -595,6 +595,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange("groupspane", "setEnabled", enable);
         firePropertyChange("grouptable", "setEnabled", enable);
         firePropertyChange("deletegroup", "setEnabled", enable);
+        firePropertyChange("deletegroupcontents", "setEnabled", enable);
         firePropertyChange("addgroup", "setEnabled", enable);
     }
 

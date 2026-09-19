@@ -6,14 +6,14 @@ import java.util.*;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for rolling stock managers car and engine.

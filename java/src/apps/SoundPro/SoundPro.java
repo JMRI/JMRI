@@ -126,7 +126,7 @@ public class SoundPro extends Apps {
 
         Apps.setStartupInfo("SoundPro");
 
-        setConfigFilename("SoundProConfig2.xml", args);
+        setConfigFilename("SoundProConfig2.properties", args);
         SoundPro sp = new SoundPro();
         JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(sp, f);

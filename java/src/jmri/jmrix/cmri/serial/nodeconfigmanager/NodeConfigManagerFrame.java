@@ -762,7 +762,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     private String[] nodeTableColumnsNames
             = {"Address", "   Type", "Bits per Card", "IN Cards", "OUT Cards", "IN Bits", "OUT Bits", " ", "  Description"};
 
-    private String[] nodeTableTypes = {"--", "SMINI", "SUSIC", "CPNODE", "CPMEGA"};
+    private String[] nodeTableTypes = {"--", "SMINI", "SUSIC", "CPNODE", "CPMEGA", "ESP32Node"};
 
     /*
      * ----------------------------------------------------------
@@ -821,6 +821,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");
         nodeTypeBox.addItem("CPMEGA");
+        nodeTypeBox.addItem("ESP32Node");
 
         /*
          * Here add code for other types of nodes
@@ -874,6 +875,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     panelnetOptBox.setVisible(true);
                     panelnodeOpt.setVisible(true);
                     nodeType = SerialNode.CPNODE;
+                    cpNodeOnboard = 4;
                     onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " 2 Bytes");
                 } else if (s.equals("CPMEGA")) {
                     panel2.setVisible(false);
@@ -889,7 +891,24 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     panelnetOptBox.setVisible(true);
                     panelnodeOpt.setVisible(true);
                     nodeType = SerialNode.CPMEGA;
+                    cpNodeOnboard = 4;
                     onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " 8 Bytes");
+                } else if (s.equals("ESP32Node")) {
+                    panel2.setVisible(false);
+                    panel2a.setVisible(false);
+                    panel2b.setVisible(true);   // IOX-style card grid -- ALL 16 cards, no onboard reservation
+                    panel2c.setVisible(false);  // no separate onboard-byte grid -- ESP32Node has no onboard I/O
+                    cardSizeText.setVisible(true);
+                    cardSizeBox.setVisible(false);
+                    cardSize8Box.setVisible(true);
+                    panelnodeDescBox.setVisible(true);
+                    panelnodeDesc.setVisible(true);
+                    panelnetOpt.setVisible(true);
+                    panelnetOptBox.setVisible(true);
+                    panelnodeOpt.setVisible(true);
+                    nodeType = SerialNode.ESP32NODE;
+                    cpNodeOnboard = 0;
+                    onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " None -- 8 MCP23017 chips (0x20-0x27), 16 bytes");
                 }
                 /*
                  * Here add code for other types of nodes
@@ -1435,6 +1454,22 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 cbx_cpnodeopt_BIT15.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_BIT15));
                 break;
 
+            // ESP32Node
+            case SerialNode.ESP32NODE:
+                nodeTypeBox.setSelectedItem("ESP32Node");
+                bitsPerCard = 8;
+                cardSize8Box.setSelectedItem(Bundle.getMessage("CardSize8"));
+                cpNodeOnboard = 0;
+                onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " None -- 8 MCP23017 chips (0x20-0x27), 16 bytes");
+
+                // ESP32Node Options -- same option bits as CPNODE/CPMEGA
+                cbx_cpnodeopt_SENDEOT.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_SENDEOT));
+                cbx_cpnodeopt_BIT1.setSelected(false);
+                cbx_cpnodeopt_BIT2.setSelected(false);
+                cbx_cpnodeopt_BIT8.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_BIT8));
+                cbx_cpnodeopt_BIT15.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_BIT15));
+                break;
+
             default:
                 log.error("Unknown Node Type {}", nodeType);
                 break;
@@ -1496,6 +1531,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         } else if (nodeType == SerialNode.CPMEGA) {
             panel2c.setVisible(true);
             panel2b.setVisible(false);
+        } else if (nodeType == SerialNode.ESP32NODE) {
+            panel2c.setVisible(false);
+            panel2b.setVisible(true);
         }
 
     }
@@ -1876,6 +1914,42 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
                 break;
 
+            // ESP32Node -- no onboard bytes at all (cpNodeOnboard=0, see the
+            // ActionListener above), so every one of the 16 cards comes from
+            // cardType[] with no skip, unlike CPNODE (skips 4) or CPMEGA
+            // (onboard bytes handled separately, IOX skips 8).
+            case SerialNode.ESP32NODE:
+                // set number of bits per card
+                bitsPerCard = 8;
+                curNode.setNumBitsPerCard(bitsPerCard);
+                numInput = 0;
+                numOutput = 0;
+
+                for (int i = 0; i < 64; i++) {
+                    if ("No Card".equals(cardType[i])) {
+                        curNode.setCardTypeByAddress(i, SerialNode.NO_CARD);
+                    } else if ("Input Card".equals(cardType[i])) {
+                        curNode.setCardTypeByAddress(i, SerialNode.INPUT_CARD);
+                        numInput++;
+                    } else if ("Output Card".equals(cardType[i])) {
+                        curNode.setCardTypeByAddress(i, SerialNode.OUTPUT_CARD);
+                        numOutput++;
+                    } else {
+                        log.error("Unexpected card type - {}", cardType[i]);
+                    }
+                }
+
+                // Set the node option bits.  Some are moved from the CMRInet options
+                curNode.setOptNet_AUTOPOLL(1);  // Default node to be polled
+
+                curNode.setOptNode_SENDEOT(cbx_cpnodeopt_SENDEOT.isSelected() ? 1 : 0);
+                curNode.setOptNode_USECMRIX(cbx_cmrinetopt_USECMRIX.isSelected() ? 1 : 0); // Copy from CMRInet
+                curNode.setOptNode_USEBCC(cbx_cmrinetopt_USEBCC.isSelected() ? 1 : 0);     // Copy from CMRInet
+                curNode.setOptNode_BIT8(cbx_cpnodeopt_BIT8.isSelected() ? 1 : 0);
+                curNode.setOptNode_BIT15(cbx_cpnodeopt_BIT15.isSelected() ? 1 : 0);
+
+                break;
+
             default:
                 log.error("Unexpected node type in setNodeParameters- {}", Integer.toString(nodeType));
                 break;
@@ -2145,6 +2219,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     }
                 }
                 break;
+            case SerialNode.ESP32NODE:
+                for (int j = 0; j < 64; j++) {
+                    if ((cardType[j].equals(Bundle.getMessage("CardTypeOutput")))
+                            || (cardType[j].equals(Bundle.getMessage("CardTypeInput")))) {
+                        numCards++;
+                    }
+                }
+                break;
 
             // here add code for other types of nodes
             default:
@@ -2375,9 +2457,16 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         public Object getValueAt(int r, int c) {
             String[] cdPort = {"  A", "  B"};
             String val = "     ";
+            // ESP32Node has no onboard-reserved cards (unlike CPNODE's 2 onboard
+            // OUTPUT bytes, which is why the diagnostic dialog and this label both
+            // add 2 for CPNODE) -- but it's still numbered 1-based (Card 1 = first
+            // real card) to match how people naturally count cards, hence +1 here
+            // (cpNodeOnboard, the actual array-index skip used below for cardType[],
+            // stays 0 for ESP32Node -- this offset is display-only).
+            int cardLabelOffset = (nodeType == SerialNode.ESP32NODE) ? 1 : 2;
             switch (c) {
                 case CARD_COLUMN:
-                    val = Integer.toString(r+2);
+                    val = Integer.toString(r+cardLabelOffset);
                     return "   " + val;
                 case CARDNUM_COLUMN:
                     int i = r / 2;

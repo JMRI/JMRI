@@ -3,44 +3,57 @@
 <!-- version 1 24 Nov 2022  Nigel Cliffe.   Placeholder for CVs in range CV200-249  for MS-series decoders-->
 <!-- version 1.1 26 May 2023  Ronald Kuhn.   added new CV's-->
 <!-- version 1.2  31 July 2026  Pierre Billon - renamed from CV200-CV249_MS_series.xml; the name now states the CV range held and the decoder series it applies to (holds CV201-249) -->
+<!-- version 1.3 06 August 2026 Pierre Billon - Added French and German translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 
       <variable item="Alternative SUSI usage 1" CV="201" default="0">
        <decVal max="55"/>
         <label>Alternative SUSI 1 usage </label>
+        <label xml:lang="fr">Utilisation alternative de SUSI 1</label>
         <label xml:lang="de">Alternative SUSI 1 Verwendung</label>
         <tooltip>&lt;html&gt;11: SUSI pins as logic level outputs&lt;br&gt;22: SUSI pins as reed inputs&lt;br&gt;33: SUSI pins as servo control lines&lt;br&gt;44: SUSI pins as "SUSI pins" (same as 0)&lt;br&gt;55: SUSI pins as I2C bus&lt;br&gt;max=55</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;11 : broches SUSI en sorties logiques&lt;br&gt;22 : broches SUSI en entrées reed&lt;br&gt;33 : broches SUSI en commandes de servo&lt;br&gt;44 : broches SUSI en « broches SUSI » (comme 0)&lt;br&gt;55 : broches SUSI en bus I2C&lt;br&gt;max=55</tooltip>
         <tooltip xml:lang="de">&lt;html&gt;11: SUSI-Pins als Logikpegel-Ausgänge&lt;br&gt;22: SUSI-Pins als Reed-Eingänge&lt;br&gt;33: SUSI-Pins als Servo-Steuerleitungen&lt;br&gt;44: SUSI-Pins als „SUSI-Pins“ (gleich wie 0)&lt;br&gt;55: SUSI-Pins als I2C Bus&lt;br&gt;max=55</tooltip>
       </variable>
       <variable item="Alternative SUSI usage 2" CV="202" default="0">
        <decVal max="55"/>
         <label>Alternative SUSI 2 usage</label>
+        <label xml:lang="fr">Utilisation alternative de SUSI 2</label>
         <label xml:lang="de">Alternative SUSI 2 Verwendung</label>
         <tooltip>&lt;html&gt;As above (CV #201), but for second SUSI connection&lt;br&gt;max=55</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;Comme ci-dessus (CV #201), mais pour le second raccordement SUSI&lt;br&gt;max=55</tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Wie oben (CV #201), aber für zweiten SUSI-Anschluss&lt;br&gt;max=55</tooltip>
       </variable>
       <variable item="Use of the inputs 1" CV="203" default="0">
        <decVal max="44"/>
         <label>Use of the inputs IN1 and IN2</label>
+        <label xml:lang="fr">Utilisation des entrées IN1 et IN2</label>
         <label xml:lang="de">Verwendung der Eingänge IN1 und IN2</label>
         <tooltip>&lt;html&gt;11: both "IN"s as logic level outputs&lt;br&gt;22: both "IN"s as logic level ("reed") inputs&lt;br&gt;44: both "IN"s as input for axis detector&lt;br&gt;Ones digit: IN1, tens digit: IN2&lt;br&gt;max=44</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;11 : les deux « IN » en sorties logiques&lt;br&gt;22 : les deux « IN » en entrées logiques (« reed »)&lt;br&gt;44 : les deux « IN » en entrées de détecteur d'essieu&lt;br&gt;Unités : IN1, dizaines : IN2&lt;br&gt;max=44</tooltip>
         <tooltip xml:lang="de">&lt;html&gt;11: beide „IN“s als Logikpegel-Ausgänge&lt;br&gt;22: beide „IN“s als Logikpegel- („Reed“)-Eingänge&lt;br&gt;44: beide „IN“s als Eingänge für Achsdetektor&lt;br&gt;Einerstelle: IN1, Zehnerstelle: IN2&lt;br&gt;max=44</tooltip>
       </variable>
       <variable item="Use of the inputs 2" CV="204" default="0">
        <decVal max="44"/>
         <label>Use of the inputs IN3 and IN4</label>
+        <label xml:lang="fr">Utilisation des entrées IN3 et IN4</label>
         <label xml:lang="de">Verwendung der Eingänge IN3 und IN4</label>
         <tooltip>&lt;html&gt;11: both "IN"s as logic level outputs&lt;br&gt;22: both "IN"s as logic level ("reed") inputs&lt;br&gt;44: both "IN"s as input for axis detector&lt;br&gt;Ones digit: IN3, tens digit: IN4&lt;br&gt;max=44</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;11 : les deux « IN » en sorties logiques&lt;br&gt;22 : les deux « IN » en entrées logiques (« reed »)&lt;br&gt;44 : les deux « IN » en entrées de détecteur d'essieu&lt;br&gt;Unités : IN3, dizaines : IN4&lt;br&gt;max=44</tooltip>
         <tooltip xml:lang="de">&lt;html&gt;11: beide „IN“s als Logikpegel-Ausgänge&lt;br&gt;22: beide „IN“s als Logikpegel- („Reed“)-Eingänge&lt;br&gt;44: beide „IN“s als Eingänge für Achsdetektor&lt;br&gt;Einerstelle: IN3, Zehnerstelle: IN4&lt;br&gt;max=44</tooltip>
       </variable>
 
       <variable item="Bootloader Version" CV="248" readOnly="yes">
         <decVal/>
         <label>Bootloader Version</label>
+        <label xml:lang="fr">Version du bootloader</label>
+        <label xml:lang="de">Bootloader-Version</label>
       </variable>
       <variable item="Bootloader SubVersion" CV="249" readOnly="yes">
         <decVal/>
         <label>Bootloader SubVersion</label>
+        <label xml:lang="fr">Sous-version du bootloader</label>
+        <label xml:lang="de">Bootloader-Unterversion</label>
       </variable>
 
 </variables>

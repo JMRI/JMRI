@@ -397,7 +397,7 @@
         "Additional Connection Settings". This may show additional settings applicable for some
         adapter types. These include, but are not limited to, the options listed here.<br>
           <img src="images/LoconetAdditionalSettings.png" alt=
-          "Connection Settings Additional settings" width="515" height="219">
+          "Connection Settings Additional settings" width="556" height="262">
           <ul>
             <li>The "Baud rate" setting. When multiple settings are available, this must be set to
             match the needs of the particular hardware adapter specified in the "System Connection"
@@ -428,15 +428,32 @@
             used on a newer throttle or on JMRI may result in confusion and delay until the slots have been
             cleared.</li>
 
+            <li>Update slot on message creation, ignore h/w echo. (Default = "No")
+
+            JMRI keeps track of things happening on the layout by updating its internal state from LocoNet
+            messages it receives.
+            By default (with this option set to "No") it will not act on LocoNet messages it creates to send
+            but wait for the LocoNet hardware to receive the echo of a message once it is sent.
+            This can cause timing issues when a throttle sends many messages in a short time, causing echos to
+            come between the queued messages, influencing the JMRI state.
+            For example, if a WiThrottle client sends "F1 On", "F2 On", "F3 On", "F4 On" in short succession,
+            the LocoNet echo of "F1 On" can arrive after "F2 On" has been enqueued, but before it has been sent.
+            So the echo of "F1 On" will turn the JMRI state of F2 back to "Off" before creating the LocoNet
+            message for "F3 On", which will then eventually turn F2 back off.
+
+            With this option set to "Yes", JMRI will instead update its internal state as soon as it creates a
+            LocoNet message, remember messages it sends and ignore echos of its own messages.
+
+            This helps with abovementioned timing problems at the expense of changing the JMRI state even
+            if it is not sure that the created LocoNet message will be successfully sent.
+
             <li>Packetizer Type lets you choose "Normal" (recommended) or "Strict". The strict packetizer places
             each LocoNet message on the wire and does not send the next one until its "sees" the first one
             echoed back. It also waits
             for a response for those packets that are supposed to have a response. It will try 5 attempts
             before giving up. It "backs off" sending more packets on receiving "Busy" messages.
             It will help situations where packets appear to get lost during busy moments. When using "Strict"
-            it is best to have the command station powered up with track power "On" before starting JMRI.</li>
-
-
+            it is best to have the command station powered up with track power "On" before starting JMRI.</li>            
             <li>"Transponding Present" allows you indicate whether certain special hardware is
             present and configured. If you have LocoNet-attached boards that configure in "ops
             mode", or if you have Digitrax Transponding installed, set this to "Yes". Otherwise,

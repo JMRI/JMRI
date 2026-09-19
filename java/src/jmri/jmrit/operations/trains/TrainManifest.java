@@ -6,9 +6,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -20,6 +17,9 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train's manifest. User has the ability to modify the text of the
@@ -77,7 +77,7 @@ public class TrainManifest extends TrainCommon {
                 newLine(fileOut, schName);
             }
             if (!train.getCommentWithColor().equals(Train.NONE)) {
-                newLine(fileOut, train.getCommentWithColor());
+                newLine(fileOut, train.getCommentCurrentWithColor());
             }
             if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(Route.NONE)) {
                 newLine(fileOut, train.getRoute().getComment());
@@ -86,6 +86,9 @@ public class TrainManifest extends TrainCommon {
             List<Engine> engineList = engineManager.getByTrainBlockingList(train);
             List<Car> carList = carManager.getByTrainDestinationList(train);
             log.debug("Train has {} cars assigned to it", carList.size());
+            
+            // the order locos and cars are added to the train
+            _order = 0;
 
             boolean hadWork = false;
             String previousRouteLocationName = null;

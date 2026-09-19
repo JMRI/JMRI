@@ -18,21 +18,11 @@
       <ul class="snav">
         <!-- TOC -->
 
-        <li>
-          <a href="#install">Installation</a>
-        </li>
-
-        <li>
-          <a href="#startprog">Starting JMRI</a>
-        </li>
-
-        <li>
-          <a href="#setprefs">Setting Preferences</a>
-        </li>
-
-        <li>
-          <a href="#debug">Fixing Problems</a>
-        </li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#startprog">Starting JMRI</a></li>
+        <li><a href="#setprefs">Setting Preferences</a></li>
+        <li><a href="#debug">Fixing Problems</a></li>
+        <li><a href="#upgrades">Upgrades</a></li>
       </ul>
 
       <h3 id="install">Installation</h3>
@@ -40,14 +30,8 @@
       <p>Full instructions for installing JMRI on different platforms can be found here:</p>
 
       <ul>
-        <li>
-          <a href="https://www.jmri.org/install/WindowsNew.shtml">Windows</a>
-        </li>
-
-        <li>
-          <a href="https://www.jmri.org/install/MacOSX.shtml">macOS</a>
-        </li>
-
+        <li><a href="https://www.jmri.org/install/WindowsNew.shtml">Windows</a></li>
+        <li><a href="https://www.jmri.org/install/MacOSX.shtml">macOS</a></li>
         <li>
           <a href="https://www.jmri.org/install/Linux.shtml">Linux</a>
           <ul>
@@ -63,32 +47,26 @@
       <ul>
         <li>Version 2.12 can run on any computer system that will run Java 1.5 through Java 8 (also
         known as Java 1.8).</li>
-
-        <li>Version 2.14.1 requires Java 1.5 (or Java 1.6 to support for drag & drop) through Java
+        <li>Version 2.14.1 requires Java 1.5 (or Java 1.6 to support for drag &amp; drop) through Java
         8.</li>
-
         <li>Version 3.10.1 requires Java 1.7 through Java 8.</li>
-
         <li>Version 4.2 thru 4.25.5 requires Java 8 (except release 311) or Java 11 (recommended).</li>
-
         <li>Version 4.25.6 thru 4.26 requires Java 8 or Java 11 (recommended).</li>
-
         <li>Version 4.99.x thru 5.8 requires Java 11.</li>
-
-        <li>Versions 5.9.1 onwards, requires Java 11 or Java 17 (recommended).  
+        <li>Versions 5.9.1 onwards, requires Java 11 or Java 17 (recommended).
         See <a href="https://www.jmri.org/java/index.shtml">our Java instructions</a>
         page on getting Java.</li>
 
       </ul>
 
-      <p>As of production release JMRI 5.0, JMRI is fully supported when running on Java release 11 as 
-      noted above. Some problems have been encountered while using a Java version beyond Java 11 and 
-      support is offered only on a "best effort" basis. Some issues may only be addressable by using a 
+      <p>As of production release JMRI 5.0, JMRI is fully supported when running on Java release 11 as
+      noted above. Some problems have been encountered while using a Java version beyond Java 11 and
+      support is offered only on a "best effort" basis. Some issues may only be addressable by using a
       supported version.</p>
 
-      <p>As of test release JMRI 5.9.1, JMRI is fully supported when running on Java release 17 as noted 
-      above. Some problems have been encountered while using a Java version beyond Java 17 and support 
-      is offered only on a "best effort" basis. Some issues may only be addressable by using a supported 
+      <p>As of test release JMRI 5.9.1, JMRI is fully supported when running on Java release 17 as noted
+      above. Some problems have been encountered while using a Java version beyond Java 17 and support
+      is offered only on a "best effort" basis. Some issues may only be addressable by using a supported
       version.</p>
 
       <h2 id="startprog">Starting the program</h2>
@@ -132,42 +110,42 @@
       <h2 id="setprefs">Setting your Preferences</h2>
 
       <ul>
-        <li>The <a href="../../package/apps/TabbedPreferences.shtml">Preferences Pane</a>
-        </li>
-
-        <li>
-          <a href="profiles.shtml">Configuration Profiles</a>
-        </li>
-
-        <li>
-          <a href="Files.shtml">Configuration Files &amp; Locations</a>
-        </li>
+        <li>The <a href="../../package/apps/TabbedPreferences.shtml">Preferences Pane</a></li>
+        <li><a href="profiles.shtml">Configuration Profiles</a></li>
+        <li><a href="Files.shtml">Configuration Files &amp; Locations</a></li>
       </ul>
 
       <h2 id="debug">Fixing Problems</h2>
 
       <ul>
-        <li>
-          <a href="https://www.jmri.org/install/Debug.shtml">Debugging an installation</a>
-        </li>
-
-        <li>
-          <a href="../apps/Debug.shtml">Debugging and System Logging</a> after installation
-        </li>
-
-        <li>
-          <a href="../apps/Errors.shtml">Error Codes</a>
-        </li>
-
-        <li>
-          <a href="https://www.jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows
-          only)
-        </li>
-
-        <li>
-          <a href="FAQ.shtml">Frequently Asked Questions</a>
-        </li>
+        <li><a href="https://www.jmri.org/install/Debug.shtml">Debugging an installation</a></li>
+        <li><a href="../apps/Debug.shtml">Debugging and System Logging</a> after installation</li>
+        <li><a href="../apps/Errors.shtml">Error Codes</a></li>
+        <li><a href="https://www.jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a>
+        (Windows only)</li>
+        <li><a href="FAQ.shtml">Frequently Asked Questions</a></li>
       </ul>
+
+      <h2 id="upgrades">Upgrades</h2>
+
+      <p>For Linux and Macs, JMRI upgrades consist of replacing the previous install with a new
+      install.  For Windows, the installer program adds new items and replaces changed items in
+      the install location. The install location can be found using <strong>Help &rArr; File
+      Locations</strong>. Since JRMI data changes are not always backward compatible, down grading
+      to older versions is discouraged.</p>
+
+      <p>Some upgrades require automatic or manual adjustments. These will be noted in the
+      <strong>Update From Older JMRI Versions</strong> and <strong>New warnings&hellip;</strong>
+      sections of the release note.  The JMRI 4.12, 4.20, 4.24 and 5.0 releases are the intermediate
+      steps for doing a multiple version upgrade. Near the end of the process, Java is also
+      upgraded from Java 1.8 to at least Java 11.</p>
+
+      <p>The <a href="SingleStepUpgrade.shtml">Single Step Upgrade</a> can be used to eliminate the
+      intermediate steps.</p>
+
+
+
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

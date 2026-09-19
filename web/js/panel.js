@@ -831,8 +831,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if (isUndefined($widget.styles.width)) { //set missing width
                                 if (isDefined($widget.colWidth)) { 
                                     $widget.styles['width'] = $widget.colWidth + "em";
-                                } else {
-                                    $widget.styles['width'] = "5em";
+                                //} else {
+                                    //$widget.styles['width'] = "5em"; //removed to let memoryComboIcon autosize to fit contents
                                 }
                             }
                             var items = $(this).find('itemList').children('item');
@@ -3265,10 +3265,19 @@ function $drawTurnout($widget) {
         return;
     }
  
-    //set erase color and width
+    //set erase color
     var $eraseColor = $gPanel.backgroundcolor;
-    var $eraseWidth = $gPanel.mainlinetrackwidth;
  
+    //erase Unknown circle by saving and restoring the to-be-covered pixels
+    if ($widget.showunknown == "yes") {
+        halfsize = $gPanel.turnoutcirclesize * SIZE // circle size is radius, so this is half the copied/restored area
+        if (! isDefined($widget.unknownSnippet)) {  // first pass through, we capture the base image
+            $widget.unknownSnippet = $gCtx.getImageData($widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize, halfsize * 2, halfsize * 2);
+        } else {
+            $gCtx.putImageData($widget.unknownSnippet, $widget.xcen * 1 - halfsize, $widget.ycen * 1 - halfsize);
+        }
+    }
+
     //set colors and widths based on connected segments and blocks
     var $colorA = $getLegColor($gWidgets[$widget.connectaname], $widget.blockname);
     var $colorB = $getLegColor($gWidgets[$widget.connectbname], 
@@ -3296,6 +3305,7 @@ function $drawTurnout($widget) {
     //turnout A--+--B
     //            \-C
     if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT || $widget.type == WYE_TURNOUT) {
+        
         //always draw from a to cen
         $drawLineP(a, cen, $colorA, $widthA); //a to cen
 
@@ -3327,12 +3337,27 @@ function $drawTurnout($widget) {
         var cd = $point_midpoint(c, d);
 
         if ($widget.state == CLOSED || $widget.state == THROWN) {
-            $drawLineP(a, b, $eraseColor, $eraseWidth);      //erase A to B
-            $drawLineP(c, d, $eraseColor, $eraseWidth);      //erase C to D
-            $drawLineP(ab, cd, $eraseColor, $eraseWidth);    //erase midAB to midDC
-            $drawLineP(a, c, $eraseColor, $eraseWidth);      //erase A to C
-            $drawLineP(b, d, $eraseColor, $eraseWidth);      //erase B to D
-            if ($widget.state == $widget.continuing) {
+ 
+            // erase any existing lines
+            $drawLineP(a, ab, $eraseColor, $widthA+1);    //A to mid ab
+            $drawLineP(b, ab, $eraseColor, $widthB+1);    //B to mid ab
+            $drawLineP(c, cd, $eraseColor, $widthC+1);    //C to mid cd
+            $drawLineP(d, cd, $eraseColor, $widthD+1);    //D to mid cd
+            if ($widget.type == DOUBLE_XOVER) {
+                $drawLineP(a, cen, $eraseColor, $widthA+1);   //A to cen
+                $drawLineP(b, cen, $eraseColor, $widthB+1);   //B to cen
+                $drawLineP(c, cen, $eraseColor, $widthC+1);   //C to cen
+                $drawLineP(d, cen, $eraseColor, $widthD+1);   //D to cen
+            } else if ($widget.type == RH_XOVER) {
+                $drawLineP(ab, cen, $eraseColor, $widthA+1);  //midAB to cen
+                $drawLineP(cen, cd, $eraseColor, $widthC+1);  //cen to midDC
+            } else {  //LH_XOVER
+                $drawLineP(ab, cen, $eraseColor, $widthB+1);  //midAB to cen
+                $drawLineP(cen, cd, $eraseColor, $widthD+1);  //cen to midDC
+            }
+
+ 
+             if ($widget.state == $widget.continuing) {
                 //draw closed legs
                 $drawLineP(a, ab, $colorA, $widthA);    //A to mid ab
                 $drawLineP(b, ab, $colorB, $widthB);    //B to mid ab
@@ -3440,6 +3465,15 @@ function $drawTurnout($widget) {
             }
         }
     }
+    
+    if (($widget.showunknown == "yes") && ($widget.state == UNKNOWN)) {
+        // draw the unknown indicator
+        // colors are hard to manipulate in JS, so we draw the circle as the track color
+        // and the text as the background color, assuming that this will have contrast
+        $fillCircle($widget.xcen * 1, $widget.ycen * 1, $gPanel.turnoutcirclesize * SIZE, $colorA);
+        $drawText($widget.xcen * 1, $widget.ycen * 1, "?", $eraseColor, $gPanel.turnoutcirclesize * SIZE * 2); // * 2 because circle size is radius
+    }
+
 }   // function $drawTurnout($widget)
 
 // compute width of turnout leg based on connected segment, then block type
@@ -3974,6 +4008,8 @@ function $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
     $gCtx.moveTo($p1x, $p1y);
     $gCtx.lineTo($p2x, $p2y);
 
+    $gCtx.lineCap = 'round'; 
+    
     $gCtx.stroke();
 
     if (isDefined(dashArray)) {
@@ -4183,6 +4219,21 @@ function $plotBezier(points, depth, displacement) {
         // draw right side Bezier
         $plotBezier(rightPoints, depth + 1, displacement);
     }
+}
+
+function $drawText($px, $py, $text, $color, $size) {
+    $gCtx.save();   // save current line width and color
+
+    // set color
+    $gCtx.fillStyle = $color;
+
+    $gCtx.font = 'bold '+$size+'px Arial';
+
+    // center the text on x,y and draw
+    metrics = $gCtx.measureText($text);
+    $gCtx.fillText($text, $px-metrics.width/2, $py+(metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent)/2);
+
+    $gCtx.restore();        // restore color and font back to default
 }
 
 function $point_log(prefix, p) {

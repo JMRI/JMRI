@@ -1,9 +1,9 @@
 package jmri.jmrit.operations.setup;
 
+import jmri.jmrit.operations.OperationsTestCase;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
@@ -90,16 +90,16 @@ public class SetupTest extends OperationsTestCase {
     
     @Test
     public void testEngineMessageComboBox() {
-        Assert.assertEquals("default size", 18, Setup.getEngineMessageComboBox().getItemCount());
+        Assert.assertEquals("default size", 19, Setup.getEngineMessageComboBox().getItemCount());
         Setup.setTabEnabled(true);
-        Assert.assertEquals("with tabs", 21, Setup.getEngineMessageComboBox().getItemCount());
+        Assert.assertEquals("with tabs", 22, Setup.getEngineMessageComboBox().getItemCount());
     }
     
     @Test
     public void testCarMessageComboBox() {
-        Assert.assertEquals("default size", 28, Setup.getCarMessageComboBox().getItemCount());
+        Assert.assertEquals("default size", 29, Setup.getCarMessageComboBox().getItemCount());
         Setup.setTabEnabled(true);
-        Assert.assertEquals("with tabs", 31, Setup.getCarMessageComboBox().getItemCount());
+        Assert.assertEquals("with tabs", 32, Setup.getCarMessageComboBox().getItemCount());
     }
     
     @Test

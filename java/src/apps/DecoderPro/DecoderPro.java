@@ -149,7 +149,7 @@ public class DecoderPro extends Apps {
 
         Apps.setStartupInfo("DecoderPro");
 
-        setConfigFilename("DecoderProConfig2.xml", args);
+        setConfigFilename("DecoderProConfig2.properties", args);
         DecoderPro dp = new DecoderPro();
         JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(dp, f);

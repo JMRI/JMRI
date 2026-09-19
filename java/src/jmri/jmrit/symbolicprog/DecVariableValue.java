@@ -300,7 +300,7 @@ public class DecVariableValue extends VariableValue
             }
             default:
                 JTextField value = new VarTextField(_value.getDocument(), _value.getText(), fieldLength(), this);
-                if (getReadOnly() || getInfoOnly()) {
+                if (getReadOnly()) {
                     value.setEditable(false);
                 }
                 reps.add(value);

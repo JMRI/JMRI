@@ -4,9 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
@@ -16,6 +13,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a car on the layout
@@ -100,6 +100,8 @@ public class Car extends RollingStock {
         car.setPassenger(isPassenger());
         car.setUtility(isUtility());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+        car.setFinalDestination(getFinalDestination());
+        car.setFinalDestinationTrack(getFinalDestinationTrack());
         car.loaded = true;
         return car;
     }
@@ -623,7 +625,7 @@ public class Car extends RollingStock {
         if (getRouteLocation() == null || getRouteDestination() == null) {
             return false;
         }
-        if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
+        if (getRouteLocation() == getRouteDestination() && getTrack() != null) {
             return true;
         }
         if (getTrain().isLocalSwitcher() &&
@@ -651,7 +653,7 @@ public class Car extends RollingStock {
                         return false;
                     }
                 }
-                if (getRouteLocation().equals(rl)) {
+                if (getRouteLocation() == rl) {
                     foundRl = true;
                 }
             }
@@ -855,7 +857,7 @@ public class Car extends RollingStock {
             return status;
         }
         // is car going to its final destination?
-        removeCarFinalDestination();
+        removeCarFinalDestination(getDestination(), getDestinationTrack());
         // now check to see if the track has a schedule
         if (track != null && destinationTrack != track && loaded && !isClone()) {
             status = track.scheduleNext(this);
@@ -898,12 +900,9 @@ public class Car extends RollingStock {
     /*
      * remove the car's final destination if sent to that destination
      */
-    private void removeCarFinalDestination() {
-        if (getDestination() != null &&
-                getDestination().equals(getFinalDestination()) &&
-                getDestinationTrack() != null &&
-                (getDestinationTrack().equals(getFinalDestinationTrack()) ||
-                        getFinalDestinationTrack() == null)) {
+    public void removeCarFinalDestination(Location location, Track track) {
+        if (location == getFinalDestination() &&
+                track == getFinalDestinationTrack()) {
             setFinalDestination(null);
             setFinalDestinationTrack(null);
         }
@@ -1132,6 +1131,19 @@ public class Car extends RollingStock {
             InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
             carManager.deregister(this);
         }
+    }
+  
+    /**
+     * Returns a clone's original car.
+     * @param clone requesting the original
+     * @return car that created the clone.
+     */
+    public Car getOriginal(Car clone) {
+        CarManager carManager = InstanceManager.getDefault(CarManager.class);
+        // get the original car's road and number
+        String[] number = getNumber().split(Car.CLONE_REGEX);
+        Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
+        return car;
     }
 
     @Override

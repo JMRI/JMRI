@@ -144,7 +144,7 @@ public class XmlFileLocationAction extends AbstractAction {
         if (!new File(configName).isAbsolute()) {
             // must be relative, but we want it to
             // be relative to the preferences directory
-            configName = FileUtil.getProfilePath() + configName;
+            configName = FileUtil.getPreferencesPath() + configName;
         }
 
         StringBuilder s = new StringBuilder();
