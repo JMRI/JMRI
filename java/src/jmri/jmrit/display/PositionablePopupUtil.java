@@ -137,11 +137,11 @@ public class PositionablePopupUtil {
 
         popup.add(edit);
         
-        // Handle special case of columns in a MemoryInputIcon.
-        // This is done via reflection to avoid passing a parameter
+        // Handle special case of columns in a PositionableJTextField child.
+        // This is done via casting to avoid passing a parameter
         // through a large number of call layers.
-        if (_parent instanceof MemoryInputIcon) {
-            var icon = (MemoryInputIcon) _parent;
+        if (_parent instanceof PositionableJTextField) {
+            var icon = (PositionableJTextField) _parent;
             edit = new JMenu(Bundle.getMessage("EditColumns"));
             jmi = edit.add("Columns = "+icon.getNumColumns());
             jmi.setEnabled(false);

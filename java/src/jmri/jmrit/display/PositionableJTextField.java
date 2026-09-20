@@ -24,6 +24,7 @@ public class PositionableJTextField extends PositionableJPanel {
 
     // provide a customized JTextField for subclass use
     protected final JTextField _textBox = new RepositioningJTextField(); // local class
+    protected int _nCols;
 
     // reimplement positioning to use the local coordinates in the enclosed JTextField
 
@@ -108,7 +109,24 @@ public class PositionableJTextField extends PositionableJPanel {
         return new Point(originalX, originalY);
     }
 
+    @OverridingMethodsMustInvokeSuper // final to require this
+    public final int getNumColumns() {
+        return _nCols;
+    }
 
+    @OverridingMethodsMustInvokeSuper // final to require this
+    public final void setNumColumns(int nCols) {
+        _textBox.setColumns(nCols);
+        _nCols = nCols;
+    }
+
+    @OverridingMethodsMustInvokeSuper // final to require this
+    @Override
+    public final JComponent getTextComponent() {
+        return _textBox;
+    }
+
+    // extend JTextField to handle scaling 
     class RepositioningJTextField extends JTextField {
         // Painting is already inside the scalled MemoryInputIcon, so 
         // doesn't need to be scaled again

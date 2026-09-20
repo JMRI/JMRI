@@ -136,7 +136,7 @@ div.MemorySpinnerIconXml {
     text-align: center;
 }
 
-.MemoryInputIconXml {
+.MemoryInputIconXml, .BlockContentsInputIconXml, .GlobalVariableInputIconXml {
     padding: 1px 1px 1px 1px;
     min-width: 4em;
     box-shadow: none;

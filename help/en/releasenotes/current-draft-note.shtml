@@ -413,14 +413,16 @@
         <a id="CPE" name="CPE"></a>
         <ul>
             <li>Memory Input Icons, Global Variable Input Icons and 
-                Block Contents Input Icons in Layout Editor, Panel Editor
-                and Control Panel Editor have for a long time 
+                Block Contents Input Icons have for a long time 
                 shown a shadow border by default instead of no border 
                 by default.  This made it impossible to display them
                 without a border, unlike other editor icons.
                 This has been fixed.  If you want a border on one of these icons
                 and no longer see one, use the contextual menu on the
                 icon to set the border width to a non-zero value.
+            <li>Memory Input Icons, Global Variable Input Icons and 
+                Block Contents Input Icons now work properly when the
+                panel has been zoomed larger or smaller.
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -467,8 +469,7 @@
         <a id="LE" name="LE"></a>
         <ul>
             <li>Memory Input Icons, Global Variable Input Icons and 
-                Block Contents Input Icons in Layout Editor, Panel Editor
-                and Control Panel Editor have for a long time 
+                Block Contents Input Icons have for a long time 
                 shown a shadow border by default instead of no border 
                 by default.  This made it impossible to display them
                 without a border, unlike other editor icons.
@@ -479,6 +480,9 @@
                 columns that the GUI will display. Note that the fixed width
                 interacts with selection:  If you select a wider fixed width,
                 blank areas will display on either side.
+            <li>Memory Input Icons, Global Variable Input Icons and 
+                Block Contents Input Icons now work properly when the
+                panel has been zoomed larger or smaller.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -520,8 +524,7 @@
         <a id="PE" name="PE"></a>
         <ul>
             <li>Memory Input Icons, Global Variable Input Icons and 
-                Block Contents Input Icons in Layout Editor, Panel Editor
-                and Control Panel Editor have for a long time 
+                Block Contents Input Icons have for a long time 
                 shown a shadow border by default instead of no border 
                 by default.  This made it impossible to display them
                 without a border, unlike other editor icons.
@@ -651,15 +654,21 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Some improvements to how the Memory Input icons are handled on panels:
+            <li>Some improvements to how the various input icons are handled on panels:
                 <ul>
                     <li>The padding on the end of the icon now agrees with what's
                         on the parent JMRI panel.
-                    <li>The drop shadow on the web has been dropped to 
+                    <li>The default drop shadow on the web has been dropped to 
                         make the appearance agree with the parent JMRI panel.
                     <li>The default border now agrees with the border on the
                         parent JMRI panel.
                 </ul>
+                <li>If an icon is defined in JMRI as having no background,
+                    it's shown as transparent on the JMRI screen.  Previously,
+                    this was shown as a white background on the web browser screen.
+                    This has been corrected so that it now shows on the web browser
+                    screen as transparent, giving the same appearance as on 
+                    the JMRI screen.
             </li>
         </ul>
 

@@ -4,7 +4,6 @@ import java.awt.event.*;
 
 import javax.annotation.Nonnull;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -33,8 +32,6 @@ public class MemoryInputIcon extends PositionableJTextField implements java.bean
 
     private final java.awt.event.MouseListener _mouseListener = JmriMouseListener.adapt(this);
     private final java.awt.event.MouseMotionListener _mouseMotionListener = JmriMouseMotionListener.adapt(this);
-
-    int _nCols;
 
     public MemoryInputIcon(int nCols, Editor editor) {
         super(editor);
@@ -72,11 +69,6 @@ public class MemoryInputIcon extends PositionableJTextField implements java.bean
     protected Positionable finishClone(MemoryInputIcon pos) {
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
-    }
-
-    @Override
-    public JComponent getTextComponent() {
-        return _textBox;
     }
 
     @Override
@@ -131,11 +123,6 @@ public class MemoryInputIcon extends PositionableJTextField implements java.bean
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<Memory> getNamedMemory() {
         return namedMemory;
     }
@@ -145,10 +132,6 @@ public class MemoryInputIcon extends PositionableJTextField implements java.bean
             return null;
         }
         return namedMemory.getBean();
-    }
-
-    public int getNumColumns() {
-        return _nCols;
     }
 
     // update icon as state of Memory changes

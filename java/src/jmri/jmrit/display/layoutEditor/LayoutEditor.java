@@ -216,6 +216,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // PositionableLabel's
     private List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); // BlockContents Label List
+    private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
     private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
     private List<SensorIcon> sensorList = new ArrayList<>();                    // Sensor Icons
     private List<TurnoutIcon> turnoutList = new ArrayList<>();                  // Turnout _Icons_
@@ -225,7 +226,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     // PositionableJPanel's
     private List<BlockContentsInputIcon> blockContentsInputList = new ArrayList<>(); // BlockContents Input List
     private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
-    private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
     
     // Factory generated positionables
     private List<Positionable> factoryPositionables = new ArrayList<>();
@@ -2287,10 +2287,14 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             // set the scale and position for PositionableJPanel items
             // TODO: ALL OF THE POSITIONABLEJPANEL SUBCLASSES NEED TO BE HERE OR A GENERAL MECHANISM IS NEEDED
-                for (var item : memoryInputList) {
+            for (var item : memoryInputList) {
                 item.setScale(newZoom);
-                // setting the location handle the zooming  TODO: BETTER APPROACH?
-                //item.setLocation((int)Math.round(item.getX()*newZoom), (int)Math.round(item.getY()*newZoom));
+                // setting the location handle the zooming
+                item.setLocation(item.getX(), item.getY());
+            }
+            for (var item : blockContentsInputList) {
+                item.setScale(newZoom);
+                // setting the location handle the zooming
                 item.setLocation(item.getX(), item.getY());
             }
 

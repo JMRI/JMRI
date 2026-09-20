@@ -47,6 +47,8 @@ PositionableLabel  <|-- MultiSensorIcon
 PositionableLabel  <|-- ReporterIcon
 PositionableLabel  <|-- SlipTurnoutIcon
 
+MemoryIcon <|-- BlockContentsIcon
+
 PositionableIcon <|-- IndicatorTrackIcon
 PositionableIcon <|-- SensorIcon
 PositionableIcon <|-- SignalHeadIcon
