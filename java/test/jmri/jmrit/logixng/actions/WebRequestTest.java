@@ -11,6 +11,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -38,6 +39,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     private static final String WEB_REQUEST_URL =
             "https://www.jmri.org/help/en/html/tools/logixng/reference/WebRequestExample/LogixNG_WebRequest_Test.php";
+
+    private TimeZone originalTimeZone;
 
     private LogixNG _logixNG;
     private ConditionalNG _conditionalNG;
@@ -580,6 +583,10 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initLogixNGManager();
         jmri.jmrit.logixng.NamedBeanType.reset();
 
+        // Force the use of UTC time zone
+        originalTimeZone = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+
         // Exclude dynamic content in the tables and panels file
         var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
         loadAndStorePreferences.setExcludeMemoryIMCURRENTTIME(true);
@@ -605,6 +612,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @AfterEach
     public void tearDown() {
+        TimeZone.setDefault(originalTimeZone);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();

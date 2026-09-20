@@ -16,6 +16,7 @@ import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitOperationsUtil;
 
 /**
@@ -1517,7 +1518,7 @@ public class RouterTest extends OperationsTestCase {
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", Track.SPUR);
         Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD);
         Track bostonYard2 = boston.getTrackByName("Boston Yard 2", Track.YARD);
-        
+
         boston.deleteTrack(bostonYard2);
 
         // create 2 cars
@@ -3169,7 +3170,7 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("car's destination is staging", staging, c3.getDestination());
         Assert.assertEquals("car's destination track is staging", stagingTrack2, c3.getDestinationTrack());
         c3.setDestination(null, null); // clear previous destination
-        
+
         // modify car's load in staging
         stagingTrack2.setLoadEmptyEnabled(true);
 
@@ -3401,7 +3402,7 @@ public class RouterTest extends OperationsTestCase {
         trainStagingToFoxboro2.build();
         Assert.assertTrue(trainStagingToFoxboro2.isBuilt());
 
-        // Route for car (BB 4): (Staging MA, Staging 4)-> (Train Staging-Gulf-Essex-Foxboro 
+        // Route for car (BB 4): (Staging MA, Staging 4)-> (Train Staging-Gulf-Essex-Foxboro
         // 2)-> (Gulf, Gulf Yard 1)-> (Train Staging-Gulf-Essex-Foxboro 1)-> (Foxboro, )
 
         Assert.assertEquals("car's destination", gulfYard1, c4.getDestinationTrack());
@@ -3422,7 +3423,7 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("car's destination", essexInterchange1, c3.getDestinationTrack());
         Assert.assertEquals("car's final destination", chelmsford, c3.getFinalDestination());
         Assert.assertEquals("car's destination", stagingT2, c4.getDestinationTrack());
-        // sent to staging rather than build failure 
+        // sent to staging rather than build failure
         Assert.assertEquals("car's final destination", chelmsford, c4.getFinalDestination());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -4954,6 +4955,9 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Car BC 9 final destination track", "Danvers Spur 1", c9.getFinalDestinationTrackName());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
+
+        // GitHub CI workflows doesn't have a default printer
+        JUnitAppender.suppressWarnMessage("No default printer found");
     }
 
     /*

@@ -675,5 +675,6 @@
         <ul>
             <li>The "noverify" option has been removed from the JMRI program
                 launchers so that JMRI can use Java 27 and later.</li>
+            <li>For JMRI developers: CI tests now fails on WARN logging messages.</li>
         </ul>
 
