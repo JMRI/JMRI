@@ -99,6 +99,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         c.setFinalDestination(destination);
         c.setFinalDestinationTrack(track);
         c.setScheduleItemId(car.getScheduleItemId());
+        c.setRouteDestinationTiming(car.getRouteDestinationTiming());
         boolean results = setDestination(c, train, buildReport);
         c.setDestination(null, null); // clear router car destinations
         c.setFinalDestinationTrack(null);
@@ -345,6 +346,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     clone.getDestinationName(), clone.getDestinationTrackName()));
             _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{testTrain.getName()});
             return true; // car can be routed, but not by this train!
+        }
+        // adjust car timing for the car.setDestination
+        if (car.getRouteDestinationTiming() == null || car.getRouteDestinationTiming().getSequenceNumber() < clone.getRouteDestinationTiming().getSequenceNumber()) {
+            car.setRouteDestinationTiming(clone.getRouteDestinationTiming());
         }
         _status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
         if (_status.equals(Track.OKAY)) {

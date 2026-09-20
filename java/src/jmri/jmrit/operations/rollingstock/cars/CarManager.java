@@ -535,13 +535,13 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         clone.setPreviousFinalDestination(car.getPreviousFinalDestination());
         clone.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         clone.setPreviousScheduleId(car.getScheduleItemId());
-        createCloneConsist(car, track, train, startTime, clone);
+        createCloneKernel(car, track, train, startTime, clone);
         // move car to new location for later pick up
         finshCreateClone(car, track, train, startTime, clone);
         return clone;
     }
 
-    private void createCloneConsist(Car car, Track track, Train train, Date startTime, Car cloneCar) {
+    private void createCloneKernel(Car car, Track track, Train train, Date startTime, Car cloneCar) {
         if (car.getKernel() != null) {
             String kernelName = car.getKernelName() + Car.CLONE + padNumber(car.getCloneOrder());
             Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);

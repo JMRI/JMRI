@@ -7,8 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import jmri.jmrit.signalsystemeditor.*;
-import jmri.util.FileUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -327,7 +326,7 @@ public class LoadAndStoreAllSignalSystemsTest {
             // disappears from the aspect file. It's possible that removing
             // those three files will break some existing layout signal
             // configurations because they're still pointing at those files.
-            log.warn("File not found: {}", ex.getMessage());
+            log.info("File not found: {}", ex.getMessage());
         }
 
         return true;
