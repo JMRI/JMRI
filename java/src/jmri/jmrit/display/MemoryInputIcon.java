@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.*;
 import java.awt.event.*;
 
 import javax.annotation.Nonnull;
@@ -9,7 +8,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -28,106 +26,8 @@ import jmri.util.swing.*;
  * @author Bob Jacobsen  Copyright (c) 2026
  * @since 2.7.2
  */
-public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    class PositionableJPanelJTextField extends JTextField {
-        // Painting is already inside the scalled MemoryInputIcon, so 
-        // doesn't need to be scaled again
-
-        // rescale the pointer location of mouse events
-        @Override
-        public void processMouseEvent(MouseEvent e) {
-            // translateMouseEvent is obtained from the enclosing class
-            super.processMouseEvent(translateMouseEvent(e));
-        }
-        @Override
-        public void processMouseMotionEvent(MouseEvent e) {
-            // translateMouseEvent is obtained from the enclosing class
-            super.processMouseMotionEvent(translateMouseEvent(e));
-        }
+public class MemoryInputIcon extends PositionableJTextField implements java.beans.PropertyChangeListener {
         
-        // rescale detection of the bounds of the field
-        @Override
-        public boolean contains(int x, int y) {
-            double scale = getScale();
-            int logicalX = (int) Math.round(x / scale);
-            int logicalY = (int) Math.round(y / scale);
-            
-            boolean retval = logicalX >= 0 && logicalX < getWidth() && logicalY >= 0 && logicalY < getHeight();
-            return retval;
-        }
-    }
-    
-    JTextField _textBox = new PositionableJPanelJTextField();
-
-    // ==========
-    // These are in the memory input icon itself - TODO: MOVE TO SUPER CLASS!
-    @Override
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        // Scale the rendering context
-        g2d.scale(getScale(), getScale());
-        super.paintComponent(g2d);
-        g2d.dispose();
-    }
-
-    @Override
-    public void processMouseEvent(MouseEvent e) {
-        super.processMouseEvent(translateMouseEvent(e));
-    }
-    @Override
-    public void processMouseMotionEvent(MouseEvent e) {
-        super.processMouseMotionEvent(translateMouseEvent(e));
-    }
-    @Override
-    public boolean contains(int x, int y) {
-        double scale = getScale();
-        int logicalX = (int) Math.round(x / scale);
-        int logicalY = (int) Math.round(y / scale);
-        
-        boolean retval = logicalX >= 0 && logicalX < getWidth() && logicalY >= 0 && logicalY < getHeight();
-        return retval;
-    }
-    MouseEvent translateMouseEvent(MouseEvent e) {
-        double scale = getScale();
-        int scaledX = (int) Math.round(e.getX() / scale);
-        int scaledY = (int) Math.round(e.getY() / scale);
-        return new MouseEvent(
-            (Component)e.getSource(), 
-            e.getID(),
-            e.getWhen(),
-            e.getModifiersEx(),
-            scaledX, scaledY,
-            e.getClickCount(),
-            e.isPopupTrigger(),
-            e.getButton()
-        );
-    }
-
-    int originalX, originalY;
-    
-    @Override 
-    public int getX() { return originalX; }
-    @Override 
-    public int getY() { return originalY; }
-    @Override
-    public void setLocation(int x, int y) {
-        originalX = x;
-        originalY = y;
-        double scale = getScale();
-        super.setLocation((int)Math.round(scale*x), (int)Math.round(scale*y));
-    }
-    @Override
-    public void setLocation(Point p) {
-        this.setLocation(p.x, p.y);
-    }
-    @Override
-    public Point getLocation() {
-        return new Point(originalX, originalY);
-    }
-    
-    // =========
-    
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
 
@@ -151,7 +51,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
                     updateMemory();
                 }
-                // specical case for LayoutEditor -> Redraw the content
+                // redraw the editor window content, including this field
+                // we have to redraw the entire contents because of possible overlaps/underlaps
                 getEditor().getTargetPanel().repaint();
             }
         });
