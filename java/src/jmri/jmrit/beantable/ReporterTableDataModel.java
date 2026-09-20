@@ -4,6 +4,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
+import jmri.CollectingReporter;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -38,12 +39,35 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
     @Override
     @CheckForNull
     public String getValue(String name) {
-        Object value;
         Reporter r = getManager().getBySystemName(name);
         if (r == null) {
             return "";
         }
-        value = r.getCurrentReport();
+        if (r instanceof CollectingReporter) {
+            java.util.Collection<?> collection = ((CollectingReporter) r).getCollection();
+            if (collection != null) {
+                Object[] items = collection.toArray();
+                if (items.length > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Object item : items) {
+                        String str = formatReport(item);
+                        if (str != null) {
+                            if (sb.length() > 0) {
+                                sb.append(" + ");
+                            }
+                            sb.append(str);
+                        }
+                    }
+                    return sb.length() > 0 ? sb.toString() : null;
+                }
+            }
+            return null;
+        }
+        return formatReport(r.getCurrentReport());
+    }
+
+    @CheckForNull
+    private String formatReport(Object value) {
         if (value == null) {
             return null;
         } else if (value instanceof Reportable) {
@@ -191,19 +215,11 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
         if (col == LASTREPORTCOL) {
 
             String name = sysNameList.get(row);
-            Object value;
             Reporter r = getManager().getBySystemName(name);
             if (r == null) {
                 return "";
             }
-            value = r.getLastReport();
-            if (value == null) {
-                return null;
-            } else if (value instanceof Reportable) {
-                return ((Reportable) value).toReportString();
-            } else {
-                return value.toString();
-            }
+            return formatReport(r.getLastReport());
         } else
         return super.getValueAt(row, col);
     }
