@@ -15,10 +15,10 @@
       <h1>JMRI: OperationsPro&trade; On Time</h1>
 
       The JMRI OperationsPro&trade; On Time mode of operations allows the creation of Manifests and
-      switch lists showing the movement of cars traveling on multiple trains, or several movements
-      using a single train.
+      switch lists showing the movement of locomotives and cars traveling on multiple trains, and /
+      or several rolling stock movements using a single train.
 
-      <h3>On Time</h3>
+      <h3>On Time Overview</h3>
 
       On Time is an advanced mode of OperationsPro&trade; that was introduced in January of 2026. It
       is an extension of Aggressive mode. When using On Time mode the use of a real or fast clock to
@@ -28,9 +28,9 @@
       work reasonably close to the times provided on the train Manifests. When running
       OperationsPro&trade; in On Time mode, tracks that have <a
         href="Operations.shtml#InterchangeQuickService">Quick Service</a> enabled can be reused
-      based on when cars are set out and picked up. Cars and locomotives can travel on multiple
-      trains with train departure times up to 31 days. Therefore you can create sessions that span
-      days, weeks, or even a month!
+      based on when rolling stock is set out and picked up. Cars and locomotives can travel on
+      multiple trains with train departure times up to 31 days. Therefore you can create sessions
+      that span days, weeks, or even a month!
 
       <p>
         Note that train turns servicing locations on both the outbound and inbound legs, will in
@@ -125,13 +125,13 @@
         <img src="images/ModifyLocationsQuickServiceOnTime.png" alt="">
       </p>
 
-      <h3>Example Turn</h3>
+      <h3>On Time Example a Train Turn</h3>
 
-      The following is an example of a simple turn were the same cars are dropped off and pulled by
-      a single train. The train will depart Bakersfield travel to Danville and Fremont and return to
-      Bakersfield while working Danville on the return leg. To create this train we loaded the demo
-      files. Then we created the train "BFB" with the following route, and to keep things simple,
-      we'll only allow the train to carry boxcars.
+      The following is an example of a simple turn where the some cars are dropped off and later
+      pulled by a the same train. The train will depart Bakersfield travel to Danville and Fremont
+      and return to Bakersfield while working Danville on the return leg. To create this train we
+      first loaded the demo files. Then we created the train "BFB" with the following route, and to
+      keep things simple, we'll only allow the train to carry boxcars.
 
       <p>
         <img src="images/RouteTurnOnTime.png" alt="">
@@ -154,7 +154,7 @@
 
       So we see the program created the clone "NH 41516-(Clone)0006" and the car NH 41516 was moved
       to Danville. The clone was then assigned to train "BFB". The program is using the "hyphen"
-      feature when creating a clone road number. This means only the "41516" part of the clone's
+      feature when creating a clone's road number. This means only the "41516" part of the clone's
       number will be shown on a Manifest or switch list. Looking further into the build report we
       see the following:
 
