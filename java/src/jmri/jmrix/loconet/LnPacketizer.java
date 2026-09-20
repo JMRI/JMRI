@@ -83,9 +83,9 @@ public class LnPacketizer extends LnTrafficController {
      * Checksum is computed and overwritten here, then the message is converted
      * to a byte array and queued for transmission.
      *
-     * @param m Message to send; will be updated with CRC
-     * @param requestIgnoreEcho Notify listeners on enqueing message, ignore echo from line.
-     *             Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
+     * @param m  Message to send; will be updated with CRC
+     * @param requestIgnoreEcho  If true: Notify listeners on enqueing message, ignore echo from line.
+     *                           Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
      */
     @Override
     public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho) {
@@ -119,7 +119,7 @@ public class LnPacketizer extends LnTrafficController {
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }
-        
+
     }
 
     /**
@@ -312,7 +312,7 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // message is complete, dispatch it !!
                     log.trace("message complete: {}", msg);
-                    
+
                     // check if this message was supposed to be ignored
                     // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
                     if(trafficController.getSentList().contains(msg)) {
@@ -323,7 +323,7 @@ public class LnPacketizer extends LnTrafficController {
                         log.trace("queue message for notification: {}", msg);
                         jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                     }
-                    
+
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
@@ -389,8 +389,9 @@ public class LnPacketizer extends LnTrafficController {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            if (isXmtBusy())
+                            if (isXmtBusy()) {
                                 log.debug("LocoNet port not ready to receive"); // NOI18N
+                            }
                             log.trace("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             ostream.write(msg);
                             ostream.flush();
@@ -423,9 +424,9 @@ public class LnPacketizer extends LnTrafficController {
         if (!echo) {
             return;
         }
- 
+
         LocoNetMessage m = new LocoNetMessage(msg);
-        
+
         // check if this message was supposed to be ignored
         // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
         if(getSentList().contains(m)) {
