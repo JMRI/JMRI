@@ -2,6 +2,8 @@ package jmri.jmrix.lenz;
 
 import java.io.IOException;
 
+import jmri.util.JUnitAppender;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,7 +20,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  */
 public class XNetPacketizerTest extends XNetTrafficControllerTest {
-        
+
     protected XNetPortControllerScaffold port = null;
 
     /**
@@ -206,6 +208,9 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         tc = null;
         port.dispose();
         port = null;
+        for (int i=0; i < 1000; i++) {
+            JUnitAppender.suppressWarnMessage("Throttle 42 - traffic controller at rest with a reply still due after 5000ms in state 1, restarting the queue");
+        }
         JUnitUtil.tearDown();
     }
 
