@@ -132,6 +132,9 @@
                     wouldn't appear. A description is no longer required; if one
                     is not present, the Sensor or Turnout will be created without 
                     a user name.</li>
+                <li>Updated the Reporter to set the RailCom orientation instead
+                    of direction (WEST/EAST if the appropriate bit is set in
+                    the report).</li>
             </ul>
 
         <h4>Powerline</h4>
