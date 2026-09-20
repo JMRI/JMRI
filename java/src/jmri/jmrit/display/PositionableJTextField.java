@@ -11,7 +11,7 @@ import javax.swing.*;
  * This is a base class implementation for 
  * {@link PositionableJPanel} subclasses that contain
  * a single {@link JTextField} for their implementation.
- * <p>
+ * 
  * @author Bob Jacobsen   Copyright (C) 2026
  * @since 5.17.4
  */
