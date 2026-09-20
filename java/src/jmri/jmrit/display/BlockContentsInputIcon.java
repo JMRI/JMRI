@@ -19,9 +19,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.util.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display and input a Block contents value in a TextField.
  * <p>
@@ -61,6 +58,7 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
             }
         });
         _textBox.setColumns(_nCols);
+        _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
@@ -267,5 +265,5 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         namedBlock = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(BlockContentsInputIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockContentsInputIcon.class);
 }

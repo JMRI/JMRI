@@ -20,9 +20,6 @@ import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.util.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display and input a GlobalVariable value in a TextField.
  * <p>
@@ -62,6 +59,7 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         });
         _textBox.setColumns(_nCols);
         _textBox.addMouseMotionListener(_mouseMotionListener);
+        _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
     }
@@ -267,5 +265,5 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         namedGlobalVariable = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(GlobalVariableInputIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableInputIcon.class);
 }
