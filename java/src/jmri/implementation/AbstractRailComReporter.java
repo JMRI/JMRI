@@ -12,7 +12,7 @@ import jmri.RailCom;
  * @author Paul Bender Copyright (c) 2016,2019
  * @since 4.5.4
  */
-public class AbstractRailComReporter extends AbstractIdTagReporter {
+public abstract class AbstractRailComReporter extends AbstractIdTagReporter {
 
     public AbstractRailComReporter(String systemName) {
         super(systemName);
@@ -21,6 +21,12 @@ public class AbstractRailComReporter extends AbstractIdTagReporter {
     public AbstractRailComReporter(String systemName, String userName) {
         super(systemName, userName);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract boolean hasExitReports();
 
     // Methods to support PhysicalLocationReporter interface
     

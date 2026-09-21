@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
+import jmri.Reporter;
 import jmri.implementation.AbstractIdTagReporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
@@ -20,9 +21,10 @@ import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.implementations.EventTable;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -46,8 +48,8 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
 
     // the four cases for the MS bits in the report
     private static final int REPORTER_UNOCCUPIED_EXIT = 0;
-    private static final int REPORTER_OCCUPIED_FORWARD_ENTRY = 0x1;
-    private static final int REPORTER_OCCUPIED_BACKWARD_ENTRY = 0x2;
+    private static final int REPORTER_OCCUPIED_WEST_ENTRY = 0x1;
+    private static final int REPORTER_OCCUPIED_EAST_ENTRY = 0x2;
     private static final int REPORTER_OCCUPIED_UNKNOWN_ENTRY = 0x3;
 
     /// Mask for the address bits of the reporter.
@@ -66,7 +68,17 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
 
     EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
-    Set<Object> entrySet = new HashSet<>();
+    private final List<IdTag> entryOrder = new ArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * OpenLCB provides explicit exit events and section-cleared messages.
+     */
+    @Override
+    public boolean hasExitReports() {
+        return true;
+    }
     
     public OlcbReporter(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "R" + address);
@@ -178,8 +190,9 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
      */
     @Override
     @CheckReturnValue
+    @SuppressWarnings("unchecked")
     public Collection<Object> getCollection() {
-        return entrySet;
+        return (Collection<Object>)(Collection<?>) Collections.unmodifiableCollection(entryOrder);
     }
     
     /**
@@ -213,23 +226,6 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
     }
     int lastLoco = -1;
 
-    @Override
-    public void notify(IdTag tag) {
-        log.trace("notified {} with tag {}", this, tag);
-        if (tag == null ) {
-        
-            if (log.isTraceEnabled()) {
-                for (var id : entrySet) {
-                    log.trace("  tag {} where seen {}", id, ((IdTag)id).getWhereLastSeen());
-                }
-            }
-        
-            var copySet = new HashSet<Object>(entrySet); // to avoid concurrent modification
-            copySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
-        }
-        super.notify(tag);
-    }
-    
     /**
      * Callback from the message decoder when a relevant event message arrives.
      * @param reportBits The bottom 14 bits of the event report. (THe top bits are already checked against our base event number)
@@ -237,12 +233,6 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
      */
     private void handleReport(long reportBits, boolean isEntry) {
         log.trace("handleReport {} with isEntry {}", this, isEntry);
-        // Remove any tags held here if they've been moved to another reporter
-        var copySet = new HashSet<Object>(entrySet); // to avoid concurrent modification
-        copySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
-
-        // The extra notify with null is necessary to clear past notifications even if we have a new report.
-        notify(null);
         
         DccLocoAddress.Protocol protocol;
         boolean isConsist;
@@ -267,50 +257,102 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
             isConsist = false;
         }
         
-        RailCom.Direction direction;
+        RailCom.Orientation orientation;
         
-        int directionBits = (int)(reportBits >> 14) & 0x3;
+        int orientationBits = (int)(reportBits >> 14) & 0x3;
         
-        switch ( directionBits ) {
-            case REPORTER_UNOCCUPIED_EXIT:
-                direction = RailCom.Direction.UNKNOWN;
+        switch ( orientationBits ) {
+            case REPORTER_OCCUPIED_WEST_ENTRY:
+                orientation = RailCom.Orientation.WEST;
                 break;
-            case REPORTER_OCCUPIED_FORWARD_ENTRY:
-                direction = RailCom.Direction.FORWARD;
+            case REPORTER_OCCUPIED_EAST_ENTRY:
+                orientation = RailCom.Orientation.EAST;
                 break;
-            case REPORTER_OCCUPIED_BACKWARD_ENTRY:
-                direction = RailCom.Direction.BACKWARD;
-                break;
-            default:        // needed to keep static checker happy
             case REPORTER_OCCUPIED_UNKNOWN_ENTRY:
-                direction = RailCom.Direction.UNKNOWN;
+            case REPORTER_UNOCCUPIED_EXIT:
+            default:        // needed to keep static checker happy
+                orientation = RailCom.Orientation.UNKNOWN;
                 break;
         }
 
         // address 0x3800 is a special case:  Arrival means reporter is unoccupied, departure is ignored
         if (addressBits == 0x3800) {
-            if (directionBits == REPORTER_UNOCCUPIED_EXIT) {
+            if (orientationBits == REPORTER_UNOCCUPIED_EXIT) {
                 return;
             } else {
                 log.trace("{} clearing collection", this);
-                entrySet.clear();
+                entryOrder.clear();
+                notify(null);
                 return; // having cleared the reporter earlier
             }
         }
 
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
 
-        if (!isEntry || directionBits == REPORTER_UNOCCUPIED_EXIT) {
+        if (!isEntry || orientationBits == REPORTER_UNOCCUPIED_EXIT) {
             log.trace("{} removes tag {}", this,  tag);
-            entrySet.remove(tag);
+            entryOrder.remove(tag);
+            if (getCurrentReport() == tag) {
+                updateCurrentReportAfterExit();
+            }
             return; // having cleared the reporter earlier
         }
         
-        entrySet.add(tag);
-        tag.setOrientation(RailCom.Orientation.UNKNOWN);
-        tag.setDirection(direction);
+        entryOrder.remove(tag);
+        entryOrder.add(tag);
+        tag.setOrientation(orientation);
         tag.setDccAddress(new DccLocoAddress(address, protocol, isConsist));
         notify(tag);
+    }
+
+    /**
+     * Updates {@link #getCurrentReport()} after an IdTag has exited this reporter's block.
+     * <p>
+     * When a locomotive exits, this method selects an appropriate fallback report from the
+     * remaining tags in {@link #entryOrder}. It prioritizes the most recently entered tag
+     * that still considers this reporter its current location (i.e. {@code candidate.getWhereLastSeen() == this}).
+     * If no such locomotive exists but the block is not empty (for example, if other locomotives
+     * were temporarily seen in bridging or nested detectors), it falls back to the most recently
+     * entered tag remaining in the block. If no tags remain, {@code notify(null)} clears the report.
+     */
+    private void updateCurrentReportAfterExit() {
+        IdTag fallback = null;
+        for (int i = entryOrder.size() - 1; i >= 0; i--) {
+            IdTag candidate = entryOrder.get(i);
+            if (candidate.getWhereLastSeen() == this) {
+                fallback = candidate;
+                break;
+            }
+        }
+        if (fallback == null && !entryOrder.isEmpty()) {
+            fallback = entryOrder.get(entryOrder.size() - 1);
+        }
+        notify(fallback);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifySeenElsewhere(IdTag tag, Reporter newReporter) {
+        if (!this.equals(newReporter) && getCurrentReport() == tag) {
+            // The tag that just moved to another reporter was our current report.
+            // In OpenLCB, physical presence is governed by explicit hardware exit messages,
+            // so we do not remove `tag` from `entryOrder` here.
+            // However, to keep getCurrentReport() pointing to an ID that is currently present
+            // in this block, we check whether any other locomotive in entryOrder still has
+            // whereLastSeen == this. If so, we fall back to reporting that locomotive.
+            // If no other locomotive has whereLastSeen == this, we do NOT call notify(candidate)
+            // or notify(null), because doing so would re-assert whereLastSeen back to this reporter
+            // and trigger an infinite ping-pong between reporters.
+            for (int i = entryOrder.size() - 1; i >= 0; i--) {
+                IdTag candidate = entryOrder.get(i);
+                if (candidate != tag && candidate.getWhereLastSeen() == this) {
+                    notify(candidate);
+                    return;
+                }
+            }
+        }
     }
     private class Receiver extends org.openlcb.MessageDecoder {
         @Override
