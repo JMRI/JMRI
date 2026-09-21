@@ -2285,8 +2285,10 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             leToolBarPanel.zoomLabel.setText(String.format(Locale.getDefault(), "x%1$,.2f", newZoom));
 
-            // set the scale and position for PositionableJPanel items
-            // TODO: ALL OF THE POSITIONABLEJPANEL SUBCLASSES NEED TO BE HERE OR A GENERAL MECHANISM IS NEEDED
+            // Set the scale and position for PositionableJPanel items
+            // Note: In the absence of a List<PositionableJPanel>, we have to 
+            // handle each separate list of each type of PositionableJPanel subclasses
+            // that are being handled by the editor.
             for (var item : memoryInputList) {
                 item.setScale(newZoom);
                 // setting the location handle the zooming

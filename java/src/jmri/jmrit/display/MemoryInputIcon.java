@@ -74,7 +74,6 @@ public class MemoryInputIcon extends PositionableJTextField implements java.bean
     @Override
     public void mouseExited(JmriMouseEvent e) {
         updateMemory();
-        // TODO: understand e.consume();
         super.mouseExited(e);
     }
 
