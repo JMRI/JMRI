@@ -343,10 +343,10 @@ public class LnPacketizerStrict extends LnPacketizer {
                         }
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
-                        if (LnPacketizerStrict.this.controller != null && LnPacketizerStrict.this.controller.getAllowConnectionRecovery()) {
+                        if (controller.getAllowConnectionRecovery()) {
                             log.info("run: server closed connection, attempting recovery");
-                            LnPacketizerStrict.this.controller.closePort();
-                            LnPacketizerStrict.this.controller.recover();
+                            controller.closePort();
+                            controller.recover();
                         }
                     }
                 } catch (InterruptedException ie) {
