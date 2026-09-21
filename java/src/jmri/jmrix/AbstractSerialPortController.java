@@ -80,15 +80,20 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    protected void reconnectFromLoop(int retryNum){
-        try {
-            connect();
-            if (opened) {
-                super.reconnect();
+    protected synchronized void reconnectFromLoop(int retryNum){
+        // It seems that this method sometimes gets called while it's already called.
+        // To protect from that, the method is synchronized and we check that the
+        // port is not already opened.
+        if (!opened) {
+            try {
+                connect();
+                if (opened) {
+                    super.reconnect();
+                }
+            } catch (IOException ex) {
+                log.trace("restart failed", ex); // main warning to log.error done within connect();
+                // if returned on exception stops thread and connection attempts
             }
-        } catch (IOException ex) {
-            log.trace("restart failed", ex); // main warning to log.error done within connect();
-            // if returned on exception stops thread and connection attempts
         }
     }
 
