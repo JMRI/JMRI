@@ -66,5 +66,5 @@ public class DefaultTrackTileManagerXml extends AbstractXmlAdapter {
         log.debug("DefaultTrackTileManager has no user configuration to load");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultTrackTileManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultTrackTileManagerXml.class);
 }

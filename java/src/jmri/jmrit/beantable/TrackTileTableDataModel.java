@@ -20,13 +20,13 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
     private final List<TrackTile> tiles;
     private final String userLanguage;
 
-    static public final int SYSNAME_COLUMN = 0;
-    static public final int VENDOR_COLUMN = 1;
-    static public final int FAMILY_COLUMN = 2;
-    static public final int JMRITYPE_COLUMN = 3;
-    static public final int PARTCODE_COLUMN = 4;
-    static public final int CAPTION_COLUMN = 5;
-    static public final int NUMCOLUMN = 6;
+    public static final int SYSNAME_COLUMN = 0;
+    public static final int VENDOR_COLUMN = 1;
+    public static final int FAMILY_COLUMN = 2;
+    public static final int JMRITYPE_COLUMN = 3;
+    public static final int PARTCODE_COLUMN = 4;
+    public static final int CAPTION_COLUMN = 5;
+    public static final int NUMCOLUMN = 6;
 
     private static final Logger log = LoggerFactory.getLogger(TrackTileTableDataModel.class);
 
