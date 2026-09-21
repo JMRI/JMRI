@@ -10,14 +10,17 @@ All turnouts and crossings use connection points designated **A**, **B**, **C**,
 
 ### Right-Hand (RH) and Left-Hand (LH) Turnouts
 
-```
-Right-hand       Left-hand
+Throat A on the left. Continuing leg B straight ahead. The diverging leg C
+goes down for a right-hand turnout, up for a left-hand turnout.
 
-                       C
-                      //
-A ==**== B       A ==**== B
-     \\
-      C
+```
+Right-hand              Left-hand
+
+                              C
+                             //
+A ====**==== B        A ====**==== B
+       \\
+        C
 ```
 
 **Valid Routes:**
@@ -26,20 +29,22 @@ A ==**== B       A ==**== B
 
 ### Wye Turnout
 
+Throat A on the left. Both legs fan out (B up, C down).
+
 ```
    Wye
-      B  (closed / continuing)
-     //
-A ==**
-     \\
-      C  (thrown / diverging)
+        B  (closed / continuing)
+       //
+A ====<
+       \\
+        C  (thrown / diverging)
 ```
 
 **Valid Routes:**
-- **A-B** (ROUTE_AB) - throat to right leg, active when the turnout is closed (continuing route)
-- **A-C** (ROUTE_AC) - throat to left leg, active when the turnout is thrown (diverging route)
+- **A-B** (ROUTE_AB) - throat to continuing leg, active when the turnout is closed (continuing route)
+- **A-C** (ROUTE_AC) - throat to diverging leg, active when the turnout is thrown (diverging route)
 
-*Note: On a wye both legs diverge geometrically, but the route roles still follow the standard convention - B is the closed/continuing leg and C is the thrown/diverging leg (same as ROUTE_AB/ROUTE_AC for RH and LH turnouts).*
+*Note: On a wye both legs diverge geometrically but the route roles still follow the standard convention - B is the closed/continuing leg and C is the thrown/diverging leg (same as ROUTE_AB/ROUTE_AC for RH and LH turnouts).*
 
 ### Double Crossover (Double XOver)
 
@@ -90,13 +95,16 @@ D ==**===== C
 
 ### Single Slip
 
+A single slip has the two straight-through routes plus **one** slip crossing
+(A-D). There is no B-C connection.
+
 ```
 \\      //
   A==-==D
    \\ //
      X
    // \\
-  B==-==C
+  B     C
  //      \\
 ```
 
@@ -104,6 +112,8 @@ D ==**===== C
 - **A-C** (ROUTE_AC) - straight through one direction
 - **B-D** (ROUTE_BD) - straight through other direction
 - **A-D** (ROUTE_AD) - slip crossing
+
+*Note: Unlike a double slip, a single slip has no B-C crossing route. The code removes STATE_BC for SINGLE_SLIP.*
 
 ### Double Slip
 
@@ -128,24 +138,26 @@ D ==**===== C
 ```
 Level Crossing
 
-     C
-     |
-     |
-A ===+===B
-     |
-     |
-     D
+  A       D
+   \\    //
+     \\ //
+       X
+     // \\
+   //    \\
+  B       C
 ```
 
 **Valid Routes:**
-- **A-B** (ROUTE_AB) - straight through, continuing route
-- **C-D** (ROUTE_CD) - crossing path, continuing route
+- **A-C** (ROUTE_AC) - straight through, continuing route
+- **B-D** (ROUTE_BD) - straight through, continuing route
 
-*Note: Level crossings are fixed track elements with no switching mechanism. Both routes are always available simultaneously.*
+*Note: Level crossings are fixed track elements with no switching mechanism.
+Both routes are always available simultaneously. The two straight segments
+A-C and B-D may be in the same or different Layout Blocks.*
 
 **Geometry Specification:**
-- **Path A-B**: Specified with `direction="straight"` and `length` attribute
-- **Path C-D**: Specified with `direction="crossing"` and `angle` attribute for crossing angle
+- **Straight path**: Specified with `direction="straight"` and `length` attribute
+- **Crossing path**: Specified with `direction="crossing"` and `angle` attribute for crossing angle
   - Optional `length` attribute for crossing path length
   - If `length` is omitted, crossing path length defaults to same as straight path
 
@@ -156,20 +168,27 @@ A ===+===B
 - **Slips**: Two crossing paths plus slip crossing paths, with connection points arranged differently than crossovers
 - **Level crossings**: Two fixed intersecting paths (one straight, one crossing) with no switching mechanism
 
-## Route Constants
+## Route/State Constants
 
-The following route constants are defined in the JMRI code:
+For turnouts and slips, the diverging/crossing connections are encoded as
+`STATE_*` constants in `LayoutTurnout` (and inherited by `LayoutSlip`):
 
-- `ROUTE_AC = 0x02` - A-C route connection
-- `ROUTE_BD = 0x04` - B-D route connection
-- `ROUTE_AD = 0x06` - A-D route connection
-- `ROUTE_BC = 0x08` - B-C route connection
+- `STATE_AC = 0x02` - A-C connection
+- `STATE_BD = 0x04` - B-D connection
+- `STATE_AD = 0x06` - A-D connection
+- `STATE_BC = 0x08` - B-C connection (double slip only)
+
+*Note: The plain A-B "closed/continuing" route of an RH/LH/Wye turnout is not
+one of these bit constants. It corresponds to the turnout's CLOSED state. The
+`(ROUTE_xx)` labels used above are descriptive shorthand for the connection
+points, not literal constant names.*
 
 ## Source References
 
 This information is derived from:
 - `java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java`
+- `java/src/jmri/jmrit/display/layoutEditor/LayoutTurnoutView.java`
 - `java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java`
-- `java/src/jmri/jmrit/display/layoutEditor/LayoutLevelXing.java`
+- `java/src/jmri/jmrit/display/layoutEditor/LevelXing.java`
 - `xml/schema/tracktiles.xsd` - Track tile XML schema
 - Various turnout and crossing-specific implementation classes
