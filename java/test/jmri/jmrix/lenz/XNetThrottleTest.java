@@ -536,6 +536,130 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
+    /**
+     * When a broadcast message is delivered in place of the reply this throttle
+     * was waiting for, the reply itself goes to whichever listener sent last.
+     * The traffic controller considers the exchange over, so no timeout ever
+     * fires, and requestState stays non idle forever: the throttle never hands
+     * another message to the traffic controller, so it can never become the
+     * destination of a reply again. The watchdog has to break that loop.
+     */
+    @Test
+    @Timeout(10)
+    public void testWatchdogRestartsQueueWhenReplyNeverArrives() {
+        int n = tc.outbound.size();
+        XNetThrottle t = (XNetThrottle) instance;
+        initThrottle(t, n);
+        t.setWatchdogInterval(100);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 00 00 03 E0", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // no reply at all: the next command is held back in the internal queue.
+        final int held = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( held, tc.outbound.size(),
+            "Speed message held back while waiting for the status reply");
+
+        // the watchdog has to give up and restart the queue.
+        JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(held).getElement(1),
+            "Throttle Set Speed Message");
+
+        // dispose before checking the log, so the watchdog armed for the speed
+        // message cannot add a message of its own while the check runs.
+        t.throttleDispose();
+        JUnitAppender.assertWarnMessageStartsWith(
+            "Throttle 3 - traffic controller at rest with a reply still due");
+    }
+
+    /**
+     * On a CS_BUSY the throttle deliberately does nothing, counting on the
+     * traffic controller to retransmit. When that message was classified as
+     * unsolicited the retransmission never happens, and the throttle waits for
+     * a reply nobody will send.
+     */
+    @Test
+    @Timeout(10)
+    public void testWatchdogRecoversFromUnretransmittedCsBusy() {
+        int n = tc.outbound.size();
+        XNetThrottle t = (XNetThrottle) instance;
+        initThrottle(t, n);
+        t.setWatchdogInterval(100);
+        n = tc.outbound.size();
+
+        // a speed command leaves the throttle in THROTTLESPEEDSENT.
+        t.setSpeedSetting(0.5f);
+        assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(n).getElement(1),
+            "Throttle Set Speed Message");
+
+        // the command station answers busy, and nothing else ever comes.
+        t.message(new XNetReply("61 81 E0"));
+
+        final int held = tc.outbound.size();
+        t.setFunction(0, true);
+        assertEquals( held, tc.outbound.size(),
+            "Function message held back while waiting for the speed reply");
+
+        JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        t.throttleDispose();
+        JUnitAppender.assertWarnMessageStartsWith(
+            "Throttle 3 - traffic controller at rest with a reply still due");
+    }
+
+    /**
+     * While the traffic controller still has work in hand, a late reply can be
+     * perfectly legitimate: the message may be queued behind another one which
+     * is consuming its own full timeout. The watchdog has to hold off until the
+     * longer deadline rather than inject a second message into an exchange the
+     * traffic controller is still running.
+     */
+    @Test
+    @Timeout(10)
+    public void testWatchdogWaitsLongerWhileTrafficControllerIsBusy() {
+        XNetInterfaceScaffold busy = new XNetInterfaceScaffold(new LenzCommandStation() {
+            @Override
+            public float getCommandStationSoftwareVersionBCD() {
+                return 0x36;
+            }
+        }) {
+            @Override
+            public boolean isAtRest() {
+                return false;
+            }
+        };
+        XNetThrottle t = new XNetThrottle(memo, busy);
+        t.setDccAddress(4);
+        t.setWatchdogInterval(100);
+
+        int n = busy.outbound.size();
+        // measure from here: the watchdog is armed by the request just below.
+        long start = System.currentTimeMillis();
+        t.sendStatusInformationRequest();
+        assertEquals( n + 1, busy.outbound.size(), "Throttle Information Request Message sent");
+
+        final int held = busy.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( held, busy.outbound.size(),
+            "Speed message held back while waiting for the status reply");
+
+        JUnitUtil.waitFor(() -> busy.outbound.size() > held, "watchdog restarted the queue");
+        long waited = System.currentTimeMillis() - start;
+
+        // dispose first: this traffic controller is never at rest, so the
+        // watchdog armed for the message just sent would keep going.
+        t.throttleDispose();
+        busy.terminateThreads();
+
+        // the short deadline is 100ms, the long one three times that.
+        assertTrue( waited >= 250,
+            "watchdog held off for the longer deadline, waited only " + waited + "ms");
+        JUnitAppender.assertWarnMessageStartsWith("Throttle 4 - no reply after");
+    }
+
     @Test
     public void testSendFunctionStatusInformationRequest() {
         int n = tc.outbound.size();
