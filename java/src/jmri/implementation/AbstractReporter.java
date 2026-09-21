@@ -61,6 +61,16 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         firePropertyChange(PROPERTY_CURRENT_REPORT, old, _currentReport);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Default implementation is a no-op for generic reporters.
+     */
+    @Override
+    public void notifySeenElsewhere(jmri.IdTag tag, Reporter newReporter) {
+        // Default no-op
+    }
+
     // internal data members
     protected Object _lastReport = null;
     protected Object _currentReport = null;
