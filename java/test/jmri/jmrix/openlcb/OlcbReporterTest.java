@@ -229,6 +229,17 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         // r should fall back to 100 because 100 still has whereLastSeen == r, whereas 200 was seen at r2
         Assert.assertEquals("RD100", r.getCurrentReport().toString());
         Assert.assertEquals(2, ((OlcbReporter) r).getCollection().size());
+
+        // Now 100 also exits r, leaving only 200 (which was seen at r2)
+        Message m2 = new ProducerIdentifiedMessage(ti.iface.getNodeId(), new EventID("01.02.03.04.05.06.C0.64"), EventState.Invalid);
+        ti.iface.getOutputConnection().put(m2, null);
+        ti.flush();
+
+        // r should fall back to reporting 200, but 200's whereLastSeen must remain r2
+        Assert.assertEquals("RD200", r.getCurrentReport().toString());
+        Assert.assertEquals(1, ((OlcbReporter) r).getCollection().size());
+        RailCom report200 = (RailCom) r.getCurrentReport();
+        Assert.assertEquals(r2, report200.getWhereLastSeen());
     }
 
     @Test
