@@ -53,14 +53,12 @@ public class BlockContentsInputIcon extends PositionableJTextField implements ja
                 getEditor().getTargetPanel().repaint();
             }
         });
-        _textBox.addFocusListener(new FocusListener() {
+        _textBox.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 updateBlock();
                 getEditor().getTargetPanel().repaint();
             }
-            @Override
-            public void focusGained(FocusEvent e) {}
         });
         _textBox.setColumns(_nCols);
         _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
