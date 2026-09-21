@@ -138,7 +138,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                     // message is complete, dispatch it !!
                     {
                         log.trace("message complete: {}", msg);
-                        
+
                         // check for XmtHandler waiting on return values
                         if (waitForMsg != null) {
                             if (waitForMsg.equals(msg)) {
@@ -189,10 +189,17 @@ public class LnPacketizerStrict extends LnPacketizer {
                     // Normal condition, go around the loop again
                     continue;
                 } catch (java.io.IOException e) {
-                    // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFile", e); // NOI18N
-                    log.info("End of file"); // NOI18N
-                    disconnectPort(controller);
+                    if (LnPacketizerStrict.this.controller != null
+                            && LnPacketizerStrict.this.controller.getAllowConnectionRecovery()) {
+                        log.info("run: server closed connection, attempting recovery");
+                        LnPacketizerStrict.this.controller.closePort();
+                        LnPacketizerStrict.this.controller.recover();
+                    } else {
+                        // fired when read detects end-of-file
+                        log.info("End of file", e); // NOI18N
+                        dispose();
+                        disconnectPort(controller);
+                    }
                     return;
                 } catch (RuntimeException e) {
                     // normally, we don't catch RuntimeException, but in this
@@ -336,6 +343,11 @@ public class LnPacketizerStrict extends LnPacketizer {
                         }
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
+                        if (LnPacketizerStrict.this.controller != null && LnPacketizerStrict.this.controller.getAllowConnectionRecovery()) {
+                            log.info("run: server closed connection, attempting recovery");
+                            LnPacketizerStrict.this.controller.closePort();
+                            LnPacketizerStrict.this.controller.recover();
+                        }
                     }
                 } catch (InterruptedException ie) {
                     return; // ending the thread
