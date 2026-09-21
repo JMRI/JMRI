@@ -53,6 +53,15 @@ public class MemoryInputIcon extends PositionableJTextField implements java.bean
                 getEditor().getTargetPanel().repaint();
             }
         });
+        _textBox.addFocusListener(new FocusListener() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateMemory();
+                getEditor().getTargetPanel().repaint();
+            }
+            @Override
+            public void focusGained(FocusEvent e) {}
+        });
         _textBox.setColumns(_nCols);
         _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
         _textBox.addMouseMotionListener(_mouseMotionListener);

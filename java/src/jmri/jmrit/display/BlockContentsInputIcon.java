@@ -1,9 +1,6 @@
 package jmri.jmrit.display;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 import javax.annotation.Nonnull;
 import javax.swing.JLabel;
@@ -55,6 +52,15 @@ public class BlockContentsInputIcon extends PositionableJTextField implements ja
                 // we have to redraw the entire contents because of possible overlaps/underlaps
                 getEditor().getTargetPanel().repaint();
             }
+        });
+        _textBox.addFocusListener(new FocusListener() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateBlock();
+                getEditor().getTargetPanel().repaint();
+            }
+            @Override
+            public void focusGained(FocusEvent e) {}
         });
         _textBox.setColumns(_nCols);
         _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
