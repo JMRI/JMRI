@@ -3,7 +3,7 @@ package jmri.jmrit.display;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jmri.Sensor;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
@@ -32,7 +32,7 @@ public class SensorIconWindowTest {
 
         Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
         icon.setSensor("IS1");
-        icon.setIcon("BeanStateUnknown", new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        icon.setIcon("BeanStateUnknown", new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
         icon.setDisplayLevel(Editor.SENSORS); //daboudreau added this for Win7
 
@@ -87,7 +87,7 @@ public class SensorIconWindowTest {
         Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
         icon.setSensor("IS1");
 
-        icon.setIcon("BeanStateUnknown", new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        icon.setIcon("BeanStateUnknown", new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
 
         icon.setDisplayLevel(Editor.SENSORS); //daboudreau added this for Win7

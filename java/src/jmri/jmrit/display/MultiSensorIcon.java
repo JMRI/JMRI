@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.palette.MultiSensorItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriMouseEvent;
@@ -38,7 +39,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     public MultiSensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        super(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
         _control = true;
         displayState();
@@ -131,13 +132,13 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     // display icons
     String inactiveName = "resources/icons/USS/plate/levers/l-inactive.gif";
-    NamedIcon inactive = new NamedIcon(inactiveName, inactiveName);
+    NamedIcon inactive = new NamedIconSelector(inactiveName, inactiveName);
 
     String inconsistentName = "resources/icons/USS/plate/levers/l-inconsistent.gif";
-    NamedIcon inconsistent = new NamedIcon(inconsistentName, inconsistentName);
+    NamedIcon inconsistent = new NamedIconSelector(inconsistentName, inconsistentName);
 
     String unknownName = "resources/icons/USS/plate/levers/l-unknown.gif";
-    NamedIcon unknown = new NamedIcon(unknownName, unknownName);
+    NamedIcon unknown = new NamedIconSelector(unknownName, unknownName);
 
     public NamedIcon getInactiveIcon() {
         return inactive;
@@ -280,12 +281,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
         HashMap<String, NamedIcon> iconMap = _itemPanel.getIconMap();
         ArrayList<Sensor> selections = _itemPanel.getTableSelections();
-        setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
-        setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
-        setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
+        setInactiveIcon(new NamedIconSelector(iconMap.get("SensorStateInactive")));
+        setInconsistentIcon(new NamedIconSelector(iconMap.get("BeanStateInconsistent")));
+        setUnknownIcon(new NamedIconSelector(iconMap.get("BeanStateUnknown")));
         entries = new ArrayList<>(selections.size());
         for (int i = 0; i < selections.size(); i++) {
-            addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.getPositionName(i))));
+            addEntry(selections.get(i).getDisplayName(), new NamedIconSelector(iconMap.get(MultiSensorItemPanel.getPositionName(i))));
         }
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();

@@ -21,6 +21,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.annotation.Nonnull;
 
+import jmri.jmrit.catalog.NamedIconSelector;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -33,7 +35,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     public OlcbSignalMastAddPane() {
-        
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         litEventID.setText("00.00.00.00.00.00.00.00");
@@ -66,14 +68,14 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         p.add(allowUnLit);
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(p);
-        
+
         // aspects controls
         TitledBorder aspectsBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         aspectsBorder.setTitle(Bundle.getMessage("EnterAspectsLabel"));
         JScrollPane allAspectsScroll = new JScrollPane(allAspectsPanel);
         allAspectsScroll.setBorder(aspectsBorder);
         add(allAspectsScroll);
-        
+
         JPanel p5;
 
         // Lit
@@ -82,44 +84,44 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         JPanel pLit = new JPanel();
         pLit.setBorder(litborder);
         pLit.setLayout(new BoxLayout(pLit, BoxLayout.Y_AXIS));
-        
+
         p5 = new JPanel();
         p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
         p5.add(new JLabel(Bundle.getMessage("LitLabel")));
         p5.add(Box.createHorizontalGlue());
         pLit.add(p5);
         pLit.add(litEventID);
-        
+
         p5 = new JPanel();
         p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
         p5.add(new JLabel(Bundle.getMessage("NotLitLabel")));
         p5.add(Box.createHorizontalGlue());
         pLit.add(p5);
         pLit.add(notLitEventID);
-        
+
         add(pLit);
-       
+
         // Held
         TitledBorder heldborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         heldborder.setTitle(Bundle.getMessage("HeldUnHeld"));
         JPanel pHeld= new JPanel();
         pHeld.setBorder(heldborder);
         pHeld.setLayout(new BoxLayout(pHeld, BoxLayout.Y_AXIS));
-        
+
         p5 = new JPanel();
         p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
         p5.add(new JLabel(Bundle.getMessage("HeldLabel")));
         p5.add(Box.createHorizontalGlue());
         pHeld.add(p5);
         pHeld.add(heldEventID);
-        
+
         p5 = new JPanel();
         p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
         p5.add(new JLabel(Bundle.getMessage("NotHeldLabel")));
         p5.add(Box.createHorizontalGlue());
         pHeld.add(p5);
         pHeld.add(notHeldEventID);
-        
+
         add(pHeld);
 
         // set up selection of connections, if needed
@@ -151,7 +153,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
     JComboBox<String> connSelectionBox = new JComboBox<String>();
 
     OlcbSignalMast currentMast = null;
-    
+
     // Support for multiple OpenLCB connections with different prefixes
     ArrayList<String> olcbConnections = null;
 
@@ -190,7 +192,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
                 }
                 NamedIcon n = null;
                 try {
-                    n = new NamedIcon(iconLink, iconLink);
+                    n = new NamedIconSelector(iconLink, iconLink);
                     log.debug("Loaded icon {}", iconLink);
                 } catch (Exception e) {
                     log.debug("Got exception trying to load icon link {}: {}", iconLink, e.getMessage());
@@ -296,14 +298,14 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setMast(SignalMast mast) { 
-        if (mast == null) { 
-            currentMast = null; 
+    public void setMast(SignalMast mast) {
+        if (mast == null) {
+            currentMast = null;
             // re-enable connection selector
             populateConnSelectionBox();
-            return; 
+            return;
         }
-        
+
         if (! (mast instanceof OlcbSignalMast) ) {
             log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
             return;
@@ -334,7 +336,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         litEventID.setText(currentMast.getLitEventId());
         notLitEventID.setText(currentMast.getNotLitEventId());
         heldEventID.setText(currentMast.getHeldEventId());
-        notHeldEventID.setText(currentMast.getNotHeldEventId());        
+        notHeldEventID.setText(currentMast.getNotHeldEventId());
 
         allowUnLit.setSelected(currentMast.allowUnLit());
 
@@ -372,7 +374,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             currentMast.setMastType(type);
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
-        
+
         // load a new or existing mast
         for (Map.Entry<String, JCheckBox> entry : allAspectsCheckBoxes.entrySet()) {
             if (entry.getValue().isSelected()) {
@@ -382,7 +384,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             }
             currentMast.setOutputForAppearance(entry.getKey(), aspectEventIDs.get(entry.getKey()).getText());
         }
-        
+
         currentMast.setLitEventId(litEventID.getText());
         currentMast.setNotLitEventId(notLitEventID.getText());
         currentMast.setHeldEventId(heldEventID.getText());

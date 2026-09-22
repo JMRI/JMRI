@@ -1,11 +1,15 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -73,7 +77,7 @@ public class LinkingLabelTest extends PositionableTestBase {
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
             p = to = new LinkingLabel("JMRI Link", editor, "http://jmri.org");
-            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+            NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
             to.setIcon(icon);
         }
     }

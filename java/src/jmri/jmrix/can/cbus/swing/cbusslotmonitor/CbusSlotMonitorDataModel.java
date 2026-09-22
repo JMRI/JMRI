@@ -6,7 +6,7 @@ import java.util.TimerTask;
 import javax.swing.JButton;
 
 import jmri.*;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -217,7 +217,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 return _mainArray.get(row).getCommandedSpeed();
             case ESTOP_COLUMN:
                 if ( _mainArray.get(row).getSessionId() > 0 ) { // is active session
-                    return new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png");
+                    return new NamedIconSelector("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png");
                 }
                 return null; // disables button if action is not possible
             case FUNCTION_LIST:

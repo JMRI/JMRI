@@ -24,6 +24,7 @@ import javax.swing.SwingUtilities;
 
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JUnitSwingUtil;
 import jmri.util.JUnitSwingUtil.Pixel;
 import jmri.util.JUnitUtil;
@@ -156,7 +157,7 @@ public class PositionableLabelTest extends PositionableTestBase {
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
 
         PositionableLabel label = new PositionableLabel(icon, editor);
 
@@ -198,7 +199,7 @@ public class PositionableLabelTest extends PositionableTestBase {
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
 
         PositionableLabel label = new PositionableLabel(icon, editor);
 
@@ -388,7 +389,7 @@ public class PositionableLabelTest extends PositionableTestBase {
         editor = new EditorScaffold("PositionableLabel Test Panel");
         to = new PositionableLabel("one", editor);
         p = to;
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
         to.setIcon(icon);
 
     }

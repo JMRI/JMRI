@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -92,7 +92,7 @@ public class IconDialog extends ItemDialog {
             _iconMap = IconDialog.clone(iconMap);
         } else {
             _iconMap = _parent.makeNewIconMap(_type);
-        }        
+        }
         if (!(_type.equals("MultiSensor") || _type.equals("SignalHead"))) {
             ItemPanel.checkIconMap(_type, _iconMap);
         }
@@ -170,7 +170,7 @@ public class IconDialog extends ItemDialog {
     }
 
     /**
-     * 
+     *
      * @param sameMap   Map edited in dialog is the same as map found in catalog
      * @param nameUsed  Name as edited in dialog is the same as name found in catalog
      * @param editFamily Map name as edited in this dialog
@@ -190,11 +190,11 @@ public class IconDialog extends ItemDialog {
                     editFamily, (nameUsed?"is":"NOT"), (sameMap?"":"NOT"), catalogFamily);
             if (catalogFamily.equals(editFamily)) {
                 if (!sameMap) {
-                    JmriJOptionPane.showMessageDialog(this, 
+                    JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("DuplicateFamilyName", editFamily, _type, Bundle.getMessage("UseAnotherName")),
                             Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                     return false;
-                }             
+                }
             } else {
                 if (sameMap) {
                     String oldFamily = _parent.getFamilyName(); // if oldFamily != null, this is an edit, not new set
@@ -206,7 +206,7 @@ public class IconDialog extends ItemDialog {
                         }
                     } else {
                         if (!nameUsed) {
-                            JmriJOptionPane.showMessageDialog(this, 
+                            JmriJOptionPane.showMessageDialog(this,
                                     Bundle.getMessage("DuplicateFamilyName", editFamily,
                                             _type, Bundle.getMessage("CannotUseName", catalogFamily)),
                                     Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
@@ -221,7 +221,7 @@ public class IconDialog extends ItemDialog {
 
     /**
      * Edited map is not in the catalog.
-     * 
+     *
      * @param sameMap  Map edited in dialog is the same as map currently held in parent item panel
      * @param nameUsed Name as edited in dialog is the same as a name found in catalog
      * @param editFamily Map name as edited in this dialog
@@ -231,14 +231,14 @@ public class IconDialog extends ItemDialog {
         String oldFamily = _parent.getFamilyName();
         if (_parent._update) {
             if (nameUsed) {    // name is a key to stored map
-                log.debug("{} keys a stored map. name is used", editFamily); 
+                log.debug("{} keys a stored map. name is used", editFamily);
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NeedDifferentName", editFamily),
                         Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                 return false;
             }
         } else {
             if (oldFamily != null) {    // editing an catalog set from parent
-                log.debug("Editing set {}. {} {} a stored map.", oldFamily, editFamily, (nameUsed?"is":"NOT")); 
+                log.debug("Editing set {}. {} {} a stored map.", oldFamily, editFamily, (nameUsed?"is":"NOT"));
                 if (nameUsed) { // map in catalog under another name
                     if (!editFamily.equals(oldFamily)) { // named changed
                         if (!sameMap) { // also map changed
@@ -250,7 +250,7 @@ public class IconDialog extends ItemDialog {
                 } else {
                     int result = JmriJOptionPane.showOptionDialog(this,
                             Bundle.getMessage("ReplaceFamily", oldFamily, editFamily),
-                            Bundle.getMessage("QuestionTitle"), JmriJOptionPane.DEFAULT_OPTION, 
+                            Bundle.getMessage("QuestionTitle"), JmriJOptionPane.DEFAULT_OPTION,
                             JmriJOptionPane.QUESTION_MESSAGE, null,
                             new Object[] {oldFamily, editFamily, Bundle.getMessage("ButtonCancel")},
                             Bundle.getMessage("ButtonCancel"));
@@ -268,7 +268,7 @@ public class IconDialog extends ItemDialog {
                 }
             } else {
                 if (nameUsed) { // map in catalog under another name
-                    JmriJOptionPane.showMessageDialog(this, 
+                    JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("DuplicateFamilyName", editFamily, _type, Bundle.getMessage("UseAnotherName")),
                             Bundle.getMessage("MessageTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
                     return false;
@@ -289,7 +289,7 @@ public class IconDialog extends ItemDialog {
             invalidate();
         }
     }
-    
+
     protected void makeDoneButtonPanel(JPanel buttonPanel, String text) {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -321,7 +321,7 @@ public class IconDialog extends ItemDialog {
         if (map != null) {
             clone = new HashMap<>();
             for (Entry<String, NamedIcon> entry : map.entrySet()) {
-                clone.put(entry.getKey(), new NamedIcon(entry.getValue()));
+                clone.put(entry.getKey(), new NamedIconSelector(entry.getValue()));
             }
         }
         return clone;

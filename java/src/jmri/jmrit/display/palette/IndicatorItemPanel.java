@@ -7,13 +7,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.NamedIcon;
+
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrackIcon;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,7 +130,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
@@ -168,10 +170,10 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 t.setFamily(_family);
 
                 for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
-                    t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+                    t.setIcon(entry.getKey(), new NamedIconSelector(entry.getValue()));
                 }
                 t.setLevel(Editor.TURNOUTS);
-                return t;                
+                return t;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 return _itemType + " icons";
             }

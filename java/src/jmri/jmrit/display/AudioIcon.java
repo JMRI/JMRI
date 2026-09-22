@@ -17,6 +17,7 @@ import javax.swing.JRadioButtonMenuItem;
 import jmri.*;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.swing.JmriMouseEvent;
 
 /**
@@ -33,7 +34,7 @@ public class AudioIcon extends PositionableLabel {
     public static final IdentityManager IDENTITY_MANAGER = new IdentityManager();
 
     private final int _identity;
-    private NamedIcon _originalIcon = new NamedIcon("resources/icons/audio_icon.gif", "resources/icons/audio_icon.gif");
+    private NamedIcon _originalIcon = new NamedIconSelector("resources/icons/audio_icon.gif", "resources/icons/audio_icon.gif");
     private String _originalText = Bundle.getMessage("AudioIcon_Text");
     private OnClickOperation _onClickOperation = OnClickOperation.DoNothing;
     private boolean _playSoundWhenJmriPlays = true;
@@ -75,7 +76,7 @@ public class AudioIcon extends PositionableLabel {
     @Override
     public Positionable deepClone() {
         AudioIcon pos = new AudioIcon(getText(), _editor);
-        pos._originalIcon = new NamedIcon(_originalIcon);
+        pos._originalIcon = new NamedIconSelector(_originalIcon);
         pos._originalText = _originalText;
         pos.setAudio(getNamedAudio().getName());
         pos._onClickOperation = _onClickOperation;

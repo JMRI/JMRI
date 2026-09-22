@@ -6,6 +6,7 @@ import java.util.List;
 
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.*;
 
 import org.jdom2.Attribute;
@@ -191,7 +192,7 @@ public class SensorIconXml extends PositionableLabelXml {
         }
 
         if (_icon) {
-            l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+            l = new SensorIcon(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                     "resources/icons/smallschematics/tracksegments/circuit-error.gif"),
                     ed);
         } else {
@@ -245,7 +246,7 @@ public class SensorIconXml extends PositionableLabelXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SENSORS, element);
         if (l.isIcon() && l.getText()!=null) {
-            l.setOpaque(false);            
+            l.setOpaque(false);
         }
     }
 

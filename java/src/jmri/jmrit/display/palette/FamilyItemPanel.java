@@ -27,10 +27,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 
-import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -286,7 +286,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 } else {
                     fr = this;
                 }
-                mapFamily = JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"), 
+                mapFamily = JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
                     Bundle.getMessage("createNewFamily"), JmriJOptionPane.QUESTION_MESSAGE );
                 if (mapFamily == null) { // user quit
                     return null;
@@ -568,7 +568,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         _itemType, _family, displayKey, (icon != null));
             }
              if (icon != null) {
-                icon = new NamedIcon(icon);
+                icon = new NamedIconSelector(icon);
                 double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH,
                         CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
                 scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"),

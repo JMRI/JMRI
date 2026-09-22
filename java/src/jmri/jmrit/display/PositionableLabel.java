@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
@@ -338,7 +339,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public Positionable deepClone() {
         PositionableLabel pos;
         if (_icon) {
-            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
+            NamedIcon icon = new NamedIconSelector((NamedIcon) getIcon());
             pos = new PositionableLabel(icon, _editor);
         } else {
             pos = new PositionableLabel(getText(), _editor);
@@ -382,9 +383,9 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public static @Nonnull NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {
         if (icon.getURL() != null) {
-            return new NamedIcon(icon, pos);
+            return new NamedIconSelector(icon, pos);
         } else {
-            NamedIcon clone = new NamedIcon(icon.getImage());
+            NamedIcon clone = new NamedIconSelector(icon.getImage());
             clone.scale(icon.getScale(), pos);
             clone.rotate(icon.getDegrees(), pos);
             return clone;
@@ -675,7 +676,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     protected void edit() {
         makeIconEditorFrame(this, "Icon", false, null);
-        NamedIcon icon = new NamedIcon(_namedIcon);
+        NamedIcon icon = new NamedIconSelector(_namedIcon);
         _iconEditor.setIcon(0, "plainIcon", icon);
         _iconEditor.makeIconPanel(false);
 
@@ -921,7 +922,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                                 _namedIcon = null;
                             }
                         } else {
-                            _namedIcon = new NamedIcon(url, url);
+                            _namedIcon = new NamedIconSelector(url, url);
                         }
                     }
                     super.setIcon(_namedIcon);
@@ -979,7 +980,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (url == null) {
             return null;
         }
-        NamedIcon icon = new NamedIcon(url, url);
+        NamedIcon icon = new NamedIconSelector(url, url);
 
         int iconWidth = icon.getIconWidth();
         int iconHeight = icon.getIconHeight();
@@ -1048,7 +1049,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
         g2d.drawImage(icon.getImage(), AffineTransform.getTranslateInstance(hOffset, vOffset + 1), this);
 
-        icon = new NamedIcon(bufIm);
+        icon = new NamedIconSelector(bufIm);
         g2d.dispose();
         icon.setURL(url);
         return icon;
@@ -1123,7 +1124,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
         }
 
-        NamedIcon icon = new NamedIcon(bufIm);
+        NamedIcon icon = new NamedIconSelector(bufIm);
         g2d.dispose();
         return icon;
     }

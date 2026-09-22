@@ -27,7 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.*;
 import jmri.configurexml.StoreXmlUserAction;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.*;
@@ -7263,7 +7263,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                     Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
-        SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        SensorIcon l = new SensorIcon(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
 
         l.setIcon("SensorStateActive", leToolBarPanel.sensorIconEditor.getIcon(0));
@@ -7308,7 +7308,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                     Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
-        TurnoutIcon l = new OutputIndicator(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        TurnoutIcon l = new OutputIndicator(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
 
         l.setTurnout(newName);
@@ -7930,7 +7930,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             return; // give up if no file selected
         }
 
-        // NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
+        // NamedIcon icon = new NamedIconSelector(inputFileChooser.getSelectedFile().getPath(),
         // inputFileChooser.getSelectedFile().getPath());
         String name = inputFileChooser.getSelectedFile().getPath();
 

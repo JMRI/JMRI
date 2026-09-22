@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -260,7 +261,7 @@ public class GlobalVariableIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect Image: "));
 
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
 
         jmri.InstanceManager.getDefault(GlobalVariableManager.class)
                 .getGlobalVariable("MyVar").setValue("1");

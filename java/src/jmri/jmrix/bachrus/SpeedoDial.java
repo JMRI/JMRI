@@ -11,8 +11,11 @@ import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
 import javax.swing.JPanel;
+
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 
 /**
  * Creates a JPanel containing an Dial type speedo display.
@@ -76,8 +79,8 @@ public class SpeedoDial extends JPanel {
         // Load the JMRI logo and pointer for the dial
         // Icons are the original size version kept for to allow for mulitple resizing
         // and scaled Icons are the version scaled for the panel size
-        jmriIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
-        scaledIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
+        jmriIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
+        scaledIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
         logo = jmriIcon.getImage();
 
         // Create an unscaled pointer to get the original size (height)to use

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -36,8 +37,8 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.CatalogTreeLeaf;
 import jmri.CatalogTreeNode;
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.Bundle;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -177,13 +178,13 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             String path = leaf.getPath();
             switch (name) {
                 case "BeanStateInconsistent":
-                    this.setIcon(0, name, new NamedIcon(path, path));
+                    this.setIcon(0, name, new NamedIconSelector(path, path));
                     break;
                 case "BeanStateUnknown":
-                    this.setIcon(1, name, new NamedIcon(path, path));
+                    this.setIcon(1, name, new NamedIconSelector(path, path));
                     break;
                 default:
-                    this.setIcon(k, name, new NamedIcon(path, path));
+                    this.setIcon(k, name, new NamedIconSelector(path, path));
                     k--;
                     break;
             }
@@ -211,7 +212,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
         if (_allowDeletes) {
             String fileName = "resources/icons/misc/X-red.gif";
-            button.setSelectedIcon(new jmri.jmrit.catalog.NamedIcon(fileName, fileName));
+            button.setSelectedIcon(new NamedIconSelector(fileName, fileName));
         }
         if (icon != null) {
             icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
@@ -242,7 +243,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      */
     public void setIcon(int order, String label, String name) {
         log.debug("setIcon: order= {}, label= {}, name= {}", order, label, name);
-        this.setIcon(order, label, new NamedIcon(name, name));
+        this.setIcon(order, label, new NamedIconSelector(name, name));
     }
 
     public void setParent(JFrame parent) {
@@ -399,7 +400,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                     if (name.equals(state) || name.equals("SignalHeadStateDark")
                             || name.equals("SignalHeadStateHeld")) {
                         String path = leaf.getPath();
-                        this.setIcon(k++, name, new NamedIcon(path, path));
+                        this.setIcon(k++, name, new NamedIconSelector(path, path));
                         break;
                     }
                 }
@@ -478,7 +479,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      */
     public NamedIcon getIcon(String key) {
         log.debug("getIcon for key= {}", key);
-        return new NamedIcon((NamedIcon) _iconMap.get(key).getIcon());
+        return new NamedIconSelector((NamedIcon) _iconMap.get(key).getIcon());
     }
 
     /**
@@ -493,7 +494,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             JToggleButton button = entry.getValue();
             log.debug("getIconMap: key= {}, button.isSelected()= {}", entry.getKey(), button.isSelected());
             if (!_allowDeletes || !button.isSelected()) {
-                iconMap.put(entry.getKey(), new NamedIcon((NamedIcon) button.getIcon()));
+                iconMap.put(entry.getKey(), new NamedIconSelector((NamedIcon) button.getIcon()));
             }
         }
         return iconMap;

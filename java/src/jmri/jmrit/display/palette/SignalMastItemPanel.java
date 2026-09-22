@@ -6,11 +6,14 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
+
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.picker.PickListModel;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +74,7 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
                 if (!s.contains("preference:")) {
                     s = s.substring(s.indexOf("resources"));
                 }
-                NamedIcon n = new NamedIcon(s, s);
+                NamedIcon n = new NamedIconSelector(s, s);
                 _currentIconMap.put(aspect, n);
             }
         }

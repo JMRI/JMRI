@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JmriJFrame;
 
 /**
@@ -62,11 +63,11 @@ public class LcdClockFrame extends JmriJFrame implements PropertyChangeListener 
 
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-            baseTubes[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
-            tubes[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+            baseTubes[i] = new NamedIconSelector("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+            tubes[i] = new NamedIconSelector("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
-        colonIcon = new NamedIcon("resources/icons/misc/LCD/Lcd_Colonb.GIF", "resources/icons/misc/LCD/Lcd_Colonb.GIF");
-        baseColon = new NamedIcon("resources/icons/misc/LCD/Lcd_Colonb.GIF", "resources/icons/misc/LCD/Lcd_Colonb.GIF");
+        colonIcon = new NamedIconSelector("resources/icons/misc/LCD/Lcd_Colonb.GIF", "resources/icons/misc/LCD/Lcd_Colonb.GIF");
+        baseColon = new NamedIconSelector("resources/icons/misc/LCD/Lcd_Colonb.GIF", "resources/icons/misc/LCD/Lcd_Colonb.GIF");
         // set initial size the same as the original gifs
         for (int i = 0; i < 10; i++) {
             Image scaledImage = baseTubes[i].getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);
@@ -79,7 +80,7 @@ public class LcdClockFrame extends JmriJFrame implements PropertyChangeListener 
         runPauseButton = new JButton(Bundle.getMessage("ButtonPauseClock"));
         runPauseButton.setText( Bundle.getMessage( "ButtonPauseClock") );
         runPauseButtonWidth = runPauseButton.getPreferredSize().width;
-        
+
         // determine aspect ratio of a single digit graphic
         iconAspect = 24. / 32.;
 

@@ -12,11 +12,13 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 import java.util.HashMap;
+
 import javax.swing.Icon;
 import javax.swing.JLabel;
 
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.palette.Bundle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,14 +71,14 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         try {
             Transferable tr = e.getTransferable();
             if (e.isDataFlavorSupported(_dataFlavor)) {
-                NamedIcon newIcon = new NamedIcon((NamedIcon) tr.getTransferData(_dataFlavor));
+                NamedIcon newIcon = new NamedIconSelector((NamedIcon) tr.getTransferData(_dataFlavor));
                 accept(e, newIcon);
             } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 String text = (String) tr.getTransferData(DataFlavor.stringFlavor);
                 if (log.isDebugEnabled()) {
                     log.debug("drop for stringFlavor {}", text);
                 }
-                NamedIcon newIcon = new NamedIcon(text, text);
+                NamedIcon newIcon = new NamedIconSelector(text, text);
                 accept(e, newIcon);
             } else {
                 if (log.isDebugEnabled()) {

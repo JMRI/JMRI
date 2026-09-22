@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.swing.PowerManagerMenu;
 
 /**
@@ -93,9 +94,9 @@ public class PowerPane extends jmri.util.swing.JmriPanel {
         mgrList.forEach( SinglePowerPane::dispose);
     }
 
-    private static final NamedIcon onIcon = new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png") ;
-    private static final NamedIcon offIcon = new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png") ;
-    private static final NamedIcon unknownIcon = new NamedIcon("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png") ;
+    private static final NamedIcon onIcon = new NamedIconSelector("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png") ;
+    private static final NamedIcon offIcon = new NamedIconSelector("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png") ;
+    private static final NamedIcon unknownIcon = new NamedIconSelector("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png") ;
 
     class SinglePowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
@@ -109,7 +110,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel {
         private final JButton idleButton = new JButton(Bundle.getMessage("ButtonIdle"));
 
         SinglePowerPane(@Nonnull PowerManager powerManager){
-        
+
             super();
             powerMgr = powerManager;
 
@@ -133,7 +134,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel {
             add(onButton);
             add(onOffStatus); // on row 2
             add(offButton);
-            
+
             if ( powerMgr.implementsIdle()) {
                 add(new JLabel("")); // on row 3
                 add(idleButton);
@@ -245,7 +246,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel {
         private boolean mgrOK() {
             return InstanceManager.getList(PowerManager.class).contains(powerMgr);
         }
-    
+
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent ev) {
             setStatus();
@@ -254,7 +255,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel {
         void dispose() {
             powerMgr.removePropertyChangeListener(this);
         }
-        
+
     }
 
     class PowerManagerMenuImpl extends PowerManagerMenu {

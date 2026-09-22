@@ -1,15 +1,17 @@
 package jmri.jmrit.throttle.buttons;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.JButton;
+
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 
 /**
- * 
+ *
  * A button to send an estop to all JMRI UI managed throttles
- * 
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -29,10 +31,10 @@ public class StopAllButton extends JButton {
         super();
         initGUI();
     }
-        
-    private void initGUI() {    
+
+    private void initGUI() {
         //    stop.setText(Bundle.getMessage("ThrottleToolBarStopAll"));
-        setIcon(new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));
+        setIcon(new NamedIconSelector("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));
         setToolTipText(Bundle.getMessage("ThrottleToolBarStopAllToolTip"));
         setVerticalTextPosition(JButton.BOTTOM);
         setHorizontalTextPosition(JButton.CENTER);

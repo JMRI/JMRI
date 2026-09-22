@@ -612,7 +612,7 @@ public class CatalogPanel extends JPanel {
                 continue;
             }
             CatalogTreeLeaf leaf = leaves.get(i);
-            NamedIcon icon = new NamedIcon(leaf.getPath(), leaf.getName());
+            NamedIcon icon = new NamedIconSelector(leaf.getPath(), leaf.getName());
             if (_noMemory) {
                 continue;
             }

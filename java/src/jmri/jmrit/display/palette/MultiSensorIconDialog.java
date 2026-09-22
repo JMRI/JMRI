@@ -64,7 +64,7 @@ public class MultiSensorIconDialog extends IconDialog {
     @Override
     protected boolean doDoneAction() {
         MultiSensorItemPanel parent = (MultiSensorItemPanel) _parent;
-        
+
         if (_iconMap.size() != parent.getIconMap().size()) {
             parent.setSelections();
         }
@@ -91,7 +91,7 @@ public class MultiSensorIconDialog extends IconDialog {
             return false;
         }
         String fileName = "resources/icons/misc/X-red.gif";
-        NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
+        NamedIcon icon = new jmri.jmrit.catalog.NamedIconSelector(fileName, fileName);
         _iconMap.put(name, icon);
         return true;
     }

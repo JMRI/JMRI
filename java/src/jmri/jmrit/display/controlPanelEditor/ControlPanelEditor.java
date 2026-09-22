@@ -33,8 +33,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrack;
@@ -50,6 +49,7 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.display.RpsPositionIcon;
 import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.display.controlPanelEditor.Bundle;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ColorDialog;
 import jmri.jmrit.display.palette.ItemPalette;
@@ -273,15 +273,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     log.warn("empty PortalIconMap returned");
                     _portalIconMap = new HashMap<>();
                     _portalIconMap.put(PortalIcon.HIDDEN,
-                            new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
+                            new NamedIconSelector("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
                     _portalIconMap.put(PortalIcon.PATH,
-                            new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
+                            new NamedIconSelector("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
                     _portalIconMap.put(PortalIcon.VISIBLE,
-                            new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
+                            new NamedIconSelector("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
                     _portalIconMap.put(PortalIcon.TO_ARROW,
-                            new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
+                            new NamedIconSelector("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
                     _portalIconMap.put(PortalIcon.FROM_ARROW,
-                            new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
+                            new NamedIconSelector("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
                 }
             }
         }
@@ -1844,7 +1844,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 evt.dropComplete(true);
                 return;
             } else if (tr.isDataFlavorSupported(_namedIconDataFlavor)) {
-                NamedIcon newIcon = new NamedIcon((NamedIcon) tr.getTransferData(_namedIconDataFlavor));
+                NamedIcon newIcon = new NamedIconSelector((NamedIcon) tr.getTransferData(_namedIconDataFlavor));
                 String url = newIcon.getURL();
                 NamedIcon icon = NamedIcon.getIconByName(url);
                 PositionableLabel ni = new PositionableLabel(icon, this);

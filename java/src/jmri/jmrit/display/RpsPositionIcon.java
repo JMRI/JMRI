@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
@@ -25,7 +26,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
 
     public RpsPositionIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        super(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
         _control = true;
         displayState();
@@ -39,11 +40,11 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
 
     // display icon for a correct reading
     String activeName = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
-    NamedIcon active = new NamedIcon(activeName, activeName);
+    NamedIcon active = new NamedIconSelector(activeName, activeName);
 
     // display icon if the last reading not OK
     String errorName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
-    NamedIcon error = new NamedIcon(errorName, errorName);
+    NamedIcon error = new NamedIconSelector(errorName, errorName);
 
     public NamedIcon getActiveIcon() {
         return active;

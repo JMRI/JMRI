@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JmriJFrame;
 
 /**
@@ -59,11 +60,11 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
 
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-            baseTubes[i] = new NamedIcon("resources/icons/misc/Nixie/M" + i + "B.gif", "resources/icons/misc/Nixie/M" + i + "B.gif");
-            tubes[i] = new NamedIcon("resources/icons/misc/Nixie/M" + i + "B.gif", "resources/icons/misc/Nixie/M" + i + "B.gif");
+            baseTubes[i] = new NamedIconSelector("resources/icons/misc/Nixie/M" + i + "B.gif", "resources/icons/misc/Nixie/M" + i + "B.gif");
+            tubes[i] = new NamedIconSelector("resources/icons/misc/Nixie/M" + i + "B.gif", "resources/icons/misc/Nixie/M" + i + "B.gif");
         }
-        colonIcon = new NamedIcon("resources/icons/misc/Nixie/colonB.gif", "resources/icons/misc/Nixie/colonB.gif");
-        baseColon = new NamedIcon("resources/icons/misc/Nixie/colonB.gif", "resources/icons/misc/Nixie/colonB.gif");
+        colonIcon = new NamedIconSelector("resources/icons/misc/Nixie/colonB.gif", "resources/icons/misc/Nixie/colonB.gif");
+        baseColon = new NamedIconSelector("resources/icons/misc/Nixie/colonB.gif", "resources/icons/misc/Nixie/colonB.gif");
         // set initial size the same as the original gifs
         for (int i = 0; i < 10; i++) {
             Image scaledImage = baseTubes[i].getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);

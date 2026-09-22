@@ -1,6 +1,6 @@
 package jmri.jmrit.display.palette;
 
-//import java.awt.datatransfer.Transferable; 
+//import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -10,11 +10,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
+import jmri.jmrit.display.palette.Bundle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,11 +73,11 @@ public class RPSItemPanel extends FamilyItemPanel {
             }
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 RpsPositionIcon r = new RpsPositionIcon(_frame.getEditor());
-                r.setActiveIcon(new NamedIcon(iconMap.get("active")));
-                r.setErrorIcon(new NamedIcon(iconMap.get("error")));
+                r.setActiveIcon(new NamedIconSelector(iconMap.get("active")));
+                r.setErrorIcon(new NamedIconSelector(iconMap.get("error")));
                 r.setSize(r.getPreferredSize().width, r.getPreferredSize().height);
                 r.setLevel(Editor.SENSORS);
-                return r;                
+                return r;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 return _itemType + " icons";
             }

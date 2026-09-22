@@ -18,11 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -155,7 +155,7 @@ public abstract class ItemPanel extends JPanel  {
     protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
         HashMap<String, NamedIcon> newMap = new HashMap<>();
         for (String name : STATE_MAP.get(type)) {
-            NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
+            NamedIcon icon = new NamedIconSelector(ItemPalette.RED_X, ItemPalette.RED_X);
             newMap.put(name, icon);
         }
         return newMap;
@@ -164,7 +164,7 @@ public abstract class ItemPanel extends JPanel  {
     protected static void checkIconMap(String type, HashMap<String, NamedIcon> map) {
         for (String name : STATE_MAP.get(type)) {
             if (map.get(name) == null) {
-                NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
+                NamedIcon icon = new NamedIconSelector(ItemPalette.RED_X, ItemPalette.RED_X);
                 // store RedX as default icon if icon not set
                 map.put(name, icon);
             }
@@ -259,12 +259,12 @@ public abstract class ItemPanel extends JPanel  {
 
     /**
      * Add the current set of icons to a Show Icons pane. Used in several
-     * ways by different ItemPanels. 
+     * ways by different ItemPanels.
      * When dropIcon is true, call may be from an editing dialog and the
      * caller may allow the icon to dropped upon (replaced) or be the
-     * source of dragging it - (e.g. IconItemPanel). When_showIconsButton 
+     * source of dragging it - (e.g. IconItemPanel). When_showIconsButton
      * pressed, dropIcon will be false.
-     * 
+     *
      * @see #hideIcons()
      * @param iconMap   family maps
      * @param iconPanel panel to fill with icons
@@ -290,7 +290,7 @@ public abstract class ItemPanel extends JPanel  {
         int cnt = 0;
         for (String key : iconMap.keySet()) {
             JPanel panel = makeIconDisplayPanel(key, iconMap, dropIcon);
-            
+
             iconPanel.add(panel, c);
             if (c.gridx > numCol) { // start next row
                 c.gridy++;
@@ -309,7 +309,7 @@ public abstract class ItemPanel extends JPanel  {
     /**
      * Utility for above method. Implementation returns a JPanel extension
      * containing a bordered JLabel extension of icon and labels
-     * 
+     *
      * @param key name of icon
      * @param iconMap containing icon for possible replacement
      * @param dropIcon JLabel extension may be replaceable or dragable.
@@ -350,7 +350,7 @@ public abstract class ItemPanel extends JPanel  {
         JPanel sPanel = new JPanel();
         sPanel.setOpaque(false);
         sPanel.add(label);
-        panel.add(sPanel);       
+        panel.add(sPanel);
 
         FontMetrics fm = getFontMetrics(panel.getFont());
         int width = fm.stringWidth(borderName) + 5;
@@ -368,7 +368,7 @@ public abstract class ItemPanel extends JPanel  {
     abstract protected void makeFamiliesPanel();
 
     abstract protected void hideIcons();
-    
+
     /**
      * See if the map is supported by the family map. "Equals" in
      * this context means that each map is the same size the keys are equal and
@@ -376,7 +376,7 @@ public abstract class ItemPanel extends JPanel  {
      * be or appear to be the same.
      * The item type "SignalHead" allows for unequal sizes but 'mapOne'
      * must contain 'mapTwo' elements.
-     * 
+     *
      * @param mapOne an icon HashMap
      * @param mapTwo another icon HashMap
      * @return true if all of signal head entries have matching entries in the
@@ -425,7 +425,7 @@ public abstract class ItemPanel extends JPanel  {
             }
         } else {
             IndicatorTOItemPanel p = (IndicatorTOItemPanel)this;
-            HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> 
+            HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
                                 families = ItemPalette.getLevel4FamilyMaps(_itemType);
             java.util.Set<String> keys = families.keySet();
             String[] key = new String[keys.size()];
@@ -460,7 +460,7 @@ public abstract class ItemPanel extends JPanel  {
      */
     private String queryWhichToDelete(String key1, String key2) {
         int result = JmriJOptionPane.showOptionDialog(this, Bundle.getMessage("DuplicateMap", key1, key2),
-                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.DEFAULT_OPTION, 
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.DEFAULT_OPTION,
                 JmriJOptionPane.QUESTION_MESSAGE, null,
                 new Object[] {key1, key2}, key1);
         if ( result == 0 ) { // position 0 in array, keep key1, return key2
@@ -491,7 +491,7 @@ public abstract class ItemPanel extends JPanel  {
         if (isPalette && _initialized) {
             _frame.reSize(ItemPalette._tabPane, deltaDim, newDim);
         } else if (_update || _initialized) {
-            _frame.reSize(_frame, deltaDim, newDim);                            
+            _frame.reSize(_frame, deltaDim, newDim);
         }
     }
 

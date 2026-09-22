@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -284,7 +285,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect Image: "));
 
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
 
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("1");
         jf.pack();

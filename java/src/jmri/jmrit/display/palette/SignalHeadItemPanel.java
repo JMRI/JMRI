@@ -15,11 +15,11 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.SignalHead;
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -126,9 +126,9 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 String name = entry.getKey();
                 String borderName = ItemPalette.convertText(name);
                 for (String state : states) {
-                    if (borderName.equals(state) || name.equals("SignalHeadStateDark") 
-                            || name.equals(ItemPalette.convertText("SignalHeadStateDark")) 
-                            || name.equals("SignalHeadStateHeld") 
+                    if (borderName.equals(state) || name.equals("SignalHeadStateDark")
+                            || name.equals(ItemPalette.convertText("SignalHeadStateDark"))
+                            || name.equals("SignalHeadStateHeld")
                             || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
                         iconMap.put(name, entry.getValue());
                         break;
@@ -184,7 +184,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 sh.setSignalHead(bean.getDisplayName());
                 HashMap<String, NamedIcon> map = getFilteredIconMap(iMap);
                 for (Entry<String, NamedIcon> ent : map.entrySet()) {
-                    sh.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                    sh.setIcon(ent.getKey(), new NamedIconSelector(ent.getValue()));
                 }
                 sh.setFamily(_family);
                 sh.setLevel(Editor.SIGNALS);

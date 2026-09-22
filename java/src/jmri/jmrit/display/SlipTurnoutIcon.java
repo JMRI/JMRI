@@ -19,6 +19,7 @@ import static jmri.NamedBean.INCONSISTENT;
 import static jmri.NamedBean.UNKNOWN;
 import static jmri.Turnout.CLOSED;
 import static jmri.Turnout.THROWN;
+import jmri.jmrit.catalog.NamedIconSelector;
 
 /**
  * An icon to display a status of a Slip, either Single or Double.<p>
@@ -51,7 +52,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     public SlipTurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif",
+        super(new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif",
                 "resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif"), editor);
         _control = true;
         displayState(turnoutState());
@@ -299,17 +300,17 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      */
     // display icons
     String lowerWestToUpperEastLName = "resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif";
-    NamedIcon lowerWestToUpperEast = new NamedIcon(lowerWestToUpperEastLName, lowerWestToUpperEastLName);
+    NamedIcon lowerWestToUpperEast = new NamedIconSelector(lowerWestToUpperEastLName, lowerWestToUpperEastLName);
     String upperWestToLowerEastLName = "resources/icons/smallschematics/tracksegments/os-slip-upper-west-lower-east.gif";
-    NamedIcon upperWestToLowerEast = new NamedIcon(upperWestToLowerEastLName, upperWestToLowerEastLName);
+    NamedIcon upperWestToLowerEast = new NamedIconSelector(upperWestToLowerEastLName, upperWestToLowerEastLName);
     String lowerWestToLowerEastLName = "resources/icons/smallschematics/tracksegments/os-slip-lower-west-lower-east.gif";
-    NamedIcon lowerWestToLowerEast = new NamedIcon(lowerWestToLowerEastLName, lowerWestToLowerEastLName);
+    NamedIcon lowerWestToLowerEast = new NamedIconSelector(lowerWestToLowerEastLName, lowerWestToLowerEastLName);
     String upperWestToUpperEastLName = "resources/icons/smallschematics/tracksegments/os-slip-upper-west-upper-east.gif";
-    NamedIcon upperWestToUpperEast = new NamedIcon(upperWestToUpperEastLName, upperWestToUpperEastLName);
+    NamedIcon upperWestToUpperEast = new NamedIconSelector(upperWestToUpperEastLName, upperWestToUpperEastLName);
     String inconsistentLName = "resources/icons/smallschematics/tracksegments/os-slip-error-full.gif";
-    NamedIcon inconsistent = new NamedIcon(inconsistentLName, inconsistentLName);
+    NamedIcon inconsistent = new NamedIconSelector(inconsistentLName, inconsistentLName);
     String unknownLName = "resources/icons/smallschematics/tracksegments/os-slip-unknown-full.gif";
-    NamedIcon unknown = new NamedIcon(unknownLName, unknownLName);
+    NamedIcon unknown = new NamedIconSelector(unknownLName, unknownLName);
 
     public NamedIcon getLowerWestToUpperEastIcon() {
         return lowerWestToUpperEast;

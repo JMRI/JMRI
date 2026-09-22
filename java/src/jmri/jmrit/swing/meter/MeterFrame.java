@@ -16,6 +16,7 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JmriJFrame;
 
 /**
@@ -86,7 +87,7 @@ public class MeterFrame extends JmriJFrame {
     private PropertyChangeListener propertyChangeListener;
 
     private Meter meter;
-    
+
     private String initialMeterName=""; // remember the initially selected meter since it may not exist at frame creation
 
     NamedIcon[] integerDigits = new NamedIcon[10];
@@ -106,7 +107,7 @@ public class MeterFrame extends JmriJFrame {
     JLayeredPane pane1;
     JPanel meterPane;
     JLabel jlDisplayName = new JLabel(Bundle.getMessage("VoltageMeterTitle"));
-    
+
     public MeterFrame() {
         this(UUID.randomUUID());
     }
@@ -170,11 +171,11 @@ public class MeterFrame extends JmriJFrame {
 
         meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
         meter.enable();
-        
+
         //set title and label to username or systemname
         this.setTitle(m.getDisplayName());
         jlDisplayName.setText(m.getDisplayName());
-        
+
         //make this text semi-transparent
         jlDisplayName.setForeground(new Color(0,0,0,128));
 
@@ -201,10 +202,10 @@ public class MeterFrame extends JmriJFrame {
             setTitle(Bundle.getMessage("CurrentMeterTitle2", m.getDisplayName()));
         }
     }
-    
+
     JMenu voltageMetersMenu = null;
     JMenu currentMetersMenu = null;
-    
+
     @Override
     public void initComponents() {
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
@@ -322,26 +323,26 @@ public class MeterFrame extends JmriJFrame {
         }
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-            integerDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+            integerDigits[i] = new NamedIconSelector("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
         for (int i = 0; i < 10; i++) {
-            decimalDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+            decimalDigits[i] = new NamedIconSelector("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
         if (decimalDot) {
-            decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
+            decimalIcon = new NamedIconSelector("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
         } else {
-            decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalc.gif", "resources/icons/misc/LCD/decimalc.gif");
+            decimalIcon = new NamedIconSelector("resources/icons/misc/LCD/decimalc.gif", "resources/icons/misc/LCD/decimalc.gif");
         }
-        microVoltIcon = new NamedIcon("resources/icons/misc/LCD/uvoltb.gif", "resources/icons/misc/LCD/uvoltb.gif");
-        milliVoltIcon = new NamedIcon("resources/icons/misc/LCD/mvoltb.gif", "resources/icons/misc/LCD/mvoltb.gif");
-        voltIcon = new NamedIcon("resources/icons/misc/LCD/voltb.gif", "resources/icons/misc/LCD/voltb.gif");
-        kiloVoltIcon = new NamedIcon("resources/icons/misc/LCD/kvoltb.gif", "resources/icons/misc/LCD/kvoltb.gif");
-        microAmpIcon = new NamedIcon("resources/icons/misc/LCD/uampb.gif", "resources/icons/misc/LCD/uampb.gif");
-        milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/mampb.gif", "resources/icons/misc/LCD/mampb.gif");
-        ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
-        kiloAmpIcon = new NamedIcon("resources/icons/misc/LCD/kampb.gif", "resources/icons/misc/LCD/kampb.gif");
-        percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
-        errorIcon = new NamedIcon("resources/icons/misc/LCD/Lcd_Error.GIF", "resources/icons/misc/LCD/Lcd_Error.GIF");
+        microVoltIcon = new NamedIconSelector("resources/icons/misc/LCD/uvoltb.gif", "resources/icons/misc/LCD/uvoltb.gif");
+        milliVoltIcon = new NamedIconSelector("resources/icons/misc/LCD/mvoltb.gif", "resources/icons/misc/LCD/mvoltb.gif");
+        voltIcon = new NamedIconSelector("resources/icons/misc/LCD/voltb.gif", "resources/icons/misc/LCD/voltb.gif");
+        kiloVoltIcon = new NamedIconSelector("resources/icons/misc/LCD/kvoltb.gif", "resources/icons/misc/LCD/kvoltb.gif");
+        microAmpIcon = new NamedIconSelector("resources/icons/misc/LCD/uampb.gif", "resources/icons/misc/LCD/uampb.gif");
+        milliAmpIcon = new NamedIconSelector("resources/icons/misc/LCD/mampb.gif", "resources/icons/misc/LCD/mampb.gif");
+        ampIcon = new NamedIconSelector("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
+        kiloAmpIcon = new NamedIconSelector("resources/icons/misc/LCD/kampb.gif", "resources/icons/misc/LCD/kampb.gif");
+        percentIcon = new NamedIconSelector("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
+        errorIcon = new NamedIconSelector("resources/icons/misc/LCD/Lcd_Error.GIF", "resources/icons/misc/LCD/Lcd_Error.GIF");
 
         decimal = new JLabel(decimalIcon);
         unitLabels.put(Unit.Percent, new JLabel(percentIcon));
@@ -417,7 +418,7 @@ public class MeterFrame extends JmriJFrame {
     /* Set default Units, Digits and Decimals for Settings menu
      *   based on initial/selected meter configuration.                */
     private void initSettingsMenu() {
-        
+
         boolean isPercent = (meter != null) && (meter.getUnit() == Meter.Unit.Percent);
         boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
         boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
@@ -433,22 +434,22 @@ public class MeterFrame extends JmriJFrame {
 
         units_MenuItemMap.get(selectedUnit).setSelected(true);
         unitLabels.get(selectedUnit).setVisible(true);
-        log.debug("selectedUnit set to '{}' for '{}'", selectedUnit, uuid);               
+        log.debug("selectedUnit set to '{}' for '{}'", selectedUnit, uuid);
         update();
 
         if (meter == null) return; // skip if meter not set
-        
+
         double max = meter.getMax();
         int iDigits = (int) (Math.log10(max) + 1);
-        log.debug("integer digits set to {} for max={} for '{}'", iDigits, max, uuid);               
+        log.debug("integer digits set to {} for max={} for '{}'", iDigits, max, uuid);
         setNumIntegerDigits(iDigits);
-        
+
         double res = meter.getResolution();
         int dDigits = 0; //assume no decimals
         if (res % 1 != 0) { //not a whole number
           dDigits = new java.math.BigDecimal(String.valueOf(res)).scale(); // get decimal places used by resolution
         }
-        log.debug("decimal digits set to {} for resolution={} for '{}'", dDigits, res, uuid);               
+        log.debug("decimal digits set to {} for resolution={} for '{}'", dDigits, res, uuid);
         setNumDecimalDigits(dDigits);
     }
 
@@ -488,7 +489,7 @@ public class MeterFrame extends JmriJFrame {
 
         //make the meterPane fit the window
         meterPane.setBounds(0,0,frameWidth,frameHeight);
-        
+
         meterPane.revalidate();
         this.getContentPane().revalidate();
     }
@@ -564,11 +565,11 @@ public class MeterFrame extends JmriJFrame {
             return;
         }
 
-        // we want to keep the title and name updated to the displayname 
+        // we want to keep the title and name updated to the displayname
         // so we do it on updates
         setTitle(meter.getDisplayName());
         jlDisplayName.setText(meter.getDisplayName());
-        
+
         double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
 
         switch (meter.getUnit()) {
@@ -744,7 +745,7 @@ public class MeterFrame extends JmriJFrame {
         if (mm == null) {
             return;
         }
-        if (log.isTraceEnabled()) { 
+        if (log.isTraceEnabled()) {
             log.trace("attempting to add all meters.  There are {} meters to add.",
                     mm.getNamedBeanSet().size());
         }
@@ -781,10 +782,10 @@ public class MeterFrame extends JmriJFrame {
      *
      * @param menu - Menu to be updated
      * @param meters - list of Meters
-     * 
+     *
      */
     private void updateMetersMenu(JMenu menu, List<Meter> meters) {
-        for (Meter meter : meters) {            
+        for (Meter meter : meters) {
             String n = meter.getDisplayName();
             log.trace("need to add a new checkbox for meter '{}'?", n);
             boolean found = false;
@@ -821,9 +822,9 @@ public class MeterFrame extends JmriJFrame {
                     menu.remove(jim);
                     log.trace("item '{}' removed from this menu for frame {}", jim.getText(), uuid);
                     break;
-                }                
+                }
             }
-        }    
+        }
     }
 
     /**

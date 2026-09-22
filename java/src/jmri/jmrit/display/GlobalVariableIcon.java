@@ -15,6 +15,7 @@ import jmri.NamedBeanHandle;
 import jmri.Reportable;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.util.swing.JmriJOptionPane;
@@ -70,7 +71,7 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
     }
 
     public void resetDefaultIcon() {
-        defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
+        defaultIcon = new NamedIconSelector("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif");
     }
 

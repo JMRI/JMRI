@@ -10,6 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.util.swing.JmriMouseEvent;
 
@@ -23,7 +24,7 @@ public class LogixNGIcon extends PositionableLabel {
     public static final IdentityManager IDENTITY_MANAGER = new IdentityManager();
 
     private final int _identity;
-    private NamedIcon _originalIcon = new NamedIcon("resources/icons/logixng/logixng_icon.gif", "resources/icons/logixng/logixng_icon.gif");
+    private NamedIcon _originalIcon = new NamedIconSelector("resources/icons/logixng/logixng_icon.gif", "resources/icons/logixng/logixng_icon.gif");
     private String _originalText = Bundle.getMessage("LogixNGIcon_Text");
 
     public LogixNGIcon(String s, @Nonnull Editor editor) {

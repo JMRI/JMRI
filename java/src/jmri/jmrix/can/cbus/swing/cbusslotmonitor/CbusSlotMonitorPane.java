@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
@@ -82,7 +82,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         p1.setLayout(new BorderLayout());
 
         p1.add(toppanelcontainer, BorderLayout.PAGE_START);
-        p1.add(split, BorderLayout.CENTER);        
+        p1.add(split, BorderLayout.CENTER);
         add(p1);
 
         p1.setMinimumSize(new Dimension(450, 200));
@@ -114,7 +114,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
 
     private JButton getStopButton(){
         JButton estopButton = new JButton("Stop All");
-        estopButton.setIcon(new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));
+        estopButton.setIcon(new NamedIconSelector("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png"));
         estopButton.setToolTipText(Bundle.getMessage("ThrottleToolBarStopAllToolTip"));
         estopButton.addActionListener((ActionEvent e) -> slotModel.sendcbusestop() );
         return estopButton;
@@ -177,7 +177,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane";
-    }    
+    }
 
     private TableCellRenderer getRenderer() {
         return new TableCellRenderer() {

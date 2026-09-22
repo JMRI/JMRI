@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
@@ -35,6 +36,9 @@ import jmri.util.swing.JmriJOptionPane;
 import org.jdom2.Element;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.palette.Bundle;
 
 /**
  * Container for adding items to Control Panels. Starting point for palette package.
@@ -276,7 +280,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 if (icon == null) {
                     log.warn("loadFamilyMap cannot find icon \"{}\" in family\"{}\" at path \"{}\"", iconName, familyName, path);
                     String fileName = RED_X;
-                    icon = new NamedIcon(fileName, fileName);
+                    icon = new NamedIconSelector(fileName, fileName);
                 }
                 iconMap.put(iconName, icon);
                 log.debug("Add {} icon to family \"{}\"", iconName, familyName);
@@ -378,7 +382,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 if (icon == null) {
                     log.warn("loadDefaultFamilyMap: icon \"{}\" in family \"{}\" cannot get icon from file \"{}\".", iconName, familyName, fileName);
                     fileName = RED_X;
-                    icon = new NamedIcon(fileName, fileName);
+                    icon = new NamedIconSelector(fileName, fileName);
                 }
                 iconMap.put(iconName, icon);
             }
@@ -773,7 +777,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (map != null) {
             for (Entry<String, NamedIcon> entry : map.entrySet()) {
                 String name = entry.getKey();
-                NamedIcon icon = new NamedIcon(entry.getValue());
+                NamedIcon icon = new NamedIconSelector(entry.getValue());
                 clone.put(name, icon);
             }
         }

@@ -31,14 +31,14 @@ import jmri.jmrit.beantable.ReporterTableAction;
 import jmri.jmrit.beantable.SignalHeadTableAction;
 import jmri.jmrit.beantable.SignalMastTableAction;
 import jmri.jmrit.beantable.MemoryTableAction;
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LightIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.TurnoutIcon;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -354,15 +354,15 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                         TurnoutIcon t = new TurnoutIcon(editor);
                         t.setTurnout(bean.getDisplayName());
                         for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
-                            t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                            t.setIcon(ent.getKey(), new NamedIconSelector(ent.getValue()));
                         }
                         t.setFamily(_family);
                         t.setLevel(Editor.TURNOUTS);
                         return t;
                     case "Sensor":
-                        SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
+                        SensorIcon s = new SensorIcon(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
                         for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
-                            s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                            s.setIcon(ent.getKey(), new NamedIconSelector(ent.getValue()));
                         }
                         s.setSensor(bean.getDisplayName());
                         s.setFamily(_family);

@@ -14,6 +14,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrameManager;
@@ -47,7 +48,7 @@ public class LocoIcon extends PositionableLabel {
 
     public LocoIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/markers/loco-white.gif",
+        super(new NamedIconSelector("resources/icons/markers/loco-white.gif",
                 "resources/icons/markers/loco-white.gif"), editor);
         _locoColor = Color.WHITE;
         setDisplayLevel(Editor.MARKERS);
@@ -157,17 +158,17 @@ public class LocoIcon extends PositionableLabel {
     }
 
     // loco icons
-    NamedIcon white = new NamedIcon("resources/icons/markers/loco-white.gif",
+    NamedIcon white = new NamedIconSelector("resources/icons/markers/loco-white.gif",
             "resources/icons/markers/loco-white.gif");
-    NamedIcon green = new NamedIcon("resources/icons/markers/loco-green.gif",
+    NamedIcon green = new NamedIconSelector("resources/icons/markers/loco-green.gif",
             "resources/icons/markers/loco-green.gif");
-    NamedIcon gray = new NamedIcon("resources/icons/markers/loco-gray.gif",
+    NamedIcon gray = new NamedIconSelector("resources/icons/markers/loco-gray.gif",
             "resources/icons/markers/loco-gray.gif");
-    NamedIcon red = new NamedIcon("resources/icons/markers/loco-red.gif",
+    NamedIcon red = new NamedIconSelector("resources/icons/markers/loco-red.gif",
             "resources/icons/markers/loco-red.gif");
-    NamedIcon blue = new NamedIcon("resources/icons/markers/loco-blue.gif",
+    NamedIcon blue = new NamedIconSelector("resources/icons/markers/loco-blue.gif",
             "resources/icons/markers/loco-blue.gif");
-    NamedIcon yellow = new NamedIcon("resources/icons/markers/loco-yellow.gif",
+    NamedIcon yellow = new NamedIconSelector("resources/icons/markers/loco-yellow.gif",
             "resources/icons/markers/loco-yellow.gif");
 
     public void addLocoMenuEntry(JMenu iconMenu, final String color) {

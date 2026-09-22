@@ -14,6 +14,8 @@ import jmri.util.JUnitUtil;
 import java.util.ArrayList;
 import java.awt.GraphicsEnvironment;
 
+import jmri.jmrit.catalog.NamedIconSelector;
+
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -34,7 +36,7 @@ public class ConvertDialogTest {
         OBlock ob1 = InstanceManager.getDefault(OBlockManager.class).createNewOBlock("OB1", "a");
         CircuitBuilder cb = frame.getCircuitBuilder();
         Assert.assertNotNull("exists", cb);
-        NamedIcon icon = new NamedIcon("program:resources/icons/smallschematics/tracksegments/block.gif", "track");
+        NamedIcon icon = new NamedIconSelector("program:resources/icons/smallschematics/tracksegments/block.gif", "track");
         PositionableLabel pos = new PositionableLabel(icon, frame);
         pos.setLocation(200,100);
         frame.putItem(pos);

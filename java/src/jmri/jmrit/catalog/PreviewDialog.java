@@ -310,7 +310,7 @@ public class PreviewDialog extends JDialog {
                             name = name.substring(0, index);
                         }
                         String path = files[i].getAbsolutePath();
-                        NamedIcon icon = new NamedIcon(path, name);
+                        NamedIcon icon = new NamedIconSelector(path, name);
                         long size = icon.getIconWidth() * icon.getIconHeight();
                         log.debug("Memory calculation icon size= {} memoryAvailable= {} memoryUsed= {}", size, memoryAvailable, memoryUsed);
 

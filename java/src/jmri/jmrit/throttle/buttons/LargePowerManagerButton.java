@@ -3,12 +3,12 @@ package jmri.jmrit.throttle.buttons;
 import javax.annotation.CheckForNull;
 
 import jmri.PowerManager;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 
 /**
- * 
+ *
  * A Large button handling layout power
- * 
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -51,10 +51,10 @@ public class LargePowerManagerButton extends PowerManagerButton {
 
     @Override
     protected void loadIcons() {
-        setPowerOnIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
-        setPowerOffIcon(new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png"));
-        setPowerIdleIcon(new NamedIcon("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png"));
-        setPowerUnknownIcon(new NamedIcon("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png"));
+        setPowerOnIcon(new NamedIconSelector("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
+        setPowerOffIcon(new NamedIconSelector("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png"));
+        setPowerIdleIcon(new NamedIconSelector("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png"));
+        setPowerUnknownIcon(new NamedIconSelector("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png"));
     }
 
 }

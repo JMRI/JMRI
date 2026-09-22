@@ -7,7 +7,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.util.JUnitUtil;
 
@@ -23,7 +23,7 @@ public class AbstractPanelServletTest {
         Sensor s = InstanceManager.getDefault(SensorManager.class).provide(systemName);
         s.setUserName(userName);
         MultiSensorIcon p = new MultiSensorIcon(null);
-        p.addEntry(userName, new NamedIcon("program:resources/logo.gif", "logo"));
+        p.addEntry(userName, new NamedIconSelector("program:resources/logo.gif", "logo"));
         Element e = ConfigXmlManager.elementFromObject(p);
         assertEquals(userName, e.getChild("active").getAttribute("sensor").getValue());
         e = servlet.positionableElement(p);
@@ -57,6 +57,6 @@ public class AbstractPanelServletTest {
         protected String getXmlPanel(String name) {
             return null;
         }
-        
+
     }
 }

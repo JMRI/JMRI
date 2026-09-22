@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,7 +18,7 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.SensorIcon;
 import jmri.util.FileUtil;
 import jmri.util.IntlUtilities;
@@ -803,16 +804,16 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     private void setupIconMap(SensorIcon sensor) {
         sensor.setIcon("SensorStateActive",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
                         "resources/icons/smallschematics/tracksegments/circuit-occupied.gif"));
         sensor.setIcon("SensorStateInactive",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-empty.gif",
                         "resources/icons/smallschematics/tracksegments/circuit-empty.gif"));
         sensor.setIcon("BeanStateInconsistent",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                         "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
         sensor.setIcon("BeanStateUnknown",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                         "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
     }
 

@@ -23,6 +23,7 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriColorChooser;
@@ -50,7 +51,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public SensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        this(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        this(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
     }
 
@@ -588,10 +589,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMousePressed(JmriMouseEvent e) {
-        log.debug("doMousePressed {},{} clicks={}, buttonLive={}, getMomentary={}", 
+        log.debug("doMousePressed {},{} clicks={}, buttonLive={}, getMomentary={}",
             e.getX(), e.getY(), e.getClickCount(),
             buttonLive(), getMomentary());
-            
+
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button press
             try {
@@ -605,10 +606,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMouseReleased(JmriMouseEvent e) {
-        log.debug("doMouseReleased {},{} clicks={}, buttonLive={}, getMomentary={}", 
+        log.debug("doMouseReleased {},{} clicks={}, buttonLive={}, getMomentary={}",
             e.getX(), e.getY(), e.getClickCount(),
             buttonLive(), getMomentary());
-        
+
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button release
             try {
@@ -622,7 +623,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
-        log.debug("doMouseClicked {},{} clicks={}, buttonLive={}, getMomentary={}", 
+        log.debug("doMouseClicked {},{} clicks={}, buttonLive={}, getMomentary={}",
             e.getX(), e.getY(), e.getClickCount(),
             buttonLive(), getMomentary());
 

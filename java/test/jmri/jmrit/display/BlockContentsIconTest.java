@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import jmri.BlockManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -34,7 +35,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @Test
     public void testNamedIconCtor() {
 
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
         BlockContentsIcon bci = new BlockContentsIcon(icon, editor);
         bci.setIcon(icon);
         assertNotNull(bci, "BlockContentsIcon Constructor");
@@ -99,7 +100,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         // the test in the parent class fails if there is no icon for the
         // blockcontents.
 
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
         ((BlockContentsIcon) p).setIcon(icon);
         assertEquals(1.0D, p.getScale(), 0.0, "Default Scale");
         p.setScale(5.0D);
@@ -111,7 +112,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @ToDo("The test in the parent class fails if there is no icon set")
     public void testGetAndSetRotationDegrees() {
 
-        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+        NamedIcon icon = new NamedIconSelector("resources/icons/redTransparentBox.gif", "box"); // 13x13
         ((BlockContentsIcon) p).setIcon(icon);
         p.rotate(50);
         assertEquals(50, p.getDegrees(), "Degrees");

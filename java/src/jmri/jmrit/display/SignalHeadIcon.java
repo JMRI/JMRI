@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.palette.SignalHeadItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriMouseEvent;
@@ -384,7 +385,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.signalHeadPickModelInstance());
         int i = 0;
         for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
-            _iconEditor.setIcon(i++, entry.getKey(), new NamedIcon(entry.getValue()));
+            _iconEditor.setIcon(i++, entry.getKey(), new NamedIconSelector(entry.getValue()));
         }
         _iconEditor.makeIconPanel(false);
 

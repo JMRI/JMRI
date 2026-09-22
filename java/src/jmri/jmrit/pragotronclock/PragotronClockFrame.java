@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JmriJFrame;
 
 /**
@@ -65,15 +66,15 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
 
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-            baseFoldingSheets10[i] = new NamedIcon("resources/icons/misc/Pragotron/M" + i + ".png", "resources/icons/misc/Pragotron/M" + i + ".png");
-            foldingSheets10[i] = new NamedIcon("resources/icons/misc/Pragotron/M" + i + ".png", "resources/icons/misc/Pragotron/M" + i + ".png");
+            baseFoldingSheets10[i] = new NamedIconSelector("resources/icons/misc/Pragotron/M" + i + ".png", "resources/icons/misc/Pragotron/M" + i + ".png");
+            foldingSheets10[i] = new NamedIconSelector("resources/icons/misc/Pragotron/M" + i + ".png", "resources/icons/misc/Pragotron/M" + i + ".png");
         }
         for (int i = 0; i < 24; i++) {
-            baseFoldingSheets24[i] = new NamedIcon("resources/icons/misc/Pragotron/H" + i + ".png", "resources/icons/misc/Pragotron/H" + i + ".png");
-            foldingSheets24[i] = new NamedIcon("resources/icons/misc/Pragotron/H" + i + ".png", "resources/icons/misc/Pragotron/H" + i + ".png");
+            baseFoldingSheets24[i] = new NamedIconSelector("resources/icons/misc/Pragotron/H" + i + ".png", "resources/icons/misc/Pragotron/H" + i + ".png");
+            foldingSheets24[i] = new NamedIconSelector("resources/icons/misc/Pragotron/H" + i + ".png", "resources/icons/misc/Pragotron/H" + i + ".png");
         }
-        colonIcon = new NamedIcon("resources/icons/misc/Pragotron/dot.png", "resources/icons/misc/Pragotron/dot.png");
-        baseColon = new NamedIcon("resources/icons/misc/Pragotron/dot.png", "resources/icons/misc/Pragotron/dot.png");
+        colonIcon = new NamedIconSelector("resources/icons/misc/Pragotron/dot.png", "resources/icons/misc/Pragotron/dot.png");
+        baseColon = new NamedIconSelector("resources/icons/misc/Pragotron/dot.png", "resources/icons/misc/Pragotron/dot.png");
         // set initial size the same as the original gifs
         for (int i = 0; i < 10; i++) {
             Image scaledImage = baseFoldingSheets10[i].getImage().getScaledInstance(32, 48, Image.SCALE_SMOOTH);  // 152 / 192

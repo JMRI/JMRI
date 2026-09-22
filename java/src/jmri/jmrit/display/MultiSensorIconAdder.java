@@ -37,6 +37,7 @@ import jmri.Sensor;
 import jmri.CatalogTreeLeaf;
 import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -93,14 +94,14 @@ public class MultiSensorIconAdder extends IconAdder {
             String name = leaf.getName();
             String path = leaf.getPath();
             if ("BeanStateInconsistent".equals(name)) {
-                setIcon(0, name, new NamedIcon(path, path));
+                setIcon(0, name, new NamedIconSelector(path, path));
             } else if ("BeanStateUnknown".equals(name)) {
-                setIcon(1, name, new NamedIcon(path, path));
+                setIcon(1, name, new NamedIconSelector(path, path));
             } else if ("SensorStateInactive".equals(name)) {
-                setIcon(2, name, new NamedIcon(path, path));
+                setIcon(2, name, new NamedIconSelector(path, path));
             } else {
                 int k = Character.digit(name.charAt(name.length() - 1), 10);
-                setIcon(k + 3, name, new NamedIcon(path, path));
+                setIcon(k + 3, name, new NamedIconSelector(path, path));
             }
         }
     }
@@ -322,7 +323,7 @@ public class MultiSensorIconAdder extends IconAdder {
         int index = _iconOrderList.size();
         String path = "resources/icons/misc/X-red.gif"; //"resources/icons/USS/plate/levers/l-vertical.gif";
         String label = "MultiSensorPosition " + (index - 3);
-        super.setIcon(index, label, new NamedIcon(path, path));
+        super.setIcon(index, label, new NamedIconSelector(path, path));
         valueChanged(null);
         if (!_update) {
             _defaultIcons.addLeaf(label, path);

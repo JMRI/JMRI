@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 
 import java.util.*;
+
 import javax.annotation.*;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,6 +24,7 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.swing.NamedBeanComboBox;
@@ -7719,7 +7721,7 @@ public final class LayoutEditorTools {
 
     @CheckReturnValue
     public SensorIcon getSensorIcon(@Nonnull String sensorName) {
-        SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        SensorIcon l = new SensorIcon(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), layoutEditor);
         l.setIcon("SensorStateActive", sensorIconEditor.getIcon(0));
         l.setIcon("SensorStateInactive", sensorIconEditor.getIcon(1));

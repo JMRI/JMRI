@@ -5,6 +5,7 @@ import javax.swing.JPopupMenu;
 
 import jmri.JmriException;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
     public Positionable deepClone() {
         PositionableLabel pos;
         if (_icon) {
-            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
+            NamedIcon icon = new NamedIconSelector((NamedIcon) getIcon());
             pos = new LinkingLabel(icon, _editor, url);
         } else {
             pos = new LinkingLabel(_unRotatedText, _editor, url);

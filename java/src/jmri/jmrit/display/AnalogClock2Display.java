@@ -22,6 +22,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriMouseEvent;
 
@@ -123,9 +124,9 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         // Load the JMRI logo and clock face
         // Icons are the original size version kept for to allow for mulitple resizing
         // and scaled Icons are the version scaled for the panel size
-        jmriIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
-        scaledIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
-        clockIcon = new NamedIcon("resources/clock2.gif", "resources/clock2.gif");
+        jmriIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
+        scaledIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
+        clockIcon = new NamedIconSelector("resources/clock2.gif", "resources/clock2.gif");
         logo = jmriIcon.getImage();
         clockFace = clockIcon.getImage();
 
@@ -208,15 +209,15 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             return;
         }
         AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
-        clockIcon = new NamedIcon("resources/clock2.gif", "resources/clock2.gif");
+        clockIcon = new NamedIconSelector("resources/clock2.gif", "resources/clock2.gif");
         int w = (int) Math.ceil(scale * clockIcon.getIconWidth());
         int h = (int) Math.ceil(scale * clockIcon.getIconHeight());
         clockIcon.transformImage(w, h, t, null);
-        scaledIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
+        scaledIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
         w = (int) Math.ceil(scale * scaledIcon.getIconWidth());
         h = (int) Math.ceil(scale * scaledIcon.getIconHeight());
         scaledIcon.transformImage(w, h, t, null);
-        jmriIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
+        jmriIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
         w = (int) Math.ceil(scale * jmriIcon.getIconWidth());
         h = (int) Math.ceil(scale * jmriIcon.getIconHeight());
         jmriIcon.transformImage(w, h, t, null);
@@ -386,7 +387,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
      }
      */
     @SuppressWarnings("deprecation") // Date.getTime
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
                 justification = "OK to compare floating point from user-selected rate")
     public void update() {
         Date now = clock.getTime();

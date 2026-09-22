@@ -25,10 +25,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.CheckForNull;
 
 import jmri.*;
-import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.DirectorySearcher;
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.Bundle;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
@@ -2451,7 +2449,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      * @return The sensor that was added to the panel.
      */
     protected SensorIcon putSensor() {
-        SensorIcon result = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        SensorIcon result = new SensorIcon(new NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
         IconAdder editor = getIconEditor("Sensor");
         Hashtable<String, NamedIcon> map = editor.getIconMap();
@@ -2615,7 +2613,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     protected MemoryIcon putMemory() {
-        MemoryIcon result = new MemoryIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+        MemoryIcon result = new MemoryIcon(new NamedIconSelector("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
         result.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
@@ -2664,7 +2662,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     protected GlobalVariableIcon putGlobalVariable() {
-        GlobalVariableIcon result = new GlobalVariableIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+        GlobalVariableIcon result = new GlobalVariableIcon(new NamedIconSelector("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
         IconAdder globalVariableIconEditor = getIconEditor("GlobalVariable");
         result.setGlobalVariable(globalVariableIconEditor.getTableSelection().getDisplayName());
@@ -2728,7 +2726,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     protected BlockContentsIcon putBlockContents() {
-        BlockContentsIcon result = new BlockContentsIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+        BlockContentsIcon result = new BlockContentsIcon(new NamedIconSelector("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
         IconAdder blockIconEditor = getIconEditor("BlockLabel");
         result.setBlock(blockIconEditor.getTableSelection().getDisplayName());

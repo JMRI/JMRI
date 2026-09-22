@@ -14,6 +14,7 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.swing.JmriJOptionPane;
@@ -68,7 +69,7 @@ public class BlockContentsIcon extends MemoryIcon {
 
     @Override
     public void resetDefaultIcon() {
-        defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
+        defaultIcon = new NamedIconSelector("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif");
     }
 
@@ -162,7 +163,7 @@ public class BlockContentsIcon extends MemoryIcon {
             return true;
         } // end of selectable
         // This is a little different
-        // jmri.jmrit.dispatcher.DispatcherFrame.class is AutoCreate so getNullableDefault creates it 
+        // jmri.jmrit.dispatcher.DispatcherFrame.class is AutoCreate so getNullableDefault creates it
         // if it doesnt exist. So we look at the count of instances.
         final jmri.jmrit.dispatcher.DispatcherFrame df;
         if (jmri.InstanceManager.getList(jmri.jmrit.dispatcher.DispatcherFrame.class).isEmpty()) {

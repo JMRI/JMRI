@@ -21,11 +21,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
 import jmri.Sensor;
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -353,11 +353,11 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 if (_itemType.equals("MultiSensor")) {
                     MultiSensorIcon ms = new MultiSensorIcon(_frame.getEditor());
-                    ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
-                    ms.setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
-                    ms.setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
+                    ms.setInactiveIcon(new NamedIconSelector(iconMap.get("SensorStateInactive")));
+                    ms.setInconsistentIcon(new NamedIconSelector(iconMap.get("BeanStateInconsistent")));
+                    ms.setUnknownIcon(new NamedIconSelector(iconMap.get("BeanStateUnknown")));
                     for (int i = 0; i < selections.size(); i++) {
-                        ms.addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(POSITION[i])));
+                        ms.addEntry(selections.get(i).getDisplayName(), new NamedIconSelector(iconMap.get(POSITION[i])));
                     }
                     _selectionModel.clearSelection();
                     ms.setFamily(_family);

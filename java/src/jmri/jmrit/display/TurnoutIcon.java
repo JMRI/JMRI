@@ -15,6 +15,7 @@ import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriMouseEvent;
@@ -43,7 +44,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
 
     public TurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
+        super(new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"), editor);
         _control = true;
         setPopupUtility(null);

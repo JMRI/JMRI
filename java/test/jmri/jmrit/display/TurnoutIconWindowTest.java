@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
@@ -34,16 +34,16 @@ public class TurnoutIconWindowTest {
         icon.setDisplayLevel(Editor.TURNOUTS);
 
         icon.setIcon("TurnoutStateClosed",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
         icon.setIcon("TurnoutStateThrown",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif"));
         icon.setIcon("BeanStateInconsistent",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif"));
         icon.setIcon("BeanStateUnknown",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif"));
 
         panel.putItem(icon);
@@ -94,16 +94,16 @@ public class TurnoutIconWindowTest {
         icon.setTurnout("IT1");
 
         icon.setIcon("TurnoutStateClosed",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
         icon.setIcon("TurnoutStateThrown",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif"));
         icon.setIcon("BeanStateInconsistent",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif"));
         icon.setIcon("BeanStateUnknown",
-                new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
+                new NamedIconSelector("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif"));
 
         panel.putItem(icon);

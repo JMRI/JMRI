@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 
 /**
  * Gather common methods for Turnouts, Sensors, SignalHeads, Masts, etc.
@@ -21,7 +23,7 @@ public class PositionableIcon extends PositionableLabel {
 
     public PositionableIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/misc/X-red.gif", "resources/icons/misc/X-red.gif"), editor);
+        super(new NamedIconSelector("resources/icons/misc/X-red.gif", "resources/icons/misc/X-red.gif"), editor);
     }
 
     public PositionableIcon(NamedIcon s, Editor editor) {

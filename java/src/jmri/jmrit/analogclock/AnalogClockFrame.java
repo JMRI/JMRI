@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 
@@ -117,8 +118,8 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // Load the JMRI logo and hands to put on the clock
             // Icons are the original size version kept for to allow for mulitple resizing
             // and scaled Icons are the version scaled for the panel size
-            jmriIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
-            scaledIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
+            jmriIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
+            scaledIcon = new NamedIconSelector("resources/logo.gif", "resources/logo.gif");
             logo = jmriIcon.getImage();
 
             // Create an unscaled minute hand to get the original size (height) to use
@@ -269,7 +270,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     }
 
     @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
                 justification = "OK to compare floating point from user-selected rate")
     void update() {
         Date now = clock.getTime();

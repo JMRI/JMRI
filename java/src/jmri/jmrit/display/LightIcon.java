@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 
     public LightIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/lights/cross-on.png",
+        super(new NamedIconSelector("resources/icons/smallschematics/lights/cross-on.png",
                 "resources/icons/smallschematics/lights/cross-off.png"), editor);
         _control = true;
         displayState(lightState());
@@ -86,13 +87,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 
     // display icons
     String offLName = "resources/icons/smallschematics/lights/cross-on.png";
-    NamedIcon off = new NamedIcon(offLName, offLName);
+    NamedIcon off = new NamedIconSelector(offLName, offLName);
     String onLName = "resources/icons/smallschematics/lights/cross-off.png";
-    NamedIcon on = new NamedIcon(onLName, onLName);
+    NamedIcon on = new NamedIconSelector(onLName, onLName);
     String inconsistentLName = "resources/icons/smallschematics/lights/cross-inconsistent.png";
-    NamedIcon inconsistent = new NamedIcon(inconsistentLName, inconsistentLName);
+    NamedIcon inconsistent = new NamedIconSelector(inconsistentLName, inconsistentLName);
     String unknownLName = "resources/icons/smallschematics/lights/cross-unknown.png";
-    NamedIcon unknown = new NamedIcon(unknownLName, unknownLName);
+    NamedIcon unknown = new NamedIconSelector(unknownLName, unknownLName);
 
     public NamedIcon getOffIcon() {
         return off;

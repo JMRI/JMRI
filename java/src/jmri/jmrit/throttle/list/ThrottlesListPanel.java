@@ -10,7 +10,7 @@ import javax.swing.*;
 
 import jmri.ConsistManager;
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottlesPreferencesAction;
 import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A panel to display a list of active JMRI UI throttles
- * 
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -70,11 +70,11 @@ public class ThrottlesListPanel extends JPanel implements PropertyChangeListener
         throttleFrames.setTableHeader(null);
         throttleFrames.setDragEnabled(true);
         throttleFrames.setDropMode(DropMode.INSERT_ROWS);
-        throttleFrames.setTransferHandler(new ThrottlesTableTransferHandler(throttleFrames)); 
+        throttleFrames.setTransferHandler(new ThrottlesTableTransferHandler(throttleFrames));
         throttleFrames.setDefaultRenderer(Object.class, new ThrottlesTableCellRenderer());
         throttleFrames.addMouseListener(JmriMouseListener.adapt(new JmriMouseListener() {
             @Override
-            public void mouseClicked(JmriMouseEvent e) {                
+            public void mouseClicked(JmriMouseEvent e) {
                 int ntw = throttleFrames.columnAtPoint(e.getPoint());
                 int ntf = throttleFrames.rowAtPoint(e.getPoint());
                 log.debug("Click in table at row {} (frame) / col {} (window)", ntf, ntw);
@@ -109,7 +109,7 @@ public class ThrottlesListPanel extends JPanel implements PropertyChangeListener
 
         JToolBar throttleToolBar = new JToolBar("Throttles list toolbar");
         JButton jbNew = new JButton();
-        jbNew.setIcon(new NamedIcon("resources/icons/throttles/new.png", "resources/icons/throttles/new.png"));
+        jbNew.setIcon(new NamedIconSelector("resources/icons/throttles/new.png", "resources/icons/throttles/new.png"));
         jbNew.setToolTipText(Bundle.getMessage("ThrottleToolBarNewWindowToolTip"));
         jbNew.setVerticalTextPosition(SwingConstants.BOTTOM);
         jbNew.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -128,7 +128,7 @@ public class ThrottlesListPanel extends JPanel implements PropertyChangeListener
 
         throttleToolBar.addSeparator();
         JButton jbPreferences = new JButton();
-        jbPreferences.setIcon(new NamedIcon("resources/icons/throttles/preferences.png", "resources/icons/throttles/Preferences24.png"));
+        jbPreferences.setIcon(new NamedIconSelector("resources/icons/throttles/preferences.png", "resources/icons/throttles/Preferences24.png"));
         jbPreferences.setToolTipText(Bundle.getMessage("ThrottleToolBarPreferencesToolTip"));
         jbPreferences.setVerticalTextPosition(SwingConstants.BOTTOM);
         jbPreferences.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -164,8 +164,8 @@ public class ThrottlesListPanel extends JPanel implements PropertyChangeListener
     public void propertyChange(PropertyChangeEvent evt) {
         if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
             applyPreferences();
-        }        
+        }
     }
-        
-    private static final Logger log = LoggerFactory.getLogger(ThrottlesListPanel.class);    
+
+    private static final Logger log = LoggerFactory.getLogger(ThrottlesListPanel.class);
 }

@@ -16,6 +16,7 @@ import jmri.SignalMast;
 import jmri.Transit;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriJOptionPane;
@@ -127,7 +128,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             }
             NamedIcon n;
             try {
-                n = new NamedIcon(s, s);
+                n = new NamedIconSelector(s, s);
             } catch (java.lang.NullPointerException e) {
                 JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastIconLoadError2", new Object[]{aspect, s, getNameString()}),
                     Bundle.getMessage("SignalMastIconLoadErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);

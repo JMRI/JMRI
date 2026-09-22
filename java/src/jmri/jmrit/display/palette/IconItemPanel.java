@@ -22,14 +22,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseAdapter;
@@ -416,16 +414,16 @@ public class IconItemPanel extends ItemPanel {
                 Transferable tr = e.getTransferable();
                 if (e.isDataFlavorSupported(_positionableDataFlavor)) {
                     PositionableLabel label = (PositionableLabel)tr.getTransferData(_positionableDataFlavor);
-                    NamedIcon newIcon = new NamedIcon((NamedIcon)label.getIcon());
+                    NamedIcon newIcon = new NamedIconSelector((NamedIcon)label.getIcon());
                     accepted = accept(label.getName(), newIcon);
                 } else if (e.isDataFlavorSupported(_namedIconDataFlavor)) {
                     NamedIcon icon = (NamedIcon) tr.getTransferData(_namedIconDataFlavor);
-                    NamedIcon newIcon = new NamedIcon(icon);
+                    NamedIcon newIcon = new NamedIconSelector(icon);
                     accepted = accept(icon.getName(), newIcon);
                 } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     String text = (String) tr.getTransferData(DataFlavor.stringFlavor);
                     log.debug("drop for stringFlavor {}", text);
-                    NamedIcon newIcon = new NamedIcon(text, text);
+                    NamedIcon newIcon = new NamedIconSelector(text, text);
                     accepted = accept(Bundle.getMessage("unNamed"), newIcon);
                  } else {
                     log.debug("IconDragJLabel.drop REJECTED!");

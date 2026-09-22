@@ -22,11 +22,11 @@ import javax.swing.JPanel;
 
 import jmri.NamedBean;
 import jmri.Turnout;
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
+import jmri.jmrit.display.palette.Bundle;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
@@ -545,7 +545,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                     String status = entry.getKey();
                     for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
-                        t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
+                        t.setIcon(status, ent.getKey(), new NamedIconSelector(ent.getValue()));
                     }
                 }
                 t.setLevel(Editor.TURNOUTS);

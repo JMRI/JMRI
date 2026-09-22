@@ -21,6 +21,7 @@ import jmri.NamedBeanHandle;
 import jmri.Reportable;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.NamedIconSelector;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.ThrottleFrameManager;
@@ -80,7 +81,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     }
 
     public void resetDefaultIcon() {
-        defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
+        defaultIcon = new NamedIconSelector("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif");
     }
 
@@ -448,7 +449,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
             //the IconPath is still at default so no icon set
             return roster.titleString();
         } else {
-            NamedIcon rosterIcon = new NamedIcon(roster.getIconPath(), roster.getIconPath());
+            NamedIcon rosterIcon = new NamedIconSelector(roster.getIconPath(), roster.getIconPath());
             _text = false;
             _icon = true;
             updateIcon(rosterIcon);

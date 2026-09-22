@@ -5,8 +5,8 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.jmrit.catalog.CatalogPane;
-import jmri.jmrit.catalog.NamedIcon;
+
+import jmri.jmrit.catalog.*;
 
 /**
  * Provides a simple editor for selecting N NamedIcons, perhaps for use in
@@ -37,7 +37,7 @@ public class MultiIconEditor extends JPanel {
     }
 
     public void setIcon(int iconNum, String label, String name) {
-        iconList[iconNum] = new NamedIcon(name, name);
+        iconList[iconNum] = new NamedIconSelector(name, name);
         // make a button to change that icon
         JButton j = new IconButton(iconNum, iconList[iconNum]);
         j.setToolTipText(iconList[iconNum].getName());
@@ -57,7 +57,7 @@ public class MultiIconEditor extends JPanel {
      * @return Unique object
      */
     public NamedIcon getIcon(int iconNum) {
-        return new NamedIcon(iconList[iconNum]);
+        return new NamedIconSelector(iconList[iconNum]);
     }
 
     public void complete() {
