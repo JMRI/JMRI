@@ -46,6 +46,10 @@ public class NamedIconSelector extends NamedIcon {
      * @param comp the container the new icon is embedded in
      */
     public NamedIconSelector(NamedIcon pOld, Component comp) {
+        if (!(pOld instanceof NamedIconSelector)) {
+            throw new IllegalArgumentException("pOld is of unknown class: " + (pOld != null ? pOld.getClass().getName() : "null"));
+        }
+
         NamedIconSelector old = (NamedIconSelector) pOld;
         if (old.namedIcon != null) {
             if (old.namedIcon instanceof NamedIconImage) {
