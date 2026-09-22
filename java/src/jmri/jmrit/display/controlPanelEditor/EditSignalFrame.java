@@ -43,7 +43,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
-import jmri.jmrit.display.controlPanelEditor.Bundle;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
