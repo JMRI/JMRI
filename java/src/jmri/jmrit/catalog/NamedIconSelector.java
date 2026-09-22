@@ -18,17 +18,23 @@ public class NamedIconSelector extends NamedIcon {
      *             complete copy of pOld (no transformations done)
      */
     public NamedIconSelector(NamedIcon pOld) {
-        if (pOld instanceof NamedIconImage) {
-            namedIcon = new NamedIconImage((NamedIconImage) pOld);
-        } else if (pOld instanceof NamedIconSelector) {
-            NamedIconSelector old = (NamedIconSelector) pOld;
-            if (old.namedIcon != null) {
-                namedIcon = new NamedIconImage((NamedIconImage) old.namedIcon);
+        if (!(pOld instanceof NamedIconSelector)) {
+            throw new IllegalArgumentException("pOld is of unknown class: " + (pOld != null ? pOld.getClass().getName() : "null"));
+        }
+
+        NamedIconSelector old = (NamedIconSelector) pOld;
+        if (old.namedIcon != null) {
+            if (old.namedIcon instanceof NamedIconImage) {
+                namedIcon = new NamedIconImage((NamedIconImage) pOld);
+            } else if (old.namedIcon instanceof NamedIconTesting) {
+                namedIcon = new NamedIconTesting(old.namedIcon.getURL(), old.namedIcon.getName());
             } else {
-                throw new IllegalArgumentException("pOld has unknown image type");
+                throw new IllegalArgumentException(
+                        "pOld.namedIcon is of unknown class: "
+                        + (old.namedIcon != null ? old.namedIcon.getClass().getName() : "null"));
             }
         } else {
-            throw new IllegalArgumentException("pOld is of unknown class: " + (pOld != null ? pOld.getClass().getName() : "null"));
+            throw new IllegalArgumentException("pOld is a NamedIconSelector where namedIcon is null");
         }
     }
 
@@ -57,7 +63,15 @@ public class NamedIconSelector extends NamedIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIconSelector(String pUrl, String pName) {
-        namedIcon = new NamedIconImage(pUrl, pName);
+        // REMOVE THIS!!!
+        // REMOVE THIS!!!
+        // REMOVE THIS!!!
+        // REMOVE THIS!!!
+        if (pUrl.equals("program:resources/clock2.gif")) {
+            namedIcon = new NamedIconTesting(pUrl, pName);
+        } else {
+            namedIcon = new NamedIconImage(pUrl, pName);
+        }
     }
 
     /**
