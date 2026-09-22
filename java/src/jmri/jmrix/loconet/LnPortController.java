@@ -39,6 +39,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         return true;
     }
 
+    private final java.util.concurrent.locks.Lock lockRecover =
+            new java.util.concurrent.locks.ReentrantLock();
+
     protected LnCommandStationType commandStationType = null;
 
     protected boolean mTurnoutNoRetry = false;
@@ -137,7 +140,18 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         if (allowConnectionRecovery && opened) {
             log.info("Connection lost. Attempting to recover...");
         }
-        super.recover();
+
+        // This method is sometimes called reentrant so to protect from that,
+        // we have a lock.
+        if (lockRecover.tryLock()) {
+            try {
+                super.recover();
+            } finally {
+                lockRecover.unlock();
+            }
+        } else {
+            log.warn("Reconnect already running");
+        }
     }
 
     // after reconnect, reattach the packetizer's streams and restart the receive thread

@@ -80,10 +80,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    protected synchronized void reconnectFromLoop(int retryNum){
-        // It seems that this method sometimes gets called while it's already called.
-        // To protect from that, the method is synchronized and we check that the
-        // port is not already opened.
+    protected void reconnectFromLoop(int retryNum){
         if (!opened) {
             try {
                 connect();
