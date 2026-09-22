@@ -26,7 +26,6 @@ import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
-import jmri.jmrit.display.palette.Bundle;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;

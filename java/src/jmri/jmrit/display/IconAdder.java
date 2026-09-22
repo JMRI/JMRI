@@ -38,7 +38,6 @@ import jmri.jmrit.catalog.CatalogPanel;
 import jmri.CatalogTreeLeaf;
 import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.*;
-import jmri.jmrit.display.Bundle;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriJOptionPane;
 

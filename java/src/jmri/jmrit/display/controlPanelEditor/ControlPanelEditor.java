@@ -49,7 +49,6 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ReporterIcon;
 import jmri.jmrit.display.RpsPositionIcon;
 import jmri.jmrit.display.ToolTip;
-import jmri.jmrit.display.controlPanelEditor.Bundle;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ColorDialog;
 import jmri.jmrit.display.palette.ItemPalette;

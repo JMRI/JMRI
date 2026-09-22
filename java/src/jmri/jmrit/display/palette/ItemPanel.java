@@ -22,7 +22,6 @@ import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
-import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 

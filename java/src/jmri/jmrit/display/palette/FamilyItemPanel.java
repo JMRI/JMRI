@@ -30,7 +30,6 @@ import javax.swing.KeyStroke;
 import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 

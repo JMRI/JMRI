@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import jmri.jmrit.catalog.*;
-import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 

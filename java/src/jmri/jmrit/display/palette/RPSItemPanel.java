@@ -14,7 +14,6 @@ import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
-import jmri.jmrit.display.palette.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

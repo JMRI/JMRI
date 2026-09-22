@@ -27,7 +27,6 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
-import jmri.jmrit.display.palette.Bundle;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseAdapter;

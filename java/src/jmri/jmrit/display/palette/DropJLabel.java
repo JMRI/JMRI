@@ -17,7 +17,6 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 
 import jmri.jmrit.catalog.*;
-import jmri.jmrit.display.palette.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

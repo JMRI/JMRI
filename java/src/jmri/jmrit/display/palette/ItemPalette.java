@@ -38,7 +38,6 @@ import org.jdom2.Element;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.jmrit.catalog.*;
-import jmri.jmrit.display.palette.Bundle;
 
 /**
  * Container for adding items to Control Panels. Starting point for palette package.

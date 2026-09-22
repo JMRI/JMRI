@@ -26,7 +26,6 @@ import javax.annotation.CheckForNull;
 
 import jmri.*;
 import jmri.jmrit.catalog.*;
-import jmri.jmrit.display.Bundle;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
