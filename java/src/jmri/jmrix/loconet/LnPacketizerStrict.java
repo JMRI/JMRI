@@ -189,11 +189,10 @@ public class LnPacketizerStrict extends LnPacketizer {
                     // Normal condition, go around the loop again
                     continue;
                 } catch (java.io.IOException e) {
-                    if (LnPacketizerStrict.this.controller != null
-                            && LnPacketizerStrict.this.controller.getAllowConnectionRecovery()) {
+                    if (controller.getAllowConnectionRecovery()) {
                         log.info("run: server closed connection, attempting recovery");
-                        LnPacketizerStrict.this.controller.closePort();
-                        LnPacketizerStrict.this.controller.recover();
+                        controller.closePort();
+                        controller.recover();
                     } else {
                         // fired when read detects end-of-file
                         log.info("End of file", e); // NOI18N
