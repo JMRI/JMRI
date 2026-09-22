@@ -654,6 +654,6 @@ public class NamedIconImage extends NamedIcon {
         transformImage(w, h, _transformF, null);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NamedIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(NamedIconImage.class);
 
 }
