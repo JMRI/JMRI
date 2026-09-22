@@ -25,7 +25,7 @@ public class NamedIconSelector extends NamedIcon {
         NamedIconSelector old = (NamedIconSelector) pOld;
         if (old.namedIcon != null) {
             if (old.namedIcon instanceof NamedIconImage) {
-                namedIcon = new NamedIconImage((NamedIconImage) pOld);
+                namedIcon = new NamedIconImage((NamedIconImage) old.namedIcon);
             } else if (old.namedIcon instanceof NamedIconTesting) {
                 namedIcon = new NamedIconTesting(old.namedIcon.getURL(), old.namedIcon.getName());
             } else {
@@ -46,10 +46,19 @@ public class NamedIconSelector extends NamedIcon {
      * @param comp the container the new icon is embedded in
      */
     public NamedIconSelector(NamedIcon pOld, Component comp) {
-        if (pOld instanceof NamedIconImage) {
-            namedIcon = new NamedIconImage((NamedIconImage) pOld, comp);
+        NamedIconSelector old = (NamedIconSelector) pOld;
+        if (old.namedIcon != null) {
+            if (old.namedIcon instanceof NamedIconImage) {
+                namedIcon = new NamedIconImage((NamedIconImage) old.namedIcon, comp);
+            } else if (old.namedIcon instanceof NamedIconTesting) {
+                namedIcon = new NamedIconTesting(old.namedIcon.getURL(), old.namedIcon.getName());
+            } else {
+                throw new IllegalArgumentException(
+                        "pOld.namedIcon is of unknown class: "
+                        + (old.namedIcon != null ? old.namedIcon.getClass().getName() : "null"));
+            }
         } else {
-            throw new IllegalArgumentException("pOld is of unknown class: " + (pOld != null ? pOld.getClass().getName() : "null"));
+            throw new IllegalArgumentException("pOld is a NamedIconSelector where namedIcon is null");
         }
     }
 
