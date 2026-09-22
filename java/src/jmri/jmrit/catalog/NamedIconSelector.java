@@ -20,6 +20,13 @@ public class NamedIconSelector extends NamedIcon {
     public NamedIconSelector(NamedIcon pOld) {
         if (pOld instanceof NamedIconImage) {
             namedIcon = new NamedIconImage((NamedIconImage) pOld);
+        } else if (pOld instanceof NamedIconSelector) {
+            NamedIconSelector old = (NamedIconSelector) pOld;
+            if (old.namedIcon != null) {
+                namedIcon = new NamedIconImage((NamedIconImage) old.namedIcon);
+            } else {
+                throw new IllegalArgumentException("pOld has unknown image type");
+            }
         } else {
             throw new IllegalArgumentException("pOld is of unknown class: " + (pOld != null ? pOld.getClass().getName() : "null"));
         }
