@@ -340,11 +340,10 @@ public class LnPacketizer extends LnTrafficController {
                     // posted from idle port when enableReceiveTimeout used
                     // Normal condition, go around the loop again
                 } catch (java.io.IOException e) {
-                    if (LnPacketizer.this.controller != null
-                            && LnPacketizer.this.controller.getAllowConnectionRecovery()) {
+                    if (controller.getAllowConnectionRecovery()) {
                         log.info("run: server closed connection, attempting recovery");
-                        LnPacketizer.this.controller.closePort();
-                        LnPacketizer.this.controller.recover();
+                        controller.closePort();
+                        controller.recover();
                     } else {
                         // fired when read detects end-of-file
                         log.info("End of file", e); // NOI18N
@@ -419,10 +418,10 @@ public class LnPacketizer extends LnTrafficController {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
 
-                        if (LnPacketizer.this.controller != null && LnPacketizer.this.controller.getAllowConnectionRecovery()) {
+                        if (controller.getAllowConnectionRecovery()) {
                             log.info("run: server closed connection, attempting recovery");
-                            LnPacketizer.this.controller.closePort();
-                            LnPacketizer.this.controller.recover();
+                            controller.closePort();
+                            controller.recover();
                         }
                     }
                 } catch (InterruptedException ie) {
