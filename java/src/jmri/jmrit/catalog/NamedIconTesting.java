@@ -138,7 +138,7 @@ public class NamedIconTesting extends NamedIcon {
 
     private Animator animator;
 
-    private class Animator extends java.util.TimerTask {
+    private static class Animator extends java.util.TimerTask {
         private final Component c;
 
         private Animator(Component c) {
