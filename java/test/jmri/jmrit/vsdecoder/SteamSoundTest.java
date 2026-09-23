@@ -32,9 +32,6 @@ public class SteamSoundTest {
         JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.clearShutDownManager();
 
-        // Not sure, but it seems the warning about OpenAL comes after the SuppressWarning call on Headless CI.
-        JUnitUtil.waitFor(100);
-
         // GitHub Headless CI workflow doesn't have sound
         JUnitAppender.suppressWarnMessage("Error loading OpenAL libraries: Could not initialize class jogamp.openal.ALImpl");
 
