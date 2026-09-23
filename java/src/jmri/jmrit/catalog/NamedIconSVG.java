@@ -2,11 +2,6 @@ package jmri.jmrit.catalog;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-//import java.awt.image.ColorModel;
-//import java.awt.image.MemoryImageSource;
-//import java.awt.image.PixelGrabber;
-//import java.awt.image.RenderedImage;
 import java.io.*;
 //import java.net.URL;
 //import java.util.Iterator;
@@ -14,19 +9,20 @@ import java.io.*;
 import java.net.URL;
 
 import javax.annotation.CheckForNull;
-import javax.swing.ImageIcon;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
+import org.apache.batik.bridge.*;
+import org.apache.batik.gvt.GraphicsNode;
 
-import org.apache.batik.transcoder.*;
-import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.Document;
+import org.w3c.dom.svg.SVGDocument;
 
 public class NamedIconSVG extends NamedIcon {
 
-    private final ImageIcon imageIcon;
+//    private final ImageIcon imageIcon;
     private Document svgImage = null;   // a place to store the original document that is a vector image (svg file)
+    private GraphicsNode rootNode;
     private String url;
     private String name;
 
@@ -38,17 +34,6 @@ public class NamedIconSVG extends NamedIcon {
      */
     public NamedIconSVG(NamedIconSVG pOld) {
         this(pOld.url,pOld.name);
-/*
-        svgImage = (Document) pOld.svgImage.cloneNode(true);
-
-        MyTranscoder transcoder = new MyTranscoder();
-        try {
-            transcoder.transcode(new TranscoderInput(svgImage), null);
-        } catch (TranscoderException ex) {
-            log.debug("Exception while transposing svg : {}", ex.getMessage());
-        }
-        imageIcon = new ImageIcon(transcoder.getImage());
-*/
     }
 
     /* *
@@ -71,25 +56,42 @@ public class NamedIconSVG extends NamedIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIconSVG(String pUrl, String pName) {
+
         this.url = pUrl;
         this.name = pName;
 
-        ImageIcon icon;
         try {
-            svgImage = createSVGDocument(pUrl);
+//            String uri = new File("animated.svg").toURI().toString();
+            String parser = XMLResourceDescriptor.getXMLParserClassName();
+            SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
+            SVGDocument doc = factory.createSVGDocument(url);
 
-            MyTranscoder transcoder = new MyTranscoder();
-            try {
-                transcoder.transcode(new TranscoderInput(svgImage), null);
-            } catch (TranscoderException ex) {
-                log.debug("Exception while transposing svg : {}", ex.getMessage());
-            }
-            icon = new ImageIcon(transcoder.getImage());
+    // 2. Setup rendering bridge
+            UserAgent userAgent = new UserAgentAdapter();
+            DocumentLoader loader = new DocumentLoader(userAgent);
+            BridgeContext ctx = new BridgeContext(userAgent, loader);
+            ctx.setDynamicState(BridgeContext.DYNAMIC); // Crucial for dynamic updates
+            GVTBuilder builder = new GVTBuilder();
+            rootNode = builder.build(ctx, doc);
+/*
+    // 3. In your Swing Timer or animation thread:
+            javax.swing.Timer timer = new javax.swing.Timer(16, e -> {
+                // Modify DOM element by ID
+                Element element = doc.getElementById("my-animated-shape");
+                if (element != null) {
+                    int xPos = 0;   //AAAA
+                    element.setAttribute("transform", "translate(" + xPos + ", 0)");
+                }
+
+                // Force Batik to re-evaluate the dynamic changes into the GVT tree
+                // (For complex updates, you may need to re-assoc or update specific nodes)
+    //AAAA            panel.repaint();
+            });
+            timer.start();
+*/
         } catch (IOException e) {
-            log.error("Cannot open svg image file: {}", e.getMessage());
-            icon = new ImageIcon("Error");
+            log.error("Cannot load image", e);
         }
-        imageIcon = icon;
     }
 
     /**
@@ -99,25 +101,7 @@ public class NamedIconSVG extends NamedIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIconSVG(URL pUrl, String pName) {
-        this.url = pUrl.toString();
-        this.name = pName;
-
-        ImageIcon icon;
-        try {
-            svgImage = createSVGDocument(pUrl.toString());
-
-            MyTranscoder transcoder = new MyTranscoder();
-            try {
-                transcoder.transcode(new TranscoderInput(svgImage), null);
-            } catch (TranscoderException ex) {
-                log.debug("Exception while transposing svg : {}", ex.getMessage());
-            }
-            icon = new ImageIcon(transcoder.getImage());
-        } catch (IOException e) {
-            log.error("Cannot open svg image file: {}", e.getMessage());
-            icon = new ImageIcon("Error");
-        }
-        imageIcon = icon;
+        this(pUrl.toString(), pName);
     }
 
 
@@ -127,7 +111,7 @@ public class NamedIconSVG extends NamedIcon {
      * @param im Image to use
      */
     public NamedIconSVG(Image im) {
-        imageIcon = new NamedIconImage(im);
+//        imageIcon = new NamedIconImage(im);
     }
 
     /** {@inheritDoc} */
@@ -160,71 +144,60 @@ public class NamedIconSVG extends NamedIcon {
     @Override
     public int getRotation() {
         return 0;
-//        return imageIcon.getRotation();
     }
 
     /** {@inheritDoc} */
     @Override
     public void setRotation(int pRotation, Component comp) {
-//        imageIcon.setRotation(pRotation, comp);
     }
 
     /** {@inheritDoc} */
     @Override
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
         return null;
-//        return imageIcon.createRotatedImage(pImage, pComponent, pRotation);
     }
 
     /** {@inheritDoc} */
     @Override
     public int getDegrees() {
         return 0;
-//        return imageIcon.getDegrees();
     }
 
     /** {@inheritDoc} */
     @Override
     public double getScale() {
         return 1.0;
-//        return imageIcon.getScale();
     }
 
     /** {@inheritDoc} */
     @Override
     public void setLoad(int d, double s, Component comp) {
-//        imageIcon.setLoad(d, s, comp);
     }
 
     /** {@inheritDoc} */
     @Override
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
-//        imageIcon.transformImage(w, h, t, comp);
     }
 
     /** {@inheritDoc} */
     @Override
     public void scale(double scale, Component comp) {
-//        imageIcon.scale(scale, comp);
     }
 
     /** {@inheritDoc} */
     @Override
     public void rotate(int degree, Component comp) {
-//        imageIcon.rotate(degree, comp);
     }
 
     /** {@inheritDoc} */
     @Override
     public double reduceTo(int width, int height, double limit) {
         return 1.0;
-//        return imageIcon.reduceTo(width, height, limit);
     }
 
     /** {@inheritDoc} */
     @Override
     public void flip(int flip, Component comp) {
-//        imageIcon.flip(flip, comp);
     }
 
     /* * {@inheritDoc} * /
@@ -236,64 +209,87 @@ public class NamedIconSVG extends NamedIcon {
     /** {@inheritDoc} */
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
-        imageIcon.paintIcon(c, g, x, y);
+        Graphics2D g2d = (Graphics2D) g.create();
+//        g2d.scale(5.0, 5.0);
+//        g2d.rotate(Math.toRadians(45));
+        rootNode.paint(g2d);
+        g2d.dispose();
     }
 
     /** {@inheritDoc} */
     @Override
     public Image getImage() {
-        return imageIcon.getImage();
+        return null;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setImage(Image image) {
-        imageIcon.setImage(image);
     }
 
     /** {@inheritDoc} */
     @Override
     public int getIconWidth() {
-        return imageIcon.getIconWidth();
+        return (int) Math.round(rootNode.getBounds().getMaxX()) + 1;
     }
 
     /** {@inheritDoc} */
     @Override
     public int getIconHeight() {
-        return imageIcon.getIconHeight();
-    }
-
-    /**
-     * Read vector image
-     * Use the SAXSVGDocumentFactory to parse the given URI into a DOM.
-     *
-     * @param uri The path to the SVG file to read.
-     * @return A Document instance that represents the SVG file.
-     * @throws IOException The file could not be read.
-     */
-    private Document createSVGDocument( String uri ) throws IOException {
-      String parser = XMLResourceDescriptor.getXMLParserClassName();
-      SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory( parser );
-      return factory.createDocument( uri );
+        return (int) Math.round(rootNode.getBounds().getMaxY()) + 1;
     }
 
 
-    // to handle svg transformation to displayable images
-    private static class MyTranscoder extends ImageTranscoder {
-        private BufferedImage image = null;
-        @Override
-        public BufferedImage createImage(int w, int h) {
-            image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-            return image;
-        }
-        public BufferedImage getImage() {
-            return image;
-        }
-        @Override
-        public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
-            //not required here, do nothing
-        }
+
+
+
+
+
+
+
+/*
+    private void test() throws IOException {
+// 1. Load document
+        String uri = new File("animated.svg").toURI().toString();
+        String parser = XMLResourceDescriptor.getXMLParserClassName();
+        SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
+        SVGDocument doc = factory.createSVGDocument(uri);
+
+// 2. Setup rendering bridge
+        UserAgent userAgent = new UserAgentAdapter();
+        DocumentLoader loader = new DocumentLoader(userAgent);
+        BridgeContext ctx = new BridgeContext(userAgent, loader);
+        ctx.setDynamicState(BridgeContext.DYNAMIC); // Crucial for dynamic updates
+        GVTBuilder builder = new GVTBuilder();
+        GraphicsNode rootNode = builder.build(ctx, doc);
+
+// 3. In your Swing Timer or animation thread:
+        javax.swing.Timer timer = new javax.swing.Timer(16, e -> {
+            // Modify DOM element by ID
+            Element element = doc.getElementById("my-animated-shape");
+            if (element != null) {
+                int xPos = 0;   //AAAA
+                element.setAttribute("transform", "translate(" + xPos + ", 0)");
+            }
+
+            // Force Batik to re-evaluate the dynamic changes into the GVT tree
+            // (For complex updates, you may need to re-assoc or update specific nodes)
+//AAAA            panel.repaint();
+        });
+        timer.start();
     }
+
+// 4. Inside your JComponent's paintComponent(Graphics g):
+//    @Override
+    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+//AAAA        rootNode.paint(g2d);
+        g2d.dispose();
+    }
+*/
+
+
 
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedIconSVG.class);
