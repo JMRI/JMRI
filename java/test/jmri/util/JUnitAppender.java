@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Assertions;
 @Plugin(name="JUnitAppender", category="Core", elementType="appender", printObject=true)
 public class JUnitAppender extends AbstractAppender {
 
-    protected JUnitAppender(final String name, final Filter filter, final Layout<? extends Serializable> layout, 
+    protected JUnitAppender(final String name, final Filter filter, final Layout<? extends Serializable> layout,
             final boolean ignoreExceptions, final Property[] properties) {
         super(name, filter, layout, ignoreExceptions, properties );
         activateInstance();
@@ -605,6 +605,17 @@ public class JUnitAppender extends AbstractAppender {
      */
     public static void suppressWarnMessageStartsWith(String msg) {
         suppressMessageStartsWith(Level.WARN, msg);
+    }
+
+    /**
+     * If there's a next matching message of Info severity, just ignore it.
+     * Not an error if not present; mismatch is an error.
+     * White space is ignored.
+     *
+     * @param msg the message to suppress
+     */
+    public static void suppressInfoMessage(String msg) {
+        suppressMessage(Level.INFO, msg);
     }
 
     /**
