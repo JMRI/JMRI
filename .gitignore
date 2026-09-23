@@ -75,6 +75,7 @@ RemoteSystemsTempFiles
 
 # CATS source, sometimes present for test
 /java/src/cats
+/java/src/designer
 
 # OS junk files
 [Tt]humbs.db
