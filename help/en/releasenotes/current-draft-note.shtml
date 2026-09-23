@@ -97,6 +97,8 @@
             <ul>
                 <li>Fixed a problem where an Intellibox-II would
                     have power on/off problems after CV programming.</li>
+                <li>A LocoNet connection now reconnects if the connection goes down and then comes up again.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
