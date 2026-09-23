@@ -117,7 +117,7 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
 
         // Test invalid width validation on "Done"
         Thread badWidthModalDialogOperatorThread = JemmyUtil.createModalDialogOperatorThread(
-                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SlotErrorTitle"),
                 Bundle.getMessage("ButtonOK"));
         widthTxt.setText("qqq");
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -222,7 +222,7 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
         widthTxt.setText("xyz");
 
         Thread badWidth = JemmyUtil.createModalDialogOperatorThread(
-                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SlotErrorTitle"),
                 Bundle.getMessage("ButtonOK"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();

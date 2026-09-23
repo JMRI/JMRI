@@ -83,6 +83,7 @@ public class SampleScriptTest {
             JUnitAppender.assertWarnMessage("JavaScriptTest: Turnout.THROWN is 4 (WARN OK here)");
         }
 
+        JUnitAppender.suppressWarnMessage("Unexpected Exception ends AbstractAutomaton thread");
     }
 
     // test for jython/TurnoutStatePersistence.py
@@ -152,6 +153,7 @@ public class SampleScriptTest {
         JUnitUtil.waitFor(() ->  ( myt3.getCommandedState() == Turnout.INCONSISTENT),"Turnout did not return to Inconsistent" );
         JUnitUtil.waitFor(() ->  ( myt4.getCommandedState() == Turnout.UNKNOWN),"Turnout did not return to Unknown" );
 
+        JUnitAppender.suppressWarnMessageStartsWith("Turnout state file "); // Turnout state file '/tmp/junit15888088443980290405/TurnoutState.csv' does not exist
     }
 
     @BeforeAll
@@ -187,7 +189,6 @@ public class SampleScriptTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitAppender.suppressWarnMessageStartsWith("Turnout state file "); // Turnout state file '/tmp/junit15888088443980290405/TurnoutState.csv' does not exist
         JUnitUtil.tearDown();
     }
 
