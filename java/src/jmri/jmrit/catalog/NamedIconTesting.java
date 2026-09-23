@@ -121,24 +121,28 @@ public class NamedIconTesting extends NamedIcon {
     /** {@inheritDoc} */
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
+
+//        ((javax.swing.JLabel)c).setDoubleBuffered(true);
+//        ((javax.swing.JLabel)c).setOpaque(false);
+//        ((javax.swing.JLabel)c).setOpaque(true);
+
         int w = getIconWidth();
         int h = getIconHeight();
-        angle++;
-        int xx = (int) Math.round(Math.cos(Math.toRadians(angle)) * w / 2);
-        int yy = (int) Math.round(Math.sin(Math.toRadians(angle)) * h / 2);
+        int xx = (int) Math.round(Math.cos(Math.toRadians(angle/3.0)) * w / 2);
+        int yy = (int) Math.round(Math.sin(Math.toRadians(angle/3.0)) * h / 2);
         g.drawLine(x-xx+w/2, y-yy+h/2, x+xx+w/2, y+yy+h/2);
 
         synchronized(this) {
             if (animator == null) {
                 animator = new Animator(c);
-                TimerUtil.schedule(animator, 100, 100);
+                TimerUtil.schedule(animator, 100, 10);
             }
         }
     }
 
     private Animator animator;
 
-    private static class Animator extends java.util.TimerTask {
+    private class Animator extends java.util.TimerTask {
         private final Component c;
 
         private Animator(Component c) {
@@ -147,6 +151,7 @@ public class NamedIconTesting extends NamedIcon {
 
         @Override
         public void run() {
+            angle++;
             c.repaint();
         }
 
@@ -168,13 +173,13 @@ public class NamedIconTesting extends NamedIcon {
     /** {@inheritDoc} */
     @Override
     public int getIconWidth() {
-        return 100;
+        return 1000;
     }
 
     /** {@inheritDoc} */
     @Override
     public int getIconHeight() {
-        return 100;
+        return 1000;
     }
 
 }
