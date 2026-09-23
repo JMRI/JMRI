@@ -308,7 +308,7 @@ public enum LnCommandStationType {
             ),
     COMMAND_STATION_IBX_TYPE_2("Intellibox-II",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
-            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            ProgDepowersTrack.TRACK_TURNEDOFF_BY_PROGRAMMING,
             "Ib2ThrottleManager", "UhlenbrockSlotManager",  // NOI18N
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.NO_MULTIMETER_SUPPORT,

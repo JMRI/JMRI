@@ -12,7 +12,7 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>7</minor>
+    <minor>17</minor>
     <test>3</test>
     <modifier>plus</modifier>
   </jmriversion>
@@ -60,7 +60,7 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="10:58 PM">
+    <memory>
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -70,7 +70,7 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Jan 01 01:00:00 CET 1970" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Jan 01 00:00:00 UTC 1970" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -561,12 +561,4 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
       </MaleSocket>
     </LogLocalVariables>
   </LogixNGDigitalActions>
-  <filehistory>
-    <operation>
-      <type>Store</type>
-      <date>Tue Feb 06 22:58:32 CET 2024</date>
-      <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/WebRequest_temp.xml</filename>
-    </operation>
-  </filehistory>
-  <!--Written by JMRI version 5.7.3plus+daniel+2024-02-06T21:58:15Z+RUNKNOWN on Tue Feb 06 22:58:32 CET 2024-->
 </layout-config>

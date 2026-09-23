@@ -151,4 +151,13 @@ public interface Reporter extends NamedBean {
     @Override
     int getState();
 
+    /**
+     * Informs this reporter that a tag previously reported here has been
+     * seen at another reporter.
+     *
+     * @param tag the tag seen elsewhere
+     * @param newReporter the reporter where the tag was newly detected
+     */
+    void notifySeenElsewhere(IdTag tag, Reporter newReporter);
+
 }

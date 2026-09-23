@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Correct E-Stop command sent when throttle is in reverse.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -81,12 +81,22 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>A throttle waiting for a reply which never arrives now gives up
+                    and resumes sending: after 5 seconds once the connection has
+                    nothing left in hand, 15 seconds otherwise. On a serial XpressNet
+                    connection a broadcast message arriving while a command is in
+                    flight could be taken for that command's reply, leaving the
+                    throttle waiting forever and silently holding back every
+                    command queued afterwards for the rest of the session.</li>
+                <li>Roco and Z21 throttles now stop their timers when they are
+                    disposed of, instead of leaving them running for the rest of
+                    the session.</li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem where an Intellibox-II would
+                    have power on/off problems after CV programming.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -126,7 +136,15 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The "Make Sensor" and "Make Turnout" buttons in the configuration
+                    panel used to require a non-empty description field to put a 
+                    user name on the Sensor/Turnout they'd create. Absent that, they
+                    wouldn't appear. A description is no longer required; if one
+                    is not present, the Sensor or Turnout will be created without 
+                    a user name.</li>
+                <li>Updated the Reporter to set the RailCom orientation instead
+                    of direction (WEST/EAST if the appropriate bit is set in
+                    the report).</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -670,5 +688,6 @@
         <ul>
             <li>The "noverify" option has been removed from the JMRI program
                 launchers so that JMRI can use Java 27 and later.</li>
+            <li>For JMRI developers: CI tests now fails on WARN logging messages.</li>
         </ul>
 

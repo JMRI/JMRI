@@ -32,24 +32,38 @@ public class AbstractIdTagReporter extends AbstractReporter
     }
 
     /**
+     * Indicates whether the underlying hardware sends messages determining
+     * when an Id is no longer in this reporter (e.g. RailCom block occupancy exit events).
+     * <p>
+     * When {@code false} (e.g. RFID point detectors), seeing a tag elsewhere implies
+     * it has departed this reporter.
+     * When {@code true}, departure is strictly governed by hardware exit/clear messages.
+     *
+     * @return true if hardware sends explicit exit/departure messages; false otherwise.
+     */
+    public boolean hasExitReports() {
+        return false;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void notify(IdTag id) {
-        log.debug("Notify: {}",mSystemName);
+        log.debug("Notify: {}", mSystemName);
         if (id != null) {
-            log.debug("Tag {} notified in {}",id, this);
+            log.debug("Tag {} notified in {}", id, this);
             // do not update last reporter and last seen if this is an "exit" report
             // Only happens on LocoNet transponding reports
             var entryexit = id.getProperty("entryexit");
-            if (entryexit == null || ! entryexit.equals("exits")) {
+            if (entryexit == null || !entryexit.equals("exits")) {
                 Reporter r = id.getWhereLastSeen();
                 id.setWhereLastSeen(this);
-                if (r != null) {
-                    log.trace("{} notifyPreviousReporter {}", id, r);
-                    notifyPreviousReporter(r,id);
+                if (r != null && !r.equals(this)) {
+                    log.trace("{} notifySeenElsewhere on {}", id, r);
+                    r.notifySeenElsewhere(id, this);
                 }
-                log.trace("{} last seen here: {}",id, this.mSystemName);
+                log.trace("{} last seen here: {}", id, this.mSystemName);
             } else {
                 log.trace("{} skipping setWhereLastSeen on {} exits report", this, id);
             }
@@ -58,14 +72,13 @@ public class AbstractIdTagReporter extends AbstractReporter
         setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
     }
 
-    private void notifyPreviousReporter(Reporter r, IdTag id) {
-        log.debug("Previous reporter: {}",r.getSystemName());
-        if (!(r.equals(this)) && r.getCurrentReport() == id
-           && (r instanceof IdTagListener)) {
-            log.debug("Notify previous");
-            ((IdTagListener)r).notify(null);
-        } else {
-            log.debug("Current report was: {}",r.getCurrentReport());
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifySeenElsewhere(IdTag tag, Reporter newReporter) {
+        if (!hasExitReports() && !this.equals(newReporter) && getCurrentReport() == tag) {
+            notify(null);
         }
     }
 

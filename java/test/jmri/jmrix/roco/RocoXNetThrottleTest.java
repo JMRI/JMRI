@@ -218,7 +218,10 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @Override
     @AfterEach
     public void tearDown() {
-        // no need to dispose of instance
+        // dispose of the throttle: it is still waiting for the reply to the
+        // status request its constructor sent, and its watchdog has to be
+        // stopped before the next test starts.
+        ((RocoXNetThrottle) instance).throttleDispose();
         if (memo.getThrottleManager() != null) {
             memo.getThrottleManager().dispose();
         }

@@ -1299,7 +1299,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * programming. The default operation is implemented in doEndOfProgramming
      * and turns power back on by sending a GPON message.
      */
-    private boolean mProgEndSequence = false;
+    protected boolean mProgEndSequence = false;
 
     /**
      * Remember whether the attached command station can read from Decoders.

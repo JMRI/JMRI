@@ -144,6 +144,7 @@ public class UhlenbrockPacketizerTest {
         memo.dispose();
         packetizer = null;
         memo = null;
+        JUnitAppender.suppressWarnMessage("sendLocoNetMessage: no connection established");
         JUnitUtil.tearDown();
     }
 

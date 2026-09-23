@@ -48,6 +48,42 @@ public class RfidReporterTest extends jmri.implementation.AbstractReporterTestBa
         Assert.assertEquals("IdTag Seen", IdTag.UNSEEN, r.getState());
     }
 
+    @Test
+    public void testMixedTechnologies() {
+        IdTag tag = (IdTag) generateObjectToReport();
+
+        // Setup a RailCom reporter that has exit reports
+        jmri.implementation.AbstractRailComReporter railcomReporter = new jmri.implementation.AbstractRailComReporter("IR1") {
+            @Override
+            public boolean hasExitReports() {
+                return true;
+            }
+        };
+
+        // Tag seen in RailCom reporter
+        railcomReporter.notify(tag);
+        Assert.assertEquals(tag, railcomReporter.getCurrentReport());
+        Assert.assertEquals(railcomReporter, tag.getWhereLastSeen());
+
+        // Tag seen at RFID reporter 1 (r)
+        ((RfidReporter) r).notify(tag);
+        Assert.assertEquals(tag, r.getCurrentReport());
+        Assert.assertEquals(r, tag.getWhereLastSeen());
+        // RailCom reporter must NOT have cleared because it hasExitReports() == true
+        Assert.assertEquals("RailCom reporter should not be cleared by RFID detection", tag, railcomReporter.getCurrentReport());
+
+        // Tag seen at RFID reporter 2
+        RfidReporter r2 = new RfidReporter("FRB", "Test 2");
+        r2.notify(tag);
+        Assert.assertEquals(tag, r2.getCurrentReport());
+        Assert.assertEquals(r2, tag.getWhereLastSeen());
+
+        // RFID reporter 1 should have been cleared because hasExitReports() == false
+        Assert.assertNull("RFID reporter 1 should be cleared when tag seen at RFID reporter 2", r.getCurrentReport());
+        // RailCom reporter must still retain the tag
+        Assert.assertEquals("RailCom reporter should still not be cleared", tag, railcomReporter.getCurrentReport());
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

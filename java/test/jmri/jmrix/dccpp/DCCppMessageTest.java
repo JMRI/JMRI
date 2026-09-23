@@ -651,7 +651,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testGetAddressedEmergencyStopMsg() {
-        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, true);
         log.debug("emergency stop message = '{}'", msg);
         Assert.assertEquals("length", 11, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 't', msg.getElement(0) & 0xFF);
@@ -665,6 +665,21 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
         Assert.assertEquals("9th byte", ' ', msg.getElement(9) & 0xFF);
         Assert.assertEquals("10th byte", '1', msg.getElement(10) & 0xFF);
+
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, false);
+        log.debug("emergency stop message = '{}'", msg);
+        Assert.assertEquals("length", 11, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 't', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3st byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4rd byte", '2', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5rd byte", '4', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", '-', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
+        Assert.assertEquals("9th byte", ' ', msg.getElement(9) & 0xFF);
+        Assert.assertEquals("10th byte", '0', msg.getElement(10) & 0xFF);
     }
 
     @Test
@@ -677,10 +692,15 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testMonitorStringAddressedEmergencyStopMsg() {
-        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
-        msg = DCCppMessage.makeAddressedEmergencyStop(24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
+
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
     }
 
     @Test
@@ -743,11 +763,18 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testMonitorMakeAddressedEmergencyStop() { 
-        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
         //newer version without register
-        msg = DCCppMessage.makeAddressedEmergencyStop(24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
+
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
+        //newer version without register
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
+
     }
 
     @Test
