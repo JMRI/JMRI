@@ -34,6 +34,8 @@ public class SteamSoundTest {
 
         // GitHub Headless CI workflow doesn't have sound
         JUnitAppender.suppressWarnMessage("Error loading OpenAL libraries: Could not initialize class jogamp.openal.ALImpl");
+        JUnitAppender.suppressWarnMessage("Error loading OpenAL libraries: Could not initialize class jogamp.openal.ALImpl");
+        JUnitAppender.suppressWarnMessage("Error loading OpenAL libraries: Could not initialize class jogamp.openal.ALImpl");
 
         JUnitUtil.tearDown();
     }
