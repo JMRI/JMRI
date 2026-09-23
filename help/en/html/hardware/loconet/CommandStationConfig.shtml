@@ -68,7 +68,7 @@
       set of OpSw settings, the mechanisms which may be used to configure those OpSw settings is
       common across Digitrax command stations.</p>
 
-      <p>The Digitrax manual for yhour command station will generally describe a mechanism where
+      <p>The Digitrax manual for your command station will generally describe a mechanism where
       command station OpSw settings are manipulated using "Switch" control operations issued from a
       throttle, while the command station is in a mode where OpSw settings may be changed. For many
       OpSw settings, once the settings have been changed, the command station may be returned to
