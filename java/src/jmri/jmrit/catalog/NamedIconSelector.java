@@ -26,6 +26,8 @@ public class NamedIconSelector extends NamedIcon {
         if (old.namedIcon != null) {
             if (old.namedIcon instanceof NamedIconImage) {
                 namedIcon = new NamedIconImage((NamedIconImage) old.namedIcon);
+            } else if (old.namedIcon instanceof NamedIconSVG) {
+                namedIcon = new NamedIconSVG((NamedIconSVG) old.namedIcon);
             } else if (old.namedIcon instanceof NamedIconTesting) {
                 namedIcon = new NamedIconTesting(old.namedIcon.getURL(), old.namedIcon.getName());
             } else {
@@ -76,11 +78,13 @@ public class NamedIconSelector extends NamedIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIconSelector(String pUrl, String pName) {
-        // REMOVE THIS!!!
-        // REMOVE THIS!!!
-        // REMOVE THIS!!!
-        // REMOVE THIS!!!
-        if (pUrl.equals("program:resources/clock2.gif")) {
+        if ( pUrl.toUpperCase().endsWith(".SVG") ) {
+            namedIcon = new NamedIconSVG(pUrl, pName);
+        } else if (pUrl.equals("program:resources/clock2.gif")) {
+            // REMOVE THIS!!!
+            // REMOVE THIS!!!
+            // REMOVE THIS!!!
+            // REMOVE THIS!!!
             namedIcon = new NamedIconTesting(pUrl, pName);
         } else {
             namedIcon = new NamedIconImage(pUrl, pName);
