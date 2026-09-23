@@ -53,7 +53,11 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
                         String str = formatReport(item);
                         if (str != null) {
                             if (sb.length() > 0) {
-                                sb.append(" + ");
+                                if (sb.charAt(sb.length() - 1) == ' ') {
+                                    sb.append("+ ");
+                                } else {
+                                    sb.append(" + ");
+                                }
                             }
                             sb.append(str);
                         }
