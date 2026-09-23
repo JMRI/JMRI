@@ -190,6 +190,22 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     }
 
     @Test
+    public void testSetCommandedStateUsesTurnoutOperator() {
+        // DIRECT is the feedback mode used with the "NoFeedback" turnout
+        // automation reported in JMRI/JMRI#15471
+        t.setFeedbackMode(Turnout.DIRECT);
+        t.setInhibitOperation(false);
+        t.setTurnoutOperation(new jmri.NoFeedbackTurnoutOperation("TestRetry", 100, 3));
+
+        t.setCommandedState(Turnout.THROWN);
+
+        JUnitUtil.waitFor(() -> dnis.outbound.size() >= 3, "automation retries sent to layout");
+
+        assertEquals(3, dnis.outbound.size(), "commands sent to layout by automation");
+        assertEquals(Turnout.THROWN, t.getKnownState(), "known state set once automation completes");
+    }
+
+    @Test
     @Override
     public void testDispose() {
         t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
