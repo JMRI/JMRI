@@ -209,7 +209,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         port.dispose();
         port = null;
         for (int i=0; i < 1000; i++) {
-            JUnitAppender.suppressWarnMessage("Throttle 42 - traffic controller at rest with a reply still due after 5000ms in state 1, restarting the queue");
+            JUnitAppender.suppressInfoMessage("Throttle 42 - traffic controller at rest with a reply still due after 5000ms in state 1, restarting the queue");
         }
         JUnitUtil.tearDown();
     }

@@ -1192,7 +1192,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 log.debug("Throttle {} - traffic controller at rest with a reply still due after"
                         + " {}ms in state {}, restarting the queue", getDccAddress(), waited, requestState);
             } else {
-                log.warn("Throttle {} - traffic controller at rest with a reply still due after"
+                log.info("Throttle {} - traffic controller at rest with a reply still due after"
                         + " {}ms in state {}, restarting the queue", getDccAddress(), waited, requestState);
             }
         } else if (waited >= maxWait) {
