@@ -619,6 +619,17 @@ public class JUnitAppender extends AbstractAppender {
     }
 
     /**
+     * If there's a next matching message of Info severity, just ignore it.
+     * Not an error if not present; mismatch is an error.
+     * White space is ignored.
+     * Removes messages of lower or equal severity while looking for a matching one.
+     * @param msg text at start of the message to suppress
+     */
+    public static void suppressInfoMessageStartsWith(String msg) {
+        suppressMessageStartsWith(Level.INFO, msg);
+    }
+
+    /**
      * See if a message (completely matching particular text) has been emitted
      * yet.
      * White space is ignored.
