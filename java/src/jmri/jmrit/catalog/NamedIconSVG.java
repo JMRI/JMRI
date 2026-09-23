@@ -15,13 +15,10 @@ import org.apache.batik.bridge.*;
 import org.apache.batik.gvt.GraphicsNode;
 
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.w3c.dom.Document;
 import org.w3c.dom.svg.SVGDocument;
 
 public class NamedIconSVG extends NamedIcon {
 
-//    private final ImageIcon imageIcon;
-    private Document svgImage = null;   // a place to store the original document that is a vector image (svg file)
     private GraphicsNode rootNode;
     private String url;
     private String name;
