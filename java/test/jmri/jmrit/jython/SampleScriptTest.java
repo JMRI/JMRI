@@ -83,6 +83,7 @@ public class SampleScriptTest {
             JUnitAppender.assertWarnMessage("JavaScriptTest: Turnout.THROWN is 4 (WARN OK here)");
         }
 
+        JUnitAppender.suppressWarnMessage("Unexpected Exception ends AbstractAutomaton thread");
     }
 
     // test for jython/TurnoutStatePersistence.py
