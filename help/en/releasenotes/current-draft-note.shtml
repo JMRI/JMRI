@@ -485,6 +485,8 @@
                 columns that the GUI will display. Note that the fixed width
                 interacts with selection:  If you select a wider fixed width,
                 blank areas will display on either side.
+            <li>A bug introduced in JMRI 5.17.3 would cause display problems with
+                layout editor windows that had been zoomed. This has been fixed.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
