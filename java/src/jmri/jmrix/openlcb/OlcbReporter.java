@@ -294,6 +294,8 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
             entryOrder.remove(tag);
             if (getCurrentReport() == tag) {
                 updateCurrentReportAfterExit();
+            } else {
+                notifyCollectionUpdated();
             }
             return; // having cleared the reporter earlier
         }
