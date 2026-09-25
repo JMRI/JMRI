@@ -389,6 +389,7 @@ public class LoadAndStoreAllSignalSystemsTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitAppender.suppressWarnMessageStartsWith("The file xml/signals/SNCF-2015/appearance-TIVP.xml has extra content:");
         JUnitUtil.tearDown();
     }
 

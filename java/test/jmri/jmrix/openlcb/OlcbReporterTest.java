@@ -295,6 +295,70 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         
     }
 
+    @Test
+    public void testMetadataUpdateNotification() {
+        java.util.List<java.beans.PropertyChangeEvent> events = new java.util.ArrayList<>();
+        r.addPropertyChangeListener(events::add);
+
+        // 256 enters with UNKNOWN orientation
+        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.flush();
+        Assert.assertEquals(1, ((OlcbReporter) r).getCollection().size());
+        // Verify PROPERTY_REPORT_METADATA was fired on initial string creation
+        Assert.assertTrue(events.stream().anyMatch(e -> jmri.Reporter.PROPERTY_REPORT_METADATA.equals(e.getPropertyName())));
+        Assert.assertTrue(events.stream().anyMatch(e -> jmri.Reporter.PROPERTY_CURRENT_REPORT.equals(e.getPropertyName())));
+
+        events.clear();
+        // 256 updates orientation to WEST
+        ti.sendMessage(":X195B4123N0102030405064100;");
+        ti.flush();
+        // Because 256 was already currentReport, currentReport does not fire, but metadata update MUST fire
+        Assert.assertTrue("Metadata update should fire on orientation change",
+                events.stream().anyMatch(e -> jmri.Reporter.PROPERTY_REPORT_METADATA.equals(e.getPropertyName())));
+
+        events.clear();
+        // 256 sends repeat packet with same orientation (WEST)
+        ti.sendMessage(":X195B4123N0102030405064100;");
+        ti.flush();
+        // No metadata change, so metadata update should NOT fire
+        Assert.assertFalse("Metadata update should not fire when string rendering is unchanged",
+                events.stream().anyMatch(e -> jmri.Reporter.PROPERTY_REPORT_METADATA.equals(e.getPropertyName())));
+    }
+
+    @Test
+    public void testCollectionNotificationOnNonCurrentExit() {
+        java.util.List<java.beans.PropertyChangeEvent> events = new java.util.ArrayList<>();
+
+        // 256 enters
+        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.flush();
+
+        // 257 enters (now currentReport is 257)
+        ti.sendMessage(":X195B4123N010203040506C101;");
+        ti.flush();
+        Assert.assertEquals("RD257", r.getCurrentReport().toString());
+        Assert.assertEquals(2, ((OlcbReporter) r).getCollection().size());
+
+        r.addPropertyChangeListener(events::add);
+
+        // 256 exits (256 was NOT currentReport, 257 was)
+        Message m = new ProducerIdentifiedMessage(ti.iface.getNodeId(), new EventID("01.02.03.04.05.06.C1.00"), EventState.Invalid);
+        ti.iface.getOutputConnection().put(m, null);
+        ti.flush();
+
+        Assert.assertEquals(1, ((OlcbReporter) r).getCollection().size());
+        Assert.assertEquals("RD257", r.getCurrentReport().toString());
+        // Collection update MUST have fired even though currentReport didn't change
+        Assert.assertTrue("Collection update must fire when non-current loco exits",
+                events.stream().anyMatch(e -> jmri.Reporter.PROPERTY_COLLECTION.equals(e.getPropertyName())));
+        // Verify oldValue is null as required by specification
+        java.beans.PropertyChangeEvent collEvt = events.stream()
+                .filter(e -> jmri.Reporter.PROPERTY_COLLECTION.equals(e.getPropertyName()))
+                .findFirst().orElseThrow();
+        Assert.assertNull(collEvt.getOldValue());
+        Assert.assertNotNull(collEvt.getNewValue());
+    }
+
 
     @Override
     @BeforeEach

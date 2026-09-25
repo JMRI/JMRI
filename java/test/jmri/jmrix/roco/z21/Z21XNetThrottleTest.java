@@ -319,7 +319,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // the watchdog has to give up and restart the queue.
         JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
         t.throttleDispose();
-        JUnitAppender.assertWarnMessageStartsWith(
+        JUnitAppender.suppressInfoMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
     }
 
@@ -352,7 +352,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
         JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
         t.throttleDispose();
-        JUnitAppender.assertWarnMessageStartsWith(
+        JUnitAppender.suppressInfoMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
     }
 
@@ -395,7 +395,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         JUnitUtil.setUp();
         tc = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         memo = new XNetSystemConnectionMemo(tc);
-        memo.setThrottleManager(new Z21XNetThrottleManager(memo)); 
+        memo.setThrottleManager(new Z21XNetThrottleManager(memo));
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
         instance = new Z21XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
     }

@@ -113,6 +113,16 @@ public interface Reporter extends NamedBean {
     String PROPERTY_CURRENT_REPORT = "currentReport";
 
     /**
+     * String constant for report metadata updates.
+     */
+    String PROPERTY_REPORT_METADATA = "reportMetadata";
+
+    /**
+     * String constant for collection updates on collecting reporters.
+     */
+    String PROPERTY_COLLECTION = "collection";
+
+    /**
      * Query the last report. This will return a value even if there's no
      * current report available. If there is a current report, both this and the
      * current report will be equal. If nothing has ever been reported, this

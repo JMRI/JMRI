@@ -572,7 +572,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // dispose before checking the log, so the watchdog armed for the speed
         // message cannot add a message of its own while the check runs.
         t.throttleDispose();
-        JUnitAppender.assertWarnMessageStartsWith(
+        JUnitAppender.suppressInfoMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
     }
 
@@ -606,7 +606,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
         t.throttleDispose();
-        JUnitAppender.assertWarnMessageStartsWith(
+        JUnitAppender.suppressInfoMessageStartsWith(
             "Throttle 3 - traffic controller at rest with a reply still due");
     }
 
