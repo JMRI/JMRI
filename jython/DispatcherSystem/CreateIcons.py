@@ -1116,10 +1116,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def addSmallIcon(self, panel, sensorName, x, y):
         icn = jmri.jmrit.display.SensorIcon(panel)
-        icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-occupied.gif", "active"));
-        icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "inactive"));
-        icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "incons"));
-        icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "unknown"));
+        icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-occupied.gif", "active"));
+        icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "inactive"));
+        icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif", "incons"));
+        icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif", "unknown"));
 
         # Assign the sensor and set the location
         icn.setSensor(sensorName)
@@ -1133,10 +1133,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def addMediumIcon(self, panel, sensor, x, y):
         icn = jmri.jmrit.display.SensorIcon(panel)
-        icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIcon("resources/icons/mediumschematics/LEDs/AMBERLED.gif", "active"));
-        icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/mediumschematics/LEDs/GRAYLED.gif", "inactive"));
-        icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIcon("resources/icons/mediumschematics/LEDs/REDLED.gif", "incons"));
-        icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIcon("resources/icons/mediumschematics/LEDs/REDLED.gif", "unknown"));
+        icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/mediumschematics/LEDs/AMBERLED.gif", "active"));
+        icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/mediumschematics/LEDs/GRAYLED.gif", "inactive"));
+        icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIconSelector("resources/icons/mediumschematics/LEDs/REDLED.gif", "incons"));
+        icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIconSelector("resources/icons/mediumschematics/LEDs/REDLED.gif", "unknown"));
 
         # Assign the sensor and set the location
         icn.setSensor(sensor.getDisplayName())
@@ -1150,10 +1150,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def addMarkerIcon(self, panel, sensor, blockName, x, y):
         icn = jmri.jmrit.display.SensorIcon(panel)
-        icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-green.gif", "active"));
-        icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-red.gif", "inactive"));
-        icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-yellow.gif", "incons"));
-        icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-gray.gif", "unknown"));
+        icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/markers/loco-green.gif", "active"));
+        icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/markers/loco-red.gif", "inactive"));
+        icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIconSelector("resources/icons/markers/loco-yellow.gif", "incons"));
+        icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIconSelector("resources/icons/markers/loco-gray.gif", "unknown"));
         if len(blockName) > 9:
             icn.setText(blockName[:11])
             icn.getPopupUtility().setFontSize(9)

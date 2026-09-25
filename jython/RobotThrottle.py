@@ -946,21 +946,21 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
 
         # get other setup things
 
-        self.greenSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-green-short.gif", "GreenCabSignal")
+        self.greenSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/searchlights/right-green-short.gif", "GreenCabSignal")
         self.greenSignalIcon.setRotation(1, temppanel4)
-        self.greenFlashSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-flashgreen-short.gif", "GreenFlashCabSignal")
+        self.greenFlashSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/searchlights/right-flashgreen-short.gif", "GreenFlashCabSignal")
         self.greenFlashSignalIcon.setRotation(1, temppanel4)
-        self.yellowSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-yellow-short.gif", "YellowCabSignal")
+        self.yellowSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/searchlights/right-yellow-short.gif", "YellowCabSignal")
         self.yellowSignalIcon.setRotation(1, temppanel4)
-        self.yellowFlashSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-flashyellow-short.gif", "YellowFlashCabSignal")
+        self.yellowFlashSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/searchlights/right-flashyellow-short.gif", "YellowFlashCabSignal")
         self.yellowFlashSignalIcon.setRotation(1, temppanel4)
-        self.redSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-red-short.gif", "RedCabSignal")
+        self.redSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/searchlights/right-red-short.gif", "RedCabSignal")
         self.redSignalIcon.setRotation(1, temppanel4)
-        self.redFlashSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-flashred-short.gif", "RedFlashCabSignal")
+        self.redFlashSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/searchlights/right-flashred-short.gif", "RedFlashCabSignal")
         self.redFlashSignalIcon.setRotation(1, temppanel4)
-        self.darkSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-dark-short.gif", "DarkCabSignal")
+        self.darkSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/searchlights/right-dark-short.gif", "DarkCabSignal")
         self.darkSignalIcon.setRotation(1, temppanel4)
-        self.unknownSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/misc/Question-black.gif", "UnknownCabSignal")
+        self.unknownSignalIcon = jmri.jmrit.catalog.NamedIconSelector("resources/icons/misc/Question-black.gif", "UnknownCabSignal")
         
         # Put contents in frame and display
         self.scriptFrame.contentPane.add(temppanel1)

@@ -82,10 +82,10 @@ def addOccupancyIconsAndLabels(panel):
 def addSmallIcon(panel, sensorName, x, y):
     global adds
     icn = jmri.jmrit.display.SensorIcon(panel)
-    icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-occupied.gif", "active"));
-    icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "inactive"));
-    icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "incons"));
-    icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "unknown"));
+    icn.setIcon("SensorStateActive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-occupied.gif", "active"));
+    icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "inactive"));
+    icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif", "incons"));
+    icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIconSelector("resources/icons/smallschematics/tracksegments/circuit-error.gif", "unknown"));
 
     # Assign the sensor and set the location
     icn.setSensor(sensorName)
