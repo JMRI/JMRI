@@ -1,7 +1,7 @@
 import java
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
-import jmri.jmrit.catalog.NamedIcon as NamedIcon
+import jmri.jmrit.catalog.NamedIconSelector as NamedIconSelector
 import jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction as LoadDefaultXmlThrottlesLayoutAction
 import javax.swing.JButton as JButton
 
