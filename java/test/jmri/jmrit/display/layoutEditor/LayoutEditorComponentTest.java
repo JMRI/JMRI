@@ -7,10 +7,10 @@ import org.junit.Assume;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
+// import java.awt.Graphics2D;
+// import java.awt.Rectangle;
+// import java.awt.geom.Rectangle2D;
+// import java.awt.image.BufferedImage;
 
 /**
  *
