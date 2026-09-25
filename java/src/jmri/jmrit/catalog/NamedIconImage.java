@@ -1,38 +1,26 @@
 package jmri.jmrit.catalog;
 
-import java.awt.Component;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.MemoryImageSource;
-import java.awt.image.PixelGrabber;
-import java.awt.image.RenderedImage;
+import java.awt.image.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
+
 import javax.annotation.CheckForNull;
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.ImageWriter;
+import javax.imageio.*;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
+
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.FileUtil;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
@@ -49,26 +37,26 @@ import org.slf4j.LoggerFactory;
  *
  * Modified by Joe Comuzzi and Larry Allen to rotate animated GIFs
  */
-public class NamedIcon extends ImageIcon {
+public class NamedIconImage extends NamedIcon {
 
     /**
-     * Create a NamedIcon that is a complete copy of an existing NamedIcon
+     * Create a NamedIconImage that is a complete copy of an existing NamedIconImage
      *
      * @param pOld Object to copy i.e. copy of the original icon, but NOT a
      *             complete copy of pOld (no transformations done)
      */
-    public NamedIcon(NamedIcon pOld) {
+    public NamedIconImage(NamedIconImage pOld) {
         this(pOld.mURL, pOld.mName, pOld.mGifInfo);
     }
 
     /**
-     * Create a NamedIcon that is really a complete copy of an existing
-     * NamedIcon
+     * Create a NamedIconImage that is really a complete copy of an existing
+     * NamedIconImage
      *
      * @param pOld Object to copy
      * @param comp the container the new icon is embedded in
      */
-    public NamedIcon(NamedIcon pOld, Component comp) {
+    public NamedIconImage(NamedIconImage pOld, Component comp) {
         this(pOld.mURL, pOld.mName, pOld.mGifInfo);
         setLoad(pOld._degrees, pOld._scale, comp);
         setRotation(pOld.mRotation, comp);
@@ -83,7 +71,7 @@ public class NamedIcon extends ImageIcon {
      * @param pUrl  URL of image file to load
      * @param pName Human-readable name for the icon
      */
-    public NamedIcon(String pUrl, String pName) {
+    public NamedIconImage(String pUrl, String pName) {
         this(pUrl, pName, null);
 
         // See if this is a GIF file and if it is, see if it's animated. If it is,
@@ -97,7 +85,7 @@ public class NamedIcon extends ImageIcon {
             InputStream is = FileUtil.findInputStream(pUrl);
             // findInputStream can return null, which has to be handled.
             if (is == null) {
-                log.warn("NamedIcon can't scan {} for animated status", pUrl);
+                log.warn("NamedIconImage can't scan {} for animated status", pUrl);
                 return;
             }
 
@@ -145,8 +133,8 @@ public class NamedIcon extends ImageIcon {
      * @param pName Human-readable name for the icon
      * @param pGifState  Breakdown of GIF Image metadata and frames
      */
-    public NamedIcon(String pUrl, String pName, GIFMetadataImages pGifState) {
-        super(substituteDefaultUrl(pUrl));
+    public NamedIconImage(String pUrl, String pName, GIFMetadataImages pGifState) {
+        super(Inherited.Yes, substituteDefaultUrl(pUrl));
         URL u = FileUtil.findURL(pUrl);
         if (u == null) {
             log.warn("Could not load image from {} (file does not exist)", pUrl);
@@ -166,7 +154,7 @@ public class NamedIcon extends ImageIcon {
         URL url = FileUtil.findURL(pUrl, FileUtil.Location.ALL);
         if (url == null) {
             url = FileUtil.findURL(DEFAULTURL);
-            log.error("Did not find \"{}\" for NamedIcon, substitute {}", pUrl, url);
+            log.error("Did not find \"{}\" for NamedIconImage, substitute {}", pUrl, url);
         }
         return url;
     }
@@ -177,37 +165,19 @@ public class NamedIcon extends ImageIcon {
      * @param pUrl  String-form URL of image file to load
      * @param pName Human-readable name for the icon
      */
-    public NamedIcon(URL pUrl, String pName) {
+    public NamedIconImage(URL pUrl, String pName) {
         this(pUrl.toString(), pName);
     }
 
 
     /**
-     * Create a named icon from an Image. N.B. NamedIcon's create
+     * Create a named icon from an Image. N.B. NamedIconImage's create
      * using this constructor can NOT be animated GIFs
      * @param im Image to use
      */
-    public NamedIcon(Image im) {
-        super(im);
+    public NamedIconImage(Image im) {
+        super(Inherited.Yes, im);
         mDefaultImage = getImage();
-    }
-
-    /**
-     * Find the NamedIcon corresponding to a file path. Understands the
-     * <a href="http://jmri.org/help/en/html/doc/Technical/FileNames.shtml">standard
-     * portable filename prefixes</a>.
-     *
-     * @param path The path to the file, either absolute or portable
-     * @return the desired icon with this same name as its path
-     */
-    public static NamedIcon getIconByName(String path) {
-        if (path == null || path.isEmpty()) {
-            return null;
-        }
-        if (FileUtil.findURL(path) == null) {
-            return null;
-        }
-        return new NamedIcon(path, path);
     }
 
     /**
@@ -634,10 +604,6 @@ public class NamedIcon extends ImageIcon {
         return scale;
     }
 
-    public static final int NOFLIP = 0X00;
-    public static final int HORIZONTALFLIP = 0X01;
-    public static final int VERTICALFLIP = 0X02;
-
     public void flip(int flip, Component comp) {
         if (flip == NOFLIP) {
             setImage(mDefaultImage);
@@ -661,6 +627,6 @@ public class NamedIcon extends ImageIcon {
         transformImage(w, h, _transformF, null);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NamedIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedIconImage.class);
 
 }
