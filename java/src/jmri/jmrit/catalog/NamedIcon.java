@@ -41,7 +41,7 @@ public class NamedIcon extends ImageIcon {
     /**
      * Tell the constructor that it is called by a sub class.
      */
-    protected enum Inherited { Yes };
+    protected enum Inherited { Yes }
 
     private final NamedIcon namedIcon;
 
@@ -105,22 +105,17 @@ public class NamedIcon extends ImageIcon {
             throw new UnsupportedOperationException("This constructor must not be called by a sub class. Pass the parameter Inherited.Yes to the constructor.");
         }
 
-        if (!(pOld instanceof NamedIcon)) {
-            throw new IllegalArgumentException("pOld is of unknown class: " + (pOld != null ? pOld.getClass().getName() : "null"));
-        }
-
-        NamedIcon old = (NamedIcon) pOld;
-        if (old.namedIcon != null) {
-            if (old.namedIcon instanceof NamedIconImage) {
-                namedIcon = new NamedIconImage((NamedIconImage) old.namedIcon);
-            } else if (old.namedIcon instanceof NamedIconSVG) {
-                namedIcon = new NamedIconSVG((NamedIconSVG) old.namedIcon);
-            } else if (old.namedIcon instanceof NamedIconTesting) {
-                namedIcon = new NamedIconTesting(old.namedIcon.getURL(), old.namedIcon.getName());
+        if (pOld.namedIcon != null) {
+            if (pOld.namedIcon instanceof NamedIconImage) {
+                namedIcon = new NamedIconImage((NamedIconImage) pOld.namedIcon);
+            } else if (pOld.namedIcon instanceof NamedIconSVG) {
+                namedIcon = new NamedIconSVG((NamedIconSVG) pOld.namedIcon);
+            } else if (pOld.namedIcon instanceof NamedIconTesting) {
+                namedIcon = new NamedIconTesting(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
             } else {
                 throw new IllegalArgumentException(
                         "pOld.namedIcon is of unknown class: "
-                        + (old.namedIcon != null ? old.namedIcon.getClass().getName() : "null"));
+                        + (pOld.namedIcon != null ? pOld.namedIcon.getClass().getName() : "null"));
             }
         } else {
             throw new IllegalArgumentException("pOld is a NamedIcon where namedIcon is null");
@@ -139,20 +134,15 @@ public class NamedIcon extends ImageIcon {
             throw new UnsupportedOperationException("This constructor must not be called by a sub class. Pass the parameter Inherited.Yes to the constructor.");
         }
 
-        if (!(pOld instanceof NamedIcon)) {
-            throw new IllegalArgumentException("pOld is of unknown class: " + (pOld != null ? pOld.getClass().getName() : "null"));
-        }
-
-        NamedIcon old = (NamedIcon) pOld;
-        if (old.namedIcon != null) {
-            if (old.namedIcon instanceof NamedIconImage) {
-                namedIcon = new NamedIconImage((NamedIconImage) old.namedIcon, comp);
-            } else if (old.namedIcon instanceof NamedIconTesting) {
-                namedIcon = new NamedIconTesting(old.namedIcon.getURL(), old.namedIcon.getName());
+        if (pOld.namedIcon != null) {
+            if (pOld.namedIcon instanceof NamedIconImage) {
+                namedIcon = new NamedIconImage((NamedIconImage) pOld.namedIcon, comp);
+            } else if (pOld.namedIcon instanceof NamedIconTesting) {
+                namedIcon = new NamedIconTesting(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
             } else {
                 throw new IllegalArgumentException(
                         "pOld.namedIcon is of unknown class: "
-                        + (old.namedIcon != null ? old.namedIcon.getClass().getName() : "null"));
+                        + (pOld.namedIcon != null ? pOld.namedIcon.getClass().getName() : "null"));
             }
         } else {
             throw new IllegalArgumentException("pOld is a NamedIcon where namedIcon is null");
