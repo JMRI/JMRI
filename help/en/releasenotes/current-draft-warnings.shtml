@@ -4,5 +4,11 @@
         cause Windows to emit some security warnings until it's 
         been used enough times that Windows calms down.
     </li>
+    <li>The <strong>jmri.jmrit.catalog.NamedIcon</strong> class has been
+        changed. If you are using JMRI as a library, please check that
+        your code is still compatible. If you get the error message
+        <strong>jmri.jmrit.catalog.NamedIcon is abstract; cannot be instantiated</strong>,
+        replace <strong>NamedIcon</strong> with <strong>NamedIconSelector</strong>
+        when you create a new instance of NamedIcon.</li>
     <li>
     </li>
