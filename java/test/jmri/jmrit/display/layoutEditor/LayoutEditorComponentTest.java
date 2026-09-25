@@ -27,38 +27,44 @@ public class LayoutEditorComponentTest {
         JUnitUtil.dispose(le);
     }
 
-    /**
-     * The clip held by the component is the visible part of the panel, used to
-     * cull drawing. It must be intersected with the clip Swing supplied, not
-     * substituted for it, so that a partial repaint stays partial.
-     */
-    @Test
-    public void testPaintStaysInsideRequestedClip() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor le = new LayoutEditor("Layout Editor Component Clip Test Layout");
-        LayoutEditorComponent t = new LayoutEditorComponent(le);
-
-        // the visible area of the panel, as adjustClip() would set it
-        t.setClip(new Rectangle2D.Double(0, 0, 400, 400));
-
-        BufferedImage image = new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = image.createGraphics();
-        try {
-            // the small area Swing asked to be repainted, e.g. one icon
-            Rectangle requested = new Rectangle(100, 100, 20, 20);
-            g2.setClip(requested);
-
-            t.paint(g2);
-
-            Rectangle after = g2.getClipBounds();
-            Assert.assertNotNull("clip still set after painting", after);
-            Assert.assertTrue("painting stayed inside the requested clip, was " + after,
-                    requested.contains(after));
-        } finally {
-            g2.dispose();
-        }
-        JUnitUtil.dispose(le);
-    }
+    // This test is commented out because LayoutEditor no longer does the 
+    // intersection of the clipping.  This was not drawing the display properly
+    // when zoomed in or out.  The test is kept in case somebody revisits the
+    // limited drawing and fixes that issue, in which case restoring this test
+    // (perhaps in modified form) might be appropriate
+    //
+    //    /**
+    //     * The clip held by the component is the visible part of the panel, used to
+    //     * cull drawing. It must be intersected with the clip Swing supplied, not
+    //     * substituted for it, so that a partial repaint stays partial.
+    //     */
+    //     @Test
+    //     public void testPaintStaysInsideRequestedClip() {
+    //         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    //         LayoutEditor le = new LayoutEditor("Layout Editor Component Clip Test Layout");
+    //         LayoutEditorComponent t = new LayoutEditorComponent(le);
+    // 
+    //         // the visible area of the panel, as adjustClip() would set it
+    //         t.setClip(new Rectangle2D.Double(0, 0, 400, 400));
+    // 
+    //         BufferedImage image = new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
+    //         Graphics2D g2 = image.createGraphics();
+    //         try {
+    //             // the small area Swing asked to be repainted, e.g. one icon
+    //             Rectangle requested = new Rectangle(100, 100, 20, 20);
+    //             g2.setClip(requested);
+    // 
+    //             t.paint(g2);
+    // 
+    //             Rectangle after = g2.getClipBounds();
+    //             Assert.assertNotNull("clip still set after painting", after);
+    //             Assert.assertTrue("painting stayed inside the requested clip, was " + after,
+    //                     requested.contains(after));
+    //         } finally {
+    //             g2.dispose();
+    //         }
+    //         JUnitUtil.dispose(le);
+    //     }
 
     @BeforeEach
     public void setUp() {
