@@ -180,64 +180,40 @@ public class NamedIconImage extends NamedIcon {
         mDefaultImage = getImage();
     }
 
-    /**
-     * Return the human-readable name of this icon.
-     *
-     * @return the name or null if not set
-     */
+    /** {@inheritDoc} */
     @CheckForNull
+    @Override
     public String getName() {
         return mName;
     }
 
-    /**
-     * Set the human-readable name for this icon.
-     *
-     * @param name the new name, can be null
-     */
+    /** {@inheritDoc} */
+    @Override
     public void setName(@CheckForNull String name) {
         mName = name;
     }
 
-    /**
-     * Get the URL of this icon.
-     *
-     * @return the path to this icon in JMRI portable format or null if not set
-     */
+    /** {@inheritDoc} */
     @CheckForNull
+    @Override
     public String getURL() {
         return mURL;
     }
 
-    /**
-     * Set URL of original icon image. Setting this after initial construction
-     * does not change the icon.
-     *
-     * @param url the URL associated with this icon
-     */
+    /** {@inheritDoc} */
+    @Override
     public void setURL(@CheckForNull String url) {
         mURL = url;
     }
 
-    /**
-     * Get the number of 90-degree rotations needed to properly display this
-     * icon.
-     *
-     * @return 0 (no rotation), 1 (rotated 90 degrees), 2 (180 degrees), or 3
-     *         (270 degrees)
-     */
+    /** {@inheritDoc} */
+    @Override
     public int getRotation() {
         return mRotation;
     }
 
-    /**
-     * Set the number of 90-degree rotations needed to properly display this
-     * icon.
-     *
-     * @param pRotation 0 (no rotation), 1 (rotated 90 degrees), 2 (180
-     *                  degrees), or 3 (270 degrees)
-     * @param comp      the component containing this icon
-     */
+    /** {@inheritDoc} */
+    @Override
     public void setRotation(int pRotation, Component comp) {
         // don't transform a blinking icon, it will no longer blink!
         if (pRotation == 0) {
@@ -271,11 +247,6 @@ public class NamedIconImage extends NamedIcon {
         private IIOMetadata mStreamMd;
     }
 
-    /*
-     public Image getOriginalImage() {
-     return mDefaultImage;
-     }*/
-
     /**
      * Valid values are
      * <ul>
@@ -287,18 +258,8 @@ public class NamedIconImage extends NamedIcon {
      */
     int mRotation;
 
-    /**
-     * The following was based on a text-rotating applet from David Risner,
-     * available at http://www.risner.org/java/rotate_text.html
-     * Page unavailable as at April 2019
-     *
-     * @param pImage     Image to transform
-     * @param pComponent Component containing the image, needed to obtain a
-     *                   MediaTracker to process the image consistently with
-     *                   display
-     * @param pRotation  0-3 number of 90-degree rotations needed
-     * @return new Image object containing the rotated input image
-     */
+    /** {@inheritDoc} */
+    @Override
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
         log.debug("createRotatedImage: pRotation= {}, mRotation= {}", pRotation, mRotation);
         if (pRotation == 0) {
@@ -372,14 +333,20 @@ public class NamedIconImage extends NamedIcon {
     private AffineTransform _transformS = new AffineTransform();    // scaling
     private AffineTransform _transformF = new AffineTransform();    // Fliped or Mirrored
 
+    /** {@inheritDoc} */
+    @Override
     public int getDegrees() {
         return _degrees;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public double getScale() {
         return _scale;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public void setLoad(int d, double s, Component comp) {
         if (d != 0 || s != 1.0) {
             setImage(createRotatedImage(mDefaultImage, comp, 0));
@@ -391,6 +358,8 @@ public class NamedIconImage extends NamedIcon {
 
     }
 
+    /** {@inheritDoc} */
+    @Override
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         if (w <= 0 || h <= 0) {
             if (comp instanceof jmri.jmrit.display.Positionable) {
@@ -506,27 +475,17 @@ public class NamedIconImage extends NamedIcon {
      c.getWidth()+", height= "+c.getHeight());
      }
      */
-    /**
-     * Scale as a percentage.
-     *
-     * @param scale the scale to set the image
-     * @param comp  the containing component
-     */
-    /* public void scale(int s, Component comp) { //log.info("scale= "+s+",
-     * "+getDescription()); if (s<1) { return; } scale(s/100.0, comp); }
-     */
+
+    /** {@inheritDoc} */
+    @Override
     public void scale(double scale, Component comp) {
         _scale = scale;
         _transformS = AffineTransform.getScaleInstance(scale, scale);
         rotate(_degrees, comp);
     }
 
-    /**
-     * Rotate from anchor point (upper left corner) and shift into place.
-     *
-     * @param degree the distance to rotate
-     * @param comp   containing component
-     */
+    /** {@inheritDoc} */
+    @Override
     public void rotate(int degree, Component comp) {
         setImage(mDefaultImage);
 
@@ -572,15 +531,8 @@ public class NamedIconImage extends NamedIcon {
         }
     }
 
-    /**
-     * Reduce this image size to within the given dimensions, with a limit on
-     * the reduction in size.
-     *
-     * @param width new width
-     * @param height new height
-     * @param limit limit on the reduction in size
-     * @return the scale by which this image was resized
-     */
+    /** {@inheritDoc} */
+    @Override
     public double reduceTo(int width, int height, double limit) {
         int w = getIconWidth();
         int h = getIconHeight();
@@ -604,6 +556,8 @@ public class NamedIconImage extends NamedIcon {
         return scale;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public void flip(int flip, Component comp) {
         if (flip == NOFLIP) {
             setImage(mDefaultImage);

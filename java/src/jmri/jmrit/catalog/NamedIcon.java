@@ -214,79 +214,133 @@ public class NamedIcon extends ImageIcon {
         namedIcon = new NamedIconImage(im);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Return the human-readable name of this icon.
+     *
+     * @return the name or null if not set
+     */
     @CheckForNull
     public String getName() {
         return namedIcon.getName();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Set the human-readable name for this icon.
+     *
+     * @param name the new name, can be null
+     */
     public void setName(@CheckForNull String name) {
         namedIcon.setName(name);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Get the URL of this icon.
+     *
+     * @return the path to this icon in JMRI portable format or null if not set
+     */
     @CheckForNull
     public String getURL() {
         return namedIcon.getURL();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Set URL of original icon image. Setting this after initial construction
+     * does not change the icon.
+     *
+     * @param url the URL associated with this icon
+     */
     public void setURL(@CheckForNull String url) {
         namedIcon.setURL(url);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Get the number of 90-degree rotations needed to properly display this
+     * icon.
+     *
+     * @return 0 (no rotation), 1 (rotated 90 degrees), 2 (180 degrees), or 3
+     *         (270 degrees)
+     */
     public int getRotation() {
         return namedIcon.getRotation();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Set the number of 90-degree rotations needed to properly display this
+     * icon.
+     *
+     * @param pRotation 0 (no rotation), 1 (rotated 90 degrees), 2 (180
+     *                  degrees), or 3 (270 degrees)
+     * @param comp      the component containing this icon
+     */
     public void setRotation(int pRotation, Component comp) {
         namedIcon.setRotation(pRotation, comp);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * The following was based on a text-rotating applet from David Risner,
+     * available at http://www.risner.org/java/rotate_text.html
+     * Page unavailable as at April 2019
+     *
+     * @param pImage     Image to transform
+     * @param pComponent Component containing the image, needed to obtain a
+     *                   MediaTracker to process the image consistently with
+     *                   display
+     * @param pRotation  0-3 number of 90-degree rotations needed
+     * @return new Image object containing the rotated input image
+     */
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
         return namedIcon.createRotatedImage(pImage, pComponent, pRotation);
     }
 
-    /** {@inheritDoc} */
     public int getDegrees() {
         return namedIcon.getDegrees();
     }
 
-    /** {@inheritDoc} */
     public double getScale() {
         return namedIcon.getScale();
     }
 
-    /** {@inheritDoc} */
     public void setLoad(int d, double s, Component comp) {
         namedIcon.setLoad(d, s, comp);
     }
 
-    /** {@inheritDoc} */
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         namedIcon.transformImage(w, h, t, comp);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Scale as a percentage.
+     *
+     * @param scale the scale to set the image
+     * @param comp  the containing component
+     */
     public void scale(double scale, Component comp) {
         namedIcon.scale(scale, comp);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Rotate from anchor point (upper left corner) and shift into place.
+     *
+     * @param degree the distance to rotate
+     * @param comp   containing component
+     */
     public void rotate(int degree, Component comp) {
         namedIcon.rotate(degree, comp);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Reduce this image size to within the given dimensions, with a limit on
+     * the reduction in size.
+     *
+     * @param width new width
+     * @param height new height
+     * @param limit limit on the reduction in size
+     * @return the scale by which this image was resized
+     */
     public double reduceTo(int width, int height, double limit) {
         return namedIcon.reduceTo(width, height, limit);
     }
 
-    /** {@inheritDoc} */
     public void flip(int flip, Component comp) {
         namedIcon.flip(flip, comp);
     }
