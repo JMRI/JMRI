@@ -20,7 +20,7 @@ import jmri.util.FileUtil;
  * <p>
  * These can be persisted by storing their name and rotation.
  * <p>
- * <hr>
+ * ------------------------------------------------------------
  * <p>
  * If the NamedIcon is instanciated, it will internally create an instance of
  * one of the sub classes of the NamedIcon to handle the actual image.
