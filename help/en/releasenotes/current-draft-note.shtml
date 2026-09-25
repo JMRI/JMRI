@@ -689,5 +689,11 @@
             <li>The "noverify" option has been removed from the JMRI program
                 launchers so that JMRI can use Java 27 and later.</li>
             <li>For JMRI developers: CI tests now fails on WARN logging messages.</li>
+            <li>The <strong>jmri.jmrit.catalog.NamedIcon</strong> class has been
+                changed. If you are using JMRI as a library, please check that
+                your code is still compatible. If you get the error message
+                <strong>jmri.jmrit.catalog.NamedIcon is abstract; cannot be instantiated</strong>,
+                replace <strong>NamedIcon</strong> with <strong>NamedIconSelector</strong>
+                when you create a new instance of NamedIcon.</li>
         </ul>
 
