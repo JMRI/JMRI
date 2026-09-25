@@ -1,16 +1,11 @@
 package jmri.jmrit.display;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -20,9 +15,6 @@ import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.util.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display and input a GlobalVariable value in a TextField.
  * <p>
@@ -31,12 +23,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman    Copyright (c) 2009
  * @author Daniel Bergqvist Copyright (C) 2022
+ * @author Bob Jacobsen  Copyright (c) 2026
  * @since 2.7.2
  */
-public class GlobalVariableInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new JTextField();
-    int _nCols;
+public class GlobalVariableInputIcon extends PositionableJTextField implements java.beans.PropertyChangeListener {
 
     // the associated GlobalVariable object
     private NamedBeanHandle<GlobalVariable> namedGlobalVariable;
@@ -58,9 +48,20 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
                 if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
                     updateGlobalVariable();
                 }
+                // redraw the editor window content, including this field
+                // we have to redraw the entire contents because of possible overlaps/underlaps
+                getEditor().getTargetPanel().repaint();
+            }
+        });
+        _textBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateGlobalVariable();
+                getEditor().getTargetPanel().repaint();
             }
         });
         _textBox.setColumns(_nCols);
+        _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
@@ -75,11 +76,6 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
     protected Positionable finishClone(GlobalVariableInputIcon pos) {
         pos.setGlobalVariable(namedGlobalVariable.getName());
         return super.finishClone(pos);
-    }
-
-    @Override
-    public JComponent getTextComponent() {
-        return _textBox;
     }
 
     @Override
@@ -125,11 +121,6 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<GlobalVariable> getNamedGlobalVariable() {
         return namedGlobalVariable;
     }
@@ -139,10 +130,6 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
             return null;
         }
         return namedGlobalVariable.getBean();
-    }
-
-    public int getNumColumns() {
-        return _nCols;
     }
 
     // update icon as state of GlobalVariable changes
@@ -253,6 +240,8 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         } else {
             _textBox.setText("");
         }
+        // and redraw
+        getEditor().getTargetPanel().repaint();
     }
 
     @Override
@@ -267,5 +256,5 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         namedGlobalVariable = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(GlobalVariableInputIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableInputIcon.class);
 }

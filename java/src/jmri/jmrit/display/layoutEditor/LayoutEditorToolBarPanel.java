@@ -716,6 +716,11 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
     private Point2D lastLocation = MathUtil.zeroPoint2D();
 
+    /**
+     * Update the "Location: x: y:" text on the edit tool bar
+     * with the current cursor position.
+     * @param p  Current cursor position reported by an event
+     */
     public void setLocationText(Point2D p) {
         int x = (int) p.getX();
         int y = (int) p.getY();

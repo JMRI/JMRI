@@ -216,15 +216,17 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // PositionableLabel's
     private List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); // BlockContents Label List
-    private List<BlockContentsInputIcon> blockContentsInputList = new ArrayList<>(); // BlockContents Input List
-    private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
-    private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
     private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
+    private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
     private List<SensorIcon> sensorList = new ArrayList<>();                    // Sensor Icons
     private List<TurnoutIcon> turnoutList = new ArrayList<>();                  // Turnout _Icons_
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
+    // PositionableJPanel's
+    private List<BlockContentsInputIcon> blockContentsInputList = new ArrayList<>(); // BlockContents Input List
+    private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
+    
     // Factory generated positionables
     private List<Positionable> factoryPositionables = new ArrayList<>();
 
@@ -2093,16 +2095,13 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private void adjustScrollBars() {
-        // log.info("adjustScrollBars()");
 
         // This is the bounds of what's on the screen
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
-        // log.info("  getViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
 
         // this is the size of the entire scaled layout panel
         Dimension targetPanelSize = getTargetPanelSize();
-        // log.info("  getTargetPanelSize: {}", MathUtil.dimensionToString(targetPanelSize));
 
         // double scale = getZoom();
         // determine the relative position of the current horizontal scrollbar
@@ -2133,17 +2132,14 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         vertScroll.setMaximum(newMaxY);
         vertScroll.setValue(newY);
 
-//        log.info("w: {}, x: {}, h: {}, y: {}", "" + newMaxX, "" + newX, "" + newMaxY, "" + newY);
         adjustClip();
     }
 
     private void adjustClip() {
-        // log.info("adjustClip()");
 
         // This is the bounds of what's on the screen
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
-        // log.info("  ViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
 
         JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
         int scrollX = horScroll.getValue();
@@ -2203,7 +2199,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             // don't let origin go negative
             newViewPosition = MathUtil.max(newViewPosition, MathUtil.zeroPoint2D);
-            // log.info("mouseWheelMoved: newViewPos2D: {}", newViewPosition);
 
             // set new view position
             viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPosition));
@@ -2289,6 +2284,21 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             // adjustClip();
 
             leToolBarPanel.zoomLabel.setText(String.format(Locale.getDefault(), "x%1$,.2f", newZoom));
+
+            // Set the scale and position for PositionableJPanel items
+            // Note: In the absence of a List<PositionableJPanel>, we have to 
+            // handle each separate list of each type of PositionableJPanel subclasses
+            // that are being handled by the editor.
+            for (var item : memoryInputList) {
+                item.setScale(newZoom);
+                // setting the location handle the zooming
+                item.setLocation(item.getX(), item.getY());
+            }
+            for (var item : blockContentsInputList) {
+                item.setScale(newZoom);
+                // setting the location handle the zooming
+                item.setLocation(item.getX(), item.getY());
+            }
 
             // save the window specific saved zoom user preference
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent( prefsMgr ->
@@ -2407,7 +2417,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         // don't let origin go negative
         panelBounds = panelBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
-        // log.info("resizePanelBounds: {}", MathUtil.rectangle2DToString(panelBounds));
         setPanelBounds(panelBounds);
 
         return panelBounds;
@@ -2621,7 +2630,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             lb.setBlockExtraColor(this.getDefaultAlternativeTrackColorColor());
             changed++;
         }
-        log.info("Track Colors set to default values for {} layoutBlocks.", changed);
         return changed;
     }
 
@@ -3133,12 +3141,20 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     /*
     * Get mouse coordinates and adjust for zoom.
     * <p>
-    * Side effects on xLoc, yLoc and dLoc
+    * dX and dY are signed offsets from the position reported by the mouse event
+    * <p>
+    * Side effects on xLoc, yLoc and dLoc.
      */
     @Nonnull
     private Point2D calcLocation(JmriMouseEvent event, int dX, int dY) {
-        xLoc = (int) ((event.getX() + dX) / getZoom());
-        yLoc = (int) ((event.getY() + dY) / getZoom());
+        double x = event.getX();
+        double y = event.getY();
+        if (event.getSource() instanceof PositionableJPanel) {
+            x = x*getZoom();
+            y = y*getZoom();
+        }
+        xLoc = (int) ((x + dX) / getZoom());
+        yLoc = (int) ((y + dY) / getZoom());
         dLoc = new Point2D.Double(xLoc, yLoc);
         return dLoc;
     }
@@ -3172,9 +3188,12 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Check whether an input icon text field is or is becoming active.
-     * This is based on:
-     * - The event component is an input icon instance.
-     * - The mouse event indicates a plain button press.
+     * This is based on: <ul>
+     *      <li>The event component is an input icon instance.
+     *      <li>The mouse event indicates a plain button press.
+     * </ul>
+     * This is done because these are expected to manage
+     * their own mouse events, including handling zooming.
      * @param event The mouse event.
      * @return true when active.
      */
@@ -3205,6 +3224,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Override
     public void mousePressed(JmriMouseEvent event) {
         if (isInputTextBox(event)) {
+            // these manage their own mouse events
             return;
         }
 
@@ -3729,7 +3749,9 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         PositionableJPanel result = null;
         int level = 0;
-
+        
+        // This does it's check in the current-zoom space
+        
         for (int i = memoryInputList.size() - 1; i >= 0; i--) {
             PositionableJPanel s = memoryInputList.get(i);
             double x = s.getX();
@@ -3913,6 +3935,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         super.setToolTip(null);
 
         if (isInputTextBox(event)) {
+            // these manage their own mouse events
             return;
         }
 
@@ -4472,7 +4495,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         addPopupItems(popup, event);
 
-        popup.show((Component) p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
+        popup.show((Component)p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
                 p.getHeight() / 2 + (int) ((getZoom() - 1.0) * p.getY()));
 
         /*popup.show((Component)pt, event.getX(), event.getY());*/
@@ -4484,6 +4507,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Override
     public void mouseClicked(@Nonnull JmriMouseEvent event) {
         if (isInputTextBox(event)) {
+            // these manage their own mouse events
             return;
         }
 
@@ -5295,6 +5319,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public void mouseMoved(@Nonnull JmriMouseEvent event) {
+        
         // initialize mouse position
         calcLocation(event);
 
@@ -5307,7 +5332,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         List<Positionable> selections = getSelectedItems(event);
         Positionable selection = null;
         int numSel = selections.size();
-
+ 
         if (numSel > 0) {
             selection = selections.get(0);
         }

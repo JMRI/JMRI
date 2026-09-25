@@ -6,15 +6,13 @@ import jmri.jmrit.display.*;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.BlockContentsInputIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
  *
- * Cloned from MemoryInputIconXml
+ * @see MemoryInputIconXml
  */
 public class BlockContentsInputIconXml extends PositionableLabelXml {
 
@@ -111,5 +109,5 @@ public class BlockContentsInputIconXml extends PositionableLabelXml {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(BlockContentsInputIconXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockContentsInputIconXml.class);
 }

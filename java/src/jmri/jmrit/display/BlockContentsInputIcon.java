@@ -1,16 +1,11 @@
 package jmri.jmrit.display;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -18,9 +13,6 @@ import jmri.Block;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.util.swing.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display and input a Block contents value in a TextField.
@@ -31,12 +23,10 @@ import org.slf4j.LoggerFactory;
  * Cloned from MemoryInputIcon by Pete Cressman
  *
  * @author Dave Sand Copyright (c) 2026
+ * @author Bob Jacobsen  Copyright (c) 2026
  * @since 5.15.4
  */
-public class BlockContentsInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new JTextField();
-    int _nCols;
+public class BlockContentsInputIcon extends PositionableJTextField implements java.beans.PropertyChangeListener {
 
     // the associated Block object
     private NamedBeanHandle<Block> namedBlock;
@@ -58,9 +48,20 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
                 if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
                     updateBlock();
                 }
+                // redraw the editor window content, including this field
+                // we have to redraw the entire contents because of possible overlaps/underlaps
+                getEditor().getTargetPanel().repaint();
+            }
+        });
+        _textBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateBlock();
+                getEditor().getTargetPanel().repaint();
             }
         });
         _textBox.setColumns(_nCols);
+        _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
@@ -75,11 +76,6 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
     protected Positionable finishClone(BlockContentsInputIcon pos) {
         pos.setBlock(namedBlock.getName());
         return super.finishClone(pos);
-    }
-
-    @Override
-    public JComponent getTextComponent() {
-        return _textBox;
     }
 
     @Override
@@ -125,11 +121,6 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<Block> getNamedBlock() {
         return namedBlock;
     }
@@ -139,10 +130,6 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
             return null;
         }
         return namedBlock.getBean();
-    }
-
-    public int getNumColumns() {
-        return _nCols;
     }
 
     // update icon as state of Block changes
@@ -253,6 +240,8 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         } else {
             _textBox.setText("");
         }
+        // and redraw
+        getEditor().getTargetPanel().repaint();
     }
 
     @Override
@@ -267,5 +256,5 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         namedBlock = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(BlockContentsInputIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockContentsInputIcon.class);
 }

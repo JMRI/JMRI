@@ -1,16 +1,12 @@
 package jmri.jmrit.display;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JComponent;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -19,9 +15,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.util.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display and input a Memory value in a TextField.
  * <p>
@@ -29,13 +22,11 @@ import org.slf4j.LoggerFactory;
  * what it finds.
  *
  * @author Pete Cressman Copyright (c) 2009
+ * @author Bob Jacobsen  Copyright (c) 2026
  * @since 2.7.2
  */
-public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new JTextField();
-    int _nCols;
-
+public class MemoryInputIcon extends PositionableJTextField implements java.beans.PropertyChangeListener {
+        
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
 
@@ -52,10 +43,21 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _textBox.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
+                log.trace("Key Listener fired");
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
                     updateMemory();
                 }
+                // redraw the editor window content, including this field
+                // we have to redraw the entire contents because of possible overlaps/underlaps
+                getEditor().getTargetPanel().repaint();
+            }
+        });
+        _textBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateMemory();
+                getEditor().getTargetPanel().repaint();
             }
         });
         _textBox.setColumns(_nCols);
@@ -77,14 +79,16 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     @Override
-    public JComponent getTextComponent() {
-        return _textBox;
-    }
-
-    @Override
     public void mouseExited(JmriMouseEvent e) {
         updateMemory();
         super.mouseExited(e);
+    }
+
+    @Override
+    public void mouseMoved(JmriMouseEvent e) {
+        // TODO: understand e.consume();
+        updateMemory();
+        super.mouseMoved(e);
     }
 
     /**
@@ -125,11 +129,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<Memory> getNamedMemory() {
         return namedMemory;
     }
@@ -139,10 +138,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             return null;
         }
         return namedMemory.getBean();
-    }
-
-    public int getNumColumns() {
-        return _nCols;
     }
 
     // update icon as state of Memory changes
@@ -168,11 +163,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
-    }
-
-    @Override
-    public void mouseMoved(JmriMouseEvent e) {
-        updateMemory();
     }
 
     private void updateMemory() {
@@ -253,6 +243,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         } else {
             _textBox.setText("");
         }
+        // and redraw
+        getEditor().getTargetPanel().repaint();
     }
 
     @Override
@@ -267,5 +259,5 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         namedMemory = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(MemoryInputIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryInputIcon.class);
 }
