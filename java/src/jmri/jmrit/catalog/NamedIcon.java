@@ -53,14 +53,14 @@ public class NamedIcon extends ImageIcon {
      * @param path The path to the file, either absolute or portable
      * @return the desired icon with this same name as its path
      */
-    public static NamedIconImage getIconByName(String path) {
+    public static NamedIcon getIconByName(String path) {
         if (path == null || path.isEmpty()) {
             return null;
         }
         if (FileUtil.findURL(path) == null) {
             return null;
         }
-        return new NamedIconImage(path, path);
+        return new NamedIcon(path, path);
     }
 
     /**
@@ -118,7 +118,7 @@ public class NamedIcon extends ImageIcon {
                         + (pOld.namedIcon != null ? pOld.namedIcon.getClass().getName() : "null"));
             }
         } else {
-            throw new IllegalArgumentException("pOld is a NamedIcon where namedIcon is null");
+            throw new IllegalArgumentException("pOld is a NamedIcon where namedIcon is null. Class: " + pOld.getClass().getName());
         }
     }
 
@@ -339,7 +339,7 @@ public class NamedIcon extends ImageIcon {
     @Override
     public void setImageObserver(ImageObserver observer) {
         if (namedIcon != null) {
-            namedIcon.namedIcon.setImageObserver(observer);
+            namedIcon.setImageObserver(observer);
         } else {
             super.setImageObserver(observer);
         }
@@ -349,7 +349,7 @@ public class NamedIcon extends ImageIcon {
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
         if (namedIcon != null) {
-            namedIcon.namedIcon.paintIcon(c, g, x, y);
+            namedIcon.paintIcon(c, g, x, y);
         } else {
             super.paintIcon(c, g, x, y);
         }
