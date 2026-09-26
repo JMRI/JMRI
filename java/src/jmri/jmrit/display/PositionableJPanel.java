@@ -1,7 +1,9 @@
 package jmri.jmrit.display;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
@@ -17,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import jmri.InstanceManager;
 
@@ -61,6 +64,31 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
 
     public PositionableJPanel(Editor editor) {
         _editor = editor;
+    }
+
+    /**
+     * Hit testing must use the same scaled bounds as painting in an editor
+     * with a paint scale other than 1.0.
+     *
+     * @param x the x coordinate relative to this panel
+     * @param y the y coordinate relative to this panel
+     * @return true if the point is inside the displayed panel
+     */
+    @Override
+    public boolean contains(int x, int y) {
+        if (_editor == null || _editor.getTargetPanel() == null || getParent() == null) {
+            return super.contains(x, y);
+        }
+        double scale = _editor.getPaintScale();
+        if (scale == 1.0) {
+            return super.contains(x, y);
+        }
+
+        Point origin = SwingUtilities.convertPoint(this, 0, 0, _editor.getTargetPanel());
+        double unscaledX = (x + origin.x) / scale - origin.x;
+        double unscaledY = (y + origin.y) / scale - origin.y;
+        return unscaledX >= 0 && unscaledX < getWidth()
+                && unscaledY >= 0 && unscaledY < getHeight();
     }
 
     @Override
@@ -493,54 +521,49 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
         return active;
     }
 
+    private JmriMouseEvent toEditorMouseEvent(JmriMouseEvent event) {
+        Component source = event.getComponent();
+        Point point = SwingUtilities.convertPoint(source, event.getPoint(), _editor.getTargetPanel());
+        double scale = _editor.getPaintScale();
+        return new JmriMouseEvent(this, event.getID(), event.getWhen(), event.getModifiersEx(),
+                (int) Math.round(point.x * scale), (int) Math.round(point.y * scale),
+                event.getClickCount(), event.isPopupTrigger(), event.getButton());
+    }
+
     @Override
     public void mousePressed(JmriMouseEvent e) {
-        _editor.mousePressed(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() + this.getX(), e.getY() + this.getY(),
-                e.getClickCount(), e.isPopupTrigger()));
+        _editor.mousePressed(toEditorMouseEvent(e));
     }
 
     @Override
     public void mouseReleased(JmriMouseEvent e) {
-        _editor.mouseReleased(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() + this.getX(), e.getY() + this.getY(),
-                e.getClickCount(), e.isPopupTrigger()));
+        _editor.mouseReleased(toEditorMouseEvent(e));
     }
 
     @Override
     public void mouseClicked(JmriMouseEvent e) {
-        _editor.mouseClicked(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() + this.getX(), e.getY() + this.getY(),
-                e.getClickCount(), e.isPopupTrigger()));
+        _editor.mouseClicked(toEditorMouseEvent(e));
     }
 
     @Override
     public void mouseExited(JmriMouseEvent e) {
 //     transferFocus();
-        _editor.mouseExited(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() + this.getX(), e.getY() + this.getY(),
-                e.getClickCount(), e.isPopupTrigger()));
+        _editor.mouseExited(toEditorMouseEvent(e));
     }
 
     @Override
     public void mouseEntered(JmriMouseEvent e) {
-        _editor.mouseEntered(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() + this.getX(), e.getY() + this.getY(),
-                e.getClickCount(), e.isPopupTrigger()));
+        _editor.mouseEntered(toEditorMouseEvent(e));
     }
 
     @Override
     public void mouseMoved(JmriMouseEvent e) {
-        _editor.mouseMoved(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() + this.getX(), e.getY() + this.getY(),
-                e.getClickCount(), e.isPopupTrigger()));
+        _editor.mouseMoved(toEditorMouseEvent(e));
     }
 
     @Override
     public void mouseDragged(JmriMouseEvent e) {
-        _editor.mouseDragged(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() + this.getX(), e.getY() + this.getY(),
-                e.getClickCount(), e.isPopupTrigger()));
+        _editor.mouseDragged(toEditorMouseEvent(e));
     }
 
     /**

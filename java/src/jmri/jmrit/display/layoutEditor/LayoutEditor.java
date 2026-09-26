@@ -220,6 +220,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
     private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
     private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
+    private List<GlobalVariableInputIcon> globalVariableInputList = new ArrayList<>(); // Global Variable Input List
     private List<SensorIcon> sensorList = new ArrayList<>();                    // Sensor Icons
     private List<TurnoutIcon> turnoutList = new ArrayList<>();                  // Turnout _Icons_
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
@@ -2345,6 +2346,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         listOfListsOfComponents.add(memoryLabelList);
         listOfListsOfComponents.add(memoryInputList);
         listOfListsOfComponents.add(globalVariableLabelList);
+        listOfListsOfComponents.add(globalVariableInputList);
         listOfListsOfComponents.add(blockContentsLabelList);
         listOfListsOfComponents.add(blockContentsInputList);
         listOfListsOfComponents.add(sensorList);
@@ -2757,6 +2759,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(memoryLabelList);
         positionables.addAll(memoryInputList);
         positionables.addAll(globalVariableLabelList);
+        positionables.addAll(globalVariableInputList);
         positionables.addAll(sensorImage);
         positionables.addAll(turnoutImage);
         positionables.addAll(sensorList);
@@ -2828,6 +2831,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(memoryLabelList);
         positionables.addAll(memoryInputList);
         positionables.addAll(globalVariableLabelList);
+        positionables.addAll(globalVariableInputList);
         positionables.addAll(sensorImage);
         positionables.addAll(turnoutImage);
         positionables.addAll(sensorList);
@@ -3764,6 +3768,17 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                         result = s;
                         level = s.getDisplayLevel();
                     }
+                }
+            }
+        }
+
+        if (result == null) {
+            for (int i = globalVariableInputList.size() - 1; i >= 0; i--) {
+                PositionableJPanel s = globalVariableInputList.get(i);
+                Rectangle2D r = new Rectangle2D.Double(s.getX(), s.getY(), s.getWidth(), s.getHeight());
+                if (r.contains(loc) && s.getDisplayLevel() >= level) {
+                    result = s;
+                    level = s.getDisplayLevel();
                 }
             }
         }
@@ -6388,6 +6403,10 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             globalVariableLabelList.remove(s);
             found = true;
         }
+        if (globalVariableInputList.contains(s)) {
+            globalVariableInputList.remove(s);
+            found = true;
+        }
         if (blockContentsLabelList.contains(s)) {
             blockContentsLabelList.remove(s);
             found = true;
@@ -7552,6 +7571,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             blockContentsInputList.add((BlockContentsInputIcon) l);
         } else if (l instanceof MemoryInputIcon) {
             memoryInputList.add((MemoryInputIcon) l);
+        } else if (l instanceof GlobalVariableInputIcon) {
+            globalVariableInputList.add((GlobalVariableInputIcon) l);
         } else if (l instanceof GlobalVariableIcon) {
             globalVariableLabelList.add((GlobalVariableIcon) l);
         } else if (l instanceof AnalogClock2Display) {
