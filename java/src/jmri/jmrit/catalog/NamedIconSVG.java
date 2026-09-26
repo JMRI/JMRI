@@ -21,16 +21,6 @@ class NamedIconSVG extends NamedIcon {
     private GraphicsNode rootNode;
 
     /**
-     * Create a NamedIcon that is a complete copy of an existing NamedIcon
-     *
-     * @param pOld Object to copy i.e. copy of the original icon, but NOT a
-     *             complete copy of pOld (no transformations done)
-     */
-    NamedIconSVG(NamedIconSVG pOld) {
-        this(pOld.mURL,pOld.mName);
-    }
-
-    /**
      * Create a named icon that includes an image to be loaded from a URL.
      * <p>
      * The default access form is "file:", so a bare pathname to an icon file
@@ -77,6 +67,21 @@ class NamedIconSVG extends NamedIcon {
         } catch (IOException e) {
             log.error("Cannot load image", e);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public NamedIcon cloneMe() {
+        return new NamedIconSVG(mURL, mName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public NamedIcon cloneMe(Component comp) {
+        NamedIconSVG namedIcon = new NamedIconSVG(mURL, mName);
+//        namedIcon.setLoad(_degrees, _scale, comp);
+//        namedIcon.setRotation(mRotation, comp);
+        return namedIcon;
     }
 
     /** {@inheritDoc} */

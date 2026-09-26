@@ -27,6 +27,21 @@ public class NamedIconExperimental extends NamedIcon {
 
     /** {@inheritDoc} */
     @Override
+    public NamedIcon cloneMe() {
+        return new NamedIconImage(mURL, mName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public NamedIcon cloneMe(Component comp) {
+        NamedIconExperimental namedIcon = new NamedIconExperimental(mURL, mName);
+//        namedIcon.setLoad(_degrees, _scale, comp);
+//        namedIcon.setRotation(mRotation, comp);
+        return namedIcon;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public int getRotation() {
         return 0;
     }

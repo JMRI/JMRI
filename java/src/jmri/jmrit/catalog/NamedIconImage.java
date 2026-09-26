@@ -39,29 +39,6 @@ import jmri.util.MathUtil;
 class NamedIconImage extends NamedIcon {
 
     /**
-     * Create a NamedIconImage that is a complete copy of an existing NamedIconImage
-     *
-     * @param pOld Object to copy i.e. copy of the original icon, but NOT a
-     *             complete copy of pOld (no transformations done)
-     */
-    NamedIconImage(NamedIconImage pOld) {
-        this(pOld.mURL, pOld.mName, pOld.mGifInfo);
-    }
-
-    /**
-     * Create a NamedIconImage that is really a complete copy of an existing
-     * NamedIconImage
-     *
-     * @param pOld Object to copy
-     * @param comp the container the new icon is embedded in
-     */
-    NamedIconImage(NamedIconImage pOld, Component comp) {
-        this(pOld.mURL, pOld.mName, pOld.mGifInfo);
-        setLoad(pOld._degrees, pOld._scale, comp);
-        setRotation(pOld.mRotation, comp);
-    }
-
-    /**
      * Create a named icon that includes an image to be loaded from a URL.
      * <p>
      * The default access form is "file:", so a bare pathname to an icon file
@@ -177,6 +154,21 @@ class NamedIconImage extends NamedIcon {
     NamedIconImage(Image im) {
         super(Inherited.Yes, im);
         mDefaultImage = getImage();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public NamedIcon cloneMe() {
+        return new NamedIconImage(mURL, mName, mGifInfo);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public NamedIcon cloneMe(Component comp) {
+        NamedIconImage namedIcon = new NamedIconImage(mURL, mName, mGifInfo);
+        namedIcon.setLoad(_degrees, _scale, comp);
+        namedIcon.setRotation(mRotation, comp);
+        return namedIcon;
     }
 
     /** {@inheritDoc} */

@@ -286,7 +286,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 } else {
                     fr = this;
                 }
-                mapFamily = JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"), 
+                mapFamily = JmriJOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
                     Bundle.getMessage("createNewFamily"), JmriJOptionPane.QUESTION_MESSAGE );
                 if (mapFamily == null) { // user quit
                     return null;
@@ -568,7 +568,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         _itemType, _family, displayKey, (icon != null));
             }
              if (icon != null) {
-                icon = new NamedIcon(icon);
+                icon = icon.cloneMe();
                 double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH,
                         CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
                 scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"),

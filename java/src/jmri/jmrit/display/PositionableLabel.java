@@ -338,7 +338,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public Positionable deepClone() {
         PositionableLabel pos;
         if (_icon) {
-            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
+            NamedIcon icon = ((NamedIcon) getIcon()).cloneMe();
             pos = new PositionableLabel(icon, _editor);
         } else {
             pos = new PositionableLabel(getText(), _editor);
@@ -382,7 +382,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public static @Nonnull NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {
         if (icon.getURL() != null) {
-            return new NamedIcon(icon, pos);
+            return icon.cloneMe(pos);
         } else {
             NamedIcon clone = new NamedIcon(icon.getImage());
             clone.scale(icon.getScale(), pos);
@@ -675,7 +675,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     protected void edit() {
         makeIconEditorFrame(this, "Icon", false, null);
-        NamedIcon icon = new NamedIcon(_namedIcon);
+        NamedIcon icon = _namedIcon.cloneMe();
         _iconEditor.setIcon(0, "plainIcon", icon);
         _iconEditor.makeIconPanel(false);
 

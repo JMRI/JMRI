@@ -97,61 +97,6 @@ public class NamedIcon extends ImageIcon {
     }
 
     /**
-     * Create a NamedIcon that is a complete copy of an existing NamedIcon
-     *
-     * @param pOld Object to copy i.e. copy of the original icon, but NOT a
-     *             complete copy of pOld (no transformations done)
-     */
-    public NamedIcon(NamedIcon pOld) {
-        if (!"jmri.jmrit.catalog.NamedIcon".equals(this.getClass().getName())) {
-            throw new UnsupportedOperationException("This constructor must not be called by a sub class. Pass the parameter Inherited.Yes to the constructor.");
-        }
-
-        if (pOld.namedIcon != null) {
-            if (pOld.namedIcon instanceof NamedIconImage) {
-                namedIcon = new NamedIconImage((NamedIconImage) pOld.namedIcon);
-            } else if (pOld.namedIcon instanceof NamedIconSVG) {
-                namedIcon = new NamedIconSVG((NamedIconSVG) pOld.namedIcon);
-            } else if (pOld.namedIcon instanceof NamedIconExperimental) {
-                namedIcon = new NamedIconExperimental(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
-            } else {
-                throw new IllegalArgumentException(
-                        "pOld.namedIcon is of unknown class: "
-                        + (pOld.namedIcon != null ? pOld.namedIcon.getClass().getName() : "null"));
-            }
-        } else {
-            throw new IllegalArgumentException("pOld is a NamedIcon where namedIcon is null. Class: " + pOld.getClass().getName());
-        }
-    }
-
-    /**
-     * Create a NamedIcon that is really a complete copy of an existing
-     * NamedIcon
-     *
-     * @param pOld Object to copy
-     * @param comp the container the new icon is embedded in
-     */
-    public NamedIcon(NamedIcon pOld, Component comp) {
-        if (!"jmri.jmrit.catalog.NamedIcon".equals(this.getClass().getName())) {
-            throw new UnsupportedOperationException("This constructor must not be called by a sub class. Pass the parameter Inherited.Yes to the constructor.");
-        }
-
-        if (pOld.namedIcon != null) {
-            if (pOld.namedIcon instanceof NamedIconImage) {
-                namedIcon = new NamedIconImage((NamedIconImage) pOld.namedIcon, comp);
-            } else if (pOld.namedIcon instanceof NamedIconExperimental) {
-                namedIcon = new NamedIconExperimental(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
-            } else {
-                throw new IllegalArgumentException(
-                        "pOld.namedIcon is of unknown class: "
-                        + (pOld.namedIcon != null ? pOld.namedIcon.getClass().getName() : "null"));
-            }
-        } else {
-            throw new IllegalArgumentException("pOld is a NamedIcon where namedIcon is null");
-        }
-    }
-
-    /**
      * Create a named icon that includes an image to be loaded from a URL.
      * <p>
      * The default access form is "file:", so a bare pathname to an icon file
@@ -204,6 +149,25 @@ public class NamedIcon extends ImageIcon {
         }
 
         namedIcon = new NamedIconImage(im);
+    }
+
+    /**
+     * Create a NamedIcon that is a complete copy of an existing NamedIcon
+     *
+     * @return the new NamedIcon
+     */
+    public NamedIcon cloneMe() {
+        return this.namedIcon.cloneMe();
+    }
+
+    /**
+     * Create a NamedIcon that is a complete copy of an existing NamedIcon
+     *
+     * @param comp the container the new icon is embedded in
+     * @return the new NamedIcon
+     */
+    public NamedIcon cloneMe(Component comp) {
+        return this.namedIcon.cloneMe(comp);
     }
 
     /**
