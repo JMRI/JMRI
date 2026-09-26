@@ -3,10 +3,6 @@ package jmri.jmrit.catalog;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.*;
-//import java.net.URL;
-//import java.util.Iterator;
-
-import java.net.URL;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.bridge.*;
@@ -30,18 +26,8 @@ class NamedIconSVG extends NamedIcon {
      * @param pOld Object to copy i.e. copy of the original icon, but NOT a
      *             complete copy of pOld (no transformations done)
      */
-    public NamedIconSVG(NamedIconSVG pOld) {
+    NamedIconSVG(NamedIconSVG pOld) {
         this(pOld.mURL,pOld.mName);
-    }
-
-    /* *
-     * Create a NamedIcon that is really a complete copy of an existing
-     * NamedIcon
-     *
-     * @param pOld Object to copy
-     * @param comp the container the new icon is embedded in
-     * /
-    public NamedIconSVG(NamedIcon pOld, Component comp) {
     }
 
     /**
@@ -53,7 +39,7 @@ class NamedIconSVG extends NamedIcon {
      * @param pUrl  URL of image file to load
      * @param pName Human-readable name for the icon
      */
-    public NamedIconSVG(String pUrl, String pName) {
+    NamedIconSVG(String pUrl, String pName) {
         super(Inherited.Yes);
 
         this.mURL = pUrl;
@@ -91,27 +77,6 @@ class NamedIconSVG extends NamedIcon {
         } catch (IOException e) {
             log.error("Cannot load image", e);
         }
-    }
-
-    /**
-     * Create a named icon that includes an image to be loaded from a URL.
-     *
-     * @param pUrl  String-form URL of image file to load
-     * @param pName Human-readable name for the icon
-     */
-    public NamedIconSVG(URL pUrl, String pName) {
-        this(pUrl.toString(), pName);
-    }
-
-
-    /**
-     * Create a named icon from an Image. N.B. NamedIcon's create
-     * using this constructor can NOT be animated GIFs
-     * @param im Image to use
-     */
-    public NamedIconSVG(Image im) {
-        super(Inherited.Yes);
-//        imageIcon = new NamedIconImage(im);
     }
 
     /** {@inheritDoc} */

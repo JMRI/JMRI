@@ -44,7 +44,7 @@ class NamedIconImage extends NamedIcon {
      * @param pOld Object to copy i.e. copy of the original icon, but NOT a
      *             complete copy of pOld (no transformations done)
      */
-    public NamedIconImage(NamedIconImage pOld) {
+    NamedIconImage(NamedIconImage pOld) {
         this(pOld.mURL, pOld.mName, pOld.mGifInfo);
     }
 
@@ -55,7 +55,7 @@ class NamedIconImage extends NamedIcon {
      * @param pOld Object to copy
      * @param comp the container the new icon is embedded in
      */
-    public NamedIconImage(NamedIconImage pOld, Component comp) {
+    NamedIconImage(NamedIconImage pOld, Component comp) {
         this(pOld.mURL, pOld.mName, pOld.mGifInfo);
         setLoad(pOld._degrees, pOld._scale, comp);
         setRotation(pOld.mRotation, comp);
@@ -70,7 +70,7 @@ class NamedIconImage extends NamedIcon {
      * @param pUrl  URL of image file to load
      * @param pName Human-readable name for the icon
      */
-    public NamedIconImage(String pUrl, String pName) {
+    NamedIconImage(String pUrl, String pName) {
         this(pUrl, pName, null);
 
         // See if this is a GIF file and if it is, see if it's animated. If it is,
@@ -132,7 +132,7 @@ class NamedIconImage extends NamedIcon {
      * @param pName Human-readable name for the icon
      * @param pGifState  Breakdown of GIF Image metadata and frames
      */
-    public NamedIconImage(String pUrl, String pName, GIFMetadataImages pGifState) {
+    NamedIconImage(String pUrl, String pName, GIFMetadataImages pGifState) {
         super(Inherited.Yes, substituteDefaultUrl(pUrl));
         URL u = FileUtil.findURL(pUrl);
         if (u == null) {
@@ -164,7 +164,7 @@ class NamedIconImage extends NamedIcon {
      * @param pUrl  String-form URL of image file to load
      * @param pName Human-readable name for the icon
      */
-    public NamedIconImage(URL pUrl, String pName) {
+    NamedIconImage(URL pUrl, String pName) {
         this(pUrl.toString(), pName);
     }
 
@@ -174,7 +174,7 @@ class NamedIconImage extends NamedIcon {
      * using this constructor can NOT be animated GIFs
      * @param im Image to use
      */
-    public NamedIconImage(Image im) {
+    NamedIconImage(Image im) {
         super(Inherited.Yes, im);
         mDefaultImage = getImage();
     }

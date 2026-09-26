@@ -19,7 +19,7 @@ public class NamedIconExperimental extends NamedIcon {
      * @param url  URL of image file to load
      * @param name Human-readable name for the icon
      */
-    public NamedIconExperimental(String url, String name) {
+    NamedIconExperimental(String url, String name) {
         super(Inherited.Yes);
         this.mURL = url;
         this.mName = name;
