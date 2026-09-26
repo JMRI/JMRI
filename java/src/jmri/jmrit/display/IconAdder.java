@@ -478,7 +478,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      */
     public NamedIcon getIcon(String key) {
         log.debug("getIcon for key= {}", key);
-        return new NamedIcon((NamedIcon) _iconMap.get(key).getIcon());
+        return ((NamedIcon) _iconMap.get(key).getIcon()).cloneMe();
     }
 
     /**
@@ -493,7 +493,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             JToggleButton button = entry.getValue();
             log.debug("getIconMap: key= {}, button.isSelected()= {}", entry.getKey(), button.isSelected());
             if (!_allowDeletes || !button.isSelected()) {
-                iconMap.put(entry.getKey(), new NamedIcon((NamedIcon) button.getIcon()));
+                iconMap.put(entry.getKey(), ((NamedIcon) button.getIcon()).cloneMe());
             }
         }
         return iconMap;

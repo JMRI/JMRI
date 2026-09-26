@@ -280,12 +280,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
         HashMap<String, NamedIcon> iconMap = _itemPanel.getIconMap();
         ArrayList<Sensor> selections = _itemPanel.getTableSelections();
-        setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
-        setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
-        setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
+        setInactiveIcon(iconMap.get("SensorStateInactive").cloneMe());
+        setInconsistentIcon(iconMap.get("BeanStateInconsistent").cloneMe());
+        setUnknownIcon(iconMap.get("BeanStateUnknown").cloneMe());
         entries = new ArrayList<>(selections.size());
         for (int i = 0; i < selections.size(); i++) {
-            addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.getPositionName(i))));
+            addEntry(selections.get(i).getDisplayName(), iconMap.get(MultiSensorItemPanel.getPositionName(i)).cloneMe());
         }
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();

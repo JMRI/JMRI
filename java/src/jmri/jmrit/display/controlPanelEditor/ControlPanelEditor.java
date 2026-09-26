@@ -1844,7 +1844,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 evt.dropComplete(true);
                 return;
             } else if (tr.isDataFlavorSupported(_namedIconDataFlavor)) {
-                NamedIcon newIcon = new NamedIcon((NamedIcon) tr.getTransferData(_namedIconDataFlavor));
+                NamedIcon newIcon = ((NamedIcon) tr.getTransferData(_namedIconDataFlavor)).cloneMe();
                 String url = newIcon.getURL();
                 NamedIcon icon = NamedIcon.getIconByName(url);
                 PositionableLabel ni = new PositionableLabel(icon, this);

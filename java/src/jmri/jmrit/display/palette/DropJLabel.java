@@ -69,7 +69,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         try {
             Transferable tr = e.getTransferable();
             if (e.isDataFlavorSupported(_dataFlavor)) {
-                NamedIcon newIcon = new NamedIcon((NamedIcon) tr.getTransferData(_dataFlavor));
+                NamedIcon newIcon = ((NamedIcon) tr.getTransferData(_dataFlavor)).cloneMe();
                 accept(e, newIcon);
             } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 String text = (String) tr.getTransferData(DataFlavor.stringFlavor);
