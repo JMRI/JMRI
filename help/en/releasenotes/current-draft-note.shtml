@@ -147,6 +147,8 @@
                 <li>Updated the Reporter to set the RailCom orientation instead
                     of direction (WEST/EAST if the appropriate bit is set in
                     the report).</li>
+                <li>Updated the OpenLCB jar library to pick up a fix to the
+                    read/write timeout value calculation.
             </ul>
 
         <h4>Powerline</h4>
