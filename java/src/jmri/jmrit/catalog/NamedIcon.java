@@ -213,7 +213,11 @@ public class NamedIcon extends ImageIcon {
      */
     @CheckForNull
     public final String getName() {
-        return mName;
+        if (namedIcon != null) {
+            return namedIcon.getName();
+        } else {
+            return mName;
+        }
     }
 
     /**
@@ -222,7 +226,11 @@ public class NamedIcon extends ImageIcon {
      * @param name the new name, can be null
      */
     public final void setName(@CheckForNull String name) {
-        this.mName = name;
+        if (namedIcon != null) {
+            namedIcon.setName(name);
+        } else {
+            this.mName = name;
+        }
     }
 
     /**
@@ -232,7 +240,11 @@ public class NamedIcon extends ImageIcon {
      */
     @CheckForNull
     public final String getURL() {
-        return mURL;
+        if (namedIcon != null) {
+            return namedIcon.getURL();
+        } else {
+            return mURL;
+        }
     }
 
     /**
@@ -242,7 +254,11 @@ public class NamedIcon extends ImageIcon {
      * @param url the URL associated with this icon
      */
     public final void setURL(@CheckForNull String url) {
-        this.mURL = url;
+        if (namedIcon != null) {
+            namedIcon.setURL(url);
+        } else {
+            this.mURL = url;
+        }
     }
 
     /**
