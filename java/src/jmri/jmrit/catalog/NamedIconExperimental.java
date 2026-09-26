@@ -4,19 +4,14 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.ImageObserver;
 
-import javax.annotation.CheckForNull;
-
 import jmri.util.TimerUtil;
 
 /**
- * NamedIcon that is used for some testing.
+ * NamedIcon that is used for some experimentation.
  *
  * @author Daniel Bergqvist Copyright (c) 2026
  */
-public class NamedIconTesting extends NamedIcon {
-
-    String url;
-    String name;
+public class NamedIconExperimental extends NamedIcon {
 
     /**
      * Create a NamedIconTest
@@ -24,36 +19,10 @@ public class NamedIconTesting extends NamedIcon {
      * @param url  URL of image file to load
      * @param name Human-readable name for the icon
      */
-    public NamedIconTesting(String url, String name) {
+    public NamedIconExperimental(String url, String name) {
         super(Inherited.Yes);
-        this.url = url;
-        this.name = name;
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setName(@CheckForNull String name) {
-        this.name = name;
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public String getURL() {
-        return url;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setURL(@CheckForNull String url) {
-        this.url = url;
+        this.mURL = url;
+        this.mName = name;
     }
 
     /** {@inheritDoc} */

@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 
-import javax.annotation.CheckForNull;
 import javax.imageio.*;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
@@ -37,7 +36,7 @@ import jmri.util.MathUtil;
  *
  * Modified by Joe Comuzzi and Larry Allen to rotate animated GIFs
  */
-public class NamedIconImage extends NamedIcon {
+class NamedIconImage extends NamedIcon {
 
     /**
      * Create a NamedIconImage that is a complete copy of an existing NamedIconImage
@@ -181,32 +180,6 @@ public class NamedIconImage extends NamedIcon {
     }
 
     /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public String getName() {
-        return mName;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setName(@CheckForNull String name) {
-        mName = name;
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public String getURL() {
-        return mURL;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setURL(@CheckForNull String url) {
-        mURL = url;
-    }
-
-    /** {@inheritDoc} */
     @Override
     public int getRotation() {
         return mRotation;
@@ -235,8 +208,6 @@ public class NamedIconImage extends NamedIcon {
         }
     }
 
-    private String mName = null;
-    private String mURL = null;
     private GIFMetadataImages mGifInfo = null;
     private final Image mDefaultImage;
 

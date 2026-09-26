@@ -8,8 +8,6 @@ import java.io.*;
 
 import java.net.URL;
 
-import javax.annotation.CheckForNull;
-
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.bridge.*;
 import org.apache.batik.gvt.GraphicsNode;
@@ -22,11 +20,9 @@ import org.w3c.dom.svg.SVGDocument;
  *
  * @author Daniel Bergqvist Copyright (c) 2026
  */
-public class NamedIconSVG extends NamedIcon {
+class NamedIconSVG extends NamedIcon {
 
     private GraphicsNode rootNode;
-    private String url;
-    private String name;
 
     /**
      * Create a NamedIcon that is a complete copy of an existing NamedIcon
@@ -35,7 +31,7 @@ public class NamedIconSVG extends NamedIcon {
      *             complete copy of pOld (no transformations done)
      */
     public NamedIconSVG(NamedIconSVG pOld) {
-        this(pOld.url,pOld.name);
+        this(pOld.mURL,pOld.mName);
     }
 
     /* *
@@ -60,14 +56,14 @@ public class NamedIconSVG extends NamedIcon {
     public NamedIconSVG(String pUrl, String pName) {
         super(Inherited.Yes);
 
-        this.url = pUrl;
-        this.name = pName;
+        this.mURL = pUrl;
+        this.mName = pName;
 
         try {
 //            String uri = new File("animated.svg").toURI().toString();
             String parser = XMLResourceDescriptor.getXMLParserClassName();
             SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
-            SVGDocument doc = factory.createSVGDocument(url);
+            SVGDocument doc = factory.createSVGDocument(mURL);
 
     // 2. Setup rendering bridge
             UserAgent userAgent = new UserAgentAdapter();
@@ -116,32 +112,6 @@ public class NamedIconSVG extends NamedIcon {
     public NamedIconSVG(Image im) {
         super(Inherited.Yes);
 //        imageIcon = new NamedIconImage(im);
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setName(@CheckForNull String name) {
-        this.name = name;
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public String getURL() {
-        return url;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setURL(@CheckForNull String url) {
-        this.url = url;
     }
 
     /** {@inheritDoc} */

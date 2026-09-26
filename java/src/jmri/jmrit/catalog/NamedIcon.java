@@ -44,6 +44,8 @@ public class NamedIcon extends ImageIcon {
     protected enum Inherited { Yes }
 
     private final NamedIcon namedIcon;
+    protected String mURL;
+    protected String mName;
 
     /**
      * Find the NamedIconImage corresponding to a file path. Understands the
@@ -110,8 +112,8 @@ public class NamedIcon extends ImageIcon {
                 namedIcon = new NamedIconImage((NamedIconImage) pOld.namedIcon);
             } else if (pOld.namedIcon instanceof NamedIconSVG) {
                 namedIcon = new NamedIconSVG((NamedIconSVG) pOld.namedIcon);
-            } else if (pOld.namedIcon instanceof NamedIconTesting) {
-                namedIcon = new NamedIconTesting(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
+            } else if (pOld.namedIcon instanceof NamedIconExperimental) {
+                namedIcon = new NamedIconExperimental(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
             } else {
                 throw new IllegalArgumentException(
                         "pOld.namedIcon is of unknown class: "
@@ -137,8 +139,8 @@ public class NamedIcon extends ImageIcon {
         if (pOld.namedIcon != null) {
             if (pOld.namedIcon instanceof NamedIconImage) {
                 namedIcon = new NamedIconImage((NamedIconImage) pOld.namedIcon, comp);
-            } else if (pOld.namedIcon instanceof NamedIconTesting) {
-                namedIcon = new NamedIconTesting(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
+            } else if (pOld.namedIcon instanceof NamedIconExperimental) {
+                namedIcon = new NamedIconExperimental(pOld.namedIcon.getURL(), pOld.namedIcon.getName());
             } else {
                 throw new IllegalArgumentException(
                         "pOld.namedIcon is of unknown class: "
@@ -170,7 +172,7 @@ public class NamedIcon extends ImageIcon {
             // REMOVE THIS!!!
             // REMOVE THIS!!!
             // REMOVE THIS!!!
-            namedIcon = new NamedIconTesting(pUrl, pName);
+            namedIcon = new NamedIconExperimental(pUrl, pName);
         } else {
             namedIcon = new NamedIconImage(pUrl, pName);
         }
@@ -210,8 +212,8 @@ public class NamedIcon extends ImageIcon {
      * @return the name or null if not set
      */
     @CheckForNull
-    public String getName() {
-        return namedIcon.getName();
+    public final String getName() {
+        return mName;
     }
 
     /**
@@ -219,8 +221,8 @@ public class NamedIcon extends ImageIcon {
      *
      * @param name the new name, can be null
      */
-    public void setName(@CheckForNull String name) {
-        namedIcon.setName(name);
+    public final void setName(@CheckForNull String name) {
+        this.mName = name;
     }
 
     /**
@@ -229,8 +231,8 @@ public class NamedIcon extends ImageIcon {
      * @return the path to this icon in JMRI portable format or null if not set
      */
     @CheckForNull
-    public String getURL() {
-        return namedIcon.getURL();
+    public final String getURL() {
+        return mURL;
     }
 
     /**
@@ -239,8 +241,8 @@ public class NamedIcon extends ImageIcon {
      *
      * @param url the URL associated with this icon
      */
-    public void setURL(@CheckForNull String url) {
-        namedIcon.setURL(url);
+    public final void setURL(@CheckForNull String url) {
+        this.mURL = url;
     }
 
     /**
