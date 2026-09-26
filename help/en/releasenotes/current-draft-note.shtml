@@ -37,6 +37,11 @@
         <h4>DCC++ and DCC-EX</h4>
             <ul>
                 <li>Correct E-Stop command sent when throttle is in reverse.</li>
+                <li>DCC-EX: turnout commands sent with a Turnout Automation retry policy
+                (e.g. "NoFeedback") were previously sent only once, ignoring the configured
+                retry interval and count. <code>DCCppTurnout</code> now defers to the configured
+                automation like every other connection type
+                (<a href="https://github.com/JMRI/JMRI/issues/15471">issue #15471</a>).</li>
             </ul>
 
         <h4>DCC4pc</h4>
