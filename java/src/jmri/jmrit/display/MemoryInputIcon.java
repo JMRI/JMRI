@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -33,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
 
-    JTextField _textBox = new JTextField();
+    JTextField _textBox = new PositionableJTextField();
     int _nCols;
 
     // the associated Memory object
@@ -53,13 +55,19 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             @Override
             public void keyReleased(KeyEvent e) {
                 int key = e.getKeyCode();
-                if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
+                if (key == KeyEvent.VK_ENTER) {
                     updateMemory();
                 }
             }
         });
         _textBox.setColumns(_nCols);
         _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
+        _textBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateMemory();
+            }
+        });
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
@@ -172,6 +180,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     @Override
     public void mouseMoved(JmriMouseEvent e) {
+        super.mouseMoved(e);
         updateMemory();
     }
 
