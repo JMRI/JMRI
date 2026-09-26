@@ -136,7 +136,8 @@ div.MemorySpinnerIconXml {
     text-align: center;
 }
 
-.MemoryInputIconXml {
+.MemoryInputIconXml, .BlockContentsInputIconXml, .GlobalVariableInputIconXml  {
+    /* turn off input-field default border, allowing JMRI border to be zero */
     padding: 1px 1px 1px 1px;
     min-width: 4em;
     box-shadow: none;
