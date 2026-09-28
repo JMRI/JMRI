@@ -58,8 +58,10 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://github.org/apiguardian-team/apiguardian
 
 #####  batik*
-    batik-js-1.8.jar is a "patched version of Rhino" needed for native-image closure with batik 1.4
-            https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-js/1.8
+- version 1.19
+- provides SVG vector image support
+- https://xmlgraphics.apache.org/batik/
+- https://xmlgraphics.apache.org/batik/javadoc/
 
 ##### jetty-*.jar
 - version 9.4.28.v20200408
