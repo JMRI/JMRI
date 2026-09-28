@@ -1842,6 +1842,9 @@ var $getTextCSSFromObj = function($widget) {
     //check for new hasBackground element, ignore background colors unless set to yes
     if (isDefined($widget.hasBackground) && $widget.hasBackground == "yes") {
         $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
+    } else {
+        // if no background specified, default to transparent
+        $retCSS['background-color'] = "transparent";
     }
     if (isUndefined($widget.hasBackground) && isDefined($widget.redBack)) {
         $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";

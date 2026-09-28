@@ -152,6 +152,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
+        setInputFocusTraversal();
         makeDataFlavors();
 
         // set scrollbar initial state

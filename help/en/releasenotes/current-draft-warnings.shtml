@@ -4,5 +4,13 @@
         cause Windows to emit some security warnings until it's 
         been used enough times that Windows calms down.
     </li>
-    <li>
+    <li>Memory Input Icons, Global Variable Input Icons and 
+        Block Contents Input Icons in Layout Editor, Panel Editor
+        and Control Panel Editor have for a long time 
+        shown a shadow border by default instead of no border 
+        by default.  This made it impossible to display them
+        without a border, unlike other editor icons.
+        This has been fixed.  If you want a border on one of these icons
+        and no longer see one, use the contextual menu on the
+        icon to set the border width to a non-zero value.
     </li>
