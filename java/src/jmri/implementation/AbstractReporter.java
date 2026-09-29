@@ -71,6 +71,19 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         // Default no-op
     }
 
+    /**
+     * Helper function to notify that the collection property has been updated.
+     * Always uses null as the previous value as the collection might be the same object.
+     * <p>
+     * This should only be used if we don't have a change in the current report. If notify(tag) is
+     * already called, there is no need to additionally call this.
+     */
+    public void notifyCollectionUpdated() {
+        if (this instanceof jmri.CollectingReporter) {
+            firePropertyChange(Reporter.PROPERTY_COLLECTION, null, ((jmri.CollectingReporter) this).getCollection());
+        }
+    }
+
     // internal data members
     protected Object _lastReport = null;
     protected Object _currentReport = null;

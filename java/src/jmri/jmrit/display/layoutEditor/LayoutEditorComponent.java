@@ -44,17 +44,15 @@ class LayoutEditorComponent extends JComponent {
             if (clipBounds != null) {
                 if (!clipBounds.isEmpty()) {
                     if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
-                        if (!clipBounds.equals(g2.getClipBounds())) {
-                            //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
-                            //        clipBounds, g2.getClipBounds());
-                            // intersect, never replace: clipBounds is the visible part of
-                            // the panel, used here to cull drawing, while the incoming clip
-                            // is the area Swing actually asked for. Replacing it would draw
-                            // track outside the dirty region, on top of higher level icons
-                            // that are not being repainted, as the target panel is a
-                            // JLayeredPane and so is not paint-optimized.
-                            g2.clip(clipBounds);
-                        }
+                        // clipBounds is the visible part of the panel, 
+                        // used here to cull drawing, while the incoming clip in g2
+                        // is the area Swing actually asked for in original graphics units 
+                        // (not scaled units). 
+
+                        log.debug("LEComponent.paint(): original g2 clip: {} requested clip: {}", 
+                                    g2.getClipBounds(), clipBounds);
+
+                        g2.setClip(clipBounds);
                     }
                 }
             }

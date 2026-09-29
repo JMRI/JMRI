@@ -68,7 +68,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         @Override
         public void run() {
             int opCode;
-            while (true) {  // loop permanently, program close will exit
+            while (!threadStopRequest && ! Thread.interrupted() ) {  // loop until asked to stop
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) {
@@ -138,7 +138,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                     // message is complete, dispatch it !!
                     {
                         log.trace("message complete: {}", msg);
-                        
+
                         // check for XmtHandler waiting on return values
                         if (waitForMsg != null) {
                             if (waitForMsg.equals(msg)) {
@@ -184,15 +184,20 @@ public class LnPacketizerStrict extends LnPacketizer {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
                     continue;
-                } catch (java.io.EOFException | java.io.InterruptedIOException e) {
-                    // posted from idle port when enableReceiveTimeout used
-                    // Normal condition, go around the loop again
-                    continue;
+                } catch (java.io.InterruptedIOException e) {
+                    // being requested to stop
+                    // will be process in while clause
                 } catch (java.io.IOException e) {
-                    // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFile", e); // NOI18N
-                    log.info("End of file"); // NOI18N
-                    disconnectPort(controller);
+                    if (controller.getAllowConnectionRecovery()) {
+                        log.info("run: server closed connection, attempting recovery");
+                        controller.closePort();
+                        controller.recover();
+                    } else {
+                        // fired when read detects end-of-file
+                        log.info("End of file", e); // NOI18N
+                        dispose();
+                        disconnectPort(controller);
+                    }
                     return;
                 } catch (RuntimeException e) {
                     // normally, we don't catch RuntimeException, but in this
@@ -236,7 +241,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         @Override
         public void run() {
             int waitCount;
-            while (true) { // loop permanently
+            while (!threadStopRequest) {   // loop until asked to stop)
                 // any input?
                 try {
                     // get content; blocks until present
@@ -336,9 +341,16 @@ public class LnPacketizerStrict extends LnPacketizer {
                         }
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
+                        if (controller.getAllowConnectionRecovery()) {
+                            log.info("run: server closed connection, attempting recovery");
+                            controller.closePort();
+                            controller.recover();
+                        }
                     }
                 } catch (InterruptedException ie) {
                     return; // ending the thread
+                } catch (RuntimeException rt) {
+                    log.error("Exception on take() call", rt);
                 }
             }
         }

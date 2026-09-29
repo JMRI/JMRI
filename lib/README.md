@@ -58,8 +58,10 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://github.org/apiguardian-team/apiguardian
 
 #####  batik*
-    batik-js-1.8.jar is a "patched version of Rhino" needed for native-image closure with batik 1.4
-            https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-js/1.8
+- version 1.19
+- provides SVG vector image support
+- https://xmlgraphics.apache.org/batik/
+- https://xmlgraphics.apache.org/batik/javadoc/
 
 ##### jetty-*.jar
 - version 9.4.28.v20200408
@@ -153,7 +155,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.8.6 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.6/openlcb-0.8.6.jar
- - with PRs through #307 pre-release https://github.com/openlcb/OpenLCB_Java/pull/307
+ - with PRs through #309 pre-release https://github.com/openlcb/OpenLCB_Java/pull/309
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels

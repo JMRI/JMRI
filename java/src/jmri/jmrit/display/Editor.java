@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -420,6 +421,60 @@ public abstract class Editor extends JmriJFrameWithPermissions
 //        log.debug("setTargetPanelSize now w={}, h={}", w, h);
         _targetPanel.setSize(w, h);
         _targetPanel.invalidate();
+    }
+
+    /**
+     * Move focus from an input field to the panel on Tab or Shift+Tab, leaving
+     * no input field selected.
+     */
+    protected void setInputFocusTraversal() {
+        _targetPanel.setFocusTraversalPolicyProvider(true);
+        _targetPanel.setFocusTraversalPolicy(new FocusTraversalPolicy() {
+
+            private List<Component> getInputFields() {
+                return getContents().stream()
+                        .filter(positionable -> positionable instanceof MemoryInputIcon
+                                || positionable instanceof BlockContentsInputIcon
+                                || positionable instanceof GlobalVariableInputIcon)
+                        .map(Positionable::getTextComponent)
+                        .filter(Objects::nonNull)
+                        .filter(component -> component.isFocusable() && component.isEnabled() && component.isVisible())
+                        .collect(Collectors.toList());
+            }
+
+            @Override
+            public Component getComponentAfter(Container focusCycleRoot, Component component) {
+                List<Component> fields = getInputFields();
+                if (fields.isEmpty() || component == _targetPanel) {
+                    return null;
+                }
+                return fields.contains(component) ? _targetPanel : null;
+            }
+
+            @Override
+            public Component getComponentBefore(Container focusCycleRoot, Component component) {
+                List<Component> fields = getInputFields();
+                if (fields.isEmpty() || component == _targetPanel) {
+                    return null;
+                }
+                return fields.contains(component) ? _targetPanel : null;
+            }
+
+            @Override
+            public Component getFirstComponent(Container focusCycleRoot) {
+                return getInputFields().isEmpty() ? null : _targetPanel;
+            }
+
+            @Override
+            public Component getLastComponent(Container focusCycleRoot) {
+                return getInputFields().isEmpty() ? null : _targetPanel;
+            }
+
+            @Override
+            public Component getDefaultComponent(Container focusCycleRoot) {
+                return getFirstComponent(focusCycleRoot);
+            }
+        });
     }
 
     protected Dimension getTargetPanelSize() {
