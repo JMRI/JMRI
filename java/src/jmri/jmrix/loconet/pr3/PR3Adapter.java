@@ -58,6 +58,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             // end up with two "LocoNet" menus...)
             jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = 
                     new jmri.jmrix.loconet.pr2.LnPr2Packetizer(this.getSystemConnectionMemo());
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
             packets.connectPort(this);
 
             // create memo
@@ -90,6 +91,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
             // connect to a packetizing traffic controller
             LnPacketizer packets = getPacketizer(getOptionState(option4Name));
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
             packets.connectPort(this);
 
             // create memo

@@ -261,7 +261,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         if (selectedItem != null) {
             trainComboBox.setSelectedItem(selectedItem);
         }
-        padComboBox(trainComboBox);
+        padComboBox(trainComboBox, Control.max_len_string_train_name);
         trainComboBox.setVisible(true);
     }
 

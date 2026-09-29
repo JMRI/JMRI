@@ -1,20 +1,20 @@
 package apps.systemconsole;
 
 import apps.SystemConsole;
+
 import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
 import javax.annotation.Nonnull;
+
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
+
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,13 +119,13 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
      * Sets the fontSize.
      * <p>
      * If the parameter is less than 6, the fontSize is set to 6. If the
-     * parameter is greater than 24, the fontSize is set to 24.
+     * parameter is greater than 28, the fontSize is set to 28.
      *
      * @param fontSize the fontSize to set
      */
     public void setFontSize(int fontSize) {
         int oldFontSize = this.fontSize;
-        this.fontSize = fontSize < 6 ? 6 : fontSize > 24 ? 24 : fontSize;
+        this.fontSize = fontSize < 6 ? 6 : fontSize > 28 ? 28 : fontSize;
         if (this.fontSize != oldFontSize) {
             this.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
             SystemConsole.getInstance().setFontSize(this.fontSize);

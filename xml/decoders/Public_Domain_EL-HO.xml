@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <version version="1" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20260820"/>
+    
+    <decoder>
+    
+        <family name="EL-HO" mfg="Public-domain and DIY" >  
+            <model model="Rybák" />
+        </family>
+    
+        <programming direct="yes" paged="no" register="no" ops="yes"/>
+
+        <variables>
+      
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+            
+            <variable item="Vestibule" CV="50" default="200">
+                <decVal min="0" max="255" />
+                <label>Vestibule</label>
+                <label xml:lang="cs">Představky</label>
+                <tooltip>Lighting intensity in vestibule.</tooltip>
+                <tooltip xml:lang="cs">Intenzita osvětlení představků.</tooltip>                
+            </variable>
+            
+            <variable item="Interior" CV="107" default="8">
+                <decVal min="0" max="10" />
+                <label>Interior</label>
+                <label xml:lang="cs">Interiér</label>
+                <tooltip>Lighting intensity in Interior. Range 0 – 10.</tooltip>
+                <tooltip xml:lang="cs">Intenzita osvětlení interiéru. Meze 0 – 10.</tooltip>                
+            </variable>
+            
+        </variables>
+        
+        <resets>
+            <factReset CV="8" default="8">
+                <label>Reset All CVs</label>
+                <label xml:lang="cs">Reset všech CV</label>
+            </factReset>
+        </resets>
+        
+    </decoder>
+    
+    <pane>
+<!--  Pane Light Intensity ================================================= -->      
+        <name>Light Intensity</name>
+        <name xml:lang="cs">Intenzita osvětlení</name>
+        <column>
+            <display item="Vestibule" />
+            <display item="Interior" /> 
+        </column>
+    </pane>
+    
+</decoder-config>

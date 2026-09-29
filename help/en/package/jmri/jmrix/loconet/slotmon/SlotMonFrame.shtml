@@ -28,6 +28,12 @@
       The "Release all unused slots" button (not visible in this screen shot) will reclaim extra
       slots in the Command Station.</p>
 
+	  <p>Column order may be changed by "Dragging" its heading to the desired position</p>
+
+	  <p>By right clicking on the header you may Hide or Show columns.</p>
+
+	  <p>The column order and hidden status is remebered</p>
+
       <p>The columns are:</p>
 
       <dl>
@@ -53,6 +59,12 @@
         <dd>The format of the commands being sent to the decoder, typically either 128 step, 28
         step, or 14 step, though other values are possible.</dd>
 
+        <dt>Updated</dt>
+
+        <dd>The last time that this slot was updated. If proceeded by SS it indicates that the
+            slot may be purged shortly.
+        </dd>
+
         <dt>Use</dt>
 
         <dd>
@@ -64,16 +76,17 @@
 
             <dt>Idle</dt>
 
-            <dd>Not reserved for any particular use, no contents</dd>
+            <dd>Not reserved for any particular use, may have contents, if a throttle requests the loco number
+				in this slot it will be used and set to In-Use, functions settings will not be reset.</dd>
 
             <dt>Common</dt>
 
-            <dd>Not in use at the moment, but still contains valid data for the last decoder to use
-            it.</dd>
+            <dd>The Command Station is sending DCC Packets, but there is no throttle refreshing the slot.</dd>
 
             <dt>In Use</dt>
 
-            <dd>Currently controlling a decoder</dd>
+            <dd>Currently controlling a decoder. The Command Station is sending DCC Packets,
+				and a Throttle is keeping the slot refreshed.</dd>
           </dl>
         </dd>
 
@@ -83,21 +96,31 @@
 
         <dt>Consisted</dt>
 
-        <dd>Displays the consist status of the slot, whether it's not consisted, the top of a
-        consist, included in a consist, etc.</dd>
+        <dd>Displays the command station consist status of the slot, whether it's not consisted, the top of a
+        consist, included in a consist, etc. The number in brackets points to the Slot for the lead loco.</dd>
+
+		<dt>Consist</dt>
+
+		<dd>For Command Station consists, shows the consist "Top" address.<dd>
 
         <dt>Throttle ID</dt>
 
         <dd>The ID of the throttle using this slot. It's displayed as two hexadecimal bytes. The
         second pair can be configured into the throttle, see the Digitrax instructions.</dd>
 
+        <dt>Cnt</dt>
+
+        <dd>If this is a slot with a JMRI throttle (ID normally 02 71) this is the number of JMRI throttles sharing
+            the slot.</dd>
+
         <dt>Direction</dt>
 
         <dd>Whether the decoder is currently being commanded to go Forward or Reverse.</dd>
 
-        <dt>F0-F8</dt>
+        <dt>F0-F8,F9-F28</dt>
 
-        <dd>The current function settings. A check mark indicates a function is On.</dd>
+        <dd>The current function settings. A check mark indicates a function is On. By default
+			F9-F28 only show if using XP Protocal.</dd>
       </dl>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

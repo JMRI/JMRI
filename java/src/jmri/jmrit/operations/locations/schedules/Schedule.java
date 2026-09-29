@@ -364,6 +364,12 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                                 si.getRoadName()) == null)) {
             status = Bundle.getMessage("NotValid", si.getRoadName());
         }
+        else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
+                !si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
+                !track.isRoadNameAndLoadTypeAccepted(si.getRoadName(), InstanceManager.getDefault(CarLoads.class)
+                        .getLoadType(si.getTypeName(), si.getReceiveLoadName()))) {
+            status = Bundle.getMessage("NotValid", si.getRoadName() + CarRoads.SPLIT_CHAR + si.getReceiveLoadName());
+        }
         // check loads
         else if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                 (!track.isLoadNameAndCarTypeAccepted(si.getReceiveLoadName(), si.getTypeName()) ||
@@ -392,7 +398,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                         si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")");
 
             } else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
-                    !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
+                    !si.getDestinationTrack().isRoadNameAndLoadTypeAccepted(si.getRoadName(), InstanceManager
+                            .getDefault(CarLoads.class).getLoadType(si.getTypeName(), si.getShipLoadName()))) {
                 status = Bundle.getMessage("NotValid",
                         si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")");
             } else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&

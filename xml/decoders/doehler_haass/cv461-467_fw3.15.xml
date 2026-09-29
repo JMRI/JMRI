@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV461/463/465/467, dimming AUX3-AUX6, new in firmware 3.15.</revremark>
+    </revision>
+  </revhistory>
+  <!-- Dimming levels for AUX3-AUX6, new in firmware 3.15. Odd addresses only: 461, 463, 465   -->
+  <!-- and 467. D&H's own ChangeLog states "CV461 bis CV466", which is wrong - the CV table is  -->
+  <!-- correct. Not every AUX is independently dimmable on every decoder.                       -->
+  <!-- Not relevant for the PD* series (product IDs 130-134).                                   -->
+  <variable item="AUX 3 dimming" CV="461" default="31" exclude="130,131,132,133,134" minOut="5">
+    <decVal min="0" max="31"/>
+    <label>AUX 3 dimming</label>
+    <label xml:lang="fr">AUX 3 intensité</label>
+    <label xml:lang="de">AUX 3 Dimmung</label>
+    <tooltip>CV461: 0 = dark … 31 = full brightness.</tooltip>
+    <tooltip xml:lang="fr">CV461 : 0 = éteint … 31 = pleine luminosité.</tooltip>
+    <tooltip xml:lang="de">CV461: 0 = dunkel … 31 = volle Helligkeit.</tooltip>
+  </variable>
+  <variable item="AUX 4 dimming" CV="463" default="31" exclude="130,131,132,133,134" minOut="6">
+    <decVal min="0" max="31"/>
+    <label>AUX 4 dimming</label>
+    <label xml:lang="fr">AUX 4 intensité</label>
+    <label xml:lang="de">AUX 4 Dimmung</label>
+    <tooltip>CV463: 0 = dark … 31 = full brightness.</tooltip>
+    <tooltip xml:lang="fr">CV463 : 0 = éteint … 31 = pleine luminosité.</tooltip>
+    <tooltip xml:lang="de">CV463: 0 = dunkel … 31 = volle Helligkeit.</tooltip>
+  </variable>
+  <variable item="AUX 5 dimming" CV="465" default="31" exclude="130,131,132,133,134" minOut="7">
+    <decVal min="0" max="31"/>
+    <label>AUX 5 dimming</label>
+    <label xml:lang="fr">AUX 5 intensité</label>
+    <label xml:lang="de">AUX 5 Dimmung</label>
+    <tooltip>CV465: 0 = dark … 31 = full brightness.</tooltip>
+    <tooltip xml:lang="fr">CV465 : 0 = éteint … 31 = pleine luminosité.</tooltip>
+    <tooltip xml:lang="de">CV465: 0 = dunkel … 31 = volle Helligkeit.</tooltip>
+  </variable>
+  <variable item="AUX 6 dimming" CV="467" default="31" exclude="130,131,132,133,134" minOut="8">
+    <decVal min="0" max="31"/>
+    <label>AUX 6 dimming</label>
+    <label xml:lang="fr">AUX 6 intensité</label>
+    <label xml:lang="de">AUX 6 Dimmung</label>
+    <tooltip>CV467: 0 = dark … 31 = full brightness. WARNING: after a firmware update this CV may read 255 instead of 31; perform a reset (CV8 = 8) or write 31 by hand.</tooltip>
+    <tooltip xml:lang="fr">CV467 : 0 = éteint … 31 = pleine luminosité. ATTENTION : après une mise à jour du firmware, ce CV peut se lire 255 au lieu de 31 ; faire un reset (CV8 = 8) ou écrire 31 manuellement.</tooltip>
+    <tooltip xml:lang="de">CV467: 0 = dunkel … 31 = volle Helligkeit. ACHTUNG: nach einem Firmware-Update kann dieses CV 255 statt 31 anzeigen; Reset (CV8 = 8) durchführen oder 31 von Hand schreiben.</tooltip>
+  </variable>
+</variables>

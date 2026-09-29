@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Correct E-Stop command sent when throttle is in reverse.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -81,16 +81,24 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>A throttle waiting for a reply which never arrives now gives up
+                    and resumes sending: after 5 seconds once the connection has
+                    nothing left in hand, 15 seconds otherwise. On a serial XpressNet
+                    connection a broadcast message arriving while a command is in
+                    flight could be taken for that command's reply, leaving the
+                    throttle waiting forever and silently holding back every
+                    command queued afterwards for the rest of the session.</li>
+                <li>Roco and Z21 throttles now stop their timers when they are
+                    disposed of, instead of leaving them running for the rest of
+                    the session.</li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Remove some extra messages when configuring with the board-level tools
-                    in the LocoNet menu</li>
-                <li>Added a new programming facade "Digitrax OpSw Word Programming" for
-                    programming at the board level for e.g. DS64's.</li>
-                <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
+                <li>Fixed a problem where an Intellibox-II would
+                    have power on/off problems after CV programming.</li>
+                <li>A LocoNet connection now reconnects if the connection goes down and then comes up again.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -130,7 +138,17 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The "Make Sensor" and "Make Turnout" buttons in the configuration
+                    panel used to require a non-empty description field to put a 
+                    user name on the Sensor/Turnout they'd create. Absent that, they
+                    wouldn't appear. A description is no longer required; if one
+                    is not present, the Sensor or Turnout will be created without 
+                    a user name.</li>
+                <li>Updated the Reporter to set the RailCom orientation instead
+                    of direction (WEST/EAST if the appropriate bit is set in
+                    the report).</li>
+                <li>Updated the OpenLCB jar library to pick up a fix to the
+                    read/write timeout value calculation.
             </ul>
 
         <h4>Powerline</h4>
@@ -416,7 +434,17 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Memory Input Icons, Global Variable Input Icons and 
+                Block Contents Input Icons have for a long time 
+                shown a shadow border by default instead of no border 
+                by default.  This made it impossible to display them
+                without a border, unlike other editor icons.
+                This has been fixed.  If you want a border on one of these icons
+                and no longer see one, use the contextual menu on the
+                icon to set the border width to a non-zero value.
+            <li>Memory Input Icons, Global Variable Input Icons and 
+                Block Contents Input Icons now work properly when the
+                panel has been zoomed larger or smaller.
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -438,8 +466,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Add the ability to export a backup of a single Roster Group.</li>
-            <li>You can now program, save and load DS64 output addresses and routes in a roster entry using DecoderPro.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -463,7 +490,23 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Memory Input Icons, Global Variable Input Icons and 
+                Block Contents Input Icons have for a long time 
+                shown a shadow border by default instead of no border 
+                by default.  This made it impossible to display them
+                without a border, unlike other editor icons.
+                This has been fixed.  If you want a border on one of these icons
+                and no longer see one, use the contextual menu on the
+                icon to set the border width to a non-zero value.
+            <li>The popup menu for Memory Input Icons now lets you set the number of 
+                columns that the GUI will display. Note that the fixed width
+                interacts with selection:  If you select a wider fixed width,
+                blank areas will display on either side.
+            <li>A bug introduced in JMRI 5.17.3 would cause display problems with
+                layout editor windows that had been zoomed. This has been fixed.
+            <li>Memory Input Icons, Global Variable Input Icons and 
+                Block Contents Input Icons now work properly when the
+                panel has been zoomed larger or smaller.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -504,7 +547,14 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Memory Input Icons, Global Variable Input Icons and 
+                Block Contents Input Icons have for a long time 
+                shown a shadow border by default instead of no border 
+                by default.  This made it impossible to display them
+                without a border, unlike other editor icons.
+                This has been fixed.  If you want a border on one of these icons
+                and no longer see one, use the contextual menu on the
+                icon to set the border width to a non-zero value.
         </ul>
 
     <h3>Permissions</h3>
@@ -610,7 +660,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>In the Reporters table, the Report column now displays all reported objects
+                concatenated with " + " when the reporter is a <code>CollectingReporter</code>.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -628,7 +679,23 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Some improvements to how the various input icons are handled on panels:
+                <ul>
+                    <li>The padding on the end of the icon now agrees with what's
+                        on the parent JMRI panel.
+                    <li>The default drop shadow on the web has been dropped to 
+                        make the appearance agree with the parent JMRI panel.
+                    <li>The default border now agrees with the border on the
+                        parent JMRI panel.
+                </ul>
+            </li>
+            <li>If an icon is defined in JMRI as having no background,
+                it's shown as transparent on the JMRI screen.  Previously,
+                this was shown as a white background on the web browser screen.
+                This has been corrected so that it now shows on the web browser
+                screen as transparent, giving the same appearance as on 
+                the JMRI screen.
+            </li>
         </ul>
 
     <h3>Where Used</h3>
@@ -658,7 +725,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The Linux desktop icons have been updated from .gif from .png
-                so they work on more Linux distributions.</li>
+            <li>The "noverify" option has been removed from the JMRI program
+                launchers so that JMRI can use Java 27 and later.</li>
+            <li>For JMRI developers: CI tests now fails on WARN logging messages.</li>
         </ul>
 

@@ -51,7 +51,12 @@ public class AbstractRailComReporterTest extends AbstractReporterTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        r = new AbstractRailComReporter("IR1");
+        r = new AbstractRailComReporter("IR1") {
+            @Override
+            public boolean hasExitReports() {
+                return true;
+            }
+        };
     }
 
     @AfterEach

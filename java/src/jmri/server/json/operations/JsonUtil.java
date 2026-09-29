@@ -2,17 +2,14 @@ package jmri.server.json.operations;
 
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
@@ -29,6 +26,9 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.consist.JsonConsist;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities used by JSON services for Operations
@@ -309,6 +309,7 @@ public class JsonUtil {
     public ObjectNode getRollingStock(@Nonnull RollingStock rs, Locale locale) {
         ObjectNode node = mapper.createObjectNode();
         node.put(JSON.NAME, rs.getId());
+        node.put(JsonOperations.ORDER, rs.getOrder());
         node.put(JsonOperations.NUMBER, TrainCommon.splitString(rs.getNumber()));
         node.put(JsonOperations.ROAD, rs.getRoadName().split(TrainCommon.HYPHEN)[0]);
         node.put(JSON.RFID, rs.getRfid());
@@ -377,7 +378,7 @@ public class JsonUtil {
         data.put(JSON.NAME, train.getId());
         data.put(JSON.DEPARTURE_TIME, train.getFormatedDepartureTime());
         data.put(JSON.DESCRIPTION, train.getDescription());
-        data.put(JSON.COMMENT, train.getComment());
+        data.put(JSON.COMMENT, train.getCommentCurrent());
         if (train.getRoute() != null) {
             data.put(JSON.ROUTE, train.getRoute().getName());
             data.put(JSON.ROUTE_ID, train.getRoute().getId());

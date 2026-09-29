@@ -264,6 +264,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             log.error("JDOM Exception when retreiving block values", jde);
         } catch (java.io.IOException ioe) {
             log.error("I/O Exception when retreiving block values", ioe);
+        } catch (RuntimeException re) {
+            // restoring the saved block values is not worth losing the routing
+            // initialization below, which would otherwise be skipped silently
+            log.error("Exception when retreiving block values", re);
         }
 
         //special tests for getFacingSignalHead method - comment out next three lines unless using LayoutEditorTests

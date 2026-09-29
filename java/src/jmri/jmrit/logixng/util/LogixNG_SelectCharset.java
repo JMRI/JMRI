@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.util;
 
-import java.beans.PropertyChangeListener;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -23,7 +22,6 @@ public class LogixNG_SelectCharset {
 
     private final AbstractBase _base;
     private final InUse _inUse;
-//    private final PropertyChangeListener _listener;
 
     private Addressing _addressing = Addressing.Standard;
     private Charset _standardValue = StandardCharsets.UTF_8;
@@ -31,11 +29,10 @@ public class LogixNG_SelectCharset {
     private final LogixNG_SelectString _selectUserSpecifiedCharset;
 
 
-    public LogixNG_SelectCharset(AbstractBase base, PropertyChangeListener listener) {
+    public LogixNG_SelectCharset(AbstractBase base) {
         _base = base;
         _inUse = () -> _addressing == Addressing.UserSpecified;
-//        _listener = listener;
-        _selectUserSpecifiedCharset = new LogixNG_SelectString(base, _inUse, listener);
+        _selectUserSpecifiedCharset = new LogixNG_SelectString(base, _inUse);
     }
 
     private static List<Charset> getStandardCharsets() {
@@ -126,7 +123,7 @@ public class LogixNG_SelectCharset {
                 break;
 
             case Memory:
-                enumName = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
+                enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:

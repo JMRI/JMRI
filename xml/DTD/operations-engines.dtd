@@ -27,7 +27,8 @@
 <!ELEMENT engines (engine*)>
 <!ELEMENT engine EMPTY>
 
-<!ATTLIST engine id						CDATA #REQUIRED>          
+<!ATTLIST engine id						CDATA #REQUIRED> 
+<!ATTLIST engine order					CDATA #IMPLIED>         
 <!ATTLIST engine roadNumber				CDATA #IMPLIED>
 <!ATTLIST engine roadName				CDATA #IMPLIED>  
 <!ATTLIST engine type					CDATA #IMPLIED>      

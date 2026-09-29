@@ -127,6 +127,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         JComboBox<String> box = new JComboBox<>();
         box.addItem(CarLoad.LOAD_TYPE_EMPTY);
         box.addItem(CarLoad.LOAD_TYPE_LOAD);
+        OperationsPanel.padComboBox(box);
         return box;
     }
 

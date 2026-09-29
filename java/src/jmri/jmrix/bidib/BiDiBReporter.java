@@ -59,6 +59,14 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
      * {@inheritDoc}
      */
     @Override
+    public boolean hasExitReports() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public BiDiBAddress getAddr() {
         return addr;
     }

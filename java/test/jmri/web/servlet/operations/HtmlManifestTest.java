@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 /**
@@ -43,6 +44,9 @@ public class HtmlManifestTest {
 
     @AfterEach
     public void tearDown() {
+        // GitHub CI workflows doesn't have a default printer
+        JUnitAppender.suppressWarnMessage("No default printer found");
+
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

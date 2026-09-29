@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--  Version 1.1   22 Jun 2023,  Ronald Kuhn.    add german translation                        -->
-
+<!--  Version 1.2   06 August 2026, Pierre Billon. Added French translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -28,6 +28,7 @@
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
+        <choice xml:lang="fr">Aucune touche</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
         <choice xml:lang="de">keine Taste</choice>
         <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
@@ -118,9 +119,11 @@
       </enumChoice>
     </enumVal>
     <label>SpeedLock Feature</label>
+    <label xml:lang="fr">Touche Speedlock</label>
     <label xml:lang="cs">Vlastnost Zámek rychlosti</label>
     <label xml:lang="de">Speedlock-Taste</label>
     <tooltip>If the key is activated, you can control the sound without changing the speed of the locomotive.</tooltip>
+    <tooltip xml:lang="fr">Si la touche est active, le régulateur pilote le son sans changer la vitesse de la locomotive.</tooltip>
     <tooltip xml:lang="de">Wenn Taste aktiv dann kann mit Geschwindigkeitsregler der Sound geregelt werden wobei sich die Geschwindigkeit der Lok nicht ändert.</tooltip>
     <tooltip xml:lang="cs">Pokud je tlačítko aktivní, lze zvuk ovládat regulátorem rychlosti, přičemž rychlost zůstane konstantní.</tooltip>
   </variable>

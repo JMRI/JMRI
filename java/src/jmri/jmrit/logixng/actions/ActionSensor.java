@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -15,15 +13,14 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ActionSensor extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionSensor extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class), this);
+                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class));
 
     private final LogixNG_SelectEnum<SensorState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
+            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active);
 
 
     public ActionSensor(String sys, String user)
@@ -111,20 +108,6 @@ public class ActionSensor extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-        _selectEnum.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-        _selectEnum.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -186,12 +169,6 @@ public class ActionSensor extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSensor.class);

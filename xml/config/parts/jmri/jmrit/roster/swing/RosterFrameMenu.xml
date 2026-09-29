@@ -489,6 +489,10 @@
         <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupAction</adapter>
         <current>deletegroup</current>
     </node>
+    <node name="Delete Roster Group Contents">
+        <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupContentsAction</adapter>
+        <current>deletegroupcontents</current>
+    </node>
     <node>separator</node><!-- separator -->
     <node name="Add Roster Entry to Group...">
 	    <name xml:lang="de">Eintrag einer Lokparkgruppe hinzufügen</name>
@@ -616,6 +620,9 @@
         <name xml:lang="cs">Řízení vícenásobných dekodérů</name>
         <name xml:lang="nl">Multi-Decoder aansturing</name>
         <adapter>jmri.jmrit.dualdecoder.DualDecoderToolAction</adapter>
+    </node>
+    <node name="Speed Profiling">
+        <adapter>jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Start WiThrottle Server">

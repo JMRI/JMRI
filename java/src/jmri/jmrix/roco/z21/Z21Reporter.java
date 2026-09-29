@@ -43,6 +43,14 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasExitReports() {
+        return true;
+    }
+
+    /**
      *     request an update from the layout.
      */
     private void requestUpdateFromLayout(){

@@ -258,7 +258,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
          if (blockToEdit == null) {
              JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
                      Bundle.getMessage("Error1"), // NOI18N
-                     Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                     Bundle.getMessage("SlotErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
              return;
          }
          blockToEdit.editLayoutBlock(editLayoutTraverserFrame);
@@ -442,7 +442,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             }
         } catch (NumberFormatException ex) {
             JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError") + ": "
-                    + ex, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                    + ex, Bundle.getMessage("SlotErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
@@ -453,7 +453,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             }
         } catch (NumberFormatException ex) {
             JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError") + ": "
-                    + ex, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                    + ex, Bundle.getMessage("SlotErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -581,7 +581,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                         msg.append(Bundle.getMessage("TV_Message_Slot_Disable"));
                         JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
                                 msg.toString(),
-                                Bundle.getMessage("ErrorTitle"),
+                                Bundle.getMessage("SlotErrorTitle"),
                                 JmriJOptionPane.ERROR_MESSAGE);
                         disabledCheckBoxA.setSelected(false);
                     }
@@ -626,7 +626,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                         msg.insert(0, Bundle.getMessage("TV_Message_Header"));
                         JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
                                 msg.toString(),
-                                Bundle.getMessage("ErrorTitle"),
+                                Bundle.getMessage("SlotErrorTitle"),
                                 JmriJOptionPane.ERROR_MESSAGE);
                         disabledCheckBoxB.setSelected(false);
                     }

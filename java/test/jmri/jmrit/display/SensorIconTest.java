@@ -1,7 +1,9 @@
 package jmri.jmrit.display;
 
 import java.awt.Component;
+import java.awt.Rectangle;
 
+import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JmriMouseEvent;
@@ -81,6 +83,21 @@ public class SensorIconTest extends PositionableIconTest {
         p.doMouseReleased(event);
         
         Assertions.assertEquals(Sensor.INACTIVE, s.getCommandedState());
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testStateChangeRepaintsBoundedArea() throws JmriException {
+        si.setBounds(12, 17, 20, 30);
+        EditorScaffold scaffold = (EditorScaffold) editor;
+        scaffold.lastRepaintRect = null;
+
+        s.setKnownState(Sensor.ACTIVE);
+
+        Assertions.assertNotNull( scaffold.lastRepaintRect,
+                "state change posts a bounded repaint instead of repainting the frame");
+        Assertions.assertTrue( scaffold.lastRepaintRect.contains(new Rectangle(12, 17, 20, 30)),
+                "dirty area covers the icon bounds");
     }
 
     Sensor s;

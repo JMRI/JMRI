@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.concurrent.LinkedTransferQueue;
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
@@ -22,6 +23,12 @@ public abstract class LnTrafficController implements LocoNetInterface {
     LocoNetSystemConnectionMemo memo = null;
 
     /**
+     * Configuration option: Notify listeners on adding message to transmit queue,
+     * don't notify them on receiving an echo
+     */
+    protected boolean mLoconetUpdateSlotOnMessageCreation = false;
+
+    /**
      * Constructor without reference to a LocoNetSystemConnectionMemo.
      */
     public LnTrafficController() {
@@ -36,6 +43,33 @@ public abstract class LnTrafficController implements LocoNetInterface {
     public LnTrafficController(LocoNetSystemConnectionMemo memo) {
         super();
         this.memo = memo;
+    }
+
+    /**
+     * Set configuration option: Notify listeners on adding message to transmit queue,
+     * don't notify them on reading back the echo
+     *
+     * @param value true for notify on adding to queue
+     */
+    public void setLoconetUpdateSlotOnMessageCreation(boolean value) {
+        mLoconetUpdateSlotOnMessageCreation = value;
+    }
+
+    /**
+     * Get configuration option: Notify listeners on adding message to transmit queue,
+     * don't notify them on reading back the echo
+     */
+    public boolean getLoconetUpdateSlotOnMessageCreation() {
+        return mLoconetUpdateSlotOnMessageCreation;
+    }
+
+    /**
+     * Synchronized list to remember outbound packets
+     */
+    protected LinkedTransferQueue<LocoNetMessage> sentList = new LinkedTransferQueue<>();
+
+    public LinkedTransferQueue<LocoNetMessage> getSentList() {
+        return sentList;
     }
 
     /**
@@ -67,10 +101,24 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * <p>
      * Implementations should update the transmit count statistic.
      *
+     * @param m  Message to send; will be updated with CRC
+     * @param requestIgnoreEcho  If true: Notify listeners on enqueing message, ignore echo from line.
+     *                           Only in effect if preference "LoconetUpdateSlotOnMessageCreation" is set.
+     */
+    @Override
+    abstract public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho);
+
+    /**
+     * Forward a preformatted LocoNetMessage to the actual interface.
+     * <p>
+     * Implementations should update the transmit count statistic.
+     *
      * @param m message to send; will be updated with CRC
      */
     @Override
-    abstract public void sendLocoNetMessage(LocoNetMessage m);
+    public void sendLocoNetMessage(LocoNetMessage m) {
+        sendLocoNetMessage(m, false);
+    }
 
     // The methods to implement adding and removing listeners
 

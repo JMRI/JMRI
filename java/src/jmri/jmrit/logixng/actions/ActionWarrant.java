@@ -30,14 +30,14 @@ public class ActionWarrant extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<Warrant> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Warrant.class, InstanceManager.getDefault(WarrantManager.class), this);
+                    this, Warrant.class, InstanceManager.getDefault(WarrantManager.class));
 
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.AllocateWarrantRoute, this);
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.AllocateWarrantRoute);
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -381,16 +381,12 @@ public class ActionWarrant extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-        _selectEnum.registerListeners();
         _selectMemoryNamedBean.addPropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-        _selectEnum.unregisterListeners();
         _selectMemoryNamedBean.removePropertyChangeListener("value", this);
     }
 

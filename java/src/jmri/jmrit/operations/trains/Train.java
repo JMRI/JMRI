@@ -7,8 +7,6 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import org.jdom2.Element;
-
 import jmri.InstanceManager;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
@@ -30,6 +28,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.jdom2.Element;
 
 /**
  * Represents a train on the layout
@@ -209,6 +209,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     
     // Train has serviced a location
     public static final int SERVICED = -1;
+    public static final int NOT_PART_ROUTE = -2;
 
     public Train(String id, String name) {
         //       log.debug("New train ({}) id: {}", name, id);
@@ -490,10 +491,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 // add wait time
                 minutes += rl.getWait();
                 // add travel time if new location
-                RouteLocation next = routeList.get(i + 1);
-                if (next != null &&
-                        !rl.getSplitName().equals(next.getSplitName())) {
-                    minutes += Setup.getTravelTime();
+                try {
+                    RouteLocation next = routeList.get(i + 1);
+                    if (next != null &&
+                            !rl.getSplitName().equals(next.getSplitName())) {
+                        minutes += Setup.getTravelTime();
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    return NOT_PART_ROUTE;
                 }
                 // don't count work if there's a departure time
                 if (i == 0 || !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
@@ -1875,6 +1880,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // now see if the train's route services the car's destination
         for (int k = rLocations.indexOf(rLoc); k < rLocations.size(); k++) {
             RouteLocation rldest = rLocations.get(k);
+            car.setRouteDestinationTiming(rldest);
             if (rldest.getName().equals(car.getDestinationName()) &&
                     (rldest.isDropAllowed() && !car.isLocalMove() ||
                             rldest.isLocalMovesAllowed() && car.isLocalMove()) &&
@@ -2830,6 +2836,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             setDirtyAndFirePropertyChange("trainComment", old, comment); // NOI18N
         }
     }
+    
+    public String getCommentCurrentWithColor() {
+        return commentCurrent(getCommentWithColor());
+    }
+    
+    public String getCommentCurrent() {
+        return commentCurrent(getComment());
+    }
 
     public String getComment() {
         return TrainCommon.getOnlyText(getCommentWithColor());
@@ -2837,6 +2851,33 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public String getCommentWithColor() {
         return _comment;
+    }
+    
+    public Color getCommentColor() {
+        return TrainCommon.getTextColor(getCommentWithColor());
+    }
+    
+    public String getCommentColorName() {
+        return TrainCommon.getTextColorName(getCommentWithColor());
+    }
+    
+    private String commentCurrent(String comment) {
+        RouteLocation crl = getCurrentRouteLocation();
+        if (crl == null) {
+            crl = getTrainDepartsRouteLocation();
+        }
+        return getCommentCurrent(comment, crl);
+    }
+    
+    public String getCommentCurrent(String comment, RouteLocation crl) {
+        return MessageFormat.format(comment,
+                new Object[]{getSplitName(), getDescription(), getTrainDepartsName(),
+                        getFormatedDepartureTime(), getTrainDepartsDirection(),
+                        getTrainTerminatesName(), getNumberCarsInTrain(crl),
+                        getNumberLoadedCarsInTrain(crl), getNumberEmptyCarsInTrain(crl),
+                        getTrainLength(crl), Setup.getLengthUnit().toLowerCase(),
+                        getTrainWeight(crl), getLeadEngineRoadAndNumber(),
+                        getLeadEngineDccAddress()});
     }
 
     /**
@@ -3873,6 +3914,28 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return getDepartureTrack().getDropRS() > 0;
         }
         return false;
+    }
+    
+    /**
+     * Used to determine if rolling stock was pulled before the current build
+     * route location. If rolling stock before pulled current route location,
+     * track space is available.
+     * @param rs The rolling stock to be placed
+     * 
+     * @param r rolling stock to be tested for timing
+     * @return true if rolling stock was pulled
+     */
+    public boolean checkPullTiming(RollingStock rs, RollingStock r) {
+        // go thought the train's route to determine if rolling stock was already pulled.
+        for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
+            if (rl == r.getRouteLocation()) {
+                break;
+            }
+            if (rl == rs.getRouteDestinationTiming()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void dispose() {

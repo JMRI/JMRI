@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.beans.PropertyChangeEvent;
@@ -436,7 +437,7 @@ public abstract class AbstractBaseTestBase {
 
         // Some item doesn't support adding new sockets.
         // End here if the item under test doesn't.
-        org.junit.Assume.assumeTrue( "Item doesn't support adding new sockets", addNewSocket());
+        assumeTrue(addNewSocket(), "Item doesn't support adding new sockets");
 
         assertTrue( ab.get(), "PropertyChangeEvent fired");
         assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());

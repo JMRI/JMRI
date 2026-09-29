@@ -2610,9 +2610,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      *
      * @param register Register Number for the loco assigned address.
      * @param address is the locomotive address.
+     * @param isForward true if loco direction is forwards, false if reverse.
      * @return message to send e stop to the specified address.
      */
-    public static DCCppMessage makeAddressedEmergencyStop(int register, int address) {
+    public static DCCppMessage makeAddressedEmergencyStop(int register, int address, boolean isForward) {
         // Sanity check inputs
         if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) {
             return (null);
@@ -2621,7 +2622,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" ").append(register);
         m.myMessage.append(" ").append(address);
-        m.myMessage.append(" -1 1");
+        m.myMessage.append(" -1 ");
+        m.myMessage.append(isForward ? "1" : "0");
         m.myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
 
         m._nDataChars = m.toString().length();
@@ -2633,10 +2635,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * Note: This just sends a THROTTLE command with speed = -1
      *
+     * @param isForward true if loco direction is forwards, false if reverse.
      * @param address is the locomotive address.
      * @return message to send e stop to the specified address.
      */
-    public static DCCppMessage makeAddressedEmergencyStop(int address) {
+    public static DCCppMessage makeAddressedEmergencyStop(int address, boolean isForward) {
         // Sanity check inputs
         if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) {
             return (null);
@@ -2644,7 +2647,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" ").append(address);
-        m.myMessage.append(" -1 1");
+        m.myMessage.append(" -1 ");
+        m.myMessage.append(isForward ? "1" : "0");
         m.myRegex = DCCppConstants.THROTTLE_V3_CMD_REGEX;
 
         m._nDataChars = m.toString().length();

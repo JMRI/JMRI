@@ -18,7 +18,7 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<MaleDigitalExpressionSocket> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, MaleDigitalExpressionSocket.class, InstanceManager.getDefault(DigitalExpressionManager.class), this);
+                    this, MaleDigitalExpressionSocket.class, InstanceManager.getDefault(DigitalExpressionManager.class));
 
     public LastResultOfDigitalExpression(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -93,7 +93,6 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(PROPERTY_LAST_RESULT_CHANGED, this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -103,7 +102,6 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(PROPERTY_LAST_RESULT_CHANGED, this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

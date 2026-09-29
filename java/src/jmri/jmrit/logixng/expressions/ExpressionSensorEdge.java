@@ -18,13 +18,13 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class), this);
+                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class));
 
     private final LogixNG_SelectEnum<SensorState> _selectEnumFromState =
-            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
+            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active);
 
     private final LogixNG_SelectEnum<SensorState> _selectEnumToState =
-            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
+            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active);
 
     private boolean _onlyTrueOnce = false;
 
@@ -138,7 +138,6 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownState", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -148,7 +147,6 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownState", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
             lastSensorState = null;
             currentSensorState = null;

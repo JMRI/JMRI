@@ -27,7 +27,6 @@ interface IndicatorTrack
 Positionable <-- PositionableJComponent
 Positionable <-- PositionableLabel
 Positionable <-- PositionableJPanel
-Positionable <-- PositionableIcon
 
 Positionable <-- IndicatorTrack
 
@@ -39,6 +38,7 @@ javax.swing.JPanel <|-- IconAdder
 PositionableLabel  <|-- PositionableIcon
 
 PositionableJComponent <|--  PositionableShape
+PositionableJComponent <|--  AnalogClock2Display
 
 PositionableLabel  <|-- LightIcon
 PositionableLabel  <|-- LocoIcon
@@ -47,11 +47,27 @@ PositionableLabel  <|-- MultiSensorIcon
 PositionableLabel  <|-- ReporterIcon
 PositionableLabel  <|-- SlipTurnoutIcon
 
+MemoryIcon <|-- BlockContentsIcon
+
 PositionableIcon <|-- IndicatorTrackIcon
 PositionableIcon <|-- SensorIcon
 PositionableIcon <|-- SignalHeadIcon
 PositionableIcon <|-- SignalMastIcon
 PositionableIcon <|-- TurnoutIcon
+
+PositionableJPanel <|-- GlobalVariableSpinnerIcon
+PositionableJPanel <|-- LogixNGTableIcon
+PositionableJPanel <|-- MemorySpinnerIcon
+PositionableJPanel <|-- MemoryOrGVComboIcon
+
+MemoryOrGVComboIcon <|-- GlobalVariableComboIcon
+MemoryOrGVComboIcon <|-- MemoryComboIcon
+
+PositionableJPanel <|-- PositionableJTextField
+
+PositionableJTextField <|-- BlockContentsInputIcon
+PositionableJTextField <|-- MemoryInputIcon
+PositionableJTextField <|-- GlobalVariableInputIcon
 
 @end
  */

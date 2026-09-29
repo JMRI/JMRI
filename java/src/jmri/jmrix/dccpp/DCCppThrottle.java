@@ -5,8 +5,6 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to a DCC-EX
@@ -26,9 +24,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     protected static final int THROTTLEIDLE = 0;  // Idle Throttle
     protected static final int THROTTLESPEEDSENT = 2;  // Sent speed/dir command to locomotive
     protected static final int THROTTLEFUNCSENT = 4;   // Sent a function command to locomotive.
-    private final float speedMultiplier = 1.0f / 126.0f; //used to convert from integer speed to what JMRI expects
+    private static final float SPEEDMULTIPLIER = 1.0f / 126.0f; //used to convert from integer speed to what JMRI expects
 
-    public int requestState = THROTTLEIDLE;
+    int requestState = THROTTLEIDLE;
 
     protected int address;
 
@@ -40,7 +38,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     public DCCppThrottle(DCCppSystemConnectionMemo memo, DCCppTrafficController controller) {
         super(memo, 69); // supports up to F68
         tc = controller;
-        requestList = new LinkedBlockingQueue<RequestMessage>();
+        requestList = new LinkedBlockingQueue<>();
         this.isForward = true; //loco should default to forward
         log.debug("DCCppThrottle constructor");
     }
@@ -218,9 +216,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         /* Emergency stop sent */
         DCCppMessage msg;
         if (tc.getCommandStation().isThrottleRegisterRequired()) {
-            msg = DCCppMessage.makeAddressedEmergencyStop(this.getRegisterNum(), this.getDccAddress());
+            msg = DCCppMessage.makeAddressedEmergencyStop(getRegisterNum(), getDccAddress(), isForward);
         } else {
-            msg = DCCppMessage.makeAddressedEmergencyStop(this.getDccAddress());            
+            msg = DCCppMessage.makeAddressedEmergencyStop(getDccAddress(), isForward);
         }
         // now, queue the message for sending to the command station
         //queueMessage(msg, THROTTLESPEEDSENT);
@@ -266,7 +264,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         finishRecord();
     }
 
-    public int setDccAddress(int newaddress) {
+    public final int setDccAddress(int newaddress) {
         address = newaddress;
         return address;
     }
@@ -330,33 +328,32 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
 
         boolean newForward = r.getIsForward();
-        float newSpeedSetting = r.getSpeedInt() * speedMultiplier;
+        float newSpeedSetting = r.getSpeedInt() * SPEEDMULTIPLIER;
         String newFunctionsString = r.getFunctionsString();
         
         if (this.getIsForward() != newForward) {
-            if (log.isDebugEnabled()) log.debug("changing forward from {} to {} for {}", this.getIsForward(), newForward, locoId);
+            log.debug("changing forward from {} to {} for {}", this.getIsForward(), newForward, locoId);
             super.setIsForward(newForward);
         }
         if (Math.abs(this.getSpeedSetting() - newSpeedSetting) > 0.0001) { //avoid possible float precision errors
-            if (log.isDebugEnabled()) log.debug("changing speed from {} to {} for {}", this.getSpeedSetting(), newSpeedSetting, locoId);
+            log.debug("changing speed from {} to {} for {}", this.getSpeedSetting(), newSpeedSetting, locoId);
             super.setSpeedSetting(newSpeedSetting);
         }
         //check each function value for any changes, and update if so
         for (int i = 0; i <= 28; i++) {
             boolean newState = (newFunctionsString.charAt(i)=='1');
             if (this.getFunction(i) != newState) {
-//                log.debug(r.toMonitorString());
-                if (log.isDebugEnabled()) log.debug("changing F{} from {} to {} for {}", i, this.getFunction(i), newState, locoId);                
+                log.debug("changing F{} from {} to {} for {}",
+                    i, this.getFunction(i), newState, locoId);
                 super.updateFunction(i,newState);
             }
         }
     }
 
     private void handleThrottleReply(DCCppReply l) {
-        int reg, speed, dir;
-        reg = l.getRegisterInt();
-        speed = l.getSpeedInt();
-        dir = l.getDirectionInt();
+        int reg = l.getRegisterInt();
+        int speed = l.getSpeedInt();
+        int dir = l.getDirectionInt();
 
         // Check to see if register matches MY throttle.
         // If so, update my values to match the returned values.
@@ -372,23 +369,27 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             // to match the returned register info.
             synchronized(this) {
                 if (speed < 0) {
-                    //this.setSpeedSetting(0.0f);
                     this.speedSetting = 0.0f;
                 } else {
-                    //this.setSpeedSetting((speed * 1.0f)/126.0f);
-                    this.speedSetting = (speed * 1.0f) / 126.0f;
+                    this.speedSetting = speed * SPEEDMULTIPLIER;
                 }
             }
             this.isForward = (dir == 1);
          }
     }
- 
-    // Listen for the outgoing messages (to the command station)
+
+    /**
+     * Does not listen for outgoing messages.
+     * {@inheritDoc }
+     */
     @Override
     public void message(DCCppMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification
+     * {@inheritDoc }
+     */
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         log.debug("Notified of timeout on message '{}' , {} retries available.", msg, msg.getRetries());
@@ -408,10 +409,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     //A queue to hold outstanding messages
-    protected LinkedBlockingQueue<RequestMessage> requestList;
+    private final LinkedBlockingQueue<RequestMessage> requestList;
 
     // function to send message from queue.
-    synchronized protected void sendQueuedMessage() {
+    private synchronized void sendQueuedMessage() {
         RequestMessage msg;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
@@ -422,7 +423,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             // to the requeried state.
             try {
                 msg = requestList.take();
-            } catch (java.lang.InterruptedException ie) {
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
                 return; // if there was an error, exit.
             }
             requestState = msg.getState();
@@ -435,13 +437,14 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     //function to queue a message
-    synchronized protected void queueMessage(DCCppMessage m, int s) {
+    private synchronized void queueMessage(DCCppMessage m, int s) {
         log.trace("adding message '{}' to message queue", m);
         // put the message in the queue
         RequestMessage msg = new RequestMessage(m, s);
         try {
             requestList.put(msg);
-        } catch (java.lang.InterruptedException ignore) {
+        } catch (InterruptedException ignore) {
+            Thread.currentThread().interrupt();
         }
         // if the state is idle, trigger the message send
         if (requestState == THROTTLEIDLE) {
@@ -451,7 +454,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     // internal class to hold a request message, along with the associated
     // throttle state.
-    protected static class RequestMessage {
+    private static class RequestMessage {
 
         private final int state;
         private final DCCppMessage msg;
@@ -472,6 +475,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     // register for notification
-    private static final Logger log = LoggerFactory.getLogger(DCCppThrottle.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppThrottle.class);
 
 }

@@ -3,10 +3,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -17,6 +13,10 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.BuildFailedException;
 import jmri.jmrit.operations.trains.Train;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains methods for engines when building a train.
@@ -816,6 +816,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * @return true if destination track found and set
      */
     protected boolean setEngineDestination(Engine engine, RouteLocation rl, RouteLocation rld) {
+        engine.setRouteDestinationTiming(rld); // for timing
         // engine to staging?
         if (rld == getTrain().getTrainTerminatesRouteLocation() && getTerminateStagingTrack() != null) {
             String status =
@@ -876,10 +877,10 @@ public class TrainBuilderEngines extends TrainBuilderBase {
     private void addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track) {
         _lastEngine = engine; // needed in case there's a engine change in the
                               // train's route
-        engine = checkQuickServiceArrival(engine, rld, track);
         if (getTrain().getLeadEngine() == null) {
             getTrain().setLeadEngine(engine); // load lead engine
         }
+        engine = checkQuickServiceArrival(engine, rld, track);
         addLine(ONE, Bundle.getMessage("buildEngineAssigned", engine.toString(), rl.getName(),
                 rld.getName(), track.getName()));
         engine.setDestination(track.getLocation(), track, Engine.FORCE);
@@ -940,10 +941,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         addLine(FIVE,
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                         track.getLocation().getName(), track.getName(), cloneEng.toString(), engine.toString()));
-        // for timing, use arrival times for the train that is building
-        // other trains will use their departure time, loaded when creating the Manifest
-        String expectedArrivalTime = getTrain().getExpectedArrivalTime(rld, true);
-        cloneEng.setSetoutTime(expectedArrivalTime);
         // remember where in the route the car was delivered
         engine.setRouteDestination(rld);
         return cloneEng; // return clone

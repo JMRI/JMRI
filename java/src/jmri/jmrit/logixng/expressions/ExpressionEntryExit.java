@@ -25,7 +25,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<DestinationPoints> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, DestinationPoints.class, InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), this);
+                    this, DestinationPoints.class, InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class));
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private EntryExitState _entryExitState = EntryExitState.Active;
@@ -253,7 +253,6 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("active", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -263,7 +262,6 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("active", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

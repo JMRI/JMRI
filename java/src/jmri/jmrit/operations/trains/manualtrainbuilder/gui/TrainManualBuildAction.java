@@ -18,10 +18,14 @@ public class TrainManualBuildAction extends AbstractAction {
         _train = train;
     }
 
+    TrainManualBuildEditFrame _frame;
     Train _train;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new TrainManualBuildEditFrame(_train.getId());
+        if (_frame != null) {
+            _frame.dispose();
+        }
+        _frame = new TrainManualBuildEditFrame(_train.getId());
     }
 }

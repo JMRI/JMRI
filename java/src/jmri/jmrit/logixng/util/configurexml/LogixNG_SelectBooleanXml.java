@@ -37,7 +37,8 @@ public class LogixNG_SelectBooleanXml {
         if (memory != null) {
             intElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        intElement.addContent(new Element("listenToMemory").addContent(selectBoolean.getListenToMemory() ? "yes" : "no"));
+        // Not used anymore. It's kept to not change old tables and panels files
+        intElement.addContent(new Element("listenToMemory").addContent("no"));
         if (selectBoolean.getLocalVariable() != null && !selectBoolean.getLocalVariable().isEmpty()) {
             intElement.addContent(new Element("localVariable").addContent(selectBoolean.getLocalVariable()));
         }
@@ -78,11 +79,6 @@ public class LogixNG_SelectBooleanXml {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectBoolean.setMemory(m);
                     else selectBoolean.removeMemory();
-                }
-
-                Element listenToMemoryElem = booleanElement.getChild("listenToMemory");
-                if (listenToMemoryElem != null) {
-                    selectBoolean.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
                 }
 
                 elem = booleanElement.getChild("localVariable");

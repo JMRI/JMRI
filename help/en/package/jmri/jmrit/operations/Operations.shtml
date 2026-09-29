@@ -99,7 +99,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#CarRouting">Car Routing Options</a></li>
                     <li><a href="#LoggingOptions">Logging Options</a></li>
                     <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
-                    <li><a href="#Options">Options</a>
+                    <li><a href="#Options">Additional Options</a>
                       <ul>
                         <li><a href="#SaveTrainManifests">Save Train Manifests, Build
                             Reports, and Switch Lists</a></li>
@@ -249,7 +249,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#Pools">Track Pools</a></li>
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
                 <li><a href="#PlannedPickUps">Planned Pick Ups (Track Overloading)</a></li>
-                <li><a href="#TrackWorkComments">Manifest Comments</a></li>
+                <li><a href="#TrackWorkComments">Track Comments</a></li>
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
                 <li><a href="#CopyTrack">Copy Track</a></li>
@@ -1332,9 +1332,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         Note that train turns servicing locations on both the outbound and inbound legs, will in
-        most cases pull the cars delivered on the outbound leg on the return leg. Use interchange
-        tracks and <a href="#Schedules">spurs/schedules</a> with wait times to hold cars, or <a
-          href="#RestrictingTrackToCertainTrains">restrict the car pick ups by train or route</a>.
+        some cases pull the cars delivered on the outbound leg on the return leg. If the train on
+        the return leg arrives after the cars set out time plus the dell time, those cars might be
+        pulled based on their move counts. If the train arrives before the cars set out time plus
+        dell time, the cars will be ignored and not pulled. To prevent pulls on the return leg, use
+        interchange tracks, or <a href="#Schedules">spurs/schedules</a> with wait times, or <a
+          href="#RestrictingTrackToCertainTrains">restrict car pick ups by train or route</a>.
+      </p>
+
+      <p>
         The program also prevents a car set out at a <a href="#EditRoute">route location</a> to be
         pulled by the same route location. This isn't an issue unless you use the same route for
         multiple trains and expect a later train using the same route to pull the car. If you want
@@ -1374,8 +1380,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
         and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
         Also recommended is that you use <a href="#AutoBackup">Auto Backup</a>. This will allow the
-        developers to reproduce any problems you encounter while using the new On Time mode of
+        developers to reproduce any issues you encounter while using the new On Time mode of
         OperationsPro&trade;.
+      </p>
+
+      <p>
+        For more detailed information concerning On Time mode, see <a
+          href="OperationsProOnTime.shtml">JMRI: OperationsPro On Time</a>
       </p>
 
       <h4>Number of Passes During Build</h4>
@@ -1908,7 +1919,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         </tr>
       </table>
 
-      <h3 id="Options">Options</h3>
+      <h3 id="Options">Additional Options</h3>
 
       <h4 id="SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</h4>
       When the option "Save Train Manifests, Build Reports, and Switch Lists" is selected,
@@ -1966,6 +1977,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       below.
       <p>
         <img src="images/PrintOptions.png" alt="">
+      </p>
+
+      <p>
+        You can also optionally customize your Manifests or switch lists with any of the following
+        comments; <a href="#TrainComment">Train</a>, <a href="#RouteComment">Route Location</a>, <a
+          href="#AddRoute">Route</a>, <a href="#LocationComment">Location</a>, <a
+          href="#TrackWorkComments">Track</a>, <a href="#CarComment">Car</a>, <a
+          href="#OptionalLoadMessages">Car Loads</a> <a href="#MisplacedCarsComment">Misplaced Cars
+          </a> and <a href="#LocoComment">Locomotive</a>.
       </p>
 
       <h3 id="PrintFont">Manifest Printer Font</h3>
@@ -3317,7 +3337,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       route will not be picked up by any train using that same route. Another train with a different
       route is required to pick up the cars. This includes transferring cars from a through freight
       to a local switcher. For example, you might have a branch line that picks up and set out cars
-      from a terminal. By defining the track as a classification/interchange track, once the branch
+      from a location. By defining the track as a classification/interchange track, once the branch
       line train delivers the cars, they will remain there until the main line train stops to
       service the classification/interchange track. Same goes for a <a href="#SwitcherService">local
         switcher</a>, cars dropped off at a location with a C/I track will remain there until the local
@@ -3939,7 +3959,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         from this track.
       </p>
 
-      <h4 id="TrackWorkComments">Manifest Comments</h4>
+      <h4 id="TrackWorkComments">Track Comments</h4>
       You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
       pickup and set out occurs to a track. Only one of the three messages will be added to your
       paperwork when there's work for the selected track. The checkboxes at the bottom of the window
@@ -4611,7 +4631,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       You can optionally enter the owner's name. Trains can be <a href="#TrainBuildOptions">configured</a>
       to only accept certain owner names.
 
-      <h4>Comment</h4>
+      <h4 id="CarComment">Car Comment</h4>
       You can enter a comment for this car. If you want to see the car's comment on the Train's
       Manifest or switch lists, make an adjustment to the <a href="#MessageFormats">Message
         Formats</a>.
@@ -4743,7 +4763,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you want the <a href="#HazardousComment">Hazardous Comment</a> to be added to your Manifest
       or switch lists, select "Yes" for your car's load.
 
-      <h4>Optional Load Messages</h4>
+      <h4 id="OptionalLoadMessages">Optional Load Messages</h4>
       You can also provide optional messages for your crew based on the type of car and load. The
       messages can be useful if you have visible car loads that need to be added or removed by your
       crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
@@ -5137,6 +5157,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         href="#LocationReporter">Id Tag Reader at Location</a> and the Id Tag associated with this
       locomotive is read by that Reporter, then the location will be updated. See <a href="#Options">Options</a>
       to enable this feature.
+
+      <h4 id="LocoComment">Locomotive Comment</h4>
+      You can enter a comment for this locomotive. If you want to see the locomotive's comment on
+      the Train's Manifest or switch lists, make an adjustment to the
+      <a href="#MessageFormats">Message Formats</a>.
 
       <h4>Save</h4>
       Press "Save" to store the locomotive's settings. The program will create a file named
@@ -5875,6 +5900,72 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>You can also change the size of the font. Add &lt;FONT size="8"&gt; at the start of the
         line, where "8" is the font size you want. Complete the size change by placing
         &lt;/FONTSIZE&gt; at the end of the lines you want resized.</p>
+
+      <p>The train comment also allows for text substitutions. The table below provides a
+        summary of the available substitutions.
+      
+      <table>
+        <tr>
+          <th>Substitute</th>
+          <th>Text</th>
+        </tr>
+        <tr>
+          <td>{0}</td>
+          <td>Train Name</td>
+        </tr>
+        <tr>
+          <td>{1}</td>
+          <td>Train Description</td>
+        </tr>
+        <tr>
+          <td>{2}</td>
+          <td>Train Departure Name</td>
+        </tr>
+        <tr>
+          <td>{3}</td>
+          <td>Train Departure Time</td>
+        </tr>
+        <tr>
+          <td>{4}</td>
+          <td>Train Departure Direction</td>
+        </tr>
+        <tr>
+          <td>{5}</td>
+          <td>Train Terminal Name</td>
+        </tr>
+        <tr>
+          <td>{6}</td>
+          <td>Number of Cars in Train</td>
+        </tr>
+        <tr>
+          <td>{7}</td>
+          <td>Number of Loaded Cars in Train</td>
+        </tr>
+        <tr>
+          <td>{8}</td>
+          <td>Number of Empty Cars in Train</td>
+        </tr>
+        <tr>
+          <td>{9}</td>
+          <td>Train Length</td>
+        </tr>
+        <tr>
+          <td>{10}</td>
+          <td>Unit of Length</td>
+        </tr>
+        <tr>
+          <td>{11}</td>
+          <td>Train Weight</td>
+        </tr>
+        <tr>
+          <td>{12}</td>
+          <td>Lead Locomotive</td>
+        </tr>
+        <tr>
+          <td>{13}</td>
+          <td>Lead Locomotive DCC Address</td>
+        </tr>
+      </table>
 
       <h4 id="TrainReset">Reset Train</h4>
       The "Reset Train" button allows you to remove locomotives and cars that have been assigned to
@@ -6991,7 +7082,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         If a train fails to build, the "Action" button will change its text to "Report". Pressing
         "Report" will print or preview the <a href="#BuildReports">build report</a> for this train.
         Whenever a train fails to build, a build failure message will appear. If you want to disable
-        this feature deselect the checkbox "Build Messages".
+        this feature deselect the checkbox "Messages".
       </p>
 
       <p>
@@ -7002,21 +7093,22 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         checkbox is deselected, only trains that have the "Build" checkbox selected are shown.</p>
 
       <h3 id="BuildingTrainsStaging">Building Trains from Staging</h3>
-      There are several options for controlling how trains depart staging, see <a
-        href="#DepartingStagingRoute">Departing Staging Route</a> for additional details.
+      There are several options for controlling how trains depart staging, see
+      <a href="#DepartingStagingRoute">Departing Staging Route</a> for additional details.
+
       <p>
         When building a train from staging, the program will attempt to find destinations for all of
         the rolling stock departing the staging track. If the program fails to find appropriate
-        destinations, it will report a build failure and prompt you to remove the rolling stock that
-        the program couldn't find destinations for. If you answer yes to the car removal, the
-        program will leave the cars in staging but without a track assignment. You should as soon as
-        possible move the cars without a staging track assignment to a another track in staging, or
-        the layout. The other option is to simply remove the cars from the layout by removing the
-        car's location in the <a href="#CarsSet">Set Car</a> window. Also on a build failure, the
-        program will ask if you want to release the rolling stock that has been assigned to the
-        train. Answering "yes" will allow another train to depart with those locomotives and cars
-        out of staging. A "no" will keep the locomotives and cars assigned to the train that failed
-        to build.
+        destinations, it will report a build failure and if the <a href="#Trains">Messages</a>
+        checkbox is selected, prompt you to remove the rolling stock that the program couldn't find
+        destinations for. If you answer yes to the car removal, the program will leave the cars in
+        staging but without a track assignment. You should as soon as possible move the cars without
+        a staging track assignment to a another track in staging, or the layout. The other option is
+        to simply remove the cars from the layout by removing the car's location in the <a
+          href="#CarsSet">Set Car</a> window. Also on a build failure, the program will ask if you
+        want to release the rolling stock that has been assigned to the train. Answering "yes" will
+        allow another train to depart with those locomotives and cars out of staging. A "no" will
+        keep the locomotives and cars assigned to the train that failed to build.
       </p>
 
       <p style="page-break-after: always">
@@ -7533,7 +7625,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         delivered. It is better to build and print twelve trains and then later find out that only
         nine trains completed their runs. You would then terminate nine trains, and leave the other
         three for next time. Or if you wish you could <a href="#TrainReset">reset</a> any trains
-        that didn't depart from their terminal. Reseting trains really isn't necessary, the trains
+        that didn't depart from their origin. Reseting trains really isn't necessary, the trains
         that didn't run during this session could run the during the next session.
       </p>
 

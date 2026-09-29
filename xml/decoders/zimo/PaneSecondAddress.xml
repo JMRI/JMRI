@@ -6,8 +6,10 @@
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
 <!-- version 1.3 - Pierre Billon - fixed table labels -->
+<!-- version 1.4 - Pierre Billon - Added French translations -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Secondary Function Map</name>
+    <name xml:lang="fr">Deuxième adresse</name>
     <name xml:lang="de">Zweitadresse</name>
     <name xml:lang="cs">Druhé přiřazení funkcí</name>
     <column>
@@ -26,6 +28,7 @@
       </label>
       <label>
         <text>           See the manual chapter 3.5</text>
+        <text xml:lang="fr">           Voir le chapitre 3.5 du manuel</text>
         <text xml:lang="de">                           Bitte Kapitel 3.5 im Handbuch beachten.</text>
         <text xml:lang="cs">                           Viz příručka kapitola 3.5</text>
       </label>
@@ -61,6 +64,7 @@
       </label>
       <label>
         <text>           Description                       Output wire or operation</text>
+        <text xml:lang="fr">           Description                       Fil de sortie ou fonction</text>
         <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
         <text xml:lang="de">      Funktion                     Ausgang bzw. Funktion</text>
         <text xml:lang="cs">           Popis                             Výstupní vodič nebo operace</text>
@@ -75,18 +79,21 @@
           </label>
           <label>
             <text>         Front  </text>
+            <text xml:lang="fr">         Avant  </text>
             <text xml:lang="it">         Frontale </text>
             <text xml:lang="de">         Lvor  </text>
             <text xml:lang="cs">         Přední  </text>
           </label>
           <label>
             <text>         Light  </text>
+            <text xml:lang="fr">         Feu  </text>
             <text xml:lang="it">         Luci   </text>
             <text xml:lang="de">         Lrück </text>
             <text xml:lang="cs">         světlo  </text>
           </label>
           <label>
             <text>         White  </text>
+            <text xml:lang="fr">         Blanc  </text>
             <text xml:lang="it">         Bianco   </text>
             <text xml:lang="de">         Weiß   </text>
             <text xml:lang="cs">         Bílá  </text>
@@ -115,16 +122,19 @@
           </label>
           <label>
             <text> Rear </text>
+            <text xml:lang="fr"> Arrière </text>
             <text xml:lang="de"> Lrück </text>
             <text xml:lang="cs"> Zadní </text>
           </label>
           <label>
             <text> Light </text>
+            <text xml:lang="fr"> Feu </text>
             <text xml:lang="de">       </text>
             <text xml:lang="cs"> světlo </text>
           </label>
           <label>
             <text>Yellow </text>
+            <text xml:lang="fr">Jaune </text>
             <text xml:lang="de"> Gelb </text>
             <text xml:lang="cs">Žlutá </text>
           </label>
@@ -188,6 +198,7 @@
           </label>
           <label>
             <text> Green </text>
+            <text xml:lang="fr"> Vert </text>
             <text xml:lang="de"> Grün </text>
             <text xml:lang="cs"> Zelená </text>
           </label>
@@ -251,6 +262,7 @@
           </label>
           <label>
             <text>Brown </text>
+            <text xml:lang="fr">Brun </text>
             <text xml:lang="de"> Braun </text>
             <text xml:lang="cs">Hnědá </text>
           </label>
@@ -314,6 +326,7 @@
           </label>
           <label>
             <text> Grey </text>
+            <text xml:lang="fr"> Gris </text>
             <text xml:lang="de">      </text>
             <text xml:lang="cs"> Šedá </text>
           </label>
@@ -377,6 +390,7 @@
           </label>
           <label>
             <text>Orange</text>
+            <text xml:lang="fr">Orange</text>
             <text xml:lang="de">        </text>
             <text xml:lang="cs">Oranžová</text>
           </label>
@@ -445,6 +459,7 @@
           </label>
           <label>
             <text>Orange</text>
+            <text xml:lang="fr">Orange</text>
             <text xml:lang="de">        </text>
             <text xml:lang="cs">Oranžová</text>
           </label>
@@ -513,6 +528,7 @@
           </label>
           <label>
             <text>Orange</text>
+            <text xml:lang="fr">Orange</text>
             <text xml:lang="de">        </text>
             <text xml:lang="cs">Oranžová</text>
           </label>

@@ -56,6 +56,7 @@
       <label xml:lang="nl">Funktiestatus Analoog - F1</label>
       <label xml:lang="es">Estado de la función en modo análogo - F1</label>
       <tooltip>Check to enable function F1 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F1 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F1 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F1 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F1 te activeren tijdens Analoog rijden</tooltip>
@@ -71,6 +72,7 @@
       <label xml:lang="nl">Funktiestatus Analoog - F2</label>
       <label xml:lang="es">Estado de la función en modo análogo - F2</label>
       <tooltip>Check to enable function F2 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F2 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F2 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F2 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F2 te activeren tijdens Analoog rijden</tooltip>
@@ -86,6 +88,7 @@
       <label xml:lang="nl">Funktiestatus Analoog - F3</label>
       <label xml:lang="es">Estado de la función en modo análogo - F3</label>
       <tooltip>Check to enable function F3 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F3 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F3 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F3 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F3 te activeren tijdens Analoog rijden</tooltip>
@@ -101,6 +104,7 @@
       <label xml:lang="nl">Funktiestatus Analoog - F4</label>
       <label xml:lang="es">Estado de la función en modo análogo - F4</label>
       <tooltip>Check to enable function F4 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F4 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F4 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F4 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F4 te activeren tijdens Analoog rijden</tooltip>
@@ -117,6 +121,7 @@
       <label xml:lang="es">Estado de la función en modo análogo - F5</label>
 
       <tooltip>Check to enable function F5 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F5 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F5 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F5 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F5 te activeren tijdens Analoog rijden</tooltip>
@@ -132,6 +137,7 @@
       <label xml:lang="nl">Funktiestatus Analoog - F6</label>
       <label xml:lang="es">Estado de la función en modo análogo - F6</label>
       <tooltip>Check to enable function F6 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F6 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F6 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F6 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F6 te activeren tijdens Analoog rijden</tooltip>
@@ -147,6 +153,7 @@
       <label xml:lang="nl">Funktiestatus Analoog - F7</label>
       <label xml:lang="es">Estado de la función en modo análogo - F7</label>
       <tooltip>Check to enable function F7 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F7 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F7 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F7 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F7 te activeren tijdens Analoog rijden</tooltip>
@@ -162,6 +169,7 @@
       <label xml:lang="nl">Funktiestatus Analoog - F8</label>
       <label xml:lang="es">Estado de la función en modo análogo - F8</label>
       <tooltip>Check to enable function F8 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="fr">Activer la fonction F8 en mode analogique</tooltip>
       <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F8 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F8 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F8 te activeren tijdens Analoog rijden</tooltip>

@@ -649,7 +649,6 @@ public class CreateLogixNGTreeScaffold {
         actionClockRate.getSelectEnum().setMemory(memory2);
         actionClockRate.getSelectSpeed().setAddressing(NamedBeanAddressing.Memory);
         actionClockRate.getSelectSpeed().setMemory(memory1);
-        actionClockRate.getSelectSpeed().setListenToMemory(true);
 
         maleSocket = digitalActionManager.registerAction(actionClockRate);
         maleSocket.setEnabled(false);

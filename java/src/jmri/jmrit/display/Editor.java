@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -422,6 +423,60 @@ public abstract class Editor extends JmriJFrameWithPermissions
         _targetPanel.invalidate();
     }
 
+    /**
+     * Move focus from an input field to the panel on Tab or Shift+Tab, leaving
+     * no input field selected.
+     */
+    protected void setInputFocusTraversal() {
+        _targetPanel.setFocusTraversalPolicyProvider(true);
+        _targetPanel.setFocusTraversalPolicy(new FocusTraversalPolicy() {
+
+            private List<Component> getInputFields() {
+                return getContents().stream()
+                        .filter(positionable -> positionable instanceof MemoryInputIcon
+                                || positionable instanceof BlockContentsInputIcon
+                                || positionable instanceof GlobalVariableInputIcon)
+                        .map(Positionable::getTextComponent)
+                        .filter(Objects::nonNull)
+                        .filter(component -> component.isFocusable() && component.isEnabled() && component.isVisible())
+                        .collect(Collectors.toList());
+            }
+
+            @Override
+            public Component getComponentAfter(Container focusCycleRoot, Component component) {
+                List<Component> fields = getInputFields();
+                if (fields.isEmpty() || component == _targetPanel) {
+                    return null;
+                }
+                return fields.contains(component) ? _targetPanel : null;
+            }
+
+            @Override
+            public Component getComponentBefore(Container focusCycleRoot, Component component) {
+                List<Component> fields = getInputFields();
+                if (fields.isEmpty() || component == _targetPanel) {
+                    return null;
+                }
+                return fields.contains(component) ? _targetPanel : null;
+            }
+
+            @Override
+            public Component getFirstComponent(Container focusCycleRoot) {
+                return getInputFields().isEmpty() ? null : _targetPanel;
+            }
+
+            @Override
+            public Component getLastComponent(Container focusCycleRoot) {
+                return getInputFields().isEmpty() ? null : _targetPanel;
+            }
+
+            @Override
+            public Component getDefaultComponent(Container focusCycleRoot) {
+                return getFirstComponent(focusCycleRoot);
+            }
+        });
+    }
+
     protected Dimension getTargetPanelSize() {
         return _targetPanel.getSize();
     }
@@ -487,6 +542,36 @@ public abstract class Editor extends JmriJFrameWithPermissions
         double ratio = newScale / _paintScale;
         _paintScale = newScale;
         setScrollbarScale(ratio);
+    }
+
+    /**
+     * Repaint a limited area of the target panel.
+     * <p>
+     * The rectangle is given in panel (unscaled) coordinates, e.g. the bounds
+     * of a child of the target panel: children are laid out in unscaled
+     * coordinates while painting is scaled by the paint scale, so the dirty
+     * region is scaled here. The region is grown by a pixel on each side to
+     * cover rounding and antialiasing.
+     * <p>
+     * Use this instead of a full {@code repaint()} of the Editor frame when
+     * the changed area is known, e.g. to show a state change of a single
+     * icon. Safe to call from any thread, as it only posts a dirty region.
+     *
+     * @param rect area to repaint, in unscaled target panel coordinates
+     */
+    public void repaintTargetPanel(@Nonnull Rectangle rect) {
+        JLayeredPane panel = _targetPanel;
+        if (panel == null) { // too early in construction, fall back to a full repaint
+            repaint();
+            return;
+        }
+        double scale = _paintScale;
+        int x = (int) Math.floor(rect.x * scale) - 1;
+        int y = (int) Math.floor(rect.y * scale) - 1;
+        // +2 for the margin pixels, +1 for the flooring of x and y
+        int width = (int) Math.ceil(rect.width * scale) + 3;
+        int height = (int) Math.ceil(rect.height * scale) + 3;
+        panel.repaint(x, y, width, height);
     }
 
     private ToolTipTimer _tooltipTimer;

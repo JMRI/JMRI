@@ -122,7 +122,7 @@ public class DispatcherPro extends Apps {
 
         Apps.setStartupInfo("DispatcherPro");
 
-        setConfigFilename("DispatcherProConfig2.xml", args);
+        setConfigFilename("DispatcherProConfig2.properties", args);
         DispatcherPro dp = new DispatcherPro();
         JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(dp, f);

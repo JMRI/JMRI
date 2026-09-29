@@ -33,6 +33,9 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
                 new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
         options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
                 new String[]{Bundle.getMessage("LoconetProtocolAutoDetect"),Bundle.getMessage("ButtonNo")} )); // NOI18N
+        options.put("LoconetUpdateSlotOnMessageCreation",                                       // NOI18N
+                new Option(Bundle.getMessage("LoconetUpdateSlotOnMessageCreationLabel"),        // I18N
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} ));  // I18N
 
     }
 
@@ -54,6 +57,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         LnTrafficController tc = getSystemConnectionMemo().getLnTrafficController();
         if (tc instanceof LnOverTcpPacketizer) {
             LnOverTcpPacketizer packets = (LnOverTcpPacketizer) tc;
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
             packets.connectPort(this);
             packets.restartRcvThread();
         }
@@ -75,6 +79,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
         // connect to a packetizing traffic controller
         LnOverTcpPacketizer packets = new LnOverTcpPacketizer(this.getSystemConnectionMemo());
+        packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
         packets.connectPort(this);
 
         // create memo

@@ -70,6 +70,16 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * CBUS hardware does not send exit reports; it relies on timeout clearing.
+     */
+    @Override
+    public boolean hasExitReports() {
+        return false;
+    }
+
+    /**
      * Set the CbusReporter State.
      *
      * May also provide / update a CBUS Sensor State, depending on property.

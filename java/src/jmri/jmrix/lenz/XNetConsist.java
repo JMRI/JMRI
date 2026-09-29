@@ -156,7 +156,9 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
-            return consistDir.get(address);
+            // consistDir.get(address) returns a Boolean, auto-unboxed to
+            // primitive boolean here.
+            return consistDir.getOrDefault(address, false);
         } else {
             log.error(CONSIST_TYPE_NOT_SUPPORTED);
             notifyConsistListeners(address, ConsistListener.NotImplemented);
@@ -438,6 +440,16 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     @Override
     public synchronized void message(XNetReply l) {
+        // remove() for ADVANCED_CONSIST is fire-and-forget: it sends the
+        // XNet message and returns immediately, with the actual list/state
+        // update happening later in this callback. dispose() does not wait
+        // for those replies before nulling out consistList, so a reply for
+        // an already-disposed consist must be ignored here rather than
+        // acting on torn-down state.
+        if (consistList == null) {
+            log.debug("Ignoring reply for consist {} -- already disposed", consistAddress);
+            return;
+        }
         if (_state != IDLESTATE) {
             // we're waiting for a reply, so examine what we received
             if (l.isOkMessage()) {

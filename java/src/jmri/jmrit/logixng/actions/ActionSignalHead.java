@@ -21,11 +21,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionSignalHead extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private final LogixNG_SelectNamedBean<SignalHead> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
+                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class));
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.Appearance;
@@ -43,7 +43,7 @@ public class ActionSignalHead extends AbstractDigitalAction
 
     private final LogixNG_SelectNamedBean<SignalHead> _selectExampleNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
+                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class));
 
 
     public ActionSignalHead(String sys, String user)
@@ -408,24 +408,6 @@ public class ActionSignalHead extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

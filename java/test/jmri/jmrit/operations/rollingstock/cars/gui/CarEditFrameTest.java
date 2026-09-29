@@ -512,7 +512,10 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         // change road number for this car
         f.roadNumberTextField.setText("54321");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonYes"));
         car = cManager.getByRoadAndNumber("CP", "54321");
         Assert.assertNotNull("car exists", car);
         // confirm car id was modified
@@ -523,7 +526,10 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         // change road name
         f.roadComboBox.setSelectedItem("SP");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonYes"));
         car = cManager.getByRoadAndNumber("SP", "54321");
         Assert.assertNotNull("car exists", car);
         // confirm car id was modified

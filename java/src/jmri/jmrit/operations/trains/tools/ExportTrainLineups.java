@@ -3,9 +3,6 @@ package jmri.jmrit.operations.trains.tools;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -13,6 +10,9 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Builds the train lineups in a comma delimited file (CSV). Only trains that
@@ -111,7 +111,7 @@ public class ExportTrainLineups extends XmlFile {
                             "",
                             rl.getComment(),
                             train.getDescription(),
-                            train.getComment());
+                            train.getCommentCurrent(train.getComment(), rl));
                 }
                 fileOut.println();
             }

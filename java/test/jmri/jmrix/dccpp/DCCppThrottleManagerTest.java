@@ -51,6 +51,9 @@ public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         DccLocoAddress locoAddress = new DccLocoAddress(1203,true);
         tm.requestThrottle(1203, throtListen,true);
 
+        // Throttle acquisition is now deferred (see AbstractThrottleManager),
+        // so not available synchronously right after requestThrottle() returns.
+        JUnitUtil.waitFor(() -> throttle != null, "wait for throttle found");
         assertNotNull( throttle, "have created a throttle");
         assertInstanceOf(DCCppThrottle.class, throttle);
         assertTrue( (((DCCppThrottleManager)tm).throttles.containsKey(locoAddress))); // now you see it

@@ -114,10 +114,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         log.trace("about to try getStartingProfile");
         try {
             ProfileManagerDialog.getStartingProfile(sp);
-            // Manually setting the configFilename property since calling
-            // Apps.setConfigFilename() does not reset the system property
-            configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
-            System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (profile != null) {
                 log.info("Starting with profile {}", profile.getId());

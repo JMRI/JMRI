@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 3 - Pierre Billon - Added French translations -->
 <!-- version 2 - Ronald Kuhn - disable unimplemented options for PD-series -->
 <!-- version 1 - Alain Le Marchand - for fw 3.10 and above -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -7,13 +8,13 @@
   <variable item="Dim LV" CV="156" default="1" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim Front Light</label>
-    <label xml:lang="fr">Atténuer Feu AV</label>
+    <label xml:lang="fr">Atténuer Feux AV</label>
     <label xml:lang="de">Abblendlicht LV</label>
   </variable>
   <variable item="Dim LR" CV="156" default="1" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim Rear Light</label>
-    <label xml:lang="fr">Atténuer Feu AR</label>
+    <label xml:lang="fr">Atténuer Feux AR</label>
     <label xml:lang="de">Abblendlicht LR</label>
   </variable>
   <variable item="Dim AUX1" CV="156" default="0" mask="XXXXXVXX" minOut="3">
@@ -32,6 +33,7 @@
   <variable item="Condition Dimmer" CV="157" default="0" exclude="130,131,132,133,134">
     <decVal max="161"/>
     <label>Condition Dimmer</label>
+    <label xml:lang="fr">Condition Atténuation</label>
     <label xml:lang="de">Bedingung Abblendlicht</label>
     <label xml:lang="ca">Condició Dimmer</label>
   </variable>
@@ -39,6 +41,7 @@
   <variable item="Condition Dimmer enum" CV="157" default="0" exclude="130,131,132,133,134">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition Dimmer</label>
+    <label xml:lang="fr">Condition Atténuation</label>
     <label xml:lang="de">Bedingung Abblendlicht</label>
     <label xml:lang="ca">Condició Dimmer</label>
   </variable>

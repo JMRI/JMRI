@@ -52,6 +52,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected boolean isSMINI = false;
     protected boolean isUSIC_SUSIC = true;
     protected boolean isCPNODE = false;
+    protected boolean isESP32NODE = false;
     // Here add other node types
     protected int numOutputCards = 2;
     protected int numInputCards = 1;
@@ -593,6 +594,22 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                   numIOXOutputCards= 0;
                   nodeText1.setText("CPMEGA - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard"));
                 break;
+                case SerialNode.ESP32NODE:
+                  // No onboard cards at all (unlike CPNODE's 2+2), so unlike CPNODE's
+                  // "numOutputCards - 2" here, IOX counts equal the raw counts directly.
+                  bitsPerCard = testNode.getNumBitsPerCard();
+                  numInputCards = testNode.numInputCards();
+                  numOutputCards = testNode.numOutputCards();
+                  numIOXInputCards = numInputCards;
+                  numIOXOutputCards= numOutputCards;
+                  if(numInputCards > 1) s1 = "s";
+                  if(numOutputCards > 1) s2 = "s";
+                  nodeText1.setText("  ESP32Node - " + bitsPerCard + " " +Bundle.getMessage("BitsPerCard"));
+                  nodeText2.setText(numInputCards + " " + Bundle.getMessage("InputCard") + s1 +
+                                    ", " + numOutputCards + " " + Bundle.getMessage("OutputCard") + s2 +
+                                    "  IOX: " + numIOXInputCards + " " + Bundle.getMessage("InputsTitle") +
+                                    ", " + numIOXOutputCards + " " + Bundle.getMessage("OutputsTitle"));
+                break;
                 default:
                   nodeText1.setText("Unknown Node Type "+testNodeType);
                 break;            
@@ -673,6 +690,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         isSMINI = (type == SerialNode.SMINI);
         isUSIC_SUSIC = (type == SerialNode.USIC_SUSIC);
         isCPNODE = (type == SerialNode.CPNODE);
+        isESP32NODE = (type == SerialNode.ESP32NODE);
         // Here insert code for other type nodes
         // initialize numInputCards, numOutputCards, and numCards
         numOutputCards = testNode.numOutputCards();
@@ -706,6 +724,23 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             return (false);
         }
         if (isCPNODE && (!testNode.isOutputCard(outCardNum+2))) {
+            statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+            statusText1.setVisible(true);
+            return (false);
+        }
+        // ESP32Node's typed Out Card field is 1-based (Card 1 = the first real
+        // card, 0x20/A) to match its on-screen "Card N" label -- unlike
+        // CPNODE's field above, which is 0-based internally even though its
+        // label shows +2. So the typed number converts to a raw
+        // cardTypeLocation index via -1, not +2 or +1. Card 1 typed -> raw
+        // index 0. Guard against 0 or negative input first (raw index -1
+        // would be an ArrayIndexOutOfBoundsException, not just "not a card").
+        if (isESP32NODE && (outCardNum < 1)) {
+            statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+            statusText1.setVisible(true);
+            return (false);
+        }
+        if (isESP32NODE && (!testNode.isOutputCard(outCardNum-1))) {
             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
             statusText1.setVisible(true);
             return (false);
@@ -763,10 +798,12 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // complete initialization of output card
         portsPerCard = (testNode.getNumBitsPerCard()) / 8;
 
-        if (testNodeType != SerialNode.CPNODE)        
-         begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
+        if (testNodeType == SerialNode.CPNODE)
+         begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;
+        else if (testNodeType == SerialNode.ESP32NODE)
+         begOutByte = (testNode.getOutputCardIndex(outCardNum-1)) * portsPerCard;
         else
-         begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;        
+         begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
 
         endOutByte = begOutByte + portsPerCard - 1;
         nOutBytes = numOutputCards * portsPerCard;
@@ -895,7 +932,18 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                             }
                         }
                     }
-                    statusText2.setText(st.reverse().toString()); //statusText2
+                    // Was st.reverse().toString() -- that reversed the WHOLE
+                    // string char-by-char, which flipped bit order within
+                    // each byte to MSB-left/LSB-right AND (for multi-byte
+                    // cards) reversed the order the byte-groups themselves
+                    // appeared in. As curOutBit climbed 0->7, the "1" in the
+                    // reversed string moved right-to-left, not left-to-right.
+                    // Dropping the reversal displays the string exactly as
+                    // built above: bit0 leftmost within each byte (ascending,
+                    // matching the convention used elsewhere in this project),
+                    // byte begOutByte's group leftmost for multi-byte cards --
+                    // so the walking-bit test now visibly sweeps left to right.
+                    statusText2.setText(st.toString()); //statusText2
                     statusText2.setVisible(true);
                     // update bit pattern for next entry
                     curOutBit++;
@@ -1253,21 +1301,29 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         }
         outCardNum = Integer.parseInt(writeCardField.getText());        
         
-        if (testNodeType != SerialNode.CPNODE)   
-        {
-            if (!testNode.isOutputCard(outCardNum)) {
-             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
-             return;                          
-            }
-            begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
-        }
-        else
+        if (testNodeType == SerialNode.CPNODE)
         {
             if (!testNode.isOutputCard(outCardNum+2)) {
              statusText1.setText(Bundle.getMessage("DiagnosticError6"));
-             return;   
+             return;
             }
-            begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard; 
+            begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;
+        }
+        else if (testNodeType == SerialNode.ESP32NODE)
+        {
+            if ((outCardNum < 1) || (!testNode.isOutputCard(outCardNum-1))) {
+             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+             return;
+            }
+            begOutByte = (testNode.getOutputCardIndex(outCardNum-1)) * portsPerCard;
+        }
+        else
+        {
+            if (!testNode.isOutputCard(outCardNum)) {
+             statusText1.setText(Bundle.getMessage("DiagnosticError6"));
+             return;
+            }
+            begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
         }
         // Zero the output buffer
         int zero = (invertWriteButton.isSelected()) ? -1:0; 

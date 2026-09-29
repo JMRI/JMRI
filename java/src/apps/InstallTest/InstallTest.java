@@ -114,7 +114,7 @@ public class InstallTest extends Apps {
 
         Apps.setStartupInfo("InstallTest");
 
-        setConfigFilename("InstallTestConfig2.xml", args);
+        setConfigFilename("InstallTestConfig2.properties", args);
         InstallTest it = new InstallTest();
         JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(it, f);
