@@ -189,7 +189,7 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());
         }        
-        notifyRosterEntryUpdated(addressPanel.getRosterEntry());;
+        notifyRosterEntryUpdated(addressPanel.getRosterEntry());
     }
 
     @Override
