@@ -380,6 +380,10 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                             && preferences.isHidingUndefinedFuncButt()) {
                         functionButtons[i].setDisplay(false);
                         needUpdate = true;
+                    } else {
+                        functionButtons[i].setDisplay(true);
+                        functionButtons[i].setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
+                        needUpdate = true;
                     }
                     String fontSize = rosterEntry.getAttribute("function"+i+"_ThrottleFontSize");
                     if (fontSize != null) {
@@ -534,14 +538,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         }
         mThrottle = t;
         mThrottle.addPropertyChangeListener(this);
-        int numFns = mThrottle.getFunctions().length;
-        if (addressPanel != null && addressPanel.getRosterEntry() != null) {
-            // +1 because we want the _number_ of functions, and we have to count F0
-            numFns = Math.min(numFns, addressPanel.getRosterEntry().getMaxFnNumAsInt()+1);
-        }
-        log.debug("notifyAddressThrottleFound number of functions {}", numFns);
-        resizeFnButtonsArray(numFns);
-        updateFnButtons();
+        notifyRosterEntryUpdated(addressPanel.getRosterEntry());
         setEnabled(true);
     }
 
@@ -566,7 +563,19 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {     
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {     
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) {
+        int numFns = mThrottle.getFunctions().length;
+        if (re != null) {
+            // +1 because we want the _number_ of functions, and we have to count F0
+            numFns = Math.min(numFns, re.getMaxFnNumAsInt()+1);
+        }
+        log.debug("notifyRosterEntryUpdated number of functions {}", numFns);
+        resizeFnButtonsArray(numFns);
+        updateFnButtons();
     }
 
     @Override

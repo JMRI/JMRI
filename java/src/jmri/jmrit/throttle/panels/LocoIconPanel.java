@@ -109,7 +109,12 @@ public class LocoIconPanel extends JPanel implements AddressListener {
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {
+        updateLabel();
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) { 
         updateLabel();
     }
 

@@ -186,7 +186,12 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {
+        updateFunctionPanels();
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) {
         updateFunctionPanels();
     }
 
