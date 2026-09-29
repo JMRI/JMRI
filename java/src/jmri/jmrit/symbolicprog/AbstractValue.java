@@ -66,13 +66,15 @@ public abstract class AbstractValue {
 
         /**
          * Defines state where value was read from a config file, but might not be
-         * the same as the decoder. It is known to have at some point been edited/read/written
+         * the same as the decoder. It is known to have been edited/read/written
+         * at some point.
          */
-        FROMFILE(new Color(0xFFFF90), "FromFile"),  // slightly lighter yellow
+        FROMFILE(Color.yellow, "FromFile"),
 
         /**
          * Defines state where value was read from a config file, but might not be
-         * the same as the decoder. It's unknown whether the item has been edited/read/written at some point.
+         * the same as the decoder. It's unknown whether the item has been edited/read/written
+         * at some point.
          */
         FROMFILEUNKNOWN(Color.yellow, "FromFileUnknown"),
 
@@ -80,7 +82,7 @@ public abstract class AbstractValue {
          * Defines state where value was defined by the decoder definition default, 
          * and has never been edited or read from or written to the decoder.
          */
-        FROMDEFAULT(new Color(0xE0F0FF), "FromDefault"),  // ice blue 0xF0F8FF
+        FROMDEFAULT(Color.yellow, "FromDefault"),  // ice blue 0xF0F8FF
 
         /**
          * Defines state where value was read from a config file, and is the same as
