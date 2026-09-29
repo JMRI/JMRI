@@ -47,12 +47,15 @@ public class TrainBuilderBase extends TrainCommon {
     Date _startTime; // when the build report started
     Train _train; // the train being built
     int _numberCars = 0; // number of cars moved by this train
+    
     List<Engine> _engineList; // engines for this train, modified during build
+    int _engineIndex; // index for engineList
     Engine _lastEngine; // last engine found from getEngine
     Engine _secondLeadEngine; // lead engine 2nd part of train's route
     Engine _thirdLeadEngine; // lead engine 3rd part of the train's route
-    int _carIndex; // index for carList
+   
     List<Car> _carList; // cars for this train, modified during the build
+    int _carIndex; // index for carList
     List<RouteLocation> _routeList; // ordered list of locations
     Hashtable<String, Integer> _numOfBlocks; // Number of blocks of cars
                                              // departing staging.
@@ -125,6 +128,13 @@ public class TrainBuilderBase extends TrainCommon {
         // remove this car from the list
         if (getCarList().remove(car)) {
             _carIndex--;
+        }
+    }
+    
+    protected void remove(Engine engine) {
+        // remove this engine from the list
+        if (getEngineList().remove(engine)) {
+            _engineIndex--;
         }
     }
 
