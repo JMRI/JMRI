@@ -73,6 +73,7 @@ public class OlcbTestInterface {
         });
         s.acquireUninterruptibly();
         flush();
+        clearSentMessages();
     }
 
     public void sendMessage(CanMessage msg) {
@@ -104,6 +105,21 @@ public class OlcbTestInterface {
     }
 
     /**
+     * Asserts that the exact list of messages was sent to the bus in order since the last check/clear.
+     * @param expectedMessages CAN frames in gridconnect format.
+     */
+    public void assertSentMessages(String... expectedMessages) {
+        iface.flushSendQueue();
+        Assert.assertEquals("Sent message count mismatch", expectedMessages.length, tc.sentMessages.size());
+        for (int i = 0; i < expectedMessages.length; i++) {
+            List<CanFrame> l = GridConnect.parse(expectedMessages[i]);
+            Assert.assertEquals(1, l.size());
+            Assert.assertEquals("Message " + i + " mismatch", OlcbConfigurationManager.convertToCan(l.get(0)), tc.sentMessages.get(i));
+        }
+        clearSentMessages();
+    }
+
+    /**
      * Asserts that no message was sent to the bus.
      */
     public void assertNoSentMessages() {
@@ -116,6 +132,7 @@ public class OlcbTestInterface {
      */
     public void clearSentMessages() {
         flush();
+        tc.sentMessages.clear();
         tc.rcvMessage = null;
     }
 

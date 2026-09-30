@@ -11,10 +11,12 @@ public class TestTrafficController extends TrafficController {
 
     public CanMessage rcvMessage = null; // new code please use #getLastMessage / #resetLastMessage
     private CanReply sndMessage = null;
+    public final java.util.List<CanMessage> sentMessages = new java.util.ArrayList<>();
 
     @Override
     public void sendCanMessage(CanMessage m, CanListener l) {
         rcvMessage = m;
+        sentMessages.add(m);
         log.debug("Message sent: header {} body {}", Integer.toHexString(m.getHeader()), m);
     }
 
@@ -70,6 +72,7 @@ public class TestTrafficController extends TrafficController {
 
     public void resetLastMessage() {
         rcvMessage = null;
+        sentMessages.clear();
     }
 
     public void resetLastReply() {
