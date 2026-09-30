@@ -15,6 +15,7 @@ import org.openlcb.Connection;
 import org.openlcb.ConsumerRangeIdentifiedMessage;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
+import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.Message;
 import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
@@ -126,10 +127,15 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
             baseEventTableEntryHolder.release();
             baseEventTableEntryHolder = null;
         }
-        baseEventTableEntryHolder = iface.getEventTable().addEvent(baseEventID, getEventName());
-        // Reports identified message.
-        Message m = new ConsumerRangeIdentifiedMessage(iface.getNodeId(), getEventRangeID());
-        iface.getOutputConnection().put(m, messageListener);
+        if (baseEventID != null && iface != null) {
+            baseEventTableEntryHolder = iface.getEventTable().addEvent(baseEventID, getEventName());
+            // Reports identified message.
+            Message m = new ConsumerRangeIdentifiedMessage(iface.getNodeId(), getEventRangeID());
+            iface.getOutputConnection().put(m, messageListener);
+            // Queries current state of the reporter.
+            m = new IdentifyProducersMessage(iface.getNodeId(), baseEventID);
+            iface.getOutputConnection().put(m, messageListener);
+        }
     }
 
     /**
@@ -380,10 +386,24 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
                 // Not for us.
                 return;
             }
-            if (msg.getEventState() == EventState.Invalid) {
-                handleReport(id & REPORTER_EVENT_MASK, false);
-            } else if (msg.getEventState() == EventState.Valid) {
-                handleReport(id & REPORTER_EVENT_MASK, true);
+            long reportBits = id & REPORTER_EVENT_MASK;
+            int orientationBits = (int) (reportBits >> 14) & 0x3;
+            if (orientationBits == REPORTER_UNOCCUPIED_EXIT) {
+                // For exit events (0x0000..), Valid means the locomotive has exited (is absent).
+                // Invalid means the exit did not occur (the locomotive is present).
+                if (msg.getEventState() == EventState.Valid) {
+                    handleReport(reportBits, false);
+                }
+            } else {
+                // For entry / orientation events (0x4000, 0x8000, 0xC000):
+                // Valid means the locomotive is present with this orientation.
+                if (msg.getEventState() == EventState.Valid) {
+                    handleReport(reportBits, true);
+                } else if (msg.getEventState() == EventState.Invalid &&
+                        orientationBits == REPORTER_OCCUPIED_UNKNOWN_ENTRY) {
+                    // Invalid on unknown orientation means the locomotive is not present at all.
+                    handleReport(reportBits, false);
+                }
             }
         }
     }

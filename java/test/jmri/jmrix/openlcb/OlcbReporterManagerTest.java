@@ -48,12 +48,12 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Test
     public void testIdentified() {
         l.provideReporter(getNameToTest2());
-        // Upon construction, a consumer range identified message was sent out.
-        ti.assertSentMessage(":X194a4c4cN06800D445566FFFF;");
+        // Upon construction, a consumer range identified message and an identify producers message were sent out.
+        ti.assertSentMessages(":X194a4c4cN06800D445566FFFF;", ":X19914c4cN06800D4455660000;");
         ti.assertNoSentMessages();
         l.provideReporter(getNameToTest1());
-        // Upon construction, a consumer range identified message was sent out.
-        ti.assertSentMessage(":X194a4c4cN06800D1122330000;");
+        // Upon construction, a consumer range identified message and an identify producers message were sent out.
+        ti.assertSentMessages(":X194a4c4cN06800D1122330000;", ":X19914c4cN06800D1122330000;");
         ti.assertNoSentMessages();
     }
 
