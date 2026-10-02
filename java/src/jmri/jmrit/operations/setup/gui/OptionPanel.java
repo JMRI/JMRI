@@ -325,9 +325,9 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setBuildOnTime(buildOnTime.isSelected());
         if (isBuildOnTime) {
             try {
-                Setup.setDwellTime(Integer.parseInt(dwellTimeTextField.getText()));
+                Setup.setDwellTime(Integer.parseUnsignedInt(dwellTimeTextField.getText()));
             } catch (NumberFormatException e) {
-                log.error("Dwell Time {} must be a number", dwellTimeTextField.getText());
+                log.error("Dwell Time: {} must be a positive number", dwellTimeTextField.getText());
             }
         }
         // local switcher options
