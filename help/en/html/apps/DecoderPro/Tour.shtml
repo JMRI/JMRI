@@ -161,22 +161,10 @@
     
               <dd>The field contains values read from a locomotive file. This is shown as yellow,
               since we're not certain that the file agrees with the decoder contents.
-              There are two shades of yellow.  The lighter one is for when you have
-              read, written or edited this sometime in the past. It's likely to agree
-              with what's in the decoder. The darker/brighter one
-              is for when the program doesn't know whether you've read, written or edited this
-              sometime in the past or not.  It might still be the default values
-              that might or might not agree with what's in the decoder.  In this case,
-              it might be safest to first read the decoder contents if you're not
-              sure.</dd>
-
-              <dt style="background:blue;">Still at default</dt>
-    
-              <dd>The field contains values that came from the default values in 
-              DecoderPro's decoder definition.  These may or may not agree with 
-              what's in the decoder.  The safest thing to do is to read the values
-              from the decoder, which will turn these white.
-              
+              The value in the file might have been read or written to the decoder in 
+              the past, in which case it should agree with the decoder, or it 
+              might never have in which case it might not.
+                            
               <dt style="background:red;">Unknown</dt>
     
               <dd>If something goes wrong with the read or write process, we might have a
