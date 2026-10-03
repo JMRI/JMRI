@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Contains methods for engines when building a train.
  * 
- * @author Daniel Boudreau Copyright (C) 2022
+ * @author Daniel Boudreau Copyright (C) 2022, 2026
  */
 public class TrainBuilderEngines extends TrainBuilderBase {
 
@@ -182,8 +182,8 @@ public class TrainBuilderEngines extends TrainBuilderBase {
 
         int assignedLocos = 0; // the number of locos assigned to this train
         List<Engine> singleLocos = new ArrayList<>();
-        for (int _indexEng = 0; _indexEng < getEngineList().size(); _indexEng++) {
-            Engine engine = getEngineList().get(_indexEng);
+        for (_engineIndex = 0; _engineIndex < getEngineList().size(); _engineIndex++) {
+            Engine engine = getEngineList().get(_engineIndex);
             log.debug("Engine ({}) at location ({}, {})", engine.toString(), engine.getLocationName(),
                     engine.getTrackName());
 
@@ -449,6 +449,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
                         Bundle.getMessage("buildTrainEngineChange", getTrain().getSecondLegStartLocationName(),
+                                getTrain().getSecondLegStartRouteLocation().getId(),
                                 getTrain().getSecondLegNumberEngines(), getTrain().getSecondLegEngineModel(),
                                 getTrain().getSecondLegEngineRoad()));
             } else {
@@ -481,6 +482,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
                         Bundle.getMessage("buildTrainEngineChange", getTrain().getThirdLegStartLocationName(),
+                                getTrain().getThirdLegStartRouteLocation().getId(),
                                 getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                                 getTrain().getThirdLegEngineRoad()));
             } else {
