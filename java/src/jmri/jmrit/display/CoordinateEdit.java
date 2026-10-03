@@ -667,8 +667,7 @@ public class CoordinateEdit extends JmriJFrame {
     }
 
     public void initClasses(final Editor editor) {
-        PositionableLabel pLabel = (PositionableLabel) pl;
-        oldStr = String.join(",", pLabel.getClasses());
+        oldStr = String.join(",", pl.getClasses());
         textX = new JLabel();
         textX.setText(Bundle.getMessage("EnterClasses") + ":");
         textX.setVisible(true);
@@ -681,23 +680,21 @@ public class CoordinateEdit extends JmriJFrame {
         addTextItems();
 
         okButton.addActionListener(e -> {
-            PositionableLabel pp = (PositionableLabel) pl;
-            pp.removeAllClasses();
+            pl.removeAllClasses();
             String t = xTextField.getText();
             if (t != null && t.length() > 0) {
                 for (String className : t.split(",")) {
                     if (!className.isBlank()) {
-                        pp.addClass(className.trim());
+                        pl.addClass(className.trim());
                     }
                 }
             }
-            pp.updateSize();
+            pl.updateSize();
             dispose();
         });
         okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(e -> {
-            PositionableLabel pp = (PositionableLabel) pl;
-            pp.updateSize();
+            pl.updateSize();
             dispose();
         });
         pack();
