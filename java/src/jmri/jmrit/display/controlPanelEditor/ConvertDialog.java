@@ -35,7 +35,7 @@ class ConvertDialog extends JDialog {
         DisplayFrame _filler;
 
         ConvertDialog(CircuitBuilder cb, PositionableLabel pos, OBlock block) {
-            
+
             super(cb._editor, true);
             _parent = cb;
             _pos = pos;
@@ -106,14 +106,14 @@ class ConvertDialog extends JDialog {
             JButton button = new JButton(Bundle.getMessage("convert"));
             button.addActionListener(updateAction);
             panel.add(button);
-            
+
             button = new JButton(Bundle.getMessage("skip"));
             button.addActionListener((ActionEvent a) -> dispose());
             panel.add(button);
             return panel;
         }
         /*
-         * Do for dialog what FamilyItemPanel, ItemPanel and DisplayFrame 
+         * Do for dialog what FamilyItemPanel, ItemPanel and DisplayFrame
          * need to do for reSizeDisplay and reSize
          */
         private void displayIcons() {
@@ -137,7 +137,7 @@ class ConvertDialog extends JDialog {
             for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                 String status = entry.getKey();
                 for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
-                    t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
+                    t.setIcon(status, ent.getKey(), ent.getValue().cloneMe());
                 }
             }
             t.setLevel(Editor.TURNOUTS);
@@ -153,7 +153,7 @@ class ConvertDialog extends JDialog {
 
             HashMap<String, NamedIcon> iconMap = _panel.getIconMap();
             for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
-                t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+                t.setIcon(entry.getKey(), entry.getValue().cloneMe());
             }
             t.setLevel(Editor.TURNOUTS);
             t.setScale(_pos.getScale());

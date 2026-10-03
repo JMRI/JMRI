@@ -128,7 +128,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
@@ -168,10 +168,10 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 t.setFamily(_family);
 
                 for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
-                    t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+                    t.setIcon(entry.getKey(), entry.getValue().cloneMe());
                 }
                 t.setLevel(Editor.TURNOUTS);
-                return t;                
+                return t;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 return _itemType + " icons";
             }

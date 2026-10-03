@@ -36,7 +36,7 @@ public class NamedIconTest {
         NamedIcon t = new NamedIcon("foof:biff.gif","logo");
         JUnitAppender.assertErrorMessageStartsWith("Did not find \"foof:biff.gif\" for NamedIcon");
         JUnitAppender.assertWarnMessage("Could not load image from foof:biff.gif (file does not exist)");
-        JUnitAppender.assertWarnMessage("NamedIcon can't scan foof:biff.gif for animated status");
+        JUnitAppender.assertWarnMessage("NamedIconImage can't scan foof:biff.gif for animated status");
         Assert.assertNotNull("exists",t);
     }
 
@@ -48,7 +48,7 @@ public class NamedIconTest {
         NamedIcon t = new NamedIcon("program:resources/foo/foo/foo/foo.gif","logo");
         JUnitAppender.assertErrorMessageStartsWith("Did not find \"program:resources/foo/foo/foo/foo.gif\" for NamedIcon");
         JUnitAppender.assertWarnMessage("Could not load image from program:resources/foo/foo/foo/foo.gif (file does not exist)");
-        JUnitAppender.assertWarnMessage("NamedIcon can't scan program:resources/foo/foo/foo/foo.gif for animated status");
+        JUnitAppender.assertWarnMessage("NamedIconImage can't scan program:resources/foo/foo/foo/foo.gif for animated status");
         Assert.assertNotNull("exists",t);
     }
 
@@ -60,7 +60,7 @@ public class NamedIconTest {
         NamedIcon t = new NamedIcon("resources/foo/foo/foo/foo.gif","logo");
         JUnitAppender.assertErrorMessageStartsWith("Did not find \"resources/foo/foo/foo/foo.gif\" for NamedIcon");
         JUnitAppender.assertWarnMessage("Could not load image from resources/foo/foo/foo/foo.gif (file does not exist)");
-        JUnitAppender.assertWarnMessage("NamedIcon can't scan resources/foo/foo/foo/foo.gif for animated status");
+        JUnitAppender.assertWarnMessage("NamedIconImage can't scan resources/foo/foo/foo/foo.gif for animated status");
         Assert.assertNotNull("exists",t);
     }
 
@@ -74,12 +74,12 @@ public class NamedIconTest {
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
         AffineTransform t = AffineTransform.getScaleInstance(0.5, 0.5);
-        
+
         ni.transformImage(w/2,  h,  t,  null);
         Assert.assertEquals(w/2, ni.getIconWidth());
         Assert.assertEquals(h, ni.getIconHeight());
     }
-    
+
     /**
      *  Test rotate method with no scaling, 45 deg rotation. The size
      *  should change.
@@ -89,13 +89,13 @@ public class NamedIconTest {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
-        
+
         ni.rotate(45, new JLabel());
         int rectSize = (int) Math.ceil((h + w)/Math.sqrt(2.));
         Assert.assertEquals(rectSize, ni.getIconHeight());
         Assert.assertEquals(rectSize, ni.getIconWidth());
     }
-    
+
     /**
      *  Test scaling, no rotation
      */
@@ -105,12 +105,12 @@ public class NamedIconTest {
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
         double scale = 1.2;
-        
+
         ni.scale(scale, new JLabel());
         Assert.assertEquals((int) (h * scale), ni.getIconHeight());
-        Assert.assertEquals((int) (w * scale), ni.getIconWidth());        
+        Assert.assertEquals((int) (w * scale), ni.getIconWidth());
     }
-    
+
     /**
      *  Test rotate method with scaling, 270 degrees
      *  should just swap height and width and we'll scale by 2.0
@@ -122,7 +122,7 @@ public class NamedIconTest {
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
         double scale = 2.0;
-        
+
         ni.scale(scale, comp);
         ni.rotate(270, comp);
         // The +1 in the below is a bit of a crock, but it's because the argument of
@@ -130,8 +130,8 @@ public class NamedIconTest {
         // rounds up!
         Assert.assertEquals((int) Math.ceil(w * scale) + 1, ni.getIconHeight());
         Assert.assertEquals((int) Math.ceil(h * scale) + 1, ni.getIconWidth());
-    } 
-    
+    }
+
     /**
      *  Test setLoad and scale. 30 degrees is also simple geometry.
      *  Also test getDegrees and getScale while we're here
@@ -145,11 +145,11 @@ public class NamedIconTest {
         JLabel comp = new JLabel();
         double scale = 0.333;
         int degrees = 30;
-        
-        ni.setLoad(degrees, scale, comp);  
+
+        ni.setLoad(degrees, scale, comp);
         Assert.assertEquals(ni.getDegrees(), degrees);
         Assert.assertEquals(ni.getScale(), scale, .001);
-        
+
         // Be wary of numerical instability in these tests. e.g. because of rounding in NamedIcon, sometimes
         // cos(30) is not exactly 0.5 and the ceil operation gives different answers!
         double sqrt3 = Math.sqrt(3);
@@ -158,28 +158,28 @@ public class NamedIconTest {
         int expectedWidth = (int) (Math.ceil(h * scale / 2.0 + w * sqrt3 * scale / 2.0));
         Assert.assertEquals(expectedWidth, ni.getIconWidth());
     }
-    
+
     /**
      *  Test reduceTo method.
-     *  
+     *
      */
     @Test
     public void testReduceTo() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
-        
+
         // Test that limit of one won't let you reduce the size.
         ni.reduceTo(10, 10, 1.0);
         Assert.assertEquals(h, ni.getIconHeight());
         Assert.assertEquals(w, ni.getIconWidth());
-       
+
         // Test that we can reduce the size
         ni.reduceTo(w / 3, h / 2, 0.1);
         Assert.assertEquals(w / 3, ni.getIconWidth());
         Assert.assertEquals(h / 3, ni.getIconHeight());
     }
-    
+
     /**
      *  Test flip method
      */
@@ -189,24 +189,24 @@ public class NamedIconTest {
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
-        
-        ni.flip(NamedIcon.NOFLIP, comp);       
+
+        ni.flip(NamedIcon.NOFLIP, comp);
         Assert.assertEquals(w, ni.getIconWidth());
         Assert.assertEquals(h, ni.getIconHeight());
         int [] noflipPixels = getPixels(ni.getImage());
-        
+
         ni.flip(NamedIcon.VERTICALFLIP, comp);
         Assert.assertEquals(w, ni.getIconWidth());
         Assert.assertEquals(h, ni.getIconHeight());
-        
-        int [] flipPixels = getPixels(ni.getImage()); 
+
+        int [] flipPixels = getPixels(ni.getImage());
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 Assert.assertEquals(noflipPixels[j * w + i], flipPixels[(h - 1 - j) * w + i]);
             }
         }
     }
-    
+
     /**
      *  Test createRotatedImage. N.B, createRotatedImage forces the color
      *  model, so we can't easily compare to the original image. Instead,
@@ -219,12 +219,12 @@ public class NamedIconTest {
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
         Image img = ni.getImage();
-        
+
         Image rot1Image = ni.createRotatedImage(img, comp, 1);
         Assert.assertEquals(w, rot1Image.getHeight(null));
         Assert.assertEquals(h, rot1Image.getWidth(null));
         int [] rot1Pixels = getPixels(rot1Image);
-        
+
         Image rot2Image = ni.createRotatedImage(img, comp, 2);
         Assert.assertEquals(h, rot2Image.getHeight(null));
         Assert.assertEquals(w, rot2Image.getWidth(null));
@@ -232,11 +232,11 @@ public class NamedIconTest {
 
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
-                Assert.assertEquals(rot1Pixels[j * h + i], rot2Pixels[(h - 1 - i) * w + j]); 
+                Assert.assertEquals(rot1Pixels[j * h + i], rot2Pixels[(h - 1 - i) * w + j]);
             }
         }
     }
-    
+
     /**
      *  Test setRotation and getRotation. Since this calls createRotatedImage, we compare
      *  the image rotated by 90 deg to the image rotated by 270 deg.
@@ -247,30 +247,30 @@ public class NamedIconTest {
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
-        
+
         Assert.assertEquals(0, ni.getRotation());
-            
+
         ni.setRotation(1, comp);
         Assert.assertEquals(h, ni.getIconWidth());
         Assert.assertEquals(w, ni.getIconHeight());
         Assert.assertEquals(1, ni.getRotation());
-        
+
         int [] rot1Pixels = getPixels(ni.getImage());
-            
+
         ni.setRotation(3, comp);
         Assert.assertEquals(h, ni.getIconWidth());
         Assert.assertEquals(w, ni.getIconHeight());
         Assert.assertEquals(3, ni.getRotation());
-        
+
         int [] rot3Pixels = getPixels(ni.getImage());
-    
+
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 Assert.assertEquals(rot1Pixels[j * w + i], rot3Pixels[(h - j) * w - 1 - i]);
             }
         }
     }
-    
+
     /**
      * Test rotate and scale with blinking GIF. This will use the animated GIF codepath.
      */
@@ -280,16 +280,16 @@ public class NamedIconTest {
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
-        
+
         double scale = 2.0;
-        
+
         ni.scale(scale, comp);
         ni.rotate(270, comp);
         // The +1 in the below is a bit of a crock, but it's because the argument of
         // Math.ceil(Math.abs(w*Math.cos(rad))) is slightly more than zero, so it
         // rounds up!
         Assert.assertEquals((int) Math.ceil(w * scale) + 1, ni.getIconHeight());
-        Assert.assertEquals((int) Math.ceil(h * scale), ni.getIconWidth());       
+        Assert.assertEquals((int) Math.ceil(h * scale), ni.getIconWidth());
     }
 
     /**
@@ -308,7 +308,7 @@ public class NamedIconTest {
         }
         return pixels;
     }
-     
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

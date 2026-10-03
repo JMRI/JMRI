@@ -57,7 +57,7 @@ public class MultiIconEditor extends JPanel {
      * @return Unique object
      */
     public NamedIcon getIcon(int iconNum) {
-        return new NamedIcon(iconList[iconNum]);
+        return iconList[iconNum].cloneMe();
     }
 
     public void complete() {
