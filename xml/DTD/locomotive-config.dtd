@@ -72,9 +72,10 @@
 <!ELEMENT decoderDef (varValue*) >   <!-- Where the variable definitions came from -->
 
 <!ELEMENT CVvalue EMPTY>
-<!ATTLIST CVvalue name    CDATA #IMPLIED>         <!-- CV number, used for identification -->
-<!ATTLIST CVvalue value   CDATA #REQUIRED>        <!-- Value of specified CV -->
-<!ATTLIST CVvalue comment CDATA #IMPLIED>
+<!ATTLIST CVvalue name      CDATA #IMPLIED>         <!-- CV number, used for identification -->
+<!ATTLIST CVvalue value     CDATA #REQUIRED>        <!-- Value of specified CV -->
+<!ATTLIST CVvalue comment   CDATA #IMPLIED>
+<!ATTLIST CVvalue state     CDATA #IMPLIED>         <!-- values from AbstractValue.ValueState -->
 
 <!ELEMENT indexedCVvalue EMPTY>
 <!ATTLIST indexedCVvalue name    CDATA #REQUIRED> <!-- Indexed CV name, used for identification -->
@@ -87,10 +88,11 @@
 <!ATTLIST indexedCVvalue comment CDATA #IMPLIED>
 
 <!ELEMENT varValue EMPTY>
-<!ATTLIST varValue item    CDATA #IMPLIED>        <!-- item name used for identification -->
-<!ATTLIST varValue name    CDATA #IMPLIED>        <!-- old form of item name, for compatibility -->
-<!ATTLIST varValue value   CDATA #REQUIRED>       <!-- Value of specified variable -->
-<!ATTLIST varValue comment CDATA #IMPLIED>
+<!ATTLIST varValue item      CDATA #IMPLIED>        <!-- item name used for identification -->
+<!ATTLIST varValue name      CDATA #IMPLIED>        <!-- old form of item name, for compatibility -->
+<!ATTLIST varValue value     CDATA #REQUIRED>       <!-- Value of specified variable -->
+<!ATTLIST varValue comment   CDATA #IMPLIED>
+<!ATTLIST varValue state     CDATA #IMPLIED>         <!-- values from AbstractValue.ValueState -->
 
 <!ELEMENT functionlabels (functionlabel*) >
 

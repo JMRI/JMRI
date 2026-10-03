@@ -140,32 +140,36 @@
           variable fields are color coded to represent their states:</p>
 
           <dl>
-          <dt style="background:orange;">Edited</dt>
-
-          <dd>You've changed this value, or it contains default values from the decoder file.
-          This is shown as black numbers on an orange background, since the value differs from what's
-          expected or last seen in the decoder.</dd>
-
-          <dt style="background:yellow;">From File</dt>
-
-          <dd>The field contains values read from a locomotive file. This is shown on yellow,
-          since we're not certain that the file agrees with the decoder contents.</dd>
-
-          <dt style="background:white;">Read</dt>
-
-          <dd>The value shown has been read from the decoder. This is shown as white to
-          indicate that the value is trustworthy.</dd>
-
-          <dt style="background:white;">Stored</dt>
-
-          <dd>The value show has been written to the decoder. This is also shown as
-          white.</dd>
-
-          <dt style="background:red;">Unknown</dt>
-
-          <dd>If something goes wrong with the read or write process, we might have a
-          completely untrustworthy result. This results in the variable's state being marked
-          as UNKNOWN and shown on a red background.</dd>
+              <dt style="background:white;">Read</dt>
+    
+              <dd>The value shown has been read from the decoder. This is shown as white to
+              indicate that the value is trustworthy.</dd>
+    
+              <dt style="background:white;">Stored</dt>
+    
+              <dd>The value show has been written to the decoder. This is also shown as
+              white.</dd>
+    
+              <dt style="background:orange;">Edited</dt>
+    
+              <dd>You've changed this value in the current programming session.
+              This is shown as black numbers on an orange background, since the value differs from what's
+              expected or last seen in the decoder. The item will get a white background
+              when you write it to the decoder.</dd>
+    
+              <dt style="background:yellow;">From File</dt>
+    
+              <dd>The field contains values read from a locomotive file. This is shown as yellow,
+              since we're not certain that the file agrees with the decoder contents.
+              The value in the file might have been read or written to the decoder in 
+              the past, in which case it should agree with the decoder, or it 
+              might never have in which case it might not.
+                            
+              <dt style="background:red;">Unknown</dt>
+    
+              <dd>If something goes wrong with the read or write process, we might have a
+              completely untrustworthy result. This results in the variable's state being marked
+              as UNKNOWN and shown on a red background.</dd>
           </dl>
         </div>
       </div>
