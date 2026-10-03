@@ -5,7 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Define common base class methods for CvValue and VariableValue classes
+ * Represents a single CV or Variable value.  
+ * Defines common base class methods for CvValue and VariableValue classes
  * <p>
  * The ToRead parameter (boolean, unbound) is used to remember whether this
  * object has been read during a "read all" operation. This allows removal of
@@ -18,9 +19,11 @@ import java.beans.PropertyChangeSupport;
  * The Available parameter (boolean, unbound) remembers whether the variable
  * should be displayed, programmed, etc.
  * <p>
- * Represents a single CV value
+ * Variables and CVs track their states, as shown below.<br>
+ * <a href="doc-files/VariableStates.png"><img src="doc-files/VariableStates.png" alt="States for variables and their colors" height="33%" width="33%"></a>
+ * 
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2005
+ * @author Bob Jacobsen Copyright (C) 2001, 2005, 2026
  */
 public abstract class AbstractValue {
 
