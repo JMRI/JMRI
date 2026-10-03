@@ -36,7 +36,7 @@
       before reading the various other sections in detail.</p>
 
       <p>Notice: The signal related portions of this help file have not been updated and apply
-      mainly to signal <em>heads</em>. Those discussions predate signal masts. 
+      mainly to signal <em>heads</em>. Those discussions predate signal masts.
       Masts are fully supported in Layout Editor Panels, but only
       described briefly.</p>
 
@@ -331,8 +331,8 @@
         selected on the right.</li>
 
         <li><span class="since">since 5.15.6</span><strong>Output Indicator</strong> - selects an icon showing the Turnout object whose name is
-        selected on the right. Note that this is meant for showing the status of some 
-        object <em>other than</em> an actual trackwork turnout that's connected to a 
+        selected on the right. Note that this is meant for showing the status of some
+        object <em>other than</em> an actual trackwork turnout that's connected to a
         JMRI Turnout output.  You can't connect this icon into your trackwork diagrams.</li>
 
         <li><strong>Signal Icon</strong> - selects a signal head icon showing the signal head whose
@@ -371,33 +371,45 @@
 
         <li>Click the mouse (left-click).</li>
 
-        <li>Release the mouse, and then release the shift key.</li>
+        <li>Release the mouse, and then release the shift key.</li></ol>
 
-        <li id="add-shape">If the item is a <strong>Shape</strong>, the first point has been added.
-        To add additional points, drag a line from a point.  When the mouse is released a point will
-        be created.  The right click on a point or the center of the shape will display a menu to
-        set various attributes.  Changing the shape type from <strong>Open</strong> to
-        <strong>Closed</strong> will create a final line between the first and last point. To create
-        a rectangle, draw three lines (four points) and select closed.  Note:  The drag process is
-        the same as drawing track segments except there is no destination point until the mouse is
-        released.</li>
+        <div style="margin-left: 1em">
+          <p id="add-shape">If the item is a <strong>Shape</strong>, the first point has been added.
+          To add additional points, drag a line from a point.  When the mouse is released a point will
+          be created.  The right click on a point or the center of the shape will display a menu to
+          set various attributes.  Changing the shape type from <strong>Open</strong> to
+          <strong>Closed</strong> will create a final line between the first and last point. To create
+          a rectangle, draw three lines (four points) and select closed.  Note:  The drag process is
+          the same as drawing track segments except there is no destination point until the mouse is
+          released.</p>
 
-        <li><span class="since">since 5.15.4</span>If the item is a <strong>Memory Variable</strong>
-        or a <strong>Block Contents</strong> label, a dialog will be displayed.  Click on
-        <strong>Yes</strong> to create the traditional memory or block contents label.  Click on
-        <strong>No</strong> to create a memory or block contents text box.  A second dialog will
-        request the size of the text box.  The text box contents can be edited directly on the panel
-        instead using a pop-up dialog.  This makes it possible to change memory and block values
-        when using a browser with the JMRI Web Server.  Limitations:
-          <ul>
-            <li>If the value is not a text string, such as a roster entry, changing the displayed
-                text will replace the item with the new text.</li>
-            <li>The panel zoom level must be at 1 (no zoom) to edit the text content.</li>
-          </ul>
-        </li>
-      </ol>
+          <p><span class="since">since 5.15.4, updated 5.17.4</span>If the item is a <strong>Memory
+          Variable</strong>, a <strong>Block Contents</strong> label, or a <strong>LogixNG Global
+          Variable</strong>, a window will be displayed.
+          </p>
 
-      <p>A Track Segment is a piece of track connecting two connection points (<strong><span style=
+          <p><img src="./images/label_input_selector.png" alt="Label or Input Selector"></p>
+
+          <p>The traditional label icon is the default.  To create an <strong>input</strong> text
+          field, select <strong>Input Field</strong>.  Use the spinner to select the number of
+          columns for the field.  Input fields have a fixed length while the length of a label is
+          dynamic based on the length of the content.</p>
+
+          <p>After the selection has been made, click on <strong>Add</strong> or press
+          <strong>Enter/Return</strong> to create a label icon or an input icon.  Click on
+          <strong>Cancel</strong> or close the window to stop the add action.</p>
+
+          <p>For these three label types, an entry needs to be selected from the associated toolbar
+          dropdown before trying to add an icon.  If an entry was not selected, an error dialog will
+          be displayed.</p>
+
+          <p>The input field contents can be edited directly on the panel instead using a pop-up
+          dialog.  This makes it possible to change values when using a browser with the JMRI Web
+          Server.  Note:  If the value is not a text string, such as a roster entry, changing the
+          displayed text will replace the item with the new text.</p>
+        </div>
+
+       <p>A Track Segment is a piece of track connecting two connection points (<strong><span style=
       "color:red">red</span></strong> squares on a turnout, anchor point, end bumper, edge
       connector, turnout's, crossover's, or level crossing). Before you can add a Track Segment,
       two <strong><span style="color:red">red</span></strong> connection points must be visible on
@@ -495,7 +507,7 @@
 
         <li><strong>Block Contents</strong> (ComboBox) - applies to Block Contents. Select an
         entry from the drop down list.</li>
-         
+
         <li><strong>Sensor Icon</strong> (ComboBox) - applies to Sensor Icon.  Select an entry from
         the drop down list.</li>
 
