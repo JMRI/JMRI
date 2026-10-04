@@ -122,7 +122,6 @@ public class LocoFile extends XmlFile {
                 }
                 if (cvObject != null) {
                     cvObject.setValue(Integer.parseInt(value));
-                    cvObject.setState(AbstractValue.ValueState.FROMFILE);
 
                     // retrieve the state, if available
                     if (element.getAttribute("state") != null) {
