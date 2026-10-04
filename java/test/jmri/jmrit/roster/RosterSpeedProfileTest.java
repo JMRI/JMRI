@@ -416,6 +416,30 @@ public class RosterSpeedProfileTest {
         Assertions.assertEquals(6.27119f, rsp.mmsToScaleSpeed(10, true), 0.001);
     }
 
+    @Test
+    public void testSetMinMaxLimitsKmhScaleCapReplacesPercentFallback() {
+        org.jdom2.Element f1 = getLocoElement100();
+        RosterEntry rF1 = new RosterEntry(f1) {
+            @Override
+            protected void warnShortLong(String s) {
+            }
+        };
+        RosterSpeedProfile sp = rF1.getSpeedProfile();
+        // 36 km/h at 1:100 scale equals 100 mm/s model speed, which is throttle 1.0
+        // in the test profile (step 1000 -> 100 mm/s forward and reverse).
+        sp.setMinMaxLimitsKmh(0.0f, 0.25f, 36.0f, 100.0f, true);
+        assertEquals(1.0f, sp.getMaxOperatingSpeed(), 0.001f);
+    }
+
+    @Test
+    public void testSetMinMaxLimitsKmhPercentFallbackWithNoProfileForDirection() {
+        RosterSpeedProfile sp = new RosterSpeedProfile(new RosterEntry());
+        sp.setForwardSpeed(1.0f, 100.0f);
+        // No reverse speeds: the scale cap cannot apply in reverse, so the percent fallback remains.
+        sp.setMinMaxLimitsKmh(0.0f, 0.25f, 36.0f, 100.0f, false);
+        assertEquals(0.25f, sp.getMaxOperatingSpeed(), 0.0001f);
+    }
+
     private void setSpeedInterpretation(SignalSpeedMap map, int interpretation) {
         var speedNames = map.getValidSpeedNames();
         HashMap<String, Float> newMap = new HashMap<>(speedNames.size());
