@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,12 +46,24 @@ public class AbstractIdTagReporter extends AbstractReporter
         return false;
     }
 
+    private String lastReportString = null;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void notify(IdTag id) {
         log.debug("Notify: {}", mSystemName);
+        String oldReportString = lastReportString;
+        String newReportString = null;
+        if (id != null) {
+            newReportString = (id instanceof Reportable) ? ((Reportable) id).toReportString() : id.toString();
+        }
+        lastReportString = newReportString;
+        // These are both nullable.
+        if (!Objects.equals(oldReportString, newReportString)) {
+            firePropertyChange(PROPERTY_REPORT_METADATA, oldReportString, newReportString);
+        }
         if (id != null) {
             log.debug("Tag {} notified in {}", id, this);
             // do not update last reporter and last seen if this is an "exit" report
@@ -70,6 +83,21 @@ public class AbstractIdTagReporter extends AbstractReporter
         }
         setReport(id);
         setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setReport(Object r) {
+        super.setReport(r);
+        if (r == null) {
+            lastReportString = null;
+        } else if (r instanceof Reportable) {
+            lastReportString = ((Reportable) r).toReportString();
+        } else {
+            lastReportString = r.toString();
+        }
     }
 
     /**

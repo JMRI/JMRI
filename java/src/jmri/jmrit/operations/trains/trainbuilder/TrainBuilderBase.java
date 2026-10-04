@@ -43,26 +43,29 @@ public class TrainBuilderBase extends TrainCommon {
     protected static final boolean USE_BUNIT = true;
     protected static final String TIMING = "timing of trains";
 
-    // build variables shared between local routines
-    Date _startTime; // when the build report started
-    Train _train; // the train being built
+    private PrintWriter _buildReport; // build report for this train
+    private Date _startTime; // when the build report started
+    private Train _train; // the train being built
+    private List<Engine> _engineList; // engines for this train, modified during build
+    protected int _engineIndex; // index for engineList
+    private List<Car> _carList; // cars for this train, modified during the build
+    protected int _carIndex; // index for carList
+    private List<RouteLocation> _routeList; // ordered list of locations
+    private Location _departLocation; // train departs this location
+    private Track _departStageTrack; // departure staging track (null if not staging)
+    private Location _terminateLocation; // train terminates at this location
+    private Track _terminateStageTrack; // terminate staging track (null if not staging)
+    
     int _numberCars = 0; // number of cars moved by this train
-    List<Engine> _engineList; // engines for this train, modified during build
+    int _completedMoves; // the number of pick up car moves for a location
+    int _reqNumOfMoves; // the requested number of car moves for a location
+    
     Engine _lastEngine; // last engine found from getEngine
     Engine _secondLeadEngine; // lead engine 2nd part of train's route
     Engine _thirdLeadEngine; // lead engine 3rd part of the train's route
-    int _carIndex; // index for carList
-    List<Car> _carList; // cars for this train, modified during the build
-    List<RouteLocation> _routeList; // ordered list of locations
+   
     Hashtable<String, Integer> _numOfBlocks; // Number of blocks of cars
                                              // departing staging.
-    int _completedMoves; // the number of pick up car moves for a location
-    int _reqNumOfMoves; // the requested number of car moves for a location
-    Location _departLocation; // train departs this location
-    Track _departStageTrack; // departure staging track (null if not staging)
-    Location _terminateLocation; // train terminates at this location
-    Track _terminateStageTrack; // terminate staging track (null if not staging)
-    PrintWriter _buildReport; // build report for this train
     List<Car> _notRoutable = new ArrayList<>(); // cars that couldn't be routed
     List<Location> _modifiedLocations = new ArrayList<>(); // modified locations
     int _warnings = 0; // the number of warnings in the build report
@@ -73,6 +76,14 @@ public class TrainBuilderBase extends TrainCommon {
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
     Router router = InstanceManager.getDefault(Router.class);
 
+    protected PrintWriter getBuildReport() {
+        return _buildReport;
+    }
+
+    protected void setBuildReport(PrintWriter printWriter) {
+        _buildReport = printWriter;
+    }
+    
     protected Date getStartTime() {
         return _startTime;
     }
@@ -113,18 +124,17 @@ public class TrainBuilderBase extends TrainCommon {
         _routeList = list;
     }
 
-    protected PrintWriter getBuildReport() {
-        return _buildReport;
-    }
-
-    protected void setBuildReport(PrintWriter printWriter) {
-        _buildReport = printWriter;
-    }
-
     protected void remove(Car car) {
         // remove this car from the list
         if (getCarList().remove(car)) {
             _carIndex--;
+        }
+    }
+    
+    protected void remove(Engine engine) {
+        // remove this engine from the list
+        if (getEngineList().remove(engine)) {
+            _engineIndex--;
         }
     }
 
@@ -588,6 +598,7 @@ public class TrainBuilderBase extends TrainCommon {
         if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
             addLine(ONE,
                     Bundle.getMessage("buildTrainEngineChange", getTrain().getSecondLegStartLocationName(),
+                            getTrain().getSecondLegStartRouteLocation().getId(),
                             getTrain().getSecondLegNumberEngines(), getTrain().getSecondLegEngineModel(),
                             getTrain().getSecondLegEngineRoad()));
         }
@@ -613,6 +624,7 @@ public class TrainBuilderBase extends TrainCommon {
         if ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
             addLine(ONE,
                     Bundle.getMessage("buildTrainEngineChange", getTrain().getThirdLegStartLocationName(),
+                            getTrain().getThirdLegStartRouteLocation().getId(),
                             getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                             getTrain().getThirdLegEngineRoad()));
         }

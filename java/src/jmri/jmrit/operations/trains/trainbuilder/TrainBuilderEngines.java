@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Contains methods for engines when building a train.
  * 
- * @author Daniel Boudreau Copyright (C) 2022
+ * @author Daniel Boudreau Copyright (C) 2022, 2026
  */
 public class TrainBuilderEngines extends TrainBuilderBase {
 
@@ -182,8 +182,8 @@ public class TrainBuilderEngines extends TrainBuilderBase {
 
         int assignedLocos = 0; // the number of locos assigned to this train
         List<Engine> singleLocos = new ArrayList<>();
-        for (int indexEng = 0; indexEng < getEngineList().size(); indexEng++) {
-            Engine engine = getEngineList().get(indexEng);
+        for (_engineIndex = 0; _engineIndex < getEngineList().size(); _engineIndex++) {
+            Engine engine = getEngineList().get(_engineIndex);
             log.debug("Engine ({}) at location ({}, {})", engine.toString(), engine.getLocationName(),
                     engine.getTrackName());
 
@@ -240,7 +240,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 if (!setEngineDestination(engine, rl, rld)) {
                     return false;
                 }
-                getEngineList().remove(indexEng--);
                 if (engine.getConsist() != null) {
                     assignedLocos = assignedLocos + engine.getConsist().getSize();
                 } else {
@@ -281,7 +280,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                             engine.getModel(), engine.getTypeName(), engine.getLocationName(), engine.getTrackName(),
                             rld.getName()));
             if (setEngineDestination(engine, rl, rld)) {
-                getEngineList().remove(indexEng--);
                 return true; // normal exit when not staging
             }
         }
@@ -316,7 +314,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                     continue;
                 }
                 if (setEngineDestination(engine, rl, rld)) {
-                    getEngineList().remove(engine);
                     singleLocos.remove(engine);
                     locos++;
                     break; // found "A" unit
@@ -327,7 +324,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 // now add the rest "A" or "B" units
                 for (Engine engine : singleLocos) {
                     if (setEngineDestination(engine, rl, rld)) {
-                        getEngineList().remove(engine);
                         locos++;
                     }
                     if (locos == reqNumberEngines) {
@@ -453,6 +449,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
                         Bundle.getMessage("buildTrainEngineChange", getTrain().getSecondLegStartLocationName(),
+                                getTrain().getSecondLegStartRouteLocation().getId(),
                                 getTrain().getSecondLegNumberEngines(), getTrain().getSecondLegEngineModel(),
                                 getTrain().getSecondLegEngineRoad()));
             } else {
@@ -485,6 +482,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
                         Bundle.getMessage("buildTrainEngineChange", getTrain().getThirdLegStartLocationName(),
+                                getTrain().getThirdLegStartRouteLocation().getId(),
                                 getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                                 getTrain().getThirdLegEngineRoad()));
             } else {
@@ -901,6 +899,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 }
             }
         }
+        remove (engine);
         // now adjust train length and weight for each location that engines are
         // in the train
         finishAddRsToTrain(engine, rl, rld, length, weightTons);

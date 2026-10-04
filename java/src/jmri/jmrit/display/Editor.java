@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -420,6 +421,60 @@ public abstract class Editor extends JmriJFrameWithPermissions
 //        log.debug("setTargetPanelSize now w={}, h={}", w, h);
         _targetPanel.setSize(w, h);
         _targetPanel.invalidate();
+    }
+
+    /**
+     * Move focus from an input field to the panel on Tab or Shift+Tab, leaving
+     * no input field selected.
+     */
+    protected void setInputFocusTraversal() {
+        _targetPanel.setFocusTraversalPolicyProvider(true);
+        _targetPanel.setFocusTraversalPolicy(new FocusTraversalPolicy() {
+
+            private List<Component> getInputFields() {
+                return getContents().stream()
+                        .filter(positionable -> positionable instanceof MemoryInputIcon
+                                || positionable instanceof BlockContentsInputIcon
+                                || positionable instanceof GlobalVariableInputIcon)
+                        .map(Positionable::getTextComponent)
+                        .filter(Objects::nonNull)
+                        .filter(component -> component.isFocusable() && component.isEnabled() && component.isVisible())
+                        .collect(Collectors.toList());
+            }
+
+            @Override
+            public Component getComponentAfter(Container focusCycleRoot, Component component) {
+                List<Component> fields = getInputFields();
+                if (fields.isEmpty() || component == _targetPanel) {
+                    return null;
+                }
+                return fields.contains(component) ? _targetPanel : null;
+            }
+
+            @Override
+            public Component getComponentBefore(Container focusCycleRoot, Component component) {
+                List<Component> fields = getInputFields();
+                if (fields.isEmpty() || component == _targetPanel) {
+                    return null;
+                }
+                return fields.contains(component) ? _targetPanel : null;
+            }
+
+            @Override
+            public Component getFirstComponent(Container focusCycleRoot) {
+                return getInputFields().isEmpty() ? null : _targetPanel;
+            }
+
+            @Override
+            public Component getLastComponent(Container focusCycleRoot) {
+                return getInputFields().isEmpty() ? null : _targetPanel;
+            }
+
+            @Override
+            public Component getDefaultComponent(Container focusCycleRoot) {
+                return getFirstComponent(focusCycleRoot);
+            }
+        });
     }
 
     protected Dimension getTargetPanelSize() {
@@ -1996,7 +2051,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      */
     static final String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
         "SlipTOEditor", "SignalHead", "SignalMast", "Memory", "Light",
-        "Reporter", "Background", "MultiSensor", "Icon", "Text", "Block Contents"};
+        "Reporter", "Background", "MultiSensor", "Icon", "Text", "BlockLabel"};
 
     /**
      * Create editor for a given item type.
@@ -2323,7 +2378,33 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     protected void addBlockContentsEditor() {
-        IconAdder editor = new IconAdder("Block Contents");
+        IconAdder editor = new IconAdder("BlockLabel") {
+            final JButton bBox = new JButton(Bundle.getMessage("AddInputBox"));
+            final JSpinner spinner = new JSpinner(_spinCols);
+
+            @Override
+            protected void addAdditionalButtons(JPanel p) {
+                JPanel p1 = new JPanel();
+                //p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+                bBox.addActionListener(a -> addBlockContentsInputBox());
+                ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(2);
+                spinner.setMaximumSize(spinner.getPreferredSize());
+                JPanel p2 = new JPanel();
+                p2.add(new JLabel(Bundle.getMessage("NumColsLabel")));
+                p2.add(spinner);
+                p1.add(p2);
+                p1.add(bBox);
+                p.add(p1);
+                p.add(p1);
+            }
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                super.valueChanged(e);
+                bBox.setEnabled(addIconIsEnabled());
+            }
+        };
+
         ActionListener addIconAction = a -> putBlockContents();
         JFrameItem frame = makeAddIconFrame("BlockLabel", true, true, editor);
         _iconEditorFrame.put("BlockLabel", frame);
@@ -2743,6 +2824,23 @@ public abstract class Editor extends JmriJFrameWithPermissions
         }
         return result;
     }
+
+    protected BlockContentsInputIcon addBlockContentsInputBox() {
+        BlockContentsInputIcon result = new BlockContentsInputIcon(_spinCols.getNumber().intValue(), this);
+        IconAdder blockContentsIconEditor = getIconEditor("BlockLabel");
+        result.setBlock(blockContentsIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+        return result;
+    }
+
 
     /**
      * Add a Light indicator to the target

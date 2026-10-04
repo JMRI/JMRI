@@ -29,11 +29,12 @@ public class SteamSoundTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
+        JUnitUtil.clearShutDownManager();
+
         // GitHub Headless CI workflow doesn't have sound
         JUnitAppender.suppressWarnMessage("Error loading OpenAL libraries: Could not initialize class jogamp.openal.ALImpl");
 
-        JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
-        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
