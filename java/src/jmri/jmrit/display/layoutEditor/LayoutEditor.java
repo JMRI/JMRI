@@ -2828,6 +2828,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         List<Positionable> positionables = new ArrayList<>(getContents());
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
+        positionables.addAll(blockContentsInputList);
         positionables.addAll(labelImage);
         positionables.addAll(memoryLabelList);
         positionables.addAll(memoryInputList);
@@ -4003,11 +4004,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else if (leToolBarPanel.textLabelButton.isSelected()) {
                     addLabel();
                 } else if (leToolBarPanel.memoryButton.isSelected()) {
-                    selectMemoryType();
+                    selectLabelInputType("memoryVariable", currentPoint);
                 } else if (leToolBarPanel.globalVariableButton.isSelected()) {
-                    addGlobalVariable();
+                    selectLabelInputType("globalVariable", currentPoint);
                 } else if (leToolBarPanel.blockContentsButton.isSelected()) {
-                    selectBlockContentsType();
+                    selectLabelInputType("blockContents", currentPoint);
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
                     addIcon();
                 } else if (leToolBarPanel.logixngButton.isSelected()) {
@@ -7592,54 +7593,135 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * When adding a memory variable, provide an option to create the normal label
-     * or create an input text field.  The label requires a pop-up dialog to change the value
-     * while the text field makes it possible to change the value on the panel.  This also makes
-     * it possible to change the value using the web server.
+     * Select the memory/block contents/LogixNG global variable type.
+     * The options are either the traditional text label or a input text field.
+     * If the text field is selected, the field length is required.
+     * @param type The type of requested icon
+     * @param currentPoint The current mouse position
      */
-    void selectMemoryType() {
-        int response = JmriJOptionPane.showConfirmDialog(null,
-            Bundle.getMessage("MemorySelectType"),
-            Bundle.getMessage("MemorySelectTitle"),
-            JmriJOptionPane.YES_NO_OPTION);
+    private void selectLabelInputType(String type, Point2D currentPoint) {
+        var selectFrame = new JmriJFrame(Bundle.getMessage("SelectIconType"));
+        Container contentPane = selectFrame.getContentPane();
+        contentPane.setLayout(new BorderLayout());
 
-        if (response == JmriJOptionPane.YES_OPTION) {
-            addMemory();
-            return;
-        }
+        var labelTypeButton = new JRadioButton(Bundle.getMessage("SelectTextIcon"), true);
+        var inputTypeButton = new JRadioButton(Bundle.getMessage("SelectInputIcon"));
+        var lengthSpinner = new JSpinner(new SpinnerNumberModel(5, 1, 99, 1));
+        var buttonGroup = new ButtonGroup();
+        buttonGroup.add(labelTypeButton);
+        buttonGroup.add(inputTypeButton);
 
-        var length = JmriJOptionPane.showInputDialog(null,
-            Bundle.getMessage("MemorySelectSize"),
-            "5");
+        var cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(a1 -> {
+            selectFrame.dispose();
+        });
 
-        int textLength;
-        try {
-           textLength = Integer.parseInt(length);
-        }
-        catch (NumberFormatException e) {
-           textLength = 5;
-        }
+        var addButton = new JButton("Add");
+        addButton.addActionListener(a1 -> {
+            var isLabel = labelTypeButton.isSelected() ? true : false;
+            var length = (Integer) lengthSpinner.getValue();
+            log.debug("selectLabelInputType: Add button clicked for {}, label is {}, length = {}, point = {}",
+                    type, isLabel, length, currentPoint);
+            int x = (int) currentPoint.getX();
+            int y = (int) currentPoint.getY();
 
-        addInputMemory(textLength);
+            switch (type) {
+                case "memoryVariable":
+                    String memoryName = leToolBarPanel.textMemoryComboBox.getSelectedItemDisplayName();
+                    if (memoryName == null || memoryName.isEmpty()) {
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11a"),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+
+                    if (isLabel) {
+                        addMemory(memoryName, x, y);
+                    } else {
+                        addInputMemory(memoryName, x, y, length);
+                    }
+                    redrawPanel();
+                    break;
+
+                case "globalVariable":
+                    String globalVariableName = leToolBarPanel.textGlobalVariableComboBox.getSelectedItemDisplayName();
+                    if (globalVariableName == null || globalVariableName.isEmpty()) {
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11c"),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+
+                    if (isLabel) {
+                        addGlobalVariable(globalVariableName, x, y);
+                    } else {
+                        addInputGlobalVariable(globalVariableName, x, y, length);
+                    }
+                    redrawPanel();
+                    break;
+
+                case "blockContents":
+                    String blockName = leToolBarPanel.blockContentsComboBox.getSelectedItemDisplayName();
+                    if (blockName == null || blockName.isEmpty()) {
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+
+                    if (isLabel) {
+                        addBlockContents(blockName, x, y);
+                    } else {
+                        addInputBlockContents(blockName, x, y, length);
+                    }
+                    redrawPanel();
+                    break;
+                default:
+                    log.error("selectLabelInputType: Should never happen");
+            }
+            selectFrame.dispose();
+        });
+
+        JPanel p;
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
+        p.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.gridy = 1;
+        p.add(labelTypeButton, c);
+        c.gridy = 2;
+        p.add(inputTypeButton, c);
+        c.gridx = 2;
+        p.add(lengthSpinner, c);
+
+        contentPane.add(p, BorderLayout.CENTER);
+
+        var footer = new JPanel();
+        footer.setLayout(new BorderLayout());
+
+        var footerButtons = new JPanel();
+        footerButtons.add(cancelButton);
+        footerButtons.add(addButton);
+        footer.add(footerButtons, BorderLayout.EAST);
+        contentPane.add(footer, BorderLayout.SOUTH);
+
+        selectFrame.getRootPane().setDefaultButton(addButton);
+        selectFrame.pack();
+        selectFrame.setVisible(true);
     }
 
     /**
-     * Add a memory label to the Draw Panel
+     * Add a memory label to the panel
+     * @param memoryName The display name for the memory variable.
+     * @param x The current x coordinate.
+     * @param y The current y coordinate.
      */
-    void addMemory() {
-        String memoryName = leToolBarPanel.textMemoryComboBox.getSelectedItemDisplayName();
-        if (memoryName == null) {
-            memoryName = "";
-        }
-
-        if (memoryName.isEmpty()) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11a"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    void addMemory(String memoryName, int x, int y) {
         MemoryIcon l = new MemoryIcon(" ", this);
         l.setMemory(memoryName);
-        setNextLocation(l);
+        l.setLocation(x, y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
@@ -7652,21 +7734,17 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
-    void addInputMemory(int textFieldLength) {
-        String memoryName = leToolBarPanel.textMemoryComboBox.getSelectedItemDisplayName();
-        if (memoryName == null) {
-            memoryName = "";
-        }
-
-        if (memoryName.isEmpty()) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11a"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
+    /**
+     * Add a memory input field to the panel.
+     * @param memoryName The display name for the memory variable.
+     * @param x The current x coordinate.
+     * @param y The current y coordinate.
+     * @param textFieldLength The number of columns in the text field.
+     */
+    void addInputMemory(String memoryName, int x, int y, int textFieldLength) {
         MemoryInputIcon l = new MemoryInputIcon(textFieldLength, this);
         l.setMemory(memoryName);
-        setNextLocation(l);
+        l.setLocation(x, y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.MEMORIES);
         l.setForeground(defaultTextColor);
@@ -7679,18 +7757,13 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
-
-    void addGlobalVariable() {
-        String globalVariableName = leToolBarPanel.textGlobalVariableComboBox.getSelectedItemDisplayName();
-        if (globalVariableName == null) {
-            globalVariableName = "";
-        }
-
-        if (globalVariableName.isEmpty()) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11c"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    /**
+     * Add a global variable label to the panel
+     * @param globalVariableName The display name for the global variable.
+     * @param x The current x coordinate.
+     * @param y The current y coordinate.
+     */
+    void addGlobalVariable(String globalVariableName, int x, int y) {
         GlobalVariableIcon l = new GlobalVariableIcon(" ", this);
         l.setGlobalVariable(globalVariableName);
         GlobalVariable xGlobalVariable = l.getGlobalVariable();
@@ -7702,7 +7775,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 leToolBarPanel.textGlobalVariableComboBox.setSelectedItem(xGlobalVariable);
             }
         }
-        setNextLocation(l);
+        l.setLocation(x, y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
@@ -7716,60 +7789,56 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * When adding a blopck contents object, provide an option to create the normal label
-     * or create an input text field.  The label requires a pop-up dialog to change the value
-     * while the text field makes it possible to change the value on the panel.  This also makes
-     * it possible to change the value using the web server.
+     * Add a global variable input field to the panel
+     * @param globalVariableName The display name for the global variable.
+     * @param x The current x coordinate.
+     * @param y The current y coordinate.
+     * @param textFieldLength The number of columns in the text field.
      */
-    void selectBlockContentsType() {
-        int response = JmriJOptionPane.showConfirmDialog(null,
-            Bundle.getMessage("BlockSelectType"),
-            Bundle.getMessage("BlockSelectTitle"),
-            JmriJOptionPane.YES_NO_OPTION);
+    void addInputGlobalVariable(String globalVariableName, int x, int y, int textFieldLength) {
+        GlobalVariableInputIcon l = new GlobalVariableInputIcon(textFieldLength, this);
+        l.setGlobalVariable(globalVariableName);
+        GlobalVariable xGlobalVariable = l.getGlobalVariable();
 
-        if (response == JmriJOptionPane.YES_OPTION) {
-            addBlockContents();
-            return;
+        if (xGlobalVariable != null) {
+            String uname = xGlobalVariable.getDisplayName();
+            if (!uname.equals(globalVariableName)) {
+                // put the system name in the memory field
+                leToolBarPanel.textGlobalVariableComboBox.setSelectedItem(xGlobalVariable);
+            }
         }
-
-        var length = JmriJOptionPane.showInputDialog(null,
-            Bundle.getMessage("BlockSelectSize"),
-            "5");
-
-        int textLength;
+        l.setLocation(x, y);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(Editor.MEMORIES);
+        l.setForeground(defaultTextColor);
+        unionToPanelBounds(l.getBounds());
         try {
-           textLength = Integer.parseInt(length);
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
         }
-        catch (NumberFormatException e) {
-           textLength = 5;
-        }
-
-        addInputBlockContents(textLength);
     }
 
-    void addBlockContents() {
-        String newName = leToolBarPanel.blockContentsComboBox.getSelectedItemDisplayName();
-        if (newName == null) {
-            newName = "";
-        }
-
-        if (newName.isEmpty()) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    /**
+     * Add a block contents label to the panel.
+     * @param blockName The display name for the block.
+     * @param x The current x coordinate.
+     * @param y The current y coordinate.
+     */
+    void addBlockContents(String blockName, int x, int y) {
         BlockContentsIcon l = new BlockContentsIcon(" ", this);
-        l.setBlock(newName);
+        l.setBlock(blockName);
         Block xMemory = l.getBlock();
 
         if (xMemory != null) {
             String uname = xMemory.getDisplayName();
-            if (!uname.equals(newName)) {
+            if (!uname.equals(blockName)) {
                 // put the system name in the memory field
                 leToolBarPanel.blockContentsComboBox.setSelectedItem(xMemory);
             }
         }
-        setNextLocation(l);
+        l.setLocation(x, y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
@@ -7781,20 +7850,17 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
-    void addInputBlockContents(int textFieldLength) {
-        String newName = leToolBarPanel.blockContentsComboBox.getSelectedItemDisplayName();
-        if (newName == null) {
-            newName = "";
-        }
-
-        if (newName.isEmpty()) {
-            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    /**
+     * Add a block contents input field to the panel.
+     * @param blockName The display name for the block.
+     * @param x The current x coordinate.
+     * @param y The current y coordinate.
+     * @param textFieldLength The number of columns in the text field.
+     */
+    void addInputBlockContents(String blockName, int x, int y, int textFieldLength) {
         BlockContentsInputIcon l = new BlockContentsInputIcon(textFieldLength, this);
-        l.setBlock(newName);
-        setNextLocation(l);
+        l.setBlock(blockName);
+        l.setLocation(x, y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.MEMORIES);
         l.setForeground(defaultTextColor);
@@ -9670,8 +9736,35 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
 
+            if (nb instanceof Block) {
+                for (BlockContentsIcon si : blockContentsLabelList) {
+                    if (nb.equals(si.getBlock())) {
+                        found = true;
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoBlockIconFound"));
+                        message.append("</li>");
+                    }
+                }
+                for (BlockContentsInputIcon si : blockContentsInputList) {
+                    if (nb.equals(si.getBlock())) {
+                        found = true;
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoBlockIconFound"));
+                        message.append("</li>");
+                    }
+                }
+            }
+
             if (nb instanceof GlobalVariable) {
                 for (GlobalVariableIcon si : globalVariableLabelList) {
+                    if (nb.equals(si.getGlobalVariable())) {
+                        found = true;
+                        message.append("<li>");
+                        message.append(Bundle.getMessage("VetoGlobalVariableIconFound"));
+                        message.append("</li>");
+                    }
+                }
+                for (GlobalVariableInputIcon si : globalVariableInputList) {
                     if (nb.equals(si.getGlobalVariable())) {
                         found = true;
                         message.append("<li>");
@@ -9818,11 +9911,46 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
 
+            if (nb instanceof Block) {
+                Iterator<BlockContentsIcon> icon = blockContentsLabelList.iterator();
+
+                while (icon.hasNext()) {
+                    BlockContentsIcon i = icon.next();
+
+                    if (nb.equals(i.getBlock())) {
+                        icon.remove();
+                        super.removeFromContents(i);
+                    }
+                }
+
+                Iterator<BlockContentsInputIcon> input = blockContentsInputList.iterator();
+
+                while (input.hasNext()) {
+                    BlockContentsInputIcon ipt = input.next();
+
+                    if (nb.equals(ipt.getBlock())) {
+                        input.remove();
+                        super.removeFromContents(ipt);
+                    }
+                }
+            }
+
             if (nb instanceof GlobalVariable) {
                 Iterator<GlobalVariableIcon> icon = globalVariableLabelList.iterator();
 
                 while (icon.hasNext()) {
                     GlobalVariableIcon i = icon.next();
+
+                    if (nb.equals(i.getGlobalVariable())) {
+                        icon.remove();
+                        super.removeFromContents(i);
+                    }
+                }
+
+                Iterator<GlobalVariableInputIcon> input = globalVariableInputList.iterator();
+
+                while (input.hasNext()) {
+                    GlobalVariableInputIcon i = input.next();
 
                     if (nb.equals(i.getGlobalVariable())) {
                         icon.remove();
