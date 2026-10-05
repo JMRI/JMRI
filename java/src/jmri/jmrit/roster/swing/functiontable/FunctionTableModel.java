@@ -291,7 +291,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
             case COL_LA:
                 return rosterEntry.getFunctionLabel(fn);                
             default:
-                log.error("getValueAt(): Invalid column index: " + columnIndex);
+                log.error("getValueAt(): Invalid column index: {}", columnIndex);
         }
         return null;
     }
@@ -335,7 +335,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
                 if ((Boolean)value) {
                     rosterEntry.setShuntingFunction("F" + fn);
                 } else {
-                    if (rosterEntry.getShuntingFunction() == "F" + fn) {
+                    if (rosterEntry.getShuntingFunction() != null && rosterEntry.getShuntingFunction().equals("F" + fn)) {
                         rosterEntry.setShuntingFunction(null);
                     }
                 }
@@ -345,7 +345,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
                 rosterEntry.setFunctionLabel(fn, (String) value);
                 break;                
             default:
-                log.error("setValueAt(): Invalid column index: " + columnIndex);
+                log.error("setValueAt(): Invalid column index: {}", columnIndex);
         }
         fireTableCellUpdated(rowIndex, columnIndex); // Notify that the cell has changed
     }

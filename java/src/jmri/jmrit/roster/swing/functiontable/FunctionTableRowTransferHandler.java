@@ -66,7 +66,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
 
     @Override
     public boolean importData(TransferSupport support) {
-        if (!canImport(support)) {
+        if ((!canImport(support)) || !(support.getDropLocation() instanceof JTable.DropLocation)) {
             log.debug("TransferSupport() can't do import : data flavor");
             return false;
         } 
@@ -93,7 +93,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
         }
     }
 
-    private class DataHandler implements Transferable {
+    private static class DataHandler implements Transferable {
         private final Integer row;
         private final DataFlavor flavor;
 

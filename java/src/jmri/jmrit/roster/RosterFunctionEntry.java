@@ -99,17 +99,37 @@ public class RosterFunctionEntry {
         this.visible = visible;
     }
 
-    public boolean equals(RosterFunctionEntry o) {
-        return (
-            (o!=null) &&
-            (fn == o.fn) &&
-            (label == null ? o.label == null : label.equals(o.label)) &&
-            (soundLabels == null ? o.soundLabels == null : soundLabels.equals(o.soundLabels)) &&
-            (image == null ? o.image == null : image.equals(o.image)) &&
-            (selectedImage == null ? o.selectedImage == null : selectedImage.equals(o.selectedImage)) &&
-            (lockable == o.lockable) &&
-            (visible == o.visible)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if ((o == null || o.getClass()!= this.getClass())) {
+            return false;
+        }
+        RosterFunctionEntry r = (RosterFunctionEntry) o;
+        return (            
+            (fn == r.fn) &&
+            (label == null ? r.label == null : label.equals(r.label)) &&
+            (soundLabels == null ? r.soundLabels == null : soundLabels.equals(r.soundLabels)) &&
+            (image == null ? r.image == null : image.equals(r.image)) &&
+            (selectedImage == null ? r.selectedImage == null : selectedImage.equals(r.selectedImage)) &&
+            (lockable == r.lockable) &&
+            (visible == r.visible)
         );
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + fn;
+        hash = 31 * hash + (label == null ? 0 : label.hashCode());
+        hash = 31 * hash + (soundLabels == null ? 0 : soundLabels.hashCode());
+        hash = 31 * hash + (image == null ? 0 : image.hashCode());
+        hash = 31 * hash + (selectedImage == null ? 0 : selectedImage.hashCode());
+        hash = 31 * hash + (lockable ? 1 : 0);
+        hash = 31 * hash + (visible ? 1 : 0);
+        return hash;
     }
 
 }
