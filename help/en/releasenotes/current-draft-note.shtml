@@ -478,6 +478,8 @@
                 comprehensive.  This should have no 
                 impact on users now,  but allows us to store
                 a more accurate state (see item above).</li>
+            <li>Fixed an exception when you closed the Labels&amp;Media pane
+                without saving first.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -543,7 +545,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Fix issues relating to the ActionPositionable and ActionPositionableByClass actions.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
