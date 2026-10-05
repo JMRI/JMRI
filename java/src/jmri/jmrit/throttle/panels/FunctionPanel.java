@@ -25,6 +25,9 @@ import jmri.util.swing.OptionallyTabbedPanel;
 
 import org.jdom2.Element;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * A Panel that contains buttons for each decoder function.
  * 
@@ -47,6 +50,8 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
     private DccThrottle mThrottle;
 
     private FunctionButton[] functionButtons;
+    private int[] btnIdxFn; // fn button indx to fn map (see function buttons display order)
+
     private boolean withPopupMenuOnFnButtons;
     private boolean fnBtnUpdatedFromRoster = false; // avoid to reinit function button twice (from throttle xml and from roster)
 
@@ -62,8 +67,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         super(MAX_FUNCTION_BUTTONS_PER_TAB);
         InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         withPopupMenuOnFnButtons = withPopupMenu;
-        initGUI();
-        applyPreferences();
+        initGUI();        
     }
 
     public FunctionPanel() {
@@ -272,42 +276,16 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         }
     }
 
-    /**
-     * Apply preferences
-     *   + global throttles preferences
-     *   + this throttle settings if any
-     */
-    private void applyPreferences() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-        RosterEntry re = null;
-        if (mThrottle != null && addressPanel != null) {
-            re = addressPanel.getRosterEntry();
-        }
-        for (int i = 0; i < functionButtons.length; i++) {
-            functionButtons[i].setDisplay(true); // default to true
-            if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                setUpDefaultLightFunctionButton();
-            } else {
-                functionButtons[i].setIconPath(null);
-                functionButtons[i].setSelectedIconPath(null);
-            }            
-            if (re != null) {
-                if (re.getFunctionLabel(i) != null) {
-                    functionButtons[i].setDisplay(re.getFunctionVisible(i));
-                    functionButtons[i].setButtonLabel(re.getFunctionLabel(i));
-                    if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                        functionButtons[i].setIconPath(re.getFunctionImage(i));
-                        functionButtons[i].setSelectedIconPath(re.getFunctionSelectedImage(i));
-                    } else {
-                        functionButtons[i].setIconPath(null);
-                        functionButtons[i].setSelectedIconPath(null);
-                    }
-                    functionButtons[i].setIsLockable(re.getFunctionLockable(i));
-                } else {
-                    functionButtons[i].setDisplay( ! (preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) );
-                }
-            }
-            functionButtons[i].updateLnF();
+    private void initBtnIdxFn(RosterEntry re) {
+        String fnDOAtt = re.getAttribute("FnDisplayOrder");
+        btnIdxFn = null;
+        if (fnDOAtt != null) {
+            try {
+                btnIdxFn = new ObjectMapper().readValue(fnDOAtt, int[].class );
+                return;
+            } catch (JsonProcessingException e) {
+                log.warn("Couldn't parse FnDisplayOrder attribute ",e);
+            } 
         }
     }
 
@@ -335,73 +313,80 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      *    - from roster entry if any
      */
     private void updateFnButtons() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-        if (mThrottle != null && addressPanel != null) {
-            RosterEntry rosterEntry = addressPanel.getRosterEntry();
-            if (rosterEntry != null) {
-                fnBtnUpdatedFromRoster = true;
-                log.debug("RosterEntry found: {}", rosterEntry.getId());
-            }
-            for (int i = 0; i < functionButtons.length; i++) {
-                // update from selected throttle setting
-                functionButtons[i].setEnabled(true);
-                functionButtons[i].setIdentity(i); // full reset of function
-                functionButtons[i].setThrottle(mThrottle);
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
+        final RosterEntry rosterEntry = (addressPanel != null?addressPanel.getRosterEntry():null);
+        btnIdxFn = null;
+        if (rosterEntry != null) {
+            fnBtnUpdatedFromRoster = true;
+            log.debug("RosterEntry found: {}", rosterEntry.getId());
+            initBtnIdxFn(rosterEntry);
+        }
+        for (int i = 0; i < functionButtons.length; i++) {
+            // update from selected throttle setting
+            functionButtons[i].setEnabled(true);
+            functionButtons[i].setIdentity(i); // full reset of function
+            functionButtons[i].setDropFolder(FileUtil.getUserResourcePath());
+            functionButtons[i].setThrottle(mThrottle);
+            if (mThrottle != null) {
                 functionButtons[i].setState(mThrottle.getFunction(i)); // reset button state
                 functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
-                functionButtons[i].setDropFolder(FileUtil.getUserResourcePath());
-                // update from roster entry if any
-                if (rosterEntry != null) {
-                    functionButtons[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
-                    boolean needUpdate = false;
-                    String imgButtonSize = rosterEntry.getAttribute("function"+i+"_ThrottleImageButtonSize");
-                    if (imgButtonSize != null) {
-                        try {
-                            functionButtons[i].setButtonImageSize(Integer.parseInt(imgButtonSize));
-                            needUpdate = true;
-                        } catch (NumberFormatException e) {
-                            log.debug("setFnButtons(): can't parse button image size attribute ");
-                        }
+            }                
+            // update from roster entry if any
+            if (rosterEntry != null) {
+                int fn = i;
+                if ((btnIdxFn != null) && (i < btnIdxFn.length)) {
+                    fn = btnIdxFn[i];
+                }    
+                functionButtons[i].setIdentity(fn);                
+                functionButtons[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
+                boolean needUpdate = false;
+                String imgButtonSize = rosterEntry.getAttribute("function"+fn+"_ThrottleImageButtonSize");
+                if (imgButtonSize != null) {
+                    try {
+                        functionButtons[i].setButtonImageSize(Integer.parseInt(imgButtonSize));
+                        needUpdate = true;
+                    } catch (NumberFormatException e) {
+                        log.debug("setFnButtons(): can't parse button image size attribute ");
                     }
-                    String text = rosterEntry.getFunctionLabel(i);
-                    if (text != null) {
-                        functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(i));
-                        functionButtons[i].setButtonLabel(text);
-                        if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                            functionButtons[i].setIconPath(rosterEntry.getFunctionImage(i));
-                            functionButtons[i].setSelectedIconPath(rosterEntry.getFunctionSelectedImage(i));
-                        } else {
-                            functionButtons[i].setIconPath(null);
-                            functionButtons[i].setSelectedIconPath(null);
-                        }
-                        functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(i));
-                        needUpdate = true;
-                    } else if (preferences.isUsingExThrottle()
-                            && preferences.isHidingUndefinedFuncButt()) {
-                        functionButtons[i].setDisplay(false);
-                        needUpdate = true;
+                }
+                String text = rosterEntry.getFunctionLabel(fn);
+                if (text != null) {
+                    functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(fn));
+                    functionButtons[i].setButtonLabel(text);
+                    if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                        functionButtons[i].setIconPath(rosterEntry.getFunctionImage(fn));
+                        functionButtons[i].setSelectedIconPath(rosterEntry.getFunctionSelectedImage(fn));
                     } else {
-                        functionButtons[i].setDisplay(true);
-                        functionButtons[i].setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
+                        functionButtons[i].setIconPath(null);
+                        functionButtons[i].setSelectedIconPath(null);
+                    }
+                    functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(fn));
+                    needUpdate = true;
+                } else if (preferences.isUsingExThrottle()
+                        && preferences.isHidingUndefinedFuncButt()) {
+                    functionButtons[i].setDisplay(false);
+                    needUpdate = true;
+                } else {
+                    functionButtons[i].setDisplay(true);
+                    functionButtons[i].setButtonLabel( fn<3 ? Bundle.getMessage(Throttle.getFunctionString(fn)) : Throttle.getFunctionString(fn) );
+                    needUpdate = true;
+                }
+                String fontSize = rosterEntry.getAttribute("function"+fn+"_ThrottleFontSize");
+                if (fontSize != null) {
+                    try {
+                        functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, Integer.parseInt(fontSize)));
                         needUpdate = true;
+                    } catch (NumberFormatException e) {
+                        log.debug("setFnButtons(): can't parse font size attribute ");
                     }
-                    String fontSize = rosterEntry.getAttribute("function"+i+"_ThrottleFontSize");
-                    if (fontSize != null) {
-                        try {
-                            functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, Integer.parseInt(fontSize)));
-                            needUpdate = true;
-                        } catch (NumberFormatException e) {
-                            log.debug("setFnButtons(): can't parse font size attribute ");
-                        }
-                    }
-                    if (needUpdate) {
-                        functionButtons[i].updateLnF();
-                    }
+                }
+                if (needUpdate) {
+                    functionButtons[i].updateLnF();
                 }
             }
         }
+        
     }
-
 
     private void resetFnButton(FunctionButton fb, int i) {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
@@ -448,7 +433,6 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         }
         // update according to throttle and roster (if any)
         updateFnButtons();
-        repaint();
     }
 
     /**
@@ -471,7 +455,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
             }
         }
         if (ThrottlesPreferences.prefPopertyName.compareTo(e.getPropertyName()) == 0) {
-            applyPreferences();
+            resetFnButtons();
         }        
     }
 

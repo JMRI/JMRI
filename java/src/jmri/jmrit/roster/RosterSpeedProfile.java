@@ -45,6 +45,23 @@ public class RosterSpeedProfile {
         _re = re;
     }
 
+    RosterSpeedProfile(RosterEntry re, RosterSpeedProfile pProfile) {
+        this(re);
+        if (pProfile == null) {
+            return;
+        }
+        overRunTimeReverse = pProfile.overRunTimeReverse;
+        overRunTimeForward = pProfile.overRunTimeForward;
+        _hasForwardSpeeds = pProfile._hasForwardSpeeds;
+        _hasReverseSpeeds = pProfile._hasReverseSpeeds;
+        pProfile.speeds.keySet().stream().forEachOrdered( i -> {
+            SpeedStep ss = new SpeedStep();
+            ss.setForwardSpeed(pProfile.speeds.get(i).getForwardSpeed());
+            ss.setReverseSpeed(pProfile.speeds.get(i).getReverseSpeed());
+            speeds.put(i, ss);
+        });
+    }
+
     /**
      * Get the RosterEntry associated with the profile.
      * @return the RosterEntry.
