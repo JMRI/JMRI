@@ -522,7 +522,11 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         }
         mThrottle = t;
         mThrottle.addPropertyChangeListener(this);
-        notifyRosterEntryUpdated(addressPanel.getRosterEntry());
+        if (addressPanel!=null) {
+            notifyRosterEntryUpdated(addressPanel.getRosterEntry() );
+        } else {
+            notifyRosterEntryUpdated(null);
+        }
         setEnabled(true);
     }
 

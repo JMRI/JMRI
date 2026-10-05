@@ -1379,7 +1379,12 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
         }
         throttle = t;
         addressThrottleFound();
-        notifyRosterEntryUpdated(addressPanel.getRosterEntry() );
+        if (addressPanel!=null) {
+            notifyRosterEntryUpdated(addressPanel.getRosterEntry() );
+        } else {
+            notifyRosterEntryUpdated(null);
+        }
+        
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());

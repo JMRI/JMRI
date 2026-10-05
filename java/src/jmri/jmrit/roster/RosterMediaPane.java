@@ -214,7 +214,7 @@ public class RosterMediaPane extends JPanel {
         boolean wasModified;
         boolean isUpdatingModel = false;
         JTable associatedTable;
-        private final static String EMPTY_FIELD = "...";
+        private static final String EMPTY_FIELD = "...";
 
         private static class KeyValueModel {
             public String key, value;

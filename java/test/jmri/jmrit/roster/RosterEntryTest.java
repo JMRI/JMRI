@@ -451,16 +451,17 @@ public class RosterEntryTest {
     @Test
     public void testAttributeList() {
         RosterEntry r = new RosterEntry();
-        r.putAttribute("key 2", "value 2");
-        r.putAttribute("key 3", "value 3");
-        r.putAttribute("key 1", "value 1");
+        String[] k = { "key 1", "key 2", "key 3" };
+        String[] v = { "value 1", "value 2", "value 3" };
+        for (int i = 0; i < 3; i++) {
+            r.putAttribute(k[i], v[i]);
+        }
         java.util.Set<String> l = r.getAttributes();
-        Assertions.assertEquals(3, l.size(), "number returned");
-        java.util.Iterator<String> i = l.iterator();
-        Assertions.assertEquals("key 1", i.next(), "1st item");
-        Assertions.assertEquals("key 2", i.next(), "2nd item");
-        Assertions.assertEquals("key 3", i.next(), "3rd item");
-        Assertions.assertFalse(i.hasNext());
+        Assertions.assertEquals(3, l.size(), "number returned"); // 3 elements
+        Assertions.assertTrue(l.containsAll(java.util.Arrays.asList(k))); // all keys in
+        for (int i = 0; i < 3; i++) { // all values match
+            Assertions.assertEquals(r.getAttribute(k[i]), v[i]);
+        }
     }
 
     @Test

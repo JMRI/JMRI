@@ -84,7 +84,7 @@ public class FunctionTableMouseListener implements JmriMouseListener {
         }   
     }
 
-    static public EditableResizableImagePanel getEditableResizableImagePanelAt(JTable t, int x, int y) {
+    public static EditableResizableImagePanel getEditableResizableImagePanelAt(JTable t, int x, int y) {
         int row = t.rowAtPoint(new java.awt.Point(x, y));
         int column = t.columnAtPoint(new java.awt.Point(x, y));
         if (row == -1 || column == -1) {

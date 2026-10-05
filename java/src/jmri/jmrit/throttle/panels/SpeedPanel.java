@@ -138,9 +138,8 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
      * @return a string for displaying speed if available
      */
     private String updateSpeedLabel(boolean useSpeedProfile, float throttleVolume, boolean isForward) {
-        RosterEntry re = addressPanel.getRosterEntry();
-        if (re != null && useSpeedProfile) {
-            return (re.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(throttleVolume, isForward));
+        if (addressPanel != null && addressPanel.getRosterEntry() != null && useSpeedProfile) {
+            return (addressPanel.getRosterEntry().getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(throttleVolume, isForward));
         } else {
             return (Bundle.getMessage("ThrottleSpeedPanelError"));
         }
