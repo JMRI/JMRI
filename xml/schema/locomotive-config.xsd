@@ -81,6 +81,21 @@
                 <xs:complexType>
                   <xs:attribute name="item" type="xs:string" use="required"/>
                   <xs:attribute name="value" type="xs:string" use="required"/> <!--String as all the speed table values are written in one string-->
+                  <xs:attribute name="state">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:token">
+                        <xs:enumeration value="UNKNOWN"/>
+                        <xs:enumeration value="EDITED"/>
+                        <xs:enumeration value="READ"/>
+                        <xs:enumeration value="STORED"/>
+                        <xs:enumeration value="FROMFILE"/>
+                        <xs:enumeration value="FROMFILEUNKNOWN"/>
+                        <xs:enumeration value="SAME"/>
+                        <xs:enumeration value="DIFFERENT"/>
+                        <xs:enumeration value="FROMDEFAULT"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
               </xs:sequence>
@@ -88,12 +103,20 @@
           </xs:element>
           <xs:element name="CVvalue" minOccurs="0" maxOccurs="unbounded">
             <xs:complexType>
-              <xs:attribute name="name" type="xs:integer" use="required"/>
-              <xs:attribute name="value" use="required">
+              <xs:attribute name="name" type="xs:string" use="required"/> <!-- string to allow "115.01" -->
+              <xs:attribute name="value" type="xs:integer" use="required"/>
+              <xs:attribute name="state">
                 <xs:simpleType>
-                  <xs:restriction base="xs:integer">
-                    <xs:minInclusive value="0"/>
-                    <xs:maxInclusive value="255"/>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="UNKNOWN"/>
+                    <xs:enumeration value="EDITED"/>
+                    <xs:enumeration value="READ"/>
+                    <xs:enumeration value="STORED"/>
+                    <xs:enumeration value="FROMFILE"/>
+                    <xs:enumeration value="FROMFILEUNKNOWN"/>
+                    <xs:enumeration value="SAME"/>
+                    <xs:enumeration value="DIFFERENT"/>
+                    <xs:enumeration value="FROMDEFAULT"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:attribute>

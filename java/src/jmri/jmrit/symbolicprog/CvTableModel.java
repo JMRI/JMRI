@@ -225,13 +225,17 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
                         return Bundle.getMessage("CvStateStored");
                     case FROMFILE:
                         return Bundle.getMessage("CvStateFromFile");
+                    case FROMFILEUNKNOWN:
+                        return Bundle.getMessage("CvStateFromFileUnknown");
                     case SAME:
                         return Bundle.getMessage("CvStateSame");
                     case DIFFERENT:
                         return Bundle.getMessage("CvStateDiff") + " "
                                 + _cvDisplayVector.elementAt(row).getDecoderValue();
+                    case FROMDEFAULT:
+                        return Bundle.getMessage("CvStateFromDefault");
                     default:
-                        return "inconsistent";
+                        return Bundle.getMessage("CvStateInconsistent");
                 }
             case READCOLUMN:
                 return _readButtons.elementAt(row);
