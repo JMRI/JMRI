@@ -469,7 +469,17 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>DecoderPro's locomotive files now track the
+                last-seen state of variable values.  This has
+                no effect right now, but may be useful information
+                in the future.</li>
+            <li>The way that DecoderPro tracks the state of 
+                CVs and variables has been updated to be more
+                comprehensive.  This should have no 
+                impact on users now,  but allows us to store
+                a more accurate state (see item above).</li>
+            <li>Fixed an exception when you closed the Labels&amp;Media pane
+                without saving first.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -535,7 +545,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Fix issues relating to the ActionPositionable and ActionPositionableByClass actions.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
