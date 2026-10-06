@@ -70,11 +70,14 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
             log.debug("TransferSupport() can't do import : data flavor");
             return false;
         }
-        if (!(support.getDropLocation() instanceof JTable.DropLocation)) {
+        JTable.DropLocation drop = null,
+        if (support.getDropLocation() instanceof JTable.DropLocation) {
+            drop = (JTable.DropLocation) support.getDropLocation();
+        } 
+        if (drop == null) {
             log.debug("TransferSupport() can't do import : not a drop location");
             return false;
-        }
-        JTable.DropLocation drop = (JTable.DropLocation) support.getDropLocation();        
+        }        
         // is if a drop on an imageicon
         EditableResizableImagePanel impan = FunctionTableMouseListener.getEditableResizableImagePanelAt(table, drop.getDropPoint().x, drop.getDropPoint().y);
         if (impan != null) {

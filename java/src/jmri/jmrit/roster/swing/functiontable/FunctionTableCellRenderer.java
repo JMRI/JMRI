@@ -4,9 +4,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 
-import jmri.InstanceManager;
-import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
-
 /**
  * A TableCellRenderer that provides a way for the user to view details of functions of a decoder in the roster. 
  * It is used in the FunctionLabelPane.
@@ -31,8 +28,6 @@ public class FunctionTableCellRenderer implements TableCellRenderer {
     public static final int LABEL_WIDTH = 200;
     public static final int[] columnWidths = new int[FunctionTableModel.NBCOL];
     public static final String[] columnTooltips = new String[FunctionTableModel.NBCOL];
-    private final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-
 
     public FunctionTableCellRenderer() {
         super();
@@ -76,7 +71,6 @@ public class FunctionTableCellRenderer implements TableCellRenderer {
             case FunctionTableModel.COL_VI:
                 JCheckBox visibleCheckBox = new JCheckBox();
                 visibleCheckBox.setSelected((Boolean) value);                
-                visibleCheckBox.setEnabled(preferences.isUsingExThrottle());                
                 retPanel.add(visibleCheckBox, BorderLayout.CENTER);
                 break;
             case FunctionTableModel.COL_LK:

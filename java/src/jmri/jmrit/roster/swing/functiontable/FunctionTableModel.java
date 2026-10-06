@@ -60,8 +60,6 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
     // caches for ImagePanels to avoid creating new ones each time the table is refreshed
     private EditableResizableImagePanel[] imageOnPanels;
     private EditableResizableImagePanel[] imageOffPanels; 
-
-    private final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
     
     /**
      * Create a new FunctionTableModel for a COPY of the given RosterEntry,
@@ -89,9 +87,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
     
         rosterEntry = new RosterEntry(re, re.getId()+"FunctionTableModelWIP");
         initRowFn();
-        initImagePanels();
-        
-        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
+        initImagePanels();        
     }
 
     /**
@@ -318,9 +314,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
                 // Fn Dsplay Order not editable
                 break;
             case COL_VI:
-                if (preferences.isUsingExThrottle()) {
-                    rosterEntry.setFunctionVisible(fn, (Boolean) value);
-                }                
+                rosterEntry.setFunctionVisible(fn, (Boolean) value);
                 break;
             case COL_LK:
                 rosterEntry.setFunctionLockable(fn, (Boolean) value);
