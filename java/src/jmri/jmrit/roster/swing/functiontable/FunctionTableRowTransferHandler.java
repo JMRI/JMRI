@@ -66,17 +66,13 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
     }
 
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "There is an instanceof test just before the cast.")
     public boolean importData(TransferSupport support) {
         if ( !canImport(support) || !(support.getDropLocation() instanceof JTable.DropLocation)) {
-            log.debug("TransferSupport() can't do import : data flavor");
-            return false;
-        }
-        @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "There is an instanceof test just above.")
-        JTable.DropLocation drop = (JTable.DropLocation) support.getDropLocation();
-        if (drop == null) {
-            log.debug("TransferSupport() can't do import : not a drop location");
+            log.debug("TransferSupport() can't do import");
             return false;
         }        
+        JTable.DropLocation drop = (JTable.DropLocation) support.getDropLocation();      
         // is if a drop on an imageicon
         EditableResizableImagePanel impan = FunctionTableMouseListener.getEditableResizableImagePanelAt(table, drop.getDropPoint().x, drop.getDropPoint().y);
         if (impan != null) {
