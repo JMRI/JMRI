@@ -622,7 +622,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
                          commonSlotCount++;
                          break;
                     default:
-                        log.error("Loco Slot[{}] has unknown status.");
+                        log.error("Loco Slot[{}] has unknown status.",slot.getSlot());
                 }
             }
         }
