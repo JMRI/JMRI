@@ -647,7 +647,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Get the highest valid Fn key number for this roster entry.
+     * Get the highest valid Fn key number for this roster entry (hence with 0, that's 29 functions aka [0..28]).
      * <dl>
      * <dt>The default value (28) can be overridden by a "maxFnNum" attribute in
      * the "model" element of a decoder definition file</dt>
@@ -1215,7 +1215,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if (functionEntries == null) {
             functionEntries = Collections.synchronizedMap(new HashMap<>());
         }
-        if (fn <getMaxFnNumAsInt() && functionEntries.get(fn) == null) {
+        if (fn <= getMaxFnNumAsInt() && functionEntries.get(fn) == null) {
             functionEntries.put(fn, new RosterFunctionEntry(fn));
         }
     }
@@ -1282,7 +1282,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void setSoundLabel(int fn, String label) {
         checkAndCreateFunctionEntry(fn);
-        String old = functionEntries.get(fn).getSoundLabels();
+        String old = (functionEntries.get(fn)!=null) ? functionEntries.get(fn).getSoundLabels() : null;
         if ((old != null && old.equals(label)) || (old == null && label == null)) {
             return;
         }        

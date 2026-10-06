@@ -111,15 +111,15 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
                 log.warn("Couldn't parse FnDisplayOrder attribute ",e);
             } 
         } 
-        rowFn = new int[rosterEntry.getMaxFnNumAsInt()];
+        rowFn = new int[rosterEntry.getMaxFnNumAsInt()+1];
         for (int i=0;i < rowFn.length; i++) {
             rowFn[i] = i; // initial mapping
         }
     }
 
     private void initImagePanels() {
-        imageOnPanels = new EditableResizableImagePanel[rosterEntry.getMaxFnNumAsInt()];
-        imageOffPanels = new EditableResizableImagePanel[rosterEntry.getMaxFnNumAsInt()];
+        imageOnPanels = new EditableResizableImagePanel[rosterEntry.getMaxFnNumAsInt()+1];
+        imageOffPanels = new EditableResizableImagePanel[rosterEntry.getMaxFnNumAsInt()+1];
     }
 
     /**
@@ -252,7 +252,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
     
     @Override
     public int getRowCount() {
-        return rosterEntry.getMaxFnNumAsInt();
+        return rosterEntry.getMaxFnNumAsInt()+1;
     }
 
     @Override

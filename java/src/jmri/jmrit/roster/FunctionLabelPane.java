@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
 
-    private int maxfunction = 28; // default value
+    private int maxfunction = 28; // default value (28 included [0..28] = 29 functions)
     private final FunctionTableModel functionTableModel;
     private JTable functionsTable;
 
@@ -141,7 +141,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             return false;
         }
         // compare labels, lockable, visible, image and pressed image 
-        for (int i = 0; i < maxfunction; i++) {
+        for (int i = 0; i <= maxfunction; i++) {
             if (r.getFunctionEntry(i) == null && re.getFunctionEntry(i) != null) {
                 return true;   
             }
@@ -181,7 +181,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     public void update(RosterEntry r) {
         RosterEntry re = functionTableModel.getRosterEntry();
         // function definitions
-        for (int i = 0; i < maxfunction; i++) {
+        for (int i = 0; i <= maxfunction; i++) {
             RosterFunctionEntry fn = re.getFunctionEntry(i);
             if (fn != null) {
                 r.setFunctionEntry(new RosterFunctionEntry(fn));
