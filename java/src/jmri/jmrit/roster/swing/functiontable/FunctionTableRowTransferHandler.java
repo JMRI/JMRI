@@ -7,6 +7,7 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.EditableResizableImagePanel;
 
@@ -66,14 +67,12 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
 
     @Override
     public boolean importData(TransferSupport support) {
-        if (!canImport(support)) {
+        if ( !canImport(support) || !(support.getDropLocation() instanceof JTable.DropLocation)) {
             log.debug("TransferSupport() can't do import : data flavor");
             return false;
         }
-        JTable.DropLocation drop = null;
-        if (support.getDropLocation() instanceof JTable.DropLocation) {
-            drop = (JTable.DropLocation) support.getDropLocation();
-        } 
+        @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "There is an instanceof test just above.")
+        JTable.DropLocation drop = (JTable.DropLocation) support.getDropLocation();
         if (drop == null) {
             log.debug("TransferSupport() can't do import : not a drop location");
             return false;
