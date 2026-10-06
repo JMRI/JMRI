@@ -152,17 +152,14 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                 return true;
             }
         }
-        // compare attributes
-        if ( r.getAttributeList().length != re.getAttributeList().length) {
+        // compare function display order
+        if (r.getAttribute("FnDisplayOrder") == null && functionTableModel.getVisibilityOrderAttributeString() != null) {
+            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute("FnDisplayOrder"), functionTableModel.getVisibilityOrderAttributeString());
             return true;
         }
-        if ( r.getAttributeList().length > 0) {
-            for (String s : r.getAttributeList()) {
-                if (! r.getAttribute(s).equals(re.getAttribute(s))) {
-                    return true;
-                }
-            }
-
+        if (r.getAttribute("FnDisplayOrder") != null && !r.getAttribute("FnDisplayOrder").equals(functionTableModel.getVisibilityOrderAttributeString())) {
+            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute("FnDisplayOrder"), functionTableModel.getVisibilityOrderAttributeString());
+            return true;
         }
         return false;
     }

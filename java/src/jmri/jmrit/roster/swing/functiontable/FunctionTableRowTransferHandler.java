@@ -70,7 +70,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
             log.debug("TransferSupport() can't do import : data flavor");
             return false;
         }
-        JTable.DropLocation drop = null,
+        JTable.DropLocation drop = null;
         if (support.getDropLocation() instanceof JTable.DropLocation) {
             drop = (JTable.DropLocation) support.getDropLocation();
         } 

@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
