@@ -73,7 +73,7 @@
         <name xml:lang="it">Esporta Roster Completo...</name>
         <name xml:lang="de">Exportiere gesamten Lokpark...</name>
 		<name xml:lang="ca">Exporta tota la flota...</name>
-        <name xml:lang="cs">Exportovat evidenci...</name>
+        <name xml:lang="cs">Exportovat úplnou evidenci...</name>
         <name xml:lang="nl">Exporteer hele Loclijst...</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
     </node>
@@ -82,7 +82,7 @@
         <name xml:lang="it">Esporta gruppo dell'organico</name>
         <name xml:lang="de">Export-Roster-Gruppe</name>
 		<name xml:lang="ca">Exporta el grup de llistes</name>
-        <name xml:lang="cs">Exportovat skupinu soupisek</name>
+        <name xml:lang="cs">Exportovat skupinu evidence...</name>
         <name xml:lang="nl">Roostergroep exporteren</name>
         <adapter>jmri.jmrit.roster.GroupBackupExportAction</adapter>
     </node>
@@ -91,7 +91,7 @@
         <name xml:lang="it">Importa Roster...</name>
         <name xml:lang="de">Importiere gesamten Lokpark...</name>
 		<name xml:lang="ca">Importa tota la flota...</name>
-        <name xml:lang="cs">Importovat evidenci...</name>
+        <name xml:lang="cs">Importovat úplnou evidenci...</name>
         <name xml:lang="nl">Importeer Loclijst...</name>
         <adapter>jmri.jmrit.roster.FullBackupImportAction</adapter>
     </node>
@@ -490,6 +490,7 @@
         <current>deletegroup</current>
     </node>
     <node name="Delete Roster Group Contents">
+        <name xml:lang="cs">Vymazat obsah skupiny evidence</name>
         <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupContentsAction</adapter>
         <current>deletegroupcontents</current>
     </node>
@@ -622,6 +623,7 @@
         <adapter>jmri.jmrit.dualdecoder.DualDecoderToolAction</adapter>
     </node>
     <node name="Speed Profiling">
+        <name xml:lang="cs">Profilace rychlosti</name>
         <adapter>jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
