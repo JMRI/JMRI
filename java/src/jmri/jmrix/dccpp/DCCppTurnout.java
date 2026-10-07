@@ -153,19 +153,24 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         synchronized (this) {
             newCommandedState(s);
         }
-        forwardCommandChangeToLayout(s);
-        // Only set the known state to inconsistent if we actually expect a response
-        // from the Base Station
-        if (_activeFeedbackType == EXACT || _activeFeedbackType == MONITORING) {
-            synchronized (this) {
-                newKnownState(INCONSISTENT);
+        myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
+        if (myOperator == null) {
+            forwardCommandChangeToLayout(s);
+            // Only set the known state to inconsistent if we actually expect a response
+            // from the Base Station
+            if (_activeFeedbackType == EXACT || _activeFeedbackType == MONITORING) {
+                synchronized (this) {
+                    newKnownState(INCONSISTENT);
+                }
+            } else if (_activeFeedbackType == DIRECT || _activeFeedbackType == CS_VPIN) {
+                // CS_VPIN: no guaranteed reply from <z>; update optimistically.
+                // An EXRAIL-broadcast <Y> reply may also update KnownState later.
+                synchronized (this) {
+                    newKnownState(s);
+                }
             }
-        } else if (_activeFeedbackType == DIRECT || _activeFeedbackType == CS_VPIN) {
-            // CS_VPIN: no guaranteed reply from <z>; update optimistically.
-            // An EXRAIL-broadcast <Y> reply may also update KnownState later.
-            synchronized (this) {
-                newKnownState(s);
-            }
+        } else {
+            myOperator.start();
         }
     }
 
