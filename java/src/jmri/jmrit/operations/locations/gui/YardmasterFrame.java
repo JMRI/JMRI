@@ -7,13 +7,14 @@ import javax.swing.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.tools.PrintSwitchListAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Yardmaster Frame. Shows work at one location.
  *
- * @author Dan Boudreau Copyright (C) 2013
+ * @author Dan Boudreau Copyright (C) 2013, 2026
  */
 public class YardmasterFrame extends OperationsFrame {
 
@@ -29,6 +30,8 @@ public class YardmasterFrame extends OperationsFrame {
             // build menu
             JMenuBar menuBar = new JMenuBar();
             JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+            toolMenu.add(new ShowCarsByLocationAction(false, location, null));
+            toolMenu.addSeparator();
             toolMenu.add(new YardmasterByTrackAction(location));
             JMenuItem print = toolMenu.add(new PrintSwitchListAction(location, false));
             JMenuItem preview = toolMenu.add(new PrintSwitchListAction(location, true));
