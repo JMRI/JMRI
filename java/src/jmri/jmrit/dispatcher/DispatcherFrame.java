@@ -173,6 +173,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         super.dispose();
         if (autoAllocate != null) {
             autoAllocate.setAbort();
+            autoAllocate = null;
         }
     }
 
