@@ -98,7 +98,7 @@
                 <li>Fixed a problem where an Intellibox-II would
                     have power on/off problems after CV programming.</li>
                 <li>A LocoNet connection now reconnects if the connection goes down and then comes up again.</li>
-                <li></li>
+                <li>Add summary panel to SlotMon, and fix up the Layout Reset and Show Idle.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -463,7 +463,8 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li></li>
+            <li>Updated the "newer" CTC Tool's web page to show that the "CTCParts"
+                web site is functioning.</li>
         </ul>
 
     <h3>DecoderPro</h3>
