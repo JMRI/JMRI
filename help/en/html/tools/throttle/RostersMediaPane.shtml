@@ -92,7 +92,8 @@
       <p>Image are edited the same way than in the above window, note that the contextual menu on each image entry allows to remove curent image but also to open
       a file browser directly in the JMRI icon ressources for function icons, SVG files are supported here and in native JMRI throttle window (allows for nice resizing)
       but may not be supported in web throttles.</p>
-      <p>Rows are rearangeable by drag'n dropping them in the table, this will change the order of the displayed functions buttons in the related JMRI throttle window.</p>
+      <p>Rows are rearangeable by drag'n dropping them in the table, this will change the order of the displayed functions buttons in the related JMRI throttle window. 
+       This visibility order is stored in the roster entry attribute FnDisplayOrder, if the visibility is reverted to default (F0, F1, F2, ...), this attribute will be removed from the roster entry.</p>
       <p>Functions images are stored in JMRI Preferences folder.
         When a new image is dropped if a file exist with the same name and same content, the existing file is used.
         When the image is updated or removed from the roster entry, the image file is not removed from its storage in JMRI Preferences folder.</p>
