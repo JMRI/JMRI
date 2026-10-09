@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.trains.gui;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 
 import javax.swing.JMenu;
@@ -23,6 +25,7 @@ public class TrainConductorFrame extends OperationsFrame {
         this.initComponents(train);
     }
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     private void initComponents(Train train) {
         super.initComponents();
 
