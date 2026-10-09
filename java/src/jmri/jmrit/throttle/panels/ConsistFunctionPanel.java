@@ -76,13 +76,13 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
         consistFunctionsPanels = null;
     }
 
-    public void setAddressPanel(AddressPanel addressPanel) {
-        if (this.addressPanel != null) {
-            this.addressPanel.removeAddressListener(this);
+    public void setAddressPanel(AddressPanel ap) {
+        if (addressPanel != null) {
+            addressPanel.removeAddressListener(this);
         }
-        this.addressPanel = addressPanel;
-        if (this.addressPanel != null) {
-            this.addressPanel.addAddressListener(this);
+        addressPanel = ap;
+        if (addressPanel != null) {
+            addressPanel.addAddressListener(this);
         }
         updateFunctionPanels();
     }
@@ -186,7 +186,12 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {
+        updateFunctionPanels();
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) {
         updateFunctionPanels();
     }
 

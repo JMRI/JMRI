@@ -660,7 +660,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>JMRI Desktop Application Throttles  now listen to Roster events, hence, if a roster entry is updated, the throttle will immediately reflect the changes</li>
+            <li>Roster functions editor panel is now displayed as a table, the table can be reordered by dragging rows, which will change the order of the displayed functions buttons in the related JMRI throttle window (see <a href="https://github.com/JMRI/JMRI/issues/13700"> #13700 </a>).
+                 Only implemented in JMRI Desktop Application Throttles for now, and no impact on keyboard shortcuts (1 or F1 is still F1, whatever the display order)</li>
         </ul>
 
     <h3>Timetable</h3>

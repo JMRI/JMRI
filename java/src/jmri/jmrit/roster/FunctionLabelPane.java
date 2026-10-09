@@ -2,42 +2,46 @@ package jmri.jmrit.roster;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
+import jmri.jmrit.roster.swing.functiontable.FunctionTableCellRenderer;
+import jmri.jmrit.roster.swing.functiontable.FunctionTableModel;
+import jmri.jmrit.roster.swing.functiontable.FunctionTableMouseListener;
+import jmri.jmrit.roster.swing.functiontable.FunctionTableRowTransferHandler;
 import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.swing.EditableResizableImagePanel;
+import jmri.util.swing.JmriMouseListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Display and edit the function labels in a RosterEntry.
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Randall Wood Copyright (C) 2014
+ * @author Lionel Jeanson Copyright (C) 2009-2026
+ * 
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
 
-    RosterEntry re;
+    private int maxfunction = 28; // default value (28 included [0..28] = 29 functions)
+    private final FunctionTableModel functionTableModel;
+    private JTable functionsTable;
 
-    JTextField[] labels;
-    public JTextField getLabel(int index) { return labels[index]; }
-
-    JCheckBox[] lockable;
-    public JCheckBox getLockable(int index) { return lockable[index]; }
-    
-    JCheckBox[] visible;
-    public JCheckBox getVisible(int index) { return visible[index]; }
-
-    JRadioButton[] shunterMode;
-    ButtonGroup shunterModeGroup;
-    EditableResizableImagePanel[] _imageFilePath;
-    EditableResizableImagePanel[] _imagePressedFilePath;
-
-    private int maxfunction = 28; // default value
 
     /**
      * This constructor allows the panel to be used in visual bean editors, but
@@ -45,153 +49,68 @@ public class FunctionLabelPane extends javax.swing.JPanel {
      */
     public FunctionLabelPane() {
         super();
+        functionTableModel = null;
     }
 
-    public FunctionLabelPane(RosterEntry r) {
+    public FunctionLabelPane(RosterEntry re) {
         super();
-        re = r;
+        functionTableModel = new FunctionTableModel(re);
         initGUI();
     }
 
-    public List<String> getLabels() {
-        var retval = new ArrayList<String>();
-        for (JTextField j : labels) {
-            retval.add(j.getText());
+    private void initGUI() {
+        maxfunction = functionTableModel.getRosterEntry().getMaxFnNumAsInt();
+        setLayout(new BorderLayout());
+        functionsTable = new JTable(functionTableModel);
+        // renderer
+        FunctionTableCellRenderer renderer = new FunctionTableCellRenderer();
+        functionsTable.setDefaultRenderer(Object.class, renderer);
+        functionsTable.setDefaultRenderer(Boolean.class, renderer); // force boolean values to use the same renderer as other values
+        // allow contextual menu on image cells
+        functionsTable.addMouseListener( JmriMouseListener.adapt(new FunctionTableMouseListener(functionsTable)));
+        // allow drag'n drop of rows to reorder display order
+        functionsTable.setDragEnabled(true);
+        functionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        functionsTable.setDropMode(DropMode.INSERT_ROWS);
+        functionsTable.getTableHeader().setReorderingAllowed(false); // forbid columns reodering
+        functionsTable.setTransferHandler(new FunctionTableRowTransferHandler(functionsTable));
+        // column width and tooltips on columns titles
+        for (int i = 0; i < functionsTable.getColumnCount(); i++) {
+            if (i<functionsTable.getColumnCount()-1) { // let's keep last column large (label)
+                functionsTable.getColumnModel().getColumn(i).setMaxWidth(FunctionTableCellRenderer.columnWidths[i]);
+            }
+            if (FunctionTableCellRenderer.columnTooltips[i] != null) {
+                DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+                headerRenderer.setToolTipText(FunctionTableCellRenderer.columnTooltips[i]);
+                functionsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+            }
         }
-        return retval;
+        functionsTable.setRowHeight(FunctionTableCellRenderer.CELL_HEIGHT);
+        functionsTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+        JScrollPane scrollPane = new JScrollPane(functionsTable);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public List<String> getLabels() {
+        return functionTableModel.getLabels();
     }
     
     public void setLabel(int n, String label) {
-        labels[n].setText(label);
+        functionTableModel.setLabel(n, label);
     }
-    
-    private void initGUI() {
-        maxfunction = re.getMaxFnNumAsInt();
-        GridBagLayout gbLayout = new GridBagLayout();
-        GridBagConstraints cL = new GridBagConstraints();
-        setLayout(gbLayout);
 
-        labels = new JTextField[maxfunction + 1];
-        lockable = new JCheckBox[maxfunction + 1];
-        visible = new JCheckBox[maxfunction + 1];
-        shunterMode = new JRadioButton[maxfunction + 1];
-        shunterModeGroup = new ButtonGroup();
-        _imageFilePath = new EditableResizableImagePanel[maxfunction + 1];
-        _imagePressedFilePath = new EditableResizableImagePanel[maxfunction + 1];
+    public String getLabel(int n) {
+        return functionTableModel.getLabel(n);
+    }    
 
-        cL.gridx = 0;
-        cL.gridy = 0;
-        cL.ipadx = 3;
-        cL.anchor = GridBagConstraints.NORTHWEST;
-        cL.insets = new Insets(0, 0, 0, 15);
-        cL.fill = GridBagConstraints.HORIZONTAL;
-        cL.weighty = 1.0;
-        int nextx = 0;
-
-        // column labels
-        // first column
-        add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonLabel")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonVisible")), cL);
-        cL.gridx++;        
-        add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
-        cL.gridx++;
-        // divider
-        add(new JLabel("|"));
-        cL.gridx++;
-        // second column
-        add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonLabel")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonVisible")), cL);
-        cL.gridx++;           
-        add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
-        cL.gridx++;
-        add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
-
-        cL.gridx = 0;
-        cL.gridy = 1;
-        // add function rows
-        for (int i = 0; i <= maxfunction; i++) {
-            // label the row
-            add(new JLabel("" + i), cL);
-            cL.gridx++;
-
-            // add the label
-            labels[i] = new JTextField(20);
-            if (re.getFunctionLabel(i) != null) {
-                labels[i].setText(re.getFunctionLabel(i));
-            }
-            add(labels[i], cL);
-            cL.gridx++;
-
-            // add the lock/latch checkbox
-            lockable[i] = new JCheckBox();
-            lockable[i].setSelected(re.getFunctionLockable(i));
-            lockable[i].setToolTipText(Bundle.getMessage("FunctionButtonLockableToolTip"));
-            add(lockable[i], cL);
-            cL.gridx++;
-            
-            // add the visibility checkbox
-            visible[i] = new JCheckBox();
-            visible[i].setSelected(re.getFunctionVisible(i));
-            visible[i].setToolTipText(Bundle.getMessage("FunctionButtonVisibleToolTip"));
-            add(visible[i], cL);
-            cL.gridx++;
-
-            // add the function buttons
-            _imageFilePath[i] = new EditableResizableImagePanel(re.getFunctionImage(i), 20, 20);
-            _imageFilePath[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
-            _imageFilePath[i].setBackground(new Color(0, 0, 0, 0));
-            _imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
-            _imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
-            _imageFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons"));
-            add(_imageFilePath[i], cL);
-            cL.gridx++;
-
-            _imagePressedFilePath[i] = new EditableResizableImagePanel(re.getFunctionSelectedImage(i), 20, 20);
-            _imagePressedFilePath[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
-            _imagePressedFilePath[i].setBackground(new Color(0, 0, 0, 0));
-            _imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
-            _imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
-            _imagePressedFilePath[i].addMenuItemBrowseFolder(Bundle.getMessage("MediaRosterOpenSystemFileBrowserOnJMRIfnButtonsRessources"), jmri.util.FileUtil.getExternalFilename("resources/icons/functionicons"));
-            add(_imagePressedFilePath[i], cL);
-            cL.gridx++;
-
-            shunterMode[i] = new JRadioButton();
-            shunterModeGroup.add(shunterMode[i]);
-            if (("F" + i).compareTo(re.getShuntingFunction()) == 0) {
-                shunterMode[i].setSelected(true);
-            }
-            shunterMode[i].setToolTipText(Bundle.getMessage("ShuntButtonToolTip"));
-            add(shunterMode[i], cL);
-            if (cL.gridx == 6) {
-                cL.gridx++;
-                // add divider
-                add(new JLabel("|"), cL);
-            }
-            // advance position
-            cL.gridy++;
-            if (cL.gridy == ((maxfunction + 2) / 2) + 1) {
-                cL.gridy = 1;  // skip titles
-                nextx = nextx + 8;
-            }
-            cL.gridx = nextx;
-        }
+    public void setLockable(int n, boolean lockable) {
+        functionTableModel.setLockable(n, lockable);
     }
+
+    public boolean getLockable(int n) {
+        return functionTableModel.getLockable(n);
+    } 
 
     /**
      * Check if panel contents differ with a RosterEntry.
@@ -200,104 +119,58 @@ public class FunctionLabelPane extends javax.swing.JPanel {
      * @return true if panel contents differ; false otherwise
      */
     public boolean guiChanged(RosterEntry r) {
-        if (labels != null) {
-            for (int i = 0; i < labels.length; i++) {
-                if (labels[i] != null) {
-                    if (r.getFunctionLabel(i) == null && !labels[i].getText().equals("")) {
-                        return true;
-                    }
-                    if (r.getFunctionLabel(i) != null && !r.getFunctionLabel(i).equals(labels[i].getText())) {
-                        return true;
-                    }
-                }
-            }
+        RosterEntry re = functionTableModel.getRosterEntry();
+        if (r == null) {
+            return true;
         }
-        if (lockable != null) {
-            for (int i = 0; i < lockable.length; i++) {
-                if (lockable[i] != null) {
-                    if (r.getFunctionLockable(i) && !lockable[i].isSelected()) {
-                        return true;
-                    }
-                    if (!r.getFunctionLockable(i) && lockable[i].isSelected()) {
-                        return true;
-                    }
-                }
-            }
+        // shunting fn
+        if (r.getShuntingFunction() == null && re.getShuntingFunction() != null) {
+            return true;
         }
-        if (visible != null) {
-            for (int i = 0; i < visible.length; i++) {
-                if (visible[i] != null) {
-                    if (r.getFunctionVisible(i) && !visible[i].isSelected()) {
-                        return true;
-                    }
-                    if (!r.getFunctionVisible(i) && visible[i].isSelected()) {
-                        return true;
-                    }
-                }
-            }
+        if (r.getShuntingFunction() != null && re.getShuntingFunction() == null) {
+            return true;
         }
-        if (_imageFilePath != null) {
-            for (int i = 0; i < _imageFilePath.length; i++) {
-                if (_imageFilePath[i] != null) {
-                    if (r.getFunctionImage(i) == null && _imageFilePath[i].getImagePath() != null) {
-                        return true;
-                    }
-                    if (r.getFunctionImage(i) != null && !r.getFunctionImage(i).equals(_imageFilePath[i].getImagePath())) {
-                        return true;
-                    }
-                }
-            }
+        if (r.getShuntingFunction() != null && re.getShuntingFunction() != null && !r.getShuntingFunction().equals(re.getShuntingFunction())) {
+            return true;
         }
-        if (_imagePressedFilePath != null) {
-            for (int i = 0; i < _imagePressedFilePath.length; i++) {
-                if (_imagePressedFilePath[i] != null) {
-                    if (r.getFunctionSelectedImage(i) == null && _imagePressedFilePath[i].getImagePath() != null) {
-                        return true;
-                    }
-                    if (r.getFunctionSelectedImage(i) != null && !r.getFunctionSelectedImage(i).equals(_imagePressedFilePath[i].getImagePath())) {
-                        return true;
-                    }
-                }
-            }
+        // number of entries
+        if (r.functionEntries.size() != re.functionEntries.size()) {
+            return true;
         }
-        if (shunterMode != null) {
-            String shunFn = "";
-            for (int i = 0; i < shunterMode.length; i++) {
-                if ((shunterMode[i] != null) && (shunterMode[i].isSelected())) {
-                    shunFn = "F" + i;
-                }
+        if (r.functionEntries.size() == 0 && re.functionEntries.size() == 0) {
+            return false;
+        }
+        // compare labels, lockable, visible, image and pressed image 
+        for (int i = 0; i <= maxfunction; i++) {
+            if (r.getFunctionEntry(i) == null && re.getFunctionEntry(i) != null) {
+                return true;   
             }
-            if (shunFn.compareTo(r.getShuntingFunction()) != 0) {
+            if (r.getFunctionEntry(i) == null && re.getFunctionEntry(i) == null) {
+                return false;   
+            }
+            if (! r.getFunctionEntry(i).equals(re.getFunctionEntry(i))) {
                 return true;
             }
+        }
+        // compare function display order
+        if (r.getAttribute("FnDisplayOrder") == null && functionTableModel.getVisibilityOrderAttributeString() != null) {
+            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute("FnDisplayOrder"), functionTableModel.getVisibilityOrderAttributeString());
+            return true;
+        }
+        if (r.getAttribute("FnDisplayOrder") != null && !r.getAttribute("FnDisplayOrder").equals(functionTableModel.getVisibilityOrderAttributeString())) {
+            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute("FnDisplayOrder"), functionTableModel.getVisibilityOrderAttributeString());
+            return true;
         }
         return false;
     }
 
     /**
      * Update contents from a RosterEntry object
-     * <p>TODO: This doesn't do every element.
+     * 
      * @param re the new contents
      */
     public void updateFromEntry(RosterEntry re) {
-        if (labels != null) {
-             for (int i = 0; i < labels.length; i++) {
-                labels[i].setText(re.getFunctionLabel(i));
-                lockable[i].setSelected(re.getFunctionLockable(i));
-                visible[i].setSelected(re.getFunctionVisible(i));                
-             }
-        }
-        if (re.getShuntingFunction() != null) {
-            try {
-                int sfn = Integer.parseInt( re.getShuntingFunction().substring(1) );
-                if (sfn<shunterMode.length && shunterMode[sfn]!=null) {
-                    shunterMode[sfn].setSelected(true);
-                }
-            } catch (NumberFormatException e) {
-                // pass
-            }
-        }
-        
+        functionTableModel.setRosterEntry(re);
     }
 
     /**
@@ -306,28 +179,20 @@ public class FunctionLabelPane extends javax.swing.JPanel {
      * @param r the roster entry to update
      */
     public void update(RosterEntry r) {
-        if (labels != null) {
-            String shunFn = "";
-            for (int i = 0; i < labels.length; i++) {
-                if (labels[i] != null && !labels[i].getText().equals("")) {
-                    r.setFunctionLabel(i, labels[i].getText());
-                    r.setFunctionLockable(i, lockable[i].isSelected());
-                    r.setFunctionVisible(i, visible[i].isSelected());
-                    r.setFunctionImage(i, _imageFilePath[i].getImagePath());
-                    r.setFunctionSelectedImage(i, _imagePressedFilePath[i].getImagePath());
-                } else if (labels[i] != null && labels[i].getText().equals("")) {
-                    if (r.getFunctionLabel(i) != null) {
-                        r.setFunctionLabel(i, null);
-                        r.setFunctionImage(i, null);
-                        r.setFunctionSelectedImage(i, null);
-                    }
-                }
-                if ((shunterMode[i] != null) && (shunterMode[i].isSelected())) {
-                    shunFn = "F" + i;
-                }
+        RosterEntry re = functionTableModel.getRosterEntry();
+        // function definitions
+        for (int i = 0; i <= maxfunction; i++) {
+            RosterFunctionEntry fn = re.getFunctionEntry(i);
+            if (fn != null) {
+                r.setFunctionEntry(new RosterFunctionEntry(fn));
             }
-            r.setShuntingFunction(shunFn);
         }
+        // shunting functions
+        r.setShuntingFunction(functionTableModel.getRosterEntry().getShuntingFunction());
+        // function display order
+        r.deleteAttribute("FnDisplayOrder");
+        String dos = functionTableModel.getVisibilityOrderAttributeString();        
+        r.putAttribute("FnDisplayOrder", dos);        
     }
 
     public void dispose() {
@@ -386,13 +251,13 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             // index over variables
             for (int i = 0; i <= maxfunction; i++) {
                 String name = "" + i;
-                if (re.getFunctionLockable(i)) {
+                if (functionTableModel.getRosterEntry().getFunctionLockable(i)) {
                     name = name + " (lockable)";
                 }
-                if (! re.getFunctionVisible(i)) {
+                if (! functionTableModel.getRosterEntry().getFunctionVisible(i)) {
                     name = name + " (not visible)";
                 }
-                String value = re.getFunctionLabel(i);
+                String value = functionTableModel.getRosterEntry().getFunctionLabel(i);
                 //Skip Blank functions
                 if (value != null) {
 
@@ -468,5 +333,4 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     private static final Logger log = LoggerFactory.getLogger(FunctionLabelPane.class);
-
 }

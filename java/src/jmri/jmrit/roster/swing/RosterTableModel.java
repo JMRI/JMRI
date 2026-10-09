@@ -1,11 +1,12 @@
 package jmri.jmrit.roster.swing;
 
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.CheckForNull;
 import javax.swing.Icon;
@@ -15,15 +16,20 @@ import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 
-import jmri.*;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import jmri.BooleanPermission;
+import jmri.InstanceManager;
+import jmri.PermissionManager;
+import jmri.PermissionsProgrammer;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.util.swing.ResizableRowDataModel;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.ResizableRowDataModel;
 
 /**
  * Table data model for display of Roster variable values.
@@ -380,16 +386,20 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             }
             try {
                 return new StdDateFormat().parse(value);
-            } catch (ParseException ex){
-                return null;
+            } catch (ParseException e){
+                log.debug("could not parse date in {}", value, e);
             }
+            return null;
         }
         if ( RosterEntry.ATTRIBUTE_OPERATING_DURATION.equals( attributeKey) ) {
+            if (value == null) {
+                return 0;
+            }
             try {
                 return Integer.valueOf(value);
             }
             catch (NumberFormatException e) {
-                log.debug("could not format duration ( String integer of total seconds ) in {}", value, e);
+                log.debug("could not parse duration ( String integer of total seconds ) in {}", value, e);
             }
             return 0;
         }

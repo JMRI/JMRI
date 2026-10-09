@@ -208,6 +208,7 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + currentAddress.getNumber(), null, null, null, null);
             if (!l.isEmpty()) {
                 rosterEntry = l.get(0);
+                rosterEntry.addPropertyChangeListener(this);
             }
         }
         
@@ -342,6 +343,7 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
                 List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + currentAddress.getNumber(), null, null, null, null);
                 if (!l.isEmpty()) {
                     rosterEntry = l.get(0);
+                    rosterEntry.addPropertyChangeListener(this);
                 }
             }
         }
@@ -398,6 +400,10 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
         log.debug("notifyThrottleDisposed");
         notifyListenersOfThrottleRelease();
         updateGUIOnThrottleFound(false);
+        
+        if (rosterEntry != null) {
+            rosterEntry.removePropertyChangeListener(this);
+        }
         rosterEntry = null;
         if (consistThrottle != null) {
             consistThrottle.removePropertyChangeListener(this);
@@ -440,7 +446,11 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
         getRosterEntrySelector().setSelectedRosterEntry(entry);
         addrSelector.setAddress(entry.getDccLocoAddress());
         isUpdatingUI = false;
+        if (rosterEntry != null) {
+            rosterEntry.removePropertyChangeListener(this);
+        }
         rosterEntry = entry;
+        rosterEntry.addPropertyChangeListener(this);
         changeOfAddress(addrSelector.getAddress());
     }
 
@@ -848,10 +858,18 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
             log.debug("propertyChange: new roster entry highlighted {}" , evt.getNewValue() );
             if (listeners != null) {
                 listeners.forEach((l) -> {
-                    l.notifyRosterEntrySelected( ((RosterEntry[]) evt.getNewValue())[0]);
+                    l.notifyNewRosterEntryHighlighted( ((RosterEntry[]) evt.getNewValue())[0]);
                 });
             }
-        } else if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
+        } else if (evt.getSource() instanceof RosterEntry) {
+            log.debug("propertyChange:roster entry updated {}" , evt.getPropertyName() );
+            if (listeners != null && getRosterEntry()!=null) {
+                listeners.forEach((l) -> {
+                    l.notifyRosterEntryUpdated( getRosterEntry() );                    
+                });
+            }
+        }        
+        else if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
             applyPreferences();
         }          
     }

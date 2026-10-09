@@ -88,9 +88,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String ICON_FILE_PATH = "iconfilepath"; // NOI18N
     public static final String URL = "url"; // NOI18N
     public static final String DATE_UPDATED = "dateupdated"; // NOI18N
+    public static final String FUNCTION_ENTRY = "functionEntry"; // NOI18N
     public static final String FUNCTION_IMAGE = "functionImage"; // NOI18N
     public static final String FUNCTION_LABEL = "functionlabel"; // NOI18N
     public static final String FUNCTION_LOCKABLE = "functionLockable"; // NOI18N
+    public static final String FUNCTION_VISIBLE = "functionVisible"; // NOI18N
     public static final String FUNCTION_SELECTED_IMAGE = "functionSelectedImage"; // NOI18N
     public static final String ATTRIBUTE_UPDATED = "attributeUpdated:"; // NOI18N
     public static final String ATTRIBUTE_DELETED = "attributeDeleted"; // NOI18N
@@ -110,11 +112,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      public static final String PHYSICS_MECH_TRANSMISSION = "physicsMechanicalTransmission"; // boolean
      public enum TractionType { STEAM, DIESEL_ELECTRIC }
 
-
     // members to remember all the info
-    protected String _fileName = null;
-
     protected String _id = "";
+    protected String _fileName = null;
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
@@ -127,79 +127,39 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
     protected String _maxFnNum = DEFAULT_MAXFNNUM;
-    protected String _dateUpdated = "";
-    protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
     protected String _developerID = "";
     protected String _manufacturerID = "";
     protected String _productID = "";
     protected String _programmingModes = "";
     protected boolean _locoDataEnabled = false;
-
      // Physics fields (stored in metric units; defaults of 0 mean "no extra limit")
      protected TractionType _physicsTractionType = TractionType.DIESEL_ELECTRIC;
      protected float _physicsWeightKg = 0.0f;
      protected float _physicsPowerKw = 0.0f;
      protected float _physicsTractiveEffortKn = 0.0f;
      protected float _physicsMaxSpeedKmh = 0.0f;
-
-      // Mechanical transmission flag (4-speed epicyclic DMU behaviour)
-      protected boolean _physicsMechanicalTransmission = false;
-
-      public void setPhysicsMechanicalTransmission(boolean value) {
-          boolean old = _physicsMechanicalTransmission;
-          _physicsMechanicalTransmission = value;
-          firePropertyChange(PHYSICS_MECH_TRANSMISSION, old, _physicsMechanicalTransmission);
-      }
-      public boolean isPhysicsMechanicalTransmission() {
-          return _physicsMechanicalTransmission;
-      }
-
-    /**
-     * Get the highest valid Fn key number for this roster entry.
-     * <dl>
-     * <dt>The default value (28) can be overridden by a "maxFnNum" attribute in
-     * the "model" element of a decoder definition file</dt>
-     * <dd><ul>
-     * <li>A European standard (RCN-212) extends NMRA S9.2.1 up to F68.</li>
-     * <li>ESU LokSound 5 already uses up to F31.</li>
-     * </ul></dd>
-     * </dl>
-     *
-     * @return the highest function number (Fn) supported by this roster entry.
-     *
-     * @see "http://normen.railcommunity.de/RCN-212.pdf"
-     */
-    public int getMaxFnNumAsInt() {
-        return Integer.parseInt(getMaxFnNum());
-    }
-
-    protected Map<Integer, String> functionLabels;
-    protected Map<Integer, String> soundLabels;
-    protected Map<Integer, String> functionSelectedImages;
-    protected Map<Integer, String> functionImages;
-    protected Map<Integer, Boolean> functionLockables;
-    protected Map<Integer, Boolean> functionVisibles;
-    protected String _isShuntingOn = "";
-
-    protected final TreeMap<String, String> attributePairs = new TreeMap<>();
-
+    // Mechanical transmission flag (4-speed epicyclic DMU behaviour)
+    protected boolean _physicsMechanicalTransmission = false;
+    // media file paths for the roster entry (not necessarily in the roster directory)
     protected String _imageFilePath = null;
     protected String _iconFilePath = null;
     protected String _URL = "";
-
+    // The function id that will enable shunting mode for this locomotive. If empty, shunting mode is not supported.
+    protected String _isShuntingOn = "";
+    // function entries are stored in a map, keyed by function number (0-XX)
+    protected Map<Integer, RosterFunctionEntry> functionEntries;
     protected RosterSpeedProfile _sp = null;
+    protected final Map<String, String> attributePairs = new HashMap<>();
+    // properties unique to that entry, not duplicated when using copy constructor
+    protected String _dateUpdated = "";
+    protected Date dateModified = null;
 
     /**
      * Construct a blank object.
      */
     public RosterEntry() {
-        functionLabels = Collections.synchronizedMap(new HashMap<>());
-        soundLabels = Collections.synchronizedMap(new HashMap<>());
-        functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
-        functionImages = Collections.synchronizedMap(new HashMap<>());
-        functionLockables = Collections.synchronizedMap(new HashMap<>());
-        functionVisibles = Collections.synchronizedMap(new HashMap<>());
+        functionEntries = Collections.synchronizedMap(new HashMap<>());
     }
 
     /**
@@ -226,71 +186,44 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         // The filename is not set here, rather later
         _fileName = null;
 
-        // All other items are copied
+        // All other items are copied, same order as in properties declarations above
         _roadName = pEntry._roadName;
         _roadNumber = pEntry._roadNumber;
         _mfg = pEntry._mfg;
+        _owner = pEntry._owner; 
         _model = pEntry._model;
         _dccAddress = pEntry._dccAddress;
         _protocol = pEntry._protocol;
         _comment = pEntry._comment;
         _decoderModel = pEntry._decoderModel;
         _decoderFamily = pEntry._decoderFamily;
+        _decoderComment = pEntry._decoderComment;
+        _maxFnNum = pEntry._maxFnNum;
+        _maxSpeedPCT = pEntry._maxSpeedPCT;
         _developerID = pEntry._developerID;
         _manufacturerID = pEntry._manufacturerID;
         _productID = pEntry._productID;
         _programmingModes = pEntry._programmingModes;
-        _decoderComment = pEntry._decoderComment;
-        _owner = pEntry._owner;
+        _locoDataEnabled = pEntry._locoDataEnabled;
+        _physicsTractionType = pEntry._physicsTractionType;
+        _physicsWeightKg = pEntry._physicsWeightKg;
+        _physicsPowerKw = pEntry._physicsPowerKw;
+        _physicsTractiveEffortKn = pEntry._physicsTractiveEffortKn;
+        _physicsMaxSpeedKmh = pEntry._physicsMaxSpeedKmh;
+        _physicsMechanicalTransmission = pEntry._physicsMechanicalTransmission;
         _imageFilePath = pEntry._imageFilePath;
         _iconFilePath = pEntry._iconFilePath;
         _URL = pEntry._URL;
-        _maxSpeedPCT = pEntry._maxSpeedPCT;
         _isShuntingOn = pEntry._isShuntingOn;
-        _locoDataEnabled = pEntry._locoDataEnabled;
-
-        if (pEntry.functionLabels != null) {
-            pEntry.functionLabels.forEach((key, value) -> {
+        if (pEntry.functionEntries != null) {
+            pEntry.functionEntries.forEach((key, value) -> {
                 if (value != null) {
-                    functionLabels.put(key, value);
+                    functionEntries.put(key, new RosterFunctionEntry(value));
                 }
             });
         }
-        if (pEntry.soundLabels != null) {
-            pEntry.soundLabels.forEach((key, value) -> {
-                if (value != null) {
-                    soundLabels.put(key, value);
-                }
-            });
-        }
-        if (pEntry.functionSelectedImages != null) {
-            pEntry.functionSelectedImages.forEach((key, value) -> {
-                if (value != null) {
-                    functionSelectedImages.put(key, value);
-                }
-            });
-        }
-        if (pEntry.functionImages != null) {
-            pEntry.functionImages.forEach((key, value) -> {
-                if (value != null) {
-                    functionImages.put(key, value);
-                }
-            });
-        }
-        if (pEntry.functionLockables != null) {
-            pEntry.functionLockables.forEach((key, value) -> {
-                if (value != null) {
-                    functionLockables.put(key, value);
-                }
-            });
-        }
-        if (pEntry.functionVisibles != null) {
-            pEntry.functionVisibles.forEach((key, value) -> {
-                if (value != null) {
-                    functionVisibles.put(key, value);
-                }
-            });
-        }        
+        _sp = new RosterSpeedProfile(this, pEntry._sp);
+        pEntry.attributePairs.forEach((key, value) -> attributePairs.put(key, value));               
     }
 
     /**
@@ -318,6 +251,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void setFileName(String s) {
         String oldName = _fileName;
+        if (oldName != null && oldName.equals(s)) {
+            return;
+        }
         _fileName = s;
         firePropertyChange(RosterEntry.FILENAME, oldName, s);
     }
@@ -332,8 +268,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setLocoDataEnabled(boolean enabled) {
         boolean old = this._locoDataEnabled;
+        if (old == enabled) {
+            return;
+        }
         _locoDataEnabled = enabled;
-        this.firePropertyChange(RosterEntry.LOCO_DATA_ENABLED, old, this._locoDataEnabled);
+        firePropertyChange(RosterEntry.LOCO_DATA_ENABLED, old, this._locoDataEnabled);
     }
 
     public boolean isLocoDataEnabled() {
@@ -342,8 +281,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
      // Traction type
      public void setPhysicsTractionType(TractionType t) {
-         TractionType old = _physicsTractionType;
+         TractionType old = _physicsTractionType;         
          _physicsTractionType = (t != null) ? t : TractionType.DIESEL_ELECTRIC;
+         if (old == _physicsTractionType) {
+            return;
+         }
          firePropertyChange(PHYSICS_TRACTION_TYPE, old, _physicsTractionType);
      }
      public TractionType getPhysicsTractionType() { return _physicsTractionType; }
@@ -352,6 +294,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      public void setPhysicsWeightKg(float kg) {
          float old = _physicsWeightKg;
          _physicsWeightKg = Math.max(0.0f, kg);
+         if (Float.compare(old, _physicsWeightKg) == 0) {
+            return;
+         }
          firePropertyChange(PHYSICS_WEIGHT_KG, old, _physicsWeightKg);
      }
      public float getPhysicsWeightKg() { return _physicsWeightKg; }
@@ -360,6 +305,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      public void setPhysicsPowerKw(float kw) {
          float old = _physicsPowerKw;
          _physicsPowerKw = Math.max(0.0f, kw);
+         if (Float.compare(old, _physicsPowerKw) == 0) {
+            return;
+         }
          firePropertyChange(PHYSICS_POWER_KW, old, _physicsPowerKw);
      }
      public float getPhysicsPowerKw() { return _physicsPowerKw; }
@@ -368,6 +316,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      public void setPhysicsTractiveEffortKn(float kn) {
          float old = _physicsTractiveEffortKn;
          _physicsTractiveEffortKn = Math.max(0.0f, kn);
+         if (Float.compare(old, _physicsTractiveEffortKn) == 0) {
+            return;
+         }
          firePropertyChange(PHYSICS_TRACTIVE_EFFORT_KN, old, _physicsTractiveEffortKn);
      }
      public float getPhysicsTractiveEffortKn() { return _physicsTractiveEffortKn; }
@@ -376,16 +327,26 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      public void setPhysicsMaxSpeedKmh(float kmh) {
          float old = _physicsMaxSpeedKmh;
          _physicsMaxSpeedKmh = Math.max(0.0f, kmh);
+         if (Float.compare(old, _physicsMaxSpeedKmh) == 0)   {
+            return;
+         }
          firePropertyChange(PHYSICS_MAX_SPEED_KMH, old, _physicsMaxSpeedKmh);
      }
      public float getPhysicsMaxSpeedKmh() { return _physicsMaxSpeedKmh; }
 
      // Helper: parse traction type from text safely
      private void setPhysicsTractionTypeFromString(String s) {
-         if (s == null) { setPhysicsTractionType(TractionType.DIESEL_ELECTRIC); return; }
-         s = s.trim().toUpperCase(Locale.ROOT);
-         if ("STEAM".equals(s)) setPhysicsTractionType(TractionType.STEAM);
-         else setPhysicsTractionType(TractionType.DIESEL_ELECTRIC);
+        if (s == null) { 
+            setPhysicsTractionType(TractionType.DIESEL_ELECTRIC); 
+            return; 
+        }
+        s = s.trim().toUpperCase(Locale.ROOT);
+        if ("STEAM".equals(s)) {
+            setPhysicsTractionType(TractionType.STEAM);
+        }
+        else {
+            setPhysicsTractionType(TractionType.DIESEL_ELECTRIC);
+        }
      }
 
 
@@ -423,6 +384,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setRoadName(String s) {
         String old = _roadName;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _roadName = s;
         firePropertyChange(RosterEntry.ROADNAME, old, s);
     }
@@ -433,6 +397,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setRoadNumber(String s) {
         String old = _roadNumber;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _roadNumber = s;
         firePropertyChange(RosterEntry.ROADNAME, old, s);
     }
@@ -443,6 +410,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setMfg(String s) {
         String old = _mfg;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }        
         _mfg = s;
         firePropertyChange(RosterEntry.MFG, old, s);
     }
@@ -453,6 +423,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setModel(String s) {
         String old = _model;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _model = s;
         firePropertyChange(RosterEntry.MODEL, old, s);
     }
@@ -463,6 +436,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setOwner(String s) {
         String old = _owner;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _owner = s;
         firePropertyChange(RosterEntry.OWNER, old, s);
     }
@@ -479,6 +455,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDccAddress(String s) {
         String old = _dccAddress;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _dccAddress = s;
         firePropertyChange(RosterEntry.DCC_ADDRESS, old, s);
     }
@@ -492,6 +471,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         boolean old = false;
         if (_protocol == LocoAddress.Protocol.DCC_LONG) {
             old = true;
+        }
+        if (old == b) {
+            return;
         }
         if (b) {
             _protocol = LocoAddress.Protocol.DCC_LONG;
@@ -512,7 +494,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
         RosterSpeedProfile old = this._sp;
         _sp = sp;
-        this.firePropertyChange(RosterEntry.SPEED_PROFILE, old, this._sp);
+        firePropertyChange(RosterEntry.SPEED_PROFILE, old, this._sp);
     }
 
     @Override
@@ -522,6 +504,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setProtocol(LocoAddress.Protocol protocol) {
         LocoAddress.Protocol old = _protocol;
+        if (old == protocol) {
+            return;
+        }
         _protocol = protocol;
         firePropertyChange(RosterEntry.PROTOCOL, old, _protocol);
     }
@@ -536,6 +521,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setComment(String s) {
         String old = _comment;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _comment = s;
         firePropertyChange(RosterEntry.COMMENT, old, s);
     }
@@ -546,6 +534,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDecoderModel(String s) {
         String old = _decoderModel;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _decoderModel = s;
         firePropertyChange(RosterEntry.DECODER_MODEL, old, s);
     }
@@ -556,6 +547,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDeveloperID(String s) {
         String old = _developerID;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _developerID = s;
         firePropertyChange(DECODER_DEVELOPERID, old, s);
     }
@@ -566,6 +560,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setManufacturerID(String s) {
         String old = _manufacturerID;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _manufacturerID = s;
         firePropertyChange(DECODER_MANUFACTURERID, old, s);
     }
@@ -576,6 +573,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setProductID(@CheckForNull String s) {
         String old = _productID;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         if (s == null) {s = "";}
         _productID = s;
         firePropertyChange(DECODER_PRODUCTID, old, s);
@@ -591,6 +591,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void setProgrammingModes(@CheckForNull String s) {
         String old = _programmingModes;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         if (s == null) {s = "";}
         _programmingModes = s;
         firePropertyChange(DECODER_MODES, old, s);
@@ -606,6 +609,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDecoderFamily(String s) {
         String old = _decoderFamily;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _decoderFamily = s;
         firePropertyChange(RosterEntry.DECODER_FAMILY, old, s);
     }
@@ -616,6 +622,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDecoderComment(String s) {
         String old = _decoderComment;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _decoderComment = s;
         firePropertyChange(RosterEntry.DECODER_COMMENT, old, s);
     }
@@ -626,12 +635,34 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setMaxFnNum(String s) {
         String old = _maxFnNum;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _maxFnNum = s;
         firePropertyChange(RosterEntry.DECODER_MAXFNNUM, old, s);
     }
 
     public String getMaxFnNum() {
         return _maxFnNum;
+    }
+
+    /**
+     * Get the highest valid Fn key number for this roster entry (hence with 0, that's 29 functions aka [0..28]).
+     * <dl>
+     * <dt>The default value (28) can be overridden by a "maxFnNum" attribute in
+     * the "model" element of a decoder definition file</dt>
+     * <dd><ul>
+     * <li>A European standard (RCN-212) extends NMRA S9.2.1 up to F68.</li>
+     * <li>ESU LokSound 5 already uses up to F31.</li>
+     * </ul></dd>
+     * </dl>
+     *
+     * @return the highest function number (Fn) supported by this roster entry.
+     *
+     * @see "http://normen.railcommunity.de/RCN-212.pdf"
+     */
+    public int getMaxFnNumAsInt() {
+        return Integer.parseInt(getMaxFnNum());
     }
 
     @Override
@@ -648,6 +679,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setImagePath(String s) {
         String old = _imageFilePath;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _imageFilePath = s;
         firePropertyChange(RosterEntry.IMAGE_FILE_PATH, old, s);
     }
@@ -658,6 +692,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setIconPath(String s) {
         String old = _iconFilePath;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _iconFilePath = s;
         firePropertyChange(RosterEntry.ICON_FILE_PATH, old, s);
     }
@@ -668,8 +705,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setShuntingFunction(String fn) {
         String old = this._isShuntingOn;
+        if ((old != null && old.equals(fn)) || (old == null && fn == null)) {
+            return;
+        }        
         _isShuntingOn = fn;
-        this.firePropertyChange(RosterEntry.SHUNTING_FUNCTION, old, this._isShuntingOn);
+        firePropertyChange(RosterEntry.SHUNTING_FUNCTION, old, this._isShuntingOn);
     }
 
     @Override
@@ -679,6 +719,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setURL(String s) {
         String old = _URL;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _URL = s;
         firePropertyChange(RosterEntry.URL, old, s);
     }
@@ -687,10 +730,22 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _URL;
     }
 
+    public void setPhysicsMechanicalTransmission(boolean value) {
+        boolean old = _physicsMechanicalTransmission;
+        _physicsMechanicalTransmission = value;
+        firePropertyChange(PHYSICS_MECH_TRANSMISSION, old, _physicsMechanicalTransmission);
+    }
+    public boolean isPhysicsMechanicalTransmission() {
+        return _physicsMechanicalTransmission;
+    }
+
     public void setDateModified(@Nonnull Date date) {
         Date old = this.dateModified;
+        if (old != null && old.equals(date)) {
+            return;
+        }
         this.dateModified = new Date(date.getTime());
-        this.firePropertyChange(RosterEntry.DATE_UPDATED, old, date);
+        firePropertyChange(RosterEntry.DATE_UPDATED, old, date);
     }
 
     /**
@@ -745,6 +800,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     protected void setDateUpdated(String s) {
         String old = _dateUpdated;
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }
         _dateUpdated = s;
         try {
             this.setDateModified(s);
@@ -803,12 +861,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param e Locomotive XML element
      */
     public RosterEntry(Element e) {
-        functionLabels = Collections.synchronizedMap(new HashMap<>());
-        soundLabels = Collections.synchronizedMap(new HashMap<>());
-        functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
-        functionImages = Collections.synchronizedMap(new HashMap<>());
-        functionLockables = Collections.synchronizedMap(new HashMap<>());
-        functionVisibles = Collections.synchronizedMap(new HashMap<>());
+        this();
         log.debug("ctor from element {}", e);
         Attribute a;
         if ((a = e.getAttribute("id")) != null) {
@@ -1154,18 +1207,57 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
+     * Check if a function entry exists for a specific function number, and create one if it does not, up to the maximum function number for this roster entry.
+     *
+     * @param fn    function number, starting with 0
+     */
+    private void checkAndCreateFunctionEntry(int fn) {
+        if (functionEntries == null) {
+            functionEntries = Collections.synchronizedMap(new HashMap<>());
+        }
+        if (fn <= getMaxFnNumAsInt() && functionEntries.get(fn) == null) {
+            functionEntries.put(fn, new RosterFunctionEntry(fn));
+        }
+    }
+
+    /**
+     * Store a function entry, replacing any existing entry for the same function number.
+     *
+     * @param refn    function definition entry to set
+     */    
+    public void setFunctionEntry(RosterFunctionEntry refn) {
+        checkAndCreateFunctionEntry(refn.getFunctionNumber());
+        RosterFunctionEntry old = functionEntries.get(refn.getFunctionNumber());
+        functionEntries.put(refn.getFunctionNumber(), refn);
+        firePropertyChange(RosterEntry.FUNCTION_ENTRY + refn.getFunctionNumber(), old, refn);
+    }
+
+
+    /**
+     * Get a function entry for function number, creating one if it does not exist (up to the maximum function number for this roster entry).
+     *
+     * @param fn    function number, starting with 0
+     * @return the function entry
+     */     
+    public RosterFunctionEntry getFunctionEntry(int fn) {
+        checkAndCreateFunctionEntry(fn);
+        return functionEntries.get(fn);
+    } 
+
+    /**
      * Set the label for a specific function.
      *
      * @param fn    function number, starting with 0
      * @param label the label to use
      */
     public void setFunctionLabel(int fn, String label) {
-        if (functionLabels == null) {
-            functionLabels = Collections.synchronizedMap(new HashMap<>());
+        checkAndCreateFunctionEntry(fn);
+        String old = functionEntries.get(fn).getLabel();
+        if ((old != null && old.equals(label)) || (old == null && label == null)) {
+            return;
         }
-        String old = functionLabels.get(fn);
-        functionLabels.put(fn, label);
-        this.firePropertyChange(RosterEntry.FUNCTION_LABEL + fn, old, label);
+        functionEntries.get(fn).setLabel(label);
+        firePropertyChange(RosterEntry.FUNCTION_LABEL + fn, old, label);
     }
 
     /**
@@ -1176,10 +1268,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @return function label or null if not defined
      */
     public String getFunctionLabel(int fn) {
-        if (functionLabels == null) {
+        if (functionEntries == null || functionEntries.get(fn) == null) {
             return null;
         }
-        return functionLabels.get(fn);
+        return functionEntries.get(fn).getLabel();
     }
 
     /**
@@ -1189,12 +1281,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param label display label for the sound function
      */
     public void setSoundLabel(int fn, String label) {
-        if (soundLabels == null) {
-            soundLabels = Collections.synchronizedMap(new HashMap<>());
-        }
-        String old = soundLabels.get(fn);
-        soundLabels.put(fn, label);
-        this.firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, label);
+        checkAndCreateFunctionEntry(fn);
+        String old = (functionEntries.get(fn)!=null) ? functionEntries.get(fn).getSoundLabels() : null;
+        if ((old != null && old.equals(label)) || (old == null && label == null)) {
+            return;
+        }        
+        functionEntries.get(fn).setSoundLabels(label);
+        firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, label);
     }
 
     /**
@@ -1205,42 +1298,44 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @return sound label or null
      */
     public String getSoundLabel(int fn) {
-        if (soundLabels == null) {
+        if (functionEntries == null || functionEntries.get(fn) == null) {
             return null;
         }
-        return soundLabels.get(fn);
+        return functionEntries.get(fn).getSoundLabels();
     }
 
     public void setFunctionImage(int fn, String s) {
-        if (functionImages == null) {
-            functionImages = Collections.synchronizedMap(new HashMap<>());
-        }
-        String old = functionImages.get(fn);
-        functionImages.put(fn, s);
+        checkAndCreateFunctionEntry(fn);
+        String old = functionEntries.get(fn).getImage();
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
+        }        
+        functionEntries.get(fn).setImage(s);
         firePropertyChange(RosterEntry.FUNCTION_IMAGE + fn, old, s);
     }
 
     public String getFunctionImage(int fn) {
-        if (functionImages == null) {
+        if (functionEntries == null || functionEntries.get(fn) == null) {
             return null;
         }
-        return functionImages.get(fn);
+        return functionEntries.get(fn).getImage();
     }
 
     public void setFunctionSelectedImage(int fn, String s) {
-        if (functionSelectedImages == null) {
-            functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
+        checkAndCreateFunctionEntry(fn);
+        String old = functionEntries.get(fn).getSelectedImage();
+        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+            return;
         }
-        String old = functionSelectedImages.get(fn);
-        functionSelectedImages.put(fn, s);
+        functionEntries.get(fn).setSelectedImage(s);
         firePropertyChange(RosterEntry.FUNCTION_SELECTED_IMAGE + fn, old, s);
     }
 
     public String getFunctionSelectedImage(int fn) {
-        if (functionSelectedImages == null) {
+        if (functionEntries == null || functionEntries.get(fn) == null) {
             return null;
         }
-        return functionSelectedImages.get(fn);
+        return functionEntries.get(fn).getSelectedImage();
     }
 
     /**
@@ -1250,13 +1345,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param lockable true if function is continuous; false if momentary
      */
     public void setFunctionLockable(int fn, boolean lockable) {
-        if (functionLockables == null) {
-            functionLockables = Collections.synchronizedMap(new HashMap<>());
-            functionLockables.put(fn, true);
+        checkAndCreateFunctionEntry(fn);
+        boolean old = functionEntries.get(fn).isLockable();
+        if (old == lockable) {
+            return;
         }
-        boolean old = ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
-        functionLockables.put(fn, lockable);
-        this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, lockable);
+        functionEntries.get(fn).setLockable(lockable);
+        firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, lockable);
     }
 
     /**
@@ -1266,10 +1361,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @return true if function is lockable/latchable
      */
     public boolean getFunctionLockable(int fn) {
-        if (functionLockables == null) {
+        if (functionEntries == null || functionEntries.get(fn) == null) {
             return true;
         }
-        return ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
+        return functionEntries.get(fn).isLockable();
     }
     
     /**
@@ -1279,13 +1374,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param visible  true if function button is visible; false to hide
      */
     public void setFunctionVisible(int fn, boolean visible) {
-        if (functionVisibles == null) {
-            functionVisibles = Collections.synchronizedMap(new HashMap<>());
-            functionVisibles.put(fn, true);
-        }
-        boolean old = ((functionVisibles.get(fn) != null) ? functionVisibles.get(fn) : true);
-        functionVisibles.put(fn, visible);
-        this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, visible);
+        checkAndCreateFunctionEntry(fn);
+        boolean old = functionEntries.get(fn).isVisible();
+        if (old == visible) {
+            return;
+        }        
+        functionEntries.get(fn).setVisible(visible);
+        firePropertyChange(RosterEntry.FUNCTION_VISIBLE + fn, old, visible);
     }
     
     /**
@@ -1295,15 +1390,18 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @return true if function button is visible
      */
     public boolean getFunctionVisible(int fn) {
-        if (functionVisibles == null) {
+        if (functionEntries == null || functionEntries.get(fn) == null) {
             return true;
         }
-        return ((functionVisibles.get(fn) != null) ? functionVisibles.get(fn) : true);
+        return functionEntries.get(fn).isVisible();        
     }
 
     @Override
     public void putAttribute(String key, String value) {
         String oldValue = getAttribute(key);
+        if ((oldValue != null && oldValue.equals(value)) || (oldValue == null && value == null)) {
+            return;
+        }        
         attributePairs.put(key, value);
         firePropertyChange(RosterEntry.ATTRIBUTE_UPDATED + key, oldValue, value);
     }
@@ -1381,8 +1479,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setMaxSpeedPCT(int maxSpeedPCT) {
         int old = this._maxSpeedPCT;
+        if (old == maxSpeedPCT) {
+            return;
+        }
         _maxSpeedPCT = maxSpeedPCT;
-        this.firePropertyChange(RosterEntry.MAX_SPEED, old, this._maxSpeedPCT);
+        firePropertyChange(RosterEntry.MAX_SPEED, old, this._maxSpeedPCT);
     }
 
     /**
@@ -1457,12 +1558,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     .store(new DccLocoAddress(Integer.parseInt(_dccAddress), _protocol)));
         }
 
-        if (functionLabels != null) {
+        if (functionEntries != null) {
             Element s = new Element("functionlabels");
 
             // loop to copy non-null elements
-            functionLabels.forEach((key, value) -> {
-                if (value != null && !value.isEmpty()) {
+            functionEntries.forEach((key, value) -> {
+                if (value != null && value.getLabel() != null && !value.getLabel().isEmpty()) {
                     Element fne = new Element(RosterEntry.FUNCTION_LABEL);
                     fne.setAttribute("num", "" + key);
                     fne.setAttribute("lockable", getFunctionLockable(key) ? "true" : "false");
@@ -1471,22 +1572,22 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                             (getFunctionImage(key) != null) ? FileUtil.getPortableFilename(getFunctionImage(key)) : "");
                     fne.setAttribute("functionImageSelected", (getFunctionSelectedImage(key) != null)
                             ? FileUtil.getPortableFilename(getFunctionSelectedImage(key)) : "");
-                    fne.addContent(value);
+                    fne.addContent(value.getLabel());
                     s.addContent(fne);
                 }
             });
             e.addContent(s);
         }
 
-        if (soundLabels != null) {
+        if (functionEntries != null) {
             Element s = new Element("soundlabels");
 
             // loop to copy non-null elements
-            soundLabels.forEach((key, value) -> {
-                if (value != null && !value.isEmpty()) {
+            functionEntries.forEach((key, value) -> {
+                if (value != null && value.getSoundLabels() != null && !value.getSoundLabels().isEmpty()) {
                     Element fne = new Element(RosterEntry.SOUND_LABEL);
                     fne.setAttribute("num", "" + key);
-                    fne.addContent(value);
+                    fne.addContent(value.getSoundLabels());
                     s.addContent(fne);
                 }
             });
