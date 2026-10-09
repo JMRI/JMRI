@@ -472,7 +472,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fixed a bug where auto trains could not be run after the
+                 Dispatcher window had been closed and reopened in the
+                 same JMRI session.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
