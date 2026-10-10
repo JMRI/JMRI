@@ -1095,9 +1095,11 @@ public class RosterSpeedProfile {
     /**
      * Set min/max throttle limits, optionally enforcing a scale km/h cap. If
      * maxSpeedScaleKmh == 0.0f, the percent maxOperatingSpeed takes precedence
-     * (no effect). If maxSpeedScaleKmh {@code >} 0.0f, we convert the km/h cap
-     * to an equivalent throttle% using the roster profile and the layout scale
-     * ratio, then take the minimum of that and the percent cap.
+     * (no effect). If maxSpeedScaleKmh {@code >} 0.0f and the direction has
+     * profile data, we convert the km/h cap to an equivalent throttle% using
+     * the roster profile and the layout scale ratio; the scale cap then
+     * replaces the percent cap. The percent cap applies only when
+     * maxSpeedScaleKmh == 0.0f or the direction has no profile.
      *
      * @param minReliableOperatingSpeed lowest throttle % the loco reliably
      *                                  moves (0..1)
@@ -1125,7 +1127,7 @@ public class RosterSpeedProfile {
 
             float thrCapPct = getThrottleSetting(targetMms, isForward);
             if (thrCapPct > 0.0f) {
-                maxPct = Math.min(maxOperatingSpeed, thrCapPct);
+                maxPct = thrCapPct;
             }
         }
 
@@ -1139,6 +1141,15 @@ public class RosterSpeedProfile {
                     this.maxOperatingSpeed, this.minReliableOperatingSpeed);
             this.maxOperatingSpeed = this.minReliableOperatingSpeed;
         }
+    }
+
+    /**
+     * Get the maximum operating speed as a percentage of throttle (0..1).
+     *
+     * @return maximum throttle percentage.
+     */
+    public float getMaxOperatingSpeed() {
+        return maxOperatingSpeed;
     }
 
     /**
