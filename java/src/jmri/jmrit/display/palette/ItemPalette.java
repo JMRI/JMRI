@@ -773,7 +773,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (map != null) {
             for (Entry<String, NamedIcon> entry : map.entrySet()) {
                 String name = entry.getKey();
-                NamedIcon icon = new NamedIcon(entry.getValue());
+                NamedIcon icon = entry.getValue().cloneMe();
                 clone.put(name, icon);
             }
         }

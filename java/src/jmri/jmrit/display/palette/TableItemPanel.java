@@ -354,7 +354,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                         TurnoutIcon t = new TurnoutIcon(editor);
                         t.setTurnout(bean.getDisplayName());
                         for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
-                            t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                            t.setIcon(ent.getKey(), ent.getValue().cloneMe());
                         }
                         t.setFamily(_family);
                         t.setLevel(Editor.TURNOUTS);
@@ -362,7 +362,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                     case "Sensor":
                         SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
                         for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
-                            s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                            s.setIcon(ent.getKey(), ent.getValue().cloneMe());
                         }
                         s.setSensor(bean.getDisplayName());
                         s.setFamily(_family);
