@@ -493,7 +493,11 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>The program will now allow you to swap the same locomotives on a turn when using quick service.</li>
+            <li>Improvements to YardMasterByTrack tool to display tracks with "similar" names together.</li>
+            <li>Conductor and Yardmaster now have "Show Cars" in their tool menu.</li>
+            <li>Conductor tool menu now has the YardmasterByTrack tool.</li>
+            <li>Additional help for the new "On Time" mode of operations.</li>
         </ul>
 
    <h3>Panel Editor</h3>
