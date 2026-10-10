@@ -524,6 +524,10 @@
             <li>Add the input option for LogixNG global variables.</li>
             <li>Improve the selection process for choosing label icons or input icons
                 for memory variables, block contents and LogixNG global variables.</li>
+            <li>The background colors on LE panels and their web versions did not always
+                match.  For example, a "light gray" background was substantially lighter
+                on the web.  This is now fixed for background and track-drawing colors.
+                Some icon backgrounds and borders can still have mismatches.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
