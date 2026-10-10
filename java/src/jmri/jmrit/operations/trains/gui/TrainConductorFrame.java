@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.trains.gui;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 
 import javax.swing.JMenu;
@@ -13,7 +15,7 @@ import jmri.jmrit.operations.trains.tools.*;
 /**
  * Conductor Frame. Shows work for a train one location at a time.
  *
- * @author Dan Boudreau Copyright (C) 2011, 2013
+ * @author Dan Boudreau Copyright (C) 2011, 2013, 2026
  * 
  */
 public class TrainConductorFrame extends OperationsFrame {
@@ -23,6 +25,7 @@ public class TrainConductorFrame extends OperationsFrame {
         this.initComponents(train);
     }
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     private void initComponents(Train train) {
         super.initComponents();
 
@@ -34,9 +37,12 @@ public class TrainConductorFrame extends OperationsFrame {
         JMenuBar menuBar = new JMenuBar();
         if (train != null) {
             JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+            toolMenu.add(new ShowCarsByLocationAction((TrainConductorPanel) getContentPane()));
+            toolMenu.addSeparator();
             toolMenu.add(new ShowCarsInTrainAction(train));
             toolMenu.add(new PrintShowCarsInTrainRouteAction(false, train));
             toolMenu.add(new PrintShowCarsInTrainRouteAction(true, train));
+            toolMenu.addSeparator();
             toolMenu.add(new ToggleShowFullLocationName());
             menuBar.add(toolMenu);
         }
