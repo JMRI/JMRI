@@ -3684,7 +3684,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public String getIconName() {
-        String name = getName();
+        String name = getSplitName();
         if (isBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled()) {
             name += " " + getLeadEngineNumber();
         }
