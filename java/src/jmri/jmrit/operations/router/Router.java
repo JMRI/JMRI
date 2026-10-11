@@ -2,6 +2,8 @@ package jmri.jmrit.operations.router;
 
 import java.io.PrintWriter;
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -59,7 +61,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private String _status = "";
     private Train _train = null;
     PrintWriter _buildReport = null; // build report
-    Date _startTime; // when routing started
+    LocalDateTime _startTime; // when routing started
 
     private static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
     private boolean _addtoReport = false;
@@ -121,7 +123,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (car.getTrack() == null || car.getFinalDestination() == null) {
             return false;
         }
-        _startTime = new Date();
+        _startTime = LocalDateTime.now();
         _status = Track.OKAY;
         _train = train;
         _buildReport = buildReport;
@@ -221,7 +223,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             log.debug("Was able to find multiple train route for car ({}) through staging", car);
         } else {
             log.debug("Wasn't able to set route for car ({}) took {} mSec", car,
-                    new Date().getTime() - _startTime.getTime());
+                    LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() -
+                            _startTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
             _status = STATUS_NOT_ABLE;
             return false; // maybe next time
         }
