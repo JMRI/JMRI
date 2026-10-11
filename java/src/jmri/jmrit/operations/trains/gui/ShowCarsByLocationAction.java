@@ -20,12 +20,15 @@ public class ShowCarsByLocationAction extends AbstractAction {
 
     TrainConductorPanel _tcp;
     boolean showAllCars = false;
-    String locationName = null;
     String trackName = null;
+    CarsTableFrame _ctf;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a car table frame
-        new CarsTableFrame(showAllCars, _tcp.getLocationName(), trackName);
+        if (_ctf != null) {
+            _ctf.dispose();
+        }
+        _ctf = new CarsTableFrame(showAllCars, _tcp.getLocationName(), trackName);
     }
 }
