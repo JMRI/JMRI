@@ -288,6 +288,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                             Thread.currentThread().interrupt();
                         }
                     } else if (!board.doNotPoll()) {
+                        board.retrySpeedIfDue();
+                        if (!board.isSynced()) {
+                            continue; // a speed change has just started
+                        }
                         log.debug("Poll board {}", boardAddress);
                         Dcc4PcMessage m = Dcc4PcMessage.pollBoard(boardAddress);
                         log.debug("queueing poll request for board {}", boardAddress);
@@ -582,6 +586,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             speedStarted = System.currentTimeMillis();
             synced = false;
             log.info("Switching board {} to 62.5 kbps", address);
+            sendWakeUp();
             tc.sendDcc4PcMessage(Dcc4PcMessage.setBoardSpeed(address, Dcc4PcMessage.SPEED_62K5), null);
             tc.sendDcc4PcMessage(Dcc4PcMessage.busSetSpeed(address, Dcc4PcMessage.SPEED_62K5), null);
             Dcc4PcMessage check = Dcc4PcMessage.getInfo(address);
@@ -601,10 +606,15 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             }
             if (ok) {
                 busSpeed = Dcc4PcMessage.SPEED_62K5;
+                speedRetryDelay = FIRST_SPEED_RETRY;
                 log.info("Board {} is running at 62.5 kbps", address);
             } else {
                 busSpeed = 0;
-                log.warn("Board {} did not answer at 62.5 kbps, going back to 8 kbps", address);
+                // try again later: the board may only have been without track power
+                nextSpeedRetry = System.currentTimeMillis() + speedRetryDelay;
+                log.warn("Board {} did not answer at 62.5 kbps, going back to 8 kbps; trying again in {} s",
+                        address, speedRetryDelay / 1000);
+                speedRetryDelay = Math.min(speedRetryDelay * 2, MAX_SPEED_RETRY);
                 tc.sendDcc4PcMessage(Dcc4PcMessage.busResetSpeeds(), null);
                 tc.sendDcc4PcMessage(Dcc4PcMessage.busSetSpeed(address, 0), null);
             }
@@ -613,8 +623,19 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             requestResync("bus speed set");
         }
 
+        /**
+         * A board that has just powered up (it runs on track power) ignores
+         * every command except Get Info until it has answered a Get Info, so
+         * send one before anything else. No listener: the reply is not the
+         * speed check.
+         */
+        private void sendWakeUp() {
+            tc.sendDcc4PcMessage(Dcc4PcMessage.getInfo(address), null);
+        }
+
         private void sendReset() {
             resetPending = true;
+            sendWakeUp();
             tc.sendDcc4PcMessage(Dcc4PcMessage.selectRawEncoding(address), null);
             Dcc4PcMessage m = Dcc4PcMessage.resetBoardData(address);
             m.setTimeout(2000);
@@ -651,6 +672,24 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 synced = true;
                 log.debug("Board {} synchronised", address);
             });
+        }
+
+        static final long FIRST_SPEED_RETRY = 5000;
+        static final long MAX_SPEED_RETRY = 300000;
+        long speedRetryDelay = FIRST_SPEED_RETRY;
+        volatile long nextSpeedRetry = 0;
+
+        /**
+         * Called from the poll loop: if a speed change fell back to 8 kbps
+         * (often because track power was still off), try 62.5 kbps again once
+         * the retry time has come.
+         */
+        void retrySpeedIfDue() {
+            if (synced && speedChecked && !speedPending && busSpeed == 0
+                    && nextSpeedRetry != 0 && System.currentTimeMillis() >= nextSpeedRetry) {
+                nextSpeedRetry = 0;
+                startSpeedChange();
+            }
         }
 
         /**

@@ -160,6 +160,9 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
+                        // DSR high means the interface is still answering the last command.
+                        // (It also reads high just after the port opens, so don't wait long.)
+                        waitForDsrLow(200, false);
                         port.setDTR(true);
                         ostream.write(msg);
                         try {
@@ -172,7 +175,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         ostream.flush();
                         port.setDTR(false);
                         if (((Dcc4PcMessage) m).isNoDataReply()) {
-                            waitForDsrLow(m.getTimeout());
+                            waitForDsrLow(m.getTimeout(), true);
                         }
                         break;
                     } else if (m.getRetries() >= 0) {
@@ -207,12 +210,17 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * DSR falls when it is done, usually within 2 ms of DTR going low.
      *
      * @param timeout longest wait, in milliseconds
+     * @param warn    log a warning if DSR is still high at the end
      */
-    private void waitForDsrLow(int timeout) {
+    private void waitForDsrLow(int timeout, boolean warn) {
         long end = System.currentTimeMillis() + timeout;
         while (port.isDSR()) {
             if (System.currentTimeMillis() > end) {
-                log.warn("Interface still busy (DSR high) {} ms after {}", timeout, mLastSentMessage);
+                if (warn) {
+                    log.warn("Interface still busy (DSR high) {} ms after {}", timeout, mLastSentMessage);
+                } else {
+                    log.debug("DSR still high after {} ms, sending anyway", timeout);
+                }
                 return;
             }
             try {
@@ -282,6 +290,13 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     boolean waitingForMore = false;
     boolean loading = false;
 
+    // True while the receive thread is fetching a reply with Get Response; the
+    // transmit thread must not send another command until it has finished.
+    volatile boolean sequenceInProgress = false;
+
+    /** Longest a single reply sequence may hold up the transmit thread. */
+    static final int MAX_SEQUENCE_TIME = 10000;
+
     final int GETMOREDATA = 0x01;
 
     /**
@@ -318,6 +333,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     }
                     //log.debug("We do not forward the response to the listener as it has not been formed");
                     lastIncomplete = null;
+                    sequenceInProgress = true;
                     forwardToPort(Dcc4PcMessage.getResponse());
 
                     return;
@@ -374,10 +390,11 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             }
                         }
 
-                    } else if (msg.getNumDataElements() > 1) {
+                    } else if (msg.getNumDataElements() > 0) { // a first chunk of one byte is data too
                         lastIncomplete = (Dcc4PcReply) msg;
                     }
                     //We do not forward the response to the listener as it has not been formed
+                    sequenceInProgress = true;
                     forwardToPort(Dcc4PcMessage.getResponse());
 
                     return;
@@ -387,6 +404,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     ((Dcc4PcReply) msg).setError(true);
                     mLastMessage.setRetries(mLastMessage.getRetries() - 1);
                     if (mLastMessage.getRetries() >= 0) {
+                        sequenceInProgress = false;
                         synchronized (xmtRunnable) {
                             mCurrentState = AUTORETRYSTATE;
                             replyInDispatch = false;
@@ -401,6 +419,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         }
 
         // message is complete, dispatch it !!
+        sequenceInProgress = false;
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
             log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
@@ -516,6 +535,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         if (flushReceiveChars) {
                             lastIncomplete = null;
                             waitingForMore = false;
+                            sequenceInProgress = false;
                             mLastMessage = null;
                             mLastSentMessage = null;
                             readingData = false;
@@ -569,6 +589,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         // so we protect by making sure the entire timeout time is used
         long currentTime = Calendar.getInstance().getTimeInMillis();
         long endTime = currentTime + waitTime;
+        long hardEnd = currentTime + Math.max(waitTime, MAX_SEQUENCE_TIME);
         while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())) {
             long wait = endTime - currentTime;
             try {
@@ -591,7 +612,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         //if we are in the process of retrieving data, then we shall increase the endTime by 200ms.
                         endTime = endTime + 200;
                     }
-
+                    // Timing out part way through a Get Response sequence would let the next
+                    // command interrupt it, which can jam the interface's USB link.
+                    long now = Calendar.getInstance().getTimeInMillis();
+                    if (sequenceInProgress && endTime <= now + 50 && now < hardEnd) {
+                        endTime = now + 50;
+                    }
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
