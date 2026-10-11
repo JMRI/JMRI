@@ -24,11 +24,11 @@ public class ExpressionReporter extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class));
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private ReporterValue _reporterValue = ReporterValue.CurrentReport;
     private ReporterOperation _reporterOperation = ReporterOperation.Equal;
@@ -457,7 +457,6 @@ public class ExpressionReporter extends AbstractDigitalExpression
             if (_listenToMemory) {
                 _selectMemoryNamedBean.addPropertyChangeListener("value", this);
             }
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -471,7 +470,6 @@ public class ExpressionReporter extends AbstractDigitalExpression
             if (_listenToMemory) {
                 _selectMemoryNamedBean.removePropertyChangeListener("value", this);
             }
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

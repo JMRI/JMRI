@@ -81,12 +81,12 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
         // forward a test message to NceListeners
         log.debug("sendTestReply [{}]", m);
         notifyReply(m);
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            log.debug("Thread interrupted while sleeping");
-        }
-
+        // SprogTrafficController.notifyReply() delivers the reply to listeners
+        // via SwingUtilities.invokeLater(), i.e. asynchronously on the EDT. Drain
+        // the EDT queue synchronously so the reply has been fully processed before
+        // this method returns; otherwise callers race the pending event and may
+        // observe stale power state (formerly papered over with Thread.sleep(50)).
+        jmri.util.ThreadingUtil.runOnGUI(() -> {});
     }
 
     /*

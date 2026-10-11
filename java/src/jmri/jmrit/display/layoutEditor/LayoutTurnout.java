@@ -42,11 +42,11 @@ import jmri.jmrit.display.ToolTip;
  *
  *    Wye           Three-way
  *
- *       B                D
+ *       C                D
  *      //               //
  * A ==**           A ==**== B
  *      \\               \\
- *       C                C
+ *       B                C
  *
  *           Crossovers
  * Right-hand            left-hand

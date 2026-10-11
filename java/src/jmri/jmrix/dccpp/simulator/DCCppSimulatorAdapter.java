@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.*;
 
 /**
- * Provide access to a simulated DCC++ system.
+ * Provide access to a simulated DCC-EX system.
  *
  * Currently, the DCCppSimulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
  *
- * NOTE: Most DCC++ commands are still unsupported in this implementation.
+ * NOTE: Most DCC-EX commands are still unsupported in this implementation.
  *
  * Normally controlled by the dccpp.DCCppSimulator.DCCppSimulatorFrame class.
  *
@@ -51,7 +51,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     static final int SENSOR_MSG_RATE = 10;
 
     private boolean outputBufferEmpty = true;
-    private final boolean checkBuffer = true;
+    private final boolean checkBuffer = false; // mousewheel on throttle could overrun buffer, ignore it
     private boolean trackPowerState = false;
     // One extra array element so that i can index directly from the
     // CV value, ignoring CVs[0].
@@ -149,7 +149,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // When the timer times out, send a heartbeat (status request on DCC++, max num slots request on DCC-EX
+                    // When the timer times out, send a heartbeat (status request on DCC-EX, max num slots request on DCC-EX
                     DCCppTrafficController tc = DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
                     DCCppCommandStation cs = tc.getCommandStation();
                     if (cs.isMaxNumSlotsMsgSupported()) {
@@ -665,6 +665,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     reply = DCCppReply.parseDCCppReply("jG 4998 4998 4998 4998");
                 } else if (msg.isCurrentValuesMessage()) {
                     generateCurrentValuesReply(); // Handle this special.
+                } else if (msg.isAutomationIDsMessage()) {
+                    reply = DCCppReply.parseDCCppReply("jA 1 2");
+                } else if (msg.isAutomationIDMessage()) {
+                    reply = generateAutomationIDReply(msg.getAutomationIDInt());
                 }
                 break;
 
@@ -686,7 +690,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (reply);
     }
 
-    //calc speedByte value matching DCC++EX, then store it, so it can be used in the locoState replies
+    //calc speedByte value matching DCC-EX, then store it, so it can be used in the locoState replies
     private void storeLocoSpeedByte(int locoId, int speed, int dir) {
         if (speed>0) speed++; //add 1 to speed if not zero or estop
         if (speed<0) speed = 1; //eStop is actually 1
@@ -696,7 +700,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (!locoFunctions.containsKey(locoId)) locoFunctions.put(locoId, 0); //init functions if not set
     }
 
-    //stores the calculated value of the functionsByte as used by DCC++EX
+    //stores the calculated value of the functionsByte as used by DCC-EX
     private void storeLocoFunction(int locoId, int function, int state) {
         int functions = 0; //init functions to all off if not stored
         if (locoFunctions.containsKey(locoId))
@@ -719,6 +723,14 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         int functions = locoFunctions.get(locoId);
         s = "l " + locoId + " 0 " + speedByte + " " + functions;  //<l loco slot speedByte functions>
         return s;
+    }
+
+    private DCCppReply generateAutomationIDReply(int id) {
+        switch (id) {
+            case 1: return DCCppReply.parseDCCppReply("jA 1 R \"Simulator Route\"");
+            case 2: return DCCppReply.parseDCCppReply("jA 2 A \"Simulator Auto\"");
+            default: return null;
+        }
     }
 
     /* 's'tatus message gets multiple reply messages */

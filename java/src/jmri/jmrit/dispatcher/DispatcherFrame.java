@@ -104,6 +104,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     public DispatcherFrame() {
         super(true, true); // remember size a position.
 
+        // set the close short cut
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
         editorManager = InstanceManager.getDefault(EditorManager.class);
         initializeOptions();

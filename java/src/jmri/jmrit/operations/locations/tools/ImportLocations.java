@@ -22,12 +22,12 @@ import jmri.util.swing.JmriJOptionPane;
  * Service Order, Road Option, Roads, Load Option, Loads, Ship Load Option,
  * Ships, Set Out Restrictions, Restrictions, Pick up Restrictions,
  * Restrictions, Schedule Name, Mode, Alternate Track, Pool name, Minimum, Track
- * Blocking Order, Planned Pick Ups, Track Destinations, Destinations, Hold
- * Cars, Disable Load Change, Swap default loads and empties, Empty cars with
- * default loads, Generate custom loads for spurs serviced by this train,
- * Generate custom loads for any spur (multiple trains), Generate custom loads
- * for any staging track, Block cars by pick up location, Comment, Comment when
- * there is only pick ups, Comment when there is only set outs
+ * Blocking Order, Planned Pick Ups, Track Destinations, Destinations, Quick
+ * Service, Hold Cars, Disable Load Change, Swap default loads and empties,
+ * Empty cars with default loads, Generate custom loads for spurs serviced by
+ * this train, Generate custom loads for any spur (multiple trains), Generate
+ * custom loads for any staging track, Block cars by pick up location, Comment,
+ * Comment when there is only pick ups, Comment when there is only set outs
  */
 public class ImportLocations extends ImportCommon {
 
@@ -54,7 +54,7 @@ public class ImportLocations extends ImportCommon {
     protected static final int FIELD_LOADS = 15;
     protected static final int FIELD_SHIP_LOAD_OPTION = 16;
     protected static final int FIELD_SHIPS = 17;
-    // 18 - 21 not implemented
+    // 18 - 21 import not implemented
     protected static final int FIELD_SET_OUT_RESTRICTIONS = 18;
     protected static final int FIELD_RESTRICTIONS_1 = 19;
     protected static final int FIELD_PICK_UP_RESTRICTIONS = 20;
@@ -69,23 +69,24 @@ public class ImportLocations extends ImportCommon {
     protected static final int FIELD_TRACK_MAXIMUM_POOL = 28;
     protected static final int FIELD_TRACK_BLOCKING_ORDER = 29;
     protected static final int FIELD_PLANNED_PICK_UPS = 30;
-    // 30 - 40 not implemented
+    // 31 - 42 import not implemented
     protected static final int FIELD_TRACK_DESTINATIONS = 31;
     protected static final int FIELD_DESTINATIONS = 32;
-    protected static final int FIELD_HOLD_CARS_CUSTOM_LOADS = 33;
-    protected static final int FIELD_DISABLE_LOAD_CHANGE = 34;
-    protected static final int FIELD_SWAP_DEFAULT = 35;
-    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 36;
-    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 37;
-    protected static final int FIELD_GENERATE_SPUR = 38;
-    protected static final int FIELD_GENERATE_ANY_SPUR = 39;
-    protected static final int FIELD_GENERATE_STAGING = 40;
-    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 41;
+    protected static final int FIELD_QUICK_SERVICE = 33;
+    protected static final int FIELD_HOLD_CARS_CUSTOM_LOADS = 34;
+    protected static final int FIELD_DISABLE_LOAD_CHANGE = 35;
+    protected static final int FIELD_SWAP_DEFAULT = 36;
+    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 37;
+    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 38;
+    protected static final int FIELD_GENERATE_SPUR = 39;
+    protected static final int FIELD_GENERATE_ANY_SPUR = 40;
+    protected static final int FIELD_GENERATE_STAGING = 41;
+    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 42;
 
-    protected static final int FIELD_COMMENT = 42;
-    protected static final int FIELD_COMMENT_BOTH = 43;
-    protected static final int FIELD_COMMENT_PICKUPS = 44;
-    protected static final int FIELD_COMMENT_SETOUTS = 45;
+    protected static final int FIELD_COMMENT = 43;
+    protected static final int FIELD_COMMENT_BOTH = 44;
+    protected static final int FIELD_COMMENT_PICKUPS = 45;
+    protected static final int FIELD_COMMENT_SETOUTS = 46;
 
     @Override
     public void run() {
@@ -382,7 +383,7 @@ public class ImportLocations extends ImportCommon {
                 }
             }
 
-            // TODO import fields 30 though 40
+            // TODO import fields 31 though 42
 
             if (inputLine.length >= FIELD_COMMENT) {
                 String fieldComment = inputLine[FIELD_COMMENT].trim();

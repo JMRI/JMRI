@@ -2,6 +2,7 @@ package jmri.jmrit.display;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
@@ -178,6 +179,36 @@ public class MemoryIconTest extends PositionableTestBase {
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
+    }
+
+    /**
+     * Showing a roster entry must not depend on the shared {@code re} field:
+     * displayState() clears it, so a second thread changing the memory value
+     * while updateIconFromRosterVal() runs used to cause a NullPointerException.
+     * The subclass below clears the field at that exact point, which makes the
+     * interleaving deterministic without needing a second thread.
+     */
+    @Test
+    public void testShowRosterEntryWhileFieldCleared() {
+        JUnitUtil.initDebugThrottleManager();
+
+        jmri.jmrit.roster.RosterEntry entry = new jmri.jmrit.roster.RosterEntry();
+        entry.setId("test loco");
+        entry.setDccAddress("42");
+        entry.setLongAddress(false);
+        entry.setIconPath("resources/icons/markers/loco-red.gif");
+
+        MemoryIcon icon = new MemoryIcon("MemoryTest2", editor) {
+            @Override
+            public void updateIcon(NamedIcon s) {
+                super.updateIcon(s);
+                re = null;  // as displayState() does, from another thread
+            }
+        };
+
+        // null means the icon was shown; a non-null return is the text fallback,
+        // which would not reach the code under test
+        assertNull(icon.updateIconFromRosterVal(entry), "roster icon was shown");
     }
 
     @Test

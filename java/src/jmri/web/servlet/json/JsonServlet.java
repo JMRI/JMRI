@@ -265,7 +265,7 @@ public class JsonServlet extends WebSocketServlet {
         JsonNode data;
         JsonNode reply = null;
         try {
-            if (request.getContentType().contains(APPLICATION_JSON)) {
+            if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
                 data = mapper.readTree(request.getReader());
                 if (!data.path(DATA).isMissingNode()) {
                     data = data.path(DATA);
@@ -358,7 +358,7 @@ public class JsonServlet extends WebSocketServlet {
         JsonNode data;
         JsonNode reply = null;
         try {
-            if (request.getContentType().contains(APPLICATION_JSON)) {
+            if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
                 data = mapper.readTree(request.getReader());
                 if (!data.path(DATA).isMissingNode()) {
                     data = data.path(DATA);
@@ -449,7 +449,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
                 if (services.get(jsonRequest.version).get(type) != null) {
                     JsonNode data = mapper.createObjectNode();
-                    if (request.getContentType().contains(APPLICATION_JSON)) {
+                    if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
                         data = mapper.readTree(request.getReader());
                         if (!data.path(DATA).isMissingNode()) {
                             data = data.path(DATA);

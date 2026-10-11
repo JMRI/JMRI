@@ -11,9 +11,7 @@ import org.junit.jupiter.api.Timeout;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.*;
@@ -141,7 +139,10 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // enter a good road number
         f.roadNumberTextField.setText("123");
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonYes"));
         
         Assert.assertNull(eManager.getByRoadAndNumber("PC", "5016"));
         Assert.assertNotNull(eManager.getByRoadAndNumber("PC", "123"));
@@ -172,18 +173,38 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // change road number for this engine
         f.roadNumberTextField.setText("54321");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonYes"));
+        
         engine = engineManager.getByRoadAndNumber("PC", "54321");
         Assert.assertNotNull("engine exists", engine);
         // confirm engine id was modified
         Assert.assertEquals("engine id", "PC54321", engine.getId());
 
+        // check cancel change road name
+        f.roadComboBox.setSelectedItem("SP");
+        
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonNo"));
+        
+        engine = engineManager.getByRoadAndNumber("PC", "54321");
+        Assert.assertNotNull("engine exists", engine);
+        Assert.assertTrue("window exists", f.isVisible());
+        
         // close on save
         Setup.setCloseWindowOnSaveEnabled(true);
 
-        // change road name
-        f.roadComboBox.setSelectedItem("SP");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        // now change road name
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveButton);
+        JemmyUtil.pressDialogButton(f,
+                Bundle.getMessage("rsChangeNumberRoad"),
+                Bundle.getMessage("ButtonYes"));
+        
         engine = engineManager.getByRoadAndNumber("SP", "54321");
         Assert.assertNotNull("engine exists", engine);
         // confirm engine id was modified

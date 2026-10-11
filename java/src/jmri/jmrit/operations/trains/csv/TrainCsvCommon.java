@@ -3,8 +3,6 @@ package jmri.jmrit.operations.trains.csv;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.csv.CSVPrinter;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -17,10 +15,12 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.FileUtil;
 
+import org.apache.commons.csv.CSVPrinter;
+
 /**
  * Contains the csv operators for manifests and switch lists
  *
- * @author Daniel Boudreau Copyright (C) 2011, 2013, 2015, 2022
+ * @author Daniel Boudreau Copyright (C) 2011, 2013, 2015, 2022, 2026
  */
 public class TrainCsvCommon extends TrainCommon {
 
@@ -125,8 +125,8 @@ public class TrainCsvCommon extends TrainCommon {
 
     protected final void printTrainComment(CSVPrinter fileOut, Train train) throws IOException {
         if (!train.getComment().equals(Train.NONE)) {
-            String textColorName = TrainCommon.getTextColorName(train.getCommentWithColor());
-            String[] comments = train.getComment().split(NEW_LINE);
+            String textColorName = train.getCommentColorName();
+            String[] comments = train.getCommentCurrent().split(NEW_LINE);
             for (String comment : comments) {
                 fileOut.printRecord("TC", Bundle.getMessage("csvTrainComment"), comment, textColorName); // NOI18N
             }
@@ -134,7 +134,9 @@ public class TrainCsvCommon extends TrainCommon {
     }
 
     protected final void printRouteComment(CSVPrinter fileOut, Train train) throws IOException {
-        fileOut.printRecord("RC", Bundle.getMessage("csvRouteComment"), train.getRoute().getComment()); // NOI18N
+        if (!train.getRoute().getComment().isBlank()) {
+            fileOut.printRecord("RC", Bundle.getMessage("csvRouteComment"), train.getRoute().getComment()); // NOI18N
+        }
     }
 
     protected void printLogoURL(CSVPrinter fileOut, Train train) throws IOException {

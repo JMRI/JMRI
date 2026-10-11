@@ -22249,7 +22249,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <addressing>Memory</addressing>
         <value>1.000</value>
         <memory>IM1</memory>
-        <listenToMemory>yes</listenToMemory>
+        <listenToMemory>no</listenToMemory>
       </rate>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />

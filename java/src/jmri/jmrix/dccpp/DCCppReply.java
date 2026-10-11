@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 
 /**
- * Represents a single response from the DCC++ system.
+ * Represents a single response from the DCC-EX system.
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Mark Underwood Copyright (C) 2015
@@ -642,7 +642,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Not really used inside of DCC++. Just here to play nicely with the
+     * Not really used inside of DCC-EX. Just here to play nicely with the
      * inheritance. 
      * TODO: If this is unused, can we just not override it and (not) "use" 
      * the superclass version? 
@@ -773,7 +773,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /*
-     * Some notes on DCC++ messages and responses...
+     * Some notes on DCC-EX messages and responses...
      *
      * Messages that have responses expected: 
      * t : <T REGISTER SPEED DIRECTION>
@@ -791,7 +791,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * s : Series of status messages... 
      *     <p[0,1]> Power state
      *     <T ...>Throttle responses from all registers
-     *     <iDCC++ ... > Base station version and build date
+     *     <iDCC-EX ... > Base station version and build date
      *     <H ID ADDR INDEX THROW> All turnout states.
      *
      * Unsolicited Replies:
@@ -822,7 +822,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return (m);
 
         } catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ reply syntax! s = {}", pat);
+            log.error("Malformed DCC-EX reply syntax! s = {}", pat);
             return (null);
         } catch (IllegalStateException e) {
             log.error("Group called before match operation executed string = {}", s);
@@ -1635,13 +1635,23 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public ArrayList<Integer> getTurnoutIDList() {
-        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        ArrayList<Integer> ids=new ArrayList<Integer>();
         if (this.isTurnoutIDsReply()) {
             String idList = this.getValueString(1);
             if (!idList.isEmpty()) {
                 String[] idStrings = idList.split(" ");
                 for (String idString : idStrings) {
-                    ids.add(Integer.parseInt(idString));
+                    try {
+                        int id = Integer.parseInt(idString);
+                        if (id >= 1 && id <= DCCppConstants.MAX_TURNOUT_ADDRESS) {
+                            ids.add(id);
+                        } else {
+                            // DCC-EX WiFi buffer overflow (Mega+WiFi) can corrupt the jT reply, producing out-of-range IDs
+                            log.warn("Ignoring out-of-range turnout ID {} in jT response (buffer overflow?)", id);
+                        }
+                    } catch (NumberFormatException e) {
+                        log.warn("Ignoring malformed token '{}' in jT response", idString);
+                    }
                 }
             }
         } else {

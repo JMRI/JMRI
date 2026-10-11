@@ -227,7 +227,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 
     /**
      * Has to be available, even though it doesn't do anything
-     * on DCC++.
+     * on DCC-EX.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -262,7 +262,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
 
     @Override
-    // endOfMessage() not really used in DCC++ .. it's handled in the Packetizer.
+    // endOfMessage() not really used in DCC-EX .. it's handled in the Packetizer.
     protected boolean endOfMessage(AbstractMRReply msg) {
         return msg.getElement(msg.getNumDataElements() - 1) == '>';
     }

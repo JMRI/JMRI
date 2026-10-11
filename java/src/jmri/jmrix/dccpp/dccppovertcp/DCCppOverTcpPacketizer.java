@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.concurrent.GuardedBy;
 
 /**
- * Converts Stream-based I/O to/from DCC++ messages. The "DCCppInterface" side
+ * Converts Stream-based I/O to/from DCC-EX messages. The "DCCppInterface" side
  * sends/receives DCCppMessage objects. The connection to a
  * DCCppPortnetworkController is via a pair of *Streams, which then carry
  * sequences of characters for transmission.
@@ -56,8 +56,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     static final String OLD_SEND_PREFIX = "SEND";
     static final String RECEIVE_PREFIX = "<";
     static final String SEND_PREFIX = ""; // Making this an empty string on purpose.
-    static final String OLD_SERVER_VERSION_STRING = "VERSION JMRI Server "; // CAREFUL: Changing this could break backward compatibility
-    static final String NEW_SERVER_VERSION_STRING = "VERSION DCC++ Server ";
+    static final String OLD_SERVER_VERSION_STRING = "VERSION DCC++ Server "; // CAREFUL: Changing this could break backward compatibility
+    static final String NEW_SERVER_VERSION_STRING = "VERSION DCC-EX Server ";
 
     boolean useOldPrefix = false;
 
@@ -164,7 +164,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         // start the XmtHandler in a thread of its own
         Thread xmtThread;
         synchronized (xmtHandler) { // never null at this point
-            xmtThread = new Thread(xmtHandler, "DCC++ transmit handler");
+            xmtThread = new Thread(xmtHandler, "DCC-EX transmit handler");
         }
         log.debug("Xmt thread starts at priority {}", xmtpriority);
         xmtThread.setDaemon(true);
@@ -175,7 +175,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "DCC++ receive handler");
+        Thread rcvThread = new Thread(rcvHandler, "DCC-EX receive handler");
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
@@ -245,7 +245,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     int lastidx = rxLine.lastIndexOf(">");
                     log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
 
-                    // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
+                    // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC-EX and don't
                     // need to be parsed. Indeed, trying to parse them will screw them up.
                     // So instead, we de-deprecated the string constructor so that we can
                     // directly create a DCCppReply from the incoming string without translation/parsing.
@@ -279,7 +279,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     //  log.warn("run: unexpected DCCppMessageException: ", e);
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    log.debug("EOFException, is DCC++ serial I/O using timeouts?");
+                    log.debug("EOFException, is DCC-EX serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
                     log.debug("IOException, should only happen with HexFile: ", e);

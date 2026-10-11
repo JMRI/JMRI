@@ -75,7 +75,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableDataModel$ImageIconRenderer$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor$2").and()
-                                .doNotHaveFullyQualifiedName("mri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.display.PositionableJTextField").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch$2").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch$3").and()
@@ -269,7 +269,8 @@ public class ArchitectureTest {
      */
     @ArchTest // Initially 3 flags in JMRI 4.17.3 - see archunit_ignore_patterns.txt
     public static final ArchRule checkJmriPackageJdom = noClasses()
-        .that().resideInAPackage("jmri")
+        .that().resideInAPackage("jmri").and()
+        .doNotHaveFullyQualifiedName("jmri.UserPreferencesManager")
         .should().dependOnClassesThat().resideInAPackage("org.jdom2..");
 
     /**

@@ -234,10 +234,7 @@ public class NXFrameTest {
             warrant.controlRunTrain(Warrant.RESUME);
         });
 
-        JUnitUtil.waitFor(() -> {
-            String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #8.");
-        }, "Train starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Train starts to move at 8th command");
 
         // OBlock sensor names
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
@@ -298,13 +295,7 @@ public class NXFrameTest {
         assertNotNull( warrant, "warrant");
 
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
-        JUnitUtil.waitFor(() -> {
-            String m =  warrant.getRunningMessage();
-            if ( m == null ) {
-                return false;
-            }
-            return m.endsWith("Cmd #3.");
-        }, "Train is moving at 3rd command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 3), "Train is moving at 3rd command");
 
        // OBlock sensor names
         String[] route = {"OB3", "OB4", "OB5", "OB10", "OB0", "OB1", "OB2", "OB3"};
@@ -365,13 +356,7 @@ public class NXFrameTest {
         sp.setRampThrottleIncrement(0.15f);
         sp.setRampTimeIncrement(100);
 
-        JUnitUtil.waitFor(() -> {
-            String m =  warrant.getRunningMessage();
-            if ( m == null ) {
-                return false;
-            }
-            return m.endsWith("Cmd #8.");
-        }, "Train starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Train starts to move at 8th command");
 
        // OBlock sensor names
         String[] route1 = {"OB1", "OB6", "OB3"};

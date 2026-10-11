@@ -622,8 +622,15 @@ public class LccProFrame extends TwoPaneTBWindow  {
             }
 
             try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
-                str.printRecord("Name", "ID", "Manufacturer", "Model", "Software", "Description");
                 var table = nodetable.getTable();
+                str.printRecord(
+                    table.getColumnName(LccProTableModel.NAMECOL),  // done this way in case columns have been reordered
+                    table.getColumnName(LccProTableModel.IDCOL),
+                    table.getColumnName(LccProTableModel.MFGCOL),
+                    table.getColumnName(LccProTableModel.MODELCOL),
+                    table.getColumnName(LccProTableModel.SVERSIONCOL),
+                    table.getColumnName(LccProTableModel.DESCRIPTIONCOL)
+                );
                 for (int row = 0; row < table.getRowCount(); row++) {
                     var name = table.getValueAt(row, LccProTableModel.NAMECOL);
                     var id = table.getValueAt(row, LccProTableModel.IDCOL);

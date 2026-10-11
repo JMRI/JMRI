@@ -5,6 +5,8 @@ import java.util.Arrays;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import jmri.jmrix.nce.ncemon.NceMonBinary;
+
 /**
  * Encodes a message to an NCE command station.
  * <p>
@@ -34,7 +36,6 @@ import javax.annotation.Nonnull;
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
  
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessage.class); // called in static block
-    private static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
     public static final int NOP_CMD = 0x80; //NCE NOP command
     public static final int ASSIGN_CAB_CMD = 0x81; // NCE Assign loco to cab command, NCE-USB no
@@ -641,6 +642,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      */
     @Override
     public String toMonitorString() {
-        return nceMon.displayMessage(this);
+        return NceMonBinary.INSTANCE.displayMessage(this);
     }
 }

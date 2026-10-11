@@ -193,7 +193,7 @@ public class Almir {
                 dev = "SE74"; //NOI18N
                 rts = 64;
                 ents = 16;
-                be = bs + 36;
+                be = bs + 35;
                 break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_PM74:
                 dev = "PM74"; //NOI18N
@@ -226,7 +226,8 @@ public class Almir {
         }
 
         if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ||
-                Alm.isSe74CapsRpt(l) || Alm.isPm74CapsRpt(l) ) {
+                Alm.isSe74CapsRpt(l) || Alm.isPm74CapsRpt(l) ||
+                Alm.isBdl716CapsRpt(l)) {
             if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ) {
                 switch ((l.getElement(10) & 0x1e) >>1) {
                     case 0:
@@ -254,11 +255,23 @@ public class Almir {
                         be = bs;
                         break;
                 }
-            } else if (Alm.isSe74CapsRpt(l)) { // element 10 observed at 0
-                mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
-                // addressing has already been set above
+            } else if (Alm.isSe74CapsRpt(l)) {
+                if (((l.getElement(10) & 0x3e) >>1) == 0x10) {
+                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_ASPECT";
+                    be = bs + 3;
+                } else if (((l.getElement(10) & 0x3E) >>1) == 0x00) {
+                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_SIG"; // NOI18N
+                    // addressing has already been set above
+                } else {
+                    mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF";
+                    // assume addressing has already been set above
+                } // NOI18N
             } else if (Alm.isPm74CapsRpt(l)) { // element 10 observed at 0
                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
+                // addressing has already been set above
+            } else if (Alm.isBdl716CapsRpt(l)) {
+                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_NOT_APPLICABLE"; // NOI18N
+                 
                 // addressing has already been set above
             } else {
                 be = bs;  // only show one address
@@ -267,7 +280,7 @@ public class Almir {
 
             mode = Bundle.getMessage(mode);
 
-            if (Alm.isPm74CapsRpt(l)) {
+            if ((Alm.isPm74CapsRpt(l)) || (Alm.isBdl716CapsRpt(l))) {
                 return Bundle.getMessage("LN_MSG_DEVICE_NO_ROUTES_CAPABILITIES_REPLY",
                    dev, ser, bs );
             }

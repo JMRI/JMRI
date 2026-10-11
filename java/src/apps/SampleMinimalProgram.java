@@ -81,7 +81,7 @@ public class SampleMinimalProgram {
 
         // Load from preference file, by default the DecoderPro
         // one so you can use DecoderPro to load the preferences values.
-        //    setConfigFilename("DecoderProConfig2.xml", args);
+        //    setConfigFilename("DecoderProConfig2.properties", args);
         //    loadFile();
         // load directly via code
         codeConfig(args);

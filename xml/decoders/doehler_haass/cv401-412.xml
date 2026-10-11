@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. Function swapping CV401-412 for the non-sound decoders (range 0-29).</revremark>
+    </revision>
+  </revhistory>
+  <!-- Function swapping (Funktionsvertauschung) CV401-412, non-sound decoders.               -->
+  <!-- Range is 0-29 here: 0 = off, 1..28 = F1..F28, 29 = F0 (light).                          -->
+  <!-- The sound decoders use the same CVs with an extended range of 0-46 (values 30-46 select -->
+  <!-- sound triggers), so they keep their own fragment SD_cv401_412.xml. Do not merge these.  -->
+  <!-- Not relevant for the PD* series - excluded by productID (130-134), which is stable across  -->
+  <!-- firmware versions, unlike the model names which carry a "(firmware x.yy.zzz+)" suffix.     -->
+  <variable item="Function Swapping F1" CV="401" default="1" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F1</label>
+    <label xml:lang="fr">Permutation de fonction F1</label>
+    <label xml:lang="de">Funktionsvertauschung F1</label>
+    <tooltip>CV401: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV401 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV401: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F2" CV="402" default="2" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F2</label>
+    <label xml:lang="fr">Permutation de fonction F2</label>
+    <label xml:lang="de">Funktionsvertauschung F2</label>
+    <tooltip>CV402: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV402 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV402: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F3" CV="403" default="3" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F3</label>
+    <label xml:lang="fr">Permutation de fonction F3</label>
+    <label xml:lang="de">Funktionsvertauschung F3</label>
+    <tooltip>CV403: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV403 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV403: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F4" CV="404" default="4" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F4</label>
+    <label xml:lang="fr">Permutation de fonction F4</label>
+    <label xml:lang="de">Funktionsvertauschung F4</label>
+    <tooltip>CV404: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV404 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV404: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F5" CV="405" default="5" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F5</label>
+    <label xml:lang="fr">Permutation de fonction F5</label>
+    <label xml:lang="de">Funktionsvertauschung F5</label>
+    <tooltip>CV405: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV405 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV405: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F6" CV="406" default="6" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F6</label>
+    <label xml:lang="fr">Permutation de fonction F6</label>
+    <label xml:lang="de">Funktionsvertauschung F6</label>
+    <tooltip>CV406: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV406 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV406: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F7" CV="407" default="7" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F7</label>
+    <label xml:lang="fr">Permutation de fonction F7</label>
+    <label xml:lang="de">Funktionsvertauschung F7</label>
+    <tooltip>CV407: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV407 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV407: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F8" CV="408" default="8" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F8</label>
+    <label xml:lang="fr">Permutation de fonction F8</label>
+    <label xml:lang="de">Funktionsvertauschung F8</label>
+    <tooltip>CV408: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV408 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV408: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F9" CV="409" default="9" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F9</label>
+    <label xml:lang="fr">Permutation de fonction F9</label>
+    <label xml:lang="de">Funktionsvertauschung F9</label>
+    <tooltip>CV409: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV409 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV409: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F10" CV="410" default="10" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F10</label>
+    <label xml:lang="fr">Permutation de fonction F10</label>
+    <label xml:lang="de">Funktionsvertauschung F10</label>
+    <tooltip>CV410: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV410 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV410: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F11" CV="411" default="11" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F11</label>
+    <label xml:lang="fr">Permutation de fonction F11</label>
+    <label xml:lang="de">Funktionsvertauschung F11</label>
+    <tooltip>CV411: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV411 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV411: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+  <variable item="Function Swapping F12" CV="412" default="12" exclude="130,131,132,133,134">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+    <label>Function interchange F12</label>
+    <label xml:lang="fr">Permutation de fonction F12</label>
+    <label xml:lang="de">Funktionsvertauschung F12</label>
+    <tooltip>CV412: 0 = off, 1-28 = F1-F28, 29 = F0 (light)</tooltip>
+    <tooltip xml:lang="fr">CV412 : 0 = désactivé, 1-28 = F1-F28, 29 = F0 (feux)</tooltip>
+    <tooltip xml:lang="de">CV412: 0 = deaktiviert, 1-28 = F1-F28, 29 = F0 (Licht)</tooltip>
+  </variable>
+</variables>

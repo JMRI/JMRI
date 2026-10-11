@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -18,11 +20,14 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import jmri.*;
+import jmri.BooleanPermission;
+import jmri.InstanceManager;
+import jmri.PermissionManager;
+import jmri.PermissionsProgrammer;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.EditableResizableImagePanel;
-import jmri.util.swing.MultiLineCellRenderer;
 import jmri.util.swing.MultiLineCellEditor;
+import jmri.util.swing.MultiLineCellRenderer;
 import jmri.util.swing.ResizableRowDataModel;
 
 /**
@@ -202,25 +207,26 @@ public class RosterMediaPane extends JPanel {
         }
     }
 
-    private static class RosterAttributesTableModel extends AbstractTableModel implements ResizableRowDataModel {
+    private static class RosterAttributesTableModel extends AbstractTableModel implements ResizableRowDataModel, PropertyChangeListener {
 
         Vector<KeyValueModel> attributes;
         String[] titles;
         boolean wasModified;
+        boolean isUpdatingModel = false;
         JTable associatedTable;
+        private static final String EMPTY_FIELD = "...";
 
         private static class KeyValueModel {
+            public String key, value;
 
             public KeyValueModel(String k, String v) {
                 key = k;
                 value = v;
-            }
-            public String key, value;
+            }            
         }
 
         public RosterAttributesTableModel(RosterEntry r) {
             setModel(r);
-
             titles = new String[2];
             titles[0] = Bundle.getMessage("MediaRosterAttributeName");
             titles[1] = Bundle.getMessage("MediaRosterAttributeValue");
@@ -232,6 +238,26 @@ public class RosterMediaPane extends JPanel {
                 attributes.add(new KeyValueModel(key, r.getAttribute(key)));
             }
             wasModified = false;
+            r.addPropertyChangeListener(this);
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (isUpdatingModel) {
+                return;
+            }
+            if (evt.getPropertyName().startsWith(RosterEntry.ATTRIBUTE_UPDATED) && (evt.getNewValue() instanceof String)) {
+                String key = evt.getPropertyName().substring(RosterEntry.ATTRIBUTE_UPDATED.length());
+                keyDelete(key);
+                attributes.add(new KeyValueModel(key, (String) evt.getNewValue()));
+                wasModified = true; 
+            } else if (evt.getPropertyName().startsWith(RosterEntry.ATTRIBUTE_DELETED) && (evt.getOldValue() instanceof String)) {
+                keyDelete((String) evt.getOldValue());
+                wasModified = true; 
+            }
+            if (wasModified) {
+                fireTableDataChanged();
+            }
         }
 
         public void updateModel(RosterEntry r) {
@@ -253,6 +279,19 @@ public class RosterMediaPane extends JPanel {
             }
             for (KeyValueModel attribute : attributes) {
                 if (k.compareTo(attribute.key) == 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private boolean keyDelete(String k) {
+            if (k == null) {
+                return false;
+            }
+            for (int i = 0; i < attributes.size(); i++) {
+                if (k.compareTo(attributes.get(i).key) == 0) {
+                    attributes.remove(i);
                     return true;
                 }
             }
@@ -287,7 +326,7 @@ public class RosterMediaPane extends JPanel {
                     return content;
                 }
             }
-            return "...";
+            return EMPTY_FIELD;
         }
 
         @Override
@@ -302,6 +341,10 @@ public class RosterMediaPane extends JPanel {
         @Override
         public void setValueAt(Object value, int row, int col) {
             KeyValueModel kv;
+
+            if ((value == null) || (value.toString().equals(EMPTY_FIELD))) {
+                return; // don't allow empty key or value
+            }
 
             if (row < attributes.size()) // already exist?
             {

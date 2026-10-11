@@ -106,7 +106,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     ShutDownTask fileDirtyTask;
 
     // holds a count of incomplete threads launched at ctor time; goes to zero when they're done
-    public java.util.concurrent.atomic.AtomicInteger threadCount = new java.util.concurrent.atomic.AtomicInteger(0);
+    public final java.util.concurrent.atomic.AtomicInteger threadCount = new java.util.concurrent.atomic.AtomicInteger(0);
+    private boolean closeAfterSave;
 
     public RosterEntryPane getRosterPane() { return _rPane;}
     public FunctionLabelPane getFnLabelPane() { return _flPane;}
@@ -124,13 +125,13 @@ abstract public class PaneProgFrame extends JmriJFrame
     protected void installComponents() {
 
         String title = " : "+_frameEntryId;
-        
+
         if (checkDontDetachPanes()) {
             tabPane = new JTabbedPane();
         } else {
             tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane(title);
         }
-        
+
         // create ShutDownTasks
         if (decoderDirtyTask == null) {
             decoderDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
@@ -1165,9 +1166,12 @@ abstract public class PaneProgFrame extends JmriJFrame
                     Bundle.getMessage("PromptSaveAndClose"));
             if (option == 0) { // array position 0 PromptSaveAndClose
                 // save requested
+                closeAfterSave = true;
                 if (!storeFile()) {
+                    closeAfterSave = false;
                     return;   // don't close if failed
                 }
+                return; // wait until the asynchronous write completes before disposing the models
             } else if (option == 2 || option == JmriJOptionPane.CLOSED_OPTION ) {
                 // cancel requested or Dialog closed
                 return; // without doing anything
@@ -1717,12 +1721,14 @@ abstract public class PaneProgFrame extends JmriJFrame
                     // how to handle the tab depends on whether it has contents and option setting
                     int index;
                     if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty()) {
+                        log.debug("'{}' pane of 1st type at index {}", name, tabPane.indexOfTab(name));
                         // Was there a race condition here with qualified panes?
                         // QualifiedVarTest attempts to invoke that, but haven't it with the following code
                         index = tabPane.indexOfTab(name);
                         tabPane.setComponentAt(tabPane.indexOfTab(name), p);  // always add if not empty
                         tabPane.setToolTipTextAt(tabPane.indexOfTab(name), p.getToolTipText());
                     } else if (isShowingEmptyPanes()) {
+                        log.debug("'{}' pane of 2nd type", name);
                         // here empty, but showing anyway as disabled
                         index = tabPane.indexOfTab(name);
                         tabPane.setComponentAt(tabPane.indexOfTab(name), p);
@@ -1730,10 +1736,12 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 Bundle.getMessage("TipTabEmptyNoCategory"));
                         tabPane.setEnabledAt(tabPane.indexOfTab(name), true); // need to enable the pane so user can see message
                     } else {
+                        log.debug("'{}' pane of 3rd type", name);
                         // here not showing tab at all
                         index = -1;
-                        log.trace("deleted {} tab here", name);
-                        tabPane.removeTabAt(tabPane.indexOfTab(name));
+                        log.trace("deleted {} tab here at index {}", name, tabPane.indexOfTab(name));
+                        // tabPane.removeTabAt(..) does not work here with DetachableTabbedPane
+                        tabPane.remove(tabPane.indexOfTab(name));
                     }
 
                     // remember it for programming
@@ -2170,9 +2178,16 @@ abstract public class PaneProgFrame extends JmriJFrame
             @Override
             protected void done() {
                 // show OK status
-                progStatus.setText(java.text.MessageFormat.format(
-                        Bundle.getMessage("StateSaveOK"), filename));
+                if (progStatus != null) {   // progStatus is set to null in the dispose method
+                    progStatus.setText(java.text.MessageFormat.format(
+                            Bundle.getMessage("StateSaveOK"), filename));
+                }
                 threadCount.decrementAndGet();
+                if (closeAfterSave) {
+                    closeAfterSave = false;
+                    windowClosing(new java.awt.event.WindowEvent(PaneProgFrame.this,
+                            java.awt.event.WindowEvent.WINDOW_CLOSING));
+                }
             }
         }.execute();
 
@@ -2293,8 +2308,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
     // This method is here to allow override in testing
     protected boolean checkDontDetachPanes() { return getDontDetachPanes(); }
-    
-    
+
+
     /**
      * Get value of whether current item should show empty panes.
      */

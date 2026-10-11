@@ -837,7 +837,6 @@ public class IdentifyDecoderTest {
             }
             @Override
             public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-                System.err.println("wrote");
                 cvRead = -1;
                 cvWrite = Integer.parseInt(CV);
                 cvValue = val;

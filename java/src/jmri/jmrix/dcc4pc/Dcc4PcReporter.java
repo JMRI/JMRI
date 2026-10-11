@@ -22,6 +22,14 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         super(systemName, userName);  // can't use prefix here, as still in construction
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasExitReports() {
+        return true;
+    }
+
     // data members
     transient RailComPacket[] rcPacket = new RailComPacket[3];
 

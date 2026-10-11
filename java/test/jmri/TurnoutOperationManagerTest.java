@@ -1,5 +1,8 @@
 package jmri;
 
+import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
+import jmri.jmrix.dccpp.DCCppTurnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -31,6 +34,18 @@ public class TurnoutOperationManagerTest {
         assertNull(t.getTooltipForOperator("Not an operator", null));
         assertNull(t.getTooltipForOperator(null, null));
         assertNotNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationOff"), null));
+    }
+
+    @Test
+    public void testDefaultTooltipNullWhenNoMatchingOperation() {
+        // CS_VPIN (512) has no matching TurnoutOperation; getTooltipForOperator
+        // must return null rather than NPE when getMatchingOperationAlways returns null
+        TurnoutOperationManager t = new TurnoutOperationManager();
+        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppTurnout turnout = new DCCppTurnout("DCCPP", 42, xnis);
+        turnout.setFeedbackMode(Turnout.CS_VPIN);
+        assertNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationDefault"), turnout));
+        xnis.terminateThreads();
     }
 
     @BeforeEach

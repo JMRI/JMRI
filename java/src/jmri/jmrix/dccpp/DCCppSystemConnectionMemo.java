@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public DCCppSystemConnectionMemo(@Nonnull DCCppTrafficController xt) {
-        super("D", "DCC++");
+        super("D", "DCC-EX");
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
@@ -38,7 +38,7 @@ public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
     }
 
     public DCCppSystemConnectionMemo() {
-        super("D", "DCC++");
+        super("D", "DCC-EX");
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
 
         // create and register the DCCppComponentFactory

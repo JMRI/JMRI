@@ -120,7 +120,8 @@
       instead of "NOTHING" prevents the engine from stopping if the speed is not zero.<br>
       <em>Since JMRI 4.19.2</em></p>
 
-      <h5>More throttle key functions: Brake-Key, Half-Speed-Key and Coast-Key</h5>
+      <h5>More throttle key functions: Brake-Key, Half-Speed-Key, Coast-Key,
+      Notch-Up-Key and Notch-Down-Key</h5>
 
       <p>Description:<br>
       Trigger name for Brake-Key: BRAKE_KEY<br>
@@ -128,7 +129,12 @@
       Trigger name for Coast-Key: COAST<br>
       All these Triggers are intended for Engine type "steam1".<br>
       Optional. Must be declared in the tag <strong>sound-event name="ENGINE"</strong>.<br>
-      <em>Since JMRI 4.13.3</em></p>
+      <em>Since JMRI 4.13.3</em><br></p>
+
+      <p>The COAST Trigger was added for Engine type "diesel3".<br>
+      In addition, NOTCH_UP and NOTCH_DOWN Triggers were added. The throttle function keys should
+      be configured as momentary-action keys.<br>
+      <em>Since JMRI 5.17.2</em></p>
 
       <p>Important note on Brake-Key and Half-speed: Please setup those keys in Virtual Sound
       Decoder only, if your DCC decoder supports such features and can be set likewise.<br>

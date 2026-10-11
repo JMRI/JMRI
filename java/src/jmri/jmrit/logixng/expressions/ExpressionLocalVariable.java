@@ -33,7 +33,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     private String _constantValue = "";
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
     private String _otherLocalVariable = "";
     private String _regEx = "";
     private boolean _listenToMemory = true;
@@ -340,7 +340,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && _listenToMemory) {
             _selectMemoryNamedBean.addPropertyChangeListener("value", this);
-            _selectMemoryNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -350,7 +349,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered && _listenToMemory) {
             _selectMemoryNamedBean.removePropertyChangeListener("value", this);
-            _selectMemoryNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

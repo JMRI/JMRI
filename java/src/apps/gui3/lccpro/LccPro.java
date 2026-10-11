@@ -98,7 +98,7 @@ public class LccPro extends Apps3 {
                         return "Next you need to configure your LCC connection.\n\nThen select the serial port or enter in the IP address of the device";
                     }
                 };
-            }      
+            }
         };
         prefsAction.setApp(this);
         prefsAction.actionPerformed(null);
@@ -136,7 +136,7 @@ public class LccPro extends Apps3 {
 
     public static void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
-        apps.gui3.Apps3.setConfigFilename("LccProConfig.xml", args);
+        apps.gui3.Apps3.setConfigFilename("LccProConfig.properties", args);
     }
 
     /**

@@ -571,6 +571,9 @@ public class RouteEditTableModel extends OperationsTableModel implements Propert
         commentColorChooser.setChooserPanels(commentColorPanels);
         commentColorChooser.setPreviewPanel(new JPanel());
         pTextColor.add(commentColorChooser);
+        JCheckBox boldCheckBox = new JCheckBox(Bundle.getMessage("BoldText"));
+        boldCheckBox.setSelected(rl.isCommentBoldEnabled());
+        pTextColor.add(boldCheckBox);
         buttonPane.add(pTextColor);
 
         JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
@@ -579,6 +582,7 @@ public class RouteEditTableModel extends OperationsTableModel implements Propert
             public void actionPerformed(ActionEvent arg0) {
                 rl.setComment(commentTextArea.getText());
                 rl.setCommentColor(commentColorChooser.getColor());
+                rl.setCommentBoldEnabled(boldCheckBox.isSelected());
                 dialog.dispose();
                 return;
             }

@@ -169,6 +169,10 @@ public abstract class AbstractThrottleManagerTestBase {
         ThrottleListen throtListen = new ThrottleListen();
         tm.requestThrottle(addr, throtListen, true);
         JUnitUtil.waitFor(()-> (tm.getThrottleInfo(addr, Throttle.ISFORWARD) != null), "reply didn't arrive");
+        // throttleFoundResult is set in the same deferred callback as
+        // throttle acquisition (see AbstractThrottleManager), so it can
+        // still be false for a moment after getThrottleInfo() is populated.
+        JUnitUtil.waitFor(() -> throttleFoundResult, "throttle found callback didn't arrive");
 
         assertTrue(throttleFoundResult);
         assertFalse( throttleNotFoundResult );

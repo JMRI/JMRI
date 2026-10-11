@@ -1,5 +1,7 @@
 package jmri.web.servlet.panel;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,8 +66,13 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             panel.addContent(color);
         }
 
-        // include contents
-        List<Positionable> contents = editor.getContents();
+        // include contents, sorted by display level (z-order) so the web client,
+        // which draws elements in document order onto a single canvas, reproduces
+        // the desktop stacking order. Lower-level elements are emitted first and
+        // higher-level elements last. A stable sort preserves the existing relative
+        // order of elements that share a display level. See JMRI/JMRI#12794.
+        List<Positionable> contents = new ArrayList<>(editor.getContents());
+        contents.sort(Comparator.comparingInt(Positionable::getDisplayLevel));
         log.debug("N elements: {}", contents.size());
         for (Positionable sub : contents) {
             if (sub != null) {

@@ -260,7 +260,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
         msg.setElement(1, slot.getSlot());
         msg.setElement(2, new_dirf);
-        network.sendLocoNetMessage(msg);
+        network.sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -277,7 +277,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setOpCode(LnConstants.OPC_LOCO_SND);
         msg.setElement(1, slot.getSlot());
         msg.setElement(2, new_snd);
-        network.sendLocoNetMessage(msg);
+        network.sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -421,7 +421,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F0F6);
-            network.sendLocoNetMessage(msg);
+            network.sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -440,7 +440,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 msg.setElement(2,slot.getSlot() & 0b01111111);
                 msg.setElement(3,slot.id() & 0x7F);
                 msg.setElement(4, new_F7F13);
-                network.sendLocoNetMessage(msg);
+                network.sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -460,7 +460,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F14F20);
-            network.sendLocoNetMessage(msg);
+            network.sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -484,7 +484,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setElement(2, slot.getSlot() & 0b01111111);
         msg.setElement(3, slot.id() & 0x7F);
         msg.setElement(4, new_F2128);
-        network.sendLocoNetMessage(msg);
+        network.sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -509,7 +509,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setElement(2, slot.getSlot() & 0x7f);
         msg.setElement(3, (slot.id() & 0x7f));
         msg.setElement(4, speed);
-        network.sendLocoNetMessage(msg);
+        network.sendLocoNetMessage(msg, true);
     }
 
     /**
@@ -533,7 +533,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setElement(2, slot.getSlot() & 0x7f);
         msg.setElement(3, (slot.id() & 0x7f));
         msg.setElement(4, speed);
-        network.sendLocoNetMessage(msg);
+        network.sendLocoNetMessage(msg, true);
     }
 
     /**

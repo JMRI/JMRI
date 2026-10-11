@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to current meters from the DCC++ Base Station
+ * Provide access to current meters from the DCC-EX Base Station
  *   Creates meters based on values sent from command station
  *
  * @author Mark Underwood    Copyright (C) 2015
@@ -71,7 +71,7 @@ public class DCCppPredefinedMeters implements DCCppListener {
      *   creates meters if first time this name is encountered
      *   uses new MeterReply message format from DCC-EX
      *   also supports original "current percent" meter from
-     *   older DCC++                                           */
+     *   older DCC-EX                                           */
     @Override
     public void message(DCCppReply r) {
 

@@ -112,6 +112,9 @@ public class LocoIcon extends PositionableLabel {
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
+        if (_editor.isLocoMarkerPopupDisabled()) {
+            return false;
+        }
         if (_entry != null) {
             popup.add(new AbstractAction("Throttle") {
                 @Override

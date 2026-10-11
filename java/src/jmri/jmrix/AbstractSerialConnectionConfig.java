@@ -23,6 +23,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
@@ -165,7 +167,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     String invalidPort = null;
 
 //    @SuppressWarnings("UseOfObsoleteCollectionType")
-    public void refreshPortBox() {
+    protected void refreshPortBox() {
+        log.debug("entering refreshPortBox");
         if (!init) {
             v = getPortNames();
             portBox.setRenderer(new ComboBoxRenderer());
@@ -189,7 +192,17 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             log.error("port name Vector v is null!");
             return;
         }
-
+        
+        // Display differences between the present and previous list of ports
+        if (originalList != null) {
+            Vector<String> newPorts = new Vector<>(v);
+            newPorts.removeAll(originalList);
+            for (var port : newPorts) { log.info("Found new port {}", port);}
+            Vector<String> lostPorts = new Vector<>(originalList);
+            lostPorts.removeAll(v);
+            for (var port : lostPorts) { log.info("Port {} no longer present", port);}
+        }
+        
         /* as we make amendments to the list of port in vector v, we keep a copy of it before
          modification, this copy is then used to validate against any changes in the port lists.
          */
@@ -206,6 +219,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             v.add(0, Bundle.getMessage("noPortsFound"));
         }
         String portName = adapter.getCurrentPortName();
+        portBox.setForeground(Color.black);
         if (portName != null && !portName.equals(Bundle.getMessage("noneSelected")) && !portName.equals(Bundle.getMessage("noPortsFound"))) {
             if (!v.contains(portName)) {
                 v.add(0, portName);
@@ -247,8 +261,21 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         // add a listener for later changes
         portBox.addActionListener((ActionEvent e) -> {
+            log.debug("portBox action listener fired");
             String port = PortNameMapper.getPortFromName((String) portBox.getSelectedItem());
             adapter.setPort(port);
+        });
+        portBox.addPopupMenuListener(new PopupMenuListener(){
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                log.trace("popupMenuCanceled");
+            }
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                log.trace("popupMenuWillBecomeInvisible");
+            }
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                log.debug("popupMenuWillBecomeVisible");
+                refreshPortBox();
+            }
         });
     }
 
@@ -623,7 +650,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
 //    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
     protected Vector<String> getPortNames() {
-        return AbstractSerialPortController.getActualPortNames();
+        log.trace("enter getPortNames");
+        var retval = AbstractSerialPortController.getActualPortNames();
+        for (var port : retval) {
+            log.trace("  port {}", port);
+        }
+        return retval;
     }
         
     /**

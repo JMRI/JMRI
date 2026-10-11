@@ -3,10 +3,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -18,10 +14,14 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.BuildFailedException;
 import jmri.jmrit.operations.trains.Train;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Contains methods for engines when building a train.
  * 
- * @author Daniel Boudreau Copyright (C) 2022
+ * @author Daniel Boudreau Copyright (C) 2022, 2026
  */
 public class TrainBuilderEngines extends TrainBuilderBase {
 
@@ -182,8 +182,8 @@ public class TrainBuilderEngines extends TrainBuilderBase {
 
         int assignedLocos = 0; // the number of locos assigned to this train
         List<Engine> singleLocos = new ArrayList<>();
-        for (int indexEng = 0; indexEng < getEngineList().size(); indexEng++) {
-            Engine engine = getEngineList().get(indexEng);
+        for (_engineIndex = 0; _engineIndex < getEngineList().size(); _engineIndex++) {
+            Engine engine = getEngineList().get(_engineIndex);
             log.debug("Engine ({}) at location ({}, {})", engine.toString(), engine.getLocationName(),
                     engine.getTrackName());
 
@@ -240,7 +240,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 if (!setEngineDestination(engine, rl, rld)) {
                     return false;
                 }
-                getEngineList().remove(indexEng--);
                 if (engine.getConsist() != null) {
                     assignedLocos = assignedLocos + engine.getConsist().getSize();
                 } else {
@@ -281,7 +280,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                             engine.getModel(), engine.getTypeName(), engine.getLocationName(), engine.getTrackName(),
                             rld.getName()));
             if (setEngineDestination(engine, rl, rld)) {
-                getEngineList().remove(indexEng--);
                 return true; // normal exit when not staging
             }
         }
@@ -316,7 +314,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                     continue;
                 }
                 if (setEngineDestination(engine, rl, rld)) {
-                    getEngineList().remove(engine);
                     singleLocos.remove(engine);
                     locos++;
                     break; // found "A" unit
@@ -327,7 +324,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 // now add the rest "A" or "B" units
                 for (Engine engine : singleLocos) {
                     if (setEngineDestination(engine, rl, rld)) {
-                        getEngineList().remove(engine);
                         locos++;
                     }
                     if (locos == reqNumberEngines) {
@@ -453,6 +449,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
                         Bundle.getMessage("buildTrainEngineChange", getTrain().getSecondLegStartLocationName(),
+                                getTrain().getSecondLegStartRouteLocation().getId(),
                                 getTrain().getSecondLegNumberEngines(), getTrain().getSecondLegEngineModel(),
                                 getTrain().getSecondLegEngineRoad()));
             } else {
@@ -485,6 +482,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
                         Bundle.getMessage("buildTrainEngineChange", getTrain().getThirdLegStartLocationName(),
+                                getTrain().getThirdLegStartRouteLocation().getId(),
                                 getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                                 getTrain().getThirdLegEngineRoad()));
             } else {
@@ -816,6 +814,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      * @return true if destination track found and set
      */
     protected boolean setEngineDestination(Engine engine, RouteLocation rl, RouteLocation rld) {
+        engine.setRouteDestinationTiming(rld); // for timing
         // engine to staging?
         if (rld == getTrain().getTrainTerminatesRouteLocation() && getTerminateStagingTrack() != null) {
             String status =
@@ -876,10 +875,10 @@ public class TrainBuilderEngines extends TrainBuilderBase {
     private void addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track) {
         _lastEngine = engine; // needed in case there's a engine change in the
                               // train's route
-        engine = checkQuickServiceArrival(engine, rld, track);
         if (getTrain().getLeadEngine() == null) {
             getTrain().setLeadEngine(engine); // load lead engine
         }
+        engine = checkQuickServiceArrival(engine, rld, track);
         addLine(ONE, Bundle.getMessage("buildEngineAssigned", engine.toString(), rl.getName(),
                 rld.getName(), track.getName()));
         engine.setDestination(track.getLocation(), track, Engine.FORCE);
@@ -900,6 +899,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 }
             }
         }
+        remove (engine);
         // now adjust train length and weight for each location that engines are
         // in the train
         finishAddRsToTrain(engine, rl, rld, length, weightTons);
@@ -940,10 +940,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         addLine(FIVE,
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                         track.getLocation().getName(), track.getName(), cloneEng.toString(), engine.toString()));
-        // for timing, use arrival times for the train that is building
-        // other trains will use their departure time, loaded when creating the Manifest
-        String expectedArrivalTime = getTrain().getExpectedArrivalTime(rld, true);
-        cloneEng.setSetoutTime(expectedArrivalTime);
         // remember where in the route the car was delivered
         engine.setRouteDestination(rld);
         return cloneEng; // return clone

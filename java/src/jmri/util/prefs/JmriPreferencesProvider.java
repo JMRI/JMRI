@@ -1,5 +1,6 @@
 package jmri.util.prefs;
 
+import org.apache.commons.collections4.properties.SortedProperties;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,7 +21,6 @@ import jmri.Version;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
-import jmri.util.OrderedProperties;
 import jmri.util.node.NodeIdentity;
 
 /**
@@ -412,7 +412,7 @@ public final class JmriPreferencesProvider {
             }
 
             synchronized (file) {
-                Properties p = new OrderedProperties();
+                Properties p = new SortedProperties();
                 try {
                     try (FileInputStream fis = new FileInputStream(file)) {
                         p.load(fis);
@@ -454,7 +454,7 @@ public final class JmriPreferencesProvider {
             final File file = JmriPreferencesProvider.this.getPreferencesFile();
 
             synchronized (file) {
-                Properties p = new OrderedProperties();
+                Properties p = new SortedProperties();
                 try {
 
                     StringBuilder sb = new StringBuilder();

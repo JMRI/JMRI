@@ -229,7 +229,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         // No reply message, wait for timeout
         JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"programming reply not received");
-        assertEquals( 1, lnis.outbound.size(), "still one message sent");
+        assertEquals( 2, lnis.outbound.size(), "now two messages sent");
         assertEquals( jmri.ProgListener.FailedTimeout, pl.getRcvdStatus(), "Reply status Not OK");
         assertTrue( pl.wasRightThread(), "Correct thread");
     }
@@ -284,7 +284,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         // No reply message, wait for timeout
         JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"programming reply not received");
-        assertEquals( 1, lnis.outbound.size(), "still one message sent");
+        assertEquals( 2, lnis.outbound.size(), "now two messages sent");
         assertEquals( jmri.ProgListener.FailedTimeout, pl.getRcvdStatus(), "Reply status Not OK");
         assertTrue( pl.wasRightThread(), "Correct thread");
      }

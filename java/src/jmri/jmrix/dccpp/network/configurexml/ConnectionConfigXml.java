@@ -6,9 +6,9 @@ import jmri.jmrix.dccpp.network.DCCppEthernetAdapter;
 import org.jdom2.Element;
 
 /**
- * Handle XML persistence of layout connections by persisting the DCC++ Server
+ * Handle XML persistence of layout connections by persisting the DCC-EX Server
  * (and connections). Note this is named as the XML version of a
- * ConnectionConfig object, but it's actually persisting the DCC++ Server.
+ * ConnectionConfig object, but it's actually persisting the DCC-EX Server.
  * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class

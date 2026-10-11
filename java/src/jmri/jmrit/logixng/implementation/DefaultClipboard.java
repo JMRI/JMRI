@@ -7,13 +7,13 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Default implementation of the clipboard
- * 
+ *
  * @author Daniel Bergqvist (C) 2020
  */
 public class DefaultClipboard extends AbstractBase implements Clipboard {
 
     private ClipboardMany _clipboardItems = new ClipboardMany("", null);
-    
+
     private final FemaleAnySocket _femaleSocket = new DefaultFemaleAnySocket(this, new FemaleSocketListener() {
         @Override
         public void connected(FemaleSocket socket) {
@@ -25,16 +25,16 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             // Do nothing
         }
     }, "A");
-    
-    
+
+
     public DefaultClipboard() {
         super("IQClipboard");
-        
+
         // Listeners should never be enabled for the clipboard
         _femaleSocket.setEnableListeners(false);
-        
+
         try {
-            _femaleSocket.connect(new MaleRootSocket(null));
+            _femaleSocket.connect(new MaleRootSocket(new MaleRootManager()));
         } catch (SocketAlreadyConnectedException ex) {
             // This should never happen
             throw new RuntimeException("Program error", ex);
@@ -44,7 +44,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
     }
-    
+
     @Override
     public boolean isEmpty() {
         return _clipboardItems.getChildCount() == 0;
@@ -60,7 +60,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             throw new RuntimeException("Cannot add socket", ex);
         }
     }
-    
+
     @Override
     public MaleSocket fetchTopItem() {
         if (!isEmpty()) {
@@ -71,7 +71,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             return null;
         }
     }
-    
+
     @Override
     public MaleSocket getTopItem() {
         if (!isEmpty()) {
@@ -106,14 +106,14 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     public void setup() {
         _clipboardItems.setup();
     }
-    
+
     public boolean replaceClipboardItems(ClipboardMany clipboardItems, List<String> errors) {
         _clipboardItems = clipboardItems;
-        
+
         _femaleSocket.disconnect();
-        
+
         try {
-            _femaleSocket.connect(new MaleRootSocket(null));
+            _femaleSocket.connect(new MaleRootSocket(new MaleRootManager()));
         } catch (SocketAlreadyConnectedException ex) {
             // This should never happen
             throw new RuntimeException("Program error", ex);
@@ -180,12 +180,12 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported");
+        return _clipboardItems.getChild(index);
     }
 
     @Override
     public int getChildCount() {
-        throw new UnsupportedOperationException("Not supported");
+        return _clipboardItems.getChildCount();
     }
 
     @Override
@@ -193,13 +193,17 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    
-    private class MaleRootSocket extends AbstractMaleSocket {
+
+    private interface ClipboardManySocket extends NamedBean, MaleSocket {
+    }
+
+
+    private class MaleRootSocket extends AbstractMaleSocket implements ClipboardManySocket {
 
         public MaleRootSocket(BaseManager<? extends NamedBean> manager) {
             super(manager, _clipboardItems);
         }
-        
+
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported");
@@ -255,6 +259,91 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             throw new UnsupportedOperationException("Not supported");
         }
 
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public String describeState(int state) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setProperty(String key, Object value) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Object getProperty(String key) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void removeProperty(String key) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Set<String> getPropertyKeys() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public String getBeanType() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
     }
-    
+
+
+    private static class MaleRootManager extends AbstractBaseManager<ClipboardManySocket> {
+
+        @Override
+        protected ClipboardManySocket castBean(MaleSocket maleSocket) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public char typeLetter() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Class<ClipboardManySocket> getNamedBeanClass() {
+            return ClipboardManySocket.class;
+        }
+
+        @Override
+        public int getXMLOrder() {
+            return Integer.MAX_VALUE;
+        }
+
+        @Override
+        public String getBeanTypeHandled(boolean plural) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Class<ClipboardManySocket> getMaleSocketClass() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public MaleSocket getLastRegisteredMaleSocket() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+    }
+
 }

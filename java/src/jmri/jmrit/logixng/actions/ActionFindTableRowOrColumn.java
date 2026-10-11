@@ -16,11 +16,11 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  * @author Daniel Bergqvist Copyright 2022
  */
 public class ActionFindTableRowOrColumn extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class), this);
+                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class));
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnName = "";
     private boolean _includeCellsWithoutHeader = false;
@@ -244,31 +244,6 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        if (_listenersAreRegistered) return;
-
-        _selectNamedBean.registerListeners();
-        _listenersAreRegistered = true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        if (!_listenersAreRegistered) return;
-
-        _selectNamedBean.unregisterListeners();
-        _listenersAreRegistered = false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-//        System.out.format("Table: Property: %s, Bean: %s, Listen: %b%n", evt.getPropertyName(), ((NamedBean)evt.getSource()).getDisplayName(), _listenOnAllProperties);
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

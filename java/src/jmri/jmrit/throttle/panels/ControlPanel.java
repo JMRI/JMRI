@@ -1332,7 +1332,17 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {     
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {     
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) {
+        if ((re != null) && (re.getShuntingFunction() != null)) {
+            prevShuntingFn = getSwitchSliderFunction();
+            setSwitchSliderFunction(addressPanel.getRosterEntry().getShuntingFunction());                            
+        } else {
+            setSwitchSliderFunction(switchSliderFunction); // reset slider           
+        }
     }
 
     @Override
@@ -1369,13 +1379,12 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
         }
         throttle = t;
         addressThrottleFound();
-
-        if ((addressPanel != null) && (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getShuntingFunction() != null)) {
-            prevShuntingFn = getSwitchSliderFunction();
-            setSwitchSliderFunction(addressPanel.getRosterEntry().getShuntingFunction());                            
+        if (addressPanel!=null) {
+            notifyRosterEntryUpdated(addressPanel.getRosterEntry() );
         } else {
-            setSwitchSliderFunction(switchSliderFunction); // reset slider           
+            notifyRosterEntryUpdated(null);
         }
+        
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());

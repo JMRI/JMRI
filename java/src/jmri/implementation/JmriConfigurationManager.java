@@ -281,8 +281,9 @@ public class JmriConfigurationManager implements ConfigureManager {
     /**
      * Show a Continue/Quit dialog when the configured roster location is
      * unavailable at startup. Returns true if the user chose Quit (in which
-     * case {@link #handleQuit()} has been invoked); returns false if the user
-     * chose Continue or dismissed the dialog.
+     * case {@link #handleQuit()} has been invoked); returns false only if the
+     * user explicitly chose Continue. Dismissing the dialog (close button) is
+     * treated as Quit, matching the profile chooser dialog's behavior.
      *
      * @param ex the exception describing the unavailable roster location
      * @return true if the user chose to quit
@@ -305,11 +306,11 @@ public class JmriConfigurationManager implements ConfigureManager {
                 null,
                 options,
                 options[0]);
-        if (choice == 1) {
-            handleQuit();
-            return true;
+        if (choice == 0) {
+            return false; // explicit Continue
         }
-        return false;
+        handleQuit();
+        return true;
     }
 
     private Object getErrorListObject(List<String> errors) {

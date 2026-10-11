@@ -2,11 +2,13 @@ package jmri.jmrit.operations;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.File;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.QueueTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,9 @@ import jmri.util.JUnitUtil;
  */
 public class OperationsTestCase {
 
+    @TempDir
+    File tempDir;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -35,7 +40,7 @@ public class OperationsTestCase {
     // Set things up outside of operations
     public void reset() {
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(tempDir);
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

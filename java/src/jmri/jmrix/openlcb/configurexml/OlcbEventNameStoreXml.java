@@ -26,13 +26,11 @@ import org.openlcb.EventID;
  */
 public final class OlcbEventNameStoreXml extends XmlFile {
 
-    public OlcbEventNameStoreXml(OlcbEventNameStore nameStore, String baseFileName) {
+    public OlcbEventNameStoreXml(OlcbEventNameStore nameStore) {
         this.nameStore = nameStore;
-        this.baseFileName = baseFileName;
     }
 
     OlcbEventNameStore nameStore;
-    String baseFileName;
     /**
      * The original implementation of this store
      * was via the IdTagManager class.  This is now

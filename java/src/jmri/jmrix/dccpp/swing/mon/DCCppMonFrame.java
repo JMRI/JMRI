@@ -16,6 +16,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
+import jmri.util.swing.TextAreaFIFO;
 import jmri.util.swing.WrapLayout;
 
 /**
@@ -49,6 +50,9 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
         // Match DCC-EX's native <...> command syntax for the raw display.
         rawOpenBracket = "<";
         rawCloseBracket = ">";
+        // DCC-EX startup enumerates all turnouts/outputs one at a time, which
+        // easily exceeds the default 500-line limit on large layouts.
+        monTextPane = new TextAreaFIFO(2000);
     }
 
     @Override

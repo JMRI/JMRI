@@ -122,6 +122,17 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         myMouseAdapter.removeMenuItem(mi);
     }
 
+    /**
+     * Return the mouse adapter used for the contextual menu, can be used to add/remove menu items
+     * but also by mouse handlers over JTable (see FunctionTableMouseListener) to forward mouse events to the contextual menu
+     *
+     * @return the mouse adapter used for the contextual menu, can be used to add/remove menu items
+     * to the contextual menu
+     */
+    public JmriMouseListener getMyMouseAdapter() {
+        return myMouseAdapter;
+    }
+
     //
     // For contextual menu
     private static class MyMouseAdapter implements JmriMouseListener {

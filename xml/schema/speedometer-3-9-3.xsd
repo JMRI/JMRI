@@ -28,76 +28,66 @@
             "
            >
 
-    <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
-    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+  <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
 
-    <xs:element name="speedometer-config">
-      <xs:annotation>
-        <xs:documentation>
-          This is the schema representing Speedometer information
-        </xs:documentation>
-        <xs:appinfo>
-          <jmri:usingclass configurexml="false">jmri.jmrit.speedometer.SpeedometerFrame</jmri:usingclass>
-        </xs:appinfo>
-      </xs:annotation>
-      <xs:complexType>
-        <xs:sequence>
-          <xs:element name="configuration" minOccurs="0" maxOccurs="1">
-            <xs:annotation>
-              <xs:documentation>
-                Speedometer configuration
-              </xs:documentation>
-            </xs:annotation>
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element name="useMetric" type="yesNoType" minOccurs="0" maxOccurs="1"/>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:simpleType name="sensorTypeListType">
-          <xs:restriction base="xs:string">
-              <xs:enumeration value="StartSensor"/>
-              <xs:enumeration value="StopSensor1"/>
-              <xs:enumeration value="StopSensor2"/>
-          </xs:restriction>
-      </xs:simpleType>
-
-      <xs:simpleType name="sensorTriggerType">
-          <xs:restriction base="xs:string">
-              <xs:pattern value="entry|exit"/>
-          </xs:restriction>
-      </xs:simpleType>
-
-      <xs:complexType name="SensorType">
-        <xs:complexContent>
-          <xs:sequence>
-            <xs:element name="sensorName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-            <xs:element name="type" type="sensorTypeListType" minOccurs="1" maxOccurs="1"/>
-            <xs:element name="trigger" type="sensorTriggerType" minOccurs="1" maxOccurs="1"/>
-            <xs:element name="distance" type="xs:float" minOccurs="0" maxOccurs="1"/>
-          </xs:sequence>
-        </xs:complexContent>
-      </xs:complexType>
-
-      <xs:complexType>
-        <xs:sequence>
-          <xs:element name="sensors" minOccurs="0" maxOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              ******** Required Sensor Table  **********
-            </xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="sensor" type="SensorType" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+  <xs:element name="speedometer-config">
+    <xs:annotation>
+      <xs:documentation>
+        This is the schema representing the Speedometer information stored in "PanelProSpeedometer.xml"
+      </xs:documentation>
+      <xs:appinfo>
+        <jmri:usingclass configurexml="false">jmri.jmrit.speedometer.SpeedometerFrame</jmri:usingclass>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="configurationType" name="configuration" minOccurs="0" maxOccurs="1"/>
+        <xs:element type="sensorsType" name="sensors" minOccurs="0" maxOccurs="1"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+  <xs:complexType name="configurationType">
+    <xs:annotation><xs:documentation>Speedometer configuration</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:element name="useMetric" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sensorsType">
+    <xs:annotation><xs:documentation>
+      Sensor table with up to 3 sensor entries
+    </xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:element name="sensor" type="sensorType" minOccurs="0" maxOccurs="3"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sensorType">
+    <xs:annotation><xs:documentation>
+      The "type" refers to the Java variable than contains a sensor system or user name
+    </xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:element name="sensorName" type="beanNameType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="type" type="sensorTypeListType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="trigger" type="sensorTriggerType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="distance" type="xs:float" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="sensorTypeListType">
+      <xs:restriction base="xs:string">
+          <xs:enumeration value="StartSensor"/>
+          <xs:enumeration value="StopSensor1"/>
+          <xs:enumeration value="StopSensor2"/>
+      </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="sensorTriggerType">
+      <xs:restriction base="xs:string">
+          <xs:pattern value="entry|exit"/>
+      </xs:restriction>
+  </xs:simpleType>
+
 </xs:schema>

@@ -5,7 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Define common base class methods for CvValue and VariableValue classes
+ * Represents a single CV or Variable value.  
+ * Defines common base class methods for CvValue and VariableValue classes
  * <p>
  * The ToRead parameter (boolean, unbound) is used to remember whether this
  * object has been read during a "read all" operation. This allows removal of
@@ -18,9 +19,11 @@ import java.beans.PropertyChangeSupport;
  * The Available parameter (boolean, unbound) remembers whether the variable
  * should be displayed, programmed, etc.
  * <p>
- * Represents a single CV value
+ * Variables and CVs track their states, as shown below.<br>
+ * <a href="doc-files/VariableStates.png"><img src="doc-files/VariableStates.png" alt="States for variables and their colors" height="33%" width="33%"></a>
+ * 
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2005
+ * @author Bob Jacobsen Copyright (C) 2001, 2005, 2026
  */
 public abstract class AbstractValue {
 
@@ -33,6 +36,13 @@ public abstract class AbstractValue {
      */
     abstract void setColor(Color c);
 
+    /**
+     * States, hence colors, of Variables and CVs.
+     *
+     * Note that these as written and read by name in LocoFiles in the roster.
+     * Do not change the name of these values without putting a migration scheme
+     * in place.
+     */
     public enum ValueState {
         /**
          * Defines state when nothing is known about the real value.
@@ -59,9 +69,23 @@ public abstract class AbstractValue {
 
         /**
          * Defines state where value was read from a config file, but might not be
-         * the same as the decoder.
+         * the same as the decoder. It is known to have been edited/read/written
+         * at some point.
          */
         FROMFILE(Color.yellow, "FromFile"),
+
+        /**
+         * Defines state where value was read from a config file, but might not be
+         * the same as the decoder. It's unknown whether the item has been edited/read/written
+         * at some point.
+         */
+        FROMFILEUNKNOWN(Color.yellow, "FromFileUnknown"),
+
+        /**
+         * Defines state where value was defined by the decoder definition default, 
+         * and has never been edited or read from or written to the decoder.
+         */
+        FROMDEFAULT(Color.yellow, "FromDefault"),  // ice blue 0xF0F8FF
 
         /**
          * Defines state where value was read from a config file, and is the same as

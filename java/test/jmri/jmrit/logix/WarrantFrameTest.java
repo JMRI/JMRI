@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.io.File;
+import java.io.IOException;
 
 import jmri.*;
 import jmri.util.*;
@@ -8,6 +9,7 @@ import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -150,9 +152,9 @@ public class WarrantFrameTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir));
         JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initWarrantManager();

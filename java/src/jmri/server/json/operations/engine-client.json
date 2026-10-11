@@ -8,6 +8,10 @@
             "type": "string",
             "description": "Operations id for engine"
         },
+        "order": {
+            "type": "string",
+            "description": "The engine order"
+        },
         "road": {
             "type": "string",
             "description": "The engine owning railroad"

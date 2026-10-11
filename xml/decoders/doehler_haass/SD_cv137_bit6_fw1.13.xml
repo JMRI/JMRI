@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-27</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV137 bit 6, introduced in sound decoder firmware 1.13.112.</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="137" item="Adopt function swapping for SUSI" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Adopt function interchanges (CV401ff.) for SUSI F1-F12</label>
+    <label xml:lang="fr">Appliquer les permutations de fonction (CV401ss.) aux SUSI F1-F12</label>
+    <label xml:lang="de">Funktionsvertauschungen (CV401ff.) für SUSI F1-F12 übernehmen</label>
+    <tooltip>bit 6 - since firmware 1.13.112. Requires CV137 bit 0 = 0 (SUSI on ZCLK/ZDAT).</tooltip>
+    <tooltip xml:lang="fr">bit 6 - depuis le firmware 1.13.112. Nécessite CV137 bit 0 = 0 (SUSI sur ZCLK/ZDAT).</tooltip>
+    <tooltip xml:lang="de">Bit 6 - seit Firmware 1.13.112. Nur bei CV137 Bit 0 = 0 (SUSI an ZCLK und ZDAT).</tooltip>
+  </variable>
+</variables>

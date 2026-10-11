@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp;
 
 /**
- * Abstract base for classes representing a DCC++ communications port.
+ * Abstract base for classes representing a DCC-EX communications port.
  * Based on XNetSerialPortController by Bob Jacobsen and Paul Bender.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
@@ -85,6 +85,15 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     @Override
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+
+    // Legacy "DCC++" remap for saved configs prior to the DCC++ -> DCC-EX rename (issue #15136).
+    @Override
+    public void setManufacturer(String manufacturer) {
+        if ("DCC++".equals(manufacturer)) {
+            manufacturer = DCCppConnectionTypeList.DCCPP;
+        }
+        super.setManufacturer(manufacturer);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppSerialPortController.class);

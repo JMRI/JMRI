@@ -90,7 +90,12 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {
+        updateImage(re);
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) {
         updateImage(re);
     }
 

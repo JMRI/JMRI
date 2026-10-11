@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides an Ops mode programming interface for DCC++. Currently only Byte
- * mode is implemented, though DCC++ also supports bit mode writes for POM
+ * Provides an Ops mode programming interface for DCC-EX. Currently only Byte
+ * mode is implemented, though DCC-EX also supports bit mode writes for POM
  *
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2003-2010
@@ -49,7 +49,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     /** 
      * {@inheritDoc}
      *
-     * Send an ops-mode write request to the DCC++.
+     * Send an ops-mode write request to the DCC-EX.
      */
     @Override
     synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
@@ -64,7 +64,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         progState = DCCppProgrammer.REQUESTSENT;
         assert msg != null;
         restartTimer(msg.getTimeout());
-        /* Issue #2423 (GitHub) -- DCC++ base station does not respond to Ops Mode
+        /* Issue #2423 (GitHub) -- DCC-EX base station does not respond to Ops Mode
          * writes, so waiting for a response just means JMRI times out after a long delay.
         /* Proposed Fix: Don't go to REQUESTSENT state... just stay in NOTPROGRAMMING.
          * Risk... the state change introduces a 250ms delay to keep the UI from sending

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2026-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. CV60 bits 1-3, new in firmware 3.15.</revremark>
+    </revision>
+  </revhistory>
+  <!-- CV60 became a settings register in firmware 3.15. Bit 0, selecting one- or two-part SX  -->
+  <!-- brake sections, is unchanged and still comes from Vars_common.xml; this fragment adds   -->
+  <!-- the two settings that are new in 3.15. Include only from firmware 3.15 definitions.     -->
+  <variable item="Minimum speed step for brake ramp" CV="60" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Minimum speed step for brake ramp active</label>
+    <label xml:lang="fr">Cran de vitesse minimal actif pour la rampe de freinage</label>
+    <label xml:lang="de">Mindestfahrstufe für Bremsrampe aktiv</label>
+    <tooltip>CV60 bit 1 - the minimum speed step is then taken from CV65 (see CV154/CV155)</tooltip>
+    <tooltip xml:lang="fr">CV60 bit 1 - le cran minimal est alors donné par le CV65 (voir CV154/CV155)</tooltip>
+    <tooltip xml:lang="de">CV60 Bit 1 - die Mindestfahrstufe wird dann aus CV65 genommen (siehe CV154/CV155)</tooltip>
+  </variable>
+  <variable item="Shuttle mode" CV="60" mask="XXXXVVXX" default="0">
+    <enumVal>
+      <enumChoice choice="Deactivated" value="0">
+        <choice>Shuttle mode deactivated</choice>
+        <choice xml:lang="fr">Navette désactivée</choice>
+        <choice xml:lang="de">Pendelbetrieb deaktiviert</choice>
+      </enumChoice>
+      <enumChoice choice="No intermediate stop" value="1">
+        <choice>Without intermediate stop</choice>
+        <choice xml:lang="fr">Sans arrêt intermédiaire</choice>
+        <choice xml:lang="de">Ohne Zwischenhalt</choice>
+      </enumChoice>
+      <enumChoice choice="Manual intermediate stop" value="2">
+        <choice>With manual intermediate stop</choice>
+        <choice xml:lang="fr">Avec arrêt intermédiaire manuel</choice>
+        <choice xml:lang="de">Mit manuellem Zwischenhalt</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic intermediate stop" value="3">
+        <choice>With automatic intermediate stop</choice>
+        <choice xml:lang="fr">Avec arrêt intermédiaire automatique</choice>
+        <choice xml:lang="de">Mit automatischem Zwischenhalt</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Shuttle mode</label>
+    <label xml:lang="fr">Navette</label>
+    <label xml:lang="de">Pendelbetrieb</label>
+    <tooltip>CV60 bits 2-3 - only with suitable asymmetry braking modules (CV27 bits 0 and 1). Dwell times in CV63</tooltip>
+    <tooltip xml:lang="fr">CV60 bits 2-3 - uniquement avec des modules de freinage par asymétrie adaptés (CV27 bits 0 et 1). Durées d'arrêt dans le CV63</tooltip>
+    <tooltip xml:lang="de">CV60 Bits 2-3 - nur mit geeigneten Asymmetrie-Bremsmodulen (CV27 Bits 0 und 1). Aufenthaltsdauern in CV63</tooltip>
+  </variable>
+</variables>

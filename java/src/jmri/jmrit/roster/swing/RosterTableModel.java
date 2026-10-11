@@ -1,11 +1,12 @@
 package jmri.jmrit.roster.swing;
 
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.CheckForNull;
 import javax.swing.Icon;
@@ -15,15 +16,20 @@ import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 
-import jmri.*;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import jmri.BooleanPermission;
+import jmri.InstanceManager;
+import jmri.PermissionManager;
+import jmri.PermissionsProgrammer;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.util.swing.ResizableRowDataModel;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.ResizableRowDataModel;
 
 /**
  * Table data model for display of Roster variable values.
@@ -326,14 +332,25 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     int findMaxLines(int row, RosterEntry re) {
-        int lines = countLinesIn(re.getComment());
+        int lines = 1;   
 
+        var columnModel = (jmri.util.swing.XTableColumnModel) associatedTable.getColumnModel();
+        boolean visible = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.COMMENT));
+        if (visible) {
+            lines = Math.max(lines, countLinesIn(re.getComment()));
+        }
+        
         String[] auxAttributeNames = getModelAttributeKeyColumnNames();
         for (String attributeKey : auxAttributeNames) {
             String value = re.getAttribute(attributeKey);
             if (value != null) {
+                int index = getAttributeColumn(attributeKey);
+                visible = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(index));
+
                 int count = countLinesIn(value);
-                lines = Math.max(lines, count);
+                if (visible) {
+                    lines = Math.max(lines, count);
+                }
             }
         }
         return lines;
@@ -369,16 +386,20 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             }
             try {
                 return new StdDateFormat().parse(value);
-            } catch (ParseException ex){
-                return null;
+            } catch (ParseException e){
+                log.debug("could not parse date in {}", value, e);
             }
+            return null;
         }
         if ( RosterEntry.ATTRIBUTE_OPERATING_DURATION.equals( attributeKey) ) {
+            if (value == null) {
+                return 0;
+            }
             try {
                 return Integer.valueOf(value);
             }
             catch (NumberFormatException e) {
-                log.debug("could not format duration ( String integer of total seconds ) in {}", value, e);
+                log.debug("could not parse duration ( String integer of total seconds ) in {}", value, e);
             }
             return 0;
         }
@@ -403,6 +424,12 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         String valueToSet = (String) value;
         switch (col) {
             case IDCOL:
+                // don't allow setting to existing ID
+                if (Roster.getDefault().getEntryForId(valueToSet)!=null) {
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(associatedTable, Bundle.getMessage("MessageIdAlreadyPresent"));
+                    return;
+                }
+                // here unique
                 re.setId(valueToSet);
                 break;
             case ROADNAMECOL:
@@ -494,6 +521,16 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         return attributeKeys;
     }
 
+    private int getAttributeColumn(String attr) {
+        var names = getModelAttributeKeyColumnNames();
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equals(attr)) {
+                return i + NUMCOL;
+            }
+        }
+        return 0;
+    }
+    
     private String getAttributeKey(int col) {
         if ( col >= NUMCOL && col < getColumnCount() ) {
             return getModelAttributeKeyColumnNames()[col - NUMCOL ];

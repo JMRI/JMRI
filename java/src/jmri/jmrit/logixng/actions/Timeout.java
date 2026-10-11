@@ -2,8 +2,6 @@ package jmri.jmrit.logixng.actions;
 
 import jmri.util.TimerUnit;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -19,12 +17,12 @@ import jmri.util.TimerUtil;
  * @author Daniel Bergqvist Copyright 2021
  */
 public class Timeout extends AbstractDigitalAction
-        implements FemaleSocketListener, PropertyChangeListener {
+        implements FemaleSocketListener {
 
     private ProtectedTimerTask _timerTask;
-    private final LogixNG_SelectInteger _selectDelay = new LogixNG_SelectInteger(this, this);
+    private final LogixNG_SelectInteger _selectDelay = new LogixNG_SelectInteger(this);
     private final LogixNG_SelectEnum<TimerUnit> _selectTimerUnit =
-            new LogixNG_SelectEnum<>(this, TimerUnit.values(), TimerUnit.MilliSeconds, this);
+            new LogixNG_SelectEnum<>(this, TimerUnit.values(), TimerUnit.MilliSeconds);
     private String _expressionSocketSystemName;
     private String _actionSocketSystemName;
     private final FemaleDigitalExpressionSocket _expressionSocket;
@@ -275,26 +273,6 @@ public class Timeout extends AbstractDigitalAction
             // This shouldn't happen and is a runtime error if it does.
             throw new RuntimeException("socket is already connected");
         }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectDelay.registerListeners();
-        _selectTimerUnit.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectDelay.unregisterListeners();
-        _selectTimerUnit.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */

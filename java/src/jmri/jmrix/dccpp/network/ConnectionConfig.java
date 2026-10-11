@@ -6,7 +6,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 /**
- * Handle configuring a DCC++ layout connection via Ethernet.Port
+ * Handle configuring a DCC-EX layout connection via Ethernet.Port
  * <p>
  * This uses the {@link DCCppEthernetAdapter} class to do the actual connection.
  *
@@ -41,7 +41,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "DCC++ Ethernet";
+        return "DCC-EX Ethernet";
     }
 
     /**

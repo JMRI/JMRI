@@ -1007,7 +1007,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 combo.setAttribute("lastSelected", cbls.getValue());
                 return combo;
             }).forEach(element::addContent);
-            this.saveElement(element);
+            this.storeElement(element);
             this.resetChangeMade();
         }
     }
@@ -1032,7 +1032,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 checkbox.setAttribute("lastChecked", cbls.getValue() ? "yes" : "no");
                 return checkbox;
             }).forEach(element::addContent);
-            this.saveElement(element);
+            this.storeElement(element);
             this.resetChangeMade();
         }
     }
@@ -1094,7 +1094,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 }
             });
             if (!element.getChildren().isEmpty()) {
-                this.saveElement(element);
+                this.storeElement(element);
             }
         }
     }
@@ -1113,7 +1113,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             Element element = new Element(SETTINGS_ELEMENT, SETTINGS_NAMESPACE);
             getSimplePreferenceStateList().stream().forEach(setting ->
                 element.addContent(new Element("setting").addContent(setting)));
-            this.saveElement(element);
+            this.storeElement(element);
             this.resetChangeMade();
         }
     }
@@ -1211,7 +1211,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     }
                     element.addContent(window);
                 }
-                this.saveElement(element);
+                this.storeElement(element);
                 this.resetChangeMade();
             }
         }
@@ -1230,13 +1230,21 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return null;
     }
 
-    protected void saveElement(@Nonnull Element element) {
+    @Override
+    public void storeElement(@Nonnull Element element) {
         log.trace("Saving {} element.", element.getName());
         try {
             ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), false);
         } catch (JDOMException ex) {
             log.error("Unable to save user preferences", ex);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public Element loadElement(@Nonnull String elementName) {
+        return readElement(elementName, GENERIC_NAMESPACE);
     }
 
     private void savePreferences() {

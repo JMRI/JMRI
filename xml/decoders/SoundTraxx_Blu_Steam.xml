@@ -43,10 +43,19 @@
             <authorinitials>MM</authorinitials>
             <revremark>Added Blunami 21PNEM models</revremark>
         </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2026-08-27</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Added Blunami 1100 models</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Steam decoders">
+            <model model="BLU-1100 Steam-2" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="2164" comment="Model 884606">
+                <size length="31" width="10.5" height="5" units="mm"/>
+            </model>
             <model model="BLU-21PNEM8 Steam-2" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2157" comment="Model 884608">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>

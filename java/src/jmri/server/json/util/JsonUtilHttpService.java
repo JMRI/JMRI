@@ -677,7 +677,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                     if (server) {
                         return doSchema(type, server,
                                 this.mapper.readTree(this.getClass().getClassLoader()
-                                        .getResource(RESOURCE_PATH + type + "-server.json")),
+                                        .getResourceAsStream(RESOURCE_PATH + type + "-server.json")),
                                 id);
                     } else {
                         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
@@ -688,7 +688,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                     if (!server) {
                         return doSchema(type, server,
                                 this.mapper.readTree(this.getClass().getClassLoader()
-                                        .getResource(RESOURCE_PATH + type + "-client.json")),
+                                        .getResourceAsStream(RESOURCE_PATH + type + "-client.json")),
                                 id);
                     } else {
                         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,

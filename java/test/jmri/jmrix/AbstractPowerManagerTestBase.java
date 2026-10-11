@@ -3,8 +3,10 @@ package jmri.jmrix;
 import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.PowerManager;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Abstract base class for PowerManager tests in specific jmrix. packages.
@@ -19,7 +21,7 @@ import org.junit.jupiter.api.*;
 public abstract class AbstractPowerManagerTestBase {
 
     // required setup routine, must set p to an appropriate value.
-    abstract public void setUp();
+    public abstract void setUp();
 
     // service routines to simulate receiving on, off from interface
     protected abstract void hearOn();
@@ -59,7 +61,7 @@ public abstract class AbstractPowerManagerTestBase {
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
-       Assert.assertNotNull("Power Manager Created",p);
+        assertNotNull(p,"Power Manager Created");
     }
 
     // test setting power on, off, then getting reply from system
@@ -68,12 +70,12 @@ public abstract class AbstractPowerManagerTestBase {
         int initialSent = outboundSize();
         p.setPower(PowerManager.ON);
         // check one message sent, correct form, unknown state
-        Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
-        Assert.assertTrue("message type OK", outboundOnOK(initialSent));
-        Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
+        assertEquals(initialSent + 1, outboundSize(),"messages sent +1");
+        assertTrue(outboundOnOK(initialSent),"message type OK");
+        assertEquals(PowerManager.UNKNOWN, p.getPower(),"unknown state before reply ");
         // arrange for reply
         sendOnReply();
-        Assert.assertEquals("state after reply ", PowerManager.ON, p.getPower());
+        assertEquals(PowerManager.ON, p.getPower(),"on state after reply ");
     }
 
     @Test
@@ -81,49 +83,48 @@ public abstract class AbstractPowerManagerTestBase {
         int startingMessages = outboundSize();
         p.setPower(PowerManager.OFF);
         // check one message sent, correct form
-        Assert.assertEquals("messages sent", startingMessages + 1, outboundSize());
-        Assert.assertTrue("message type OK", outboundOffOK(startingMessages));
-        Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
+        assertEquals(startingMessages + 1, outboundSize(),"messages sent");
+        assertTrue(outboundOffOK(startingMessages),"message type OK");
+        assertEquals(PowerManager.UNKNOWN, p.getPower(),"state before reply ");
         // arrange for reply
         sendOffReply();
-        Assert.assertEquals("state after reply ", PowerManager.OFF, p.getPower());
+        assertEquals(PowerManager.OFF, p.getPower(),"state after reply ");
 
     }
 
     @Test
     public void testSetPowerIdle() throws JmriException {
-        if (p.implementsIdle()) {
-            Assert.assertTrue("LocoNet implements IDLE", p.implementsIdle());
-            int initialSent = outboundSize();
-            p.setPower(PowerManager.IDLE);
-            // check one message sent, correct form, unknown state
-            Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
-            Assert.assertTrue("message type IDLE O.K.", outboundIdleOK(initialSent));
-            Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
-            // arrange for reply
-            sendIdleReply();
-            Assert.assertEquals("state after reply ", PowerManager.IDLE, p.getPower());
-        }
+        Assumptions.assumeTrue(p.implementsIdle(),"Does not implement IDLE");
+        assertTrue(p.implementsIdle(),"LocoNet implements IDLE");
+        int initialSent = outboundSize();
+        p.setPower(PowerManager.IDLE);
+        // check one message sent, correct form, unknown state
+        assertEquals(initialSent + 1, outboundSize(),"messages sent");
+        assertTrue(outboundIdleOK(initialSent),"message type IDLE O.K.");
+        assertEquals(PowerManager.UNKNOWN, p.getPower(),"state before reply ");
+        // arrange for reply
+        sendIdleReply();
+        assertEquals(PowerManager.IDLE, p.getPower(),"state after reply ");
+
     }
 
     @Test
     public void testStateOn() throws JmriException {
         hearOn();
-        Assert.assertEquals("power state", PowerManager.ON, p.getPower());
+        assertEquals(PowerManager.ON, p.getPower(),"power state on");
     }
 
     @Test
     public void testStateOff() throws JmriException {
         hearOff();
-        Assert.assertEquals("power state", PowerManager.OFF, p.getPower());
+        assertEquals(PowerManager.OFF, p.getPower(),"power state off");
     }
 
     @Test
     public void testStateIdle() throws JmriException {
-        if (p.implementsIdle()) {
-            hearIdle();
-            Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
-        }
+        Assumptions.assumeTrue(p.implementsIdle(),"Does not implement IDLE");
+        hearIdle();
+        assertEquals(PowerManager.IDLE, p.getPower(), "power state idle");
     }
 
     @Test
@@ -132,11 +133,11 @@ public abstract class AbstractPowerManagerTestBase {
         listenerResult = false;
         p.setPower(PowerManager.ON);
         sendOnReply();
-        Assert.assertTrue("listener invoked by GPOFF", listenerResult);
+        assertTrue(listenerResult,"listener invoked by GPOFF");
         listenerResult = false;
         p.setPower(PowerManager.OFF);
         sendOffReply();
-        Assert.assertTrue("listener invoked by GPON", listenerResult);
+        assertTrue(listenerResult,"listener invoked by GPON");
     }
 
     @Test
@@ -146,8 +147,7 @@ public abstract class AbstractPowerManagerTestBase {
         p.removePropertyChangeListener(ln);
         listenerResult = false;
         hearOn();
-        Assert.assertFalse("listener should not have heard message after removeListener",
-                listenerResult);
+        assertFalse(listenerResult,"listener should not have heard message after removeListener");
     }
 
     @Test
@@ -156,7 +156,7 @@ public abstract class AbstractPowerManagerTestBase {
         int startingListeners = numListeners();
 
         p.dispose();
-        Assert.assertEquals("controller listeners remaining", startingListeners -1 , numListeners());
+        assertEquals(startingListeners -1,numListeners(),"controller listeners remaining");
     }
 
     @Test
@@ -166,21 +166,19 @@ public abstract class AbstractPowerManagerTestBase {
         sendOnReply();
         int initialOutboundSize = outboundSize();
         p.dispose();
-        try {
-            p.setPower(PowerManager.OFF);
-        } catch (JmriException e) {
-            // this is OK branch, check message not sent
-            Assert.assertEquals("messages sent", initialOutboundSize, outboundSize()); // just the first
-            return;
-        }
-        Assert.fail("Should have thrown exception after dispose()");
+
+        Exception ex = Assertions.assertThrows(JmriException.class,
+            () -> p.setPower(PowerManager.OFF),
+            "Should have thrown exception after dispose()");
+        assertNotNull(ex);
+        assertEquals(initialOutboundSize, outboundSize(),"just the first messages sent");
     }
 
     @Test
     public void testImplementsIdle() {
         // assumes that Idle is not implemented; override this test for cases
         // where idle is implemented.
-        Assert.assertFalse(p.implementsIdle());
+        assertFalse(p.implementsIdle());
     }
 
 }

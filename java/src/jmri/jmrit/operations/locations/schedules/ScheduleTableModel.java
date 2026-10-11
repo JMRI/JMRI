@@ -445,7 +445,7 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
         } else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
             // error user deleted this pick up day
             String notValid = Bundle.getMessage("NotValid", si.getPickupTrainScheduleId());
-            TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
+            TrainSchedule errorSchedule = new TrainSchedule(si.getPickupTrainScheduleId(), notValid);
             cb.addItem(errorSchedule);
             cb.setSelectedItem(errorSchedule);
         }

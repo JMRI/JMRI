@@ -4,10 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.GraphicsEnvironment;
 
+import java.io.File;
+import java.io.IOException;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -26,9 +30,9 @@ public class LearnThrottleFrameTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir));
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
     }

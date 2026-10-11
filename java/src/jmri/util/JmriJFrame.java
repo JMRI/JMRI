@@ -92,6 +92,22 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         initFrame();
     }
 
+    /**
+     * Creates a JFrame with standard settings, optional save/restore of size
+     * and position.
+     *
+     * @param saveSize      Set true to save the last known size
+     * @param savePosition  Set true to save the last known location
+     * @param title         The title
+     */
+    public JmriJFrame(boolean saveSize, boolean savePosition, String title) {
+        super();
+        setTitle(title);
+        reuseFrameSavedPosition = savePosition;
+        reuseFrameSavedSized = saveSize;
+        initFrame();
+    }
+
     final void initFrame() {
         addWindowListener(this);
         addComponentListener(this);
@@ -244,11 +260,17 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 // with any of these screens - in other words, ensure that this frame would be (partially) visible
                 // on at least one of the connected screens
                 //
+                var tempWindow = window;
+                if (tempWindow.width == 0 && tempWindow.height == 0) {
+                    // The window size must be at least 1x1 pixel for the intersect() call to return true
+                    tempWindow.width = 1;
+                    tempWindow.height = 1;
+                }
                 for (ScreenDimensions sd: getScreenDimensions()) {
-                    boolean canShow = window.intersects(sd.getBounds());
+                    boolean canShow = tempWindow.intersects(sd.getBounds());
                     if (canShow) isVisible = true;
                     log.debug("Screen {} bounds {}, {}", sd.getGraphicsDevice().getIDstring(), sd.getBounds(), sd.getInsets());
-                    log.debug("Does \"{}\" window {} fit on screen {}? {}", getTitle(), window, sd.getGraphicsDevice().getIDstring(), canShow);
+                    log.debug("Does \"{}\" window {} fit on screen {}? {}", getTitle(), tempWindow, sd.getGraphicsDevice().getIDstring(), canShow);
                 }
 
                 log.debug("Can \"{}\" window {} display on a screen? {}", getTitle(), window, isVisible);
@@ -1031,7 +1053,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         synchronized (m) {
             m.remove(this);
         }
-        
+
         // workaround for code that directly calls dispose()
         // instead of dispatching a WINDOW_CLOSED event.  This
         // causes the windowClosing method to not be called. This in turn is an
@@ -1041,7 +1063,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
             removeWindowListener(this);
             removeComponentListener(this);
         }, 500);
-        
+
         super.dispose();
     }
 

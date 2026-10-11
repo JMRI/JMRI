@@ -50,10 +50,9 @@ public class ConsistManager extends RollingStockGroupManager implements Instance
         Consist consist = getConsistByName(name);
         if (consist != null) {
             consist.dispose();
-            Integer oldSize = Integer.valueOf(_groupHashTable.size());
+            int oldSize = _groupHashTable.size();
             _groupHashTable.remove(name);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_groupHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _groupHashTable.size());
         }
     }
 

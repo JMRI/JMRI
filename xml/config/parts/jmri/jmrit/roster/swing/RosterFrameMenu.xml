@@ -73,16 +73,25 @@
         <name xml:lang="it">Esporta Roster Completo...</name>
         <name xml:lang="de">Exportiere gesamten Lokpark...</name>
 		<name xml:lang="ca">Exporta tota la flota...</name>
-        <name xml:lang="cs">Exportovat evidenci...</name>
+        <name xml:lang="cs">Exportovat úplnou evidenci...</name>
         <name xml:lang="nl">Exporteer hele Loclijst...</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
+    </node>
+    <node name="Export Roster Group...">
+        <name xml:lang="fr">Exporter le groupe de la liste</name>
+        <name xml:lang="it">Esporta gruppo dell'organico</name>
+        <name xml:lang="de">Export-Roster-Gruppe</name>
+		<name xml:lang="ca">Exporta el grup de llistes</name>
+        <name xml:lang="cs">Exportovat skupinu evidence...</name>
+        <name xml:lang="nl">Roostergroep exporteren</name>
+        <adapter>jmri.jmrit.roster.GroupBackupExportAction</adapter>
     </node>
     <node name="Import Complete Roster...">
         <name xml:lang="fr">Importer l'Inventaire...</name>
         <name xml:lang="it">Importa Roster...</name>
         <name xml:lang="de">Importiere gesamten Lokpark...</name>
 		<name xml:lang="ca">Importa tota la flota...</name>
-        <name xml:lang="cs">Importovat evidenci...</name>
+        <name xml:lang="cs">Importovat úplnou evidenci...</name>
         <name xml:lang="nl">Importeer Loclijst...</name>
         <adapter>jmri.jmrit.roster.FullBackupImportAction</adapter>
     </node>
@@ -480,6 +489,11 @@
         <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupAction</adapter>
         <current>deletegroup</current>
     </node>
+    <node name="Delete Roster Group Contents">
+        <name xml:lang="cs">Vymazat obsah skupiny evidence</name>
+        <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupContentsAction</adapter>
+        <current>deletegroupcontents</current>
+    </node>
     <node>separator</node><!-- separator -->
     <node name="Add Roster Entry to Group...">
 	    <name xml:lang="de">Eintrag einer Lokparkgruppe hinzufügen</name>
@@ -607,6 +621,10 @@
         <name xml:lang="cs">Řízení vícenásobných dekodérů</name>
         <name xml:lang="nl">Multi-Decoder aansturing</name>
         <adapter>jmri.jmrit.dualdecoder.DualDecoderToolAction</adapter>
+    </node>
+    <node name="Speed Profiling">
+        <name xml:lang="cs">Profilace rychlosti</name>
+        <adapter>jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Start WiThrottle Server">

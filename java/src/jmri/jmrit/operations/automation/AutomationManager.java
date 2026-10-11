@@ -77,10 +77,9 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
         if (automation == null) {
             _id++;
             automation = new Automation(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_automationHashTable.size());
+            int oldSize = _automationHashTable.size();
             _automationHashTable.put(automation.getId(), automation);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_automationHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _automationHashTable.size());
         }
         return automation;
     }
@@ -91,15 +90,14 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
      * @param automation The automation that is being registered.
      */
     public void register(Automation automation) {
-        Integer oldSize = Integer.valueOf(_automationHashTable.size());
+        int oldSize = _automationHashTable.size();
         _automationHashTable.put(automation.getId(), automation);
         // find last id created
         int id = Integer.parseInt(automation.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                Integer.valueOf(_automationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _automationHashTable.size());
     }
 
     /**
@@ -112,10 +110,9 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
             return;
         }
         automation.dispose();
-        Integer oldSize = Integer.valueOf(_automationHashTable.size());
+        int oldSize = _automationHashTable.size();
         _automationHashTable.remove(automation.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                Integer.valueOf(_automationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _automationHashTable.size());
     }
 
     /**

@@ -1,9 +1,9 @@
 package jmri.jmrix.nce.ncemon;
 
-import jmri.util.JUnitUtil;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -13,7 +13,7 @@ public class NceMonBinaryTest {
 
     @Test
     public void testCTor() {
-        NceMonBinary t = new NceMonBinary();
+        NceMonBinary t = NceMonBinary.INSTANCE;
         Assert.assertNotNull("exists",t);
     }
 

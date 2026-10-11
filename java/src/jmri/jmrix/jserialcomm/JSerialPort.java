@@ -340,8 +340,10 @@ public class JSerialPort implements SerialPort {
                         && portNameVector.contains(getSymlinkTarget(file))
                         && !portNameVector.contains(file.getName())).map(File::getName).collect(Collectors.toSet());
                 portNameVector.addAll(symlinkPorts);
-                log.info("Adding symlink port {}", symlinkPorts);
-
+                if (symlinkPorts.size() > 0) {
+                    log.info("Adding symlink port {}", symlinkPorts);
+                }
+                
                 // Let the user add additional serial ports
                 String portnamePattern = System.getProperty("purejavacomm.portnamepattern");
                 if (portnamePattern != null) {

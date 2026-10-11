@@ -10,9 +10,13 @@
 <!-- version 1.5 - Ronald Kuhn - add value for effect dimming and SUSI usage -->
 <!-- version 1.6 - Ronald Kuhn - add value for Lights flash with switchgear and a few visual correction -->
 <!-- version 2.0 - Ronald Kuhn - new arrangement of the options per grid -->
+<!-- version 2.1 - Pierre Billon - 2026-07-31 - add the pantograph settings, CV186-CV189 -->
+<!-- version 2.2 - Pierre Billon - 2026-08-05 - CV62 and CV64 were shown under item names no definition provides, so they never appeared -->
+<!-- version 2.3 - Pierre Billon - 2026-08-06 - Added French and German translations -->
 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Function Output</name>
+    <name xml:lang="fr">Sortie de fonction</name>
     <name xml:lang="it">Funzione Uscita</name>
     <name xml:lang="cs">Funkční výstup</name>
     <name xml:lang="de">Effekte für Funktions-Ausgänge</name>
@@ -33,6 +37,7 @@
             <griditem gridx="2" gridy="0" anchor="LINE_START">
              <label>
               <text>Generates Pulse chain commands</text>
+              <text xml:lang="fr">Génère des commandes en train d'impulsions</text>
               <text xml:lang="it">&lt;html&gt;Genera comandi e treno impulsi&lt;br&gt;per moduli sonori LBG con F1</text>
               <text xml:lang="cs">&lt;html&gt;Generování příkazů řetězců impulsů&lt;br&gt;pro zvukové moduly LGB na funkčním výstupu 1</text>
               <text xml:lang="de">&lt;html&gt;Pulskettenerzeugung&lt;br&gt;für LGB-Sound-Module an F1</text>
@@ -60,7 +65,7 @@
              <display item="Special Output Configuration"/>
             </griditem>
             <griditem anchor="LINE_END">
-             <display item="Function Output 4 as virtual Cam or Smoke Fan"/>
+             <display item="Function Output as virtual Cam or Smoke Fan"/>
             </griditem>
             <griditem gridy="13">
              <display item="Output Level"/>
@@ -87,6 +92,7 @@
             <griditem gridx="2" gridy="14" anchor="LINE_START">
              <label>
               <text>&lt;html&gt;Tens digit = on time&lt;br&gt;Ones digit = Off time&lt;br&gt;(0 = 100ms, 9 = 1s)</text>
+              <text xml:lang="fr">&lt;html&gt;Dizaines : durée d'allumage&lt;br&gt;Unités : durée d'extinction&lt;br&gt;(0 = 100 ms, 9 = 1 s)</text>
               <text xml:lang="it">&lt;html&gt;Numero decine= tempo On&lt;br&gt;Numero unità= tempo Off&lt;br&gt;(0 = 100ms, 9 = 1s)</text>
               <text xml:lang="cs">&lt;html&gt;Desítky = doba zapnuto&lt;br&gt;Jednotky = doba vypnuto&lt;br&gt;(0 = 100 ms, 9 = 1 s)</text>
               <text xml:lang="de">&lt;html&gt;Zehnerstelle: Einschaltphase&lt;br&gt;Einerstelle: Ausschaltphase&lt;br&gt;(0 = 100ms, 9 = 1s)</text>
@@ -234,6 +240,7 @@
             <griditem  gridwidth="3" anchor="CENTER">
              <label>
               <text>&lt;html&gt;&lt;b&gt;Lighting Effects Adjustments (Mars, Gyralight, etc)</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;b&gt;Réglage des effets lumineux (Mars, Gyralight, etc.)</text>
               <text xml:lang="it">&lt;html&gt;&lt;b&gt;Regolazioni Effetti luminosi  (Mars, Gyralight, etc)</text>
               <text xml:lang="cs">&lt;html&gt;&lt;b&gt;Úprava světelných efektů (Mars, Gyroskop, atd.)</text>
               <text xml:lang="de">&lt;html&gt;&lt;b&gt;Modifizieren der Lichteffekte  (Mars, Gyralight, etc)</text>
@@ -245,7 +252,7 @@
              </label>
             </griditem>
             <griditem>
-             <display item="Minimum Dimming Value"/>
+             <display item="Global lighting option 1"/>
             </griditem>
             <griditem>
              <display item="Fade-in time"/>
@@ -278,13 +285,14 @@
             <griditem gridx="2" gridy="6" anchor="LINE_START">
              <label>
               <text>&lt;html&gt;Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)&lt;br&gt;Ones digit extends Off time(0-9)&lt;br&gt;Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</text>
+              <text xml:lang="fr">&lt;html&gt;Dizaines : durée du cycle (0-9 = 0 - 0,9 s)&lt;br&gt;Unités : prolongation de la durée d'extinction (0-9)&lt;br&gt;Rémanence en dixièmes de seconde (0-255 = 0 - 25,5 s)</text>
               <text xml:lang="it">&lt;html&gt;Decine= tempo di ciclo(0-9), o tempo per partenza graduale(0-0.9s)&lt;br&gt;Unità= Estende tempo Off(0-9)&lt;br&gt;Ritardo Off-Automatico (0-255 = 0 - 25.5 sec)</text>
               <text xml:lang="cs">&lt;html&gt;Desítky nastavují dobu periody (0-9) nebo dobu náběhu pro měkký start (0-9 = 0 - 0,9 s)&lt;br&gt;Jednotky prodlužují dobu vypnuto (0-9)&lt;br&gt;Automatické vypnutí doba zpoždění (0-255 = 0 - 25,5 s)</text>
               <text xml:lang="de">&lt;html&gt;Zehnerstelle: Veränderung der Zykluszeit (0-9 = 0 - 0.9s)&lt;br&gt;Einerstelle: Ausschaltzeit-Verlängerung (0-9)&lt;br&gt;Nachleuchten in Zehntel-sek (0-255 = 0 - 25.5 sec)</text>
              </label>
             </griditem>
             <griditem>
-             <display item="Ditch Light Off Time"/>
+             <display item="Global lighting option 4"/>
             </griditem>
             <griditem>
              <display item="Ditch Light with Bell"/>
@@ -293,6 +301,42 @@
              <display item="Ditch Light with Horn"/>
             </griditem>
           </grid>
+     </row>
+     <row>
+       <column>
+         <label>
+          <text>&lt;html&gt;&lt;b&gt;Pantographs&lt;/b&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;b&gt;Pantographes&lt;/b&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;b&gt;Stromabnehmer&lt;/b&gt;&lt;/html&gt;</text>
+         </label>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 1 function key"/>
+         <display item="Panto 1 direction"/>
+         <display item="Panto 1 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 2 function key"/>
+         <display item="Panto 2 direction"/>
+         <display item="Panto 2 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 3 function key"/>
+         <display item="Panto 3 direction"/>
+         <display item="Panto 3 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+         <display item="Panto 4 function key"/>
+         <display item="Panto 4 direction"/>
+         <display item="Panto 4 sound dependency"/>
+         <label>
+          <text> </text>
+         </label>
+       </column>
      </row>
          <label>
           <text> </text>

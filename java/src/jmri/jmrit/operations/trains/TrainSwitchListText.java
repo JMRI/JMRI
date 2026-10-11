@@ -15,6 +15,7 @@ public class TrainSwitchListText {
     private static String switchListFor = Bundle.getMessage("SwitchListFor");
     private static String scheduledWork = Bundle.getMessage("ScheduledWork");
 
+    private static String trainVisits = Bundle.getMessage("TrainVisits");
     private static String departsAt = Bundle.getMessage("DepartsAt");
     private static String departsAtExpectedArrival = Bundle.getMessage("DepartsAtExpectedArrival");
     private static String departedExpected = Bundle.getMessage("DepartedExpected");
@@ -51,6 +52,14 @@ public class TrainSwitchListText {
 
     public static void setStringScheduledWork(String s) {
         scheduledWork = s;
+    }
+    
+    public static String getStringTrainVisits() {
+        return trainVisits;
+    }
+
+    public static void setStringTrainVisits(String s) {
+        trainVisits = s;
     }
 
     public static String getStringDepartsAt() {
@@ -195,6 +204,11 @@ public class TrainSwitchListText {
             values.setAttribute(Xml.TEXT, getStringScheduledWork());
         }
 
+        if (!getStringTrainVisits().equals(Bundle.getMessage("TrainVisits"))) {
+            e.addContent(values = new Element(Xml.TRAIN_VISITS));
+            values.setAttribute(Xml.TEXT, getStringTrainVisits());
+        }
+        
         if (!getStringDepartsAt().equals(Bundle.getMessage("DepartsAt"))) {
             e.addContent(values = new Element(Xml.DEPARTS_AT));
             values.setAttribute(Xml.TEXT, getStringDepartsAt());
@@ -282,7 +296,12 @@ public class TrainSwitchListText {
                 setStringScheduledWork(a.getValue());
             }
         }
-
+        if (emts.getChild(Xml.TRAIN_VISITS) != null) {
+            if ((a = emts.getChild(Xml.TRAIN_VISITS).getAttribute(Xml.TEXT)) != null) {
+                setStringTrainVisits(a.getValue());
+            }
+        }
+        
         if (emts.getChild(Xml.DEPARTS_AT) != null) {
             if ((a = emts.getChild(Xml.DEPARTS_AT).getAttribute(Xml.TEXT)) != null) {
                 setStringDepartsAt(a.getValue());

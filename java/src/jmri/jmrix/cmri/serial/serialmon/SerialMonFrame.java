@@ -205,6 +205,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
                         case SerialNode.NDP_CPNODE: // CPNODE
                         case SerialNode.NDP_CPMEGA: // CPMEGA
+                        case SerialNode.NDP_ESP32NODE: // ESP32Node -- same init payload layout as CPNODE/CPMEGA
                             if (len>=5)
                             {
                                 sb.append(" DL=");

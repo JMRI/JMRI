@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement SensorManager for DCC++ systems.
+ * Implement SensorManager for DCC-EX systems.
  * <p>
  * System names are "DSnnn", where D is the user configurable system prefix,
  * nnn is the sensor number without padding.
@@ -23,8 +23,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     protected DCCppTrafficController tc = null;
 
     /**
-     * Create an new DCC++ SensorManager.
-     * Has to register for DCC++ events.
+     * Create an new DCC-EX SensorManager.
+     * Has to register for DCC-EX events.
      *
      * @param memo the supporting system connection memo
      */
@@ -70,7 +70,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Can't convert " +  // NOI18N
                     systemName.substring(getSystemNamePrefix().length()) +
-                    " to DCC++ sensor address"); // NOI18N
+                    " to DCC-EX sensor address"); // NOI18N
         }
         return new DCCppSensor(getSystemNamePrefix() + addr, userName, tc);
     }

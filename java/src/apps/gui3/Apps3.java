@@ -94,13 +94,13 @@ public abstract class Apps3 extends AppsBase {
     protected boolean wizardLaunchCheck() {
         return false;
     }
-    
+
     public void launchFirstTimeStartupWizard() {
         FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard");
         prefsAction.setApp(this);
         prefsAction.actionPerformed(null);
     }
-    
+
     /**
      * For compatability with adding in buttons to the toolbar using the
      * existing createbuttonmodel
@@ -159,7 +159,7 @@ public abstract class Apps3 extends AppsBase {
                 }
             }
         }, eventMask);
-        
+
         // A Shutdown manager handles the quiting of the application
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         displayMainFrame(mainFrame.getMaximumSize());
@@ -320,9 +320,6 @@ public abstract class Apps3 extends AppsBase {
         }
         try {
             ProfileManagerDialog.getStartingProfile(sp);
-            // Manually setting the configFilename property since calling
-            // Apps.setConfigFilename() does not reset the system property
-            System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (profile != null) {
                 log.info("Starting with profile {}", profile.getId());

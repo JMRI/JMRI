@@ -68,6 +68,7 @@
     <comment xml:lang="de">Wert 0-255</comment>
     <comment xml:lang="ca">Valor 0-255</comment>
     <tooltip>0 = disconnected, smaller 128 reduction, greater 128 enhancement of the speed</tooltip>
+    <tooltip xml:lang="fr">0 = désactivé, inférieur à 128 = réduction, supérieur à 128 = augmentation de la vitesse</tooltip>
     <tooltip xml:lang="de">0 = ausgeschaltet, kleiner 128 Reduktion, größer 128 Erhöhung der Geschwindigkeit</tooltip>
     <tooltip xml:lang="va">0 = desconnectat, petita reducció a 128, gran millora de la velocitat a 128</tooltip>
   </variable>
@@ -83,6 +84,7 @@
     <comment xml:lang="de">Wert 0-255</comment>
     <comment xml:lang="ca">Valor 0-255</comment>
     <tooltip>0 = disconnected, smaller 128 reduction, greater 128 enhancement of the speed</tooltip>
+    <tooltip xml:lang="fr">0 = désactivé, inférieur à 128 = réduction, supérieur à 128 = augmentation de la vitesse</tooltip>
     <tooltip xml:lang="de">0 = ausgeschaltet, kleiner 128 Reduktion, größer 128 Erhöhung der Geschwindigkeit</tooltip>
     <tooltip xml:lang="ca">0 = desconnectat, petita reducció a 128, gran millora de la velocitat a 128</tooltip>
   </variable>

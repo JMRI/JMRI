@@ -315,6 +315,8 @@
               <li>Event + Data 2</li>
 
               <li>Event + Data 3</li>
+
+              <li> Event Acknowledgement</li>
             </ul>
           </li>
 
@@ -375,6 +377,20 @@
               <li>Node events</li>
 
               <li>Node Number</li>
+            </ul>
+          </li>
+
+          <li>
+            <ul>
+              <li>VLCB (extensions to CBUS)</li>
+
+              <li>Services</li>
+
+              <li>Diagnostics</li>
+
+              <li>Long Messages</li>
+
+              <li>Heart Beat</li>
             </ul>
           </li>
 

@@ -69,10 +69,17 @@ public interface AddressListener extends EventListener {
     void notifyConsistAddressThrottleFound(DccThrottle throttle);
 
     /**
-     * Receive notification that a new roster entry has been selected (and not validated yet).
+     * Receive notification that a new roster entry has been highlighted (and not validated yet).
      * In the RosterEntry combobox for example.
      *
      * @param re The roster entry that is now selected.
      */
-    void notifyRosterEntrySelected(RosterEntry re);
+    void notifyNewRosterEntryHighlighted(RosterEntry re);
+
+    /**
+     * Receive notification that a roster entry has been updated.
+     *
+     * @param re The roster entry that has been updated.
+     */
+    void notifyRosterEntryUpdated(RosterEntry re);
 }

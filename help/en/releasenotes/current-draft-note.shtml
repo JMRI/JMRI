@@ -36,16 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCC-EX Traffic Monitor: controls now wrap onto additional rows when the
-                window is narrowed and the controls area grows upward to keep everything visible,
-                rather than clipping checkboxes off the bottom
-                (<a href="https://github.com/JMRI/JMRI/issues/15134">#15134</a>).
-                The window title and menu action label also now read &quot;DCC-EX&quot; rather
-                than &quot;DCC++&quot;.</li>
-                <li>DCC-EX Traffic Monitor: traffic lines now show an explicit &quot;TX:&quot; or
-                &quot;RX:&quot; direction marker regardless of whether the translated text or raw
-                form is displayed, and the raw form is wrapped in &lt;&hellip;&gt; rather than
-                [&hellip;] to match DCC-EX's native command syntax.</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -502,7 +493,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-          <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -596,7 +587,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>JMRI Desktop Application Throttles  now listen to Roster events, hence, if a roster entry is updated, the throttle will immediately reflect the changes</li>
+            <li>Roster functions editor panel is now displayed as a table, the table can be reordered by dragging rows, which will change the order of the displayed functions buttons in the related JMRI throttle window (see <a href="https://github.com/JMRI/JMRI/issues/13700"> #13700 </a>).
+                 Only implemented in JMRI Desktop Application Throttles for now, and no impact on keyboard shortcuts (1 or F1 is still F1, whatever the display order)</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -662,9 +655,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The class <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionStatus.html">jmri.jmrix.ConnectionStatus</a>
-                has been refactorized to use <a href="https://www.jmri.org/JavaDoc/doc/jmri/SystemConnectionMemo.html">SystemConnectionMemo</a>
-                instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
             <li></li>
         </ul>
 

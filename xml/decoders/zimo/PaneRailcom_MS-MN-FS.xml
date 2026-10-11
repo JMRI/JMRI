@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Pierre Billon - 2026-07-31 - RailCom pane for the MS, MN and FS decoders, with the CV99 ID 7 transmission switches. -->
+<!--   Split from PaneRailcom.xml, which is shared with 139 MX definitions: CV28 bit 6 -->
+<!--   (high voltage RailCom) exists only on the large scale MS decoders, and bit 7 is -->
+<!--   DCC-A registration on this generation. -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <name>RailCom</name>
+  <name xml:lang="it">RailCom</name>
+  <name xml:lang="fr">RailCom</name>
+  <name xml:lang="de">RailCom</name>
+  <name xml:lang="cs">RailCom</name>
+  <column>
+    <display item="Enable RailCom" format="checkbox"/>
+    <display item="RailCom channel 1 (Broadcast)"/>
+    <display item="RailCom channel 2 (Data)"/>
+    <display item="Railcom high voltage"/>
+    <display item="DCC-A registration"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="RailCom speed reporting method"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>ID 7 transmissions</text>
+      <text xml:lang="fr">Émissions ID 7</text>
+      <text xml:lang="de">ID-7-Aussendungen</text>
+    </label>
+    <display item="RailCom ID 7 deactivate speed"/>
+    <display item="RailCom ID 7 deactivate revolutions"/>
+    <display item="RailCom ID 7 deactivate temperature"/>
+    <display item="RailCom ID 7 deactivate track voltage"/>
+  </column>
+</pane>

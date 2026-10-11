@@ -43,7 +43,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     protected final CbusConsolePacketPane packetPane;
     protected final CbusSendEventPane sendPane;
     protected CbusConsoleDecodeOptionsPane decodePane;
-    protected final CbusConsoleLoggingPane logPane;
+    protected CbusConsoleLoggingPane logPane;
     public final CbusConsoleDisplayOptionsPane displayPane;
 
     // members for handling the CBUS interface
@@ -56,7 +56,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         statsPane = new CbusConsoleStatsPane(this);
         packetPane = new CbusConsolePacketPane(this);
         sendPane = new CbusSendEventPane(this);
-        logPane = new CbusConsoleLoggingPane(this);
         displayPane = new CbusConsoleDisplayOptionsPane(this);
 
     }
@@ -99,8 +98,11 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public void dispose() {
-        if (decodePane!=null) {
+        if (decodePane!=null) { // initComponents called
             decodePane.dispose();
+        }
+        if (logPane!=null) { // initComponents called
+            logPane.dispose();
         }
         displayPane.dispose();
         statsPane.dispose();
@@ -123,7 +125,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     public void initComponents(CanSystemConnectionMemo memo, boolean launchEvTable) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
+        if ( tc == null ) {
+            throw new IllegalArgumentException("TC Should not be null for memo.getTrafficController() " + memo.getUserName()
+            + "" + memo.getTrafficController() + " on GUI Thread " + ThreadingUtil.isGUIThread());
+        }
         decodePane = new CbusConsoleDecodeOptionsPane(this);
+        logPane = new CbusConsoleLoggingPane(this);
         if (launchEvTable){
             memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
         }

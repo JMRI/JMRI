@@ -68,7 +68,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         String old = _name;
         _name = name;
         if (!old.equals(name)) {
-            setDirtyAndFirePropertyChange(ROUTE_NAME_CHANGED_PROPERTY, old, name); // NOI18N
+            setDirtyAndFirePropertyChange(ROUTE_NAME_CHANGED_PROPERTY, old, name);
         }
     }
 
@@ -113,11 +113,11 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         log.debug("adding new location to ({}) id: {}", getName(), id);
         RouteLocation rl = new RouteLocation(id, location);
         rl.setSequenceNumber(_sequenceNum);
-        Integer old = Integer.valueOf(_routeHashTable.size());
+        int old = _routeHashTable.size();
         _routeHashTable.put(rl.getId(), rl);
 
         resetBlockingOrder();
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _routeHashTable.size());
         // listen for drop and pick up changes to forward
         rl.addPropertyChangeListener(this);
         return rl;
@@ -149,7 +149,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
      * @param rl The RouteLocation to add to this route.
      */
     public void register(RouteLocation rl) {
-        Integer old = Integer.valueOf(_routeHashTable.size());
+        int old = _routeHashTable.size();
         _routeHashTable.put(rl.getId(), rl);
 
         // find last id created
@@ -162,7 +162,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         if (rl.getSequenceNumber() > _sequenceNum) {
             _sequenceNum = rl.getSequenceNumber();
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _routeHashTable.size());
         // listen for drop and pick up changes to forward
         rl.addPropertyChangeListener(this);
     }
@@ -178,11 +178,11 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
             rl.removePropertyChangeListener(this);
             String id = rl.getId();
             rl.dispose();
-            Integer old = Integer.valueOf(_routeHashTable.size());
+            int old = _routeHashTable.size();
             _routeHashTable.remove(id);
             resequence();
             resetBlockingOrder();
-            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _routeHashTable.size());
         }
     }
 
@@ -425,7 +425,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
             }
         }
         resetBlockingOrder();
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceNum));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceNum);
     }
 
     /**
@@ -450,7 +450,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
             }
         }
         resetBlockingOrder();
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceNum));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceNum);
     }
 
     /**

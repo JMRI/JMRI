@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -295,8 +296,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         log.debug("property change: {}", e);
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue());
+            Rectangle dirty = getBounds();
             displayState(now);
-            _editor.repaint();
+            dirty.add(getBounds()); // union with the new bounds, in case displayState resized this icon
+            _editor.repaintTargetPanel(dirty);
         }
     }
 

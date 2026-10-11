@@ -63,9 +63,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
         panel.setAttribute("turnoutdrawunselectedleg", (editor.isTurnoutDrawUnselectedLeg()) ? "yes" : "no");
         if (editor.getBackgroundColor() == null) {
-            panel.setAttribute("backgroundcolor", ColorUtil.colorToColorName(Color.lightGray));
+            panel.setAttribute("backgroundcolor", ColorUtil.colorToHexString(Color.lightGray));
         } else {
-            panel.setAttribute("backgroundcolor", ColorUtil.colorToColorName(editor.getBackgroundColor()));
+            panel.setAttribute("backgroundcolor", ColorUtil.colorToHexString(editor.getBackgroundColor()));
         }
         panel.setAttribute("defaulttrackcolor", editor.getDefaultTrackColor());
         panel.setAttribute("defaultoccupiedtrackcolor", editor.getDefaultOccupiedTrackColor());
@@ -77,27 +77,27 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
         //add Layout Track Drawing Options settings
         LayoutTrackDrawingOptions ltdo = editor.getLayoutTrackDrawingOptions();
-        panel.setAttribute("mainBallastColor", (ColorUtil.colorToColorName(ltdo.getMainBallastColor())));       
+        panel.setAttribute("mainBallastColor", (ColorUtil.colorToHexString(ltdo.getMainBallastColor())));       
         panel.setAttribute("mainBallastWidth", (Integer.toString(ltdo.getMainBallastWidth())));       
         panel.setAttribute("mainBlockLineDashPercentageX10", (Integer.toString(ltdo.getMainBlockLineDashPercentageX10())));       
         panel.setAttribute("mainBlockLineWidth", (Integer.toString(ltdo.getMainBlockLineWidth())));       
-        panel.setAttribute("mainRailColor", (ColorUtil.colorToColorName(ltdo.getMainRailColor())));       
+        panel.setAttribute("mainRailColor", (ColorUtil.colorToHexString(ltdo.getMainRailColor())));       
         panel.setAttribute("mainRailCount", (Integer.toString(ltdo.getMainRailCount())));       
         panel.setAttribute("mainRailGap", (Integer.toString(ltdo.getMainRailGap())));       
         panel.setAttribute("mainRailWidth", (Integer.toString(ltdo.getMainRailWidth())));       
-        panel.setAttribute("mainTieColor", (ColorUtil.colorToColorName(ltdo.getMainTieColor())));       
+        panel.setAttribute("mainTieColor", (ColorUtil.colorToHexString(ltdo.getMainTieColor())));       
         panel.setAttribute("mainTieGap", (Integer.toString(ltdo.getMainTieGap())));       
         panel.setAttribute("mainTieLength", (Integer.toString(ltdo.getMainTieLength())));       
         panel.setAttribute("mainTieWidth", (Integer.toString(ltdo.getMainTieWidth())));       
-        panel.setAttribute("sideBallastColor", (ColorUtil.colorToColorName(ltdo.getSideBallastColor())));       
+        panel.setAttribute("sideBallastColor", (ColorUtil.colorToHexString(ltdo.getSideBallastColor())));       
         panel.setAttribute("sideBallastWidth", (Integer.toString(ltdo.getSideBallastWidth())));       
         panel.setAttribute("sideBlockLineDashPercentageX10", (Integer.toString(ltdo.getSideBlockLineDashPercentageX10())));       
         panel.setAttribute("sideBlockLineWidth", (Integer.toString(ltdo.getSideBlockLineWidth())));       
-        panel.setAttribute("sideRailColor", (ColorUtil.colorToColorName(ltdo.getSideRailColor())));       
+        panel.setAttribute("sideRailColor", (ColorUtil.colorToHexString(ltdo.getSideRailColor())));       
         panel.setAttribute("sideRailCount", (Integer.toString(ltdo.getSideRailCount())));       
         panel.setAttribute("sideRailGap", (Integer.toString(ltdo.getSideRailGap())));       
         panel.setAttribute("sideRailWidth", (Integer.toString(ltdo.getSideRailWidth())));       
-        panel.setAttribute("sideTieColor", (ColorUtil.colorToColorName(ltdo.getSideTieColor())));       
+        panel.setAttribute("sideTieColor", (ColorUtil.colorToHexString(ltdo.getSideTieColor())));       
         panel.setAttribute("sideTieGap", (Integer.toString(ltdo.getSideTieGap())));       
         panel.setAttribute("sideTieLength", (Integer.toString(ltdo.getSideTieLength())));       
         panel.setAttribute("sideTieWidth", (Integer.toString(ltdo.getSideTieWidth())));       
@@ -150,9 +150,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 }
 
                 elem.setAttribute("occupiedsense", Integer.toString(b.getOccupiedSense()));
-                elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
-                elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
-                elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
+                elem.setAttribute("trackcolor", ColorUtil.colorToHexString(b.getBlockTrackColor()));
+                elem.setAttribute("occupiedcolor", ColorUtil.colorToHexString(b.getBlockOccupiedColor()));
+                elem.setAttribute("extracolor", ColorUtil.colorToHexString(b.getBlockExtraColor()));
                 Memory m = b.getMemory();
                 if (!b.getMemoryName().isEmpty() && (m != null)) {
                     elem.setAttribute("memory", m.getSystemName()); // NOI18N

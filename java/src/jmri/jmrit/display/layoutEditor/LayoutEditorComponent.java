@@ -44,11 +44,15 @@ class LayoutEditorComponent extends JComponent {
             if (clipBounds != null) {
                 if (!clipBounds.isEmpty()) {
                     if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
-                        if (!clipBounds.equals(g2.getClipBounds())) {
-                            //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
-                            //        clipBounds, g2.getClipBounds());
-                            g2.setClip(clipBounds);
-                        }
+                        // clipBounds is the visible part of the panel, 
+                        // used here to cull drawing, while the incoming clip in g2
+                        // is the area Swing actually asked for in original graphics units 
+                        // (not scaled units). 
+
+                        log.debug("LEComponent.paint(): original g2 clip: {} requested clip: {}", 
+                                    g2.getClipBounds(), clipBounds);
+
+                        g2.setClip(clipBounds);
                     }
                 }
             }

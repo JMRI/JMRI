@@ -61,8 +61,17 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         //log.debug("{} selected", tw.getThrottleFrameAt(row_tf).getTitle());
         return tw.getThrottleControllerAt(row_tf);
     }
+
+    public boolean moveThrottleController(ThrottleControllerUI tcui, int row, int column) {
+        if (tcui instanceof ThrottleFrame) {
+            return moveThrottleController((ThrottleFrame) tcui, row, column);
+        } else if (tcui instanceof SimpleThrottlePanel) {
+            return moveThrottleController((SimpleThrottlePanel) tcui, row, column);
+        }
+        return false;
+    }
     
-    public boolean moveThrottleController(ThrottleFrame tcui, int row_tf, int col_tw ) {
+    private boolean moveThrottleController(ThrottleFrame tcui, int row_tf, int col_tw ) {
         ThrottleControllersUIContainer destination = throttleFrameManager.getThrottleControllersContainerAt(col_tw);
         ThrottleControllersUIContainer source = tcui.getThrottleControllersContainer();
         source.removeThrottleController(tcui);
@@ -78,7 +87,7 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         return true;
     }
 
-    public boolean moveThrottleController(SimpleThrottlePanel tcui, int row_tf, int col_tw ) {
+    private boolean moveThrottleController(SimpleThrottlePanel tcui, int row_tf, int col_tw ) {
         ThrottleControllersUIContainer destination = throttleFrameManager.getThrottleControllersContainerAt(col_tw);
         ThrottleControllersUIContainer source = tcui.getThrottleControllersContainer();
         if (destination instanceof ThrottleWindow) {

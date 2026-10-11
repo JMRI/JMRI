@@ -99,15 +99,15 @@ public class SCWarrantTest extends WarrantTest {
         //jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
         ThreadingUtil.runOnLayoutWithJmriException( () ->
             sWest.setState(Sensor.ACTIVE));
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(() -> bWest.isOccupied(), "West block occupied");
 
         ThreadingUtil.runOnLayoutWithJmriException( () ->
             sWest.setState(Sensor.INACTIVE));
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(() -> !bWest.isOccupied(), "West block unoccupied");
 
         ThreadingUtil.runOnLayoutWithJmriException( () ->
             sSouth.setState(Sensor.ACTIVE));
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+        JUnitUtil.waitFor(() -> bSouth.isOccupied(), "South block occupied");
 
         // wait for done
         JUnitUtil.waitFor(() -> {

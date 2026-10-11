@@ -3,7 +3,10 @@ package jmri.jmrix.dccpp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -105,6 +108,50 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         assertEquals( '1', l.rcvdRply.getElement(5) & 0xFF, "Char 5 ");
     }
 
+    @Test
+    public void testInboundCaptionWithGreaterThan() throws IOException {
+        // A '>' inside the quoted caption must not terminate the message early.
+        checkAutomationCaption("Round > the bend");
+    }
+
+    @Test
+    public void testInboundCaptionWithLessThan() throws IOException {
+        // A '<' inside the quoted caption must pass through unchanged.
+        checkAutomationCaption("Less < than");
+    }
+
+    @Test
+    public void testInboundCaptionWithBothAngleBrackets() throws IOException {
+        // Both characters in the same caption.
+        checkAutomationCaption("Round > and < the bend");
+    }
+
+    /**
+     * Feed a <jA ...> automation-id reply with the given caption through the
+     * packetizer and assert the full body is delivered, the reply still matches
+     * AUTOMATION_ID_REPLY_REGEX, and the caption is preserved verbatim.
+     */
+    private void checkAutomationCaption(String caption) throws IOException {
+        DCCppPacketizer c = (DCCppPacketizer) tc;
+        DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
+        c.connectPort(p);
+
+        DCCppListenerScaffold l = new DCCppListenerScaffold();
+        c.addDCCppListener(~0, l);
+
+        String body = "jA 4 A \"" + caption + "\"";
+        p.tistream.write('<');
+        for (byte b : body.getBytes(StandardCharsets.US_ASCII)) {
+            p.tistream.write(b);
+        }
+        p.tistream.write('>');
+
+        assertTrue( waitForReply(l), "reply received");
+        assertEquals( body, l.rcvdRply.toString(), "full body delivered");
+        assertTrue( l.rcvdRply.isAutomationIDReply(), "reply still matches AUTOMATION_ID_REPLY_REGEX");
+        assertEquals( caption, l.rcvdRply.getAutomationDescString(), "caption preserved verbatim");
+    }
+
     private boolean waitForReply(DCCppListenerScaffold l) {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
@@ -120,11 +167,76 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         return i < 100;
     }
 
+    // --- readFrameBody direct tests (no threading required) ---
+
+    @Test
+    public void testReadFrameBodyNormalMessage() throws IOException {
+        assertEquals("H 22 1", parseBody("H 22 1>"));
+    }
+
+    @Test
+    public void testReadFrameBodyQuotedGreaterThan() throws IOException {
+        assertEquals("jA 4 A \"Round > bend\"", parseBody("jA 4 A \"Round > bend\">"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastSimple() throws IOException {
+        assertEquals("* hello world *", parseBody("* hello world *>"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastWithGreaterThan() throws IOException {
+        assertEquals("* value > 16 *", parseBody("* value > 16 *>"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastWithNestedAngles() throws IOException {
+        // The actual failure case: DCC-EX rejects <V 1025 0> and embeds the
+        // command in the broadcast body — the '>' inside must not split the frame.
+        String body = "* Command format <V cv value> failed CHECK(cv 1 .. 1023)\n  <V 1025 0> *";
+        assertEquals(body, parseBody(body + ">"));
+    }
+
+    @Test
+    public void testReadFrameBodyBroadcastWithCommandContainingLessThan() throws IOException {
+        // '<' in a quoted arg inside the broadcast body, e.g. echo of <m 0 1 "voltage  < 16 ">.
+        String body = "* Command format <m 0 1 \"voltage  < 16 \"> failed *";
+        assertEquals(body, parseBody(body + ">"));
+    }
+
+    @Test
+    public void testInboundBroadcastMessage() throws IOException {
+        // Full pipeline test: verify broadcast frames reach parseReply and are recognised as diag replies.
+        DCCppPacketizer c = (DCCppPacketizer) tc;
+        DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
+        c.connectPort(p);
+        DCCppListenerScaffold l = new DCCppListenerScaffold();
+        c.addDCCppListener(~0, l);
+
+        String payload = "* Command format <V cv value> failed CHECK(cv 1 .. 1023)  <V 1025 0> *";
+        p.tistream.write('<');
+        for (byte b : payload.getBytes(StandardCharsets.US_ASCII)) {
+            p.tistream.write(b);
+        }
+        p.tistream.write('>');
+
+        assertTrue(waitForReply(l), "reply received");
+        assertEquals(payload, l.rcvdRply.toString(), "full body delivered");
+        assertTrue(l.rcvdRply.isDiagReply(), "reply parsed as diag");
+    }
+
+    /** Synchronous helper: feed raw bytes directly to readFrameBody and return the result. */
+    private String parseBody(String input) throws IOException {
+        DataInputStream is = new DataInputStream(
+            new ByteArrayInputStream(input.getBytes(StandardCharsets.US_ASCII)));
+        return ((DCCppPacketizer) tc).readFrameBody(is, 2048);
+    }
+
     @Test
     @Override
     public void testPortReadyToSendNullController() {
         super.testPortReadyToSendNullController();
-        JUnitAppender.suppressWarnMessageStartsWith("DCC++ port not ready to send");
+        JUnitAppender.suppressWarnMessageStartsWith("DCC-EX port not ready to send");
     }
 
     @BeforeEach

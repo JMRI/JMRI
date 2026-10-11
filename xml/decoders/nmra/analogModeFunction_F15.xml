@@ -50,13 +50,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F1</label>
       <label xml:lang="it">Stato Funzioni in analogico - F1</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F1</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F1</label>
       <label xml:lang="fr">État de la fonction en analogique - F1</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F1</label>
       <label xml:lang="nl">Funktiestatus Analoog - F1</label>
       <label xml:lang="es">Estado de la función en modo análogo - F1</label>
       <tooltip>Check to enable function F1 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F1 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F1 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F1 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F1 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F1 cuando se use en modo análogo</tooltip>
@@ -65,13 +65,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F2</label>
       <label xml:lang="it">Stato Funzioni in analogico - F2</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F2</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F2</label>
       <label xml:lang="fr">État de la fonction en analogique - F2</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F2</label>
       <label xml:lang="nl">Funktiestatus Analoog - F2</label>
       <label xml:lang="es">Estado de la función en modo análogo - F2</label>
       <tooltip>Check to enable function F2 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F2 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F2 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F2 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F2 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F2 cuando se use en modo análogo</tooltip>
@@ -80,13 +80,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F3</label>
       <label xml:lang="it">Stato Funzioni in analogico - F3</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F3</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F3</label>
       <label xml:lang="fr">État de la fonction en analogique - F3</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F3</label>
       <label xml:lang="nl">Funktiestatus Analoog - F3</label>
       <label xml:lang="es">Estado de la función en modo análogo - F3</label>
       <tooltip>Check to enable function F3 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F3 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F3 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F3 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F3 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F3 cuando se use en modo análogo</tooltip>
@@ -95,13 +95,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F4</label>
       <label xml:lang="it">Stato Funzioni in analogico - F4</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F4</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F4</label>
       <label xml:lang="fr">État de la fonction en analogique - F4</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F4</label>
       <label xml:lang="nl">Funktiestatus Analoog - F4</label>
       <label xml:lang="es">Estado de la función en modo análogo - F4</label>
       <tooltip>Check to enable function F4 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F4 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F4 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F4 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F4 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F4 cuando se use en modo análogo</tooltip>
@@ -110,13 +110,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F5</label>
       <label xml:lang="it">Stato Funzioni in analogico - F5</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F5</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F5</label>
       <label xml:lang="fr">État de la fonction en analogique - F5</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F5</label>
       <label xml:lang="nl">Funktiestatus Analoog - F5</label>
       <label xml:lang="es">Estado de la función en modo análogo - F5</label>
       <tooltip>Check to enable function F5 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F5 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F5 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F5 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F5 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F5 cuando se use en modo análogo</tooltip>
@@ -125,13 +125,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F6</label>
       <label xml:lang="it">Stato Funzioni in analogico - F6</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F6</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F6</label>
       <label xml:lang="fr">État de la fonction en analogique - F6</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F6</label>
       <label xml:lang="nl">Funktiestatus Analoog - F6</label>
       <label xml:lang="es">Estado de la función en modo análogo - F6</label>
       <tooltip>Check to enable function F6 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F6 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F6 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F6 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F6 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F6 cuando se use en modo análogo</tooltip>
@@ -140,13 +140,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F7</label>
       <label xml:lang="it">Stato Funzioni in analogico - F7</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F7</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F7</label>
       <label xml:lang="fr">État de la fonction en analogique - F7</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F7</label>
       <label xml:lang="nl">Funktiestatus Analoog - F7</label>
       <label xml:lang="es">Estado de la función en modo análogo - F7</label>
       <tooltip>Check to enable function F7 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F7 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F7 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F7 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F7 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F7 cuando se use en modo análogo</tooltip>
@@ -155,13 +155,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Analog Mode Function Status - F8</label>
       <label xml:lang="it">Stato Funzioni in analogico - F8</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F8</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F8</label>
       <label xml:lang="fr">État de la fonction en analogique - F8</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F8</label>
       <label xml:lang="nl">Funktiestatus Analoog - F8</label>
       <label xml:lang="es">Estado de la función en modo análogo - F8</label>
       <tooltip>Check to enable function F8 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F8 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F8 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F8 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F8 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F8 cuando se use en modo análogo</tooltip>
@@ -170,13 +170,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F0</label>
       <label xml:lang="it">Stato Funzioni in analogico - F0</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F0</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F0</label>
       <label xml:lang="fr">État de la fonction en analogique - F0</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F0</label>
       <label xml:lang="nl">Funktiestatus Analoog - F0</label>
       <label xml:lang="es">Estado de la función en modo análogo - F0</label>
       <tooltip>Check to enable function F0 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F0 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F0 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F0 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F0 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F0 cuando se use en modo análogo</tooltip>
@@ -185,13 +185,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F9</label>
       <label xml:lang="it">Stato Funzioni in analogico - F9</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F9</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F9</label>
       <label xml:lang="fr">État de la fonction en analogique - F9</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F9</label>
       <label xml:lang="nl">Funktiestatus Analoog - F9</label>
       <label xml:lang="es">Estado de la función en modo análogo - F9</label>
       <tooltip>Check to enable function F9 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F9 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F9 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F9 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F9 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F9 cuando se use en modo análogo</tooltip>
@@ -200,13 +200,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F10</label>
       <label xml:lang="it">Stato Funzioni in analogico - F10</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F10</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F10</label>
       <label xml:lang="fr">État de la fonction en analogique - F10</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F10</label>
       <label xml:lang="nl">Funktiestatus Analoog - F10</label>
       <label xml:lang="es">Estado de la función en modo análogo - F10</label>
       <tooltip>Check to enable function F10 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F10 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F10 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F10 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F10 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F10 cuando se use en modo análogo</tooltip>
@@ -215,13 +215,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F11</label>
       <label xml:lang="it">Stato Funzioni in analogico - F11</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F11</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F11</label>
       <label xml:lang="fr">État de la fonction en analogique - F11</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F11</label>
       <label xml:lang="nl">Funktiestatus Analoog - F11</label>
       <label xml:lang="es">Estado de la función en modo análogo - F11</label>
       <tooltip>Check to enable function F11 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F11 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F11 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F11 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F11 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F11 cuando se use en modo análogo</tooltip>
@@ -230,13 +230,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F12</label>
       <label xml:lang="it">Stato Funzioni in analogico - F12</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F12</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F12</label>
       <label xml:lang="fr">État de la fonction en analogique - F12</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F12</label>
       <label xml:lang="nl">Funktiestatus Analoog - F12</label>
       <label xml:lang="es">Estado de la función en modo análogo - F12</label>
       <tooltip>Check to enable function F12 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F12 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F12 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F12 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F12 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F12 cuando se use en modo análogo</tooltip>
@@ -245,13 +245,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F13</label>
       <label xml:lang="it">Stato Funzioni in analogico - F13</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F13</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F13</label>
       <label xml:lang="fr">État de la fonction en analogique - F13</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F13</label>
       <label xml:lang="nl">Funktiestatus Analoog - F13</label>
       <label xml:lang="es">Estado de la función en modo análogo - F13</label>
       <tooltip>Check to enable function F13 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F13 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F13 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F13 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F13 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F13 cuando se use en modo análogo</tooltip>
@@ -260,13 +260,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F14</label>
       <label xml:lang="it">Stato Funzioni in analogico - F14</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F14</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F14</label>
       <label xml:lang="fr">État de la fonction en analogique - F14</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F14</label>
       <label xml:lang="nl">Funktiestatus Analoog - F14</label>
       <label xml:lang="es">Estado de la función en modo análogo - F14</label>
       <tooltip>Check to enable function F14 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F14 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F14 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F14 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F14 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F14 cuando se use en modo análogo</tooltip>
@@ -275,13 +275,13 @@
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       <label>Analog Mode Function Status - F15</label>
       <label xml:lang="it">Stato Funzioni in analogico - F15</label>
-      <label xml:lang="cs">Stav funkce v analogovém režimu - F15</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu – F15</label>
       <label xml:lang="fr">État de la fonction en analogique - F15</label>
       <label xml:lang="de">Funktionsstatus im Analogbetrieb - F15</label>
       <label xml:lang="nl">Funktiestatus Analoog - F15</label>
       <label xml:lang="es">Estado de la función en modo análogo - F15</label>
       <tooltip>Check to enable function F15 when the unit is operating in analog power mode</tooltip>
-      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F15 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="cs">Zaškrtněte pro povolení funkce F15 když je jednotka provozována v režimu analogového napájení</tooltip>
       <tooltip xml:lang="de">Auswählen um Function F15 zu aktivieren im Analogbetrieb</tooltip>
       <tooltip xml:lang="nl">Selecteer om functie F15 te activeren tijdens Analoog rijden</tooltip>
       <tooltip xml:lang="es">Marque para habilitar la función F15 cuando se use en modo análogo</tooltip>
