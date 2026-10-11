@@ -260,6 +260,6 @@ public class TimeProviderTableAction extends AbstractTableAction<TimeProvider> {
         return TimeProviderTableAction.class.getName();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClockTableAction.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClockTableAction.class);
 
 }

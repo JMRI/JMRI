@@ -89,5 +89,5 @@ public class InternalDateTimeXml extends jmri.managers.configurexml.AbstractName
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalDateTimeXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalDateTimeXml.class);
 }

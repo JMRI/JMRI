@@ -29,6 +29,6 @@ public class InternalTimeProviderManagerXml extends jmri.managers.configurexml.A
         return true;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(InternalTimeProviderManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(InternalTimeProviderManagerXml.class);
 
 }

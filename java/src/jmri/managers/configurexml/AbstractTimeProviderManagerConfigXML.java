@@ -422,6 +422,6 @@ public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamed
         return InstanceManager.getDefault(TimeProviderManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTimeProviderManagerConfigXML.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractTimeProviderManagerConfigXML.class);
 
 }
