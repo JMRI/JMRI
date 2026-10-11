@@ -30,6 +30,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         this.boardManager = new Dcc4PcBoardManager(tc, this);
         // Finally, create and register a shutdown task to ensure clean exit
         this.pollShutDownTask = this::stopPolling;
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(pollShutDownTask);
         startPolling();
     }
 
@@ -138,11 +139,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     protected void stopPolling() {
         synchronized (this) {
             stopPolling = true;
+            notifyAll(); // don't sit out the rest of a poll wait
         }
         if (pollThread != null) {
             // we want to wait for the polling thread to finish what it is currently working on.
             try {
-                pollThread.join();
+                pollThread.join(5000);
             } catch (InterruptedException e) {
                 // Don't need to worry
             }
@@ -306,7 +308,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         }
                         int delay = shortCycleInterval;
                         synchronized (this) {
-                            if (awaitingReply) {
+                            if (awaitingReply && !stopPolling) { // stopPolling() wakes us early on purpose
                                 log.warn("timeout awaiting poll response for board {}", boardAddress);
                                 delay = pollTimeout;
                             }
@@ -1073,6 +1075,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     @Override
     public void dispose() {
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(pollShutDownTask);
         stopPolling();
         super.dispose();
     }

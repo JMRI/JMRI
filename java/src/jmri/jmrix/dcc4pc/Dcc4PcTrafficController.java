@@ -99,10 +99,37 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return Dcc4PcMessage.getProgMode();
     }
 
-    //Dcc4Pc doesn't support this function!
+    // DCC4PC has no programming mode, so there's nothing to send. The old
+    // one-byte 0x00 message was the interface's own Get Info, and at shutdown
+    // terminate() sent it with 100 retries, flooding the log.
     @Override
     protected AbstractMRMessage enterNormalMode() {
-        return Dcc4PcMessage.getExitProgMode();
+        return null;
+    }
+
+    /**
+     * At shutdown, put every board and the interface back to 8 kbps so other
+     * programs can talk to them. The next JMRI start resets the speed anyway.
+     */
+    @Override
+    protected void terminate() {
+        log.debug("Cleanup Starts");
+        if (ostream == null || port == null) {
+            return;    // no connection established
+        }
+        // let a reply that is still being fetched finish first
+        long end = System.currentTimeMillis() + 1000;
+        while (sequenceInProgress && System.currentTimeMillis() < end) {
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        Dcc4PcMessage m = Dcc4PcMessage.busResetSpeeds();
+        m.setRetries(0);
+        forwardToPort(m, null);
     }
 
     @Override
