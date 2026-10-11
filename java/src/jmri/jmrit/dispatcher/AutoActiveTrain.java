@@ -299,10 +299,11 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         RosterEntry entry = (re != null) ? re : _activeTrain.getRosterEntry();
         RosterSpeedProfile sp = (entry != null) ? entry.getSpeedProfile() : null;
-        boolean hasProfile = (sp != null) && (sp.getProfileSize() > 0);
-        boolean dirHasProfile = hasProfile && (forward ? sp.hasForwardSpeeds() : sp.hasReverseSpeeds());
-        if (dirHasProfile) {
-            return; // the scale cap can be resolved; no fallback
+        if (sp != null && sp.getProfileSize() > 0) {
+            boolean dirHasProfile = forward ? sp.hasForwardSpeeds() : sp.hasReverseSpeeds();
+            if (dirHasProfile) {
+                return; // the scale cap can be resolved; no fallback
+            }
         }
         String direction = forward ? "forward" : "reverse";
         if (!_scaleCapFallbackWarned.add(direction)) {
@@ -315,7 +316,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
         String rosterId = entry.getId();
-        if (!hasProfile) {
+        if (sp == null || sp.getProfileSize() < 1) {
             log.warn("Train {}: scale speed cap {} km/h cannot be applied when running {} (called from {}): roster entry {} has no speed profile; using throttle % cap {} instead",
                     trainName, _maxSpeedScaleKmh, direction, caller, rosterId, _maxSpeed);
         } else {
