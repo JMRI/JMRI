@@ -171,6 +171,9 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         }
                         ostream.flush();
                         port.setDTR(false);
+                        if (((Dcc4PcMessage) m).isNoDataReply()) {
+                            waitForDsrLow(m.getTimeout());
+                        }
                         break;
                     } else if (m.getRetries() >= 0) {
                         log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
@@ -199,6 +202,28 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             portWarn(e);
         }
     }
+    /**
+     * Wait for the interface to finish a command that it answers with no data:
+     * DSR falls when it is done, usually within 2 ms of DTR going low.
+     *
+     * @param timeout longest wait, in milliseconds
+     */
+    private void waitForDsrLow(int timeout) {
+        long end = System.currentTimeMillis() + timeout;
+        while (port.isDSR()) {
+            if (System.currentTimeMillis() > end) {
+                log.warn("Interface still busy (DSR high) {} ms after {}", timeout, mLastSentMessage);
+                return;
+            }
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+    }
+
     jmri.jmrix.purejavacomm.SerialPort port;
 
     @Override

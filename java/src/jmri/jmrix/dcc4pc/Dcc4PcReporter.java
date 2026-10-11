@@ -126,7 +126,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             //We reset everything as the associated sensor has gone inactive
             synchronized (this) {
                 addr = 0;
-                address_part_1 = 0x100;
+                address_part_1 = 0; // no ADR_HIGH yet; 0x100 would pass for short-address high byte 0
                 address_part_2 = -1;
                 addr_type = -1;
                 actual_speed = -1;
@@ -177,7 +177,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
     }
 
     int addr = 0;
-    int address_part_1 = 0x100;
+    int address_part_1 = 0; // 0x100 bit set once an ADR_HIGH has arrived
     int address_part_2 = -1;
     int addr_type = -1;
     int actual_speed = -1;
@@ -235,23 +235,8 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                 }
                 i++;
                 if ((chbyte & ACK) == ACK) {
-                    chbyte = (char) packet[i];
-                    i++;
-                    chbyte = decode[chbyte];
-                    if (chbyte == ERROR) {
-                        log.debug("{} Error packet stage 2", this.getDisplayName());
-                        packetsinerror++;
-                        return;
-                    }
-                    if ((chbyte & ACK) == ACK) {
-                        if (packet.length <= (i + 1)) {
-                            log.debug("No further data to process Only had the ack 1");
-                            break;
-                        }
-                        chbyte = (char) packet[i];
-                        i++;
-                        chbyte = decode[chbyte];
-                    }
+                    // ACK, NACK or BUSY: a single symbol, and channel 2 may hold several
+                    continue;
                 }
                 if (packet.length <= i) {
                     break;
@@ -270,6 +255,16 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
                 chbyte = (char) (((type & 0x03) << 6) | (chbyte & 0x3f));
                 type = (char) ((type >> 2) & 0x0F);
+                // RCN-217: EXT (3) and DYN (7) datagrams are three symbols long and
+                // IDs 8-11 six; the rest are two. Skipping the extra symbols stops
+                // them being read as the start of another datagram, such as a
+                // bogus ADR_HIGH from a DYN subindex.
+                int extraSymbols = 0;
+                if (type == 3 || type == 7) {
+                    extraSymbols = 1;
+                } else if (type >= 8 && type <= 11) {
+                    extraSymbols = 4;
+                }
 
                 switch (type) {
                     case 0:
@@ -293,6 +288,11 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                         break;
                     case 1: // Address byte 1
                         log.debug("Address Byte 1");
+                        // only 0 (short), 10xxxxxx (long) or 0110xxxx (consist) are addresses
+                        if (chbyte != 0 && (chbyte & 0xC0) != 0x80 && (chbyte & 0xF0) != 0x60) {
+                            log.debug("{} Ignoring invalid address byte 1 {}", this.getDisplayName(), Integer.toHexString(chbyte));
+                            break;
+                        }
                         address_part_1 = (0x100 | chbyte);
                         addressp1found = 0;
                         break;
@@ -309,21 +309,11 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                             log.debug("{} Break at Address part 1, part one not complete", this.getDisplayName());
                             break;
                         }
+                        addr = combineAddress(address_part_1 & 0xFF, address_part_2);
                         rcTag = decodeAddress();
                         break;
-                    case 3: //Actual Speed / load
-                        if ((chbyte & 0x80) == 0x80) {
-                            actual_speed = (chbyte & 0x7f);
-                            log.debug("{} Actual Speed: {}", this.getDisplayName(), actual_speed);
-                        } else {
-                            actual_load = (chbyte & 0x7f);
-                            log.debug("{} Actual Load: {}", this.getDisplayName(), actual_load);
-                        }
-                        if (rcTag != null) {
-                            rcTag.setActualLoad(actual_load);
-                            rcTag.setActualSpeed(actual_speed);
-                            rcTag.setWhereLastSeen(this);
-                        }
+                    case 3: // EXT (RCN-217), location information; not decoded yet
+                        log.debug("{} EXT datagram", this.getDisplayName());
                         break;
                     case 5: //Routing number
                         routing_no = chbyte;
@@ -339,27 +329,31 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                             rcTag.setWhereLastSeen(this);
                         }
                         break;
-                    case 7: //Fuel water
-                        if ((chbyte & 0x80) == 0x80) {
-                            fuelLevel = (chbyte & 0x7f);
-                        } else {
-                            waterLevel = (chbyte & 0x7f);
+                    case 7: // DYN (RCN-217): 8-bit value, then a 6-bit subindex in the third symbol
+                        if (i + 1 >= packet.length || decode[packet[i + 1]] == ERROR
+                                || (decode[packet[i + 1]] & ACK) == ACK) {
+                            log.debug("{} DYN datagram without a valid subindex", this.getDisplayName());
+                            break;
                         }
-
+                        int subindex = decode[packet[i + 1]] & 0x3F;
+                        log.debug("{} DYN subindex {} value {}", this.getDisplayName(), subindex, (int) chbyte);
+                        if (subindex == 0) { // actual speed 0-255
+                            actual_speed = chbyte;
+                        } else if (subindex == 1) { // actual speed 256-511
+                            actual_speed = chbyte + 256;
+                        } else {
+                            break; // other DYN values are not decoded yet
+                        }
                         if (rcTag != null) {
-                            rcTag.setWaterLevel(waterLevel);
-                            rcTag.setFuelLevel(fuelLevel);
+                            rcTag.setActualSpeed(actual_speed);
                             rcTag.setWhereLastSeen(this);
                         }
                         break;
-                    case 8: //Temp
-                        if (!((chbyte & 0x80) == 0x80)) {
-                            actual_temperature = (chbyte & 0x7F);
-                        }
-                        if (rcTag != null) {
-                            rcTag.setActualTemperature(actual_temperature);
-                            rcTag.setWhereLastSeen(this);
-                        }
+                    case 8: // XPOM (RCN-217, IDs 8-11); not decoded yet
+                    case 9:
+                    case 10:
+                    case 11:
+                        log.debug("{} XPOM datagram", this.getDisplayName());
                         break;
                     case 15: //CV Address  Value
                         log.debug("{} CV Address and value:", this.getDisplayName());
@@ -370,7 +364,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                         log.info("unknown railcom type packet {}", type);
                         break;
                 }
-                i++;
+                i += 1 + extraSymbols;
 
             }
         }
@@ -412,7 +406,29 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         address_part_1 = 0;
         address_part_2 = -1;
         notify(rcTag);
+        // the orientation arrived with the input state, before this tag was reported
+        if (state == REPRESENTS_RAILCOM_EAST) {
+            rcTag.setOrientation(RailCom.Orientation.EAST);
+        } else if (state == REPRESENTS_RAILCOM_WEST) {
+            rcTag.setOrientation(RailCom.Orientation.WEST);
+        }
         return rcTag;
+    }
+
+    /**
+     * Combine the ADR_HIGH and ADR_LOW payloads of a RailCom channel 1
+     * broadcast into a locomotive address (RCN-217 5.2.1).
+     *
+     * @param high ADR_HIGH payload: 0 for a short address, 10xxxxxx for the
+     *             top six bits of a long address, 0110xxxx for a consist
+     * @param low  ADR_LOW payload
+     * @return the address
+     */
+    static int combineAddress(int high, int low) {
+        if ((high & 0xC0) == 0x80) {
+            return ((high & 0x3F) << 8) | (low & 0xFF);
+        }
+        return low & 0x7F;
     }
 
     RailCom provideTag(int address, int addr_type) {
