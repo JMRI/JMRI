@@ -1,17 +1,18 @@
 package jmri.jmrix.openlcb.swing;
 
-import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.text.JTextComponent;
 
 import jmri.ShutDownTask;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.WrapLayout;
 
@@ -19,6 +20,7 @@ import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 import org.openlcb.cdi.swing.CdiPanel;
+import org.openlcb.swing.EventIdTextField;
 
 /**
  * Shared code for creating UI elements from different places in the application.
@@ -39,7 +41,6 @@ public class ClientActions {
     ShutDownTask shutDownTask;
     
     public void openCdiWindow(NodeID destNode, String description) {
-//        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<>();
 
@@ -99,7 +100,6 @@ public class ClientActions {
             private boolean haveButtons = false;
             @Override
             public JButton handleReadButton(JButton button) {
-//                readList.add(button);
                 return button;
             }
 
@@ -116,63 +116,87 @@ public class ClientActions {
                 desc = null;
             }
 
+            public void installButtonsOnEndOfGroup(JPanel pane, boolean buttonsCountTowardAllButtons) {
+                JPanel p = new JPanel();
+                p.setLayout(new WrapLayout());
+                p.setAlignmentX(-1.0f);
+                pane.add(p);
+                JButton button = new JButton(Bundle.getMessage("CdiPanelMakeSensor"));
+                p.add(button);
+                if (buttonsCountTowardAllButtons) {
+                    sensorButtonList.add(button);
+                }
+                button.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        log.info("make sensor MS{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc!=null ? mdesc.getText() : "<none>");
+                        jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
+                                .provideSensor(memo.getSystemPrefix() + "S" + mevt1.getEventIDAsDottedString() + ";" + mevt2.getEventIDAsDottedString());
+                        if (mdesc != null && mdesc.getText().length() > 0) {
+                            sensor.setUserName(mdesc.getText());
+                        }
+                    }
+
+                    final JTextField mdesc = desc;
+                    final NamedEventIdTextField mevt1 = evt1;
+                    final NamedEventIdTextField mevt2 = evt2;
+                });
+                button = new JButton(Bundle.getMessage("CdiPanelMakeTurnout"));
+                p.add(button);
+                if (buttonsCountTowardAllButtons) {
+                    turnoutButtonList.add(button);
+                }
+                button.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        log.info("make turnout MT{};{} [{}]", mevt1.getEventIDAsDottedString(), mevt2.getEventIDAsDottedString(), mdesc!=null ? mdesc.getText() : "<none>");
+                        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
+                                .provideTurnout(memo.getSystemPrefix() + "T" + mevt1.getEventIDAsDottedString() + ";" + mevt2.getEventIDAsDottedString());
+                        if (mdesc != null && mdesc.getText().length() > 0) {
+                            turnout.setUserName(mdesc.getText());
+                        }
+                    }
+
+                    final JTextField mdesc = desc;
+                    final NamedEventIdTextField mevt1 = evt1;
+                    final NamedEventIdTextField mevt2 = evt2;
+                });
+                if (!haveButtons && buttonsCountTowardAllButtons) {
+                    log.debug("create Make Turnout/Sensor buttons, starting with {}", desc!=null ? desc.getText() : "<none>");
+                    log.debug("       events {} {}", evt1.getText(), evt2.getText());
+                    
+                    haveButtons = true;
+                    cdiPanel.addButtonToFooter(buttonForList(sensorButtonList, Bundle.getMessage("CdiPanelMakeAllSensors")));
+                    cdiPanel.addButtonToFooter(buttonForList(turnoutButtonList, Bundle.getMessage("CdiPanelMakeAllTurnouts")));
+                }
+                gpane = null;
+                evt1 = null;
+                evt2 = null;
+                desc = null;
+            }
+            
+            @Override
+            public void handleManualEnd(JPanel pane) {
+                installButtonsOnEndOfGroup(pane, false);
+            }
+
             @Override
             public void handleGroupPaneEnd(JPanel pane) {
-                if (gpane != null && evt1 != null && evt2 != null && desc != null) {
-                    JPanel p = new JPanel();
-                    p.setLayout(new WrapLayout());
-                    p.setAlignmentX(-1.0f);
-                    pane.add(p);
-                    JButton button = new JButton(Bundle.getMessage("CdiPanelMakeSensor"));
-                    p.add(button);
-                    sensorButtonList.add(button);
-                    button.addActionListener(new java.awt.event.ActionListener() {
-                        @Override
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
-                                    .provideSensor(memo.getSystemPrefix() + "S" + mevt1.getText() + ";" + mevt2.getText());
-                            if (mdesc.getText().length() > 0) {
-                                sensor.setUserName(mdesc.getText());
-                            }
-                            log.info("make sensor MS{};{} [{}]", mevt1.getText(), mevt2.getText(), mdesc.getText());
-                        }
-
-                        final JTextField mdesc = desc;
-                        final JFormattedTextField mevt1 = evt1;
-                        final JFormattedTextField mevt2 = evt2;
-                    });
-                    button = new JButton(Bundle.getMessage("CdiPanelMakeTurnout"));
-                    p.add(button);
-                    turnoutButtonList.add(button);
-                    button.addActionListener(new java.awt.event.ActionListener() {
-                        @Override
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
-                                    .provideTurnout(memo.getSystemPrefix() + "T" + mevt1.getText() + ";" + mevt2.getText());
-                            if (mdesc.getText().length() > 0) {
-                                turnout.setUserName(mdesc.getText());
-                            }
-                            log.info("make turnout MT{};{} [{}]", mevt1.getText(), mevt2.getText(), mdesc.getText());
-                        }
-
-                        final JTextField mdesc = desc;
-                        final JFormattedTextField mevt1 = evt1;
-                        final JFormattedTextField mevt2 = evt2;
-                    });
-                    if (!haveButtons) {
-                        haveButtons = true;
-                        cdiPanel.addButtonToFooter(buttonForList(sensorButtonList, Bundle.getMessage("CdiPanelMakeAllSensors")));
-                        cdiPanel.addButtonToFooter(buttonForList(turnoutButtonList, Bundle.getMessage("CdiPanelMakeAllTurnouts")));
-                    }
-                    gpane = null;
-                    evt1 = null;
-                    evt2 = null;
-                    desc = null;
+                if (gpane != null 
+                        && evt1 != null && !evt1.getText().isEmpty() 
+                        && evt2 != null && !evt2.getText().isEmpty()
+                        // no longer checking for existence of a description field
+                        ) {
+                    log.debug("handleGroupPaneEnd for {}", desc!=null ? desc.getText() : "<none>");
+                    installButtonsOnEndOfGroup(pane, true);
                 }
             }
 
             @Override
-            public JFormattedTextField handleEventIdTextField(JFormattedTextField field) {
+            public JTextComponent handleEventIdTextField(EventIdTextField input) {
+                var field = new NamedEventIdTextField(memo);  // return our own constructed field
+
+                // What does this field do entry for?
                 if (evt1 == null) {
                     evt1 = field;
                 } else if (evt2 == null) {
@@ -182,7 +206,7 @@ public class ClientActions {
                 }
                 return field;
             }
-
+            
             @Override
             public JTextField handleStringValue(JTextField value) {
                 desc = value;
@@ -196,6 +220,7 @@ public class ClientActions {
              * {@inheritDoc}
              */
             public void makeSensor(String ev, String mdesc) {
+                log.debug("MakeSensor() invoked for {}",mdesc, new Exception("for traceback"));
                 jmri.Sensor sensor =
                         jmri.InstanceManager.sensorManagerInstance()
                                 .provideSensor(memo.getSystemPrefix() + "S" + ev);
@@ -207,11 +232,12 @@ public class ClientActions {
 
             JPanel gpane = null;
             JTextField desc = null;
-            JFormattedTextField evt1 = null;
-            JFormattedTextField evt2 = null;
+            jmri.jmrix.openlcb.swing.NamedEventIdTextField evt1 = null;
+            jmri.jmrix.openlcb.swing.NamedEventIdTextField evt2 = null;
         };
         ConfigRepresentation rep = iface.getConfigForNode(destNode);
-
+        rep.eventNameStore = memo.get(OlcbEventNameStore.class);
+        
         cdiPanel.initComponents(rep, factory);
 
         f.pack();
@@ -240,5 +266,5 @@ public class ClientActions {
         return b;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientActions.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientActions.class);
 }

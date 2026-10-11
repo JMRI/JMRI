@@ -1,19 +1,19 @@
 package jmri.jmrix.rps.swing.debugger;
 
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.vecmath.Point3d;
+
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for manual operation and debugging of the RPS system.
@@ -48,15 +48,16 @@ public class DebuggerTimePane extends JPanel
         Distributor.instance().removeMeasurementListener(this);
     }
 
-    java.text.NumberFormat nf;
+    private java.text.NumberFormat nf;
 
     int NUMSENSORS;
 
-    JTextField[] times;
-    JLabel[] residuals;
+    protected JTextField[] times;
+    private final JLabel[] residuals;
 
     public void initComponents() {
-        nf = java.text.NumberFormat.getInstance();
+
+        nf = java.text.NumberFormat.getInstance(); // I18N format
         nf.setMinimumFractionDigits(1);
         nf.setMaximumFractionDigits(1);
         nf.setGroupingUsed(false);
@@ -82,7 +83,7 @@ public class DebuggerTimePane extends JPanel
     }
 
     void setResidual(int i, Measurement m) {
-        if (times[i].getText().equals("")) {
+        if (times[i].getText().isEmpty()) {
             residuals[i].setText(""); // just blank out
             return;
         }
@@ -103,13 +104,11 @@ public class DebuggerTimePane extends JPanel
         }
     }
 
-    Measurement lastPoint = null;
-
     @Override
     public void notify(Reading r) {
         // Display this set of time values
         for (int i = 1; i <= Math.min(r.getNValues(), times.length - 1); i++) {
-            times[i].setText(nf.format(r.getValue(i)));
+            times[i].setText(nf.format(r.getValue(i))); // I18N format
         }
     }
 
@@ -124,6 +123,6 @@ public class DebuggerTimePane extends JPanel
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebuggerTimePane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebuggerTimePane.class);
 
 }

@@ -20,6 +20,7 @@ import jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel;
 import jmri.jmrix.loconet.swing.throttlemsg.MessagePanel;
 import jmri.jmrix.loconet.locogen.LocoGenPanel;
 import jmri.jmrix.loconet.swing.lncvprog.LncvProgPane;
+import jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane;
 import jmri.jmrix.loconet.pr3.swing.Pr3SelectPane;
 import jmri.jmrix.loconet.soundloader.LoaderPane;
 import jmri.jmrix.loconet.soundloader.EditorPane;
@@ -77,7 +78,7 @@ public class LocoNetMenu extends JMenu {
         panelItems.add(new LocoNetMenuItem("MenuItemSlotMonitor", SlotMonPane.class, false, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemClockMon", ClockMonPane.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemLocoStats", LocoStatsPanel.class, false, true)); // NOI18N
-        panelItems.add(null);
+        panelItems.add(null); // direct Ln CS/hardware tools
         panelItems.add(new LocoNetMenuItem("MenuItemBDL16Programmer", BDL16Panel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemPM4Programmer", PM4Panel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSE8cProgrammer", SE8Panel.class, true, true)); // NOI18N
@@ -85,16 +86,19 @@ public class LocoNetMenu extends JMenu {
         panelItems.add(new LocoNetMenuItem("MenuItemCmdStnConfig", CmdStnConfigPane.class,true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSetID", LocoIdPanel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemDuplex", DuplexGroupTabbedPanel.class, true, true)); // NOI18N
+        panelItems.add(null); // listing panes for Roster programming
+        panelItems.add(new LocoNetMenuItem("MenuItemLnsv1Prog", Lnsv1ProgPane.class, true, true)); // NOI18N
+        // Lnsv2?
         panelItems.add(new LocoNetMenuItem("MenuItemLncvProg", LncvProgPane.class, true, true)); // NOI18N
-        panelItems.add(null);
+        panelItems.add(null); // message/packet tools
         panelItems.add(new LocoNetMenuItem("MenuItemThrottleMessages", MessagePanel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSendPacket", LocoGenPanel.class, false, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemPr3ModeSelect", Pr3SelectPane.class, false, true)); // NOI18N
-        panelItems.add(null);
+        panelItems.add(null); // upload/download tools
         panelItems.add(new LocoNetMenuItem("MenuItemDownload", jmri.jmrix.loconet.downloader.LoaderPane.class, false, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSoundload", LoaderPane.class, false, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSoundEditor", EditorPane.class, false, true)); // NOI18N
-        panelItems.add(null);
+        panelItems.add(null); // servers
         panelItems.add(new LocoNetMenuItem("MenuItemLocoNetOverTCPServer", LnTcpServerAction.class, false, false));
 
         LnCommandStationType cmdStation = null;

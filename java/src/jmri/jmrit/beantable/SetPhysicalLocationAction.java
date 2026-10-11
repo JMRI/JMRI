@@ -4,19 +4,12 @@ import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import java.util.*;
+
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import jmri.InstanceManager;
-import jmri.Reporter;
-import jmri.ReporterManager;
+
+import jmri.*;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsPanel;
 import jmri.util.PhysicalLocation;
@@ -76,6 +69,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         /**
          * Frame Constructor.
+         * @param reporter reporter
          */
         public SetPhysicalLocationFrame(Reporter reporter) {
             super(rb.getString("MenuSetPhysicalLocation"), new SetPhysicalLocationPanel(reporter));
@@ -181,7 +175,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         /**
          * Close button action.
          */
-        public void closeButtonActionPerformed(ActionEvent ae) {
+        public void closeButtonActionPerformed(@SuppressWarnings("javadoc") ActionEvent ae) {
             JmriJOptionPane.showMessageDialog(this,
                     rb.getString("CloseButtonSaveWarning"),
                     rb.getString("CloseButtonSaveWarningTitle"),
@@ -192,7 +186,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         /**
          * Save button action -> save this Reporter's location.
          */
-        public void saveButtonActionPerformed(ActionEvent ae) {
+        public void saveButtonActionPerformed(@SuppressWarnings("javadoc") ActionEvent ae) {
             // check to see if a location has been selected
             if (reporterBox.getSelectedItem() == null
                     || reporterBox.getSelectedItem().equals("")) {

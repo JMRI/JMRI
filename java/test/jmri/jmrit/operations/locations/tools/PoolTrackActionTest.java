@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.YardEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
@@ -53,6 +54,6 @@ public class PoolTrackActionTest extends OperationsTestCase {
         Assert.assertNull("frame gone", f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PoolTrackActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PoolTrackActionTest.class);
 
 }

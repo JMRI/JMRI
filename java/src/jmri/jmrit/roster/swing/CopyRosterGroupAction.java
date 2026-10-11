@@ -72,7 +72,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         }
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.
-        if (group == null) {
+        if (group == null || group == Roster.NOGROUP) {
             group = (String) JmriJOptionPane.showInputDialog(_who,
                     Bundle.getMessage("DuplicateRosterGroupDialog"),
                     Bundle.getMessage("DuplicateRosterGroupTitle", ""),
@@ -81,8 +81,8 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                     Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
-        // don't duplicate the null and ALLENTRIES groups (they are the entire roster)
-        if (group == null || group.equals(Roster.ALLENTRIES)) {
+        // don't duplicate the null, ALLENTRIES and NOGROUP groups (they are the entire roster)
+        if (group == null || group.equals(Roster.ALLENTRIES) || group.equals(Roster.NOGROUP)) {
             return;
         }
 
@@ -96,7 +96,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         if (entry != null) {
             entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
         }
-        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
+        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES) || entry.equals(Roster.NOGROUP)) {
             return;
         } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {
             JmriJOptionPane.showMessageDialog(_who,
@@ -105,7 +105,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                     JmriJOptionPane.ERROR_MESSAGE);
         }
 
-        // rename the roster grouping
+        // copy the roster grouping
         Roster.getDefault().copyRosterGroupList(group, entry);
         Roster.getDefault().writeRoster();
     }

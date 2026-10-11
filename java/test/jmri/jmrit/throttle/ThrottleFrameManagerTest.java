@@ -1,13 +1,10 @@
 package jmri.jmrit.throttle;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of ThrottleFrameManager
@@ -17,23 +14,24 @@ import org.junit.Assume;
 public class ThrottleFrameManagerTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // the constructor is private, but invoked by instance.
         ThrottleFrameManager frame = InstanceManager.getDefault(ThrottleFrameManager.class);
-        Assert.assertNotNull("exists", frame);
+        Assertions.assertNotNull(frame, "exists");
         frame.showThrottlesList();
-        jmri.util.JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"),true,true);
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"),true,true);
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

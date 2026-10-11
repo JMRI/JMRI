@@ -149,7 +149,7 @@ public class PrintingTestListener extends SummaryGeneratingListener {
     /*
      * Made from JUnit5 MutableTestExecutionSummary which really should have been public
      */
-    static private class LocalTestExecutionSummary implements TestExecutionSummary {
+    private static class LocalTestExecutionSummary implements TestExecutionSummary {
         public LocalTestExecutionSummary(TestExecutionSummary p) {
             provided = p;
         }

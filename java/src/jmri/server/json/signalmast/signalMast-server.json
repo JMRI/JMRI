@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-signalMast-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"signalMast\"",
@@ -9,11 +9,17 @@
             "description": "System name of the signalMast"
         },
         "userName": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "User name of the signalMast"
         },
         "comment": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Comment for the signalMast"
         },
         "properties": {
@@ -27,12 +33,18 @@
                         "description": "Key by which property is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of property or null"
                     }
                 },
                 "additionalProperties": false,
-                "required": ["name", "value"]
+                "required": [
+                    "name",
+                    "value"
+                ]
             }
         },
         "aspect": {
@@ -53,5 +65,13 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "aspect", "lit", "held", "state"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "aspect",
+        "lit",
+        "held",
+        "state"
+    ]
 }

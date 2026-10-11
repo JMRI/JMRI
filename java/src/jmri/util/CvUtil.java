@@ -210,6 +210,6 @@ public class CvUtil {
         return maskDescString.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CvUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CvUtil.class.getName());
 
 }

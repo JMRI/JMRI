@@ -102,5 +102,5 @@ public class VirtualSignalMastXml
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMastXml.class);
+    private static final Logger log = LoggerFactory.getLogger(VirtualSignalMastXml.class);
 }

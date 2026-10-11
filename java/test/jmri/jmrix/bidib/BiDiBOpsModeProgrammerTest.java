@@ -1,6 +1,6 @@
 package jmri.jmrix.bidib;
 
-import jmri.util.JUnitAppender;
+//import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
 
@@ -8,13 +8,13 @@ import jmri.util.JUnitUtil;
 
 /**
  * Tests for the BiDiBOpsModeProgrammer class
- * 
+ *
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
-    
+
     private BiDiBSystemConnectionMemo memo;
-    
+
     @Override
     @Test
     public void testGetCanRead() {
@@ -43,8 +43,8 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         // test may require further setup?
         //JUnitAppender.suppressWarnMessageStartsWith(
         //    "The node is no longer registered. Skip send message to node:");
-        JUnitAppender.suppressErrorMessageStartsWith(
-            "writePom async failed on node:"); //since jbidibc 2.0.18
+        //JUnitAppender.suppressErrorMessageStartsWith(
+        //    "writePom async failed on node:"); //since jbidibc 2.0.18
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
         programmer = new BiDiBOpsModeProgrammer(5, memo.getBiDiBTrafficController());
     }
-    
+
     @Override
     @AfterEach
     public void tearDown() {

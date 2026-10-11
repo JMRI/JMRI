@@ -46,7 +46,7 @@
 	  <p>BiDiB ist kein kommerzielles Produkt und nicht an eine bestimmte Hardware gebunden. Es ist eine Protokolldefinition, die von jedem implementiert werden kann,
 	  einschließlich kommerzieller Hersteller.</p>
       
-	  <p>BiDiB startete 2010 und wurde von Wolfgang Kufer (opendcc.de) entwickelt. Weitere Informationen zu BiDiB finden Sie unter <a href="http://bidib.org/index.html">bidib.org</a>.</p>   
+	  <p>BiDiB startete 2010 und wurde von Wolfgang Kufer (opendcc.de) entwickelt. Weitere Informationen zu BiDiB finden Sie unter <a href="https://bidib.org/index.html">bidib.org</a>.</p>   
 	  
       <p>BiDiB Merkmale:</p>
       
@@ -94,6 +94,11 @@
            nicht relevant.
        </p>      
        
+      <h4>netBiDiB</h4>
+      
+      <p><a href="https://bidib.org/transport/bidib_net.html">netBiDiB</a> ermöglicht den Transport des BiDiB-Protokolls über eine Netzwerkverbindung (TCP). Die Verbindung wird einmal durch den Pairing-Vorgang authorisiert, sodass ein Gerät nicht einfach fremdgesteuert werden kann. Zur einfacheren Konfiguration sollen sich BiDiB-Geräte im Netz melden (mDNS/Bonjour) und können so in den JMRI Einstellungen für BiDiB in einem Auswahlfeld gewählt werden. Wenn dieses Discovery nicht verfügbar ist, kann die Automatische Konfiguration abgeschaltet werden und die IP-Adresse des Geräts manuell eingegeben werden. Die Standardportnummer ist 62875. JMRI unterstützt einen ständigen Keep-Alive Test (local ping), sodass Verbindungsabbrüche schnell bemerkt werden. Da nicht alle BiDiB-Geräte dies unterstützen, ist es in den Verbindungseinstellungen unter "Keep-Alive" einstellbar.
+      </p>
+      
       <h4>BiDiB über TCP</h4>
 	   <p>
 		In diesem Fall ist die Hardware nicht direkt mit JMRI verbunden, sondern JMRI verbindet sich mit einem TCP-Server, der sich wiederum mit der Hardware verbindet. Dies kann nützlich sein, wenn ein anderes Programm als Hauptsteuerprogramm verwendet wird und JMRI nur als CV-Programmierer (Decoder Pro). Die Parameter sind die IP-Adresse und die Portnummer des Servers, zu dem eine Verbindung hergestellt werden soll.
@@ -106,7 +111,13 @@
 		
       <h3>Einstellungen</h3>
       
+      <p>Dialog für serielle Schnittstelle:</p>
+      
       <img src="images/BiDiB_Connection.png" alt="BiDiB Connection" height="480">
+      
+      <p>Dialog für netBiDiB mit Discovery (Automatische Konfiguration):</p>
+      
+      <img src="images/de/BiDiB_netBiDiB_Connection.png" alt="netBiDiB Connection" height="525">
       
       <h4>BiDiB Namensgebung</h4>
 		<p>JMRI-Systemnamen bestehen im Allgemeinen aus einem Systemverbindungspräfix Xn, wobei X der Systemverbindungsbuchstabe ist und n entweder leer
@@ -332,8 +343,8 @@
       
       <a name="tools" id="tools"></a>
 
-      <h2>JMRI BiDiB Tools</h2><img src="BiDiBMenu.png"
-      width="100" height="100" align="right" alt="Menu">
+      <h2>JMRI BiDiB Tools</h2><img src="images/BiDiBMenu.png"
+      height="100" align="right" alt="Menu"></p>
 
       <p>Wenn JMRI über dieses System mit einer Anlage verbunden ist, wird ein
        <b>BiDiB</b>-Menü wird angezeigt:</p>
@@ -342,6 +353,7 @@
         <li><b>Traffic Monitor</b><br>
         <li><b>Start/Stopp BiDiB über TCP Server</b><br>Der Server hört auf Port 62875 auf eingehende Clients, leitet alle Nachrichten des Clients an die Systemverbindung weiter und sendet
          alle von der Verbindung eingehenden Antwortnachrichten an alle verbundenen Clients. Das ist so etwas wie das Gegenteil der oben erwähnten „BiDiB over TCP“-Systemverbindung.<br>
+        <li><b>netBiDiB Anmelden/Abmelden</b> (nur netBiDiB)<br>JMRI wird beim angeschlossenen Gerät an-/abgemeldet. Das Abmelden kann sinnvoll sein, um einem anderen Programm (z.B. dem BiDiB Wizard) Zugriff auf das Gerät zu ermöglichen. Nach der Abmeldung des anderen Programms kann JMRI wieder angemeldet werden.<br>
 <!--
         <a href="images/OpenLCBMonitor.png"><img src=
         "images/OpenLCBMonitor.png" alt="Monitor Pane" width="488"

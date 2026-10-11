@@ -1,14 +1,13 @@
 package jmri.util;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractButton;
 
-import org.junit.Assert;
 import org.netbeans.jemmy.operators.AbstractButtonOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 
@@ -54,7 +53,9 @@ public final class JUnitSwingUtil {
      * @param component Typically a JComponent, could be a JFrame, the item to
      *                      be returned
      * @param size      dimension of image to capture
+     * @param upLeft    point (ignored)
      * @param file      file to write
+     * @throws java.io.IOException when needed
      */
     public static void writeDisplayedContentToFile(java.awt.Container component, 
                                                     Dimension size, Point upLeft, java.io.File file)
@@ -115,7 +116,7 @@ public final class JUnitSwingUtil {
      * @param pixel ARGB piel value being tested
      */
     public static void assertPixel(String name, Pixel value, int pixel) {
-        Assert.assertEquals(name, value.toString(), formatPixel(pixel));
+        assertEquals( value.toString(), formatPixel(pixel), name);
     }
 
     /**
@@ -143,7 +144,7 @@ public final class JUnitSwingUtil {
         int rows = size.height;
         int cols = size.width;
 
-        Assert.assertEquals("size consistency", pixels.length, rows * cols);
+        assertEquals( pixels.length, rows * cols, "size consistency");
 
         assertPixel(name + " upper left", upperLeft, pixels[0]);
         assertPixel(name + " upper middle", upperCenter, pixels[0 + cols / 2]);
@@ -169,7 +170,7 @@ public final class JUnitSwingUtil {
      */
     public static AbstractButton pressButton(Container frame, String text) {
         AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
-        Assert.assertNotNull(text + " Button not found", button);
+        assertNotNull( button, text + " Button not found");
         AbstractButtonOperator abo = new AbstractButtonOperator(button);
         abo.doClick();
         return button;

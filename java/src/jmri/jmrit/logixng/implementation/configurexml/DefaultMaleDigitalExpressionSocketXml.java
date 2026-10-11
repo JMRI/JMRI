@@ -47,5 +47,5 @@ public class DefaultMaleDigitalExpressionSocketXml extends AbstractMaleSocketXml
         return super.load(maleSocketElement, maleSocket);
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalExpressionSocketXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalExpressionSocketXml.class);
 }

@@ -32,6 +32,6 @@ public class NceLightManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceLightManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceLightManagerTest.class);
 
 }

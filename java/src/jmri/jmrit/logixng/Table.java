@@ -25,7 +25,7 @@ public interface Table {
     default Object getCell(int row) {
         return getCell(row, 1);
     }
-    
+
     /**
      * Get the value of a cell.
      * @param row the row of the cell
@@ -34,7 +34,7 @@ public interface Table {
      */
     @CheckReturnValue
     Object getCell(int row, int column);
-    
+
     /**
      * Get the value of a cell.
      * If the table has both rows and columns, the value of the first column
@@ -48,7 +48,7 @@ public interface Table {
             throws RowNotFoundException {
         return getCell(getRowNumber(row), 1);
     }
-    
+
     /**
      * Get the value of a cell.
      * @param row the row of the cell. If this string is a name of a row, that
@@ -66,7 +66,7 @@ public interface Table {
             throws RowNotFoundException, ColumnNotFoundException {
         return getCell(getRowNumber(row), getColumnNumber(column));
     }
-    
+
     /**
      * Get the value of a cell.
      * @param value the new value of the cell
@@ -75,7 +75,7 @@ public interface Table {
      */
     @CheckReturnValue
     void setCell(Object value, int row, int column);
-    
+
     /**
      * Set the value of a cell.
      * If the table has both rows and columns, the value of the first column
@@ -88,7 +88,7 @@ public interface Table {
             throws RowNotFoundException {
         setCell(value, getRowNumber(row), 1);
     }
-    
+
     /**
      * Set the value of a cell.
      * @param value the new value of the cell
@@ -105,13 +105,13 @@ public interface Table {
             throws RowNotFoundException, ColumnNotFoundException {
         setCell(value, getRowNumber(row), getColumnNumber(column));
     }
-    
+
     /**
      * Get the number of rows in the table.
      * @return the number of rows
      */
     int numRows();
-    
+
     /**
      * Get the number of columns in the table.
      * @return the number of columns
@@ -126,7 +126,7 @@ public interface Table {
      * @throws RowNotFoundException if the row is not found
      */
     int getRowNumber(String rowName) throws RowNotFoundException;
-    
+
     /**
      * Get the row number by name of row.
      * @param columnName the name of the column. If there is no column with
@@ -142,12 +142,14 @@ public interface Table {
      * The default is TABBED, as that was previously the only choice
      * TABBED results in parsing the CSV file with tabs as the delimiters
      * COMMA uses csvFormat of RFC-4180, which is the standard Comma
-     * Seperated Value format, but does not allow empty lines
+     * Seperated Value format, but does not allow empty lines.
+     * SEMICOLON uses a modified version of RFC-4180 with the semicolon as the field delimiter.
      */
     enum CsvType {
 
         TABBED(Bundle.getMessage("CsvType_Tabbed")),
-        COMMA(Bundle.getMessage("CsvType_Comma"));
+        COMMA(Bundle.getMessage("CsvType_Comma")),
+        SEMICOLON(Bundle.getMessage("CsvType_Semicolon"));
 
         private final String _text;
 
@@ -175,11 +177,28 @@ public interface Table {
     }
 
     /**
+     * Store the table to a CSV file using the filename given when loading the
+     * CSV file.
+     * @throws java.io.FileNotFoundException if file not found
+     */
+    void storeTableAsCSV() throws FileNotFoundException;
+
+    /**
      * Store the table to a CSV file.
      * @param file the CSV file
      * @throws java.io.FileNotFoundException if file not found
      */
     void storeTableAsCSV(@Nonnull File file)
+            throws FileNotFoundException;
+
+    /**
+     * Store the table to a CSV file.
+     * @param file the CSV file
+     * @param storeSystemUserName true if to store system name and user name in
+     *                            the file, false otherwise
+     * @throws java.io.FileNotFoundException if file not found
+     */
+    void storeTableAsCSV(@Nonnull File file, boolean storeSystemUserName)
             throws FileNotFoundException;
 
     /**
@@ -196,6 +215,25 @@ public interface Table {
     void storeTableAsCSV(
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
+            throws FileNotFoundException;
+
+    /**
+     * Store the table to a CSV file.
+     * If system name and/or user name is not null, these values are used
+     * instead of the tables own system name and user name. If no system name
+     * and user name is given and the table is anonymous, no system name and
+     * user name is stored in the file.
+     * @param file the CSV file
+     * @param systemName the system name of the table
+     * @param userName the user name of the table
+     * @param storeSystemUserName true if to store system name and user name in
+     *                            the file, false otherwise
+     * @throws java.io.FileNotFoundException if file not found
+     */
+    void storeTableAsCSV(
+            @Nonnull File file,
+            @CheckForNull String systemName, @CheckForNull String userName,
+            boolean storeSystemUserName)
             throws FileNotFoundException;
 
 

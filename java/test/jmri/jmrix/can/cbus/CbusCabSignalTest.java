@@ -80,6 +80,6 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusCabSignalTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusCabSignalTest.class);
 
 }

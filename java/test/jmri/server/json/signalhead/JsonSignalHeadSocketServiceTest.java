@@ -19,8 +19,12 @@ import jmri.server.json.JsonRequest;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -30,7 +34,7 @@ import org.junit.jupiter.api.*;
  */
 public class JsonSignalHeadSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Test
     public void testSignalHeadChange() throws IOException, JmriException, JsonException {
@@ -40,8 +44,8 @@ public class JsonSignalHeadSocketServiceTest {
         SignalHead s = new VirtualSignalHead(sysName, userName);
         SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
         manager.register(s);
-        Assert.assertNotNull(s);
-        Assert.assertEquals("One listener", 1, s.getNumPropertyChangeListeners());
+        assertNotNull(s);
+        assertEquals( 1, s.getNumPropertyChangeListeners(), "One listener");
 
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         connection.setVersion(JSON.V5);
@@ -49,12 +53,12 @@ public class JsonSignalHeadSocketServiceTest {
         JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
         JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(connection, http);
         service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        Assert.assertEquals("Two listeners", 2, s.getNumPropertyChangeListeners());
+        assertEquals( 2, s.getNumPropertyChangeListeners(), "Two listeners");
 
         //signalhead defaults to Dark
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals(SignalHead.DARK, message.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertNotNull(message);
+        assertEquals(SignalHead.DARK, message.path(JSON.DATA).path(JSON.STATE).asInt());
 
         //change to Green, and wait for change to show up, then verify
         s.setAppearance(SignalHead.GREEN);
@@ -62,8 +66,8 @@ public class JsonSignalHeadSocketServiceTest {
             return s.getState() == SignalHead.GREEN;
         }, "SignalHead is now GREEN");
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals(SignalHead.GREEN, message.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertNotNull(message);
+        assertEquals(SignalHead.GREEN, message.path(JSON.DATA).path(JSON.STATE).asInt());
 
         //change to Red, and wait for change to show up, then verify
         s.setAppearance(SignalHead.RED);
@@ -71,18 +75,16 @@ public class JsonSignalHeadSocketServiceTest {
             return s.getState() == SignalHead.RED;
         }, "SignalHead is now RED");
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals(SignalHead.RED, message.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertNotNull(message);
+        assertEquals(SignalHead.RED, message.path(JSON.DATA).path(JSON.STATE).asInt());
 
         // put a new signal head
-        try {
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "something"); // does not matter
-            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
-            Assert.fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Error code is HTTP Invalid Request", 405, ex.getCode());
-            Assert.assertEquals("Error message", "Putting signalHead is not allowed.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () -> {
+            JsonNode messageEx = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "something"); // does not matter
+            service.onMessage(JsonSignalHead.SIGNAL_HEAD, messageEx, new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
+        });
+        assertEquals( 405, ex.getCode(), "Error code is HTTP Invalid Request");
+        assertEquals( "Putting signalHead is not allowed.", ex.getMessage(), "Error message");
 
         // trap JsonException error
         http.setThrowException(1);
@@ -91,9 +93,9 @@ public class JsonSignalHeadSocketServiceTest {
             return s.getState() == SignalHead.GREEN;
         }, "SignalHead is now GREEN");
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals("Deliberately thrown error", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
-        Assert.assertEquals("Two listeners", 2, s.getNumPropertyChangeListeners());
+        assertNotNull(message);
+        assertEquals( 499, message.path(JSON.DATA).path(JsonException.CODE).asInt(), "Deliberately thrown error");
+        assertEquals( 2, s.getNumPropertyChangeListeners(), "Two listeners");
 
         // trap IOException error
         connection.setThrowIOException(true);
@@ -101,7 +103,7 @@ public class JsonSignalHeadSocketServiceTest {
         JUnitUtil.waitFor(() -> {
             return s.getState() == SignalHead.RED;
         }, "SignalHead is now RED");
-        Assert.assertEquals("One listener", 1, s.getNumPropertyChangeListeners());
+        assertEquals( 1, s.getNumPropertyChangeListeners(), "One listener");
     }
 
     @Test
@@ -112,39 +114,39 @@ public class JsonSignalHeadSocketServiceTest {
         SignalHead s1 = new VirtualSignalHead(sysName, userName);
         SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
         manager.register(s1);
-        Assert.assertNotNull(s1);
-        Assert.assertEquals("No listeners", 0, manager.getPropertyChangeListeners().length);
+        assertNotNull(s1);
+        assertEquals( 0, manager.getPropertyChangeListeners().length, "No listeners");
 
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         connection.setVersion(JSON.V5);
         TestJsonSignalHeadHttpService http = new TestJsonSignalHeadHttpService(connection.getObjectMapper());
         JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(connection, http);
         service.onList(JsonSignalHead.SIGNAL_HEAD, connection.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        Assert.assertEquals("One listener", 1, manager.getPropertyChangeListeners().length);
+        assertEquals( 1, manager.getPropertyChangeListeners().length, "One listener");
         JsonNode message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertTrue(message.isArray());
+        assertNotNull(message);
+        assertTrue(message.isArray());
 
         SignalHead s2 = new VirtualSignalHead("IH2", "SH2");
         manager.register(s2);
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertTrue(message.isArray());
-        Assert.assertEquals("Two SignalHeads", 2, message.size());
+        assertNotNull(message);
+        assertTrue(message.isArray());
+        assertEquals( 2, message.size(), "Two SignalHeads");
 
         manager.deregister(s1);
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertTrue(message.isArray());
-        Assert.assertEquals("One SignalHead", 1, message.size());
+        assertNotNull(message);
+        assertTrue(message.isArray());
+        assertEquals( 1, message.size(), "One SignalHead");
 
         // trap JsonException error
         http.setThrowException(2);
         manager.register(s1); // triggers two change reports
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals("Deliberately thrown error", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
-        Assert.assertEquals("One listener", 1, manager.getPropertyChangeListeners().length);
+        assertNotNull(message);
+        assertEquals( 499, message.path(JSON.DATA).path(JsonException.CODE).asInt(), "Deliberately thrown error");
+        assertEquals( 1, manager.getPropertyChangeListeners().length, "One listener");
         JUnitAppender.assertWarnMessage(
                 "json error sending SignalHeads: {\"type\":\"error\",\"data\":{\"code\":499,\"message\":\"Mock Exception\"}}");
         JUnitAppender.assertWarnMessage(
@@ -166,34 +168,32 @@ public class JsonSignalHeadSocketServiceTest {
         SignalHead s = new VirtualSignalHead(sysName, userName);
         SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
         manager.register(s);
-        Assert.assertNotNull(s);
-        Assert.assertEquals("No listeners", 0, manager.getPropertyChangeListeners().length);
+        assertNotNull(s);
+        assertEquals( 0, manager.getPropertyChangeListeners().length, "No listeners");
 
         // SignalHead Yellow
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName)
                 .put(JSON.STATE, SignalHead.YELLOW);
         service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        Assert.assertEquals(SignalHead.YELLOW, s.getState()); //state should be Yellow
-        Assert.assertEquals("No listeners", 0, manager.getPropertyChangeListeners().length);
-        Assert.assertEquals("Two listeners", 2, s.getNumPropertyChangeListeners());
+        assertEquals(SignalHead.YELLOW, s.getState(), "state should be Yellow");
+        assertEquals( 0, manager.getPropertyChangeListeners().length, "No listeners");
+        assertEquals( 2, s.getNumPropertyChangeListeners(), "Two listeners");
 
         // Try to set SignalHead to FLASHLUNAR, should throw error, remain at Yellow
-        try {
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName)
+        JsonException ex = assertThrows( JsonException.class, () -> {
+            JsonNode messageEx = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName)
                     .put(JSON.STATE, SignalHead.FLASHLUNAR);
-            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Error code is HTTP Method not allowed", 400, ex.getCode());
-            Assert.assertEquals("Error message", "Attempting to set object type signalHead to unknown state 128.",
-                    ex.getMessage());
-        }
-        Assert.assertEquals(SignalHead.YELLOW, s.getAppearance()); //state should be Yellow
-        Assert.assertEquals("No listeners", 0, manager.getPropertyChangeListeners().length);
-        Assert.assertEquals("Two listeners", 2, s.getNumPropertyChangeListeners());
+            service.onMessage(JsonSignalHead.SIGNAL_HEAD, messageEx, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        });
+        assertEquals( 400, ex.getCode(), "Error code is HTTP Method not allowed");
+        assertEquals( "Attempting to set object type signalHead to unknown state 128.",
+            ex.getMessage(), "Error message");
+        assertEquals(SignalHead.YELLOW, s.getAppearance()); //state should be Yellow
+        assertEquals( 0, manager.getPropertyChangeListeners().length, "No listeners");
+        assertEquals( 2, s.getNumPropertyChangeListeners(), "Two listeners");
 
         service.onClose();
-        Assert.assertEquals("One listener", 1, s.getNumPropertyChangeListeners());
+        assertEquals( 1, s.getNumPropertyChangeListeners(), "One listener");
         
     }
 
@@ -213,7 +213,7 @@ public class JsonSignalHeadSocketServiceTest {
 
         private int throwException = 0;
 
-        public TestJsonSignalHeadHttpService(ObjectMapper mapper) {
+        TestJsonSignalHeadHttpService(ObjectMapper mapper) {
             super(mapper);
         }
 

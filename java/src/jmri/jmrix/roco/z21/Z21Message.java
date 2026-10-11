@@ -1,8 +1,18 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRMessage;
+
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import jmri.util.StringUtil;
 
 /**
  * Class for messages in the z21/Z21 protocol.
@@ -82,12 +92,15 @@ public class Z21Message extends AbstractMRMessage {
 
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      * @param l unused.
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public Z21Message(byte[] a, int l) {
-        super(String.valueOf(a));
+        // super(String.valueOf(a)); // Spotbug toString on array
+        // requires further development to produce correct values for hardware type.
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
         setBinary(true);
     }
 
@@ -238,11 +251,22 @@ public class Z21Message extends AbstractMRMessage {
      * @return z21 message for LAN_RAILCOM_GETDATA request.
      */
     public static Z21Message getLanRailComGetDataRequestMessage() {
-        Z21Message retval = new Z21Message(4);
-        retval.setElement(0, 0x04);
+        return getLanRailComGetDataRequestMessage(0); // address 0 causes the Z21 to search for the next address.
+    }
+
+    /**
+     * @param address the address of the locomotive to request RailCom data for.
+     * @return z21 message for LAN_RAILCOM_GETDATA request.
+     */
+    public static Z21Message getLanRailComGetDataRequestMessage(int address) {
+        Z21Message retval = new Z21Message(7);
+        retval.setElement(0, 0x07);
         retval.setElement(1, 0x00);
         retval.setElement(2, 0x89);
         retval.setElement(3, 0x00);
+        retval.setElement(4, 0x01);
+        retval.setElement(5, address & 0xff);
+        retval.setElement(6, (address & 0xff00)>>8);
         return retval;
     }
 
@@ -258,33 +282,30 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
+    private static List<Z21MessageFormatter> formatterList = new ArrayList<>();
+
     @Override
     public String toMonitorString() {
-        switch(getOpCode()){
-           case 0x0010:
-               return Bundle.getMessage("Z21MessageStringSerialNoRequest");
-           case 0x001A:
-               return Bundle.getMessage("Z21MessageStringVersionRequest");
-           case 0x0040:
-               return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
-           case 0x0050:
-               return Bundle.getMessage("Z21MessageSetBroadcastFlags",Z21MessageUtils.interpretBroadcastFlags(_dataChars));
-           case 0x0051:
-               return Bundle.getMessage("Z21MessageRequestBroadcastFlags");
-           case 0x00A2:
-               return Bundle.getMessage("Z21LocoNetLanMessage", getLocoNetMessage().toMonitorString());
-           case 0x0081:
-               return Bundle.getMessage("Z21RMBusGetDataRequest", getElement(4));
-           case 0x0082:
-               return Bundle.getMessage("Z21RMBusProgramModuleRequest", getElement(4));
-           case 0x0089:
-               return Bundle.getMessage("Z21_RAILCOM_GETDATA");
-           case 0x00C4:
-               int networkID = ( getElement(4) & 0xFF) + ((getElement(5) & 0xFF) << 8);
-               return Bundle.getMessage("Z21CANDetectorRequest",networkID);
-           default:
+        if(formatterList.isEmpty()) {
+            try {
+
+                Reflections reflections = new Reflections("jmri.jmrix.roco.z21.messageformatters");
+                Set<Class<? extends Z21MessageFormatter>> f = reflections.getSubTypesOf(Z21MessageFormatter.class);
+                for (Class<?> c : f) {
+                    log.debug("Found formatter: {}", f.getClass().getName());
+                    Constructor<?> ctor = c.getConstructor();
+                    formatterList.add((Z21MessageFormatter) ctor.newInstance());
+                }
+            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException |
+                     IllegalArgumentException | InvocationTargetException e) {
+                log.error("Error instantiating formatter", e);
+            }
         }
-        return toString();
+
+        return formatterList.stream()
+                .filter(f -> f.handlesMessage(this))
+                .findFirst().map(f -> f.formatMessage(this))
+                .orElse(this.toString());
     }
 
     // handle LocoNet messages tunneled in Z21 messages
@@ -300,7 +321,7 @@ public class Z21Message extends AbstractMRMessage {
        return (getOpCode() == 0x00A4);
     }
 
-    jmri.jmrix.loconet.LocoNetMessage getLocoNetMessage() {
+    public jmri.jmrix.loconet.LocoNetMessage getLocoNetMessage() {
         jmri.jmrix.loconet.LocoNetMessage lnr = null;
         if (isLocoNetTunnelMessage()) {
             int i = 4;
@@ -364,6 +385,62 @@ public class Z21Message extends AbstractMRMessage {
         retval.setElement(4, 0x00);// type, currently fixed.
         retval.setElement(5, (address & 0xff));
         retval.setElement(6, ((address & 0xff00)>>8));
+        return retval;
+    }
+
+    /**
+     * @param address CAN NetworkID of the module to request data from.
+     * @return z21 message for LAN_CAN_GET_DESCRIPTION request message
+     */
+    public static Z21Message getLanCanGetDescription(int address) {
+        Z21Message retval = new Z21Message(6);
+        retval.setElement(0, 0x06);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0xC8);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (address & 0xff));
+        retval.setElement(5, ((address & 0xff00)>>8));
+        return retval;
+    }
+
+    /**
+     * @param address CAN NetworkID of the module to request data from.
+     * @param description description for the CAN Module
+     * @return z21 message for LAN_CAN_SET_DESCRIPTION request message
+     */
+    public static Z21Message getLanCanSetDescription(int address, String description) {
+        Z21Message retval = new Z21Message(22);
+        retval.setElement(0, 0x16);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0xC9);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (address & 0xff));
+        retval.setElement(5, ((address & 0xff00)>>8));
+        for (int j = 0; j < 16; j++) {
+            if (j < description.length()) {
+                retval.setElement(6 + j, description.charAt(j));
+            } else {
+                retval.setElement(6 + j, '\0'); // pad with nulls if description is too short.
+            }
+        }
+        return retval;
+    }
+
+
+    /**
+     * @param address CAN NetworkID of the module to set.
+     * @param powerSet track power state to set (0x00 for all on, 0xFF for all off.).
+     * @return z21 message for LAN_CAN_SET_BOOSTER_TRACK_POWER request message
+     */
+    public static Z21Message getLanCanSetBoosterTrackPower(int address, int powerSet) {
+        Z21Message retval = new Z21Message(7);
+        retval.setElement(0, 0x07);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0xCB);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (address & 0xff));
+        retval.setElement(5, ((address & 0xff00)>>8));
+        retval.setElement(6, (powerSet & 0xff));
         return retval;
     }
 

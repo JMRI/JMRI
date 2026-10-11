@@ -24,7 +24,7 @@ import static jmri.Timebase.ClockInitialRunState.DO_NOTHING;
 import static jmri.Timebase.ClockInitialRunState.DO_START;
 import static jmri.Timebase.ClockInitialRunState.DO_STOP;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
 
@@ -36,8 +36,8 @@ import static org.mockito.Mockito.mock;
  * Created by bracz on 11/27/18.
  */
 public class OlcbClockControlTest {
-    OlcbTestInterface iface = null;
-    ClockControl clock;
+    private OlcbTestInterface iface = null;
+    private ClockControl clock;
 
     interface MockInterface {
         void onChange(String property, Object newValue);
@@ -59,7 +59,7 @@ public class OlcbClockControlTest {
     }
 
     @BeforeAll
-    static public void checkSeparate() {
+    public static void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
     }
@@ -538,5 +538,5 @@ public class OlcbClockControlTest {
         new org.netbeans.jemmy.QueueTool().waitEmpty();  // using 100 as argument has a high fail rate 2018-12-15
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
 }

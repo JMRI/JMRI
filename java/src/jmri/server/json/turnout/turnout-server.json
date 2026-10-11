@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-turnout-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"turnout\"",
@@ -9,11 +9,17 @@
             "description": "System name of the turnout"
         },
         "userName": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "User name of the turnout"
         },
         "comment": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Comment for the turnout"
         },
         "properties": {
@@ -27,12 +33,18 @@
                         "description": "Key by which property is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of property or null"
                     }
                 },
                 "additionalProperties": false,
-                "required": ["name", "value"]
+                "required": [
+                    "name",
+                    "value"
+                ]
             }
         },
         "inverted": {
@@ -42,7 +54,12 @@
         "state": {
             "type": "integer",
             "description": "The state of the turnout",
-            "enum": [0, 2, 4, 8]
+            "enum": [
+                0,
+                2,
+                4,
+                8
+            ]
         },
         "feedbackMode": {
             "type": "integer",
@@ -59,11 +76,22 @@
             "type": "array",
             "description": "The sensors providing feedback for this turnout in order",
             "items": {
-                "type": ["object", "null"],
+                "type": [
+                    "object",
+                    "null"
+                ],
                 "description": "The sensor object or null if there is no sensor"
             }
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "inverted", "state", "feedbackMode", "feedbackModes"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "inverted",
+        "state",
+        "feedbackMode",
+        "feedbackModes"
+    ]
 }

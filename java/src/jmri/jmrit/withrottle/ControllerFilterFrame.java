@@ -415,6 +415,6 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControllerFilterFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(ControllerFilterFrame.class);
 
 }

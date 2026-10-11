@@ -35,7 +35,8 @@ import jmri.managers.AbstractManager;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, InstanceManagerAutoDefault {
+public class BlockManager extends AbstractManager<Block>
+    implements ProvidingManager<Block>, InstanceManagerAutoDefault {
 
     private final String powerManagerChangeName;
     public final ShutDownTask shutDownTask = new AbstractShutDownTask("Writing Blocks") {
@@ -51,19 +52,28 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     public BlockManager() {
         super();
-        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
-        InstanceManager.getList(PowerManager.class).forEach(pm -> pm.addPropertyChangeListener(this));
+        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(BlockManager.this);
+        InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(BlockManager.this);
+        InstanceManager.getList(PowerManager.class).forEach(pm -> pm.addPropertyChangeListener(BlockManager.this));
         powerManagerChangeName = InstanceManager.getListPropertyName(PowerManager.class);
-        InstanceManager.addPropertyChangeListener(this);
+        InstanceManager.addPropertyChangeListener(BlockManager.this);
         InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
     }
 
     @Override
     public void dispose() {
+        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
+        InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
+        InstanceManager.getList(PowerManager.class).forEach(pm -> pm.removePropertyChangeListener(this));
+        InstanceManager.removePropertyChangeListener(this);
         super.dispose();
         InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
+
+    /**
+     * String constant for property Default Block Speed Change
+     */
+    public static final String PROPERTY_DEFAULT_BLOCK_SPEED_CHANGE = "DefaultBlockSpeedChange";
 
     @Override
     @CheckReturnValue
@@ -202,12 +212,13 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
             retv = this.getBySystemName(key);
         }
         // If it's not in the system list, go ahead and return null
-        return (retv);
+        return retv;
     }
 
     private String defaultSpeed = "Normal";
 
     /**
+     * Set the Default Block Speed.
      * @param speed the speed
      * @throws IllegalArgumentException if provided speed is invalid
      */
@@ -217,17 +228,18 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         }
 
         try {
-            Float.parseFloat(speed);
+            Float.valueOf(speed);
         } catch (NumberFormatException nx) {
             try {
                 InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
             } catch (IllegalArgumentException ex) {
-                throw new IllegalArgumentException("Value of requested default block speed \"" + speed + "\" is not valid", ex);
+                throw new IllegalArgumentException("Value of requested default block speed \""
+                    + speed + "\" is not valid", ex);
             }
         }
         String oldSpeed = defaultSpeed;
         defaultSpeed = speed;
-        firePropertyChange("DefaultBlockSpeedChange", oldSpeed, speed);
+        firePropertyChange(PROPERTY_DEFAULT_BLOCK_SPEED_CHANGE, oldSpeed, speed);
     }
 
     @CheckReturnValue
@@ -259,9 +271,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         getNamedBeanSet().stream().forEach(b -> {
             if (b != null) {
                 Object obj = b.getValue();
-                if ((obj instanceof BasicRosterEntry && obj == re) ||
-                        obj.toString().equals(re.getId()) ||
-                        obj.toString().equals(re.getDccAddress())) {
+                if ( obj != null && blockValueEqualsRosterEntry(obj, re)) {
                     blockList.add(b);
                 }
             }
@@ -269,6 +279,11 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         return blockList;
     }
 
+    private boolean blockValueEqualsRosterEntry( @Nonnull Object obj, @Nonnull BasicRosterEntry re ){
+        return ( obj instanceof BasicRosterEntry && obj == re) ||
+            obj.toString().equals(re.getId()) ||
+            obj.toString().equals(re.getDccAddress());
+    }
 
     private Instant lastTimeLayoutPowerOn; // the most recent time any power manager had a power ON event
 
@@ -282,14 +297,13 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      *
      * @param e the change event
      */
-
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
-        if (jmri.PowerManager.POWER.equals(e.getPropertyName())) {
+        if ( PowerManager.POWER.equals(e.getPropertyName())) {
             try {
                 PowerManager pm = (PowerManager) e.getSource();
-                if (pm.getPower() == jmri.PowerManager.ON) {
+                if (pm.getPower() == PowerManager.ON) {
                     lastTimeLayoutPowerOn = Instant.now();
                 }
             } catch (NoSuchMethodError xe) {

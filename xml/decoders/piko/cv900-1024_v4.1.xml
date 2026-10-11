@@ -101,8 +101,8 @@
 	</variable>
 	<variable item="Bank A Reset" CV="902.1021=0" readOnly="no">
 		<decVal/>
-		<label>Reset to factory settings: </label>
-		<label xml:lang="de">Rücksetzen der CVs: </label>
+		<label>Reset to factory sound settings: </label>
+		<label xml:lang="de">Rücksetzen der Sound-CVs: </label>
 		<label xml:lang="nl">Zet terug naar fabrieksinstellingen: </label>
 		<label xml:lang="cs">Reset do továrního nastavení: </label>
 		<tooltip>To reset write a value other than 0</tooltip>

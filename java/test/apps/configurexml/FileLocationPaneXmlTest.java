@@ -3,7 +3,6 @@ package apps.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * FileLocationPaneXmlTest.java
@@ -16,7 +15,7 @@ public class FileLocationPaneXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("FileLocationPaneXml constructor",new FileLocationPaneXml());
+        Assertions.assertNotNull(new FileLocationPaneXml(), "FileLocationPaneXml constructor");
     }
 
     @BeforeEach

@@ -1,12 +1,9 @@
 package apps.InstallTest;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -15,11 +12,11 @@ import org.junit.Assume;
 public class InstallTestTest {
 
     @Test
+    @DisabledIfHeadless
     @Disabled("gives error message about an invalid profile on Travis")
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstallTest t = new InstallTest();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -32,5 +29,5 @@ public class InstallTestTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InstallTestTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(InstallTestTest.class);
 }

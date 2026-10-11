@@ -1,8 +1,10 @@
 package jmri.jmrix.sprog;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,21 +15,21 @@ import org.junit.jupiter.api.*;
 public class SprogConnectionTypeListTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testSprogConnectionTypeListConstructor(){
        SprogConnectionTypeList ct = new SprogConnectionTypeList();
-       Assert.assertNotNull(ct);
+       assertNotNull(ct);
    }
 
    @Test
-   public void ManfacturerString(){
+   public void testManfacturerString(){
        SprogConnectionTypeList ct = new SprogConnectionTypeList();
-       Assert.assertEquals("Manufacturers",new String[]{"SPROG DCC"}, ct.getManufacturers());
+       assertArrayEquals(new String[]{"SPROG DCC"}, ct.getManufacturers(), "Manufacturers");
    }
 
    @Test
-   public void ProtocolClassList(){
+   public void testProtocolClassList(){
        SprogConnectionTypeList ct = new SprogConnectionTypeList();
-       Assert.assertEquals("Protocol Class List", new String[]{
+       assertArrayEquals( new String[]{
             "jmri.jmrix.sprog.sprog.ConnectionConfig",
             "jmri.jmrix.sprog.sprogCS.ConnectionConfig",
             "jmri.jmrix.sprog.sprognano.ConnectionConfig",
@@ -36,7 +38,8 @@ public class SprogConnectionTypeListTest {
             "jmri.jmrix.sprog.pi.pisprognano.ConnectionConfig",
             "jmri.jmrix.sprog.simulator.ConnectionConfig",
             "jmri.jmrix.sprog.SprogCSStreamConnectionConfig"},
-            ct.getAvailableProtocolClasses());
+            ct.getAvailableProtocolClasses(),
+            "Protocol Class List");
    }
 
     @BeforeEach

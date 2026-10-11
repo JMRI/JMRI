@@ -1,11 +1,15 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.beans.PropertyChangeListener;
 
 import jmri.*;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Abstract Base Class for Light tests in specific jmrix packages. This is not
@@ -43,7 +47,7 @@ public abstract class AbstractLightTestBase {
     @Test
     public void testCreate() {
         // initial state when created must be OFF
-        Assert.assertEquals("initial commanded state", Light.OFF, t.getState());
+        assertEquals(Light.OFF, t.getState(), "initial commanded state");
     }
 
     @Test
@@ -51,10 +55,10 @@ public abstract class AbstractLightTestBase {
         t.addPropertyChangeListener(new Listen());
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertTrue("listener invoked by setUserName", listenerResult);
+        assertTrue(listenerResult, "listener invoked by setUserName");
         listenerResult = false;
         t.setState(Light.ON);
-        Assert.assertTrue("listener invoked by setCommandedState", listenerResult);
+        assertTrue(listenerResult, "listener invoked by setCommandedState");
     }
 
     @Test
@@ -64,8 +68,8 @@ public abstract class AbstractLightTestBase {
         t.removePropertyChangeListener(ln);
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertFalse("listener should not have heard message after removeListener",
-                listenerResult);
+        assertFalse(listenerResult,
+            "listener should not have heard message after removeListener");
     }
 
     @Test
@@ -73,24 +77,24 @@ public abstract class AbstractLightTestBase {
         t.setState(Light.ON); // in case registration with TrafficController
                               // is deferred to after first use
         t.dispose();
-        Assert.assertEquals("controller listeners remaining", 0, numListeners());
+        assertEquals(0, numListeners(), "controller listeners remaining");
     }
-    
+
     @Test
     public void testRemoveListenerOnDispose() {
-        Assert.assertEquals("starts 0 listeners", 0, t.getNumPropertyChangeListeners());
+        assertEquals(0, t.getNumPropertyChangeListeners(), "starts 0 listeners");
         t.addPropertyChangeListener(new Listen());
-        Assert.assertEquals("controller listener added", 1, t.getNumPropertyChangeListeners());
+        assertEquals(1, t.getNumPropertyChangeListeners(), "controller listener added");
         t.dispose();
-        Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
+        assertTrue(t.getNumPropertyChangeListeners() < 1, "controller listeners remaining < 1");
     }
 
     @Test
     public void testCommandOff() {
         t.setState(Light.OFF);
         // check
-        Assert.assertEquals("state 1", jmri.Light.OFF, t.getState());
-        Assert.assertEquals("state 2", "Off", t.describeState(t.getState()));
+        assertEquals(jmri.Light.OFF, t.getState(), "state 1");
+        assertEquals("Off", t.describeState(t.getState()), "state 2");
         checkOffMsgSent();
     }
 
@@ -98,54 +102,54 @@ public abstract class AbstractLightTestBase {
     public void testCommandOn() {
         t.setState(Light.ON);
         // check
-        Assert.assertEquals("state 1", jmri.Light.ON, t.getState());
-        Assert.assertEquals("state 2", "On", t.describeState(t.getState()));
+        assertEquals(Light.ON, t.getState(), "state 1");
+        assertEquals("On", t.describeState(t.getState()), "state 2");
         checkOnMsgSent();
     }
 
     @Test
     public void testGetBeanType() {
-        Assert.assertEquals("bean type", t.getBeanType(), Bundle.getMessage("BeanNameLight"));
+        assertEquals(Bundle.getMessage("BeanNameLight"), t.getBeanType(), "bean type");
     }
 
     // Test the Light interface
     @Test
     public void testLight() {
         t.setState(Light.ON);
-        Assert.assertEquals("Light is ON", Light.ON, t.getState());
+        assertEquals(Light.ON, t.getState(), "Light is ON");
         t.setState(Light.OFF);
-        Assert.assertEquals("Light is ON", Light.OFF, t.getState());
+        assertEquals(Light.OFF, t.getState(), "Light is ON");
         t.setCommandedState(Light.ON);
-        Assert.assertEquals("Light is ON", Light.ON, t.getState());
+        assertEquals(Light.ON, t.getState(), "Light is ON");
         t.setCommandedState(Light.OFF);
-        Assert.assertEquals("Light is ON", Light.OFF, t.getState());
+        assertEquals(Light.OFF, t.getState(), "Light is ON");
         t.setState(Light.ON);
-        Assert.assertEquals("Light is ON", Light.ON, t.getCommandedState());
+        assertEquals(Light.ON, t.getCommandedState(), "Light is ON");
         t.setState(Light.OFF);
-        Assert.assertEquals("Light is ON", Light.OFF, t.getCommandedState());
+        assertEquals(Light.OFF, t.getCommandedState(), "Light is ON");
         t.setState(Light.ON);
-        Assert.assertEquals("Light is ON", Light.ON, t.getKnownState());
+        assertEquals(Light.ON, t.getKnownState(), "Light is ON");
         t.setState(Light.OFF);
-        Assert.assertEquals("Light is ON", Light.OFF, t.getKnownState());
+        assertEquals(Light.OFF, t.getKnownState(), "Light is ON");
     }
 
     // add a LightControl
     @Test
     public void testAddLightControls() {
-        Assert.assertEquals("0 controls attached", 0, t.getLightControlList().size());
+        assertEquals(0, t.getLightControlList().size(), "0 controls attached");
         LightControl lc = new jmri.implementation.DefaultLightControl(t);
         lc.setControlType(Light.SENSOR_CONTROL);
         t.addLightControl(lc);
-        Assert.assertEquals("1 control attached", 1, t.getLightControlList().size());
+        assertEquals(1, t.getLightControlList().size(), "1 control attached");
         t.addLightControl(lc);
-        Assert.assertEquals("1 control attached", 1, t.getLightControlList().size());
-        Assert.assertEquals("control attached", lc, t.getLightControlList().get(0));
+        assertEquals(1, t.getLightControlList().size(), "1 control attached");
+        assertEquals(lc, t.getLightControlList().get(0), "control attached");
         t.addLightControl(new jmri.implementation.DefaultLightControl(t));
-        Assert.assertEquals("2 controls attached", 2, t.getLightControlList().size());
-        Assert.assertNotEquals("2 controls attached", t.getLightControlList().get(0),
-                t.getLightControlList().get(1));
+        assertEquals(2, t.getLightControlList().size(), "2 controls attached");
+        assertNotEquals(t.getLightControlList().get(0),
+                t.getLightControlList().get(1), "2 controls attached");
         t.clearLightControls();
-        Assert.assertEquals("0 controls attached", 0, t.getLightControlList().size());
+        assertEquals(0, t.getLightControlList().size(), "0 controls attached");
     }
 
 }

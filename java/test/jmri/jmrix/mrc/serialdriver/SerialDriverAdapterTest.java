@@ -2,7 +2,6 @@ package jmri.jmrix.mrc.serialdriver;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,21 +12,20 @@ import org.junit.jupiter.api.*;
 
 public class SerialDriverAdapterTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SerialDriverAdapter constructor",new SerialDriverAdapter());
-   }
+    @Test
+    public void testMrcSerialDriverAdapterConstructor(){
+        Assertions.assertNotNull( new SerialDriverAdapter(), "SerialDriverAdapter constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
-
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

@@ -23,7 +23,7 @@ public interface ConsistManager {
 
     /**
      * Find a Consist with this consist address, and return it. If the Consist
-     * doesn't exit, create it.
+     * doesn't exist, create it.
      *
      * @param address the consist address
      * @return an existing or new consist
@@ -74,6 +74,24 @@ public interface ConsistManager {
      */
     void requestUpdateFromLayout();
 
+    /**
+     * Does this ConsistManager allow advanced consisting?
+     * @return true if this manager's protocols support DCC advanced consisting
+     */
+     default boolean isAdvancedConsistPossible() {
+        return true;
+     }
+     
+    /**
+     * Does this ConsistManager require that all locomotives in a consist
+     * use the same protocol?
+     * @return true if this manager requires that all locomotives in a consist 
+     *              use the same protocol
+     */
+     default boolean isSingleFormConsistRequired() {
+        return false;
+     }
+     
     /**
      * Register a ConsistListListener object with this ConsistManager
      *

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-kernel-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for operations type \"kernel\"",
@@ -24,7 +24,10 @@
             }
         },
         "lead": {
-            "type": ["object", "null"],
+            "type": [
+                "object",
+                "null"
+            ],
             "description": "The lead car in the kernel"
         },
         "rename": {
@@ -33,5 +36,11 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "cars", "lead", "length", "weight"]
+    "required": [
+        "name",
+        "cars",
+        "lead",
+        "length",
+        "weight"
+    ]
 }

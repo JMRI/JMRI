@@ -128,6 +128,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                 case BidibLibrary.MSG_BM_CURRENT:
                 case BidibLibrary.MSG_CS_STATE:
                 case BidibLibrary.MSG_CS_SET_STATE:
+                case BidibLibrary.MSG_LOCAL_PING:
+                case BidibLibrary.MSG_LOCAL_PONG:
                     return true;
                 default:
                     break;
@@ -139,7 +141,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
     private void log1Message(BidibMessageInterface message, String line) {
         Node node = tc.getNodeByAddr(message.getAddr());
         if (node != null) {
-            output += String.format(" %010X (%s)", node.getUniqueId() & 0xffffffffffL, node.getStoredString(StringData.INDEX_USERNAME)) + ": ";
+            output += String.format(" %010X (%s)", node.getUniqueId() & 0xffffffffffL,
+                node.getStoredString(StringData.INDEX_USERNAME)) + ": ";
         }
         else {
             output += NodeUtils.formatAddress(message.getAddr()) + ": ";
@@ -198,7 +201,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
             case BidibLibrary.MSG_BOOST_DIAGNOSTIC:
             {
                 BoostDiagnosticResponse m = (BoostDiagnosticResponse)message;
-                line = "Voltage: " + m.getVoltage() + " mV, Current: " + m.getCurrent() + " mA, Temperature: " + m.getTemperature() + " °C";
+                line = "Voltage: " + m.getVoltage() + " mV, Current: " + m.getCurrent().getCurrent() + " mA, Temperature: " + m.getTemperature() + " °C";
             }
                 break;
             case BidibLibrary.MSG_BOOST_STAT:
@@ -781,6 +784,9 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                 List<String> lines = new ArrayList<>();
                 List<BidibMessageInterface> messages = new ArrayList<>();
                 BidibRequestFactory requestFactory = tc.getBidib().getRootNode().getRequestFactory();
+                // Note: netBiDiB does NOT use the escape sequence. We must tell the parser not to use them
+                // otherwise a byte could be misinterpreted as an escape character and the parser will fail.
+                requestFactory.setEscapeMagic(!tc.isNetBiDiB());
                 try {
                     List<BidibMessageInterface> commandMessages = requestFactory.create(data);
                     for (BidibMessageInterface message : commandMessages) {
@@ -802,7 +808,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
     /**
      * Nested class to create one of these using old-style defaults.
      */
-//    static public class Default extends BiDiBNamedPaneAction {
+//    public static class Default extends BiDiBNamedPaneAction {
 //
 //        public Default() {
 //            super(Bundle.getMessage("MonitorXTitle", "RFID Device"),
@@ -812,6 +818,6 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
 //        }
 //    }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBMonPane.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBMonPane.class);
 
 }

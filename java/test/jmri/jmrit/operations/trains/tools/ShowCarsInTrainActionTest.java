@@ -11,9 +11,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 
 /**
  *
@@ -57,7 +55,7 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         }, "wait to complete");
         
         // confirm window is showing
-        JmriJFrame frame = JmriJFrame.getFrame(Bundle.getMessage("TitleShowCarsInTrain")+ " (" + train1.getName() + ")");
+        JmriJFrame frame = JmriJFrame.getFrame(Bundle.getMessage("TitleShowCarsInTrain", train1.getName()));
         Assert.assertNotNull("exists", frame);
         
         JUnitUtil.dispose(frame);
@@ -66,6 +64,6 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class);
 
 }

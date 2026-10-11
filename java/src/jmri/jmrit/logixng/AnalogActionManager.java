@@ -2,11 +2,14 @@ package jmri.jmrit.logixng;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
+
+import jmri.Category;
 
 /**
  * Manager for AnalogActionBean
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
@@ -22,7 +25,7 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
      */
     MaleAnalogActionSocket registerAction(@Nonnull AnalogActionBean action)
             throws IllegalArgumentException;
-    
+
     /**
      * Create a new system name for an AnalogActionBean.
      * @return a new system name
@@ -34,7 +37,7 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
 
     /**
      * Get a set of classes that implements the DigitalAction interface.
-     * 
+     *
      * @return a set of entries with category and class
      */
     Map<Category, List<Class<? extends Base>>> getActionClasses();
@@ -63,7 +66,7 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The sub system prefix for the AnalogActionManager is
      * {@link #getSystemNamePrefix() } and "AA";
      */
@@ -79,5 +82,5 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
      * @param x the Action to delete
      */
     void deleteAnalogAction(MaleAnalogActionSocket x);
-    
+
 }

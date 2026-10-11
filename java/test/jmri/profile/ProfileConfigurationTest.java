@@ -4,7 +4,6 @@ import java.io.File;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -21,7 +20,7 @@ public class ProfileConfigurationTest {
         instance.setName("saved");
 
         ProfileConfiguration t = new ProfileConfiguration(instance);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -34,6 +33,6 @@ public class ProfileConfigurationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProfileConfigurationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProfileConfigurationTest.class);
 
 }

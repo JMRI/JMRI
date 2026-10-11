@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.9.7-SNAPSHOT</version>
+    <version>5.17.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -20,15 +20,17 @@
         <jetty.version>9.4.28.v20200408</jetty.version>
         <!-- this is a custom version, see lib/README.md -->
         <jemmy.version>RELEASE125</jemmy.version>
-        <slf4j.version>2.0.7</slf4j.version>
-        <log4j.version>2.20.0</log4j.version>
-        <jackson-core.version>2.13.4</jackson-core.version>
-        <jackson-databind.version>2.13.4.2</jackson-databind.version>
-        <jackson-annotations.version>2.13.4</jackson-annotations.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <log4j.version>2.25.4</log4j.version>
+        <jackson-core.version>2.22.0</jackson-core.version>
+        <jackson-databind.version>2.22.0</jackson-databind.version>
+        <jackson-annotations.version>2.22</jackson-annotations.version>
+        <jackson-datatype-jsr310.version>2.22.0</jackson-datatype-jsr310.version>
         <jogamp.version>2.5.0</jogamp.version>
-        <openlcb.version>0.8.2</openlcb.version>
+        <openlcb.version>0.8.6</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
-        <jacoco.version>0.8.11</jacoco.version>
+        <spotbugs.version>4.9.8.2</spotbugs.version>
+        <jacoco.version>0.8.14</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
@@ -36,16 +38,16 @@
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
-        <ant.version>1.10.11</ant.version>
-        <junit5.version>5.9.1</junit5.version>
-        <junit.platform.version>1.9.1</junit.platform.version>
+        <ant.version>1.10.14</ant.version>
+        <junit5.version>5.13.4</junit5.version>
+        <junit.platform.version>1.13.4</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning</argLine>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning --add-exports java.desktop/sun.awt=ALL-UNNAMED -XX:+EnableDynamicAgentLoading</argLine>
         <!-- define argLines to allow running surefire:test -->
         <surefire.argLine></surefire.argLine>
         <failsafe.argLine></failsafe.argLine>
-        <surefire.version>2.22.0</surefire.version>
-        <failsafe.version>2.22.0</failsafe.version>
+        <surefire.version>3.5.4</surefire.version>
+        <failsafe.version>3.5.4</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
         <checkstyle.config.location>${basedir}/checkstyle.xml</checkstyle.config.location>
     </properties>
@@ -119,7 +121,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>4.8.6.2</version>
+                        <version>${spotbugs.version}</version>
                         <configuration>
                             <plugins>
                                 <plugin>
@@ -195,6 +197,7 @@
                                 <properties>${basedir}/java/ecj.warning.options-ci</properties>
                                 <arg>-sourcepath</arg>
                                 <arg>${basedir}/java/src:${basedir}/target/generated-sources</arg>
+                                <arg>-proc:full</arg>
                             </compilerArgs>
                         </configuration>
                         <dependencies>
@@ -360,6 +363,7 @@
                 </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
+                    <exclude>**/junit-platform.properties</exclude><!-- Prevent Warning 2 JUnit properties found -->
                 </excludes>
             </resource>
             <resource>
@@ -396,7 +400,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
+                <version>3.2.0</version><!--$NO-MVN-MAN-VER$-->
                 <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
@@ -450,7 +454,21 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <compilerArgs>
+                        <arg>-proc:full</arg>
+                    </compilerArgs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <configuration>
+                            <compilerArgs combine.children="append">
+                                <arg>-Alog4j.graalvm.groupId=${project.groupId}</arg>
+                                <arg>-Alog4j.graalvm.artifactId=${project.artifactId}</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -477,7 +495,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.8.6.2</version>
+                <version>${spotbugs.version}</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
                     <plugins>
@@ -539,6 +557,15 @@
                     <reuseForks>false</reuseForks>
                     -->
                 </configuration>
+                <!-- From Surefire 3.0+ ( due to junit-vintage-engine ), this forces the JU Platform runner. -->
+                <!-- Maven Test runner auto-detects JUnit4 Test Runner instead of JUnit Platform Runner. -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit-platform</artifactId>
+                        <version>${surefire.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -649,7 +676,7 @@
                     <!-- change from default 100 warnings; keep number synced with ant javadoc target -->
                     <additionalJOption>-breakiterator -Xmaxwarns 100</additionalJOption><!-- 100 is default, here so we can easily change it -->
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
-                    <doclint>all,-missing,-html</doclint>
+                    <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -725,7 +752,7 @@
                         <!-- our web production Javadocs are made with Ant, not Maven, this is not a problem -->
                         <!-- <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link> -->
                         <!-- <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link> -->
-                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.8.6/</link> -->
+                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/${spotbugs.version}/</link> -->
                         <!-- <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link> -->
                         <!-- <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link> -->
                         <!-- <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link> -->
@@ -1180,7 +1207,7 @@
         <dependency>
             <groupId>org.jdom</groupId>
             <artifactId>jdom2</artifactId>
-            <version>2.0.6</version>
+            <version>2.0.6.1</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
@@ -1200,6 +1227,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <!-- When this is removed, also remove surefire-junit-platform override. -->
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit5.version}</version>
@@ -1212,8 +1240,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
             <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
@@ -1230,21 +1270,21 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5</artifactId>
-            <version>1.0.0-rc1</version>
+            <version>1.4.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.12.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-swing-junit</artifactId>
-            <version>3.9.2</version>
+            <version>3.27.7</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1280,7 +1320,7 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>4.2.2</version>
+            <version>6.1.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1304,6 +1344,16 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId> <!-- Commons Logging to SLF4J Bridge -->
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId> <!-- Log4Jv1 to SLF4J Bridge ( CATS ) -->
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
@@ -1344,6 +1394,12 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson-annotations.version}</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
@@ -1439,27 +1495,45 @@
         </dependency>
         <dependency>
             <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <!-- used in jmri.util.GenerateSearchIndexTest -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.15.3</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.2</version>
+            <version>2.8.0</version>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-device</artifactId>
-            <version>1.2</version>
-            <!-- not used at compile time, may be used at runtime. -->
+            <artifactId>pi4j-plugin-raspberrypi</artifactId>
+            <version>2.8.0</version>
+            <!-- loaded at runtime via ServiceLoader on Raspberry Pi hardware -->
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-gpio-extension</artifactId>
-            <version>1.2</version>
-            <!-- not used at compile time, may be used at runtime. -->
+            <artifactId>pi4j-plugin-linuxfs</artifactId>
+            <version>2.8.0</version>
+            <!-- loaded at runtime via ServiceLoader on Raspberry Pi hardware -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-plugin-gpiod</artifactId>
+            <version>2.8.0</version>
+            <!-- GpioD plugin: uses Linux /dev/gpiochip* character-device interface
+                 (preferred on kernel 5.10+); loaded at runtime via ServiceLoader -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-library-gpiod</artifactId>
+            <version>2.8.0</version>
+            <!-- transitive runtime dependency of pi4j-plugin-gpiod; JNI wrapper for
+                 the native libgpiod C library (sudo apt install libgpiod2) -->
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -1501,11 +1575,13 @@
             <!-- The next two lines force use of the local lib/openlcb.jar file. -->
             <!-- This is needed when we're using a custom openlcb.jar file -->
             <!-- not yet available on a maven repository. -->
-<!-- 
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
- -->
-
+                <scope>system</scope>
+                <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.weisj</groupId>
+            <artifactId>darklaf-core</artifactId>
+            <version>3.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>
@@ -1528,7 +1604,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>4.8.6</version>
+            <version>4.9.8</version>
         </dependency>
         <dependency>
             <groupId>xerces</groupId>
@@ -1576,30 +1652,24 @@
         <dependency>
             <groupId>com.fazecast</groupId>
             <artifactId>jSerialComm</artifactId>
-            <version>2.10.4</version>
+            <version>2.11.4</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.12.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.12.0</version>
+            <version>5.21.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.14.15</version>
+            <version>1.18.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy-agent</artifactId>
-            <version>1.14.15</version>
+            <version>1.18.2</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.objenesis/objenesis -->
@@ -1629,7 +1699,7 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.0.28</version>
+            <version>1.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>
@@ -1647,18 +1717,6 @@
             <version>0.8.0</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.1.14.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>5.1.14.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
@@ -1674,11 +1732,6 @@
             <version>1.1.0</version>
         </dependency>
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.sarxos</groupId>
             <artifactId>webcam-capture</artifactId>
             <version>0.3.12</version>
@@ -1687,7 +1740,7 @@
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-transcoder</artifactId>
-            <version>1.17</version>
+            <version>1.19</version>
             <exclusions>
                 <exclusion>
                     <artifactId>fop</artifactId>
@@ -1697,61 +1750,70 @@
                     <groupId>xml-apis</groupId>
                     <artifactId>xml-apis</artifactId>
                 </exclusion>
+                <exclusion> <!-- Use jcl-over-slf4j JCL > SLF4J Bridge instead -->
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 		<!-- //BiDiB client library -->
-		<!-- jbidibc 2.0.18 -->
+		<!-- jbidibc 2.0.40 -->
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-core</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.40</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-serial</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.40</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-simulation</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.40</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-jserialcomm</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.40</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-messages</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.40</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bidib.jbidib</groupId>
+            <artifactId>jbidibc-netbidib</artifactId>
+            <version>2.0.40</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-net-serial-over-tcp</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.40</version>
         </dependency>
-		<!-- BiDiB Wizard Simulation 2.0.18 -->
+		<!-- BiDiB Wizard Simulation 2.0.44 -->
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-common</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.44</version>
         </dependency>
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-model</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.44</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-simulation</artifactId>
-            <version>2.0.18</version>
+            <version>2.0.44</version>
         </dependency>
         <!--  dependencies from jbidibc and bidibwizard -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
+            <version>4.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.bushe</groupId>
@@ -1789,6 +1851,11 @@
             <version>1.8.1</version>
         </dependency>
  		<!-- //BiDiB -->
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>0.10.2</version>
+      </dependency>
     </dependencies>
 
     <repositories>
@@ -1809,7 +1876,7 @@
         <repository>
             <id>jogamp-remote</id>
             <name>jogamp test mirror</name>
-            <url>https://www.jogamp.org/deployment/maven/</url>
+            <url>https://jogamp.org/deployment/maven/</url>
             <layout>default</layout>
         </repository>
         <!--

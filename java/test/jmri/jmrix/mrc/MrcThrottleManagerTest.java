@@ -33,6 +33,6 @@ public class MrcThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcThrottleManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MrcThrottleManagerTest.class);
 
 }

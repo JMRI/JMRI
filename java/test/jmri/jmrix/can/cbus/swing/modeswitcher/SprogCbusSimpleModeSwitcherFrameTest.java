@@ -7,16 +7,14 @@ import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the ModeSwitcherPane class
  *
  * @author Andrew Crosland (C) 2020
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private CanSystemConnectionMemo memo = null;
@@ -25,13 +23,13 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
     private CbusDccProgrammerManager pm;
 
     @Test
-    public void testInitComponents () throws Exception{
+    public void testInitComponents () {
         // for now, just makes ure there isn't an exception.
         ((SprogCbusSimpleModeSwitcherFrame) frame).initComponents();
     }
 
     @Test
-    public void testPrefProg () throws Exception {
+    public void testPrefProg () {
 
         // Create global programer and matching preferences
         pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
@@ -44,11 +42,11 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
         SprogCbusSimpleModeSwitcherFrame f = ((SprogCbusSimpleModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertEquals(SprogCbusSimpleModeSwitcherFrame.PROG_MODE, f.mode);
+        Assertions.assertEquals(SprogCbusSimpleModeSwitcherFrame.PROG_MODE, f.mode);
     }
 
     @Test
-    public void testPrefCmd () throws Exception {
+    public void testPrefCmd () {
 
         // Create addressed programer and matching preferences
         pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
@@ -61,7 +59,7 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
         SprogCbusSimpleModeSwitcherFrame f = ((SprogCbusSimpleModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertEquals( SprogCbusSimpleModeSwitcherFrame.CMD_MODE, f.mode);
+        Assertions.assertEquals( SprogCbusSimpleModeSwitcherFrame.CMD_MODE, f.mode);
     }
 
     @BeforeEach

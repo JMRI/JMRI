@@ -138,13 +138,14 @@
 
       <h3>USB device (USBThrottle.jyn)</h3>
       There is a Jynstrument named USBThrottle.jyn to be dropped on a Throttle Window toolbar to get
-      control of that Window with a HID device (joypad, RailDriver ...). See the .py files for default button settings, and
-      possible customizations.
+      control of that Window with a HID device (joypad, RailDriver, <a href="https://www.zuiki.co.jp/product_info/denshadegomascon_black/"> Densha de GO controler</a> ...). 
+      See the .py files for default button settings, and possible customizations.
       <p>Particularly you might want to define a "driver" file for your own device, start from
       default.py, copy it, rename it with the name of the device as seen by JMRI without any space
-      or ".", then use <a href="../../../package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">the
-      JMRI Jinput USB Input Control window</a> (accessible from Debug menu) to get your Components
-      names and value,</p>
+      or ".", (the driver filename that JMRI is looking for will appear in the log file when selecting
+      a specific device from the contextual menu, look for "Loading USBDriver :"). Then when using the device,
+      components name and value will be printed (from line 58 in USBThrottle.py) in the log allowing you to setup 
+      your driver accordingly.</p>
 
 
       <h4>Default controls:</h4>

@@ -411,6 +411,6 @@ public class ActionAudioIcon extends AbstractDigitalAction implements VetoableCh
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionAudioIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionAudioIcon.class);
 
 }

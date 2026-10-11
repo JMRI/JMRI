@@ -31,7 +31,7 @@ public class XNetAddress {
     }
 
     static final int MINSENSORADDRESS = 1;
-    static final int MAXSENSORADDRESS = 1024; // same for outputs
+    static final int MAXSENSORADDRESS = 2048; // same for outputs
 
     /**
      * Public static method to parse a Lenz XpressNet system name.

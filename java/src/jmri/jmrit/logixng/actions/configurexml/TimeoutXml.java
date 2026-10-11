@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Timeout;
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectIntegerXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 
@@ -118,5 +118,5 @@ public class TimeoutXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeoutXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeoutXml.class);
 }

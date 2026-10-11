@@ -92,6 +92,6 @@ public class CbusDccProgrammerManagerTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusDccProgrammerManagerTest.class);
 
 }

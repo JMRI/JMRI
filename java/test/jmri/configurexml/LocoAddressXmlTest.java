@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class LocoAddressXmlTest {
     @Test
     public void testCTor() {
         LocoAddressXml t = new LocoAddressXml();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class LocoAddressXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoAddressXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoAddressXmlTest.class);
 
 }

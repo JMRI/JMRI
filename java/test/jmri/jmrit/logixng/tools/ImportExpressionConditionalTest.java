@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.*;
 
 /**
@@ -8,26 +10,27 @@ import jmri.*;
  * This class creates a Logix, test that it works, imports it to LogixNG,
  * deletes the original Logix and then test that the new LogixNG works.
  * <P>
- This test tests expression conditional
+ * This test tests expression conditional
  * 
  * @author Daniel Bergqvist (C) 2020
  */
 public class ImportExpressionConditionalTest extends ImportExpressionTestBase {
 
-    Conditional conditional;
-    ConditionalVariable cv;
-    
+    private Conditional conditional = null;
+    private ConditionalVariable cv = null;
+
     @Override
     public void setNamedBeanState(State state) throws JmriException {
+        assertNotNull(conditional);
         switch (state) {
             case ON:
                 conditional.setState(Conditional.TRUE);
                 break;
-                
+
             case OFF:
                 conditional.setState(Conditional.FALSE);
                 break;
-                
+
             case OTHER:
             default:
                 conditional.setState(Sensor.UNKNOWN);
@@ -37,11 +40,12 @@ public class ImportExpressionConditionalTest extends ImportExpressionTestBase {
 
     @Override
     public void setConditionalVariableState(State state) {
+        assertNotNull(cv);
         switch (state) {
             case ON:
                 cv.setType(Conditional.Type.CONDITIONAL_TRUE);
                 break;
-                
+
             case OFF:
             case OTHER:
             default:
@@ -58,5 +62,5 @@ public class ImportExpressionConditionalTest extends ImportExpressionTestBase {
         cv.setName("IX2C1");
         return cv;
     }
-    
+
 }

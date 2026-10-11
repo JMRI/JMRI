@@ -35,6 +35,6 @@ public class LnComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnComponentFactoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LnComponentFactoryTest.class);
 
 }

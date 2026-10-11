@@ -106,10 +106,9 @@
 
       <p>Most MERG modules can do "enumeration" for CBUS, but some other adapters can't because of
       their intrinsic latency. Their slow replies effectively make them invisible.<br>
-      Therefore Mike Bolton, one of the CBUS developers suggested that JMRI use a CAN ID of 126.
-      That's a fixed value in some systems.</p>
+      Therefore Mike Bolton, one of the CBUS developers suggested that JMRI use a CAN ID of 126.</p>
 
-      <p>If you have multiple copies of JMRI attached to a MERGCBUS network, be sure to give these
+      <p>If you have multiple copies of JMRI attached to a MERG CBUS network, be sure to give these
       unique CAN ID's.</p>
 
       <h3 id="c1">CAN via MERG CAN-RS or CAN-USB</h3>
@@ -148,7 +147,7 @@
         <li>460,800</li>
       </ul>
 
-      <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
+      <p>CAN ID for JMRI : 126 ( selectable from 100-127 )</p>
 
       <p>Connection Protocol : "CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not
       use")</p>
@@ -182,7 +181,7 @@
 
       <p>Connection Name : "MERG"</p>
       <em>Additional Connection Settings shown when box checked</em>
-      <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
+      <p>CAN ID for JMRI : 126 ( selectable from 100-127 )</p>
 
       <p>Gateway : Pass All ( Filtering also selectable )</p>
 

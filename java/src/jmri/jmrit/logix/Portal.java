@@ -4,16 +4,17 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
-
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * A Portal is a boundary between two Blocks.
@@ -32,8 +33,31 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  */
 public class Portal {
 
-    private static final String NAME_CHANGE = "NameChange";
-    private static final String SIGNAL_CHANGE = "signalChange";
+    /**
+     * String constant for property name change.
+     */
+    public static final String PROPERTY_NAME_CHANGE = "NameChange";
+
+    /**
+     * String constant for property signal change.
+     */
+    public static final String PROPERTY_SIGNAL_CHANGE = "signalChange";
+
+    /**
+     * String constant for property direction.
+     */
+    public static final String PROPERTY_DIRECTION = "Direction";
+
+    /**
+     * String constant for property block changed.
+     */
+    public static final String PROPERTY_BLOCK_CHANGED = "BlockChanged";
+
+    /**
+     * String constant for property portal delete.
+     */
+    public static final String PROPERTY_PORTAL_DELETE = "portalDelete";
+
     private static final String ENTRANCE = "entrance";
     private final ArrayList<OPath> _fromPaths = new ArrayList<>();
     private OBlock _fromBlock;
@@ -155,12 +179,12 @@ public class Portal {
         // for some unknown reason, PortalManager firePropertyChange is not read by PortalTableModel
         // so let OBlock do it
         if (_toBlock != null) {
-            _toBlock.pseudoPropertyChange(NAME_CHANGE, oldName, this);
+            _toBlock.pseudoPropertyChange(PROPERTY_NAME_CHANGE, oldName, this);
         } else if (_fromBlock != null) {
-            _fromBlock.pseudoPropertyChange(NAME_CHANGE, oldName, this);
+            _fromBlock.pseudoPropertyChange(PROPERTY_NAME_CHANGE, oldName, this);
         }
         // CircuitBuilder PortalList needs this property change
-        pcs.firePropertyChange(NAME_CHANGE, oldName, newName);
+        pcs.firePropertyChange(PROPERTY_NAME_CHANGE, oldName, newName);
         return null;
     }
 
@@ -199,7 +223,7 @@ public class Portal {
         if (_toBlock != null) {
             _toBlock.addPortal(this);
         }
-        pcs.firePropertyChange("BlockChanged", oldBlock, _toBlock);
+        pcs.firePropertyChange(PROPERTY_BLOCK_CHANGED, oldBlock, _toBlock);
         return true;
     }
 
@@ -247,7 +271,7 @@ public class Portal {
         if (_fromBlock != null) {
             _fromBlock.addPortal(this);
         }
-        pcs.firePropertyChange("BlockChanged", oldBlock, _fromBlock);
+        pcs.firePropertyChange(PROPERTY_BLOCK_CHANGED, oldBlock, _fromBlock);
         return true;
     }
 
@@ -296,8 +320,8 @@ public class Portal {
             ret = true;
         }
         if (ret) {
-            protectedBlock.pseudoPropertyChange(SIGNAL_CHANGE, false, true);
-            pcs.firePropertyChange(SIGNAL_CHANGE, false, true);
+            protectedBlock.pseudoPropertyChange(PROPERTY_SIGNAL_CHANGE, false, true);
+            pcs.firePropertyChange(PROPERTY_SIGNAL_CHANGE, false, true);
             log.debug("setProtectSignal: \"{}\" for Block= {} at Portal {}",
                     (signal != null ? signal.getDisplayName() : "null"), protectedBlock.getDisplayName(), _name);
         }
@@ -369,15 +393,15 @@ public class Portal {
             _toSignal = null; // set the 2 _tos
             _toSignalOffset = 0;
             if (_fromBlock != null) {
-                _fromBlock.pseudoPropertyChange(SIGNAL_CHANGE, false, false);
-                pcs.firePropertyChange(SIGNAL_CHANGE, false, false);
+                _fromBlock.pseudoPropertyChange(PROPERTY_SIGNAL_CHANGE, false, false);
+                pcs.firePropertyChange(PROPERTY_SIGNAL_CHANGE, false, false);
             }
         } else if (signal.equals(_fromSignal)) {
             _fromSignal = null; // set the 2 _froms
             _fromSignalOffset = 0;
             if (_toBlock != null) {
-                _toBlock.pseudoPropertyChange(SIGNAL_CHANGE, false, false);
-                pcs.firePropertyChange(SIGNAL_CHANGE, false, false);
+                _toBlock.pseudoPropertyChange(PROPERTY_SIGNAL_CHANGE, false, false);
+                pcs.firePropertyChange(PROPERTY_SIGNAL_CHANGE, false, false);
             }
         }
     }
@@ -463,7 +487,7 @@ public class Portal {
     public void setState(int s) {
         int old = _state;
         _state = s;
-        pcs.firePropertyChange("Direction", old, _state);
+        pcs.firePropertyChange(PROPERTY_DIRECTION, old, _state);
     }
 
     public int getState() {
@@ -681,7 +705,7 @@ public class Portal {
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
         }
-        pcs.firePropertyChange("portalDelete", true, false);
+        pcs.firePropertyChange(PROPERTY_PORTAL_DELETE, true, false);
         PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
         for (PropertyChangeListener l : listeners) {
             pcs.removePropertyChangeListener(l);

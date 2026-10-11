@@ -2,7 +2,6 @@ package jmri.jmrix.grapevine.simulator;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,21 +11,20 @@ import org.junit.jupiter.api.*;
  */
 public class SimulatorAdapterTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SimulatorAdapter constructor", new SimulatorAdapter());
-   }
+    @Test
+    public void testGrapevineSimulatorAdapterConstructor(){
+        Assertions.assertNotNull( new SimulatorAdapter(), "SimulatorAdapter constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

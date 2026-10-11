@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.*;
 
 /**
@@ -14,21 +16,22 @@ import jmri.*;
  */
 public class ImportExpressionLightTest extends ImportExpressionTestBase {
 
-    Light light;
-    ConditionalVariable cv;
-    
+    private Light light = null;
+    private ConditionalVariable cv = null;
+
     @Override
     public boolean isStateOtherAllowed() {
         return false;
     }
-    
+
     @Override
     public void setNamedBeanState(State state) throws JmriException {
+        assertNotNull(light);
         switch (state) {
             case ON:
                 light.setState(Light.ON);
                 break;
-                
+
             case OFF:
             default:
                 light.setState(Light.OFF);
@@ -38,11 +41,12 @@ public class ImportExpressionLightTest extends ImportExpressionTestBase {
 
     @Override
     public void setConditionalVariableState(State state) {
+        assertNotNull(cv);
         switch (state) {
             case ON:
                 cv.setType(Conditional.Type.LIGHT_ON);
                 break;
-                
+
             case OFF:
             case OTHER:
             default:
@@ -58,5 +62,5 @@ public class ImportExpressionLightTest extends ImportExpressionTestBase {
         cv.setName("IL1");
         return cv;
     }
-    
+
 }

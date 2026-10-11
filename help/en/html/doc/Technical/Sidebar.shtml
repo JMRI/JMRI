@@ -54,6 +54,7 @@
                 <li><a href="/JavaDoc/doc/index.html">Packages</a></li>
                 <li><a href="/JavaDoc/doc/allclasses-index.html">Classes</a></li>
                 </ul>
+            <li><a href="NetBeansGUIEditor.shtml">NetBeans Swing GUI Builder</a>
             </ul>
         </dd>
 

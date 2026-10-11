@@ -93,6 +93,6 @@ public abstract class AbstractDigitalActionSwing extends AbstractSwingConfigurat
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalActionSwing.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalActionSwing.class);
 
 }

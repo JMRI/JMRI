@@ -1,7 +1,11 @@
 package jmri.jmrit.revhistory.configurexml;
 
 import java.util.ArrayList;
+
+import jmri.InstanceManager;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.jmrit.revhistory.FileHistory;
+
 import org.jdom2.Element;
 
 /**
@@ -49,7 +53,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    static public FileHistory loadFileHistory(Element e) {
+    public static FileHistory loadFileHistory(Element e) {
         FileHistory r = new FileHistory();
 
         java.util.List<Element> list = e.getChildren("operation");
@@ -59,7 +63,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return r;
     }
 
-    static public void loadOperation(FileHistory r, Element e) {
+    public static void loadOperation(FileHistory r, Element e) {
         Element s;
 
         String type = null;
@@ -119,10 +123,14 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
     static int defaultDepth = 5;
 
-    static public Element storeDirectly(Object o, String fileName) {
+    public static Element storeDirectly(Object o, String fileName) {
         final FileHistory r = (FileHistory) o;
         if (r == null) {
             return null;  // no file history object, not recording
+        }
+        var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
+        if (loadAndStorePreferences.isExcludeFileHistory()) {
+            return null;  // writing of file history is suppressed
         }
         Element e = historyElement(r, defaultDepth);
 
@@ -180,5 +188,5 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return rev;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileHistoryXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileHistoryXml.class);
 }

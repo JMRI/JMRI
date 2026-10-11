@@ -1,6 +1,5 @@
 package jmri.util.swing;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class ValidatedTextFieldTest {
     @Test
     public void testCTor() {
         ValidatedTextField t = new ValidatedTextField(10, false, ".","test error");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -25,6 +24,6 @@ public class ValidatedTextFieldTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ValidatedTextFieldTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(ValidatedTextFieldTest.class.getName());
 
 }

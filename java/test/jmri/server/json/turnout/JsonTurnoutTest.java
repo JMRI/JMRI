@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,19 +24,23 @@ public class JsonTurnoutTest {
     }
 
     @Test
-    public void testConstructor() throws Exception {
-        try {
+    public void testConstructor() {
+
+        // because the constructor throws UnsupportedOperationException, and
+        // that is thrown by newInstance() into an InvocationTargetException
+        // we assert the exception cause is the correct class.
+
+        InvocationTargetException ex = Assertions.assertThrows( InvocationTargetException.class, () -> {
             Constructor<JsonTurnout> constructor;
             constructor = JsonTurnout.class.getDeclaredConstructor();
             constructor.setAccessible(true);
             constructor.newInstance();
             fail("Instance of JsonTurnout created");
-        } catch (InvocationTargetException ex) {
-            // because the constructor throws UnsupportedOperationException, and
-            // that is thrown by newInstance() into an InvocationTargetException
-            // we assert the exception cause is the correct class
-            assertThat(ex.getCause().getClass()).isEqualTo(UnsupportedOperationException.class);
-        }
+        });
+        UnsupportedOperationException cause = Assertions.assertInstanceOf(
+            UnsupportedOperationException.class, ex.getCause());
+        Assertions.assertNotNull(cause);
+
     }
 
     @BeforeEach

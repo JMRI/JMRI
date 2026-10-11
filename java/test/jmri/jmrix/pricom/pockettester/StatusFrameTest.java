@@ -1,9 +1,8 @@
 package jmri.jmrix.pricom.pockettester;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,16 +13,18 @@ import org.junit.jupiter.api.*;
 public class StatusFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         StatusFrame statusFrame = new StatusFrame();
-        Assert.assertNotNull(statusFrame);
+        Assertions.assertNotNull(statusFrame);
     }
 
     // create and show, with some data present
     @Test
-    public void testShow() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testShow() {
+
         StatusFrame f = new StatusFrame();
         f.initComponents();
         f.setVisible(true);
@@ -47,8 +48,9 @@ public class StatusFrameTest {
 
     // create and show, with zero address data
     @Test
-    public void testZeroAddr() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testZeroAddr() {
+
         StatusFrame f = new StatusFrame();
         f.initComponents();
         f.setVisible(true);
@@ -67,13 +69,13 @@ public class StatusFrameTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

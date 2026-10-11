@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TriggerRouteModel extends AbstractStartupModel {
 
-    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModel.class);
+    private static final Logger log = LoggerFactory.getLogger(TriggerRouteModel.class);
 
     /**
      * Get the user name of the Route.

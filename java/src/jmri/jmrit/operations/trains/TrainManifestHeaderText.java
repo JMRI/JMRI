@@ -6,12 +6,13 @@ import org.jdom2.Element;
 /**
  * Loads and stores the manifest header text strings.
  *
- * @author Daniel Boudreau Copyright (C) 2014
+ * @author Daniel Boudreau Copyright (C) 2014, 2026
  *
  */
 public class TrainManifestHeaderText {
 
-    private static String road = Bundle.getMessage("Road"); // the supported message format options
+    private static String order = Bundle.getMessage("Order");
+    private static String road = Bundle.getMessage("Road");
     private static String number = Bundle.getMessage("Number");
     private static String engine_number = Bundle.getMessage("Number");
     private static String type = Bundle.getMessage("Type");
@@ -38,7 +39,18 @@ public class TrainManifestHeaderText {
     private static String drop_comment = Bundle.getMessage("SetOut_Msg");
     private static String pickup_comment = Bundle.getMessage("PickUp_Msg");
     private static String hazardous = Bundle.getMessage("Hazardous");
+    private static String lastTrain = Bundle.getMessage("LastTrain");
+    private static String lastMoved = Bundle.getMessage("LastMoved");
+    private static String lastLocation = Bundle.getMessage("LastLocation");
 
+    public static String getStringHeader_Order() {
+        return order;
+    }
+
+    public static void setStringHeader_Order(String s) {
+        order = s;
+    }
+    
     public static String getStringHeader_Road() {
         return road;
     }
@@ -255,11 +267,39 @@ public class TrainManifestHeaderText {
         dcc_address = s;
     }
 
+    public static String getStringHeader_Last_Train() {
+        return lastTrain;
+    }
+
+    public static void setStringHeader_Last_Train(String s) {
+        lastTrain = s;
+    }
+    
+    public static String getStringHeader_Last_Moved() {
+        return lastMoved;
+    }
+
+    public static void setStringHeader_Last_Moved(String s) {
+        lastMoved = s;
+    }
+    
+    public static String getStringHeader_Last_Location() {
+        return lastLocation;
+    }
+
+    public static void setStringHeader_Last_Location(String s) {
+        lastLocation = s;
+    }
+
     // must synchronize changes with operation-config.dtd
     public static Element store() {
         Element values;
         Element e = new Element(Xml.MANIFEST_HEADER_TEXT_STRINGS);
         // only save strings that have been modified
+        if (!getStringHeader_Order().equals(Bundle.getMessage("Order"))) {
+            e.addContent(values = new Element(Xml.ORDER));
+            values.setAttribute(Xml.TEXT, getStringHeader_Order());
+        }
         if (!getStringHeader_Road().equals(Bundle.getMessage("Road"))) {
             e.addContent(values = new Element(Xml.ROAD));
             values.setAttribute(Xml.TEXT, getStringHeader_Road());
@@ -368,6 +408,18 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.HAZARDOUS));
             values.setAttribute(Xml.TEXT, getStringHeader_Hazardous());
         }
+        if (!getStringHeader_Last_Train().equals(Bundle.getMessage("LastTrain"))) {
+            e.addContent(values = new Element(Xml.LAST_TRAIN));
+            values.setAttribute(Xml.TEXT, getStringHeader_Last_Train());
+        }
+        if (!getStringHeader_Last_Moved().equals(Bundle.getMessage("LastMoved"))) {
+            e.addContent(values = new Element(Xml.LAST_MOVED));
+            values.setAttribute(Xml.TEXT, getStringHeader_Last_Moved());
+        }
+        if (!getStringHeader_Last_Location().equals(Bundle.getMessage("LastLocation"))) {
+            e.addContent(values = new Element(Xml.LAST_LOCATION));
+            values.setAttribute(Xml.TEXT, getStringHeader_Last_Location());
+        }
 
         return e;
     }
@@ -378,6 +430,11 @@ public class TrainManifestHeaderText {
             return;
         }
         Attribute a;
+        if (emts.getChild(Xml.ORDER) != null) {
+            if ((a = emts.getChild(Xml.ORDER).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Order(a.getValue());
+            }
+        }
         if (emts.getChild(Xml.ROAD) != null) {
             if ((a = emts.getChild(Xml.ROAD).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Road(a.getValue());
@@ -511,6 +568,21 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.HAZARDOUS) != null) {
             if ((a = emts.getChild(Xml.HAZARDOUS).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Hazardous(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.LAST_TRAIN) != null) {
+            if ((a = emts.getChild(Xml.LAST_TRAIN).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Last_Train(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.LAST_MOVED) != null) {
+            if ((a = emts.getChild(Xml.LAST_MOVED).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Last_Moved(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.LAST_LOCATION) != null) {
+            if ((a = emts.getChild(Xml.LAST_LOCATION).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Last_Location(a.getValue());
             }
         }
     }

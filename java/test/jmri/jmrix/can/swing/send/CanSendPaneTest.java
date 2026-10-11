@@ -11,20 +11,20 @@ import org.junit.jupiter.api.*;
  */
 public class CanSendPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    jmri.jmrix.can.CanSystemConnectionMemo memo = null;
-    jmri.jmrix.can.TrafficController tc = null;
+    private jmri.jmrix.can.CanSystemConnectionMemo memo = null;
+    private jmri.jmrix.can.TrafficController tc = null;
 
     @Test
     @Override
-    public void testInitComponents() throws Exception{
-        // for now, just makes ure there isn't an exception.
-        ((CanSendPane) panel).initComponents(memo);
+    public void testInitComponents() {
+        Assertions.assertDoesNotThrow( () ->
+            ((CanSendPane) panel).initComponents(memo));
     }
 
     @Test
-    public void testInitContext() throws Exception {
-        // for now, just makes ure there isn't an exception.
-        ((CanSendPane) panel).initContext(memo);
+    public void testInitContext() {
+        Assertions.assertDoesNotThrow( () ->
+        ((CanSendPane) panel).initContext(memo));
     }
 
     @Override
@@ -41,9 +41,14 @@ public class CanSendPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
     @AfterEach
-    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    public void tearDown() {
+        Assertions.assertNotNull(memo);
+        Assertions.assertNotNull(tc);
+        Assertions.assertNotNull(panel);
+        panel.dispose();
+        tc.terminateThreads();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
-
 
 }

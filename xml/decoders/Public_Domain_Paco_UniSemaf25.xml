@@ -1,0 +1,1490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+
+<version author="Paco Cañada: https://usuaris.tinet.cat/fmco/" version="1" lastUpdated="20231012"/>
+<decoder>
+<family name="Paco Canada" mfg="Public-domain and DIY"
+lowVersionID="25" highVersionID="25"
+comment="Paco UniSemaf25 semaphore decoder" >
+<model model="UniSemaf25" />
+</family>
+<programming direct="byteOnly" paged="no" register="no" ops="no"></programming>
+  <variables>
+    <variable CV="1" mask="XXVVVVVV" comment="Aspect address" item="Aspect_Address_1" default="01">
+        <splitVal highCV="9" min="1" max="2041" factor="4" offset="-3"/>
+    </variable>
+    <variable CV="1" mask="XXVVVVVV" comment="Aspect address" item="Aspect_Address_2" default="02">
+        <splitVal highCV="9" min="1" max="2042" factor="4" offset="-2"/>
+    </variable>	  
+    <variable CV="1" mask="XXVVVVVV" comment="Aspect address" item="Aspect_Address_3" default="03">
+        <splitVal highCV="9" min="1" max="2043" factor="4" offset="-1"/>
+    </variable>
+    <variable CV="1" mask="XXVVVVVV" comment="Aspect address" item="Aspect_Address_4" default="04">
+        <splitVal highCV="9" min="1" max="2044" factor="4"/>
+    </variable>
+    <variable CV="1" mask="XXVVVVVV" comment="Decoder address" item="Decoder Address" default="01">
+        <splitVal highCV="9" min="1" max="511"/>
+        <label>Decoder Address</label>
+        <comment>Decoder address</comment>
+    </variable>
+  <variable CV="1" mask="VVVVVVVV" comment="Output address" item="Output Address" default="01">
+        <splitVal highCV="9" min="1" max="2044" />
+        <label>Extended Address</label>
+        <comment>Extended address</comment>
+      </variable>
+    <variable CV="7" item="Decoder Version" readOnly="yes" default="25">
+    <decVal/>
+    <label>Manufacturer Version: </label>
+  </variable>
+  <variable CV="8" item="Manufacturer" default="13">
+    <decVal/>
+    <label>Manufacturer ID: </label>
+  </variable>
+  
+  <variable CV="8" item="Presets" default="13">
+    <enumVal>
+	  <enumChoice choice="Select a preset" value="13" />
+      <enumChoice choice="Independent 2 and 3 lights signals" value="8" />
+      <enumChoice choice="ADIF 5 lights signal" value="33" />
+      <enumChoice choice="Entry and advanced signals" value="10" />
+      <enumChoice choice="Exit with passing signal" value="7" />	  
+	  <enumChoice choice="Backward direction low signal" value="9" />
+      <enumChoice choice="Level Crossing signal" value="3" />
+	</enumVal>
+    <label>Presets</label>
+  </variable>  
+  
+  <variable CV="29" mask="VXXXXXXX" item="Is Accessory Decoder" default="1">
+    <decVal/>
+   </variable>
+  <variable CV="29" mask="XVXXXXXX" item="Is_Extended" default="0">
+    <enumVal>
+      <enumChoice choice="Decoder Address" value="0" />
+      <enumChoice choice="Output Address" value="1" />
+    </enumVal>
+	<label>Addressing Method: </label>
+  </variable>
+  <variable CV="2" item="Bright_1A" default="15" comment="Range 1-15">
+  <decVal min="1" max="15"/>
+  </variable>
+    <variable CV="3" item="Bright_1B" default="15" comment="Range 1-15">
+  <decVal min="1" max="15"/>
+  </variable>
+    <variable CV="4" item="Bright_2A" default="15" comment="Range 1-15">
+  <decVal min="1" max="15"/>
+  </variable>
+    <variable CV="5" item="Bright_2B" default="15" comment="Range 1-15">
+  <decVal min="1" max="15"/>
+  </variable>
+    <variable CV="6" item="Bright_2C" default="15" comment="Range 1-15">
+  <decVal min="1" max="15"/>
+  </variable>
+  <variable CV="33" item="Fade" default="20" comment="Range 1-255">
+  <decVal min="1" max="255"/>
+  <label>Fade</label>
+  </variable>
+  <variable CV="34" item="Flash" default="9" comment="Range 1-255">
+  <decVal min="1" max="255"/>
+  <label>Flash</label>
+  </variable>
+  
+  <variable CV="35" mask="XXXXXXXV" item="Aspect1_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="35" mask="XXXXXXVX" item="Aspect1_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="35" mask="XXXXXVXX" item="Aspect1_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="35" mask="XXXVXXXX" item="Aspect1_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="35" mask="XXVXXXXX" item="Aspect1_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="36" mask="XXXXXXXV" item="Aspect1_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="36" mask="XXXXXXVX" item="Aspect1_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="36" mask="XXXXXVXX" item="Aspect1_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="36" mask="XXXVXXXX" item="Aspect1_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="36" mask="XXVXXXXX" item="Aspect1_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="37" mask="XXXXXXXV" item="Aspect1_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="37" mask="XXXXXXVX" item="Aspect1_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="37" mask="XXXXXVXX" item="Aspect1_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="37" mask="XXXVXXXX" item="Aspect1_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="37" mask="XXVXXXXX" item="Aspect1_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="38" mask="XXXXXXXV" item="Aspect1_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="38" mask="XXXXXXVX" item="Aspect1_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="38" mask="XXXXXVXX" item="Aspect1_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="38" mask="XXXVXXXX" item="Aspect1_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="38" mask="XXVXXXXX" item="Aspect1_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>    
+   
+  <variable CV="39" mask="XXXXXXXV" item="Aspect2_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="39" mask="XXXXXXVX" item="Aspect2_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="39" mask="XXXXXVXX" item="Aspect2_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="39" mask="XXXVXXXX" item="Aspect2_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="39" mask="XXVXXXXX" item="Aspect2_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="40" mask="XXXXXXXV" item="Aspect2_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="40" mask="XXXXXXVX" item="Aspect2_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="40" mask="XXXXXVXX" item="Aspect2_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="40" mask="XXXVXXXX" item="Aspect2_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="40" mask="XXVXXXXX" item="Aspect2_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="41" mask="XXXXXXXV" item="Aspect2_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="41" mask="XXXXXXVX" item="Aspect2_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="41" mask="XXXXXVXX" item="Aspect2_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="41" mask="XXXVXXXX" item="Aspect2_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="41" mask="XXVXXXXX" item="Aspect2_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="42" mask="XXXXXXXV" item="Aspect2_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="42" mask="XXXXXXVX" item="Aspect2_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="42" mask="XXXXXVXX" item="Aspect2_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="42" mask="XXXVXXXX" item="Aspect2_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="42" mask="XXVXXXXX" item="Aspect2_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>    
+   
+  <variable CV="43" mask="XXXXXXXV" item="Aspect3_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="43" mask="XXXXXXVX" item="Aspect3_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="43" mask="XXXXXVXX" item="Aspect3_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="43" mask="XXXVXXXX" item="Aspect3_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="43" mask="XXVXXXXX" item="Aspect3_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="44" mask="XXXXXXXV" item="Aspect3_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="44" mask="XXXXXXVX" item="Aspect3_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="44" mask="XXXXXVXX" item="Aspect3_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="44" mask="XXXVXXXX" item="Aspect3_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="44" mask="XXVXXXXX" item="Aspect3_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="45" mask="XXXXXXXV" item="Aspect3_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="45" mask="XXXXXXVX" item="Aspect3_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="45" mask="XXXXXVXX" item="Aspect3_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="45" mask="XXXVXXXX" item="Aspect3_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="45" mask="XXVXXXXX" item="Aspect3_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="46" mask="XXXXXXXV" item="Aspect3_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="46" mask="XXXXXXVX" item="Aspect3_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="46" mask="XXXXXVXX" item="Aspect3_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="46" mask="XXXVXXXX" item="Aspect3_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="46" mask="XXVXXXXX" item="Aspect3_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>      
+   
+  <variable CV="47" mask="XXXXXXXV" item="Aspect4_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="47" mask="XXXXXXVX" item="Aspect4_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="47" mask="XXXXXVXX" item="Aspect4_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="47" mask="XXXVXXXX" item="Aspect4_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="47" mask="XXVXXXXX" item="Aspect4_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="48" mask="XXXXXXXV" item="Aspect4_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="48" mask="XXXXXXVX" item="Aspect4_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="48" mask="XXXXXVXX" item="Aspect4_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="48" mask="XXXVXXXX" item="Aspect4_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="48" mask="XXVXXXXX" item="Aspect4_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="49" mask="XXXXXXXV" item="Aspect4_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="49" mask="XXXXXXVX" item="Aspect4_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="49" mask="XXXXXVXX" item="Aspect4_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="49" mask="XXXVXXXX" item="Aspect4_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="49" mask="XXVXXXXX" item="Aspect4_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="50" mask="XXXXXXXV" item="Aspect4_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="50" mask="XXXXXXVX" item="Aspect4_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="50" mask="XXXXXVXX" item="Aspect4_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="50" mask="XXXVXXXX" item="Aspect4_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="50" mask="XXVXXXXX" item="Aspect4_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable> 
+  
+  <variable CV="51" mask="XXXXXXXV" item="Aspect5_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="51" mask="XXXXXXVX" item="Aspect5_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="51" mask="XXXXXVXX" item="Aspect5_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="51" mask="XXXVXXXX" item="Aspect5_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="51" mask="XXVXXXXX" item="Aspect5_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="52" mask="XXXXXXXV" item="Aspect5_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="52" mask="XXXXXXVX" item="Aspect5_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="52" mask="XXXXXVXX" item="Aspect5_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="52" mask="XXXVXXXX" item="Aspect5_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="52" mask="XXVXXXXX" item="Aspect5_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="53" mask="XXXXXXXV" item="Aspect5_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="53" mask="XXXXXXVX" item="Aspect5_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="53" mask="XXXXXVXX" item="Aspect5_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="53" mask="XXXVXXXX" item="Aspect5_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="53" mask="XXVXXXXX" item="Aspect5_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="54" mask="XXXXXXXV" item="Aspect5_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="54" mask="XXXXXXVX" item="Aspect5_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="54" mask="XXXXXVXX" item="Aspect5_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="54" mask="XXXVXXXX" item="Aspect5_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="54" mask="XXVXXXXX" item="Aspect5_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable> 
+  
+  <variable CV="55" mask="XXXXXXXV" item="Aspect6_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="55" mask="XXXXXXVX" item="Aspect6_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="55" mask="XXXXXVXX" item="Aspect6_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="55" mask="XXXVXXXX" item="Aspect6_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="55" mask="XXVXXXXX" item="Aspect6_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="56" mask="XXXXXXXV" item="Aspect6_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="56" mask="XXXXXXVX" item="Aspect6_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="56" mask="XXXXXVXX" item="Aspect6_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="56" mask="XXXVXXXX" item="Aspect6_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="56" mask="XXVXXXXX" item="Aspect6_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="57" mask="XXXXXXXV" item="Aspect6_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="57" mask="XXXXXXVX" item="Aspect6_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="57" mask="XXXXXVXX" item="Aspect6_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="57" mask="XXXVXXXX" item="Aspect6_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="57" mask="XXVXXXXX" item="Aspect6_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="58" mask="XXXXXXXV" item="Aspect6_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="58" mask="XXXXXXVX" item="Aspect6_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="58" mask="XXXXXVXX" item="Aspect6_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="58" mask="XXXVXXXX" item="Aspect6_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="58" mask="XXVXXXXX" item="Aspect6_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  
+  <variable CV="59" mask="XXXXXXXV" item="Aspect7_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="59" mask="XXXXXXVX" item="Aspect7_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="59" mask="XXXXXVXX" item="Aspect7_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="59" mask="XXXVXXXX" item="Aspect7_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="59" mask="XXVXXXXX" item="Aspect7_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="60" mask="XXXXXXXV" item="Aspect7_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="60" mask="XXXXXXVX" item="Aspect7_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="60" mask="XXXXXVXX" item="Aspect7_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="60" mask="XXXVXXXX" item="Aspect7_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="60" mask="XXVXXXXX" item="Aspect7_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="61" mask="XXXXXXXV" item="Aspect7_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="61" mask="XXXXXXVX" item="Aspect7_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="61" mask="XXXXXVXX" item="Aspect7_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="61" mask="XXXVXXXX" item="Aspect7_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="61" mask="XXVXXXXX" item="Aspect7_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="62" mask="XXXXXXXV" item="Aspect7_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="62" mask="XXXXXXVX" item="Aspect7_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="62" mask="XXXXXVXX" item="Aspect7_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="62" mask="XXXVXXXX" item="Aspect7_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="62" mask="XXVXXXXX" item="Aspect7_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable> 
+  
+  <variable CV="63" mask="XXXXXXXV" item="Aspect8_2A_Enable" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="63" mask="XXXXXXVX" item="Aspect8_2B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="63" mask="XXXXXVXX" item="Aspect8_2C_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="63" mask="XXXVXXXX" item="Aspect8_1B_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="63" mask="XXVXXXXX" item="Aspect8_1A_Enable" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="64" mask="XXXXXXXV" item="Aspect8_2A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="64" mask="XXXXXXVX" item="Aspect8_2B_Lights" default="0">
+     <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal> 
+  </variable>
+  <variable CV="64" mask="XXXXXVXX" item="Aspect8_2C_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="64" mask="XXXVXXXX" item="Aspect8_1B_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="64" mask="XXVXXXXX" item="Aspect8_1A_Lights" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="65" mask="XXXXXXXV" item="Aspect8_2A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="65" mask="XXXXXXVX" item="Aspect8_2B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="65" mask="XXXXXVXX" item="Aspect8_2C_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="65" mask="XXXVXXXX" item="Aspect8_1B_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="65" mask="XXVXXXXX" item="Aspect8_1A_Flash" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  <variable CV="66" mask="XXXXXXXV" item="Aspect8_2A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="66" mask="XXXXXXVX" item="Aspect8_2B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="66" mask="XXXXXVXX" item="Aspect8_2C_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="66" mask="XXXVXXXX" item="Aspect8_1B_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>
+  <variable CV="66" mask="XXVXXXXX" item="Aspect8_1A_Phase" default="0">
+    <enumVal><enumChoice choice="Off" /><enumChoice choice="On"  /></enumVal>
+  </variable>   
+  
+  </variables>
+</decoder>
+<pane>
+  <name>Basic</name>
+    <column>
+		  <display item="Is_Extended" layout="left">
+		    <tooltip>Sets addressing method</tooltip>
+			<tooltip xml:lang="es">Modo de direccionamiento del decodificador</tooltip>
+			<tooltip xml:lang="ca">Mode de adreçament del decodificador</tooltip>		 
+          </display>
+		  <label>
+            <text> </text>
+          </label>
+          <display item="Decoder Address" label="Decoder Number: ">
+		    <tooltip>Sets base address</tooltip>
+			<tooltip xml:lang="es">Dirección base del decodificador</tooltip>
+			<tooltip xml:lang="ca">Adreça base del decodificador</tooltip>
+            <label>Decoder Addrees: </label>
+          </display>
+		  <label>
+            <text> </text>
+          </label>
+          <display item="Aspect_Address_1" viewOnly="yes">
+		    <tooltip>Aspect 1 [red] / Aspect 2 [green] address</tooltip>
+			<tooltip xml:lang="es">Dirección del Aspecto 1 [rojo] / Aspecto 2 [verde]</tooltip>
+			<tooltip xml:lang="ca">Adreça del Aspecte 1 [vermell] / Aspecte 2 [verd]</tooltip>		  
+             <label>Aspect 1-2 Address</label>
+          </display>		  
+          <display item="Aspect_Address_2" viewOnly="yes">
+		    <tooltip>Aspect 3 [red] / Aspect 4 [green] address</tooltip>
+			<tooltip xml:lang="es">Dirección del Aspecto 3 [rojo] / Aspecto 4 [verde]</tooltip>
+			<tooltip xml:lang="ca">Adreça del Aspecte 3 [vermell] / Aspecte 4 [verd]</tooltip>			  
+             <label>Aspect 3-4 Address</label>
+          </display>		  
+		  <display item="Aspect_Address_3" viewOnly="yes">
+		    <tooltip>Aspect 5 [red] / Aspect 6 [green] address</tooltip>
+			<tooltip xml:lang="es">Dirección del Aspecto 5 [rojo] / Aspecto 6 [verde]</tooltip>
+			<tooltip xml:lang="ca">Adreça del Aspecte 5 [vermell] / Aspecte 6 [verd]</tooltip>			  
+             <label>Aspect 5-6 Address</label>
+          </display>		  
+          <display item="Aspect_Address_4" viewOnly="yes">
+		    <tooltip>Aspect 7 [red] / Aspect 8 [green] address</tooltip>
+			<tooltip xml:lang="es">Dirección del Aspecto 7 [rojo] / Aspecto 8 [verde]</tooltip>
+			<tooltip xml:lang="ca">Adreça del Aspecte 7 [vermell] / Aspecte 8 [verd]</tooltip>			  
+             <label>Aspect 7-8 Address</label>
+          </display>		  
+	</column>
+    <column>
+
+		  <display item="Output Address">
+		    <tooltip>Sets output address</tooltip>
+			<tooltip xml:lang="es">Dirección Extendida del decodificador</tooltip>
+			<tooltip xml:lang="ca">Adreça Estesa del decodificador</tooltip>		  
+            <label>Output Address: </label>
+          </display>
+		  <label>
+            <text> </text>
+          </label>
+          <separator />
+		  <label>
+            <text> </text>
+          </label>
+          <display item="Manufacturer">
+		    <tooltip>The manufacturer's ID number (read only)</tooltip>
+            <tooltip xml:lang="es">Número de Fabricante (solo lectura)</tooltip>
+            <tooltip xml:lang="ca">Número de Fabricant (només lectura)</tooltip>
+          </display>
+          <display item="Decoder Version">
+		    <tooltip>The decoder version number (read only)</tooltip>
+            <tooltip xml:lang="es">Número versión del Decoder (solo lectura)</tooltip>
+            <tooltip xml:lang="ca">Número de versió del decodificador (només lectura)</tooltip>
+          </display>
+		  <label>
+            <text> </text>
+          </label>
+		  <separator />
+		  <label>
+            <text> </text>
+          </label>
+		  <display item="Presets" layout="above">
+		    <tooltip>Sets a preset configuration for the module</tooltip>
+            <tooltip xml:lang="es">&lt;html&gt;Establece una configuración preestablecida para el módulo:&lt;br&gt;Señales independientes de 2 y 3 luces [8]&lt;br&gt;Señal de 5 luces ADIF [33]&lt;br&gt;Señales de entrada y avanzadas [10]&lt;br&gt;Señal de salida con rebase [7]&lt;br&gt;Señal baja de retroceso [9]&lt;br&gt;Señal de paso a nivel [3]&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="ca">&lt;html&gt;Estableix una configuració predeterminada per al mòdul:&lt;br&gt;Senyals independents de 2 i 3 llums [8]&lt;br&gt;Senyal ADIF 5 llums [33]&lt;br&gt;Senyals d'entrada i avançats [10]&lt;br&gt;Senyal sortida amb rebasament [7]&lt;br&gt;Senyal baix de retrocés [9]&lt;br&gt;Senyal pas a nivell [3]&lt;/html&gt;</tooltip>
+          </display>
+    </column>
+</pane>
+<pane>
+  <name>Lights</name>
+    <column>
+	  <row>
+	    <label><text>Bright output 1A: </text></label>	  	  
+		  <display item="Bright_1A">
+		    <tooltip>Sets bright for output 1A</tooltip>
+			<tooltip xml:lang="es">Brillo salida 1A</tooltip>
+			<tooltip xml:lang="ca">Brillantor sortida 1A</tooltip>			  
+		  <label> </label>  			
+          </display>
+		  <display item="Bright_1A"  format="hslider">
+            <label> </label>
+          </display>
+	  </row>
+	  <row>
+	    <label><text>Bright output 1B: </text></label>	  	  
+		  <display item="Bright_1B">
+		    <tooltip>Sets bright for output 1B</tooltip>
+			<tooltip xml:lang="es">Brillo salida 1B</tooltip>
+			<tooltip xml:lang="ca">Brillantor sortida 1B</tooltip>			  
+		  <label> </label>  			
+          </display>
+		  <display item="Bright_1B"  format="hslider">
+            <label> </label>
+          </display>
+	  </row>
+	  <row>
+	    <label><text>Bright output 2A: </text></label>	  	  
+		  <display item="Bright_2A">
+		    <tooltip>Sets bright for output 2A</tooltip>
+			<tooltip xml:lang="es">Brillo salida 2A</tooltip>
+			<tooltip xml:lang="ca">Brillantor sortida 2A</tooltip>			  
+		  <label> </label>  			
+          </display>
+		  <display item="Bright_2A"  format="hslider">
+            <label> </label>
+          </display>
+	  </row>
+	  <row>
+	    <label><text>Bright output 2B: </text></label>	  	  
+		  <display item="Bright_2B">
+		    <tooltip>Sets bright for output 2B</tooltip>
+			<tooltip xml:lang="es">Brillo salida 2B</tooltip>
+			<tooltip xml:lang="ca">Brillantor sortida 2B</tooltip>			  
+		  <label> </label>  			
+          </display>
+		  <display item="Bright_2B"  format="hslider">
+            <label> </label>
+          </display>
+	  </row>
+	  <row>
+	    <label><text>Bright output 2C: </text></label>	  	  
+		  <display item="Bright_2C">
+		    <tooltip>Sets bright for output 2C</tooltip>
+			<tooltip xml:lang="es">Brillo salida 2C</tooltip>
+			<tooltip xml:lang="ca">Brillantor sortida 2C</tooltip>			  
+		  <label> </label>  			
+          </display>
+		  <display item="Bright_2C"  format="hslider">
+            <label> </label>
+          </display>
+	  </row>	  
+		  <label>
+            <text> </text>
+          </label>
+		  <separator />
+		  <label>
+            <text> </text>
+          </label>
+	  <row>
+		  <label><text>Fade: </text></label>	  
+		  <display item="Fade">
+		    <tooltip>Sets fade speed</tooltip>
+			<tooltip xml:lang="es">Velocidad de encendido/extinción luces</tooltip>
+			<tooltip xml:lang="ca">Velocitat d'encesa/extinció llums</tooltip>			  
+		  <label> </label>
+          </display>
+		  <display item="Fade" format="hslider">
+		  <label> </label>  		  
+          </display>		  
+	  </row>
+		  <label>
+            <text> </text>
+          </label>
+		  <display item="Flash">
+		    <tooltip>Sets flash period</tooltip>
+			<tooltip xml:lang="es">Periodo de parpadeo (en 65ms)</tooltip>
+			<tooltip xml:lang="ca">Període de parpelleig (en 65ms)</tooltip>			  
+		  <label>Flash period (in 65ms): </label>
+          </display>
+	</column>
+</pane>
+<pane>
+  <name>Aspects</name>
+    <column>
+        <grid>
+		 
+		 <griditem gridx="2" gridy="0">
+            <label><text>&lt;html&gt;&lt;b&gt; 1A &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="3" gridy="0">
+            <label><text>&lt;html&gt;&lt;b&gt; 1B &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="4" gridy="0">
+            <label><text>&lt;html&gt;&lt;b&gt; 2A &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="5" gridy="0">
+            <label><text>&lt;html&gt;&lt;b&gt; 2B &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="6" gridy="0">
+            <label><text>&lt;html&gt;&lt;b&gt; 2C &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 1 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect1_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect1_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect1_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect1_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect1_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect1_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect1_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect1_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect1_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect1_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect1_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect1_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect1_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect1_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect1_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect1_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect1_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect1_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect1_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect1_2C_Phase" label="" format="checkbox" />			
+        </griditem>			
+</grid>
+<separator />
+<grid>
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 2 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect2_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect2_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect2_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect2_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect2_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect2_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect2_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect2_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect2_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect2_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect2_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect2_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect2_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect2_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect2_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect2_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect2_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect2_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect2_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect2_2C_Phase" label="" format="checkbox" />			
+        </griditem>	
+</grid>
+<separator />
+<grid>
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 3 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect3_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect3_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect3_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect3_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect3_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect3_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect3_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect3_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect3_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect3_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect3_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect3_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect3_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect3_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect3_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect3_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect3_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect3_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect3_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect3_2C_Phase" label="" format="checkbox" />			
+        </griditem>	
+</grid>
+<separator />
+<grid>
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 4 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect4_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect4_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect4_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect4_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect4_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect4_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect4_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect4_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect4_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect4_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect4_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect4_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect4_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect4_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect4_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect4_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect4_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect4_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect4_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect4_2C_Phase" label="" format="checkbox" />			
+        </griditem>	
+</grid>
+<separator />
+<grid>
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 5 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect5_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect5_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect5_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect5_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect5_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect5_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect5_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect5_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect5_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect5_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect5_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect5_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect5_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect5_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect5_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect5_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect5_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect5_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect5_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect5_2C_Phase" label="" format="checkbox" />			
+        </griditem>	
+</grid>
+<separator />
+<grid>
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 6 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect6_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect6_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect6_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect6_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect6_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect6_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect6_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect6_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect6_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect6_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect6_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect6_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect6_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect6_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect6_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect6_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect6_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect6_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect6_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect6_2C_Phase" label="" format="checkbox" />			
+        </griditem>	
+</grid>
+<separator />
+<grid>
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 7 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect7_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect7_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect7_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect7_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect7_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect7_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect7_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect7_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect7_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect7_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect7_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect7_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect7_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect7_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect7_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect7_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect7_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect7_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect7_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect7_2C_Phase" label="" format="checkbox" />			
+        </griditem>			
+</grid>
+<separator />
+<grid>
+		 <griditem gridx="0" gridy="1">
+		    <label><text>&lt;html&gt;&lt;b&gt; Aspect 8 &lt;/b&gt;&lt;/html&gt;</text></label>
+		 </griditem>
+		 <griditem gridx="1" gridy="1">
+            <label>
+                <text>Enable</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="1">
+            <display item="Aspect8_1A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="1">
+            <display item="Aspect8_1B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="1">
+            <display item="Aspect8_2A_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="1">
+            <display item="Aspect8_2B_Enable" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="1">
+            <display item="Aspect8_2C_Enable" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="2">
+            <label>
+                <text>Lights</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="2">
+            <display item="Aspect8_1A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="2">
+            <display item="Aspect8_1B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="2">
+            <display item="Aspect8_2A_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="2">
+            <display item="Aspect8_2B_Lights" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="2">
+            <display item="Aspect8_2C_Lights" label="" format="checkbox" />
+        </griditem>		
+		 <griditem gridx="1" gridy="3">
+            <label>
+                <text>Flash</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="3">
+            <display item="Aspect8_1A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="3">
+            <display item="Aspect8_1B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="3">
+            <display item="Aspect8_2A_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="3">
+            <display item="Aspect8_2B_Flash" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="3">
+            <display item="Aspect8_2C_Flash" label="" format="checkbox" />	
+        </griditem>				
+		 <griditem gridx="1" gridy="4">
+            <label>
+                <text>Phase</text>
+            </label>
+        </griditem>		
+		<griditem gridx="2" gridy="4">
+            <display item="Aspect8_1A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="3" gridy="4">
+            <display item="Aspect8_1B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="4" gridy="4">
+            <display item="Aspect8_2A_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="5" gridy="4">
+            <display item="Aspect8_2B_Phase" label="" format="checkbox" />
+        </griditem>
+		<griditem gridx="6" gridy="4">
+            <display item="Aspect8_2C_Phase" label="" format="checkbox" />			
+        </griditem>			
+		
+
+		 <griditem gridx="2" gridy="5">
+            <label><text>&lt;html&gt;&lt;b&gt; 1A &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="3" gridy="5">
+            <label><text>&lt;html&gt;&lt;b&gt; 1B &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="4" gridy="5">
+            <label><text>&lt;html&gt;&lt;b&gt; 2A &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="5" gridy="5">
+            <label><text>&lt;html&gt;&lt;b&gt; 2B &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+        <griditem gridx="6" gridy="5">
+            <label><text>&lt;html&gt;&lt;b&gt; 2C &lt;/b&gt;&lt;/html&gt;</text></label>
+        </griditem>
+		
+	    </grid>	  
+	</column>
+</pane>
+</decoder-config>
+
+

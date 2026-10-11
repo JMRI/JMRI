@@ -13,7 +13,7 @@ public class ToggleSoundEventTest {
 
     @Test
     public void testCTor() {
-        ToggleSoundEvent t = new ToggleSoundEvent();
+        ToggleSoundEvent t = new ToggleSoundEvent("test");
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +27,6 @@ public class ToggleSoundEventTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ToggleSoundEventTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ToggleSoundEventTest.class);
 
 }

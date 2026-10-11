@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class ImagePanelTest {
     @Test
     public void testCall() {
         ImagePanel ip = new ImagePanel();
-        Assert.assertNotNull("exists", ip);
+        Assertions.assertNotNull( ip, "exists");
     }
 
     @Test
@@ -36,6 +35,6 @@ public class ImagePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImagePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ImagePanelTest.class);
 
 }

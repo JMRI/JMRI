@@ -2,7 +2,6 @@ package jmri.util.swing.sdi;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class JmriJFrameInterfaceTest {
     @Test
     public void testCTor() {
         JmriJFrameInterface t = new JmriJFrameInterface();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,7 +26,7 @@ public class JmriJFrameInterfaceTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriJFrameInterfaceTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriJFrameInterfaceTest.class);
 
 }
 

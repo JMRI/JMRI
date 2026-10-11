@@ -71,6 +71,7 @@
     <label xml:lang="nl">Rijrichting Multitractie</label>
     <label xml:lang="es">Sentido de la locomotora en el consist</label>
     <tooltip>This loco runs Normal(default) or Reversed(address+128) when in the consist</tooltip>
+    <tooltip xml:lang="fr">Cette loco roule en sens normal (défaut) ou inversé (adresse+128) en UM</tooltip>
     <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro (indirizzo+128)</tooltip>
     <tooltip xml:lang="de">Diese Lok fährt im Verbundbetrieb vorwärts (Default) oder rückwärts (Adresse + 128).</tooltip>
     <tooltip xml:lang="cs">Pokud je tato lokomotiva v soupravě tak jede normálně (výchozí hodnota) nebo opačně (adresa + 128).</tooltip>

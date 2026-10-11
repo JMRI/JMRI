@@ -39,8 +39,8 @@ span#filter-text {
 }
 
 /* hide data-only elements */
-th.trainId, th.locationId, th.trackId, th.locationUnknown, th.outOfService, th.destination,
-td.trainId, td.locationId, td.trackId, td.locationUnknown, td.outOfService, td.destination,
+th.trainId, th.locationId, th.trackId, th.locationUnknown, th.outOfService,
+td.trainId, td.locationId, td.trackId, td.locationUnknown, td.outOfService,
 #modal-car-edit-other-data {
     display: none;
 }

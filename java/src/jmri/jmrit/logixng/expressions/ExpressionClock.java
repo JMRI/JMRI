@@ -46,8 +46,8 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
@@ -267,6 +267,6 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionClock.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionClock.class);
 
 }

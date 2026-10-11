@@ -192,6 +192,13 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return 6;
     }
 
+    /** 
+     * Skip warning message, as timeouts are routine in this protocol
+     */
+    @Override
+    protected void warnOnTimeout(AbstractMRMessage msg, AbstractMRListener l) {
+    }
+
     /**
      * Actually transmits the next message to the port
      */
@@ -268,6 +275,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 
 }

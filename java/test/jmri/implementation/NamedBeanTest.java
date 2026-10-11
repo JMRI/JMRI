@@ -1,9 +1,15 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import jmri.NamedBean;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -52,7 +58,7 @@ public class NamedBeanTest {
         NamedBean n = createInstance();
 
         n.setProperty("foo", "bar");
-        Assert.assertEquals("bar", n.getProperty("foo"));
+        assertEquals( n.getProperty("foo"), "bar");
     }
 
     @Test
@@ -60,9 +66,9 @@ public class NamedBeanTest {
         NamedBean n = createInstance();
 
         n.setProperty("foo", "bar");
-        Assert.assertEquals("bar", n.getProperty("foo"));
+        assertEquals("bar", n.getProperty("foo"));
         n.setProperty("foo", null);
-        Assert.assertEquals(null, n.getProperty("foo"));
+        assertNull( n.getProperty("foo"));
     }
 
     @Test
@@ -73,9 +79,9 @@ public class NamedBeanTest {
         n.setProperty("biff", "bar");
 
         java.util.Set<String> s = n.getPropertyKeys();
-        Assert.assertEquals("size", 2, s.size());
-        Assert.assertEquals("contains foo", true, s.contains("foo"));
-        Assert.assertEquals("contains biff", true, s.contains("biff"));
+        assertEquals( 2, s.size(), "size");
+        assertTrue( s.contains("foo"), "contains foo");
+        assertTrue( s.contains("biff"), "contains biff");
 
     }
 
@@ -92,10 +98,20 @@ public class NamedBeanTest {
             public void propertyChange(PropertyChangeEvent p) {
             }
         });
-        Assert.assertEquals("start length", 2, n.getNumPropertyChangeListeners());
+        assertEquals( 2, n.getNumPropertyChangeListeners(), "start length");
 
         n.dispose();
-        Assert.assertEquals("end length", 0, n.getNumPropertyChangeListeners());
+        assertEquals( 0, n.getNumPropertyChangeListeners(), "end length");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

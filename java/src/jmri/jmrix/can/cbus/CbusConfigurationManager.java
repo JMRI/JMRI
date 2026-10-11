@@ -147,6 +147,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return null; // nothing, by default
     }
 
+    private CbusReporterManager reporterManager;
+    
     private CbusDccProgrammerManager programmerManager;
 
     private CbusDccProgrammerManager getProgrammerManager() {
@@ -235,8 +237,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             adapterMemo.store(new CbusTurnoutManager(adapterMemo), TurnoutManager.class);
             InstanceManager.setTurnoutManager(adapterMemo.getFromMap(T));
         } else if (T.equals(ReporterManager.class) ) {
-            adapterMemo.store(new CbusReporterManager(adapterMemo), ReporterManager.class);
+            adapterMemo.store(reporterManager = new CbusReporterManager(adapterMemo), ReporterManager.class);
             InstanceManager.setReporterManager(adapterMemo.getFromMap(T));
+            
         } else if (T.equals(LightManager.class) ) {
             adapterMemo.store(new CbusLightManager(adapterMemo), LightManager.class);
             InstanceManager.setLightManager(adapterMemo.getFromMap(T));
@@ -286,6 +289,10 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (programmerManager != null) {
             programmerManager.dispose();
         }
+        if (reporterManager != null) {
+            reporterManager.dispose();
+        }
+                
         InstanceManager.deregister(this, CbusConfigurationManager.class);
     }
 

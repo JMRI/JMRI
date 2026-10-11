@@ -1,5 +1,7 @@
 package jmri.jmris;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,28 +23,28 @@ abstract public class AbstractPowerServerTestBase {
 
     // test sending an error message.
     @Test
-    public void testSendErrorStatus() throws Exception {
+    public void testSendErrorStatus() throws IOException {
         ps.sendErrorStatus();
         checkErrorStatusSent();
     }
 
     // test sending an On Status.
     @Test
-    public void testSendOnStatus() throws Exception {
+    public void testSendOnStatus() throws IOException {
         ps.sendStatus(jmri.PowerManager.ON);
         checkPowerOnSent();
     }
 
     // test sending an OFF Status.
     @Test
-    public void testSendOffStatus() throws Exception {
+    public void testSendOffStatus() throws IOException {
         ps.sendStatus(jmri.PowerManager.OFF);
         checkPowerOffSent();
     }
 
     // test sending an Unknown Status.
     @Test
-    public void testSendUnknownStatus() throws Exception {
+    public void testSendUnknownStatus() throws IOException {
         ps.sendStatus(-1);
         checkUnknownStatusSent();
     }

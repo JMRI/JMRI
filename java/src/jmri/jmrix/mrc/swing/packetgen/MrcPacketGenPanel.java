@@ -129,7 +129,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.mrc.swing.MrcNamedPaneAction {
+    public static class Default extends jmri.jmrix.mrc.swing.MrcNamedPaneAction {
         public Default() {
             super("Open MRC Send Binary Command",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),

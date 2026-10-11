@@ -18,7 +18,7 @@ import jmri.jmrix.ipocs.IpocsSystemConnectionMemo;
  * @since 4.21.2
  */
 public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
-  private final static Logger log = LoggerFactory.getLogger(IpocsConnectionConfigXml.class);
+  private static final Logger log = LoggerFactory.getLogger(IpocsConnectionConfigXml.class);
   IpocsPortController portController;
 
   public IpocsConnectionConfigXml() {

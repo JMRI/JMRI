@@ -36,6 +36,6 @@ public class TrainCopyActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCopyActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainCopyActionTest.class);
 
 }

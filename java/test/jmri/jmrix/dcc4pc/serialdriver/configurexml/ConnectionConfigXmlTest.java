@@ -29,6 +29,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         super.loadTest();
         JUnitAppender.suppressErrorMessageStartsWith("No usable ports returned");
         JUnitAppender.suppressErrorMessageStartsWith("Serial port (none selected) not found");
+        JUnitAppender.suppressErrorMessageStartsWith("Serial port (none selected) not found");
         JUnitAppender.suppressErrorMessageStartsWith("Load Error: Serial port (none selected) not found");
     }
 

@@ -1,5 +1,8 @@
 package jmri.jmrit.display;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import javax.swing.JComponent;
 
 import jmri.InstanceManager;
@@ -11,10 +14,10 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+import jmri.util.ThreadingUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -25,37 +28,37 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author Bob Jacobsen Copyright 2009, 2010
  */
 @Timeout(10)
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class IconEditorWindowTest {
 
-    Editor _editor = null;
-    JComponent _panel;
+    private Editor _editor = null;
+    private JComponent _panel;
 
     @Test
-    public void testSensorEditor() throws Exception {
+    public void testSensorEditor() {
         _editor.addSensorEditor();
 
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Sensor");
         IconAdder iconEditor = iconEditorFrame.getEditor();
-        Assert.assertNotNull(iconEditor);
+        assertNotNull(iconEditor);
 
         iconEditor._sysNameText.setText("IS1");
         iconEditor.addToTable();
 
         SensorIcon icon = _editor.putSensor();
-        Assert.assertNotNull(icon);
+        assertNotNull(icon);
         Sensor sensor = icon.getSensor();
-        Assert.assertNotNull(sensor);
+        assertNotNull(sensor);
 
         int x = 50;
         int y = 20;
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             icon.setLocation(x, y);
             _panel.repaint();
         });
 
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, sensor.getState());
+        assertEquals( Sensor.UNKNOWN, sensor.getState(), "initial state");
 
         JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
         JComponentOperator jfo = new JComponentOperator(_panel);
@@ -80,28 +83,28 @@ public class IconEditorWindowTest {
     }
 
     @Test
-    public void testRightTOEditor() throws Exception {
+    public void testRightTOEditor() {
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("RightTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
-        Assert.assertNotNull(iconEditor);
+        assertNotNull(iconEditor);
 
         iconEditor._sysNameText.setText("IT2");
         iconEditor.addToTable();
 
         TurnoutIcon icon = _editor.addTurnout(iconEditor);
-        Assert.assertNotNull(icon);
+        assertNotNull(icon);
         Turnout turnout = icon.getTurnout();
-        Assert.assertNotNull(turnout);
+        assertNotNull(turnout);
 
         int x = 30;
         int y = 10;
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             icon.setLocation(x, y);
             _panel.repaint();
         });
 
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, turnout.getState());
+        assertEquals( Sensor.UNKNOWN, turnout.getState(), "initial state");
         JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
@@ -122,31 +125,31 @@ public class IconEditorWindowTest {
     }
 
     @Test
-    public void testLeftTOEditor() throws Exception {
+    public void testLeftTOEditor() {
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("LeftTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
-        Assert.assertNotNull(iconEditor);
+        assertNotNull(iconEditor);
 
         iconEditor._sysNameText.setText("IT1");
         iconEditor.addToTable();
 
         TurnoutIcon icon = _editor.addTurnout(iconEditor);
-        Assert.assertNotNull(icon);
+        assertNotNull(icon);
         Turnout turnout = icon.getTurnout();
-        Assert.assertNotNull(turnout);
+        assertNotNull(turnout);
 
         int x = 30;
         int y = 10;
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             icon.setLocation(x, y);
             _panel.repaint();
         });
 
-        Assertions.assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
+        assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2));
 
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, turnout.getState());
+        assertEquals( Sensor.UNKNOWN, turnout.getState(), "initial state");
 
         JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
         JComponentOperator jfo = new JComponentOperator(_panel);
@@ -168,28 +171,28 @@ public class IconEditorWindowTest {
     }
 
     @Test
-    public void testLightEditor() throws Exception {
+    public void testLightEditor() {
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Light");
         IconAdder iconEditor = iconEditorFrame.getEditor();
-        Assert.assertNotNull(iconEditor);
+        assertNotNull(iconEditor);
 
         iconEditor._sysNameText.setText("IL2");
         iconEditor.addToTable();
 
         LightIcon icon = _editor.addLight();
-        Assert.assertNotNull(icon);
+        assertNotNull(icon);
         Light light = icon.getLight();
-        Assert.assertNotNull(light);
+        assertNotNull(light);
 
         int x = 30;
         int y = 10;
         icon.setLocation(x, y);
         _panel.repaint();
 
-        Assertions.assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
+        assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2));
 
-        Assert.assertEquals("initial state", Light.OFF, light.getState());
+        assertEquals( Light.OFF, light.getState(), "initial state");
 
         JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
         JComponentOperator jfo = new JComponentOperator(_panel);
@@ -211,10 +214,10 @@ public class IconEditorWindowTest {
     }
 
     @Test
-    public void testSignalHeadEditor() throws Exception {
+    public void testSignalHeadEditor() {
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("SignalHead");
         IconAdder iconEditor = iconEditorFrame.getEditor();
-        Assert.assertNotNull(iconEditor);
+        assertNotNull(iconEditor);
 
         SignalHead signalHead = new jmri.implementation.VirtualSignalHead("IH2");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHead);
@@ -222,20 +225,20 @@ public class IconEditorWindowTest {
         iconEditor.setSelection(signalHead);
 
         SignalHeadIcon icon = _editor.putSignalHead();
-        Assert.assertNotNull(icon);
+        assertNotNull(icon);
         SignalHead sh = icon.getSignalHead();
-        Assert.assertEquals("SignalHead==sh", signalHead, sh);
+        assertEquals( signalHead, sh, "SignalHead==sh");
 
         int x = 30;
         int y = 10;
         icon.setLocation(x, y);
         _panel.repaint();
 
-        Assertions.assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
+        assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2));
 
         int[] states = signalHead.getValidStates();
-        Assert.assertEquals("initial state", states[0], signalHead.getState());
+        assertEquals( states[0], signalHead.getState(), "initial state");
 
         JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
         JComponentOperator jfo = new JComponentOperator(_panel);
@@ -260,18 +263,18 @@ public class IconEditorWindowTest {
     }
 
     @Test
-    public void testMemoryEditor() throws Exception {
+    public void testMemoryEditor() {
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Memory");
         IconAdder iconEditor = iconEditorFrame.getEditor();
-        Assert.assertNotNull(iconEditor);
+        assertNotNull(iconEditor);
 
         iconEditor._sysNameText.setText("IM2");
         iconEditor.addToTable();
 
         MemoryIcon memIcon = _editor.putMemory();
-        Assert.assertNotNull(memIcon);
+        assertNotNull(memIcon);
         Memory memory = memIcon.getMemory();
-        Assert.assertNotNull(memory);
+        assertNotNull(memory);
 
         int x = 20;
         int y = 10;
@@ -288,9 +291,9 @@ public class IconEditorWindowTest {
         iconEditor.addToTable();
 
         MemorySpinnerIcon memSpinIcon = _editor.addMemorySpinner();
-        Assert.assertNotNull(memSpinIcon);
+        assertNotNull(memSpinIcon);
         memory = memSpinIcon.getMemory();
-        Assert.assertNotNull(memory);
+        assertNotNull(memory);
 
         x = 70;
         y = 10;
@@ -305,9 +308,9 @@ public class IconEditorWindowTest {
         iconEditor.addToTable();
 
         MemoryInputIcon memInputIcon = _editor.addMemoryInputBox();
-        Assert.assertNotNull(memInputIcon);
+        assertNotNull(memInputIcon);
         memory = memInputIcon.getMemory();
-        Assert.assertNotNull(memory);
+        assertNotNull(memory);
 
         x = 150;
         y = 10;
@@ -322,18 +325,18 @@ public class IconEditorWindowTest {
     }
 
     @Test
-    public void testReporterEditor() throws Exception {
+    public void testReporterEditor() {
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Reporter");
         IconAdder iconEditor = iconEditorFrame.getEditor();
-        Assert.assertNotNull(iconEditor);
+        assertNotNull(iconEditor);
 
         iconEditor._sysNameText.setText("IR2");
         iconEditor.addToTable();
 
         ReporterIcon icon = _editor.addReporter();
-        Assert.assertNotNull(icon);
+        assertNotNull(icon);
         Reporter reporter = icon.getReporter();
-        Assert.assertNotNull(reporter);
+        assertNotNull(reporter);
 
         int x = 30;
         int y = 10;
@@ -350,9 +353,9 @@ public class IconEditorWindowTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
@@ -360,14 +363,14 @@ public class IconEditorWindowTest {
         JUnitUtil.initInternalSignalHeadManager();
 
         _editor = new PanelEditor("IconEditorTestPanel");
-        Assert.assertNotNull(JFrameOperator.waitJFrame("IconEditorTestPanel", true, true));
+        assertNotNull(JFrameOperator.waitJFrame("IconEditorTestPanel", true, true));
         _panel = _editor.getTargetPanel();
-        Assert.assertNotNull(_panel);
+        assertNotNull(_panel);
 
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
 
         // Delete the editor by calling dispose() defined in PanelEditor
         // directly instead of closing the window through a WindowClosing()

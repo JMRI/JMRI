@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +15,17 @@ public class MeasurementTest {
     public void testCtorAndID() {
         Reading r = new Reading("21", new double[]{0., 0., 0.});
         Measurement m = new Measurement(r);
-        Assert.assertEquals("ID ok", "21", m.getId());
+        Assertions.assertEquals( "21", m.getId(), "ID ok");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

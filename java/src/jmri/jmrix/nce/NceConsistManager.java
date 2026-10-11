@@ -124,8 +124,7 @@ public class NceConsistManager extends AbstractConsistManager {
         private void searchNext() {
             synchronized (this) {
                 // we need to wait for the connection to be up and running
-                while (!ConnectionStatus.instance()
-                            .getConnectionState(memo.getUserName(), memo.getNceTrafficController().getPortName())
+                while (!ConnectionStatus.instance().getConnectionState(memo)
                         .equals(ConnectionStatus.CONNECTION_UP)) {
                     log.debug("Waiting for NCE connected");
                     try {
@@ -161,6 +160,6 @@ public class NceConsistManager extends AbstractConsistManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class);
+    private static final Logger log = LoggerFactory.getLogger(NceConsistManager.class);
 
 }

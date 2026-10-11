@@ -71,6 +71,6 @@ public class MergTrafficController extends GcTrafficController {
         return new MergReply();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(MergTrafficController.class);
 
 }

@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -14,25 +13,25 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Editor of ConditionalNG
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class ConditionalNGEditor extends TreeEditor {
 
     protected final ConditionalNG _conditionalNG;
-    
-    
+
+
     /**
      * Maintain a list of listeners -- normally only one.
      */
     private final List<ConditionalNGEventListener> listenerList = new ArrayList<>();
-    
+
     /**
      * This contains a list of commands to be processed by the listener
      * recipient.
      */
     final HashMap<String, String> logixNGData = new HashMap<>();
-    
+
     /**
      * Construct a ConditionalEditor.
      * <p>
@@ -54,12 +53,13 @@ public class ConditionalNGEditor extends TreeEditor {
                 EnableClipboard.EnableClipboard,
                 EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
                 EnableRootPopup.EnableRootPopup,
-                EnableExecuteEvaluate.EnableExecuteEvaluate
+                EnableExecuteEvaluate.EnableExecuteEvaluate,
+                EnableChangeUsernameForRoot.EnableChangeUsername
         );
-        
+
         _conditionalNG = null;
     }
-    
+
     /**
      * Construct a ConditionalEditor.
      *
@@ -70,35 +70,38 @@ public class ConditionalNGEditor extends TreeEditor {
                 EnableClipboard.EnableClipboard,
                 EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
                 EnableRootPopup.EnableRootPopup,
-                EnableExecuteEvaluate.EnableExecuteEvaluate
+                EnableExecuteEvaluate.EnableExecuteEvaluate,
+                EnableChangeUsernameForRoot.EnableChangeUsername
         );
-        
+
         _conditionalNG = conditionalNG;
-        
+
         if (_conditionalNG.getUserName() == null) {
             ConditionalNGEditor.this.setTitle(
                     Bundle.getMessage("TitleEditConditionalNG",
                             _conditionalNG.getSystemName()));
         } else {
             ConditionalNGEditor.this.setTitle(
-                    Bundle.getMessage("TitleEditConditionalNG2", 
+                    Bundle.getMessage("TitleEditConditionalNG2",
                             _conditionalNG.getSystemName(),
                             _conditionalNG.getUserName()));
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
-    public void windowClosed(WindowEvent e) {
+    public void dispose() {
         logixNGData.clear();
         logixNGData.put("Finish", _conditionalNG.getSystemName());  // NOI18N
         fireLogixNGEvent();
+
+        super.dispose();
     }
-    
+
     public void addLogixNGEventListener(ConditionalNGEventListener listener) {
         listenerList.add(listener);
     }
-    
+
     /**
      * Notify the listeners to check for new data.
      */
@@ -107,14 +110,14 @@ public class ConditionalNGEditor extends TreeEditor {
             l.conditionalNGEventOccurred();
         }
     }
-    
-    
+
+
     public interface ConditionalNGEventListener extends EventListener {
-        
+
         public void conditionalNGEventOccurred();
     }
-    
-    
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGEditor.class);
+
+
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGEditor.class);
 
 }

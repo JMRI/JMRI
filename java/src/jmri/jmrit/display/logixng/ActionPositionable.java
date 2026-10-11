@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.util.ReferenceUtil;
@@ -227,7 +228,7 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryDisplay.DISPLAY;
     }
 
@@ -345,6 +346,10 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
                     break;
                 default:
                     throw new RuntimeException("operation has invalid value: "+operation.name());
+            }
+            if (_editor instanceof LayoutEditor) {
+                // Insure that the panel has been updated
+                ((LayoutEditor) _editor).redrawPanel();
             }
         });
     }
@@ -467,6 +472,6 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPositionable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPositionable.class);
 
 }

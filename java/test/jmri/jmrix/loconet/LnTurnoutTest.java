@@ -7,13 +7,16 @@ import static jmri.Turnout.THROWN;
 import static jmri.Turnout.UNKNOWN;
 import static jmri.Turnout.INCONSISTENT;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
@@ -22,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
-    LnTurnout lnt;
+    private LnTurnout lnt;
 
     @Override
     public int numListeners() {
@@ -41,9 +44,9 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
         // check results
-        Assert.assertEquals( "B0 14 30 00", // CLOSED/ON loconet message
+        assertEquals( "B0 14 30 00", // CLOSED/ON loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 2).toString());
-        Assert.assertEquals( "B0 14 20 00",  // CLOSED/OFF loconet message
+        assertEquals( "B0 14 20 00",  // CLOSED/OFF loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         // clear message stack
         lnis.clearReceivedMessages();
@@ -58,10 +61,10 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
         // check results
-        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals("B0 14 10 00", // THROWN/ON loconet message
+        assertEquals( 2, lnis.outbound.size(), "just two messages");
+        assertEquals("B0 14 10 00", // THROWN/ON loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 2).toString());
-        Assert.assertEquals("B0 14 00 00", // THROWN/OFF loconet message
+        assertEquals("B0 14 00 00", // THROWN/OFF loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         // clear message stack
         lnis.clearReceivedMessages();
@@ -76,7 +79,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x30);
         m.setElement(3, 0x00);
         lnt.messageFromManager(m);
-        Assert.assertTrue(t.getCommandedState() == CLOSED);
+        assertEquals( CLOSED, t.getCommandedState());
 
         m = new LocoNetMessage(4);
         m.setOpCode(0xb0);
@@ -84,7 +87,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x10);
         m.setElement(3, 0x00);
         lnt.messageFromManager(m);
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        assertEquals( THROWN, t.getCommandedState() );
     }
 
     @Test
@@ -96,7 +99,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x30);
         m.setElement(3, 0x00);
         lnt.messageFromManager(m);
-        Assert.assertTrue(t.getCommandedState() == CLOSED);
+        assertEquals( CLOSED, t.getCommandedState());
 
         m = new LocoNetMessage(4);
         m.setOpCode(0xbd);
@@ -104,7 +107,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x10);
         m.setElement(3, 0x00);
         lnt.messageFromManager(m);
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        assertEquals( THROWN, t.getCommandedState());
     }
 
     // LnTurnout test for incoming status message
@@ -112,14 +115,12 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testLnTurnoutStatusMsg() {
         // prepare an interface
         // set closed
-        try {
-            t.setCommandedState(CLOSED);
-        } catch (Exception e) {
-            log.error("TO exception: {}", e);
-        }
-        Assert.assertTrue(lnis.outbound.elementAt(0)
-                .toString().equals("B0 14 30 00"));  // CLOSED loconet message
-        Assert.assertTrue(t.getCommandedState() == CLOSED);
+        assertDoesNotThrow( () -> {
+            t.setCommandedState( CLOSED );
+        }, "TO exception: ");
+        assertEquals( "B0 14 30 00", lnis.outbound.elementAt(0).toString(),
+            "CLOSED loconet message");
+        assertEquals( CLOSED, t.getCommandedState());
 
         // notify the Ln that somebody else changed it...
         LocoNetMessage m = new LocoNetMessage(4);
@@ -128,7 +129,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x20);
         m.setElement(3, 0x7b);
         lnt.messageFromManager(m);
-        Assert.assertTrue(t.getCommandedState() == CLOSED);
+        assertEquals( CLOSED, t.getCommandedState());
 
     }
 
@@ -137,15 +138,13 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testLnTurnoutStatusMsgAck() {
         // prepare an interface
         // set closed
-        try {
+        assertDoesNotThrow( () -> {
             t.setProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY, true);
             t.setCommandedState(THROWN);
-        } catch (Exception e) {
-            log.error("TO exception: {}", e);
-        }
-        Assert.assertTrue(lnis.outbound.elementAt(0)
-                .toString().equals("BD 14 10 00"));  // thrown loconet message
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        }, "TO exception: ");
+        assertEquals( "BD 14 10 00", lnis.outbound.elementAt(0).toString(),
+            "thrown loconet message");
+        assertEquals( THROWN, t.getCommandedState());
 
         // notify the Ln that somebody else changed it...
         LocoNetMessage m = new LocoNetMessage(4);
@@ -154,7 +153,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x10);
         m.setElement(3, 0x7b);
         lnt.messageFromManager(m);
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        assertEquals( THROWN, t.getCommandedState());
 
     }
 
@@ -166,12 +165,14 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         t.setBinaryOutput(true);
         t.setCommandedState(CLOSED);
         t.setFeedbackMode(jmri.Turnout.EXACT);
-        Assert.assertEquals("CommandedState after set CLOSED is CLOSED", CLOSED, t.getCommandedState());
+        assertEquals( CLOSED, t.getCommandedState(),
+            "CommandedState after set CLOSED is CLOSED");
         // because this is the first time, the state is UNKNOWN; never goes back to that (in this test)
-        Assert.assertEquals("KnownState after set CLOSED is UNKNOWN", UNKNOWN, t.getKnownState());
+        assertEquals( UNKNOWN, t.getKnownState(),
+            "KnownState after set CLOSED is UNKNOWN");
 
         // notify the Ln of first feedback - AUX is thrown, so moved off
-        log.debug("notify of 1st feedback");
+        // log.debug("notify of 1st feedback");
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -179,24 +180,24 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(3, 0x1A);     // AUX reports THROWN\
 
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after AUX report THROWN is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after AUX report THROWN is INCONSISTENT", INCONSISTENT, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after AUX report THROWN is CLOSED");
+        assertEquals( INCONSISTENT, t.getKnownState(), "KnownState after AUX report THROWN is INCONSISTENT");
 
         // notify the Ln of second feedback - SWITCH is closed, so moved on
-        log.debug("notify of 2nd feedback");
+        // log.debug("notify of 2nd feedback");
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
         m.setElement(2, 0x70);
         m.setElement(3, 0x2A);     // SWITCH reports CLOSED
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after SWITCH report CLOSED is CLOSED");
+        assertEquals( CLOSED, t.getKnownState(), "KnownState after SWITCH report CLOSED is CLOSED");
 
         // test transition to THROWN
         t.setCommandedState(THROWN);
-        Assert.assertEquals("CommandedState after set THROWN is THROWN", THROWN, t.getCommandedState());
-        Assert.assertEquals("KnownState after set THROWN is UNKNOWN", CLOSED, t.getKnownState());
+        assertEquals( THROWN, t.getCommandedState(), "CommandedState after set THROWN is THROWN");
+        assertEquals( CLOSED, t.getKnownState(), "KnownState after set THROWN is UNKNOWN");
 
         // notify the Ln of first feedback - SWITCH is thrown, so moved off
         m = new LocoNetMessage(4);
@@ -205,8 +206,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x60);
         m.setElement(3, 0x3A);     // AUX reports THROWN
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after SWITCH report THROWN is THROWN", THROWN, t.getCommandedState());
-        Assert.assertEquals("KnownState after SWITCH report THROWN is INCONSISTENT", INCONSISTENT, t.getKnownState());
+        assertEquals( THROWN, t.getCommandedState(), "CommandedState after SWITCH report THROWN is THROWN");
+        assertEquals( INCONSISTENT, t.getKnownState(), "KnownState after SWITCH report THROWN is INCONSISTENT");
 
         // notify the Ln of second feedback - AUX is closed, so moved on
         m = new LocoNetMessage(4);
@@ -215,13 +216,13 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x50);
         m.setElement(3, 0x0A);     // SWITCH reports CLOSED
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after AUX report CLOSED is THROWN", THROWN, t.getCommandedState());
-        Assert.assertEquals("KnownState after AUX report CLOSED is THROWN", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getCommandedState(), "CommandedState after AUX report CLOSED is THROWN");
+        assertEquals( THROWN, t.getKnownState(), "KnownState after AUX report CLOSED is THROWN");
 
         // test transition back to CLOSED
         t.setCommandedState(CLOSED);
-        Assert.assertEquals("CommandedState after 2nd set CLOSED is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after 2nd set CLOSED is THROWN", THROWN, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after 2nd set CLOSED is CLOSED");
+        assertEquals( THROWN, t.getKnownState(), "KnownState after 2nd set CLOSED is THROWN");
 
         // notify the Ln of first feedback - AUX is thrown, so moved off
         m = new LocoNetMessage(4);
@@ -230,8 +231,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x40);
         m.setElement(3, 0x1A);     // AUX reports THROWN
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after AUX report THROWN is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after AUX report THROWN is INCONSISTENT", INCONSISTENT, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after AUX report THROWN is CLOSED");
+        assertEquals( INCONSISTENT, t.getKnownState(), "KnownState after AUX report THROWN is INCONSISTENT");
 
         // notify the Ln of second feedback - SWITCH is closed, so moved on
         m = new LocoNetMessage(4);
@@ -240,13 +241,13 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x70);
         m.setElement(3, 0x2A);     // SWITCH reports CLOSED
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after SWITCH report CLOSED is CLOSED");
+        assertEquals( CLOSED, t.getKnownState(), "KnownState after SWITCH report CLOSED is CLOSED");
 
         // test transition to back to THROWN in wrong order
         t.setCommandedState(THROWN);
-        Assert.assertEquals("CommandedState after 2nd set THROWN is THROWN", THROWN, t.getCommandedState());
-        Assert.assertEquals("KnownState after 2nd set THROWN is CLOSED", CLOSED, t.getKnownState());
+        assertEquals( THROWN, t.getCommandedState(), "CommandedState after 2nd set THROWN is THROWN");
+        assertEquals( CLOSED, t.getKnownState(), "KnownState after 2nd set THROWN is CLOSED");
 
         // notify the Ln of second feedback (out of order) - AUX is closed, so moved on
         m = new LocoNetMessage(4);
@@ -255,8 +256,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x50);
         m.setElement(3, 0x0A);     // SWITCH reports CLOSED
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after AUX report CLOSED is THROWN", THROWN, t.getCommandedState());
-        Assert.assertEquals("KnownState after AUX report CLOSED is THROWN", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getCommandedState(), "CommandedState after AUX report CLOSED is THROWN");
+        assertEquals( THROWN, t.getKnownState(), "KnownState after AUX report CLOSED is THROWN");
 
         // notify the Ln of first feedback (out of order) - SWITCH is thrown, so moved off - ignored
         m = new LocoNetMessage(4);
@@ -265,13 +266,13 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x60);
         m.setElement(3, 0x3A);     // AUX reports THROWN
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after SWITCH report THROWN is THROWN", THROWN, t.getCommandedState());
-        Assert.assertEquals("KnownState after SWITCH report THROWN is THROWN", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getCommandedState(), "CommandedState after SWITCH report THROWN is THROWN");
+        assertEquals( THROWN, t.getKnownState(), "KnownState after SWITCH report THROWN is THROWN");
 
         // test transition back to CLOSED in wrong order
         t.setCommandedState(CLOSED);
-        Assert.assertEquals("CommandedState after 2nd set CLOSED is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after 2nd set CLOSED is THROWN", THROWN, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after 2nd set CLOSED is CLOSED");
+        assertEquals( THROWN, t.getKnownState(), "KnownState after 2nd set CLOSED is THROWN");
 
         // notify the Ln of second feedback (out of order) - SWITCH is closed, so moved on
         m = new LocoNetMessage(4);
@@ -280,8 +281,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x70);
         m.setElement(3, 0x2A);     // SWITCH reports CLOSED
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after SWITCH report CLOSED is CLOSED");
+        assertEquals( CLOSED, t.getKnownState(), "KnownState after SWITCH report CLOSED is CLOSED");
 
         // notify the Ln of first feedback (out of order) - AUX is thrown, so moved off
         m = new LocoNetMessage(4);
@@ -290,8 +291,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(2, 0x40);
         m.setElement(3, 0x1A);     // AUX reports THROWN
         lnt.messageFromManager(m);
-        Assert.assertEquals("CommandedState after AUX report THROWN is CLOSED", CLOSED, t.getCommandedState());
-        Assert.assertEquals("KnownState after AUX report THROWN is CLOSED", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getCommandedState(), "CommandedState after AUX report THROWN is CLOSED");
+        assertEquals( CLOSED, t.getKnownState(), "KnownState after AUX report THROWN is CLOSED");
 
     }
 
@@ -305,10 +306,10 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
-        Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
-        Assert.assertEquals("B0 14 10 00", // THROWN/ON loconet message
+        assertEquals( 1, lnis.outbound.size(), "just one message");
+        assertEquals("B0 14 10 00", // THROWN/ON loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        assertEquals( THROWN, t.getCommandedState());
     }
 
     // test that only one message is sent when property SendOnAndOff is false.
@@ -322,10 +323,10 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
-        Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
-        Assert.assertEquals("B0 14 10 00", // THROWN/ON loconet message
+        assertEquals( 1, lnis.outbound.size(), "just one message");
+        assertEquals("B0 14 10 00", // THROWN/ON loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        assertEquals( THROWN, t.getCommandedState());
     }
 
     // test that only two messages are sent when property SendOnAndOff is true.
@@ -339,10 +340,10 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
-        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals("B0 14 00 00",  // THROWN/OFF loconet message
+        assertEquals( 2, lnis.outbound.size(), "just two messages");
+        assertEquals("B0 14 00 00",  // THROWN/OFF loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        assertEquals( THROWN, t.getCommandedState());
     }
 
     // test that only two messages are sent when property SendOnAndOff is true, even if (ulenbook) binary set.
@@ -356,213 +357,201 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
-        Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals("B0 14 00 00",  // THROWN/OFF loconet message
+        assertEquals( 2, lnis.outbound.size(), "just two messages");
+        assertEquals("B0 14 00 00",  // THROWN/OFF loconet message
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertTrue(t.getCommandedState() == THROWN);
+        assertEquals( THROWN, t.getCommandedState());
     }
 
     @Test
     public void testTurnoutLocks() {
-        Assert.assertFalse("check t.canLock(CABLOCKOUT)",t.canLock(CABLOCKOUT));
-        Assert.assertFalse("check t.canLock(PUSHBUTTONLOCKOUT)",t.canLock(PUSHBUTTONLOCKOUT));
+        assertFalse( t.canLock(CABLOCKOUT), "check t.canLock(CABLOCKOUT)");
+        assertFalse( t.canLock(PUSHBUTTONLOCKOUT), "check t.canLock(PUSHBUTTONLOCKOUT)");
 
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 1", lnt.getLocked(PUSHBUTTONLOCKOUT));
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 2", lnt.getLocked(CABLOCKOUT));
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 3", lnt.getLocked(CABLOCKOUT + PUSHBUTTONLOCKOUT));
+        assertFalse( lnt.getLocked(PUSHBUTTONLOCKOUT), "check turnoutPushbuttonLockout(false) is false 1");
+        assertFalse( lnt.getLocked(CABLOCKOUT), "check turnoutPushbuttonLockout(false) is false 2");
+        assertFalse( lnt.getLocked(CABLOCKOUT + PUSHBUTTONLOCKOUT), "check turnoutPushbuttonLockout(false) is false 3");
         lnt.turnoutPushbuttonLockout(false);
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 4", lnt.getLocked(PUSHBUTTONLOCKOUT));
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 5", lnt.getLocked(CABLOCKOUT));
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 6", lnt.getLocked(CABLOCKOUT + PUSHBUTTONLOCKOUT));
+        assertFalse( lnt.getLocked(PUSHBUTTONLOCKOUT), "check turnoutPushbuttonLockout(false) is false 4");
+        assertFalse( lnt.getLocked(CABLOCKOUT), "check turnoutPushbuttonLockout(false) is false 5");
+        assertFalse( lnt.getLocked(CABLOCKOUT + PUSHBUTTONLOCKOUT), "check turnoutPushbuttonLockout(false) is false 6");
         lnt.turnoutPushbuttonLockout(true);
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 7", lnt.getLocked(PUSHBUTTONLOCKOUT));
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 8", lnt.getLocked(CABLOCKOUT));
-        Assert.assertFalse("check turnoutPushbuttonLockout(false) is false 9", lnt.getLocked(CABLOCKOUT + PUSHBUTTONLOCKOUT));
+        assertFalse( lnt.getLocked(PUSHBUTTONLOCKOUT), "check turnoutPushbuttonLockout(false) is false 7");
+        assertFalse( lnt.getLocked(CABLOCKOUT), "check turnoutPushbuttonLockout(false) is false 8");
+        assertFalse( lnt.getLocked(CABLOCKOUT + PUSHBUTTONLOCKOUT), "check turnoutPushbuttonLockout(false) is false 9");
     }
 
     @Test
     public void testMessageFromManagerWrongType() {
-        Assert.assertEquals("check default known state", UNKNOWN, t.getKnownState());
-        Assert.assertEquals("check default commanded state", UNKNOWN, t.getKnownState());
+        assertEquals( UNKNOWN, t.getKnownState(), "check default known state");
+        assertEquals( UNKNOWN, t.getKnownState(), "check default commanded state");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xd0, 0x00, 0x00, 0x00, 0x00, 0x00}));
-        Assert.assertEquals("check default known state", UNKNOWN, t.getKnownState());
-        Assert.assertEquals("check default commanded state", UNKNOWN, t.getKnownState());
+        assertEquals( UNKNOWN, t.getKnownState(), "check default known state");
+        assertEquals( UNKNOWN, t.getKnownState(), "check default commanded state");
     }
 
     @Test
     public void testMyAddress() {
         LocoNetMessage m;
-        Assert.assertEquals("get initial turnout 21 known state as unknown", UNKNOWN, lnt.getKnownState());
-        Assert.assertEquals("get initial turnout 21 commanded state as unknown", UNKNOWN, lnt.getCommandedState());
+        assertEquals( UNKNOWN, lnt.getKnownState(),
+            "get initial turnout 21 known state as unknown");
+        assertEquals( UNKNOWN, lnt.getCommandedState(),
+            "get initial turnout 21 commanded state as unknown");
 
         m = new LocoNetMessage(new int[] {0xb0, 0x0, 0x30, 00});
         for (int i=0; i < 2048; ++i) {
-            if (i != 20) {
+            if (i == 20) {
+                continue;
+            }
             m.setElement(1, i&0x7f); m.setElement(2, ((i>>7)&0xf)+0x30);
             lnt.messageFromManager(m);
-            Assert.assertEquals("check turnout 21 known state after message turnout "+i+" unknown.", UNKNOWN, lnt.getKnownState());
-            Assert.assertEquals("check turnout 21 commanded state after message turnout "+i+" unknown.", UNKNOWN, lnt.getCommandedState());
-            }
+            assertEquals( UNKNOWN, lnt.getKnownState(),
+                "check turnout 21 known state after message turnout "+i+" unknown.");
+            assertEquals( UNKNOWN, lnt.getCommandedState(),
+                "check turnout 21 commanded state after message turnout "+i+" unknown.");
         }
-        Assert.assertEquals("get final turnout 21 known state after bunch of opc_sw_req messages", UNKNOWN, lnt.getKnownState());
-        Assert.assertEquals("get final turnout 21 commanded state after bunch of opc_sw_req messages", UNKNOWN, lnt.getCommandedState());
+        assertEquals( UNKNOWN, lnt.getKnownState(), "get final turnout 21 known state after bunch of opc_sw_req messages");
+        assertEquals( UNKNOWN, lnt.getCommandedState(),
+            "get final turnout 21 commanded state after bunch of opc_sw_req messages");
 
         m.setElement(1, 20&0x7f); m.setElement(2, ((20>>7)&0xf)+0x30);
         lnt.messageFromManager(m);
-        Assert.assertEquals("check turnout 21 known state closed after opc_sw_req message turnout 20 closed.", CLOSED, lnt.getKnownState());
-        Assert.assertEquals("check turnout 21 commanded state closed after opc_sw_req message turnout 20 closed.", CLOSED, lnt.getCommandedState());
+        assertEquals( CLOSED, lnt.getKnownState(),
+            "check turnout 21 known state closed after opc_sw_req message turnout 20 closed.");
+        assertEquals( CLOSED, lnt.getCommandedState(),
+            "check turnout 21 commanded state closed after opc_sw_req message turnout 20 closed.");
 
         // same basic test using OPC_SW_REQ (output report form)
 
         m = new LocoNetMessage(new int[] {0xb1, 0x0, 0x00, 00});
         for (int i=0; i < 2048; ++i) {
-            if (i != 20) {
+            if (i == 20) {
+                continue;
+            }
             m.setElement(1, i&0x7f); m.setElement(2, ((i>>7)&0xf)+0x10);
             lnt.messageFromManager(m);
-            Assert.assertEquals("check turnout 21 known state after opc_sw_rep (output rep) message turnout "+i+" thrown.", CLOSED, lnt.getKnownState());
-            Assert.assertEquals("check turnout 21 commanded state after opc_sw_rep (output rep) message turnout "+i+" thrown.", CLOSED, lnt.getCommandedState());
-            }
+            assertEquals( CLOSED, lnt.getKnownState(),
+                "check turnout 21 known state after opc_sw_rep (output rep) message turnout "+i+" thrown.");
+            assertEquals( CLOSED, lnt.getCommandedState(),
+                "check turnout 21 commanded state after opc_sw_rep (output rep) message turnout "+i+" thrown.");
         }
-        Assert.assertEquals("get turnout 21 known state after bunch of opc_sw_rep (output rep) messages", CLOSED, lnt.getKnownState());
-        Assert.assertEquals("get turnout 21 commanded state after bunch of opc_sw_rep (output rep) messages", CLOSED, lnt.getCommandedState());
+        assertEquals( CLOSED, lnt.getKnownState(),
+            "get turnout 21 known state after bunch of opc_sw_rep (output rep) messages");
+        assertEquals( CLOSED, lnt.getCommandedState(),
+            "get turnout 21 commanded state after bunch of opc_sw_rep (output rep) messages");
 
         m.setElement(1, 20&0x7f); m.setElement(2, ((20>>7)&0xf)+0x10);
         lnt.messageFromManager(m);
-        Assert.assertEquals("check turnout 21 known state closed after opc_sw_req message turnout 21 thrown.", THROWN, lnt.getKnownState());
-        Assert.assertEquals("check turnout 21 commanded state closed after opc_sw_req message turnout 21 thrown.", THROWN, lnt.getCommandedState());
+        assertEquals( THROWN, lnt.getKnownState(),
+            "check turnout 21 known state closed after opc_sw_req message turnout 21 thrown.");
+        assertEquals( THROWN, lnt.getCommandedState(),
+            "check turnout 21 commanded state closed after opc_sw_req message turnout 21 thrown.");
 
         m.setElement(1, 20&0x7f); m.setElement(2, ((20>>7)&0xf)+0x30);
         lnt.messageFromManager(m);
-        Assert.assertEquals("check turnout 21 known state closed after opc_sw_req message turnout 21 closed+thrown.", THROWN + CLOSED, lnt.getKnownState());
-        Assert.assertEquals("check turnout 21 commanded state closed+thrown after opc_sw_req message turnout 21 closed+thrown.", THROWN + CLOSED, lnt.getCommandedState());
+        assertEquals( THROWN + CLOSED, lnt.getKnownState(),
+            "check turnout 21 known state closed after opc_sw_req message turnout 21 closed+thrown.");
+        assertEquals( THROWN + CLOSED, lnt.getCommandedState(),
+            "check turnout 21 commanded state closed+thrown after opc_sw_req message turnout 21 closed+thrown.");
     }
 
     @Test
     public void testCtorNumberOutOfBounds() {
 
-        Exception ex = Assert.assertThrows( java.lang.IllegalArgumentException.class,
+        Exception ex = assertThrows( IllegalArgumentException.class,
             () -> new LnTurnout("L", 0, lnis) );
-        Assert.assertEquals("Turnout value: 0 not in the range 1 to 2048", ex.getMessage());
+        assertEquals("Turnout value: 0 not in the range 1 to 2048", ex.getMessage());
 
-        ex = Assert.assertThrows( java.lang.IllegalArgumentException.class,
+        ex = assertThrows( IllegalArgumentException.class,
             () -> new LnTurnout("L", 2049, lnis) );
-        Assert.assertEquals("Turnout value: 2049 not in the range 1 to 2048", ex.getMessage());
+        assertEquals("Turnout value: 2049 not in the range 1 to 2048", ex.getMessage());
 
-        boolean excep = false;
-        int value = -999;
-        try {
+        int value = assertDoesNotThrow( () -> {
             LnTurnout validTurnout = new LnTurnout("L", 2048, lnis);
-            value = validTurnout._number;
-        } catch (java.lang.IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertFalse("exception did not happen (3)", excep);
-        Assert.assertEquals("check t has number", 2048, value);
+            return validTurnout._number;
+        }, "exception did not happen (3)");
+        assertEquals( 2048, value, "check t has number");
     }
 
     @Test
     public void testSetFeedback() {
-        boolean excep = false;
-        try {
-            t.setFeedbackMode("poSitive");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertTrue("expected illegal argument exception happened (1)", excep);
 
-        excep = false;
-        try {
-            t.setFeedbackMode("NEGATIVE");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertTrue("expected illegal argument exception happened (2)", excep);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> t.setFeedbackMode("poSitive"),
+            "expected illegal argument exception happened (1)");
+        assertTrue( ex.getMessage().contains("poSitive"));
 
-        excep = false;
-        try {
-            t.setFeedbackMode("DIRECT");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertFalse("Did not expect or get an exception (3)", excep);
-        Assert.assertEquals("Check direct feedback mode set (3)", "DIRECT", t.getFeedbackModeName());
+        ex = assertThrows( IllegalArgumentException.class,
+            () -> t.setFeedbackMode("NEGATIVE"),
+            "expected illegal argument exception happened (2)");
+        assertTrue( ex.getMessage().contains("NEGATIVE"));
 
-        try {
-            t.setFeedbackMode("MONITORING");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertFalse("Did not expect or get an exception (4)", excep);
-        Assert.assertEquals("Check direct feedback mode set (4)", "MONITORING", t.getFeedbackModeName());
+        assertDoesNotThrow( () -> t.setFeedbackMode("DIRECT"),
+            "Did not expect or get an exception (3)");
+        assertEquals( "DIRECT", t.getFeedbackModeName(),
+            "Check direct feedback mode set (3)");
 
-        try {
-            t.setFeedbackMode("EXACT");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertFalse("Did not expect or get an exception (5)", excep);
-        Assert.assertEquals("Check direct feedback mode set (5)", "EXACT", t.getFeedbackModeName());
+        assertDoesNotThrow( () -> t.setFeedbackMode("MONITORING"),
+            "Did not expect or get an exception (4)");
+        assertEquals( "MONITORING", t.getFeedbackModeName(),
+            "Check direct feedback mode set (4)");
 
-        try {
-            t.setFeedbackMode("INDIRECT");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertFalse("Did not expect or get an exception (6)", excep);
-        Assert.assertEquals("Check direct feedback mode set (6)", "INDIRECT", t.getFeedbackModeName());
+        assertDoesNotThrow( () -> t.setFeedbackMode("EXACT"),
+            "Did not expect or get an exception (5)");
+        assertEquals( "EXACT", t.getFeedbackModeName(),
+            "Check direct feedback mode set (5)");
 
-        try {
-            t.setFeedbackMode("ONESENSOR");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertFalse("Did not expect or get an exception (7)", excep);
-        Assert.assertEquals("Check direct feedback mode set (7)", "ONESENSOR", t.getFeedbackModeName());
+        assertDoesNotThrow( () -> t.setFeedbackMode("INDIRECT"),
+            "Did not expect or get an exception (6)");
+        assertEquals( "INDIRECT", t.getFeedbackModeName(),
+            "Check direct feedback mode set (6)");
+
+        assertDoesNotThrow( () -> t.setFeedbackMode("ONESENSOR"),
+            "Did not expect or get an exception (7)");
+        assertEquals( "ONESENSOR", t.getFeedbackModeName(),
+            "Check direct feedback mode set (7)");
 
         JUnitAppender.assertWarnMessage("expected Sensor 1 not defined - LT21");
 
 
-        try {
-            t.setFeedbackMode("TWOSENSOR");
-        } catch (IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertFalse("Did not expect or get an exception (8)", excep);
-        Assert.assertEquals("Check direct feedback mode set (8)", "TWOSENSOR", t.getFeedbackModeName());
+        assertDoesNotThrow( () -> t.setFeedbackMode("TWOSENSOR"),
+            "Did not expect or get an exception (8)");
+        assertEquals( "TWOSENSOR", t.getFeedbackModeName(),
+            "Check direct feedback mode set (8)");
         JUnitAppender.assertWarnMessage("expected Sensor 1 not defined - LT21");
         JUnitAppender.assertWarnMessage("expected Sensor 2 not defined - LT21");
     }
 
     @Test
     public void testGetNumber() {
-        Assert.assertEquals("check test's default turnout address nubmer", 21, lnt.getNumber());
+        assertEquals( 21, lnt.getNumber(), "check test's default turnout address nubmer");
         LnTurnout t2 = new LnTurnout("L", 5, lnis);
-        Assert.assertEquals("check test's default turnout address nubmer", 5, t2.getNumber());
+        assertEquals( 5, t2.getNumber(), "check test's default turnout address nubmer");
         t2 = new LnTurnout("L", 2047, lnis);
-        Assert.assertEquals("check test's default turnout address nubmer", 2047, t2.getNumber());
+        assertEquals( 2047, t2.getNumber(), "check test's default turnout address nubmer");
     }
 
     @Test
     public void testSetUseOffSwReqAsConfirmation() {
-        Assert.assertFalse("check default offSwReqAsConfirmation", lnt._useOffSwReqAsConfirmation);
+        assertFalse( lnt._useOffSwReqAsConfirmation, "check default offSwReqAsConfirmation");
         lnt.setUseOffSwReqAsConfirmation(true);
-        Assert.assertTrue("check first offSwReqAsConfirmation", lnt._useOffSwReqAsConfirmation);
+        assertTrue( lnt._useOffSwReqAsConfirmation, "check first offSwReqAsConfirmation");
         lnt.setUseOffSwReqAsConfirmation(false);
-        Assert.assertFalse("check first offSwReqAsConfirmation", lnt._useOffSwReqAsConfirmation);
+        assertFalse( lnt._useOffSwReqAsConfirmation, "check first offSwReqAsConfirmation");
     }
 
     @Test
     public void testSetStateClosedAndThrown() {
-        Assert.assertEquals("checking initial known state", UNKNOWN, t.getKnownState());
+        assertEquals( UNKNOWN, t.getKnownState(), "checking initial known state");
         t.setCommandedState(CLOSED + THROWN);
         JUnitAppender.assertErrorMessage("LocoNet turnout logic can't handle both THROWN and CLOSED yet");
-        Assert.assertEquals("checking commanded state is Unknown after trying to send THROWN AND CLOSED", UNKNOWN, t.getKnownState());
-        Assert.assertEquals("checking known state is Unknown after trying to send THROWN AND CLOSED", UNKNOWN, t.getKnownState());
-        Assert.assertEquals("Checking to see if a LocoNet message was generated", 1, lnis.outbound.size());
-        Assert.assertEquals("Check OpCode", 0xb0, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("Check byte 1", 0x14, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("Check byte 2", 0x30, lnis.outbound.get(0).getElement(2));
+        assertEquals( UNKNOWN, t.getKnownState(), "checking commanded state is Unknown after trying to send THROWN AND CLOSED");
+        assertEquals( UNKNOWN, t.getKnownState(), "checking known state is Unknown after trying to send THROWN AND CLOSED");
+        assertEquals( 1, lnis.outbound.size(), "Checking to see if a LocoNet message was generated");
+        assertEquals( 0xb0, lnis.outbound.get(0).getOpCode(), "Check OpCode");
+        assertEquals( 0x14, lnis.outbound.get(0).getElement(1), "Check byte 1");
+        assertEquals( 0x30, lnis.outbound.get(0).getElement(2), "Check byte 2");
     }
 
     @Test
@@ -570,7 +559,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt._useOffSwReqAsConfirmation = true;
         lnt.sendOpcSwReqMessage(CLOSED, false);
         JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
-        Assert.assertEquals("check message sent", 1, lnis.outbound.size());
+        assertEquals( 1, lnis.outbound.size(), "check message sent");
     }
 
     @Test
@@ -578,22 +567,22 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt.setFeedbackMode("INDIRECT");
         lnt._useOffSwReqAsConfirmation=true;
         lnt.setCommandedState(CLOSED);
-        Assert.assertEquals("check message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("check known state before feedback received", UNKNOWN, t.getKnownState());
-        Assert.assertEquals("check initial message Opcode", 0xB0, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("check initial message element 1", 20, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("check initial message element 2", 0x30, lnis.outbound.get(0).getElement(2));
+        assertEquals( 1, lnis.outbound.size(), "just one message");
+        assertEquals( UNKNOWN, t.getKnownState(), "check known state before feedback received");
+        assertEquals( 0xB0, lnis.outbound.get(0).getOpCode(), "check initial message Opcode");
+        assertEquals( 20, lnis.outbound.get(0).getElement(1), "check initial message element 1");
+        assertEquals( 0x30, lnis.outbound.get(0).getElement(2), "check initial message element 2");
         JUnitUtil.waitFor(()->{return lnis.outbound.size()==2;},"2nd message not received");
         JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
-        Assert.assertEquals("check second message Opcode", 0xB0, lnis.outbound.get(1).getOpCode());
-        Assert.assertEquals("check second message element 1", 20, lnis.outbound.get(1).getElement(1));
-        Assert.assertEquals("check second message element 2", 0x20, lnis.outbound.get(1).getElement(2));
+        assertEquals( 0xB0, lnis.outbound.get(1).getOpCode(), "check second message Opcode");
+        assertEquals( 20, lnis.outbound.get(1).getElement(1), "check second message element 1");
+        assertEquals( 0x20, lnis.outbound.get(1).getElement(2), "check second message element 2");
         JUnitUtil.waitFor(()->{return lnis.outbound.size()==3;},"3rd message not received");
         // check for resend of original message
-        Assert.assertEquals("check second message Opcode", 0xB0, lnis.outbound.get(2).getOpCode());
-        Assert.assertEquals("check second message element 1", 20, lnis.outbound.get(2).getElement(1));
-        Assert.assertEquals("check second message element 2", 0x30, lnis.outbound.get(2).getElement(2));
-        Assert.assertEquals("check known state got updated", UNKNOWN, t.getKnownState());
+        assertEquals( 0xB0, lnis.outbound.get(2).getOpCode(), "check second message Opcode");
+        assertEquals( 20, lnis.outbound.get(2).getElement(1), "check second message element 1");
+        assertEquals( 0x30, lnis.outbound.get(2).getElement(2), "check second message element 2");
+        assertEquals( UNKNOWN, t.getKnownState(), "check known state got updated");
     }
 
     @Test
@@ -601,118 +590,118 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt.setFeedbackMode("INDIRECT");
         lnt._useOffSwReqAsConfirmation=true;
         lnt.setCommandedState(CLOSED);
-        Assert.assertEquals("check message sent (2)", 1, lnis.outbound.size());
-        Assert.assertEquals("check known state before feedback received (2)", UNKNOWN, t.getKnownState());
-        Assert.assertEquals("check initial message Opcode (2)", 0xB0, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("check initial message element 1 (2)", 20, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("check initial message element 2 (2)", 0x30, lnis.outbound.get(0).getElement(2));
+        assertEquals( 1, lnis.outbound.size(), "just one message(2)");
+        assertEquals( UNKNOWN, t.getKnownState(), "check known state before feedback received (2)");
+        assertEquals( 0xB0, lnis.outbound.get(0).getOpCode(), "check initial message Opcode (2)");
+        assertEquals( 20, lnis.outbound.get(0).getElement(1), "check initial message element 1 (2)");
+        assertEquals( 0x30, lnis.outbound.get(0).getElement(2), "check initial message element 2 (2)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xB1, 0x14, 0x60, 0x00}));
-        Assert.assertEquals("check known state got updated", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getKnownState(), "check known state got updated");
         JUnitUtil.waitFor(()->{return lnis.outbound.size()==2;},"2nd message not received (2)");
         JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
-        Assert.assertEquals("check second message Opcode", 0xB0, lnis.outbound.get(1).getOpCode());
-        Assert.assertEquals("check second message element 1", 20, lnis.outbound.get(1).getElement(1));
-        Assert.assertEquals("check second message element 2", 0x20, lnis.outbound.get(1).getElement(2));
+        assertEquals( 0xB0, lnis.outbound.get(1).getOpCode(), "check second message Opcode");
+        assertEquals( 20, lnis.outbound.get(1).getElement(1), "check second message element 1");
+        assertEquals( 0x20, lnis.outbound.get(1).getElement(2), "check second message element 2");
         JUnitUtil.waitFor(3500);
-        Assert.assertEquals("still only 2 sent messages", 2, lnis.outbound.size());
+        assertEquals( 2, lnis.outbound.size(), "still only 2 sent messages");
     }
 
     @Test
     public void testComputeKnownStateOpSwAckReq() {
         lnt.setFeedbackMode("DIRECT");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x20, 0x00}));
-        Assert.assertEquals("check message sent(1)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (1)", CLOSED, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(1)");
+        assertEquals( CLOSED, t.getKnownState(), "check known state after echoed (1)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x00, 0x00}));
-        Assert.assertEquals("check message sent(2)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (2)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(2)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (2)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x30, 0x00}));
-        Assert.assertEquals("check message sent(3)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (3)", CLOSED, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(3)");
+        assertEquals( CLOSED, t.getKnownState(), "check known state after echoed (3)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x10, 0x00}));
-        Assert.assertEquals("check message sent(4)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (4)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(4)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (4)");
 
         lnt.setFeedbackMode("MONITORING");
         lnt._useOffSwReqAsConfirmation = true;
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x30, 0x00}));
-        Assert.assertEquals("check message sent(5)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (5)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(5)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (5)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x20, 0x00}));
-        Assert.assertEquals("check message sent(6)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (6)", CLOSED, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(6)");
+        assertEquals( CLOSED, t.getKnownState(), "check known state after echoed (6)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x10, 0x00}));
-        Assert.assertEquals("check message sent(7)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (7)", CLOSED, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(7)");
+        assertEquals( CLOSED, t.getKnownState(), "check known state after echoed (7)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x00, 0x00}));
-        Assert.assertEquals("check message sent(8)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (8)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(8)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (8)");
 
         lnt.setFeedbackMode("INDIRECT");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x10, 0x00}));
-        Assert.assertEquals("check message sent(9)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (9)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(9)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (9)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x00, 0x00}));
-        Assert.assertEquals("check message sent(10)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (10)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(10)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (10)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x10, 0x00}));
-        Assert.assertEquals("check message sent(11)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (11)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(11)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (11)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb0, 0x14, 0x00, 0x00}));
-        Assert.assertEquals("check message sent(12)", 0, lnis.outbound.size());
-        Assert.assertEquals("check known state after echoed (12)", THROWN, t.getKnownState());
+        assertEquals( 0, lnis.outbound.size(), "check message sent(12)");
+        assertEquals( THROWN, t.getKnownState(), "check known state after echoed (12)");
     }
 
     @Test
     public void testSetKnownStateFromOutputStateReport() {
         lnt.setFeedbackMode("DIRECT");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x00, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", 0, t.getKnownState());
+        assertEquals( 0, t.getKnownState(), "check known state after message (1)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[]{0xb1, 0x14, 0x10, 0x00}));
-        Assert.assertEquals("check known state after message (1)", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getKnownState(), "check known state after message (2)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x20, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (3)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x30, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", THROWN+CLOSED, t.getKnownState());
+        assertEquals( THROWN+CLOSED, t.getKnownState(), "check known state after message (4)");
 
         lnt.setFeedbackMode("INDIRECT");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x00, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", THROWN+CLOSED, t.getKnownState());
+        assertEquals( THROWN+CLOSED, t.getKnownState(), "check known state after message (5)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[]{0xb1, 0x14, 0x10, 0x00}));
-        Assert.assertEquals("check known state after message (1)", THROWN+CLOSED, t.getKnownState());
+        assertEquals( THROWN+CLOSED, t.getKnownState(), "check known state after message (6)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x20, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", THROWN+CLOSED, t.getKnownState());
+        assertEquals( THROWN+CLOSED, t.getKnownState(), "check known state after message (7)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x30, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", THROWN+CLOSED, t.getKnownState());
+        assertEquals( THROWN+CLOSED, t.getKnownState(), "check known state after message (8)");
 
         lnt.setFeedbackMode("MONITORING");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x00, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", 0, t.getKnownState());
+        assertEquals( 0, t.getKnownState(), "check known state after message (9)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[]{0xb1, 0x14, 0x10, 0x00}));
-        Assert.assertEquals("check known state after message (1)", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getKnownState(), "check known state after message (10)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x20, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (11)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x30, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", THROWN+CLOSED, t.getKnownState());
+        assertEquals( THROWN+CLOSED, t.getKnownState(), "check known state after message (12)");
 
     }
 
@@ -720,87 +709,87 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testComputeFeedbackFromSwitchOffReport() {
         lnt.setFeedbackMode("INDIRECT");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x40, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", UNKNOWN, t.getKnownState());
+        assertEquals( UNKNOWN, t.getKnownState(), "check known state after message (1)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[]{0xb1, 0x14, 0x50, 0x00}));
-        Assert.assertEquals("check known state after message (1)", UNKNOWN, t.getKnownState());
+        assertEquals( UNKNOWN, t.getKnownState(), "check known state after message (2)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x60, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getKnownState(), "check known state after message (3)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x70, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (4)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x40, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (5)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[]{0xb1, 0x14, 0x50, 0x00}));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (6)");
 
         lnt.setFeedbackMode("EXACT");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x60, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", INCONSISTENT, t.getKnownState());
+        assertEquals( INCONSISTENT, t.getKnownState(), "check known state after message (7)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x40, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", INCONSISTENT, t.getKnownState());
+        assertEquals( INCONSISTENT, t.getKnownState(), "check known state after message (8)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[]{0xb1, 0x14, 0x50, 0x00}));
-        Assert.assertEquals("check known state after message (1)", THROWN, t.getKnownState());
+        assertEquals( THROWN, t.getKnownState(), "check known state after message (9)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x14, 0x70, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (10)");
 
         lnt = new LnTurnout("L", 22, lnis);
         lnt.setFeedbackMode("MONITORING");
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x15, 0x60, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (11)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x15, 0x40, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (12)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[]{0xb1, 0x15, 0x50, 0x00}));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (13)");
 
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x15, 0x70, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (14)");
 
         lnt = new LnTurnout("L", 23, lnis);
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xb1, 0x16, 0x60, 0x00} ));
-        Assert.assertEquals("check known state after message (1)", CLOSED, t.getKnownState());
+        assertEquals( CLOSED, t.getKnownState(), "check known state after message (15)");
     }
 
     @Test
     public void testAdjustStateForInversion() {
-        Assert.assertFalse("check default inversion", lnt.getInverted());
+        assertFalse( lnt.getInverted(), "check default inversion");
         lnt.setBinaryOutput(true);
         lnt.setUseOffSwReqAsConfirmation(false);
         lnt.setCommandedState(CLOSED);
-        Assert.assertEquals("check commanded state after forward closed to layout (1)", CLOSED, t.getCommandedState());
-        Assert.assertEquals("check num messages sent after forward closed to layout (1)",1, lnis.outbound.size());
-        Assert.assertEquals("check byte 2 of message (1)", 0x30, lnis.outbound.get(0).getElement(2));
+        assertEquals( CLOSED, t.getCommandedState(), "check commanded state after forward closed to layout (1)");
+        assertEquals( 1, lnis.outbound.size(), "check num messages sent after forward closed to layout (1)");
+        assertEquals( 0x30, lnis.outbound.get(0).getElement(2), "check byte 2 of message (1)");
 
         lnt.setCommandedState(THROWN);
-        Assert.assertEquals("check commanded state after forward thrown to layout (2)", THROWN, t.getCommandedState());
-        Assert.assertEquals("check num messages sent after forward thrown to layout (2)",2, lnis.outbound.size());
-        Assert.assertEquals("check byte 2 of message (2)", 0x10, lnis.outbound.get(1).getElement(2));
+        assertEquals( THROWN, t.getCommandedState(), "check commanded state after forward thrown to layout (2)");
+        assertEquals( 2, lnis.outbound.size(), "check num messages sent after forward thrown to layout (2)");
+        assertEquals( 0x10, lnis.outbound.get(1).getElement(2), "check byte 2 of message (2)");
 
         lnt.setInverted(true);
         // when inverted, the commanded state remains unmodified; only the LocoNet
         // message sent gets state inverted.
         lnt.setCommandedState(THROWN);
-        Assert.assertEquals("check commanded state after forward closed to layout (3)", THROWN, t.getCommandedState());
-        Assert.assertEquals("check num messages sent after forward closed to layout (3)",3, lnis.outbound.size());
-        Assert.assertEquals("check byte 2 of message (1)", 0x30, lnis.outbound.get(2).getElement(2));
+        assertEquals( THROWN, t.getCommandedState(), "check commanded state after forward closed to layout (3)");
+        assertEquals( 3, lnis.outbound.size(), "check num messages sent after forward closed to layout (3)");
+        assertEquals( 0x30, lnis.outbound.get(2).getElement(2), "check byte 2 of message (1)");
 
         lnt.setCommandedState(CLOSED);
-        Assert.assertEquals("check commanded state after forward thrown to layout (4)", CLOSED, t.getCommandedState());
-        Assert.assertEquals("check num messages sent after forward thrown to layout (4)",4, lnis.outbound.size());
-        Assert.assertEquals("check byte 2 of message (2)", 0x10, lnis.outbound.get(3).getElement(2));
+        assertEquals( CLOSED, t.getCommandedState(), "check commanded state after forward thrown to layout (2)");
+        assertEquals( 4, lnis.outbound.size(), "check num messages sent after forward thrown to layout (4)");
+        assertEquals( 0x10, lnis.outbound.get(3).getElement(2), "check byte 2 of message (2)");
 
     }
 
-    LocoNetInterfaceScaffold lnis;
-    LocoNetSystemConnectionMemo memo;
+    private LocoNetInterfaceScaffold lnis;
+    private LocoNetSystemConnectionMemo memo;
 
     @Override
     @BeforeEach
@@ -826,6 +815,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnTurnoutTest.class);
 
 }

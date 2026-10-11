@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,9 +12,9 @@ import org.junit.jupiter.api.*;
 public class PiSprogNanoSerialDriverAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testPiSprogNanoSerialDriverAdapterConstructor(){
        PiSprogNanoSerialDriverAdapter a = new PiSprogNanoSerialDriverAdapter();
-       Assert.assertNotNull(a);
+       Assertions.assertNotNull(a);
  
        // clean up
        a.getSystemConnectionMemo().getSprogTrafficController().dispose();

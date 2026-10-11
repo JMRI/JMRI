@@ -2,7 +2,6 @@ package jmri.util.startup;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class StartupActionsManagerTest {
     @Test
     public void testCTor() {
         StartupActionsManager t = new StartupActionsManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class StartupActionsManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StartupActionsManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StartupActionsManagerTest.class);
 
 }

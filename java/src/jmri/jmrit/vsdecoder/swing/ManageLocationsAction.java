@@ -15,8 +15,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.PhysicalLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Loading of Reporters, Blocks, Locations and Listener attributes.
@@ -71,9 +69,9 @@ public class ManageLocationsAction extends AbstractAction {
                         reporterTable[i][ManageLocationsTableModel.SYSNAMECOL] = r.getSystemName();
                         reporterTable[i][ManageLocationsTableModel.USERNAMECOL] = r.getDisplayName();
                         reporterTable[i][ManageLocationsTableModel.USECOL + 1] = false;
-                        reporterTable[i][ManageLocationsTableModel.XCOL + 1] = Float.valueOf(0.0f);
-                        reporterTable[i][ManageLocationsTableModel.YCOL + 1] = Float.valueOf(0.0f);
-                        reporterTable[i][ManageLocationsTableModel.ZCOL + 1] = Float.valueOf(0.0f);
+                        reporterTable[i][ManageLocationsTableModel.XCOL + 1] = 0.0f;
+                        reporterTable[i][ManageLocationsTableModel.YCOL + 1] = 0.0f;
+                        reporterTable[i][ManageLocationsTableModel.ZCOL + 1] = 0.0f;
                         reporterTable[i][ManageLocationsTableModel.TUNNELCOL + 1] = false;
                     }
                 }
@@ -89,7 +87,7 @@ public class ManageLocationsAction extends AbstractAction {
                 // NOTE: Unlike Reporters, all Blocks are (now) PhysicalLocationReporters, so no need to do a check here.
                 // We'll keep the explicit cast for now, but it's not actually necessary.
                 if (b != null) {
-                    PhysicalLocation p = ((PhysicalLocationReporter) b).getPhysicalLocation();
+                    PhysicalLocation p = b.getPhysicalLocation();
                     blockTable[i][ManageLocationsTableModel.SYSNAMECOL] = b.getSystemName();
                     blockTable[i][ManageLocationsTableModel.USERNAMECOL] = b.getDisplayName();
                     blockTable[i][ManageLocationsTableModel.USECOL + 1] = true;
@@ -128,6 +126,6 @@ public class ManageLocationsAction extends AbstractAction {
         f.setExtendedState(Frame.NORMAL);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManageLocationsAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManageLocationsAction.class);
 
 }

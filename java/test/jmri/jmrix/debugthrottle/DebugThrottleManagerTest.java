@@ -1,5 +1,7 @@
 package jmri.jmrix.debugthrottle;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -20,7 +22,8 @@ public class DebugThrottleManagerTest extends jmri.managers.AbstractThrottleMana
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tm = new DebugThrottleManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        tm = new DebugThrottleManager(memo);
     }
 
     @AfterEach
@@ -28,6 +31,6 @@ public class DebugThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DebugThrottleManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DebugThrottleManagerTest.class);
 
 }

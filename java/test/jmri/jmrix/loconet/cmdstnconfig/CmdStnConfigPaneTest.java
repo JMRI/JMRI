@@ -26,6 +26,6 @@ public class CmdStnConfigPaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CmdStnConfigPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CmdStnConfigPaneTest.class);
 
 }

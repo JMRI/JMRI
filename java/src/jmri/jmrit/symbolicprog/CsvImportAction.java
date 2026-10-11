@@ -29,5 +29,5 @@ public class CsvImportAction extends GenericImportAction {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvImportAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvImportAction.class);
 }

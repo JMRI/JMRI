@@ -1,17 +1,22 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.jupiter.api.*;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -23,7 +28,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
 
     @Test
     public void testCreate() {
-        Assert.assertNotNull(a);
+        assertNotNull(a);
     }
 
     @Override
@@ -34,7 +39,8 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
     @Override
     @Test
     public void testGetClassDescription() {
-        Assert.assertEquals("Signal Group Table Action class description", "Signal Group Table", a.getClassDescription());
+        assertEquals( "Signal Group Table", a.getClassDescription(),
+                "Signal Group Table Action class description");
     }
 
     /**
@@ -44,13 +50,15 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
     @Override
     @Test
     public void testIncludeAddButton() {
-        Assert.assertTrue("Default include add button", a.includeAddButton());
+        assertTrue( a.includeAddButton(), "Default include add button");
     }
 
     @Test
-    public void testAdd() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)", "VM1");
+    @DisabledIfHeadless
+    public void testAdd() {
+
+        var vsm = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)", "VM1");
+        assertNotNull(vsm);
         // create a Turnout
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         // create a signal head
@@ -62,17 +70,17 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         // open Signal Group Table
         SignalGroupTableAction _sGroupTable;
         _sGroupTable = new SignalGroupTableAction();
-        Assert.assertNotNull("found SignalGroupTable frame", _sGroupTable);
+        assertNotNull( _sGroupTable, "found SignalGroupTable frame");
 
         _sGroupTable.addPressed(null);
         JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("AddSignalGroup"), true, true);
-        Assert.assertNotNull("found Add frame", af);
+        assertNotNull( af, "found Add frame");
 
         // create a new signal group
         _sGroupTable._userName.setText("TestGroup");
-        Assert.assertEquals("user name", "TestGroup", _sGroupTable._userName.getText());
+        assertEquals( "TestGroup", _sGroupTable._userName.getText(), "user name");
         _sGroupTable._systemName.setText("IF1");
-        Assert.assertEquals("system name", "IF1", _sGroupTable._systemName.getText());
+        assertEquals( "IF1", _sGroupTable._systemName.getText(), "system name");
         _sGroupTable.mainSignalComboBox.setSelectedItemByName("VM1");
         SignalGroup g = _sGroupTable.checkNamesOK();
         _sGroupTable.setValidSignalMastAspects();
@@ -103,14 +111,15 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
 
     @Test
     @Override
+    @DisabledIfHeadless
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
@@ -118,18 +127,25 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("LabelSystemName"));
         ((JTextField) jlo.getLabelFor()).setText("1");
         //and press create
-        jmri.util.swing.JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
+
+        // pops dialog No Signal Mast Present
+        Thread t = JemmyUtil.createModalDialogOperatorThread("Error", "OK");
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.waitThreadTerminated(t);
+
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
+        jf.waitClosed();
     }
 
     @Test
     @Disabled("needs further setup")
     @ToDo("To Edit, the signal group needs a mast added to it")
     @Override
+    @DisabledIfHeadless
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -169,7 +185,6 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
     @Override
     public void tearDown() {
         a = null;
-        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 }

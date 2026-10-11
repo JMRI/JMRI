@@ -1,7 +1,12 @@
 package jmri.jmrix.lenz.liusb;
 
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +20,7 @@ public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
 
     @Test
     @Override
-    public void testOutbound() throws Exception {
+    public void testOutbound() throws IOException {
         LIUSBXNetPacketizer c = (LIUSBXNetPacketizer)tc;
         // connect to iostream via port controller scaffold
         jmri.jmrix.lenz.XNetPortControllerScaffold p = new jmri.jmrix.lenz.XNetPortControllerScaffold();
@@ -27,14 +32,14 @@ public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
         p.flush();
         jmri.util.JUnitUtil.waitFor(()-> p.tostream.available()==6,"total length 6");
 
-        Assert.assertEquals("total length ", 6, p.tostream.available());
-        Assert.assertEquals("Header 0", 0xFF, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("Header 1", 0xFE, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 0", 0x52, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 1", 0x05, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 2", 0x8A, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("parity", 0xDD, p.tostream.readByte() & 0xff);
-        Assert.assertEquals("remaining ", 0, p.tostream.available());
+        assertEquals( 6, p.tostream.available(), "total length");
+        assertEquals( 0xFF, p.tostream.readByte() & 0xff, "Header 0");
+        assertEquals( 0xFE, p.tostream.readByte() & 0xff, "Header 1");
+        assertEquals( 0x52, p.tostream.readByte() & 0xff, "Char 0");
+        assertEquals( 0x05, p.tostream.readByte() & 0xff, "Char 1");
+        assertEquals( 0x8A, p.tostream.readByte() & 0xff, "Char 2");
+        assertEquals( 0xDD, p.tostream.readByte() & 0xff, "parity");
+        assertEquals( 0, p.tostream.available(), "remaining");
     }
 
 
@@ -48,11 +53,8 @@ public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
-        try {
-           port = new XNetPortControllerScaffold();
-        } catch (Exception e) {
-           Assert.fail("Error creating test port");
-        }
+        port = assertDoesNotThrow( () -> new XNetPortControllerScaffold(),
+            "Error creating test port");
     }
 
 }

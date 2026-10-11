@@ -2,8 +2,9 @@ package jmri;
 
 import jmri.implementation.AbstractNamedBean;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for the StringIO class
@@ -16,13 +17,13 @@ public class StringIOTest {
     public void testStringIO() throws JmriException {
         StringIO stringIO = new MyStringIO("String");
         stringIO.setCommandedStringValue("One string");
-        Assert.assertTrue("StringIO has value 'One string'", "One string".equals(stringIO.getCommandedStringValue()));
+        assertEquals( "One string", stringIO.getCommandedStringValue(), "StringIO has value 'One string'");
         stringIO.setCommandedStringValue("Other string");
-        Assert.assertTrue("StringIO has value 'Other string'", "Other string".equals(stringIO.getCommandedStringValue()));
+        assertEquals( "Other string", stringIO.getCommandedStringValue(), "StringIO has value 'Other string'");
         stringIO.setCommandedStringValue("One string");
-        Assert.assertTrue("StringIO has value 'One string'", "One string".equals(stringIO.getKnownStringValue()));
+        assertEquals( "One string", stringIO.getKnownStringValue(), "StringIO has value 'One string'");
         stringIO.setCommandedStringValue("Other string");
-        Assert.assertTrue("StringIO has value 'Other string'", "Other string".equals(stringIO.getKnownStringValue()));
+        assertEquals( "Other string", stringIO.getKnownStringValue(), "StringIO has value 'Other string'");
     }
     
     @BeforeEach

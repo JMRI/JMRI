@@ -307,7 +307,7 @@ public class SimulatorAdapter extends TamsPortController implements Runnable {
         }
     }
 
-    private final static Logger log = LoggerFactory
+    private static final Logger log = LoggerFactory
             .getLogger(SimulatorAdapter.class);
 
 }

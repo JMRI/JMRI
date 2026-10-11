@@ -41,6 +41,6 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown(); // handles frame member
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AutoTrainsFrameTest.class);
 
 }

@@ -45,7 +45,7 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
         tcs.setFileName(fileNameTextField.getText());
 
         if (ae.getSource() == testButton) {
-            if (tcs.excelFileExists()) {
+            if (tcs.doesExcelFileExist()) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DirectoryNameFileName",
                         tcs.getDirectoryName(), tcs.getFileName()),
                         Bundle.getMessage("ManifestCreatorFound"), JmriJOptionPane.INFORMATION_MESSAGE);

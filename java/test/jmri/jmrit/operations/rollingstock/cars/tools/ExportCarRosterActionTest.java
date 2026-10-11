@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -27,6 +27,6 @@ public class ExportCarRosterActionTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class);
 
 }

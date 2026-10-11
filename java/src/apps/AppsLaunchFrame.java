@@ -72,7 +72,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
-    static public JComponent buttonSpace() {
+    public static JComponent buttonSpace() {
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
@@ -80,5 +80,5 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     // GUI members
     private JMenuBar menuBar;
 
-//     private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class);
+//     private static final Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class);
 }

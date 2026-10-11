@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
@@ -11,11 +15,11 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -26,7 +30,7 @@ public class DefaultStringActionManagerXmlTest {
     @Test
     public void testCTor() {
         DefaultStringActionManagerXml b = new DefaultStringActionManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
     @Test
@@ -79,7 +83,7 @@ public class DefaultStringActionManagerXmlTest {
 //        System.out.format("Class name: %s%n", PrivateConstructorXml.class.getName());
     }
 
-    @Ignore("Cannot load xml configurator")
+    @Disabled("Cannot load xml configurator")
     @Test
     public void testStore() {
         DefaultStringActionManagerXml b = new DefaultStringActionManagerXml();
@@ -116,20 +120,20 @@ public class DefaultStringActionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_STRING_ACTIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(StringActionManager.class)
-                        instanceof DefaultStringActionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultStringActionManagerXmlTest.MyManager.class,
+            InstanceManager.getDefault(StringActionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultStringActionManagerXml b = new DefaultStringActionManagerXml();
         b.replaceActionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(StringActionManager.class)
-                        instanceof DefaultStringActionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(StringActionManager.class)
+            instanceof DefaultStringActionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-//    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
+//    @Disabled("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
 
@@ -153,21 +157,20 @@ public class DefaultStringActionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_STRING_ACTIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(StringActionManager.class)
-                        instanceof DefaultStringActionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultStringActionManagerXmlTest.MyManager.class,
+                InstanceManager.getDefault(StringActionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultStringActionManagerXml b = new DefaultStringActionManagerXml();
         b.replaceActionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(StringActionManager.class)
-                        instanceof DefaultStringActionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(StringActionManager.class)
+            instanceof DefaultStringActionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -176,7 +179,7 @@ public class DefaultStringActionManagerXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -185,7 +188,7 @@ public class DefaultStringActionManagerXmlTest {
 
 
 
-    private class MyStringAction extends StringActionMemory {
+    private static class MyStringAction extends StringActionMemory {
 
         MyStringAction() {
             super("IQSA9999", null);
@@ -196,14 +199,14 @@ public class DefaultStringActionManagerXmlTest {
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class PrivateConstructorXml extends StringActionMemoryXml {
+    static class PrivateConstructorXml extends StringActionMemoryXml {
         private PrivateConstructorXml() {
         }
     }
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class ThrowExceptionXml extends StringActionMemoryXml {
+    static class ThrowExceptionXml extends StringActionMemoryXml {
         @Override
         public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
             throw new JmriConfigureXmlException();
@@ -211,7 +214,7 @@ public class DefaultStringActionManagerXmlTest {
     }
 
 
-    class MyManager extends DefaultStringActionManager {
+    static class MyManager extends DefaultStringActionManager {
     }
 
 }

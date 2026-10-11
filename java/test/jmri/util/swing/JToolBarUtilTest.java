@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class JToolBarUtilTest {
     @Test
     public void testCTor() {
         JToolBarUtil t = new JToolBarUtil();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class JToolBarUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JToolBarUtilTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JToolBarUtilTest.class);
 
 }

@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -13,12 +15,10 @@ import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -29,48 +29,42 @@ import org.netbeans.jemmy.operators.*;
 public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         ActionLightSwing t = new ActionLightSwing();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCreatePanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JDialog dialog = new JDialog();
 
-        Assert.assertTrue("panel is not null",
-            null != new ActionLightSwing(dialog).getConfigPanel(new JPanel()));
-        Assert.assertTrue("panel is not null",
-            null != new ActionLightSwing(dialog).getConfigPanel(new ActionLight("IQDA1", null), new JPanel()));
+        assertNotNull( new ActionLightSwing(dialog).getConfigPanel(new JPanel()), "panel is not null");
+        assertNotNull( new ActionLightSwing(dialog).getConfigPanel(new ActionLight("IQDA1", null), new JPanel()), "panel is not null");
     }
 
-    ConditionalNG conditionalNG = null;
-    ActionLight action = null;
+    private ConditionalNG conditionalNG = null;
+    private ActionLight action = null;
 
-    @org.junit.Ignore("Fails in Java 11 testing")
+    @Disabled("Fails in Java 11 testing")
     @Test
+    @DisabledIfHeadless
     public void testDialogUseExistingLight() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Light l1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         InstanceManager.getDefault(LightManager.class).provide("IL2");
 
         ThreadingUtil.runOnGUI(() -> {
-            try {
-                jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
-                        .createLogixNG("A logixNG with an empty conditionlNG");
-                conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
+            jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                    .createLogixNG("A logixNG with an empty conditionlNG");
+            conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "IQC1", null);
 
-                action = new ActionLight("IQDA1", null);
-                MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-                conditionalNG.getChild(0).connect(maleSocket);
-            } catch (SocketAlreadyConnectedException e) {
-                Assert.fail("SocketAlreadyConnectedException");
-            }
+            action = new ActionLight("IQDA1", null);
+            MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+            assertDoesNotThrow( () ->
+                conditionalNG.getChild(0).connect(maleSocket));
         });
 
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
@@ -79,15 +73,14 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
-        JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getSelectEnum().getEnum();});
+        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;}, "nb not null");
+        JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getSelectEnum().getEnum();}, "Light off");
 
-        Assert.assertEquals("IL1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
-        Assert.assertEquals(ActionLight.LightState.Off, action.getSelectEnum().getEnum());
+        assertEquals("IL1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
+        assertEquals(ActionLight.LightState.Off, action.getSelectEnum().getEnum());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -99,7 +92,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

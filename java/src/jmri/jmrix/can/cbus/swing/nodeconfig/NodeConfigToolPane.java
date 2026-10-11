@@ -20,6 +20,7 @@ import jmri.GlobalProgrammerManager;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
+import jmri.jmrix.can.cbus.CbusDccProgrammer.CbusDccProgrammerConfigurator;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
@@ -194,7 +195,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         });
 
         add(_pane1);
-        _pane1.setVisible(true);
+        ThreadingUtil.runOnGUI( () ->  _pane1.setVisible(true) );
 
         tabbedPane.addChangeListener((ChangeEvent e) -> {
             userViewChanged();
@@ -281,9 +282,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             getTabs().get(tabindex).setNode( getNodeModel().getNodeByNodeNum(_selectedNode) );
 
             try {
-                ((CbusDccProgrammer)(progMan.getGlobalProgrammer())).setNodeOfInterest(getNodeModel().getNodeByNodeNum(_selectedNode));
+                ((CbusDccProgrammerConfigurator)(progMan.getGlobalProgrammer().getConfigurator()))
+                        .setNodeOfInterest(getNodeModel().getNodeByNodeNum(_selectedNode));
             } catch(NullPointerException e) {
-                log.info("No programmer available fro NV programming");
+                log.info("No programmer available for NV programming");
             }
         }
         else {
@@ -861,7 +863,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      * Nested class to create one of these using old-style defaults.
      * Used as a startup action
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemNodeConfig"),

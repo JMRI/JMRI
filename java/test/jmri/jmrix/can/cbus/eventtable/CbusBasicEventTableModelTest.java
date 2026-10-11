@@ -2,8 +2,6 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -19,7 +17,7 @@ public class CbusBasicEventTableModelTest {
     public void testCTor() {
         
         CbusBasicEventTableModel t = new CbusBasicEventTableModel(memo);
-        assertThat(t).isNotNull();
+        Assertions.assertNotNull(t);
         
     }
 
@@ -41,6 +39,6 @@ public class CbusBasicEventTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusBasicEventTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusBasicEventTableModelTest.class);
 
 }

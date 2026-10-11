@@ -2,7 +2,11 @@ package jmri.configurexml;
 
 
 import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.stream.Stream;
+
+import jmri.JmriException;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,7 +34,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file) throws Exception {
+    public void loadAndStoreTest(File file) throws IOException, JmriException, ParseException {
         super.loadLoadStoreFileCheck(file);
     }
 

@@ -81,7 +81,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends RfidNamedPaneAction {
+    public static class Default extends RfidNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MonitorXTitle", "RFID Device"),

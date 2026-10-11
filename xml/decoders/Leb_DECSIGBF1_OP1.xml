@@ -155,12 +155,12 @@
 				<label>Turnout_C_Address_High5</label>
 			</variable>
 			
-			
-			
-			
+<!-- commented out because without a type specification element it doesn't do anything			
 			<variable item="Allumage choix A" CV="4" mask="XXXXXXXX" default="0">
 				<label>Allumage choix A</label>
 			</variable>
+-->
+
 			<variable item="Allumage ID A" CV="4" mask="XXXXXXXV" default="0">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Allumage ID A</label>
@@ -180,10 +180,12 @@
 				<tooltip>Indication a la mise sous tension A</tooltip>
 			</variable>
 			
-			
+<!-- commented out because without a type specification element it doesn't do anything			
 			<variable item="Allumage choix B" CV="5" mask="XXXXXXXX" default="0">
 				<label>Allumage choix B</label>
 			</variable>
+-->
+
 			<variable item="Allumage ID B" CV="5" mask="XXXXXXXV" default="0">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Allumage ID B</label>
@@ -203,9 +205,12 @@
 			</variable>
 			
 
+<!-- commented out because without a type specification element it doesn't do anything
 			<variable item="Allumage choix C" CV="6" mask="XXXXXXXX" default="0">
 				<label>Allumage choix C</label>
 			</variable>
+-->
+
 			<variable item="Allumage ID C" CV="6" mask="XXXXXXXV" default="0">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Allumage ID C</label>

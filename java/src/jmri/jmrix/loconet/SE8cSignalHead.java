@@ -239,6 +239,6 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == mNumber + 1;
     }
-    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class);
+    private static final Logger log = LoggerFactory.getLogger(SE8cSignalHead.class);
 
 }

@@ -1,16 +1,17 @@
 package jmri.jmrit.speedometer;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of SpeedometerAction
@@ -21,37 +22,35 @@ public class SpeedometerActionTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerAction action = new SpeedometerAction();
-        Assert.assertNotNull("exists", action);
+        assertNotNull(action, "exists");
     }
 
     @Test
     public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerAction action = new SpeedometerAction("Test SpeedometerAction");
-        Assert.assertNotNull("exists", action);
+        assertNotNull(action, "exists");
     }
 
     @Test
     public void testMakePanel(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerAction action = new SpeedometerAction("Test SpeedometerAction");
-        Assert.assertThrows(IllegalArgumentException.class, () -> action.makePanel());
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> action.makePanel());
+        assertNotNull(ex);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testActionCreateAndFire() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerAction action = new SpeedometerAction("Sensor Group");
         action.actionPerformed(null);
         // wait for frame with "Speedometer" in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
         JFrame frame = JFrameOperator.waitJFrame("Speedometer", false, false);
-        Assert.assertNotNull(frame);
+        assertNotNull(frame);
         // verify the action provided the expected frame class
-        Assert.assertEquals(SpeedometerFrame.class.getName(), frame.getClass().getName());
+        assertEquals(SpeedometerFrame.class.getName(), frame.getClass().getName());
         JUnitUtil.dispose(frame);
     }
 

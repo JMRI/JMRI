@@ -25,6 +25,9 @@ public class MS100Adapter extends LnPortController {
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
         options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
+        options.put("LoconetUpdateSlotOnMessageCreation",                                       // NOI18N
+                new Option(Bundle.getMessage("LoconetUpdateSlotOnMessageCreationLabel"),        // I18N
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} ));  // I18N
 
     }
 
@@ -68,6 +71,7 @@ public class MS100Adapter extends LnPortController {
         setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
         LnPacketizer packets = new LnPacketizer(this.getSystemConnectionMemo());
+        packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
         packets.connectPort(this);
 
         // create memo

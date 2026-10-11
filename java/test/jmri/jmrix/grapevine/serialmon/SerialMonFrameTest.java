@@ -1,35 +1,36 @@
 package jmri.jmrix.grapevine.serialmon;
 
-import java.awt.GraphicsEnvironment;
-import jmri.jmrix.grapevine.SerialMessage;
-import jmri.jmrix.grapevine.SerialReply;
-import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
+import jmri.jmrix.grapevine.SerialMessage;
+import jmri.jmrix.grapevine.SerialReply;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.grapevine.serialmon package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008
  */
+@DisabledIfHeadless
 public class SerialMonFrameTest {
 
     private GrapevineSystemConnectionMemo memo = null; 
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SerialMonFrame t = new SerialMonFrame(memo);
-        Assert.assertNotNull("exists", t);
+        assertNotNull( t, "exists");
     }
 
     @Test
-    public void testDisplay() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testDisplay() {
+
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(memo) {
             {
@@ -58,23 +59,25 @@ public class SerialMonFrameTest {
         f.reply(r);
 
         //close frame
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         memo = new GrapevineSystemConnectionMemo();
         SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    public void tearDown() {
+        memo.getTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
 
     }

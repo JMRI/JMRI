@@ -21,7 +21,12 @@ class MyNameGenerator(org.openlcb.cdi.swing.CdiPanel.FileNameGenerator) :
         # assemble desired filename from above parts
         result = "config-"+nodeName+"-"+time+".txt"
         
-        # replace spaces with underscores and return the result
-        return result.replace(" ", "_")
+        if (nodeName is None or nodeName == "") :
+            result = "config-Node-"+nodeID+"+"+time+".txt"
+        
+        # replace illegal characters with underscores and return the result
+        import re
+        illegal_chars = r'[ ,`\x27<>:"/\\|?*\x00-\x1f]'  # 0x27 is is single quote
+        return re.sub(illegal_chars, "_", result)
         
 org.openlcb.cdi.swing.CdiPanel.fileNameGenerator = MyNameGenerator()

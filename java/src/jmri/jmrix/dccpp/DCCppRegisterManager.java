@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Defines and Manages the Registers (~ slots) for DCC++ Base Station
+ * Defines and Manages the Registers (~ slots) for DCC-EX Base Station
  *
  * @author Mark Underwood Copyright (C) 2015
  * @author Harald Barth Copyright (C) 2019
@@ -92,7 +92,7 @@ public class DCCppRegisterManager {
     /*
      * We need to register for logging
      */
-    private final static Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class);
 
 }
 

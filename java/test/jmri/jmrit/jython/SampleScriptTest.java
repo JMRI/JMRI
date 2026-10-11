@@ -48,14 +48,18 @@ public class SampleScriptTest {
             }
         });
 
+        // non-null array
         File[] files = (new File("jython/test")).listFiles((File a, String b) -> {
                                 for (var ext : allExtensions) {
-                                    if (b.endsWith(ext)) return true;
+                                    if (b.endsWith(ext)) {
+                                        return true;
+                                    }
                                 }
                                 return false;
                              });
+        Assertions.assertTrue(files.length>0);
         Arrays.sort(files);  // process in known (alphanumeric) order
-        return files != null ? Arrays.stream(files) : Stream.empty();
+        return Arrays.stream(files);
     }
 
     @ParameterizedTest
@@ -79,6 +83,7 @@ public class SampleScriptTest {
             JUnitAppender.assertWarnMessage("JavaScriptTest: Turnout.THROWN is 4 (WARN OK here)");
         }
 
+        JUnitAppender.suppressWarnMessage("Unexpected Exception ends AbstractAutomaton thread");
     }
 
     // test for jython/TurnoutStatePersistence.py
@@ -148,10 +153,11 @@ public class SampleScriptTest {
         JUnitUtil.waitFor(() ->  ( myt3.getCommandedState() == Turnout.INCONSISTENT),"Turnout did not return to Inconsistent" );
         JUnitUtil.waitFor(() ->  ( myt4.getCommandedState() == Turnout.UNKNOWN),"Turnout did not return to Unknown" );
 
+        JUnitAppender.suppressWarnMessageStartsWith("Turnout state file "); // Turnout state file '/tmp/junit15888088443980290405/TurnoutState.csv' does not exist
     }
 
     @BeforeAll
-    static public void startTests() {
+    public static void startTests() {
         // this is to System.out because that's where the test output goes
         System.out.println("\njmri.jmrit.jython.SampleScriptTest starts, following output is from script tests");
     }
@@ -176,23 +182,22 @@ public class SampleScriptTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.clearRouteThreads();
         JUnitUtil.clearBlockBossLogicThreads();
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitAppender.suppressWarnMessageStartsWith("Turnout state file "); // Turnout state file '/tmp/junit15888088443980290405/TurnoutState.csv' does not exist
         JUnitUtil.tearDown();
     }
 
     @AfterAll
-    static public void endTests() {
+    public static void endTests() {
         // this is to System.out because that's where the test output goes
         System.out.println("jmri.jmrit.jython.SampleScriptTest ends, above output was from script tests");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleScriptTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleScriptTest.class);
 
 }

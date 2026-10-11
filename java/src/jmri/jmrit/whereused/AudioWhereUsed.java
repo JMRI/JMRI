@@ -17,7 +17,7 @@ public class AudioWhereUsed {
      * @param audio The audio bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean audio) {
+    public static JTextArea getWhereUsed(NamedBean audio) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameAudio"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, audio.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

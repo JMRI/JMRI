@@ -29,6 +29,6 @@ public class JmriSRCPServiceHandlerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriSRCPServiceHandlerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriSRCPServiceHandlerTest.class);
 
 }

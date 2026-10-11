@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -10,10 +19,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ActionSensor
@@ -30,22 +38,18 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testSensorState() {
-        Assert.assertEquals("String matches", "Inactive", ActionSensor.SensorState.Inactive.toString());
-        Assert.assertEquals("String matches", "Active", ActionSensor.SensorState.Active.toString());
-        Assert.assertEquals("String matches", "Toggle", ActionSensor.SensorState.Toggle.toString());
+        assertEquals( "Inactive", ActionSensor.SensorState.Inactive.toString(), "String matches");
+        assertEquals( "Active", ActionSensor.SensorState.Active.toString(), "String matches");
+        assertEquals( "Toggle", ActionSensor.SensorState.Toggle.toString(), "String matches");
 
-        Assert.assertTrue("objects are equal", ActionSensor.SensorState.Inactive == ActionSensor.SensorState.get(Sensor.INACTIVE));
-        Assert.assertTrue("objects are equal", ActionSensor.SensorState.Active == ActionSensor.SensorState.get(Sensor.ACTIVE));
-        Assert.assertTrue("objects are equal", ActionSensor.SensorState.Toggle == ActionSensor.SensorState.get(-1));
+        assertSame( ActionSensor.SensorState.Inactive, ActionSensor.SensorState.get(Sensor.INACTIVE), "objects are equal");
+        assertSame( ActionSensor.SensorState.Active, ActionSensor.SensorState.get(Sensor.ACTIVE), "objects are equal");
+        assertSame( ActionSensor.SensorState.Toggle, ActionSensor.SensorState.get(-1), "objects are equal");
 
-        boolean hasThrown = false;
-        try {
-            ActionSensor.SensorState.get(100);      // The number 100 is a state that ActionSensor.SensorState isn't aware of
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "invalid sensor state".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            ActionSensor.SensorState.get(100),      // The number 100 is a state that ActionSensor.SensorState isn't aware of
+                "Exception is thrown");
+        assertEquals( "invalid sensor state", ex.getMessage(), "Error message is correct");
     }
 
     @Override
@@ -89,54 +93,48 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCtor() throws JmriException {
-        Assert.assertTrue("object exists", _base != null);
+        assertNotNull( _base, "object exists");
 
         ActionSensor action2;
-        Assert.assertNotNull("sensor is not null", sensor);
+        assertNotNull( sensor, "sensor is not null");
         sensor.setState(Sensor.ON);
 
         action2 = new ActionSensor("IQDA321", null);
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set sensor '' to state Active", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertNull( action2.getUserName(), "Username matches");
+        assertEquals( "Set sensor '' to state Active", action2.getLongDescription(), "String matches");
 
         action2 = new ActionSensor("IQDA321", "My sensor");
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My sensor", action2.getUserName());
-        Assert.assertEquals("String matches", "Set sensor '' to state Active", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertEquals( "My sensor", action2.getUserName(), "Username matches");
+        assertEquals( "Set sensor '' to state Active", action2.getLongDescription(), "String matches");
 
         action2 = new ActionSensor("IQDA321", null);
         action2.getSelectNamedBean().setNamedBean(sensor);
-        Assert.assertTrue("sensor is correct", sensor == action2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set sensor IS1 to state Active", action2.getLongDescription());
+        assertSame( sensor, action2.getSelectNamedBean().getNamedBean().getBean(), "sensor is correct");
+        assertNotNull( action2, "object exists");
+        assertNull( action2.getUserName(), "Username matches");
+        assertEquals( "Set sensor IS1 to state Active", action2.getLongDescription(), "String matches");
 
         Sensor l = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         action2 = new ActionSensor("IQDA321", "My sensor");
         action2.getSelectNamedBean().setNamedBean(l);
-        Assert.assertTrue("sensor is correct", l == action2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My sensor", action2.getUserName());
-        Assert.assertEquals("String matches", "Set sensor IS1 to state Active", action2.getLongDescription());
+        assertSame( l, action2.getSelectNamedBean().getNamedBean().getBean(), "sensor is correct");
+        assertNotNull( action2, "object exists");
+        assertEquals( "My sensor", action2.getUserName(), "Username matches");
+        assertEquals( "Set sensor IS1 to state Active", action2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ActionSensor("IQA55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ActionSensor("IQA55:12:XY11", null);
+            fail("Did not throw, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ActionSensor("IQA55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ActionSensor("IQA55:12:XY11", "A name");
+            fail("Did not throw, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
@@ -144,16 +142,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == actionSensor.getChildCount());
+        assertEquals( 0, actionSensor.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            actionSensor.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            actionSensor.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
@@ -166,26 +159,28 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         sensor14.setUserName("Some user name");
 
         actionSensor.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("sensor handle is null", actionSensor.getSelectNamedBean().getNamedBean());
+        assertNull( actionSensor.getSelectNamedBean().getNamedBean(), "sensor handle is null");
 
         actionSensor.getSelectNamedBean().setNamedBean(sensor11);
-        Assert.assertTrue("sensor is correct", sensor11 == actionSensor.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( sensor11, actionSensor.getSelectNamedBean().getNamedBean().getBean(), "sensor is correct");
 
         actionSensor.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("sensor handle is null", actionSensor.getSelectNamedBean().getNamedBean());
+        assertNull( actionSensor.getSelectNamedBean().getNamedBean(), "sensor handle is null");
 
         actionSensor.getSelectNamedBean().setNamedBean(sensorHandle12);
-        Assert.assertTrue("sensor handle is correct", sensorHandle12 == actionSensor.getSelectNamedBean().getNamedBean());
+        assertSame( sensorHandle12, actionSensor.getSelectNamedBean().getNamedBean(), "sensor handle is correct");
 
         actionSensor.getSelectNamedBean().setNamedBean("A non existent sensor");
-        Assert.assertNull("sensor handle is null", actionSensor.getSelectNamedBean().getNamedBean());
+        assertNull( actionSensor.getSelectNamedBean().getNamedBean(), "sensor handle is null");
         JUnitAppender.assertErrorMessage("Sensor \"A non existent sensor\" is not found");
 
         actionSensor.getSelectNamedBean().setNamedBean(sensor13.getSystemName());
-        Assert.assertTrue("sensor is correct", sensor13 == actionSensor.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( sensor13, actionSensor.getSelectNamedBean().getNamedBean().getBean(), "sensor is correct");
 
-        actionSensor.getSelectNamedBean().setNamedBean(sensor14.getUserName());
-        Assert.assertTrue("sensor is correct", sensor14 == actionSensor.getSelectNamedBean().getNamedBean().getBean());
+        String sensor14UserName = sensor14.getUserName();
+        assertNotNull(sensor14UserName);
+        actionSensor.getSelectNamedBean().setNamedBean(sensor14UserName);
+        assertSame( sensor14, actionSensor.getSelectNamedBean().getNamedBean().getBean(), "sensor is correct");
     }
 
     @Test
@@ -193,32 +188,32 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Set the light
         sensor.setCommandedState(Sensor.INACTIVE);
         // The sensor should be inactive
-        Assert.assertTrue("sensor is inactive",sensor.getCommandedState() == Sensor.INACTIVE);
+        assertEquals( Sensor.INACTIVE, sensor.getCommandedState(), "sensor is inactive");
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
-        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
+        assertEquals( Sensor.ACTIVE, sensor.getCommandedState(), "sensor is active");
 
         // Test to set sensor to inactive
         actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Inactive);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
-        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.INACTIVE);
+        assertEquals( sensor.getCommandedState(), Sensor.INACTIVE, "sensor is active");
 
         // Test to set sensor to toggle
         actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
-        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
+        assertEquals( sensor.getCommandedState(), Sensor.ACTIVE, "sensor is active");
 
         // Test to set sensor to toggle
         actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
-        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.INACTIVE);
+        assertEquals( sensor.getCommandedState(), Sensor.INACTIVE, "sensor is active");
     }
 
     @Test
@@ -227,7 +222,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         m1.setValue("IS102");
 
-        Assert.assertTrue(conditionalNG.isActive());
+        assertTrue(conditionalNG.isActive());
         Sensor t1 = InstanceManager.getDefault(SensorManager.class).provide("IS101");
         Sensor t2 = InstanceManager.getDefault(SensorManager.class).provide("IS102");
         Sensor t3 = InstanceManager.getDefault(SensorManager.class).provide("IS103");
@@ -253,11 +248,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.ACTIVE, t1.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t2.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t3.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t4.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t5.getCommandedState());
+        assertEquals(Sensor.ACTIVE, t1.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t2.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t3.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t4.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t5.getCommandedState());
 
         // Test reference by memory addressing
         actionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
@@ -269,11 +264,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, t1.getCommandedState());
-        Assert.assertEquals(Sensor.ACTIVE, t2.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t3.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t4.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t5.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t1.getCommandedState());
+        assertEquals(Sensor.ACTIVE, t2.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t3.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t4.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t5.getCommandedState());
 
         // Test reference by local variable addressing
         actionSensor.getSelectNamedBean().setReference("{refSensor}");    // Points to "IS103"
@@ -286,11 +281,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, t1.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t2.getCommandedState());
-        Assert.assertEquals(Sensor.ACTIVE, t3.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t4.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t5.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t1.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t2.getCommandedState());
+        assertEquals(Sensor.ACTIVE, t3.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t4.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t5.getCommandedState());
 
         // Test local variable addressing
         actionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
@@ -302,11 +297,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, t1.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t2.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t3.getCommandedState());
-        Assert.assertEquals(Sensor.ACTIVE, t4.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t5.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t1.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t2.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t3.getCommandedState());
+        assertEquals(Sensor.ACTIVE, t4.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t5.getCommandedState());
 
         // Test formula addressing
         actionSensor.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
@@ -318,11 +313,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, t1.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t2.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t3.getCommandedState());
-        Assert.assertEquals(Sensor.INACTIVE, t4.getCommandedState());
-        Assert.assertEquals(Sensor.ACTIVE, t5.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t1.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t2.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t3.getCommandedState());
+        assertEquals(Sensor.INACTIVE, t4.getCommandedState());
+        assertEquals(Sensor.ACTIVE, t5.getCommandedState());
     }
 
     @Test
@@ -331,7 +326,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         m1.setValue("IS102");
 
-        Assert.assertTrue(conditionalNG.isActive());
+        assertTrue(conditionalNG.isActive());
 
 
         // Test direct addressing
@@ -342,14 +337,14 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
         // Test Inactive
         sensor.setState(Sensor.INACTIVE);
         actionSensor.getSelectEnum().setEnum(ActionSensor.SensorState.Active);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
 
 
         // Test reference by memory addressing
@@ -361,14 +356,14 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
         // Test Active
         m1.setValue("Active");
         sensor.setState(Sensor.INACTIVE);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
 
 
         // Test reference by local variable addressing
@@ -381,7 +376,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
         // Test Active
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Active");
@@ -389,7 +384,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
 
 
         // Test local variable addressing
@@ -402,7 +397,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
         // Test Active
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Active");
@@ -410,7 +405,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
 
 
         // Test formula addressing
@@ -424,7 +419,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.INACTIVE, sensor.getCommandedState());
         // Test Active
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Act");
@@ -433,82 +428,74 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct sensor should be thrown
-        Assert.assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
+        assertEquals(Sensor.ACTIVE, sensor.getCommandedState());
     }
 
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the action and set the sensor
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
-        Assert.assertNotNull("Sensor is not null", sensor);
+        sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        assertNotNull( sensor, "Sensor is not null");
         ActionSensor action = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         action.getSelectNamedBean().setNamedBean(sensor);
 
         // Get some other sensor for later use
         Sensor otherSensor = InstanceManager.getDefault(SensorManager.class).provide("IM99");
-        Assert.assertNotNull("Sensor is not null", otherSensor);
-        Assert.assertNotEquals("Sensor is not equal", sensor, otherSensor);
+        assertNotNull( otherSensor, "Sensor is not null");
+        assertNotEquals( sensor, otherSensor, "Sensor is not equal");
 
         // Test vetoableChange() for some other propery
         action.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Sensor matches", sensor, action.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( sensor, action.getSelectNamedBean().getNamedBean().getBean(), "Sensor matches");
 
         // Test vetoableChange() for a string
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Sensor matches", sensor, action.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( sensor, action.getSelectNamedBean().getNamedBean().getBean(), "Sensor matches");
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Sensor matches", sensor, action.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( sensor, action.getSelectNamedBean().getNamedBean().getBean(), "Sensor matches");
 
         // Test vetoableChange() for another sensor
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherSensor, null));
-        Assert.assertEquals("Sensor matches", sensor, action.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( sensor, action.getSelectNamedBean().getNamedBean().getBean(), "Sensor matches");
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherSensor, null));
-        Assert.assertEquals("Sensor matches", sensor, action.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( sensor, action.getSelectNamedBean().getNamedBean().getBean(), "Sensor matches");
 
         // Test vetoableChange() for its own sensor
-        boolean thrown = false;
-        try {
-            action.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", sensor, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        PropertyVetoException ex = assertThrows( PropertyVetoException.class, () ->
+            action.getSelectNamedBean().vetoableChange(
+                    new PropertyChangeEvent(this, "CanDelete", sensor, null)),
+                "Expected exception thrown");
+        assertNotNull(ex);
 
-        Assert.assertEquals("Sensor matches", sensor, action.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( sensor, action.getSelectNamedBean().getNamedBean().getBean(), "Sensor matches");
         action.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", sensor, null));
-        Assert.assertNull("Sensor is null", action.getSelectNamedBean().getNamedBean());
+        assertNull( action.getSelectNamedBean().getNamedBean(), "Sensor is null");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        assertSame( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Sensor", _base.getShortDescription());
+        assertEquals( "Sensor", _base.getShortDescription(), "String matches");
     }
 
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Set sensor IS1 to state Active", _base.getLongDescription());
+        assertEquals( "Set sensor IS1 to state Active", _base.getLongDescription(), "String matches");
     }
 
     @Test
     public void testChild() {
-        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
-        boolean hasThrown = false;
-        try {
-            _base.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        assertEquals( 0, _base.getChildCount(), "Num children is zero");
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            _base.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -518,7 +505,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
@@ -538,12 +525,12 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         _base = actionSensor;
         _baseMaleSocket = socket;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
         JUnitUtil.deregisterBlockManagerShutdownTask();

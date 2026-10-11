@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -13,13 +22,12 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
- * Test And
+ * Test AnalogFormula
  *
  * @author Daniel Bergqvist 2018
  */
@@ -46,7 +54,8 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
 
     @Override
     public MaleSocket getConnectableChild() {
-        AnalogExpressionBean childExpression = new AnalogExpressionConstant("IQAE"+Integer.toString(beanID++), null);
+        AnalogExpressionBean childExpression = new AnalogExpressionConstant("IQAE"+Integer.toString(beanID), null);
+        beanID++;
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;
@@ -80,7 +89,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     }
 
     @Override
-    public NamedBean createNewBean(String systemName) throws Exception {
+    public NamedBean createNewBean(String systemName) {
         AnalogFormula a = new AnalogFormula(systemName, null);
 //        a.setFormula("R1");
         return a;
@@ -98,50 +107,48 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     }
 
     @Test
-    public void testCtor() throws Exception {
+    public void testCtor() {
         AnalogFormula expression2;
 
         expression2 = new AnalogFormula("IQAE321", null);
 //        expression2.setFormula("R1");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1", expression2.getLongDescription());
 
         expression2 = new AnalogFormula("IQAE321", "My expression");
 //        expression2.setFormula("R1");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My expression", expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1", expression2.getLongDescription());
 
         expression2 = new AnalogFormula("IQAE321", null);
 //        expression2.setFormula("R1 and R2");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1 and R2", expression2.getLongDescription());
 
         expression2 = new AnalogFormula("IQAE321", "My expression");
 //        expression2.setFormula("R1 or R2");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My expression", expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1 or R2", expression2.getLongDescription());
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new AnalogFormula("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                AnalogFormula af = new AnalogFormula("IQE55:12:XY11", null);
+                assertNull(af, "should not have got here");
+            }, "Expected Illegal system name exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new AnalogFormula("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+
+        ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                AnalogFormula af = new AnalogFormula("IQE55:12:XY11", "A name");
+                assertNull(af, "should not have got here");
+            }, "Expected Illegal system name exception thrown");
+        assertNotNull(ex);
+
     }
 
     // Test action when at least one child socket is not connected
@@ -166,18 +173,18 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         actionSystemNames.add(new AnalogFormula.SocketData("Yes123", "IQAE3", managerName));
 
         AnalogFormula expression = new AnalogFormula("IQAE321", null, actionSystemNames);
-        Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertNotNull( expression, "exists");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
 
         for (int i=0; i < 5; i++) {
             AnalogFormula.SocketData socketData = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+socketData._socketName,
-                    socketData._socketName, expression.getChild(i).getName());
-            Assert.assertEquals("expression female socket is of correct class",
-                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
-                    expression.getChild(i).getClass().getName());
-            Assert.assertFalse("expression female socket is not connected",
-                    expression.getChild(i).isConnected());
+            assertEquals( socketData._socketName, expression.getChild(i).getName(),
+                () -> "expression female socket name is "+socketData._socketName);
+            assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
+                    expression.getChild(i).getClass().getName(),
+                    "expression female socket is of correct class");
+            assertFalse( expression.getChild(i).isConnected(),
+                    "expression female socket is not connected");
         }
 
         // Setup action. This connects the child actions to this action
@@ -187,22 +194,22 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
 
         for (int i=0; i < 5; i++) {
             AnalogFormula.SocketData socketName = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+socketName._socketName,
-                    socketName._socketName, expression.getChild(i).getName());
+            assertEquals( socketName._socketName, expression.getChild(i).getName(),
+                "expression female socket name is "+socketName._socketName);
 
             if (maleSockets.get(i) != null) {
-                Assert.assertTrue("expression female socket is connected",
-                        expression.getChild(i).isConnected());
-//                Assert.assertEquals("child is correct bean",
+                assertTrue( expression.getChild(i).isConnected(),
+                    "expression female socket is connected");
+//                assertEquals(
 //                        maleSockets.get(i),
-//                        expression.getChild(i).getConnectedSocket());
+//                        expression.getChild(i).getConnectedSocket(), "child is correct bean");
             } else {
-                Assert.assertFalse("expression female socket is not connected",
-                        expression.getChild(i).isConnected());
+                assertFalse( expression.getChild(i).isConnected(),
+                    "expression female socket is not connected");
             }
         }
 
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
     }
 
     @Test
@@ -225,18 +232,18 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         actionSystemNames.add(new AnalogFormula.SocketData("Yes123", "IQAE3", managerName));
 
         AnalogFormula expression = new AnalogFormula("IQAE321", null, actionSystemNames);
-        Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertNotNull( expression, "exists");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
 
         for (int i=0; i < 5; i++) {
             AnalogFormula.SocketData socketData = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+socketData._socketName,
-                    socketData._socketName, expression.getChild(i).getName());
-            Assert.assertEquals("expression female socket is of correct class",
-                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
-                    expression.getChild(i).getClass().getName());
-            Assert.assertFalse("expression female socket is not connected",
-                    expression.getChild(i).isConnected());
+            assertEquals( socketData._socketName, expression.getChild(i).getName(),
+                "expression female socket name is "+socketData._socketName);
+            assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
+                    expression.getChild(i).getClass().getName(),
+                    "expression female socket is of correct class");
+            assertFalse( expression.getChild(i).isConnected(),
+                "expression female socket is not connected");
         }
 
         // Setup action. This connects the child actions to this action
@@ -244,28 +251,28 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
 
         for (int i=0; i < 5; i++) {
             AnalogFormula.SocketData socketData = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+socketData._socketName,
-                    socketData._socketName, expression.getChild(i).getName());
+            assertEquals( socketData._socketName, expression.getChild(i).getName(),
+                () -> "expression female socket name is "+socketData._socketName);
 
             if (maleSockets.get(i) != null) {
-                Assert.assertTrue("expression female socket is connected",
-                        expression.getChild(i).isConnected());
-//                Assert.assertEquals("child is correct bean",
+                assertTrue( expression.getChild(i).isConnected(),
+                    "expression female socket is connected");
+//                assertEquals(
 //                        maleSockets.get(i),
-//                        expression.getChild(i).getConnectedSocket());
+//                        expression.getChild(i).getConnectedSocket(), "child is correct bean");
             } else {
-                Assert.assertFalse("expression female socket is not connected",
-                        expression.getChild(i).isConnected());
+                assertFalse( expression.getChild(i).isConnected(),
+                    "expression female socket is not connected");
             }
         }
 
         // Since all the sockets are connected, a new socket must have been created.
-        Assert.assertEquals("expression has 6 female sockets", 6, expression.getChildCount());
+        assertEquals( 6, expression.getChildCount(), "expression has 6 female sockets");
 
         // Try run setup() again. That should not cause any problems.
         expression.setup();
 
-        Assert.assertEquals("expression has 6 female sockets", 6, expression.getChildCount());
+        assertEquals( 6, expression.getChildCount(), "expression has 6 female sockets");
     }
 
     // Test calling setActionSystemNames() twice
@@ -280,18 +287,12 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
                 expression.getClass().getDeclaredMethod("setExpressionSystemNames", new Class<?>[]{List.class});
         method.setAccessible(true);
 
-        boolean hasThrown = false;
-        try {
-            method.invoke(expression, new Object[]{null});
-        } catch (InvocationTargetException e) {
-            if (e.getCause() instanceof RuntimeException) {
-                hasThrown = true;
-                Assert.assertEquals("Exception message is correct",
-                        "expression system names cannot be set more than once",
-                        e.getCause().getMessage());
-            }
-        }
-        Assert.assertTrue("Exception thrown", hasThrown);
+        InvocationTargetException e = assertThrows( InvocationTargetException.class,
+            () -> method.invoke(expression, new Object[]{null}),
+            "Exception thrown");
+        RuntimeException ex = assertInstanceOf( RuntimeException.class, e.getCause());
+        assertEquals( "expression system names cannot be set more than once",
+            ex.getMessage(), "Exception message is correct");
     }
 
     @Test
@@ -304,20 +305,20 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         });
 
         a.setChildCount(1);
-        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
+        assertEquals( 1, a.getChildCount(), "numChilds are correct");
 
         // Test increase num children
         ab.set(false);
         a.setChildCount(a.getChildCount()+1);
-        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        assertEquals( 2, a.getChildCount(), "numChilds are correct");
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
 
         // Test decrease num children
         ab.set(false);
-        Assert.assertTrue("We have least two children", a.getChildCount() > 1);
+        assertTrue( a.getChildCount() > 1, "We have least two children");
         a.setChildCount(1);
-        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        assertEquals( 1, a.getChildCount(), "numChilds are correct");
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
 
         // Test decrease num children when all children are connected
         ab.set(false);
@@ -327,16 +328,16 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         a.getChild(1).connect(getConnectableChild());
         a.getChild(2).disconnect();
         a.getChild(2).connect(getConnectableChild());
-        Assert.assertEquals("numChilds are correct", 4, a.getChildCount());
+        assertEquals( 4, a.getChildCount(), "numChilds are correct");
         a.setChildCount(2);
-        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        assertEquals( 2, a.getChildCount(), "numChilds are correct");
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
 
         // Test setChildCount to same number of children as before
         ab.set(false);
         a.setChildCount(2);
-        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
-        Assert.assertFalse("PropertyChangeEvent not fired", ab.get());
+        assertEquals( 2, a.getChildCount(), "numChilds are correct");
+        assertFalse( ab.get(), "PropertyChangeEvent not fired");
     }
 
     @Test
@@ -351,22 +352,23 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         a.getChild(1).setName("Xyz");
 
         a.setFormula("Xyz + Abc");
-        Assert.assertEquals("Formula is correct", "Xyz + Abc", a.getFormula());
+        assertEquals( "Xyz + Abc", a.getFormula(), "Formula is correct");
 
         a.setFormula("Abc - Xyz");
-        Assert.assertEquals("Formula is correct", "Abc - Xyz", a.getFormula());
+        assertEquals( "Abc - Xyz", a.getFormula(), "Formula is correct");
     }
 
     @Test
-    public void testGetChild() throws Exception {
+    public void testGetChild() throws JmriException {
         AnalogFormula expression2 = new AnalogFormula("IQAE321", null);
 //        expression2.setFormula("R1");
 
         for (int i=0; i < 3; i++) {
-            Assert.assertTrue("getChildCount() returns "+(i+1), i+1 == expression2.getChildCount());
+            assertEquals( i+1, expression2.getChildCount(),
+                "getChildCount() returns "+(i+1));
 
-            Assert.assertNotNull("getChild(0) returns a non null value",
-                    expression2.getChild(0));
+            assertNotNull( expression2.getChild(0),
+                "getChild(0) returns a non null value");
 
             assertIndexOutOfBoundsException(expression2::getChild, i+1, i+1);
 
@@ -380,7 +382,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        assertSame( LogixNG_Category.COMMON, _base.getCategory(), "Category matches");
     }
 
     // Test the methods connected(FemaleSocket) and getExpressionSystemName(int)
@@ -392,44 +394,44 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         MaleSocket maleSAMSocket =
                 InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpressionMemory);
 
-        Assert.assertEquals("Num children is correct", 1, expression.getChildCount());
+        assertEquals( 1, expression.getChildCount(), "Num children is correct");
 
         // Test connect and disconnect
         expression.getChild(0).connect(maleSAMSocket);
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertEquals("getExpressionSystemName(0) is correct", "IQAE122", expression.getExpressionSystemName(0));
-        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertEquals( "IQAE122", expression.getExpressionSystemName(0), "getExpressionSystemName(0) is correct");
+        assertNull( expression.getExpressionSystemName(1), "getExpressionSystemName(1) is null");
         expression.getChild(0).disconnect();
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertNull( expression.getExpressionSystemName(1), "getExpressionSystemName(1) is null");
 
         expression.getChild(1).connect(maleSAMSocket);
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertEquals("getExpressionSystemName(1) is correct", "IQAE122", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertEquals( expression.getExpressionSystemName(1), "IQAE122", "getExpressionSystemName(1) is correct");
         expression.getChild(0).disconnect();    // Test removing child with the wrong index.
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertEquals("getExpressionSystemName(1) is correct", "IQAE122", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertEquals( "IQAE122", expression.getExpressionSystemName(1), "getExpressionSystemName(1) is correct");
         expression.getChild(1).disconnect();
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertNull( expression.getExpressionSystemName(1), "getExpressionSystemName(1) is null");
     }
 
     @Test
     public void testDescription() {
         AnalogFormula expression = new AnalogFormula("IQAE321", null);
-        Assert.assertEquals("strings matches", "Analog Formula", expression.getShortDescription());
-        Assert.assertEquals("strings matches", "Analog Formula: empty", expression.getLongDescription());
+        assertEquals( "Analog Formula", expression.getShortDescription(), "strings matches");
+        assertEquals( "Analog Formula: empty", expression.getLongDescription(), "strings matches");
     }
 
     @Test
     public void testEvaluateEmptyFormula() throws ParserException, JmriException {
         AnalogFormula expression = new AnalogFormula("IQAE321", null);
         expression.setFormula("");
-        Assert.assertTrue("Empty formula returns 0.0", 0.0 == expression.evaluate());
+        assertEquals( 0.0, expression.evaluate(), "Empty formula returns 0.0");
     }
 /*
     private void testValidate(boolean expectedResult, String formula, List<AnalogExpressionBean> conditionalVariablesList) throws Exception {
@@ -677,9 +679,8 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     }
 */
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -688,7 +689,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.COMMON;
+        _category = LogixNG_Category.COMMON;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
@@ -725,12 +726,12 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         MaleSocket socketAnalogActionMemory = InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
         doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -278,5 +278,5 @@ public class GlobalVariableSpinnerIcon extends PositionableJPanel implements Cha
         namedGlobalVariable = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableSpinnerIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalVariableSpinnerIcon.class);
 }

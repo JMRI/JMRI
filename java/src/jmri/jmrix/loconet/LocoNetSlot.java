@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Stephen Williams Copyright (C) 2008
- * @author B. Milhaupt, Copyright (C) 2018
+ * @author B. Milhaupt, Copyright (C) 2018, 2025
  * @author S. Gigiel, Copyright (C) 2018
  */
 public class LocoNetSlot {
@@ -85,7 +85,7 @@ public class LocoNetSlot {
     /**
      * Creates a slot object based on the contents of a LocoNet message.
      * The slot number is assumed to be found in byte 2 of the message if message is 0xE6 or bytes 2 and 3 for 0xE7
-     * 
+     *
      * @param l  a LocoNet message
      * @throws LocoNetException if the slot does not have an easily-found
      * slot number
@@ -237,7 +237,7 @@ public class LocoNetSlot {
      * If it is false then any changes to its state may be lost.
      * @return true
      */
-    public boolean getIsInitilized() {
+    public boolean getIsInitialized() {
         return isInitialized;
     }
 
@@ -884,12 +884,14 @@ public class LocoNetSlot {
                     if ((l.getElement(1) & 0b00001000) != 0) {
                         dirf = dirf | 0b00100000;
                     }
+                    lastUpdateTime = System.currentTimeMillis();
                 } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6) {
                     // function grp 1
                     dirf = dirf & 0b11100000;
                     dirf = dirf | (l.getElement(4) & 0b00011111);
                     snd = snd & 0b11111100;
                     snd = snd | ((l.getElement(4) & 0b01100000) >> 5);
+                    lastUpdateTime = System.currentTimeMillis();
                 } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13) {
                     // function grp 2
                     snd = snd & 0b11110011;
@@ -899,6 +901,7 @@ public class LocoNetSlot {
                     localF11 = ((l.getElement(4) & 0b00010000) != 0);
                     localF12 = ((l.getElement(4) & 0b00100000) != 0);
                     localF13 = ((l.getElement(4) & 0b01000000) != 0);
+                    lastUpdateTime = System.currentTimeMillis();
                 } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20) {
                     localF14 = ((l.getElement(4) & 0b00000001) != 0);
                     localF15 = ((l.getElement(4) & 0b00000010) != 0);
@@ -907,6 +910,7 @@ public class LocoNetSlot {
                     localF18 = ((l.getElement(4) & 0b00010000) != 0);
                     localF19 = ((l.getElement(4) & 0b00100000) != 0);
                     localF20 = ((l.getElement(4) & 0b01000000) != 0);
+                    lastUpdateTime = System.currentTimeMillis();
                 } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF
                         || (l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON) {
                     localF21 = ((l.getElement(4) & 0b00000001) != 0);
@@ -917,6 +921,7 @@ public class LocoNetSlot {
                     localF26 = ((l.getElement(4) & 0b00100000) != 0);
                     localF27 = ((l.getElement(4) & 0b01000000) != 0);
                     localF28 = ((l.getElement(1) & 0b00010000) != 0);
+                    lastUpdateTime = System.currentTimeMillis();
                 }
                 notifySlotListeners();
                 break;
@@ -927,7 +932,7 @@ public class LocoNetSlot {
                 addr = l.getElement(5) + 128 * l.getElement(6);
                 spd = l.getElement(8);
                 if (loconetProtocol == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
-                    // it has to be 2 
+                    // it has to be 2
                     loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
                 }
                 dirf = l.getElement(10) & 0b00111111;
@@ -1437,7 +1442,7 @@ public class LocoNetSlot {
     }
 
     // data values to echo slot contents
-    final private int slot;   // <SLOT#> is the number of the slot that was read.
+    private final int slot;   // <SLOT#> is the number of the slot that was read.
     private boolean isInitialized; // set when full initilization is complete with the throttle ID.
     private int loconetProtocol; // protocol used by the slot.
     private SlotType slotType; // system, loco, unknown
@@ -1458,9 +1463,10 @@ public class LocoNetSlot {
     private int _pcmd;  // hold pcmd and pstat for programmer
 
     private long lastUpdateTime; // Time of last update for detecting stale slots
+    private long slowScanStartedAt; // Time slow scan started if zero no slow scan running
 
     // data members to hold contact with the slot listeners
-    final private List<SlotListener> slotListeners = new ArrayList<>();
+    private final List<SlotListener> slotListeners = new ArrayList<>();
 
     /**
      * Registers a slot listener if it is not already registered.
@@ -1493,6 +1499,28 @@ public class LocoNetSlot {
      */
     public long getLastUpdateTime() {
         return lastUpdateTime;
+    }
+
+    /**
+     * Returns the timestamp when this LocoNetSlot started to be slowscan
+     * due to lack of sure and certain status.
+     * Returns Zero if slow scan not active.
+     *
+     * @return timestamp when slow scan started, 0 if not active
+     */
+    public long getSlowScanStartedAt() {
+        return slowScanStartedAt;
+    }
+
+    /**
+     * sets the timestamp when this LocoNetSlot started to be slowscan
+     * due to lack of sure and certain status.
+     *
+     * @param timestamp when slow scan started, 0 to deactivate
+     */
+    public void setSlowScanStartedAt(long timestamp) {
+        slowScanStartedAt = timestamp;
+        notifySlotListeners();
     }
 
     /**
@@ -1753,5 +1781,5 @@ public class LocoNetSlot {
         stat = val & 0x7F;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSlot.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetSlot.class);
 }

@@ -17,7 +17,7 @@ public class WarrantWhereUsed {
      * @param warrant The warrant bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean warrant) {
+    public static JTextArea getWhereUsed(NamedBean warrant) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameWarrant"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, warrant.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

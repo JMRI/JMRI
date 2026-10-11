@@ -1,6 +1,5 @@
 package jmri.util.usb;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class RailDriverMenuItemTest {
     @Test
     public void testCTor() {
         RailDriverMenuItem t = new RailDriverMenuItem();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

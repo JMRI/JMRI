@@ -149,7 +149,7 @@ public class Reply extends AbstractMRReply {
         return (byte) b;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Reply.class);
+    private static final Logger log = LoggerFactory.getLogger(Reply.class);
 }
 
 

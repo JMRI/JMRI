@@ -373,5 +373,5 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSection.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSection.class);
 }

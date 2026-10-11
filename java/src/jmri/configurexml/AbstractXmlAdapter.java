@@ -17,6 +17,11 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     private ErrorHandler errorHandler = XmlAdapter.getDefaultExceptionHandler();
 
+    public static final String STR_TRUE = "true";
+    public static final String STR_FALSE = "false";
+    public static final String STR_YES = "yes";
+    public static final String STR_NO = "no";
+
     /** {@inheritDoc} */
     @Override
     public void handleException(
@@ -108,15 +113,21 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @param def default value if name not present in element.
      * @return boolean value of attribute, else default if not present or error.
      */
-    final public boolean getAttributeBooleanValue(@Nonnull Element element, @Nonnull String name, boolean def) {
+    public final boolean getAttributeBooleanValue(@Nonnull Element element, @Nonnull String name, boolean def) {
         Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
-            if (a == null) return def;
+            if (a == null) {
+                return def;
+            }
             val = a.getValue();
-            if ( val.equals("yes") || val.equals("true") ) return true;  // non-externalized strings
-            if ( val.equals("no") || val.equals("false") ) return false;
+            if ( val.equals(STR_YES) || val.equals(STR_TRUE) ) {
+                return true;
+            }
+            if ( val.equals(STR_NO) || val.equals(STR_FALSE) ) {
+                return false;
+            }
             return def;
         } catch (Exception ex) {
             log.debug("caught exception", ex);
@@ -141,12 +152,14 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @param def default value if name not present in element.
      * @return integer value of attribute, else default if not present or error.
      */
-    final public int getAttributeIntegerValue(@Nonnull Element element, @Nonnull String name, int def) {
+    public final int getAttributeIntegerValue(@Nonnull Element element, @Nonnull String name, int def) {
         Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
-            if (a == null) return def;
+            if (a == null) {
+                return def;
+            }
             val = a.getValue();
             return a.getIntValue();
         } catch (Exception ex) {
@@ -172,12 +185,14 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @param def default value if name not present in element.
      * @return double value of attribute, else default if not present or error.
      */
-    final public double getAttributeDoubleValue(@Nonnull Element element, @Nonnull String name, double def) {
+    public final double getAttributeDoubleValue(@Nonnull Element element, @Nonnull String name, double def) {
         Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
-            if (a == null) return def;
+            if (a == null) {
+                return def;
+            }
             val = a.getValue();
             return a.getDoubleValue();
         } catch (Exception ex) {
@@ -204,12 +219,14 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @param def default value if name not present in element.
      * @return float value of attribute, else default if not present or error.
      */
-    final public float getAttributeFloatValue(@Nonnull Element element, @Nonnull String name, float def) {
+    public final float getAttributeFloatValue(@Nonnull Element element, @Nonnull String name, float def) {
         Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
-            if (a == null) return def;
+            if (a == null) {
+                return def;
+            }
             val = a.getValue();
             return a.getFloatValue();
         } catch (Exception ex) {
@@ -227,8 +244,11 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /**
      * Base for support of Enum load/store to XML files.
+     * <p>
+     * Public to be usable by adapters in other configXML packages.
+     * @param <T> The ENUM implementation type.
      */
-    public static abstract class EnumIO <T extends Enum<T>> { // public to be usable by adapters in other configXML packages
+    public abstract static class EnumIO <T extends Enum<T>> {
 
         /**
          * Convert an enum value to a String for storage in an XML file.
@@ -236,7 +256,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
          * @return storage string.
          */
         @Nonnull
-        abstract public String outputFromEnum(@Nonnull T e);
+        public abstract String outputFromEnum(@Nonnull T e);
         
         /**
          * Convert a String value from an XML file to an enum value.
@@ -244,7 +264,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
          * @return enum value.
          */
         @Nonnull
-        abstract public T inputFromString(@CheckForNull String s);
+        public abstract T inputFromString(@CheckForNull String s);
 
         /**
          * Convert a JDOM Attribute from an XML file to an enum value
@@ -263,9 +283,11 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * This converts to and from ordinal numbers
      * so the order of definitions in the enum has to 
      * match up with the (former) constant values.
+     * <p>
+     * Public to be usable by adapters in other configXML packages.
      * @param <T> generic Enum class.
      */
-    public static class EnumIoOrdinals <T extends Enum<T>> extends EnumIO<T> { // public to be usable by adapters in other configXML packages
+    public static class EnumIoOrdinals <T extends Enum<T>> extends EnumIO<T> {
     
         public EnumIoOrdinals(@Nonnull Class<T> clazz) {
             this.clazz = clazz;
@@ -460,5 +482,5 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractXmlAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractXmlAdapter.class);
 }

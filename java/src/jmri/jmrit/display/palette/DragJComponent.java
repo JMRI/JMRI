@@ -12,11 +12,12 @@ import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.util.ThreadingUtil;
 
 /**
  * Gives a JComponent the capability to Drag and Drop
@@ -39,9 +40,14 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
     DataFlavor _dataFlavor;
     JComponent _component;
 
-    public DragJComponent(DataFlavor flavor,  JComponent comp) {
+    protected DragJComponent(DataFlavor flavor,  JComponent comp) {
         super();
         _component = comp;
+        _dataFlavor = flavor;
+        ThreadingUtil.runOnGUI( () -> init(comp));
+    }
+
+    private void init( JComponent comp) {
         setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 Bundle.getMessage("dragToPanel")));
         // guestimate border is about 5 pixels thick. plus some margin
@@ -51,7 +57,6 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
         DragSource dragSource = DragSource.getDefaultDragSource();
         dragSource.createDefaultDragGestureRecognizer(this,
                 DnDConstants.ACTION_COPY, this);
-        _dataFlavor = flavor;
     }
 
     @Override
@@ -77,12 +82,11 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
     
     /**
      * ************** DragGestureListener **************
+     * {@inheritDoc }
      */
     @Override
     public void dragGestureRecognized(DragGestureEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("DragJLabel.dragGestureRecognized ");
-        }
+        log.debug("DragJLabel.dragGestureRecognized ");
         if (okToDrag()) {
             e.startDrag(DragSource.DefaultCopyDrop, this, this);            
         }
@@ -90,12 +94,11 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
 
     /**
      * ************** DragSourceListener ***********
+     * {@inheritDoc }
      */
     @Override
     public void dragDropEnd(DragSourceDropEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("DragJLabel.dragDropEnd ");
-        }
+        log.debug("DragJLabel.dragDropEnd ");
     }
 
     @Override
@@ -127,5 +130,5 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
         return _dataFlavor.equals(flavor);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DragJComponent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DragJComponent.class);
 }

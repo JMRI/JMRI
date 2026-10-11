@@ -37,8 +37,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     private static final String oldSendPrefix = "SEND"; // lack of space is correct for legacy code
     private static final String oldReceivePrefix = "RECEIVE "; // presence of space is correct for legacy code
     private static final String sendPrefix = "<";
-    private static final String oldServerVersionString = "VERSION JMRI Server "; // CAREFUL: Changing this could break backward compatibility
-    private static final String newServerVersionString = "VERSION DCC++ Server ";
+    private static final String oldServerVersionString = "VERSION DCC++ Server "; // CAREFUL: Changing this could break backward compatibility
+    private static final String newServerVersionString = "VERSION DCC-EX Server ";
     boolean useOldPrefix = false;
 
     public ClientRxHandler(String newRemoteAddress, Socket newSocket) {

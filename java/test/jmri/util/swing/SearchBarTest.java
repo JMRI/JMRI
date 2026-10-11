@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class SearchBarTest {
     @Test
     public void testCTor() {
         SearchBar t = new SearchBar(null, null, null);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class SearchBarTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SearchBarTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SearchBarTest.class);
 
 }

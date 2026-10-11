@@ -6,7 +6,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalExpressionManager;
@@ -49,8 +49,8 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
     
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
     
     /** {@inheritDoc} */
@@ -160,6 +160,6 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Not.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Not.class);
 
 }

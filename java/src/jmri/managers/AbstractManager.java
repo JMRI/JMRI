@@ -57,7 +57,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     public AbstractManager(SystemConnectionMemo memo) {
         this.memo = memo;
         this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
-        silenceableProperties.add("beans");
+        silenceableProperties.add(PROPERTY_BEANS);
         setRegisterSelf();
     }
 
@@ -167,7 +167,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     public void deleteBean(@Nonnull E bean, @Nonnull String property) throws PropertyVetoException {
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, bean, null);
-        if (property.equals("DoDelete")) { // NOI18N
+        if ( PROPERTY_DO_DELETE.equals(property) ) {
             deregister(bean);
             bean.dispose();
         }
@@ -218,10 +218,10 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
-        if (!silencedProperties.getOrDefault("beans", false)) {
-            fireIndexedPropertyChange("beans", position, null, s);
+        if (!silencedProperties.getOrDefault(PROPERTY_BEANS, false)) {
+            fireIndexedPropertyChange(PROPERTY_BEANS, position, null, s);
         }
-        firePropertyChange("length", null, _beans.size());
+        firePropertyChange(PROPERTY_LENGTH, null, _beans.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
     }
@@ -289,10 +289,10 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
         // notifications
         fireDataListenersRemoved(position, position, s);
-        if (!silencedProperties.getOrDefault("beans", false)) {
-            fireIndexedPropertyChange("beans", position, s, null);
+        if (!silencedProperties.getOrDefault(PROPERTY_BEANS, false)) {
+            fireIndexedPropertyChange(PROPERTY_BEANS, position, s, null);
         }
-        firePropertyChange("length", null, _beans.size());
+        firePropertyChange(PROPERTY_LENGTH, null, _beans.size());
     }
 
     /**
@@ -330,7 +330,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @SuppressWarnings("unchecked") // The cast of getSource() to E can't be checked due to type erasure, but we catch errors
     @OverridingMethodsMustInvokeSuper
     public void propertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("UserName")) {
+        if ( NamedBean.PROPERTY_USERNAME.equals( e.getPropertyName())) {
             String old = (String) e.getOldValue();  // previous user name
             String now = (String) e.getNewValue();  // current user name
             try { // really should always succeed
@@ -351,7 +351,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             }
 
             // called DisplayListName, as DisplayName might get used at some point by a NamedBean
-            firePropertyChange("DisplayListName", old, now); // NOI18N
+            firePropertyChange(PROPERTY_DISPLAY_LIST_NAME, old, now); // NOI18N
         }
     }
 
@@ -388,13 +388,13 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Override
     public void fireVetoableChange(String p, Object old, Object n) throws PropertyVetoException {
         PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, n);
-        if (p.equals("CanDelete")) { // NOI18N
+        if ( PROPERTY_CAN_DELETE.equals(p) ) {
             StringBuilder message = new StringBuilder();
             for (VetoableChangeListener vc : vetoableChangeSupport.getVetoableChangeListeners()) {
                 try {
                     vc.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                    if (PROPERTY_DO_NOT_DELETE.equals(e.getPropertyChangeEvent().getPropertyName())) {
                         log.info("Do Not Delete : {}", e.getMessage());
                         throw e;
                     }
@@ -416,7 +416,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @OverridingMethodsMustInvokeSuper
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
 
-        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
+        if (PROPERTY_CAN_DELETE.equals(evt.getPropertyName())) {
             StringBuilder message = new StringBuilder();
             message.append(Bundle.getMessage("VetoFoundIn", getBeanTypeHandled()))
                     .append("<ul>");
@@ -425,7 +425,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
                 try {
                     nb.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                    if (PROPERTY_DO_NOT_DELETE.equals(e.getPropertyChangeEvent().getPropertyName())) {
                         throw e;
                     }
                     found = true;
@@ -487,8 +487,8 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
         }
         silencedProperties.put(propertyName, silenced);
-        if (propertyName.equals("beans") && !silenced) {
-            fireIndexedPropertyChange("beans", _beans.size(), null, null);
+        if (PROPERTY_BEANS.equals(propertyName) && !silenced) {
+            fireIndexedPropertyChange(PROPERTY_BEANS, _beans.size(), null, null);
         }
     }
 

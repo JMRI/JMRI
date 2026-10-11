@@ -122,6 +122,6 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusDccProgrammerTest.class);
 
 }

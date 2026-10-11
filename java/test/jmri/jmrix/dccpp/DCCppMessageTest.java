@@ -531,15 +531,31 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringThrottleCommandsMsg() {
         msg = new DCCppMessage("J T");
-        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request TurnoutID list", msg.toMonitorString());
         msg = DCCppMessage.makeTurnoutIDsMsg();
-        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request TurnoutID list", msg.toMonitorString());
         msg = new DCCppMessage("J T 145");
-        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request details for TurnoutID 145", msg.toMonitorString());
         msg = DCCppMessage.makeTurnoutIDMsg(145);
-        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request details for TurnoutID 145", msg.toMonitorString());
         msg = new DCCppMessage("T 145 X");
-        Assert.assertEquals("Monitor string", "Request implementation for Turnout 145", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request implementation for TurnoutID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeRosterIDsMsg();
+        Assert.assertEquals("Monitor string", "Request RosterID list", msg.toMonitorString());
+        msg = new DCCppMessage("J R 145");
+        Assert.assertEquals("Monitor string", "Request details for RosterID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeRosterIDMsg(145);
+        Assert.assertEquals("Monitor string", "Request details for RosterID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeAutomationIDsMsg();
+        Assert.assertEquals("Monitor string", "Request AutomationID list", msg.toMonitorString());
+        msg = new DCCppMessage("J A 145");
+        Assert.assertEquals("Monitor string", "Request details for AutomationID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeAutomationIDMsg(145);
+        Assert.assertEquals("Monitor string", "Request details for AutomationID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeCurrentMaxesMsg();
+        Assert.assertEquals("Monitor string", "Request list of Current Maximums", msg.toMonitorString());
+        msg = DCCppMessage.makeCurrentValuesMsg();
+        Assert.assertEquals("Monitor string", "Request list of Current Values", msg.toMonitorString());
         msg = new DCCppMessage("J C");
         Assert.assertEquals("Monitor string", "Request clock update from CS", msg.toMonitorString());
         msg = DCCppMessage.makeClockRequestTimeMsg();
@@ -548,6 +564,19 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "FastClock Send: 03:54, Rate:12", msg.toMonitorString());
         msg = DCCppMessage.makeClockSetMsg(234, 12);
         Assert.assertEquals("Monitor string", "FastClock Send: 03:54, Rate:12", msg.toMonitorString());
+    }
+
+    @Test
+    public void testMakeStartExrailMsg() {
+        msg = DCCppMessage.makeStartExrailMsg(42);
+        Assert.assertNotNull(msg);
+        Assert.assertEquals("message content", "/ START 42", msg.toString());
+        Assert.assertEquals("monitor string", "Control Cmd: '/ START 42'", msg.toMonitorString());
+
+        msg = DCCppMessage.makeStartExrailMsg(10, 1234);
+        Assert.assertNotNull(msg);
+        Assert.assertEquals("message content", "/ START 1234 10", msg.toString());
+        Assert.assertEquals("monitor string", "Control Cmd: '/ START 1234 10'", msg.toMonitorString());
     }
 
     @Test
@@ -622,7 +651,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testGetAddressedEmergencyStopMsg() {
-        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, true);
         log.debug("emergency stop message = '{}'", msg);
         Assert.assertEquals("length", 11, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 't', msg.getElement(0) & 0xFF);
@@ -636,6 +665,21 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
         Assert.assertEquals("9th byte", ' ', msg.getElement(9) & 0xFF);
         Assert.assertEquals("10th byte", '1', msg.getElement(10) & 0xFF);
+
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, false);
+        log.debug("emergency stop message = '{}'", msg);
+        Assert.assertEquals("length", 11, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 't', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '5', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3st byte", ' ', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4rd byte", '2', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5rd byte", '4', msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", ' ', msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", '-', msg.getElement(7) & 0xFF);
+        Assert.assertEquals("8th byte", '1', msg.getElement(8) & 0xFF);
+        Assert.assertEquals("9th byte", ' ', msg.getElement(9) & 0xFF);
+        Assert.assertEquals("10th byte", '0', msg.getElement(10) & 0xFF);
     }
 
     @Test
@@ -648,10 +692,15 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testMonitorStringAddressedEmergencyStopMsg() {
-        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
-        msg = DCCppMessage.makeAddressedEmergencyStop(24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
+
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
     }
 
     @Test
@@ -714,11 +763,18 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testMonitorMakeAddressedEmergencyStop() { 
-        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
         //newer version without register
-        msg = DCCppMessage.makeAddressedEmergencyStop(24);
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, true);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
+
+        msg = DCCppMessage.makeAddressedEmergencyStop(5, 24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
+        //newer version without register
+        msg = DCCppMessage.makeAddressedEmergencyStop(24, false);
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Reverse", msg.toMonitorString());
+
     }
 
     @Test
@@ -825,6 +881,18 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Output Cmd: ID: 23, State: LOW", msg.toMonitorString());
     }
 
+    @Test
+    public void testOutputCmdReplyExpected() {
+        Assert.assertTrue("uppercase <Z> expects a reply", DCCppMessage.makeOutputCmdMsg(23, true).replyExpected());
+    }
+
+    @Test
+    public void testOutputCmdLCNoReplyExpected() {
+        // lowercase <z> is fire-and-forget; no reply from CS
+        Assert.assertFalse("lowercase <z> on does not expect a reply", DCCppMessage.makeOutputCmdMsgLC(26, true).replyExpected());
+        Assert.assertFalse("lowercase <z> off does not expect a reply", DCCppMessage.makeOutputCmdMsgLC(26, false).replyExpected());
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -840,6 +908,6 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppMessageTest.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppMessageTest.class);
 
 }

@@ -25,6 +25,8 @@ public class DefaultModule extends AbstractBase
         implements Module, FemaleSocketListener {
 
 
+    private boolean _isVisible;
+    private boolean _storeIfEmpty;
     private final FemaleSocketManager.SocketType _rootSocketType;
     private final FemaleSocket _femaleRootSocket;
     private String _socketSystemName = null;
@@ -35,8 +37,17 @@ public class DefaultModule extends AbstractBase
 
     public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType)
             throws BadUserNameException, BadSystemNameException  {
+        this(sys, user, socketType, true, true);
+    }
+
+    public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType,
+            boolean isVisible, boolean storeIfEmpty)
+            throws BadUserNameException, BadSystemNameException  {
 
         super(sys, user);
+
+        this._isVisible = isVisible;
+        this._storeIfEmpty = storeIfEmpty;
 
         _rootSocketType = socketType;
         _femaleRootSocket = socketType.createSocket(this, this, "Root");
@@ -49,6 +60,26 @@ public class DefaultModule extends AbstractBase
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
+    }
+
+    @Override
+    public boolean isVisible() {
+        return _isVisible;
+    }
+
+    @Override
+    public void setVisible(boolean value) {
+        _isVisible = value;
+    }
+
+    @Override
+    public boolean isStoreIfEmpty() {
+        return _storeIfEmpty;
+    }
+
+    @Override
+    public void setStoreIfEmpty(boolean value) {
+        _storeIfEmpty = value;
     }
 
     @Override
@@ -163,8 +194,8 @@ public class DefaultModule extends AbstractBase
     }
 
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 /*
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
@@ -297,7 +328,7 @@ public class DefaultModule extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    final public void setup() {
+    public final void setup() {
         if (!_femaleRootSocket.isConnected()
                 || !_femaleRootSocket.getConnectedSocket().getSystemName()
                         .equals(_socketSystemName)) {
@@ -327,7 +358,7 @@ public class DefaultModule extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    final public void disposeMe() {
+    public final void disposeMe() {
         _femaleRootSocket.dispose();
     }
 
@@ -371,6 +402,6 @@ public class DefaultModule extends AbstractBase
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
 
 }

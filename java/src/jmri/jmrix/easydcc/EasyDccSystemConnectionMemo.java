@@ -182,6 +182,6 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(EasyDccSystemConnectionMemo.class);
 
 }

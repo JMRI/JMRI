@@ -2,7 +2,6 @@ package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,29 +14,28 @@ public class SpecificInsteonLightTest {
 
    private SpecificTrafficController tc = null;
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SpecificLight constructor",new SpecificInsteonLight("PLA2",tc));
-   }
+    @Test
+    public void testSpecificInsteonLightConstructor(){
+        Assertions.assertNotNull( new SpecificInsteonLight("PLA2",tc), "SpecificLight constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         tc = new SpecificTrafficController(memo);
         memo.setTrafficController(tc);
         memo.configureManagers();
         memo.setSerialAddress(new jmri.jmrix.powerline.SerialAddress(memo));
-   }
+    }
 
-   @AfterEach
-   public void tearDown(){
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
-
+    @AfterEach
+    public void tearDown(){
+        tc.terminateThreads();
         tc = null;
-   }
+        JUnitUtil.tearDown();
+    }
 
 }

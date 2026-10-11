@@ -30,6 +30,6 @@ public class TamsProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsProgrammerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TamsProgrammerManagerTest.class);
 
 }

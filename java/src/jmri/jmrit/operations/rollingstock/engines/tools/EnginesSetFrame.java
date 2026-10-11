@@ -6,7 +6,8 @@ import java.util.List;
 import javax.swing.JTable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.gui.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**

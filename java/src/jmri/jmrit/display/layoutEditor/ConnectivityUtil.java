@@ -44,13 +44,13 @@ import jmri.jmrit.blockboss.BlockBossLogicProvider;
  * @author Dave Duchamp Copyright (c) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class ConnectivityUtil {
+public final class ConnectivityUtil {
 
     // constants
     // operational instance variables
-    final private LayoutEditor layoutEditor;
-    final private LayoutEditorAuxTools auxTools;
-    final private LayoutBlockManager layoutBlockManager;
+    private final LayoutEditor layoutEditor;
+    private final LayoutEditorAuxTools auxTools;
+    private final LayoutBlockManager layoutBlockManager;
 
     private final int TRACKNODE_CONTINUING = 0;
     private final int TRACKNODE_DIVERGING = 1;
@@ -70,6 +70,7 @@ final public class ConnectivityUtil {
     private HitPointType prevConnectType = HitPointType.NONE;
     private LayoutTrack prevConnectTrack = null;
     private LayoutBlock currLayoutBlock = null;
+    private LayoutBlock prevLayoutBlock = null;
     private LayoutBlock nextLayoutBlock = null;
 
     /**
@@ -121,6 +122,32 @@ final public class ConnectivityUtil {
             @CheckForNull Block nextBlock,
             boolean suppress) {
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
+        
+        // If this is a turntable boundary, add the required turnouts to position the turntable.
+        for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
+            if (turntable.isTurntableBoundary(currBlock, prevBlock)) {
+                log.debug("getTurnoutList: Detected turntable boundary between {} and {}.",
+                        (currBlock != null) ? currBlock.getDisplayName() : "null",
+                        (prevBlock != null) ? prevBlock.getDisplayName() : "null");
+                List<LayoutTrackExpectedState<LayoutTurnout>> turntableTurnouts =
+                        turntable.getTurnoutList(currBlock, prevBlock, nextBlock);
+                result.addAll(turntableTurnouts);
+                return result; // This path is handled, no need to check other turnouts.
+            }
+        }
+
+        // If this is a traverser boundary, add the required turnouts to position the traverser.
+        for (LayoutTraverser traverser : layoutEditor.getLayoutTraversers()) {
+            if (traverser.isTraverserBoundary(currBlock, prevBlock)) {
+                log.debug("getTurnoutList: Detected traverser boundary between {} and {}.",
+                        (currBlock != null) ? currBlock.getDisplayName() : "null",
+                        (prevBlock != null) ? prevBlock.getDisplayName() : "null");
+                List<LayoutTrackExpectedState<LayoutTurnout>> traverserTurnouts =
+                        traverser.getTurnoutList(currBlock, prevBlock, nextBlock);
+                result.addAll(traverserTurnouts);
+                return result; // This path is handled, no need to check other turnouts.
+            }
+        }
 
         // initialize
         currLayoutBlock = null;
@@ -132,7 +159,7 @@ final public class ConnectivityUtil {
             }
         }
 
-        LayoutBlock prevLayoutBlock = null;
+        prevLayoutBlock = null;
         if (prevBlock != null) {
             String prevUserName = prevBlock.getUserName();
             if ((prevUserName != null) && !prevUserName.isEmpty()) {
@@ -526,6 +553,9 @@ final public class ConnectivityUtil {
                 }
             } else if (HitPointType.isTurntableRayHitType(cType)) {
                 // Declare arrival at a turntable ray to be the end of the block
+                trackSegment = null;
+            } else if (HitPointType.isTraverserSlotHitType(cType)) {
+                // Declare arrival at a traverser slot to be the end of the block
                 trackSegment = null;
             }
         }
@@ -2155,7 +2185,10 @@ final public class ConnectivityUtil {
                 trackSegment = null;
             } else if (trackSegment == null) {
                 if (!suppress) {
-                    log.warn("Connectivity not complete at {}", layoutSlip.getDisplayName());
+                    log.warn("Connectivity not complete at {} while searching from {} to {}",
+                            layoutSlip.getDisplayName(),
+                            (prevLayoutBlock != null) ? prevLayoutBlock.getDisplayName() : "null",
+                            (nextLayoutBlock != null) ? nextLayoutBlock.getDisplayName() : "null");
                 }
                 turnoutConnectivity = false;
             }
@@ -2371,7 +2404,10 @@ final public class ConnectivityUtil {
                 trackSegment = null;
             } else if (trackSegment == null) {
                 if (!suppress) {
-                    log.warn("Connectivity not complete at {}", layoutTurnout.getTurnoutName());
+                    log.warn("Connectivity not complete at {} while searching from {} to {}",
+                            layoutTurnout.getTurnoutName(),
+                            (prevLayoutBlock != null) ? prevLayoutBlock.getDisplayName() : "null",
+                            (nextLayoutBlock != null) ? nextLayoutBlock.getDisplayName() : "null");
                 }
                 turnoutConnectivity = false;
             }
@@ -2833,5 +2869,5 @@ final public class ConnectivityUtil {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectivityUtil.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectivityUtil.class);
 }

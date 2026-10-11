@@ -105,8 +105,8 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /** {@inheritDoc} */
@@ -302,6 +302,6 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanMany.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanMany.class);
 
 }

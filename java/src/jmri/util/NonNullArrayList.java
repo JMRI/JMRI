@@ -1,6 +1,7 @@
 package jmri.util;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -9,17 +10,18 @@ import javax.annotation.Nonnull;
  * @see java.util.ArrayList
  * @see java.util.List
  * @author Bob Jacobsen, Copyright (C) 2017
+ * @param <E> E
  */
 public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override
-    public boolean add(@Nonnull E e) {
+    public boolean add(E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
         return super.add(e);
     }
 
     @Override
-    public void add(int i, @Nonnull E e) {
+    public void add(int i, E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
         super.add(i, e);
     }
@@ -50,7 +52,7 @@ public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override
     @Nonnull
-    public E set(int i, @Nonnull E e) {
+    public E set(int i, E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot set item null");
         return super.set(i, e);
     }

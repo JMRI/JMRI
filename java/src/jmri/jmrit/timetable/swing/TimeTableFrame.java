@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -112,7 +113,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     JTextField _editFastClock;
     JTextField _editThrottles;
     JCheckBox _editMetric;
-    JLabel _showScaleMK;
+    private JLabel _showScaleMK;
 
     // TrainType
     JTextField _editTrainTypeName;
@@ -1408,7 +1409,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         String unitMeasure = (layout.getMetric())
                 ? Bundle.getMessage("LabelRealMeters") // NOI18N
                 : Bundle.getMessage("LabelRealFeet"); // NOI18N
-        _showScaleMK.setText(String.format("%.2f %s", layout.getScaleMK(), unitMeasure)); // NOI18N
+        _showScaleMK.setText(String.format(Locale.getDefault(), "%.2f %s",
+            layout.getScaleMK(), unitMeasure));
 
         _editScale.removeAllItems();
         for (Scale scale : ScaleManager.getScales()) {

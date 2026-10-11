@@ -281,7 +281,7 @@ public class ActionLayoutTurnout extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryDisplay.DISPLAY;
     }
 
@@ -531,6 +531,6 @@ public class ActionLayoutTurnout extends AbstractDigitalAction
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLayoutTurnout.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLayoutTurnout.class);
 
 }

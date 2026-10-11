@@ -22,6 +22,15 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         // the default is 2006 or later
         options.put(option2Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
         setManufacturer(jmri.jmrix.nce.NceConnectionTypeList.NCE);
+        // Auto-reconnect: same fix applied to CMRI's network driver -- the
+        // generic reconnect framework in AbstractPortController (exponential
+        // backoff, reconnectMaxAttempts/reconnectMaxInterval loaded from the
+        // saved connection XML) is already triggered automatically by
+        // AbstractMRTrafficController.receiveLoop() whenever the read loop
+        // exits abnormally, but it no-ops unless allowConnectionRecovery is
+        // explicitly turned on -- which NCE's network driver never did.
+        // See resetupConnection() below for the other half of the fix.
+        allowConnectionRecovery = true;
     }
 
     /**
@@ -49,6 +58,19 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
+    }
+
+    /**
+     * Called once a reconnect attempt succeeds. The traffic controller's
+     * transmit/receive threads were torn down when the connection was lost
+     * (AbstractMRTrafficController.recovery() calls disconnectPort() before
+     * attempting reconnection), so they need to be started again against the
+     * fresh socket streams -- connectPort() does both, the same call
+     * configure() made for the original connection.
+     */
+    @Override
+    protected void resetupConnection() {
+        getSystemConnectionMemo().getNceTrafficController().connectPort(this);
     }
 
 }

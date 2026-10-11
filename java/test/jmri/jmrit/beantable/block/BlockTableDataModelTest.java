@@ -23,7 +23,7 @@ public class BlockTableDataModelTest extends AbstractBeanTableDataModelBase<Bloc
     
     @Override
     public int getModelColumnCount(){
-        return 15;
+        return 16;
     }
     
     @Test
@@ -58,6 +58,6 @@ public class BlockTableDataModelTest extends AbstractBeanTableDataModelBase<Bloc
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BlockTableDataModelTest.class);
 
 }

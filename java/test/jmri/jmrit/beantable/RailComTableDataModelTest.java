@@ -24,7 +24,7 @@ public class RailComTableDataModelTest extends AbstractBeanTableDataModelBase<Id
     
     @Override
     public int getModelColumnCount(){
-        return 12;
+        return 17;
     }
     
     @Test

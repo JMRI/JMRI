@@ -97,5 +97,5 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogDataXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogDataXml.class);
 }

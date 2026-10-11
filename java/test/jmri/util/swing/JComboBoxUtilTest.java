@@ -4,8 +4,9 @@ import javax.swing.*;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -17,7 +18,7 @@ public class JComboBoxUtilTest {
     public void testCall() {
         JComboBox<String> c = new JComboBox<>(new String[]{"A", "B"});
         JComboBoxUtil.setupComboBoxMaxRows(c);
-        Assert.assertTrue("Max Row Count", c.getMaximumRowCount() > 7);  // NOI18N
+        assertTrue( c.getMaximumRowCount() > 7, "Max Row Count");
     }
 
     @BeforeEach
@@ -30,6 +31,6 @@ public class JComboBoxUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBoxTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriBeanComboBoxTest.class);
 
 }

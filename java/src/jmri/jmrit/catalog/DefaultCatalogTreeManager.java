@@ -1,5 +1,7 @@
 package jmri.jmrit.catalog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -39,6 +41,8 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      * automatically as part of the general storage mechanism.
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method intentionally doesn't register anything")
     protected void registerSelf() {
         log.debug("not registering");
     }
@@ -96,7 +100,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         }
         // return existing if there is one
         CatalogTree t;
-        if (userName != null) { 
+        if (userName != null) {
             t = getByUserName(userName);
             if (t != null) {
                 if (getBySystemName(systemName) != t) {
@@ -140,7 +144,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      *
      * @param systemName system name for catalog tree, never null/empty
      * @param userName   user name for catalog tree
-     * @return the new catalog tree or 
+     * @return the new catalog tree or
      * @throws IllegalArgumentException if unable to create
      */
     @Nonnull

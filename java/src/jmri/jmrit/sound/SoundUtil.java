@@ -109,5 +109,5 @@ public class SoundUtil {
         return abAudioData;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SoundUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(SoundUtil.class);
 }

@@ -65,7 +65,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
         if (entry != null) {
             entry = entry.trim(); // remove white space around name, also prevent "Space" as a Group name
         }
-        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES)) {
+        if (entry == null || entry.length() == 0 || entry.equals(Roster.ALLENTRIES) || entry.equals(Roster.NOGROUP)) {
             return;
         }
         if (rosterEntries != null) {

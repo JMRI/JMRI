@@ -37,6 +37,6 @@ public class CMRInetMetricsAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CMRInetMetricsAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CMRInetMetricsAction.class.getName());
 
 }

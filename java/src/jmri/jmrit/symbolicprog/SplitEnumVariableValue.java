@@ -150,9 +150,22 @@ public class SplitEnumVariableValue extends VariableValue
 
         // have to do when list is complete
         for (int i = 0; i < cvCount; i++) {
-            cvList.get(i).thisCV.addPropertyChangeListener(this);
-            cvList.get(i).thisCV.setState(ValueState.FROMFILE);
+            var thisCV = cvList.get(i).thisCV;
+
+            // only add property listener once
+            boolean alreadyDone = false;
+            for (int j = 0; j < i; j++) {
+                if (thisCV.equals(cvList.get(j).thisCV) ) {
+                    alreadyDone = true;
+                    break;
+                }
+            }
+            if (! alreadyDone) {
+                thisCV.addPropertyChangeListener(this);
+            }
+            thisCV.setState(ValueState.FROMFILE);
         }
+
         treeNodes.addLast(new DefaultMutableTreeNode(""));
     }
 
@@ -256,7 +269,9 @@ public class SplitEnumVariableValue extends VariableValue
         }
         cv1.addPropertyChangeListener(this);
         cv1.setState(ValueState.FROMFILE);
-        cv2.addPropertyChangeListener(this);
+        if (! cv1.equals(cv2)) {  // only add listener once
+            cv2.addPropertyChangeListener(this);
+        }
         cv2.setState(ValueState.FROMFILE);
     }
 
@@ -409,15 +424,6 @@ public class SplitEnumVariableValue extends VariableValue
         String retString = "";
         if (cvCount > 0) {
             retString = cvList.get(0).cvName;
-        }
-        return retString;
-    }
-
-    @Deprecated
-    public String getSecondCvNum() {
-        String retString = "";
-        if (cvCount > 1) {
-            retString = cvList.get(1).cvName;
         }
         return retString;
     }
@@ -1227,7 +1233,7 @@ public class SplitEnumVariableValue extends VariableValue
 
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SplitEnumVariableValue.class
+    private static final Logger log = LoggerFactory.getLogger(SplitEnumVariableValue.class
             .getName());
 
 }

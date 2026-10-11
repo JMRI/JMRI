@@ -2,10 +2,7 @@ package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ActionTurnoutXml
@@ -17,11 +14,10 @@ public class ActionTurnoutXmlTest {
     @Test
     public void testCtor() {
         ActionTurnoutXml b = new ActionTurnoutXml();
-        Assert.assertNotNull("exists", b);
+        Assertions.assertNotNull( b, "exists");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -32,7 +28,7 @@ public class ActionTurnoutXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

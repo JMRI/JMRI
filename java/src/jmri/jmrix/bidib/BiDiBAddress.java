@@ -1,27 +1,20 @@
 package jmri.jmrix.bidib;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collections;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.bidib.jbidibc.messages.Node;
-import org.bidib.jbidibc.messages.utils.NodeUtils;
-import org.bidib.jbidibc.messages.utils.ByteUtils;
-import org.bidib.jbidibc.messages.LcConfig;
-import org.bidib.jbidibc.messages.LcConfigX;
-import org.bidib.jbidibc.messages.BidibPort;
+import org.bidib.jbidibc.messages.*;
 import org.bidib.jbidibc.messages.enums.LcOutputType;
 import org.bidib.jbidibc.messages.enums.PortModelEnum;
-
+import org.bidib.jbidibc.messages.utils.ByteUtils;
+import org.bidib.jbidibc.messages.utils.NodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utilities for handling BiDiB adresses
- * <p>
+ * Utilities for handling BiDiB addresses.
+ *
  * @author Eckart Meyer Copyright (C) 2019-2023
  * 
  */
@@ -260,7 +253,7 @@ public class BiDiBAddress {
      * @param memo connection memo object
      * @return true if the system name is syntactically valid.
      */
-    static public boolean isValidSystemNameFormat(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) {
+    public static boolean isValidSystemNameFormat(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) {
         String aString = systemName.substring(memo.getSystemPrefix().length() + 1);
         if (addrPattern == null) {
             addrPattern = Pattern.compile(addrRegex);
@@ -508,8 +501,9 @@ public class BiDiBAddress {
      * @param typeLetter the type letter from the calling manager (T, L, S, R)
      * @param memo connection memo object
      * @return true if the system name is valid and the BiDiB Node is available
+     * @throws IllegalArgumentException when needed
      */
-    static public boolean isValidAddress(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) throws IllegalArgumentException {
+    public static boolean isValidAddress(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) throws IllegalArgumentException {
         BiDiBAddress addr = new BiDiBAddress(systemName, typeLetter, memo);
         return addr.isValid();
     }
@@ -526,5 +520,5 @@ public class BiDiBAddress {
         return "BiDiBAdress[UID=" + ByteUtils.formatHexUniqueId(nodeuid) + ",addrType=" + addrType + ",addr=" + addr + s + "]";
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBAddress.class);
 }

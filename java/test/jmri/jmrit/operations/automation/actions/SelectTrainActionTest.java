@@ -66,6 +66,6 @@ public class SelectTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SelectTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SelectTrainActionTest.class);
 
 }

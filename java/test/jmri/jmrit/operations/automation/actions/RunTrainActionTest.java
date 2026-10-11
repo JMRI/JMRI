@@ -106,7 +106,7 @@ public class RunTrainActionTest extends OperationsTestCase {
         }
 
         // confirm file exists
-        Assert.assertTrue(InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists());
+        Assert.assertTrue(InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist());
 
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train1 = tmanager.getTrainById("1");
@@ -131,6 +131,6 @@ public class RunTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RunTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RunTrainActionTest.class);
 
 }

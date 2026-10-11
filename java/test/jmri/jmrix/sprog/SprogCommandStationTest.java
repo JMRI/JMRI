@@ -2,7 +2,6 @@ package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,11 +12,11 @@ import org.junit.jupiter.api.*;
 public class SprogCommandStationTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testSprogCommandStationConstructor(){
        SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
        SprogTrafficController tc = new SprogTrafficControlScaffold(m);
        SprogCommandStation cs = new SprogCommandStation(tc);
-       Assert.assertNotNull(cs);
+       Assertions.assertNotNull(cs);
        tc.dispose();
    }
 

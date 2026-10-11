@@ -37,7 +37,7 @@ public class LnCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         Assert.assertEquals("next Block set", bm.getBlock(nextBlock), lcs.getNextBlock());
         Assert.assertEquals("Mast set", smm.getSignalMast(mastName), lcs.getNextMast());
         if (!mastName.isBlank()) {
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for signal to settle.
+            new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for signal to settle.
             // mast expected, so check the aspect.
             JUnitUtil.waitFor(() -> {
                 return "Clear".equals(lcs.getNextMast().getAspect());
@@ -85,5 +85,5 @@ public class LnCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(LnCabSignalTest.class);
+    //private static final Logger log = LoggerFactory.getLogger(LnCabSignalTest.class);
 }

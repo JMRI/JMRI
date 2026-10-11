@@ -3,7 +3,7 @@ package jmri.jmrit.operations.setup;
 import java.io.File;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -52,7 +52,8 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("Operations Setup Constant S_SCALE", 8, Setup.S_SCALE);
         Assert.assertEquals("Operations Setup Constant On3_SCALE", 9, Setup.On3_SCALE);
         Assert.assertEquals("Operations Setup Constant O_SCALE", 10, Setup.O_SCALE);
-        Assert.assertEquals("Operations Setup Constant G_SCALE", 11, Setup.G_SCALE);
+        Assert.assertEquals("Operations Setup Constant G_SCALE", 11, Setup.Gauge1_SCALE);
+        Assert.assertEquals("Operations Setup Constant G_SCALE", 12, Setup.G_24_SCALE);
 
         Assert.assertEquals("Operations Setup Constant EAST", 1, Setup.EAST);
         Assert.assertEquals("Operations Setup Constant WEST", 2, Setup.WEST);
@@ -169,9 +170,16 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("O Initial Weight", 5000, s.getInitalWeight());
         Assert.assertEquals("O Added Weight", 1000, s.getAddWeight());
 
-        s.setScale(Setup.G_SCALE);
+        s.setScale(Setup.Gauge1_SCALE);
         Assert.assertEquals("G Scale", 11, s.getScale());
         Assert.assertEquals("G Scale Ratio", 32, s.getScaleRatio());
+        Assert.assertEquals("G Scale Ton Ratio", 2, s.getScaleTonRatio());
+        Assert.assertEquals("G Initial Weight", 10000, s.getInitalWeight());
+        Assert.assertEquals("G Added Weight", 2000, s.getAddWeight());
+
+        s.setScale(Setup.G_24_SCALE);
+        Assert.assertEquals("G Scale", 12, s.getScale());
+        Assert.assertEquals("G Scale Ratio", 24, s.getScaleRatio());
         Assert.assertEquals("G Scale Ton Ratio", 2, s.getScaleTonRatio());
         Assert.assertEquals("G Initial Weight", 10000, s.getInitalWeight());
         Assert.assertEquals("G Added Weight", 2000, s.getAddWeight());
@@ -439,7 +447,7 @@ public class OperationsSetupTest extends OperationsTestCase {
         s.setTrainDirection(Setup.EAST + Setup.WEST + Setup.NORTH + Setup.SOUTH);
         s.setMaxTrainLength(1111);
         s.setMaxNumberEngines(111);
-        s.setScale(Setup.G_SCALE);
+        s.setScale(Setup.Gauge1_SCALE);
         s.setCarTypes("File Test Car Types");
         s.setSwitchTime(11);
         s.setTravelTime(111);

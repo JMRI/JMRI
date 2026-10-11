@@ -607,6 +607,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
+    private static final Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }

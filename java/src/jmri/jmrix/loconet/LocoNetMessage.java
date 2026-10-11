@@ -52,7 +52,7 @@ import jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret;
  */
 public class LocoNetMessage extends AbstractMessage implements Serializable {
     // Serializable, serialVersionUID used by jmrix.loconet.locormi, please do not remove
-    static final long serialVersionUID = -7904918731667071828L;
+    private static final long serialVersionUID = -7904918731667071828L;
 
     /**
      * Create a LocoNetMessage object without providing any
@@ -155,9 +155,8 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         _nDataChars = original.getNumDataElements();
         _dataChars = new int[_nDataChars];
 
-        for (int i = 0; i < original.getNumDataElements(); i++) {
-            _dataChars[i] = original._dataChars[i];
-        }
+        if (original.getNumDataElements() >= 0)
+            System.arraycopy(original._dataChars, 0, _dataChars, 0, original.getNumDataElements());
     }
 
     public void setOpCode(int i) {
@@ -189,14 +188,14 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     public int getElement(int n) {
         if (n < 0 || n >= _dataChars.length) {
             log.error("reference element {} in message of {} elements: {}", // NOI18N
-                    n, _dataChars.length, this.toString()); // NOI18N
+                    n, _dataChars.length, this); // NOI18N
             return -1;
         }
         return _dataChars[n] & 0xFF;
     }
 
     /**
-     * set a specific byte at a specific index in the message
+     * Set a specific byte at a specific index in the message
      * <p>
      * Logs an error and aborts if the index is beyond the length of the message.
      *
@@ -207,7 +206,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataChars.length) {
             log.error("reference element {} in message of {} elements: {}", // NOI18N
-                    n, _dataChars.length, this.toString()); // NOI18N
+                    n, _dataChars.length, this); // NOI18N
             return;
         }
         _dataChars[n] = v & 0xFF;
@@ -222,7 +221,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     @Override
     public String toString() {
         int val;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < _nDataChars; i++) {
             if (i > 0) {
                 sb.append(' ');
@@ -265,7 +264,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         for (loop = 0; loop < len - 1; loop++) {  // calculate contents for data part
             chksum ^= getElement(loop);
         }
-        setElement(len - 1, chksum);  // checksum is last element of message    }
+        setElement(len - 1, chksum);  // checksum is last element of message
     }
 
     /**
@@ -294,10 +293,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
             for (loop = 6; loop < len - 1; loop++) {
                 sum = sum ^ getElement(loop);
             }
-            if (getElement(len - 1) != sum) {
-                return false;
-            }
-            return true;
+            return getElement(len - 1) == sum;
         }
 
         // normal case - just sum entire message
@@ -329,7 +325,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
             return new int[] {0};
         }
 
-        int[] data = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        int[] data = new int[] {0, 0, 0, 0, 0, 0, 0, 0};
 
         int pxct1 = getElement(5);
         int pxct2 = getElement(10);
@@ -464,7 +460,8 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @param code The instruction code placed in the pcxt1 pcxt2 bytes
      * @return The formatted message
      */
-    static public LocoNetMessage makePeerXfr(int src, int dst, int[] d, int code) {
+    public static LocoNetMessage makePeerXfr(int src, int dst, int[] d, int code) {
+        log.debug("makePeerXfr for src={}, dst={} subAddr={} data[]={} code={}", src, dst, d[4], d, code);
         LocoNetMessage msg = new LocoNetMessage(16);
         msg.setOpCode(LnConstants.OPC_PEER_XFER);
         msg.setElement(1, 0x10);  // 2nd part of op code
@@ -478,9 +475,9 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         pxct2 |= ((code & 0x38) / 8) * 0x10; // next 4 bits
 
         // store the addresses
-        msg.setElement(2, src & 0x7F); //src
-        msg.setElement(3, dst & 0x7F); //dstl
-        msg.setElement(4, highByte(dst) & 0x7F); //dsth
+        msg.setElement(2, src & 0x7F); // src_l
+        msg.setElement(3, dst & 0x7F); // dst_l
+        msg.setElement(4, highByte(dst) & 0x7F); // dst_h
 
         // store the data bytes
         msg.setElement(6, d[0] & 0x7F);
@@ -531,7 +528,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @param val  value to be checked
      * @return True if the argument has the high bit set
      */
-    static protected boolean highBit(int val) {
+    protected static boolean highBit(int val) {
         if ((val & (~0xFF)) != 0) {
             log.error("highBit called with too large value: 0x{}", // NOI18N
                     Integer.toHexString(val));
@@ -539,11 +536,11 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         return (0 != (val & 0x80));
     }
 
-    static protected int lowByte(int val) {
+    protected static int lowByte(int val) {
         return val & 0xFF;
     }
 
-    static protected int highByte(int val) {
+    protected static int highByte(int val) {
         if ((val & (~0xFFFF)) != 0) {
             log.error("highByte called with too large value: {}", // NOI18N
                     Integer.toHexString(val));
@@ -625,6 +622,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     static char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoNetMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetMessage.class);
 
 }

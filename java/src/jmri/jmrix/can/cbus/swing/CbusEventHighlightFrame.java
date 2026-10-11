@@ -1,15 +1,18 @@
 package jmri.jmrix.can.cbus.swing;
 
 import java.awt.Color;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.WindowConstants;
+
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusEventHighlighter;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -97,7 +100,7 @@ public class CbusEventHighlightFrame extends JmriJFrame {
             getContentPane().add(highlightPanes[i]);
         }
         // prevent button areas from expanding
-        pack();
+        ThreadingUtil.runOnGUI( () -> pack());
     }
 
     /**
@@ -204,5 +207,5 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         return highlightColors[i];
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventHighlightFrame.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventHighlightFrame.class);
 }

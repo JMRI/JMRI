@@ -56,7 +56,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryLocoNet.LOCONET;
     }
 
@@ -385,6 +385,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSlotUsage.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSlotUsage.class);
 
 }

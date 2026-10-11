@@ -1,5 +1,15 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.abort;
+
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -8,9 +18,9 @@ import java.util.List;
 import javax.swing.Timer;
 import jmri.*;
 import jmri.jmrit.Sound;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -30,22 +40,22 @@ public class DefaultConditionalTest {
     @Test
     public void createInstance() {
         DefaultConditional t = new DefaultConditional("IXIC 0");
-        Assertions.assertNotNull(t);
+        assertNotNull(t);
     }
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists",new DefaultConditional("IXIC 1"));
+        assertNotNull(new DefaultConditional("IXIC 1"), "exists");
     }
 
     @Test
     public void testBasics() {
         Conditional ix1 = new DefaultConditional("IXIC 1");
-        Assert.assertEquals("Conditional", ix1.getBeanType());
+        assertEquals("Conditional", ix1.getBeanType());
 
         // Check that a non existent item in a table results in -1
         int[] table = { 1, 2, 3 };
-        Assert.assertEquals(-1, DefaultConditional.getIndexInTable(table, 5));
+        assertEquals(-1, DefaultConditional.getIndexInTable(table, 5));
     }
 
     @Test
@@ -54,51 +64,53 @@ public class DefaultConditionalTest {
 
         Conditional ix2 = new DefaultConditional("IXIC 3");
 
-        Assert.assertTrue("object not equals", !ix1.equals(ix2));
-        Assert.assertTrue("object not equals reverse", !ix2.equals(ix1));
+        assertFalse( ix1.equals(ix2), "object not equals");
+        assertFalse( ix2.equals(ix1), "object not equals reverse");
 
-        Assert.assertTrue("hash not equals", ix1.hashCode() != ix2.hashCode());
+        assertNotEquals( ix1.hashCode(), ix2.hashCode(), "hash not equals");
     }
 
     private void testValidate(boolean expectedResult, String antecedent, List<ConditionalVariable> conditionalVariablesList) {
         Conditional ix1 = new DefaultConditional("IXIC 1");
 
         if (expectedResult) {
-            Assert.assertTrue("validateAntecedent() returns null for '"+antecedent+"'",
-                    ix1.validateAntecedent(antecedent, conditionalVariablesList) == null);
+            assertNull( ix1.validateAntecedent(antecedent, conditionalVariablesList),
+                () -> "validateAntecedent() returns null for '"+antecedent+"'");
         } else {
-            Assert.assertTrue("validateAntecedent() returns error message for '"+antecedent+"'",
-                    ix1.validateAntecedent(antecedent, conditionalVariablesList) != null);
+            assertNotNull( ix1.validateAntecedent(antecedent, conditionalVariablesList),
+                () -> "validateAntecedent() returns error message for '"+antecedent+"'");
         }
     }
 
-    private void testCalculate(int expectedResult, String antecedent, List<ConditionalVariable> conditionalVariablesList, String errorMessage) {
+    private void testCalculate(int expectedResult, String antecedent,
+            List<ConditionalVariable> conditionalVariablesList, String errorMessage) {
+
         Conditional ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.MIXED, antecedent);
         ix1.setStateVariables(conditionalVariablesList);
 
         switch (expectedResult) {
             case NamedBean.UNKNOWN:
-                Assert.assertTrue("validateAntecedent() returns UNKNOWN for '"+antecedent+"'",
-                        ix1.calculate(false, null) == NamedBean.UNKNOWN);
+                assertEquals( NamedBean.UNKNOWN, ix1.calculate(false, null),
+                    () -> "validateAntecedent() returns UNKNOWN for '"+antecedent+"'");
                 break;
 
             case Conditional.FALSE:
-                Assert.assertTrue("validateAntecedent() returns FALSE for '"+antecedent+"'",
-                        ix1.calculate(false, null) == Conditional.FALSE);
+                assertEquals( Conditional.FALSE, ix1.calculate(false, null),
+                    () -> "validateAntecedent() returns FALSE for '"+antecedent+"'");
                 break;
 
             case Conditional.TRUE:
-                Assert.assertTrue("validateAntecedent() returns TRUE for '"+antecedent+"'",
-                        ix1.calculate(false, null) == Conditional.TRUE);
+                assertEquals( Conditional.TRUE, ix1.calculate(false, null),
+                    () -> "validateAntecedent() returns TRUE for '"+antecedent+"'");
                 break;
 
             default:
-                throw new RuntimeException(String.format("Unknown expected result: %d", expectedResult));
+                fail(String.format("Unknown expected result: %d", expectedResult));
         }
 
         if (! errorMessage.isEmpty()) {
-            jmri.util.JUnitAppender.assertErrorMessageStartsWith(errorMessage);
+            JUnitAppender.assertErrorMessageStartsWith(errorMessage);
         }
     }
 
@@ -296,34 +308,40 @@ public class DefaultConditionalTest {
         Conditional ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
-        Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
+        assertEquals( Conditional.TRUE, ix1.calculate(false, null),
+            "calculate() returns NamedBean.TRUE");
 
         ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueFalse);
-        Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
+        assertEquals( Conditional.FALSE, ix1.calculate(false, null),
+            "calculate() returns NamedBean.FALSE");
 
         ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
-        Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
+        assertEquals( Conditional.FALSE, ix1.calculate(false, null),
+            "calculate() returns NamedBean.FALSE");
 
 
         // Test ALL_OR
         ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
-        Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
+        assertEquals( Conditional.TRUE, ix1.calculate(false, null),
+            "calculate() returns NamedBean.TRUE");
 
         ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueFalse);
-        Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.TRUE);
+        assertEquals( Conditional.TRUE, ix1.calculate(false, null),
+            "calculate() returns NamedBean.FALSE");
 
         ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
-        Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
+        assertEquals( Conditional.FALSE, ix1.calculate(false, null),
+            "calculate() returns NamedBean.FALSE");
 
 
         // Test wrong logic
@@ -359,32 +377,26 @@ public class DefaultConditionalTest {
         Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName", "MemoryValue");
 
         // Test that trigger is not checked if enabled == false
-        Conditional ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
-        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        Conditional ix = new DefaultConditional("IXIC 1");
+        ix.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
+        ix.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         PropertyChangeEvent event = new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue") {
             @Override
             public Object getSource() {
-                Assertions.fail("Property change event should not be triggered");
+                fail("Property change event should not be triggered");
                 throw new IllegalStateException();
             }
         };
-        boolean success = false;
-        try {
-            ix1.calculate(false, event);
-            success = true;
-        } catch (IllegalStateException ex) {
-            Assertions.fail("Property change event should not be triggered ", ex );
-        }
-        Assert.assertTrue("trigger has not been checked", success);
+        assertDoesNotThrow( () -> ix.calculate(false, event));
 
         // Test invalid event source object
-        ix1 = new DefaultConditional("IXIC 1");
+        Conditional ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_True);
         int result = ix1.calculate(true, new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
-        Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 PropertyChangeEvent source of unexpected type: java.beans.PropertyChangeEvent");
+        assertEquals( Conditional.TRUE, result, "calculate() returns NamedBean.TRUE");
+        JUnitAppender.assertErrorMessageStartsWith(
+            "IXIC 1 PropertyChangeEvent source of unexpected type: java.beans.PropertyChangeEvent");
 
         // Test trigger event with bad device name
         ix1 = new DefaultConditional("IXIC 1");
@@ -395,8 +407,8 @@ public class DefaultConditionalTest {
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = null;
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
-        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith(" error: IXIC 1 - invalid memory name in action - ");
+        assertTrue( "InitialValue".equals(myMemory.getValue()), "action has not been executed");
+        JUnitAppender.assertErrorMessageStartsWith(" error: IXIC 1 - invalid memory name in action - ");
 
         // Test trigger event with system name.
         // This action wants to trigger the event.
@@ -410,7 +422,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = "MyDeviceName";
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        assertTrue( "NewValue".equals(myMemory.getValue()), "action has been executed");
 
         // Test trigger event with user name.
         // This action wants to trigger the event.
@@ -424,7 +436,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = "MyDeviceName";
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestUserName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        assertTrue( "NewValue".equals(myMemory.getValue()), "action has been executed");
 
         // Test trigger event with bad system and user name.
         // This action wants to trigger the event.
@@ -438,7 +450,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = "MyDeviceName";
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyOtherName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        assertTrue( "NewValue".equals(myMemory.getValue()), "action has been executed");
 
         // Test not trigger event.
         // This action does not want to trigger the event.
@@ -452,7 +464,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = "MyDeviceName";
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
+        assertTrue( "InitialValue".equals(myMemory.getValue()), "action has not been executed");
 
         // Test trigger event on change.
         // _triggerActionsOnChange == true
@@ -469,7 +481,7 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = "NewValue";
         // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        assertTrue( "NewValue".equals(myMemory.getValue()), "action has been executed");
 
         // Test trigger event on change.
         // _triggerActionsOnChange == true
@@ -488,7 +500,7 @@ public class DefaultConditionalTest {
         ix1.calculate(false, null);
         // Calculate doesn't change state since the state already is Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
+        assertTrue( "InitialValue".equals(myMemory.getValue()), "action has not been executed");
 
         // Test trigger event on change.
         // _triggerActionsOnChange == false
@@ -505,7 +517,7 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = "NewValue";
         // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        assertTrue( "NewValue".equals(myMemory.getValue()), "action has not been executed");
 
         // Test trigger event on change.
         // _triggerActionsOnChange == false
@@ -524,7 +536,7 @@ public class DefaultConditionalTest {
         ix1.calculate(false, null);
         // Calculate doesn't change state since the state already is Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        assertTrue( "NewValue".equals(myMemory.getValue()), "action has been executed");
     }
 
 
@@ -571,7 +583,7 @@ public class DefaultConditionalTest {
         myMemory.setValue("OldValue");
         ix1.setStateVariables(conditionalVariablesList_True);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+        assertEquals( "OldValue", myMemory.getValue(), "memory has not been set");
 
         // Test old state == FALSE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
         testConditionalAction = getConditionalAction(Conditional.Action.SET_MEMORY, myMemory);
@@ -582,7 +594,7 @@ public class DefaultConditionalTest {
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         myMemory.setValue("OldValue");
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        assertEquals( "NewValue", myMemory.getValue(), "memory has been set");
 
         // Test old state == FALSE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
         testConditionalAction = getConditionalAction(Conditional.Action.SET_MEMORY, myMemory);
@@ -593,7 +605,7 @@ public class DefaultConditionalTest {
         myMemory.setValue("OldValue");
         ix1.setStateVariables(conditionalVariablesList_False);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+        assertEquals( "OldValue", myMemory.getValue(), "memory has not been set");
 
         // Test old state == TRUE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
         testConditionalAction = getConditionalAction(Conditional.Action.SET_MEMORY, myMemory);
@@ -605,7 +617,7 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_False);
         ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        assertEquals( "NewValue", myMemory.getValue(), "memory has been set");
 
         // Test old state == FALSE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE
         testConditionalAction = getConditionalAction(Conditional.Action.SET_MEMORY, myMemory);
@@ -616,7 +628,7 @@ public class DefaultConditionalTest {
         myMemory.setValue("OldValue");
         ix1.setStateVariables(conditionalVariablesList_False);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+        assertEquals( "OldValue", myMemory.getValue(), "memory has not been set");
 
         // Test old state == FALSE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE
         testConditionalAction = getConditionalAction(Conditional.Action.SET_MEMORY, myMemory);
@@ -628,7 +640,7 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_True);
         ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        assertEquals( "NewValue", myMemory.getValue(), "memory has been set");
 
         // Test old state == TRUE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE
         testConditionalAction = getConditionalAction(Conditional.Action.SET_MEMORY, myMemory);
@@ -639,7 +651,7 @@ public class DefaultConditionalTest {
         myMemory.setValue("OldValue");
         ix1.setStateVariables(conditionalVariablesList_False);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        assertEquals( "NewValue", myMemory.getValue(), "memory has been set");
 
         // Test old state == TRUE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE
         testConditionalAction = getConditionalAction(Conditional.Action.SET_MEMORY, myMemory);
@@ -650,7 +662,7 @@ public class DefaultConditionalTest {
         myMemory.setValue("OldValue");
         ix1.setStateVariables(conditionalVariablesList_True);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+        assertEquals( "OldValue", myMemory.getValue(), "memory has not been set");
     }
 
     @Test
@@ -681,7 +693,7 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = "NewValue";
         DefaultConditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        assertEquals( "NewValue", myMemory.getValue(), "memory has been set");
 
         // Test ACTION_ENABLE_LOGIX
         // Test system name
@@ -691,7 +703,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = x.getSystemName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("logix has been enabled", x.getEnabled());
+        assertTrue( x.getEnabled(), "logix has been enabled");
 
         // Test user name
         x.setEnabled(false);
@@ -699,7 +711,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = x.getUserName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("logix has been enabled", x.getEnabled());
+        assertTrue( x.getEnabled(), "logix has been enabled");
 
         // Test ACTION_DISABLE_LOGIX
         // Test system name
@@ -708,7 +720,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = x.getSystemName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertFalse("logix has been disabled", x.getEnabled());
+        assertFalse( x.getEnabled(), "logix has been disabled");
 
         // Test user name
         x.setEnabled(true);
@@ -716,7 +728,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = x.getUserName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertFalse("logix has been disabled", x.getEnabled());
+        assertFalse( x.getEnabled(), "logix has been disabled");
 
         // Test ACTION_RUN_SCRIPT
         // Test ACTION_DELAYED_TURNOUT
@@ -738,7 +750,7 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = destMemory.getSystemName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has been copied", myMemory.getValue().equals(destMemory.getValue()));
+        assertEquals( myMemory.getValue(), destMemory.getValue(), "memory has been copied");
 
         // Test copy to memory by user name
         destMemory.setValue("OtherValue");
@@ -747,7 +759,7 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = destMemory.getUserName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("memory has been copied", myMemory.getValue().equals(destMemory.getValue()));
+        assertEquals( myMemory.getValue(), destMemory.getValue(), "memory has been copied");
 
         // Test ACTION_SET_LIGHT_INTENSITY
         // Test ACTION_SET_LIGHT_TRANSITION_TIME
@@ -790,7 +802,7 @@ public class DefaultConditionalTest {
         try {
             javax.sound.sampled.AudioSystem.getClip();
         } catch (IllegalArgumentException | javax.sound.sampled.LineUnavailableException ex) {
-            Assume.assumeNoException("Unable to initialize AudioSystem", ex);
+            abort( () -> "Unable to initialize AudioSystem" + ex.getMessage());
         }
         Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName2", "MemoryValue2");
         testConditionalAction = getConditionalAction(Conditional.Action.PLAY_SOUND, myMemory);
@@ -799,7 +811,7 @@ public class DefaultConditionalTest {
         testConditionalAction.setSound(sound);
         Conditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
-        Assert.assertTrue("sound has played", sound.hasPlayed);
+        assertTrue( sound.hasPlayed, "sound has played");
     }
 
 
@@ -1011,7 +1023,7 @@ public class DefaultConditionalTest {
 
         MyNamedBean(String systemName, String userName) {
             super(systemName);
-            setUserName(userName);
+            assertDoesNotThrow(() -> setUserName(userName));
         }
 
         @Override

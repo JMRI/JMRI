@@ -170,5 +170,5 @@ public class OlcbClockControl extends DefaultClockControl {
     /// The listener registered for the hardwareClock.
     private final PropertyChangeListener listener;
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbClockControl.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbClockControl.class);
 }

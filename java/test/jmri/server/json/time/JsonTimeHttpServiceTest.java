@@ -1,10 +1,5 @@
 package jmri.server.json.time;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.jupiter.api.*;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
@@ -15,6 +10,11 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class JsonTimeHttpServiceTest extends JsonHttpServiceTestBase<JsonTimeHttpService> {
 
     @Test
@@ -22,13 +22,12 @@ public class JsonTimeHttpServiceTest extends JsonHttpServiceTestBase<JsonTimeHtt
         Timebase manager = InstanceManager.getDefault(Timebase.class);
         JsonNode array = service.doGetList(JSON.TIME, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(array);
-        assertEquals("One element in array", 1, array.size());
-        assertTrue("First element is a JSON object", array.get(0).isObject());
-        assertEquals("JSON object type is \"time\"", JSON.TIME,
-                array.get(0).path(JSON.TYPE).asText());
-        assertTrue("time property", array.get(0).path(JSON.DATA).path(JSON.TIME).isTextual());
-        assertEquals("rate property", manager.getRate(), array.get(0).path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
-        assertEquals("running state", JSON.ON, array.get(0).path(JSON.DATA).path(JSON.STATE).asInt());
+        assertEquals( 1, array.size(), "One element in array");
+        assertTrue( array.get(0).isObject(), "First element is a JSON object");
+        assertEquals( JSON.TIME, array.get(0).path(JSON.TYPE).asText(), "JSON object type is \"time\"");
+        assertTrue( array.get(0).path(JSON.DATA).path(JSON.TIME).isTextual(), "time property");
+        assertEquals( manager.getRate(), array.get(0).path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0, "rate property");
+        assertEquals( JSON.ON, array.get(0).path(JSON.DATA).path(JSON.STATE).asInt(), "running state");
     }
 
     @BeforeEach

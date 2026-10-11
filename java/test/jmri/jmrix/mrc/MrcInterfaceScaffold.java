@@ -1,6 +1,7 @@
 package jmri.jmrix.mrc;
 
 import java.util.Vector;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +47,7 @@ public class MrcInterfaceScaffold extends MrcTrafficController {
 
     /**
      * Avoid error message, normal in parent
+     * @param e exception
      */
     protected void portWarn(Exception e) {
     }
@@ -68,7 +70,7 @@ public class MrcInterfaceScaffold extends MrcTrafficController {
 
 
 
-    private final static Logger log = LoggerFactory.getLogger(MrcInterfaceScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(MrcInterfaceScaffold.class);
 
 }
 

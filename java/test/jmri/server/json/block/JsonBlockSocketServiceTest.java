@@ -18,8 +18,11 @@ import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -28,7 +31,7 @@ import org.junit.jupiter.api.*;
  */
 public class JsonBlockSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Test
     public void testBlockChange() throws IOException, JmriException, JsonException {
@@ -38,28 +41,28 @@ public class JsonBlockSocketServiceTest {
         // of blocks when creating block for test
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
-        Assert.assertEquals("Block has only one listener", 1, block1.getNumPropertyChangeListeners());
+        assertEquals( 1, block1.getNumPropertyChangeListeners(), "Block has only one listener");
         JsonBlockSocketService service = new JsonBlockSocketService(connection);
         service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        Assert.assertEquals("Block is being listened to by service", 2, block1.getNumPropertyChangeListeners());
+        assertEquals( 2, block1.getNumPropertyChangeListeners(), "Block is being listened to by service");
         JsonNode result = connection.getMessage();
-        Assert.assertNotNull(result);
-        Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertNotNull(result);
+        assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         block1.setState(Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
             return block1.getState() == Block.OCCUPIED;
         }, "Block to throw");
         result = connection.getMessage();
-        Assert.assertNotNull(result);
-        Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertNotNull(result);
+        assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
         block1.setState(Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
             return block1.getState() == Block.UNOCCUPIED;
         }, "Block to close");
-        Assert.assertEquals(Block.UNOCCUPIED, block1.getState());
+        assertEquals(Block.UNOCCUPIED, block1.getState());
         result = connection.getMessage();
-        Assert.assertNotNull(result);
-        Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertNotNull(result);
+        assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // test IOException handling when listening by triggering exception and
         // observing that block1 is no longer being listened to
         connection.setThrowIOException(true);
@@ -67,12 +70,12 @@ public class JsonBlockSocketServiceTest {
         JUnitUtil.waitFor(() -> {
             return block1.getState() == Block.OCCUPIED;
         }, "Block to close");
-        Assert.assertEquals(Block.OCCUPIED, block1.getState());
-        Assert.assertEquals("Block is no longer listened to by service", 1, block1.getNumPropertyChangeListeners());
+        assertEquals(Block.OCCUPIED, block1.getState());
+        assertEquals( 1, block1.getNumPropertyChangeListeners(), "Block is no longer listened to by service");
         service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        Assert.assertEquals("Block is being listened to by service", 2, block1.getNumPropertyChangeListeners());
+        assertEquals( 2, block1.getNumPropertyChangeListeners(), "Block is being listened to by service");
         service.onClose();
-        Assert.assertEquals("Block is no longer listened to by service", 1, block1.getNumPropertyChangeListeners());
+        assertEquals( 1, block1.getNumPropertyChangeListeners(), "Block is no longer listened to by service");
     }
 
     @Test
@@ -85,26 +88,23 @@ public class JsonBlockSocketServiceTest {
         // Block UNOCCUPIED
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.OFF);
         service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        Assert.assertEquals(Block.UNOCCUPIED, block1.getState());
+        assertEquals(Block.UNOCCUPIED, block1.getState());
         // Block OCCUPIED
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.ON);
         service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        Assert.assertEquals(Block.OCCUPIED, block1.getState());
+        assertEquals(Block.OCCUPIED, block1.getState());
         // Block UNKNOWN - remains OCCUPIED
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.UNKNOWN);
         service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        Assert.assertEquals(Block.OCCUPIED, block1.getState());
+        assertEquals(Block.OCCUPIED, block1.getState());
         // Block Invalid State
-        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, 42); // invalid state
-        JsonException exception = null;
-        try {
-            service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        } catch (JsonException ex) {
-            exception = ex;
-        }
-        Assert.assertEquals(Block.OCCUPIED, block1.getState());
-        Assert.assertNotNull(exception);
-        Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
+        JsonNode message2 = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, 42); // invalid state
+        JsonException exception = assertThrows( JsonException.class, () ->
+            service.onMessage(JsonBlock.BLOCK, message2,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42)));
+        assertEquals(Block.OCCUPIED, block1.getState());
+        assertNotNull(exception);
+        assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
     }
 
     @Test
@@ -117,8 +117,8 @@ public class JsonBlockSocketServiceTest {
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.OFF);
         service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         Block block1 = manager.getBySystemName("IB1");
-        Assert.assertNotNull("Block was created by PUT", block1);
-        Assert.assertEquals(Block.UNOCCUPIED, block1.getState());
+        assertNotNull( block1, "Block was created by PUT");
+        assertEquals(Block.UNOCCUPIED, block1.getState());
     }
 
     @BeforeEach

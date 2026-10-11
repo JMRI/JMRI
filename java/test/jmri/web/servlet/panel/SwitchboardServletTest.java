@@ -2,7 +2,6 @@ package jmri.web.servlet.panel;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class SwitchboardServletTest {
     @Test
     public void testCtor() {
         SwitchboardServlet a = new SwitchboardServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

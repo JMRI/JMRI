@@ -140,7 +140,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return SerialMessage.staticFormat(b1, b2, b3, b4);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialReply.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialReply.class);
 
 }
 

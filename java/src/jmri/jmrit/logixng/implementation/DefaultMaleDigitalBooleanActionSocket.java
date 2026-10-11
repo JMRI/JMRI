@@ -72,7 +72,7 @@ public class DefaultMaleDigitalBooleanActionSocket
      */
     @Override
     public void registerListenersForThisClass() {
-        ((DigitalBooleanActionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
 
     /**
@@ -80,7 +80,7 @@ public class DefaultMaleDigitalBooleanActionSocket
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((DigitalBooleanActionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
 
     @Override
@@ -198,6 +198,6 @@ public class DefaultMaleDigitalBooleanActionSocket
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalBooleanActionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalBooleanActionSocket.class);
 
 }

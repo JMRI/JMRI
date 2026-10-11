@@ -59,7 +59,7 @@
 
       <p><a href="../../../../../jython/AssignIdTagToRollingStock.py">AssignIdTagToRollingStock.py</a>
       </p>
-      
+
       <p>A more advanced example of scripting, this script "listens" for new or changed ID Tag Table entries (RFID Tags)
       and opens a window to allow the user to enter a user name (typically locomotive or car/wagon number) and comment.
       It does this by creating a property change listener on the ID Tag Table.
@@ -67,11 +67,11 @@
       the popup window). It will flag locomotive/car numbers that do not exist, as well as move an ID
       Tag from one loco or car to another and eliminate dupicate assignment of RFID Tag to cars or locomotives.</p>
 
-      <p>This script illustrates the use of the JMRI property change listener, writing to the 
-      Script Output window, writing information to the System Console, updating the ID Tag Table, 
-      updating the OperationsPro Locomotive and Car Tables, and using Java swing to create a popup 
-      window with entry fields and radio buttons.</p> 
-      
+      <p>This script illustrates the use of the JMRI property change listener, writing to the
+      Script Output window, writing information to the System Console, updating the ID Tag Table,
+      updating the OperationsPro Locomotive and Car Tables, and using Java swing to create a popup
+      window with entry fields and radio buttons.</p>
+
       <p>For more information about the use of RFID and the Id Tags Table, see <a href=
       "../../hardware/rfid/GettingStartedWithRFID.shtml">Getting Started with RFID</a>.</p>
 
@@ -242,6 +242,16 @@
 
       <p>This is an example script for a JMRI "Siglet" in Python. It listens to a Memory object,
       and prints the new state to stdout.</p>
+
+      <p><a href="../../../../../jython/MemoryValuesPersistence.py">MemoryValuesPersistence.py</a>
+      </p>
+
+      <p>Persist the values of selected memory variables between sessions. Before closing JMRI, this
+        script stores to a .csv file the value of each selected memory variable, and reads back in
+        the last known value after a restart. The script needs to run after the layout xml data file
+        has been loaded.  The script has to be copied to the user files location and modified.
+        The <code>memoryNames</code> list has the system or user names of the selected memory
+        variables.</p>
 
       <p><a href="../../../../../jython/NSelectorExample.py">NSelectorExample.py</a>
       </p>

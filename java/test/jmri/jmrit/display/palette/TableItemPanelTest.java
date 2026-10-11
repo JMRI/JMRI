@@ -1,5 +1,8 @@
 package jmri.jmrit.display.palette;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import javax.swing.JScrollPane;
 
 import jmri.Turnout;
@@ -7,18 +10,17 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.*;
 
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class TableItemPanelTest {
 
     @Test
@@ -26,21 +28,21 @@ public class TableItemPanelTest {
         PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance();
         DisplayFrame df = new DisplayFrame("Table Item Panel Test"); // NOI18N
         TableItemPanel<Turnout> t = new TableItemPanel<>(df,"IS01","",tableModel);
-        Assert.assertNotNull("exists",t); // NOI18N
+        assertNotNull( t, "exists");
         JUnitUtil.dispose(df);
     }
 
     @Test
     public void testShowTurnoutIcons() {
         ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
-        Assert.assertNotNull("exists", editor);
+        assertNotNull( editor, "exists");
         JFrameOperator fo = new JFrameOperator(ItemPalette.getDefault("ItemPalette", editor));
 
         ItemPalette._tabPane.setSelectedIndex(0);
         JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(0);
         ItemPanel panel = (ItemPanel)sp.getViewport().getView();
-        Assert.assertNotNull("ItemPanel exists", panel);
-        Assert.assertEquals("ItemPanel._itemType", "Turnout", panel._itemType);
+        assertNotNull( panel, "ItemPanel exists");
+        assertEquals( "Turnout", panel._itemType, "ItemPanel._itemType");
 
         new JButtonOperator(fo, Bundle.getMessage("ShowIcons")).doClick();
 
@@ -51,20 +53,20 @@ public class TableItemPanelTest {
         fo.requestClose();
         fo.waitClosed();
 
-        editor.dispose();
+        JUnitUtil.dispose(editor);
     }
 
     @Test
     public void testShowIndicatorTurnoutIcons() {
         ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
-        Assert.assertNotNull("exists", editor);
+        assertNotNull( editor, "exists");
         JFrameOperator fo = new JFrameOperator(ItemPalette.getDefault("ItemPalette", editor));
 
         ItemPalette._tabPane.setSelectedIndex(14);
         JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(15);
         ItemPanel panel = (ItemPanel)sp.getViewport().getView();
-        Assert.assertNotNull("ItemPanel exists", panel);
-        Assert.assertEquals("ItemPanel._itemType", "IndicatorTO", panel._itemType);
+        assertNotNull( panel, "ItemPanel exists");
+        assertEquals( "IndicatorTO", panel._itemType, "ItemPanel._itemType");
 
         new JButtonOperator(fo, Bundle.getMessage("ShowIcons")).doClick();
 
@@ -75,27 +77,27 @@ public class TableItemPanelTest {
         fo.requestClose();
         fo.waitClosed();
 
-        editor.dispose();
+        JUnitUtil.dispose(editor);
     }
 
     @Test
     public void testNewSensorFamily() {
         ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
-        Assert.assertNotNull("exists", editor);
+        assertNotNull( editor, "exists");
         JFrameOperator fo = new JFrameOperator(ItemPalette.getDefault("ItemPalette", editor));
 
         ItemPalette._tabPane.setSelectedIndex(1);
         JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(1);
         ItemPanel panel = (ItemPanel)sp.getViewport().getView();
-        Assert.assertNotNull("ItemPanel exists", panel);
-        Assert.assertEquals("ItemPanel._itemType", "Sensor", panel._itemType);
+        assertNotNull( panel, "ItemPanel exists");
+        assertEquals( "Sensor", panel._itemType, "ItemPanel._itemType");
 
         JButtonOperator bo = new JButtonOperator(fo, Bundle.getMessage("ShowIcons"));
         bo.doClick();
 
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("createNewFamily"));
+            JDialogOperator jdo = new JDialogOperator(fo, Bundle.getMessage("createNewFamily"));
             new JTextFieldOperator(jdo, 0).enterText("My Family Name");
             new JButtonOperator(jdo, Bundle.getMessage("ButtonOK")).doClick();
         });
@@ -114,7 +116,7 @@ public class TableItemPanelTest {
         fo.requestClose();
         fo.waitClosed();
 
-        editor.dispose();
+        JUnitUtil.dispose(editor);
     }
 
     @BeforeEach

@@ -3,13 +3,14 @@ package jmri.jmrit.logixng.implementation;
 import java.util.*;
 
 import javax.annotation.Nonnull;
+import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.util.*;
+import jmri.util.ThreadingUtil;
 
 /**
  * The default implementation of ConditionalNG.
@@ -145,6 +146,7 @@ public class DefaultConditionalNG extends AbstractBase
      * Executes a LogixNG Module.
      * @param module      The module to be executed
      * @param parameters  The parameters
+     * @throws IllegalArgumentException when needed
      */
     public static void executeModule(Module module, Map<String, Object> parameters)
             throws IllegalArgumentException {
@@ -249,9 +251,17 @@ public class DefaultConditionalNG extends AbstractBase
                 } else {
                     conditionalNG.getFemaleSocket().execute();
                 }
-            } catch (ReturnException | ExitException e) {
+            } catch (AbortConditionalNG_IgnoreException | ReturnException | ExitException e) {
+                // A AbortConditionalNG_IgnoreException should be ignored.
                 // A Return action in a ConditionalNG causes a ReturnException so this is okay.
                 // An Exit action in a ConditionalNG causes a ExitException so this is okay.
+            } catch (ValidationErrorException e) {
+                ThreadingUtil.runOnGUI(()->
+                        JOptionPane.showMessageDialog(null,
+                                e.getMessage(),
+                                Bundle.getMessage("LogixNG_ValidationError"),
+                                JOptionPane.ERROR_MESSAGE)
+                );
             } catch (PassThruException e) {
                 // This happens due to a a Break action or a Continue action that isn't handled.
                 log.info("ConditionalNG {} was aborted during execute: {}",
@@ -402,7 +412,7 @@ public class DefaultConditionalNG extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    final public void setup() {
+    public final void setup() {
         if (!_femaleSocket.isConnected()
                 || !_femaleSocket.getConnectedSocket().getSystemName()
                         .equals(_socketSystemName)) {
@@ -432,7 +442,7 @@ public class DefaultConditionalNG extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    final public void disposeMe() {
+    public final void disposeMe() {
         _femaleSocket.dispose();
     }
 
@@ -499,6 +509,6 @@ public class DefaultConditionalNG extends AbstractBase
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNG.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNG.class);
 
 }

@@ -1,12 +1,20 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -30,9 +38,10 @@ public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyT
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
         // check
-        Assert.assertNotNull("real object returned ", t);
-        Assert.assertSame("user name correct ", t, l.getByUserName("mine"));
-        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertSame( t, l.getByUserName("mine"), "user name correct ");
+        assertSame( t, l.getBySystemName(getSystemName(getNumToTest1())),
+            "system name correct ");
     }
 
     @Test
@@ -40,14 +49,15 @@ public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyT
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
         // check
-        Assert.assertNotNull("real object returned ", t);
-        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertSame( t, l.getBySystemName(getSystemName(getNumToTest1())),
+            "system name correct ");
     }
 
     @Test
-    public void testProvideFailure() throws Exception {
-        IllegalArgumentException assertThrows = Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
-        Assertions.assertTrue(assertThrows.getMessage().contains("System name must start with \"JT\""),"msg was: "+assertThrows.getMessage());
+    public void testProvideFailure() {
+        IllegalArgumentException assertThrows = assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        assertTrue(assertThrows.getMessage().contains("System name must start with \"JT\""),"msg was: "+assertThrows.getMessage());
         JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -55,39 +65,40 @@ public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyT
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertNotNull("t1 real object returned ", t1);
-        Assert.assertSame("same by user ", t1, l.getByUserName("mine"));
-        Assert.assertSame("same by system ", t1, l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t1, "t1 real object returned ");
+        assertSame( t1, l.getByUserName("mine"), "same by user ");
+        assertSame( t1, l.getBySystemName(getSystemName(getNumToTest1())),
+            "same by system ");
 
         Turnout t2 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertNotNull("t2 real object returned ", t2);
+        assertNotNull( t2, "t2 real object returned ");
         // check
-        Assert.assertSame("same new ", t1, t2);
+        assertSame( t1, t2, "same new ");
     }
 
     @Test
     public void testMisses() {
         // try to get nonexistant objects
-        Assert.assertNull(l.getByUserName("foo"));
-        Assert.assertNull(l.getBySystemName("bar"));
+        assertNull(l.getByUserName("foo"));
+        assertNull(l.getBySystemName("bar"));
     }
 
     @Test
     public void testUpperLower() {
         Turnout t = l.provideTurnout("" + getNumToTest2());
         String name = t.getSystemName();
-        Assert.assertNull(l.getTurnout(name.toLowerCase()));
+        assertNull(l.getTurnout(name.toLowerCase()));
     }
 
     @Test
     public void testRename() {
         // get
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "before");
-        Assert.assertNotNull("t1 real object ", t1);
+        assertNotNull( t1, "t1 real object ");
         t1.setUserName("after");
         Turnout t2 = l.getByUserName("after");
-        Assert.assertEquals("same object", t1, t2);
-        Assert.assertNull("no old object", l.getByUserName("before"));
+        assertEquals( t1, t2, "same object");
+        assertNull( l.getByUserName("before"), "no old object");
     }
 
 
@@ -98,9 +109,9 @@ public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyT
 
         String next = l.getNextValidSystemName(t);
 
-        Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("based on ", "JT9", t.getSystemName());
-        Assert.assertEquals("correct next name ", "JT10", next);
+        assertNotNull( t, "real object returned ");
+        assertEquals( "JT9", t.getSystemName(), "based on ");
+        assertEquals( "JT10", next, "correct next name ");
     }
 
     @Test
@@ -108,17 +119,17 @@ public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyT
         Turnout jl212 = l.provideTurnout("JT212");
         Turnout jl211 = l.provideTurnout("JT211");
 
-        Assert.assertNotNull(jl212);
-        Assert.assertNotNull(jl211);
-        Assert.assertNotSame(jl212, jl211);
+        assertNotNull(jl212);
+        assertNotNull(jl211);
+        assertNotSame(jl212, jl211);
     }
 
     @Test
     public void testDefaultNotInternal() {
         Turnout lut = l.provideTurnout("211");
 
-        Assert.assertNotNull(lut);
-        Assert.assertEquals("JT211", lut.getSystemName());
+        assertNotNull(lut);
+        assertEquals("JT211", lut.getSystemName());
     }
 
     @Test
@@ -128,41 +139,42 @@ public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyT
         Turnout l2 = l.provideTurnout("user 1");
         Turnout l3 = l.getTurnout("user 1");
 
-        Assert.assertNotNull(l1);
-        Assert.assertNotNull(l2);
-        Assert.assertNotNull(l3);
-        Assert.assertEquals(l1, l2);
-        Assert.assertEquals(l3, l2);
-        Assert.assertEquals(l1, l3);
+        assertNotNull(l1);
+        assertNotNull(l2);
+        assertNotNull(l3);
+        assertEquals(l1, l2);
+        assertEquals(l3, l2);
+        assertEquals(l1, l3);
 
         Turnout l4 = l.getTurnout("JLuser 1");
-        Assert.assertNull(l4);
+        assertNull(l4);
     }
 
     @Test
     public void testOutputInterval() {
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
+        assertEquals( 250, l.getOutputInterval(), "default outputInterval");
         l.setOutputInterval(50);
-        Assert.assertEquals("Internal outputInterval", 50, l.getOutputInterval());
+        assertEquals( 50, l.getOutputInterval(), "Internal outputInterval");
     }
 
     @Test
     public void testInstanceManagerIntegration() {
         JUnitUtil.resetInstanceManager();
-        Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
+        assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
 
         JUnitUtil.initInternalTurnoutManager();
 
-        Assert.assertTrue(InstanceManager.getDefault(TurnoutManager.class) instanceof ProxyTurnoutManager);
+        assertInstanceOf(ProxyTurnoutManager.class,
+            InstanceManager.getDefault(TurnoutManager.class));
 
-        Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS1"));
+        assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
+        assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS1"));
 
         InternalTurnoutManager m = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(m);
 
-        Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("JS1"));
-        Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS2"));
+        assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("JS1"));
+        assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS2"));
     }
 
     /**
@@ -186,11 +198,9 @@ public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyT
         TurnoutManager itm = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(itm);
         TurnoutManager pl = InstanceManager.getDefault(TurnoutManager.class);
-        if ( pl instanceof ProxyTurnoutManager ) {
-            l = (ProxyTurnoutManager) pl;
-        } else {
-            Assertions.fail("TurnoutManager is not a ProxyTurnoutManager");
-        }
+        assertInstanceOf( ProxyTurnoutManager.class, pl,
+            "TurnoutManager is not a ProxyTurnoutManager");
+        l = (ProxyTurnoutManager) pl;
     }
 
     @AfterEach

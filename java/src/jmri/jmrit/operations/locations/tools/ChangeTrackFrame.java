@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -110,5 +110,5 @@ class ChangeTrackFrame extends OperationsFrame {
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ChangeTrackFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(ChangeTrackFrame.class);
 }

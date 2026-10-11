@@ -184,34 +184,34 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
             rp = new SignalMastRepeater(master, slave);
             repeaterList.add(rp);
         }
-        firePropertyChange("repeaterlength", null, null);
+        firePropertyChange(PROPERTY_REPEATER_LENGTH, null, null);
         return rp;
     }
 
     public void addRepeater(SignalMastRepeater rp) throws JmriException {
         for (SignalMastRepeater rpeat : repeaterList) {
-            if (rpeat.getMasterMast() == rp.getMasterMast()
-                    && rpeat.getSlaveMast() == rp.getSlaveMast()) {
-                log.error("Signal repeater already Exists");
-                throw new JmriException("Signal mast Repeater already exists");
-            } else if (rpeat.getMasterMast() == rp.getSlaveMast()
-                    && rpeat.getSlaveMast() == rp.getMasterMast()) {
+            if  ( ( rpeat.getMasterMast() == rp.getMasterMast() && rpeat.getSlaveMast() == rp.getSlaveMast())
+                || ( rpeat.getMasterMast() == rp.getSlaveMast() && rpeat.getSlaveMast() == rp.getMasterMast()) ) {
                 log.error("Signal repeater already Exists");
                 throw new JmriException("Signal mast Repeater already exists");
             }
         }
         repeaterList.add(rp);
-        firePropertyChange("repeaterlength", null, null);
+        firePropertyChange(PROPERTY_REPEATER_LENGTH, null, null);
     }
 
     public void removeRepeater(SignalMastRepeater rp) {
         rp.dispose();
         repeaterList.remove(rp);
-        firePropertyChange("repeaterlength", null, null);
+        firePropertyChange(PROPERTY_REPEATER_LENGTH, null, null);
     }
 
+    /**
+     * Get the list of SignalMastRepeaters.
+     * @return copy of the list.
+     */
     public List<SignalMastRepeater> getRepeaterList() {
-        return repeaterList;
+        return new ArrayList<>(repeaterList);
     }
 
     public void initialiseRepeaters() {
@@ -235,5 +235,5 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalMastManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalMastManager.class);
 }

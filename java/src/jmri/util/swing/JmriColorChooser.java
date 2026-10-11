@@ -24,15 +24,15 @@ public class JmriColorChooser {
      * The XML loading process creates the initial list and
      * subsequent activity will add new colors.
      */
-    static private ArrayList<Color> recentColors = new ArrayList<>();
-    static private boolean _suppressAdd = false;
+    private static ArrayList<Color> recentColors = new ArrayList<>();
+    private static boolean _suppressAdd = false;
 
     /**
      * Add a new color to the recent list.
      * Null values and duplicates are not added.
      * @param color The color object to be added.
      */
-    static public void addRecentColor(Color color) {
+    public static void addRecentColor(Color color) {
         if (color == null || _suppressAdd || !color.toString().contains("java.awt.Color")) {
             // Ignore null or default system colors
             return;
@@ -48,7 +48,7 @@ public class JmriColorChooser {
      * tab while editing colors on CPE panels.
      * @param set if true, previewed color is not added.
      */
-    static public void suppressAddRecentColor(boolean set) {
+    public static void suppressAddRecentColor(boolean set) {
         _suppressAdd = set;
     }
 
@@ -58,7 +58,7 @@ public class JmriColorChooser {
      * the recent color list.
      * @return the recent color list.
      */
-    static public ArrayList<Color> getRecentColors() {
+    public static ArrayList<Color> getRecentColors() {
         return new ArrayList<>(recentColors);
     }
 
@@ -76,7 +76,7 @@ public class JmriColorChooser {
      * @param currentColor The color that will be set as the starting value for the dialog.
      * @return the selected color for a OK response, the orignal color for a Cancel response.
      */
-    static public Color showDialog(Component comp, String dialogTitle, Color currentColor) {
+    public static Color showDialog(Component comp, String dialogTitle, Color currentColor) {
         color = currentColor == null ? Color.WHITE : currentColor;
         String title = dialogTitle == null ? "" : dialogTitle;
         JColorChooser chooser = extendColorChooser(new JColorChooser(color));
@@ -94,7 +94,7 @@ public class JmriColorChooser {
      * @param chooser The chooser object to be updated.
      * @return the updated chooser object
      */
-     static public JColorChooser extendColorChooser(JColorChooser chooser) {
+     public static JColorChooser extendColorChooser(JColorChooser chooser) {
 
         int colorTabCount ;
 

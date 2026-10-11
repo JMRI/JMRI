@@ -1,6 +1,5 @@
 package jmri.util.swing;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class BeanSelectCreatePanelTest {
         jmri.TurnoutManager manager = jmri.InstanceManager.getDefault(jmri.TurnoutManager.class);
         jmri.Turnout turnout = manager.provideTurnout("IT1");
         BeanSelectCreatePanel<jmri.Turnout> t = new BeanSelectCreatePanel<>(manager,turnout);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -28,6 +27,6 @@ public class BeanSelectCreatePanelTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BeanSelectCreatePanelTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(BeanSelectCreatePanelTest.class.getName());
 
 }

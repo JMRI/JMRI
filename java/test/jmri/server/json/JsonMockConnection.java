@@ -14,7 +14,8 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 
 import org.eclipse.jetty.websocket.api.Session;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * JsonConnection that retains sent messages for unit testing.
@@ -69,7 +70,7 @@ public class JsonMockConnection extends JsonConnection {
                     schemas.validateMessage(message, true, request);
                 } catch (JsonException ex) {
                     messages.add(ex.getJsonMessage());
-                    Assert.fail(ex.getMessage());
+                    fail(ex.getMessage());
                 }
             }
             messages.add(message);

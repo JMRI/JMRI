@@ -17,7 +17,7 @@ public class SectionWhereUsed {
      * @param section The section bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean section) {
+    public static JTextArea getWhereUsed(NamedBean section) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSection"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, section.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

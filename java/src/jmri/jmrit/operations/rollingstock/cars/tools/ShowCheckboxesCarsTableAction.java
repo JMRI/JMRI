@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.rollingstock.cars.CarsTableModel;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableModel;
 
 /**
  * Swing action to show checkboxes in the cars window.

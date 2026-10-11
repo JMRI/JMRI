@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and in
- * memory. The interal storage is a JDOM tree. See locomotive-config.xsd
+ * memory. The internal storage is a JDOM tree. See locomotive-config.xsd
  * <p>
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
@@ -91,6 +91,7 @@ public class LocoFile extends XmlFile {
                 String name = element.getAttribute("name").getValue();
                 String value = element.getAttribute("value").getValue();
                 log.debug("CV named {} has value: {}", name, value);
+                
 
                 // Fairly ugly hack to migrate Indexed CVs of existing Tsunami2 & Econami
                 // roster entries to full NMRA S9.2.2 format (include CV 31 value).
@@ -121,7 +122,18 @@ public class LocoFile extends XmlFile {
                 }
                 if (cvObject != null) {
                     cvObject.setValue(Integer.parseInt(value));
-                    cvObject.setState(AbstractValue.ValueState.FROMFILE);
+
+                    // retrieve the state, if available
+                    if (element.getAttribute("state") != null) {
+                        var state = AbstractValue.ValueState.valueOf(element.getAttributeValue("state"));
+                        if (!state.equals(AbstractValue.ValueState.FROMDEFAULT)) {
+                            state = AbstractValue.ValueState.FROMFILE;
+                        }
+                        cvObject.setState(state);
+                    } else {
+                        cvObject.setState(AbstractValue.ValueState.FROMFILEUNKNOWN);
+                    }
+
                 }
             }
         } else {
@@ -192,12 +204,21 @@ public class LocoFile extends XmlFile {
             String value = element.getAttribute("value").getValue();
             log.debug("Variable \"{}\" has value: {}", item, value);
 
-            VariableValue var = map.get(item);
-            if (var != null) {
-                var.setValue(value);
+            VariableValue varValue = map.get(item);
+            if (varValue != null) {
+                varValue.setValue(value);
+
+                // retrieve the state, if available
+                if (element.getAttribute("state") != null) {
+                    var state = AbstractValue.ValueState.valueOf(element.getAttributeValue("state"));
+                    varValue.setState(state);
+                } else {
+                    varValue.setState(AbstractValue.ValueState.FROMFILEUNKNOWN);
+                }
+
             } else {
                 if (selectMissingVarResponse(item) == MessageResponse.REPORT) {
-                    // not an warning, as this is how some definitions are migrated to remove erroneous variables
+                    // not a warning, as this is how some definitions are migrated to remove erroneous variables
                     log.debug("Did not find locofile variable \"{}\" in decoder definition, no variable loaded", item);
                 }
             }
@@ -269,6 +290,7 @@ public class LocoFile extends XmlFile {
                     decoderDef.addContent(new Element("varValue")
                             .setAttribute("item", variableModel.getItem(i))
                             .setAttribute("value", variableModel.getValString(i))
+                            .setAttribute("state", variableModel.getState(i).toString())
                     );
                 }
                 // mark file as OK
@@ -281,6 +303,7 @@ public class LocoFile extends XmlFile {
                     values.addContent(new Element("CVvalue")
                             .setAttribute("name", cvModel.getName(i))
                             .setAttribute("value", cvModel.getValString(i))
+                            .setAttribute("state", cvModel.getCvByRow(i).getState().toString())
                     );
                 }
             }
@@ -295,7 +318,7 @@ public class LocoFile extends XmlFile {
     /**
      * Write an XML version of this object from an existing XML tree, updating
      * only the ID string.
-     *
+     * <p>
      * Does not do an automatic backup of the file, so that should be done
      * elsewhere. This is intended for copy and import operations, where the
      * tree has been read from an existing file. Hence, only the "ID"
@@ -334,7 +357,7 @@ public class LocoFile extends XmlFile {
     /**
      * Write an XML version of this object, updating the RosterEntry
      * information, from an existing XML tree.
-     *
+     * <p>
      * Does not do an automatic backup of the file, so that should be done
      * elsewhere. This is intended for writing out changes to the RosterEntry
      * information only.
@@ -367,8 +390,10 @@ public class LocoFile extends XmlFile {
             doc.addContent(0, p);
 
             // Add the variable info
-            Element values = existingElement.getChild("locomotive").getChild("values");
-            newLocomotive.addContent(values.clone());
+            if (existingElement!=null) {
+                Element values = existingElement.getChild("locomotive").getChild("values");
+                newLocomotive.addContent(values.clone());
+            }
 
             writeXML(pFile, doc);
         } catch (IOException ex) {
@@ -376,11 +401,11 @@ public class LocoFile extends XmlFile {
         }
     }
 
-    static public String getFileLocation() {
+    public static String getFileLocation() {
         return Roster.getDefault().getRosterFilesLocation();
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoFile.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoFile.class);
 
 }

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-location-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"location\"",
@@ -28,7 +28,10 @@
             "description": "Freeform comment concerning location"
         },
         "reporter": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The system name of the reporter for this location"
         },
         "track": {
@@ -40,5 +43,11 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "reporter", "carType"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "reporter",
+        "carType"
+    ]
 }

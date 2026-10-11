@@ -18,7 +18,6 @@
 			<!-- Temporary disable these until we have decided what to do about them -->
 
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="OVERRIDING_METHODS_MUST_INVOKE_SUPER" />
            <Bug pattern="DCN_NULLPOINTER_EXCEPTION" /> <!-- 327 cases -->
            <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA" />
         </Or>
@@ -30,7 +29,6 @@
         <Or>
 			<!-- Temporary disable these until we have decided what to do about them -->
            <Bug pattern="AA_ASSERTION_OF_ARGUMENTS" /> <!-- 16 cases -->
-           <Bug pattern="FE_FLOATING_POINT_EQUALITY" /> <!-- 4 cases -->
            <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" /> <!-- 93 cases -->
            <Bug pattern="URF_UNREAD_FIELD" /> <!-- 112 cases -->
            <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 50 cases -->
@@ -50,6 +48,34 @@
         </Or>
      </Match>
 
+    <!-- New reports from SpoBugs 4.9.8 that haven't been addressed (yet) -->
+     <Match>
+        <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
+        <Or>
+		   <!-- Temporary disable these until we have decided what to do about them -->
+           <Bug pattern="HSM_HIDING_METHOD" /> <!-- 8 cases -->
+           <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE" />
+           <Bug pattern="NN_NAKED_NOTIFY" />
+           <Bug pattern="AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE" />
+           <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
+           <Bug pattern="US_USELESS_SUPPRESSION_ON_METHOD" />
+           <Bug pattern="US_USELESS_SUPPRESSION_ON_FIELD" />
+           <Bug pattern="US_USELESS_SUPPRESSION_ON_CLASS" />
+           <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+        </Or>
+     </Match>
+     <Match>
+        <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
+        <Or>
+		   <!-- Temporary disable these until we have decided what to do about them -->
+           <Bug pattern="THROWS_METHOD_THROWS_RUNTIMEEXCEPTION" />
+           <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" />
+           <Bug pattern="AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD" />
+           <Bug pattern="OS_OPEN_STREAM_EXCEPTION_PATH" />
+        </Or>
+     </Match>
+    
+    
     <!-- what follows should be kept in sync with .spotbugs.xml -->
 
     <!-- The following section is used to suppress notifications about

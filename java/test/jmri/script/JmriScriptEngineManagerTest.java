@@ -1,20 +1,10 @@
 package jmri.script;
 
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.TurnoutManager;
-import jmri.profile.NullProfile;
-import jmri.profile.ProfileManager;
-import jmri.util.FileUtil;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +17,16 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
+
+import jmri.InstanceManager;
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.TurnoutManager;
+import jmri.profile.NullProfile;
+import jmri.profile.ProfileManager;
+import jmri.util.FileUtil;
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.python.util.PythonInterpreter;
@@ -87,8 +87,9 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetDefault() {
-        assertEquals("getDefault ==s InstanceManager instance", InstanceManager.getDefault(JmriScriptEngineManager.class), JmriScriptEngineManager.getDefault());
-        assertNotEquals("getDefault !=s test object", jsem, JmriScriptEngineManager.getDefault());
+        assertEquals( InstanceManager.getDefault(JmriScriptEngineManager.class),
+            JmriScriptEngineManager.getDefault(), "getDefault ==s InstanceManager instance");
+        assertNotEquals( jsem, JmriScriptEngineManager.getDefault(), "getDefault !=s test object");
     }
 
     @Test
@@ -99,7 +100,7 @@ public class JmriScriptEngineManagerTest {
     @Test
     public void testInitializePython() {
         jsem.initializePython();
-        assertNull("no non-engine python", jsem.getPythonInterpreter());
+        assertNull( jsem.getPythonInterpreter(), "no non-engine python");
     }
 
     @Test
@@ -108,10 +109,13 @@ public class JmriScriptEngineManagerTest {
         JUnitUtil.resetProfileManager(new NullProfile(new File("java/test/jmri/script/jython-exec-profile")));
         jsem.initializePython();
         PythonInterpreter pi = jsem.getPythonInterpreter();
-        assertNotNull("got non-engine python", pi);
+        assertNotNull( pi, "got non-engine python");
         // now test that bindings are correct
-        jsem.getDefaultContext().getBindings(ScriptContext.GLOBAL_SCOPE)
-                .forEach((name, value) -> assertEquals("value in bindings is in non-engine python", value, pi.get(name, value.getClass())));
+        jsem.getDefaultContext().getBindings(ScriptContext.GLOBAL_SCOPE).forEach((name, value) -> {
+            assertNotNull(value);
+            var piGet = pi.get(name, value.getClass());
+            assertEquals( value, piGet, "value in bindings is in non-engine python");
+        });
     }
 
     @Test
@@ -150,38 +154,35 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetEngineByExtensionInvalidExtension() {
-        try {
-            jsem.getEngineByExtension("invalid");
-            fail("Expected exception not thrown");
-        } catch (ScriptException e) {
-            // not asserting full error message because ends with list of known extensions
-            // which can vary based on JVM
-            JUnitAppender.assertErrorMessageStartsWith("Could not find script engine for extension \"invalid\", expected one of ");
-        }
+        ScriptException ex = assertThrows( ScriptException.class, () ->
+            jsem.getEngineByExtension("invalid"),
+            "Expected exception not thrown");
+        assertNotNull(ex);
+        // not asserting full error message because ends with list of known extensions
+        // which can vary based on JVM
+        JUnitAppender.assertErrorMessageStartsWith("Could not find script engine for extension \"invalid\", expected one of ");
     }
 
     @Test
     public void testGetEngineByMimeTypeInvalidMimeType() {
-        try {
-            jsem.getEngineByMimeType("invalid");
-            fail("Expected exception not thrown");
-        } catch (ScriptException e) {
-            // not asserting full error message because ends with list of known extensions
-            // which can vary based on JVM
-            JUnitAppender.assertErrorMessageStartsWith("Could not find script engine for mime type \"invalid\", expected one of ");
-        }
+        ScriptException ex = assertThrows( ScriptException.class, () ->
+            jsem.getEngineByMimeType("invalid"),
+            "Expected exception not thrown");
+        assertNotNull(ex);
+        // not asserting full error message because ends with list of known extensions
+        // which can vary based on JVM
+        JUnitAppender.assertErrorMessageStartsWith("Could not find script engine for mime type \"invalid\", expected one of ");
     }
 
     @Test
     public void testGetEngineByNameInvalidName() {
-        try {
-            jsem.getEngineByName("invalid");
-            fail("Expected exception not thrown");
-        } catch (ScriptException e) {
-            // not asserting full error message because ends with list of known extensions
-            // which can vary based on JVM
-            JUnitAppender.assertErrorMessageStartsWith("Could not find script engine for name \"invalid\", expected one of ");
-        }
+        ScriptException ex = assertThrows( ScriptException.class, () ->
+            jsem.getEngineByName("invalid"),
+            "Expected exception not thrown");
+        assertNotNull(ex);
+        // not asserting full error message because ends with list of known extensions
+        // which can vary based on JVM
+        JUnitAppender.assertErrorMessageStartsWith("Could not find script engine for name \"invalid\", expected one of ");
     }
 
     @Test
@@ -220,38 +221,35 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetFactoryByExtensionInvalidExtension() {
-        try {
-            jsem.getFactoryByExtension("invalid");
-            fail("Expected exception not thrown");
-        } catch (ScriptException e) {
-            // not asserting full error message because ends with list of known extensions
-            // which can vary based on JVM
-            JUnitAppender.assertErrorMessageStartsWith("Could not find script engine factory for extension \"invalid\", expected one of ");
-        }
+        ScriptException ex = assertThrows( ScriptException.class, () ->
+            jsem.getFactoryByExtension("invalid"),
+            "Expected exception not thrown");
+        assertNotNull(ex);
+        // not asserting full error message because ends with list of known extensions
+        // which can vary based on JVM
+        JUnitAppender.assertErrorMessageStartsWith("Could not find script engine factory for extension \"invalid\", expected one of ");
     }
 
     @Test
     public void testGetFactoryByMimeTypeInvalidMimeType() {
-        try {
-            jsem.getFactoryByMimeType("invalid");
-            fail("Expected exception not thrown");
-        } catch (ScriptException e) {
-            // not asserting full error message because ends with list of known extensions
-            // which can vary based on JVM
-            JUnitAppender.assertErrorMessageStartsWith("Could not find script engine factory for mime type \"invalid\", expected one of ");
-        }
+        ScriptException ex = assertThrows( ScriptException.class, () ->
+            jsem.getFactoryByMimeType("invalid"),
+            "Expected exception not thrown");
+        assertNotNull(ex);
+        // not asserting full error message because ends with list of known extensions
+        // which can vary based on JVM
+        JUnitAppender.assertErrorMessageStartsWith("Could not find script engine factory for mime type \"invalid\", expected one of ");
     }
 
     @Test
     public void testGetFactoryByNameInvalidName() {
-        try {
-            jsem.getFactoryByName("invalid");
-            fail("Expected exception not thrown");
-        } catch (ScriptException e) {
-            // not asserting full error message because ends with list of known extensions
-            // which can vary based on JVM
-            JUnitAppender.assertErrorMessageStartsWith("Could not find script engine factory for name \"invalid\", expected one of ");
-        }
+        ScriptException ex = assertThrows( ScriptException.class, () ->
+            jsem.getFactoryByName("invalid"),
+            "Expected exception not thrown");
+        assertNotNull(ex);
+        // not asserting full error message because ends with list of known extensions
+        // which can vary based on JVM
+        JUnitAppender.assertErrorMessageStartsWith("Could not find script engine factory for name \"invalid\", expected one of ");
     }
 
     @Test
@@ -266,10 +264,11 @@ public class JmriScriptEngineManagerTest {
         @SuppressWarnings("unchecked")
         HashMap<String, ScriptEngine> engines = (HashMap<String, ScriptEngine>) field.get(jsem);
         assertNotEquals("factories is not empty", factories.size());
-        assertNotEquals("engines is empty", factories.size(), engines.size());
+        assertNotEquals( factories.size(), engines.size(), "engines is empty");
         jsem.initializeAllEngines();
-        assertEquals("one engine per factory", factories.size(), engines.size());
-        factories.keySet().forEach(name -> assertNotNull("factory " + name + " has engine", engines.get(name)));
+        assertEquals( factories.size(), engines.size(), "one engine per factory");
+        factories.keySet().forEach(name ->
+            assertNotNull( engines.get(name), () -> "factory " + name + " has engine"));
     }
 
     @BeforeEach

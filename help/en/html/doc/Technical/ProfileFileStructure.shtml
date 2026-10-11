@@ -61,6 +61,8 @@
 
             <dt>SoundProConfig2.properties</dt>
 
+            <dt>LccProConfig.properties</dt>
+
             <dd>
               These files are created the first time each of the apps are run and simply contain
               three pieces of information:

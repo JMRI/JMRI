@@ -1,8 +1,9 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.File;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -79,24 +80,24 @@ public class CheckProgrammerNamesTest {
     public void checkAgainstNames(File file) {
         String result = ProgCheckAction.checkMissingNames(file);
         if (!result.equals("")) {
-            Assert.fail(result);
+            fail(result);
         }
     }
 
     public void checkComplete(File file) {
         String result = ProgCheckAction.checkIncompleteComprehensive(file);
         if (!result.equals("")) {
-            Assert.fail(result);
+            fail(result);
         }
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }

@@ -2,19 +2,18 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
  * Unit Tests for StayOpenCheckBoxMenuItemUI
- * @author Steve Yound copyright(c) 2021
+ * @author Steve Young copyright(c) 2021
  */
 public class StayOpenCheckBoxMenuItemUITest {
     
     @Test
     public void testCTor() {
         StayOpenCheckBoxMenuItemUI t = new StayOpenCheckBoxMenuItemUI();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
     
     @BeforeEach

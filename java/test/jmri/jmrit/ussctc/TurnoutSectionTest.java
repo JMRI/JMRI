@@ -1,9 +1,12 @@
 package jmri.jmrit.ussctc;
 
-import jmri.util.JUnitUtil;
-import jmri.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Assert;
+import jmri.*;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,7 +21,7 @@ public class TurnoutSectionTest {
     public void testConstruction() {
         TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N",
             "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
-        Assertions.assertNotNull(t);
+        assertNotNull(t);
     }
 
     @Test
@@ -29,12 +32,12 @@ public class TurnoutSectionTest {
 
         TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N",
             "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
-        Assertions.assertNotNull(t);
+        assertNotNull(t);
 
         // initialization sets indicators to follow actual turnout state
-        Assert.assertEquals(Turnout.THROWN, layoutTurnout.getKnownState());
-        Assert.assertEquals(Turnout.CLOSED, normIndicator.getCommandedState());
-        Assert.assertEquals(Turnout.THROWN,  revIndicator.getCommandedState());
+        assertEquals(Turnout.THROWN, layoutTurnout.getKnownState());
+        assertEquals(Turnout.CLOSED, normIndicator.getCommandedState());
+        assertEquals(Turnout.THROWN,  revIndicator.getCommandedState());
 
     }
 
@@ -44,12 +47,12 @@ public class TurnoutSectionTest {
 
         TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N",
              "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
-        Assertions.assertNotNull(t);
+        assertNotNull(t);
 
         layoutTurnout.setCommandedState(Turnout.CLOSED);
 
         // initialization sets indicators to follow actual turnout state
-        Assert.assertTrue(requestIndicationStart);
+        assertTrue(requestIndicationStart);
     }
 
     @Test
@@ -59,11 +62,11 @@ public class TurnoutSectionTest {
 
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
-        Assert.assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
+        assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
 
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.ACTIVE);
-        Assert.assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
+        assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
     }
 
     @Test
@@ -76,18 +79,18 @@ public class TurnoutSectionTest {
         t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_NORMAL;
         normIndicator.setCommandedState(Turnout.THROWN);
         revIndicator.setCommandedState(Turnout.CLOSED);
-        Assert.assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
-        Assert.assertEquals(Turnout.THROWN, normIndicator.getKnownState());
-        Assert.assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
+        assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
+        assertEquals(Turnout.THROWN, normIndicator.getKnownState());
+        assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
 
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.ACTIVE);
         t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_REVERSED;
         normIndicator.setCommandedState(Turnout.CLOSED);
         revIndicator.setCommandedState(Turnout.THROWN);
-        Assert.assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
-        Assert.assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
-        Assert.assertEquals(Turnout.THROWN, revIndicator.getKnownState());
+        assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
+        assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
+        assertEquals(Turnout.THROWN, revIndicator.getKnownState());
 
     }
 
@@ -103,9 +106,9 @@ public class TurnoutSectionTest {
         normIndicator.setCommandedState(Turnout.CLOSED);
         revIndicator.setCommandedState(Turnout.THROWN);
 
-        Assert.assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
-        Assert.assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
-        Assert.assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
+        assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
+        assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
+        assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
 
     }
 
@@ -121,9 +124,9 @@ public class TurnoutSectionTest {
         normIndicator.setCommandedState(Turnout.THROWN);
         revIndicator.setCommandedState(Turnout.CLOSED);
 
-        Assert.assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
-        Assert.assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
-        Assert.assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
+        assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
+        assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
+        assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
 
     }
 
@@ -136,19 +139,19 @@ public class TurnoutSectionTest {
         // check multiple patterns for state -> return value
         t.field.lastCodeValue = CodeGroupTwoBits.Double10;  // access for testing
         layoutTurnout.setCommandedState(Turnout.CLOSED);
-        Assert.assertEquals("CLOSED OK", CodeGroupTwoBits.Double10, t.indicationStart());
+        assertEquals(CodeGroupTwoBits.Double10, t.indicationStart(), "CLOSED OK");
 
         t.field.lastCodeValue = CodeGroupTwoBits.Double10;
         layoutTurnout.setCommandedState(Turnout.THROWN);
-        Assert.assertEquals("CLOSED out of correspondence", CodeGroupTwoBits.Double00, t.indicationStart());
+        assertEquals(CodeGroupTwoBits.Double00, t.indicationStart(), "CLOSED out of correspondence");
 
         t.field.lastCodeValue = CodeGroupTwoBits.Double01;
         layoutTurnout.setCommandedState(Turnout.THROWN);
-        Assert.assertEquals("THROWN OK", CodeGroupTwoBits.Double01, t.indicationStart());
+        assertEquals(CodeGroupTwoBits.Double01, t.indicationStart(), "THROWN OK");
 
         t.field.lastCodeValue = CodeGroupTwoBits.Double01;
         layoutTurnout.setCommandedState(Turnout.CLOSED);
-        Assert.assertEquals("THROWN out of correspondence", CodeGroupTwoBits.Double00, t.indicationStart());
+        assertEquals(CodeGroupTwoBits.Double00, t.indicationStart(), "THROWN out of correspondence");
 
     }
 
@@ -161,8 +164,8 @@ public class TurnoutSectionTest {
 
         t.indicationComplete(CodeGroupTwoBits.Double00);
 
-        Assert.assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
-        Assert.assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
+        assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
+        assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
     }
 
     @Test
@@ -174,8 +177,8 @@ public class TurnoutSectionTest {
 
         t.indicationComplete(CodeGroupTwoBits.Double10);
 
-        Assert.assertEquals(Turnout.THROWN, normIndicator.getKnownState());
-        Assert.assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
+        assertEquals(Turnout.THROWN, normIndicator.getKnownState());
+        assertEquals(Turnout.CLOSED, revIndicator.getKnownState());
     }
 
     @Test
@@ -187,19 +190,19 @@ public class TurnoutSectionTest {
 
         t.indicationComplete(CodeGroupTwoBits.Double01);
 
-        Assert.assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
-        Assert.assertEquals(Turnout.THROWN, revIndicator.getKnownState());
+        assertEquals(Turnout.CLOSED, normIndicator.getKnownState());
+        assertEquals(Turnout.THROWN, revIndicator.getKnownState());
     }
 
-    CodeLine codeline;
-    Station station;
-    boolean requestIndicationStart;
+    private CodeLine codeline;
+    private Station station;
+    private boolean requestIndicationStart;
 
-    Turnout layoutTurnout;
-    Turnout normIndicator;
-    Turnout revIndicator;
-    Sensor normSensor;
-    Sensor revSensor;
+    private Turnout layoutTurnout;
+    private Turnout normIndicator;
+    private Turnout revIndicator;
+    private Sensor normSensor;
+    private Sensor revSensor;
 
     @BeforeEach
     public void setUp() {

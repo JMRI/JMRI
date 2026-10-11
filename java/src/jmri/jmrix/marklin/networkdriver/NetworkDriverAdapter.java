@@ -2,15 +2,13 @@ package jmri.jmrix.marklin.networkdriver;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.DatagramSocket;
+
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.marklin.MarklinPortController;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.MarklinTrafficController;
 import jmri.util.com.rbnb.UDPInputStream;
 import jmri.util.com.rbnb.UDPOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements NetworkPortAdapter for the Marklin system network connection.
@@ -22,8 +20,6 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class NetworkDriverAdapter extends MarklinPortController {
-
-    protected DatagramSocket datagramSocketConn = null;
 
     public NetworkDriverAdapter() {
         super(new MarklinSystemConnectionMemo());
@@ -54,19 +50,19 @@ public class NetworkDriverAdapter extends MarklinPortController {
             log.error("a error opening network connection", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             }
             throw (e);
         }
         if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
-                    null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         } else if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                    null, m_HostName, ConnectionStatus.CONNECTION_UP);
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         }
     }
 
@@ -74,13 +70,8 @@ public class NetworkDriverAdapter extends MarklinPortController {
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         try {
             return new DataInputStream(new UDPInputStream(null, 15730));
@@ -99,13 +90,8 @@ public class NetworkDriverAdapter extends MarklinPortController {
             return new DataOutputStream(new UDPOutputStream(m_HostName, 15731));
         } catch (java.io.IOException e) {
             log.error("getOutputStream exception", e);
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         return null;
     }
@@ -129,6 +115,6 @@ public class NetworkDriverAdapter extends MarklinPortController {
         return opened;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

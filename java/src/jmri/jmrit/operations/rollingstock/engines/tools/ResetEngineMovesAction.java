@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableFrame;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -16,8 +17,11 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class ResetEngineMovesAction extends AbstractAction {
 
-    public ResetEngineMovesAction() {
+    EnginesTableFrame _enginesTableFrame;
+
+    public ResetEngineMovesAction(EnginesTableFrame enginesTableFrame) {
         super(Bundle.getMessage("MenuItemResetMoves"));
+        _enginesTableFrame = enginesTableFrame;
     }
 
     @Override
@@ -25,7 +29,8 @@ public class ResetEngineMovesAction extends AbstractAction {
         if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("engineSureResetMoves"),
                 Bundle.getMessage("engineResetMovesAll"), JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {
             log.debug("Reset moves for all engines in roster");
-            InstanceManager.getDefault(EngineManager.class).resetMoves();
+            InstanceManager.getDefault(EngineManager.class)
+                    .resetMoves(_enginesTableFrame.enginesTableModel.getSelectedEngineList());
         }
     }
 

@@ -45,7 +45,7 @@ public class SkemeStart extends SdfMacro {
         return 4;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         // course match
         if ((buff.getAtIndex() & 0xFF) != 0xF1) {
             return null;

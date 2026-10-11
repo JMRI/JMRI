@@ -19,11 +19,9 @@ public class ProxyMeterManagerTest extends AbstractProxyManagerTestBase<ProxyMet
         MeterManager itm = new jmri.jmrix.internal.InternalMeterManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setMeterManager(itm);
         MeterManager pl = InstanceManager.getDefault(MeterManager.class);
-        if ( pl instanceof ProxyMeterManager ) {
-            l = (ProxyMeterManager) pl;
-        } else {
-            Assertions.fail("IdTagManager is not a ProxyIdTagManager");
-        }
+        Assertions.assertInstanceOf(ProxyMeterManager.class, pl,
+            "MeterManager is not a ProxyMeterManager");
+        l = (ProxyMeterManager) pl;
     }
 
     @AfterEach

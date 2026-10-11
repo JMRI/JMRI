@@ -56,23 +56,6 @@
         par d&eacute;faut pour le r&eacute;pertoire des
         pr&eacute;f&eacute;rences.</dd>
 
-        <dt>gnu.io.rxtx.SerialPorts</dt>
-
-        <dd>
-          La biblioth&egrave;que de communication RXTX utilise
-          cette option pour sp&eacute;cifier les ports
-          suppl&eacute;mentaires &agrave; utiliser. Si vous avez
-          par exemple un adaptateur USB vers un adaptateur
-          s&eacute;rie qui ne s'affiche pas dans les bo&icirc;tes
-          du s&eacute;lecteur de pr&eacute;f&eacute;rences,
-          attribuer son nom &agrave; cette propri&eacute;t&eacute;.
-
-          <p>-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0</p>
-
-          <p>Les scripts de d&eacute;marrage Linux le fera si vous
-          avez d&eacute;fini la variable d'environnement
-          JMRI_SERIAL_PORT.</p>
-        </dd>
       </dl>
 
       <h3>Propri&eacute;t&eacute;s JMRI</h3>

@@ -21,7 +21,7 @@ import jmri.Turnout;
  * @author George Warner Copyright (c) 2017-2018
  * @author Bob Jacobsen Copyright (c) 2019-2020
  */
-final public class LayoutEditorFindItems {
+public final class LayoutEditorFindItems {
 
     private final LayoutModels layoutModels;
 
@@ -494,6 +494,19 @@ final public class LayoutEditorFindItems {
         return result;
     }
 
+    public LayoutTraverser findLayoutTraverserByName(String name) {
+        LayoutTraverser result = null;
+        if ((name != null) && !name.isEmpty()) {
+            for (LayoutTraverser x : layoutModels.getLayoutTraversers()) {
+                if (x.getId().equals(name)) {
+                    result = x;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
     public LayoutShape findLayoutShapeByName(String name) {
         LayoutShape result = null;
         if ((name != null) && !name.isEmpty()) {
@@ -533,6 +546,8 @@ final public class LayoutEditorFindItems {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {
                 result = findLayoutTurntableByName(name);
+            } else if (name.startsWith("TRV")) {
+                result = findLayoutTraverserByName(name);
             } else if (name.startsWith("T") || name.matches("F\\d+-S-\\d+")) {  // (this prefix has to go after "TO" & "TUR" prefixes above)
                 result = findTrackSegmentByName(name);
             } else if (name.endsWith("-EB")) {  //BUGFIX: a 3rd party JMRI exporter gets this one wrong.
@@ -579,5 +594,5 @@ final public class LayoutEditorFindItems {
         return uniqueName(inPrefix, 1);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFindItems.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }

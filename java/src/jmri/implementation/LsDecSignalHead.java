@@ -292,6 +292,6 @@ public class LsDecSignalHead extends DefaultSignalHead {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LsDecSignalHead.class);
+    private static final Logger log = LoggerFactory.getLogger(LsDecSignalHead.class);
 
 }

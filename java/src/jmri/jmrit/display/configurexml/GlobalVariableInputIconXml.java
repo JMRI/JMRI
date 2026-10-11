@@ -111,5 +111,5 @@ public class GlobalVariableInputIconXml extends PositionableLabelXml {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableInputIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalVariableInputIconXml.class);
 }

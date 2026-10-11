@@ -33,7 +33,7 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     private ExpressionNode _expressionNode;
 
     private final LogixNG_SelectEnum<DispatcherState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, DispatcherState.values(), DispatcherState.Mode, this);
+            new LogixNG_SelectEnum<>(this, DispatcherState.values(), DispatcherState.Mode);
 
     private String _trainInfoFileName = "";
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
@@ -150,8 +150,8 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     private String getSelectedFileName() throws JmriException {
@@ -294,7 +294,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (! _listenersAreRegistered) {
             _atManager.addPropertyChangeListener(this);
-            _selectEnum.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -304,7 +303,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _atManager.removePropertyChangeListener(this);
-            _selectEnum.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -438,6 +436,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
         log.debug("getUsageReport :: ExpressionDispatcher: bean = {}, report = {}", cdl, report);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionDispatcher.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionDispatcher.class);
 
 }

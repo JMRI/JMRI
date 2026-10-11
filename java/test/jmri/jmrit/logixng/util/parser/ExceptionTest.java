@@ -1,10 +1,13 @@
 package jmri.jmrit.logixng.util.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test exceptions
@@ -16,59 +19,58 @@ public class ExceptionTest {
     @Test
     public void testCalculateException() {
         CalculateException t = new CalculateException("Calculate exception");
-        Assert.assertNotNull("not null", t);
+        assertNotNull( t, "not null");
     }
     
     @Test
     public void testInvalidSyntaxException() {
         InvalidSyntaxException t = new InvalidSyntaxException("Syntax error");
-        Assert.assertNotNull("not null", t);
-        Assert.assertTrue("position is correct", -1 == t.getPosition());
+        assertNotNull( t, "not null");
+        assertEquals( -1, t.getPosition(), "position is correct");
         
         t = new InvalidSyntaxException("Syntax error", 10);
-        Assert.assertNotNull("not null", t);
-        Assert.assertTrue("position is correct", 10 == t.getPosition());
+        assertNotNull( t, "not null");
+        assertEquals( 10, t.getPosition(), "position is correct");
     }
     
     @Test
     public void testFunctionNotExistsException() {
         FunctionNotExistsException t =
                 new FunctionNotExistsException("Function does not exists", "MyFunc");
-        Assert.assertNotNull("not null", t);
-        Assert.assertTrue("strings matches", "MyFunc".equals(t.getFunctionName()));
+        assertNotNull( t, "not null");
+        assertEquals( "MyFunc", t.getFunctionName(), "strings matches");
     }
     
     @Test
     public void testIdentifierNotExistsException() {
         IdentifierNotExistsException t =
                 new IdentifierNotExistsException("Identifier does not exists", "MyIdentifier");
-        Assert.assertNotNull("not null", t);
-        Assert.assertTrue("strings matches", "MyIdentifier".equals(t.getIdentifierName()));
+        assertNotNull( t, "not null");
+        assertEquals( "MyIdentifier", t.getIdentifierName(), "strings matches");
     }
     
     @Test
     public void testParserException() {
         ParserException t = new ParserException();
-        Assert.assertNotNull("not null", t);
+        assertNotNull( t, "not null");
         
         t = new ParserException("Parser exception");
-        Assert.assertNotNull("not null", t);
+        assertNotNull( t, "not null");
     }
     
     @Test
     public void testWrongNumberOfParametersException() {
         WrongNumberOfParametersException t =
                 new WrongNumberOfParametersException("Wrong number of parameters");
-        Assert.assertNotNull("not null", t);
+        assertNotNull( t, "not null");
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

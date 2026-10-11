@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class StatusBarTest {
     @Test
     public void testCTor() {
         StatusBar t = new StatusBar();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class StatusBarTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StatusBarTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StatusBarTest.class);
 
 }

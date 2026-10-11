@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-client-message",
     "type": "object",
     "description": "Message from client to JMRI",
@@ -14,7 +14,13 @@
         },
         "method": {
             "type": "string",
-            "enum": ["get", "put", "post", "delete", "list"],
+            "enum": [
+                "get",
+                "put",
+                "post",
+                "delete",
+                "list"
+            ],
             "description": "HTTP Method equivalent to be performed on data; defaults to \"get\" if not specified"
         },
         "list": {
@@ -28,13 +34,21 @@
     },
     "oneOf": [
         {
-            "required": ["type", "data"]
+            "required": [
+                "type",
+                "data"
+            ]
         },
         {
-            "required": ["type", "list"]
+            "required": [
+                "type",
+                "list"
+            ]
         },
         {
-            "required": ["type"]
+            "required": [
+                "type"
+            ]
         }
     ]
 }

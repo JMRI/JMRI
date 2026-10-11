@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -52,16 +54,19 @@ public class TransitScaffold {
         final MyDestinationPoints dp2;
         final MyDestinationPoints myBeanEntryExit;
 
-        public MyEntryExitPairs() {
+        MyEntryExitPairs() {
             InstanceManager.getDefault(SignalHeadManager.class)
                     .register(new VirtualSignalHead("IHTransitScaffold"));
             point = new MyPointDetails();
             src = new Source(point);
             dp1 = new MyDestinationPoints(new MyPointDetails(), "DP1", src);
-            dp1.setUserName("Destination point 1");
             dp2 = new MyDestinationPoints(new MyPointDetails(), "DP2", src);
-            dp2.setUserName("Destination point 2");
             myBeanEntryExit = new MyDestinationPoints(new MyPointDetails(), "MyBeanEntryExit", src);
+            assertDoesNotThrow( () -> {
+                dp1.setUserName("Destination point 1");
+                dp2.setUserName("Destination point 2");
+                myBeanEntryExit.setUserName("Destination point MyBean");
+            }, "Exception thrown while setting userName :");
         }
 
         @Override
@@ -85,6 +90,8 @@ public class TransitScaffold {
                     return dp1;
                 case "Destination point 2":
                     return dp2;
+                case "Destination point MyBean":
+                    return myBeanEntryExit;
                 default:
                     return getBySystemName(name);
             }

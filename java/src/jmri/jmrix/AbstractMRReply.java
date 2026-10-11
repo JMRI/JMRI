@@ -210,11 +210,21 @@ abstract public class AbstractMRReply extends AbstractMessage {
     public int maxSize() {
         return DEFAULTMAXSIZE;
     }
-    static public final int DEFAULTMAXSIZE = 120;
+    public static final int DEFAULTMAXSIZE = 120;
 
+    protected String sourceLetter = "R";
+    /** 
+     * Get the letter representing where this reply originated.
+     * This is used by e.g. some Monitor implementations.
+     * Defaults to "R" for "Received"
+     */
+    public String getSourceLetter() {
+        return sourceLetter;
+    } 
+    
     // contents
     private boolean unsolicited;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractMRReply.class);
 
 }

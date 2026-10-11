@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -172,8 +173,10 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     prop, sen.getKnownState(), e.getOldValue(), e.getNewValue());
         }
         if (e.getPropertyName().equals("KnownState")) {
+            Rectangle dirty = getBounds();
             displayState();
-            _editor.repaint();
+            dirty.add(getBounds()); // union with the new bounds, in case displayState resized this icon
+            _editor.repaintTargetPanel(dirty);
         }
     }
 
@@ -521,6 +524,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         NamedIcon icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(MultiSensorIcon.class);
 
 }

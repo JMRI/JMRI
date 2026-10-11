@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class DnDTableExportHandlerTest {
     @Test
     public void testCTor() {
         DnDTableExportHandler t = new DnDTableExportHandler();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -25,6 +24,6 @@ public class DnDTableExportHandlerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DnDTableExportHandlerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DnDTableExportHandlerTest.class);
 
 }

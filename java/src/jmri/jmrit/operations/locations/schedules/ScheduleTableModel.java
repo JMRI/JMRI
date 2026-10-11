@@ -61,7 +61,6 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
     Schedule _schedule;
     Location _location;
     Track _track;
-    JTable _table;
     ScheduleEditFrame _frame;
     boolean _matchMode = false;
 
@@ -93,7 +92,6 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
         _schedule = schedule;
         _location = location;
         _track = track;
-        _table = table;
         _frame = frame;
 
         // add property listeners
@@ -447,7 +445,7 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
         } else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
             // error user deleted this pick up day
             String notValid = Bundle.getMessage("NotValid", si.getPickupTrainScheduleId());
-            TrainSchedule errorSchedule = new TrainSchedule(si.getSetoutTrainScheduleId(), notValid);
+            TrainSchedule errorSchedule = new TrainSchedule(si.getPickupTrainScheduleId(), notValid);
             cb.addItem(errorSchedule);
             cb.setSelectedItem(errorSchedule);
         }
@@ -470,12 +468,17 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
     protected JComboBox<String> getShipComboBox(ScheduleItem si) {
         // log.debug("getShipComboBox for ScheduleItem "+si.getType());
         JComboBox<String> cb = InstanceManager.getDefault(CarLoads.class).getSelectComboBox(si.getTypeName());
-        cb.setSelectedItem(si.getShipLoadName());
-        if (!cb.getSelectedItem().equals(si.getShipLoadName())) {
-            String notValid = MessageFormat
-                    .format(Bundle.getMessage("NotValid"), new Object[]{si.getShipLoadName()});
-            cb.addItem(notValid);
-            cb.setSelectedItem(notValid);
+        // if load change disabled, return receive load name
+        if (_track.isDisableLoadChangeEnabled()) {
+            cb.setSelectedItem(si.getReceiveLoadName());
+        } else {
+            cb.setSelectedItem(si.getShipLoadName());
+            if (!cb.getSelectedItem().equals(si.getShipLoadName())) {
+                String notValid = MessageFormat
+                        .format(Bundle.getMessage("NotValid"), new Object[]{si.getShipLoadName()});
+                cb.addItem(notValid);
+                cb.setSelectedItem(notValid);
+            }
         }
         return cb;
     }
@@ -766,5 +769,5 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduleTableModel.class);
 }

@@ -29,6 +29,7 @@
 <!-- Manual identification -->
 <!ATTLIST consist id			CDATA #REQUIRED>          
 <!ATTLIST consist consistNumber	CDATA #IMPLIED>
+<!ATTLIST consist protocol  	CDATA #IMPLIED>
 <!ATTLIST consist longAddress   ( yes | no ) "no" >          
 <!-- The consist types are CSAC (Command Station Assistated) and DAC (Decoder Assisted) -->
 <!ATTLIST consist type ( CSAC | DAC ) "DAC" > 
@@ -40,6 +41,7 @@
 <!ATTLIST loco locoName			( lead | rear | mid ) "mid" >   
 <!ATTLIST loco locoMidNumber    CDATA #IMPLIED  >       
 <!ATTLIST loco dccLocoAddress	CDATA #REQUIRED >          
+<!ATTLIST loco protocol  	    CDATA #IMPLIED>
 <!ATTLIST loco longAddress		( yes | no ) "yes">          
 <!ATTLIST loco locoDir			( normal | reverse | unknown ) "normal" >
 <!ATTLIST loco locoRosterId		CDATA #IMPLIED >

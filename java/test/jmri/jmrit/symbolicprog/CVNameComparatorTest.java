@@ -1,10 +1,13 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
- * Tests for the jmri.util.AlphanumComparator class.
+ * Tests for the jmri.jmrit.symbolicprog.CVNameComparator class.
  *
  * @author Paul Bender Copyright 2016
  */
@@ -14,39 +17,39 @@ public class CVNameComparatorTest extends jmri.util.AlphanumComparatorTest {
     @Test
     public void testDotOrder() {
 
-        Assert.assertTrue("2 < 1.1", ac.compare("2", "1.1") < 0);
-        Assert.assertTrue("1.1 > 2", ac.compare("1.1", "2") > 0);
+        assertTrue( ac.compare("2", "1.1") < 0, "2 < 1.1");
+        assertTrue( ac.compare("1.1", "2") > 0, "1.1 > 2");
 
-        Assert.assertTrue("1.2 < 1.1.1", ac.compare("1.2", "1.1.1") < 0);
-        Assert.assertTrue("1.1.2 > 1.2", ac.compare("1.1.1", "1.2") > 0);
-        
+        assertTrue( ac.compare("1.2", "1.1.1") < 0, "1.2 < 1.1.1");
+        assertTrue( ac.compare("1.1.1", "1.2") > 0, "1.1.2 > 1.2");
+
         // odd cases
-        Assert.assertTrue("2. > 1.1", ac.compare("2.", "1.1") > 0);
-        Assert.assertTrue("1.1 < 2.", ac.compare("1.1", "2.") < 0);
-        
-        Assert.assertTrue("2. > 1..1", ac.compare("2.", "1..1") > 0);
-        Assert.assertTrue("1..1 < 2.", ac.compare("1..1", "2.") < 0);
+        assertTrue( ac.compare("2.", "1.1") > 0, "2. > 1.1");
+        assertTrue( ac.compare("1.1", "2.") < 0, "1.1 < 2.");
 
-        Assert.assertTrue("1.1.1 > 1..1", ac.compare("1.1.1", "1..1") > 0);
-        Assert.assertTrue("1..1 < 1.1.1", ac.compare("1..1", "1.1.1") < 0);
+        assertTrue( ac.compare("2.", "1..1") > 0, "2. > 1..1");
+        assertTrue( ac.compare("1..1", "2.") < 0, "1..1 < 2.");
 
-        Assert.assertTrue(".2. < 1.1", ac.compare(".2.", "1.1") < 0);
-        Assert.assertTrue("1.1 > .2.", ac.compare("1.1", ".2.") > 0);
+        assertTrue( ac.compare("1.1.1", "1..1") > 0, "1.1.1 > 1..1");
+        assertTrue( ac.compare("1..1", "1.1.1") < 0, "1..1 < 1.1.1");
+
+        assertTrue( ac.compare(".2.", "1.1") < 0, ".2. < 1.1");
+        assertTrue( ac.compare("1.1", ".2.") > 0, "1.1 > .2.");
     }
 
     
     // from here down is testing infrastructure
     @BeforeEach
     @Override
-    public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
         ac = new CVNameComparator();
     }
 
     @AfterEach
     @Override
-    public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
 
     }
 

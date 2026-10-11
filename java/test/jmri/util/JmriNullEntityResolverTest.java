@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class JmriNullEntityResolverTest {
     @Test
     public void testCTor() {
         JmriNullEntityResolver t = new JmriNullEntityResolver();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -25,6 +24,6 @@ public class JmriNullEntityResolverTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriNullEntityResolverTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriNullEntityResolverTest.class);
 
 }

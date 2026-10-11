@@ -1,5 +1,6 @@
 package jmri.web.servlet.json;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
@@ -23,6 +24,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
+@SuppressFBWarnings(value = {"HSM_HIDING_METHOD"},
+    justification = "Desired pattern is repeated classes with package-level access to members")
 public class JsonBundle extends jmri.server.json.Bundle {
 
     @CheckForNull
@@ -93,7 +96,7 @@ public class JsonBundle extends jmri.server.json.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static JsonBundle b = new JsonBundle();
+    private static final JsonBundle b = new JsonBundle();
 
     @Override
     @CheckForNull

@@ -6,6 +6,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectString;
 
 /**
  * Returns from a Module or a ConditionalNG.
@@ -14,7 +15,8 @@ import jmri.jmrit.logixng.*;
  */
 public class Error extends AbstractDigitalAction {
 
-    private String _message = "";
+    private final LogixNG_SelectString _selectMessage =
+            new LogixNG_SelectString(this);
 
     public Error(String sys, String user) {
         super(sys, user);
@@ -28,28 +30,25 @@ public class Error extends AbstractDigitalAction {
         if (sysName == null) sysName = manager.getAutoSystemName();
         Error copy = new Error(sysName, userName);
         copy.setComment(getComment());
-        copy.setMessage(_message);
+        getSelectMessage().copy(copy._selectMessage);
         return manager.registerAction(copy);
     }
 
-    public void setMessage(String message) {
-        _message = message;
-    }
-
-    public String getMessage() {
-        return _message;
+    public LogixNG_SelectString getSelectMessage() {
+        return _selectMessage;
     }
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.FLOW_CONTROL;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.FLOW_CONTROL;
     }
 
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        throw new JmriException(_message);
+        String message = _selectMessage.evaluateValue(getConditionalNG());
+        throw new JmriException(message);
     }
 
     @Override
@@ -59,7 +58,8 @@ public class Error extends AbstractDigitalAction {
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Error_Long", _message);
+        return Bundle.getMessage(locale, "Error_Long",
+                _selectMessage.getDescription(locale));
     }
 
     /** {@inheritDoc} */
@@ -68,6 +68,6 @@ public class Error extends AbstractDigitalAction {
         // Do nothing
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebBrowser.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebBrowser.class);
 
 }

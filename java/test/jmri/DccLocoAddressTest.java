@@ -1,7 +1,13 @@
 package jmri;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test simple functioning of DccLocoAddress
@@ -13,29 +19,29 @@ public class DccLocoAddressTest {
     @Test
     public void testValue1() {
         DccLocoAddress l = new DccLocoAddress(12, true);
-        Assertions.assertEquals(12, l.getNumber(), "number ");
-        Assertions.assertTrue( l.isLongAddress(), "long/short ");
+        assertEquals(12, l.getNumber(), "number ");
+        assertTrue( l.isLongAddress(), "long/short ");
     }
 
     @Test
     public void testValue2() {
         DccLocoAddress l = new DccLocoAddress(12, false);
-        Assertions.assertEquals(12, l.getNumber(), "number ");
-        Assertions.assertFalse( l.isLongAddress(), "long/short ");
+        assertEquals(12, l.getNumber(), "number ");
+        assertFalse( l.isLongAddress(), "long/short ");
     }
 
     @Test
     public void testValue3() {
         DccLocoAddress l = new DccLocoAddress(121, true);
-        Assertions.assertEquals(121, l.getNumber(), "number ");
-        Assertions.assertTrue( l.isLongAddress(), "long/short ");
+        assertEquals(121, l.getNumber(), "number ");
+        assertTrue( l.isLongAddress(), "long/short ");
     }
 
     @Test
     public void testCopy1() {
         DccLocoAddress l = new DccLocoAddress(new DccLocoAddress(121, true));
-        Assertions.assertEquals(121, l.getNumber(), "number ");
-        Assertions.assertTrue( l.isLongAddress(), "long/short ");
+        assertEquals(121, l.getNumber(), "number ");
+        assertTrue( l.isLongAddress(), "long/short ");
     }
 
     @Test
@@ -43,14 +49,14 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(121, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
 
-        Assert.assertTrue("equate ", l1.equals(l2));
+        assertTrue( l1.equals(l2), "equate ");
 
-        Assert.assertTrue("reflexive 1 ", l1.equals(l1));
-        Assert.assertTrue("reflexive 2 ", l2.equals(l2));
+        assertTrue( l1.equals(l1), "reflexive 1 ");
+        assertTrue( l2.equals(l2), "reflexive 2 ");
 
-        Assert.assertNotEquals( "null 1 ", null, l1);
-        Assert.assertNotEquals( "null 2 ", null, l2);
-        Assert.assertTrue("transitive ", (l2.equals(l1)) == ((l1.equals(l2))));
+        assertNotNull( l1, "null 1 ");
+        assertNotNull( l2, "null 2 ");
+        assertTrue( (l2.equals(l1)) == ((l1.equals(l2))), "transitive ");
 
     }
 
@@ -59,14 +65,14 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
 
-        Assert.assertTrue("equate ", !l1.equals(l2));
+        assertFalse( l1.equals(l2), "equate ");
 
-        Assert.assertTrue("reflexive 1 ", l1.equals(l1));
-        Assert.assertTrue("reflexive 2 ", l2.equals(l2));
+        assertTrue( l1.equals(l1), "reflexive 1 ");
+        assertTrue( l2.equals(l2), "reflexive 2 ");
 
-        Assert.assertNotEquals( "null 1 ", null, l1);
-        Assert.assertNotEquals( "null 2 ", null, l2);
-        Assert.assertTrue("transitive ", (l2.equals(l1)) == ((l1.equals(l2))));
+        assertNotNull( l1, "null 1 ");
+        assertNotNull( l2, "null 2 ");
+        assertTrue( (l2.equals(l1)) == ((l1.equals(l2))), "transitive ");
 
     }
 
@@ -75,14 +81,14 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(121, false);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
 
-        Assert.assertTrue("equate ", !l1.equals(l2));
+        assertFalse( l1.equals(l2), "equate ");
 
-        Assert.assertTrue("reflexive 1 ", l1.equals(l1));
-        Assert.assertTrue("reflexive 2 ", l2.equals(l2));
+        assertTrue( l1.equals(l1), "reflexive 1 ");
+        assertTrue( l2.equals(l2), "reflexive 2 ");
 
-        Assert.assertNotEquals( "null 1 ", null, l1);
-        Assert.assertNotEquals( "null 2 ", null, l2);
-        Assert.assertTrue("transitive ", (l2.equals(l1)) == ((l1.equals(l2))));
+        assertNotNull( l1, "null 1 ");
+        assertNotNull( l2, "null 2 ");
+        assertTrue( (l2.equals(l1)) == ((l1.equals(l2))), "transitive ");
 
     }
 
@@ -91,14 +97,14 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(121, false);
 
-        Assert.assertTrue("equate ", !l1.equals(l2));
+        assertFalse( l1.equals(l2), "equate ");
 
-        Assert.assertTrue("reflexive 1 ", l1.equals(l1));
-        Assert.assertTrue("reflexive 2 ", l2.equals(l2));
+        assertTrue( l1.equals(l1), "reflexive 1 ");
+        assertTrue( l2.equals(l2), "reflexive 2 ");
 
-        Assert.assertNotEquals( "null 1 ", null, l1);
-        Assert.assertNotEquals( "null 2 ", null, l2);
-        Assert.assertTrue("transitive ", (l2.equals(l1)) == ((l1.equals(l2))));
+        assertNotNull( l1, "null 1 ");
+        assertNotNull( l2, "null 2 ");
+        assertTrue( (l2.equals(l1)) == ((l1.equals(l2))), "transitive ");
 
     }
 
@@ -107,8 +113,8 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(121, true);
         DccLocoAddress l2 = new DccLocoAddress(4321, false);
 
-        Assert.assertTrue("equate self 1", l1.hashCode() == l1.hashCode());
-        Assert.assertTrue("equate self 2", l2.hashCode() == l2.hashCode());
+        assertTrue( l1.hashCode() == l1.hashCode(), "equate self 1");
+        assertTrue( l2.hashCode() == l2.hashCode(), "equate self 2");
     }
 
     @Test
@@ -116,7 +122,7 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(121, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
 
-        Assert.assertTrue("equate ", l1.hashCode() == l2.hashCode());
+        assertTrue( l1.hashCode() == l2.hashCode(), "equate ");
     }
 
     @Test
@@ -124,7 +130,7 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
 
-        Assert.assertTrue("equate ", l1.hashCode() != l2.hashCode());
+        assertTrue( l1.hashCode() != l2.hashCode(), "equate ");
     }
 
     @Test
@@ -132,7 +138,7 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(4321, false);
         DccLocoAddress l2 = new DccLocoAddress(4321, true);
 
-        Assert.assertTrue("equate ", l1.hashCode() != l2.hashCode());
+        assertTrue( l1.hashCode() != l2.hashCode(), "equate ");
     }
 
     @Test
@@ -140,7 +146,7 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(4321, false);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
 
-        Assert.assertTrue("equate ", l1.hashCode() != l2.hashCode());
+        assertTrue( l1.hashCode() != l2.hashCode(), "equate ");
     }
 
     @Test
@@ -148,7 +154,7 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(4321, true);
 
-        Assert.assertTrue("equate ", l1.hashCode() == l2.hashCode());
+        assertTrue( l1.hashCode() == l2.hashCode(), "equate ");
     }
 
     @Test
@@ -156,7 +162,17 @@ public class DccLocoAddressTest {
         DccLocoAddress l1 = new DccLocoAddress(4321, false);
         DccLocoAddress l2 = new DccLocoAddress(4321, false);
 
-        Assert.assertTrue("equate ", l1.hashCode() == l2.hashCode());
+        assertTrue( l1.hashCode() == l2.hashCode(), "equate ");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

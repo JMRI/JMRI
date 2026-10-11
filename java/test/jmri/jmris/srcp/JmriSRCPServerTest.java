@@ -1,8 +1,11 @@
 package jmri.jmris.srcp;
 
-import org.junit.jupiter.api.Test;
+import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPServer class
@@ -14,13 +17,24 @@ public class JmriSRCPServerTest {
     @Test
     public void testCtor() {
         JmriSRCPServer a = new JmriSRCPServer();
-        assertThat(a).isNotNull();
+        assertNotNull(a);
     }
 
     @Test
     public void testCtorwithParameter() {
         JmriSRCPServer a = new JmriSRCPServer(2048);
-        assertThat(a).isNotNull();
+        assertNotNull(a);
+        JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

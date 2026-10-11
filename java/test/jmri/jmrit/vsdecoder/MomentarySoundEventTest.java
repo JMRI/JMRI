@@ -13,7 +13,7 @@ public class MomentarySoundEventTest {
 
     @Test
     public void testCTor() {
-        MomentarySoundEvent t = new MomentarySoundEvent();
+        MomentarySoundEvent t = new MomentarySoundEvent("test");
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +27,6 @@ public class MomentarySoundEventTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MomentarySoundEventTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MomentarySoundEventTest.class);
 
 }

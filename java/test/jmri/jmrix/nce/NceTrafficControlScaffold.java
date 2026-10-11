@@ -76,6 +76,6 @@ public class NceTrafficControlScaffold extends NceTrafficController {
         return jmri.jmrix.JmrixConfigPane.NONE_SELECTED; 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTrafficControlScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(NceTrafficControlScaffold.class);
 
 }

@@ -3,7 +3,6 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class SensorTurnoutOperationTest {
     @Test
     public void testCTor() {
         SensorTurnoutOperation t = new SensorTurnoutOperation();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class SensorTurnoutOperationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SensorTurnoutOperationTest.class);
 
 }

@@ -18,13 +18,13 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  * @author Daniel Bergqvist Copyright 2022
  */
 public class ActionCreateBeansFromTable extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private boolean _onlyCreatableTypes = true;
     private NamedBeanType _namedBeanType = NamedBeanType.Light;
     private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class), this);
+                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class));
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnSystemName = "";
     private String _rowOrColumnUserName = "";
@@ -226,8 +226,8 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     private List<BeanName> getItems() {
@@ -354,14 +354,14 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
             // Remove old bean if desired
             if (_removeOldBean) {
                 try {
-                    _namedBeanType.getDeleteBean().deleteBean(userBean, "CanDelete");
+                    _namedBeanType.getDeleteBean().deleteBean(userBean, Manager.PROPERTY_CAN_DELETE);
                 } catch (java.beans.PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                    if (Manager.PROPERTY_DO_NOT_DELETE.equals(e.getPropertyChangeEvent().getPropertyName())) {
                         throw new JmriException(String.format("Cannot delete bean: %s", e.getPropertyChangeEvent().getOldValue()), e);
                     }
                 }
                 try {
-                    _namedBeanType.getDeleteBean().deleteBean(userBean, "DoDelete");
+                    _namedBeanType.getDeleteBean().deleteBean(userBean, Manager.PROPERTY_DO_DELETE);
                 } catch (java.beans.PropertyVetoException e) {
                     throw new JmriException(String.format("Cannot delete bean: %s", e.getPropertyChangeEvent().getOldValue()), e);
                 }
@@ -425,30 +425,6 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        if (_listenersAreRegistered) return;
-
-        _selectNamedBean.registerListeners();
-        _listenersAreRegistered = true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        if (!_listenersAreRegistered) return;
-
-        _selectNamedBean.unregisterListeners();
-        _listenersAreRegistered = false;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -475,6 +451,6 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionCreateBeansFromTable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionCreateBeansFromTable.class);
 
 }

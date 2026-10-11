@@ -1,10 +1,8 @@
 package jmri.jmrit.beantable.routetable;
 
-import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
+
+import jmri.InstanceManager;
 
 /**
  * Table model for selecting Turnouts and Turnout State.
@@ -24,7 +22,7 @@ class RouteTurnoutModel extends RouteOutputModel {
 
     RouteTurnoutModel(AbstractRouteAddEditFrame routeAddFrame) {
         this.routeAddFrame = routeAddFrame;
-        InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
+        InstanceManager.turnoutManagerInstance().addPropertyChangeListener(RouteTurnoutModel.this);
     }
 
     @Override
@@ -83,6 +81,11 @@ class RouteTurnoutModel extends RouteOutputModel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RouteTurnoutModel.class);
+    @Override
+    protected void dispose() {
+        InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteTurnoutModel.class);
 
 }

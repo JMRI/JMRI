@@ -326,6 +326,7 @@
       <raytrack angle="270.0" index="3" />
     </layoutturntable>
   </LayoutEditor>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri May 15 09:43:35 PDT 2020" startsettime="no" />
   <filehistory>
     <operation>
       <type>Load OK</type>

@@ -48,10 +48,10 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
     private boolean paused = false;
     private boolean dirty = false;
     public final String PAUSED = "paused";
-    public final static String TABLES_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"; // NOI18N
-    public final static String TABLES_ELEMENT = "tableDetails"; // NOI18N
-    public final static String SORT_ORDER = "sortOrder"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(JmriJTablePersistenceManager.class);
+    public static final String TABLES_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"; // NOI18N
+    public static final String TABLES_ELEMENT = "tableDetails"; // NOI18N
+    public static final String SORT_ORDER = "sortOrder"; // NOI18N
+    private static final Logger log = LoggerFactory.getLogger(JmriJTablePersistenceManager.class);
 
     /**
      * {@inheritDoc}
@@ -493,7 +493,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
     /**
      * Handler for individual column preferences.
      */
-    public final static class TableColumnPreferences {
+    public static final class TableColumnPreferences {
 
         private final int order;
         private final int preferredWidth;
@@ -524,7 +524,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
         }
     }
 
-    protected final static class JTableListener
+    protected static final class JTableListener
             implements PropertyChangeListener, RowSorterListener, TableColumnModelListener {
 
         private final JTable table;
@@ -659,7 +659,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
         }
 
         @SuppressWarnings("hiding")     // Field has same name as a field in the outer class
-        private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JTableListener.class);
+        private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JTableListener.class);
 
     }
 }

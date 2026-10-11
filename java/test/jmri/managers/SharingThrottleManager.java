@@ -17,10 +17,6 @@ import org.junit.jupiter.api.Assertions;
  */
 public class SharingThrottleManager extends DebugThrottleManager {
 
-    public SharingThrottleManager() {
-        super();
-    }
-
     /**
      * Constructor.
      */

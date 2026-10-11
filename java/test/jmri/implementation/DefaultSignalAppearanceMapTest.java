@@ -1,5 +1,10 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +16,6 @@ import jmri.SignalMast;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the SignalAppearanceMap interface.
@@ -29,11 +33,11 @@ public class DefaultSignalAppearanceMapTest {
     @Test
     public void testCtor() {
         DefaultSignalAppearanceMap map = new DefaultSignalAppearanceMap("sys", "user");
-        Assert.assertNotNull(map);
+        assertNotNull(map);
     }
 
     @Test
-    public void testSearchOrder() throws Exception {
+    public void testSearchOrder() throws IOException {
         try {  // need try-finally to ensure junk deleted from user area
             SignalSystemTestUtil.createMockSystem();
 
@@ -53,16 +57,16 @@ public class DefaultSignalAppearanceMapTest {
         t.loadDefaults();
 
         s.setAspect("Stop");
-        Assert.assertEquals("Stop is RED", SignalHead.RED,
-                h1.getAppearance());
+        assertEquals( SignalHead.RED, h1.getAppearance(),
+                "Stop is RED");
 
         s.setAspect("Approach");
-        Assert.assertEquals("Approach is YELLOW", SignalHead.YELLOW,
-                h1.getAppearance());
+        assertEquals( SignalHead.YELLOW, h1.getAppearance(),
+                "Approach is YELLOW");
 
         s.setAspect("Clear");
-        Assert.assertEquals("Clear is GREEN", SignalHead.GREEN,
-                h1.getAppearance());
+        assertEquals( SignalHead.GREEN, h1.getAppearance(),
+                "Clear is GREEN");
 
         InstanceManager.getDefault(jmri.SignalMastManager.class).deregister(s);
         s.dispose();
@@ -75,11 +79,11 @@ public class DefaultSignalAppearanceMapTest {
 
         java.util.Enumeration<String> e = t.getAspects();
 
-        Assert.assertEquals("Stop", e.nextElement());
-        Assert.assertEquals("Approach", e.nextElement());
-        Assert.assertEquals("Clear", e.nextElement());
+        assertEquals("Stop", e.nextElement());
+        assertEquals("Approach", e.nextElement());
+        assertEquals("Clear", e.nextElement());
 
-        Assert.assertFalse(e.hasMoreElements());
+        assertFalse(e.hasMoreElements());
     }
 
     @Test
@@ -97,16 +101,16 @@ public class DefaultSignalAppearanceMapTest {
         t.addAspect("biff", new int[]{SignalHead.GREEN, SignalHead.GREEN});
 
         s.setAspect("meh");
-        Assert.assertEquals("meh 1 is LUNAR", SignalHead.LUNAR,
-                h1.getAppearance());
-        Assert.assertEquals("meh 2 is LUNAR", SignalHead.DARK,
-                h2.getAppearance());
+        assertEquals( SignalHead.LUNAR, h1.getAppearance(),
+                "meh 1 is LUNAR");
+        assertEquals( SignalHead.DARK, h2.getAppearance(),
+                "meh 2 is LUNAR");
 
         s.setAspect("biff");
-        Assert.assertEquals("biff 1 is GREEN", SignalHead.GREEN,
-                h1.getAppearance());
-        Assert.assertEquals("biff 2 is GREEN", SignalHead.GREEN,
-                h2.getAppearance());
+        assertEquals( SignalHead.GREEN, h1.getAppearance(),
+                "biff 1 is GREEN");
+        assertEquals( SignalHead.GREEN, h2.getAppearance(),
+                "biff 2 is GREEN");
 
         InstanceManager.getDefault(jmri.SignalMastManager.class).deregister(s);
         s.dispose();
@@ -115,7 +119,7 @@ public class DefaultSignalAppearanceMapTest {
     @Test
     public void testGetState() {
         DefaultSignalAppearanceMap map = new DefaultSignalAppearanceMap("sys", "user");
-        Assert.assertEquals(NamedBean.INCONSISTENT, map.getState());
+        assertEquals(NamedBean.INCONSISTENT, map.getState());
     }
 
     @Test
@@ -123,7 +127,7 @@ public class DefaultSignalAppearanceMapTest {
         DefaultSignalAppearanceMap map = new DefaultSignalAppearanceMap("sys", "user");
         map.setState(NamedBean.UNKNOWN);
         // verify getState did not change
-        Assert.assertEquals(NamedBean.INCONSISTENT, map.getState());
+        assertEquals(NamedBean.INCONSISTENT, map.getState());
     }
 
     @BeforeEach

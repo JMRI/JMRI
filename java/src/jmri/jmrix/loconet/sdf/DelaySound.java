@@ -30,7 +30,7 @@ public class DelaySound extends SdfMacro {
         return 2;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         if ((buff.getAtIndex() & 0xFE) != 0xB4) {
             return null;
         }

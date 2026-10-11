@@ -116,6 +116,9 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             int curMacro = cs_macro_mem;  // load the start address of the NCE macro memory
             byte[] macroAccy = new byte[20];  // NCE Macro data
             String line;
+            int macroMemMim = tc.csm.getMacroAddr();
+            int macroMemMax = macroMemMim + (tc.csm.getMacroSize() * tc.csm.getMacroLimit());
+            int macroMemAddr;
 
             while (true) {
                 try {
@@ -144,6 +147,21 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 if (!macroAddr.equalsIgnoreCase(macroLine[0])) {
                     log.error("Restore file selected is not a vaild backup file"); // NOI18N
                     log.error("Macro addr in restore file should be {} Macro addr read {}", macroAddr, macroLine[0]); // NOI18N
+                    break;
+                }
+                
+                // check for macroLine our of range
+                macroMemAddr = Integer.parseUnsignedInt(macroLine[0].replace(":", ""), 16);
+                if (macroMemAddr < macroMemMim) {
+                    log.warn("macro mem file out of range, ending restore, got: {} mimimum: {} ",
+                            Integer.toHexString(macroMemAddr), Integer.toHexString(macroMemMim));
+                    fileValid = false;
+                    break;
+                }
+                if (macroMemAddr >= macroMemMax ) {
+                    log.warn("macro mem file out of range, ending restore, got: {} maximum: {} ",
+                            Integer.toHexString(macroMemAddr), Integer.toHexString(macroMemMax));
+                    fileValid = false;
                     break;
                 }
 

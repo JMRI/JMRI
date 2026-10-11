@@ -54,5 +54,5 @@ public class OlcbConfigurationManagerScaffold extends jmri.jmrix.openlcb.OlcbCon
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerScaffold.class);
+    // private static final Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerScaffold.class);
 }

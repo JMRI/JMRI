@@ -52,6 +52,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
             // end up with two "LocoNet" menus...)
             jmri.jmrix.loconet.pr2.LnPr2Packetizer packets =
                     new jmri.jmrix.loconet.pr2.LnPr2Packetizer(this.getSystemConnectionMemo());
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
             packets.connectPort(this);
 
             // set traffic controller and configure command station and mangers
@@ -82,6 +83,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
             setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
             // connect to a packetizing traffic controller
             LnPacketizer packets = getPacketizer(getOptionState(option4Name));
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
             packets.connectPort(this);
 
             // set traffic controller and configure command station and mangers
@@ -168,5 +170,5 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbDcs210PlusAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(UsbDcs210PlusAdapter.class);
 }

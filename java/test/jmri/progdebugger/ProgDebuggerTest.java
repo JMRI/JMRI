@@ -2,7 +2,6 @@ package jmri.progdebugger;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ProgDebuggerTest {
     @Test
     public void testCTor() {
         ProgDebugger t = new ProgDebugger();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class ProgDebuggerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProgDebuggerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProgDebuggerTest.class);
 
 }

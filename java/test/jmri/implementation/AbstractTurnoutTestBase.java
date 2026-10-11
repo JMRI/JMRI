@@ -1,13 +1,18 @@
 package jmri.implementation;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.beans.PropertyChangeListener;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -72,10 +77,10 @@ public abstract class AbstractTurnoutTestBase {
     @Test
     public void testCreate() {
         // initial commanded state when created must be UNKNOWN
-        Assert.assertEquals("initial commanded state 1", Turnout.UNKNOWN, t.getCommandedState());
+        assertEquals( Turnout.UNKNOWN, t.getCommandedState(), "initial commanded state 1");
         // initial known state when created must be UNKNOWN
-        Assert.assertEquals("initial known state", Turnout.UNKNOWN, t.getKnownState());
-        Assert.assertEquals("initial commanded state 2", Turnout.UNKNOWN, t.getState());
+        assertEquals( Turnout.UNKNOWN, t.getKnownState(), "initial known state");
+        assertEquals( Turnout.UNKNOWN, t.getState(), "initial commanded state 2");
     }
 
     @Test
@@ -83,10 +88,10 @@ public abstract class AbstractTurnoutTestBase {
         t.addPropertyChangeListener(new Listen());
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertTrue("listener invoked by setUserName", listenerResult);
+        assertTrue( listenerResult, "listener invoked by setUserName");
         listenerResult = false;
         t.setCommandedState(Turnout.CLOSED);
-        Assert.assertTrue("listener invoked by setCommandedState", listenerResult);
+        assertTrue( listenerResult, "listener invoked by setCommandedState");
     }
 
     @Test
@@ -96,67 +101,68 @@ public abstract class AbstractTurnoutTestBase {
         t.removePropertyChangeListener(ln);
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertFalse("listener should not have heard message after removeListener",
-                listenerResult);
+        assertFalse( listenerResult,
+            "listener should not have heard message after removeListener");
     }
 
     @Test
     public void testDispose() {
         t.setCommandedState(Turnout.CLOSED); // in case registration with TrafficController is deferred to after first use
         t.dispose();
-        Assert.assertEquals("controller listeners remaining", 0, numListeners());
+        assertEquals( 0, numListeners(), "controller listeners remaining");
     }
 
     @Test
     public void testRemoveListenerOnDispose() {
         int startListeners =  t.getNumPropertyChangeListeners();
         t.addPropertyChangeListener(new Listen());
-        Assert.assertEquals("controller listener added", startListeners+1, t.getNumPropertyChangeListeners());
+        assertEquals( startListeners+1, t.getNumPropertyChangeListeners(),
+            "controller listener added");
         t.dispose();
-        Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
+        assertTrue( t.getNumPropertyChangeListeners() < 1, "controller listeners remaining < 1");
     }
 
     @Test
     public void testCommandClosed() throws InterruptedException {
         t.setCommandedState(Turnout.CLOSED);
         // check
-        Assert.assertEquals("commanded state 1", Turnout.CLOSED, t.getCommandedState());
+        assertEquals( Turnout.CLOSED, t.getCommandedState(), "commanded state 1");
         checkClosedMsgSent();
         ((AbstractTurnout)t).setKnownStateToCommanded();
-        Assert.assertEquals("commanded state 2", Turnout.CLOSED, t.getState());
-        Assert.assertEquals("commanded state 3", "Closed", t.describeState(t.getState()));
+        assertEquals( Turnout.CLOSED, t.getState(), "commanded state 2");
+        assertEquals( "Closed", t.describeState(t.getState()), "commanded state 3");
     }
 
     @Test
     public void testCommandThrown() throws InterruptedException {
         t.setCommandedState(Turnout.THROWN);
         // check
-        Assert.assertEquals("commanded state 1", Turnout.THROWN, t.getCommandedState());
+        assertEquals( Turnout.THROWN, t.getCommandedState(), "commanded state 1");
         checkThrownMsgSent();
         ((AbstractTurnout)t).setKnownStateToCommanded();
-        Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
-        Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
+        assertEquals( Turnout.THROWN, t.getState(), "commanded state 2");
+        assertEquals( "Thrown", t.describeState(t.getState()), "commanded state 3");
     }
 
     private static class TestSensor extends AbstractSensor {
-            public boolean request = false;
+        boolean request = false;
 
-            private TestSensor(String sysName, String userName){
-                super(sysName, userName);
-            }
+        private TestSensor(String sysName, String userName){
+            super(sysName, userName);
+        }
 
-            @Override
-            public void requestUpdateFromLayout(){
-                request = true;
-            }
+        @Override
+        public void requestUpdateFromLayout(){
+            request = true;
+        }
 
-            boolean getRequest(){
-                return request;
-            }
+        boolean getRequest(){
+            return request;
+        }
 
-            void resetRequest(){
-                request=false;
-            }
+        void resetRequest(){
+            request=false;
+        }
     }
 
     @Test
@@ -170,138 +176,136 @@ public abstract class AbstractTurnoutTestBase {
         t.setFeedbackMode(Turnout.ONESENSOR);
 
         t.requestUpdateFromLayout();
-        Assert.assertTrue("update requested, one sensor", s1.getRequest());
+        assertTrue( s1.getRequest(), "update requested, one sensor");
         s1.resetRequest();
 
         t.provideSecondFeedbackSensor("IS2");
         t.setFeedbackMode(Turnout.TWOSENSOR);
 
         t.requestUpdateFromLayout();
-        Assert.assertTrue("update requested, two sensor s1", s1.getRequest());
-        Assert.assertTrue("update requested, two sensor s2", s2.getRequest());
+        assertTrue( s1.getRequest(), "update requested, two sensor s1");
+        assertTrue( s2.getRequest(), "update requested, two sensor s2");
     }
 
     @Test
     public void testGetAndSetInverted() {
-        if (t.canInvert()) {
-            t.addPropertyChangeListener(new Listen());
-            Assert.assertFalse("Default Inverted State", t.getInverted());
-            t.setInverted(true);
-            Assert.assertTrue("set Inverted", t.getInverted());
-            Assert.assertTrue("Inverted propertychange",propChangeNames.contains("inverted"));
+        assumeTrue(t.canInvert(), "Turnout does not invert");
+        t.addPropertyChangeListener(new Listen());
+        assertFalse( t.getInverted(), "Default Inverted State");
+        t.setInverted(true);
+        assertTrue( t.getInverted(), "set Inverted");
+        assertTrue( propChangeNames.contains("inverted"), "Inverted propertychange");
+
+        t.addPropertyChangeListener(new Listen()); // reset PCLs
+
+        t.setInverted(false);
+        assertFalse( t.getInverted(), "Unset Inverted");
+        assertTrue( propChangeNames.contains("inverted"), "Inverted propertychange");
             
-            t.addPropertyChangeListener(new Listen()); // reset PCLs
-            
-            t.setInverted(false);
-            Assert.assertFalse("Unset Inverted", t.getInverted());
-            Assert.assertTrue("Inverted propertychange",propChangeNames.contains("inverted"));
-            
-        }
+        
     }
 
     @Test
     public void testInvertedCommandClosed() throws InterruptedException {
-        if (t.canInvert()) {
-            //Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
-            t.setInverted(true);
-            t.setCommandedState(Turnout.CLOSED);
-            // check
-            Assert.assertEquals("commanded state 1", Turnout.CLOSED, t.getCommandedState());
-            checkThrownMsgSent();
-            ((AbstractTurnout) t).setKnownStateToCommanded();
-            Assert.assertEquals("commanded state 2", Turnout.CLOSED, t.getState());
-            Assert.assertEquals("commanded state 3", "Closed", t.describeState(t.getState()));
-        }
+        assumeTrue(t.canInvert(), "Turnout does not invert");
+        t.setInverted(true);
+        t.setCommandedState(Turnout.CLOSED);
+        // check
+        assertEquals( Turnout.CLOSED, t.getCommandedState(), "commanded state 1");
+        checkThrownMsgSent();
+        ((AbstractTurnout) t).setKnownStateToCommanded();
+        assertEquals( Turnout.CLOSED, t.getState(), "commanded state 2");
+        assertEquals( "Closed", t.describeState(t.getState()), "commanded state 3");
+
     }
 
     @Test
     public void testInvertedCommandThrown() throws InterruptedException {
-        if (t.canInvert()) {
-            //Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
-            t.setInverted(true);
-            t.setCommandedState(Turnout.THROWN);
-            // check
-            Assert.assertEquals("commanded state 1", Turnout.THROWN, t.getCommandedState());
-            checkClosedMsgSent();
-            ((AbstractTurnout) t).setKnownStateToCommanded();
-            Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
-            Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
-        }
+        assumeTrue(t.canInvert(), "Turnout does not invert");
+        t.setInverted(true);
+        t.setCommandedState(Turnout.THROWN);
+        // check
+        assertEquals( Turnout.THROWN, t.getCommandedState(), "commanded state 1");
+        checkClosedMsgSent();
+        ((AbstractTurnout) t).setKnownStateToCommanded();
+        assertEquals( Turnout.THROWN, t.getState(), "commanded state 2");
+        assertEquals( "Thrown", t.describeState(t.getState()), "commanded state 3");
+
     }
 
     @Test
     public void testSetGetReportLocked() throws InterruptedException {
-        Assert.assertTrue("Turnout starts reporting locked attempted access",t.getReportLocked());
+        assertTrue( t.getReportLocked(), "Turnout starts reporting locked attempted access");
         t.addPropertyChangeListener(new Listen()); // reset PCLs
         t.setReportLocked(true);
-        Assert.assertFalse("SetGetReportLocked nochange",
-            propChangeNames.contains("reportlocked"));
-        
+        assertFalse( propChangeNames.contains("reportlocked"),
+            "SetGetReportLocked nochange");
+
         t.setReportLocked(false);
-        Assert.assertFalse("SetGetReportLocked sets false",t.getReportLocked());
-        Assert.assertTrue("SetGetReportLocked propertychange",
-            propChangeNames.contains("reportlocked"));
-        
+        assertFalse( t.getReportLocked(), "SetGetReportLocked sets false");
+        assertTrue( propChangeNames.contains("reportlocked"),
+            "SetGetReportLocked propertychange");
+
         t.addPropertyChangeListener(new Listen()); // reset PCLs
         t.setReportLocked(true);
-        Assert.assertTrue("SetGetReportLocked sets true",t.getReportLocked());
-        Assert.assertTrue("SetGetReportLocked propertychange",
-            propChangeNames.contains("reportlocked"));
-        
+        assertTrue( t.getReportLocked(), "SetGetReportLocked sets true");
+        assertTrue( propChangeNames.contains("reportlocked"),
+            "SetGetReportLocked propertychange");
+
     }
-    
+
     @Test
     public void testSetFeedbackModePCL() throws InterruptedException {
         t.setFeedbackMode(Turnout.UNKNOWN);
-        Assert.assertEquals("No feedback set at start",Turnout.UNKNOWN,t.getFeedbackMode());
-        
+        assertEquals( Turnout.UNKNOWN,t.getFeedbackMode(), "No feedback set at start");
+
         t.addPropertyChangeListener(new Listen());
         t.setFeedbackMode(Turnout.UNKNOWN);
-        Assert.assertFalse("setFeedbackMode propertychange",
-            propChangeNames.contains("feedbackchange"));
-        
+        assertFalse( propChangeNames.contains("feedbackchange"),
+            "setFeedbackMode propertychange");
+
         t.setFeedbackMode(Turnout.ONESENSOR);
-        Assert.assertTrue("setFeedbackMode propertychange",
-            propChangeNames.contains("feedbackchange"));
+        assertTrue( propChangeNames.contains("feedbackchange"),
+            "setFeedbackMode propertychange");
     }
-    
+
     @Test
     public void testSetDecoderNamePCL() throws InterruptedException {
-        
-        // Assert.assertEquals("No decoder set at start",null,t.getDecoderName());
+
+        // assertNull( t.getDecoderName(), "No decoder set at start");
         // In AbstractTurnout this String defaults to PushbuttonPacket.unknown , ie "None"
         // which is different to the javadoc in Turnout which indicates should return null for unset.
-        
+
         // so we set it manually here so starting this particular test from a known state.
         t.setDecoderName(null);
-        Assert.assertEquals("No decoder set at start",null,t.getDecoderName());
-        
+        assertNull( t.getDecoderName(), "No decoder set at start");
+
         t.addPropertyChangeListener(new Listen());
         t.setDecoderName(null);
-        Assert.assertFalse("setDecoderName no change",
-            propChangeNames.contains("decoderNameChange"));
-        
+        assertFalse( propChangeNames.contains("decoderNameChange"),
+            "setDecoderName no change");
+
         t.setDecoderName("Test Name");
-        Assert.assertTrue("SetDecoderName propertychange",
-            propChangeNames.contains("decoderNameChange"));
+        assertTrue( propChangeNames.contains("decoderNameChange"),
+            "SetDecoderName propertychange");
     }
-    
+
     @Test
     public void testProvideFirstFeedbackSensor() throws jmri.JmriException {
         t.addPropertyChangeListener(new Listen());
         t.provideFirstFeedbackSensor("IS1");
-        Assert.assertNotNull("first feedback sensor", t.getFirstSensor());
-        Assert.assertTrue("1st feedback sensor propertychange",
-            propChangeNames.contains("turnoutFeedbackFirstSensorChange"));
+        assertNotNull( t.getFirstSensor(), "first feedback sensor");
+        assertTrue( propChangeNames.contains("turnoutFeedbackFirstSensorChange"),
+            "1st feedback sensor propertychange");
     }
 
     @Test
     public void testProvideSecondFeedbackSensor() throws jmri.JmriException {
         t.addPropertyChangeListener(new Listen());
         t.provideSecondFeedbackSensor("IS2");
-        Assert.assertNotNull("first feedback sensor", t.getSecondSensor());
-        Assert.assertTrue("2nd feedback sensor propertychange",
-            propChangeNames.contains("turnoutFeedbackSecondSensorChange"));
+        assertNotNull( t.getSecondSensor(), "first feedback sensor");
+        assertTrue( propChangeNames.contains("turnoutFeedbackSecondSensorChange"),
+            "2nd feedback sensor propertychange");
     }
 
     @Test
@@ -312,25 +316,35 @@ public abstract class AbstractTurnoutTestBase {
         t.addPropertyChangeListener(new Listen());
         t.provideFirstFeedbackSensor("IS1");
         s1.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("known state for ONESENSOR feedback Inactive", Turnout.CLOSED, t.getKnownState());
-        Assert.assertEquals("listener notified of change for ONESENSOR feedback", Turnout.CLOSED,listenStatus);
+        assertEquals( Turnout.CLOSED, t.getKnownState(),
+            "known state for ONESENSOR feedback Inactive");
+        assertEquals( Turnout.CLOSED,listenStatus,
+            "listener notified of change for ONESENSOR feedback");
         s1.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("listener notified of change for ONESENSOR feedback", Turnout.THROWN,listenStatus);
-        Assert.assertEquals("known state for ONESENSOR feedback active", Turnout.THROWN, t.getKnownState());
-        
+        assertEquals( Turnout.THROWN, listenStatus,
+            "listener notified of change for ONESENSOR feedback");
+        assertEquals( Turnout.THROWN, t.getKnownState(),
+            "known state for ONESENSOR feedback active");
+
         s1.setKnownState(Sensor.UNKNOWN);
-        
-        Assert.assertEquals("unknown state for ONESENSOR feedback ", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        Assert.assertEquals("listener notified of change for ONESENSOR feedback unknown", Turnout.INCONSISTENT,listenStatus);
-        
+
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "unknown state for ONESENSOR feedback, was " + t.describeState(t.getKnownState()));
+        assertEquals( Turnout.INCONSISTENT, listenStatus,
+            "listener notified of change for ONESENSOR feedback unknown");
+
         s1.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("known state for ONESENSOR feedback Inactive", Turnout.CLOSED, t.getKnownState());
-        Assert.assertEquals("listener notified of change for ONESENSOR feedback reset", Turnout.CLOSED,listenStatus);
-        
+        assertEquals( Turnout.CLOSED, t.getKnownState(),
+            "known state for ONESENSOR feedback Inactive");
+        assertEquals( Turnout.CLOSED, listenStatus,
+            "listener notified of change for ONESENSOR feedback reset");
+
         s1.setKnownState(Sensor.INCONSISTENT);
-        Assert.assertEquals("listener notified of change for ONESENSOR feedback INCONSISTENT", Turnout.INCONSISTENT,listenStatus);
-        Assert.assertEquals("INCONSISTENT state for ONESENSOR feedback", Turnout.INCONSISTENT, t.getKnownState());
-        
+        assertEquals( Turnout.INCONSISTENT, listenStatus,
+            "listener notified of change for ONESENSOR feedback INCONSISTENT");
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            "INCONSISTENT state for ONESENSOR feedback");
+
     }
 
     // Order of the 2 Sensor Conditions in same order as support page jmrit/beantable/TurnoutTable.shtml
@@ -341,7 +355,8 @@ public abstract class AbstractTurnoutTestBase {
         t.provideFirstFeedbackSensor("IS1");
         t.provideSecondFeedbackSensor("IS2");
         t.setFeedbackMode(Turnout.TWOSENSOR); 
-        Assert.assertEquals("known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)", Turnout.UNKNOWN, t.getKnownState());
+        assertEquals( Turnout.UNKNOWN, t.getKnownState(),
+            "known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)");
 
         listenStatus = Turnout.UNKNOWN;
         t.addPropertyChangeListener(new Listen());
@@ -351,124 +366,145 @@ public abstract class AbstractTurnoutTestBase {
 
         JUnitUtil.waitFor( () -> t.getKnownState() != Turnout.UNKNOWN,"Turnout did not go Thrown");
 
-        Assert.assertEquals("state changed by TWOSENSOR feedback (Active, Inactive)", Turnout.THROWN, t.getKnownState());
-        Assert.assertEquals("listener notified of change for TWOSENSOR feedback", Turnout.THROWN,listenStatus);
+        assertEquals( Turnout.THROWN, t.getKnownState(),
+            "state changed by TWOSENSOR feedback (Active, Inactive)");
+        assertEquals( Turnout.THROWN, listenStatus,
+            "listener notified of change for TWOSENSOR feedback");
 
 
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
-        Assert.assertEquals("listener notified of change for TWOSENSOR feedback ", Turnout.CLOSED,listenStatus);
+        assertEquals( Turnout.CLOSED, t.getKnownState(),
+            "state changed by TWOSENSOR feedback (Inactive, Active)");
+        assertEquals( Turnout.CLOSED, listenStatus,
+            "listener notified of change for TWOSENSOR feedback ");
 
-        
+
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("known state for TWOSENSOR feedback (Inactive, Inactive)", Turnout.INCONSISTENT, t.getKnownState());
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            "known state for TWOSENSOR feedback (Inactive, Inactive)");
 
-        
+
         s1.setKnownState(Sensor.UNKNOWN);
         s2.setKnownState(Sensor.UNKNOWN);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, UNKNOWN)", t.describeState(Turnout.UNKNOWN), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.UNKNOWN, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (UNKNOWN, UNKNOWN), was "+ t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (ACTIVE, ACTIVE)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (ACTIVE, ACTIVE) was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.INCONSISTENT);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (ACTIVE, INCONSISTENT)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (ACTIVE, INCONSISTENT), was "+ t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.INCONSISTENT);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (INACTIVE, INCONSISTENT)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (INACTIVE, INCONSISTENT) was " + t.describeState(t.getKnownState()));
 
-        
+
         s1.setKnownState(Sensor.INCONSISTENT);
         s2.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (INCONSISTENT, ACTIVE)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (INCONSISTENT, ACTIVE) was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.INCONSISTENT);
         s2.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (INCONSISTENT, INACTIVE)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (INCONSISTENT, INACTIVE) was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.UNKNOWN);
         s2.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, INACTIVE)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (UNKNOWN, ACTIVE), was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.UNKNOWN);
         s2.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, INACTIVE)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (UNKNOWN, INACTIVE), was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.UNKNOWN);
         s2.setKnownState(Sensor.INCONSISTENT);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (UNKNOWN, INCONSISTENT)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (UNKNOWN, INCONSISTENT), was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.INCONSISTENT);
         s2.setKnownState(Sensor.UNKNOWN);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (INCONSISTENT, UNKNOWN)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (INCONSISTENT, UNKNOWN), was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.UNKNOWN);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (ACTIVE, UNKNOWN)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (ACTIVE, UNKNOWN), was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.UNKNOWN);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (INACTIVE, UNKNOWN)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
-        
-        
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (INACTIVE, UNKNOWN), was " + t.describeState(t.getKnownState()));
+
+
         s1.setKnownState(Sensor.INCONSISTENT);
         s2.setKnownState(Sensor.INCONSISTENT);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (INCONSISTENT, INCONSISTENT)", t.describeState(Turnout.INCONSISTENT), t.describeState(t.getKnownState()));
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(),
+            () -> "state changed by TWOSENSOR feedback (INCONSISTENT, INCONSISTENT), was " + t.describeState(t.getKnownState()));
     }
 
     @Test
-    public void testDirectFeedback() throws Exception {
+    public void testDirectFeedback() throws InterruptedException, jmri.JmriException {
 
         // DIRECT mode is implemented in the AbstractTurnout class, so
         // it is possible on all systems.
         if (t.getFeedbackMode() != Turnout.DIRECT) {
             t.setFeedbackMode(Turnout.DIRECT);
         }
-        Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
+        assertEquals(Turnout.DIRECT, t.getFeedbackMode());
 
         listenStatus = Turnout.UNKNOWN;
         t.addPropertyChangeListener(new Listen());
-        
+
         // Check that state changes appropriately
         t.setCommandedState(Turnout.THROWN);
         checkThrownMsgSent();
-        Assert.assertEquals(Turnout.THROWN, t.getState());
-        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
+        assertEquals(Turnout.THROWN, t.getState());
+        assertEquals( Turnout.THROWN, listenStatus,
+            "listener notified of change for DIRECT feedback");
 
         t.setCommandedState(Turnout.CLOSED);
         checkClosedMsgSent();
-        Assert.assertEquals(Turnout.CLOSED, t.getState());
-        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
+        assertEquals(Turnout.CLOSED, t.getState());
+        assertEquals( Turnout.CLOSED, listenStatus,
+            "listener notified of change for DIRECT feedback");
     }
 
     @Test
     public void testGetBeanType(){
-         Assert.assertEquals("bean type", t.getBeanType(), Bundle.getMessage("BeanNameTurnout"));
+        assertEquals( t.getBeanType(), Bundle.getMessage("BeanNameTurnout"),
+            "bean type");
     }
 
     @Test
     public void testIsCanFollow() {
-        assertThat(t.isCanFollow()).as("Abstract method should always return false").isFalse();
+        assertFalse( t.isCanFollow(), "Abstract method should always return false");
     }
 
     @Test
     public void testSetLeadingTurnout() {
-        assertThat(t.getLeadingTurnout()).as("Defaults to null").isNull();
+        assertNull( t.getLeadingTurnout(), "Defaults to null");
         t.setLeadingTurnout(new AbstractTurnout("9999") {
 
             @Override
@@ -481,7 +517,7 @@ public abstract class AbstractTurnoutTestBase {
                 // nothing to do
             }
         });
-        assertThat(t.getLeadingTurnout()).as("Did not change from null").isNull();
+        assertNull( t.getLeadingTurnout(), "Did not change from null");
     }
 
 }

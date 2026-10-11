@@ -1,8 +1,9 @@
 package jmri.jmrix.loconet.locoio;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +12,11 @@ import org.junit.jupiter.api.*;
  */
 public class LocoIOTest {
 
+    // no Ctor test, class only supplies static methods
+
     @Test
-    public void testCTor() {
-        LocoIO t = new LocoIO();
-        Assert.assertNotNull("exists",t);
+    public void testLocoIoConstants() {
+        assertEquals( 0x0100, LocoIO.LOCOIO_BROADCAST_ADDRESS);
     }
 
     @BeforeEach
@@ -27,6 +29,6 @@ public class LocoIOTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoIOTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoIOTest.class);
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,9 +12,7 @@ import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.junit.jupiter.api.*;
 
 /**
@@ -23,7 +22,7 @@ import org.junit.jupiter.api.*;
  */
 public class VariableTableModelTest {
 
-    private ProgDebugger p = new ProgDebugger();
+    private final ProgDebugger p = new ProgDebugger();
 
     @Test
     public void testStart() {
@@ -879,7 +878,7 @@ public class VariableTableModelTest {
 
     // Check can read simple file
     @Test
-    public void testVarTableLoadFileSimple() throws Exception {
+    public void testVarTableLoadFileSimple() throws JDOMException, IOException {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 
@@ -900,7 +899,7 @@ public class VariableTableModelTest {
 
     // Check can read complex file
     @Test
-    public void testVarTableLoadFileComplex() throws Exception {
+    public void testVarTableLoadFileComplex() throws IOException, JDOMException {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 

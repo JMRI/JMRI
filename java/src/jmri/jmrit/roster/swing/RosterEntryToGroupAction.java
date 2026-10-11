@@ -4,12 +4,11 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.*;
 
 /**
  * Associate a Roster Entry to a Roster Group
@@ -28,7 +27,7 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
-public class RosterEntryToGroupAction extends AbstractAction {
+public class RosterEntryToGroupAction extends JmriAbstractAction {
 
     /**
      * @param s Name of this action, e.g. in menus
@@ -40,11 +39,32 @@ public class RosterEntryToGroupAction extends AbstractAction {
         _who = who;
     }
 
+    /**
+     * @param s Name of this action, e.g. in menus
+     * @param wi WindowInterface not used by this action, which doesn't open a window
+     */
+    public RosterEntryToGroupAction(String s, WindowInterface wi) {
+        super(s);
+        _who = null;
+    }
+
+    /**
+     * @param s Name of this action, e.g. in menus
+     * @param preSelectedEntry The Roster Entry that should be presented to be
+     *          added to a group
+     */
+    public RosterEntryToGroupAction(String s, RosterEntry preSelectedEntry) {
+        super(s);
+        _who = null;
+        this.preSelectedEntry = preSelectedEntry;
+    }
+
     Component _who;
     JComboBox<String> rosterEntry = new JComboBox<String>();
     RosterGroupComboBox selections;
     Roster roster;
     String lastGroupSelect = null;
+    RosterEntry preSelectedEntry;
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -52,6 +72,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         roster = Roster.getDefault();
 
         selections = new RosterGroupComboBox();
+        boolean allEntriesEnabled = selections.isAllEntriesEnabled();
         selections.setAllEntriesEnabled(false);
         if (lastGroupSelect != null) {
             selections.setSelectedItem(lastGroupSelect);
@@ -81,6 +102,8 @@ public class RosterEntryToGroupAction extends AbstractAction {
         Roster.getDefault().writeRoster();
         re.updateFile();
         actionPerformed(event);
+        
+        selections.setAllEntriesEnabled(allEntriesEnabled);
     }
 
     void rosterEntryUpdate() {
@@ -91,7 +114,19 @@ public class RosterEntryToGroupAction extends AbstractAction {
         roster.getAllEntries().stream().filter((r) -> (r.getAttribute(group) == null)).forEachOrdered((r) -> {
             rosterEntry.addItem(r.titleString());
         });
+        
+        // lock the preselected entry if there is one
+        if (preSelectedEntry != null ) {
+            rosterEntry.setSelectedItem(preSelectedEntry);
+            rosterEntry.setEnabled(false);
+        }
     }
 
+    @Override
+    public JmriPanel  makePanel() {
+        log.warn("makePanel should not have been  called");
+        return null;
+    }
+    
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterEntryToGroupAction.class);
 }

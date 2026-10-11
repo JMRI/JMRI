@@ -2,8 +2,11 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -14,12 +17,12 @@ public class ScrollablePanelTest {
     @Test
     public void testCTor() {
         ScrollablePanel sp = new ScrollablePanel(22);
-        Assert.assertEquals(22, sp.getScrollableBlockIncrement(null, 0, 0));
-        Assert.assertEquals(22, sp.getScrollableUnitIncrement(null, 0, 0));
+        assertEquals(22, sp.getScrollableBlockIncrement(null, 0, 0));
+        assertEquals(22, sp.getScrollableUnitIncrement(null, 0, 0));
         
         // test Width and Height logic
-        Assert.assertTrue(sp.getScrollableTracksViewportWidth());
-        Assert.assertFalse(sp.getScrollableTracksViewportHeight());
+        assertTrue(sp.getScrollableTracksViewportWidth());
+        assertFalse(sp.getScrollableTracksViewportHeight());
         
     }
 
@@ -33,6 +36,6 @@ public class ScrollablePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScrollablePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ScrollablePanelTest.class);
 
 }

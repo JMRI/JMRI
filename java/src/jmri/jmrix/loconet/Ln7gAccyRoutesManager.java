@@ -8,9 +8,6 @@ import jmri.jmrix.loconet.alm.LnSimple7thGenRoute;
 import jmri.jmrix.loconet.alm.LnSimpleRouteEntry;
 import jmri.jmrix.loconet.alm.RouteSwitchPositionEnum;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  *
  * @author aptly
@@ -422,10 +419,11 @@ public class Ln7gAccyRoutesManager implements LocoNetListener  {
         return devicesRoutes.getDeviceRoutes(i);
     }
 
-
     public void dispose() {
-        memo.getLnTrafficController().removeLocoNetListener(~0, this);
+        if ( memo != null ) {
+            memo.getLnTrafficController().removeLocoNetListener(~0, this);
+        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Ln7gAccyRoutesManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Ln7gAccyRoutesManager.class);
 }

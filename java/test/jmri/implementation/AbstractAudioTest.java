@@ -1,54 +1,56 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
  * Tests for AbstractAudio
  */
 public class AbstractAudioTest {
-    
-    AtomicBoolean stateHasChanged = new AtomicBoolean(false);
-    
+
+    private final AtomicBoolean stateHasChanged = new AtomicBoolean(false);
+
     @Test
     public void testCtor() {
-        
         MyAbstractAudio audio = new MyAbstractAudio();
-        Assert.assertNotNull("AbstractAudio constructor return", audio);
+        assertNotNull(audio, "AbstractAudio constructor return");
     }
-    
+
     @Test
     public void testState() {
         MyAbstractAudio audio = new MyAbstractAudio();
         
-        Assert.assertTrue("state is initial", audio.getState() == jmri.Audio.STATE_INITIAL);
+        assertEquals(jmri.Audio.STATE_INITIAL, audio.getState(), "state is initial");
         audio.setState(jmri.Audio.STATE_PLAYING);
-        Assert.assertTrue("state is playing", audio.getState() == jmri.Audio.STATE_PLAYING);
+        assertEquals(jmri.Audio.STATE_PLAYING, audio.getState(), "state is playing");
         // Check that audio.setState() triggers stateChanged()
-        Assert.assertTrue("state has changed", stateHasChanged.get());
-        Assert.assertEquals("toString() matches", "MySystemName", audio.toString());
-        
-        Assert.assertTrue("getBeanType() matches", "Audio".equals(audio.getBeanType()));
+        assertTrue(stateHasChanged.get(), "state has changed");
+        assertEquals("MySystemName", audio.toString(), "toString() matches");
+
+        assertEquals("Audio", audio.getBeanType(), "getBeanType() matches");
     }
-    
+
     @Test
     public void testRoundDecimal() {
         // Test AbstractAudio.roundDecimal()
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 1) > 10.59);
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 1) < 10.61);
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 3) > 10.5559);
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 3) < 10.5561);
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 5) > 10.555559);
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 5) < 10.555561);
-        
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555, 1) > 10.59, "test roundDecimal()");
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555, 1) < 10.61, "test roundDecimal()");
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555, 3) > 10.5559, "test roundDecimal()");
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555, 3) < 10.5561, "test roundDecimal()");
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555, 5) > 10.555559, "test roundDecimal()");
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555, 5) < 10.555561, "test roundDecimal()");
+
         // Test AbstractAudio.roundDecimal()
         // The test of jmri.Audio.DECIMAL_PLACES is only a "heads up" for the tests below.
         // If jmri.Audio.DECIMAL_PLACES is changed, the tests below must be changed too.
-        Assert.assertEquals(2, Math.round(jmri.Audio.DECIMAL_PLACES));
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555) > 10.559);
-        Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555) < 10.561);
+        assertEquals(2, Math.round(jmri.Audio.DECIMAL_PLACES));
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555) > 10.559, "test roundDecimal()");
+        assertTrue(AbstractAudio.roundDecimal((float) 10.5555555) < 10.561, "test roundDecimal()");
     }
 
     @BeforeEach
@@ -60,8 +62,8 @@ public class AbstractAudioTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-    
-    
+
+
     private class MyAbstractAudio extends AbstractAudio {
         
         MyAbstractAudio() {
@@ -83,5 +85,5 @@ public class AbstractAudioTest {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
-    
+
 }

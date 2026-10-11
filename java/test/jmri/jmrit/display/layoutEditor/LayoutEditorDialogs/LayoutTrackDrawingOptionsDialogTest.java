@@ -4,15 +4,16 @@ import jmri.util.JUnitUtil;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class LayoutTrackDrawingOptionsDialogTest {
 
     private LayoutEditor le = null;
@@ -22,7 +23,7 @@ public class LayoutTrackDrawingOptionsDialogTest {
         LayoutTrackDrawingOptions ltdo = new LayoutTrackDrawingOptions("test");
         LayoutTrackDrawingOptionsDialog t = new LayoutTrackDrawingOptionsDialog(le,false,ltdo);
         Assertions.assertNotNull(t, "exists");
-        
+        t.dispose();
     }
 
     @BeforeEach
@@ -30,14 +31,14 @@ public class LayoutTrackDrawingOptionsDialogTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         le = new LayoutEditor(this.getClass().getName());
-        le.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> le.setVisible(true));
     }
 
     @AfterEach
     public void tearDown() {
         Assertions.assertNotNull(le);
         // new EditorFrameOperator(le).closeFrameWithConfirmations();
-        le.dispose();
+        JUnitUtil.dispose(le);
         le = null;
 
         JUnitUtil.deregisterBlockManagerShutdownTask();

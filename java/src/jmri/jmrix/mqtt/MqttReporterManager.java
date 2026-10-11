@@ -53,7 +53,7 @@ public class MqttReporterManager extends AbstractReporterManager {
     }
 
     /**
-     * Create an new sensor object.
+     * Create an new Reporter object.
      * {@inheritDoc}
      * @return never null
      */
@@ -86,6 +86,6 @@ public class MqttReporterManager extends AbstractReporterManager {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttReporterManager.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttReporterManager.class);
 
 }

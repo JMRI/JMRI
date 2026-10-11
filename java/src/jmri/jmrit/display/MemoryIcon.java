@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
@@ -22,8 +23,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
-import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
@@ -236,9 +237,9 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                    ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.toFront();
-                    tf.getAddressPanel().setRosterEntry(re);
+                    tf.setRosterEntry(re);
                 }
             });
             //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor
@@ -368,9 +369,9 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                 if (val instanceof String) {
                     String str = (String) val;
                     _icon = false;
-                    _text = true;
+                    setIcon(null);
                     setText(str);
-                    updateIcon(null);
+                    _text = true;
                     if (log.isDebugEnabled()) {
                         log.debug("String str= \"{}\" str.trim().length()= {}", str, str.trim().length());
                         log.debug("  maxWidth()= {}, maxHeight()= {}", maxWidth(), maxHeight());
@@ -389,9 +390,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                     setText(null);
                 } else if (val instanceof Number) {
                     _icon = false;
-                    _text = true;
-                    setText(val.toString());
                     setIcon(null);
+                    setText(val.toString());
+                    _text = true;
+                    _editor.setAttributes(getPopupUtility(), this);
                 } else if (val instanceof jmri.IdTag){
                     // most IdTags are Reportable objects, so
                     // this needs to be before Reportable
@@ -410,8 +412,8 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                             getNameString(), val, val.getClass().getName());
                     _icon = false;
                     _text = true;
-                    setText(val.toString());
                     setIcon(null);
+                    setText(val.toString());
                 }
             } else {
                 // map exists, use it
@@ -431,9 +433,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         } else {
             log.debug("object null");
             _icon = true;
-            _text = false;
             setIcon(defaultIcon);
             setText(null);
+            _text = false;
+            _editor.setAttributes(getPopupUtility(), this);
         }
         updateSize();
     }
@@ -453,8 +456,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
             if (flipRosterIcon) {
                 flipIcon(NamedIcon.HORIZONTALFLIP);
             }
-            jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
-            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), jmri.Throttle.ISFORWARD);
+            // use the roster parameter, not the re field: displayState() can clear
+            // re from another thread between the assignment above and here
+            jmri.InstanceManager.throttleManagerInstance().attachListener(roster.getDccLocoAddress(), this);
+            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(roster.getDccLocoAddress(), jmri.Throttle.ISFORWARD);
             if (isForward != null) {
                 if (!(Boolean) isForward) {
                     flipIcon(NamedIcon.HORIZONTALFLIP);
@@ -493,6 +498,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                     break;
             }
             setSize(maxWidth(), maxHeight());
+            setPreferredSize(new Dimension(maxWidth(), maxHeight()));
         } else {
             super.updateSize();
             if (_icon && _namedIcon != null) {

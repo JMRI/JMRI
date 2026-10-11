@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.ArrayList;
 
 import jmri.*;
@@ -7,10 +9,7 @@ import jmri.jmrit.logix.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test import of Logix to LogixNG.
@@ -29,7 +28,7 @@ public class ImportExpressionWarrantTest {
     private Conditional conditional;
     private ArrayList<ConditionalVariable> variables;
     private ArrayList<ConditionalAction> actions;
-    ConditionalVariable cv;
+    private ConditionalVariable cv;
 
 
     @Test
@@ -37,7 +36,7 @@ public class ImportExpressionWarrantTest {
         cv.setType(Conditional.Type.ROUTE_FREE);
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
+        assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
         JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
     }
 
@@ -46,7 +45,7 @@ public class ImportExpressionWarrantTest {
         cv.setType(Conditional.Type.ROUTE_OCCUPIED);
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
+        assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
         JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
     }
 
@@ -55,7 +54,7 @@ public class ImportExpressionWarrantTest {
         cv.setType(Conditional.Type.ROUTE_ALLOCATED);
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
+        assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
         JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
     }
 
@@ -64,7 +63,7 @@ public class ImportExpressionWarrantTest {
         cv.setType(Conditional.Type.ROUTE_SET);
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
+        assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
         JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
     }
 
@@ -73,12 +72,11 @@ public class ImportExpressionWarrantTest {
         cv.setType(Conditional.Type.TRAIN_RUNNING);
         ImportLogix importLogix = new ImportLogix(logix);
         importLogix.doImport();
-        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
+        assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
         JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -121,7 +119,7 @@ public class ImportExpressionWarrantTest {
         conditional.setAction(actions);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -48,6 +48,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         setInterrogateOnStart(getOptionState("InterrogateOnStart"));
         // connect to a packetizing traffic controller
         UhlenbrockPacketizer packets = new UhlenbrockPacketizer(this.getSystemConnectionMemo());
+        packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
         packets.connectPort(this);
 
         // create memo
@@ -112,6 +113,6 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class);
 
 }

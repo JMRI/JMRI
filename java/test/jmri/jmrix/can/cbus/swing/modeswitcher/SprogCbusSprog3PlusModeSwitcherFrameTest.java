@@ -7,16 +7,14 @@ import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the ModeSwitcherPane class
  *
  * @author Andrew Crosland (C) 2020
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private CanSystemConnectionMemo memo = null;
@@ -25,13 +23,13 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
     private CbusDccProgrammerManager pm;
 
     @Test
-    public void testInitComponents () throws Exception{
-        // for now, just makes ure there isn't an exception.
-        frame.initComponents();
+    public void testInitComponents () {
+        Assertions.assertDoesNotThrow( () ->
+            frame.initComponents());
     }
 
     @Test
-    public void testPrefOff () throws Exception {
+    public void testPrefOff () {
 
         // Create global programer and matching preferences
         Assertions.assertNotNull(preferences);
@@ -40,11 +38,11 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         SprogCbusSprog3PlusModeSwitcherFrame f = ((SprogCbusSprog3PlusModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertEquals( SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE, f.mode);
+        Assertions.assertEquals( SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE, f.mode);
     }
 
     @Test
-    public void testPrefOn () throws Exception {
+    public void testPrefOn () {
 
         // Create global programer and matching preferences
         Assertions.assertNotNull(preferences);
@@ -53,11 +51,11 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         SprogCbusSprog3PlusModeSwitcherFrame f = ((SprogCbusSprog3PlusModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertEquals( SprogCbusSprog3PlusModeSwitcherFrame.PROG_ON_MODE, f.mode);
+        Assertions.assertEquals( SprogCbusSprog3PlusModeSwitcherFrame.PROG_ON_MODE, f.mode);
     }
 
     @Test
-    public void testPrefAr () throws Exception {
+    public void testPrefAr () {
 
         // Create global programer and matching preferences
         Assertions.assertNotNull(preferences);
@@ -66,7 +64,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         SprogCbusSprog3PlusModeSwitcherFrame f = ((SprogCbusSprog3PlusModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertEquals( SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE, f.mode);
+        Assertions.assertEquals( SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE, f.mode);
     }
 
     @BeforeEach

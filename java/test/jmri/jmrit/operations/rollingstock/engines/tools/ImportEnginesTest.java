@@ -611,7 +611,8 @@ public class ImportEnginesTest extends OperationsTestCase {
      */
     private void exportEngines() {
         // export engines to create file
-        ExportEngines exportEngines = new ExportEngines();
+        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+        ExportEngines exportEngines = new ExportEngines(engineManager.getByNumberList());
         assertThat(exportEngines).withFailMessage("exists").isNotNull();
 
         // should cause export complete dialog to appear

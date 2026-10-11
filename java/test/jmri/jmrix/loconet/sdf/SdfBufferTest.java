@@ -1,5 +1,9 @@
 package jmri.jmrix.loconet.sdf;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,9 +11,6 @@ import java.io.IOException;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.SdfBuffer class.
@@ -35,8 +36,7 @@ public class SdfBufferTest {
             }
             in.close();
         } catch (IOException e) {
-            log.error("exception reading golden file: {}", e);
-            System.out.println("exception reading golden file: " + e);
+            fail("exception reading golden file: ", e);
         }
 
         if (!result.equals(g.toString())) {
@@ -47,7 +47,7 @@ public class SdfBufferTest {
             System.out.println("--------------------");
         }
 
-        Assert.assertEquals("output as string", g.toString(), result);
+        assertEquals( g.toString(), result, "output as string");
     }
 
     @Test
@@ -58,7 +58,7 @@ public class SdfBufferTest {
 
         // and a version to modify
         SdfBuffer b = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
-        Assert.assertEquals("original lengths", oarray.length, b.getByteArray().length);
+        assertEquals( oarray.length, b.getByteArray().length, "original lengths");
 
         // modify the 1st SDF     
         SkemeStart first = (SkemeStart) b.getMacroList().get(0);
@@ -71,13 +71,12 @@ public class SdfBufferTest {
         byte barray[];
 
         barray = b.getByteArray();
-        Assert.assertEquals("updated lengths", oarray.length, barray.length);
-        Assert.assertTrue("modified 1st byte same", oarray[0] == barray[0]);
-        Assert.assertTrue("modified 2nd byte differ", oarray[1] != barray[1]);
+        assertEquals( oarray.length, barray.length, "updated lengths");
+        assertEquals( oarray[0], barray[0], "modified 1st byte same");
+        assertNotEquals( oarray[1], barray[1], "modified 2nd byte differ");
         for (int i = 2; i < barray.length; i++) {
-            if (oarray[i] != barray[i]) {
-                Assert.fail("modified failed to match at index " + i);
-            }
+            assertEquals( oarray[i], barray[i],
+                "modified failed to match at index " + i);
         }
 
         // set it back, and make sure length and content is the same
@@ -85,13 +84,12 @@ public class SdfBufferTest {
         b.loadByteArray();
 
         barray = b.getByteArray();
-        Assert.assertEquals("last lengths", oarray.length, barray.length);
-        Assert.assertTrue("last 1st byte same", oarray[0] == barray[0]);
-        Assert.assertTrue("last 2nd byte same", oarray[1] == barray[1]);
+        assertEquals( oarray.length, barray.length, "last lengths");
+        assertEquals( oarray[0], barray[0], "last 1st byte same");
+        assertEquals( oarray[1], barray[1], "last 2nd byte same");
         for (int i = 2; i < barray.length; i++) {
-            if (oarray[i] != barray[i]) {
-                Assert.fail("last failed to match at index " + i);
-            }
+            assertEquals( oarray[i], barray[i],
+                "last failed to match at index " + i);
         }
 
     }
@@ -106,6 +104,6 @@ public class SdfBufferTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SdfBufferTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SdfBufferTest.class);
 
 }

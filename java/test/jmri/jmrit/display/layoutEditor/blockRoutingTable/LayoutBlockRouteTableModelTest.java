@@ -28,5 +28,5 @@ public class LayoutBlockRouteTableModelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockRouteTableModelTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockRouteTableModelTest.class);
 }

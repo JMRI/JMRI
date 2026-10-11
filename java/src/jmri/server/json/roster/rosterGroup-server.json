@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-rosterGroup-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"rosterGroup\"",
@@ -14,5 +14,8 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "length"]
+    "required": [
+        "name",
+        "length"
+    ]
 }

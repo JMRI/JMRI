@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <enumChoice value="129" choice="Maneuvering mode, speed max 50%"> <choice>Maneuvering mode, speed max 50%</choice> <choice xml:lang="cs">Režim Posun, rychlost max 50 %</choice> </enumChoice> 
+    <enumChoice value="130" choice="Maneuvering mode without acceleration"> <choice>Maneuvering mode without acceleration</choice> <choice xml:lang="cs">Režim Posun bez akcelerace</choice> </enumChoice> 
+    <enumChoice value="131" choice="No acceleration"> <choice>No acceleration</choice> <choice xml:lang="cs">Bez akcelerace</choice> </enumChoice> 
+    <enumChoice value="133" choice="Reverse, only when Maneuvering is on and speed max 25%"> <choice>Reverse, only when Maneuvering is on and speed max 25%</choice> <choice xml:lang="cs">Reverz, pouze při zapnutém Posun a rychlosti max 25 %</choice> </enumChoice> 
+    <enumChoice value="134" choice="Stop, only when Maneuvering is on"> <choice>Stop, only when Maneuvering is on</choice> <choice xml:lang="cs">Stop, pouze při zapnutém Posun</choice> </enumChoice> 
+    
+</enumVal>

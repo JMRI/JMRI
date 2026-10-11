@@ -123,6 +123,6 @@ public class Mx1Adapter extends Mx1PortController {
     protected String[] validOption2 = new String[]{"3", "5"};
     //protected String selectedOption1=validOption1[0];
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1Adapter.class);
 
 }

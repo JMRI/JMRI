@@ -40,26 +40,26 @@ import jmri.util.swing.JmriJOptionPane;
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OBlock> {
 
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-    static public final int SYSNAMECOL = 0;
+    public static final int SYSNAMECOL = 0;
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-    static public final int USERNAMECOL = 1;
+    public static final int USERNAMECOL = 1;
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-    static public final int COMMENTCOL = 2;
-    static public final int STATECOL = 3;
-    static public final int SENSORCOL = 4;
-    static public final int EDIT_COL = 5;   // Paths button
-    static public final int DELETE_COL = 6;
-    static public final int LENGTHCOL = 7;
-    static public final int UNITSCOL = 8;
-    static public final int REPORTERCOL = 9;
-    static public final int REPORT_CURRENTCOL = 10;
-    static public final int PERMISSIONCOL = 11;
-    static public final int SPEEDCOL = 12;
-    static public final int WARRANTCOL = 13;
-    static public final int ERR_SENSORCOL = 14;
-    static public final int CURVECOL = 15;
-    static public final int VALUE = 16;
-    static public final int NUMCOLS = 17;
+    public static final int COMMENTCOL = 2;
+    public static final int STATECOL = 3;
+    public static final int SENSORCOL = 4;
+    public static final int EDIT_COL = 5;   // Paths button
+    public static final int DELETE_COL = 6;
+    public static final int LENGTHCOL = 7;
+    public static final int UNITSCOL = 8;
+    public static final int REPORTERCOL = 9;
+    public static final int REPORT_CURRENTCOL = 10;
+    public static final int PERMISSIONCOL = 11;
+    public static final int SPEEDCOL = 12;
+    public static final int WARRANTCOL = 13;
+    public static final int ERR_SENSORCOL = 14;
+    public static final int CURVECOL = 15;
+    public static final int VALUE = 16;
+    public static final int NUMCOLS = 17;
 
     static String ZEROS = "000000000";      // 9 bits contain the OBlock state info
 
@@ -175,7 +175,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return "";
     }
 
-    static protected String getValue(int state) {
+    protected static String getValue(int state) {
         StringBuilder sb = new StringBuilder();
         if ((state & OBlock.UNDETECTED) != 0) {
             sb.append(Bundle.getMessage("Dark"));
@@ -365,7 +365,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     if (obj != null) {
                         return obj;
                     } else if ((b.getState() & OBlock.OCCUPIED) != 0) {
-                        return Bundle.getMessage("BlockUnknown");
+                        return Bundle.getMessage("UnknownValue");
                     } else {
                         return null;
                     }
@@ -920,8 +920,10 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         String property = e.getPropertyName();
-        if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
-        if (property.equals("length") || property.equals("UserName") || property.equals("state")) {
+        log.debug("PropertyChange = {}", property);
+
+        if ( OBlockManager.PROPERTY_LENGTH.equals(property) || OBlock.PROPERTY_USERNAME.equals(property)
+                || OBlock.PROPERTY_STATE.equals(property)) {
             ThreadingUtil.runOnGUIEventually(()-> {
                 _parent.updateOBlockTablesMenu();
                 fireTableDataChanged();
@@ -937,6 +939,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return jmri.jmrit.beantable.OBlockTableAction.class.getName();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableModel.class);
 
 }

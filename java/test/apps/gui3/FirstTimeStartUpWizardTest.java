@@ -79,7 +79,7 @@ public class FirstTimeStartUpWizardTest {
         getNextButton(jfo).doClick();
         getNextButton(jfo).getQueueTool().waitEmpty();
 
-        assertEquals("Select your DCC Connection", getPageTitleOperator(jfo).getText());
+        assertEquals("Select Your System Connection", getPageTitleOperator(jfo).getText());
         assertTrue(getBackButton(jfo).isEnabled());
         assertTrue(getNextButton(jfo).isEnabled());
         assertTrue(getCancelButton(jfo).isEnabled());
@@ -117,6 +117,8 @@ public class FirstTimeStartUpWizardTest {
 
         Assertions.assertNotEquals(0, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize(),
             "Font size should not be 0");
+
+        JUnitUtil.waitThreadTerminated("Start-Up Wizard Connect");
 
     }
 
@@ -227,5 +229,5 @@ public class FirstTimeStartUpWizardTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class);
 }

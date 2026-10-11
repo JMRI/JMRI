@@ -1,26 +1,31 @@
 package jmri.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
-
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 import java.util.concurrent.Callable;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
-import org.junit.jupiter.api.Test;
+
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
  * @author Svata Dedic Copyright (c) 2019
  */
 public class ValidatingInputPaneTest {
+
     /**
      * Checks that inconvertible input produces an error message.
      */
@@ -28,9 +33,9 @@ public class ValidatingInputPaneTest {
     public void testInconvertibleInputFails() {
         ValidatingInputPane<Integer> intValidator = new ValidatingInputPane<>((s) -> Integer.parseInt(s));
         intValidator.validateText("nonInteger");
-        assertTrue("Non-number must produce error", intValidator.hasError());
-        assertNotNull("Converter exception expected", intValidator.getException());
-        assertTrue(intValidator.getException() instanceof NumberFormatException);
+        assertTrue( intValidator.hasError(), "Non-number must produce error");
+        NumberFormatException ex = assertInstanceOf(NumberFormatException.class, intValidator.getException());
+        assertNotNull( ex, "Converter exception expected");
     }
 
     /**
@@ -40,7 +45,7 @@ public class ValidatingInputPaneTest {
     public void testEmptyInputOK() {
         ValidatingInputPane<Integer> intValidator = new ValidatingInputPane<>((s) -> Integer.parseInt(s));
         intValidator.validateText("");
-        assertFalse("Empty string must be accepted", intValidator.hasError());
+        assertFalse( intValidator.hasError(), "Empty string must be accepted");
     }
 
     @Test
@@ -49,9 +54,9 @@ public class ValidatingInputPaneTest {
         intValidator.validator((i) -> i >= 5);
         intValidator.validateText("3");
 
-        assertTrue("Bad number should produce error", intValidator.hasError());
-        assertNull("Validator rejection does not record an exception", intValidator.getException());
-        assertEquals("General message expected", Bundle.getMessage("InputDialogError"), intValidator.getErrorMessage());
+        assertTrue( intValidator.hasError(), "Bad number should produce error");
+        assertNull( intValidator.getException(), "Validator rejection does not record an exception");
+        assertEquals( Bundle.getMessage("InputDialogError"), intValidator.getErrorMessage(), "General message expected");
     }
 
     @Test
@@ -60,9 +65,9 @@ public class ValidatingInputPaneTest {
         intValidator.validator((i) -> i >= 5);
         intValidator.validateText("6");
 
-        assertFalse("Validation must pass", intValidator.hasError());
-        assertNull("Exception must be null on OK result", intValidator.getException());
-        assertNull("No message for OK result", intValidator.getErrorMessage());
+        assertFalse( intValidator.hasError(), "Validation must pass");
+        assertNull( intValidator.getException(), "Exception must be null on OK result");
+        assertNull( intValidator.getErrorMessage(), "No message for OK result");
     }
 
     @Test
@@ -70,14 +75,14 @@ public class ValidatingInputPaneTest {
         setupLargeValidator();
         // now should fail:
         intValidator.validateText("6");
-        assertNotNull("Exception must non-null", intValidator.getException());
-        assertEquals("Exception must non-null", "Large", intValidator.getException().getMessage());
-        assertEquals("Invalid message", "Large", intValidator.getErrorMessage());
+        assertNotNull( intValidator.getException(), "Exception must non-null");
+        assertEquals( "Large", intValidator.getException().getMessage(), "Exception must non-null");
+        assertEquals( "Large", intValidator.getErrorMessage(), "Invalid message");
 
         // should pass
         intValidator.validateText("3");
-        assertNull("Message must be null on successful validation", intValidator.getErrorMessage());
-        assertFalse("No error must be indicated", intValidator.hasError());
+        assertNull( intValidator.getErrorMessage(), "Message must be null on successful validation");
+        assertFalse( intValidator.hasError(), "No error must be indicated");
     }
 
     private ValidatingInputPane<Integer> intValidator;
@@ -106,12 +111,12 @@ public class ValidatingInputPaneTest {
         setupLargeValidator();
         // now should fail:
         intValidator.validateText("6");
-        assertNotNull("Exception must non-null", intValidator.getException());
+        assertNotNull( intValidator.getException(), "Exception must non-null");
 
         // should pass
         intValidator.validateText("3");
-        assertNull("Message must be null on successful validation", intValidator.getErrorMessage());
-        assertFalse("No error must be indicated", intValidator.hasError());
+        assertNull( intValidator.getErrorMessage(), "Message must be null on successful validation");
+        assertFalse( intValidator.hasError(), "No error must be indicated");
     }
 
     /**
@@ -121,7 +126,7 @@ public class ValidatingInputPaneTest {
      */
     private <T> void testInGUI(Callable<T> check) throws Exception {
         // terminate tests which require GUI
-        assumeFalse(GraphicsEnvironment.isHeadless());
+        assertFalse(GraphicsEnvironment.isHeadless());
 
         // display the panel
         JWindow dlg = new JWindow();
@@ -149,6 +154,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testValidationHappensWhenAfterDisplayed() throws Exception {
         setupLargeValidator();
 
@@ -162,6 +168,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testTextChangeValidatesFalse() throws Exception {
         setupLargeValidator();
 
@@ -182,6 +189,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testClearAllNoError() throws Exception {
         setupLargeValidator();
         intValidator.setText("6");
@@ -204,6 +212,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testControlBecomesDisabled() throws Exception {
         setupLargeValidator(true);
         intValidator.setText("4");
@@ -214,4 +223,16 @@ public class ValidatingInputPaneTest {
            return null;
         });
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.resetWindows(false, false);
+        JUnitUtil.tearDown();
+    }
+
 }

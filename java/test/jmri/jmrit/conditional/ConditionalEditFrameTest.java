@@ -1,34 +1,45 @@
 package jmri.jmrit.conditional;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /*
 * Tests for the ConditionalListEdit Class.
 *
 * @author Pete Crecssman Copyright (C) 2020
 */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class ConditionalEditFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         ConditionalListEdit listedit = new ConditionalListEdit("IX102");
-        Assert.assertNotNull(listedit);
+        Assertions.assertNotNull(listedit);
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));
+        Assertions.assertNotNull(jfo);
 
         Conditional cond = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName("IX102C1");  // NOI18N
-        Assert.assertNotNull(cond);
+        Assertions.assertNotNull(cond);
 
         ConditionalEditFrame f = new ConditionalEditFrame("Test ConditionalEditFrame", cond, listedit);  // NOI18N
-        Assert.assertNotNull(f);
+        Assertions.assertNotNull(f);
+        f.initComponents();
+
+        ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
+
+        JUnitUtil.dispose(jfo.getWindow());
+        JUnitUtil.dispose(f);
+
     }
 
     @BeforeEach
@@ -36,9 +47,9 @@ public class ConditionalEditFrameTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        CreateTestObjects.createTestObjects();
     }
 
     @AfterEach

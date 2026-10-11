@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-message-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"message\"",
@@ -9,13 +9,21 @@
             "description": "Unsolicited message"
         },
         "context": {
-            "type": ["object", "null"],
+            "type": [
+                "object",
+                "null"
+            ],
             "description": "Context for message"
         },
         "type": {
             "type": "string",
             "description": "Type of message",
-            "enum": ["error", "info", "success", "warning"]
+            "enum": [
+                "error",
+                "info",
+                "success",
+                "warning"
+            ]
         },
         "locale": {
             "type": "string",
@@ -23,5 +31,10 @@
         }
     },
     "additionalProperties": false,
-    "required": ["message", "context", "type", "locale"]
+    "required": [
+        "message",
+        "context",
+        "type",
+        "locale"
+    ]
 }

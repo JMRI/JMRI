@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.text.DefaultFormatter;
 
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -24,6 +23,7 @@ import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.CbusSend;
 import jmri.util.TimerUtil;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.JSpinnerUtil;
 
 public class CbusAllocateNodeNumber implements CanListener {
 
@@ -113,6 +113,8 @@ public class CbusAllocateNodeNumber implements CanListener {
 
         rqNNpane.add(bottomrqNNpane, BorderLayout.PAGE_END);
 
+        rqNNpane.setPreferredSize( new java.awt.Dimension(280, 80));
+
         Toolkit.getDefaultToolkit().beep();
 
         if ( _paramsArr==null ) {
@@ -142,10 +144,9 @@ public class CbusAllocateNodeNumber implements CanListener {
 
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(rqnnSpinner, "#");
         rqnnSpinner.setEditor(editor);
+        JSpinnerUtil.setCommitsOnValidEdit(rqnnSpinner, true);
 
         JFormattedTextField rqfield = (JFormattedTextField) editor.getComponent(0);
-        DefaultFormatter rqformatter = (DefaultFormatter) rqfield.getFormatter();
-        rqformatter.setCommitsOnValidEdit(true);
         rqfield.setBackground(Color.white);
         rqnnSpinner.addChangeListener((ChangeEvent e) -> {
             int newval = (Integer) rqnnSpinner.getValue();
@@ -166,7 +167,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         return rqnnSpinner;
     }
 
-    protected TimerTask sendSNNTask;
+    private TimerTask sendSNNTask;
 
     private void clearSendSNNTimeout(){
         if (sendSNNTask != null ) {
@@ -208,10 +209,8 @@ public class CbusAllocateNodeNumber implements CanListener {
         if ( m.extendedOrRtr() ) {
             return;
         }
-        if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN) {
-            if (!NODE_NUM_DIALOGUE_OPEN) {
-                send.nodeRequestParamSetup();
-            }
+        if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN && !NODE_NUM_DIALOGUE_OPEN ) {
+            send.nodeRequestParamSetup();
         }
     }
 

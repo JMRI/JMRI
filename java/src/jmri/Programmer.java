@@ -2,6 +2,8 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -50,6 +52,25 @@ import javax.annotation.Nonnull;
 public interface Programmer extends jmri.Disposable {
 
     /**
+     * A configurator for this programmer.
+     * It's used if some code in JMRI needs to get direct access to some part
+     * of a connection specific programmer.
+     * <P>
+     * Note! This class must not be the programmer itself. It should open up
+     * as little as possible of the programmer. Otherwise an hacker could
+     * potentially use this to circumvent the permission system.
+     */
+    public interface Configurator {
+    }
+
+    /**
+     * Get the configurator of this programmer.
+     * @return the configurator if it exists, otherwise null
+     */
+    @CheckForNull
+    default Configurator getConfigurator() { return null; }
+
+    /**
      * Perform a CV write in the system-specific manner, and using the specified
      * programming mode.
      * <p>
@@ -57,7 +78,7 @@ public interface Programmer extends jmri.Disposable {
      * defines the acceptable formats.
      * <p>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the
      * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
      * <p>
      * Exceptions will only be
@@ -80,7 +101,7 @@ public interface Programmer extends jmri.Disposable {
      * defines the acceptable formats.
      * <p>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the
      * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
      * <p>
      * Exceptions will only be
@@ -107,7 +128,7 @@ public interface Programmer extends jmri.Disposable {
      * verified immediately in direct byte mode to speed up the read process.
      * <p>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the
      * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
      * <p>
      * Defaults to the normal read method if not overridden in a specific implementation.
@@ -134,7 +155,7 @@ public interface Programmer extends jmri.Disposable {
      * defines the acceptable formats.
      * <p>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the
      * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
      * <p>
      * Exceptions will only be
@@ -244,7 +265,7 @@ public interface Programmer extends jmri.Disposable {
      *
      * @param p listener to notify
      * @param value result value
-     * @param status code from jmri.ProgListener 
+     * @param status code from jmri.ProgListener
      */
     default void notifyProgListenerEnd(ProgListener p, int value, int status) {
         if ( p != null ) {

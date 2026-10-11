@@ -10,8 +10,6 @@ import jmri.NamedBeanHandle;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -122,7 +120,7 @@ public class RouteController extends AbstractController implements PropertyChang
 
     }
 
-    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    private final jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     /**
      * Send list of routes Format:
@@ -154,9 +152,10 @@ public class RouteController extends AbstractController implements PropertyChang
                 }
                 list.append("}|{");
                 String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-                if (!turnoutsAlignedSensor.equals("")) {  //only set if found
+                if (turnoutsAlignedSensor != null && !turnoutsAlignedSensor.isEmpty()) {  //only set if found
                     try {
-                        Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+                        Sensor routeAligned = InstanceManager.sensorManagerInstance()
+                            .provideSensor(turnoutsAlignedSensor);
                         list.append(routeAligned.getKnownState());
                     } catch (IllegalArgumentException ex) {
                         log.warn("Failed to provide turnoutsAlignedSensor \"{}\" in sendList", turnoutsAlignedSensor);
@@ -176,7 +175,7 @@ public class RouteController extends AbstractController implements PropertyChang
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("KnownState")) {
+        if (Sensor.PROPERTY_KNOWN_STATE.equals(evt.getPropertyName())) {
             Sensor s = (Sensor) evt.getSource();
             for (Map.Entry<NamedBeanHandle<Sensor>, Route> entry : indication.entrySet()) {
                 if (entry.getKey().getBean() == s) {
@@ -201,7 +200,7 @@ public class RouteController extends AbstractController implements PropertyChang
             Route r = manager.getBySystemName(sysName);
             if (r != null) {
                 String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-                if (!turnoutsAlignedSensor.equals("")) {  //only set if found
+                if ( turnoutsAlignedSensor != null && !turnoutsAlignedSensor.isEmpty()) {  //only set if found
                     Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
                     NamedBeanHandle<Sensor> routeAligned = nbhm.getNamedBeanHandle(turnoutsAlignedSensor, sensor);
                     indication.put(routeAligned, r);
@@ -221,15 +220,16 @@ public class RouteController extends AbstractController implements PropertyChang
             return;
         }
 
-        indication.keySet().forEach((namedSensor) -> {
+        indication.keySet().forEach( namedSensor -> {
             namedSensor.getBean().removePropertyChangeListener(this);
             if (log.isDebugEnabled()) {
-                log.debug("Removing listener from Sensor: {} for Route: {}", namedSensor.getName(), indication.get(namedSensor).getSystemName());
+                log.debug("Removing listener from Sensor: {} for Route: {}",
+                    namedSensor.getName(), indication.get(namedSensor).getSystemName());
             }
         });
         indication = new HashMap<>();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteController.class);
 
 }

@@ -2825,9 +2825,13 @@
         <decVal/>
         <label>Dynamic Decel Rate</label>
       </variable>
+
+<!-- commented out because without a type specification element it doesn't do anything
       <variable default="3" item="Dynamic brake notch setting" CV="192">
         <label>Dynamic brake notch setting</label>
       </variable>
+-->
+
       <variable default="0" item="Motor Option 1" CV="115">
         <decVal/>
         <label>Motor Delay</label>
@@ -2884,9 +2888,13 @@
         <decVal max="100"/>
         <label>Brake Release</label>
       </variable>
+
+<!-- commented out because without a type specification element it doesn't do anything
       <variable default="0" item="Code Hash Part 4" CV="256">
         <label>Code Hash Part 4</label>
       </variable>
+-->
+
       <variable default="100" item="Sound Setting 13" CV="206">
         <decVal max="100"/>
         <label>Horn Long</label>
@@ -2895,16 +2903,24 @@
         <decVal/>
         <label>Accel 1 Rate</label>
       </variable>
+      
+<!-- commented out because without a type specification element it doesn't do anything
       <variable default="0" item="Code Hash Part 2" CV="254">
         <label>Code Hash Part 2</label>
       </variable>
+-->
+
       <variable default="5" item="Decoder Version" CV="7">
         <decVal/>
         <label>Decoder Version</label>
       </variable>
+
+<!-- commented out because without a type specification element it doesn't do anything
       <variable default="0" item="Code Hash Part 3" CV="255">
         <label>Code Hash Part 3</label>
       </variable>
+-->
+
       <variable default="35" item="Motor Option 2" CV="244">
         <decVal/>
         <label>BEMF Routine Frequency (lower is faster)</label>
@@ -3039,9 +3055,13 @@
         <decVal/>
         <label>User Id #2</label>
       </variable>
+
+<!-- commented out because without a type specification element it doesn't do anything
       <variable default="0" item="Sound Set Version Identifier" CV="248">
         <label>Sound Set Version Identifier</label>
       </variable>
+-->
+
       <variable default="0" item="User Id #1" CV="105">
         <decVal/>
         <label>User Id #1</label>
@@ -3449,9 +3469,13 @@
         <decVal/>
         <label>Decoder ID</label>
       </variable>
+
+<!-- commented out because without a type specification element it doesn't do anything
       <variable default="0" item="Code Hash Part 1" CV="253">
         <label>Code Hash Part 1</label>
       </variable>
+-->
+
       <variable default="32" item="Brake Rate 1" CV="183">
         <decVal/>
         <label>Brake Rate 1</label>

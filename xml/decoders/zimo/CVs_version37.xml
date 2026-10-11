@@ -6,20 +6,24 @@
 <!-- version 1.3  08 Apr 2021..(Nigel Cliffe) Delete exclusion from CV349 for decoder MX616 -->
 <!-- version 1.4  29 Nov 2021  (Ronald Kuhn) Correction of bitmask for #109 & #110 and "Choice_LigthX.xml" -->
 <!-- version 1.5  05 Apr 2024  (Ronald Kuhn) exclude #836 and #837 for new non-sound-decoder -->
+<!-- version 1.6  06 Aug 2026  Pierre Billon - Added French and German translations, corrected English -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="22" item="Auto Consist" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <!--xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/-->
     <label>Auto Consist Address Active</label>
+    <label xml:lang="fr">Adresse d'UM automatique active</label>
     <label xml:lang="de">Auto Consist Addresse aktiv</label>
     <label xml:lang="cs">Automatická souprava je aktivní</label>
     <tooltip xml:lang="de">Es wird automatisch zwischen Einzel- und Verbundadresse gewechselt, jeweils zu jener Adresse, deren Geschwindigkeit > 0 ist, wenn die andere Geschwindigkeit = 0.</tooltip>
+    <tooltip xml:lang="fr">Bascule automatiquement entre l'adresse individuelle et l'adresse d'UM, vers celle dont la vitesse est &gt; 0 lorsque l'autre est à 0.</tooltip>
     <tooltip xml:lang="cs">Zapíná se automatické přepnutí mezi obyčejnou adresou lokomotivy a adresou v soupravě. Aplikuje se v případě, že jedna rychlost je > 0 a druhá rychlost je = 0.</tooltip>
   </variable>
   <variable CV="22" item="Consist Address Active For F13-F27" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F13 - F27</label>
+    <label xml:lang="fr">Adresse d'UM active pour F13 - F27</label>
     <label xml:lang="it">Indirizzo Consist attivo per F13 - F27</label>
     <label xml:lang="cs">Adresa soupravy aktivní pro F13 - F27</label>
     <label xml:lang="de">im Verbundbetrieb aktiv F13 - F27</label>
@@ -27,9 +31,11 @@
   <variable CV="97" item="Consist Option 1" default="0">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
     <label>Consist-Key</label>
+    <label xml:lang="fr">Touche d'UM</label>
     <label xml:lang="de">Consist-Taste</label>
     <label xml:lang="cs">Tlačítko soupravy</label>
       <tooltip>Key to change between Default- and Consist-address</tooltip>
+      <tooltip xml:lang="fr">Touche de commutation entre l'adresse principale et l'adresse d'UM</tooltip>
       <tooltip xml:lang="de">Taste zum Umschalten zwischen Hauptadresse und Consistadresse.</tooltip>
       <tooltip xml:lang="cs">Tlačítko které přepíná mezi výchozí adresou a adresou soupravy.</tooltip>
   </variable>
@@ -37,48 +43,56 @@
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="cs">Žádný</choice>
         <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="fr">FO 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
         <choice xml:lang="cs">Funkční výstup 1</choice>
         <choice xml:lang="de">FA 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="fr">FO 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
         <choice xml:lang="cs">Funkční výstup 2</choice>
         <choice xml:lang="de">FA 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="fr">FO 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
         <choice xml:lang="cs">Funkční výstup 3</choice>
         <choice xml:lang="de">FA 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="fr">FO 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
         <choice xml:lang="cs">Funkční výstup 4</choice>
         <choice xml:lang="de">FA 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="fr">FO 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
         <choice xml:lang="cs">Funkční výstup 5</choice>
         <choice xml:lang="de">FA 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="fr">FO 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
         <choice xml:lang="cs">Funkční výstup 6</choice>
         <choice xml:lang="de">FA 6</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front additional 2 function off</label>
+    <label xml:lang="fr">Feux AV fonction supplémentaire 2 éteinte</label>
     <label xml:lang="de">Lvor zusätzlich 2 aus</label>
     <label xml:lang="cs">Vypnutí funkčních výstupů 2 vpřed lokomotivy</label>
   </variable>
@@ -86,64 +100,75 @@
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
+        <choice xml:lang="fr">Aucune</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="cs">Žádný</choice>
         <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
+        <choice xml:lang="fr">FO 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
         <choice xml:lang="cs">Funkční výstup 1</choice>
         <choice xml:lang="de">FA 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
+        <choice xml:lang="fr">FO 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
         <choice xml:lang="cs">Funkční výstup 2</choice>
         <choice xml:lang="de">FA 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
+        <choice xml:lang="fr">FO 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
         <choice xml:lang="cs">Funkční výstup 3</choice>
         <choice xml:lang="de">FA 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
+        <choice xml:lang="fr">FO 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
         <choice xml:lang="cs">Funkční výstup 4</choice>
         <choice xml:lang="de">FA 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
+        <choice xml:lang="fr">FO 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
         <choice xml:lang="cs">Funkční výstup 5</choice>
         <choice xml:lang="de">FA 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
+        <choice xml:lang="fr">FO 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
         <choice xml:lang="cs">Funkční výstup 6</choice>
         <choice xml:lang="de">FA 6</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear additional 2 function off</label>
+    <label xml:lang="fr">Feux AR fonction supplémentaire 2 éteinte</label>
     <label xml:lang="de">Lrück zusätzlich 2 aus</label>
     <label xml:lang="cs">Vypnutí funkčních výstupů 2 vzad lokomotivy</label>
   </variable>
   <variable CV="111" item="Emergency Delay" default="0">
     <decVal/>
     <label>Emergency Delay</label>
+    <label xml:lang="fr">Temporisation d'arrêt d'urgence</label>
     <label xml:lang="de">Emergency Verzögerungszeit</label>
     <label xml:lang="cs">Nouzové zpoždění</label>
     <tooltip>This CV is for Emergency Stopp instead CV #4</tooltip>
+    <tooltip xml:lang="fr">Ce CV s'applique à l'arrêt d'urgence, à la place du CV #4</tooltip>
     <tooltip xml:lang="de">Dieser CV-Wert gilt bei Emergency Stopp anstelle der CV #4, also bei Einzelstopp und Sammelstopp emerg.</tooltip>
-    <tooltip xml:lang="de">Toto CV je pro nouzové zastavení místo CV4.</tooltip>
+    <tooltip xml:lang="cs">Toto CV je pro nouzové zastavení místo CV4.</tooltip>
   </variable>
   <variable CV="155" item="Half Speed" mask="VVVXXXXX">
      <enumVal>
       <enumChoice choice="0.625 (default)">
         <choice>0.625 (default)</choice>
+        <choice xml:lang="fr">0,625 (par défaut)</choice>
         <choice xml:lang="de">0,625 (Standard)</choice>
         <choice xml:lang="cs">0,625 (Výchozí)</choice>
       </enumChoice>
@@ -184,6 +209,7 @@
       </enumChoice>
     </enumVal>
     <label>Half Speed</label>
+    <label xml:lang="fr">Demi-vitesse</label>
     <label xml:lang="de">Halbgeschwindigkeit</label>
     <label xml:lang="cs">Poloviční rychlost</label>
   </variable>
@@ -196,6 +222,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Functin output 7 effect generated</label>
+    <label xml:lang="fr">Effet FO7</label>
     <label xml:lang="it">Effetti uscita Funzione 7</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 7</label>
     <label xml:lang="de">FA7 Effekt</label>
@@ -203,6 +230,7 @@
   <variable CV="159" item="Output 9 behavior" mask="XXXXXXVV" minOut="9">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 7 behavior</label>
+    <label xml:lang="fr">Comportement FO7</label>
     <label xml:lang="it">Comportamento uscita Funzione 7</label>
     <label xml:lang="cs">Chování funkčního výstupu 7</label>
     <label xml:lang="de">FA7 Verhalten</label>
@@ -216,6 +244,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light8.xml"/>
     </enumVal>
     <label>Functin output 8 effect generated</label>
+    <label xml:lang="fr">Effet FO8</label>
     <label xml:lang="it">Effetti uscita Funzione 8</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 8</label>
     <label xml:lang="de">FA8 Effekt</label>
@@ -223,6 +252,7 @@
   <variable CV="160" item="Output 10 behavior" mask="XXXXXXVV" minOut="10">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 8 behavior</label>
+    <label xml:lang="fr">Comportement FO8</label>
     <label xml:lang="it">Comportamento uscita Funzione 8</label>
     <label xml:lang="cs">Chování funkčního výstupu 8</label>
     <label xml:lang="de">FA8 Verhalten</label>
@@ -254,7 +284,7 @@
     <label xml:lang="de">Messfahrt</label>
     <label xml:lang="cs">Test zatížení</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Messfahrt zur Bestimmung der Motor-Grundlast</tooltip>
+      <tooltip xml:lang="de"> Messfahrt zur Bestimmung der Motor-Grundlast </tooltip>
       <tooltip xml:lang="cs">Průběh měření pro zjištění základního zatížení mototu</tooltip>
   </variable>
   -->
@@ -262,37 +292,41 @@
   <variable CV="307" item="Curve squeal reed" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <decVal/>
     <label>Curve squeal reed input</label>
+    <label xml:lang="fr">Entrée reed du crissement en courbe</label>
     <label xml:lang="de">Kurvenquietschen Reed Eingänge</label>
     <label xml:lang="cs">Vstup skřípění v oblouku</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Welcher Reed-Eingang löst das Kurvenquietschen aus</tooltip>
+      <tooltip xml:lang="de"> Welcher Reed-Eingang löst das Kurvenquietschen aus </tooltip>
       <tooltip xml:lang="cs">Který vstup spustí skřípění kol v oblouku</tooltip>
   </variable>
   <variable CV="308" item="Curve squeal key" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
     <label>Curve squeal key</label>
+    <label xml:lang="fr">Touche de crissement en courbe</label>
     <label xml:lang="de">Kurvenquietschen-Taste</label>
     <label xml:lang="cs">Tlačítko křivky skřípění v oblouku</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Welche Funktionstaste löst das Kurvenquietschen aus</tooltip>
+      <tooltip xml:lang="de"> Welche Funktionstaste löst das Kurvenquietschen aus </tooltip>
       <tooltip xml:lang="cs">Které tlačítko spustí skřípění kol v oblouku</tooltip>
   </variable>
   <variable CV="309" item="Brake key" default="0">
     <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F1-F28.xml"/>
     <label>Brake key</label>
+    <label xml:lang="fr">Touche de frein</label>
     <label xml:lang="de">Bremstaste</label>
     <label xml:lang="cs">Tlačítko brzdy</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Die hier zugewiesene Funktionstaste löst einen Bremsvorgang nach der in CV#349 definierten Bremszeit aus</tooltip>
+      <tooltip xml:lang="de"> Die hier zugewiesene Funktionstaste löst einen Bremsvorgang nach der in CV#349 definierten Bremszeit aus </tooltip>
       <tooltip xml:lang="cs">Které tlačítko spustí brždění po doběš definované v CV349</tooltip>
   </variable>
   <variable CV="348" item="Switch-over" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <decVal max="4"/>
     <label>Switch-over parameters for driving solo</label>
+    <label xml:lang="fr">Comportement en marche isolée</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt</label>
     <label xml:lang="cs">Parametry přepínání pro strojovou jízdu</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Auswahl der Maßnahmen, die bei Umschaltung auf Alleinfahrt getroffen werden sollen</tooltip>
+      <tooltip xml:lang="de"> Auswahl der Maßnahmen, die bei Umschaltung auf Alleinfahrt getroffen werden sollen </tooltip>
       <tooltip xml:lang="cs">Výběr nastavení pro přepnutí do jízda sólo.</tooltip>
   </variable>
   <variable CV="349" item="Brake time" default="0" exclude="130,201,211,218">
@@ -300,98 +334,117 @@
     <label>Brake time</label>
     <label xml:lang="de">Bremszeit für Bremstaste</label>
       <tooltip> </tooltip>
-      <tooltip xml:lang="de">Bremszeit nach Auslösen der Bremstaste</tooltip>
+      <tooltip xml:lang="de"> Bremszeit nach Auslösen der Bremstaste </tooltip>
       <tooltip xml:lang="cs">Doba brždění po uvolnění tlačítka brždění.</tooltip>
   </variable>
   <variable CV="393" item="Ditch Light with Bell" mask="XXXXXXXV" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Ditch Light with Bell</label>
+    <label xml:lang="fr">Ditch Light avec la cloche</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Glocke spielt</label>
     <label xml:lang="cs">Obrysová světla se zvonem</label>
   </variable>
   <variable CV="393" item="Ditch Light with Horn" mask="XXXXXXVX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Ditch Light with Horn</label>
+    <label xml:lang="fr">Ditch Light avec le klaxon</label>
     <label xml:lang="de">Aktiviert Ditch Light wenn Horn spielt</label>
     <label xml:lang="cs">Obrysová světla s houkačkou</label>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-2" mask="XXXXXVXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>ZIMO Konfig 5-2</label>
+    <label>High-speed switchgear: use the samples in turn</label>
+    <label xml:lang="fr">Graduateur grande vitesse : utiliser les échantillons à tour de rôle</label>
     <label xml:lang="de">Hochgeschwindigkeitsschaltwerk 1</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 1</label>
-      <tooltip>Highspeed switchgear</tooltip>
+      <tooltip>Instead of always starting with the first sample of the high-speed switchgear, use one sample after another.</tooltip>
+      <tooltip xml:lang="fr">Au lieu de toujours commencer par le premier échantillon du graduateur grande vitesse, les utiliser l'un après l'autre.</tooltip>
       <tooltip xml:lang="de">Statt immer mit dem 1.Sample im Hochgeschwindigkeitsschaltwerk zu beginnen, ein Sample nach dem anderen verwenden.</tooltip>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-3" mask="XXXXVXXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>ZIMO Konfig 5-3</label>
+    <label>High-speed switchgear: skip the sample start and end when upshifting</label>
+    <label xml:lang="fr">Graduateur grande vitesse : ignorer le début et la fin de l'échantillon en montant les crans</label>
     <label xml:lang="de">Hochgeschwindigkeitsschaltwerk 2</label>
     <label xml:lang="cs">Vysokorychlostní rozvaděč 2</label>
-      <tooltip>Highspeed switchgear</tooltip>
+      <tooltip>When upshifting, skip the start and end part of the sample, if loop pointers are set.</tooltip>
+      <tooltip xml:lang="fr">En montant les crans, ignorer le début et la fin de l'échantillon si les pointeurs de boucle sont définis.</tooltip>
       <tooltip xml:lang="de">Hochgeschwindigkeitsschaltwerk beim Hochschalten Anfangs- und Endteil des Samples überspringen (falls Loop Zeiger gesetzt sind).</tooltip>
   </variable>
   <variable CV="393" item="ZIMO Konfig 5-4" mask="XXXVXXXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>ZIMO Konfig 5-4</label>
+    <label>Thyristor 2 do not elevate pitch</label>
+    <label xml:lang="fr">Thyristor 2 : ne pas élever la hauteur du son</label>
     <label xml:lang="de">Thyristor2 Tonhöhe nicht anheben</label>
     <label xml:lang="cs">Tyristor 2 nezvyšuje tón</label>
   </variable>
   <variable CV="393" item="SUSI as In" mask="XXVXXXXX" default="0" exclude="177,195,197,199">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>SUSI as In</label>
+    <label xml:lang="fr">SUSI comme entrée</label>
     <label xml:lang="de">SUSI als Schalteingang</label>
     <label xml:lang="cs">SUSI jako Vstup</label>
   </variable>
   <variable CV="828" item="Steam Impact Stroke" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <decVal/>
     <label>steam impact stroke for Set+1</label>
+    <label xml:lang="fr">coup de vapeur pour le Set +1</label>
     <label xml:lang="de">Dampfschlagtakt für Set+1</label>
     <label xml:lang="cs">Výfuk páry pro sadu 1</label>
     <tooltip> </tooltip>
-    <tooltip xml:lang="de">Dampfschlagtakt wie CV # 267 aber für Set+1</tooltip>
+    <tooltip xml:lang="de"> Dampfschlagtakt wie CV # 267 aber für Set+1 </tooltip>
   </variable>
   <variable CV="836" item="Motor Start Sound" mask="XXXXXXXV" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Motor Start Sound</label>
+    <label xml:lang="fr">Son de démarrage moteur</label>
     <label xml:lang="de">Motor Start Sound</label>
     <label xml:lang="cs">Zvuk startujícího motoru</label>
       <tooltip>Don't start if Motor Sound not complete</tooltip>
+      <tooltip xml:lang="fr">Ne pas démarrer tant que le son de démarrage moteur n'est pas terminé</tooltip>
       <tooltip xml:lang="de">Lok soll nicht Anfahren solange der Motor Start Sound nicht zu Ende gespielt hat.</tooltip>
   </variable>
   <variable CV="837" item="Script Running 1" mask="XXXXXXXV" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 1 Running </label>
-    <label xml:lang="de">Script Ablauf 1</label>
+    <label xml:lang="fr">Script 1 en cours </label>
+    <label xml:lang="de">Script Ablauf 1 </label>
     <label xml:lang="cs">Skript 1 běžící</label>
       <tooltip>Deactivate Script 1</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 1</tooltip>
       <tooltip xml:lang="de">Script 1 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 1.</tooltip>
   </variable>
   <variable CV="837" item="Script Running 2" mask="XXXXXXVX" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 2 Running</label>
+    <label xml:lang="fr">Script 2 en cours</label>
     <label xml:lang="de">Script Ablauf 2</label>
     <label xml:lang="cs">Skript 2 běžící</label>
       <tooltip>Deactivate Script 2</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 2</tooltip>
       <tooltip xml:lang="de">Script 2 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 2.</tooltip>
   </variable>
   <variable CV="837" item="Script Running 3" mask="XXXXXVXX" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 3 Running</label>
+    <label xml:lang="fr">Script 3 en cours</label>
     <label xml:lang="de">Script Ablauf 3</label>
     <label xml:lang="cs">Skript 3 běžící</label>
       <tooltip>Deactivate Script 3</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 3</tooltip>
       <tooltip xml:lang="de">Script 3 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 3.</tooltip>
   </variable>
   <variable CV="837" item="Script Running 4" mask="XXXXVXXX" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Script 4 Running</label>
+    <label xml:lang="fr">Script 4 en cours</label>
     <label xml:lang="de">Script Ablauf 4</label>
     <label xml:lang="cs">Skript 4 běžící</label>
       <tooltip>Deactivate Script 4</tooltip>
+      <tooltip xml:lang="fr">Désactiver le script 4</tooltip>
       <tooltip xml:lang="de">Script 4 deaktivieren.</tooltip>
       <tooltip xml:lang="cs">Deaktivace skriptu 4.</tooltip>
   </variable>

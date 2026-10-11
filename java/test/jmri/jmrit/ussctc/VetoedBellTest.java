@@ -1,9 +1,12 @@
 package jmri.jmrit.ussctc;
 
-import jmri.util.JUnitUtil;
-import jmri.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Assert;
+import jmri.*;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,32 +18,32 @@ public class VetoedBellTest {
 
     @Test
     public void testConstruction() {
-        Assert.assertNotNull( new VetoedBell("veto Sensor", new PhysicalBell("Bell output")));
+        assertNotNull( new VetoedBell("veto Sensor", new PhysicalBell("Bell output")));
     }
  
     @Test
     public void testBellStrokeAllowed() throws JmriException {
-        Assert.assertNotNull(veto);
+        assertNotNull(veto);
         veto.setState(Sensor.INACTIVE);
         
         Bell vbell = new VetoedBell("veto Sensor", new BellScaffold());
         vbell.ring();
         
-        Assert.assertTrue(rung);
+        assertTrue(rung);
     }
     
     @Test
     public void testBellStrokeNotAllowed() throws JmriException  {
-        Assert.assertNotNull(veto);
+        assertNotNull(veto);
         veto.setState(Sensor.ACTIVE);
         
         Bell vbell = new VetoedBell("veto Sensor", new BellScaffold());
         vbell.ring();
         
-        Assert.assertFalse(rung);
+        assertFalse(rung);
     }
-    
-    boolean rung;
+
+    private boolean rung;
     private Sensor veto = null;
     private Turnout bellTurnout = null;
 

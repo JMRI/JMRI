@@ -2,8 +2,9 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -14,13 +15,13 @@ public class JCBHandleTest {
     @Test
     public void testToStringReal() {
         JCBHandle<DummyObject> a = new JCBHandle<>(new DummyObject());
-        Assert.assertEquals("dummy output", a.toString());
+        assertEquals("dummy output", a.toString());
     }
 
     @Test
     public void testToStringEmpty() {
         JCBHandle<DummyObject> a = new JCBHandle<>("no object");
-        Assert.assertEquals("no object", a.toString());
+        assertEquals("no object", a.toString());
     }
 
     private static class DummyObject {

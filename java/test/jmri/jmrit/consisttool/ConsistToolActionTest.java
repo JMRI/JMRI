@@ -1,14 +1,13 @@
 package jmri.jmrit.consisttool;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of ConsistToolAction
@@ -18,24 +17,28 @@ import org.junit.Assume;
 public class ConsistToolActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolAction action = new ConsistToolAction("Test Consist Tool Action");
-        Assert.assertNotNull("exists", action);
+        assertNotNull(action, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolAction action = new ConsistToolAction();
-        Assert.assertNotNull("exists", action);
+        assertNotNull(action, "exists");
     }
 
     @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
+        JUnitUtil.setUp();
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

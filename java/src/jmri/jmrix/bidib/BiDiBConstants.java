@@ -15,6 +15,6 @@ package jmri.jmrix.bidib;
 public final class BiDiBConstants {
 
     // BiDiB over TCP
-    public final static String BIDIB_OVER_TCP_DEFAULT_HOST = "localhost";
+    public static final String BIDIB_OVER_TCP_DEFAULT_HOST = "localhost";
 
 }

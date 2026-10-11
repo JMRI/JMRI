@@ -2,7 +2,6 @@ package jmri.web.server;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class WebServerActionTest {
     @Test
     public void testCtor() {
         WebServerAction a = new WebServerAction();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

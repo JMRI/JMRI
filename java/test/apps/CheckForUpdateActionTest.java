@@ -3,7 +3,6 @@ package apps;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class CheckForUpdateActionTest {
     @Test
     public void testCTor() {
         CheckForUpdateAction t = new CheckForUpdateAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class CheckForUpdateActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CheckForUpdateActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CheckForUpdateActionTest.class);
 
 }

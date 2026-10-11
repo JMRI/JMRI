@@ -27,9 +27,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     private final Class<E> _class;
     private final Manager<E> _manager;
     private final LogixNG_SelectTable _selectTable;
-    private final PropertyChangeListener _listener;
-    private boolean _listenToMemory;
-    private boolean _listenersAreRegistered;
     private boolean _onlyDirectAddressingAllowed;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
@@ -43,22 +40,20 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     private String _delayedNamedBean;
 
 
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, PropertyChangeListener listener) {
+    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager) {
         _base = base;
         _inUse = () -> true;
         _class = clazz;
         _manager = manager;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
-        _listener = listener;
     }
 
-    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, InUse inUse, PropertyChangeListener listener) {
+    public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, InUse inUse) {
         _base = base;
         _inUse = inUse;
         _class = clazz;
         _manager = manager;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
-        _listener = listener;
     }
 
     public void setOnlyDirectAddressingAllowed() {
@@ -75,7 +70,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setMemory(_memoryHandle);
-        copy.setListenToMemory(_listenToMemory);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
     }
@@ -205,14 +199,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _memoryHandle;
     }
 
-    public void setListenToMemory(boolean listenToMemory) {
-        _listenToMemory = listenToMemory;
-    }
-
-    public boolean getListenToMemory() {
-        return _listenToMemory;
-    }
-
     public void setLocalVariable(@Nonnull String localVariable) {
         _localVariable = localVariable;
     }
@@ -328,7 +314,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                 break;
 
             case Memory:
-                namedBean = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
+                namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -352,32 +338,6 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                 throw new IllegalArgumentException("invalid _addressing: " + _addressing.name());
         }
         return namedBean;
-    }
-
-    /**
-     * Register listeners if this object needs that.
-     */
-    public void registerListeners() {
-        if (!_listenersAreRegistered
-                && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)
-                && _listenToMemory) {
-            _memoryHandle.getBean().addPropertyChangeListener("value", _listener);
-            _listenersAreRegistered = true;
-        }
-    }
-
-    /**
-     * Unregister listeners if this object needs that.
-     */
-    public void unregisterListeners() {
-        if (_listenersAreRegistered
-                && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)
-                && _listenToMemory) {
-            _memoryHandle.getBean().removePropertyChangeListener("value", _listener);
-            _listenersAreRegistered = false;
-        }
     }
 
     @Override
@@ -490,5 +450,5 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectNamedBean.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectNamedBean.class);
 }

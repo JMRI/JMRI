@@ -1,6 +1,5 @@
 package jmri.jmrix.tams;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.Queue;
 import jmri.DccLocoAddress;
@@ -24,7 +23,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     private final Queue<TamsMessage> tmq = new LinkedList<>();
 
     //This dummy message is used in case we expect a reply from polling
-    static private TamsMessage myDummy() {
+    private static TamsMessage myDummy() {
         log.trace("*** myDummy ***");
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);
@@ -165,7 +164,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
@@ -396,6 +394,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(TamsThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsThrottle.class);
 
 }

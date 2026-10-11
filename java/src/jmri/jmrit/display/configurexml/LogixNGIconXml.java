@@ -149,5 +149,5 @@ public class LogixNGIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LABELS, element);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGIconXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGIconXml.class);
 }

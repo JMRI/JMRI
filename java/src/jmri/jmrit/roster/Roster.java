@@ -7,6 +7,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -93,9 +97,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     private String rosterIndexFileName = Roster.DEFAULT_ROSTER_INDEX;
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
-    // Note that dispose() doesn't act on these.  Its not clear whether it should...
+    // Note that dispose() doesn't act on these.  It isn't clear whether it should...
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    static final public String schemaVersion = ""; // NOI18N
+    public static final String schemaVersion = ""; // NOI18N
     private String defaultRosterGroup = null;
     private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
 
@@ -147,6 +151,11 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * rely on being able to store this value.
      */
     public static final String ALLENTRIES = Bundle.getMessage("ALLENTRIES"); // NOI18N
+    /**
+     * Title of the "No Group" roster group. As this varies by locale, do not
+     * rely on being able to store this value.
+     */
+    public static final String NOGROUP = Bundle.getMessage("NOGROUP"); // NOI18N
 
     /**
      * Create a roster with default contents.
@@ -214,7 +223,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Add a RosterEntry object to the in-memory Roster.
-     *
+     * <p>
      * This method notifies the UI of changes so should not be used when
      * adding or reloading many roster entries at once.
      *
@@ -230,7 +239,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Add a RosterEntry object to the in-memory Roster without notifying
      * the UI of changes.
-     *
+     * <p>
      * This method exists so full roster reloads/reindexing can take place without
      * completely redrawing the UI table for each entry.
      *
@@ -243,7 +252,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             int i = _list.size() - 1; // Last valid index
             while (i >= 0) {
                 if (e.getId().compareToIgnoreCase(_list.get(i).getId()) > 0) {
-                    break; // get out of the loop since the entry at I sorts
+                    break; // get out of the loop since the entry at i sorts
                     // before the new entry
                 }
                 i--;
@@ -287,7 +296,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *         group does not exist.
      */
     public int numGroupEntries(String group) {
-        if (group != null
+        log.trace("numGroupEntries for {}", group);
+        if (group != null && group.equals(Roster.NOGROUP)) {
+            return numNoGroupEntries();
+        } else if (group != null
                 && !group.equals(Roster.ALLENTRIES)
                 && !group.equals(Roster.allEntries(Locale.getDefault()))) {
             return (this.rosterGroups.get(group) != null) ? this.rosterGroups.get(group).getEntries().size() : 0;
@@ -296,6 +308,17 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
     }
 
+    int numNoGroupEntries() {
+        int count = 0;
+        for (var entry : _list) {
+            if (entry.getGroups().isEmpty()) {
+                count++;
+            }
+        }
+        log.trace("numNoGroupEntries returns {}", count);
+        return count;
+    }
+    
     /**
      * Return RosterEntry from a "title" string, ala selection in
      * matchingComboBox.
@@ -315,7 +338,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Return RosterEntry from a "id" string.
+     * Return RosterEntry from an "id" string.
      *
      * @param id The id for the RosterEntry.
      * @return The matching RosterEntry or null
@@ -333,17 +356,15 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Return a list of RosterEntry which have a particular DCC address.
+     * Return a list of RosterEntry items which have a particular DCC address.
      *
      * @param a The address.
-     * @return a List of matching entries, empty if there are not matches.
+     * @return a List of matching entries, empty if there are no matches.
      */
     @Nonnull
     public List<RosterEntry> getEntriesByDccAddress(String a) {
         return findMatchingEntries(
-                (RosterEntry r) -> {
-                    return r.getDccAddress().equals(a);
-                }
+                (RosterEntry re) -> re.getDccAddress().equals(a)
         );
     }
 
@@ -380,6 +401,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *         group, or the group does not exist.
      */
     public RosterEntry getGroupEntry(String group, int i) {
+        log.trace("getGroupEntry({}, {})", group, i);
         boolean doGroup = (group != null && !group.equals(Roster.ALLENTRIES) && !group.isEmpty());
         if (!doGroup) {
             // if not trying to get a specific group entry, just get the specified
@@ -389,6 +411,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             } catch (IndexOutOfBoundsException e) {
                 return null;
             }
+        } else if (group != null && group.equals(Roster.NOGROUP)) {
+            return getNoGroupEntry(i);
         }
         synchronized (_list) {
             int num = 0;
@@ -405,26 +429,63 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         return null;
     }
 
+    RosterEntry getNoGroupEntry(int i) {
+        log.trace("getNoGroupEntry({})", i);
+        try {
+            return getNoGroupList().get(i);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+    
+    List<RosterEntry> getNoGroupList() {
+        List<RosterEntry> result = new ArrayList<>();
+
+        getAllEntries().forEach((entry) -> {
+            if (entry.getGroups().isEmpty()) {
+                result.add(entry);
+            }
+        });
+        log.trace("getNoGroupList returns {} items", result.size());
+        return result;
+    }
+    
     public int getGroupIndex(String group, RosterEntry re) {
+        log.trace("getGroupIndex({}, {})", group, re);
         int num = 0;
         boolean doGroup = (group != null && !group.equals(Roster.ALLENTRIES) && !group.isEmpty());
+
         synchronized (_list) {
-        for (RosterEntry r : _list) {
-            if (doGroup) {
-                if ((r.getAttribute(getRosterGroupProperty(group)) != null)
-                        && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) { // NOI18N
-                    if (r == re) {
+
+            if (group != null && group.equals(Roster.NOGROUP)) {
+                var list = getNoGroupList();
+                for (RosterEntry r : list) {
+                    if (re == r) {
+                        log.trace("getGroupIndex of NOGROUP returns {}", num);
                         return num;
                     }
                     num++;
                 }
-            } else {
-                if (re == r) {
-                    return num;
-                }
-                num++;
+                log.trace("getGroupIndex of NOGROUP returns -1");
+                return -1;
             }
-        }
+    
+            for (RosterEntry r : _list) {
+                if (doGroup) {
+                    if ((r.getAttribute(getRosterGroupProperty(group)) != null)
+                            && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) { // NOI18N
+                        if (r == re) {
+                            return num;
+                        }
+                        num++;
+                    }
+                } else {
+                    if (re == r) {
+                        return num;
+                    }
+                    num++;
+                }
+            }
         }
         return -1;
     }
@@ -447,9 +508,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public List<RosterEntry> getEntriesWithAttributeKey(String key) {
         ArrayList<RosterEntry> result = new ArrayList<>();
         synchronized (_list) {
-            _list.stream().filter((r) -> (r.getAttribute(key) != null)).forEachOrdered((r) -> {
-                result.add(r);
-            });
+            _list.stream().filter((r) -> (r.getAttribute(key) != null)).forEachOrdered(result::add);
         }
         return result;
     }
@@ -457,7 +516,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public List<RosterEntry> getEntriesWithAttributeKeyValue(String key, String value) {
         ArrayList<RosterEntry> result = new ArrayList<>();
         synchronized (_list) {
-            _list.stream().forEach((r) -> {
+            _list.forEach((r) -> {
                 String v = r.getAttribute(key);
                 if (v != null && v.equals(value)) {
                     result.add(r);
@@ -470,9 +529,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public Set<String> getAllAttributeKeys() {
         Set<String> result = new TreeSet<>();
         synchronized (_list) {
-            _list.stream().forEach((r) -> {
-                result.addAll(r.getAttributes());
-            });
+            _list.forEach((r) -> result.addAll(r.getAttributes()));
         }
         return result;
     }
@@ -480,7 +537,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public List<RosterEntry> getEntriesInGroup(String group) {
         if (group == null || group.equals(Roster.ALLENTRIES) || group.isEmpty()) {
             // Return a copy of the list
-            return new ArrayList<RosterEntry>(this._list);
+            return new ArrayList<>(this._list);
+        }  else if (group.equals(Roster.NOGROUP)) {
+            return getNoGroupList();
         } else {
             return this.getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes"); // NOI18N
         }
@@ -492,7 +551,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     private interface RosterComparator {
 
-        public boolean check(RosterEntry r);
+        boolean check(RosterEntry r);
     }
 
     /**
@@ -502,73 +561,14 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     private List<RosterEntry> findMatchingEntries(RosterComparator c) {
         List<RosterEntry> l = new ArrayList<>();
         synchronized (_list) {
-            _list.stream().filter((r) -> (c.check(r))).forEachOrdered((r) -> {
-                l.add(r);
-            });
+            _list.stream().filter(c::check).forEachOrdered(l::add);
         }
         return l;
     }
 
     /**
-     * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list will be empty if there are no matches.
-     *
-     * @param roadName      road name of entry or null for any road name
-     * @param roadNumber    road number of entry of null for any number
-     * @param dccAddress    address of entry or null for any address
-     * @param mfg           manufacturer of entry or null for any manufacturer
-     * @param decoderModel  decoder model of entry or null for any model
-     * @param decoderFamily decoder family of entry or null for any family
-     * @param id            id of entry or null for any id
-     * @param group         group entry is member of or null for any group
-     * @param developerID   developerID of entry, or null for any developerID
-     * @param manufacturerID   manufacturerID of entry, or null for any manufacturerID
-     * @param productID   productID of entry, or null for any productID
-     * @return List of matching RosterEntries or an empty List
-     */
-    @Nonnull
-    public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
-            String mfg, String decoderModel, String decoderFamily, String id, String group,
-            String developerID, String manufacturerID, String productID) {
-            // specifically updated for SV2
-            return findMatchingEntries(
-                (RosterEntry r) -> {
-                    return checkEntry(r, roadName, roadNumber, dccAddress,
-                            mfg, decoderModel, decoderFamily,
-                            id, group, developerID, manufacturerID, productID);
-                }
-        );
-    }
-
-    /**
-     * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list will be empty if there are no matches.
-     *
-     * @param roadName      road name of entry or null for any road name
-     * @param roadNumber    road number of entry of null for any number
-     * @param dccAddress    address of entry or null for any address
-     * @param mfg           manufacturer of entry or null for any manufacturer
-     * @param decoderModel  decoder model of entry or null for any model
-     * @param decoderFamily decoder family of entry or null for any family
-     * @param id            id of entry or null for any id
-     * @param group         group entry is member of or null for any group
-     * @return List of matching RosterEntries or an empty List
-     */
-    @Nonnull
-    public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
-            String mfg, String decoderModel, String decoderFamily, String id, String group) {
-        return findMatchingEntries(
-                (RosterEntry r) -> {
-                    return checkEntry(r, roadName, roadNumber, dccAddress,
-                            mfg, decoderModel, decoderFamily,
-                            id, group, null, null, null);
-                }
-        );
-    }
-
-    /**
-     * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list will be empty if there are no matches.
+     * Get a List of {@link RosterEntry} objects in Roster matching 7
+     * basic selectors. The list will be empty if there are no matches.
      * <p>
      * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      * }
@@ -589,18 +589,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     @Nonnull
     public List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderModel, String decoderFamily, String id) {
-        // specifically updated for SV2!
         return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress,
                 mfg, decoderModel, decoderFamily, id, null, null, null, null);
     }
 
     /**
-     * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list will be empty if there are no matches.
-     * <p>
-     * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-     * }
-     * with a null group.
+     * Get a List of {@link RosterEntry} objects in Roster matching 11
+     * selectors. The list will be empty if there are no matches.
      *
      * @param roadName      road name of entry or null for any road name
      * @param roadNumber    road number of entry of null for any number
@@ -609,54 +604,78 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param decoderModel  decoder model of entry or null for any model
      * @param decoderFamily decoder family of entry or null for any family
      * @param id            id of entry or null for any id
-     * @param developerID   developerID number
-     * @param manufacturerID manufacturerID number
-     * @param productID     productID number
+     * @param group         group entry is member of or null for any group
+     * @param developerID   developerID of entry, or null for any developerID
+     * @param manufacturerID   manufacturerID of entry, or null for any manufacturerID
+     * @param productID   productID of entry, or null for any productID
      * @return List of matching RosterEntries or an empty List
-     * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String,
-     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
-     * java.lang.String, java.lang.String)
      */
     @Nonnull
-    public List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
-            String mfg, String decoderModel, String decoderFamily, String id,
-            String developerID, String manufacturerID, String productID) {
-        // specifically updated for SV2!
-        return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress,
-                mfg, decoderModel, decoderFamily, id, null, developerID,
-                manufacturerID, productID);
+    public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
+                                                        String mfg, String decoderModel, String decoderFamily, String id, String group,
+                                                        String developerID, String manufacturerID, String productID) {
+        // specifically updated for LocoNet SV2.
+        return findMatchingEntries(
+                (RosterEntry r) -> checkEntry(r, roadName, roadNumber, dccAddress,
+                        mfg, decoderModel, decoderFamily,
+                        id, group, developerID, manufacturerID, productID)
+        );
     }
 
     /**
-     * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list will be empty if there are no matches.
+     * Get a List of {@link RosterEntry} objects in Roster matching 8
+     * selectors. The list will be empty if there are no matches.
+     *
+     * @param roadName      road name of entry or null for any road name
+     * @param roadNumber    road number of entry of null for any number
+     * @param dccAddress    address of entry or null for any address
+     * @param mfg           manufacturer of entry or null for any manufacturer
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param id            id of entry or null for any id
+     * @param group         group entry is member of or null for any group
+     * @return List of matching RosterEntries or an empty List
+     */
+    @Nonnull
+    public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
+            String mfg, String decoderModel, String decoderFamily, String id, String group) {
+        return findMatchingEntries(
+                (RosterEntry r) -> checkEntry(r, roadName, roadNumber, dccAddress,
+                        mfg, decoderModel, decoderFamily,
+                        id, group, null, null, null)
+        );
+    }
+
+    /**
+     * Get a List of {@link RosterEntry} objects in Roster matching 5
+     * selectors.
+     * The list will be empty if there are no matches.
      * <p>
-     * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-     * }
-     * with a null group.
-     * This pattern is specifically for LNCV (since 4.22).
+     * This pattern is used for LocoNet LNCV.
      *
      * @param dccAddress    address of entry or null for any address
-     * @param productID     productID number
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param productID     decoder productID or null for any productID
+     * @param progMode      decoder programming mode
      * @return List of matching RosterEntries or an empty List
-     * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String,
-     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
-     * java.lang.String, java.lang.String)
      */
     @Nonnull
-    public List<RosterEntry> matchingList(String dccAddress, String productID) {
-        return this.getEntriesMatchingCriteria(null, null, dccAddress,
-                null, null, null, null, null, null,
-                null, productID);
+    public List<RosterEntry> getEntriesMatchingCriteria(String dccAddress, String decoderModel,
+                                                        String decoderFamily, String productID,
+                                                        String progMode) {
+        return findMatchingEntries(
+                (RosterEntry r) -> checkEntry(r, dccAddress, decoderModel, decoderFamily, productID, progMode)
+        );
     }
 
     /**
-     * Check if an entry is consistent with specific properties.
+     * Check if an entry is consistent with up to 9 specific properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
-     * @param i             index in the roster for the RosterEntry
+     * @param i             index for the RosterEntry in the Roster
      * @param roadName      road name of entry or null for any road name
      * @param roadNumber    road number of entry of null for any number
      * @param dccAddress    address of entry or null for any address
@@ -675,12 +694,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Check if an entry is consistent with specific properties.
+     * Check if an item from a list of Roster Entry items is consistent with up
+     * to 10 specific properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
-     * @param list          the list of RosterEntrys being searched
+     * @param list          the list of RosterEntry items being searched
      * @param i             the index of the roster entry in the list
      * @param roadName      road name of entry or null for any road name
      * @param roadNumber    road number of entry of null for any number
@@ -702,7 +722,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Check if an entry is consistent with specific properties.
+     * Check if an entry is consistent with up to 12 specific (LNSV2/LNCV) properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
@@ -725,7 +745,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             String mfg, String decoderModel, String decoderFamily,
             String id, String group, String developerID,
                 String manufacturerID, String productID) {
-        // specifically updated for SV2!
+        // specifically updated for LNSV2!
 
         if (id != null && !id.equals(r.getId())) {
             return false;
@@ -761,6 +781,42 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 || Roster.ALLENTRIES.equals(group)
                 || (r.getAttribute(Roster.getRosterGroupProperty(group)) != null
                 && r.getAttribute(Roster.getRosterGroupProperty(group)).equals("yes")));
+    }
+
+    /**
+     * Check if an entry is consistent with up to 5 specific LNCV properties.
+     * <p>
+     * A null String argument always matches. Strings are used for convenience
+     * in GUI building.
+     *
+     * @param r             the roster entry being checked
+     * @param dccAddress    address of entry or null for any address
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param productID     productId of entry or null for any productID
+     * @param progMode      programming mode
+     * @return True if the entry matches
+     */
+    public boolean checkEntry(RosterEntry r, String dccAddress,
+                              String decoderModel, String decoderFamily,
+                              String productID, String progMode) {
+        // used for LNCV and LNSV1
+        if (productID != null && !productID.equals(r.getProductID())) {
+            return false;
+        }
+        if (dccAddress != null && !dccAddress.equals(r.getDccAddress())) {
+            return false;
+        }
+        if (decoderModel != null && !decoderModel.equals(r.getDecoderModel())) {
+            return false;
+        }
+        if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) {
+            return false;
+        }
+        if (progMode != null && !r.getProgrammingModes().contains(progMode)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -821,7 +877,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             _list.forEach((entry) -> {
                 //Extract the RosterEntry at this index and inspect the Comment and
                 //Decoder Comment fields to change any \n characters to <?p?> processor
-                //directives so they can be stored in the xml file and converted
+                //directives, so they can be stored in the xml file and converted
                 //back when the file is read.
                 if (!entry.getId().equals(newLocoString)) {
                     String tempComment = entry.getComment();
@@ -833,7 +889,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                         if (tempComment.startsWith("\n", k)) { // NOI18N
                             xmlComment.append("<?p?>"); // NOI18N
                         } else {
-                            xmlComment.append(tempComment.substring(k, k + 1));
+                            xmlComment.append(tempComment.charAt(k));
                         }
                     }
                     entry.setComment(xmlComment.toString());
@@ -846,7 +902,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                         if (tempDecoderComment.startsWith("\n", k)) { // NOI18N
                             xmlDecoderComment.append("<?p?>"); // NOI18N
                         } else {
-                            xmlDecoderComment.append(tempDecoderComment.substring(k, k + 1));
+                            xmlDecoderComment.append(tempDecoderComment.charAt(k));
                         }
                     }
                     entry.setDecoderComment(xmlDecoderComment.toString());
@@ -860,7 +916,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         root.addContent(values);
         // add entries
         synchronized (_list) {
-            _list.stream().forEach((entry) -> {
+            _list.forEach((entry) -> {
                 if (!entry.getId().equals(newLocoString)) {
                     values.addContent(entry.store());
                 } else {
@@ -870,9 +926,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
         if (!this.rosterGroups.isEmpty()) {
             Element rosterGroup = new Element("rosterGroup"); // NOI18N
-            rosterGroups.keySet().stream().forEach((name) -> {
+            rosterGroups.keySet().forEach((name) -> {
                 Element group = new Element("group"); // NOI18N
-                if (!name.equals(Roster.ALLENTRIES)) {
+                if (!name.equals(Roster.ALLENTRIES) && !name.equals(Roster.NOGROUP)) {
                     group.addContent(name);
                     rosterGroup.addContent(group);
                 }
@@ -887,7 +943,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         //Comment and Decoder comment fields, otherwise it can cause problems in
         //other parts of the program (e.g. in copying a roster)
         synchronized (_list) {
-            _list.stream().forEach((entry) -> {
+            _list.forEach((entry) -> {
                 if (!entry.getId().equals(newLocoString)) {
                     String xmlComment = entry.getComment();
                     StringBuilder tempComment = new StringBuilder();
@@ -897,7 +953,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                             tempComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            tempComment.append(xmlComment.substring(k, k + 1));
+                            tempComment.append(xmlComment.charAt(k));
                         }
                     }
                     entry.setComment(tempComment.toString());
@@ -910,7 +966,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                             tempDecoderComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            tempDecoderComment.append(xmlDecoderComment.substring(k, k + 1));
+                            tempDecoderComment.append(xmlDecoderComment.charAt(k));
                         }
                     }
                     entry.setDecoderComment(tempDecoderComment.toString());
@@ -937,7 +993,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @see RosterEntry#ensureFilenameExists()
      * @since 2.1.5
      */
-    static public String makeValidFilename(String entry) {
+    public static String makeValidFilename(String entry) {
         if (entry == null) {
             throw new IllegalArgumentException("makeValidFilename requires non-null argument");
         }
@@ -964,7 +1020,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // roster exists?
         if (!(new File(name)).exists()) {
-            log.debug("no roster file found; this is normal if you haven't put decoders in your roster yet");
+            log.debug("no roster file found; this is normal if you haven't put decoders in your roster locos yet");
             return;
         }
 
@@ -980,22 +1036,33 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("roster") != null) { // NOI18N
             List<Element> l = root.getChild("roster").getChildren("locomotive"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("readFile sees {} children", l.size());
+            log.debug("readFile sees {} children", l.size());
+
+            RosterEntry firstRosterEntry = null;
+            for (Element e : l) {  // can't be forEach because we need definitive order and non-final variable
+                // Create a RosterEntry from this element and add to Roster.
+                // Do not notify UI on each, notify once when all are done
+                var thisRosterEntry = new RosterEntry(e);
+                addEntryNoNotify(thisRosterEntry);
+                if (firstRosterEntry == null) {
+                    firstRosterEntry = thisRosterEntry;
+                }
             }
-            l.stream().forEach((e) -> {
-                // do not notify UI on each, notify once when all are done
-                addEntryNoNotify(new RosterEntry(e));
-            });
-            // Only fire one notification: the table will redraw all entries
-            if (l.size() > 0) {
-                firePropertyChange(ADD, null, l.get(0));
+            // Fire one notification, the table will redraw all entries anyway
+            //
+            // This works well with e.g. the Roster Table, which knows to 
+            // handle an ADD event by doing a redraw-all.  But the JsonRosterSocketService
+            // only handles the individual roster entries that are brought to its
+            // attention via an ADD event.  So there's a mismatch here that 
+            // will need to be resolved at some point.
+            if (firstRosterEntry != null) {
+                firePropertyChange(ADD, null, firstRosterEntry);
             }
 
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
             synchronized (_list) {
-                _list.stream().map((entry) -> {
+                _list.stream().peek((entry) -> {
                     //Extract the Comment field and create a new string for output
                     String tempComment = entry.getComment();
                     StringBuilder xmlComment = new StringBuilder();
@@ -1007,11 +1074,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                             xmlComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            xmlComment.append(tempComment.substring(k, k + 1));
+                            xmlComment.append(tempComment.charAt(k));
                         }
                     }
                     entry.setComment(xmlComment.toString());
-                    return entry;
                 }).forEachOrdered((r) -> {
                     //Now do the same thing for the decoderComment field
                     String tempDecoderComment = r.getDecoderComment();
@@ -1022,7 +1088,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                             xmlDecoderComment.append("\n"); // NOI18N
                             k = k + 4;
                         } else {
-                            xmlDecoderComment.append(tempDecoderComment.substring(k, k + 1));
+                            xmlDecoderComment.append(tempDecoderComment.charAt(k));
                         }
                     }
 
@@ -1034,9 +1100,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
         if (root.getChild("rosterGroup") != null) { // NOI18N
             List<Element> groups = root.getChild("rosterGroup").getChildren("group"); // NOI18N
-            groups.stream().forEach((group) -> {
-                addRosterGroup(group.getText());
-            });
+            groups.forEach((group) -> addRosterGroup(group.getText()));
         }
     }
 
@@ -1059,13 +1123,12 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Store the roster in the default place, including making a backup if
      * needed.
      * <p>
-     * Uses writeFile(String), a protected method that can write to a specific
-     * location.
+     * Writes to a temporary file first, then backs up and replaces the roster
+     * index only after the temporary write succeeds.
      */
     public void writeRoster() {
-        this.makeBackupFile(this.getRosterIndexPath());
         try {
-            this.writeFile(this.getRosterIndexPath());
+            this.writeFileAtomic(this.getRosterIndexPath());
         } catch (IOException e) {
             log.error("Exception while writing the new roster file, may not be complete", e);
             try {
@@ -1113,7 +1176,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         ThreadingUtil.newThread(() -> {
             try {
                 reindexInternal(filenames, pb, pane);
-            // catch all exceptions, so progess dialog will close
+            // catch all exceptions, so progress dialog will close
             } catch (Exception e) {
                 // TODO: show message in progress dialog?
                 log.error("Error writing new roster index file: {}", e.getMessage());
@@ -1129,7 +1192,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Re-index roster, optionally updating a progress dialog.
-     *
+     * <p>
      * During reindexing, do not notify the UI of changes until
      * all indexing is complete (the single notify event is done in
      * readFile(), called from reloadRosterFile()).
@@ -1163,13 +1226,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             }
         }
 
-        log.debug("Making backup roster index file");
-        this.makeBackupFile(this.getRosterIndexPath());
         try {
             log.debug("Writing new index file");
-            roster.writeFile(this.getRosterIndexPath());
+            roster.writeFileAtomic(this.getRosterIndexPath());
         } catch (IOException ex) {
-            // TODO: error dialog, copy backup back to roster.xml
             log.error("Exception while writing the new roster file, may not be complete", ex);
         }
         log.debug("Reloading resulting roster index");
@@ -1206,6 +1266,51 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     public String getRosterIndexPath() {
         return this.getRosterLocation() + this.getRosterIndexFileName();
+    }
+
+    private void writeFileAtomic(String name) throws IOException {
+        File file = findFile(name);
+        if (file == null) {
+            file = new File(name);
+        }
+
+        Path target = file.toPath();
+        Path temp = target.resolveSibling(file.getName() + ".new"); // NOI18N
+
+        try {
+            writeFile(temp.toFile());
+        } catch (IOException ex) {
+            deleteTempFile(temp, ex);
+            throw ex;
+        }
+
+        try {
+            if (Files.exists(target)) {
+                Files.copy(target, new File(backupFileName(file.getAbsolutePath())).toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
+            moveTempFile(temp, target);
+        } catch (IOException ex) {
+            setDirty(true);
+            deleteTempFile(temp, ex);
+            throw ex;
+        }
+    }
+
+    private void moveTempFile(Path temp, Path target) throws IOException {
+        try {
+            Files.move(temp, target, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+        } catch (AtomicMoveNotSupportedException ex) {
+            Files.move(temp, target, StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
+    private void deleteTempFile(Path temp, IOException originalException) {
+        try {
+            Files.deleteIfExists(temp);
+        } catch (IOException ex) {
+            originalException.addSuppressed(ex);
+        }
     }
 
     /*
@@ -1288,12 +1393,14 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     @Override
-    public PropertyChangeListener[] getPropertyChangeListeners() {
+    @Nonnull
+    public PropertyChangeListener [] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
     @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+    @Nonnull
+    public PropertyChangeListener [] getPropertyChangeListeners(String propertyName) {
         return pcs.getPropertyChangeListeners(propertyName);
     }
 
@@ -1306,7 +1413,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public void entryIdChanged(RosterEntry r) {
         log.debug("EntryIdChanged");
         synchronized (_list) {
-            Collections.sort(_list, (RosterEntry o1, RosterEntry o2) -> o1.getId().compareToIgnoreCase(o2.getId()));
+            _list.sort((RosterEntry o1, RosterEntry o2) -> o1.getId().compareToIgnoreCase(o2.getId()));
         }
         firePropertyChange(CHANGE, null, r);
     }
@@ -1362,6 +1469,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return;
         }
         this.addRosterGroup(new RosterGroup(rg));
+        firePropertyChange(ROSTER_GROUP_ADDED, null, rg);
     }
 
     /**
@@ -1372,9 +1480,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *               the roster will not be added again.
      */
     public void addRosterGroups(List<RosterGroup> groups) {
-        groups.stream().forEach((rg) -> {
-            this.addRosterGroup(rg);
-        });
+        groups.forEach(this::addRosterGroup);
     }
 
     public void removeRosterGroup(RosterGroup rg) {
@@ -1392,8 +1498,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public void delRosterGroupList(String rg) {
         RosterGroup group = this.rosterGroups.remove(rg);
         String str = Roster.getRosterGroupProperty(rg);
-        group.getEntries().stream().forEach((re) -> {
+        group.getEntries().forEach((re) -> {
             re.deleteAttribute(str);
+            re.updateFile();
         });
         firePropertyChange(ROSTER_GROUP_REMOVED, rg, null);
     }
@@ -1418,11 +1525,12 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
         this.rosterGroups.put(newName, new RosterGroup(newName));
         String newGroup = Roster.getRosterGroupProperty(newName);
-        this.rosterGroups.get(oldName).getEntries().stream().forEach((re) -> {
+        this.rosterGroups.get(oldName).getEntries().forEach((re) -> {
             re.putAttribute(newGroup, "yes"); // NOI18N
         });
         this.addRosterGroup(new RosterGroup(newName));
-        // the firePropertyChange event will be called by addRosterGroup()
+
+        firePropertyChange(ROSTER_GROUP_ADDED, oldName, newName);
     }
 
     public void rosterGroupRenamed(String oldName, String newName) {
@@ -1455,11 +1563,26 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Strings are immutable, so deleting an item from the copy should not
      * affect the system-wide list of roster groups.
      *
-     * @return A list of the roster group names.
+     * @return A list of the roster group names not including All Entries and No Group.
      */
     public ArrayList<String> getRosterGroupList() {
         ArrayList<String> list = new ArrayList<>(this.rosterGroups.keySet());
         Collections.sort(list);
+        return list;
+    }
+
+    /**
+     * Get a list of the roster group names.
+     * <p>
+     * Strings are immutable, so deleting an item from the copy should not
+     * affect the system-wide list of roster groups.
+     *
+     * @return A list of the roster group names including No Group, not including All Entries
+     */
+    public ArrayList<String> getRosterGroupListWithNoGroup() {
+        ArrayList<String> list = new ArrayList<>(this.rosterGroups.keySet());
+        Collections.sort(list);
+        list.add(NOGROUP);
         return list;
     }
 
@@ -1506,7 +1629,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Get an array of all the RosterEntry-containing files in the target
      * directory.
      *
-     * @return the list of file names for entries in this roster
+     * @return a string array of file names for entries in this roster
      */
     static String[] getAllFileNames() {
         // ensure preferences will be found for read
@@ -1536,7 +1659,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
 
         // Copy the entries to the final array
-        String sbox[] = new String[np];
+        String[] sbox = new String[np];
         int n = 0;
         if (sp != null && np > 0) {
             for (i = 0; i < sp.length; i++) {
@@ -1570,7 +1693,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Changes the key used to lookup a RosterGroup by name. This is a helper
+     * Changes the key used to look up a RosterGroup by name. This is a helper
      * method that does not fire a notification to any propertyChangeListeners.
      * <p>
      * To rename a RosterGroup, use
@@ -1597,5 +1720,5 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Roster.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Roster.class);
 }

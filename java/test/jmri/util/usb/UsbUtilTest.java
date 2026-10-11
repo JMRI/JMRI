@@ -6,8 +6,11 @@ import javax.usb.*;
 
 import jmri.util.JUnitAppender;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -18,31 +21,31 @@ public class UsbUtilTest {
     @Test
     public void testGetFullProductName() {
         // test MFG and product name complete
-        Assert.assertEquals("Foo Bar", UsbUtil.getFullProductName(new UsbDeviceScaffold("Foo","Bar")));
+        assertEquals("Foo Bar", UsbUtil.getFullProductName(new UsbDeviceScaffold("Foo","Bar")));
         // test no MFG or product name
-        Assert.assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold(null,null)));
+        assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold(null,null)));
         // test exceptions thrown by device
-        Assert.assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
+        assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
             @Override
             public String getManufacturerString() throws UsbException, UnsupportedEncodingException, UsbDisconnectedException {
                throw new UsbException("foo");
             }
         }));
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
-        Assert.assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
+        assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
             @Override
             public String getManufacturerString() throws UsbException, UnsupportedEncodingException, UsbDisconnectedException {
                 throw new UnsupportedEncodingException("foo");
             }
         }));
-        Assert.assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
+        assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
             @Override
             public String getManufacturerString() throws UsbException, UnsupportedEncodingException, UsbDisconnectedException {
                 throw new UsbDisconnectedException("foo");
             }
         }));
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
-        Assert.assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
+        assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
             @Override
             public String getManufacturerString() throws UsbException, UnsupportedEncodingException, UsbDisconnectedException {
                 throw new UsbDisconnectedException("foo");
@@ -50,15 +53,15 @@ public class UsbUtilTest {
         }));
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
         // test that unexpected exception is not caught
-        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
-            Assertions.assertNotNull( UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+            assertNotNull( UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
                 @Override
                 public String getManufacturerString() throws UsbException, UnsupportedEncodingException, UsbDisconnectedException {
                     throw new NullPointerException("foo");
                 }
             }));
         });
-        Assertions.assertNotNull(ex);
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
     }
 

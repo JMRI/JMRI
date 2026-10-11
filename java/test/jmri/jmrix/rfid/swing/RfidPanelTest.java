@@ -1,37 +1,34 @@
 package jmri.jmrix.rfid.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Tests for RfidPanel class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class RfidPanelTest {
         
    // private RfidSystemConnectionMemo memo = null;
 
    @Test
-   public void MemoConstructorTest(){
-      Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-      Assert.assertNotNull("RfidPanel constructor",new RfidPanel(){
+   @DisabledIfHeadless
+   public void testRfidPanelMemoConstructor(){
+
+      Assertions.assertNotNull( new RfidPanel(){
            // class under test is abstract, but doesn't appear to
            // have any abstract methods. 
-     });
+     }, "RfidPanel constructor");
    }
 
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         // memo = new RfidSystemConnectionMemo();
    }
 

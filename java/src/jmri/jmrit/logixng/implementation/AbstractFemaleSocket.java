@@ -6,8 +6,7 @@ import java.util.*;
 
 import javax.annotation.Nonnull;
 
-import jmri.JmriException;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -511,6 +510,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         return isConnected() && getConnectedSocket() == b;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
 
 }

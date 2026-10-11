@@ -92,5 +92,5 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called"); // NOI18N
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
+    private static final Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
 }

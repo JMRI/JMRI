@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Bluetooth LocoBridge Adapter</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
@@ -16,8 +15,9 @@
 
     <div id="mainContent">
       <h1>Hardware Support: Connecting through a Bluetooth LocoBridge Adapter</h1>
-      <img src="http://www.mollehem.se/images/stories/virtuemart/product/bt_rensad2.png" alt=
-      "LocoAdapter picture" class="floatRight" height="205" width="166"> The <a href=
+
+      <img src="images/Bt_lnbridge_rensad2.png" alt=
+      "LocoBridge Adapter picture" class="floatRight"> The <a href=
       "http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">LocoBridge</a>
       allows you to connect remotely through Bluetooth to the adapter, which then connects to a
       LocoNet to control your layout.
@@ -26,16 +26,21 @@
 
       <h2>Setup</h2>
 
+      <span class="since">since 4.1</span>
       <p>On Intel Mac and Windows systems, all necessary software comes with the JMRI
-      download. </p>
+      download.</p>
       <p>Note that this connection is not directly supported on Apple Silicon Macs, e.g.
-        the M1, M2, M3 etc.  To use this on one of those Macs, please 
-        <a href="/java/index.shtml">install an Intel-architecture version of Javav</a>
+        the M1, M2, M3 etc. To use a LocoBridge on one of those Macs, please
+        <a href="/java/index.shtml">install an Intel-architecture version of Java</a>
         so that Rosetta 2 can do the translation for you.</p>
 
-      <p>On Linux and other systems, you need to have a libbluetooth installed. Depending on which
-      Linux distribution you are using, you might have to use commands like "sudo apt-get install
-      libbluetooth" or perhaps "sudo apt-get install libbluetooth-dev". For more information,
+      <p>On Linux and other systems, you need to have <code>libbluetooth</code> installed.
+      Depending on which Linux distribution you are using, you might have to use commands like<br>
+      <code>sudo apt-get install libbluetooth</code><br>
+      or<br>
+      <code>sudo apt-get install libbluetooth-dev</code></p>
+
+      <p>For more information,
       please see <a href="http://bluecove.org/bluecove-gpl/">this page</a>, which describes the
       requirements to use the Blue Cove library that JMRI uses to access Bluetooth.</p>
 

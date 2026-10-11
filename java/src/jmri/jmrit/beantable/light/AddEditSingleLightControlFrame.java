@@ -14,9 +14,6 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 import jmri.util.swing.JComboBoxUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Frame to add or edit a single Light Control.
  * Code originally within LightTableAction.
@@ -67,14 +64,13 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
 
     private final JLabel f2Label = new JLabel(Bundle.getMessage("LightSensorSense"));
 
-    private final int sensorActiveIndex = 0;
-    private final int sensorInactiveIndex = 1;
-    private final int turnoutClosedIndex = 0;
-    private final int turnoutThrownIndex = 1;
+    private static final int SENSOR_ACTIVE_INDEX = 0;
+    private static final int SENSOR_INACTIVE_INDEX = 1;
+    private static final int TURNOUT_CLOSED_INDEX = 0;
+    private static final int TURNOUT_THROWN_INDEX = 1;
 
     private JButton createControl;
     private JButton updateControl;
-    private JButton cancelControl;
 
     final LightControlPane lcp;
 
@@ -222,7 +218,7 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-        cancelControl = new JButton(Bundle.getMessage("ButtonCancel"));
+        JButton cancelControl = new JButton(Bundle.getMessage("ButtonCancel"));
         buttonPanel.add(cancelControl);
         cancelControl.addActionListener(this::cancelControlPressed);
         cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
@@ -570,7 +566,7 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             case Light.SENSOR_CONTROL:
                 setUpControlType(Light.SENSOR_CONTROL);
                 sensor1Box.setSelectedItemByName(lc.getControlSensorName());
-                stateBox.setSelectedIndex( (lc.getControlSensorSense() == Sensor.ACTIVE)? sensorActiveIndex : sensorInactiveIndex);
+                stateBox.setSelectedIndex( (lc.getControlSensorSense() == Sensor.ACTIVE)? SENSOR_ACTIVE_INDEX : SENSOR_INACTIVE_INDEX);
                 break;
             case Light.FAST_CLOCK_CONTROL:
                 setUpControlType(Light.FAST_CLOCK_CONTROL);
@@ -582,7 +578,7 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
             case Light.TURNOUT_STATUS_CONTROL:
                 setUpControlType(Light.TURNOUT_STATUS_CONTROL);
                 turnoutBox.setSelectedItemByName(lc.getControlTurnoutName());
-                stateBox.setSelectedIndex( (lc.getControlTurnoutState() == Turnout.THROWN)? turnoutThrownIndex : turnoutClosedIndex);
+                stateBox.setSelectedIndex( (lc.getControlTurnoutState() == Turnout.THROWN)? TURNOUT_THROWN_INDEX : TURNOUT_CLOSED_INDEX);
                 break;
             case Light.TIMED_ON_CONTROL:
                 setUpControlType(Light.TIMED_ON_CONTROL);
@@ -593,7 +589,7 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
                 setUpControlType(Light.TWO_SENSOR_CONTROL);
                 sensor1Box.setSelectedItemByName(lc.getControlSensorName());
                 sensor2Box.setSelectedItemByName(lc.getControlSensor2Name());
-                stateBox.setSelectedIndex( (lc.getControlSensorSense() == Sensor.ACTIVE)? sensorActiveIndex : sensorInactiveIndex);
+                stateBox.setSelectedIndex( (lc.getControlSensorSense() == Sensor.ACTIVE)? SENSOR_ACTIVE_INDEX : SENSOR_INACTIVE_INDEX);
                 break;
             case Light.NO_CONTROL:
                 setUpControlType(Light.NO_CONTROL);
@@ -605,6 +601,6 @@ public class AddEditSingleLightControlFrame extends jmri.util.JmriJFrame {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddEditSingleLightControlFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddEditSingleLightControlFrame.class);
 
 }

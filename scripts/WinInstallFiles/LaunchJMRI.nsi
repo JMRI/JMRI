@@ -181,7 +181,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "(C) 1997-2024 JMRI Community" ; Copyright string
+!define COPYRIGHT  "(C) 1997-2026 JMRI Community" ; Copyright string
 !define VER        "0.1.31.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
@@ -560,11 +560,14 @@ Section "Main"
     StrCpy $JMRIOPTIONS '$JMRIOPTIONS -Dorg.jmri.profile="$JMRIPROFILE"'
 
   contOptions:
-  StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
+  StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djogamp.gluegen.UseTempJarCache=false"
   StrCpy $OPTIONS "$OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
+  ; following line is for DarkLAF
+  StrCpy $OPTIONS "$OPTIONS --add-exports=java.desktop/sun.awt=ALL-UNNAMED"
+  
   StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries

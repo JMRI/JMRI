@@ -147,6 +147,19 @@
       default setting for Entry/Exit is to set the signals to <strong><em>held</em></strong> when
       the NX pair is not active.  If the ABS mode is enabled, the signals are not held.</p>
 
+      <p><span class="since">since 5.13.7</span><strong>Suppress the multi-point failed dialog</strong>
+      &mdash; The failed dialog was added in the JMRI 5.11.4 release.  Sometimes the desired action
+      is to fail quietly.  This typically applies to scripts creating a multi-point route and doing
+      their own checks for success or failure.</p>
+
+      <p><span class="since">since 5.13.7</span><strong>Revert to the old GUI behavior</strong>
+      &mdash; The GUI enhancement was added in the JMRI 5.11.4 release.  The change was to run the
+      route setting code in a separate thread.  This allows the destination sensor to flash which
+      provides feedback that the destination button click was actually accepted.  The side effect was
+      that a double click no longer completed a request followed by a new request for the next route.
+      The double click became a route completion request followed by a cancel request for the route
+      that was just created.</p>
+
       <p><strong>Integrate with Dispatcher</strong> &mdash; Select this option if the NX route is to
       extend the path of an <strong>Active Train</strong> in the <a href=
       "../dispatcher/Dispatcher.shtml">Dispatcher</a> module.<br>

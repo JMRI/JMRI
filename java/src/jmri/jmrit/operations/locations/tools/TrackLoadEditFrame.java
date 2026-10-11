@@ -18,7 +18,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of track loads
  *
- * @author Dan Boudreau Copyright (C) 2013, 2014, 2015, 2023
+ * @author Dan Boudreau Copyright (C) 2013, 2014, 2015, 2023, 2026
  * 
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -56,7 +56,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox shipLoadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox holdCars = new JCheckBox(Bundle.getMessage("HoldCarsWithCustomLoads"));
-    JCheckBox disableloadChange = new JCheckBox(Bundle.getMessage("DisableLoadChange"));
+    JCheckBox disableLoadChange = new JCheckBox(Bundle.getMessage("DisableLoadChange"));
+    JCheckBox quickLoadService = new JCheckBox(Bundle.getMessage("QuickLoadService"));
 
     // radio buttons
     JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -73,8 +74,11 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JComboBox<String> comboBoxTypes = InstanceManager.getDefault(CarTypes.class).getComboBox();
     JComboBox<String> comboBoxShipTypes = InstanceManager.getDefault(CarTypes.class).getComboBox();
 
+    JTextField factorTextField = new JTextField(5);
+
     // labels
     JLabel trackName = new JLabel();
+    JLabel factor = new JLabel(Bundle.getMessage("ScheduleFactor"));
 
     public static final String DISPOSE = "dispose"; // NOI18N
     public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
@@ -196,11 +200,17 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         pOptions.setLayout(new GridBagLayout());
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pOptions.setMaximumSize(new Dimension(2000, 400));
-        addItem(pOptions, holdCars, 0, 0);
-        addItem(pOptions, disableloadChange, 1, 0);
+        addItemLeft(pOptions, disableLoadChange, 0, 0);
+        addItemLeft(pOptions, quickLoadService, 0, 1);
+        addItemLeft(pOptions, holdCars, 0, 2);
+        disableLoadChange.setToolTipText(Bundle.getMessage("DisableLoadChangeTip"));
+        quickLoadService.setToolTipText(Bundle.getMessage("QuickLoadServiceTip"));
         holdCars.setToolTipText(Bundle.getMessage("HoldCarsWithCustomLoadsTip"));
-        disableloadChange.setToolTipText(Bundle.getMessage("DisableLoadChangeTip"));
         
+        addItemLeft(pOptions, factor, 0, 3);
+        addItemLeft(pOptions, factorTextField, 1, 3);
+        factorTextField.setToolTipText(Bundle.getMessage("TipScheduleFactor"));
+
         // row 12
         JPanel panelButtons = new JPanel();
         panelButtons.setLayout(new GridBagLayout());
@@ -254,7 +264,11 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             pOptions.setVisible(_track.isSpur());
             holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
-            disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
+            disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
+            quickLoadService.setSelected(_track.isQuickServiceEnabled());
+            factor.setEnabled(_track.getSchedule() != null);
+            factorTextField.setEnabled(_track.getSchedule() != null);
+            factorTextField.setText(Integer.toString(_track.getReservationFactor()));
             updateButtons(true);
         } else {
             updateButtons(false);
@@ -283,9 +297,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (ae.getSource() == saveButton) {
             log.debug("track save button activated");
             save();
-            if (Setup.isCloseWindowOnSaveEnabled()) {
-                dispose();
-            }
         }
         if (ae.getSource() == addLoadButton) {
             String loadName = (String) comboBoxLoads.getSelectedItem();
@@ -329,14 +340,41 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void save() {
-        checkForErrors();
-        _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
-        _track.setDisableLoadChangeEnabled(disableloadChange.isSelected());
-        // save the last state of the "Use car type and load" checkbox
-        loadAndType = loadAndTypeCheckBox.isSelected();
-        shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
-        // save location file
-        OperationsXml.save();
+        if (!checkForErrors()) {
+            _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
+            _track.setDisableLoadChangeEnabled(disableLoadChange.isSelected());
+            _track.setQuickServiceEnabled(quickLoadService.isSelected());
+            saveReservationFactor();
+            // save the last state of the "Use car type and load" checkbox
+            loadAndType = loadAndTypeCheckBox.isSelected();
+            shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
+            // save location file
+            OperationsXml.save();
+            if (Setup.isCloseWindowOnSaveEnabled()) {
+                dispose();
+            }
+        }
+    }
+
+    /*
+     * percentage from staging
+     */
+    private void saveReservationFactor() {
+        boolean okay = false;
+        try {
+            int factor = Integer.parseInt(factorTextField.getText());
+            if (0 <= factor && factor <= 1000) {
+                okay = true;
+            }
+        } catch (NumberFormatException e) {
+            // do nothing
+        }
+        if (okay) {
+            _track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
+        } else {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+        }
     }
 
     protected void updateButtons(boolean enabled) {
@@ -507,12 +545,14 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    private void checkForErrors() {
+    private boolean checkForErrors() {
         if (_track.getLoadOption().equals(Track.INCLUDE_LOADS) && _track.getLoadNames().length == 0
                 || _track.getShipLoadOption().equals(Track.INCLUDE_LOADS) && _track.getShipLoadNames().length == 0) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNeedLoads"), Bundle.getMessage("ErrorNoLoads"),
                     JmriJOptionPane.ERROR_MESSAGE);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -549,6 +589,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (_track != null) {
             if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
                 updateButtons(true);
+                disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
+                quickLoadService.setSelected(_track.isQuickServiceEnabled());
             }
             if (e.getPropertyName().equals(Track.HOLD_CARS_CHANGED_PROPERTY)) {
                 holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
@@ -557,8 +599,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
                     e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
                 holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
             }
-            if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
-                disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
+            if (e.getPropertyName().equals(Track.TRACK_FACTOR_CHANGED_PROPERTY)) {
+                factorTextField.setText(Integer.toString(_track.getReservationFactor()));
             }
         }
     }

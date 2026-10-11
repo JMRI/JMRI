@@ -63,8 +63,8 @@ public class LogLocalVariables extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     /** {@inheritDoc} */
@@ -143,5 +143,5 @@ public class LogLocalVariables extends AbstractDigitalAction {
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogLocalVariables.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogLocalVariables.class);
 }

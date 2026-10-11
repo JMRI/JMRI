@@ -139,6 +139,6 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         return (a2 == dccByteAddr2);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class);
+    private static final Logger log = LoggerFactory.getLogger(LNCPSignalMast.class);
 
 }

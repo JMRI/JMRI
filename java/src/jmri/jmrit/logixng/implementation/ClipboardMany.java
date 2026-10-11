@@ -93,8 +93,8 @@ public class ClipboardMany extends AbstractBase
     
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     @Override
@@ -267,6 +267,6 @@ public class ClipboardMany extends AbstractBase
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardMany.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardMany.class);
 
 }

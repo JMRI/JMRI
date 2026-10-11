@@ -226,9 +226,9 @@ public class Mx1Packetizer extends Mx1TrafficController {
     byte lastSequence = 0x00;
     //byte lastSequenceSent = 0x00;
 
-    final static int SOH = 0x01;
-    final static int EOT = 0x17;
-    final static int DLE = 0x10;
+    static final int SOH = 0x01;
+    static final int EOT = 0x17;
+    static final int DLE = 0x10;
 
     /**
      * Handle incoming characters. This is a permanent loop, looking for input
@@ -481,6 +481,19 @@ public class Mx1Packetizer extends Mx1TrafficController {
             justification = "while loop controls access")
     class XmtHandler implements Runnable {
 
+        /**
+         * CTor
+         * 
+         * Init heartbeat
+         */
+        public XmtHandler() {
+            // Initialize heartbeat messgae
+            heartBeat = new Mx1Message(4, BINARY);
+            heartBeat.setElement(1, 0x10); // Short Primary message by PC
+            heartBeat.setElement(2, 11); // CommandStation IO state query
+            heartBeat.setElement(3, 0); // Must be zero
+        }
+
         @Override
         public void run() {
             while (true) {   // loop permanently
@@ -520,7 +533,12 @@ public class Mx1Packetizer extends Mx1TrafficController {
                     log.debug("start wait");
                     try {
                         synchronized (this) {
-                            wait();
+                            // Send heartbeat if idle for 2 seconds
+                            wait(2000);
+                            if (xmtPackets.size() == 0){
+                                log.debug("send heartbeat");
+                                sendMx1Message(heartBeat, null);
+                            }
                         }
                     } catch (java.lang.InterruptedException ei) {
                         Thread.currentThread().interrupt(); // retain if needed later
@@ -529,6 +547,8 @@ public class Mx1Packetizer extends Mx1TrafficController {
                 }
             }
         }
+
+        private Mx1Message heartBeat; // Store heartBeat 
     }
 
     /**
@@ -687,5 +707,5 @@ public class Mx1Packetizer extends Mx1TrafficController {
         0x74, 0x2a, 0xc8, 0x96, 0x15, 0x4b, 0xa9, 0xf7, 0xb6, 0xe8, 0x0a, 0x54, 0xd7, 0x89, 0x6b, 0x35
     };
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1Packetizer.class);
 }

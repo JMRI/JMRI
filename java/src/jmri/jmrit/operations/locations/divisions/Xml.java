@@ -14,14 +14,14 @@ public class Xml {
     }
 
     // Common to operation xml files
-    static final String ID = "id"; // NOI18N
-    static final String NAME = "name"; // NOI18N
-    static final String COMMENT = "comment"; // NOI18N
+    protected static final String ID = "id"; // NOI18N
+    protected static final String NAME = "name"; // NOI18N
+    protected static final String COMMENT = "comment"; // NOI18N
 
     // DivisionManager.java
-    static final String DIVISIONS = "divisions"; // NOI18N
+    protected static final String DIVISIONS = "divisions"; // NOI18N
 
     // Location.java
-    static final String DIVISION = "division"; // NOI18N
+    protected static final String DIVISION = "division"; // NOI18N
 
 }

@@ -1,7 +1,11 @@
 package jmri.jmrix.powerline.cm11;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.jmrix.powerline.SerialMessage;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +18,7 @@ public class SpecificMessageTest {
     @Test
     public void testCreate() {
         SerialMessage m = new SpecificMessage(4);
-        Assert.assertNotNull("exists", m);
+        assertNotNull( m, "exists");
     }
 
     @Test
@@ -24,7 +28,17 @@ public class SpecificMessageTest {
         m.setElement(1, (byte) 0x02);
         m.setElement(2, (byte) 0xA2);
         m.setElement(3, (byte) 0x00);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
+        assertEquals( "81 02 A2 00", m.toString(), "string compare ");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

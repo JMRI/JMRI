@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.LocationEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -74,5 +75,5 @@ public class ChangeTracksFrameTest extends OperationsTestCase {
     }
 
 
-    // private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);
 }

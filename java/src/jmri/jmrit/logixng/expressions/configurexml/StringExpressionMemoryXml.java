@@ -58,5 +58,5 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionMemoryXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionMemoryXml.class);
 }

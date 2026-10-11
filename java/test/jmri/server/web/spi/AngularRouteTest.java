@@ -16,19 +16,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class AngularRouteTest {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }
 
     @Test
-    public void testGetConstructor() throws Exception {
+    public void testGetConstructor() {
 
         Exception exc = assertThrows(NullPointerException.class, () -> {
             checkCtorThrowsException(null,"b","c","d");
@@ -65,9 +65,9 @@ public class AngularRouteTest {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NP_NULL_PARAM_DEREF_NONVIRTUAL","NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE"},
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE"},
         justification = "testing exception when null passed")
-    private void checkCtorThrowsException(@CheckForNull String a, @CheckForNull String b, @CheckForNull String c, @CheckForNull String d) throws Exception {
+    private void checkCtorThrowsException(@CheckForNull String a, @CheckForNull String b, @CheckForNull String c, @CheckForNull String d) {
         Assertions.assertNotNull(new AngularRoute(a, b, c, d));
         Assertions.fail("Should have thrown exception");
     }

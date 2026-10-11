@@ -8,13 +8,37 @@ package jmri.jmrix.nce.usbdriver;
 public class UsbCmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
 
     /*
-     * give maximum consist number
+     * give cab addr consist table
+     */
+    @Override
+    public int getConsistAddr() {
+        return 0x0D; // start of NCE CS Consist memory 
+    }
+
+    /*
+     * give minimum consist number
      */
     @Override
     public int getConsistMin() {
         return 112;
     }
-        
+
+    /*
+     * give # of consist middle locos
+     */
+    @Override
+    public int getConsistMidEntries() {
+        return 2;       // how many middle Consist entries/consist
+    }
+
+    /*
+     * give consist num lines
+     */
+    @Override
+    public int getConsistNumLines() {
+        return 8;   // number of lines in the file
+    }
+     
     /*
      * give max cab id
      */

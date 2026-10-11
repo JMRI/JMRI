@@ -18,7 +18,7 @@ import jmri.jmrix.ipocs.protocol.packets.ThrowPointsPacket;
  */
 public class IpocsTurnout extends AbstractTurnout implements IpocsClientListener {
 
-  private final static Logger log = LoggerFactory.getLogger(IpocsTurnout.class);
+  private static final Logger log = LoggerFactory.getLogger(IpocsTurnout.class);
   private final IpocsPortController portController;
 
   IpocsTurnout(IpocsPortController portController, String systemName, String userName) {

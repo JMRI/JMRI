@@ -1,6 +1,5 @@
 package apps.gui3.mdi;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Application;
 import jmri.util.swing.mdi.MdiMainFrame;
 
@@ -27,8 +26,6 @@ public class MDI extends apps.gui3.Apps3 {
         this.start();
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "only one application at a time")
     @Override
     protected void createMainFrame() {
         // create and populate main window
@@ -38,9 +35,12 @@ public class MDI extends apps.gui3.Apps3 {
                 "xml/config/apps/demo/Gui3MainToolBar.xml");
     }
 
+// main() method commented out since this method is probably not used any more.
+// See: https://jmri-developers.groups.io/g/jmri/message/12240
+/*
     // Main entry point
     public static void main(String args[]) {
         new MDI(args);
     }
-
+*/
 }

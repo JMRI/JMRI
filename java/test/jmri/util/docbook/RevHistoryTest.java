@@ -2,8 +2,10 @@ package jmri.util.docbook;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for the jmri.util.docbook.RevHistory class.
@@ -14,7 +16,7 @@ public class RevHistoryTest {
 
     @Test
     public void testCtor() {
-        Assertions.assertNotNull(new RevHistory());
+        assertNotNull(new RevHistory());
     }
 
     @Test
@@ -23,13 +25,13 @@ public class RevHistoryTest {
         r.addRevision("one");
         r.addRevision("two");
 
-        Assert.assertEquals(2, r.list.size());
+        assertEquals(2, r.list.size());
 
-        Assert.assertEquals(1, r.list.get(0).revnumber);
-        Assert.assertEquals(2, r.list.get(1).revnumber);
+        assertEquals(1, r.list.get(0).revnumber);
+        assertEquals(2, r.list.get(1).revnumber);
 
-        Assert.assertEquals("one", r.list.get(0).revremark);
-        Assert.assertEquals("two", r.list.get(1).revremark);
+        assertEquals("one", r.list.get(0).revremark);
+        assertEquals("two", r.list.get(1).revremark);
     }
 
     @Test
@@ -42,7 +44,7 @@ public class RevHistoryTest {
         String expected = " 2, date 2, initials 2, remark 2\n"
                 + " 3, date 3, initials 3, remark 3\n";
 
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @BeforeEach

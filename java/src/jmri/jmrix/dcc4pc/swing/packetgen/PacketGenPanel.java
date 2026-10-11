@@ -118,11 +118,11 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         setChildBoardAndSend(m);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
+    public static class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
 
         public Default() {
             super("Dcc4PC Command Monitor",

@@ -32,7 +32,7 @@ public class RunTrainAction extends Action {
                 finishAction(false);
                 return;
             }
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist()) {
                 log.warn("Manifest creator file not found!, directory name: {}, file name: {}", InstanceManager.getDefault(TrainCustomManifest.class)
                         .getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName());
                 finishAction(false);
@@ -91,5 +91,5 @@ public class RunTrainAction extends Action {
         // no cancel for this action
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class);
+    private static final Logger log = LoggerFactory.getLogger(RunTrainAction.class);
 }

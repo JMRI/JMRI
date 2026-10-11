@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Z21 Server</title><!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Z21 Connected Throttle</h1>
+      The Z21 server window controls the connection between Z21 throttles and JMRI. Currently supported are:
+      <ul>
+        <li>the Roco Z21 App</li>
+        <li>the Roco WlanMaus (a WiFi Handheld)</li>
+      </ul>
+      <p>It can be set to start automatically with the "<a href=
+      "../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>" section in the "<a href=
+      "../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>".</p>
+
+<!-- maybe we add a Preferences page in the future...
+      <p><a href="../../../apps/TabbedPreferences.shtml#Z21 Server">Preferences</a> for the Z21
+      throttles can be found in the JMRI Preferences under the heading Z21 Server.</p>
+-->
+      <p>Currently there are no settings for the Z21 server, the server always listens on UDP port 21105.</p>
+
+      <p>When using a Z21 throttle, if the computer enters sleep mode, control will be lost.
+      System preferences may need to be adjusted to prevent the computer from putting itself to
+      sleep when it is inactive.</p>
+
+      <p>You can use any of these devices via the same or a different (remote) network than the one
+      that your JMRI computer is running on. More information can be found in the
+      <a href="../withrottle/UserInterface.shtml#remote">WiThrottle documentation</a>. Just replace
+      "WiThrottle" with "Z21 Client".<p>
+
+      <p>A description of the Z21 protocol can be downloaded from  <a href="https://www.z21.eu/de/downloads/anleitungen">this page</a>.
+      For more on JMRI networking, see the <a href="../../../../html/doc/Technical/Networking.shtml">networking technical page</a>.</p>
+      
+      <h3 id="stopbutton">Stop button</h3>
+      
+      <p>The WlanMaus has a "STOP" button that can be used to either turn the power on/off or stop all locomotives,
+      depending on the setting in the WlanMaus.
+      The Z21 app also has such a button in the top right corner. The Z21 server supports both methods.</p>
+      
+      <h2 id="turnouts">Support for Turnouts</h2>
+      
+      <p>Both the Z21 app and the WlanMaus have the functionality to operate turnouts, but the turnout can only be selected by a number.
+      Since JMRI has no concept of turnout numbers, a mapping of the turnout number to a JMRI component is required.</p>
+      
+      <p>The mapping has been implemented by providing mapping tables. This window can be opened by selecting "Z21 Turnout Number Map..." from the Z21 Server UI menu.
+      A list of all turnouts will appear with system name, user name and a third column "Z21 Turnout Number". If you enter a number in this field, the turnout will be
+      mapped to the specified turnout number. The mapping can even be used to operate other components such as routes, lights, signal masts, signal heads and sensors.
+      The tables can be accessed via the corresponding tabs.</p>
+      
+      <p>The result of pressing the "Turned" or "Closed" buttons on the handheld depends on the component type:
+      <ul>
+        <li>Turnouts: buttons map directly</li>
+        <li>Lights: Thrown = ON, Closed = OFF</li>
+        <li>Routes: Thrown sets the route, Closed does nothing</li>
+        <li>Signal Masts and Signal Heads: Closed = HELD, Thrown = not HELD, the aspect/appearance itself can not be modified</li>
+        <li>Sensors: Thrown = ACTIVE, Closed = INACTIVE. Used to triggers all actions bound to the sensor</li>
+      </ul>
+      </p>
+      <p>The mapping is written to the panel xml file as a <i>property</i> entry.</p>
+
+      <h2 id="programming">CV Programming</h2>
+      
+      <p>Both devices also are designed to be able to program CVs. This is currently not supported by the JMRI Z21 Server.</p>
+
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/help.js"></script>
+</body>
+</html>

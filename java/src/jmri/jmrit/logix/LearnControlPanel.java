@@ -9,7 +9,7 @@ import jmri.Throttle;
  *
  * @author Pete Cressman Copyright 2020
  */
-public class LearnControlPanel extends jmri.jmrit.throttle.ControlPanel {
+public class LearnControlPanel extends jmri.jmrit.throttle.panels.ControlPanel {
 
     private final LearnThrottleFrame _throttleFrame;
 

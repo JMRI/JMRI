@@ -65,7 +65,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         }
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.
-        if (group == null) {
+        if (group == null || group.equals(Roster.NOGROUP)) {
             group = (String) JmriJOptionPane.showInputDialog(_who,
                     Bundle.getMessage("DeleteRosterGroupDialog"),
                     Bundle.getMessage("DeleteRosterGroupTitle", ""),
@@ -74,8 +74,8 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
                     Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
-        // can't delete the roster itself (ALLENTRIES and null represent the roster)
-        if (group == null || group.equals(Roster.ALLENTRIES)) {
+        // can't delete the roster itself (ALLENTRIES and null represent the roster) and NOGROUP
+        if (group == null || group.equals(Roster.ALLENTRIES) || group.equals(Roster.NOGROUP)) {
             return;
         }
         // prompt for one last chance

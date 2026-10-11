@@ -1,7 +1,8 @@
 package jmri;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for setting and changing path lengths of the Path class
@@ -19,10 +20,10 @@ public class PathLengthTest {
         p.setBlock(b);
         b.setLength(100);
 
-        Assert.assertEquals("check default path length millimeters", 100f, p.getLengthMm(), 0.0);
-        Assert.assertEquals("check default path length centimeters", 10f, p.getLengthCm(), 0.0);
-        Assert.assertEquals("check default path length inches", 100/25.4f, p.getLengthIn(), 0.0);
-        Assert.assertEquals("check raw path length", p.getLength(), 0f, 0.0);
+        assertEquals( 100f, p.getLengthMm(), 0.0, "check default path length millimeters");
+        assertEquals( 10f, p.getLengthCm(), 0.0, "check default path length centimeters");
+        assertEquals( 100/25.4f, p.getLengthIn(), 0.0, "check default path length inches");
+        assertEquals( p.getLength(), 0f, 0.0, "check raw path length");
     }
 
     @Test
@@ -32,14 +33,14 @@ public class PathLengthTest {
         p.setBlock(b);
         b.addPath(p);
         b.setLength(100);
-        Assert.assertEquals("check block length", 100f, b.getLengthMm(), 0.0);
-        Assert.assertEquals("check path length equals block length", p.getLengthMm(), b.getLengthMm(), 0.0);
+        assertEquals( 100f, b.getLengthMm(), 0.0, "check block length");
+        assertEquals( p.getLengthMm(), b.getLengthMm(), 0.0, "check path length equals block length");
 
         p.setLength(50);
-        Assert.assertEquals("check path length", 50f, p.getLengthMm(), 0.0);
+        assertEquals( 50f, p.getLengthMm(), 0.0, "check path length");
         p.setLength(150);
-        Assert.assertEquals("check path length", 150f, p.getLengthMm(), 0.0);
-        Assert.assertEquals("check block length", 100f, b.getLengthMm(), 0.0);
+        assertEquals( 150f, p.getLengthMm(), 0.0, "check path length");
+        assertEquals( 100f, b.getLengthMm(), 0.0, "check block length");
     }
 
     @Test
@@ -58,18 +59,18 @@ public class PathLengthTest {
         p1.setLength(80);
         p2.setLength(50);
 
-        Assert.assertEquals("check path p1 length Millimeters", 80f, p1.getLengthMm(), 0.0);
-        Assert.assertEquals("check path p2 length Millimeters", 50f, p2.getLengthMm(), 0.0);
-        Assert.assertEquals("check path p3 length Millimeters", 100f, p3.getLengthMm(), 0.0);
-        
+        assertEquals( 80f, p1.getLengthMm(), 0.0, "check path p1 length Millimeters");
+        assertEquals( 50f, p2.getLengthMm(), 0.0, "check path p2 length Millimeters");
+        assertEquals( 100f, p3.getLengthMm(), 0.0, "check path p3 length Millimeters");
+
         b.setLength(60);
-        Assert.assertEquals("check change block length", 60f, b.getLengthMm(), 0.0);
-        Assert.assertEquals("check change path p1 length", 60f, p1.getLengthMm(), 0.0);
-        Assert.assertEquals("check raw path p1 length", 0f, p1.getLength(), 0.0);
-        Assert.assertEquals("check change path p2 length", 50f, p2.getLengthMm(), 0.0);
-        Assert.assertEquals("check raw path p2 length", 50f, p2.getLength(), 0.0);
-        Assert.assertEquals("check change path p3 length", 60f, p3.getLengthMm(), 0.0);
-        Assert.assertEquals("check raw path p3 length", 0f, p1.getLength(), 0.0);
+        assertEquals( 60f, b.getLengthMm(), 0.0, "check change block length");
+        assertEquals( 60f, p1.getLengthMm(), 0.0, "check change path p1 length");
+        assertEquals( 0f, p1.getLength(), 0.0, "check raw path p1 length");
+        assertEquals( 50f, p2.getLengthMm(), 0.0, "check change path p2 length");
+        assertEquals( 50f, p2.getLength(), 0.0, "check raw path p2 length");
+        assertEquals( 60f, p3.getLengthMm(), 0.0, "check change path p3 length");
+        assertEquals( 0f, p1.getLength(), 0.0, "check raw path p3 length");
     }
 
     @BeforeEach

@@ -35,7 +35,7 @@
   </revhistory>
   
       <!-- Sound Settings -->
-       <variable CV="58" item="Sound Setting 1" default="9" tooltip="0-15, use about 4-8">
+       <variable CV="58" item="Sound Setting 1" default="6" tooltip="0-15, use about 4-8">
         <decVal max="15"/>
         <label>Master Volume</label>
         <label xml:lang="it">Volume Principale</label>
@@ -243,59 +243,59 @@
   
   <!-- Sound Rates -->
 
-      <variable CV="147" item="Sound Setting 31" default="47" include="SDXH167ExtD">
+      <variable CV="147" item="Sound Setting 32" default="47" include="SDXH167ExtD">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
         <tooltip>1= approx. 2 sec</tooltip>
       </variable>
-      <variable CV="147" item="Sound Setting 31" default="52"  exclude="SDXH167ExtS,SDXH167ExtD">
+      <variable CV="147" item="Sound Setting 32" default="52"  exclude="SDXH167ExtS,SDXH167ExtD">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
         <tooltip>1= approx. 2 sec</tooltip>
       </variable>
-      <variable CV="148" item="Sound Setting 32" default="50" include="SDXH167ExtS">
+      <variable CV="148" item="Sound Setting 33" default="50" include="SDXH167ExtS">
         <decVal/>
         <label>Airpump Start Rate</label>
         <label xml:lang="it">Frequenza air pump Run</label>
         <tooltip>Time ms. between Airpump cycles</tooltip>
       </variable>
-      <variable CV="148" item="Sound Setting 32" default="50" include="SDXH167ExtD">
+      <variable CV="148" item="Sound Setting 33" default="50" include="SDXH167ExtD">
         <decVal/>
         <label>Compressor Start Rate</label>
         <label xml:lang="it">Frequenza compressore Run</label>
         <tooltip>Time ms. between Compressor cycles</tooltip>
       </variable>
-      <variable CV="148" item="Sound Setting 32" default="50"  exclude="SDXH167ExtS,SDXH167ExtD">
+      <variable CV="148" item="Sound Setting 33" default="50"  exclude="SDXH167ExtS,SDXH167ExtD">
         <decVal/>
         <label>Compressor Start Rate</label>
         <label xml:lang="it">Frequenza compressore Run/Popoff</label>
         <tooltip>Time ms. between Compressor cycles</tooltip>
       </variable>
-      <variable CV="149" item="Sound Setting 33" default="48" include="SDXH167ExtS">
+      <variable CV="149" item="Sound Setting 34" default="48" include="SDXH167ExtS">
         <decVal/>
         <label>Airpump Run Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
-      <variable CV="149" item="Sound Setting 33" default="52" include="SDXH167ExtD">
+      <variable CV="149" item="Sound Setting 34" default="52" include="SDXH167ExtD">
         <decVal/>
         <label>Compressor Run Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
-      <variable CV="149" item="Sound Setting 33" default="50"  exclude="SDXH167ExtS,SDXH167ExtD">
+      <variable CV="149" item="Sound Setting 34" default="50"  exclude="SDXH167ExtS,SDXH167ExtD">
         <decVal/>
         <label>Compressor Run Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
 	  
-	  <variable CV="154" item="Sound Setting 34" default="22" include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+	  <variable CV="154" item="Sound Setting 35" default="22" include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
         <decVal max="100"/>
         <label>Delay Brake Apply</label>
         <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
          <tooltip>speed above which braking sounds begin to play</tooltip>
       </variable>
-      <variable CV="146" item="Sound Setting 35" default="0">
+      <variable CV="146" item="Sound Setting 36" default="0">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <label xml:lang="it">Frequenza Campana</label>
@@ -303,7 +303,7 @@
         <comment xml:lang="it">in passi da 24msec</comment>
         <tooltip>delay 24msec counts - 1=24 milliseconds</tooltip>
       </variable>
-       <variable CV="156" item="Sound Setting 36" default="1">
+       <variable CV="156" item="Sound Setting 37" default="1">
         <decVal max="21"/>
         <label>Playable Horn/Whistle Delay Rate</label>
         <label xml:lang="it">Tasso Ritardo Tromba</label>
@@ -311,28 +311,34 @@
       </variable>
  
 
-	<variable CV="161" item="Sound Setting 37"  default="50"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+	<variable CV="161" item="Sound Setting 38"  default="50"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
      <decVal max="96"/>
      <label>Not Used</label>
      <label xml:lang="it">Not Used</label>
      <tooltip> Pump Run Time</tooltip>
 	</variable>
-  <variable CV="163" item="Sound Setting 38" default="52"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+  <variable CV="163" item="Sound Setting 39" default="52"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="96"/>
     <label>Safety Run Time</label>
     <label xml:lang="it">Safety Run Time</label>
   </variable>
-  <variable CV="164" item="Sound Setting 39" default="49"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+  <variable CV="164" item="Sound Setting 40" default="49"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="96"/>
     <label>Air Pump Cycle Time</label>
     <label xml:lang="it">Air Pump Cycle Time</label>
     <tooltip>Level in the guage 10-64</tooltip>
   </variable>
-  <variable CV="165" item="Sound Setting 40" default="48"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+  <variable CV="165" item="Sound Setting 41" default="48"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="96"/>
     <label>Fuel (Stoker/Pump) Run Time</label>
     <label xml:lang="it">Stoker/Pump Run Time</label>
     <tooltip>18-60</tooltip>
+  </variable>
+  <variable CV="195" item="Sound Setting 42" default="45"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+    <decVal max="64"/>
+    <label>Stoker Volume</label>
+    <label xml:lang="it">Volume Gener. Stoker/Pompa Olio</label>
+    <tooltip>11-63</tooltip>
   </variable>
      <!-- SDXH167Ext has cv185-188 in Feature Disable: -->
 

@@ -8,7 +8,7 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableFrame;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
@@ -23,7 +23,7 @@ public class PrintEngineRosterFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
-        EnginesTableFrame ctf = new EnginesTableFrame();
+        EnginesTableFrame ctf = new EnginesTableFrame(true, null, null);
 
         PrintEngineRosterFrame f = new PrintEngineRosterFrame(true, ctf);
         Assert.assertNotNull("exists", f);

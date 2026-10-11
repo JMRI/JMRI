@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class DefaultPowerManagerTest {
     @Test
     public void testCTor() {
         DefaultPowerManager t = new DefaultPowerManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -29,6 +28,6 @@ public class DefaultPowerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultPowerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DefaultPowerManagerTest.class);
 
 }

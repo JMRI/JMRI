@@ -126,8 +126,8 @@ public class IfThenElse extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.FLOW_CONTROL;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.FLOW_CONTROL;
     }
 
     /** {@inheritDoc} */
@@ -609,6 +609,6 @@ public class IfThenElse extends AbstractDigitalAction
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElse.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElse.class);
 
 }

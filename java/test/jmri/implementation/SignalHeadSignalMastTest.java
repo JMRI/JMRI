@@ -249,5 +249,5 @@ public class SignalHeadSignalMastTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class);
 }

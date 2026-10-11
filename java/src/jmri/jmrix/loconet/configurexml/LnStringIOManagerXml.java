@@ -6,7 +6,7 @@ import org.jdom2.Element;
 /**
  * Provides load and store functionality for configuring LnStringIOManagers.
  *
- * @author Bob Jacobsen      Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen      Copyright: Copyright (c) 2003, 2024
  * @author Daniel Bergqvist  Copyright: Copyright (c) 2021
  */
 public class LnStringIOManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -31,5 +31,5 @@ public class LnStringIOManagerXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnStringIOManagerXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnStringIOManagerXml.class);
 }

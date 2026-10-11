@@ -2,8 +2,13 @@ package jmri.util.startup;
 
 import jmri.JmriException;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -17,15 +22,15 @@ public class AbstractStartupModelTest {
     @Test
     public void testGetName() {
         AbstractStartupModel model = new AbstractStartupModelImpl();
-        Assert.assertNull("Name defaults to null", model.getName());
+        assertNull( model.getName(), "Name defaults to null");
         model.setName("");
-        Assert.assertNotNull("Name should be empty", model.getName());
-        Assert.assertTrue("Name should be empty", model.getName().isEmpty());
-        Assert.assertEquals("Name should be empty", "", model.getName());
+        assertNotNull( model.getName(), "Name should be empty");
+        assertTrue( model.getName().isEmpty(), "Name should be empty");
+        assertEquals( "", model.getName(), "Name should be empty");
         model.setName("name");
-        Assert.assertNotNull("Name should not be empty", model.getName());
-        Assert.assertFalse("Name should not be empty", model.getName().isEmpty());
-        Assert.assertEquals("Name should not be empty", "name", model.getName());
+        assertNotNull( model.getName(), "Name should not be empty");
+        assertFalse( model.getName().isEmpty(), "Name should not be empty");
+        assertEquals( "name", model.getName(), "Name should not be empty");
     }
 
     /**
@@ -34,15 +39,15 @@ public class AbstractStartupModelTest {
     @Test
     public void testSetName() {
         AbstractStartupModel model = new AbstractStartupModelImpl();
-        Assert.assertNull("Name defaults to null", model.getName());
+        assertNull( model.getName(), "Name defaults to null");
         model.setName("");
-        Assert.assertNotNull("Name should be empty", model.getName());
-        Assert.assertTrue("Name should be empty", model.getName().isEmpty());
-        Assert.assertEquals("Name should be empty", "", model.getName());
+        assertNotNull( model.getName(), "Name should be empty");
+        assertTrue( model.getName().isEmpty(), "Name should be empty");
+        assertEquals( "", model.getName(), "Name should be empty");
         model.setName("name");
-        Assert.assertNotNull("Name should not be empty", model.getName());
-        Assert.assertFalse("Name should not be empty", model.getName().isEmpty());
-        Assert.assertEquals("Name should not be empty", "name", model.getName());
+        assertNotNull( model.getName(), "Name should not be empty");
+        assertFalse( model.getName().isEmpty(), "Name should not be empty");
+        assertEquals( "name", model.getName(), "Name should not be empty");
     }
 
     /**
@@ -51,15 +56,15 @@ public class AbstractStartupModelTest {
     @Test
     public void testToString() {
         AbstractStartupModel model = new AbstractStartupModelImpl();
-        Assert.assertNotNull("toString defaults to nonnull", model.toString());
+        assertNotNull( model.toString(), "toString defaults to nonnull");
         model.setName("");
-        Assert.assertNotNull("toString should be empty", model.toString());
-        Assert.assertTrue("toString should be empty", model.toString().isEmpty());
-        Assert.assertEquals("toString should be empty", "", model.toString());
+        assertNotNull( model.toString(), "toString should be empty");
+        assertTrue( model.toString().isEmpty(), "toString should be empty");
+        assertEquals( "", model.toString(), "toString should be empty");
         model.setName("name");
-        Assert.assertNotNull("toString should not be empty", model.toString());
-        Assert.assertFalse("toString should not be empty", model.toString().isEmpty());
-        Assert.assertEquals("toString should not be empty", "name", model.toString());
+        assertNotNull( model.toString(), "toString should not be empty");
+        assertFalse( model.toString().isEmpty(), "toString should not be empty");
+        assertEquals( "name", model.toString(), "toString should not be empty");
     }
 
     /**
@@ -68,11 +73,11 @@ public class AbstractStartupModelTest {
     @Test
     public void testIsValid() {
         AbstractStartupModel model = new AbstractStartupModelImpl();
-        Assert.assertFalse("Model default state is invalid", model.isValid());
+        assertFalse( model.isValid(), "Model default state is invalid");
         model.setName("");
-        Assert.assertFalse("Empty name is invalid", model.isValid());
+        assertFalse( model.isValid(), "Empty name is invalid");
         model.setName("name");
-        Assert.assertTrue("Nonempty name is valid", model.isValid());
+        assertTrue( model.isValid(), "Nonempty name is valid");
     }
 
     @BeforeEach

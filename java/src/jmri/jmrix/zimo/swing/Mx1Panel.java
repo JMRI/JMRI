@@ -43,5 +43,5 @@ abstract public class Mx1Panel extends jmri.util.swing.JmriPanel implements Mx1P
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Panel.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1Panel.class);
 }

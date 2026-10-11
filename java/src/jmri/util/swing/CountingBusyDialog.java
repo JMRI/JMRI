@@ -13,6 +13,8 @@ import javax.swing.JProgressBar;
  * After constructing one, call start() to display it.
  * Then call count(..) to update the progress count, and
  * finish() when the operation is done.
+ * If the initial maxCount is less than zero,
+ * an indeterminate bar is displayed.
  *
  * @author   Mark Underwood Copyright (C) 2011
  * @author   Bob Jacobsen   Copyright (C) 2023
@@ -38,7 +40,12 @@ public class CountingBusyDialog extends JDialog {
         setMinimumSize(new Dimension(200, 100));
         setLayout(new BorderLayout(10, 10));
 
-        pbar = new JProgressBar(0, maxCount);
+         if (maxCount < 0) {
+            pbar = new JProgressBar();
+            pbar.setIndeterminate(true);
+        } else {
+            pbar = new JProgressBar(0, maxCount);
+        }
         pbar.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         //pbar.setBorderPainted(true);
         this.add(pbar, BorderLayout.CENTER);

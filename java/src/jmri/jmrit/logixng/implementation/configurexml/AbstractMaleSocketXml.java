@@ -71,7 +71,7 @@ public class AbstractMaleSocketXml
         if (maleSocketElement.getAttribute("enabled") != null) {  // NOI18N
             enabled = maleSocketElement.getAttribute("enabled").getValue();  // NOI18N
         }
-        ((AbstractMaleSocket)maleSocket).setEnabledFlag("yes".equals(enabled)); // NOI18N
+        maleSocket.setEnabledFlag("yes".equals(enabled)); // NOI18N
 
         String locked = "no";       // NOI18N
         if (maleSocketElement.getAttribute("locked") != null) {  // NOI18N
@@ -121,5 +121,5 @@ public class AbstractMaleSocketXml
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMaleSocketXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMaleSocketXml.class);
 }

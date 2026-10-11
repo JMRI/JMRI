@@ -4,8 +4,6 @@ import jmri.*;
 import jmri.implementation.DefaultMeter;
 import jmri.implementation.MeterUpdateTask;
 import jmri.jmrix.loconet.duplexgroup.swing.LnIPLImplementation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to current and voltage meter from some LocoNet command stations
@@ -16,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist  Copyright (C) 2020
  * @author B. Milhaupt       Copyright (C) 2020
  */
-public class LnPredefinedMeters implements LocoNetListener {
+public class LnPredefinedMeters implements LocoNetListener, Disposable {
 
     private SlotManager sm = null;
     private LnTrafficController tc = null;
@@ -82,7 +80,15 @@ public class LnPredefinedMeters implements LocoNetListener {
         updateAddMeter(m, ampsSysName, valAmps, false);
     }
 
+    /**
+     * Dispose of the instance.
+     * Removes TC Listener.
+     * Disposes initialization task and individual update tasks.
+     */
+    @Override
     public void dispose() {
+        tc.removeLocoNetListener(~0, this);
+        initializationTask.dispose();
         var meters = new java.util.HashSet<>(InstanceManager.getDefault(MeterManager.class).getNamedBeanSet());
         for (Meter m: meters) {
             if (m.getSystemName().startsWith(sm.getSystemPrefix()+"V")) { // NOI18N
@@ -98,7 +104,7 @@ public class LnPredefinedMeters implements LocoNetListener {
         sm.sendReadSlot(249);
     }
 
-    private final String createSystemName(int device, int sn, String typeString) {
+    private String createSystemName(int device, int sn, String typeString) {
         String devName = LnIPLImplementation.getDeviceName(0, device,0,0);
         if (devName == null) {
             devName="["+device+"]"; // NOI18N
@@ -142,5 +148,5 @@ public class LnPredefinedMeters implements LocoNetListener {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPredefinedMeters.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnPredefinedMeters.class);
 }

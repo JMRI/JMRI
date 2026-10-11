@@ -3,7 +3,6 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class RawTurnoutOperationTest {
     @Test
     public void testCTor() {
         RawTurnoutOperation t = new RawTurnoutOperation();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class RawTurnoutOperationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RawTurnoutOperationTest.class);
 
 }

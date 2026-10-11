@@ -8,10 +8,10 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import org.apiguardian.api.API;
+
 import jmri.jmrit.etcs.*;
 import jmri.util.ThreadingUtil;
-
-import org.apiguardian.api.API;
 
 /**
  * JPanel containing the ERTMS ETCS DMI.
@@ -636,6 +636,7 @@ public class DmiPanel extends JPanel {
      * <p>
      * 4 - click.wav - 1 sec, plays once.
      * @param sound which Sound, 
+     * @throws IllegalArgumentException when needed
      */
     public void playDmiSound(int sound) throws IllegalArgumentException {
         ResourceUtil.playDmiSound(sound);

@@ -76,7 +76,7 @@ public class LayoutTrackEditorTest {
         JUnitUtil.initInternalSensorManager();
 
         layoutEditor = new LayoutEditor();
-        layoutEditor.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> layoutEditor.setVisible(true) );
 
     }
 
@@ -100,6 +100,8 @@ public class LayoutTrackEditorTest {
 
     protected Turnout turnout0 = null;
     protected Turnout turnout1 = null;
+    protected Turnout turnout2 = null;
+    protected Turnout turnout3 = null;
 
     /*
      * This is used to find a component by matching against its tooltip
@@ -115,7 +117,8 @@ public class LayoutTrackEditorTest {
 
         @Override
         public boolean checkComponent(Component comp) {
-            return comparator.equals(((JComponent) comp).getToolTipText(), buttonTooltip);
+            JComponent jComp = Assertions.assertInstanceOf(JComponent.class, comp);
+            return comparator.equals(jComp.getToolTipText(), buttonTooltip);
         }
 
         @Override
@@ -133,6 +136,14 @@ public class LayoutTrackEditorTest {
         turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT102");
         turnout1.setUserName("Turnout 102");
         turnout1.setCommandedState(Turnout.CLOSED);
+
+        turnout2 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT103");
+        turnout2.setUserName("Turnout 103");
+        turnout2.setCommandedState(Turnout.CLOSED);
+
+        turnout3 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT104");
+        turnout3.setUserName("Turnout 104");
+        turnout3.setCommandedState(Turnout.CLOSED);
     }
 
     protected void createBlocks() {
@@ -143,5 +154,5 @@ public class LayoutTrackEditorTest {
     }
 
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditorTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditorTest.class);
 }

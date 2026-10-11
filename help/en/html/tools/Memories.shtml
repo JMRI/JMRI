@@ -31,7 +31,7 @@
       </ul>
 
       <h2>Using Memories with Logix</h2>
-      A Logix can test a memory for particular contents, and set the contents of a Memory to
+      A Logix or LogixNG can test a memory for particular contents, and set the contents of a Memory to
       whatever string is needed. This lets you use a Memory as a status indicator, counter or just
       about anything else you can imagine. Because of their user interface, Logix generally only
       put string values into Memory Variables.
@@ -70,11 +70,12 @@
 
       <h3 id="addBlock">Saving Memories to disk</h3>
 
-      <p>Memories are is kept in your <em>layout configuration</em>, along with Turnouts, Sensors,
+      <p>Memories are kept in your <em>layout configuration</em>, along with Turnouts, Sensors,
       Signal Heads, etc. To store this information on disk, allowing you to <a href=
       "../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> next time you run JMRI,
       see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>. 
-      <!--#include virtual="/help/en/parts/Footer.shtml" --></p>
+      </p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

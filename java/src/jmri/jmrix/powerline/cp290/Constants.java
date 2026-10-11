@@ -8,19 +8,21 @@ package jmri.jmrix.powerline.cp290;
  */
 public class Constants {
 
+    private Constants() {} // class only supplies static methods
+
     public static final int CMD_ON = 0x02;
     public static final int CMD_OFF = 0x03;
     public static final int CMD_DIM_R = 0x04;
     public static final int CMD_DIM_S = 0x05;
 
     /**
-     * Translate Function to Text
-     * @param cmd   cmd value
+     * Translate Function to Text.
+     * @param cmd   command value
      * @param level dim value
-     * @return      formated command as text
+     * @return      formatted command as text
      */
     public static String commandToText(int cmd, int level) {
-        String cmdText = "";
+        String cmdText;
         switch (cmd) {
             case CMD_ON:
                 cmdText = "ON";
@@ -50,7 +52,7 @@ public class Constants {
      * @return   housecode as text
      */
     public static String houseCodeToText(int hC) {
-        String hCode = "";
+        String hCode;
         switch (hC) {
             case 0x06:
                 hCode = "A";

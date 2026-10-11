@@ -2,11 +2,14 @@ package jmri.jmrit.logixng;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
+
+import jmri.Category;
 
 /**
  * Manager for DigitalExpressionBean
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
@@ -22,7 +25,7 @@ public interface DigitalExpressionManager extends BaseManager<MaleDigitalExpress
      */
     MaleDigitalExpressionSocket registerExpression(@Nonnull DigitalExpressionBean expression)
             throws IllegalArgumentException;
-    
+
     /**
      * Create a new system name for an DigitalExpressionBean.
      * @return a new system name
@@ -40,7 +43,7 @@ public interface DigitalExpressionManager extends BaseManager<MaleDigitalExpress
 */
     /**
      * Get a set of classes that implements the DigitalAction interface.
-     * 
+     *
      * @return a set of entries with category and class
      */
     Map<Category, List<Class<? extends Base>>> getExpressionClasses();
@@ -69,7 +72,7 @@ public interface DigitalExpressionManager extends BaseManager<MaleDigitalExpress
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The sub system prefix for the DigitalExpressionManager is
      * {@link #getSystemNamePrefix() } and "DE";
      */

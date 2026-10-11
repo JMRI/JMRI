@@ -1,10 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of TrackNode
@@ -14,8 +13,9 @@ import org.junit.Assume;
 public class TrackNodeTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         LayoutEditor le = new LayoutEditor();
         LayoutTurnout lt = new LayoutRHTurnout("T", le);
         PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.PointType.END_BUMPER, le);
@@ -24,19 +24,19 @@ public class TrackNodeTest {
         TrackSegment ts = new TrackSegment("test", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, true, le);
 
         TrackNode tn = new TrackNode(lt, HitPointType.TURNOUT_A, ts, false, 0);
-        Assert.assertNotNull("exists", tn);
+        Assertions.assertNotNull( tn, "exists");
         JUnitUtil.dispose(le);
     }
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

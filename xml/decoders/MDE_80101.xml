@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!--                                                                        -->
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2025</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Phil</firstname><surname>Grainger</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber><date>2025-12-21</date><authorinitials>PG</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+<!--                                                                        -->
+<!-- The switch machine decoder IS supposed to support accessory OPS mode   -->
+<!-- Currently this definition precludes use of OPS mode programming        -->
+<!-- Unfortunately I have no way to test this on my DCC systems             -->
+<!--                                                                        -->
+  <decoder>
+    <family name="Turnout Drives" mfg="MD Electronics">
+      <model model="80101 Turnout Drive" lowVersionID="120" highVersionID="120"/>
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="no">
+<!--                                                   ^^^^^^^^             -->
+    </programming>
+    <variables>
+
+      <!-- standard variables that go in standard panes -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+
+      <!-- variables specific to this decoder that go in custom panes -->
+
+      <variable mask="XXXXXXVV" item="Drive Calibrated?" CV="41" readOnly="yes" default="0">
+<!-- If drive is calibrated cv41=3, uncalibrated cv41=0    -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>Not Calibrated</choice>
+            </enumChoice>
+            <enumChoice value="1">
+                <choice>In Progress</choice>
+            </enumChoice>
+            <enumChoice value="2">
+                <choice>In Progress</choice>
+            </enumChoice>
+            <enumChoice value="3">
+                <choice>Calibrated</choice>
+            </enumChoice>
+        </enumVal>
+        <tooltip>Has the drive been calibrated? (CV41)</tooltip>
+        <label>Drive Calibrated</label>
+      </variable>
+
+      <variable item="Number of Drive Steps" CV="24,23" default="406" mask="VVVVVVVV XXXXXVVV">
+<!-- Number of steps to drive is an 11 bit number cv23=3x MSB, cv24=8x LSB    -->
+        <splitVal min="1" max="2047" highCV="23"/>
+        <label>Number of Drive Steps</label>
+      <tooltip>How many steps to fully throw the turnout - 1-2047 (CVs23,24)</tooltip>
+      </variable>
+
+      <variable item="Time per Step (ms)" CV="22" default="5">
+<!-- cv22=time per step in msecs -->
+        <decVal min="1" max="255"/>
+        <label>Time per Step</label>
+      <tooltip>Time taken oer step (m/sec) (CV22)</tooltip>
+      </variable>
+
+      <variable item="Manufacturer Version No." CV="7" default="120" readOnly="yes">
+        <decVal/>
+        <label>Manufacturer Version No.</label>
+      </variable>
+
+      <variable item="Manufacturer ID" CV="8" default="1" readOnly="yes">
+        <decVal/>
+        <label>Manufacturer ID
+        </label>
+      </variable>
+
+      <variable item="Category" CV="120" default="8" readOnly="yes">
+        <decVal/>
+        <label>Category
+        </label>
+      </variable>
+      <variable item="Number of Outputs" CV="121" default="1" readOnly="yes">
+        <decVal/>
+        <label>Number of Outputs
+        </label>
+      </variable>
+
+      <variable item="Hardware Version" CV="122" default="1" readOnly="yes">
+        <decVal/>
+        <label>Hardware Version</label>
+      </variable>
+
+      <variable item="Software Version" CV="123" default="1" readOnly="yes">
+        <decVal/>
+        <label>Software Version</label>
+      </variable>
+
+      <variable item="Programming Lock" CV="6" default="160">
+<!-- If decoder is locked for programming then cv6=0, otherwise cv6=160    -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>Locked</choice>
+            </enumChoice>
+            <enumChoice value="160">
+                <choice>Unlocked</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Programming Lock</label>
+        <tooltip>Is this locked against programming? (CV6)</tooltip>
+      </variable>
+
+      <variable item="Turnout Inversion" CV="25" default="0">
+<!-- cv25=1 causes turnout operation inversion, otherwise cv25-=0    -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice value="1">
+                <choice>Inverted</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Turnout Inversion</label>
+        <tooltip>Is the operation inverted? (CV25)</tooltip>
+      </variable>
+
+      <variable mask="XXXXXXVV" item="Position at Startup" CV="17">
+<!-- Turnout position at startup -->
+<!--    No start position cv17=0    -->
+<!--    Diverging route cv17=1    -->
+<!--    Straight route cv17=2 -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>No Start Position</choice>
+            </enumChoice>
+            <enumChoice value="1">
+                <choice>Start Thrown</choice>
+            </enumChoice>
+            <enumChoice value="2">
+                <choice>Start Closed</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Position at Startup</label>
+        <tooltip>Turnout position at startup (Closed, Thrown or None) (CV17)</tooltip>
+      </variable>
+
+      <variable item="Position Reset Delay (100 msec) - Zero = No Reset" CV="27" default="0">
+<!-- cv27=time to reset to prior position in 100's msecs (0=no reset)    -->
+        <decVal/>
+        <label>Position Reset Delay</label>
+        <tooltip>Delay before resetting turnout in 100's msecs (0=No reset) (CV27)</tooltip>
+      </variable>
+
+<!-- We're going to fudge Long Address and Address Format values to get the turnout address onto the Roster pane     -->
+
+      <variable item="Long Address" CV="21,20" default="1" mask="VVVVVVVV XXXXXVVV">
+        <splitVal min="1" max="2047" highCV="20"/>
+        <label>Long Address</label>
+      </variable>
+
+      <variable item="Address Format" CV="29" mask="XXVXXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Short Address">
+          </enumChoice>
+          <enumChoice choice="Long Address">
+          </enumChoice>
+        </enumVal>
+        <label>Address Format</label>
+      </variable>
+
+<!-- End of fudge           -->
+
+      <variable item="Turnout Address" CV="21,20" default="1" mask="VVVVVVVV XXXXXVVV">
+<!--Turnout address is an 11 bit number cv20=3x MSB, cv21=8x LSB    -->
+        <splitVal min="1" max="2047" highCV="20"/>
+        <label>Turnout Address</label>
+        <tooltip>Turnout address (1-2047) (CV20,21)</tooltip>
+      </variable>
+
+      <variable mask="XXXXXXXV" item="RailCom Ch1" CV="13" default="1">
+<!-- cv13 bit 0=1 if RailCom channel 1 is active    -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>Disabled</choice>
+            </enumChoice>
+            <enumChoice value="1">
+                <choice>Enabled</choice>
+            </enumChoice>
+        </enumVal>
+        <label>RailCom Ch1</label>
+        <tooltip>RailCom settings (CV13)</tooltip>
+      </variable>
+
+      <variable mask="XXXXXXVX" item="RailCom Ch2" CV="13" default="1">
+<!-- cv13 but 1=1 if RailCom channel 2 is active    -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>Disabled</choice>
+            </enumChoice>
+            <enumChoice value="1">
+                <choice>Enabled</choice>
+            </enumChoice>
+        </enumVal>
+        <label>RailCom Ch2</label>
+        <tooltip>RailCom settings (CV13)</tooltip>
+      </variable>
+
+      <variable mask="XVXXXXXX" item="RailCom High Power" CV="13">
+<!-- cv13 bit 6=1 if RailCom high power is active    -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>Disabled</choice>
+            </enumChoice>
+            <enumChoice value="1">
+                <choice>Enabled</choice>
+            </enumChoice>
+        </enumVal>
+        <tooltip>RailCom settings (CV13)</tooltip>
+        <label>RailCom High Power</label>
+      </variable>
+
+      <variable mask="XXXXVVXX" item="RailCom Plus" CV="13">
+<!-- cv13 bits 2/3=1 if RailCom plus is active    -->
+        <enumVal>
+            <enumChoice value="0">
+                <choice>Disabled</choice>
+            </enumChoice>
+            <enumChoice value="3">
+                <choice>Enabled</choice>
+            </enumChoice>
+        </enumVal>
+        <label>RailCom Plus</label>
+        <tooltip>RailCom settings (CV13)</tooltip>
+      </variable>
+
+    </variables>
+
+    <resets>
+<!-- write 8 to cv8 to factory reset    -->
+        <factReset label="Full Factory Reset" CV="8" default="8"/>
+<!-- write 0 to cv41 to reset calibration    -->
+        <factReset label="Reset Callibration" CV="41" default="0"/>
+    </resets>
+
+  </decoder>
+
+  <pane>
+<!-- Display a BASIC pane    -->
+    <row>
+
+      <column>
+        <label>
+        <text>Addressing:</text>
+        </label>
+        <separator/>
+        <display item="Turnout Address"/>
+        <display item="Programming Lock"/>
+        <display item="Drive Calibrated"/>
+      </column>
+
+      <column>
+        <label> <text>                 </text> </label>
+      </column>
+
+      <column>
+        <label>
+        <text>Identification:</text>
+        </label>
+        <separator/>
+        <display item="Manufacturer ID"/>
+        <display item="Manufacturer Version No."/>
+        <display item="Category"/>
+        <display item="Number of Outputs"/>
+        <display item="Hardware Version"/>
+        <display item="Software Version"/>
+     </column>
+    </row>
+    <name>Basic</name>
+  </pane>
+
+  <pane>
+
+<!-- Display a CONFIGURATION pane    -->
+    <row>
+      <column>
+
+      <label>
+      <text>Operation:</text>
+      </label>
+      <separator/>
+        <display item="Position at Startup"/>
+        <display item="Turnout Inversion"/>
+        <label> <text>                 </text> </label>
+        <display item="Number of Drive Steps"/>
+        <display item="Time per Step"/>
+        <label> <text>                 </text> </label>
+        <display item="Position Reset Delay"/>
+      </column>
+
+      <column>
+        <label> <text>                 </text> </label>
+      </column>
+
+      <column>
+      <label>
+      <text>RailCom:</text>
+      </label>
+      <separator/>
+        <display item="RailCom Ch1"/>
+        <display item="RailCom Ch2"/>
+        <display item="RailCom High Power"/>
+        <display item="RailCom Plus"/>
+      </column>
+    </row>
+
+    <name>Decoder Configuration</name>
+  </pane>
+
+</decoder-config>

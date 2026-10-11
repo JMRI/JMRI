@@ -6,7 +6,7 @@ import jmri.implementation.DefaultClockControl;
 
 /**
  * Class providing SRCP Clock Control to the SRCP client.
- *
+ * @see <a href="https://srcpd.sourceforge.net/srcp/srcp-084.html#TIME">SRCP TIME documentation</a>
  * @author Paul Bender Copyright (C) 2014
  */
 public class SRCPClockControl extends DefaultClockControl {
@@ -42,7 +42,6 @@ public class SRCPClockControl extends DefaultClockControl {
         String text = "INIT " + _memo.getBus() + " TIME 1 " + newRate;
         // create and send the message itself
         _tc.sendSRCPMessage(new SRCPMessage(text), null);
-        return;
     }
 
     @Override
@@ -56,15 +55,15 @@ public class SRCPClockControl extends DefaultClockControl {
     /**
      * Set and get the fast clock time For the default implementation,set time
      * is ignored and getTime returns the time of the internal clock;
+     * Date format sent as yyyyDDD HH mm ss , YearJulDay Hour Minute Seconds
      */
     @Override
     public void setTime(Date now) {
-        // prepare to format the date as <JulDay> <Hour> <Minute> <Seconds>
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyDDD hh mm ss");
+        // prepare to format the date as <Year><JulDay> <Hour> <Minute> <Seconds>
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyDDD HH mm ss");
         String text = "SET " + _memo.getBus() + " TIME " + sdf.format(now);
         // create and send the message itself
         _tc.sendSRCPMessage(new SRCPMessage(text), null);
-        return;
     }
 
     @Override
@@ -86,12 +85,10 @@ public class SRCPClockControl extends DefaultClockControl {
     @Override
     public void startHardwareClock(Date now) {
         setTime(now);
-        return;
     }
 
     @Override
     public void stopHardwareClock() {
-        return;
     }
 
     /**
@@ -102,8 +99,5 @@ public class SRCPClockControl extends DefaultClockControl {
      */
     @Override
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
-        return;
     }
 }
-
-

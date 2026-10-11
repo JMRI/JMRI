@@ -9,6 +9,9 @@ package jmri.jmrix.can.cbus;
  */
 public final class CbusConstants {
 
+    // Class only supplies static methods
+    private CbusConstants(){}
+
     /**
      * Handle used by service mode programmer
      */
@@ -18,13 +21,36 @@ public final class CbusConstants {
     public static final int DEFAULT_EXTENDED_ID = 0x7a;
 
     /**
+     * Get a String Array of valid CBUS CAN IDs for use with fixed IDs.
+     * CBUS dev guide 6b was 120-127, 6c is 100-127.
+     * @return list of CAN IDs from 100 to 127
+     */
+    public static String[] getValidFixedCanIds() {
+        final byte MAX = 28;
+        String[] result = new String[MAX];
+        for (int i = 0; i < MAX; i++) {
+            result[i] = String.valueOf(i + 100);
+        }
+        return result;
+    }
+
+    /**
+     * Get the Default JMRI CAN ID for new CBUS connections, 126, in String format.
+     */
+    public static final String DEFAULT_JMRI_CAN_ID_STRING = "126";
+
+    /**
      * CBUS Manufacturer definitions
      * Where the manufacturer already has an NMRA code, this is used
      */
+    public static final int MANU_DEV = 13;
     public static final int SPROG_DCC = 44;         // http://www.merg.co.uk
-    public static final int MANU_MERG = 165;        // http://www.merg.co.uk
     public static final int MANU_ROCRAIL = 70;      // http://www.rocrail.net
     public static final int MANU_SPECTRUM = 80;     // http://animatedmodeler.com  (Spectrum Engineering)
+    public static final int MANU_MERG = 165;        // http://www.merg.co.uk
+    public static final int MANU_RME = 248;
+    public static final int MANU_SYSPIXIE = 249;
+    public static final int MANU_VLCB = 250;
 
     /**
      * SPROG DCC module types
@@ -43,6 +69,9 @@ public final class CbusConstants {
 
     /**
      * CBUS Opcodes
+     *
+     * Note that VLCB op-codes that are additions to CBUS have a VLCB_ prefix.
+     * Any code using VLCB op-codes must ensure that the participating node is a VLCB node.
      */
     // Opcodes with no data
     public static final int CBUS_ACK = 0x00;
@@ -116,6 +145,8 @@ public final class CbusConstants {
     public static final int CBUS_RQNPN = 0x73;
     public static final int CBUS_NUMEV = 0x74;
     public static final int CBUS_CANID = 0x75;
+    public static final int VLCB_MODE = 0x76;
+    public static final int VLCB_RQSD = 0x78;
 
     public static final int CBUS_EXTC2 = 0x7F;
 
@@ -125,6 +156,8 @@ public final class CbusConstants {
     public static final int CBUS_WCVB = 0x83;
     public static final int CBUS_QCVS = 0x84;
     public static final int CBUS_PCVS = 0x85;
+    public static final int VLCB_RDGN = 0x87;
+    public static final int VLCB_NVSETRD = 0x8E;
 
     public static final int CBUS_ACON = 0x90;
     public static final int CBUS_ACOF = 0x91;
@@ -147,6 +180,9 @@ public final class CbusConstants {
     public static final int CBUS_RDCC4 = 0xA0;
     public static final int CBUS_WCVS = 0xA2;
     public static final int CBUS_VCVS = 0xA4;
+    public static final int VLCB_HEARTB = 0xAB;
+    public static final int VLCB_SD = 0xAC;
+    public static final int VLCB_GRSP = 0xAF;
 
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;
@@ -165,6 +201,7 @@ public final class CbusConstants {
     public static final int CBUS_RDCC5 = 0xC0;
     public static final int CBUS_WCVOA = 0xC1;
     public static final int CBUS_CABDAT = 0xC2;
+    public static final int VLCB_DGN = 0xC7;
     public static final int CBUS_FCLK = 0xCF;
 
     public static final int CBUS_ACON2 = 0xD0;
@@ -186,6 +223,10 @@ public final class CbusConstants {
     public static final int CBUS_PLOC = 0xE1;
     public static final int CBUS_NAME = 0xE2;
     public static final int CBUS_STAT = 0xE3;
+    public static final int VLCB_ENACK = 0xE6;
+    public static final int VLCB_ESD = 0xE7;
+    public static final int CBUS_DTXC = 0xE9; // Defined by RFC0005 - Long message
+    public static final int VLCB_LM = 0xEA;   // VLCB Long message
 
     public static final int CBUS_PARAMS = 0xEF;
 
@@ -234,6 +275,17 @@ public final class CbusConstants {
     public static final int CBUS_BOOT_ENABLES = 0x07;
 
     /**
+     * Bootloader protocol
+     *
+     * These define options for the bootloader mode
+     */
+    public static final int CBUS_BOOT_MODE_WRT_UNLCK  = 0x01;   // Unlock write and erase
+    public static final int CBUS_BOOT_MODE_ERASE_ONLY = 0x02;   // Erase without write
+    public static final int CBUS_BOOT_MODE_AUTO_ERASE = 0x04;   // Enable auto erase before write
+    public static final int CBUS_BOOT_MODE_AUTO_INC   = 0x08;   // Enable auto inc the address
+    public static final int CBUS_BOOT_MODE_ACK        = 0x10;   // Acknowledge mode
+
+    /**
      * Programming modes
      */
     public static final int CBUS_PROG_DIRECT_BYTE = 0;
@@ -242,7 +294,7 @@ public final class CbusConstants {
     public static final int CBUS_PROG_REGISTER = 3;
     public static final int CBUS_PROG_ADDRESS = 4;
     public static final int CBUS_OPS_BYTE = 5;
-
+    
     /**
      * Error codes returned by CBUS_ERR
      */

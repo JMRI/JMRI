@@ -88,6 +88,6 @@ public class EcosPowerManager extends AbstractPowerManager<EcosSystemConnectionM
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosPowerManager.class);
 
 }

@@ -9,7 +9,7 @@ import org.bidib.jbidibc.messages.helpers.Context;
 
 /**
  *
- * @author Eckart Meyer Copyright (C) 2023
+ * @author Eckart Meyer Copyright (C) 2023-2024
  */
 public interface BiDiBPortController extends jmri.jmrix.PortAdapter {
 
@@ -38,5 +38,9 @@ public interface BiDiBPortController extends jmri.jmrix.PortAdapter {
      * 
      * @return Context
      */
-    public Context getContext();    
+    public Context getContext();
+
+    //default void delayedConfigure() {
+    //}
+
 }

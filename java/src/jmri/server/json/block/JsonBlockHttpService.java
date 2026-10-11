@@ -39,9 +39,9 @@ import jmri.server.json.sensor.JsonSensor;
  */
 public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
-    private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
-    private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
-    private JsonRosterHttpService rosterService = new JsonRosterHttpService(mapper);
+    private final JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
+    private final JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
+    private final JsonRosterHttpService rosterService = new JsonRosterHttpService(mapper);
 
     public JsonBlockHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -50,7 +50,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     @Override
     public ObjectNode doGet(Block block, String name, String type, JsonRequest request) throws JsonException {
         ObjectNode root = this.getNamedBean(block, name, getType(), request);
-        ObjectNode data = root.with(JSON.DATA);
+        ObjectNode data = root.withObject(JSON.DATA);
         switch (block.getState()) {
             case Block.UNDETECTED:
             case NamedBean.UNKNOWN:
@@ -70,14 +70,17 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
             ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) bv, name, REPORTER, request);
             data.set(VALUE, reporterValue);
         } else if (bv instanceof jmri.BasicRosterEntry) {
-            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) bv).getId(), request.id);
+            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(
+                request.locale, ((BasicRosterEntry) bv).getId(), request.id);
             data.set(VALUE, rosterValue);
         } else {
             // send string for types not explicitly handled
             data.put(VALUE, bv.toString());
         }
-        data.put(JsonSensor.SENSOR, block.getSensor() != null ? block.getSensor().getSystemName() : null);
-        data.put(JsonReporter.REPORTER, block.getReporter() != null ? block.getReporter().getSystemName() : null);
+        var sens = block.getSensor();
+        data.put(JsonSensor.SENSOR, sens != null ? sens.getSystemName() : null);
+        var rep = block.getReporter();
+        data.put(JsonReporter.REPORTER, rep != null ? rep.getSystemName() : null);
         data.put(JSON.SPEED, block.getBlockSpeed());
         data.put(JsonBlock.CURVATURE, block.getCurvature());
         data.put(JSON.DIRECTION, block.getDirection());

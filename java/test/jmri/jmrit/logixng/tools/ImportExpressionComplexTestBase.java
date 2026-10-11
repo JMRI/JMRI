@@ -9,8 +9,9 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test import of Logix to LogixNG.
@@ -22,6 +23,7 @@ import org.junit.Test;
  *
  * @author Daniel Bergqvist (C) 2020
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) // allows non-static method source in parameterized tests
 public abstract class ImportExpressionComplexTestBase {
 
     protected enum Setup {
@@ -72,9 +74,9 @@ public abstract class ImportExpressionComplexTestBase {
 
     public void assertBoolean(String message, boolean expectSuccess, boolean result) {
         if (expectSuccess) {
-            Assert.assertTrue(message, result);
+            Assertions.assertTrue(result, message);
         } else {
-            Assert.assertFalse(message, result);
+            Assertions.assertFalse(result, message);
         }
     }
 
@@ -195,25 +197,24 @@ public abstract class ImportExpressionComplexTestBase {
         check.runTest("LogixNG is removed. Enum: "+e.name(), false);
     }
 
-    @Test
-    public void testAll() throws JmriException {
-        for (Enum<?> e : getEnums()) {
+    @MethodSource("getEnums") // JUnit will call the method getEnums() to get the enums to test
+    @ParameterizedTest(name = "Test Enum: {0}")
+    public void testEnumExpression(Enum<?> e) throws JmriException {
+//        for (Enum<?> e : getEnums()) {
 //            if (e.name().startsWith("Memory")) continue;
 //            if (e.name().equals("MemoryEquals")) continue;
 //            if (e.name().equals("ConstantEquals")) continue;
 //            if (e.name().equals("ConstantCompareLessThan")) continue;
-            setupTest();
+//            setUp();
 //            System.out.format("Test enum: %s%n", e.name());
             testEnum(e);
 //            System.out.format("Test enum: %s done%n", e.name());
-            teardownTest();
-        }
+//            tearDown();
+//        }
     }
 
-//    // The minimal setup for log4J
-//    @Before
-//    public void setUp() {
-    public void setupTest() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -260,9 +261,8 @@ public abstract class ImportExpressionComplexTestBase {
                 .activateAllLogixNGs(false, false);
     }
 
-//    @After
-//    public void tearDown() {
-    public void teardownTest() {
+    @AfterEach
+    public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
 
         JUnitAppender.suppressWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");

@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.event.*;
 import java.util.*;
 
+import jmri.Category;
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
@@ -49,7 +50,8 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
                 EnableClipboard.EnableClipboard,
                 EnableRootRemoveCutCopy.DisableRootRemoveCutCopy,
                 EnableRootPopup.EnableRootPopup,
-                EnableExecuteEvaluate.EnableExecuteEvaluate
+                EnableExecuteEvaluate.EnableExecuteEvaluate,
+                EnableChangeUsernameForRoot.DisableChangeUsername
         );
 
         this.beanTableDataModel = m;

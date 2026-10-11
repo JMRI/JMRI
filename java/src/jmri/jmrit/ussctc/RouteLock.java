@@ -124,5 +124,5 @@ public class RouteLock implements Lock {
         return retval;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteLock.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteLock.class);
 }

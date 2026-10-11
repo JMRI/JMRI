@@ -108,6 +108,10 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return arr;
     }
 
+    /**
+     * Get the 4-Byte Address.
+     * @return the value from CANADDRESSBYTE1 (hi) to CANADDRESSBYTE4 (low)
+     */
     public long getAddress() {
         long addr = (getElement(MarklinConstants.CANADDRESSBYTE1));
         addr = (addr << 8) + (getElement(MarklinConstants.CANADDRESSBYTE2));
@@ -116,14 +120,45 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return addr;
     }
 
+    /**
+     * Sets the 4-byte address by splitting an integer into four bytes.
+     * @param address the 32-bit integer representing the full address
+     */
+    public void setAddress(long address) {
+        setElement(MarklinConstants.CANADDRESSBYTE1, (byte) ((address >> 24) & 0xFF)); // hi
+        setElement(MarklinConstants.CANADDRESSBYTE2, (byte) ((address >> 16) & 0xFF));
+        setElement(MarklinConstants.CANADDRESSBYTE3, (byte) ((address >> 8) & 0xFF));
+        setElement(MarklinConstants.CANADDRESSBYTE4, (byte) (address & 0xFF)); // lo
+    }
+
     public int getPriority() {
         return (getElement(0) >> 4);
     }
 
+    /**
+     * Get the Control Command.
+     * @return command, e.g. MarklinConstants.CMDHALTSYS
+     */
     public int getCommand() {
         int result = getElement(0) << 7;
         result = result + getElement(1) >> 1;
         return result;
+    }
+
+    /**
+     * Set the Command value.
+     * @param command new value.
+     */
+    public void setCommand(int command) {
+        // Update only the relevant bits in element0 (upper 7 bits)
+        int element0 = (getElement(0) & ~0x7F) | ((command >> 7) & 0x7F);
+
+        // Update only the relevant bits in element1 (lower 7 bits, shifted left)
+        int element1 = (getElement(1) & ~0xFE) | ((command & 0x7F) << 1);
+
+        // Set the updated elements
+        setElement(0, element0);
+        setElement(1, element1);
     }
 
     public int[] getHash() {

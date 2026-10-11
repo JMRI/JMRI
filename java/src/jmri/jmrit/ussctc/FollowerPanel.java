@@ -124,6 +124,6 @@ public class FollowerPanel extends BasePanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FollowerPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(FollowerPanel.class);
 
 }

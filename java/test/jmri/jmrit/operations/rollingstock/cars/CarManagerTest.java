@@ -684,8 +684,8 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("2nd car in list available for t3", c2, carList.get(1));
         Assert.assertEquals("3rd car in list available for t3", c3, carList.get(2));
 
-        // now don't allow pickups at the last location in the train's route
-        last.setPickUpAllowed(false);
+        // now don't allow local moves at the last location in the train's route
+        last.setLocalMovesAllowed(false);
         carList = manager.getAvailableTrainList(t3);
         Assert.assertEquals("Number of Cars available for t3", 2, carList.size());
         Assert.assertEquals("1st car in list available for t3", c2, carList.get(0));
@@ -743,7 +743,7 @@ public class CarManagerTest extends OperationsTestCase {
     }
 
     /**
-     * Cars at the last location are not normally included in car list if pick up is
+     * Cars at the last location are not normally included in car list if local moves is
      * disabled
      */
     @Test
@@ -755,7 +755,7 @@ public class CarManagerTest extends OperationsTestCase {
         r.addLocation(l1);
         r.addLocation(l2);
         RouteLocation last = r.addLocation(l3);
-        last.setPickUpAllowed(false); // no pulls
+        last.setLocalMovesAllowed(false); // no pulls
 
         Train t1 = new Train("id1", "F");
         t1.setRoute(r);
@@ -1026,7 +1026,7 @@ public class CarManagerTest extends OperationsTestCase {
         c6.setLastDate(time); // one year ago.
 
         // now get cars by last move date.
-        List<Car> carList = manager.getByLastDateList(manager.getByIdList());
+        List<Car> carList = manager.getByLastDateList();
         Assert.assertEquals("Number of Cars by last move date", 6, carList.size());
         Assert.assertEquals("1st car in list by move date", c6, carList.get(0));
         Assert.assertEquals("2nd car in list by move date", c4, carList.get(1));

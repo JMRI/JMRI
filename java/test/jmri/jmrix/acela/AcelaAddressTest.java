@@ -29,6 +29,6 @@ public class AcelaAddressTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaAddressTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AcelaAddressTest.class);
 
 }

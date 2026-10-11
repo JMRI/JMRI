@@ -2,8 +2,9 @@ package jmri.server.json;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for the jmri.server.json package
@@ -15,14 +16,14 @@ public class JsonServerTest {
     @Test
     public void testCtor() {
         JsonServer a = new JsonServer();
-        Assert.assertNotNull(a);
+        assertNotNull(a);
     }
 
     @Test
     public void testCtorwithParameter() {
         JsonServer a = new JsonServer(12345, 10000);
         //jmri.util.JUnitAppender.assertErrorMessage("Failed to connect to port 12345");
-        Assert.assertNotNull(a);
+        assertNotNull(a);
     }
 
     @BeforeEach

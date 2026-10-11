@@ -27,6 +27,6 @@ public class HexFileServerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HexFileServerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(HexFileServerTest.class);
 
 }

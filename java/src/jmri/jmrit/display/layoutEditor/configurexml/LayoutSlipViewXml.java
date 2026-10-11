@@ -19,7 +19,7 @@ public class LayoutSlipViewXml extends LayoutTrackViewXml {
     public LayoutSlipViewXml() {
     }
 
-    final static EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutSlip.TurnoutType.class);
+    static final EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutSlip.TurnoutType.class);
 
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml");
@@ -84,16 +84,16 @@ public class LayoutSlipViewXml extends LayoutTrackViewXml {
         }
 
         if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
+            element.setAttribute("connectaname", p.getConnectA().getId());
         }
         if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
+            element.setAttribute("connectbname", p.getConnectB().getId());
         }
         if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
+            element.setAttribute("connectcname", p.getConnectC().getId());
         }
         if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
+            element.setAttribute("connectdname", p.getConnectD().getId());
         }
 
         if (!p.getSignalA1Name().isEmpty()) {
@@ -368,5 +368,5 @@ public class LayoutSlipViewXml extends LayoutTrackViewXml {
         return "";
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipViewXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipViewXml.class);
 }

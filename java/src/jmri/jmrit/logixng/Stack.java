@@ -41,11 +41,11 @@ public interface Stack {
     ValueAndType getValueAndTypeAtIndex(int index);
 
     /**
-     * Set the value at an index
+     * Copy the value at an index
      * @param index the index from bottom of the table
      * @param valueAndType the new value and type
      */
-    void setValueAndTypeAtIndex(int index, ValueAndType valueAndType);
+    void copyValueAndTypeAtIndex(int index, ValueAndType valueAndType);
 
     /**
      * Get the number of items on the stack

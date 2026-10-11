@@ -29,6 +29,6 @@ public class DCCppTcpDriverAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppTcpDriverAdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppTcpDriverAdapterTest.class);
 
 }

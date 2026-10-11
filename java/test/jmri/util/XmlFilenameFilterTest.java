@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class XmlFilenameFilterTest {
     @Test
     public void testCTor() {
         XmlFilenameFilter t = new XmlFilenameFilter();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -25,6 +24,6 @@ public class XmlFilenameFilterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XmlFilenameFilterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(XmlFilenameFilterTest.class);
 
 }

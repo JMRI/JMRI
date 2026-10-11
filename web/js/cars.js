@@ -28,9 +28,9 @@ function showError(code, message) {
 //append a new row to the table, or replace an existing row, based on name
 function setRow(name, data){
     var tbody = $("table#jmri-data tbody").html(); //get current table body
-    var carType = data.carType + ", " + data.color;
     var tds = "<td class='carName'>" + data.name 
-        + "</td><td class='carType'>" + carType 
+        + "</td><td class='carType'>" + data.type
+		+ "</td><td class='carColor'>" + data.color
         + "</td><td class='location'>";
     //format location description column
     if (data.locationUnknown == true) {  

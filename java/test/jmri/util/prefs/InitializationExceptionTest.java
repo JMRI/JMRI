@@ -2,7 +2,6 @@ package jmri.util.prefs;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class InitializationExceptionTest {
 
    @Test
    public void testCtor(){
-      Assert.assertNotNull("InitializationException constructor",new InitializationException("test exception",null));
+      Assertions.assertNotNull( new InitializationException("test exception",null), "InitializationException constructor");
    }
 
    @BeforeEach

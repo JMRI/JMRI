@@ -31,14 +31,17 @@ public class SignalMastLogicTableDataModelTest extends jmri.jmrit.beantable.Abst
         return sml;
     }
 
+    @Test
     @Disabled
     @Override
     public void testNBFromUserSystemNames() {}
 
+    @Test
     @Disabled
     @Override
     public void testGetBaseColumnNames() {}
 
+    @Test
     @Disabled
     @Override
     public void testGetBaseColumnClasses() {}

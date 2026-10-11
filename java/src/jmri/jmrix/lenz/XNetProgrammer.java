@@ -35,7 +35,7 @@ import jmri.jmrix.AbstractProgrammer;
  * }
  * [*] --> NormalMode
  * state ServiceMode{
- * [*] --> INQUIRESENT 
+ * [*] --> INQUIRESENT
  * REQUESTSENT --> INQUIRESENT : Command Successfully Received
  * REQUESTSENT --> NOTPROGRAMMING : timeout()
  * INQUIRESENT --> NOTPROGRAMMING : Result Received
@@ -78,9 +78,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
     protected static final int XNetProgrammerTimeout = 90000;
 
-    // keep track of whether or not the command station is in service 
-    // mode.  Used for determining if "OK" message is an aproriate 
-    // response to a request to a programming request. 
+    // keep track of whether or not the command station is in service
+    // mode.  Used for determining if "OK" message is an aproriate
+    // response to a request to a programming request.
     protected boolean _service_mode = false;
 
     public XNetProgrammer(XNetTrafficController tc) {
@@ -97,7 +97,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         setMode(ProgrammingMode.DIRECTBYTEMODE);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -111,7 +111,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Can we read from a specific CV in the specified mode? Answer may not be
@@ -149,7 +149,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Can we write to a specific CV in the specified mode? Answer may not be
@@ -192,7 +192,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     protected int _val; // remember the value being read/written for confirmative reply
     protected int _cv; // remember the cv being read/written
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -217,7 +217,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
             } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV, val);
                 controller().sendXNetMessage(msg, this);
-            } else { // register mode by elimination 
+            } else { // register mode by elimination
                 XNetMessage msg = XNetMessage.getWriteRegisterMsg(registerFromCV(CV), val);
                 controller().sendXNetMessage(msg, this);
             }
@@ -227,7 +227,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -235,7 +235,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         readCV(CV, p);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -264,7 +264,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
             } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getReadDirectCVMsg(CV);
                 controller().sendXNetMessage(msg, this);
-            } else { // register mode by elimination    
+            } else { // register mode by elimination
                 XNetMessage msg = XNetMessage.getReadRegisterMsg(registerFromCV(CV));
                 controller().sendXNetMessage(msg, this);
             }
@@ -288,7 +288,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -296,8 +296,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
             if (!_service_mode) {
-                // the command station is in service mode.  An "OK" 
-                // message can trigger a request for service mode 
+                // the command station is in service mode.  An "OK"
+                // message can trigger a request for service mode
                 // results if progrstate is REQUESTSENT.
                 _service_mode = true;
             } else {  // _ service_mode == true
@@ -310,11 +310,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
             if (_service_mode) {
-                // the command station is not in service mode.  An 
-                // "OK" message can not trigger a request for service 
+                // the command station is not in service mode.  An
+                // "OK" message can not trigger a request for service
                 // mode results if progrstate is REQUESTSENT.
                 _service_mode = false;
-            } else { // _service_mode == false 
+            } else { // _service_mode == false
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -334,10 +334,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                     && (m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY
                     || m.getElement(1) == XNetConstants.PROG_CS_READY))) {
                 if (!getCanRead()) {
-                    // on systems like the Roco MultiMaus 
+                    // on systems like the Roco MultiMaus
                     // (which does not support reading)
                     // let a timeout occur so the system
-                    // has time to write data to the 
+                    // has time to write data to the
                     // decoder
                     restartTimer(SHORT_TIMEOUT);
                     return;
@@ -392,7 +392,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                     // we always save the cv number, but if
                     // we are using register mode, there is
                     // at least one case (CV29) where the value
-                    // returned does not match the value we saved. 
+                    // returned does not match the value we saved.
                     if (m.getServiceModeCVNumber() != _cv
                             && m.getServiceModeCVNumber() != registerFromCV(_cv)) {
                         log.debug(" result for CV {} expecting {}",m.getServiceModeCVNumber(),_cv);
@@ -409,7 +409,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 }
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                // if this was a read, we cached the value earlier.  
+                // if this was a read, we cached the value earlier.
                 // If its a write, we're to return the original write value
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             } else if (m.isDirectModeResponse()) {
@@ -468,8 +468,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
             } else if (m.getElement(0) == XNetConstants.CS_INFO
                     && m.getElement(1) == XNetConstants.PROG_CS_BUSY) {
-                // Command station indicated it was busy in 
-                // programming mode, request results again 
+                // Command station indicated it was busy in
+                // programming mode, request results again
                 // (do not reset timer or change mode)
                 // NOTE: Currently only sent by OpenDCC.
                 controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
@@ -496,7 +496,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      */
@@ -505,9 +505,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
       // The prgrammer does not use outgoing XpressNet messges.
     }
 
-    /** 
+    /**
      * {@inheritDoc}
-     * 
+     *
      * Log and ignore
      */
     @Override
@@ -516,9 +516,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     }
 
     /**
-     * Since the Lenz programming sequence requires several 
+     * Since the Lenz programming sequence requires several
      * operations, we want to be able to check and see if we are
-     * currently programming before allowing the Traffic Controller 
+     * currently programming before allowing the Traffic Controller
      * to send a request to exit service mode.
      * @return true if programmer busy, else false.
      */
@@ -526,7 +526,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return (progState != NOTPROGRAMMING);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -565,6 +565,19 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
     protected XNetTrafficController controller() {
         return _controller;
+    }
+
+    @Override
+    public Configurator getConfigurator() {
+        return new XNetConfigurator();
+    }
+
+
+    public class XNetConfigurator implements Configurator {
+
+        public boolean programmerBusy() {
+            return XNetProgrammer.this.programmerBusy();
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetProgrammer.class);

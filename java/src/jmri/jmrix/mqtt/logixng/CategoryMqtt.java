@@ -4,14 +4,14 @@ import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 
 import java.util.List;
 
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 
 /**
  * Defines the category MQTT
  *
  * @author Daniel Bergqvist Copyright 2022
  */
-public final class CategoryMqtt extends Category {
+public final class CategoryMqtt extends LogixNG_Category {
 
     /**
      * A item on the layout, for example turnout, sensor and signal mast.
@@ -25,8 +25,8 @@ public final class CategoryMqtt extends Category {
 
     public static void registerCategory() {
         // We don't want to add these classes if we don't have a MQTT connection
-        if (hasMQTT() && !Category.values().contains(MQTT)) {
-            Category.registerCategory(MQTT);
+        if (hasMQTT() && !LogixNG_Category.values().contains(MQTT)) {
+            LogixNG_Category.registerCategory(MQTT);
         }
     }
 

@@ -20,9 +20,6 @@ import jmri.util.ThreadingUtil;
 
 import jmri.util.prefs.JmriPreferencesActionFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import apps.util.Log4JUtil;
 
 /**
@@ -41,12 +38,11 @@ import apps.util.Log4JUtil;
  */
 public abstract class AppsBase {
 
-    private final static String CONFIG_FILENAME = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
+    private static final String CONFIG_FILENAME = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
     static boolean preInit = false;
-    private final static Logger log = LoggerFactory.getLogger(AppsBase.class);
 
     /**
      * Initial actions before frame is created, invoked in the applications
@@ -60,7 +56,7 @@ public abstract class AppsBase {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="Info String always needs to be evaluated")
-    static public void preInit(String applicationName) {
+    public static void preInit(String applicationName) {
         Log4JUtil.initLogging();
 
         try {
@@ -169,9 +165,6 @@ public abstract class AppsBase {
         try {
             // GUI should use ProfileManagerDialog.getStartingProfile here
             if (ProfileManager.getStartingProfile() != null) {
-                // Manually setting the configFilename property since calling
-                // Apps.setConfigFilename() does not reset the system property
-                System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 if (profile != null) {
                     log.info("Starting with profile {}", profile.getId());
@@ -238,12 +231,15 @@ public abstract class AppsBase {
         }
         if (sharedConfig != null) {
             file = sharedConfig;
+            log.trace("Try preferences from sharedConfig {}", file.getPath());
         } else if (!new File(getConfigFileName()).isAbsolute()) {
             // must be relative, but we want it to
             // be relative to the preferences directory
             file = new File(FileUtil.getUserFilesPath() + getConfigFileName());
+            log.trace("Try references from getUserFilesPath {}", file.getPath());
         } else {
             file = new File(getConfigFileName());
+            log.trace("Try references from getConfigFileName {}", file.getPath());
         }
         // don't try to load if doesn't exist, but mark as not OK
         if (!file.exists()) {
@@ -252,6 +248,7 @@ public abstract class AppsBase {
             log.info("No pre-existing config file found, searched for '{}'", file.getPath());
             return;
         }
+        log.debug("Found preferences file '{}'", file.getPath());
         preferenceFileExists = true;
 
         // ensure the UserPreferencesManager has loaded. Done on GUI
@@ -353,7 +350,7 @@ public abstract class AppsBase {
      * @param def  Default value if no other is provided
      * @param args Argument array from the main routine
      */
-    static protected void setConfigFilename(String def, String[] args) {
+    protected static void setConfigFilename(String def, String[] args) {
         // skip if org.jmri.Apps.configFilename is set
         if (System.getProperty("org.jmri.Apps.configFilename") != null) {
             return;
@@ -377,14 +374,14 @@ public abstract class AppsBase {
     }
 
     // We will use the value stored in the system property
-    static public String getConfigFileName() {
+    public static String getConfigFileName() {
         if (System.getProperty("org.jmri.Apps.configFilename") != null) {
             return System.getProperty("org.jmri.Apps.configFilename");
         }
         return CONFIG_FILENAME;
     }
 
-    static protected void setJmriSystemProperty(String key, String value) {
+    protected static void setJmriSystemProperty(String key, String value) {
         try {
             String current = System.getProperty("org.jmri.Apps." + key);
             if (current == null) {
@@ -402,7 +399,7 @@ public abstract class AppsBase {
      *
      * @return always returns false
      */
-    static public boolean handleQuit() {
+    public static boolean handleQuit() {
         log.debug("Start handleQuit");
         try {
             InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
@@ -415,7 +412,7 @@ public abstract class AppsBase {
     /**
      * The application decided to restart, handle that.
      */
-    static public void handleRestart() {
+    public static void handleRestart() {
         log.debug("Start handleRestart");
         try {
             InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
@@ -424,5 +421,5 @@ public abstract class AppsBase {
         }
     }
 
-
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsBase.class);
 }

@@ -1,5 +1,7 @@
 package jmri.jmrit.display.switchboardEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -18,6 +20,7 @@ import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.swing.ManagerComboBox;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
@@ -67,9 +70,9 @@ public class SwitchboardEditor extends Editor {
     private final JLabel next = new JLabel(iconNext);
     private final int rangeBottom = 1;
     private final int rangeTop = 100000; // for MERG etc where thousands = node number, total number on board limited to unconnectedRangeLimit anyway
-    private final static int unconnectedRangeLimit = 400;
-    private final static int rangeSizeWarning = 250;
-    private final static int initialMax = 24;
+    private static final int unconnectedRangeLimit = 400;
+    private static final int rangeSizeWarning = 250;
+    private static final int initialMax = 24;
     private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeBottom, rangeBottom, rangeTop - 1, 1));
     private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(initialMax, rangeBottom + 1, rangeTop, 1));
     private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
@@ -90,11 +93,11 @@ public class SwitchboardEditor extends Editor {
         Bundle.getMessage("Symbols")
     };
     private JComboBox<String> shapeList;
-    final static int BUTTON = 0;
-    final static int SLIDER = 1;
-    final static int KEY = 2;
-    final static int SYMBOL = 3;
-    //final static int ICON = 4;
+    static final int BUTTON = 0;
+    static final int SLIDER = 1;
+    static final int KEY = 2;
+    static final int SYMBOL = 3;
+    //static final int ICON = 4;
     private final ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
     private final ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
     private final ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
@@ -112,9 +115,9 @@ public class SwitchboardEditor extends Editor {
     // editor items (adapted from LayoutEditor toolbar)
     private Color defaultTextColor = Color.BLACK;
     private Color defaultActiveColor = Color.RED; // user configurable since 4.21.3
-    protected final static Color darkActiveColor = new Color(180, 50, 50);
+    protected static final Color darkActiveColor = new Color(180, 50, 50);
     private Color defaultInactiveColor = Color.GREEN; // user configurable since 4.21.3
-    protected final static Color darkInactiveColor = new Color(40, 150, 30);
+    protected static final Color darkInactiveColor = new Color(40, 150, 30);
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
     private int rows = 4; // matches initial autoRows pref for default pane size
@@ -152,9 +155,9 @@ public class SwitchboardEditor extends Editor {
     private final JRadioButtonMenuItem sizeSmall = new JRadioButtonMenuItem(Bundle.getMessage("optionSmaller"));
     private final JRadioButtonMenuItem sizeDefault = new JRadioButtonMenuItem(Bundle.getMessage("optionDefault"));
     private final JRadioButtonMenuItem sizeLarge = new JRadioButtonMenuItem(Bundle.getMessage("optionLarger"));
-    final static int SIZE_MIN = 50;
-    final static int SIZE_INIT = 100;
-    final static int SIZE_MAX = 150;
+    static final int SIZE_MIN = 50;
+    static final int SIZE_INIT = 100;
+    static final int SIZE_MAX = 150;
 
     /**
      * To count number of displayed beanswitches, this array holds all beanswitches to be displayed
@@ -191,7 +194,7 @@ public class SwitchboardEditor extends Editor {
         // always available (?) and supports all types, not required now, will be set by listener
 
         Container contentPane = getContentPane(); // the actual Editor configuration pane
-        setVisible(false);      // start with Editor window hidden
+        ThreadingUtil.runOnGUI( () -> setVisible(false)); // start with Editor window hidden
         setUseGlobalFlag(true); // always true for a Switchboard
         // handle Editor close box clicked without deleting the Switchboard panel
         super.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -200,7 +203,7 @@ public class SwitchboardEditor extends Editor {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 log.debug("switchboardEditor close box selected");
                 setAllEditable(false);
-                setVisible(false); // hide Editor window
+                ThreadingUtil.runOnGUI( () -> setVisible(false)); // hide Editor window
             }
         });
         // make menus
@@ -462,6 +465,10 @@ public class SwitchboardEditor extends Editor {
      * Switchboard JPanel WindowResize() event is handled by resizeInFrame()
      */
     public void updatePressed() {
+        ThreadingUtil.runOnGUI(this::updatePressedOnGui);
+    }
+
+    private void updatePressedOnGui() {
         log.debug("updatePressed START _tileSize = {}", _tileSize);
 
         if (_autoItemRange && !autoItemRange.isSelected()) {
@@ -1543,15 +1550,6 @@ public class SwitchboardEditor extends Editor {
         return _showUserName;
     }
 
-    /**
-     * Initial, simple boolean label option
-     * @param on true to show both system and user name on the switch label
-     */
-    @Deprecated
-    public void setShowUserName(Boolean on) {
-        setShowUserName(on ? SwitchBoardLabelDisplays.BOTH_NAMES : SwitchBoardLabelDisplays.SYSTEM_NAME);
-    }
-
     public void setShowUserName(SwitchBoardLabelDisplays label) {
         _showUserName = label;
         switch (label) {
@@ -1680,6 +1678,8 @@ public class SwitchboardEditor extends Editor {
      * so we don't dispose it (yet).
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Just hiding the window, not actually closing it")
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         setAllEditable(false);
@@ -1730,7 +1730,7 @@ public class SwitchboardEditor extends Editor {
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);
-        targetFrame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> targetFrame.setVisible(true) );
 
         JMenuBar menuBar = new JMenuBar();
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
@@ -1923,6 +1923,6 @@ public class SwitchboardEditor extends Editor {
         return _iconSquare;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwitchboardEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwitchboardEditor.class);
 
 }

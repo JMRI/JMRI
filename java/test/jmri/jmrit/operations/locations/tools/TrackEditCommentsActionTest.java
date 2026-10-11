@@ -9,10 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.SpurEditFrame;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.SpurEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -51,6 +49,6 @@ public class TrackEditCommentsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackEditCommentsActionTest.class);
 
 }

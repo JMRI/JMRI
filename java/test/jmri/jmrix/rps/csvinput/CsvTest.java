@@ -1,12 +1,18 @@
 package jmri.jmrix.rps.csvinput;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import jmri.util.JUnitUtil;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,32 +24,46 @@ public class CsvTest {
 
     @Test
     public void testCreateReader() throws java.io.IOException {
-        CSVParser parser = CSVParser.parse(new File("java/test/jmri/jmrix/rps/csvinput/testdata.csv"), StandardCharsets.UTF_8, CSVFormat.DEFAULT.withSkipHeaderRecord());
-        Assert.assertNotNull("exists", parser);
+        var format = CSVFormat.DEFAULT;
+        format.builder().setSkipHeaderRecord(true);
+        CSVParser parser = CSVParser.parse(new File("java/test/jmri/jmrix/rps/csvinput/testdata.csv"),
+            StandardCharsets.UTF_8, format);
+        assertNotNull( parser, "exists");
     }
 
     @Test
     public void testReading() throws java.io.IOException {
-        CSVParser parser = CSVParser.parse(new File("java/test/jmri/jmrix/rps/csvinput/testdata.csv"), StandardCharsets.UTF_8, CSVFormat.DEFAULT);
+        CSVParser parser = CSVParser.parse(new File("java/test/jmri/jmrix/rps/csvinput/testdata.csv"),
+            StandardCharsets.UTF_8, CSVFormat.DEFAULT);
         List<CSVRecord> records = parser.getRecords();
-        Assert.assertEquals("2 lines", 2, records.size());
-        
-        CSVRecord record = records.get(0);
-        Assert.assertNotNull("read 1st line", record);
-        Assert.assertEquals("1st line column count", 4, record.size());
+        assertEquals( 2, records.size(), "2 lines");
 
-        Assert.assertEquals("1st line datum 1", "1", record.get(0));
-        Assert.assertEquals("1st line datum 2", "2", record.get(1));
-        Assert.assertEquals("1st line datum 3", "3", record.get(2));
-        Assert.assertEquals("1st line datum 4", "4", record.get(3));
+        CSVRecord record = records.get(0);
+        assertNotNull( record, "read 1st line");
+        assertEquals( 4, record.size(), "1st line column count");
+
+        assertEquals( "1", record.get(0), "1st line datum 1");
+        assertEquals( "2", record.get(1), "1st line datum 2");
+        assertEquals( "3", record.get(2), "1st line datum 3");
+        assertEquals( "4", record.get(3), "1st line datum 4");
 
         record = records.get(1);
-        Assert.assertNotNull("read 2nd line", record);
+        assertNotNull( record, "read 2nd line");
 
-        Assert.assertEquals("2nd line datum 1", "4", record.get(0));
-        Assert.assertEquals("2nd line datum 2", "3", record.get(1));
-        Assert.assertEquals("2nd line datum 3", "2", record.get(2));
-        Assert.assertEquals("2nd line datum 4", "1", record.get(3));
+        assertEquals( "4", record.get(0), "2nd line datum 1");
+        assertEquals( "3", record.get(1), "2nd line datum 2");
+        assertEquals( "2", record.get(2), "2nd line datum 3");
+        assertEquals( "1", record.get(3), "2nd line datum 4");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

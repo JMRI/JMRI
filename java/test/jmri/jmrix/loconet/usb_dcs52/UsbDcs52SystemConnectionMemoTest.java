@@ -28,6 +28,6 @@ public class UsbDcs52SystemConnectionMemoTest extends LnSystemConnectionMemoTest
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbDcs52SystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UsbDcs52SystemConnectionMemoTest.class);
 
 }

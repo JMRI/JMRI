@@ -1,12 +1,13 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test LogixNG_Manager
@@ -17,54 +18,54 @@ public class LogixNG_ManagerTest {
 
     private void testSystemNameFormat(String prefix) {
         // Validation is correct
-        Assert.assertEquals("Validation is correct",
-                Manager.NameValidity.VALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"123"));
+        assertEquals( Manager.NameValidity.VALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"123"),
+                "Validation is correct");
 
         // This is not valid since the dollar sign is missing after the prefix
-        Assert.assertEquals("Validation is not correct",
-                Manager.NameValidity.INVALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"Hello World"));
+        assertEquals( Manager.NameValidity.INVALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"Hello World"),
+                "Validation is not correct");
 
         // Validation is correct
-        Assert.assertEquals("Validation is correct",
-                Manager.NameValidity.VALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":AUTO:123"));
+        assertEquals( Manager.NameValidity.VALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":AUTO:123"),
+                "Validation is correct");
 
         // This is not valid since :AUTO: names must be digits only after :AUTO:
-        Assert.assertEquals("Validation is not correct",
-                Manager.NameValidity.INVALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":AUTO:Hello"));
+        assertEquals( Manager.NameValidity.INVALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":AUTO:Hello"),
+                "Validation is not correct");
 
         // Validation is correct
-        Assert.assertEquals("Validation is correct",
-                Manager.NameValidity.VALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"$123"));
+        assertEquals( Manager.NameValidity.VALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"$123"),
+                "Validation is correct");
 
         // Validation is correct
-        Assert.assertEquals("Validation is correct",
-                Manager.NameValidity.VALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"$Hello World"));
+        assertEquals( Manager.NameValidity.VALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+"$Hello World"),
+                "Validation is correct");
 
         // Validation is correct
-        Assert.assertEquals("Validation is correct",
-                Manager.NameValidity.VALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JMRI:Signal Mast System"));
+        assertEquals( Manager.NameValidity.VALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JMRI:Signal Mast System"),
+                "Validation is correct");
 
         // This is invalid since JMRI is misspelled
-        Assert.assertEquals("Validation is not correct",
-                Manager.NameValidity.INVALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JRMI:Signal Mast System"));
+        assertEquals( Manager.NameValidity.INVALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JRMI:Signal Mast System"),
+                "Validation is not correct");
 
         // Validation is correct
-        Assert.assertEquals("Validation is correct",
-                Manager.NameValidity.VALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JMRI-LIB:Track Warrant System"));
+        assertEquals( Manager.NameValidity.VALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JMRI-LIB:Track Warrant System"),
+                "Validation is correct");
 
         // This is invalid since JMRI is misspelled
-        Assert.assertEquals("Validation is not correct",
-                Manager.NameValidity.INVALID,
-                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JRMI-LIB:Signal Mast System"));
+        assertEquals( Manager.NameValidity.INVALID,
+                LogixNG_Manager.validSystemNameFormat(prefix, prefix+":JRMI-LIB:Signal Mast System"),
+                "Validation is not correct");
     }
 
     private void testValidSystemNameFormat(String prefix) {
@@ -87,11 +88,10 @@ public class LogixNG_ManagerTest {
         testValidSystemNameFormat("PQ");
         testValidSystemNameFormat("P55Q");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
-        Assert.assertEquals("beanType is correct", "ConditionalNG", conditionalNG.getBeanType());
+        assertEquals( "ConditionalNG", conditionalNG.getBeanType(), "beanType is correct");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -100,7 +100,7 @@ public class LogixNG_ManagerTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -92,10 +93,10 @@ public class PositionablePopupUtil {
     /**
      * *************************************************************************************
      */
-    static final public int FONT_COLOR = 0x00;
-    static final public int BACKGROUND_COLOR = 0x01;
-    static final public int BORDER_COLOR = 0x02;
-    static final public int MIN_SIZE = 5;
+    public static final int FONT_COLOR = 0x00;
+    public static final int BACKGROUND_COLOR = 0x01;
+    public static final int BORDER_COLOR = 0x02;
+    public static final int MIN_SIZE = 5;
 
     private int fixedWidth = 0;
     private int fixedHeight = 0;
@@ -135,6 +136,42 @@ public class PositionablePopupUtil {
         edit.add(CoordinateEdit.getFixedSizeEditAction(_parent));
 
         popup.add(edit);
+        
+        // Handle special case of columns in a MemoryInputIcon.
+        // This is done via reflection to avoid passing a parameter
+        // through a large number of call layers.
+        if (_parent instanceof MemoryInputIcon || _parent instanceof BlockContentsInputIcon) {
+            var icon = (MemoryInputIcon) _parent;
+            edit = new JMenu(Bundle.getMessage("EditColumns"));
+            jmi = edit.add("Columns = "+icon.getNumColumns());
+            jmi.setEnabled(false);
+
+            var setColumns = new JMenuItem(Bundle.getMessage("EditSetColumns"));
+            setColumns.addActionListener((ActionEvent event) -> {
+                Component component = null;
+                if (_parent instanceof Component) {
+                    component = (Component) _parent;
+                }
+                String newValue = jmri.util.swing.JmriJOptionPane.showInputDialog(
+                    component,
+                    Bundle.getMessage("EditSetDialog"),
+                    ""+icon.getNumColumns()
+                );
+                if (newValue != null) { // if not cancelled by user
+                    int update = 0;
+                    try {
+                        update = Integer.parseInt(newValue);
+                    } catch (NumberFormatException e) { // ill-formed input
+                        update = icon.getNumColumns();
+                    }
+                    icon.setNumColumns(update);
+                    icon.revalidate();  // put new size into effect
+                }
+            });
+            edit.add(setColumns);
+            
+            popup.add(edit);
+        }
     }
 
     public void setTextMarginMenu(JPopupMenu popup) {
@@ -554,9 +591,9 @@ public class PositionablePopupUtil {
         popup.add(justMenu);
     }
 
-    static public final int LEFT = 0x00;
-    static public final int RIGHT = 0x02;
-    static public final int CENTRE = 0x04;
+    public static final int LEFT = 0x00;
+    public static final int RIGHT = 0x02;
+    public static final int CENTRE = 0x04;
 
     private int justification = CENTRE; //Default is always Centre
 
@@ -653,9 +690,9 @@ public class PositionablePopupUtil {
         return null;
     }
 
-    public final static int HORIZONTAL = 0x00;
-    public final static int VERTICAL_UP = 0x01;
-    public final static int VERTICAL_DOWN = 0x02;
+    public static final int HORIZONTAL = 0x00;
+    public static final int VERTICAL_UP = 0x01;
+    public static final int VERTICAL_DOWN = 0x02;
 
     private int orientation = HORIZONTAL;
 
@@ -767,5 +804,5 @@ public class PositionablePopupUtil {
         viewAdditionalMenu.forEach(popup::add);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class);
 }

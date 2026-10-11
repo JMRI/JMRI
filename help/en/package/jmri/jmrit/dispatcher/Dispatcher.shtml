@@ -764,7 +764,7 @@
         </li>
 
         <li>
-          <p><strong>Allocated Section ID</strong> - Shows the sysetm name of the Section allocated
+          <p><strong>Allocated Section ID</strong> - Shows the system name of the Section allocated
           to the Active Train on the left.</p>
         </li>
 
@@ -927,6 +927,13 @@
       <p>Note: Overall ramping rates can be adjusted in Dispatcher <a href=
       "Options.shtml">Options</a>.</p>
 
+      <p class="noted"><span class="since">since 5.15.4</span>An advanced feature has been added to
+      Dispatcher which controls auto trains based on the physical characteristics of a prototype
+      locomotive. This is controlled by the <strong>Physics</strong> ramp setting and related roster
+      changes. See <a href="NewTrain.shtml">New Train</a> for the new Dispatcher settings and
+      <a href="../../../../html/apps/DecoderPro/Roster.shtml#loco_data">Locomotive Data</a> for the
+      roster related changes.</p>
+
       <p>When traversing the layout, an Auto Active Train changes speed in response to the signals
       it passes. If the next signal it faces is dark, red or flashing red, the train will stop in
       the current Section (see below). If the facing signal is green or flashing green, the train
@@ -1009,9 +1016,9 @@
         <li>
           <p>Auto Active Trains follow signals, requiring signals as part of the Layout Editor
           panels. Hardware signals on the layout need not be physically present, but signals and
-          signal logic (Either SignalHeads & SSL or SignalMasts & SML) must be configured in the
-          Layout Editor panels, and must be connected to the track at the proper block transition
-          points.</p>
+          signal logic (Either SignalHeads &amp; SSL or SignalMasts &amp; SML) must be configured in
+          the Layout Editor panels, and must be connected to the track at the proper block
+          transition points.</p>
         </li>
 
         <li>

@@ -22,6 +22,8 @@
     <programming direct="yes" paged="no" register="no" ops="yes"/>
 
     <variables>
+    
+<!-- commented out because without a type specification element it doesn't do anything   
       <variable item="Decoder Address lo" CV="1" default="03">
         <label>Decoder address low byte</label>
       </variable>
@@ -45,6 +47,7 @@
       <variable item="Configuration" CV="29" readOnly="yes" default="192">
         <label>Configuration</label>
       </variable>
+-->
 
     </variables>
 

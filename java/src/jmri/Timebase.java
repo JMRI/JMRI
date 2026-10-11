@@ -23,6 +23,26 @@ import javax.annotation.Nonnull;
 public interface Timebase extends NamedBean {
 
     /**
+     * Property Change sent when the minute value changes.
+     */
+    String PROPERTY_CHANGE_MINUTES = "minutes";
+
+    /**
+     * Property Change sent when the rate value changes.
+     */
+    String PROPERTY_CHANGE_RATE = "rate";
+
+    /**
+     * Property Change sent when the run status changes.
+     */
+    String PROPERTY_CHANGE_RUN = "run";
+
+    /**
+     * Property Change sent when the minute value changes.
+     */
+    String PROPERTY_CHANGE_TIME = "time";
+
+    /**
      * Set the current time.
      *
      * @param d the new time
@@ -95,7 +115,8 @@ public interface Timebase extends NamedBean {
      * because of the peculiar way some hardware clocks attempt to synchronize
      * with the JMRI fast clock.
      *
-     * @return the rate
+     * @return the rate, e.g. 1.0 runs at the same rate as real clocks,
+     *         2.0 at twice the speed.
      */
     double userGetRate();
 

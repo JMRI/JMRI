@@ -50,6 +50,11 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 
+        if (pv.getShowUnknown()) {
+            // only write if set to help with backward compatibility
+            element.setAttribute("showunknown", "yes");
+        }
+        
         if (p.showToolTip()) {
             element.setAttribute("showtooltip", "yes");
         }
@@ -57,24 +62,24 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         element.setAttribute("continuing", "" + p.getContinuingSense());
 
         Point2D coords = pv.getCoordsCenter();
-        element.setAttribute("xcen", "" + coords.getX());
-        element.setAttribute("ycen", "" + coords.getY());
+        element.setAttribute("xcen", "" + roundForStore(coords.getX()));
+        element.setAttribute("ycen", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsA();
-        element.setAttribute("xa", "" + coords.getX());
-        element.setAttribute("ya", "" + coords.getY());
+        element.setAttribute("xa", "" + roundForStore(coords.getX()));
+        element.setAttribute("ya", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsB();
-        element.setAttribute("xb", "" + coords.getX());
-        element.setAttribute("yb", "" + coords.getY());
+        element.setAttribute("xb", "" + roundForStore(coords.getX()));
+        element.setAttribute("yb", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsC();
-        element.setAttribute("xc", "" + coords.getX());
-        element.setAttribute("yc", "" + coords.getY());
+        element.setAttribute("xc", "" + roundForStore(coords.getX()));
+        element.setAttribute("yc", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsD();
-        element.setAttribute("xd", "" + coords.getX());
-        element.setAttribute("yd", "" + coords.getY());
+        element.setAttribute("xd", "" + roundForStore(coords.getX()));
+        element.setAttribute("yd", "" + roundForStore(coords.getY()));
 
         element.setAttribute("ver", "" + p.getVersion());
 
@@ -110,16 +115,16 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         }
 
         if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
+            element.setAttribute("connectaname", p.getConnectA().getId());
         }
         if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
+            element.setAttribute("connectbname", p.getConnectB().getId());
         }
         if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
+            element.setAttribute("connectcname", p.getConnectC().getId());
         }
         if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
+            element.setAttribute("connectdname", p.getConnectD().getId());
         }
 
         if (!p.getSignalA1Name().isEmpty()) {
@@ -405,6 +410,14 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
             }
         }
 
+        lv.setShowUnknown(false);
+        a = element.getAttribute("showunknown");
+        if (a != null) {
+            if ("yes".equals(a.getValue())) {
+                lv.setShowUnknown(true);
+            }
+        }
+        
         if (version == 2) {
             try {
                 x = element.getAttribute("xa").getFloatValue();
@@ -462,5 +475,5 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         return "";
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutViewXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutViewXml.class);
 }

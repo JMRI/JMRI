@@ -2,7 +2,6 @@ package jmri.web.servlet.simple;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class SimpleServletTest {
     @Test
     public void testCtor() {
         SimpleServlet a = new SimpleServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

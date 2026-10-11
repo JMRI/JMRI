@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -13,12 +14,13 @@ import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -29,40 +31,40 @@ import org.netbeans.jemmy.operators.*;
 public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         ExpressionSensorSwing t = new ExpressionSensorSwing();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testPanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JDialog dialog = new JDialog();
 
         ExpressionSensorSwing t = new ExpressionSensorSwing(dialog);
         JPanel panel = t.getConfigPanel(new JPanel());
-        Assert.assertNotNull("exists",panel);
+        assertNotNull( panel, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCreatePanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JDialog dialog = new JDialog();
 
-        Assert.assertTrue("panel is not null",
-            null != new ExpressionSensorSwing(dialog).getConfigPanel(new JPanel()));
-        Assert.assertTrue("panel is not null",
-            null != new ExpressionSensorSwing(dialog).getConfigPanel(new ExpressionSensor("IQDE1", null), new JPanel()));
+        assertNotNull( new ExpressionSensorSwing(dialog).getConfigPanel(new JPanel()),
+                "panel is not null");
+        assertNotNull( new ExpressionSensorSwing(dialog).getConfigPanel(new ExpressionSensor("IQDE1", null), new JPanel()),
+            "panel is not null");
     }
 
-    @org.junit.Ignore("Fails in Java 11 testing")
+    @Disabled("Fails in Java 11 testing")
     @Test
+    @DisabledIfHeadless
     public void testDialogUseExistingSensor() throws SocketAlreadyConnectedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Sensor s1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         InstanceManager.getDefault(SensorManager.class).provide("IS2");
@@ -86,14 +88,13 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionSensor.SensorState.Inactive);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;});
+        JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;}, "nb not null");
 
-        Assert.assertEquals("IS1", expression.getSelectNamedBean().getNamedBean().getBean().getSystemName());
-        Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getSelectEnum().getEnum());
+        assertEquals("IS1", expression.getSelectNamedBean().getNamedBean().getBean().getSystemName());
+        assertEquals(ExpressionSensor.SensorState.Inactive, expression.getSelectEnum().getEnum());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -104,7 +105,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -11,6 +11,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -185,7 +188,8 @@ public class MergePrompt extends JDialog {
      * @param speedProfile speedProfile
      * @return Map of Key and direction of possible errors (anomalies)
      */
-    public static Map<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile) {
+    @Nonnull
+    public static Map<Integer, Boolean> validateSpeedProfile(@CheckForNull RosterSpeedProfile speedProfile) {
         // do forward speeds, then reverse
         HashMap<Integer, Boolean> anomalies = new HashMap<>();
         if (speedProfile == null) {
@@ -392,6 +396,7 @@ public class MergePrompt extends JDialog {
             setVisible(true);
         }
 
+        @CheckForNull
         private JPanel makeViewPanel(String id) {
             RosterEntry entry = Roster.getDefault().getEntryForId(id);
             if (entry == null) {

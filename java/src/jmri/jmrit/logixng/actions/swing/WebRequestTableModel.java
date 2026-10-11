@@ -212,7 +212,9 @@ public class WebRequestTableModel extends AbstractTableModel {
             JComboBox<InitialValueType> returnValueTypeComboBox = new JComboBox<>();
 
             for (InitialValueType type : InitialValueType.values()) {
-                returnValueTypeComboBox.addItem(type);
+                if (type.isVisible()) {
+                    returnValueTypeComboBox.addItem(type);
+                }
             }
             JComboBoxUtil.setupComboBoxMaxRows(returnValueTypeComboBox);
 
@@ -237,6 +239,6 @@ public class WebRequestTableModel extends AbstractTableModel {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequestTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequestTableModel.class);
 
 }

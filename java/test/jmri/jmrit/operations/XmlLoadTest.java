@@ -41,6 +41,9 @@ public class XmlLoadTest extends OperationsTestCase {
 
     // load a set of operations files with trains that have been built.
     // these are the demo files, but they were stored after building trains.
+    // This test fails intermittently
+    // XmlLoadTest.testDemoWithBuildLoad:51 Unexpected exception thrown: java.lang.NullPointerException
+    
     @Test
     public void testDemoWithBuildLoad() {
         runTest("java/test/jmri/jmrit/operations/xml/DemoFilesWithBuiltTrains/", 12, 12, 10, 210, 19);

@@ -104,12 +104,12 @@ public class RunSwitchListActionTest extends OperationsTestCase {
         }
 
         // confirm file exists
-        Assert.assertTrue(InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists());
+        Assert.assertTrue(InstanceManager.getDefault(TrainCustomSwitchList.class).doesExcelFileExist());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RunSwitchListActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RunSwitchListActionTest.class);
 
 }

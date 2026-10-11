@@ -398,6 +398,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new TamsSystemConnectionMemo(tc);
         tm = new TamsThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new TamsThrottle(memo, new jmri.DccLocoAddress(1234,true));
     }
 
@@ -415,6 +416,6 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsThrottleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TamsThrottleTest.class);
 
 }

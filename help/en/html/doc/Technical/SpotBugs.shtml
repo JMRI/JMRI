@@ -36,25 +36,26 @@
       off with an annotation such as:</p>
 
       <pre style="font-family: monospace;">
-import edu.umd.cs.findbugs.annotations;
-@SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY", "Even tiny differences should trigger update")
-</pre>Although Java itself considers it optional, we require the second "justification" argument.
-Explaining why you've added this annotation to suppress a message will help whoever comes after you
-and is trying to understand the code. It will also help make sure you properly understand the cause
-of the underlying bug report: Sometimes what seems a false positive really isn't. Annotations
-without a justification clause will periodically be removed. Note that the @SuppressFBWarnings
-contents in this form should be all on one line so that automated scanners can more reliably see
-it.
-      <p>For clarity, this annotation also supports a form that lets you be more verbose:</p>
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-      <pre style="font-family: monospace;">
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
-        justification = "OK to compare floats, as even tiny differences should trigger update")
-</pre>This can make it easier to see what is what when quickly scanning through the code.
+@SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "Even tiny differences should trigger update")
+</pre>
+
+      <p>Although Java itself considers it optional, we require the second "justification" argument.
+      Explaining why you've added this annotation to suppress a message will help whoever comes after you
+      and is trying to understand the code.
+      It will also help make sure you properly understand the cause of the underlying bug report:
+      Sometimes what seems a false positive really isn't.</p>
+
+      <p>Annotations without a justification clause will periodically be removed.</p>
+
+      <p>Note that the <code>@SuppressFBWarnings</code> contents in this form should be all on one line
+      so that automated scanners can more reliably see it.</p>
+
       <p>If you need to put more than one message type in an annotation, use array syntax:</p>
 
       <pre style="font-family: monospace;">
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("{type1},{type2}","why both are needed")
+@SuppressFBWarnings(value = {"type1", "type2"}, justification = "Why both are needed")
 </pre>
       <p>There are also Java and SpotBugs annotations that can help it better understand your code.
       Sometimes they'll give it enough understanding of e.g. when a variable can be null, that

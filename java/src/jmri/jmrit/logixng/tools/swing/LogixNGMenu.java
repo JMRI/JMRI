@@ -28,7 +28,8 @@ public class LogixNGMenu extends JMenu {
         add(new InlineLogixNGsAction());
         add(new WhereUsedAction(Bundle.getMessage("MenuItemWhereUsed")));
         add(new BrowseAllLogixNGsAction());
+        add(new EditErrorHandlingModuleAction());
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGMenu.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGMenu.class);
 }

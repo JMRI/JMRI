@@ -1,5 +1,12 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.beans.PropertyChangeListener;
 
 import jmri.Turnout;
@@ -7,7 +14,6 @@ import jmri.TurnoutManager;
 import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Base for TurnoutManager tests in specific jmrix.* packages
@@ -42,7 +48,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
-        Assertions.assertNotNull( l );
+        assertNotNull( l );
     }
 
     @Test
@@ -54,7 +60,9 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
 
     @Test
     public void testProvideFailure() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+            () -> l.provideTurnout(""));
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -63,9 +71,9 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
         // check
-        Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
-        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertEquals( t, l.getByUserName("mine"), "user name correct ");
+        assertEquals( t, l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
     }
 
     @Test
@@ -73,28 +81,30 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         // create
         Turnout t = l.provide("" + getNumToTest1());
         // check
-        Assert.assertNotNull("real object returned ", t );
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertSame( t, l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
     }
 
     @Test
     public void testProvideWithoutWithPrefix() throws IllegalArgumentException {
         Turnout psa = l.provide(""+getASystemNameWithNoPrefix());
         Turnout psb = l.provide(l.getSystemPrefix()+"T"+getASystemNameWithNoPrefix());
-        Assert.assertTrue("Provide Without then With Prefix", psa == psb);
+        assertSame( psa, psb, "Provide Without then With Prefix");
     }
 
     @Test
     public void testProvideWithWithoutPrefix() throws IllegalArgumentException {
         Turnout psa = l.provide(l.getSystemNamePrefix()+getASystemNameWithNoPrefix());
         Turnout psb = l.provide(""+getASystemNameWithNoPrefix());
-        Assert.assertTrue("Provide With then Without Prefix", psa == psb);
+        assertSame( psa, psb, "Provide With then Without Prefix");
     }
 
     @Test
-    public void testProvideFailWithPrefix() throws IllegalArgumentException {
+    public void testProvideFailWithPrefix() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> l.provide(l.getSystemPrefix()+"T"));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+            () -> l.provide(l.getSystemPrefix()+"T"));
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: ");
 
     }
@@ -106,69 +116,77 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
         // check
-        Assert.assertNotNull("real object returned ", t );
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
-        Assert.assertTrue(listenerResult);
+        assertNotNull( t, "real object returned ");
+        assertSame( t, l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
+        assertTrue(listenerResult);
     }
 
     @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertNotNull("t1 real object returned ", t1 );
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t1, "t1 real object returned ");
+        assertSame( t1, l.getByUserName("mine"), "same by user ");
+        assertSame( t1, l.getBySystemName(getSystemName(getNumToTest1())),
+            "same by system ");
 
         Turnout t2 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertNotNull("t2 real object returned ", t2 );
+        assertNotNull( t2, "t2 real object returned ");
         // check
-        Assert.assertTrue("same new ", t1 == t2);
+        assertSame( t1, t2, "same new ");
     }
 
     @Test
     public void testMisses() {
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        assertNull( l.getByUserName("foo"));
+        assertNull( l.getBySystemName("bar"));
     }
 
     @Test
     public void testUpperLower() {
         Turnout t = l.provideTurnout("" + getNumToTest2());
 
-        Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
+        assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
     @Test
     public void testRename() {
         // get turnout
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "before");
-        Assert.assertNotNull("t1 real object ", t1);
+        assertNotNull( t1, "t1 real object ");
         t1.setUserName("after");
         Turnout t2 = l.getByUserName("after");
-        Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        assertEquals( t1, t2, "same object");
+        assertNull( l.getByUserName("before"), "no old object");
     }
 
     @Test
     public void testThrownText(){
-         Assert.assertEquals("thrown text", Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+        assertEquals( Bundle.getMessage("TurnoutStateThrown"),l.getThrownText(),
+            "thrown text");
     }
 
     @Test
     public void testClosedText(){
-         Assert.assertEquals("closed text", Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
+        assertEquals( Bundle.getMessage("TurnoutStateClosed"), l.getClosedText(),
+            "closed text");
     }
 
     @Test
     public void testSetAndGetOutputInterval() {
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
+        assertEquals( 250, l.getOutputInterval(),
+            "default outputInterval");
         l.getMemo().setOutputInterval(21);
-        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set & get in memo
-        Assert.assertEquals("new outputInterval via manager", 21, l.getOutputInterval()); // get via turnoutManager
+        assertEquals( 21, l.getMemo().getOutputInterval(),
+            "new outputInterval set get in memo");
+        assertEquals( 21, l.getOutputInterval(),
+            "new outputInterval via turnoutManager");
         l.setOutputInterval(50);
-        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // interval stored in AbstractTurnoutManager
-        Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
+        assertEquals( 50, l.getOutputInterval(),
+                "new outputInterval from AbstractTurnoutManager");
+        assertEquals( 50, l.getMemo().getOutputInterval(),
+            "new outputInterval from memo");
     }
 
     @Disabled("Turnout managers don't support auto system names")
@@ -179,13 +197,15 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
 
     @Test
     public void testGetEntryToolTip(){
-        Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
-        Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
+        assertNotNull( l.getEntryToolTip(), "getEntryToolTip not null");
+        assertTrue( l.getEntryToolTip().length() > 5, "Entry ToolTip Contains text");
     }
 
     /**
-     * Number of turnout to test. Made a separate method so it can be overridden
+     * Number of turnout to test.
+     * Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
+     * @return a Turnout number.
      */
     protected int getNumToTest1() {
         return 9;

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableFrame;
 
 /**
  * Action to print locomotive roster

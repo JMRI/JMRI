@@ -95,6 +95,6 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(RpsSensorManager.class);
 
 }

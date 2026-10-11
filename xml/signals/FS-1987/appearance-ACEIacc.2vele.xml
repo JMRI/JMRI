@@ -277,8 +277,16 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
   <aspectMappings>
 
     <aspectMapping>
-      <advancedAspect>Verde</advancedAspect>
+      <advancedAspect>Rosso</advancedAspect>
+      <ourAspect>Giallo</ourAspect>
+      <ourAspect>Rosso-Giallo</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Giallo</advancedAspect>
+      <ourAspect>Giallo Lampeggiante</ourAspect>
       <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
       <ourAspect>Rosso-Verde</ourAspect>
     </aspectMapping>
 
@@ -287,47 +295,43 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <ourAspect>Verde</ourAspect>
       <ourAspect>Rosso-Verde</ourAspect>
     </aspectMapping>
-
+ 
     <aspectMapping>
-      <advancedAspect>Giallo</advancedAspect>
+      <advancedAspect>Verde</advancedAspect>
       <ourAspect>Verde</ourAspect>
-      <ourAspect>Giallo Lampeggiante</ourAspect>
       <ourAspect>Rosso-Verde</ourAspect>
-      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
-      <advancedAspect>Rosso</advancedAspect>
-      <ourAspect>Giallo</ourAspect>
-      <ourAspect>Rosso-Giallo</ourAspect>
+      <advancedAspect>Giallo-Giallo</advancedAspect>
+      <ourAspect>Giallo Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Giallo-Verde</advancedAspect>
-      <ourAspect>Verde</ourAspect>
-      <ourAspect>Rosso-Verde</ourAspect>
       <ourAspect>Giallo Lampeggiante</ourAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Giallo-Verde Lampeggiante</advancedAspect>
-      <ourAspect>Verde</ourAspect>
-      <ourAspect>Rosso-Verde</ourAspect>
       <ourAspect>Giallo Lampeggiante</ourAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Giallo-Verde Lampeggiante Alt.</advancedAspect>
-      <ourAspect>Verde</ourAspect>
-      <ourAspect>Rosso-Verde</ourAspect>
       <ourAspect>Giallo Lampeggiante</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-      <advancedAspect>Rosso-Verde</advancedAspect>
-      <ourAspect>Giallo-Verde</ourAspect>
-      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
-      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -345,8 +349,31 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     </aspectMapping>   
 
     <aspectMapping>
+      <advancedAspect>Rosso-Verde</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Rosso-Giallo-Verde</advancedAspect>
       <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect> 
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Verde Lampeggiante</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect> 
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Verde Lampeggiante Alt.</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect> 
     </aspectMapping>
 
     <aspectMapping>

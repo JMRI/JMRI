@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.automation;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -13,10 +10,12 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 
 /**
@@ -25,7 +24,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "automationListLength"; // NOI18N
     private int _id = 0; // retain highest automation Id seen to ensure no Id
@@ -78,10 +77,9 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
         if (automation == null) {
             _id++;
             automation = new Automation(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_automationHashTable.size());
+            int oldSize = _automationHashTable.size();
             _automationHashTable.put(automation.getId(), automation);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_automationHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _automationHashTable.size());
         }
         return automation;
     }
@@ -92,15 +90,14 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
      * @param automation The automation that is being registered.
      */
     public void register(Automation automation) {
-        Integer oldSize = Integer.valueOf(_automationHashTable.size());
+        int oldSize = _automationHashTable.size();
         _automationHashTable.put(automation.getId(), automation);
         // find last id created
         int id = Integer.parseInt(automation.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                Integer.valueOf(_automationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _automationHashTable.size());
     }
 
     /**
@@ -113,10 +110,9 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
             return;
         }
         automation.dispose();
-        Integer oldSize = Integer.valueOf(_automationHashTable.size());
+        int oldSize = _automationHashTable.size();
         _automationHashTable.remove(automation.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                Integer.valueOf(_automationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _automationHashTable.size());
     }
 
     /**
@@ -315,6 +311,14 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class);
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(CarManagerXml.class); // load cars
+        InstanceManager.getDefault(EngineManagerXml.class); // load engines
+        InstanceManager.getDefault(TrainManagerXml.class); // load trains
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(AutomationManager.class);
 
 }

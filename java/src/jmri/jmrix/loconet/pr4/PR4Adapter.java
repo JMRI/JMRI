@@ -55,6 +55,7 @@ public class PR4Adapter extends LocoBufferAdapter {
             // end up with two "LocoNet" menus...)
             jmri.jmrix.loconet.pr2.LnPr2Packetizer packets =
                     new jmri.jmrix.loconet.pr2.LnPr2Packetizer(this.getSystemConnectionMemo());
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
             packets.connectPort(this);
 
             // set traffic controller and configure command station and mangers
@@ -84,6 +85,7 @@ public class PR4Adapter extends LocoBufferAdapter {
             setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
             // connect to a packetizing traffic controller
             LnPacketizer packets = getPacketizer(getOptionState(option4Name));
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
             packets.connectPort(this);
 
             // set traffic controller and configure command station and mangers
@@ -152,7 +154,7 @@ public class PR4Adapter extends LocoBufferAdapter {
         // Add "Standalone LocoNet" option
         // Note: PR4 does not provide "LocoNet Data Termination" and _requires_
         // some external source of that feature.
-        retval[retval.length - 1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName() + " (using external LocoNet Data Termination!)"; // NOI18N
+        retval[retval.length - 1] = LnCommandStationType.COMMAND_STATION_STANDALONE_EXT_TERM.getName(); // NOI18N
         return retval;
     }
 
@@ -166,5 +168,5 @@ public class PR4Adapter extends LocoBufferAdapter {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR4Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(PR4Adapter.class);
 }

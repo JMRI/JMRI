@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 
 import jmri.*;
 import jmri.jmrit.logixng.LogixNGPreferences;
+import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -89,6 +90,12 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()
                                 && logixNG_Manager.isStartLogixNGsOnLoad()) {
                             logixNG_Manager.activateAllLogixNGs();
+                        }
+
+                        // If a LE panel specified "openDispatcher", it creates the DispatcherFrame instance.
+                        // The presence of the instance is use to trigger calling loadAtStartup after file loading is done.
+                        if (InstanceManager.isInitialized(DispatcherFrame.class)) {
+                            InstanceManager.getDefault(DispatcherFrame.class).loadAtStartup();
                         }
                     }
                 }

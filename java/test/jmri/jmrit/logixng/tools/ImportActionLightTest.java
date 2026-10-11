@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 
@@ -15,32 +17,39 @@ import jmri.implementation.DefaultConditionalAction;
  */
 public class ImportActionLightTest extends ImportActionTestBase {
 
-    Light light;
-    ConditionalAction ca;
-    
+    private Light light = null;
+    private ConditionalAction ca = null;
+
     @Override
     public void setNamedBeanState(boolean on) throws JmriException {
-        if (on) light.setState(Light.ON);
-        else light.setState(Light.OFF);
+        if (on) {
+            light.setState(Light.ON);
+        } else {
+            light.setState(Light.OFF);
+        }
     }
 
     @Override
     public boolean checkNamedBeanState(boolean on) {
-        if (on) return light.getState() == Light.ON;
-        else return light.getState() == Light.OFF;
+        if (on) {
+            return light.getState() == Light.ON;
+        } else {
+            return light.getState() == Light.OFF;
+        }
     }
 
     @Override
     public void setConditionalActionState(State state) {
+        assertNotNull(ca);
         switch (state) {
             case ON:
                 ca.setActionData(Light.ON);
                 break;
-                
+
             case OFF:
                 ca.setActionData(Light.OFF);
                 break;
-                
+
             case TOGGLE:
             default:
                 ca.setActionData(Route.TOGGLE);
@@ -57,5 +66,5 @@ public class ImportActionLightTest extends ImportActionTestBase {
         ca.setDeviceName("IL2");
         return ca;
     }
-    
+
 }

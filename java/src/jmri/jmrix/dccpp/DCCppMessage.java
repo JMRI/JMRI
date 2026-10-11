@@ -12,7 +12,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
- * Represents a single command or response on the DCC++.
+ * Represents a single command or response on the DCC-EX.
  * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
@@ -47,12 +47,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     private static int _nRetries = 3;
 
-    /* According to the specification, DCC++ has a maximum timing
+    /* According to the specification, DCC-EX has a maximum timing
      interval of 500 milliseconds during normal communications */
-    protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
-    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
+    protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC-EX?
+    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC-EX?
 
-    //private ArrayList<Integer> valueList = new ArrayList<>();
     private StringBuilder myMessage;
     private String myRegex;
     private char opcode;
@@ -114,7 +113,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * NOTE 15-Feb-17: un-Deprecating this function so that it can be used in
      * the DCCppOverTCP server/client interface.
-     * Messages shouldn't be parsed, they are already in DCC++ format,
+     * Messages shouldn't be parsed, they are already in DCC-EX format,
      * so we need the string constructor to generate a DCCppMessage from
      * the incoming byte stream.
      * @param s message in string form.
@@ -217,6 +216,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     myRegex = "";
                 }
                 break;
+            case DCCppConstants.OUTPUT_CMD_LC:
+                if ((match(toString(), DCCppConstants.OUTPUT_CMD_LC_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.OUTPUT_CMD_LC_REGEX;
+                } else {
+                    myRegex = "";
+                }
+                break;
             case DCCppConstants.OPS_WRITE_CV_BYTE:
                 if ((match(toString(), DCCppConstants.PROG_WRITE_BYTE_V4_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.PROG_WRITE_BYTE_V4_REGEX;
@@ -291,6 +297,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     myRegex = DCCppConstants.TURNOUT_IDS_REGEX;
                 } else if ((match(toString(), DCCppConstants.TURNOUT_ID_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_ID_REGEX;
+                } else if ((match(toString(), DCCppConstants.ROSTER_IDS_REGEX, "ctor")) != null) {
+                        myRegex = DCCppConstants.ROSTER_IDS_REGEX;
+                } else if ((match(toString(), DCCppConstants.ROSTER_ID_REGEX, "ctor")) != null) {
+                        myRegex = DCCppConstants.ROSTER_ID_REGEX;
+                } else if ((match(toString(), DCCppConstants.AUTOMATION_IDS_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.AUTOMATION_IDS_REGEX;
+                } else if ((match(toString(), DCCppConstants.AUTOMATION_ID_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.AUTOMATION_ID_REGEX;
+                } else if ((match(toString(), DCCppConstants.CURRENT_MAXES_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.CURRENT_MAXES_REGEX;
+                } else if ((match(toString(), DCCppConstants.CURRENT_VALUES_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.CURRENT_VALUES_REGEX;
                 } else if ((match(toString(), DCCppConstants.CLOCK_REQUEST_TIME_REGEX, "ctor")) != null) { //<JC>
                     myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;
                 } else if ((match(toString(), DCCppConstants.CLOCK_SET_REGEX, "ctor")) != null) {
@@ -422,10 +440,19 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += "ID: " + getTOIDString();
                     text += ", State: " + getTOStateString();
                 } else if (isTurnoutImplementationMessage()) {
-                    text = "Request implementation for Turnout ";
+                    text = "Request implementation for TurnoutID ";
                     text += getTOIDString();
                 } else {
                     text = "Unmatched Turnout Cmd: " + toString();
+                }
+                break;
+            case DCCppConstants.OUTPUT_CMD_LC:
+                if (isOutputCmdLCMessage()) {
+                    text = "Pin Cmd: ";
+                    text += "VPIN: " + getOutputCmdLCVpinInt();
+                    text += ", State: " + (getOutputCmdLCStateBool() ? "HIGH" : "LOW");
+                } else {
+                    text = "Unmatched Pin Cmd: " + toString();
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
@@ -564,10 +591,28 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.THROTTLE_COMMANDS:
                 if (isTurnoutIDsMessage()) {    
-                    text = "Request Turnout ID list";
+                    text = "Request TurnoutID list";
                     break;
                 } else if (isTurnoutIDMessage()) {    
-                    text = "Request details for Turnout " + getTOIDString();
+                    text = "Request details for TurnoutID " + getTOIDString();
+                    break;
+                } else if (isRosterIDsMessage()) {    
+                    text = "Request RosterID list";
+                    break;
+                } else if (isRosterIDMessage()) {    
+                    text = "Request details for RosterID " + getRosterIDString();
+                    break;
+                } else if (isAutomationIDsMessage()) {    
+                    text = "Request AutomationID list";
+                    break;
+                } else if (isAutomationIDMessage()) {    
+                    text = "Request details for AutomationID " + getAutomationIDString();
+                    break;
+                } else if (isCurrentMaxesMessage()) {    
+                    text = "Request list of Current Maximums";
+                    break;
+                } else if (isCurrentValuesMessage()) {    
+                    text = "Request list of Current Values";
                     break;
                 } else if (isClockRequestTimeMessage()) {    
                     text = "Request clock update from CS";
@@ -622,7 +667,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         }
         toStringCache = null;
     }
-    // For DCC++, the opcode is the first character in the
+    // For DCC-EX, the opcode is the first character in the
     // command (after the < ).
 
     // note that the opcode is part of the message, so we treat it
@@ -704,7 +749,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Change the default number of retries for an DCC++ message.
+     * Change the default number of retries for an DCC-EX message.
      *
      * @param t number of retries to attempt
      */
@@ -713,7 +758,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Change the default timeout for a DCC++ message.
+     * Change the default timeout for a DCC-EX message.
      *
      * @param t Timeout in milliseconds
      */
@@ -764,7 +809,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return m;
 
         } catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ message syntax! s = {}", pat);
+            log.error("Malformed DCC-EX message syntax! s = {}", pat);
             return (null);
         } catch (IllegalStateException e) {
             log.error("Group called before match operation executed string= {}", s);
@@ -901,6 +946,34 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return (this.match(DCCppConstants.OUTPUT_CMD_REGEX) != null);
     }
 
+    public boolean isOutputCmdLCMessage() {
+        return (this.match(DCCppConstants.OUTPUT_CMD_LC_REGEX) != null);
+    }
+
+    /**
+     * Vpin number from a lower-case pin control message {@code <z [-]vpin>}.
+     * Returns the absolute vpin; use {@link #getOutputCmdLCStateBool} for the sign.
+     */
+    public int getOutputCmdLCVpinInt() {
+        if (this.isOutputCmdLCMessage()) {
+            return Math.abs(getValueInt(1));
+        }
+        log.error("Pin Parser called on non-Pin message type {}", this.getOpCodeChar());
+        return 0;
+    }
+
+    /**
+     * State from a lower-case pin control message {@code <z [-]vpin>}.
+     * True = HIGH ({@code <z vpin>}); false = LOW ({@code <z -vpin>}).
+     */
+    public boolean getOutputCmdLCStateBool() {
+        if (this.isOutputCmdLCMessage()) {
+            return getValueInt(1) > 0;
+        }
+        log.error("Pin Parser called on non-Pin message type {}", this.getOpCodeChar());
+        return false;
+    }
+
     public boolean isOutputAddMessage() {
         return (this.match(DCCppConstants.OUTPUT_ADD_REGEX) != null);
     }
@@ -926,6 +999,24 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
     public boolean isTurnoutIDMessage() {
         return (this.match(DCCppConstants.TURNOUT_ID_REGEX) != null);
+    }
+    public boolean isRosterIDsMessage() {
+        return (this.match(DCCppConstants.ROSTER_IDS_REGEX) != null);
+    }
+    public boolean isRosterIDMessage() {
+        return (this.match(DCCppConstants.ROSTER_ID_REGEX) != null);
+    }
+    public boolean isAutomationIDsMessage() {
+        return (this.match(DCCppConstants.AUTOMATION_IDS_REGEX) != null);
+    }
+    public boolean isAutomationIDMessage() {
+        return (this.match(DCCppConstants.AUTOMATION_ID_REGEX) != null);
+    }
+    public boolean isCurrentMaxesMessage() {
+        return (this.match(DCCppConstants.CURRENT_MAXES_REGEX) != null);
+    }
+    public boolean isCurrentValuesMessage() {
+        return (this.match(DCCppConstants.CURRENT_VALUES_REGEX) != null);
     }
     public boolean isClockRequestTimeMessage() {
         return (this.match(DCCppConstants.CLOCK_REQUEST_TIME_REGEX) != null);
@@ -1426,6 +1517,31 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return (0);
         }
     }
+
+    public String getRosterIDString() {
+        return (Integer.toString(getRosterIDInt()));
+    }
+    public int getRosterIDInt() {
+        if (isRosterIDMessage()) {
+            return (getValueInt(1));
+        } else {
+            log.error("RosterID Parser called on non-RosterID message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }  
+    
+    public String getAutomationIDString() {
+        return (Integer.toString(getAutomationIDInt()));
+    }
+    public int getAutomationIDInt() {
+        if (isAutomationIDMessage()) {
+            return (getValueInt(1));
+        } else {
+            log.error("AutomationID Parser called on non-AutomationID message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }  
+    
     public String getClockMinutesString() {
         if (this.isClockSetTimeMessage()) {
             return (this.getValueString(1));
@@ -1666,7 +1782,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * a broadcast message, because the reply usually comes to us
      * that way.
      */
-    // TODO: Not sure this is useful in DCC++
+    // TODO: Not sure this is useful in DCC-EX
     @Override
     public boolean replyExpected() {
         boolean retv;
@@ -1792,6 +1908,28 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return (m);
     }
 
+    /**
+     * Build a lower-case pin control command {@code <z vpin>} (HIGH) or {@code <z -vpin>} (LOW).
+     * Requires no pre-definition on the command station; added in DCC-EX v4.2.35.
+     *
+     * @param vpin  the virtual pin number (uint16)
+     * @param state true to drive the pin HIGH ({@code <z vpin>}),
+     *              false to drive it LOW ({@code <z -vpin>})
+     * @return the assembled message, or null if vpin is out of range
+     */
+    public static DCCppMessage makeOutputCmdMsgLC(int vpin, boolean state) {
+        if (vpin < 1 || vpin > DCCppConstants.MAX_VPIN) {
+            return (null);
+        }
+
+        DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_CMD_LC);
+        m.myMessage.append(" ").append(state ? vpin : -vpin);
+        m.myRegex = DCCppConstants.OUTPUT_CMD_LC_REGEX;
+
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
     public static DCCppMessage makeOutputAddMsg(int id, int pin, int iflag) {
         // Sanity check inputs
         if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) {
@@ -1887,6 +2025,58 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m._nDataChars = m.toString().length();
         return (m);
     }
+
+    public static DCCppMessage makeRosterIDsMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.ROSTER_IDS); // <JR>
+        m.myRegex = DCCppConstants.ROSTER_IDS_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeRosterIDMsg(int id) {
+        DCCppMessage m = makeMessage(DCCppConstants.ROSTER_IDS + " " + id); //<JR 123>
+        m.myRegex = DCCppConstants.ROSTER_ID_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    public static DCCppMessage makeAutomationIDsMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.AUTOMATION_IDS); // <JA>
+        m.myRegex = DCCppConstants.AUTOMATION_IDS_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeAutomationIDMsg(int id) {
+        DCCppMessage m = makeMessage(DCCppConstants.AUTOMATION_IDS + " " + id); //<JA 123>
+        m.myRegex = DCCppConstants.AUTOMATION_ID_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    public static DCCppMessage makeStartExrailMsg(int id) {
+        DCCppMessage m = makeMessage("/ START " + id); // </ START id>
+        m.myRegex = DCCppConstants.CONTROL_CMD_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeStartExrailMsg(int id, int address) {
+        DCCppMessage m = makeMessage("/ START " + address + " " + id); // </ START cab id>
+        m.myRegex = DCCppConstants.CONTROL_CMD_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeCurrentMaxesMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.CURRENT_MAXES); // <JG>
+        m.myRegex = DCCppConstants.CURRENT_MAXES_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeCurrentValuesMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.CURRENT_VALUES); // <JI>
+        m.myRegex = DCCppConstants.CURRENT_VALUES_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
     public static DCCppMessage makeClockRequestTimeMsg() {
         DCCppMessage m = makeMessage(DCCppConstants.CLOCK_REQUEST_TIME); // <JC>
         m.myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;
@@ -1979,7 +2169,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Station and is simply echoed back in the output - useful for external
      * programs that call this function CALLBACKSUB: a second arbitrary integer
      * (0-32767) that is ignored by the Base Station and is simply echoed back
-     * in the output - useful for external programs (e.g. DCC++ Interface) that
+     * in the output - useful for external programs (e.g. DCC-EX Interface) that
      * call this function
      * <p>
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in
@@ -2057,7 +2247,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * by the Base Station and is simply echoed back in the output - useful for
      * external programs that call this function CALLBACKSUB: a second arbitrary
      * integer (0-32767) that is ignored by the Base Station and is simply
-     * echoed back in the output - useful for external programs (e.g. DCC++
+     * echoed back in the output - useful for external programs (e.g. DCC-EX
      * Interface) that call this function
      * <p>
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in
@@ -2139,7 +2329,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * output - useful for external programs that call this function
      * CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the
      * Base Station and is simply echoed back in the output - useful for
-     * external programs (e.g. DCC++ Interface) that call this function
+     * external programs (e.g. DCC-EX Interface) that call this function
      * <p>
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in
      * decoding the responses.
@@ -2338,7 +2528,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Read DCC++ Base Station Status
+     * Read DCC-EX Base Station Status
      * <p>
      * Format: {@code <s>}
      * <p>
@@ -2349,14 +2539,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * settings
      *
      * @return series of status messages that can be read by an interface to
-     * determine status of DCC++ Base Station and important settings
+     * determine status of DCC-EX Base Station and important settings
      */
     public static DCCppMessage makeCSStatusMsg() {
         return (new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
     }
 
     /**
-     * Get number of supported slots for this DCC++ Base Station Status
+     * Get number of supported slots for this DCC-EX Base Station Status
      * <p>
      * Format: {@code <N>}
      * <p>
@@ -2420,9 +2610,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      *
      * @param register Register Number for the loco assigned address.
      * @param address is the locomotive address.
+     * @param isForward true if loco direction is forwards, false if reverse.
      * @return message to send e stop to the specified address.
      */
-    public static DCCppMessage makeAddressedEmergencyStop(int register, int address) {
+    public static DCCppMessage makeAddressedEmergencyStop(int register, int address, boolean isForward) {
         // Sanity check inputs
         if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) {
             return (null);
@@ -2431,7 +2622,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" ").append(register);
         m.myMessage.append(" ").append(address);
-        m.myMessage.append(" -1 1");
+        m.myMessage.append(" -1 ");
+        m.myMessage.append(isForward ? "1" : "0");
         m.myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
 
         m._nDataChars = m.toString().length();
@@ -2443,10 +2635,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * Note: This just sends a THROTTLE command with speed = -1
      *
+     * @param isForward true if loco direction is forwards, false if reverse.
      * @param address is the locomotive address.
      * @return message to send e stop to the specified address.
      */
-    public static DCCppMessage makeAddressedEmergencyStop(int address) {
+    public static DCCppMessage makeAddressedEmergencyStop(int address, boolean isForward) {
         // Sanity check inputs
         if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) {
             return (null);
@@ -2454,7 +2647,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" ").append(address);
-        m.myMessage.append(" -1 1");
+        m.myMessage.append(" -1 ");
+        m.myMessage.append(isForward ? "1" : "0");
         m.myRegex = DCCppConstants.THROTTLE_V3_CMD_REGEX;
 
         m._nDataChars = m.toString().length();
@@ -2476,7 +2670,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /**
      * Generate a Speed and Direction Request message
      *
-     * @param register  is the DCC++ base station register assigned.
+     * @param register  is the DCC-EX base station register assigned.
      * @param address   is the locomotive address
      * @param speed     a normalized speed value (a floating point number
      *                  between 0 and 1). A negative value indicates emergency
@@ -3041,10 +3235,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /**
      * Write DCC Packet to a specified Register on the Main.
      * <br>
-     * DCC++ BaseStation code appends its own error-correction byte so we must
+     * DCC-EX BaseStation code appends its own error-correction byte so we must
      * not provide one.
      *
-     * @param register the DCC++ BaseStation main register number to use
+     * @param register the DCC-EX BaseStation main register number to use
      * @param numBytes the number of bytes in the packet
      * @param bytes    byte array representing the packet. The first
      *                 {@code num_bytes} are used.
@@ -3069,10 +3263,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /**
      * Write DCC Packet to a specified Register on the Programming Track.
      * <br><br>
-     * DCC++ BaseStation code appends its own error-correction byte so we must
+     * DCC-EX BaseStation code appends its own error-correction byte so we must
      * not provide one.
      *
-     * @param register the DCC++ BaseStation main register number to use
+     * @param register the DCC-EX BaseStation main register number to use
      * @param numBytes the number of bytes in the packet
      * @param bytes    byte array representing the packet. The first
      *                 {@code num_bytes} are used.

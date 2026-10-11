@@ -33,6 +33,11 @@
       generate the report.  The <strong>Save to Text File</strong> button can be used to save the
       report in a text file.</p>
 
+      <p><span class="since">since 5.11.7</span><strong>Formula actions and expressions</strong> are
+      also searched. Since this is a text search using the system and user names of the item, it is
+      possible that <strong>false positive</strong> matches might be found. For example, a local
+      variable name in a formula that happens to match a sensor name.</p>
+
       <p>The standard Where Used also shows the references but with less LogixNG detail.  It does
       not search the LogixNG clipboard.</p>
 

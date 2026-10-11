@@ -1,8 +1,12 @@
 package jmri.jmrit.withrottle;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,128 +20,130 @@ public class WiThrottlePreferencesTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", prefs );
+        assertNotNull( prefs, "exists");
     }
 
     @Test
     public void testGetDefaultPort() {
-        Assert.assertEquals("default port", 12090, prefs.getPort() );
+        assertEquals( 12090, prefs.getPort(), "default port");
     }
 
     @Test
     public void testSetAndGetPort() {
         prefs.setPort(12345);
-        Assert.assertEquals("port after set", 12345, prefs.getPort() );
+        assertEquals( 12345, prefs.getPort(), "port after set");
     }
 
     @Test
     public void testGetDefaultEStopDelay() {
-        Assert.assertEquals("default estop delay", 10, prefs.getEStopDelay() );
+        assertEquals( 10, prefs.getEStopDelay(), "default estop delay");
     }
 
     @Test
     public void testSetAndGetEStopDelay() {
         prefs.setEStopDelay(12345);
-        Assert.assertEquals("port after set", 12345, prefs.getEStopDelay() );
+        assertEquals( 12345, prefs.getEStopDelay(), "port after set");
     }
 
     @Test
     public void testIsRestartRequired(){
-        Assert.assertFalse("restart required",prefs.isRestartRequired());
+        assertFalse( prefs.isRestartRequired(), "restart required");
     }
 
     @Test
     public void testIsUseEStop(){
-        Assert.assertTrue("Use EStop",prefs.isUseEStop());
+        assertTrue( prefs.isUseEStop(), "Use EStop");
     }
 
     @Test
     public void testSetAndGetUseEStop(){
         prefs.setUseEStop(false);
-        Assert.assertFalse("Use EStop",prefs.isUseEStop());
+        assertFalse( prefs.isUseEStop(), "Use EStop");
     }
 
     @Test
     public void testIsUseMomF2(){
-        Assert.assertTrue("Use Momentary F2",prefs.isUseMomF2());
+        assertTrue( prefs.isUseMomF2(), "Use Momentary F2");
     }
 
     @Test
     public void testSetAndGetUseMomF2(){
         prefs.setUseMomF2(false);
-        Assert.assertFalse("Use Momentary F2",prefs.isUseMomF2());
-    }
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-        prefs = new WiThrottlePreferences();
+        assertFalse( prefs.isUseMomF2(), "Use Momentary F2");
     }
 
     @Test
     public void testIsAllowTrackPower(){
-        Assert.assertTrue("Allow Track Power",prefs.isAllowTrackPower());
+        assertTrue( prefs.isAllowTrackPower(), "Allow Track Power");
     }
 
     @Test
     public void testSetAndGetAllowTrackPower(){
         prefs.setAllowTrackPower(false);
-        Assert.assertFalse("Allow Track Power",prefs.isAllowTrackPower());
+        assertFalse( prefs.isAllowTrackPower(), "Allow Track Power");
     }
 
     @Test
     public void testIsAllowTurnout(){
-        Assert.assertTrue("Allow Turnout Control",prefs.isAllowTurnout());
+        assertTrue( prefs.isAllowTurnout(), "Allow Turnout Control");
     }
 
     @Test
     public void testSetAndGetAllowTurnout(){
         prefs.setAllowTurnout(false);
-        Assert.assertFalse("Allow Turnout",prefs.isAllowTurnout());
+        assertFalse( prefs.isAllowTurnout(), "Allow Turnout");
     }
 
     @Test
     public void testSetAndGetAllowTurnoutCreation(){
         prefs.setAllowTurnoutCreation(false);
-        Assert.assertFalse("Allow Turnout Creation",prefs.isAllowTurnoutCreation());
+        assertFalse( prefs.isAllowTurnoutCreation(), "Allow Turnout Creation");
     }
 
     @Test
     public void testIsAllowRoute(){
-        Assert.assertTrue("Allow Route Control",prefs.isAllowRoute());
+        assertTrue( prefs.isAllowRoute(), "Allow Route Control");
     }
 
     @Test
     public void testSetAndGetAllowRoute(){
         prefs.setAllowRoute(false);
-        Assert.assertFalse("Allow Route",prefs.isAllowRoute());
+        assertFalse( prefs.isAllowRoute(), "Allow Route");
     }
 
     @Test
     public void testIsAllowConsist(){
-        Assert.assertTrue("Allow Consist Control",prefs.isAllowConsist());
+        assertTrue( prefs.isAllowConsist(), "Allow Consist Control");
     }
 
     @Test
     public void testSetAndGetAllowConsist(){
         prefs.setAllowConsist(false);
-        Assert.assertFalse("Allow Consist",prefs.isAllowConsist());
+        assertFalse( prefs.isAllowConsist(), "Allow Consist");
     }
 
     @Test
     public void testIsUseWiFiConsist(){
-        Assert.assertTrue("Use WiFi Consist",prefs.isUseWiFiConsist());
+        assertTrue( prefs.isUseWiFiConsist(), "Use WiFi Consist");
     }
 
     @Test
     public void testSetAndGetUseWiFiConsist(){
         prefs.setUseWiFiConsist(false);
-        Assert.assertFalse("Use WiFiConsist",prefs.isUseWiFiConsist());
+        assertFalse( prefs.isUseWiFiConsist(), "Use WiFiConsist");
     }
-    
-    
+
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        prefs = new WiThrottlePreferences();
+    }
+
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
+        prefs = null;
         JUnitUtil.tearDown();
     }
+
 }

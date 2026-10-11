@@ -74,7 +74,7 @@ string; to the right of the equals sign is the String that will be displayed.
       <em>NamedBeanBundle</em>, located in the jmri package. A next level is inside the jmri.jmrit
       (Tools) directory, where the Bundle.properties bundle contains keys common for all tools,
       such as the names of colors and other Tools interface strings.</p>
-
+    
       <h2>Adapting to a new language</h2>
       The primary steps to adapt JMRI to a new language are:
       <ol>
@@ -319,6 +319,21 @@ log.debug("The process failed account of user error"); // NOI18N
 // This comment is in English and need not be annotated w.r.t. internationalization
 </pre>
 
+      To make it easier for translators, please:
+      <ul>
+        <li>When adding a new item, do not include it in the files for 
+            other languages unless you can also provide the translated language.
+            E.g. don't copy the item into other non-default files using the 
+            English phrase.  You might think that this is being helpful,
+            but it interferes with tools that the translators use to 
+            find untranslated strings.
+        <li>If you want to <u>change</u> the text associated with an entry,
+            create a new entry instead.  E.g. if you want to change the
+            &quot;Error123&quot; string above to something else, 
+            leave that entry as it is and create a new &quot;Error123_2&quot;
+            entry in both the .properties file and the code.
+      </ul>
+
       <h3>Adding a new Bundle</h3>
 
       <p>If your package does not already have a Bundle class, you can add it by:</p>
@@ -332,10 +347,13 @@ log.debug("The process failed account of user error"); // NOI18N
             <li>The 'package' statement at the top should list your package;</li>
 
             <li>The 'class ... extends' should refer to the Bundle class directly above your
-            package;</li>
+            package. If there isn't a Bundle class there, please install one there too;</li>
 
             <li>The assignment to the 'name' variable should be the name of your local bundle, by
-            convention "jmri/mypackage.Bundle".</li>
+            convention "jmri/mypackage.Bundle". If your code only uses properties
+            defined in parent packages, e.g. your Bundle.properties file would be
+            otherwise empty, assign null to 'name' and don't provide a Bundle.properties file.
+            </li>
           </ol>
         </li>
 
@@ -386,7 +404,7 @@ attribute. "Null" will be returned if nothing is found.
       <h3 id="numbers">Numbers</h3>
 
       <p>The number "10*10*10+2+3/10" is written in different ways in different places: "1002.3",
-      "1,002.3", "1.002,3" and perhaps other ways.</p>
+      "1,002.3", "1.002,3", "1 002.3", "1 002,3", "1002.30", and perhaps other ways.</p>
 
       <p>JMRI provides a helpful utility for handling this on input:</p>
 
@@ -394,6 +412,7 @@ attribute. "Null" will be returned if nothing is found.
   <pre>
 double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
 float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
+int    i = jmri.util.IntlUtilities.intValue("1 002");
 </pre>
 </div>
 
@@ -403,10 +422,17 @@ so handling that is part of your user-error handling.
 <pre>
 String s = jmri.util.IntlUtilities.valueOf(1002.3);
 </pre>
+
+      <p><a href="../../../../../../JavaDoc/doc/jmri/util/IntlUtilities.html">IntlUtilities</a>
+      should only be used within the GUI.</p>
+
       <p><strong>Note: You should still store and load values in XML files in Java's default
       coding, without using these formatting tools. That way, the files can be moved from one user
       to another without worrying about whether they are using the same Locale.</strong>
       </p>
+
+      <p><code>String.format()</code> uses English locale for numbers in Java 17 but the computer locale for
+      numbers on Java 21. Care should be taken with this method within both GUI and XML.</p>
 
       <h3 id="testing">Testing</h3>
       <p>You should check that you've properly internationalized your code. We provide a tool for

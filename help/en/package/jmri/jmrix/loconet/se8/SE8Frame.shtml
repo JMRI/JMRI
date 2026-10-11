@@ -12,9 +12,11 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+
+      <h1>Configure Digitrax SE8c</h1>
+
       <a href="SE8cConfigTool.png"><img src="SE8cConfigTool.png" alt=
       "SE8c Configuration Tool Screen Capture" style="float:right; margin: 5px;"></a>
-      <h1>Configure Digitrax SE8c</h1>
 
       <p>The JMRI SE8c programming tool lets you configure the internal options of a Digitrax SE8c
       Signaling Decoder Board directly from your computer.</p>

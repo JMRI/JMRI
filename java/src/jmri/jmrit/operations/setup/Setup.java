@@ -1,43 +1,49 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
+import java.awt.JobAttributes.SidesType;
 import java.io.IOException;
 import java.util.*;
 
+import javax.print.attribute.standard.Sides;
 import javax.swing.JComboBox;
-
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
+import jmri.jmrit.operations.setup.backup.AutoBackup;
+import jmri.jmrit.operations.setup.backup.AutoSave;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.web.server.WebServerPreferences;
 
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Operations settings.
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014, 2025, 2025
  */
 public class Setup extends PropertyChangeSupport implements InstanceManagerAutoDefault, Disposable {
 
     public static final String NONE = "";
 
     // scale ratios from NMRA
-    private static final int Z_RATIO = 220;
-    private static final int N_RATIO = 160;
-    private static final int TT_RATIO = 120;
-    private static final int OO_RATIO = 76; // actual ratio 76.2
-    private static final int HO_RATIO = 87;
-    private static final int S_RATIO = 64;
-    private static final int O_RATIO = 48;
-    private static final int G_RATIO = 32; // NMRA #1
+    public static final int Z_RATIO = 220;
+    public static final int N_RATIO = 160;
+    public static final int TT_RATIO = 120;
+    public static final int OO_RATIO = 76; // actual ratio 76.2
+    public static final int HO_RATIO = 87;
+    public static final int S_RATIO = 64;
+    public static final int O_RATIO = 48;
+    public static final int Gauge1_RATIO = 32; // NMRA #1
+    public static final int G_24_RATIO = 24;
 
     // initial weight in milli ounces from NMRA
     private static final int Z_INITIAL_WEIGHT = 364; // not specified by NMRA
@@ -88,7 +94,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final int S_SCALE = 8;
     public static final int On3_SCALE = 9;
     public static final int O_SCALE = 10;
-    public static final int G_SCALE = 11; // NMRA #1
+    public static final int Gauge1_SCALE = 11; // NMRA #1
+    public static final int G_24_SCALE = 12;
 
     public static final int EAST = 1; // train direction serviced by this location
     public static final int WEST = 2;
@@ -113,6 +120,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String LANDSCAPE = Bundle.getMessage("Landscape");
     public static final String HALFPAGE = Bundle.getMessage("HalfPage");
     public static final String HANDHELD = Bundle.getMessage("HandHeld");
+    public static final String RECEIPT = Bundle.getMessage("Receipt");
 
     public static final String PAGE_NORMAL = Bundle.getMessage("PageNormal");
     public static final String PAGE_PER_TRAIN = Bundle.getMessage("PagePerTrain");
@@ -124,7 +132,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String BUILD_REPORT_VERY_DETAILED = "7";
 
     // the following are converted to English spelling when storing to file, see KEYS below
-    public static final String ROAD = Bundle.getMessage("Road"); // the supported message format options
+    public static final String ORDER = Bundle.getMessage("Order"); // the supported message format options
+    public static final String ROAD = Bundle.getMessage("Road");
     public static final String NUMBER = Bundle.getMessage("Number");
     public static final String TYPE = Bundle.getMessage("Type");
     public static final String MODEL = Bundle.getMessage("Model");
@@ -146,16 +155,20 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String KERNEL_SIZE = Bundle.getMessage("Kernel_Size");
     public static final String OWNER = Bundle.getMessage("Owner");
     public static final String DIVISION = Bundle.getMessage("Division");
+    public static final String BLOCKING_ORDER = Bundle.getMessage("Blocking_Order");
     public static final String RWE = Bundle.getMessage("RWE");
     public static final String COMMENT = Bundle.getMessage("Comment");
     public static final String DROP_COMMENT = Bundle.getMessage("SetOut_Msg");
     public static final String PICKUP_COMMENT = Bundle.getMessage("PickUp_Msg");
     public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
+    public static final String LAST_TRAIN = Bundle.getMessage("LastTrain");
+    public static final String LAST_MOVED = Bundle.getMessage("LastMoved");
+    public static final String LAST_LOCATION = Bundle.getMessage("LastLocation");
     public static final String BLANK = " "; // blank has be a character or a space
     public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
     public static final String TAB2 = Bundle.getMessage("Tab2");
     public static final String TAB3 = Bundle.getMessage("Tab3");
-    
+
     public static final String BOX = " [ ] "; // NOI18N
 
     // these are for the utility printing when using tabs
@@ -175,20 +188,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String FEET_ABV = Bundle.getMessage("FeetAbbreviation");
     public static final String METER_ABV = Bundle.getMessage("MeterAbbreviation");
 
-    private static final String[] CAR_ATTRIBUTES = { ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS,
-            COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
-            COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE };
-    
-    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER,
-            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS };
+    private static final String[] CAR_ATTRIBUTES =
+            {ORDER, ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+                    DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, BLOCKING_ORDER,
+                    COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
+
+    private static final String[] ENGINE_ATTRIBUTES =
+            {ORDER, ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER, TRACK, LOCATION, DESTINATION,
+                    COMMENT, DCC_ADDRESS, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
     /*
-     * The print Manifest and switch list user selectable options are stored in the
-     * xml file using the English translations.
+     * The print Manifest and switch list user selectable options are stored in
+     * the xml file using the English translations.
      */
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
             "HP", "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
-            "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg",
-            "Hazardous", "Tab", "Tab2", "Tab3"};
+            "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "Blocking_Order", "RWE", "Comment",
+            "SetOut_Msg", "PickUp_Msg", "Hazardous", "LastTrain", "LastMoved", "LastLocation", "Tab", "Tab2", "Tab3"};
 
     private int scale = HO_SCALE; // Default scale
     private int ratio = HO_RATIO;
@@ -208,25 +223,28 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
+    private Sides sides = Sides.ONE_SIDED;
     private boolean printHeader = true;
+    private Color pickupEngineColor = Color.black;
+    private Color dropEngineColor = Color.black;
     private Color pickupColor = Color.black;
     private Color dropColor = Color.black;
     private Color localColor = Color.black;
-    private String[] pickupEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT };
-    private String[] dropEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT };
-    private String[] pickupManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            COMMENT, PICKUP_COMMENT };
-    private String[] dropManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-            COMMENT, DROP_COMMENT };
-    private String[] localManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            DESTINATION, COMMENT };
-    private String[] pickupSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            COMMENT, PICKUP_COMMENT };
-    private String[] dropSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-            COMMENT, DROP_COMMENT };
-    private String[] localSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            DESTINATION, COMMENT };
-    private String[] missingCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT };
+    private String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
+    private String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
+    private String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            COMMENT, PICKUP_COMMENT};
+    private String[] dropManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
+            COMMENT, DROP_COMMENT};
+    private String[] localManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            DESTINATION, COMMENT};
+    private String[] pickupSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            COMMENT, PICKUP_COMMENT};
+    private String[] dropSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
+            COMMENT, DROP_COMMENT};
+    private String[] localSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+            DESTINATION, COMMENT};
+    private String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
     private String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
     private String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
     private String pickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
@@ -257,6 +275,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int tab1CharLength = Control.max_len_string_attibute;
     private int tab2CharLength = 6; // arbitrary lengths
     private int tab3CharLength = 8;
+    private int manifestTabLength = 4; // plus one space
 
     private String manifestFormat = STANDARD_FORMAT;
     private boolean manifestEditorEnabled = false; // when true use text editor to view build report
@@ -267,6 +286,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean switchListRouteComment = true; // when true, switch list have route location comments
     private boolean trackSummary = true; // when true, print switch list track summary
     private boolean groupCarMoves = false; // when true, car moves are grouped together
+    private boolean locoLast = false; // when true, loco set outs printed last
 
     private boolean switchListRealTime = true; // when true switch list only show work for built trains
     private boolean switchListAllTrains = true; // when true show all trains that visit the location
@@ -290,7 +310,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private String labelRfid = Bundle.getMessage("RFID");
 
     private boolean carRoutingEnabled = true; // when true enable car routing
-    private boolean carRoutingYards = true; // when true enable car routing via yard tracks
+    private boolean carRoutingYards = false; // when true enable car routing via yard tracks
     private boolean carRoutingStaging = false; // when true staging tracks can be used for car routing
     private boolean forwardToYardEnabled = true; // when true forward car to yard if track is full
     private boolean onlyActiveTrains = false; // when true only active trains are used for routing
@@ -303,6 +323,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     private boolean aggressiveBuild = false; // when true subtract car length from track reserve length
     private int numberPasses = 2; // the number of passes in train builder
+    private boolean onTimeBuild = false; // when true on time mode
+    private int dwellTime = 60; // time in minutes before allowing track reuse
     private boolean allowLocalInterchangeMoves = false; // when true local C/I to C/I moves are allowed
     private boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
     private boolean allowLocalSpurMoves = false; // when true local spur to spur moves are allowed
@@ -327,10 +349,17 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printValid = true; // when true print out the valid time and date
     private boolean sortByTrack = false; // when true manifest work is sorted by track names
     private boolean printHeaders = false; // when true add headers to manifest and switch lists
+    private boolean printNoPageBreaks = true; // when true no page breaks for a location's work
+    private boolean printHeaderLine1 = true; // when true add header line 1 to manifest and switch lists
+    private boolean printHeaderLine2 = true; // when true add header line 2 to manifest and switch lists
+    private boolean printHeaderLine3 = true; // when true add header line 3 to manifest and switch lists
+    private int horizontalLineAdjustment = 0;
 
     private boolean printCabooseLoad = false; // when true print caboose load
     private boolean printPassengerLoad = false; // when true print passenger car load
     private boolean showTrackMoves = false; // when true show track moves in table
+
+    private Hashtable<String, String> hashTableDayToName = new Hashtable<>();
 
     // property changes
     public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; // NOI18N
@@ -382,7 +411,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         // true.
         if (enabled && !getDefault().autoBackup) {
             try {
-                new AutoBackup().autoBackup();
+                InstanceManager.getDefault(AutoBackup.class).autoBackup();
             } catch (IOException ex) {
                 log.debug("Autobackup after setting AutoBackup flag true", ex);
             }
@@ -466,8 +495,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * When true, router checks that the car's destination is serviced by departure
-     * track. Very restrictive, not recommended.
+     * When true, router checks that the car's destination is serviced by
+     * departure track. Very restrictive, not recommended.
      * 
      * @return true if enabled.
      */
@@ -493,6 +522,25 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void setNumberPasses(int number) {
         getDefault().numberPasses = number;
+    }
+
+    public static boolean isBuildOnTime() {
+        return getDefault().onTimeBuild;
+    }
+
+    public static void setBuildOnTime(boolean enabled) {
+        getDefault().onTimeBuild = enabled;
+    }
+
+    public static int getDwellTime() {
+        if (isBuildOnTime()) {
+            return getDefault().dwellTime;
+        }
+        return 0;
+    }
+
+    public static void setDwellTime(int minutes) {
+        getDefault().dwellTime = minutes;
     }
 
     public static boolean isLocalInterchangeMovesEnabled() {
@@ -524,11 +572,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * Controls staging track selection, when true, the terminus staging track has
-     * to have the same characteristics as the train.
+     * Controls staging track selection, when true, the terminus staging track
+     * has to have the same characteristics as the train.
      *
-     * @param enabled when true, the terminal staging track must service the same
-     *                car types, loads, etc. as the train
+     * @param enabled when true, the terminal staging track must service the
+     *                same car types, loads, etc. as the train
      */
     public static void setStagingTrainCheckEnabled(boolean enabled) {
         getDefault().trainIntoStagingCheck = enabled;
@@ -848,6 +896,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return getDefault().groupCarMoves;
     }
 
+    public static void setPrintLocoLast(boolean b) {
+        getDefault().locoLast = b;
+    }
+
+    public static boolean isPrintLocoLastEnabled() {
+        return getDefault().locoLast;
+    }
+
     public static void setSwitchListRealTime(boolean b) {
         boolean old = getDefault().switchListRealTime;
         getDefault().switchListRealTime = b;
@@ -865,9 +921,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * When true switch list shows all trains visiting a location, even if the train
-     * doesn't have any work at that location. When false, switch lists only report
-     * a train if it has work at the location.
+     * When true switch list shows all trains visiting a location, even if the
+     * train doesn't have any work at that location. When false, switch lists
+     * only report a train if it has work at the location.
      *
      * @return When true show all trains visiting a location.
      */
@@ -876,8 +932,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * Used to determine if there's spaces or form feed between trains and locations
-     * when printing switch lists. see getSwitchListPageFormatComboBox()
+     * Used to determine if there's spaces or form feed between trains and
+     * locations when printing switch lists. see
+     * getSwitchListPageFormatComboBox()
      *
      * @param format PAGE_NORMAL, PAGE_PER_TRAIN, or PAGE_PER_VISIT
      */
@@ -980,6 +1037,46 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isPrintHeadersEnabled() {
         return getDefault().printHeaders;
+    }
+
+    public static void setPrintNoPageBreaksEnabled(boolean enable) {
+        getDefault().printNoPageBreaks = enable;
+    }
+
+    public static boolean isPrintNoPageBreaksEnabled() {
+        return getDefault().printNoPageBreaks;
+    }
+
+    public static void setPrintHeaderLine1Enabled(boolean enable) {
+        getDefault().printHeaderLine1 = enable;
+    }
+
+    public static boolean isPrintHeaderLine1Enabled() {
+        return getDefault().printHeaderLine1;
+    }
+
+    public static void setPrintHeaderLine2Enabled(boolean enable) {
+        getDefault().printHeaderLine2 = enable;
+    }
+
+    public static boolean isPrintHeaderLine2Enabled() {
+        return getDefault().printHeaderLine2;
+    }
+
+    public static void setPrintHeaderLine3Enabled(boolean enable) {
+        getDefault().printHeaderLine3 = enable;
+    }
+
+    public static boolean isPrintHeaderLine3Enabled() {
+        return getDefault().printHeaderLine3;
+    }
+
+    public static void setHorizontalLineAdjustment(int value) {
+        getDefault().horizontalLineAdjustment = value;
+    }
+
+    public static int getHorizontalLineAdjustment() {
+        return getDefault().horizontalLineAdjustment;
     }
 
     public static void setPrintCabooseLoadEnabled(boolean enable) {
@@ -1090,6 +1187,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().manifestFontSize = size;
     }
 
+    public static Sides getPrintDuplexSides() {
+        return getDefault().sides;
+    }
+
+    public static void setPrintDuplexSides(Sides sides) {
+        getDefault().sides = sides;
+    }
+
     public static boolean isPrintPageHeaderEnabled() {
         return getDefault().printHeader;
     }
@@ -1158,6 +1263,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().tab3CharLength = length;
     }
 
+    public static int getManifestTabLength() {
+        return getDefault().manifestTabLength;
+    }
+
+    public static void setManifestTablength(int length) {
+        getDefault().manifestTabLength = length;
+    }
+
     public static String getManifestFormat() {
         return getDefault().manifestFormat;
     }
@@ -1165,7 +1278,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     /**
      * Sets the format for manifests
      * 
-     * @param format STANDARD_FORMAT, TWO_COLUMN_FORMAT, or TWO_COLUMN_TRACK_FORMAT
+     * @param format STANDARD_FORMAT, TWO_COLUMN_FORMAT, or
+     *               TWO_COLUMN_TRACK_FORMAT
      */
     public static void setManifestFormat(String format) {
         getDefault().manifestFormat = format;
@@ -1411,8 +1525,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     * Gets the manifest format for utility cars. The car's road, number, and color
-     * are not printed.
+     * Gets the manifest format for utility cars. The car's road, number, and
+     * color are not printed.
      *
      * @return Utility car format
      */
@@ -1478,6 +1592,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return format;
     }
 
+    public static String[] getPickupEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackPickupMessageFormat(getPickupEngineMessageFormat());
+    }
+
     public static String[] getPickupTwoColumnByTrackManifestMessageFormat() {
         return createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
     }
@@ -1505,6 +1623,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return format;
     }
 
+    public static String[] getDropEngineTwoColumnByTrackMessageFormat() {
+        return createTwoColumnByTrackDropMessageFormat(getDropEngineMessageFormat());
+    }
+
     public static String[] getDropTwoColumnByTrackManifestMessageFormat() {
         return createTwoColumnByTrackDropMessageFormat(getDropManifestMessageFormat());
     }
@@ -1530,6 +1652,32 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             }
         }
         return format;
+    }
+
+    public static String getDropEngineTextColor() {
+        return ColorUtil.colorToColorName(getDefault().dropEngineColor);
+    }
+
+    public static void setDropEngineTextColor(String color) {
+        setDropEngineColor(ColorUtil.stringToColor(color));
+    }
+
+    public static void setDropEngineColor(Color c) {
+        getDefault().dropEngineColor = c;
+        JmriColorChooser.addRecentColor(c);
+    }
+
+    public static String getPickupEngineTextColor() {
+        return ColorUtil.colorToColorName(getDefault().pickupEngineColor);
+    }
+
+    public static void setPickupEngineTextColor(String color) {
+        setPickupEngineColor(ColorUtil.stringToColor(color));
+    }
+
+    public static void setPickupEngineColor(Color c) {
+        getDefault().pickupEngineColor = c;
+        JmriColorChooser.addRecentColor(c);
     }
 
     public static String getDropTextColor() {
@@ -1569,6 +1717,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setLocalColor(Color c) {
         getDefault().localColor = c;
         JmriColorChooser.addRecentColor(c);
+    }
+
+    public static Color getPickupEngineColor() {
+        return getDefault().pickupEngineColor;
+    }
+
+    public static Color getDropEngineColor() {
+        return getDefault().dropEngineColor;
     }
 
     public static Color getPickupColor() {
@@ -1698,8 +1854,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 getDefault().addWeight = O_ADD_WEIGHT;
                 getDefault().ratioTons = O_RATIO_TONS;
                 break;
-            case G_SCALE:
-                getDefault().ratio = G_RATIO;
+
+            case Gauge1_SCALE:
+                getDefault().ratio = Gauge1_RATIO;
+                getDefault().initWeight = G_INITIAL_WEIGHT;
+                getDefault().addWeight = G_ADD_WEIGHT;
+                getDefault().ratioTons = G_RATIO_TONS;
+                break;
+            case G_24_SCALE:
+                getDefault().ratio = G_24_RATIO;
                 getDefault().initWeight = G_INITIAL_WEIGHT;
                 getDefault().addWeight = G_ADD_WEIGHT;
                 getDefault().ratioTons = G_RATIO_TONS;
@@ -1714,6 +1877,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(STANDARD_FORMAT);
         box.addItem(TWO_COLUMN_FORMAT);
         box.addItem(TWO_COLUMN_TRACK_FORMAT);
+        OperationsPanel.padComboBox(box, TWO_COLUMN_TRACK_FORMAT.length());
         return box;
     }
 
@@ -1723,6 +1887,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(LANDSCAPE);
         box.addItem(HALFPAGE);
         box.addItem(HANDHELD);
+        box.addItem(RECEIPT);
+        OperationsPanel.padComboBox(box, LANDSCAPE.length());
         return box;
     }
 
@@ -1731,6 +1897,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(PAGE_NORMAL);
         box.addItem(PAGE_PER_TRAIN);
         box.addItem(PAGE_PER_VISIT);
+        OperationsPanel.padComboBox(box, PAGE_PER_TRAIN.length());
         return box;
     }
 
@@ -1763,9 +1930,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /**
-     *
-     * @return JComboBox loaded with the strings (North, South, East, West) showing
-     *         the available train directions for this railroad
+     * @return JComboBox loaded with the strings (North, South, East, West)
+     *         showing the available train directions for this railroad
      */
     public static JComboBox<String> getTrainDirectionComboBox() {
         JComboBox<String> box = new JComboBox<>();
@@ -1860,6 +2026,16 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         } else {
             return 0; // return unknown
         }
+    }
+
+    public static void setDayToName(String day, String name) {
+        if (name != null) {
+            getDefault().hashTableDayToName.put(day, name);
+        }
+    }
+
+    public static String getDayToName(String day) {
+        return getDefault().hashTableDayToName.get(day);
     }
 
     // must synchronize changes with operation-config.dtd
@@ -1957,7 +2133,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.MANIFEST, getManifestOrientation());
         values.setAttribute(Xml.SWITCH_LIST, getSwitchListOrientation());
 
+        e.addContent(values = new Element(Xml.PRINT_DUPLEX));
+        values.setAttribute(Xml.NAME, getPrintDuplexSides().toString());
+
         e.addContent(values = new Element(Xml.MANIFEST_COLORS));
+        values.setAttribute(Xml.DROP_ENGINE_COLOR, getDropEngineTextColor());
+        values.setAttribute(Xml.PICKUP_ENGINE_COLOR, getPickupEngineTextColor());
         values.setAttribute(Xml.DROP_COLOR, getDropTextColor());
         values.setAttribute(Xml.PICKUP_COLOR, getPickupTextColor());
         values.setAttribute(Xml.LOCAL_COLOR, getLocalTextColor());
@@ -1967,6 +2148,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.LENGTH, Integer.toString(getTab1Length()));
         values.setAttribute(Xml.TAB2_LENGTH, Integer.toString(getTab2Length()));
         values.setAttribute(Xml.TAB3_LENGTH, Integer.toString(getTab3Length()));
+        values.setAttribute(Xml.MANIFEST_TAB_LENGTH, Integer.toString(getManifestTabLength()));
 
         e.addContent(values = new Element(Xml.MANIFEST));
         values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -1978,12 +2160,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_PAGE_HEADER, isPrintPageHeaderEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_NO_PAGE_BREAKS, isPrintNoPageBreaksEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRUNCATE, isPrintTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_CABOOSE_LOAD, isPrintCabooseLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.GROUP_MOVES, isGroupCarMovesEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_LOCO_LAST, isPrintLocoLastEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
         // new format June 2014
@@ -1998,6 +2182,13 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         values.setAttribute(Xml.VALUE, value);
 
+        // new format June 2025
+        e.addContent(values = new Element(Xml.HEADER_LINES));
+        values.setAttribute(Xml.PRINT_HEADER_LINE1, isPrintHeaderLine1Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_HEADER_LINE2, isPrintHeaderLine2Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_HEADER_LINE3, isPrintHeaderLine3Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.HORIZONTAL_LINE_ADJ, Integer.toString(getHorizontalLineAdjustment()));
+
         if (!getManifestLogoURL().equals(NONE)) {
             values = new Element(Xml.MANIFEST_LOGO);
             values.setAttribute(Xml.NAME, getManifestLogoURL());
@@ -2011,6 +2202,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         e.addContent(values = new Element(Xml.BUILD_OPTIONS));
         values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.NUMBER_PASSES, Integer.toString(getNumberPasses()));
+        values.setAttribute(Xml.ON_TIME, isBuildOnTime() ? Xml.TRUE : Xml.FALSE);
+        if (isBuildOnTime()) {
+            values.setAttribute(Xml.DWELL_TIME, Integer.toString(getDwellTime()));
+        }
 
         values.setAttribute(Xml.ALLOW_LOCAL_INTERCHANGE, isLocalInterchangeMovesEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.ALLOW_LOCAL_SPUR, isLocalSpurMovesEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2070,11 +2265,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             e.addContent(values = new Element(Xml.VSD));
             values.setAttribute(Xml.ENABLE_PHYSICAL_LOCATIONS, isVsdPhysicalLocationEnabled() ? Xml.TRUE : Xml.FALSE);
         }
-
         // Save CATS setting
         e.addContent(values = new Element(Xml.CATS));
         values.setAttribute(Xml.EXACT_LOCATION_NAME,
                 AbstractOperationsServer.isExactLoationNameEnabled() ? Xml.TRUE : Xml.FALSE);
+        // day to name mapping
+        e.addContent(values = new Element(Xml.DAY_NAME_MAP));
+        for (int i = 0; i < Control.numberOfDays; i++) {
+            Element map;
+            String day = Integer.toString(i);
+            String name = getDefault().hashTableDayToName.get(day);
+            if (name != null && !name.isBlank()) {
+                values.addContent(map = new Element(Xml.MAP));
+                map.setAttribute(Xml.DAY, day);
+                map.setAttribute(Xml.NAME, name);
+            }
+        }
         return e;
     }
 
@@ -2339,6 +2545,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String setting = a.getValue();
                 log.debug("missingCarFormat: {}", setting);
                 String[] keys = setting.split(",");
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setMissingCarMessageFormat(keys);
             }
@@ -2484,6 +2691,18 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 setSwitchListOrientation(orientation);
             }
         }
+        if ((operations.getChild(Xml.PRINT_DUPLEX) != null)) {
+            if ((a = operations.getChild(Xml.PRINT_DUPLEX).getAttribute(Xml.NAME)) != null) {
+                String sides = a.getValue();
+                log.debug("Print duplex: {}", sides);
+                if (sides.equals(SidesType.TWO_SIDED_LONG_EDGE.toString())) {
+                    setPrintDuplexSides(Sides.TWO_SIDED_LONG_EDGE);
+                }
+                if (sides.equals(SidesType.TWO_SIDED_SHORT_EDGE.toString())) {
+                    setPrintDuplexSides(Sides.TWO_SIDED_SHORT_EDGE);
+                }
+            }
+        }
         if ((operations.getChild(Xml.MANIFEST_COLORS) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.DROP_COLOR)) != null) {
                 String dropColor = a.getValue();
@@ -2499,6 +2718,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String localColor = a.getValue();
                 log.debug("localColor: {}", localColor);
                 setLocalTextColor(localColor);
+            }
+            if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.DROP_ENGINE_COLOR)) != null) {
+                String dropColor = a.getValue();
+                log.debug("dropEngineColor: {}", dropColor);
+                setDropEngineTextColor(dropColor);
+            } else {
+                // Engine drop color didn't exist before 5.11.3
+                setDropEngineTextColor(getDropTextColor());
+            }
+            if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.PICKUP_ENGINE_COLOR)) != null) {
+                String pickupColor = a.getValue();
+                log.debug("pickupEngineColor: {}", pickupColor);
+                setPickupEngineTextColor(pickupColor);
+            } else {
+                // Engine pick up color didn't exist before 5.11.3
+                setPickupEngineTextColor(getPickupTextColor());
             }
         }
         if ((operations.getChild(Xml.TAB) != null)) {
@@ -2532,6 +2767,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                     setTab3length(Integer.parseInt(length));
                 } catch (NumberFormatException ee) {
                     log.error("Tab 3 length ({}) isn't a valid number", a.getValue());
+                }
+            }
+            if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.MANIFEST_TAB_LENGTH)) != null) {
+                String length = a.getValue();
+                log.debug("Manifest tab length: {}", length);
+                try {
+                    setManifestTablength(Integer.parseInt(length));
+                } catch (NumberFormatException ee) {
+                    log.error("Manifest tab length ({}) isn't a valid number", a.getValue());
                 }
             }
         }
@@ -2581,6 +2825,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 log.debug("manifest print headers: {}", enable);
                 setPrintHeadersEnabled(enable.equals(Xml.TRUE));
             }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_NO_PAGE_BREAKS)) != null) {
+                String enable = a.getValue();
+                log.debug("printNoPageBreaks: {}", enable);
+                setPrintNoPageBreaksEnabled(enable.equals(Xml.TRUE));
+            }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.TRUNCATE)) != null) {
                 String enable = a.getValue();
                 log.debug("manifest truncate: {}", enable);
@@ -2610,6 +2859,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("manifest group car moves: {}", enable);
                 setGroupCarMoves(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_LOCO_LAST)) != null) {
+                String enable = a.getValue();
+                log.debug("manifest print loco last: {}", enable);
+                setPrintLocoLast(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.HAZARDOUS_MSG)) != null) {
                 String message = a.getValue();
@@ -2642,6 +2896,28 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 }
             }
         }
+        if ((operations.getChild(Xml.HEADER_LINES) != null)) {
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE1)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine1Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE2)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine2Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE3)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine3Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.HORIZONTAL_LINE_ADJ)) != null) {
+                String number = a.getValue();
+                try {
+                    setHorizontalLineAdjustment(Integer.parseInt(number));
+                } catch (NumberFormatException ne) {
+                    log.error("Horizontal line adjustment isn't a number");
+                }
+            }
+        }
         // get manifest logo
         if ((operations.getChild(Xml.MANIFEST_LOGO) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_LOGO).getAttribute(Xml.NAME)) != null) {
@@ -2669,6 +2945,20 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                     setNumberPasses(Integer.parseInt(number));
                 } catch (NumberFormatException ne) {
                     log.debug("Number of passes isn't a number");
+                }
+            }
+            if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ON_TIME)) != null) {
+                String enable = a.getValue();
+                log.debug("on time: {}", enable);
+                setBuildOnTime(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.DWELL_TIME)) != null) {
+                String minutes = a.getValue();
+                log.debug("dwell time: {}", minutes);
+                try {
+                    setDwellTime(Integer.parseInt(minutes));
+                } catch (NumberFormatException ne) {
+                    log.debug("dwell time isn't a number");
                 }
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_INTERCHANGE)) != null) {
@@ -2937,6 +3227,17 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 getDefault().trainLogger = enable.equals(Xml.TRUE);
             }
         }
+        if (operations.getChild(Xml.DAY_NAME_MAP) != null) {
+            List<Element> eMap = operations.getChild(Xml.DAY_NAME_MAP).getChildren(Xml.MAP);
+            for (Element eDay : eMap) {
+                if (eDay.getAttribute(Xml.DAY) != null && eDay.getAttribute(Xml.NAME) != null) {
+                    String day = eDay.getAttribute(Xml.DAY).getValue();
+                    String name = eDay.getAttribute(Xml.NAME).getValue();
+                    setDayToName(day, name);
+                    log.debug("Mapping day: {} to name: {}", day, name);
+                }
+            }
+        }
     }
 
     // replace old pickup and drop message keys
@@ -2956,7 +3257,6 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     /**
      * Converts the xml key to the proper locale text
-     *
      */
     private static void keyToStringConversion(String[] keys) {
         for (int i = 0; i < keys.length; i++) {
@@ -2975,7 +3275,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      * Converts the strings into English tags for xml storage
      *
      */
-    private static void stringToTagConversion(String[] strings) {
+    public static void stringToTagConversion(String[] strings) {
         for (int i = 0; i < strings.length; i++) {
             if (strings[i].equals(BLANK)) {
                 continue;
@@ -2991,8 +3291,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     /*
-     * The xml attributes stored using the English translation. This converts the
-     * attribute to the appropriate key for language conversion.
+     * The xml attributes stored using the English translation. This converts
+     * the attribute to the appropriate key for language conversion.
      */
     private static void xmlAttributeToKeyConversion(String[] format) {
         for (int i = 0; i < format.length; i++) {

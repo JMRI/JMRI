@@ -24,7 +24,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     public SimulateTurnoutFeedback(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        super(sys, user, Category.OTHER);
+        super(sys, user, LogixNG_Category.OTHER);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         for (Turnout t : tm.getNamedBeanSet()) {
             addTurnoutListener(t);
         }
-        tm.addPropertyChangeListener("beans", this);
+        tm.addPropertyChangeListener(Manager.PROPERTY_BEANS, this);
         tm.addVetoableChangeListener(this);
     }
 
@@ -90,7 +90,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
             for (Turnout t : tm.getNamedBeanSet()) {
                 removeTurnoutListener(t);
             }
-            tm.removePropertyChangeListener("beans", this);
+            tm.removePropertyChangeListener(Manager.PROPERTY_BEANS, this);
             tm.removeVetoableChangeListener(this);
             _listenersAreRegistered = false;
         }
@@ -125,11 +125,11 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         if (!_turnouts.containsKey(turnout.getSystemName())) {
             TurnoutInfo ti = new TurnoutInfo(turnout);
             _turnouts.put(turnout.getSystemName(), ti);
-            turnout.addPropertyChangeListener("feedbackchange", this);
-            turnout.addPropertyChangeListener("turnoutFeedbackFirstSensorChange", this);
-            turnout.addPropertyChangeListener("turnoutFeedbackSecondSensorChange", this);
+            turnout.addPropertyChangeListener(Turnout.PROPERTY_FEEDBACK_MODE, this);
+            turnout.addPropertyChangeListener(Turnout.PROPERTY_TURNOUT_FEEDBACK_FIRST_SENSOR, this);
+            turnout.addPropertyChangeListener(Turnout.PROPERTY_TURNOUT_FEEDBACK_SECOND_SENSOR, this);
             if (hasTurnoutFeedback(turnout)) {
-                turnout.addPropertyChangeListener("CommandedState", _turnoutListener);
+                turnout.addPropertyChangeListener(Turnout.PROPERTY_COMMANDED_STATE, _turnoutListener);
                 ti._hasListener = true;
             }
         }
@@ -137,11 +137,11 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     private void removeTurnoutListener(Turnout turnout) {
         TurnoutInfo ti = _turnouts.remove(turnout.getSystemName());
-        turnout.removePropertyChangeListener("feedbackchange", this);
-        turnout.removePropertyChangeListener("turnoutFeedbackFirstSensorChange", this);
-        turnout.removePropertyChangeListener("turnoutFeedbackSecondSensorChange", this);
+        turnout.removePropertyChangeListener(Turnout.PROPERTY_FEEDBACK_MODE, this);
+        turnout.removePropertyChangeListener(Turnout.PROPERTY_TURNOUT_FEEDBACK_FIRST_SENSOR, this);
+        turnout.removePropertyChangeListener(Turnout.PROPERTY_TURNOUT_FEEDBACK_SECOND_SENSOR, this);
         if (ti != null && ti._hasListener) {
-            turnout.removePropertyChangeListener("CommandedState", _turnoutListener);
+            turnout.removePropertyChangeListener(Turnout.PROPERTY_COMMANDED_STATE, _turnoutListener);
             ti._hasListener = false;
         }
     }
@@ -149,8 +149,11 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public synchronized void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("beans")) {
-            if (!(evt.getSource() instanceof TurnoutManager)) return;
+        if (Manager.PROPERTY_BEANS.equals(evt.getPropertyName())) {
+            if (!(evt.getSource() instanceof TurnoutManager)) {
+                log.error("Non-TurnoutManager sent event : {}", evt);
+                return;
+            }
             TurnoutManager manager = (TurnoutManager)evt.getSource();
             if (evt.getNewValue() != null) {
                 String sysName = evt.getNewValue().toString();
@@ -169,19 +172,20 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
             }
         }
 
-        if (evt.getPropertyName().equals("feedbackchange")
-                || evt.getPropertyName().equals("turnoutFeedbackFirstSensorChange")
-                || evt.getPropertyName().equals("turnoutFeedbackSecondSensorChange")) {
+        String evp = evt.getPropertyName();
+        if ( Turnout.PROPERTY_FEEDBACK_MODE.equals(evp)
+                || Turnout.PROPERTY_TURNOUT_FEEDBACK_FIRST_SENSOR.equals(evp)
+                || Turnout.PROPERTY_TURNOUT_FEEDBACK_SECOND_SENSOR.equals(evp)) {
 
             TurnoutInfo ti = _turnouts.get(evt.getSource().toString());
             if (hasTurnoutFeedback(ti._turnout)) {
                 if (!ti._hasListener) {
-                    ti._turnout.addPropertyChangeListener("CommandedState", _turnoutListener);
+                    ti._turnout.addPropertyChangeListener(Turnout.PROPERTY_COMMANDED_STATE, _turnoutListener);
                     ti._hasListener = true;
                 }
             } else {
                 if (ti._hasListener) {
-                    ti._turnout.removePropertyChangeListener("CommandedState", _turnoutListener);
+                    ti._turnout.removePropertyChangeListener(Turnout.PROPERTY_COMMANDED_STATE, _turnoutListener);
                     ti._hasListener = false;
                 }
             }
@@ -190,10 +194,9 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Turnout) {
+        if ( Manager.PROPERTY_DO_DELETE.equals(evt.getPropertyName())
+            && evt.getOldValue() instanceof Turnout ) {
                 removeTurnoutListener((Turnout) evt.getOldValue());
-            }
         }
     }
 
@@ -233,7 +236,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         public void propertyChange(PropertyChangeEvent evt) {
 //            System.out.format("Source: %s, name: %s, old: %s, new: %s%n", evt.getSource(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
 
-            if (evt.getPropertyName().equals("CommandedState")) {
+            if ( Turnout.PROPERTY_COMMANDED_STATE.equals(evt.getPropertyName())) {
                 String sysName = evt.getSource().toString();
                 TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
                 Turnout t = tm.getBySystemName(sysName);

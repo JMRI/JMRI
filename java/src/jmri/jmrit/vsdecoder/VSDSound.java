@@ -22,19 +22,20 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2025
  */
 abstract public class VSDSound {
 
-    final static String SrcSysNamePrefix = "IAS$VSD:";
-    final static String BufSysNamePrefix = "IAB$VSD:";
-    final static String SrcUserNamePrefix = "IVSDS_";
-    final static String BufUserNamePrefix = "IVSDB_";
+    static final String SrcSysNamePrefix = "IAS$VSD:";
+    static final String BufSysNamePrefix = "IAB$VSD:";
+    static final String SrcUserNamePrefix = "IVSDS_";
+    static final String BufUserNamePrefix = "IVSDB_";
 
-    final static float default_exponent = 1.0f;
-    final static float default_gain = 0.8f;
-    final static float default_reference_distance = 1.0f;
-    final static float tunnel_volume = 0.5f;
-    final static int default_sleep_interval = 50; // time in ms
+    static final float default_exponent = 1.0f;
+    static final float default_gain = 0.8f;
+    static final float default_reference_distance = 1.0f;
+    static final float tunnel_volume = 0.5f;
+    static final int default_sleep_interval = 50; // time in ms
 
     Timer t;
 
@@ -107,12 +108,29 @@ abstract public class VSDSound {
         gain = g;
     }
 
-    public void setTunnel(boolean t) {
+    int attachSourcesToEffects() {
+        return 1;
+    }
+
+    int detachSourcesToEffects() {
+        return 1;
+    }
+
+    void setTunnel(boolean t) {
         is_tunnel = t;
     }
 
     boolean getTunnel() {
         return is_tunnel;
+    }
+
+    boolean checkForFreeBuffer() {
+        jmri.AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
+        if (am.getNamedBeanSet(jmri.Audio.BUFFER).size() < jmri.AudioManager.MAX_BUFFERS) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Element getXml() {

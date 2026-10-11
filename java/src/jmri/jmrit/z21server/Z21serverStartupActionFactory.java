@@ -8,9 +8,10 @@ import org.openide.util.lookup.ServiceProvider;
 import java.util.Locale;
 
 /**
- * Factory for roster startup actions.
+ * Factory for startup actions.
  *
  * @author Randall Wood Copyright 2020
+ * @author Jean-Yves Roda (C) 2023
  */
 @ServiceProvider(service = StartupActionFactory.class)
 public final class Z21serverStartupActionFactory extends AbstractStartupActionFactory {

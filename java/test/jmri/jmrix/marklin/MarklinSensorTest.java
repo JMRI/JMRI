@@ -33,9 +33,10 @@ public class MarklinSensorTest extends jmri.implementation.AbstractSensorTestBas
     @AfterEach
     public void tearDown() {
         t.dispose();
+        t = null;
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinSensorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinSensorTest.class);
 
 }

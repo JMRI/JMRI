@@ -1,7 +1,10 @@
 package jmri;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the IdTag class
@@ -13,22 +16,22 @@ public class IdTagTest {
     @Test
     public void testStateConstants() {
 
-        Assert.assertTrue("Seen and Unseen differ", (IdTag.SEEN != IdTag.UNSEEN));
-        Assert.assertTrue("Seen and Unknown differ", (IdTag.SEEN != IdTag.UNKNOWN));
-        Assert.assertTrue("Seen and Inconsistent differ", (IdTag.SEEN != IdTag.INCONSISTENT));
+        assertTrue( (IdTag.SEEN != IdTag.UNSEEN), "Seen and Unseen differ");
+        assertTrue( (IdTag.SEEN != IdTag.UNKNOWN), "Seen and Unknown differ");
+        assertTrue( (IdTag.SEEN != IdTag.INCONSISTENT), "Seen and Inconsistent differ");
 
-        Assert.assertTrue("Unseen and Unknown differ", (IdTag.UNSEEN != IdTag.UNKNOWN));
-        Assert.assertTrue("Unseen and Inconsistent differ", (IdTag.UNSEEN != IdTag.INCONSISTENT));
+        assertTrue( (IdTag.UNSEEN != IdTag.UNKNOWN), "Unseen and Unknown differ");
+        assertTrue( (IdTag.UNSEEN != IdTag.INCONSISTENT), "Unseen and Inconsistent differ");
 
-        Assert.assertTrue("Unknown and Inconsistent differ", (IdTag.UNKNOWN != IdTag.INCONSISTENT));
+        assertTrue( (IdTag.UNKNOWN != IdTag.INCONSISTENT), "Unknown and Inconsistent differ");
 
     }
 
     @Test
     public void testReportableIdTag() {
        TestIdTag t = new TestIdTag("ID1234"); 
-       Assert.assertNotNull("default toReporterStringImplementation",t.toReportString());
-       Assert.assertEquals("default toReporterStringImplementation","ID1234",t.toReportString());
+       assertNotNull( t.toReportString(), "default toReporterStringImplementation");
+       assertEquals( "ID1234",t.toReportString(), "default toReporterStringImplementation");
 
     }
 

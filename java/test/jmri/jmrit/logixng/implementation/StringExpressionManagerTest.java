@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -10,10 +14,9 @@ import jmri.jmrit.logixng.expressions.StringExpressionMemory;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test StringExpressionManager
@@ -28,15 +31,10 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
     public void testRegisterExpression() {
         MyExpression myExpression = new MyExpression(_m.getSystemNamePrefix()+"BadSystemName");
 
-        boolean hasThrown = false;
-        try {
-            _m.registerExpression(myExpression);
-        } catch (IllegalArgumentException e) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
-            JUnitAppender.assertWarnMessage("SystemName IQBadSystemName is not in the correct format");
-        }
-        Assert.assertTrue("Exception thrown", hasThrown);
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () ->
+            _m.registerExpression(myExpression), "Exception thrown");
+        assertEquals( "System name is invalid: IQBadSystemName", e.getMessage(), "Error message is correct");
+        JUnitAppender.assertWarnMessage("SystemName IQBadSystemName is not in the correct format");
 
 
         // We need a male socket to test with, so we register the action and then unregister the socket
@@ -44,14 +42,10 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         MaleStringExpressionSocket maleSocket = _m.registerExpression(action);
         _m.deregister(maleSocket);
 
-        hasThrown = false;
-        try {
-            _m.registerExpression(maleSocket);
-        } catch (IllegalArgumentException e) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "registerExpression() cannot register a MaleStringExpressionSocket. Use the method register() instead.", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", hasThrown);
+        e = assertThrows( IllegalArgumentException.class, () ->
+            _m.registerExpression(maleSocket), "Exception thrown");
+        assertEquals( "registerExpression() cannot register a MaleStringExpressionSocket. Use the method register() instead.",
+                e.getMessage(), "Error message is correct");
     }
 
     @Test
@@ -61,24 +55,24 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         FemaleSocketListener listener = new MyFemaleSocketListener();
 
         socket = _m.createFemaleSocket(myExpression, listener, "E1");
-        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", socket.getClass().getName());
+        assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket",
+                socket.getClass().getName(), "Class is correct");
     }
 
     @Test
     public void testGetBeanTypeHandled() {
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", _m.getBeanTypeHandled());
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", _m.getBeanTypeHandled(false));
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expressions", _m.getBeanTypeHandled(true));
+        assertEquals( "String expression", _m.getBeanTypeHandled(), "getBeanTypeHandled() returns correct value");
+        assertEquals( "String expression", _m.getBeanTypeHandled(false), "getBeanTypeHandled() returns correct value");
+        assertEquals( "String expressions", _m.getBeanTypeHandled(true), "getBeanTypeHandled() returns correct value");
     }
 
     @Test
     public void testInstance() {
-        Assert.assertNotNull("instance() is not null", DefaultStringExpressionManager.instance());
+        assertNotNull( DefaultStringExpressionManager.instance(), "instance() is not null");
         JUnitAppender.assertWarnMessage("instance() called on wrong thread");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -92,7 +86,7 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         _manager = _m;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         _m = null;
         _manager = null;
@@ -104,7 +98,7 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
 
     private static class MyExpression extends AbstractBase implements StringExpressionBean {
 
-        public MyExpression(String sys) throws BadSystemNameException {
+        MyExpression(String sys) throws BadSystemNameException {
             super(sys);
         }
 
@@ -169,7 +163,7 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
         }
 
         @Override
-        public Category getCategory() {
+        public LogixNG_Category getCategory() {
             throw new UnsupportedOperationException("Not supported");
         }
 

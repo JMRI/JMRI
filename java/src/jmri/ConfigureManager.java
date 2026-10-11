@@ -3,6 +3,10 @@ package jmri;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+
 import jmri.jmrit.XmlFile;
 
 /**
@@ -81,6 +85,7 @@ public interface ConfigureManager {
      * @param index a 1-based index of the object to return
      * @return an object of class c or null
      */
+    @CheckForNull
     Object findInstance(Class<?> c, int index);
 
     /**
@@ -118,6 +123,7 @@ public interface ConfigureManager {
      * @param file Output file
      * @return true if successful; false otherwise
      */
+    @CheckReturnValue
     boolean storeConfig(File file);
 
     /**
@@ -126,6 +132,7 @@ public interface ConfigureManager {
      * @param file Output file
      * @return true if succeeded
      */
+    @CheckReturnValue
     boolean storeUser(File file);
 
     /**
@@ -135,6 +142,7 @@ public interface ConfigureManager {
      * @return true if succeeded
      * @throws jmri.JmriException if unable to load file due to internal error
      */
+    @CheckReturnValue
     boolean load(File file) throws JmriException;
 
     /**
@@ -144,6 +152,7 @@ public interface ConfigureManager {
      * @return true if succeeded
      * @throws jmri.JmriException if unable to load URL due to internal error
      */
+    @CheckReturnValue
     boolean load(URL file) throws JmriException;
 
     /**
@@ -155,6 +164,7 @@ public interface ConfigureManager {
      * @throws JmriException if problem during load
      * @since 2.11.2
      */
+    @CheckReturnValue
     boolean load(File file, boolean registerDeferred) throws JmriException;
 
     /**
@@ -166,6 +176,7 @@ public interface ConfigureManager {
      * @throws JmriException if problem during load
      * @since 2.11.2
      */
+    @CheckReturnValue
     boolean load(URL file, boolean registerDeferred) throws JmriException;
 
     /**
@@ -178,6 +189,7 @@ public interface ConfigureManager {
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
+    @CheckReturnValue
     boolean loadDeferred(File file) throws JmriException;
 
     /**
@@ -190,6 +202,7 @@ public interface ConfigureManager {
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
+    @CheckReturnValue
     boolean loadDeferred(URL file) throws JmriException;
 
     /**
@@ -207,6 +220,7 @@ public interface ConfigureManager {
      * @param file to be backed up
      * @return true if successful
      */
+    @CheckReturnValue
     boolean makeBackup(File file);
 
     /**

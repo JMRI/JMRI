@@ -234,15 +234,25 @@
 
       <h2 id="saveoptions">Saving Dispatcher Options</h2>
 
-      <p>To save the Dispatcher settings currently in effect into a small XML file
-      (<em>dispatcheroptions.xml</em>) in the user's preferences directory, select <strong>Save
-      Options...</strong> from the <strong>Options</strong> menu. This is the same location where
-      JMRI preference files are saved. When Dispatcher is started, if a file named
-      "<em>dispatcheroptions.xml</em>" is found in the user's preference directory, that file is
-      read, and Dispatcher options are set accordingly. If the file is not present when Dispatcher
-      is started, default options are used. <strong>Note: Dispatcher Options are not saved
-      automatically.</strong> Saving Dispatcher Options is optional. Selecting this menu item is
-      the only way to save Dispatcher Options.</p>
+      <p>To make the changes to Dispatcher options persistent, select <strong>Save Options...</strong>
+      from the <strong>Options</strong> menu.  A small XML file, <em>dispatcheroptions.xml</em>, will be
+      created and saved in the <strong>dispatcher</strong> directory within the user files location.
+      <strong>Note: Dispatcher Options are not saved automatically.</strong> Saving Dispatcher
+      Options is optional. Selecting this menu item is the only way to save Dispatcher Options.
+      </p>
+
+      <p>When Dispatcher is started, the <em>dispatcheroptions.xml</em> file will be loaded to set
+      the options for the current Panelpro session.</p>
+
+      <p>If the file is not present when Dispatcher is started, default options are used.
+      </p>
+
+      <p class="noted">Prior to JMRI 5.13.7, the <em>dispatcheroptions.xml</em> file was stored at
+      the user files location. The options file location file has been changed to the
+      <strong>dispatcher</strong> directory which also contains the train info files.  The result is
+      that the Dispatcher configuration data is in a single location.  The file at the old location,
+      if it exists, will continue to be updated when options are updated. The "change" occurs when
+      options have been saved the first time after a JMRI upgrade to 5.13.7 or later.</p>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

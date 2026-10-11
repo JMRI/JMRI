@@ -35,6 +35,7 @@ public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemCo
 
     /**
      * Tells which managers this class provides.
+     * {@inheritDoc}
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -42,12 +43,16 @@ public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemCo
             return false;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            if (programmerManager == null) return false;
-            programmerManager.isGlobalProgrammerAvailable();
+            if (programmerManager == null) {
+                return false;
+            }
+            return programmerManager.isGlobalProgrammerAvailable();
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            if (programmerManager == null) return false;
-            programmerManager.isAddressedModePossible();
+            if (programmerManager == null) {
+                return false;
+            }
+            return programmerManager.isAddressedModePossible();
         }
         if (type.equals(jmri.SensorManager.class)) {
             return true;
@@ -68,13 +73,21 @@ public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemCo
             return null;
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            if (programmerManager == null) return null;
-            if (!programmerManager.isGlobalProgrammerAvailable()) return null;
+            if (programmerManager == null) {
+                return null;
+            }
+            if (!programmerManager.isGlobalProgrammerAvailable()) {
+                return null;
+            }
             return (T)programmerManager;
         }
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            if (programmerManager == null) return null;
-            if (!programmerManager.isAddressedModePossible()) return null;
+            if (programmerManager == null) {
+                return null;
+            }
+            if (!programmerManager.isAddressedModePossible()) {
+                return null;
+            }
             return (T)programmerManager;
         }
         if (T.equals(jmri.SensorManager.class)) {
@@ -144,7 +157,7 @@ public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemCo
             return null;
         }
         if (throttleManager == null) {
-            throttleManager = new OlcbThrottleManager();
+            throttleManager = new OlcbThrottleManager(this);
         }
         return throttleManager;
     }

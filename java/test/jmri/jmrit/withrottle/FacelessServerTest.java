@@ -25,7 +25,7 @@ public class FacelessServerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         server = new FacelessServer(){
             @Override
@@ -35,7 +35,7 @@ public class FacelessServerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         Assertions.assertNotNull(server);
         server.disableServer();
         JUnitUtil.waitFor( () -> { return !server.isListen; },"Server stops listening flag");

@@ -2,7 +2,6 @@ package jmri.jmrix.nce.boosterprog;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -19,7 +18,7 @@ public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
     @Test
-    public void testInitComponents() throws Exception {
+    public void testInitComponents() {
         // this test currently only verifies there is no exception thrown.
         ((BoosterProgPanel)panel).initComponents(memo);
         // also check that dispose doesn't cause an exception
@@ -27,7 +26,7 @@ public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Test
-    public void testInitContext() throws Exception {
+    public void testInitContext() {
         // this test currently only verifies there is no exception thrown.
         ((BoosterProgPanel)panel).initContext(memo);
         // also check that dispose doesn't cause an exception
@@ -36,9 +35,9 @@ public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
 
 
     @Test
-    public void testGetTitleAfterInit() throws Exception {
+    public void testGetTitleAfterInit() {
         ((BoosterProgPanel)panel).initComponents(memo);
-        Assert.assertEquals("Title","NCE: Booster Programming",panel.getTitle());
+        Assertions.assertEquals("NCE: Booster Programming",panel.getTitle(), "Title");
     }
 
     @Override
@@ -55,7 +54,9 @@ public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.getNceTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 }

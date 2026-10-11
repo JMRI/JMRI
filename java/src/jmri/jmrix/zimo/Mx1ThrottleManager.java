@@ -87,6 +87,6 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1ThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1ThrottleManager.class);
 
 }

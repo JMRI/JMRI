@@ -304,7 +304,7 @@ public class CbusAddress {
     }
 
     // not A-F, N or X
-    private final static String[] invalidChars = {
+    private static final String[] invalidChars = {
         "G","H","I","J","K","L","M","S","T","U","V","W","Y","Z",
         "?",":","++","--",",","*","NN","XX"};
     
@@ -466,6 +466,6 @@ public class CbusAddress {
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusAddress.class);
 
 }

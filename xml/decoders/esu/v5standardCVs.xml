@@ -15,6 +15,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
     <variable CV="2" default="3" item="Vstart">
         <decVal min="1"/>
         <label>Vstart</label>
@@ -137,9 +138,9 @@
     <variable CV="111" default="0" item="Motor Option 1">
         <decVal/>
         <label>Gearbox Backlash Compensation</label>
-        <label xml:lang="de">Getriebelastausgleich</label>
+        <label xml:lang="de">Getriebelastausgleich (CV111)</label>
         <tooltip>Time for which the motor runs at minimum speed after changing direction to prevent gear box jerking. Unit is 16 milliseconds.</tooltip>
-        <tooltip xml:lang="de">Zeit als Vielfaches von 16mS, für die der Motor nach Fahrtirchtungsumkehr mit minimaler Geschwindigkeit läuft, um ein Anfahrrucken durch Getriebsspiel zu verhindern.</tooltip>
+        <tooltip xml:lang="de">Zeit als Vielfaches von 16 mS, für die der Motor nach Fahrtrichtungsumkehr mit minimaler Geschwindigkeit läuft, um ein Anfahrrucken durch Getriebsspiel zu verhindern.</tooltip>
     </variable>
     <variable CV="123" default="100" item="ESU V4 ABC Reduced Speed">
         <decVal/>
@@ -248,113 +249,116 @@
         <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Enable">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>BEMF</label>
-            <label xml:lang="de">Lastregelung</label>
+            <label xml:lang="de">Lastregelung (CV49)</label>
             <label xml:lang="ca">BEMF</label>
         </variable>
         <variable CV="9" default="40" item="Motor PWM Frequency">
             <decVal min="10" max="50"/>
             <label>Motor PWM Frequency</label>
-            <label xml:lang="de">Motor PWM Frequenz</label>
+            <label xml:lang="de">Motor PWM Frequenz (CV09)</label>
             <label xml:lang="ca">Freqüència PWM Motor</label>
             <tooltip>Unit is kHz (1000Hz).</tooltip>
         </variable>
         <variable CV="51" default="10" item="EMF Option 4">
             <decVal/>
             <label>BEMF Parameter 'K' Slow Cutoff</label>
-            <label xml:lang="de">Lastregelung Param. „K" Slow Cutoff</label>
+            <label xml:lang="de">Lastregelung Param. „K" Slow Cutoff (CV51)</label>
             <tooltip xml:lang="de">Interne Fahrstufe, bis zu der «K Slow» gilt</tooltip>
         </variable>
         <variable CV="52" default="10" item="EMF Option 3">
             <decVal/>
             <label>BEMF Parameter 'K' Slow</label>
-            <label xml:lang="de">Lastregelung Param. „K“ Slow</label>
+            <label xml:lang="de">Lastregelung Param. „K" Slow (CV52)</label>
             <label xml:lang="ca">Paràmetre K lent de la BEMF</label>
+            <tooltip xml:lang="de">Regelverstärkung für das ganz langsame Fahren in Fahrstufe 1</tooltip>
         </variable>
         <variable CV="53" default="130" item="EMF Control Reference">
             <decVal/>
             <label>BEMF Reference Voltage</label>
-            <label xml:lang="de">Regelungsreferenz Spannung</label>
+            <label xml:lang="de">Regelungsreferenz Spannung (CV53)</label>
             <label xml:lang="ca">Voltatge de referència de la BEMF</label>
         </variable>
         <variable CV="54" default="50" item="EMF Option 1">
             <decVal/>
             <label>BEMF Parameter 'K'</label>
-            <label xml:lang="de">Lastregelung Param. „K“</label>
+            <label xml:lang="de">Lastregelung Param. „K" (CV54)</label>
             <label xml:lang="ca">Paràmetre K de la BEMF</label>
+            <tooltip xml:lang="de">Stärke der Lastregelung, Wert verringern, wenn die Lok ruckhaft läuft</tooltip>
         </variable>
         <variable CV="55" default="100" item="EMF Option 2">
             <decVal/>
             <label>BEMF Parameter 'I'</label>
-            <label xml:lang="de">Lastregelung Param. „I“</label>
+            <label xml:lang="de">Lastregelung Param. „I" (CV55)</label>
             <label xml:lang="ca">Paràmetre I de la BEMF</label>
+            <tooltip xml:lang="de">Trägheit der Lastregelung, Wert verändern, wenn die Lok Sprünge macht</tooltip>
         </variable>
         <variable CV="56" default="255" item="EMF Option 5">
             <decVal/>
             <label>BEMF Influence at Vmin</label>
-            <label xml:lang="de">Regelungseinfluss bei Vmin</label>
+            <label xml:lang="de">Regelungseinfluss bei Vmin  (CV56)</label>
             <tooltip>Defines the Strength of the BEMF at minimum speed step (255=100%).</tooltip>
-            <tooltip xml:lang="de">0-100 %, Bestimmt, wie stark die Lastregelung bei der kleinsten Fahrstufe ist.</tooltip>
+            <tooltip xml:lang="de">0-100 %, Bestimmt, wie stark die Lastregelung bei der kleinsten Fahrstufe ist. Bei Ruckeln verringern</tooltip>
         </variable>
         <variable CV="100" default="0" item="Motor Option 3">
             <decVal/>
             <label>Motor Current Limiter</label>
-            <label xml:lang="de">Motor Current Limiter</label>
+            <label xml:lang="de">Motor Current Limiter (CV100)</label>
             <tooltip>Limits the maximum curent allowed to be drawn by the motor. 0 is limiter disabled, 1 is 0.39%, 255 is 100%.</tooltip>
-            <tooltip xml:lang="de">Limits the maximum curent allowed to be drawn by the motor. 0 is limiter disabled, 1 is 0.39%, 255 is 100%.</tooltip>
+            <tooltip xml:lang="de">Begrenzt den maximalen Strom, der vom Motor aufgenommen werden darf. 0 Begrenzer ist deaktiviert, 1 ist 0,39%, 255 ist 100%..</tooltip>
         </variable>
         <variable CV="116" exclude="Essential Sound Unit" default="50" item="EMF Option 6">
             <decVal min="25" max="200"/>
             <label>Slow Speed BEMF Sampling Period</label>
-            <label xml:lang="de">EMK Messperiode bei Vmin</label>
+            <label xml:lang="de">EMK Messperiode bei Vmin (CV116)</label>
             <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
         </variable>
         <variable CV="116" include="Essential Sound Unit" readOnly="yes" default="50" item="EMF Option 6">
             <decVal min="50" max="200"/>
             <label>Slow Speed BEMF Sampling Period</label>
-            <label xml:lang="de">EMK Messperiode bei Vmin</label>
+            <label xml:lang="de">EMK Messperiode bei Vmin (CV116)</label>
             <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
         </variable>
         <variable CV="117" exclude="Essential Sound Unit" default="150" item="EMF Option 7">
             <decVal min="25" max="200"/>
             <label>Full Speed BEMF Sampling Period</label>
-            <label xml:lang="de">EMK Messperiode bei Vmax</label>
+            <label xml:lang="de">EMK Messperiode bei Vmax (CV117)</label>
             <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
         </variable>
         <variable CV="117" include="Essential Sound Unit" readOnly="yes" default="150" item="EMF Option 7">
             <decVal min="50" max="200"/>
             <label>Full Speed BEMF Sampling Period</label>
-            <label xml:lang="de">EMK Messperiode bei Vmax</label>
+            <label xml:lang="de">EMK Messperiode bei Vmax (CV117)</label>
             <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
         </variable>
         <variable CV="118" exclude="Essential Sound Unit" default="15" item="EMF Option 8">
             <decVal min="3" max="40"/>
             <label>Slow Speed BEMF Measurement Gap</label>
-            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmin</label>
+            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmin (CV118)</label>
             <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
         </variable>
         <variable CV="118" include="Essential Sound Unit" readOnly="yes" default="15" item="EMF Option 8">
             <decVal min="10" max="40"/>
             <label>Slow Speed BEMF Measurement Gap</label>
-            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmin</label>
+            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmin (CV118)</label>
             <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
         </variable>
         <variable CV="119" exclude="Essential Sound Unit" default="20" item="EMF Option 9">
             <decVal min="3" max="40"/>
             <label>Full Speed BEMF Measurement Gap</label>
-            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmax</label>
+            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmax (CV119)</label>
             <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
         </variable>
         <variable CV="119" include="Essential Sound Unit" readOnly="yes" default="20" item="EMF Option 9">
             <decVal min="10" max="40"/>
             <label>Full Speed BEMF Measurement Gap</label>
-            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmax</label>
+            <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmax (CV119)</label>
             <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
             <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
         </variable>
@@ -735,21 +739,21 @@
         <label>Optional Load Adjustment</label>
         <label xml:lang="de">Lastanpassung „Alternative Last”</label>
         <tooltip>&lt;html&gt;Sets the factor that changes CV3, CV4 and the sound.&lt;br/&gt;
-            Acceleration time = CV3*(load value/128).&lt;br/&gt;
-            Deceleration time = CV4*(load value/128).&lt;br/&gt;
-            (load value = 0) changes the time to zero.&lt;br/&gt;
-            (load value = 128) does not change the time.&lt;br/&gt;
-            (load value = 255) doubles the time.&lt;br/&gt;
-            Intended to be set up for Light Load.
+        Acceleration time = CV3*(load value/128).&lt;br/&gt;
+        Deceleration time = CV4*(load value/128).&lt;br/&gt;
+        (load value = 0) changes the time to zero.&lt;br/&gt;
+        (load value = 128) does not change the time.&lt;br/&gt;
+        (load value = 255) doubles the time.&lt;br/&gt;
+        Intended to be set up for Light Load.
         &lt;/html&gt;
         </tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Stellt den Faktor ein, der CV3, CV4 und den Klang ändert.&lt;br/&gt;
-            Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
-            Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
-            (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
-            (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
-            (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
-            Vorgesehen für leichte Belastung.
+        Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
+        Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
+        (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
+        (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
+        (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
+        Vorgesehen für leichte Belastung.
         &lt;/html&gt;
         </tooltip>
     </variable>
@@ -758,23 +762,23 @@
         <label>Primary Load Adjustment</label>
         <label xml:lang="de">Lastanpassung „Schwere Last”</label>
         <tooltip>&lt;html&gt;Sets the factor that changes CV3, CV4 and the sound.&lt;br/&gt;
-            Acceleration time = CV3*(load value/128).&lt;br/&gt;
-            Deceleration time = CV4*(load value/128).&lt;br/&gt;
-            (load value = 0) changes the time to zero.&lt;br/&gt;
-            (load value = 128) does not change the time.&lt;br/&gt;
-            (load value = 255) doubles the time.&lt;br/&gt;
-            Intended to be set up for Heavy Load.&lt;br/&gt;
-            If active, overrides Optional Load.
+        Acceleration time = CV3*(load value/128).&lt;br/&gt;
+        Deceleration time = CV4*(load value/128).&lt;br/&gt;
+        (load value = 0) changes the time to zero.&lt;br/&gt;
+        (load value = 128) does not change the time.&lt;br/&gt;
+        (load value = 255) doubles the time.&lt;br/&gt;
+        Intended to be set up for Heavy Load.&lt;br/&gt;
+        If active, overrides Optional Load.
         &lt;/html&gt;
         </tooltip>
         <tooltip xml:lang="de">&lt;html&gt;Stellt den Faktor ein, der CV3, CV4 und den Klang ändert.&lt;br/&gt;
-            Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
-            Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
-            (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
-            (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
-            (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
-            Vorgesehen für schwere Lastunen.&lt;br/&gt;
-            Wenn aktiv, wird die Lastanpassung „Alternative Last” überschrieben.
+        Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
+        Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
+        (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
+        (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
+        (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
+        Vorgesehen für schwere Lastunen.&lt;br/&gt;
+        Wenn aktiv, wird die Lastanpassung „Alternative Last” überschrieben.
         &lt;/html&gt;
         </tooltip>
     </variable>
@@ -1011,6 +1015,27 @@
             <tooltip xml:lang="nl">M4 Decoderversienummer</tooltip>
         </variable>
     </variables>
+
+    <variables> <!-- extra nesting level required to get access to Firmware Full Version -->
+        <variable CV="199" default="2" item="Class light logic colors">
+            <qualifier>
+                <variableref>Firmware Full Version</variableref>
+                <relation>ge</relation>
+                <!-- 5.8.156 -> 0x0508009c -> 84410524 -->
+                <value>84410524</value>
+            </qualifier>
+            <enumVal>
+                <enumChoice value="1">
+                    <choice>2 (Two different color class lights)</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                    <choice>3 (Three different color class lights)</choice>
+                </enumChoice>
+            </enumVal>
+            <label>Class light logic: Number of colors</label>
+        </variable>
+    </variables>
+    
     <variable CV="249" default="0" item="Sound Steam Chuffs Min Distance">
         <decVal/>
         <label>Chuff minimum spacing</label>
@@ -1028,34 +1053,12 @@
     <!-- Index variables -->
     <constant item="PICV" default="31" comment="CV used for Primary Index"/>
     <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
-    <!-- Firmware Version -->
-    <variable CV="0.255.285:2" readOnly="no" item="Firmware Build Number">
-        <splitVal/>
-        <label>Firmware Build Number</label>
-        <label xml:lang="de">Firmware Build Nummer</label>
-        <label xml:lang="ca">Número de firmware</label>
-    </variable>
-    <variable CV="0.255.287" readOnly="no" item="Firmware Minor Version">
-        <decVal/>
-        <label>Firmware Minor Version</label>
-    </variable>
-    <variable CV="0.255.288" readOnly="no" item="Firmware Major Version">
-        <decVal/>
-        <label>Firmware Major Version</label>
-    </variable>
-    <variable CV="0.255.285:4" readOnly="yes" item="Firmware Full Version">
-        <splitHexVal/>
-        <label>Firmware Full Version</label>
-        <tooltip>A machine-comparable value calculated from the different parts of the Firmware Version</tooltip>
-    </variable>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
     <variables exclude="Essential Sound Unit">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/>
     </variables>
     <variables exclude="ESU LokPilot 5">
         <xi:include href="http://jmri.org/xml/decoders/esu/v5soundCVs.xml"/>
     </variables>
-    <xi:include href="http://jmri.org/xml/decoders/esu/v5fnOutCVs.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncCVs.xml"/>
     <!-- begin SUSI variables -->
     <!-- note that the exclusions below must be copied to xml/decoders/esu/susiMapPane.xml -->

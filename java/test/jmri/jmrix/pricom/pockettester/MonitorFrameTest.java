@@ -1,12 +1,9 @@
 package jmri.jmrix.pricom.pockettester;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * JUnit tests for the MonitorFrame class
@@ -16,16 +13,18 @@ import org.junit.Assume;
 public class MonitorFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         MonitorFrame monitorFrame = new MonitorFrame();
-        Assert.assertNotNull(monitorFrame);
+        Assertions.assertNotNull(monitorFrame);
     }
 
     // create and show, with some data present
     @Test
-    public void testShow() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testShow() {
+
         MonitorFrame f = new MonitorFrame();
         f.initComponents();
         f.setVisible(true);
@@ -36,15 +35,15 @@ public class MonitorFrameTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

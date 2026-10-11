@@ -1,14 +1,15 @@
 package jmri.progdebugger;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.ProgListener;
 import jmri.Programmer;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the DebugProgrammer class.
@@ -17,8 +18,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DebugProgrammerTest {
 
-    int readValue = -2;
-    boolean replied = false;
+    private int readValue = -2;
+    private boolean replied = false;
 
     @Test
     public void testWriteRead() throws jmri.ProgrammerException, InterruptedException {
@@ -37,16 +38,16 @@ public class DebugProgrammerTest {
         p.readCV("4", l);
         waitReply();
         log.debug("readValue is {}", readValue);
-        Assert.assertEquals("read back", 12, readValue);
+        assertEquals( 12, readValue, "read back");
     }
 
     @Test
     public void testCvLimit() {
         Programmer p = new jmri.progdebugger.ProgDebugger();
-        Assert.assertTrue("CV limit read", p.getCanRead("256"));
-        Assert.assertTrue("CV limit write", p.getCanWrite("256"));
-        Assert.assertTrue("CV limit read", !p.getCanRead("257"));
-        Assert.assertTrue("CV limit write", !p.getCanWrite("257"));
+        assertTrue( p.getCanRead("256"), "CV limit read");
+        assertTrue( p.getCanWrite("256"), "CV limit write");
+        assertFalse( p.getCanRead("257"), "CV limit read");
+        assertFalse( p.getCanWrite("257"), "CV limit write");
     }
 
     @Test
@@ -61,13 +62,13 @@ public class DebugProgrammerTest {
             }
         };
 
-        Assert.assertTrue("initially not written", !p.hasBeenWritten(4));
+        assertFalse( p.hasBeenWritten(4), "initially not written");
         p.writeCV("4", 12, l);
-        Assert.assertTrue("after 1st write", p.hasBeenWritten(4));
+        assertTrue( p.hasBeenWritten(4), "after 1st write");
         p.clearHasBeenWritten(4);
-        Assert.assertTrue("now longer written", !p.hasBeenWritten(4));
+        assertFalse( p.hasBeenWritten(4), "now longer written");
         p.writeCV("4", 12, l);
-        Assert.assertTrue("after 2nd write", p.hasBeenWritten(4));
+        assertTrue( p.hasBeenWritten(4), "after 2nd write");
 
     }
 
@@ -89,6 +90,6 @@ public class DebugProgrammerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebugProgrammerTest.class);
 
 }

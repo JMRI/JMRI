@@ -363,6 +363,6 @@ public class CbusPreferences extends PreferencesBean {
         savePreferences();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusPreferences.class);
 
 }

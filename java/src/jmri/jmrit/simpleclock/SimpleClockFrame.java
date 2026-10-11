@@ -1,5 +1,7 @@
 package jmri.jmrit.simpleclock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -40,9 +42,9 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     protected JComboBox<String> clockStartBox = null;
     protected JComboBox<String> startRunBox = null;
     // These are the indexes into the start run box.
-    private final static int START_RUNNING = 0;
-    private final static int START_STOPPED = 1;
-    private final static int START_NORUNCHANGE = 2;
+    private static final int START_RUNNING = 0;
+    private static final int START_STOPPED = 1;
+    private static final int START_NORUNCHANGE = 2;
 
     protected JCheckBox synchronizeCheckBox = null;
     protected JCheckBox correctCheckBox = null;
@@ -837,6 +839,8 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This calls doneButtonActionPerformed which calls super.windowClosing()")
     public void windowClosing(WindowEvent e) {
         doneButtonActionPerformed(null);
     }

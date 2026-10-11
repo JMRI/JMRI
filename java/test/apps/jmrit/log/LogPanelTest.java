@@ -2,7 +2,6 @@ package apps.jmrit.log;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class LogPanelTest {
     @Test
     public void testCTor() {
         LogPanel t = new LogPanel();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class LogPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LogPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LogPanelTest.class);
 
 }

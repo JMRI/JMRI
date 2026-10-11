@@ -156,9 +156,7 @@
  </indexitem>
  <indexitem text="DCC Specialties - Hardware, Connection, Tools " target="html.hardware.misc.DccSpecialties"/>
 
- <indexitem text="DCC-EX EX-CommandStation Hardware, Connection, Tools " target="html.hardware.dcc-ex.index"/>
-
- <indexitem text="DCC++ Hardware, Connection, Tools " target="html.hardware.dccpp.index"/>
+ <indexitem text="DCC-EX Hardware, Connection, Tools " target="html.hardware.dcc-ex.index"/>
 
  <indexitem text="Debug Menu " target="html.apps.PanelPro.DebugMenu"/>
 
@@ -226,6 +224,8 @@
   <indexitem text="Throttle Messages " target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"/>
 
   <indexitem text="UR90 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
+  <indexitem text="UR90X " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
   <indexitem text="UR91 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
@@ -328,6 +328,8 @@
 
  <indexitem text="Layout Editor (Panels) " target="package.jmri.jmrit.display.LayoutEditor"/>
 
+ <indexitem text="LccPro " target="package.apps.gui3.lccpro.LccPro"/>
+
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
  <indexitem text="Lenz XpressNet - Hardware, Connection, Tools " target="html.hardware.XPressNet.index"/>
@@ -363,7 +365,9 @@
 
   <indexitem text="Firmware Downloader " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
 
-  <indexitem text="LNCV Programmer " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
+  <indexitem text="Manage LNCV Modules " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
+
+  <indexitem text="Manage LNSV1 Modules " target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane"/>
 
   <indexitem text="LocoBuffer " target="html.hardware.loconet.LocoBuffer"/>
 
@@ -371,7 +375,9 @@
 
   <indexitem text="LocoBuffer-USB " target="html.hardware.loconet.LocoBufferUSB"/>
 
-  <indexitem text="LocoIO " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
+  <indexitem text="LocoBuffer-NG " target="html.hardware.loconet.LocoBufferUSB"/>
+
+  <indexitem text="LocoIO " target="html.hardware.loconet.LocoIO"/>
 
   <indexitem text="LocoNet Addressing " target="html.hardware.loconet.Addressing"/>
 
@@ -585,6 +591,8 @@
 
  <indexitem text="QSI - Hardware, Connection, Tools " target="html.hardware.qsi.index"/>
 
+ <indexitem text="RailCom " target="package.jmri.jmrit.beantable.RailComTable"/>
+
  <indexitem text="RailDriver Throttle " target="html.hardware.raildriver.index"/>
 
  <indexitem text="Raspberry Pi - Hardware, Connection, Tools " target="html.hardware.pi.index"/>
@@ -739,6 +747,14 @@
   <indexitem text="See also: CBUS " target="html.hardware.can.cbus.index"/>
 
  </indexitem>
+
+ <indexitem text="StringIO " target="html.tools.StringIOs">
+  <indexitem text="Add/Edit a StringIO " target="package.jmri.jmrit.beantable.StringIOAddEdit"/>
+
+  <indexitem text="StringIO Table " target="package.jmri.jmrit.beantable.StringIOTable"/>
+
+ </indexitem>
+
  <indexitem text="Supported Decoders " target="html.apps.DecoderPro.index_decoderlisting"/>
 
  <indexitem text="Supported Digital Control Hardware " target="html.hardware.index"/>
@@ -767,6 +783,8 @@
   <indexitem text="Add a Throttle " target="package.jmri.jmrit.throttle.ThrottleFrame"/>
 
   <indexitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
+  
+  <indexitem text="Z21 Throttle (Z21 App and WlanMaus) " target="package.jmri.jmrit.z21server.z21server"/>
 
   <indexitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
 

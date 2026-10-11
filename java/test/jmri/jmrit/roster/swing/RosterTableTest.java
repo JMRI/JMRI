@@ -1,7 +1,7 @@
 package jmri.jmrit.roster.swing;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import jmri.InstanceManager;
 import jmri.jmrit.roster.*;
@@ -54,8 +54,8 @@ public class RosterTableTest {
         new JMenuItemOperator(jpo,"Protocol").doClick();
 
         // check cell values for column Key A
-        to.waitCell("value 1", 0, 11); // key a column value 1
-        to.waitCell("value 22", 1, 11); // key a column value 1
+        to.waitCell("value 1", 0, 12); // key a column value 1
+        to.waitCell("value 22", 1, 12); // key a column value 1
         to.waitCell("", 2, 11); // key a column value 1
 
         JUnitUtil.dispose(jfo.getWindow());
@@ -87,15 +87,6 @@ public class RosterTableTest {
         assertNotNull(to);
         assertTrue(t.getEditable());
 
-        to.clickOnCell(0, 10, 1);
-        to.getQueueTool().waitEmpty();
-        to.clickOnCell(1, 10, 1);
-        to.getQueueTool().waitEmpty();
-        to.clickOnCell(2, 10, 1);
-        to.getQueueTool().waitEmpty();
-        // to.changeCellObject(2, 10, "H");
-        // row 2 cell 10 populates with new Date as H cannot be parsed
-
         JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
 
@@ -124,14 +115,14 @@ public class RosterTableTest {
         JTableOperator to = new JTableOperator(jfo);
         assertNotNull(to);
 
-        int durationCol = 10;
+        int durationCol = 11;
 
-        JLabel c = (JLabel) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
+        var c = (DefaultTableCellRenderer) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
         assertEquals(Bundle.getMessage("DurationViewTip"), c.getToolTipText());
         assertEquals("00:00:01", c.getText());
 
         to.setValueAt("123456", 0, durationCol);
-        c = (JLabel) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
+        c = (DefaultTableCellRenderer) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
         assertEquals("1 10:17:36", c.getText());
 
         JUnitUtil.dispose(jfo.getWindow());
@@ -165,5 +156,5 @@ public class RosterTableTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterTableTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterTableTest.class);
 }

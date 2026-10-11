@@ -36,8 +36,8 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
     }
     
     MqttContentParser<Sensor> parser = new MqttContentParser<Sensor>() {
-        private final static String inactiveText = "INACTIVE";
-        private final static String activeText = "ACTIVE";
+        private static final String inactiveText = "INACTIVE";
+        private static final String activeText = "ACTIVE";
         @Override
         public void beanFromPayload(@Nonnull Sensor bean, @Nonnull String payload, @Nonnull String topic) {
             switch (payload) {
@@ -120,6 +120,6 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttSensor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttSensor.class);
 
 }

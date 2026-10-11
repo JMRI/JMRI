@@ -1,9 +1,12 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the SignalSpeedMap class
@@ -14,7 +17,7 @@ public class SignalSpeedMapTest {
 
     @Test
     public void testLoadDefaultMap() {
-        Assert.assertNotNull(jmri.InstanceManager.getDefault(SignalSpeedMap.class));
+        assertNotNull(jmri.InstanceManager.getDefault(SignalSpeedMap.class));
     }
     
     static final String[] speeds = new String[]{
@@ -31,7 +34,7 @@ public class SignalSpeedMapTest {
         "Stop"
     };
 
-    SignalSpeedMap map;
+    private SignalSpeedMap map;
     
     /**
      * To avoid breaking signal systems, speed definitions should
@@ -41,7 +44,8 @@ public class SignalSpeedMapTest {
     @Test
     public void testAllSpeedsPresent() {
         for (int i = 0; i < speeds.length; i++) {
-            Assert.assertTrue(map.getSpeed(speeds[i])+" must be ge 0 to be present",0<=map.getSpeed(speeds[i]));
+            assertTrue( 0 <= map.getSpeed(speeds[i]),
+                    map.getSpeed(speeds[i])+" must be ge 0 to be present");
         }
     }
 
@@ -50,8 +54,9 @@ public class SignalSpeedMapTest {
         
         // check for monotonic values
         for (int i = 0; i < speeds.length-1; i++) {
-            Assert.assertTrue(speeds[i+1]+" ("+map.getSpeed(speeds[i+1])+") must be less than "+speeds[i]+" ("+map.getSpeed(speeds[i])+")", 
-                map.getSpeed(speeds[i+1])<map.getSpeed(speeds[i]));
+            assertTrue( map.getSpeed(speeds[i+1]) < map.getSpeed(speeds[i]),
+                speeds[i+1]+" ("+map.getSpeed(speeds[i+1])+") must be less than "
+                    +speeds[i]+" ("+map.getSpeed(speeds[i])+")");
         }
          
     }
@@ -70,9 +75,11 @@ public class SignalSpeedMapTest {
         check: while (e.hasMoreElements()) {
             name = e.nextElement();
             for (String test : speeds) {
-                if (test.equals(name)) continue check;
+                if (test.equals(name)) {
+                    continue check;
+                }
             }
-            Assert.fail("Speed name \""+name+"\" not recognized");
+            fail("Speed name \""+name+"\" not recognized");
         }        
     }
     
@@ -83,13 +90,13 @@ public class SignalSpeedMapTest {
         String name;
         while (e.hasMoreElements()) {
             name = e.nextElement();
-            Assert.assertNotNull("appearanceSpeed \""+name+"\" is defined", map.getAppearanceSpeed(name));
-            Assert.assertTrue("appearanceSpeed \""+name+"\" has value", map.getSpeed(map.getAppearanceSpeed(name)) >= 0.);
+            assertNotNull( map.getAppearanceSpeed(name), "appearanceSpeed \""+name+"\" is defined");
+            assertTrue( map.getSpeed(map.getAppearanceSpeed(name)) >= 0., "appearanceSpeed \""+name+"\" has value");
         }        
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -100,7 +107,7 @@ public class SignalSpeedMapTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         map = null;
         JUnitUtil.tearDown();
     }

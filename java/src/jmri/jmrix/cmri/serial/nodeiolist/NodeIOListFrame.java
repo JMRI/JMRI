@@ -5,14 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.util.davidflanagan.HardcopyWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.util.davidflanagan.CompatibleHardcopyWriter;
 
 /**
  * Frame for running CMRI assignment list.
@@ -261,6 +264,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                 numOutputBits = bitsPerCard * numOutputCards;
                 nodeType = "CPMEGA - ";
                 break;
+            case SerialNode.ESP32NODE:
+                numInputBits = bitsPerCard * numInputCards;
+                numOutputBits = bitsPerCard * numOutputCards;
+                nodeType = "ESP32Node - ";
+                break;
             default:
                 break;
         }
@@ -313,10 +321,10 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                     + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum + "  ";
         }
         // initialize a printer writer
-        HardcopyWriter writer = null;
+        CompatibleHardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+            writer = new CompatibleHardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
+        } catch (CompatibleHardcopyWriter.PrintCanceledException ex) {
             //log.debug("Print cancelled");
             return;
         }
@@ -462,7 +470,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
          * @param w hard copy writer instance.
          * @param colWidth column width array.
          */
-        public void printTable(HardcopyWriter w, int colWidth[]) {
+        public void printTable(CompatibleHardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[MAX_COLS];
             int charPerLine = w.getCharactersPerLine();
@@ -489,7 +497,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             }
             //w.setFontStyle(Font.BOLD);
             printColumns(w, columnStrings, columnSize);
-            w.setFontStyle(0);
+            w.setFontStyle(Font.PLAIN);
             // draw horizontal line
             w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                     tableLineWidth);
@@ -520,7 +528,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+        protected void printColumns(CompatibleHardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
             StringBuilder lineString = new StringBuilder("");
             String[] spaces = new String[MAX_COLS];
@@ -593,7 +601,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         Bundle.getMessage("HeadingUserName"),
         Bundle.getMessage("HeadingComment")};
 
-    private final static Logger log = LoggerFactory.getLogger(NodeIOListFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(NodeIOListFrame.class);
 
 }
 

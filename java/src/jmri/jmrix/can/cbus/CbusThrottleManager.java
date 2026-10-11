@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.awt.GraphicsEnvironment;
 
 import jmri.*;
-import jmri.jmrit.throttle.ThrottlesPreferences;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.can.*;
 import jmri.util.TimerUtil;
@@ -212,8 +212,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     /**
      * {@inheritDoc}
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"SLF4J_SIGN_ONLY_FORMAT", "SLF4J_FORMAT_SHOULD_BE_CONST"})
-        // justification="I18N of log message")
     @Override
     public void reply(CanReply m) {
         if ( m.extendedOrRtr() ) {

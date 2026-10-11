@@ -159,5 +159,5 @@ public class MaintenanceTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MaintenanceTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MaintenanceTest.class);
 }

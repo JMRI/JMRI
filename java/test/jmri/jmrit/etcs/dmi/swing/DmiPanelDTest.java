@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for DmiPanelD.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiPanelDTest {
 
     @Test
@@ -88,7 +88,7 @@ public class DmiPanelDTest {
         p.extendMovementAuthorities(new MovementAuthority(trackSectionList9)); // 2000m
         // JUnitUtil.waitFor(10000);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -126,7 +126,7 @@ public class DmiPanelDTest {
         }
         // JUnitUtil.waitFor(5000);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -160,7 +160,7 @@ public class DmiPanelDTest {
         p.extendMovementAuthorities(new MovementAuthority(trackSectionList)); // 1000m
         // JUnitUtil.waitFor(10000);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -189,7 +189,7 @@ public class DmiPanelDTest {
         p.setScale(5);
         advanceBottomOfPlanning(p);
         
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
     

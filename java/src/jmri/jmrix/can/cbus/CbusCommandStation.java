@@ -214,6 +214,6 @@ public class CbusCommandStation implements CommandStation {
         return adapterMemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusCommandStation.class);
 
 }

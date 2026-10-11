@@ -226,5 +226,5 @@ public class CbusBasicNodeTableFetch extends CbusBasicNodeTableOperations {
         trickleFetch = null;
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusBasicNodeTableFetch.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusBasicNodeTableFetch.class);
 }

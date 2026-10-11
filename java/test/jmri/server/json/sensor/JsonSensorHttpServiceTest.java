@@ -4,14 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeNotNull;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -29,6 +21,13 @@ import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -66,13 +65,12 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         // test an unexpected state
         Sensor sensor2 = new ErrorSensor("IS2");
-        try {
-            service.doGet(sensor2, "IS2", JsonSensor.SENSOR, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals("HTTP error code", 500, ex.getCode());
-            assertEquals("Internal error message", "Internal sensor handling error. See JMRI logs for information.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doGet(sensor2, "IS2", JsonSensor.SENSOR, new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown");
+        assertEquals( 500, ex.getCode(), "HTTP error code");
+        assertEquals( "Internal sensor handling error. See JMRI logs for information.",
+            ex.getMessage(), "Internal error message");
     }
 
     @Test
@@ -107,34 +105,32 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         assertFalse(sensor1.getInverted());
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.INVERTED, true);
         result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-        assertTrue("Sensor is inverted", sensor1.getInverted());
+        assertTrue( sensor1.getInverted(), "Sensor is inverted");
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         assertEquals(true, result.path(JSON.DATA).path(JSON.INVERTED).asBoolean());
         // reset inverted - becomes inactive
         message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.INVERTED, false);
         result = service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-        assertFalse("Sensor is not inverted", sensor1.getInverted());
+        assertFalse( sensor1.getInverted(), "Sensor is not inverted");
         assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set invalid state
-        message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, 42); // Invalid value
-        try {
-            service.doPost(JsonSensor.SENSOR, "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-        }
+        JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, 42); // Invalid value
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonSensor.SENSOR, "IS1", messageEx,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown");
+        assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
         assertEquals(Sensor.INACTIVE, sensor1.getState());
         // test catching error thrown by Sensor while setting state
         Sensor sensor2 = new ErrorSensor("IS2");
         manager.register(sensor2);
-        message = mapper.createObjectNode().put(JSON.NAME, "IS2").put(JSON.STATE, JSON.ACTIVE);
-        try {
-            service.doPost(JsonSensor.SENSOR, "IS2", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals("HTTP error code", 500, ex.getCode());
-            assertEquals("Internal error message", "jmri.JmriException: " + ErrorSensor.MESSAGE, ex.getMessage());
-        }
+        JsonNode messageEx2 = mapper.createObjectNode().put(JSON.NAME, "IS2").put(JSON.STATE, JSON.ACTIVE);
+        ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonSensor.SENSOR, "IS2", messageEx2,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown");
+        assertEquals( 500, ex.getCode(), "HTTP error code");
+        assertEquals( "jmri.JmriException: " + ErrorSensor.MESSAGE, ex.getMessage(), "Internal error message");
     }
 
     @Test
@@ -154,15 +150,16 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         SensorManager manager = InstanceManager.getDefault(SensorManager.class);
         ObjectNode message = mapper.createObjectNode();
         // delete non-existant bean
-        try {
-            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
-            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
-            assertEquals("Message", "Object type sensor named \"non-existant\" not found.", ex.getMessage());
-            assertEquals("ID is 42", 42, ex.getId());
-        }
+        Assumptions.assumeTrue( service != null, "protect against JUnit tests in Eclipse that test this class directly");
+
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doDelete(service.getType(), "non-existant", message,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals( 404, ex.getCode(), "Code is HTTP NOT FOUND");
+        assertEquals( "Object type sensor named \"non-existant\" not found.", ex.getMessage(), "Message");
+        assertEquals( 42, ex.getId(), "ID is 42");
+
         manager.newSensor("IS1", null);
         // delete existing bean (no named listener)
         assertNotNull(manager.getBySystemName("IS1"));
@@ -178,26 +175,23 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
             }
         }, "IS1", "Test Listener");
         // delete existing bean (with named listener)
-        try {
-            service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(409, ex.getCode());
-            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
-            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
-        }
+        ex = assertThrows( JsonException.class, () ->
+            service.doDelete(service.getType(), "IS1", message,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals(409, ex.getCode());
+        assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+        assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+        JsonNode messageEx = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         assertNotNull(manager.getBySystemName("IS1"));
         // will throw if prior catch failed
-        service.doDelete(service.getType(), "IS1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        service.doDelete(service.getType(), "IS1", messageEx, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull(manager.getBySystemName("IS1"));
-        try {
-            // deleting again should throw an exception
-            service.doDelete(service.getType(), "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
+        ex = assertThrows( JsonException.class, () ->
+            service.doDelete(service.getType(), "IS1", NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "deleting again should throw an exception.");
             assertEquals(404, ex.getCode());
-        }
     }
 
     @Test
@@ -233,7 +227,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
 
         public static String MESSAGE = "Deliberately thrown error";
         
-        public ErrorSensor(String systemName) {
+        ErrorSensor(String systemName) {
             super(systemName);
         }
 

@@ -395,7 +395,9 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        jmri.InstanceManager.store(new MrcThrottleManager(memo),jmri.ThrottleManager.class);
+        MrcThrottleManager tm = new MrcThrottleManager(memo);
+        jmri.InstanceManager.store( tm,jmri.ThrottleManager.class);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new MrcThrottle(memo,new jmri.DccLocoAddress(42,false));
     }
 
@@ -408,6 +410,6 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcThrottleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MrcThrottleTest.class);
 
 }

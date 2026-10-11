@@ -1,7 +1,11 @@
 package jmri.jmrix.loconet.locogen;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import jmri.jmrix.loconet.LocoNetMessage;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,22 +19,32 @@ public class LocoGenTest {
     public void testPacketNull() {
         LocoGenPanel t = new LocoGenPanel();
         LocoNetMessage m = t.createPacket("");
-        Assert.assertEquals("null pointer", null, m);
+        assertNull( m, "null pointer");
     }
 
     @Test
     public void testPacketCreate() {
         LocoGenPanel t = new LocoGenPanel();
         LocoNetMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
-        Assert.assertEquals("length", 8, m.getNumDataElements());
-        Assert.assertEquals("0th byte", 0x12, m.getElement(0) & 0xFF);
-        Assert.assertEquals("1st byte", 0x34, m.getElement(1) & 0xFF);
-        Assert.assertEquals("2nd byte", 0xAB, m.getElement(2) & 0xFF);
-        Assert.assertEquals("3rd byte", 0x03, m.getElement(3) & 0xFF);
-        Assert.assertEquals("4th byte", 0x19, m.getElement(4) & 0xFF);
-        Assert.assertEquals("5th byte", 0x06, m.getElement(5) & 0xFF);
-        Assert.assertEquals("6th byte", 0x0B, m.getElement(6) & 0xFF);
-        Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
+        assertEquals( 8, m.getNumDataElements(), "length");
+        assertEquals( 0x12, m.getElement(0) & 0xFF, "0th byte");
+        assertEquals( 0x34, m.getElement(1) & 0xFF, "1st byte");
+        assertEquals( 0xAB, m.getElement(2) & 0xFF, "2nd byte");
+        assertEquals( 0x03, m.getElement(3) & 0xFF, "3rd byte");
+        assertEquals( 0x19, m.getElement(4) & 0xFF, "4th byte");
+        assertEquals( 0x06, m.getElement(5) & 0xFF, "5th byte");
+        assertEquals( 0x0B, m.getElement(6) & 0xFF, "6th byte");
+        assertEquals( 0xB1, m.getElement(7) & 0xFF, "7th byte");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

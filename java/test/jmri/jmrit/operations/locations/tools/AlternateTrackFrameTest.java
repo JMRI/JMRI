@@ -7,7 +7,7 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.SpurEditFrame;
+import jmri.jmrit.operations.locations.gui.SpurEditFrame;
 import jmri.util.JUnitUtil;
 
 /**
@@ -26,5 +26,5 @@ public class AlternateTrackFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(tf);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AlternateTrackFrameTest.class);
 }

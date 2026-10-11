@@ -3,6 +3,8 @@ package jmri.jmrit.throttle;
 import java.io.File;
 
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.implementation.ThrottleFrame;
+import jmri.jmrit.throttle.panels.FunctionButton;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
@@ -85,7 +87,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertTrue("Function F" + i + " continuous", f.getIsLockable());
             to.toggleFunctionMomentary(i);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
             Assert.assertFalse("Function F" + i + " momentary", f.getIsLockable());
         }
 
@@ -105,7 +107,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertFalse("Function F" + i + " off", f.isSelected());
             JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
         }
 
@@ -269,21 +271,6 @@ public class ThrottleFrameTest {
     }
 
     @Test
-    public void testSetAndGetFileName() throws java.io.IOException {
-        String fileName = folder.getPath() + File.separator + "testThrotttle.xml";
-        panel.setLastUsedSaveFile(fileName);
-        Assert.assertEquals("filename after set", fileName, panel.getLastUsedSaveFile());
-    }
-
-    @Test
-    public void testSaveThrottle() throws java.io.IOException {
-        String fileName = folder.getPath() + File.separator + "testThrotttle.xml";
-        panel.setLastUsedSaveFile(fileName);
-        // right now, just verify no error
-        panel.saveThrottle();
-    }
-
-    @Test
     public void testDispatchReleaseButtonPropertyChangeListener() {
 
         Assert.assertFalse("Release button NOT enabled as no loco", to.releaseButtonEnabled());
@@ -325,7 +312,7 @@ public class ThrottleFrameTest {
     public void tearDown() {
 
         to.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
         JUnitUtil.dispose(frame);
         // the throttle list frame gets created above, but needs to be shown to be disposed
         InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();

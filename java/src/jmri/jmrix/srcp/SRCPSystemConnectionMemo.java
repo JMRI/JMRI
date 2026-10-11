@@ -84,7 +84,7 @@ public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     @Override
     public <T> T get(Class<T> T) {
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     /**
@@ -92,7 +92,7 @@ public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
      */
     @Override
     public boolean provides(Class<?> type) {
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     @Override

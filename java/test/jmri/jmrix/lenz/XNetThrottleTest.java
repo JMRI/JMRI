@@ -1,9 +1,14 @@
 package jmri.jmrix.lenz;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,30 +25,31 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     public void testCtor() {
         XNetThrottle t = new XNetThrottle(memo, tc);
-        Assert.assertNotNull(t);
+        assertNotNull(t);
         t.throttleDispose();
     }
 
     // Test the constructor with an address specified.
     @Test
-    public void testCtorWithArg() throws Exception {
+    public void testCtorWithArg() {
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
-        Assert.assertNotNull(t);
+        assertNotNull(t);
         t.throttleDispose();
     }
 
     // Test the initialization sequence.
     @Test
-    public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
+    public void testInitSequenceNormalUnitSpeedStep128() {
         int n = tc.outbound.size();
         // this test requires a new throttle.
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
-        Assert.assertNotNull(t);
+        assertNotNull(t);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait forboutbound size to change.
 
         // The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message", "E3 00 00 03 E0", tc.outbound.elementAt(n).toString());
+        assertEquals( "E3 00 00 03 E0", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this is a message with the status.
         XNetReply m = new XNetReply();
@@ -62,7 +68,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for outbound size to change.
         // The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message", "E3 07 00 03 E7", tc.outbound.elementAt(n).toString());
+        assertEquals( "E3 07 00 03 E7", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         m = new XNetReply();
         m.setElement(0, 0x61);
@@ -78,39 +85,40 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);  // give the messages
         // some time to process;
 
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // and verify all the data was set correctly.
         // getSpeedStepMode returns the right mode and
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode());
+        assertEquals( SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode(), "SpeedStepMode");
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 126.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( (1.0f / 126.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
-        Assert.assertEquals("Speed 0.0", 0.0, t.getSpeedSetting(), 0.0);
+        assertEquals( 0.0, t.getSpeedSetting(), 0.0, "Speed 0.0");
 
         // test that the direction value is the expected value
-        Assert.assertFalse("Direction Reverse", t.getIsForward());
+        assertFalse( t.getIsForward(), "Direction Reverse");
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getFunction(0));
-        Assert.assertFalse("F1 off", t.getFunction(1));
-        Assert.assertFalse("F2 off", t.getFunction(2));
-        Assert.assertFalse("F3 off", t.getFunction(3));
-        Assert.assertFalse("F4 off", t.getFunction(4));
-        Assert.assertFalse("F5 off", t.getFunction(5));
-        Assert.assertFalse("F6 off", t.getFunction(6));
-        Assert.assertFalse("F7 off", t.getFunction(7));
-        Assert.assertFalse("F8 off", t.getFunction(8));
-        Assert.assertFalse("F9 off", t.getFunction(9));
-        Assert.assertFalse("F10 off", t.getFunction(10));
-        Assert.assertFalse("F11 off", t.getFunction(11));
-        Assert.assertFalse("F12 off", t.getFunction(12));
+        assertFalse( t.getFunction(0), "F0 off");
+        assertFalse( t.getFunction(1), "F1 off");
+        assertFalse( t.getFunction(2), "F2 off");
+        assertFalse( t.getFunction(3), "F3 off");
+        assertFalse( t.getFunction(4), "F4 off");
+        assertFalse( t.getFunction(5), "F5 off");
+        assertFalse( t.getFunction(6), "F6 off");
+        assertFalse( t.getFunction(7), "F7 off");
+        assertFalse( t.getFunction(8), "F8 off");
+        assertFalse( t.getFunction(9), "F9 off");
+        assertFalse( t.getFunction(10), "F10 off");
+        assertFalse( t.getFunction(11), "F11 off");
+        assertFalse( t.getFunction(12), "F12 off");
         t.throttleDispose();
     }
 
     @Test
-    public void initSequenceNormalUnitSpeedStep14() throws Exception {
+    public void initSequenceNormalUnitSpeedStep14() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -173,33 +181,34 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_14, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 14.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_14, t.getSpeedStepMode(), "SpeedStepMode");
+        assertEquals( (1.0f / 14.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
-        Assert.assertEquals("Speed 0.0", 0.0, t.getSpeedSetting(), 0.0);
+        assertEquals( 0.0, t.getSpeedSetting(), 0.0, "Speed 0.0");
 
         // test that the direction value is the expected value
-        Assert.assertFalse("Direction Reverse", t.getIsForward());
+        assertFalse( t.getIsForward(), "Direction Reverse");
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getFunction(0));
-        Assert.assertFalse("F1 off", t.getFunction(1));
-        Assert.assertFalse("F2 off", t.getFunction(2));
-        Assert.assertFalse("F3 off", t.getFunction(3));
-        Assert.assertFalse("F4 off", t.getFunction(4));
-        Assert.assertFalse("F5 off", t.getFunction(5));
-        Assert.assertFalse("F6 off", t.getFunction(6));
-        Assert.assertFalse("F7 off", t.getFunction(7));
-        Assert.assertFalse("F8 off", t.getFunction(8));
-        Assert.assertFalse("F9 off", t.getFunction(9));
-        Assert.assertFalse("F10 off", t.getFunction(10));
-        Assert.assertFalse("F11 off", t.getFunction(11));
+        assertFalse( t.getFunction(0), "F0 off");
+        assertFalse( t.getFunction(1), "F1 off");
+        assertFalse( t.getFunction(2), "F2 off");
+        assertFalse( t.getFunction(3), "F3 off");
+        assertFalse( t.getFunction(4), "F4 off");
+        assertFalse( t.getFunction(5), "F5 off");
+        assertFalse( t.getFunction(6), "F6 off");
+        assertFalse( t.getFunction(7), "F7 off");
+        assertFalse( t.getFunction(8), "F8 off");
+        assertFalse( t.getFunction(9), "F9 off");
+        assertFalse( t.getFunction(10), "F10 off");
+        assertFalse( t.getFunction(11), "F11 off");
         t.throttleDispose();
     }
 
     @Test
-    public void initSequenceMUAddress28SpeedStep() throws Exception {
+    public void initSequenceMUAddress28SpeedStep() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -260,19 +269,21 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 28.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode(),
+            "SpeedStepMode");
+        assertEquals( (1.0f / 28.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
-        Assert.assertEquals("Speed 0.0", 0.0, t.getSpeedSetting(), 0.0);
+        assertEquals( 0.0, t.getSpeedSetting(), 0.0, "Speed 0.0");
 
         // test that the direction value is the expected value
-        Assert.assertFalse("Direction Reverse", t.getIsForward());
+        assertFalse( t.getIsForward(), "Direction Reverse");
         t.throttleDispose();
     }
 
     @Test
-    public void initSequenceMuedUnitSpeedStep128() throws Exception {
+    public void initSequenceMuedUnitSpeedStep128() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -336,33 +347,34 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 126.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode(), "SpeedStepMode");
+        assertEquals( (1.0f / 126.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
-        Assert.assertEquals("Speed 0.0", 0.0, t.getSpeedSetting(), 0.0);
+        assertEquals( 0.0, t.getSpeedSetting(), 0.0, "Speed 0.0");
 
         // test that the direction value is the expected value
-        Assert.assertFalse("Direction Reverse", t.getIsForward());
+        assertFalse( t.getIsForward(), "Direction Reverse");
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getFunction(0));
-        Assert.assertFalse("F1 off", t.getFunction(1));
-        Assert.assertFalse("F2 off", t.getFunction(2));
-        Assert.assertFalse("F3 off", t.getFunction(3));
-        Assert.assertFalse("F4 off", t.getFunction(4));
-        Assert.assertFalse("F5 off", t.getFunction(5));
-        Assert.assertFalse("F6 off", t.getFunction(6));
-        Assert.assertFalse("F7 off", t.getFunction(7));
-        Assert.assertFalse("F8 off", t.getFunction(8));
-        Assert.assertFalse("F9 off", t.getFunction(9));
-        Assert.assertFalse("F10 off", t.getFunction(10));
-        Assert.assertFalse("F11 off", t.getFunction(11));
+        assertFalse( t.getFunction(0), "F0 off");
+        assertFalse( t.getFunction(1), "F1 off");
+        assertFalse( t.getFunction(2), "F2 off");
+        assertFalse( t.getFunction(3), "F3 off");
+        assertFalse( t.getFunction(4), "F4 off");
+        assertFalse( t.getFunction(5), "F5 off");
+        assertFalse( t.getFunction(6), "F6 off");
+        assertFalse( t.getFunction(7), "F7 off");
+        assertFalse( t.getFunction(8), "F8 off");
+        assertFalse( t.getFunction(9), "F9 off");
+        assertFalse( t.getFunction(10), "F10 off");
+        assertFalse( t.getFunction(11), "F11 off");
         t.throttleDispose();
     }
 
     @Test
-    public void initSequenceDHUnitSpeedStep27() throws Exception {
+    public void initSequenceDHUnitSpeedStep27() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -427,33 +439,34 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // in this case, we are just checking for proper initialization.
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_27, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 27.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_27, t.getSpeedStepMode(), "SpeedStepMode");
+        assertEquals( (1.0f / 27.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
 
         // test that the speed value is the expected value
-        Assert.assertEquals("Speed 0.0", 0.0, t.getSpeedSetting(), 0.0);
+        assertEquals( 0.0, t.getSpeedSetting(), 0.0, "Speed 0.0");
 
         // test that the direction value is the expected value
-        Assert.assertFalse("Direction Reverse", t.getIsForward());
+        assertFalse( t.getIsForward(), "Direction Reverse");
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getFunction(0));
-        Assert.assertFalse("F1 off", t.getFunction(1));
-        Assert.assertFalse("F2 off", t.getFunction(2));
-        Assert.assertFalse("F3 off", t.getFunction(3));
-        Assert.assertFalse("F4 off", t.getFunction(4));
-        Assert.assertFalse("F5 off", t.getFunction(5));
-        Assert.assertFalse("F6 off", t.getFunction(6));
-        Assert.assertFalse("F7 off", t.getFunction(7));
-        Assert.assertFalse("F8 off", t.getFunction(8));
-        Assert.assertFalse("F9 off", t.getFunction(9));
-        Assert.assertFalse("F10 off", t.getFunction(10));
-        Assert.assertFalse("F11 off", t.getFunction(11));
+        assertFalse( t.getFunction(0), "F0 off");
+        assertFalse( t.getFunction(1), "F1 off");
+        assertFalse( t.getFunction(2), "F2 off");
+        assertFalse( t.getFunction(3), "F3 off");
+        assertFalse( t.getFunction(4), "F4 off");
+        assertFalse( t.getFunction(5), "F5 off");
+        assertFalse( t.getFunction(6), "F6 off");
+        assertFalse( t.getFunction(7), "F7 off");
+        assertFalse( t.getFunction(8), "F8 off");
+        assertFalse( t.getFunction(9), "F9 off");
+        assertFalse( t.getFunction(10), "F10 off");
+        assertFalse( t.getFunction(11), "F11 off");
         t.throttleDispose();
     }
 
     @Test
-    public void testSendStatusInformationRequest() throws Exception {
+    public void testSendStatusInformationRequest() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -465,7 +478,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         } // busy loop.  Wait for
         // outbound size to change.
         //The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message", "E3 00 00 03 E0", tc.outbound.elementAt(n).toString());
+        assertEquals( "E3 00 00 03 E0", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this is a message with the status.
         XNetReply m = new XNetReply();
@@ -483,6 +497,169 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
+    /**
+     * A LOCO_INFO_RESPONSE (0xE3) carrying a sub-type the throttle does not
+     * know about used to leave requestState stuck at THROTTLESTATSENT: the
+     * reply was consumed, so no timeout ever fired, and every command queued
+     * afterwards was held back forever.
+     */
+    @Test
+    public void testUnknownLocoInfoResponseSubtypeDoesNotStallQueue() {
+        int n = tc.outbound.size();
+        XNetThrottle t = (XNetThrottle) instance;
+        initThrottle(t, n);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 00 00 03 E0", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // answer with an unrecognized LOCO_INFO_RESPONSE sub-type.
+        XNetReply m = new XNetReply();
+        m.setElement(0, XNetConstants.LOCO_INFO_RESPONSE);
+        m.setElement(1, 0x60);  // neither LOCO_NOT_AVAILABLE, LOCO_FUNCTION_STATUS
+        m.setElement(2, 0x00);  // nor LOCO_FUNCTION_STATUS_HIGH
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x83);
+        t.message(m);
+
+        // the throttle has to be back to idle, so the next command reaches the
+        // traffic controller instead of piling up in the internal queue.
+        n = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+
+        assertEquals( n + 1, tc.outbound.size(),
+            "Speed message sent after unrecognized LOCO_INFO_RESPONSE sub-type");
+        assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(n).getElement(1),
+            "Throttle Set Speed Message");
+        t.throttleDispose();
+    }
+
+    /**
+     * When a broadcast message is delivered in place of the reply this throttle
+     * was waiting for, the reply itself goes to whichever listener sent last.
+     * The traffic controller considers the exchange over, so no timeout ever
+     * fires, and requestState stays non idle forever: the throttle never hands
+     * another message to the traffic controller, so it can never become the
+     * destination of a reply again. The watchdog has to break that loop.
+     */
+    @Test
+    @Timeout(10)
+    public void testWatchdogRestartsQueueWhenReplyNeverArrives() {
+        int n = tc.outbound.size();
+        XNetThrottle t = (XNetThrottle) instance;
+        initThrottle(t, n);
+        t.setWatchdogInterval(100);
+        n = tc.outbound.size();
+
+        // request the status, which leaves the throttle in THROTTLESTATSENT.
+        t.sendStatusInformationRequest();
+        assertEquals( "E3 00 00 03 E0", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
+
+        // no reply at all: the next command is held back in the internal queue.
+        final int held = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( held, tc.outbound.size(),
+            "Speed message held back while waiting for the status reply");
+
+        // the watchdog has to give up and restart the queue.
+        JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(held).getElement(1),
+            "Throttle Set Speed Message");
+
+        // dispose before checking the log, so the watchdog armed for the speed
+        // message cannot add a message of its own while the check runs.
+        t.throttleDispose();
+        JUnitAppender.suppressInfoMessageStartsWith(
+            "Throttle 3 - traffic controller at rest with a reply still due");
+    }
+
+    /**
+     * On a CS_BUSY the throttle deliberately does nothing, counting on the
+     * traffic controller to retransmit. When that message was classified as
+     * unsolicited the retransmission never happens, and the throttle waits for
+     * a reply nobody will send.
+     */
+    @Test
+    @Timeout(10)
+    public void testWatchdogRecoversFromUnretransmittedCsBusy() {
+        int n = tc.outbound.size();
+        XNetThrottle t = (XNetThrottle) instance;
+        initThrottle(t, n);
+        t.setWatchdogInterval(100);
+        n = tc.outbound.size();
+
+        // a speed command leaves the throttle in THROTTLESPEEDSENT.
+        t.setSpeedSetting(0.5f);
+        assertEquals( XNetConstants.LOCO_SPEED_128, tc.outbound.elementAt(n).getElement(1),
+            "Throttle Set Speed Message");
+
+        // the command station answers busy, and nothing else ever comes.
+        t.message(new XNetReply("61 81 E0"));
+
+        final int held = tc.outbound.size();
+        t.setFunction(0, true);
+        assertEquals( held, tc.outbound.size(),
+            "Function message held back while waiting for the speed reply");
+
+        JUnitUtil.waitFor(() -> tc.outbound.size() > held, "watchdog restarted the queue");
+        t.throttleDispose();
+        JUnitAppender.suppressInfoMessageStartsWith(
+            "Throttle 3 - traffic controller at rest with a reply still due");
+    }
+
+    /**
+     * While the traffic controller still has work in hand, a late reply can be
+     * perfectly legitimate: the message may be queued behind another one which
+     * is consuming its own full timeout. The watchdog has to hold off until the
+     * longer deadline rather than inject a second message into an exchange the
+     * traffic controller is still running.
+     */
+    @Test
+    @Timeout(10)
+    public void testWatchdogWaitsLongerWhileTrafficControllerIsBusy() {
+        XNetInterfaceScaffold busy = new XNetInterfaceScaffold(new LenzCommandStation() {
+            @Override
+            public float getCommandStationSoftwareVersionBCD() {
+                return 0x36;
+            }
+        }) {
+            @Override
+            public boolean isAtRest() {
+                return false;
+            }
+        };
+        XNetThrottle t = new XNetThrottle(memo, busy);
+        t.setDccAddress(4);
+        t.setWatchdogInterval(100);
+
+        int n = busy.outbound.size();
+        // measure from here: the watchdog is armed by the request just below.
+        long start = System.currentTimeMillis();
+        t.sendStatusInformationRequest();
+        assertEquals( n + 1, busy.outbound.size(), "Throttle Information Request Message sent");
+
+        final int held = busy.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( held, busy.outbound.size(),
+            "Speed message held back while waiting for the status reply");
+
+        JUnitUtil.waitFor(() -> busy.outbound.size() > held, "watchdog restarted the queue");
+        long waited = System.currentTimeMillis() - start;
+
+        // dispose first: this traffic controller is never at rest, so the
+        // watchdog armed for the message just sent would keep going.
+        t.throttleDispose();
+        busy.terminateThreads();
+
+        // the short deadline is 100ms, the long one three times that.
+        assertTrue( waited >= 250,
+            "watchdog held off for the longer deadline, waited only " + waited + "ms");
+        JUnitAppender.assertWarnMessageStartsWith("Throttle 4 - no reply after");
+    }
+
     @Test
     public void testSendFunctionStatusInformationRequest() {
         int n = tc.outbound.size();
@@ -497,7 +674,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message", "E3 07 00 03 E7", tc.outbound.elementAt(n).toString());
+        assertEquals( "E3 07 00 03 E7", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message with the status.
         XNetReply m = new XNetReply();
@@ -527,7 +705,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message", "E3 09 00 03 E9", tc.outbound.elementAt(n).toString());
+        assertEquals( "E3 09 00 03 E9", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message with the status.
         XNetReply m = new XNetReply();
@@ -545,7 +724,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
+    public void testSendFunctionHighMomentaryStatusRequest() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -558,7 +737,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message", "E3 08 00 03 E8", tc.outbound.elementAt(n).toString());
+        assertEquals( "E3 08 00 03 E8", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message with the status.
         XNetReply m = new XNetReply();
@@ -589,7 +769,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 1 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 20 00 03 00 C7", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 20 00 03 00 C7", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -619,7 +800,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 2 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 21 00 03 00 C6", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 21 00 03 00 C6", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -649,7 +831,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 3 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 22 00 03 00 C5", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 22 00 03 00 C5", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -679,7 +862,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 4 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 23 00 03 00 C4", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 23 00 03 00 C4", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -710,7 +894,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // if the loop exited early, we sent the message, and we
         // shouldn't do that in this case.
-        Assert.assertEquals("loop exited", 1000, count);
+        assertEquals( 1000, count, "loop exited");
 
     }
 
@@ -729,7 +913,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 5 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 28 00 03 00 CF", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 28 00 03 00 CF", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -745,7 +930,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void testSendFunctionGroup5v35() throws Exception {
+    public void testSendFunctionGroup5v35() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottlev35(t, n);
@@ -761,7 +946,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // if the loop exited early, we sent the message, and we
         // shouldn't do that in this case.
-        Assert.assertEquals("loop exited", 1000, count);
+        assertEquals( 1000, count, "loop exited");
 
     }
 
@@ -780,7 +965,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a momentary group 1 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 24 00 03 00 C3", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 24 00 03 00 C3", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -810,7 +996,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a momentary group 2 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 25 00 03 00 C2", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 25 00 03 00 C2", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -840,7 +1027,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a monentary group 3 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 26 00 03 00 C1", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 26 00 03 00 C1", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -870,7 +1058,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a momentary group 4 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 27 00 03 00 C0", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 27 00 03 00 C0", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -900,7 +1089,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a momentary group 5 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 2C 00 03 00 CB", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 2C 00 03 00 CB", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -918,30 +1108,30 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     public void testGetDccAddress() {
         XNetThrottle t = (XNetThrottle) instance;
-        Assert.assertEquals("XNetThrottle getDccAddress()", 3, t.getDccAddress());
+        assertEquals( 3, t.getDccAddress(), "XNetThrottle getDccAddress()");
     }
 
     @Test
     public void testGetDccAddressLow() {
         XNetThrottle t = (XNetThrottle) instance;
-        Assert.assertEquals("XNetThrottle getDccAddressLow()", 3, t.getDccAddressLow());
+        assertEquals( 3, t.getDccAddressLow(), "XNetThrottle getDccAddressLow()");
     }
 
     @Test
     public void testGetDccAddressHigh() {
         XNetThrottle t = (XNetThrottle) instance;
-        Assert.assertEquals("XNetThrottle getDccAddressHigh()", 0, t.getDccAddressHigh());
+        assertEquals( 0, t.getDccAddressHigh(), "XNetThrottle getDccAddressHigh()");
     }
 
     @Test
     public void testGetLocoAddress() {
         XNetThrottle t = (XNetThrottle) instance;
-        Assert.assertEquals("XNetThrottle getLocoAddress()",
-                new jmri.DccLocoAddress(3, false), t.getLocoAddress());
+        assertEquals( new jmri.DccLocoAddress(3, false), t.getLocoAddress(),
+            "XNetThrottle getLocoAddress()");
     }
 
     @Test
-    public void setReverse() throws Exception {
+    public void testSetReverse() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -955,7 +1145,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Set Speed Message", "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString(),
+            "Throttle Set Speed Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -968,12 +1159,12 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // which sets the status back state back to idle..
 
         // and finaly, verify that getIsForward() returns false, like we set it.
-        Assert.assertFalse("Direction Set", t.getIsForward());
+        assertFalse( t.getIsForward(), "Direction Set");
         t.throttleDispose();
     }
 
     @Test
-    public void setForward() throws Exception {
+    public void testSetForward() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -987,7 +1178,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Set Speed Message", "E4 13 00 03 80 74", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 13 00 03 80 74", tc.outbound.elementAt(n).toString(),
+            "Throttle Set Speed Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -1000,12 +1192,12 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // which sets the status back state back to idle..
 
         // and finaly, verify that getIsForward() returns false, like we set it.
-        Assert.assertTrue("Direction Set", t.getIsForward());
+        assertTrue( t.getIsForward(), "Direction Set");
         t.throttleDispose();
     }
 
     @Test
-    public void sendEmergencyStop() throws Exception {
+    public void testSendEmergencyStop() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1019,7 +1211,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Emergency Stop Message", "92 00 03 91", tc.outbound.elementAt(n).toString());
+        assertEquals( "92 00 03 91", tc.outbound.elementAt(n).toString(),
+            "Throttle Emergency Stop Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -1034,7 +1227,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void setSpeedStep128() throws Exception {
+    public void testSetSpeedStep128() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1048,7 +1241,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Set Speed Message", "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString(),
+            "Throttle Set Speed Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -1062,13 +1256,14 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 126.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode(), "SpeedStepMode");
+        assertEquals( (1.0f / 126.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
     @Test
-    public void setSpeedStep28() throws Exception {
+    public void testSetSpeedStep28() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1082,7 +1277,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Set Speed Message", "E4 12 00 03 00 F5", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 12 00 03 00 F5", tc.outbound.elementAt(n).toString(),
+            "Throttle Set Speed Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -1096,13 +1292,14 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 28.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode(), "SpeedStepMode");
+        assertEquals( (1.0f / 28.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
     @Test
-    public void setSpeedStep27() throws Exception {
+    public void testSetSpeedStep27() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1116,7 +1313,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Set Speed Message", "E4 11 00 03 00 F6", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 11 00 03 00 F6", tc.outbound.elementAt(n).toString(),
+            "Throttle Set Speed Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -1130,13 +1328,14 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_27, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 27.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_27, t.getSpeedStepMode(), "SpeedStepMode");
+        assertEquals( (1.0f / 27.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
     @Test
-    public void setSpeedStep14() throws Exception {
+    public void testSetSpeedStep14() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1150,7 +1349,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Set Speed Message", "E4 10 00 03 00 F7", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 10 00 03 00 F7", tc.outbound.elementAt(n).toString(),
+            "Throttle Set Speed Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -1164,8 +1364,9 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // and finaly, verify that getSpeedStepMode returns the right mode and
         // get speedIncrement reports the correct value.
-        Assert.assertEquals("SpeedStepMode", jmri.SpeedStepMode.NMRA_DCC_14, t.getSpeedStepMode());
-        Assert.assertEquals("SpeedStep Increment", (1.0f / 14.0f), t.getSpeedIncrement(), 0.0); // the speed increments are constants, so if there is deviation, that is an error.
+        assertEquals( SpeedStepMode.NMRA_DCC_14, t.getSpeedStepMode(), "SpeedStepMode");
+        assertEquals( (1.0f / 14.0f), t.getSpeedIncrement(), 0.0,
+            "SpeedStep Increment"); // the speed increments are constants, so if there is deviation, that is an error.
         t.throttleDispose();
     }
 
@@ -1177,7 +1378,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedStepMode() {
         SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
         SpeedStepMode result = instance.getSpeedStepMode();
-        Assert.assertEquals(expResult, result);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -1188,7 +1389,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedIncrement() {
         float expResult = 1.0F / 126.0F;
         float result = instance.getSpeedIncrement();
-        Assert.assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
     }
 
     /**
@@ -1593,7 +1794,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @BeforeEach
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
@@ -1614,7 +1815,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @AfterEach
     @Override
-    public void tearDown() throws Exception {
+    public void tearDown() {
         try {
             ((XNetThrottle) instance).throttleDispose();
         }

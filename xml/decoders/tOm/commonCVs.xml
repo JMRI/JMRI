@@ -1118,7 +1118,7 @@
 
 <!-- CV213 -->
       <variable item="Special Function" CV="213" default="28">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
         <label>Special saving function</label>
         <label xml:lang="cs">Funkce speciálních ukládání</label>
       </variable>

@@ -3,6 +3,7 @@ package apps.swing;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Icon;
+import javax.swing.JFrame;
 
 import jmri.util.swing.*;
 
@@ -26,7 +27,14 @@ public class AboutAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new AboutDialog(null, true).setVisible(true);
+        JFrame tmp = null;
+        if ( e != null ) {
+            var x = jmri.util.swing.JmriJOptionPane.findWindowForObject(e.getSource());
+            if ( x instanceof JFrame ) {
+                tmp = (JFrame)x;
+            }
+        }
+        new AboutDialog(tmp, true).setVisible(true);
     }
 
     // never invoked, because we overrode actionPerformed above

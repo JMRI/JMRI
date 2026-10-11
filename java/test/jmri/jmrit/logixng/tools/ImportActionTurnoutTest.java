@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 
@@ -15,32 +17,39 @@ import jmri.implementation.DefaultConditionalAction;
  */
 public class ImportActionTurnoutTest extends ImportActionTestBase {
 
-    Turnout turnout;
-    ConditionalAction ca;
-    
+    private Turnout turnout = null;
+    private ConditionalAction ca = null;
+
     @Override
     public void setNamedBeanState(boolean on) throws JmriException {
-        if (on) turnout.setState(Turnout.THROWN);
-        else turnout.setState(Turnout.CLOSED);
+        if (on) {
+            turnout.setState(Turnout.THROWN);
+        } else {
+            turnout.setState(Turnout.CLOSED);
+        }
     }
 
     @Override
     public boolean checkNamedBeanState(boolean on) {
-        if (on) return turnout.getState() == Turnout.THROWN;
-        else return turnout.getState() == Turnout.CLOSED;
+        if (on) {
+            return turnout.getState() == Turnout.THROWN;
+        } else {
+            return turnout.getState() == Turnout.CLOSED;
+        }
     }
 
     @Override
     public void setConditionalActionState(State state) {
+        assertNotNull(ca);
         switch (state) {
             case ON:
                 ca.setActionData(Turnout.THROWN);
                 break;
-                
+
             case OFF:
                 ca.setActionData(Turnout.CLOSED);
                 break;
-                
+
             case TOGGLE:
             default:
                 ca.setActionData(Route.TOGGLE);
@@ -57,5 +66,5 @@ public class ImportActionTurnoutTest extends ImportActionTestBase {
         ca.setDeviceName("IT2");
         return ca;
     }
-    
+
 }

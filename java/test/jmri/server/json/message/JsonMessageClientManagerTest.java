@@ -7,10 +7,13 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -18,7 +21,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class JsonMessageClientManagerTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @BeforeEach
     public void setUp() {
@@ -39,21 +42,17 @@ public class JsonMessageClientManagerTest {
         JsonNode message2;
         JsonMessageClientManager instance = new JsonMessageClientManager();
         instance.subscribe("1", connection1);
-        boolean exceptionThrown = false;
-        try {
-            instance.subscribe("1", connection2);
-        } catch (IllegalArgumentException ex) {
-            exceptionThrown = true;
-        }
-        Assert.assertTrue(exceptionThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            instance.subscribe("1", connection2));
+        assertNotNull(ex);
         instance.subscribe("2", connection2);
         instance.send(new JsonMessage("testSubscribe1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
-        Assert.assertNotNull("message1 is not null", message1);
-        Assert.assertNotNull("message2 is not null", message2);
-        Assert.assertEquals("testSubscribe1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertEquals("testSubscribe1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertNotNull( message1, "message1 is not null");
+        assertNotNull( message2, "message2 is not null");
+        assertEquals("testSubscribe1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertEquals("testSubscribe1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
     }
 
     @Test
@@ -68,18 +67,18 @@ public class JsonMessageClientManagerTest {
         instance.send(new JsonMessage("testUnsubscribe1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
-        Assert.assertNotNull("message1 is not null", message1);
-        Assert.assertNotNull("message2 is not null", message2);
-        Assert.assertEquals("testUnsubscribe1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertEquals("testUnsubscribe1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertNotNull( message1, "message1 is not null");
+        assertNotNull( message2, "message2 is not null");
+        assertEquals("testUnsubscribe1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertEquals("testUnsubscribe1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
         instance.unsubscribe("2");
         instance.send(new JsonMessage("testUnsubscribe2", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
-        Assert.assertNotNull("message1 is not null", message1);
-        Assert.assertNotNull("message2 is not null", message2);
-        Assert.assertEquals("testUnsubscribe2", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertEquals("testUnsubscribe1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertNotNull( message1, "message1 is not null");
+        assertNotNull( message2, "message2 is not null");
+        assertEquals("testUnsubscribe2", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertEquals("testUnsubscribe1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
     }
 
     @Test
@@ -94,17 +93,17 @@ public class JsonMessageClientManagerTest {
         instance.send(new JsonMessage("testSend1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
-        Assert.assertNotNull("message1 is not null", message1);
-        Assert.assertNotNull("message2 is not null", message2);
-        Assert.assertEquals("testSend1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertEquals("testSend1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertNotNull( message1, "message1 is not null");
+        assertNotNull( message2, "message2 is not null");
+        assertEquals("testSend1", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertEquals("testSend1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
         instance.send(new JsonMessage(JsonMessage.TYPE.INFO, "testSend2", "1", locale));
         message1 = connection1.getMessage();
         message2 = connection2.getMessage();
-        Assert.assertNotNull("message1 is not null", message1);
-        Assert.assertNotNull("message2 is not null", message2);
-        Assert.assertEquals("testSend2", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
-        Assert.assertEquals("testSend1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertNotNull( message1, "message1 is not null");
+        assertNotNull( message2, "message2 is not null");
+        assertEquals("testSend2", message1.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
+        assertEquals("testSend1", message2.path(JSON.DATA).path(JsonMessage.MESSAGE).asText());
     }
 
 }

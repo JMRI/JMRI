@@ -3,7 +3,6 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class TransitManagerTest {
     @Test
     public void testCTor() {
         TransitManager t = new jmri.managers.DefaultTransitManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -28,6 +27,6 @@ public class TransitManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TransitManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TransitManagerTest.class);
 
 }

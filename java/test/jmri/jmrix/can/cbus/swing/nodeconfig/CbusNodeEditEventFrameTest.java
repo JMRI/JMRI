@@ -135,6 +135,6 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);
 
 }

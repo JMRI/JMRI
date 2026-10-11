@@ -139,5 +139,5 @@ public class BiDiBSignalMastXml
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBSignalMastXml.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBSignalMastXml.class);
 }

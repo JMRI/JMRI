@@ -24,6 +24,6 @@ public class Z21XNetConnectionConfigTest extends jmri.jmrix.AbstractStreamConnec
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Z21XNetConnectionConfigTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Z21XNetConnectionConfigTest.class);
 
 }

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import jmri.jmrix.can.*;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,8 +108,10 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
         setHelp();
 
         this.add(panel);
-        pack();
-        setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            pack();
+            setVisible(true);
+        });
     }
     
     
@@ -129,6 +132,6 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
     }
 
     
-    private final static Logger log = LoggerFactory.getLogger(SprogCbusSprog3PlusModeSwitcherFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogCbusSprog3PlusModeSwitcherFrame.class);
     
 }

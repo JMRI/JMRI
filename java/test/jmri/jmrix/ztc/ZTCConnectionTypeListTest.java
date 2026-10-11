@@ -27,6 +27,6 @@ public class ZTCConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ZTCConnectionTypeListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ZTCConnectionTypeListTest.class);
 
 }

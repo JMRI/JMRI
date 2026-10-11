@@ -27,6 +27,6 @@ public class Mx1CommandStationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1CommandStationTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Mx1CommandStationTest.class);
 
 }

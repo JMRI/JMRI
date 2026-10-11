@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.YardEditFrame;
 import jmri.util.*;
 
 /**
@@ -39,6 +40,6 @@ public class TrackDestinationEditActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackDestinationEditActionTest.class);
 
 }

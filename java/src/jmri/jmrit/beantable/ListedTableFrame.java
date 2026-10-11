@@ -84,6 +84,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.SignalMastLogicTableAction", Bundle.getMessage("MenuItemSignalMastLogicTable"), true);
             addTable("jmri.jmrit.beantable.ReporterTableTabAction", Bundle.getMessage("MenuItemReporterTable"), false);
             addTable("jmri.jmrit.beantable.MemoryTableAction", Bundle.getMessage("MenuItemMemoryTable"), true);
+            addTable("jmri.jmrit.beantable.StringIOTableAction", Bundle.getMessage("MenuItemStringIOTable"), true);
             addTable("jmri.jmrit.beantable.RouteTableAction", Bundle.getMessage("MenuItemRouteTable"), true);
             addTable("jmri.jmrit.beantable.LRouteTableAction", Bundle.getMessage("MenuItemLRouteTable"), true);
             addTable("jmri.jmrit.beantable.LogixTableAction", Bundle.getMessage("MenuItemLogixTable"), true);
@@ -256,6 +257,19 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
                 log.warn("Printing error", e1);
             } catch (NullPointerException ex) {
                 log.error("Trying to print returned a NPE error");
+            }
+        });
+
+        JMenuItem exportItem = new JMenuItem(Bundle.getMessage("ExportTable"));
+        fileMenu.add(exportItem);
+        exportItem.addActionListener((ActionEvent e) -> {
+            if (item.getStandardTableModel()) {
+                item.getDataModel().exportToCSV(null);
+            } else {
+                // following goes through frame to avoid recreating data model
+                var model = item.getAAClass()
+                                    .getDataModel();
+                model.exportToCSV(null);
             }
         });
 
@@ -464,6 +478,10 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         JTable getDataTable() {
             return dataTable;
+        }
+
+        BeanTableDataModel<E> getDataModel() {
+            return dataModel;
         }
 
         public void addToBottomBox(Component comp) {

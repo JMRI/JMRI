@@ -4,8 +4,6 @@ import javax.swing.Icon;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to create and load a Marklin JmriPanel from just its name.
@@ -31,7 +29,7 @@ public class MarklinNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction 
         this.memo = memo;
     }
 
-    MarklinSystemConnectionMemo memo;
+    private final MarklinSystemConnectionMemo memo;
 
     @Override
     public JmriPanel makePanel() {
@@ -50,5 +48,5 @@ public class MarklinNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction 
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinNamedPaneAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinNamedPaneAction.class);
 }

@@ -9,6 +9,7 @@
     <year>2009</year>
     <year>2010</year>
     <year>2024</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
 
@@ -28,6 +29,12 @@
       <authorinitials>JDP</authorinitials>
       <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
     </revision>
+     <revision>
+      <revnumber>2.0</revnumber>
+      <date>2026-01-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>added alternate color-distinguished icon set</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>basic-enhanced</aspecttable>
@@ -46,6 +53,7 @@
       <show>green</show>
       <show>red</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-281.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-G-R-R.gif</imagelink>
     </appearance>
 
@@ -54,6 +62,7 @@
       <show>yellow</show>
       <show>red</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-285.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-Y-R-R.gif</imagelink>
     </appearance>
 
@@ -71,6 +80,7 @@
       <show>red</show>
       <show>red</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-292.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-R.gif</imagelink>
     </appearance>
 
@@ -79,6 +89,7 @@
       <show>red</show>
       <show>green</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-283.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-G-R.gif</imagelink>
     </appearance>
 
@@ -87,6 +98,7 @@
       <show>red</show>
       <show>red</show>
       <show>green</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-287.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-G.gif</imagelink>
     </appearance>    
 
@@ -95,6 +107,7 @@
       <show>red</show>
       <show>yellow</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-286.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-Y-R.gif</imagelink>
     </appearance>
 
@@ -112,6 +125,7 @@
       <show>red</show>
       <show>red</show>
       <show>yellow</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-290.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-Y.gif</imagelink>
     </appearance>
 

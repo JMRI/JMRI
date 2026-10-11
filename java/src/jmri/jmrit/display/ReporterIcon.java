@@ -171,13 +171,13 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
 
     @Override
     public int maxHeight() {
-        return ((javax.swing.JLabel) this).getMaximumSize().height;  // defer to superclass
+        return getMaximumSize().height;  // defer to superclass
     }
 
     @Override
     public int maxWidth() {
-        return ((javax.swing.JLabel) this).getMaximumSize().width;  // defer to superclass
+        return getMaximumSize().width;  // defer to superclass
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(ReporterIcon.class);
 }

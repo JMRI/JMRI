@@ -14,6 +14,8 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
+import jmri.jmrit.throttle.panels.ControlPanel;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,8 +48,7 @@ public class ControlPanelTest {
         mainPanel.setOpaque(true);
         mainPanel.add(new JDesktopPane());
         mainPanel.add(panel);
-
-        panel.toFront();
+        
         panel.setVisible(true);
 
         frame.add(mainPanel);
@@ -71,12 +72,10 @@ public class ControlPanelTest {
                     }
                     Rectangle r1 = c1.getBounds();
                     Rectangle r2 = c2.getBounds();
-                    if (r1.intersects(r2)) {
-                        System.out.printf("Components %s(%s) and %s(%s) overlap%n",
+                    assertFalse(r1.intersects(r2),
+                        () -> String.format("Components %s(%s) and %s(%s) overlap%n",
                             c1.getName(), c1.getClass().getName(),
-                            c2.getName(), c2.getClass().getName());
-                    }
-                    assertFalse(r1.intersects(r2));
+                            c2.getName(), c2.getClass().getName()));
                 }
 
                 if (c1 instanceof Container) {
@@ -90,7 +89,7 @@ public class ControlPanelTest {
     public void testCtor() {
         setupControlPanel();
 
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
         assertNotNull(panel.getSpeedSlider());
 
     }
@@ -101,16 +100,16 @@ public class ControlPanelTest {
         InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(false);
         setupControlPanel();
 
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.STEPDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
     }
 
     @Test
@@ -120,16 +119,16 @@ public class ControlPanelTest {
         InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
 
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.STEPDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
     }
 
     @ParameterizedTest
@@ -138,7 +137,7 @@ public class ControlPanelTest {
 
         InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
-        throttle = null;
+
         InstanceManager.throttleManagerInstance().requestThrottle(3,
             new ThrottleListener(){
               @Override
@@ -170,6 +169,7 @@ public class ControlPanelTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         InstanceManager.getDefault(ThrottlesPreferences.class).setUseExThrottle(true);
+        throttle = null;
     }
 
     @AfterEach

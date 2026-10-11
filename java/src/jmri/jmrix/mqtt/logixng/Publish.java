@@ -2,8 +2,6 @@ package jmri.jmrix.mqtt.logixng;
 
 import jmri.jmrit.logixng.actions.*;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -18,16 +16,13 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2022
  */
-public class Publish extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class Publish extends AbstractDigitalAction {
 
-    private final LogixNG_SelectString _selectTopic =
-            new LogixNG_SelectString(this, this);
-    private final LogixNG_SelectString _selectMessage =
-            new LogixNG_SelectString(this, this);
+    private final LogixNG_SelectString _selectTopic = new LogixNG_SelectString(this);
+    private final LogixNG_SelectString _selectMessage = new LogixNG_SelectString(this);
 
     private MqttSystemConnectionMemo _memo;
-    
+
     private Retain _retain;
 
 
@@ -80,8 +75,8 @@ public class Publish extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return CategoryMqtt.MQTT;
     }
 
     /** {@inheritDoc} */
@@ -90,7 +85,7 @@ public class Publish extends AbstractDigitalAction
 
         String topic = _selectTopic.evaluateValue(getConditionalNG());
         String data = _selectMessage.evaluateValue(getConditionalNG());
-        
+
         boolean retain = _retain.getRetainValue(_memo);
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
@@ -129,26 +124,6 @@ public class Publish extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectTopic.registerListeners();
-        _selectMessage.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectTopic.unregisterListeners();
-        _selectMessage.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -163,7 +138,7 @@ public class Publish extends AbstractDigitalAction
         private Retain(String text) {
             this._text = text;
         }
-        
+
         public boolean getRetainValue(MqttSystemConnectionMemo memo) {
             switch (this) {
                 case Default:
@@ -185,6 +160,6 @@ public class Publish extends AbstractDigitalAction
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Publish.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Publish.class);
 
 }

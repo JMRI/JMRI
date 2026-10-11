@@ -82,7 +82,7 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void registerListenersForThisClass() {
-        ((AnalogActionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
     
     /**
@@ -90,7 +90,7 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((AnalogActionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
     
     @Override
@@ -211,6 +211,6 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogActionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogActionSocket.class);
 
 }

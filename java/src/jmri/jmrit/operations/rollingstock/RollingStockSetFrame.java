@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -7,7 +9,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.*;
@@ -244,7 +245,9 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         updateTrainComboBox(); // load the train combo box
         enableComponents(!locationUnknownCheckBox.isSelected());
         // has the program generated a pick up and set out for this rolling stock?
-        if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
+        if (_rs.getTrain() != null &&
+                _rs.getTrain().isBuilt() &&
+                (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null)) {
             if (_rs.getRouteLocation() != null) {
                 log.debug("rs ({}) has a pick up location ({})", _rs.toString(), _rs.getRouteLocation().getName());
             }
@@ -468,12 +471,13 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                 }
                 // update location only if it has changed
                 if (rs.getLocation() == null ||
-                        !rs.getLocation().equals(locationBox.getSelectedItem()) ||
+                        rs.getLocation() != locationBox.getSelectedItem() ||
                         rs.getTrack() == null ||
-                        !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
+                        rs.getTrack() != trackLocationBox.getSelectedItem()) {
                     String status = rs.setLocation((Location) locationBox.getSelectedItem(),
                             (Track) trackLocationBox.getSelectedItem());
                     rs.setLastRouteId(RollingStock.NONE); // clear last route id
+                    rs.setLastTrain(null); // clear last train
                     if (!status.equals(Track.OKAY)) {
                         log.debug("Can't set rs's location because of {}", status);
                         JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
@@ -766,7 +770,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
             log.debug("RollingStockFrame sees location: {}", locationBox.getSelectedItem());
             Location l = (Location) locationBox.getSelectedItem();
             l.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
-            if (_rs != null && _rs.getLocation() != null && _rs.getLocation().equals(l) && _rs.getTrack() != null) {
+            if (_rs != null && _rs.getLocation() != null && _rs.getLocation() == l && _rs.getTrack() != null) {
                 trackLocationBox.setSelectedItem(_rs.getTrack());
             }
         }

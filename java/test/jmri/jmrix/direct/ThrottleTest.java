@@ -376,8 +376,10 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assertions.assertNotNull(aspcs.tistream);
         m.getTrafficController().connectPort(aspcs);
         jmri.CommandStation cs = jmri.InstanceManager.getDefault(jmri.CommandStation.class);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new ThrottleManager(m));
-        instance = new Throttle(new jmri.DccLocoAddress(5, false), cs);
+        var tm = new jmri.jmrix.direct.ThrottleManager(m);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        m.store(tm, jmri.ThrottleManager.class);
+        instance = new Throttle(new jmri.DccLocoAddress(5, false), cs, m);
     }
 
     @AfterEach
@@ -387,6 +389,6 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ThrottleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ThrottleTest.class);
 
 }

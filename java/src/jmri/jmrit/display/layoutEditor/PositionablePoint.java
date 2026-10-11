@@ -1246,6 +1246,6 @@ public class PositionablePoint extends LayoutTrack {
         return Bundle.getMessage("TypeName_PositionablePoint");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePoint.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePoint.class);
 
 }

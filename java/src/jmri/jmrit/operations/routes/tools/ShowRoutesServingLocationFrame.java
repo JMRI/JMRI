@@ -13,6 +13,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.*;
+import jmri.jmrit.operations.routes.gui.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -157,5 +158,5 @@ public class ShowRoutesServingLocationFrame extends OperationsFrame implements j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ShowRoutesServingLocationFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(ShowRoutesServingLocationFrame.class);
 }

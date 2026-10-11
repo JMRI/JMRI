@@ -2,7 +2,6 @@ package jmri.jmrit.vsdecoder;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +10,11 @@ import org.junit.jupiter.api.*;
  */
 public class AudioUtilTest {
 
+    // no Ctor test, tested class only supplies static methods.
+
     @Test
-    public void testCTor() {
-        AudioUtil t = new AudioUtil();
-        Assert.assertNotNull("exists",t);
+    public void testAudioUtilIsAudioRunning() {
+        Assertions.assertFalse(AudioUtil.isAudioRunning());
     }
 
     @BeforeEach
@@ -27,6 +27,6 @@ public class AudioUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AudioUtilTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AudioUtilTest.class);
 
 }

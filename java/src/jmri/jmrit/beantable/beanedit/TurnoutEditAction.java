@@ -289,10 +289,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         super.cancelButtonAction(e);
     }
 
-    private final static String bothText = "Both"; // TODO I18N using bundle. Note: check how this property is stored/loaded
-    private final static String cabOnlyText = "Cab only";
-    private final static String pushbutText = "Pushbutton only";
-    private final static String noneText = "None";
+    private static final String bothText = "Both"; // TODO I18N using bundle. Note: check how this property is stored/loaded
+    private static final String cabOnlyText = "Cab only";
+    private static final String pushbutText = "Pushbutton only";
+    private static final String noneText = "None";
 
     private JComboBox<String> lockBox;
     protected BeanItemPanel lock() {

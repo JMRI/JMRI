@@ -160,6 +160,6 @@ public class TitledSlider extends JPanel implements ChangeListener {
         TimerUtil.schedule(timerTask, 100);
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(TitledSlider.class);
+//    private static final Logger log = LoggerFactory.getLogger(TitledSlider.class);
 
 }

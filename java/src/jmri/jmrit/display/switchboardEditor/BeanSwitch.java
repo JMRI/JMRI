@@ -18,13 +18,16 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
+import jmri.LightManager;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.jmrit.beantable.AddNewDevicePanel;
-import jmri.util.JmriJFrame;
-import jmri.util.SystemType;
+import jmri.util.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -574,18 +577,18 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (log.isDebugEnabled()) {
             log.debug("property change: {} {} is now: {}", _switchSysName, e.getPropertyName(), e.getNewValue());
         }
-        if (e.getPropertyName().equals("KnownState")) {
+        if ( NamedBean.PROPERTY_KNOWN_STATE.equals(e.getPropertyName())) {
             int now = ((Integer) e.getNewValue());
             displayState(now);
             log.debug("Item state changed");
         }
-        if (e.getPropertyName().equals("UserName")) {
+        if ( NamedBean.PROPERTY_USERNAME.equals(e.getPropertyName())) {
             // update tooltip
             String newUserName;
             if (showToolTip) {
                 newUserName = ((String) e.getNewValue());
                 _uLabel = (newUserName == null ? "" : newUserName); // store for display on icon
-                if (newUserName == null || newUserName.equals("")) {
+                if (newUserName == null || newUserName.isEmpty()) {
                     newUserName = Bundle.getMessage("NoUserName"); // longer for tooltip
                 }
                 setToolTipText(_switchSysName + " (" + newUserName + ")");
@@ -908,14 +911,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             switchConnect.setOK(); // activate OK button on Add new device pane
             addFrame.add(switchConnect);
         }
-        addFrame.pack();
-        addFrame.setLocationRelativeTo(this);
-        addFrame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            addFrame.pack();
+            addFrame.setLocationRelativeTo(this);
+            addFrame.setVisible(true);
+        });
     }
 
     protected void cancelAddPressed(ActionEvent e) {
         if (addFrame != null) {
-            addFrame.setVisible(false);
+            ThreadingUtil.runOnGUI( () -> addFrame.setVisible(false) );
             addFrame.dispose();
             addFrame = null;
         }
@@ -924,7 +929,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected void okAddPressed(ActionEvent e) {
         NamedBean nb;
         String user = userName.getText();
-        if (user.trim().equals("")) {
+        if (user.isBlank()) {
             user = null;
         }
         // systemName can't be changed, fixed
@@ -935,6 +940,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
         switch (_switchSysName.charAt(manuPrefix.length())) {
             case 'T':
+                if ( existingUserName(InstanceManager.getDefault(TurnoutManager.class), user, e)) {
+                    return;
+                }
                 Turnout t;
                 try {
                     // add turnout to JMRI (w/appropriate manager)
@@ -942,12 +950,15 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     t.setUserName(user);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(_switchSysName);
+                    handleCreateException(_switchSysName, ex);
                     return; // without creating
                 }
                 nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_switchSysName);
                 break;
             case 'S':
+                if ( existingUserName(InstanceManager.getDefault(SensorManager.class), user, e)) {
+                    return;
+                }
                 Sensor s;
                 try {
                     // add Sensor to JMRI (w/appropriate manager)
@@ -955,12 +966,15 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     s.setUserName(user);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(_switchSysName);
+                    handleCreateException(_switchSysName, ex);
                     return; // without creating
                 }
                 nb = jmri.InstanceManager.sensorManagerInstance().getSensor(_switchSysName);
                 break;
             case 'L':
+                if ( existingUserName(InstanceManager.getDefault(LightManager.class), user, e)) {
+                    return;
+                }
                 Light l;
                 try {
                     // add Light to JMRI (w/appropriate manager)
@@ -968,7 +982,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     l.setUserName(user);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(_switchSysName);
+                    handleCreateException(_switchSysName, ex);
                     return; // without creating
                 }
                 nb = jmri.InstanceManager.lightManagerInstance().getLight(_switchSysName);
@@ -989,10 +1003,21 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     _editor.updatePressed();
                 }
             } catch (NullPointerException npe) {
-                handleCreateException(_switchSysName);
+                handleCreateException(_switchSysName, npe);
                 // exit without updating
             }
         }
+    }
+
+    private boolean existingUserName(Manager<?> mgr, String userName, Object e){
+        NamedBean nb = mgr.getByUserName(userName == null ? "" : userName);
+        if ( nb != null ) {
+            JmriJOptionPane.showMessageDialog( JmriJOptionPane.findWindowForObject(e),
+                Bundle.getMessage("InvalidUserNameAlreadyExists",nb.getBeanType(),userName),
+                Bundle.getMessage("WarningUserName", userName), JmriJOptionPane.ERROR_MESSAGE);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -1019,12 +1044,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
     }
 
-    void handleCreateException(String sysName) {
+    void handleCreateException(String sysName, Exception ex) {
         JmriJOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSwitchAddFailed"), sysName),
-                Bundle.getMessage("ErrorTitle"),
-                JmriJOptionPane.ERROR_MESSAGE);
+            "<html>" + Bundle.getMessage("ErrorSwitchAddFailed") + "<br>" + ex.getLocalizedMessage()+"</html>",
+            Bundle.getMessage("ErrorTitle") + " : " + sysName,
+            JmriJOptionPane.ERROR_MESSAGE);
     }
 
     String rootPath = "resources/icons/misc/switchboard/";

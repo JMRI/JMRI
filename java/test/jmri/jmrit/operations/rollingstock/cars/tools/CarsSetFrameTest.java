@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
@@ -342,6 +343,6 @@ public class CarsSetFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class);
 
 }

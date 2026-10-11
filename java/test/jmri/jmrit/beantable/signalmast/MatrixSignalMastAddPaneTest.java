@@ -1,14 +1,19 @@
 package jmri.jmrit.beantable.signalmast;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.*;
+
+import javax.swing.*;
+
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import java.util.*;
-import javax.swing.*;
-
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -41,10 +46,13 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
 
         MatrixSignalMastAddPane vp = new MatrixSignalMastAddPane();
 
-        Assert.assertTrue(vp.canHandleMast(s1));
+        assertTrue(vp.canHandleMast(s1));
 
         vp.setMast(null);
         vp.setMast(s1);
+
+        SignalSystem basicSys = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
+        assertNotNull(basicSys);
 
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IF$xsm:basic:one-low($0001)-3t") {
@@ -55,7 +63,7 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
                             new String[]{"Approach","Stop","Unlit"}));
                     }
             }
-            , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
+            , basicSys);
     }
 
     @Test
@@ -64,19 +72,22 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
 
         MatrixSignalMastAddPane vp = new MatrixSignalMastAddPane();
 
-        Assert.assertFalse(vp.canHandleMast(m1));
+        assertFalse(vp.canHandleMast(m1));
 
         vp.setMast(null);
 
-        vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
+        SignalSystem basicSys = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
+        assertNotNull(basicSys);
+
+        vp.setAspectNames(m1.getAppearanceMap(), basicSys);
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$tsm:basic:one-searchlight($1) jmri.implementation.TurnoutSignalMast");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testEditAndDisableViaGui() {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(0, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
+        assertEquals(0, InstanceManager.getDefault(SignalMastManager.class).getObjectCount());
         // create a mast
         InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
@@ -95,50 +106,54 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
         mast.setBitstring("Stop", "001"); // used for test below
         mast.setBitstring("Unlit", "000");
 
-        InstanceManager.getDefault(jmri.SignalMastManager.class).register(mast);
-        Assert.assertEquals(1, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
+        InstanceManager.getDefault(SignalMastManager.class).register(mast);
+        assertEquals(1, InstanceManager.getDefault(SignalMastManager.class).getObjectCount());
         mast.setAspectDisabled("Unlit"); // we will reenable this below
         mast.setAllowUnLit(true);
 
         // set up a mast edit pane
         MatrixSignalMastAddPane vp = new MatrixSignalMastAddPane();
 
+        SignalSystem basicSys = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
+        assertNotNull(basicSys);
+
         vp.setAspectNames(
                 new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
                     @Override
                     public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
                 }
-                , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
+                , basicSys);
         vp.setMast(mast);
 
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
-        frame.pack();
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            frame.pack();
+            frame.setVisible(true);
+        });
 
         JFrameOperator frameOp = new JFrameOperator("Add/Edit Signal Mast");
         JCheckBoxOperator rBox = new JCheckBoxOperator(frameOp, Bundle.getMessage("ResetPrevious"));
 
         // enable Reset
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             rBox.push(); // this should set Reset enabled
             vp.createMast("basic", "appearance-one-searchlight.xml", "user name 2");
         });
 
         // check list of SignalMasts
-        Assert.assertEquals(1, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2"));
+        assertEquals(1, InstanceManager.getDefault(SignalMastManager.class).getObjectCount());
+        SignalMast userName2 = InstanceManager.getDefault(SignalMastManager.class).getByUserName("user name 2");
+        assertNotNull(userName2);
         // system name not checked, depends on history of how many MatrixSignalMast objects have been created
 
         // check correct aspect disabled
-        Assert.assertFalse(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Stop"));
-        Assert.assertTrue(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
+        assertFalse(userName2.isAspectDisabled("Stop"));
+        assertTrue(userName2.isAspectDisabled("Unlit"));
         // check Reset setting in mast
-        Assert.assertTrue(mast.resetPreviousStates());
+        assertTrue(mast.resetPreviousStates());
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            frame.dispose();
-        });
+        JUnitUtil.dispose(frame);
     }
 
     @BeforeEach

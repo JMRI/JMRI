@@ -35,6 +35,6 @@ public class SprogTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogTurnoutManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogTurnoutManagerXml.class);
 
 }

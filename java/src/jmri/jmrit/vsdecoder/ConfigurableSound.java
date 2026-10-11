@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Configurable Sound initial version.
@@ -24,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2025
  */
 class ConfigurableSound extends VSDSound {
 
@@ -54,7 +53,7 @@ class ConfigurableSound extends VSDSound {
         return this.init(null);
     }
 
-    public boolean init(VSDFile vf) {
+    boolean init(VSDFile vf) {
         if (!initialized) {
             if (use_start_sound) {
                 start_sound = new SoundBite(vf, start_file, name + "_Start", name + "_Start");
@@ -248,15 +247,27 @@ class ConfigurableSound extends VSDSound {
         super.setPosition(p);
         if (use_start_sound) {
             start_sound.setPosition(p);
+            setTunnelEffect(start_sound);
         }
         if (use_mid_sound) {
             mid_sound.setPosition(p);
+            setTunnelEffect(mid_sound);
         }
         if (use_end_sound) {
             end_sound.setPosition(p);
+            setTunnelEffect(end_sound);
         }
         if (use_short_sound) {
             short_sound.setPosition(p);
+            setTunnelEffect(short_sound);
+        }
+    }
+
+    private void setTunnelEffect(SoundBite sb) {
+        if (this.getTunnel()) {
+            sb.attachSourcesToEffects();
+        } else {
+            sb.detachSourcesToEffects();
         }
     }
 
@@ -343,6 +354,6 @@ class ConfigurableSound extends VSDSound {
         this.init(vf);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigurableSound.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConfigurableSound.class);
 
 }

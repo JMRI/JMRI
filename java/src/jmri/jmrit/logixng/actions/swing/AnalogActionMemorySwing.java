@@ -84,6 +84,6 @@ public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemorySwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemorySwing.class);
 
 }

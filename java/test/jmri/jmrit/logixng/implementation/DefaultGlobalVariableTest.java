@@ -1,5 +1,12 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -10,7 +17,6 @@ import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -23,7 +29,7 @@ public class DefaultGlobalVariableTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new DefaultGlobalVariable("IQGV10", "MyGlobal"));
+        assertNotNull(new DefaultGlobalVariable("IQGV10", "MyGlobal"), "exists");
     }
 
     private Object getVariableValue(InitialValueType type, String data)
@@ -38,50 +44,49 @@ public class DefaultGlobalVariableTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testInitialValue() throws JmriException, NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        Assert.assertEquals("java.util.concurrent.CopyOnWriteArrayList",
+        assertEquals("java.util.concurrent.CopyOnWriteArrayList",
                 getVariableValue(InitialValueType.Array, "").getClass().getName());
-        Assert.assertEquals("java.util.concurrent.ConcurrentHashMap",
+        assertEquals("java.util.concurrent.ConcurrentHashMap",
                 getVariableValue(InitialValueType.Map, "").getClass().getName());
-        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Formula, "1 == 1"));
-        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Formula, "1 == 2"));
-        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "true"));
-        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "false"));
-        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "True"));
-        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "False"));
+        assertTrue((boolean)getVariableValue(InitialValueType.Formula, "1 == 1"));
+        assertFalse((boolean)getVariableValue(InitialValueType.Formula, "1 == 2"));
+        assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "true"));
+        assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "false"));
+        assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "True"));
+        assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "False"));
 
-        Exception exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, "trueAaa"));
-        Assert.assertEquals("Value \"trueAaa\" can't be converted to a boolean", exception.getMessage());
-        exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, "falseAaa"));
-        Assert.assertEquals("Value \"falseAaa\" can't be converted to a boolean", exception.getMessage());
-        exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, ""));
-        Assert.assertEquals("Initial data is empty string for global variable \"MyGlobal\". Can't set value to boolean.", exception.getMessage());
-        exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, null));
-        Assert.assertEquals("Initial data is null for global variable \"MyGlobal\". Can't set value to boolean.", exception.getMessage());
+        Exception exception = assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, "trueAaa"));
+        assertEquals("Value \"trueAaa\" can't be converted to a boolean", exception.getMessage());
+        exception = assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, "falseAaa"));
+        assertEquals("Value \"falseAaa\" can't be converted to a boolean", exception.getMessage());
+        exception = assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, ""));
+        assertEquals("Initial data is empty string for global variable \"MyGlobal\". Can't set value to boolean.", exception.getMessage());
+        exception = assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, null));
+        assertEquals("Initial data is null for global variable \"MyGlobal\". Can't set value to boolean.", exception.getMessage());
 
-        Assert.assertEquals(25, (long)getVariableValue(InitialValueType.Formula, "12*2+1"));
-        Assert.assertEquals(352, (long)getVariableValue(InitialValueType.Integer, "352"));
-        Assert.assertNull(getVariableValue(InitialValueType.None, ""));
-        Assert.assertEquals("Hello", getVariableValue(InitialValueType.String, "Hello"));
+        assertEquals(25, (long)getVariableValue(InitialValueType.Formula, "12*2+1"));
+        assertEquals(352, (long)getVariableValue(InitialValueType.Integer, "352"));
+        assertNull(getVariableValue(InitialValueType.None, ""));
+        assertEquals("Hello", getVariableValue(InitialValueType.String, "Hello"));
 
         // Assign a copy of a table to a global variable
         NamedTable csvTable = InstanceManager.getDefault(NamedTableManager.class)
                         .loadTableFromCSV("IQT1", null, "scripts:LogixNG/LogixNG_ExampleTable.csv");
-        Assert.assertNotNull(csvTable);
+        assertNotNull(csvTable);
         Object value = getVariableValue(InitialValueType.LogixNG_Table, csvTable.getSystemName());
-        Assert.assertNotNull(value);
-        Assert.assertEquals("java.util.concurrent.ConcurrentHashMap", value.getClass().getName());
+        assertNotNull(value);
+        assertEquals("java.util.concurrent.ConcurrentHashMap", value.getClass().getName());
         Map<String,Map<String,String>> map = (Map)value;
-        Assert.assertEquals("Left turnout", map.get("Left").get("Turnouts"));
-        Assert.assertEquals("Right turnout", map.get("Right").get("Turnouts"));
-        Assert.assertEquals("IT15", map.get("First siding").get("Turnouts"));
-        Assert.assertEquals("IT22", map.get("Second siding").get("Turnouts"));
-        Assert.assertEquals("Left sensor", map.get("Left").get("Sensors"));
-        Assert.assertEquals("Right sensor", map.get("Right").get("Sensors"));
-        Assert.assertEquals("IS15", map.get("First siding").get("Sensors"));
-        Assert.assertEquals("IS22", map.get("Second siding").get("Sensors"));
+        assertEquals("Left turnout", map.get("Left").get("Turnouts"));
+        assertEquals("Right turnout", map.get("Right").get("Turnouts"));
+        assertEquals("IT15", map.get("First siding").get("Turnouts"));
+        assertEquals("IT22", map.get("Second siding").get("Turnouts"));
+        assertEquals("Left sensor", map.get("Left").get("Sensors"));
+        assertEquals("Right sensor", map.get("Right").get("Sensors"));
+        assertEquals("IS15", map.get("First siding").get("Sensors"));
+        assertEquals("IS22", map.get("Second siding").get("Sensors"));
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();

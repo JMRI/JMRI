@@ -32,8 +32,10 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
         softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(XNetThrottleManager.class);
         softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer().getConfigurator())
+                .isExactlyInstanceOf(XNetProgrammer.XNetConfigurator.class);
+        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42).getConfigurator())
+                .isExactlyInstanceOf(XNetOpsModeProgrammer.XNetOpsConfigurator.class);
         softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(ZTC611XNetTurnoutManager.class);
         softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
@@ -42,7 +44,7 @@ public class XNetInitializationManagerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = Mockito.mock(XNetTrafficController.class);
         cs = Mockito.mock(LenzCommandStation.class);
@@ -52,7 +54,7 @@ public class XNetInitializationManagerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         memo = null;
         tc = null;
         cs = null;

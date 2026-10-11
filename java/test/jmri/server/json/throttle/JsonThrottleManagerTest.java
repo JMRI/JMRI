@@ -2,11 +2,12 @@ package jmri.server.json.throttle;
 
 import java.io.DataOutputStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.DccLocoAddress;
 import jmri.server.json.JsonMockConnection;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -28,7 +29,7 @@ public class JsonThrottleManagerTest {
         JsonThrottleSocketService service = new JsonThrottleSocketService(connection);
         JsonThrottle throttle = new JsonThrottle(new DccLocoAddress(3, true), service);
         manager.put(throttle, service);
-        Assert.assertEquals(service, manager.getServers(throttle).get(0));
+        assertEquals(service, manager.getServers(throttle).get(0));
     }
 
     @BeforeEach

@@ -19,11 +19,10 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Exports the location roster into a comma delimited file (CSV).
- * Keep ImportLocations.java in sync with export
+ * Exports the location roster into a comma delimited file (CSV). Keep
+ * ImportLocations.java in sync with export
  *
- * @author Daniel Boudreau Copyright (C) 2018, 2023
- *
+ * @author Daniel Boudreau Copyright (C) 2018, 2023, 2025
  */
 public class ExportLocations extends XmlFile {
 
@@ -68,6 +67,10 @@ public class ExportLocations extends XmlFile {
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("Type"),
                     Bundle.getMessage("Length"),
+                    Bundle.getMessage("Used"),
+                    Bundle.getMessage("Cars"),
+                    Bundle.getMessage("Engines"),
+                    Bundle.getMessage("Moves"),
                     Bundle.getMessage("Division"),
                     Bundle.getMessage("ServicedByTrains"),
                     Bundle.getMessage("RollingStock"),
@@ -88,10 +91,12 @@ public class ExportLocations extends XmlFile {
                     Bundle.getMessage("AlternateTrack"),
                     Bundle.getMessage("PoolName"),
                     Bundle.getMessage("Minimum"),
+                    Bundle.getMessage("Maximum"),
                     Bundle.getMessage("TitleTrackBlockingOrder"),
                     Bundle.getMessage("MenuItemPlannedPickups"),
                     Bundle.getMessage("MenuItemDestinations"),
                     Bundle.getMessage("Destinations"),
+                    Bundle.getMessage("QuickService"),
                     Bundle.getMessage("HoldCarsWithCustomLoads"),
                     Bundle.getMessage("DisableLoadChange"),
                     Bundle.getMessage("SwapCarLoads"),
@@ -239,6 +244,10 @@ public class ExportLocations extends XmlFile {
                             track.getName(),
                             track.getTrackTypeName(),
                             track.getLength(),
+                            track.getUsedLength(),
+                            track.getNumberCars(),
+                            track.getNumberEngines(),
+                            track.getMoves(),
                             track.getDivision(),
                             trainDirections.toString(),
                             rollingStockNames.toString(),
@@ -258,11 +267,13 @@ public class ExportLocations extends XmlFile {
                             track.getReservationFactor(),
                             alternateTrackName,
                             track.getPoolName(),
-                            track.getMinimumLength(),
+                            track.getPoolMinimumLength(),
+                            track.getPoolMaximumLength(),
                             track.getBlockingOrder(),
                             track.getIgnoreUsedLengthPercentage(),
                             Bundle.getMessage(track.getDestinationOption().equals(Track.ALL_DESTINATIONS) ? "All" : "Include"),
                             destinationNames.toString(),
+                            (track.isQuickServiceEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isHoldCarsWithCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isDisableLoadChangeEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : ""),
@@ -279,8 +290,6 @@ public class ExportLocations extends XmlFile {
                             track.getCommentSetout().replace('\n', ' '));
                 }
             }
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} locations to file {}", locations.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedLocationsToFile", locations.size(), defaultOperationsFilename()),

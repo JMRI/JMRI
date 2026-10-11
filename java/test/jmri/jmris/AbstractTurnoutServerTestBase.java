@@ -1,5 +1,7 @@
 package jmri.jmris;
 
+import java.io.IOException;
+
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -24,7 +26,7 @@ abstract public class AbstractTurnoutServerTestBase {
 
     // test sending an error message.
     @Test 
-    public void testSendErrorStatus() throws java.io.IOException {
+    public void testSendErrorStatus() throws IOException {
         ts.sendErrorStatus("IT1");
         checkErrorStatusSent();
     }
@@ -38,7 +40,7 @@ abstract public class AbstractTurnoutServerTestBase {
 
     // test sending an Thrown status message.
     @Test 
-    public void testCheckSendThrownStatus() throws java.io.IOException{
+    public void testCheckSendThrownStatus() throws IOException {
         ts.initTurnout("IT1");
         ts.sendStatus("IT1",Turnout.THROWN);
         checkTurnoutThrownSent();
@@ -46,7 +48,7 @@ abstract public class AbstractTurnoutServerTestBase {
 
     // test sending an Closed status message.
     @Test
-    public void testCheckSendClosedStatus() throws java.io.IOException {
+    public void testCheckSendClosedStatus() throws IOException {
         ts.initTurnout("IT1");
         ts.sendStatus("IT1",Turnout.CLOSED);
         checkTurnoutClosedSent();
@@ -54,7 +56,7 @@ abstract public class AbstractTurnoutServerTestBase {
 
     // test sending an UNKNOWN status message.
     @Test
-    public void testCheckSendUnkownStatus() throws java.io.IOException {
+    public void testCheckSendUnkownStatus() throws IOException {
         ts.initTurnout("IT1");
         ts.sendStatus("IT1",Turnout.UNKNOWN);
         checkTurnoutUnknownSent();
@@ -62,7 +64,7 @@ abstract public class AbstractTurnoutServerTestBase {
 
     // test the property change sequence for an THROWN property change.
     @Test
-    public void testPropertyChangeThrownStatus() throws Exception {
+    public void testPropertyChangeThrownStatus() {
         assertDoesNotThrow ( () -> {
             ts.initTurnout("IT1");
             InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1").setState(Turnout.THROWN);
@@ -72,7 +74,7 @@ abstract public class AbstractTurnoutServerTestBase {
 
     // test the property change sequence for an CLOSED property change.
     @Test
-    public void testPropertyChangeClosedStatus() throws Exception {
+    public void testPropertyChangeClosedStatus() {
         assertDoesNotThrow ( () -> {
             ts.initTurnout("IT1");
             InstanceManager.getDefault(TurnoutManager.class)

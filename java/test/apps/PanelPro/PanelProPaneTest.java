@@ -1,12 +1,9 @@
 package apps.PanelPro;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -15,10 +12,10 @@ import org.junit.Assume;
 public class PanelProPaneTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PanelProPane t = new PanelProPane();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -33,6 +30,6 @@ public class PanelProPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanelProPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PanelProPaneTest.class);
 
 }

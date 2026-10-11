@@ -20,17 +20,21 @@
       <h2 id="cs2">Command Station 2 (CS2)</h2>
 
       <p>JMRI can connect to a M&auml;rklin Command Station 2 using the built in Ethernet interface.<br>
-      It is possible for multiple PCs to connect to a CS2 using IP/UDP.</p>
+      It is possible for multiple PCs to connect to a CS2 using UDP/IP or TCP/IP.</p>
 
-      <p>The CS2 uses its own CAN BUS protocol running over UDP; responses from the CS2 are sent
+      <p>The CS2 uses its own CAN BUS protocol running over the network.
+      When using the UDP protocol, responses from the CS2 are sent
       out as a broadcast message and therefore the PCs connecting to the CS2 must be in the same IP
-      subnet otherwise the reply messages will not get seen.</p>
+      subnet otherwise the reply messages will not get seen.
+      The TCP protocol connection does not have this limitation.</p>
 
       <p>This implementation of the CS2 CAN protocol was developed and tested on CS2 firmware
       version 2.</p>
 
       <p>Support for the M&auml;rklin CS2 was first available in <a href=
-      "https://www.jmri.org/releasenotes/jmri3.1.1.shtml">JMRI 3.1.1</a>.</p>
+      "https://www.jmri.org/releasenotes/jmri3.1.1.shtml">JMRI 3.1.1</a>.
+      TCP protocol was added in 
+      <a href="https://www.jmri.org/releasenotes/jmri5.11.5.shtml">JMRI 5.11.5</a></p>
 
       <h3 id="limitations">Limitations</h3>
       <strong>This interface is still under development; if you find any issues then please raise a
@@ -45,7 +49,7 @@
         <li>Open the JMRI "Preferences" under the "Edit" menu,</li>
 
         <li>Select "MARKLIN" as the manufacturer, and Command Station 2 as the Connection
-        type,</li>
+        type with either TCP (recommended) or UDP protocol.</li>
 
         <li>Enter in the address assigned to the CS2.</li>
 

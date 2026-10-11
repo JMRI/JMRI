@@ -1,5 +1,6 @@
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -48,10 +49,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @javax.annotation.concurrent.Immutable
+@SuppressFBWarnings(value = {"HSM_HIDING_METHOD"},
+    justification = "Desired pattern is repeated class names with package-level access to members")
 public class Bundle {
 
     @CheckForNull
-    private final static String name = "jmri.NamedBeanBundle";  // NOI18N
+    private static final String name = "jmri.NamedBeanBundle";  // NOI18N
 
     /**
      * Provides a translated string for a given key from the package resource
@@ -204,7 +207,7 @@ public class Bundle {
         throw new MissingResourceException("Resource '" + key + "' not found", this.getClass().toString(), key); // NOI18N
     }
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @CheckForNull
     protected String bundleName() {
@@ -225,6 +228,6 @@ public class Bundle {
     //           return;
     //        }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Bundle.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Bundle.class);
 
 }

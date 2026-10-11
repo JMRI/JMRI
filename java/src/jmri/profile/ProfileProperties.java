@@ -12,7 +12,7 @@ public class ProfileProperties implements AuxiliaryProperties {
 
     private final File path;
 
-    private final static Logger log = LoggerFactory.getLogger(ProfileProperties.class);
+    private static final Logger log = LoggerFactory.getLogger(ProfileProperties.class);
 
     public ProfileProperties(Profile project) {
         this.path = project.getPath();

@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.*;
  */
 public class PrintSavedBuildReportAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(PrintSavedBuildReportAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintSavedBuildReportAction.class);
 
     public PrintSavedBuildReportAction(boolean isPreview, Train train) {
         super(isPreview ? Bundle.getMessage("MenuItemPreviewSavedBuildReport")
@@ -58,12 +58,11 @@ public class PrintSavedBuildReportAction extends AbstractAction implements java.
             return;
         }
         if (_isPreview && Setup.isBuildReportEditorEnabled()) {
-            TrainPrintUtilities.editReport(file, _train.getName()); 
+            TrainPrintBuildReport.editReport(file, _train.getName());
             return;
         }
-        TrainPrintUtilities.printReport(file,
-                Bundle.getMessage("buildReport", _train.getDescription()),
-                _isPreview, Train.NONE, true, Train.NONE, Train.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
+        TrainPrintBuildReport.printReport(file,
+                Bundle.getMessage("buildReport", _train.getDescription()), _isPreview);
         return;
     }
 

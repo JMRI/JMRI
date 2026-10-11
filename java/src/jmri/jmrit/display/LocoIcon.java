@@ -17,6 +17,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -104,19 +105,22 @@ public class LocoIcon extends PositionableLabel {
         return false;
     }
 
-    jmri.jmrit.throttle.ThrottleFrame tf = null;
+    ThrottleControllerUI tf = null;
 
     /**
      * Pop-up only if right click and not dragged
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
+        if (_editor.isLocoMarkerPopupDisabled()) {
+            return false;
+        }
         if (_entry != null) {
             popup.add(new AbstractAction("Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-                    tf.getAddressPanel().setRosterEntry(_entry);
+                    tf.setRosterEntry(_entry);
                     tf.toFront();
                 }
             });
@@ -339,5 +343,5 @@ public class LocoIcon extends PositionableLabel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoIcon.class);
 }

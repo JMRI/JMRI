@@ -172,11 +172,13 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
             Roster.getDefault().writeRoster();
 
         }
-        //re.updateFile();
-        //Roster.getDefault().writeRosterFile();
     }
 
-    public void setGroup(String grp) {
+    /**
+     * Set the group that can be added-to, e.g.
+     * the one displayed as check boxes to the right
+     */
+    public void setAddGroup(String grp) {
         group = grp;
     }
 
@@ -184,5 +186,5 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterGroupTableModel.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterGroupTableModel.class);
 }

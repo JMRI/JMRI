@@ -27,6 +27,6 @@ public class CommentMacroTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CommentMacroTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CommentMacroTest.class);
 
 }

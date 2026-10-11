@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -17,7 +16,7 @@ public class DrawSquaresTest {
     @Test
     public void testCall() {
         BufferedImage bi = DrawSquares.getImage(100, 100, 25, Color.white, Color.black);
-        Assert.assertNotNull("exists", bi);
+        Assertions.assertNotNull( bi, "exists");
     }
 
     @BeforeEach
@@ -30,6 +29,6 @@ public class DrawSquaresTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DrawSquaresTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DrawSquaresTest.class);
 
 }

@@ -1,8 +1,10 @@
 package jmri.jmrix.rfid.protocol.seeedstudio;
 
-import jmri.jmrix.AbstractMRReply;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.Assert.assertEquals;
+import jmri.jmrix.AbstractMRReply;
 
 import org.junit.jupiter.api.*;
 
@@ -20,8 +22,8 @@ import org.junit.jupiter.api.*;
  */
 public class SeeedStudioRfidProtocolTest {
 
-    AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\u00027800652CC9F8\u0003");
-    AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("\u00027800652CC9C6\u0003");
+    private final AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\u00027800652CC9F8\u0003");
+    private final AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("\u00027800652CC9C6\u0003");
 
     /**
      * Test of getMaxSize method, of class SeeedStudioRfidProtocol.
@@ -55,7 +57,7 @@ public class SeeedStudioRfidProtocolTest {
     @Test
     public void testProvidesChecksum() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
-        assertEquals(true, instance.providesChecksum());
+        assertTrue( instance.providesChecksum());
     }
 
     /**
@@ -73,8 +75,8 @@ public class SeeedStudioRfidProtocolTest {
     @Test
     public void testIsValid() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
-        assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(false, instance.isValid(msgBadChkSumStandalone));
+        assertTrue( instance.isValid(msgStandalone));
+        assertFalse( instance.isValid(msgBadChkSumStandalone));
     }
 
     /**
@@ -83,8 +85,8 @@ public class SeeedStudioRfidProtocolTest {
     @Test
     public void testIsCheckSumValid() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
-        assertEquals(true, instance.isCheckSumValid(msgStandalone));
-        assertEquals(false, instance.isCheckSumValid(msgBadChkSumStandalone));
+        assertTrue( instance.isCheckSumValid(msgStandalone));
+        assertFalse( instance.isCheckSumValid(msgBadChkSumStandalone));
     }
 
     /**
@@ -93,7 +95,7 @@ public class SeeedStudioRfidProtocolTest {
     @Test
     public void testEndOfMessage() {
         SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
-        assertEquals(true, instance.endOfMessage(msgStandalone));
+        assertTrue( instance.endOfMessage(msgStandalone));
     }
 
     /**
@@ -116,11 +118,7 @@ public class SeeedStudioRfidProtocolTest {
         assertEquals(expResult, instance.toMonitorString(msgStandalone));
     }
 
-    class AbstractMRReplyImpl extends AbstractMRReply {
-
-        AbstractMRReplyImpl() {
-            super();
-        }
+    private static class AbstractMRReplyImpl extends AbstractMRReply {
 
         AbstractMRReplyImpl(String s) {
             super(s);
@@ -134,12 +132,12 @@ public class SeeedStudioRfidProtocolTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

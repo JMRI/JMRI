@@ -37,7 +37,7 @@ public class EasyDccMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
         f.message(m);
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JUnitUtil.waitFor(()-> { return f.getTextArea().getText().length()>0; },"No Text in getFrameText");
         Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getTextArea().getText().length());
         Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getTextArea().getText());
@@ -62,7 +62,7 @@ public class EasyDccMonFrameTest extends jmri.util.JmriJFrameTestBase {
         EasyDccMonFrame f = (EasyDccMonFrame)frame;
         f.reply(m);
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         JUnitUtil.waitFor(()-> { return f.getTextArea().getText().length()>0; },"No Text in getFrameText");
         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getTextArea().getText().length());
         Assert.assertEquals("display", "rep: \"Co:\"\n", f.getTextArea().getText());
@@ -105,6 +105,6 @@ public class EasyDccMonFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccMonFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EasyDccMonFrameTest.class);
 
 }

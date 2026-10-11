@@ -5,9 +5,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Abstract class providing the basic logic of the Sensor interface.
  *
@@ -15,7 +12,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor {
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
@@ -57,7 +53,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         }
         long oldValue = sensorDebounceGoingActive;
         sensorDebounceGoingActive = time;
-        firePropertyChange("ActiveTimer", oldValue, sensorDebounceGoingActive);
+        firePropertyChange(PROPERTY_ACTIVE_TIMER, oldValue, sensorDebounceGoingActive);
     }
 
     /**
@@ -78,7 +74,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         }
         long oldValue = sensorDebounceGoingInActive;
         sensorDebounceGoingInActive = time;
-        firePropertyChange("InActiveTimer", oldValue, sensorDebounceGoingInActive);
+        firePropertyChange(PROPERTY_INACTIVE_TIMER, oldValue, sensorDebounceGoingInActive);
     }
 
     /**
@@ -96,10 +92,10 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         }
         useDefaultTimerSettings = boo;
         if (useDefaultTimerSettings) {
-            sensorDebounceGoingActive = jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingActive();
-            sensorDebounceGoingInActive = jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive();
+            sensorDebounceGoingActive = InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingActive();
+            sensorDebounceGoingInActive = InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive();
         }
-        firePropertyChange("GlobalTimer", !boo, boo);
+        firePropertyChange(PROPERTY_GLOBAL_TIMER, !boo, boo);
     }
 
     @Override
@@ -127,7 +123,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 _knownState = _rawState;
 
                 javax.swing.SwingUtilities.invokeAndWait(
-                        () -> firePropertyChange("KnownState", lastKnownState, _knownState)
+                        () -> firePropertyChange(PROPERTY_KNOWN_STATE, lastKnownState, _knownState)
                 );
             } catch (InterruptedException ex) {
                 restartcount++;
@@ -171,6 +167,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      *
      * @param newState the Sensor state command value passed
      * @return true if a Sensor.ACTIVE was requested and Sensor is not set to _inverted
+     * @throws IllegalArgumentException when needed
      */
     protected boolean stateChangeCheck(int newState) throws IllegalArgumentException {
         // sort out states
@@ -188,6 +185,8 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
             return(getInverted());
         }
     }
+
+    private static final String PROPERTY_RAW_STATE = "RawState";
 
     /**
      * Set our internal state information, and notify bean listeners.
@@ -208,7 +207,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
                     log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
                 }
-                firePropertyChange("RawState", oldRawState, s);
+                firePropertyChange(PROPERTY_RAW_STATE, oldRawState, s);
                 sensorDebounce();
                 return;
             } else {
@@ -223,7 +222,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
-            firePropertyChange("KnownState", oldState, _knownState);
+            firePropertyChange(PROPERTY_KNOWN_STATE, oldState, _knownState);
         }
     }
 
@@ -264,7 +263,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         boolean oldInverted = _inverted;
         _inverted = inverted;
         if (oldInverted != _inverted) {
-            firePropertyChange("inverted", oldInverted, _inverted);
+            firePropertyChange(PROPERTY_SENSOR_INVERTED, oldInverted, _inverted);
             int state = _knownState;
             if (state == ACTIVE) {
                 setOwnState(INACTIVE);
@@ -347,5 +346,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
             thr.interrupt();
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSensor.class);
 
 }

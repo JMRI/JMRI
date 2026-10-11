@@ -3,17 +3,13 @@ package jmri.server.json.light;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.implementation.AbstractLight;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
@@ -22,7 +18,10 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import jmri.implementation.AbstractLight;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -97,13 +96,12 @@ public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<L
         validate(result);
         assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set invalid state
-        message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // Invalid value
-        try {
-            service.doPost(JsonLight.LIGHT, "IL1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals(400, ex.getCode());
-        }
+        JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // Invalid value
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonLight.LIGHT, "IL1", messageEx,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown");
+        assertEquals(400, ex.getCode());
         assertEquals(Light.ON, light1.getState());
     }
 

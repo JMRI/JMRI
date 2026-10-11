@@ -52,6 +52,6 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assertions.assertNotNull( l.getByUserName("my name"));
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TamsTurnoutManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TamsTurnoutManagerTest.class);
 
 }

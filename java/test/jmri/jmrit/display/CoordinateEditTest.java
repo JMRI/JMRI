@@ -1,10 +1,11 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,29 +13,26 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfHeadless
 public class CoordinateEditTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void initCheck() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor ef = new EditorScaffold();
         SensorIcon i = new SensorIcon(ef);
         // this test (currently) makes sure there are no exceptions
         // thrown when initComponents is called.
-        try {
-           ((CoordinateEdit)frame).init("foo",i,false);
-        } catch( Exception e) {
-            Assert.fail("Exception " + e + " Thrown during init call ");
-        }
+        assertDoesNotThrow( () ->
+            ((CoordinateEdit)frame).init("foo",i,false));
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
+        JUnitUtil.dispose(ef);
     }
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new CoordinateEdit();
-        }
+        frame = new CoordinateEdit();
     }
 
     @AfterEach
@@ -43,6 +41,5 @@ public class CoordinateEditTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }
-
 
 }

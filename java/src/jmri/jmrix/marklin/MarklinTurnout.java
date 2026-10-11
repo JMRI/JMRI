@@ -2,8 +2,6 @@ package jmri.jmrix.marklin;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Turnout via Marklin communications.
@@ -17,10 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  *
  */
-public class MarklinTurnout extends AbstractTurnout
-        implements MarklinListener {
-
-    String prefix;
+public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
 
     /**
      * Marklin turnouts use the NMRA number (0-2040) as their numerical
@@ -33,12 +28,11 @@ public class MarklinTurnout extends AbstractTurnout
     public MarklinTurnout(int number, String prefix, MarklinTrafficController etc) {
         super(prefix + "T" + number);
         _number = number;
-        this.prefix = prefix;
         tc = etc;
-        tc.addMarklinListener(this);
+        tc.addMarklinListener(MarklinTurnout.this);
     }
 
-    MarklinTrafficController tc;
+    private final MarklinTrafficController tc;
 
     /**
      * {@inheritDoc}
@@ -58,7 +52,6 @@ public class MarklinTurnout extends AbstractTurnout
             if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN {}", newState);
-                return;
             } else {
                 // send a CLOSED command
                 sendMessage(!getInverted());
@@ -70,7 +63,7 @@ public class MarklinTurnout extends AbstractTurnout
     }
 
     // data members
-    int _number;   // turnout number
+    private final int _number;   // turnout number
 
     /**
      * Set the turnout known state to reflect what's been observed from the
@@ -118,12 +111,12 @@ public class MarklinTurnout extends AbstractTurnout
         return true;
     }
 
-    final static int PROTOCOL_UNKNOWN = MarklinConstants.PROTOCOL_UNKNOWN;
-    final static int DCC = MarklinConstants.PROTOCOL_DCC;
-    final static int MM2 = MarklinConstants.PROTOCOL_MM2;
-    final static int SFX = MarklinConstants.PROTOCOL_SX;
+    static final int PROTOCOL_UNKNOWN = MarklinConstants.PROTOCOL_UNKNOWN;
+    static final int DCC = MarklinConstants.PROTOCOL_DCC;
+    static final int MM2 = MarklinConstants.PROTOCOL_MM2;
+    static final int SFX = MarklinConstants.PROTOCOL_SX;
 
-    int protocol = PROTOCOL_UNKNOWN;
+    private int protocol = PROTOCOL_UNKNOWN;
 
     /**
      * Tell the layout to go to new state.
@@ -135,7 +128,7 @@ public class MarklinTurnout extends AbstractTurnout
         tc.sendMarklinMessage(m, this);
 
         jmri.util.TimerUtil.schedule(new java.util.TimerTask() {
-            boolean state = newstate;
+            private final boolean state = newstate;
 
             @Override
             public void run() {
@@ -160,7 +153,8 @@ public class MarklinTurnout extends AbstractTurnout
     // to listen for status changes from Marklin system
     @Override
     public void reply(MarklinReply m) {
-        if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.ACCCOMMANDSTART && m.getCommand() <= MarklinConstants.ACCCOMMANDEND) {
+        if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.ACCCOMMANDSTART
+            && m.getCommand() <= MarklinConstants.ACCCOMMANDEND) {
             if (protocol == PROTOCOL_UNKNOWN) {
                 if (m.getAddress() == _number + MarklinConstants.MM1ACCSTART - 1) {
                     protocol = MM2;
@@ -198,6 +192,12 @@ public class MarklinTurnout extends AbstractTurnout
 
     static final int METERINTERVAL = 100;  // msec wait before closed
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class);
+    @Override
+    public void dispose() {
+        tc.removeMarklinListener(this);
+        super.dispose();
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinTurnout.class);
 
 }

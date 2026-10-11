@@ -274,7 +274,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * Validate the current limit value entered by the user, depending on the
      * SPROG version.
      */
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // validateCurrent() is called from synchronised code
     public void validateCurrent() {
         String currentRange = "200 - 996";
@@ -324,7 +323,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // Further messages will be sent from state machine
     }
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isCurrentLimitPossible() {
         return sv.hasCurrentLimit();
@@ -336,13 +334,11 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         return sv.hasBlueLine();
     }
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
         return sv.hasFirmwareLock();
     }
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isZTCModePossible() {
         return sv.hasZTCMode();

@@ -1,8 +1,13 @@
 package jmri.jmrix.lenz;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -30,11 +35,11 @@ public class XNetTrafficRouterTest {
             protected void portWarn(Exception e) {
             }
         };
-        Assert.assertNotNull("exists", router);
+        assertNotNull( router, "exists");
 
         // connect
         router.connect(upstream);
-        Assert.assertTrue("connected", router.status());
+        assertTrue( router.status(), "connected");
 
         // send a message
         XNetMessage m = new XNetMessage(3);
@@ -44,11 +49,11 @@ public class XNetTrafficRouterTest {
         router.sendXNetMessage(m, null);
 
         // check receipt
-        Assert.assertEquals("one message sent", 1, upstream.outbound.size());
-        Assert.assertSame(upstream.outbound.elementAt(0), m);
+        assertEquals( 1, upstream.outbound.size(), "one message sent");
+        assertSame(upstream.outbound.elementAt(0), m);
     }
 
-    static int count = 0;
+    private static int count = 0;
 
     static void resetCount() {
         count = 0;
@@ -74,7 +79,7 @@ public class XNetTrafficRouterTest {
             protected void portWarn(Exception e) {
             }
         };
-        Assert.assertNotNull("exists", router);
+        assertNotNull( router, "exists");
 
         resetCount();
         // register a listener
@@ -101,7 +106,7 @@ public class XNetTrafficRouterTest {
         router.forwardReply(l, m);
 
         // check receipt
-        Assert.assertEquals("one message sent", 1, count);
+        assertEquals( 1, count, "one message sent");
     }
 
     @Test
@@ -123,15 +128,15 @@ public class XNetTrafficRouterTest {
 
         // create object
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation());
-        Assert.assertNotNull("exists", router);
+        assertNotNull( router, "exists");
 
         // connect
         router.connect(upstream);
-        Assert.assertTrue("connected", router.status());
+        assertTrue( router.status(), "connected");
 
         // disconnect
         router.disconnectPort(upstream);
-        Assert.assertFalse(router.status());
+        assertFalse(router.status());
     }
 
     @BeforeEach

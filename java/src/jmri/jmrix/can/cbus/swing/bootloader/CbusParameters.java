@@ -185,6 +185,6 @@ public class CbusParameters {
         valid = s;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusParameters.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusParameters.class);
     
 }

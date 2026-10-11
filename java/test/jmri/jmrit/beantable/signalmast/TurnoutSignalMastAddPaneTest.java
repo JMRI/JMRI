@@ -1,11 +1,14 @@
 package jmri.jmrit.beantable.signalmast;
 
-import jmri.InstanceManager;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * @author Bob Jacobsen Copyright 2018
@@ -22,16 +25,19 @@ public class TurnoutSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
         MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
         TurnoutSignalMastAddPane vp = new TurnoutSignalMastAddPane();
-        
-        Assert.assertTrue(vp.canHandleMast(s1));
-        Assert.assertFalse(vp.canHandleMast(m1));
-        
+
+        assertTrue(vp.canHandleMast(s1));
+        assertFalse(vp.canHandleMast(m1));
+
         vp.setMast(null);
-        
-        vp.setAspectNames(s1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
+
+        SignalSystem basicSys = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
+        assertNotNull(basicSys);
+
+        vp.setAspectNames(s1.getAppearanceMap(), basicSys);
         vp.setMast(s1);
-        
-        vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
+
+        vp.setAspectNames(m1.getAppearanceMap(), basicSys);
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
     }

@@ -3,7 +3,6 @@ package jmri.configurexml.swing;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class StoreAndCompareDialogTest {
     @Test
     public void testCTor() {
         StoreAndCompareDialog t = new StoreAndCompareDialog();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class StoreAndCompareDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StoreAndCompareDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StoreAndCompareDialogTest.class);
 
 }

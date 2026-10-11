@@ -33,9 +33,13 @@
       <h2 id="connecting">Connecting</h2>
       JMRI provides support for general JMRI <a href="../../tools/Sensors.shtml">Sensors</a> and
       <a href="../../tools/Turnouts.shtml">Turnouts</a> in terms of OpenLCB "events".
+
+      <p>OpenLCB connection options are <a href="Connections.shtml">on a separate page</a>.</p>
+
       <h3>Settings</h3>
 
-      <p>The <a href="../../../html/doc/Technical/Names.shtml">system letter</a> for OpenLCB
+      <p>The default <a href="../../../html/doc/Technical/Names.shtml">system letter</a>
+      for OpenLCB
       connections is "M". OpenLCB event and object names are introduced below, with additional
       details and formats on a <a href="Names.shtml">separate page</a>.</p>
 
@@ -47,10 +51,15 @@
       <p>Another format for Event ID's is a continuous hexadecimal string, such as
       "<code>x0102030405060709</code>".</p>
 
+      <p>You can also assign your own names to EventIDs and use those to create 
+      Turnouts, Sensors, Lights, Signal Masts and StringIOs.  See the 
+      <a href="Names.shtml">page on OpenLCB names</a>
+      for more information on this.</p>
+      
       <p>These System Names can get very long, in which case the "User Names" become much more
       useful.</p>
 
-      <h4>Sensors</h4>
+      <h2 id="sensors">Sensors</h2>
 
       <p>OpenLCB messages coming into JMRI applications can be accessed via JMRI Sensor objects.
       The Sensor's <a href="Names.shtml">System Name</a> determines which OpenLCB Events it
@@ -68,6 +77,11 @@
       provide just one, it will set the Sensor ACTIVE, and it will automatically reset itself to
       INACTIVE shortly after. This can be used for events that indicate momentary things on the
       layout like "it's noon".</p>
+
+      <p>As a special case, layout sensors connected via a bridge to an OpenLCB network
+      can be addressed as e.g. MSS123. Note the S in the 3rd position for "Sensor addressing". JMRI will
+      then automatically generate the correct well-known events to represent active/on
+      and inactive/off for the sensor.
 
       <p>When "Show System-specific columns" is checked in the table, there are two additional
       columns shown that are specific to OpenLCB Sensors:
@@ -109,7 +123,7 @@
                                   "Always Listen" needs to be unchecked.
       </dl>
 
-      <h4>Turnouts</h4>
+      <h2 id="turnouts"">Turnouts</h2>
 
       <p>The scheme for Turnouts is similar to Sensors above, except JMRI is producing the OpenLCB
       events instead of receiving them, and the type letter is "T" instead of "S", e.g.
@@ -126,7 +140,7 @@
       then automatically generate the correct well-known events to throw/close the corresponding
       DCC turnout.
 
-      <h4>Lights</h4>
+      <h2 id="lights">Lights</h2>
 
       <p>The scheme for Lights is similar to Sensors above, except JMRI is producing the OpenLCB
       events instead of receiving them, and the type letter is "L" instead of "S", e.g.
@@ -139,22 +153,44 @@
       checkboxes on Sensors.
 
 
-      <h4>Signals</h4>
+      <h2 id="signals">Signals</h2>
 
       <p>OpenLCB connections can use many of the usual forms of SignalHeads and SignalMasts that
       are based on Turnouts. In addition, there's an <a href=
       "OlcbSignalMast.shtml">OpenLCB-specific form of SignalMast</a> that uses Events to change
       from one aspect to another.</p>
 
-      <h3>Wiring</h3>
-
-      <p>OpenLCB connection options are <a href="Connections.shtml">on a separate page</a>.</p>
+      <h2 id="stringios">StringIOs</h2>
+      <span class="since">since 5.11.2</span>
+      A 
+      <a href="../../tools/StringIO.shtml ">StringIO</a>
+      is a general-purpose tool for sending and receiving strings of characters to 
+      the layout hardware.  Different systems use them in different ways.
+      <p>
+      OpenLCB connections can use StringIOs to create shared variables across
+      multiple JMRI instances, and perhaps someday other OpenLCB hardware that supports 
+      string input and output.  
+      To do this, you create the same StringIO within each JMRI
+      instance, using the same Event ID.  Once you've done that, updating the 
+      string value in one instance will update the value in all of the others
+      in the different JMRI instances connected to the same OpenLCB network.
+      You can then configure
+      <a href="../../tools/logixng/LogixNG.shtml">LogixNG</a>
+      or scripts to communicate using that.
 
       <h2 id="tools">JMRI OpenLCB Tools</h2>
+
+      
+      The <a href="../../../package/apps/gui3/lccpro/LccPro.shtml">LccPro</a>
+      application is optimized for configuring and controlling
+      an LCC network.  You can also use PanelPro to do this
+      through its LCC or OpenLCB menu.
+
       <img src="images/OpenLCBmenu.png" width="172" height="126" class="floatRight" alt="Menu">
-      <p>When JMRI is connected to a layout via this system, an <strong>OpenLCB</strong>
-      or <strong>LCC</strong> menu is
-      shown:</p>
+      
+      <p>The  <strong>OpenLCB</strong>
+      or <strong>LCC</strong> menu contains:
+      </p>
 
       <ul>
         <li>Traffic Monitor<br>

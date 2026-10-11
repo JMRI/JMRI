@@ -123,7 +123,11 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
                 return;
             case LnConstants.OPC_LISSY_UPDATE:
                 if (l.getElement(1) == 0x08) {
-                    addr =  (l.getElement(4) & 0x7F);
+                    addr = (l.getElement(4) & 0x7F);
+                    break;
+                }
+                else if (l.getElement(2) == 0x41) { // GCA51 RFID-5/-7 reports
+                    addr = (l.getElement(3) & 0x1F) * 128 + l.getElement(4); // sensor address
                     break;
                 }
                 return;
@@ -135,6 +139,6 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         r.messageFromManager(l); // make sure it got the message
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LnReporterManager.class);
 
 }

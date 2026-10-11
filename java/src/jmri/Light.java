@@ -100,33 +100,38 @@ public interface Light extends DigitalIO {
      * request to transition.
      */
     static final int TRANSITIONING = 0x010;
-    
+
+    /**
+     * Constant for the Target Intensity property.
+     */
+    String PROPERTY_TARGET_INTENSITY = "TargetIntensity";
+
     /** {@inheritDoc} */
     @Override
     default boolean isConsistentState() {
         return (getState() == DigitalIO.ON)
                 || (getState() == DigitalIO.OFF);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
     default void setCommandedState(int s) {
         setState(s);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     default int getCommandedState() {
         return getState();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     default int getKnownState() {
         return getState();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread

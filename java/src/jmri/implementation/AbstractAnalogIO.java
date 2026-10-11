@@ -60,7 +60,7 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
      * 
      * @param newValue the new value
      */
-    protected void setValue(double newValue) {
+    public void setValue(double newValue) {
         Object _old = this._knownValue;
         this._knownValue = newValue;
         firePropertyChange(PROPERTY_STATE, _old, _knownValue); //NOI18N

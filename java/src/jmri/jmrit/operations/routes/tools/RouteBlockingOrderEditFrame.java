@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.swing.JTablePersistenceManager;
 
 /**
- * Frame for user edit of q route's blocking order.
+ * Frame for user edit of a route's blocking order.
  *
  * @author Dan Boudreau Copyright (C) 2021
  */
@@ -182,5 +182,5 @@ public class RouteBlockingOrderEditFrame extends OperationsFrame implements java
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteBlockingOrderEditFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteBlockingOrderEditFrame.class);
 }

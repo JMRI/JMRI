@@ -112,6 +112,18 @@ public abstract class AbstractTableTabAction<E extends NamedBean> extends Abstra
     }
 
     @Override
+    @SuppressWarnings("unchecked") // have to run-time cast to BeanTableDataModel<E> after check of BeanTableDataModel<?>
+    public BeanTableDataModel<E> getDataModel() {
+        var model = tabbedTableArray.get(dataTabs.getSelectedIndex()).getDataTable().getModel();
+        if (model instanceof BeanTableDataModel<?>) {
+            return (BeanTableDataModel<E>)model;
+        } else {
+            log.warn("Did not find suitable model type, result is null");
+            return null;
+        }
+    }
+
+    @Override
     public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat) {
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getDataTable().print(mode, headerFormat, footerFormat);

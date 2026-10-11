@@ -3,7 +3,8 @@ package jmri.jmrit.etcs.dmi.swing;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.beans.PropertyChangeListener;
+import java.time.format.DateTimeFormatter;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.etcs.ResourceUtil;
+import jmri.util.TimerUtil;
 
 /**
  * Class to demonstrate features of ERTMS DMI Panel G,
@@ -20,13 +22,19 @@ import jmri.jmrit.etcs.ResourceUtil;
 public class DmiPanelG extends JPanel {
 
     private final DmiPanel main;
-    private final JLabel timeLabel;
+    private final JLabel timeLabel = new JLabel();
     private final JLabel g2g3g4LabelTop;
     private final JLabel g2g3g4LabelBottom;
 
-    private final Timebase clock;
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private final Timebase clock = InstanceManager.getDefault(Timebase.class);
 
-    private final transient java.beans.PropertyChangeListener clockListener;
+    private final transient PropertyChangeListener clockTickListener = e -> updateClock();
+    private transient java.util.TimerTask secondTimer;
+    private final transient PropertyChangeListener clockPauseFlashListener =
+        e -> timeLabel.setVisible(!timeLabel.isVisible());
+    private final transient PropertyChangeListener clockRunStateChangedListener = e -> clockRunStateChanged();
+    private boolean disposed = false;
 
     private final JButton g1Button;
     private final JButton g2Button;
@@ -56,7 +64,6 @@ public class DmiPanelG extends JPanel {
         g12PositionButton.setFocusable(false);
 
         // position G13
-        timeLabel = new JLabel();
         timeLabel.setBounds(183, 100, 63, 50);
         timeLabel.setForeground(DmiPanel.GREY);
         timeLabel.setBackground(DmiPanel.BACKGROUND_COLOUR);
@@ -65,10 +72,13 @@ public class DmiPanelG extends JPanel {
         timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(timeLabel);
 
-        clock = InstanceManager.getDefault(jmri.Timebase.class);
-        clockListener = (java.beans.PropertyChangeEvent e) -> update();
-        clock.addMinuteChangeListener(clockListener);
-        DmiPanelG.this.update();
+        clock.addMinuteChangeListener(clockTickListener);
+        clock.addPropertyChangeListener(Timebase.PROPERTY_CHANGE_RATE, clockTickListener);
+        clock.addPropertyChangeListener(Timebase.PROPERTY_CHANGE_RUN, clockRunStateChangedListener);
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            clockRunStateChanged();
+            updateClock();
+        });
 
         g2g3g4LabelTop = new JLabel();
         g2g3g4LabelTop.setBounds(49,4,147,25);
@@ -285,19 +295,51 @@ public class DmiPanelG extends JPanel {
         main.firePropertyChange(e.getActionCommand(), false, true);
     }
 
-    // todo - display seconds, add routine to TimeBase ??
-    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
-    public void update() {
-        Date now = clock.getTime();
-        int hours = now.getHours();
-        int minutes = now.getMinutes();
+    private void clockRunStateChanged(){
+        timeLabel.setVisible(clock.getRun());
+        if ( clock.getRun() ) {
+            main.removeFlashListener(clockPauseFlashListener, false);
+        } else {
+            main.addFlashListener(clockPauseFlashListener, false);
+        }
+    }
 
-        String time = ( hours > 9 ? "" : "0" ) + hours + ":" + ( minutes > 9 ? "" : "0" ) + minutes;
-        timeLabel.setText(time);
+    private void updateClock() {
+        restartSecondTimer();
+        updateLabel();
+    }
+
+    private void updateLabel() {
+        java.time.LocalTime now = clock.getTime().toInstant()
+            .atZone(java.time.ZoneId.systemDefault()).toLocalTime();
+        timeLabel.setText(now.format(TIME_FORMAT));
+    }
+
+    private void restartSecondTimer(){
+        if ( secondTimer != null ) {
+            secondTimer.cancel();
+            secondTimer = null;
+        }
+
+        long period = (long) (1000 / clock.userGetRate());
+        secondTimer = new java.util.TimerTask(){
+            @Override
+            public void run() {
+                if ( !disposed ) {
+                    updateLabel();
+                    TimerUtil.scheduleOnGUIThread(secondTimer, period);
+                }
+            }
+        };
+        TimerUtil.scheduleOnGUIThread(secondTimer, period);
     }
 
     public void dispose(){
-        clock.removeMinuteChangeListener(clockListener);
+        clock.removeMinuteChangeListener(clockTickListener);
+        clock.removePropertyChangeListener(Timebase.PROPERTY_CHANGE_RUN, clockRunStateChangedListener);
+        clock.removePropertyChangeListener(Timebase.PROPERTY_CHANGE_RATE, clockTickListener);
+        main.removeFlashListener(clockPauseFlashListener, false);
+        disposed = true;
     }
 
 }

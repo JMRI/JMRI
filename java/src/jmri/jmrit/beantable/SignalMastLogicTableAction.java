@@ -75,19 +75,17 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         menuBar.add(pathMenu, pos + offset);
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemAutoGen"));
         pathMenu.add(item);
-        item.addActionListener((ActionEvent e) -> {
-            autoCreatePairs(finalF);
-        });
+        item.addActionListener( e -> autoCreatePairs(finalF));
         item = new JMenuItem(Bundle.getMessage("MenuItemAutoGenSections"));
         pathMenu.add(item);
-        item.addActionListener((ActionEvent e) -> {
+        item.addActionListener( e -> {
             ((DefaultSignalMastLogicManager) InstanceManager.getDefault(SignalMastLogicManager.class)).generateSection();
             InstanceManager.getDefault(SectionManager.class).generateBlockSections();
             JmriJOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
         });
         JMenuItem setSMLDirSensors = new JMenuItem(Bundle.getMessage("MenuItemAddDirectionSensors"));
         pathMenu.add(setSMLDirSensors);
-        setSMLDirSensors.addActionListener((ActionEvent e) -> {
+        setSMLDirSensors.addActionListener( e -> {
             int n = InstanceManager.getDefault(SignalMastLogicManager.class).setupSignalMastsDirectionSensors();
             if (n > 0) {
                 JmriJOptionPane.showMessageDialog(finalF, java.text.MessageFormat.format(
@@ -119,8 +117,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         sigLog.actionPerformed(e);
     }
 
-    JmriJFrame signalMastLogicFrame = null;
-    JLabel sourceLabel = new JLabel();
+    private JmriJFrame signalMastLogicFrame = null;
+    private JLabel sourceLabel = new JLabel();
 
     void autoCreatePairs(JmriJFrame f) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
@@ -196,16 +194,16 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         }
     }
 
-    protected transient PropertyChangeListener propertyGenerateListener = new PropertyChangeListener() {
+    private final PropertyChangeListener propertyGenerateListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("autoGenerateComplete")) {// NOI18N
+            if (SignalMastLogicManager.PROPERTY_AUTO_GENERATE_COMPLETE.equals(evt.getPropertyName())) {
                 if (signalMastLogicFrame != null) {
                     signalMastLogicFrame.setVisible(false);
                 }
                 InstanceManager.getDefault(SignalMastLogicManager.class).removePropertyChangeListener(this);
                 JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastPairGenerationComplete"));
-            } else if (evt.getPropertyName().equals("autoGenerateUpdate")) {// NOI18N
+            } else if (SignalMastLogicManager.PROPERTY_AUTO_GENERATE_UPDATE.equals(evt.getPropertyName())) {
                 sourceLabel.setText((String) evt.getNewValue());
                 signalMastLogicFrame.pack();
                 signalMastLogicFrame.repaint();
@@ -220,5 +218,5 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         return SignalMastLogicTableAction.class.getName();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastLogicTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastLogicTableAction.class);
 }

@@ -19,5 +19,5 @@ public class LayoutDoubleSlipViewXml extends LayoutSlipViewXml {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml");
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlipViewXml.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlipViewXml.class);
 }

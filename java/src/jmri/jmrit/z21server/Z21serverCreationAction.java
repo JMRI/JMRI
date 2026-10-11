@@ -36,6 +36,7 @@ public class Z21serverCreationAction extends JmriAbstractAction {
         if (InstanceManager.getNullableDefault(ThrottleManager.class) == null) {
             super.setEnabled(false);
         }
+        //FacelessServer.getInstance().start(); //Mey - test
     }
 
     /**

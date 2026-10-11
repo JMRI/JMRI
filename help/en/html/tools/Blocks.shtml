@@ -32,11 +32,10 @@
 
       <p>Blocks may be set up manually from the Block Table, using a script or automatically in a
       Layout Editor Panel. When a Block is defined on a Layout Editor Panel, a new Block is created
-      if one does not already exist. In Layout Editor, Blocks are identified by their User Name, so
-      if a Block shown in the Block Table is used in a Layout Editor Panel, its User Name should
-      not be changed.<br>
-      If you want to change the User Name of a Block used in a Layout Editor Panel, make the change
-      in the Layout Editor, not in the Block Table.</p>
+      if one does not already exist. In Layout Editor, Blocks are identified by their User Names.
+      Before renaming or deleting a block user name, a check is made to see if the user name is
+      used by a Layout Editor panel.  If so, a warning is displayed.  For renames, if <strong>Yes</strong>
+      is selected, the panel references will also be renamed.</p>
 
       <p>To complete the definition of a Block, Paths and Bean Settings must be attached to each
       Block. Paths describe entry points to the Block. Each Block has one or more Paths associated
@@ -44,8 +43,8 @@
       that information. Paths and Bean Settings are set up automatically for Blocks defined in a
       Layout Editor Panel. They can also be set up in a script. There is currently no way to
       manually enter Paths or Bean Settings. Paths and Bean Settings are not shown in the Block
-      Table, and are described here only for completeness.<br>
-      Paths may however be deleted using the <strong>Paths</strong> menu.</p>
+      Table, and are described here only for completeness. Paths may however be deleted using the
+      <strong><a href="../../package/jmri/jmrit/beantable/BlockTable.shtml#block_path_menu">Paths</a></strong> menu.</p>
 
       <h3>The Block Table</h3>
 
@@ -65,9 +64,9 @@
         Blocks.
         </li>
 
-        <li>The <strong>Paths</strong> menu contains a <strong>Delete Paths...</strong> item.</li>
-
-        <li>The <strong>Speeds</strong> menu lets you set system wide Defaults...</li>
+        <li><a href="../../package/jmri/jmrit/beantable/BlockTable.shtml#block_table_menus">Block
+        Table Menus</a>.
+        </li>
       </ul>
 
       <h3 id="addBlock">Saving Blocks to disk</h3>

@@ -1,7 +1,5 @@
 package jmri.util.exceptionhandler;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.swing.ExceptionContext;
@@ -45,7 +43,6 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
         }
     }
 
-    @SuppressFBWarnings(value="DM_EXIT", justification="Errors should terminate the application")
     protected void systemExit(){
         System.exit(126);
     }

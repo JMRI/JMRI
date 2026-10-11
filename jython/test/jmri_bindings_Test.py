@@ -1,6 +1,6 @@
 # Test for jmri_bindings_test.py
 
-# check existence of standard values
+# check existence of standard values - will give error if not present
 sensors
 turnouts
 lights
@@ -10,6 +10,7 @@ routes
 blocks
 reporters
 memories
+stringios
 powermanager
 addressedProgrammers
 globalProgrammers

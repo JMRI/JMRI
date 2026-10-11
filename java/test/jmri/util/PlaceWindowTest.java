@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class PlaceWindowTest {
 
-    private final static int TOLERANCE = 5;
+    private static final int TOLERANCE = 5;
 
     @Test
     public void testCTor() {
@@ -44,8 +44,8 @@ public class PlaceWindowTest {
         assertThat(pt.x).isLessThanOrEqualTo(100);
         assertThat(pt.y).isBetween(300- TOLERANCE,300+ TOLERANCE);
 
-        w1.dispose();
-        w2.dispose();
+        JUnitUtil.dispose(w1);
+        JUnitUtil.dispose(w2);
     }
 
     private JFrame createFrameWithDimentionsAtPoint(int width, int height, int x, int y) {
@@ -71,6 +71,9 @@ public class PlaceWindowTest {
                 .withFailMessage("pt.x at screen center")
                 .isLessThanOrEqualTo(TOLERANCE);
         assertThat(pt.y).withFailMessage("pt.y at screen top").isEqualTo(0);
+
+        JUnitUtil.dispose(w1);
+        JUnitUtil.dispose(w2);
     }
 
     @BeforeEach

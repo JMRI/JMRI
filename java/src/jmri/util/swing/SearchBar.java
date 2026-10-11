@@ -153,5 +153,5 @@ public class SearchBar extends javax.swing.JPanel {
         });
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SearchBar.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SearchBar.class);
 }

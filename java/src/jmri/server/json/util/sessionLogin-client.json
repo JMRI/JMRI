@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "jmri-json-sessionLogin-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"sessionLogin\"",
+    "properties": {
+        "username": {
+            "type": ["string"],
+            "description": "user name to create a session for"
+        },
+        "password": {
+            "type": ["string"],
+            "description": "Password - may be empty string but not omitted"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["username", "password"]
+}

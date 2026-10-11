@@ -2,7 +2,6 @@ package jmri.util.xml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,7 +12,7 @@ public class XMLUtilTest {
 
     @Test
     public void createXMLReader() throws org.xml.sax.SAXException {
-        Assert.assertNotNull("exists",XMLUtil.createXMLReader());
+        Assertions.assertNotNull( XMLUtil.createXMLReader(), "exists");
     }
 
     @BeforeEach
@@ -26,6 +25,6 @@ public class XMLUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XMLUtilTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(XMLUtilTest.class);
 
 }

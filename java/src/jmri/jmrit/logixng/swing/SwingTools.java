@@ -51,7 +51,7 @@ public final class SwingTools {
      * @param object The object to get a SwingConfiguratorInterface of
      * @return a SwingConfiguratorInterface object
      */
-    static public SwingConfiguratorInterface getSwingConfiguratorForObject(Object object) {
+    public static SwingConfiguratorInterface getSwingConfiguratorForObject(Object object) {
         SwingConfiguratorInterface adapter = null;
         try {
             adapter = (SwingConfiguratorInterface) Class.forName(adapterNameForObject(object)).getDeclaredConstructor().newInstance();
@@ -72,7 +72,7 @@ public final class SwingTools {
      * @param clazz The class to get a SwingConfiguratorInterface of
      * @return a SwingConfiguratorInterface object
      */
-    static public SwingConfiguratorInterface getSwingConfiguratorForClass(Class<?> clazz) {
+    public static SwingConfiguratorInterface getSwingConfiguratorForClass(Class<?> clazz) {
         SwingConfiguratorInterface adapter = null;
         try {
             adapter = (SwingConfiguratorInterface) Class.forName(adapterNameForClass(clazz)).getDeclaredConstructor().newInstance();
@@ -89,6 +89,6 @@ public final class SwingTools {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingTools.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingTools.class);
 
 }

@@ -48,6 +48,16 @@ package jmri;
 public interface Signal extends NamedBean {
 
     /**
+     * Constant property for lit.
+     */
+    String PROPERTY_LIT = "Lit";
+
+    /**
+     * Constant property for held.
+     */
+    String PROPERTY_HELD = "Held";
+
+    /**
      * Determine whether this signal shows an aspect or appearance that allows
      * travel past it, e.g. it's "been cleared". This might be a yellow or green
      * appearance, or an Approach or Clear aspect.

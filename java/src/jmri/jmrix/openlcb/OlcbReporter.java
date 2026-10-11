@@ -1,21 +1,31 @@
 package jmri.jmrix.openlcb;
 
+import jmri.CollectingReporter;
+import jmri.DccLocoAddress;
+import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
+import jmri.Reporter;
 import jmri.implementation.AbstractIdTagReporter;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import org.openlcb.Connection;
 import org.openlcb.ConsumerRangeIdentifiedMessage;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
+import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.Message;
 import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.implementations.EventTable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -28,7 +38,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  * @author Balazs Racz Copyright (C) 2023
  * @since 5.3.5
  */
-public class OlcbReporter extends AbstractIdTagReporter {
+public final class OlcbReporter extends AbstractIdTagReporter implements CollectingReporter {
 
     /// How many bits does a reporter event range contain.
     private static final int REPORTER_BIT_COUNT = 16;
@@ -37,29 +47,48 @@ public class OlcbReporter extends AbstractIdTagReporter {
     /// Mask for the bits which are the actual report.
     private static final long REPORTER_EVENT_MASK = REPORTER_LSB - 1;
 
-    /// When this bit is set, the report is an exit report.
-    private static final long EXIT_BIT = (1L << 14);
-    /// When this bit is set, the orientation of the locomotive is reverse, when clear it is normal.
-    private static final long ORIENTATION_BIT = (1L << 15);
+    // the four cases for the MS bits in the report
+    private static final int REPORTER_UNOCCUPIED_EXIT = 0;
+    private static final int REPORTER_OCCUPIED_WEST_ENTRY = 0x1;
+    private static final int REPORTER_OCCUPIED_EAST_ENTRY = 0x2;
+    private static final int REPORTER_OCCUPIED_UNKNOWN_ENTRY = 0x3;
 
     /// Mask for the address bits of the reporter.
     private static final long ADDRESS_MASK = (1L << 14) - 1;
     /// The high bits of the address report for a DCC short address.
-    private static final int HIBITS_SHORTADDRESS = 0x28;
+    private static final int HIBITS_SHORTADDRESS = 0x38;
     /// The high bits of the address report for a DCC consist address.
-    private static final int HIBITS_CONSIST = 0x29;
+    private static final int HIBITS_CONSIST = 0x39;
 
     private OlcbAddress baseAddress;    // event ID for zero report
     private EventID baseEventID;
     private long baseEventNumber;
     private final OlcbInterface iface;
+    private final CanSystemConnectionMemo memo;
     private final Connection messageListener = new Receiver();
 
     EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
-    public OlcbReporter(String prefix, String address, OlcbInterface iface) {
+    private final List<IdTag> entryOrder = new ArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * OpenLCB provides explicit exit events and section-cleared messages.
+     */
+    @Override
+    public boolean hasExitReports() {
+        return true;
+    }
+    
+    public OlcbReporter(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "R" + address);
-        this.iface = iface;
+        this.memo = memo;
+        if (memo != null) { // greatly simplify testing
+            this.iface = memo.get(OlcbInterface.class);
+        } else {
+            this.iface = null;
+        }
         init(address);
     }
 
@@ -71,8 +100,8 @@ public class OlcbReporter extends AbstractIdTagReporter {
     private void init(String address) {
         iface.registerMessageListener(messageListener);
         // build local addresses
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(address, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
             log.error("Did not find usable system name: {}", address);
             return;
@@ -98,10 +127,15 @@ public class OlcbReporter extends AbstractIdTagReporter {
             baseEventTableEntryHolder.release();
             baseEventTableEntryHolder = null;
         }
-        baseEventTableEntryHolder = iface.getEventTable().addEvent(baseEventID, getEventName());
-        // Reports identified message.
-        Message m = new ConsumerRangeIdentifiedMessage(iface.getNodeId(), getEventRangeID());
-        iface.getOutputConnection().put(m, messageListener);
+        if (baseEventID != null && iface != null) {
+            baseEventTableEntryHolder = iface.getEventTable().addEvent(baseEventID, getEventName());
+            // Reports identified message.
+            Message m = new ConsumerRangeIdentifiedMessage(iface.getNodeId(), getEventRangeID());
+            iface.getOutputConnection().put(m, messageListener);
+            // Queries current state of the reporter.
+            m = new IdentifyProducersMessage(iface.getNodeId(), baseEventID);
+            iface.getOutputConnection().put(m, messageListener);
+        }
     }
 
     /**
@@ -158,6 +192,16 @@ public class OlcbReporter extends AbstractIdTagReporter {
     }
 
     /**
+     *  {@inheritDoc}
+     */
+    @Override
+    @CheckReturnValue
+    @SuppressWarnings("unchecked")
+    public Collection<Object> getCollection() {
+        return (Collection<Object>)(Collection<?>) Collections.unmodifiableCollection(entryOrder);
+    }
+    
+    /**
      * {@inheritDoc}
      *
      * Sorts by decoded EventID(s)
@@ -165,7 +209,7 @@ public class OlcbReporter extends AbstractIdTagReporter {
     @CheckReturnValue
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
-        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2);
+        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2, memo);
     }
 
     /**
@@ -194,29 +238,134 @@ public class OlcbReporter extends AbstractIdTagReporter {
      * @param isEntry true for entry, false for exit
      */
     private void handleReport(long reportBits, boolean isEntry) {
-        // The extra notify with null is necessary to clear past notifications even if we have a new report.
-        notify(null);
-        if (!isEntry || ((reportBits & EXIT_BIT) != 0)) {
-            return;
-        }
+        log.trace("handleReport {} with isEntry {}", this, isEntry);
+        
+        DccLocoAddress.Protocol protocol;
+        boolean isConsist;
         long addressBits = reportBits & ADDRESS_MASK;
         int address = 0;
         int hiBits = (int) ((addressBits >> 8) & 0x3f);
-        int direction = (int) (reportBits & ORIENTATION_BIT);
         if (addressBits < 0x2800) {
             address = (int) addressBits;
+            protocol = DccLocoAddress.Protocol.DCC_LONG;
+            isConsist = false;
         } else if (hiBits == HIBITS_SHORTADDRESS) {
             address = (int) (addressBits & 0xff);
+            protocol = DccLocoAddress.Protocol.DCC_SHORT;
+            isConsist = false;
         } else if (hiBits == HIBITS_CONSIST) {
             address = (int) (addressBits & 0x7f);
-        }
-        RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
-        if (direction != 0) {
-            tag.setOrientation(RailCom.ORIENTB);
+            protocol = DccLocoAddress.Protocol.DCC_SHORT;
+            isConsist = true;
         } else {
-            tag.setOrientation(RailCom.ORIENTA);
+            log.warn("Unexpected address field formatting, treating as DCC_LONG: {}", Long.toHexString(reportBits));
+            protocol = DccLocoAddress.Protocol.DCC_LONG;
+            isConsist = false;
         }
+        
+        RailCom.Orientation orientation;
+        
+        int orientationBits = (int)(reportBits >> 14) & 0x3;
+        
+        switch ( orientationBits ) {
+            case REPORTER_OCCUPIED_WEST_ENTRY:
+                orientation = RailCom.Orientation.WEST;
+                break;
+            case REPORTER_OCCUPIED_EAST_ENTRY:
+                orientation = RailCom.Orientation.EAST;
+                break;
+            case REPORTER_OCCUPIED_UNKNOWN_ENTRY:
+            case REPORTER_UNOCCUPIED_EXIT:
+            default:        // needed to keep static checker happy
+                orientation = RailCom.Orientation.UNKNOWN;
+                break;
+        }
+
+        // address 0x3800 is a special case:  Arrival means reporter is unoccupied, departure is ignored
+        if (addressBits == 0x3800) {
+            if (orientationBits == REPORTER_UNOCCUPIED_EXIT) {
+                return;
+            } else {
+                log.trace("{} clearing collection", this);
+                entryOrder.clear();
+                notify(null);
+                return; // having cleared the reporter earlier
+            }
+        }
+
+        RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
+
+        if (!isEntry || orientationBits == REPORTER_UNOCCUPIED_EXIT) {
+            log.trace("{} removes tag {}", this,  tag);
+            entryOrder.remove(tag);
+            if (getCurrentReport() == tag) {
+                updateCurrentReportAfterExit();
+            } else {
+                notifyCollectionUpdated();
+            }
+            return; // having cleared the reporter earlier
+        }
+        
+        entryOrder.remove(tag);
+        entryOrder.add(tag);
+        tag.setOrientation(orientation);
+        tag.setDccAddress(new DccLocoAddress(address, protocol, isConsist));
         notify(tag);
+    }
+
+    /**
+     * Updates {@link #getCurrentReport()} after an IdTag has exited this reporter's block.
+     * <p>
+     * When a locomotive exits, this method selects an appropriate fallback report from the
+     * remaining tags in {@link #entryOrder}. It prioritizes the most recently entered tag
+     * that still considers this reporter its current location (i.e. {@code candidate.getWhereLastSeen() == this}).
+     * If no such locomotive exists but the block is not empty (for example, if other locomotives
+     * were temporarily seen in bridging or nested detectors), it falls back to the most recently
+     * entered tag remaining in the block without stealing {@code whereLastSeen}.
+     * If no tags remain, {@code notify(null)} clears the report.
+     */
+    private void updateCurrentReportAfterExit() {
+        if (entryOrder.isEmpty()) {
+            notify(null);
+            return;
+        }
+        for (int i = entryOrder.size() - 1; i >= 0; i--) {
+            IdTag candidate = entryOrder.get(i);
+            if (candidate.getWhereLastSeen() == this) {
+                notify(candidate);
+                return;
+            }
+        }
+        // Fall back to the most recently entered remaining tag without modifying its
+        // whereLastSeen or notifying the reporter where it was seen elsewhere.
+        IdTag fallback = entryOrder.get(entryOrder.size() - 1);
+        setReport(fallback);
+        setState(IdTag.SEEN);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifySeenElsewhere(IdTag tag, Reporter newReporter) {
+        if (!this.equals(newReporter) && getCurrentReport() == tag) {
+            // The tag that just moved to another reporter was our current report.
+            // In OpenLCB, physical presence is governed by explicit hardware exit messages,
+            // so we do not remove `tag` from `entryOrder` here.
+            // However, to keep getCurrentReport() pointing to an ID that is currently present
+            // in this block, we check whether any other locomotive in entryOrder still has
+            // whereLastSeen == this. If so, we fall back to reporting that locomotive.
+            // If no other locomotive has whereLastSeen == this, we do NOT call notify(candidate)
+            // or notify(null), because doing so would re-assert whereLastSeen back to this reporter
+            // and trigger an infinite ping-pong between reporters.
+            for (int i = entryOrder.size() - 1; i >= 0; i--) {
+                IdTag candidate = entryOrder.get(i);
+                if (candidate != tag && candidate.getWhereLastSeen() == this) {
+                    notify(candidate);
+                    return;
+                }
+            }
+        }
     }
     private class Receiver extends org.openlcb.MessageDecoder {
         @Override
@@ -226,7 +375,8 @@ public class OlcbReporter extends AbstractIdTagReporter {
                 // Not for us.
                 return;
             }
-            handleReport(id & REPORTER_EVENT_MASK, true);
+            boolean entry = ((id >>14) & 0x3) != REPORTER_UNOCCUPIED_EXIT;
+            handleReport(id & REPORTER_EVENT_MASK, entry);
         }
 
         @Override
@@ -236,14 +386,28 @@ public class OlcbReporter extends AbstractIdTagReporter {
                 // Not for us.
                 return;
             }
-            if (msg.getEventState() == EventState.Invalid) {
-                handleReport(id & REPORTER_EVENT_MASK, false);
-            } else if (msg.getEventState() == EventState.Valid) {
-                handleReport(id & REPORTER_EVENT_MASK, true);
+            long reportBits = id & REPORTER_EVENT_MASK;
+            int orientationBits = (int) (reportBits >> 14) & 0x3;
+            if (orientationBits == REPORTER_UNOCCUPIED_EXIT) {
+                // For exit events (0x0000..), Valid means the locomotive has exited (is absent).
+                // Invalid means the exit did not occur (the locomotive is present).
+                if (msg.getEventState() == EventState.Valid) {
+                    handleReport(reportBits, false);
+                }
+            } else {
+                // For entry / orientation events (0x4000, 0x8000, 0xC000):
+                // Valid means the locomotive is present with this orientation.
+                if (msg.getEventState() == EventState.Valid) {
+                    handleReport(reportBits, true);
+                } else if (msg.getEventState() == EventState.Invalid &&
+                        orientationBits == REPORTER_OCCUPIED_UNKNOWN_ENTRY) {
+                    // Invalid on unknown orientation means the locomotive is not present at all.
+                    handleReport(reportBits, false);
+                }
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbReporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbReporter.class);
 
 }

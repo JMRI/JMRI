@@ -28,6 +28,6 @@ public class SimpleClockFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SimpleClockFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SimpleClockFrameTest.class);
 
 }

@@ -103,6 +103,6 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     @Override
     abstract protected void setInstance(); // necessary to get correct type
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
 }

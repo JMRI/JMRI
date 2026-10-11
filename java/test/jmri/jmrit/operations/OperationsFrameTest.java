@@ -20,6 +20,6 @@ public class OperationsFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OperationsFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OperationsFrameTest.class);
 
 }

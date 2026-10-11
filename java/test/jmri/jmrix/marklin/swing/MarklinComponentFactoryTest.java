@@ -1,12 +1,9 @@
 package jmri.jmrix.marklin.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of MarklinComponentFactory
@@ -19,10 +16,10 @@ public class MarklinComponentFactoryTest {
     private jmri.jmrix.marklin.MarklinSystemConnectionMemo m = null;
  
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         MarklinComponentFactory action = new MarklinComponentFactory(m);
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull(action, "exists");
     }
 
     @BeforeEach
@@ -32,5 +29,8 @@ public class MarklinComponentFactoryTest {
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

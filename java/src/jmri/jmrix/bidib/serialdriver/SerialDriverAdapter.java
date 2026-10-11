@@ -134,7 +134,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
      * @param portName human-readable name
      * @return canonical path
      */
-    static public String getCanonicalPortName(String portName) {
+    public static String getCanonicalPortName(String portName) {
         File file = new File(portName);
         if (file.exists()) {
             try {
@@ -152,7 +152,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
      * @param portName displayed port name
      * @return real port name
      */
-    static public String getRealPortName(String portName) {
+    public static String getRealPortName(String portName) {
         if (SystemType.isLinux()) {
             portName = "/dev/" + portName;
         }
@@ -191,9 +191,9 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
             bidib = createSerialBidib(context);
         }
         BiDiBTrafficController tc = new BiDiBTrafficController(bidib);
-        context  = tc.connnectPort(this); //must be done before configuring managers since they may need features from the device
         log.debug("memo: {}", this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setBiDiBTrafficController(tc);
+        context  = tc.connnectPort(this); //must be done before configuring managers since they may need features from the device
         if (context != null) {
             opened = true;
             Long uid = tc.getRootNode().getUniqueId() & 0x0000ffffffffffL; //mask the classid
@@ -235,12 +235,12 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     
     /**
      * Create a BiDiB object. jbidibc has support for various serial implementations.
-     * We tested SCM and PUREJAVACOMM. Both worked without problems. Since
-     * JMRI generally uses PUREJAVACOMM, we also use it here
+     * We tested SCM, PUREJAVACOMM and later JSerialComm. All worked without problems. Since
+     * JMRI generally uses JSerialComm, we also use it here
      * 
      * @return a BiDiB object from jbidibc
      */
-    static private BidibInterface createSerialBidib(Context context) {
+    private static BidibInterface createSerialBidib(Context context) {
         if (useScm) {
 //            return BidibFactory.createBidib(ScmSerialBidib.class.getName());
         }
@@ -371,7 +371,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
      * @param portNameFilter a port name filter (e.g. /dev/ttyUSB* for Linux)
      * @return found port name (e.g. /dev/ttyUSB0) or null of not found
      */
-    //static private String scanPorts(BidibInterface bidib, Long requid, String portNameFilter) {
+    //private static String scanPorts(BidibInterface bidib, Long requid, String portNameFilter) {
     private String scanPorts(Long requid, String portNameFilter) {
         //String portPrefix = portNameFilter.replaceAll("\\*", "");
         log.trace("scanPorts for UID {}, filter: {}", ByteUtils.formatHexUniqueId(requid), portNameFilter);
@@ -538,7 +538,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     protected String selectedSpeed = validSpeeds[0];
 
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
     private static final Logger MSG_RAW_LOGGER = LoggerFactory.getLogger("RAW");
 
 }

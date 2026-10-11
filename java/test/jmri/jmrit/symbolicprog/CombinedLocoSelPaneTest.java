@@ -98,5 +98,5 @@ public class CombinedLocoSelPaneTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CombinedLocoSelPaneTest.class);
 }

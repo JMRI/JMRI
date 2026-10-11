@@ -161,7 +161,7 @@
             <li><strong>Paste</strong>
             </li>
 
-            <li><strong>Duplicate Loco</strong><br>
+            <li><strong>Duplicate Entry</strong><br>
             Select the roster entry that you would like to duplicate. Enter a new name for the
             duplicate entry.<br>
             <img src="images/dp3_edit_duplicate01.png" alt="duplicate" height="128" width=
@@ -172,8 +172,8 @@
             <img src="images/dp3_edit_duplicate02.png" alt="dupliate" height="86" width=
             "773">.<br></li>
 
-            <li><strong>Delete Loco</strong><br>
-            Select the loco that you wish to delete in the roster list, select menu item.<br>
+            <li><strong>Delete Entry</strong><br>
+            Select the roster entry that you wish to delete in the roster list, select menu item.<br>
             <img src="images/dp3_edit_delete_entry.png" alt="delete" height="122" width="405"><br>
             <img src="images/separator.png" alt="s" height="4" width="340"></li>
 

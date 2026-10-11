@@ -69,7 +69,7 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
     //protected String mastType = "F$bsm";
     protected String mastType = getNamePrefix();
     
-    static public String getNamePrefix() {
+    public static String getNamePrefix() {
         return "F$bsm";
     }
 
@@ -406,7 +406,7 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
         tc.addMessageListener(messageHandler);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBSignalMast.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBSignalMast.class);
 
 }
 

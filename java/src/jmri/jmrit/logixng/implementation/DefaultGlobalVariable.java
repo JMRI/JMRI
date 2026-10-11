@@ -174,7 +174,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     }
 
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -309,5 +309,5 @@ public class DefaultGlobalVariable extends AbstractNamedBean
         list.addAll(getListenerRefs());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariable.class);
 }

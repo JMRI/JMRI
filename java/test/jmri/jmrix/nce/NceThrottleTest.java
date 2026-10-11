@@ -399,6 +399,7 @@ public class NceThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setNceTrafficController(tcis);
         tm = new NceThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new NceThrottle(memo, new jmri.DccLocoAddress(1024,true));
     }
 
@@ -416,6 +417,6 @@ public class NceThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceThrottleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceThrottleTest.class);
 
 }

@@ -27,6 +27,6 @@ public class TwoByteMacroEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TwoByteMacroEditorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TwoByteMacroEditorTest.class);
 
 }

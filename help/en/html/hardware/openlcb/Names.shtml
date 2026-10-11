@@ -13,11 +13,13 @@
     <div id="mainContent">
       <h1>Hardware Support: OpenLCB - Naming</h1>
       This page discusses how JMRI uses System Names to access OpenLCB-attached resources.
+
       <h2>JMRI's Use of Names</h2>
       JMRI provides an interface to the real layout via internal objects such as Turnouts, Sensors,
       etc. that are closely mapped to corresponding physical devices. This mapping is done via
       "System Names", which both identify how to access a particular device, and are the key to
       looking up the corresponding object in JMRI.
+
       <h2 id="openlcbevents">OpenLCB Events</h2>
       <a href="http://openlcb.org">OpenLCB</a> communicates events via messages with a fixed
       format: eight bytes of content. We convert this to a 16 hexadecimal digit code with a leading
@@ -26,21 +28,34 @@
       case only, one leading zero per byte can be omitted when typing the event; JMRI will insert
       them automatically in names. For example, "00.01.02.03.04.05.06.07" can be typed as
       "0.1.2.3.4.5.6.7".
-      <h2>OpenLCB Configuration Memory</h2>
-      DecoderPro accesses decoder memory via "CVs". For that purpose, the JMRI OpenLCB provides a
-      CV syntax that can be used to access OpenLCB node configuration memory:
-      <ul>
-        <li>CV12345 - A single byte at address 12345 in the default configuration address
-        space</li>
+      
+      <p>
+      JMRI also allows you to associate your own names with LCC events.  These can then be used instead of the numeric Event IDs where you enter information.
+        
+      For example, instead of typing "02.01.00.44.00.00.01.A2", you could enter "Select Yard Track 5".
+        
+      You associate these names and event ID numbers in the
+      <a href="../../../package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>.  
+      Locate a particular event number in the Event Table, type a name for it in the "Event Name" (2nd) column, and hit return.  That's persistant across runs; you don't have to explicitly store it.
+      <p>  
+      Places where names appear:
+        <ul>
+        <li>The Traffic Monitor:  
+<code><pre>        
+        S: 02.01.12.FE.F3.16 Producer/Consumer Event Report EventID:02.01.57.40.00.07.00.06
+           Name: Select Yard Track 5
+</pre></code>           
+        (May look different depending on selected display options)
+        
+        <li>The CDI event input fields.  You can enter the name instead of the numerical ID.  When the value is read from the node, if it matches a name, the name is displayed. You can copy&amp;paste or drag&amp;drop names just like you can with numbers.  The name is an alias that's substituted when it's used: The value that's stored in the node is the numeric equivalent.  This means that, should you change the event ID associated with a name, the name will appear on the new Event ID the next time that's read from a node.
+        
+        <li>Turnout, Sensor and Light names.  Instead of 02.01.57.40.00.07.00.06;02.01.57.40.00.07.01.A9 you can type EvtA;EvtB to use the two named events instead.  Those will appear that way in the tables, and be stored that way.
+        If you change the event ID number associated with the name in the Event Table, that will change the underlying function immediately.  E.g. the next time you throw the turnout, it should use the new number.
 
-        <li>CV(252)12345 - A single byte at address 12345 in the 252 address space</li>
-
-        <li>CV12345:4 - Four bytes starting at address 12345 in the default configuration address
-        space.</li>
-
-        <li>CV(252)12345:4 - Four bytes starting at address 12345 in the 252 address space.</li>
-      </ul>
-
+        <li>Backups. When you backup a node, the name is stored instead of the EventID.  This means that when you restore the node, the name's value <u>at that time</u> is used.  If you haven't changed the associated EventID, you'll get the same value restored.  If you have changed the associated EventID, the new one will be used.
+        
+        </ul>
+      
       <h2>OpenLCB Signal Masts</h2>
       See the <a href="OlcbSignalMast.shtml">OpenLCB Signal Mast page</a> for more information on
       OpenLCB Signal Mast names.

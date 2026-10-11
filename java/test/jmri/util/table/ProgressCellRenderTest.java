@@ -1,12 +1,14 @@
 package jmri.util.table;
 
 import java.awt.Color;
+
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
+
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProgressCellRenderTest  {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testInitComponents() throws Exception{
+    @DisabledIfHeadless
+    public void testInitComponents() {
         assertNotNull(t);
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testValues() {
 
         JTable table = new JTable(new Object[][]{}, new String[]{});

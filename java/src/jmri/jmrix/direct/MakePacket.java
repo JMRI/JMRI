@@ -131,7 +131,7 @@ public class MakePacket {
     /**
      * Set the Preamble Length - Default is 15 NRMA '1's Every NMRA
      * packet decoded starts with a preamble Service mode requires longer
-     * preambles Thus this public function allowing user to define the lenght of
+     * preambles Thus this public function allowing user to define the length of
      * desired preamble
      *
      * @param preambleLen int
@@ -268,7 +268,7 @@ public class MakePacket {
      *
      * @param thisNode (INPUT/OUTPUT) determine if there is another child
      *                 if so update Node with ie the Bit
-     *                 pattern and its associated lenght
+     *                 pattern and its associated length
      *
      * @return false if one doesn't exist otherwise returns true
      */
@@ -322,7 +322,7 @@ public class MakePacket {
      * @param offset    Offset in to buffer
      * @param validBits (INPUT) number of valid bits in the bit stream
      * @param thisNode  (OUTPUT) where to put largest child found ie the Bit
-     *                  pattern and its associated lenght
+     *                  pattern and its associated length
      *
      * @return false if one doesn't exist otherwise returns true
      */

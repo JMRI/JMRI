@@ -127,7 +127,7 @@ public class SampleFactory {
     }
 
     // Main entry point for standalone run
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         // dump a document to stdout
         Element root = getBasicSample();
         Document doc = new Document(root);

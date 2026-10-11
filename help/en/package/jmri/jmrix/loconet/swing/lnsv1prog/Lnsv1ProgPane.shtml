@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: Configure LocoIO (LNSV1) Devices Tool</title>
+  <meta name="author" content="Egbert Broerse">
+  <meta name="keywords" content="JMRI help send loconet lnsv1 locoio">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Configure LocoIO (LNSV1) Devices Tool</h1>
+
+      <p><span class="since">since 5.11.5</span>The "Configure LocoIO (LNSV1) Modules" tool lets you access
+      and program connected LocoNet devices that respond to the LNSV version 1 LocoNet
+      programming protocol.<br>
+      Examples are the classic Jabour, HDL and GCA LocoIO boards. You find the
+      tool in the LocoNet menu as long as a LocoNet connection is available.</p>
+
+      <img src="images/LNSV1Tool1.png" alt="Initial view of LNSV1 Programming Tool pane">
+
+      <p>As this tool is new, you might use it in combination with the "Show Raw Data" option in the
+      <a href="../../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
+      responses rejected by the LNSV1 filters.</p>
+
+      <p>LNSV1 modules will respond to any Read and Write commands addressed to them
+      (only the Read button in the tool is enabled).</p>
+
+      <p>LNSV1 Responses coming back from the layout will be listed in the LNSV1 Monitor, and if not already in the
+        list, devices sending a read reply will be added to the Devices table.</p>
+
+      <h2>Module LNSV1 Programming</h2>
+
+      <p>LNSV1 Programming requires 3 elements to address an SV in an LNSV1 module on LocoNet:</p>
+
+      <ol>
+        <li>Low module address</li>
+
+        <li>High or module subaddress</li>
+
+        <li>SV number</li>
+      </ol>
+
+      <p>Enter the low address e.g. 81 in the field to the left of the slash, and enter the subaddress in the field 
+      on the right.</p>
+
+      <p>After first starting the tool, existing LocoIO modules are detected on LocoNet. After a couple of seconds
+      they will appear in the table. Note the Version column and other properties.<br>
+      To repeat the probing, for example after you powered up a LocoIO, press the [Probe All] button at top left.</p>
+
+      <p>When your Roster contains (exactly) one entry for a decoder of the same DCC address (the value in the second
+      column), its name will be listed in the table as the Roster Entry ID, as shown below.<br>
+      When you have a matching Roster Entry, the button in the Program column will read
+      [Program] and will directly open the Roster Entry tabs.</p>
+
+      <img src="images/LNSV1Tool2.png"
+           alt="LNSV1 Programming Tool pane with one LNSV1 device selected and a No Match">
+
+      <p>When no match was found in your Roster, the button will read [No Match in Roster]. You may click on the
+      button to receive a short hint. That will tell you to open your Roster and
+      create a new Entry with the DCC address mentioned in the dialog.<br>
+      Be sure to complete the Entry creation process by clicking [Save to Roster] on the
+      DecoderPro Roster Entry tab.</p>
+
+      <p>When a matching DCC address was found in the Roster but that decoder doesn't support LNSV1
+      programming, we must assume it is a mismatch. Perhaps a decoder in one of the locos has the same address as one
+      of the LocoIO composite addresses.<br>
+      The button will read [Not for LNSV1] and you advised to change the LocoIO address.</p>
+
+      <h2>LNSV1 Read</h2>
+      <p>For incidental checking, the tool allows reading of individual SV values.<br>
+      <p>Click on one of the rows to copy a modules' address and SV last read to the top part of the pane.<br>
+      Enter an SV number in the SV: field on the right of the tool pane and click [Read] to
+      find the value returned in the Value: field.<br>
+      The [Write] button is disabled to prevent messing up the complicated LocoIO configuration variables (in contrast
+      to the <a href="../lncvprog/LncvProgPane.shtml">Configure LNCV</a> tool). DecoderPro <a
+      href="../../../../../../html/hardware/loconet/LocoIO.shtml">Programming on Main</a> gives you
+      access to the full suite in a consistent and accessible way.</p>
+
+      <img src="images/LNSV1Tool3.png"
+           alt="LNSV1 Programming Tool pane with a selected device and address filled in">
+
+      <h2>Broadcast LNSV1 Programming</h2>
+
+      <p class="important">Click "Probe All" to start a session.</p>
+
+      <p>Module addresses can be changed from this tool using Broadcast mode [Set All Addresses] button, but you have
+      to make sure only one such device is powered, as they will all respond to broadcast programming commands.</p>
+
+      <p>WARNING: this will change the SV1 and SV2 address values in ALL connected LocoIO family boards</p>
+
+      <img src="images/LNSV1BroadcastWarning.png" alt="LocoIO (LNSV1) Tool warning for Broadcast">
+
+      <h2>LNSV1 Decoder definitions</h2>
+
+      <p>You use the
+      Roster entry programming panes for advanced (and accessible) configuration changes. Easily
+      switch to DecoderPro Roster either by clicking the [Program] button in the LNSV1 table or manually
+      open the entry for the module in your Roster entries list.<br>
+      Go to the "LocoIO" or "Ports" tabs to read and write options supported by the device.</p>
+
+      <p>Anyone interested in writing their own LNSV1 decoder definitions in JMRI, please note that
+      in the definition the programming mode should be defined as
+      <code>&lt;mode&gt;LOCONETLNSV1MODE&lt;/mode&gt;</code>.</p>
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/help.js"></script>
+</body>
+</html>

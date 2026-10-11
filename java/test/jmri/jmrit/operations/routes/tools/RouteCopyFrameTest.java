@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.gui.RouteEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -91,6 +91,6 @@ public class RouteCopyFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(rcf);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RouteCopyFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RouteCopyFrameTest.class);
 
 }

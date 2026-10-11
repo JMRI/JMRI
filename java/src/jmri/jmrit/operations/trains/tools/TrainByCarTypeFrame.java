@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -27,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     protected static final String POINTER = "    -->";
-    
+
     // train
     Train _train;
 
@@ -89,21 +91,16 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         addItem(pCarType, typeComboBox, 0, 0);
         addItem(pCarType, carsComboBox, 1, 0);
 
-        // increase width of combobox so large text names display properly
-        Dimension boxsize = typeComboBox.getMinimumSize();
-        if (boxsize != null) {
-            boxsize.setSize(boxsize.width + 10, boxsize.height);
-            typeComboBox.setMinimumSize(boxsize);
-        }
-
-        adjustCarsComboBoxSize();
-
         pRoute.setLayout(new GridBagLayout());
         JScrollPane locationPane = new JScrollPane(pRoute);
         locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Route")));
         updateCarsComboBox();
         updateRoute();
+
+        // has to be after updateCarsComboBox()
+        OperationsPanel.padComboBox(carsComboBox,
+                InstanceManager.getDefault(CarRoads.class).getMaxNameLength() + Control.max_len_string_attibute);
 
         getContentPane().add(pTrain);
         getContentPane().add(pCarType);
@@ -180,6 +177,11 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             repaint();
             return;
         }
+        // header
+        addItemLeft(pRoute, new JLabel(Bundle.getMessage("Location")), 0, y);
+        addItemLeft(pRoute, new JLabel(Bundle.getMessage("Track")), 1, y);
+        addItemLeft(pRoute, new JLabel(Bundle.getMessage("Status")), 2, y++);
+
         List<RouteLocation> routeList = route.getLocationsBySequenceList();
         for (RouteLocation rl : routeList) {
             JLabel loc = new JLabel();
@@ -251,7 +253,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrainBuilt)"));
                 } else if (_car != null && !_train.isOwnerNameAccepted(_car.getOwnerName())) {
                     op.setText(Bundle.getMessage("X(TrainOwner)"));
-                } else if (_train.isLocationSkipped(rl.getId())) {
+                } else if (_train.isLocationSkipped(rl)) {
                     op.setText(Bundle.getMessage("X(TrainSkips)"));
                 } else if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
                     op.setText(Bundle.getMessage("X(Route)"));
@@ -267,7 +269,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrackTrain)"));
                 } else if (!track.isTypeNameAccepted(carType)) {
                     op.setText(Bundle.getMessage("X(TrackType)"));
-                } else if (_car != null && !track.isRoadNameAccepted(_car.getRoadName())) {
+                } else if (_car != null &&
+                        !track.isRoadNameAndLoadTypeAccepted(_car.getRoadName(), _car.getLoadType())) {
                     op.setText(Bundle.getMessage("X(TrackRoad)"));
                 } else if (_car != null &&
                         _car.getTrack() != track &&
@@ -380,21 +383,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         carsComboBox.addItem(null);
         List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTypeList(carType);
         for (Car car : cars) {
-            carsComboBox.addItem(car);
+            if (!car.isClone()) {
+                carsComboBox.addItem(car);
+            }
         }
-    }
-
-    private void adjustCarsComboBoxSize() {
-        List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
-        for (Car car : cars) {
-            carsComboBox.addItem(car);
-        }
-        Dimension boxsize = carsComboBox.getMinimumSize();
-        if (boxsize != null) {
-            boxsize.setSize(boxsize.width + 10, boxsize.height);
-            carsComboBox.setMinimumSize(boxsize);
-        }
-        carsComboBox.removeAllItems();
     }
 
     /**
@@ -469,5 +461,5 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainByCarTypeFrame.class);
 }

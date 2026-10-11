@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class ResetControllerPacket extends Packet {
-  public final static byte IDENT = 6;
+  public static final byte IDENT = 6;
 
   @Override
   public byte getId() {

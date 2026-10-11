@@ -144,5 +144,5 @@ public class DccSignalMastXml
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccSignalMastXml.class);
+    private static final Logger log = LoggerFactory.getLogger(DccSignalMastXml.class);
 }

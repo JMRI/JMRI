@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 
@@ -15,32 +17,39 @@ import jmri.implementation.DefaultConditionalAction;
  */
 public class ImportActionSensorTest extends ImportActionTestBase {
 
-    Sensor sensor;
-    ConditionalAction ca;
-    
+    private Sensor sensor = null;
+    private ConditionalAction ca = null;
+
     @Override
     public void setNamedBeanState(boolean on) throws JmriException {
-        if (on) sensor.setState(Sensor.ACTIVE);
-        else sensor.setState(Sensor.INACTIVE);
+        if (on) {
+            sensor.setState(Sensor.ACTIVE);
+        } else {
+            sensor.setState(Sensor.INACTIVE);
+        }
     }
 
     @Override
     public boolean checkNamedBeanState(boolean on) {
-        if (on) return sensor.getState() == Sensor.ACTIVE;
-        else return sensor.getState() == Sensor.INACTIVE;
+        if (on) {
+            return sensor.getState() == Sensor.ACTIVE;
+        } else {
+            return sensor.getState() == Sensor.INACTIVE;
+        }
     }
 
     @Override
     public void setConditionalActionState(State state) {
+        assertNotNull(ca);
         switch (state) {
             case ON:
                 ca.setActionData(Sensor.ACTIVE);
                 break;
-                
+
             case OFF:
                 ca.setActionData(Sensor.INACTIVE);
                 break;
-                
+
             case TOGGLE:
             default:
                 ca.setActionData(Route.TOGGLE);

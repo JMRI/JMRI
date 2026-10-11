@@ -3,7 +3,6 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class CatalogTreeNodeTest {
     @Test
     public void testCTor() {
         CatalogTreeNode t = new CatalogTreeNode("Test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class CatalogTreeNodeTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CatalogTreeNodeTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CatalogTreeNodeTest.class);
 
 }

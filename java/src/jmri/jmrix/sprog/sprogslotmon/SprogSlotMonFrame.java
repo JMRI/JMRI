@@ -270,6 +270,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class);
 
 }

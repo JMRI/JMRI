@@ -276,17 +276,14 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testMonitorStringSerialNumberReply() {
-        byte msg[] = {(byte) 0x08, (byte) 0x00, (byte) 0x10, (byte) 0x00,
-            (byte) 0xAE, (byte) 0xA7, (byte) 0x01, (byte) 0x00};
+        byte msg[] = {(byte) 0x08, (byte) 0x00, (byte) 0x10, (byte) 0x00, (byte) 0xAE, (byte) 0xA7, (byte) 0x01, (byte) 0x00};
         message = new Z21Reply(msg, 8);
         Assert.assertEquals("Z21 Serial Number Reply.  Serial Number: 108,462", message.toMonitorString());
     }
 
     @Test
     public void testMonitorStringVersionReply() {
-        byte msg[] = {(byte) 0x0C, (byte) 0x00, (byte) 0x1A, (byte) 0x00,
-            (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0x00, (byte) 0x32,
-            (byte) 0x01, (byte) 0x00, (byte) 0x00};
+        byte msg[] = {(byte) 0x0C, (byte) 0x00, (byte) 0x1A, (byte) 0x00, (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0x00, (byte) 0x32, (byte) 0x01, (byte) 0x00, (byte) 0x00};
         message = new Z21Reply(msg, 12);
         Assert.assertEquals("Z21 Version Reply.  Hardware Version: 0x200 Software Version: 1.32", message.toMonitorString());
     }
@@ -416,7 +413,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testMonitorStringZ21BroadcastFlagsReply() {
         byte msg[] = {(byte) 0x08, (byte) 0x00, (byte) 0x51, (byte) 0x00, (byte) 0xcd, (byte) 0xab, (byte) 0x01, (byte) 0x00};
         Z21Reply reply = new Z21Reply(msg, 8);
-        Assert.assertEquals("Z21 Broadcast flags 43725", reply.toMonitorString());
+        Assert.assertEquals("Z21 Broadcast flags XpressNet Messages\nRailcom Messages\n", reply.toMonitorString());
     }
 
     @BeforeEach

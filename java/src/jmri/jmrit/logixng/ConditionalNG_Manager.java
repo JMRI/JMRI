@@ -18,6 +18,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param systemName The system name
      * @param userName   The user name
      * @return a new ConditionalNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     ConditionalNG createConditionalNG(LogixNG logixNG, String systemName, String userName)
             throws IllegalArgumentException;
@@ -29,6 +30,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param logixNG  The parent LogixNG
      * @param userName The user name
      * @return a new ConditionalNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     ConditionalNG createConditionalNG(LogixNG logixNG, String userName)
             throws IllegalArgumentException;
@@ -41,6 +43,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param userName   The user name
      * @param threadID   The thread ID that this ConditionalNG will execute on
      * @return a new ConditionalNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     ConditionalNG createConditionalNG(
             LogixNG logixNG, String systemName, String userName, int threadID)
@@ -54,6 +57,7 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * @param userName  The user name
      * @param threadID  The thread ID that this ConditionalNG will execute on
      * @return a new ConditionalNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     ConditionalNG createConditionalNG(LogixNG logixNG, String userName, int threadID)
             throws IllegalArgumentException;

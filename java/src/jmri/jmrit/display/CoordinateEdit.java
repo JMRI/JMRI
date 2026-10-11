@@ -362,6 +362,7 @@ public class CoordinateEdit extends JmriJFrame {
             int x = ((Number) spinX.getValue()).intValue();
             int y = ((Number) spinY.getValue()).intValue();
             pl.setLocation(x, y);
+            pl.getEditor().resizePanelBounds(true);
             textX.setText("X: " + pl.getX());
             textY.setText("Y: " + pl.getY());
             dispose();
@@ -594,10 +595,10 @@ public class CoordinateEdit extends JmriJFrame {
         textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), oldD * 100));
         textX.setVisible(true);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(100.0, 10.0, 5000.0, 1.0);
+        SpinnerNumberModel model = new SpinnerNumberModel(100.0d, 10.0d, 5000.0d, 1.0d);
         spinX = new JSpinner(model);
         log.debug("scale%= {}", (int) Math.round(oldD * 100));
-        spinX.setValue((int) Math.round(oldD * 100));
+        spinX.setValue((double) Math.round(oldD * 100));
         spinX.setToolTipText(Bundle.getMessage("enterScale"));
         spinX.setMaximumSize(new Dimension(
                 spinX.getMaximumSize().width, spinX.getPreferredSize().height));
@@ -607,7 +608,7 @@ public class CoordinateEdit extends JmriJFrame {
         addSpinItems(false);
 
         okButton.addActionListener(e -> {
-            double s = ((Number) spinX.getValue()).doubleValue() / 100 * pl.getScale();
+            double s = ((Number) spinX.getValue()).doubleValue() / 100;
             pl.getEditor().setSelectionsScale(s, pl);
             textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), pl.getScale() * 100));
             dispose();
@@ -618,27 +619,25 @@ public class CoordinateEdit extends JmriJFrame {
     }
 
     public void initId(final Editor editor) {
-        PositionableLabel pLabel = (PositionableLabel) pl;
-        oldStr = pLabel.getId();
+        oldStr = pl.getId();
         textX = new JLabel();
         textX.setText(Bundle.getMessage("EnterId") + ":");
         textX.setVisible(true);
 
         xTextField = new JTextField(15);
-        xTextField.setText(pLabel.getId());
+        xTextField.setText(pl.getId());
         xTextField.setToolTipText(Bundle.getMessage("TooltipEnterId"));
 
         getContentPane().setLayout(new GridBagLayout());
         addTextItems();
 
         okButton.addActionListener(e -> {
-            PositionableLabel pp = (PositionableLabel) pl;
             String t = xTextField.getText();
             boolean hasText = (t != null && t.length() > 0);
             if (hasText) {
                 try {
-                    pp.setId(t);
-                    pp.updateSize();
+                    pl.setId(t);
+                    pl.updateSize();
                     dispose();
                 } catch (Positionable.DuplicateIdException ignore) {
                     JmriJOptionPane.showMessageDialog(editor,
@@ -648,8 +647,8 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             } else {
                 try {
-                    pp.setId(null);
-                    pp.updateSize();
+                    pl.setId(null);
+                    pl.updateSize();
                     dispose();
                 } catch (Positionable.DuplicateIdException ex) {
                     // This should never happen
@@ -668,8 +667,7 @@ public class CoordinateEdit extends JmriJFrame {
     }
 
     public void initClasses(final Editor editor) {
-        PositionableLabel pLabel = (PositionableLabel) pl;
-        oldStr = String.join(",", pLabel.getClasses());
+        oldStr = String.join(",", pl.getClasses());
         textX = new JLabel();
         textX.setText(Bundle.getMessage("EnterClasses") + ":");
         textX.setVisible(true);
@@ -682,23 +680,21 @@ public class CoordinateEdit extends JmriJFrame {
         addTextItems();
 
         okButton.addActionListener(e -> {
-            PositionableLabel pp = (PositionableLabel) pl;
-            pp.removeAllClasses();
+            pl.removeAllClasses();
             String t = xTextField.getText();
             if (t != null && t.length() > 0) {
                 for (String className : t.split(",")) {
                     if (!className.isBlank()) {
-                        pp.addClass(className.trim());
+                        pl.addClass(className.trim());
                     }
                 }
             }
-            pp.updateSize();
+            pl.updateSize();
             dispose();
         });
         okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(e -> {
-            PositionableLabel pp = (PositionableLabel) pl;
-            pp.updateSize();
+            pl.updateSize();
             dispose();
         });
         pack();

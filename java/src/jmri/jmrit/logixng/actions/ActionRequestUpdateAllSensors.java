@@ -33,8 +33,8 @@ public class ActionRequestUpdateAllSensors extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     public void setMemo(SystemConnectionMemo memo) {
@@ -111,6 +111,6 @@ public class ActionRequestUpdateAllSensors extends AbstractDigitalAction {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateAllSensors.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateAllSensors.class);
 
 }

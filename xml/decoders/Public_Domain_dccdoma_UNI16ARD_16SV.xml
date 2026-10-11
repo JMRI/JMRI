@@ -1,0 +1,2046 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no" >
+    <version version="1" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20251205"/>
+    <!-- Accessory decoder  -->
+    <!-- Description of circuit diagram https://sites.google.com/site/sidloweb1 -->
+    <!-- Program description https://sites.google.com/site/sidloweb1 -->
+    <!-- e-shop https://dccdoma-eshop.cz/ -->
+    
+    <decoder>
+
+        <family name="dccdoma.cz" mfg="Public-domain and DIY" >  
+            <model model="UNI16ARD-16SV" lowVersionID="04" highVersionID="19" productID="16843014" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        </family>
+
+        <programming direct="yes" paged="no" register="no" ops="yes">
+            <capability>
+                <name>Ops Mode Accessory Programming</name>
+                <parameter name="Address Type">signal</parameter>
+                <parameter name="Delay">500</parameter>
+            </capability>
+            <mode>OPSACCEXTBYTEMODE</mode>
+        </programming>    
+        
+    <variables>
+    	
+      <variable CV="1" item="Short Address" default="37" >
+        <splitVal highCV="9"  min="1" max="2044" />
+        <label>Decoder Address:</label>
+        <label xml:lang="cs">Adresa dekodéru:</label>
+        <tooltip>Accessory decoder address. CV1 - LSB. CV9 - MSB.</tooltip>
+        <tooltip xml:lang="cs">Adresa dekodéru příslušenství. CV1 - LSB. CV9 - MSB.</tooltip>
+      </variable>
+      
+      <variable CV="7" item="Decoder Version" readOnly="yes" >
+        <decVal/>
+        <label>Decoder Version:</label>
+        <label xml:lang="cs">Verze software:</label>
+      </variable>
+      
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="13" >
+        <decVal/>
+        <label>Manufacturer:</label>
+        <label xml:lang="cs">Výrobce ID:</label>
+      </variable>
+    
+      <variable item="Key" CV="15" default="0">
+        <decVal/>
+        <label>Key:</label>
+        <label xml:lang="cs">Klíč:</label>
+        <tooltip>Key for lock. Universal key is 255.</tooltip>
+        <tooltip xml:lang="cs">Klíč k zámku. Univerzální klíč je 255.</tooltip>
+      </variable>
+    
+      <variable item="Lock" CV="16" default="0">
+        <decVal/>
+        <label>Lock:</label>
+        <label xml:lang="cs">Zámek:</label>
+        <tooltip>Value other than 0 lock the decoder.</tooltip>
+        <tooltip xml:lang="cs">Jiná hodnota než 0 zamkne dekodér.</tooltip>
+      </variable>
+    
+      <variable item="Addressing" CV="34" default="1">
+      	<enumVal>
+      		<enumChoice choice="NMRA"/>
+      		<enumChoice choice="ROCO"/>
+      	</enumVal>
+        <label>Addressing:</label>
+        <label xml:lang="cs">Adresování:</label>
+        <tooltip>ROCO addressing is NMRA addressing + 4.</tooltip>
+        <tooltip xml:lang="cs">ROCO adresování je NMRA adresování + 4.</tooltip>
+      </variable>
+        
+      <variable CV="47" item="ProductID1" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #1</label>
+        <label xml:lang="cs">Výrobek ID #1:</label>
+        <tooltip>Product ID #1</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #1</tooltip>
+      </variable>
+      
+      <variable CV="48" item="ProductID2" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #2</label>
+        <label xml:lang="cs">Výrobek ID #2:</label>
+        <tooltip>Product ID #2</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #2</tooltip>
+      </variable>
+      
+      <variable CV="49" item="ProductID3" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #3</label>
+        <label xml:lang="cs">Výrobek ID #3:</label>
+        <tooltip>Product ID #3</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #3</tooltip>
+      </variable>
+      
+      <variable CV="50" item="ProductID4" readOnly="yes" default="6" >
+        <decVal/>
+        <label>Product ID #4</label>
+        <label xml:lang="cs">Výrobek ID #4:</label>
+        <tooltip>Product ID #4</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #4</tooltip>
+      </variable>
+      
+      
+<!--  Output A ============================================================== -->
+
+      <variable CV="128" item="Output A lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="129" item="Output A fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="130" item="Output A fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="131" item="Output A blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="132" item="Output A half period of blinking" default="556" >
+        <splitVal highCV="133"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="134" item="Output A last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output B ============================================================== -->
+
+      <variable CV="135" item="Output B lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="136" item="Output B fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="137" item="Output B fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="138" item="Output B blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="139" item="Output B half period of blinking" default="556" >
+        <splitVal highCV="140"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="141" item="Output B last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output C ============================================================== -->
+
+      <variable CV="142" item="Output C lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="143" item="Output C fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="144" item="Output C fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="145" item="Output C blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="146" item="Output C half period of blinking" default="556" >
+        <splitVal highCV="147"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="148" item="Output C last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output D ============================================================== -->
+
+      <variable CV="149" item="Output D lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="150" item="Output D fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="151" item="Output D fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="152" item="Output D blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="153" item="Output D half period of blinking" default="556" >
+        <splitVal highCV="154"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="155" item="Output D last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output E ============================================================== -->
+
+      <variable CV="156" item="Output E lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="157" item="Output E fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="158" item="Output E fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="159" item="Output E blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="160" item="Output E half period of blinking" default="556" >
+        <splitVal highCV="161"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="162" item="Output E last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output F ============================================================== -->
+
+      <variable CV="163" item="Output F lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="164" item="Output F fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="165" item="Output F fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="166" item="Output F blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="167" item="Output F half period of blinking" default="556" >
+        <splitVal highCV="168"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="169" item="Output F last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output G ============================================================== -->
+
+      <variable CV="170" item="Output G lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="171" item="Output G fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="172" item="Output G fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="173" item="Output G blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="174" item="Output G half period of blinking" default="556" >
+        <splitVal highCV="175"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="176" item="Output G last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output H ============================================================== -->
+
+      <variable CV="177" item="Output H lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="178" item="Output H fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="179" item="Output H fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="180" item="Output H blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="181" item="Output H half period of blinking" default="556" >
+        <splitVal highCV="182"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="183" item="Output H last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output I ============================================================== -->
+
+      <variable CV="184" item="Output I lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="185" item="Output I fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="186" item="Output I fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="187" item="Output I blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="188" item="Output I half period of blinking" default="556" >
+        <splitVal highCV="189"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="190" item="Output I last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output J ============================================================== -->
+
+      <variable CV="191" item="Output J lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="192" item="Output J fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="193" item="Output J fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="194" item="Output J blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="195" item="Output J half period of blinking" default="556" >
+        <splitVal highCV="196"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="197" item="Output J last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output K ============================================================== -->
+
+      <variable CV="198" item="Output K lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="199" item="Output K fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="200" item="Output K fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="201" item="Output K blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="202" item="Output K half period of blinking" default="556" >
+        <splitVal highCV="203"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="204" item="Output K last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output L ============================================================== -->
+
+      <variable CV="205" item="Output L lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="206" item="Output L fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="207" item="Output L fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="208" item="Output L blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="209" item="Output L half period of blinking" default="556" >
+        <splitVal highCV="210"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="211" item="Output L last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output M ============================================================== -->
+
+      <variable CV="212" item="Output M lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="213" item="Output M fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="214" item="Output M fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="215" item="Output M blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="216" item="Output M half period of blinking" default="556" >
+        <splitVal highCV="217"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="218" item="Output M last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output N ============================================================== -->
+
+      <variable CV="219" item="Output N lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="220" item="Output N fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="221" item="Output N fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="222" item="Output N blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="223" item="Output N half period of blinking" default="556" >
+        <splitVal highCV="224"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="225" item="Output N last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output O ============================================================== -->
+
+      <variable CV="226" item="Output O lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="227" item="Output O fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="228" item="Output O fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="229" item="Output O blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="230" item="Output O half period of blinking" default="556" >
+        <splitVal highCV="231"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="232" item="Output O last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+   
+<!--  Output P ============================================================== -->
+
+      <variable CV="233" item="Output P lighting mode" default="3" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_light_mode.xml"/>
+        <label>Lighting mode</label>
+        <label xml:lang="cs">Režim svícení:</label>
+        <tooltip>Mode lighting.</tooltip>
+        <tooltip xml:lang="cs">Režim svícení.</tooltip>
+      </variable>     
+
+      <variable CV="234" item="Output P fade mode" default="2" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Fade mode</label>
+        <label xml:lang="cs">Režim pohasínání:</label>
+        <tooltip>&lt;html&gt;Presets fade modes.&lt;br/&gt;In the case of a custom value, set the fade constant.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy pohasínání.&lt;br/&gt;V případě vlastní hodnoty nastavte konstantu pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="235" item="Output P fade time" default="27" >
+        <decVal min="0" max="255" />
+        <label>Fade time</label>
+        <label xml:lang="cs">Čas pohasínání:</label>
+        <tooltip>&lt;html&gt;Time constant for fading.&lt;br/&gt;Value must be 10 times less than half period of blinking.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Časová konstanta pro pohasínání.&lt;br/&gt;Hodnota musí být 10× menší než půlperioda blikání.&lt;/html&gt;</tooltip>
+      </variable>     
+
+      <variable CV="236" item="Output P blinking mode" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/sidlo_enum_fade_mode.xml"/>
+        <label>Blinking mode</label>
+        <label xml:lang="cs">Režim blikání:</label>
+        <tooltip>&lt;html&gt;Presets blinking modes.&lt;br/&gt;In the case of a custom value, set the blinking half-period in msec or sec.&lt;br/&gt;Value must be 10 times greater than constant of fade.&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="cs">&lt;html&gt;Přednastavené režimy blikání.&lt;br/&gt;V případě vlastní hodnoty nastavte půlperiodu blikání v ms nebo v s.&lt;br/&gt;Hodnota pro blikání musí být 10× větší než konstanta pohasínání.&lt;/html&gt;</tooltip>
+      </variable>     
+      
+      <variable CV="237" item="Output P half period of blinking" default="556" >
+        <splitVal highCV="238"  min="0" max="65535" />
+        <label>Half period of blinking</label>
+        <label xml:lang="cs">Půlperioda blikání:</label>
+        <tooltip>For blinking is in msec. For random lighting is in sec.</tooltip>
+        <tooltip xml:lang="cs">Pro blikání je v ms. Pro náhodné svícení je v s.</tooltip>
+      </variable>
+      
+      <variable CV="239" item="Output P last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label>Last position</label>
+        <label xml:lang="cs">Poslední poloha:</label>
+        <tooltip>Last state of output.</tooltip>
+        <tooltip xml:lang="cs">Poslední stav výstupu.</tooltip>
+      </variable>     
+            
+    </variables> 
+
+    <resets>
+      <factReset CV="8" default="33">
+        <label>Reset All CVs</label>
+        <label xml:lang="cs">Reset všech CV</label>
+      </factReset>
+    </resets>
+
+  </decoder>
+
+  
+    <pane>
+<!--  Pane Decoder ========================================================= -->      
+  	<name>Decoder</name>
+        <name xml:lang="cs">Dekodér</name>
+        <column>
+            <display item="Addressing" />
+            <display item="Key" />
+            <display item="Lock" />
+        </column>
+        <column>
+            <display item="ProductID1" />
+            <display item="ProductID2" />
+            <display item="ProductID3" />
+            <display item="ProductID4" />
+        </column>
+    </pane>
+  
+
+    <pane>
+<!--  Pane Outputs ========================================================= --> 
+  	<name>Outputs</name>
+        <name xml:lang="cs">Výstupy</name>
+
+    <row>
+    <separator />
+  	<column>
+  	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output A&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup A&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output A lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output A lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output A fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output A fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output A fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output A lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output A blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output A blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output A half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output B&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup B&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output B lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output B lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output B fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output B fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output B fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output B lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output B blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output B blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output B half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output C&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup C&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output C lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output C lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output C fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output C fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output C fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output C lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output C blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output C blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output C half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output D&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup D&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output D lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output D lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output D fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output D fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output D fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output D lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output D blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output D blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output D half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output E&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup E&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output E lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output E lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output E fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output E fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output E fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output E lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output E blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output E blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output E half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output F&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup F&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output F lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output F lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output F fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output F fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output F fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output F lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output F blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output F blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output F half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output G&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup G&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output G lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output G lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output G fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output G fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output G fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output G lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output G blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output G blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output G half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output H&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup H&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output H lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output H lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output H fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output H fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output H fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output H lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output H blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output H blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output H half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+  	</column>
+    <separator />
+    </row>
+    <row>
+    <separator />
+  	<column>
+
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output I&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup I&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output I lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output I lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output I fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output I fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output I fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output I lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output I blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output I blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output I half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output J&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup J&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output J lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output J lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output J fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output J fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output J fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output J lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output J blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output J blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output J half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output K&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup K&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output K lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output K lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output K fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output K fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output K fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output K lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output K blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output K blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output K half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output L&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup L&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output L lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output L lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output L fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output L fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output L fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output L lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output L blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output L blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output L half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output M&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup M&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output M lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output M lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output M fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output M fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output M fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output M lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output M blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output M blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output M half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output N&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup N&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output N lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output N lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output N fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output N fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output N fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output N lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output N blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output N blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output N half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output O&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup O&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output O lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output O lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output O fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output O fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output O fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output O lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output O blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output O blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output O half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Output P&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Výstup P&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <row>
+            <display item="Output P lighting mode" />
+        </row>
+        
+        <group>
+            <qualifier>
+                <variableref>Output P lighting mode</variableref>
+                <relation>le</relation>
+                <value>3</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+       	        <display item="Output P fade mode" />
+                    </row>
+       	        <group>
+                    <qualifier>
+                        <variableref>Output P fade mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output P fade time" />
+                    </row>
+                </group>
+            </column>
+        </group>
+        
+        <group>
+            <qualifier>
+                <variableref>Output P lighting mode</variableref>
+                <relation>le</relation>
+                <value>2</value>
+            </qualifier>
+            
+            <column>
+                    <row>
+                <display item="Output P blinking mode" />
+                    </row>
+                <group>
+                    <qualifier>
+                        <variableref>Output P blinking mode</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <row>
+                    <display item="Output P half period of blinking" />
+                    </row>
+                </group>
+            </column>
+        </group>
+       	
+        <separator />        
+        
+  	</column>
+    <separator />
+    </row>
+
+    </pane>
+  
+</decoder-config>

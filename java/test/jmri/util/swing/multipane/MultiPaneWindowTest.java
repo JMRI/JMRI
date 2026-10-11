@@ -1,16 +1,15 @@
 package jmri.util.swing.multipane;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.ButtonTestAction;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Invokes complete set of tests in the jmri.util tree
@@ -20,8 +19,8 @@ import org.junit.Assume;
 public class MultiPaneWindowTest {
 
     @Test
+    @DisabledIfHeadless
     public void testShow() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new MultiPaneWindow("Test of empty Multi Pane Window",
                 "xml/config/apps/panelpro/Gui3LeftTree.xml",
                 "xml/config/apps/panelpro/Gui3Menus.xml",
@@ -29,13 +28,13 @@ public class MultiPaneWindowTest {
         ).setVisible(true);
 
         JFrame f = jmri.util.JmriJFrame.getFrame("Test of empty Multi Pane Window");
-        Assert.assertTrue("found frame", f != null);
+        assertNotNull( f, "found frame");
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testAction() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MultiPaneWindow m = new MultiPaneWindow("Test of Multi Pane Window function",
                 "xml/config/apps/panelpro/Gui3LeftTree.xml",
                 "xml/config/apps/panelpro/Gui3Menus.xml",
@@ -57,12 +56,12 @@ public class MultiPaneWindowTest {
         m.setVisible(true);
 
         JFrame f = jmri.util.JmriJFrame.getFrame("Test of Multi Pane Window function");
-        Assert.assertTrue("found frame", f != null);
+        assertNotNull( f, "found frame");
         JUnitUtil.dispose(f);
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();

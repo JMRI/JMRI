@@ -1,10 +1,9 @@
 package jmri.jmrix.acela.nodeconfig;
 
-import java.awt.GraphicsEnvironment;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,15 +11,15 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfHeadless
 public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private AcelaSystemConnectionMemo memo = null;
 
     @Test
     public void testGetTitle(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         frame.initComponents();
-        Assert.assertEquals("title","Configure Nodes",frame.getTitle());
+        Assertions.assertEquals("Configure Nodes",frame.getTitle(), "title");
     }
 
 
@@ -28,18 +27,18 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
 
         memo = new AcelaSystemConnectionMemo(); 
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new NodeConfigFrame(memo);
-        }
+        frame = new NodeConfigFrame(memo);
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.getTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
         super.tearDown();
     }
 }

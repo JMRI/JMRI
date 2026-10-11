@@ -79,15 +79,14 @@ public class AudioTablePanel extends JPanel {
         sourceDataTable.createDefaultColumnsFromModel();
 
         // configure items for GUI
-        listenerDataModel.configureTable(listenerDataTable);
         listenerDataModel.configEditColumn(listenerDataTable);
-        listenerDataModel.persistTable(listenerDataTable);
-        bufferDataModel.configureTable(bufferDataTable);
+        listenerDataModel.configureTable(listenerDataTable); // and persists
+
         bufferDataModel.configEditColumn(bufferDataTable);
-        bufferDataModel.persistTable(bufferDataTable);
-        sourceDataModel.configureTable(sourceDataTable);
+        bufferDataModel.configureTable(bufferDataTable); // and persists
+
         sourceDataModel.configEditColumn(sourceDataTable);
-        sourceDataModel.persistTable(sourceDataTable);
+        sourceDataModel.configureTable(sourceDataTable); // and persists
 
         // general GUI config
         this.setLayout(new BorderLayout());

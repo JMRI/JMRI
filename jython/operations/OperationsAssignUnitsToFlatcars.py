@@ -5,8 +5,9 @@
 # Part of the JMRI distribution
 #
 # To use this script you must provide the type names for containers and trailers, and the type names for the flatcars to use. 
-# You must also enter the train name that will service them. The train doesn't have to service the flatcars, this script will
-# do the flatcar assignments based on the container or trailer destinations. Run this script after the train is built.
+# You must also enter the train name that will service them. The train should not service the flatcars, this script will
+# do the flatcar assignments based on the container or trailer destinations. Run this script after the train is built. The containers
+# and trailers must resside on the same track as the flatcars.
 #
 # When there isn't enough flatcars for the containers or trailers, the script will produce a warning message and remove them
 # from the train.
@@ -51,7 +52,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
     # used when creating kernel names
     self.regex = "_$_"
     
-    print "Assigning flatcars to train (" + self.trainName + ")"
+    print ('Assigning flatcars to train ({})'.format(self.trainName))
     
     return
 
@@ -63,7 +64,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
     for unitArray in self.units:
         unitName = unitArray[0]
         if (carTypes.containsName(unitName) == False):
-          print "Error type(" + unitName + ") not found"
+          print ('Error car type ({}) not found'.format(unitName))
           return False
         flatcarOptions = unitArray[1]
         flatcarLoadName = unitArray[2]
@@ -71,19 +72,19 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
             number = flatcarOption[1]
             flatcarName = flatcarOption[0]
             if (carTypes.containsName(flatcarName) == False):
-                print "Error flatcar(" + flatcarName + ") for (" + unitName + ") not found"
+                print ('Error flatcar ({}) for ({}) not found'.format(flatcarName, unitName))
                 return False
-            print number, "(" + unitName + ") can be carried by flatcar (" + flatcarName + ") load name (" + flatcarLoadName + ")"
+            print ('{} ({}) can be carried by flatcar ({}) load name ({})'.format(number, unitName, flatcarName, flatcarLoadName))
             
     # get the train manager
     trainManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     # determine if train exists and is built
     train = trainManager.getTrainByName(self.trainName)
     if train == None:
-        print "Error Train (" + self.trainName + ") not found"
+        print ('Error Train ({}) not found'.format(self.trainName))
         return False
     if not train.isBuilt():
-        print "Error Train (" + self.trainName + ") not built"
+        print ('Error Train ({}) not built'.format(self.trainName))
         return False
     
     # get the car manager
@@ -95,31 +96,31 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
     carList = carManager.getByTrainDestinationList(train)
     flatcarList = carManager.getAvailableTrainList(train)
     
-    print carList.size(), "cars assigned to train (" + self.trainName + ")"
+    print ('{} cars assigned to train ({})'.format(carList.size(), self.trainName))
     
     for unitArray in self.units:
         unitName = unitArray[0]
         flatcarOptions = unitArray[1]
         flatcarLoadName = unitArray[2]
-        print "Searching for (" + unitName + "):"
+        print ('Searching for ({}):'.format(unitName))
         for unit in carList:
             if unit.getTypeName() == unitName:
-                print "    Loading (" + unit.toString() + ") destination (" + unit.getDestinationName() + ", " + unit.getDestinationTrackName() + ") final destination (" + unit.getFinalDestinationName() + ", " + unit.getFinalDestinationTrackName() + ")"
+                print ('    Loading ({}) ({}) destination ({}, {}) final destination ({}, {})'.format(unit.toString(), unitName, unit.getDestinationName(), unit.getDestinationTrackName(), unit.getFinalDestinationName(), unit.getFinalDestinationTrackName()))
                 if not unit.getKernel() == None:
-                    print "    (" + unit.toString() + ") assigned to kernel (" + unit.getKernelName() + ")"
+                    print ('    ({}) assigned to kernel ({})'.format(unit.toString(), unit.getKernelName()))
                     continue
                 else:
-                    print "    (" + unit.toString() + ") isn't assigned to a kernel"
+                    print ('    ({}) isn''t assigned to a kernel'.format(unit.toString()))
                     for flatcarOption in flatcarOptions:
                         flatcarName = flatcarOption[0]
                         number = flatcarOption[1]
                         for flatcar in flatcarList:
                             if flatcar.getTypeName() == flatcarName and flatcar.getTrack() == unit.getTrack():
-                                print "    Found flatcar(" + flatcar.toString() + ") type (" + flatcarName + ")"
+                                print ('    Found flatcar ({}) type ({})'.format(flatcar.toString(), flatcarName))
                                 if flatcar.getKernel() == None:
                                     # create new kernel using train name and unit's id
                                     kernel = kernelManager.newKernel(self.trainName + self.regex + unit.toString()) 
-                                    print "    Add (" + unit.toString() + ") and flatcar (" + flatcar.toString() + ") to kernel (" + kernel.getName() + ")"                                   
+                                    print ('    Add ({}) and flatcar ({}) to kernel ({})'.format(unit.toString(), flatcar.toString(), kernel.getName()))                             
                                     unit.setKernel(kernel)
                                     flatcar.setKernel(kernel)
                                     # show flatcar first in the manifest or switch list, then the units being carried
@@ -140,28 +141,28 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
                                     kernel = flatcar.getKernel()
                                     # determine if kernel is going to the same destination as this unit
                                     if not unit.getDestination() == flatcar.getDestination() or not unit.getDestinationTrack() == flatcar.getDestinationTrack():
-                                        print "    Can't use flatcar (" + flatcar.toString() + ") destination (" + flatcar.getDestinationName() + ", " + flatcar.getDestinationTrackName() + ")"
+                                        print ('    Can''t use flatcar ({}) destination ({}, {})'.format(flatcar.toString(), flatcar.getDestinationName(), flatcar.getDestinationTrackName()))
                                         continue
                                     if not unit.getFinalDestination() == flatcar.getFinalDestination() or not unit.getFinalDestinationTrack() == flatcar.getFinalDestinationTrack():
-                                        print "    Can't use flatcar (" + flatcar.toString() + ") final destination (" + flatcar.getFinalDestinationName() + ", " + flatcar.getFinalDestinationTrackName() + ")"
+                                        print ('    Can''t use flatcar ({}) final destination ({}, {})'.format())
                                         continue
                                     if not flatcarLoadName == flatcar.getLoadName():
-                                        print "    Can't use flatcar (" + flatcar.toString() + ") load name {" + flatcar.getLoadName() + ")"
+                                        print ('    Can''t use flatcar ({}) load name ({})'.format(flatcar.toString(), flatcar.getLoadName()))
                                         continue                                                                 
-                                    print "    Add (" + unit.toString() + ") to kernel (" + kernel.getName() + ")"
+                                    print ('    Add ({}) to kernel ({})'.format(unit.toString(), kernel.getName()))
                                     unit.setKernel(kernel)
                                     unit.setBlocking(kernel.getSize())
                                     train.setModified(True)
                                     break
                                 else:
-                                    print "    Flatcar (" + flatcar.toString() + ") full"
+                                    print ('    Flatcar ({}) full'.format(flatcar.toString()))
                         else:
                             continue
                         break
                     if unit.getKernel() == None:
                         title = "Warning couldn't find enough flatcars for train (" + self.trainName + ")"
                         message = "Warning (" + unit.toString() + ")  type (" + unit.getTypeName() + ") at (" + unit.getLocationName() + ") not assigned to a flatcar, train (" + self.trainName + ")"
-                        print message
+                        print (message)
                         javax.swing.JOptionPane.showMessageDialog(None, message, title, javax.swing.JOptionPane.WARNING_MESSAGE)
                         # remove trailer from train
                         unit.setRouteLocation(None)

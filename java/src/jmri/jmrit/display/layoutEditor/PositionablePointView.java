@@ -18,6 +18,7 @@ import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.JCBHandle;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
 
 /**
@@ -54,7 +55,7 @@ public class PositionablePointView extends LayoutTrackView {
         this.positionablePoint = point;
     }
 
-    final private PositionablePoint positionablePoint;
+    private final PositionablePoint positionablePoint;
 
     public PositionablePoint getPoint() {
         return positionablePoint;
@@ -1455,6 +1456,11 @@ public class PositionablePointView extends LayoutTrackView {
     void setLink() {
         if (getConnect1() == null || getConnect1().getLayoutBlock() == null) {
             log.error("{}.setLink(); Can not set link until we have a connecting track with a block assigned", getName());
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("EdgeLinkErrorMessage"),
+                    Bundle.getMessage("EdgeLinkErrorTitle"),
+                    JmriJOptionPane.ERROR_MESSAGE
+                    );
             return;
         }
         editLink = new JDialog();
@@ -1985,5 +1991,5 @@ public class PositionablePointView extends LayoutTrackView {
         // nothing to see here, move along...
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class);
 }

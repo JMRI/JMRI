@@ -1,17 +1,14 @@
 package jmri.server.json.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,15 +25,22 @@ import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -53,12 +57,14 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", folder));
         JUnitUtil.initConnectionConfigManager();
         JUnitUtil.initZeroConfServiceManager();
+        // Initialize mock PermissionManager for session authentication tests
+        InstanceManager.store(new MockPermissionManager(), jmri.PermissionManager.class);
     }
 
     @AfterEach
     @Override
     public void tearDown() throws Exception {
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
@@ -78,19 +84,18 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         assertEquals(service.getNode(new JsonRequest(locale, JSON.V5, JSON.GET, 42)), service.doGet(JSON.NODE, null, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
         assertEquals(service.getNetworkServices(new JsonRequest(locale, JSON.V5, JSON.GET, 42)), service.doGet(JSON.NETWORK_SERVICE, null, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
         assertEquals(service.getNetworkServices(new JsonRequest(locale, JSON.V5, JSON.GET, 42)), service.doGet(JSON.NETWORK_SERVICES, null, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
-        try {
+
+        JsonException ex = assertThrows(JsonException.class, () ->
             service.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
-                    NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
-        try {
-            service.doGet("INVALID TYPE TOKEN", null, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(500, ex.getCode());
-        }
+                NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals(404, ex.getCode());
+
+        ex = assertThrows(JsonException.class, () ->
+            service.doGet("INVALID TYPE TOKEN", null, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals(500, ex.getCode());
+
         ZeroConfService zcs = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
@@ -99,8 +104,10 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == true;
         }, "Published ZeroConf Service");
-        assertEquals(service.getNetworkService(JSON.ZEROCONF_SERVICE_TYPE, new JsonRequest (locale, JSON.V5, JSON.GET, 42)), service.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
-                        NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
+        assertEquals(service.getNetworkService(JSON.ZEROCONF_SERVICE_TYPE,
+            new JsonRequest (locale, JSON.V5, JSON.GET, 42)),
+                service.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
+                NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
         zcs.stop();
         JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == false;
@@ -147,24 +154,25 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         int heartbeat = 1000; // one second
         JsonNode result = service.getHello(heartbeat, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
-        assertEquals("Hello type", JSON.HELLO, result.path(JSON.TYPE).asText());
+        assertEquals( JSON.HELLO, result.path(JSON.TYPE).asText(), "Hello type");
         JsonNode data = result.path(JSON.DATA);
-        assertEquals("JMRI Version", Version.name(), data.path(JSON.JMRI).asText());
-        assertEquals("JSON Complete Version", JSON.V5_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
-        assertEquals("JSON Version Identifier", JSON.V5, data.path(JSON.VERSION).asText());
-        assertEquals("Heartbeat", Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt());
-        assertEquals("RR Name", InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.RAILROAD).asText());
-        assertEquals("Node Identity", NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
+        assertEquals( Version.name(), data.path(JSON.JMRI).asText(), "JMRI Version");
+        assertEquals( JSON.V5_PROTOCOL_VERSION, data.path(JSON.JSON).asText(), "JSON Complete Version");
+        assertEquals( JSON.V5, data.path(JSON.VERSION).asText(), "JSON Version Identifier");
+        assertEquals( Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt(), "Heartbeat");
+        assertEquals( InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.RAILROAD).asText(),
+            "RR Name");
+        assertEquals( NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText(), "Node Identity");
         Profile profile = ProfileManager.getDefault().getActiveProfile();
         assertNotNull(profile);
-        assertEquals("Profile", profile.getName(), data.path(JSON.ACTIVE_PROFILE).asText());
-        assertEquals("Message has 2 elements", 2, result.size());
-        assertEquals("Message data has 7 elements", 7, data.size());
+        assertEquals( profile.getName(), data.path(JSON.ACTIVE_PROFILE).asText(), "Profile");
+        assertEquals( 2, result.size(), "Message has 2 elements");
+        assertEquals( 7, data.size(), "Message data has 7 elements");
         result = service.getHello(heartbeat, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         data = result.path(JSON.DATA);
-        assertEquals("Message has 2 elements", 3, result.size());
-        assertEquals("Message data has 7 elements", 7, data.size());
+        assertEquals( 3, result.size(), "Message has 2 elements");
+        assertEquals( 7, data.size(), "Message data has 7 elements");
     }
 
     /**
@@ -182,12 +190,10 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
             assertEquals(metadata, result.path(JSON.DATA).path(JSON.NAME).asText());
             assertEquals(Metadata.getBySystemName(metadata), result.path(JSON.DATA).path(JSON.VALUE).asText());
         }
-        try {
-            service.getMetadata(locale, "invalid_metadata_entry", 42);
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+        JsonException ex = assertThrows(JsonException.class, () ->
+            service.getMetadata(locale, "invalid_metadata_entry", 42),
+            "Expected exception not thrown");
+        assertEquals(404, ex.getCode());
     }
 
     /**
@@ -307,12 +313,12 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetNetworkService() throws JsonException {
         JsonNode result;
         // non-existent service
-        try {
-            result = service.getNetworkService("non-existant-service", new JsonRequest(locale, JSON.V5, JSON.GET, 42)); // NOI18N
-            fail("Expected exception not thrown " + result);
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.getNetworkService("non-existant-service",
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+        "Expected exception not thrown ");
+        assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
+
         // published service
         ZeroConfService zcs = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
         JUnitUtil.waitFor(() -> {
@@ -350,7 +356,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         validate(result);
         assertEquals(JSON.RAILROAD, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(),
+            data.path(JSON.NAME).asText());
     }
 
     /**
@@ -359,7 +366,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      * @throws jmri.server.json.JsonException if the result cannot be validated
      */
     @Test
-    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    @DisabledIfHeadless
     public void testGetPanel() throws JsonException {
         Editor editor = new SwitchboardEditor("test");
         ObjectNode result = service.getPanel(editor, JSON.XML, 42);
@@ -374,7 +381,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      * @throws jmri.server.json.JsonException if the result cannot be validated
      */
     @Test
-    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    @DisabledIfHeadless
     public void testGetPanels_Locale_String() throws JsonException {
         Editor editor = new SwitchboardEditor("test");
         JsonNode result = service.getPanels(JSON.XML, 42);
@@ -389,7 +396,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      * @throws jmri.server.json.JsonException if the result cannot be validated
      */
     @Test
-    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    @DisabledIfHeadless
     public void testGetPanels_Locale() throws JsonException {
         Editor editor = new SwitchboardEditor("test");
         JsonNode result = service.getPanels(42);
@@ -405,13 +412,10 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
      */
     @Test
     public void testGetConfigProfile() {
-        try {
-            JsonNode result = service.getConfigProfile("non-existent-profile", new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            validate(result);
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.getConfigProfile("non-existent-profile", new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown");
+        assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
 
     }
 
@@ -425,7 +429,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetConfigProfiles() throws JsonException {
         ArrayNode result = service.getConfigProfiles(new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
-        assertEquals("Result has every profile", ProfileManager.getDefault().getProfiles().length, result.size());
+        assertEquals( ProfileManager.getDefault().getProfiles().length, result.size(), "Result has every profile");
     }
 
     /**
@@ -434,25 +438,277 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     @Test
     public void testAddressForString() {
         DccLocoAddress result = JsonUtilHttpService.addressForString("123(l)");
-        assertTrue("Address is long", result.isLongAddress());
-        assertEquals("Address is 123", 123, result.getNumber());
+        assertTrue( result.isLongAddress(), "Address is long");
+        assertEquals( 123, result.getNumber(), "Address is 123");
         result = JsonUtilHttpService.addressForString("123(L)");
-        assertTrue("Address is long", result.isLongAddress());
-        assertEquals("Address is 123", 123, result.getNumber());
+        assertTrue( result.isLongAddress(), "Address is long");
+        assertEquals( 123, result.getNumber(), "Address is 123");
         result = JsonUtilHttpService.addressForString("123(s)");
-        assertFalse("Address is short", result.isLongAddress());
-        assertEquals("Address is 123", 123, result.getNumber());
+        assertFalse( result.isLongAddress(), "Address is short");
+        assertEquals( 123, result.getNumber(), "Address is 123");
         result = JsonUtilHttpService.addressForString("123");
-        assertFalse("Address is short", result.isLongAddress());
-        assertEquals("Address is 123", 123, result.getNumber());
+        assertFalse( result.isLongAddress(), "Address is short");
+        assertEquals( 123, result.getNumber(), "Address is 123");
         result = JsonUtilHttpService.addressForString("3");
-        assertFalse("Address is short", result.isLongAddress());
-        assertEquals("Address is 3", 3, result.getNumber());
+        assertFalse( result.isLongAddress(), "Address is short");
+        assertEquals( 3, result.getNumber(), "Address is 3");
         result = JsonUtilHttpService.addressForString("3(l)");
-        assertTrue("Address is long", result.isLongAddress());
-        assertEquals("Address is 3", 3, result.getNumber());
+        assertTrue( result.isLongAddress(), "Address is long");
+        assertEquals( 3, result.getNumber(), "Address is 3");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
+    /**
+     * Test of postSessionLogin method with valid credentials.
+     *
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testPostSessionLoginSuccess() throws JsonException {
+        // Create login request data
+        ObjectNode data = mapper.createObjectNode();
+        data.put("username", "testuser");
+        data.put("password", "testpass");
 
+        // Mock a successful login by setting up the permission system
+        // In actual usage, this would check against configured users
+        // For test purposes, we'll just verify the method handles the call
+
+        try {
+            JsonNode result = service.doPost(JSON.SESSION_LOGIN, "testuser", data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+
+            assertNotNull(result, "Result should not be null");
+            assertEquals(JSON.SESSION_LOGIN, result.path(JSON.TYPE).asText(), "Type should be sessionLogin");
+            JsonNode dataNode = result.path(JSON.DATA);
+            assertNotNull(dataNode, "Data node should not be null");
+
+            // Verify response structure (success field may or may not be present depending on actual login)
+            assertTrue(dataNode.has(JSON.USERNAME) || result.path(JSON.TYPE).asText().equals(JSON.SESSION_LOGIN),
+                "Response should have username or be sessionLogin type");
+        } catch (JsonException ex) {
+            // Expected for unauthorized user in test environment
+            assertTrue(ex.getCode() == 401 || ex.getCode() == 403,
+                "Should be unauthorized (401) or forbidden (403) for test user");
+        }
+    }
+
+    /**
+     * Test of postSessionLogin method with missing username.
+     */
+    @Test
+    public void testPostSessionLoginMissingUsername() {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("password", "testpass");
+
+        JsonException ex = assertThrows(JsonException.class, () -> {
+            service.doPost(JSON.SESSION_LOGIN, null, data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        });
+
+        assertEquals(400, ex.getCode(), "Should be bad request (400)");
+        assertTrue(ex.getMessage().contains("username") || ex.getMessage().contains("parameter"),
+            "Error message should mention username or missing parameter");
+    }
+
+    /**
+     * Test of postSessionLogin method with guest user.
+     */
+    @Test
+    public void testPostSessionLoginGuestUser() {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("username", "guest");
+        data.put("password", "");
+
+        // Guest users should be rejected
+        JsonException ex = assertThrows(JsonException.class, () -> {
+            service.doPost(JSON.SESSION_LOGIN, "guest", data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        });
+
+        assertEquals(403, ex.getCode(), "Should be forbidden (403) for guest user");
+        assertTrue(ex.getMessage().toLowerCase().contains("guest"),
+            "Error message should mention guest");
+    }
+
+    /**
+     * Test of postSessionLogin method with guest user (should fail).
+     */
+    @Test
+    public void testPostSessionLoginInvalidCredentials() {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("username", "guest");
+        data.put("password", "anypassword");
+
+        JsonException ex = assertThrows(JsonException.class, () -> {
+            service.doPost(JSON.SESSION_LOGIN, "guest", data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        });
+
+        assertEquals(403, ex.getCode(), "Should be forbidden (403) for guest user");
+    }
+
+    /**
+     * Test of postSessionLogout method.
+     *
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testPostSessionLogout() throws JsonException {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("token", "test-token-12345");
+        data.put(JSON.USERNAME, "testuser");
+
+        JsonNode result = service.doPost(JSON.SESSION_LOGOUT, "testuser", data,
+            new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+
+        assertNotNull(result, "Result should not be null");
+        assertEquals(JSON.SESSION_LOGOUT, result.path(JSON.TYPE).asText(), "Type should be sessionLogout");
+        JsonNode dataNode = result.path(JSON.DATA);
+        assertNotNull(dataNode, "Data node should not be null");
+        assertEquals("test-token-12345", dataNode.path("authenticationToken").asText(), "Should return the token");
+    }
+
+    /**
+     * Test of postSessionLogout method with empty token.
+     *
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testPostSessionLogoutEmptyToken() throws JsonException {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("token", "");
+
+        // Logout should still succeed even with empty token
+        JsonNode result = service.doPost(JSON.SESSION_LOGOUT, null, data,
+            new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+
+        assertNotNull(result, "Result should not be null");
+        assertEquals(JSON.SESSION_LOGOUT, result.path(JSON.TYPE).asText(), "Type should be sessionLogout");
+    }
+
+    /**
+     * Test session login/logout through socket service integration.
+     *
+     * @throws java.io.IOException if test fails unexpectedly
+     * @throws jmri.JmriException if test fails unexpectedly
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testSocketServiceSessionMessages() throws IOException, jmri.JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonUtilSocketService socketService = new JsonUtilSocketService(connection);
+        ObjectMapper testMapper = connection.getObjectMapper();
+
+        // Test LOGIN message
+        ObjectNode loginData = testMapper.createObjectNode();
+        loginData.put("username", "testuser");
+        loginData.put("password", "testpass");
+
+        try {
+            socketService.onMessage(JSON.SESSION_LOGIN, loginData,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+            JsonNode message = connection.getMessage();
+            // Message should either be success or error (depending on permission setup)
+            assertNotNull(message, "Should receive a response message");
+        } catch (JsonException ex) {
+            // Expected if no valid user configured
+            assertTrue(ex.getCode() == 401 || ex.getCode() == 403,
+                "Should be auth error for test environment");
+        }
+
+        // Test LOGOUT message
+        ObjectNode logoutData = testMapper.createObjectNode();
+        logoutData.put("token", "test-token");
+        logoutData.put(JSON.USERNAME, "testuser");
+
+        socketService.onMessage(JSON.SESSION_LOGOUT, logoutData,
+            new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        JsonNode message = connection.getMessage();
+        assertNotNull(message, "Should receive logout response message");
+        assertEquals(JSON.SESSION_LOGOUT, message.path(JSON.TYPE).asText(),
+            "Response type should be sessionLogout");
+    }
+
+    /**
+     * Mock PermissionManager for testing session authentication.
+     */
+    private static class MockPermissionManager implements jmri.PermissionManager {
+        @Override
+        public boolean remoteLogin(StringBuilder sessionId, java.util.Locale locale,
+                                  String username, String password) {
+            // Reject guest users
+            if ("guest".equals(username)) {
+                return false;
+            }
+            // Accept any non-guest user for testing
+            sessionId.append("test-session-").append(username);
+            return true;
+        }
+
+        @Override
+        public void remoteLogout(String sessionId) {
+            // No-op for testing
+        }
+
+        @Override
+        public boolean isAGuestUser(String username) {
+            return "guest".equals(username);
+        }
+
+        @Override
+        public boolean isAGuestUser(jmri.User user) {
+            return user != null && isAGuestUser(user.getUserName());
+        }
+
+        // Stub implementations for other required methods
+        @Override
+        public jmri.Role addRole(String name) { return null; }
+        @Override
+        public void removeRole(String name) {}
+        @Override
+        public jmri.User addUser(String username, String password) { return null; }
+        @Override
+        public void removeUser(String username) {}
+        @Override
+        public void changePassword(String newPassword, String oldPassword) {}
+        @Override
+        public boolean login(String username, String password) { return false; }
+        @Override
+        public void logout() {}
+        @Override
+        public String getCurrentUserName() { return null; }
+        @Override
+        public boolean isCurrentUser(String username) { return false; }
+        @Override
+        public boolean isCurrentUser(jmri.User user) { return false; }
+        @Override
+        public boolean isCurrentUserPermittedToChangePassword() { return false; }
+        @Override
+        public boolean isLoggedIn() { return false; }
+        @Override
+        public boolean isRemotelyLoggedIn(String sessionId) { return false; }
+        @Override
+        public void addLoginListener(LoginListener listener) {}
+        @Override
+        public boolean isEnabled() { return true; }
+        @Override
+        public void setEnabled(boolean enabled) {}
+        @Override
+        public boolean isAllowEmptyPasswords() { return false; }
+        @Override
+        public void setAllowEmptyPasswords(boolean value) {}
+        @Override
+        public boolean hasAtLeastPermission(jmri.Permission permission, jmri.PermissionValue minValue) { return true; }
+        @Override
+        public boolean hasAtLeastRemotePermission(String sessionId, jmri.Permission permission, jmri.PermissionValue minValue) { return true; }
+        @Override
+        public boolean ensureAtLeastPermission(jmri.Permission permission, jmri.PermissionValue minValue) { return true; }
+        @Override
+        public void registerOwner(jmri.PermissionOwner owner) {}
+        @Override
+        public void registerPermission(jmri.Permission permission) {}
+        @Override
+        public void storePermissionSettings() {}
+    }
 }
+

@@ -10,10 +10,10 @@ import org.junit.Assert;
  *
  * @author Paul Bender
  */
-public class Z21AdapterTest {
+class Z21AdapterTest {
 
     @Test
-    public void testCtor() {
+    void testCtor() {
         Z21Adapter a = new Z21Adapter();
         Assert.assertNotNull(a);
         a.dispose();

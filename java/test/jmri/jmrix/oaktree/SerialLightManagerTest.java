@@ -44,6 +44,6 @@ public class SerialLightManagerTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);
 
 }

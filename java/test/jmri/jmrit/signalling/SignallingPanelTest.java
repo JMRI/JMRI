@@ -83,6 +83,6 @@ public class SignallingPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignallingPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignallingPanelTest.class);
 
 }

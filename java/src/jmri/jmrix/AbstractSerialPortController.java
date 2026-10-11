@@ -42,7 +42,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
     public String handlePortBusy(jmri.jmrix.purejavacomm.PortInUseException p, String portName, org.slf4j.Logger log) {
         log.error("{} port is in use: {}", portName, p.getMessage());
-        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(this.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortInUse", portName);
     }
 
@@ -56,22 +56,22 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
     public String handlePortNotFound(jmri.jmrix.purejavacomm.NoSuchPortException p, String portName, org.slf4j.Logger log) {
         log.error("Serial port {} not found", portName);
-        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(this.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
     /**
      * Standard error handling for the general port-not-found case.
-     * @param systemPrefix the system prefix
+     * @param memo the system memo
      * @param portName port name.
      * @param log system log, passed so logging comes from bottom level class
      * @param ex Underlying Exception that caused this failure
      * @return human readable string with error detail.
      */
-    public static String handlePortNotFound(String systemPrefix, String portName, org.slf4j.Logger log, Exception ex) {
+    public static String handlePortNotFound(SystemConnectionMemo memo, String portName, org.slf4j.Logger log, Exception ex) {
         log.error("Serial port {} not found: {}", portName, ex.getMessage());
-        if (systemPrefix != null) {
-            ConnectionStatus.instance().setConnectionState(systemPrefix, portName, ConnectionStatus.CONNECTION_DOWN);
+        if (memo != null) {
+            ConnectionStatus.instance().setConnectionState(memo, ConnectionStatus.CONNECTION_DOWN);
         }
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
@@ -80,8 +80,36 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
+    protected void reconnectFromLoop(int retryNum){
+        if (!opened) {
+            try {
+                connect();
+                if (opened) {
+                    super.reconnect();
+                }
+            } catch (IOException ex) {
+                log.trace("restart failed", ex); // main warning to log.error done within connect();
+                // if returned on exception stops thread and connection attempts
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void connect() throws java.io.IOException {
         openPort(mPort, "JMRI app");
+        if (currentSerialPort == null) {
+            log.debug("currentSerialPort is null");
+            // openPort failed to open the port. "opened" might have been set
+            // to true despite failure to open the port so we set it to false.
+            opened = false;
+        }
+        if (opened) {
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
+        }
     }
 
     /**
@@ -98,8 +126,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param log Logger to use for errors, passed so that errors are logged from low-level class
      * @return the serial port object for later use
      */
-    final protected SerialPort activatePort(String portName, org.slf4j.Logger log) {
-        return activatePort(this.getSystemPrefix(), portName, log, 1, SerialPort.Parity.NONE);
+    protected final SerialPort activatePort(String portName, org.slf4j.Logger log) {
+        return activatePort(this.getSystemConnectionMemo(), portName, log, 1, SerialPort.Parity.NONE);
     }
 
     /**
@@ -117,8 +145,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param stop_bits The number of stop bits, either 1 or 2
      * @return the serial port object for later use
      */
-    final protected SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
-        return activatePort(this.getSystemPrefix(), portName, log, stop_bits, SerialPort.Parity.NONE);
+    protected final SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
+        return activatePort(this.getSystemConnectionMemo(), portName, log, stop_bits, SerialPort.Parity.NONE);
     }
 
     /**
@@ -131,18 +159,24 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * This is usually followed by calls to
      * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
      *
-     * @param systemPrefix the system prefix
+     * @param memo the system memo
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class'
      * @param stop_bits The number of stop bits, either 1 or 2
      * @param parity one of the defined parity contants
      * @return the serial port object for later use
      */
-    public static SerialPort activatePort(String systemPrefix, String portName, org.slf4j.Logger log, int stop_bits, SerialPort.Parity parity) {
-        return jmri.jmrix.jserialcomm.JSerialPort.activatePort(systemPrefix, portName, log, stop_bits, parity);
+    public static SerialPort activatePort(
+            SystemConnectionMemo memo,
+            String portName,
+            org.slf4j.Logger log,
+            int stop_bits,
+            SerialPort.Parity parity) {
+
+        return jmri.jmrix.jserialcomm.JSerialPort.activatePort(memo, portName, log, stop_bits, parity);
     }
 
-    final protected void setComPortTimeouts(SerialPort serialPort, Blocking blocking, int timeout) {
+    protected final void setComPortTimeouts(SerialPort serialPort, Blocking blocking, int timeout) {
         serialPort.setComPortTimeouts(blocking.getValue(), timeout, 0);
     }
 
@@ -226,7 +260,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be updated
      * @param baud baud rate to be set
      */
-    final protected void setBaudRate(SerialPort serialPort, int baud) {
+    protected final void setBaudRate(SerialPort serialPort, int baud) {
         serialPort.setBaudRate(baud);
     }
 
@@ -237,7 +271,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param rts        set RTS active if true
      * @param dtr        set DTR active if true
      */
-    final protected void configureLeads(SerialPort serialPort, boolean rts, boolean dtr) {
+    protected final void configureLeads(SerialPort serialPort, boolean rts, boolean dtr) {
         if (rts) {
             serialPort.setRTS();
         } else {
@@ -286,7 +320,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be updated
      * @param flow  set which kind of flow control to use
      */
-    final protected void setFlowControl(SerialPort serialPort, FlowControl flow) {
+    protected final void setFlowControl(SerialPort serialPort, FlowControl flow) {
         lastFlowControl = flow;
         serialPort.setFlowControl(flow);
     }
@@ -297,7 +331,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be examined
      * @return flow control setting observed in the port
      */
-    final protected FlowControl getFlowControl(SerialPort serialPort) {
+    protected final FlowControl getFlowControl(SerialPort serialPort) {
         // do a cross-check, just in case there's an issue
         int nowFlow = serialPort.getFlowControlSettings();
 
@@ -329,7 +363,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be updated
      * @param serialPortDataListener the listener to add
      */
-    final protected void setDataListener(SerialPort serialPort, SerialPortDataListener serialPortDataListener){
+    protected final void setDataListener(SerialPort serialPort, SerialPortDataListener serialPortDataListener){
         serialPort.addDataListener(serialPortDataListener);
     }
 
@@ -337,7 +371,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Cleanly close the specified port
      * @param serialPort Port to be closed
      */
-    final protected void closeSerialPort(SerialPort serialPort){
+    protected final void closeSerialPort(SerialPort serialPort){
         serialPort.closePort();
     }
 
@@ -348,7 +382,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param flow       flow control mode from (@link jmri.jmrix.purejavacomm.SerialPort}
      */
     //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
-    final protected void configureLeadsAndFlowControl(jmri.jmrix.purejavacomm.SerialPort serialPort, int flow) {
+    protected final void configureLeadsAndFlowControl(jmri.jmrix.purejavacomm.SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
 
@@ -358,7 +392,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param log The low-level logger to get this reported against the right class
      * @param portName low-level name of selected port
      */
-    final protected void reportPortStatus(org.slf4j.Logger log, String portName) {
+    protected final void reportPortStatus(org.slf4j.Logger log, String portName) {
         if (log.isInfoEnabled()) {
             log.info("{}: Port {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {} flow: {}",
                     this.getSystemConnectionMemo().getUserName(), currentSerialPort.getDescriptivePortName(),
@@ -414,7 +448,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    final public void configureBaudRate(String rate) {
+    public final void configureBaudRate(String rate) {
         mBaudRate = rate;
     }
 
@@ -422,7 +456,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    final public void configureBaudRateFromNumber(String indexString) {
+    public final void configureBaudRateFromNumber(String indexString) {
         int baudNum;
         int index = 0;
         final String[] rates = validBaudRates();
@@ -490,7 +524,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Invalid indexes are ignored.
      */
     @Override
-    final public void configureBaudRateFromIndex(int index) {
+    public final void configureBaudRateFromIndex(int index) {
         if (validBaudRates().length > index && index > -1 ) {
             mBaudRate = validBaudRates()[index];
             log.debug("mBaudRate set by index to: {}", mBaudRate);
@@ -522,7 +556,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    final public String getCurrentBaudNumber() {
+    public final String getCurrentBaudNumber() {
         int[] numbers = validBaudNumbers();
         String[] rates = validBaudRates();
         if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
@@ -547,7 +581,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     @Override
-    final public int getCurrentBaudIndex() {
+    public final int getCurrentBaudIndex() {
         if (mBaudRate != null) {
             String[] rates = validBaudRates();
             // find the configured baud rate value
@@ -592,7 +626,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      *         0 if baudrate not supported by this adapter,
      *         -1 if no match (configuration system should prevent this)
      */
-    final public int currentBaudNumber(String currentBaudRate) {
+    public final int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
         int[] numbers = validBaudNumbers();
 
@@ -639,7 +673,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Each port adapter should handle this and it should be abstract.
      */
     @Override
-    protected void resetupConnection(){}
+    protected void resetupConnection() {}
 
     /**
      * Is the serial port open?
@@ -665,6 +699,45 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         outputStream.replaceStream(OutputStream.nullOutputStream());
         currentSerialPort = serialPort;
         oldSerialPort.closePort();
+    }
+
+    /**
+     * Close the serial port.
+     * If the serial port isn't closed, the hardware might fail to open the
+     * same port again. For example, if the serial port is /dev/rfcomm0 and
+     * it's not closed, once the hardware reinitializes the port, it might be
+     * /dev/rfcomm1 instead.
+     */
+    public void closePort() {
+        try {
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            log.warn("Exception during close stream", e);
+        }
+        if (currentSerialPort != null) {
+            currentSerialPort.closePort();
+        } else {
+            log.warn("Cannot close serial port. It's null");
+        }
+    }
+
+    /**
+     * Attempts to reconnect to a failed port.
+     * Starts a reconnect thread
+     */
+    @Override
+    protected void reconnect() {
+        // If the connection is already open, then we shouldn't try a re-connect.
+        if (opened || !allowConnectionRecovery) {
+            return;
+        }
+        try {
+            connect();
+            super.reconnect();
+        } catch (IOException e) {
+            log.warn("Error during reconnect", e);
+        }
     }
 
     /**

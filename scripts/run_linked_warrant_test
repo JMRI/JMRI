@@ -13,7 +13,16 @@
 rm -f ./failed_files.txt
 touch ./failed_files.txt
 
-for jmri_test in $( find java/test/$1 -name \*Test.java -exec grep -q jmri.skipLinkedWarrantTest {} \; -print) 
+# Find all matching test files
+test_files=$(find java/test/$1 -name \*Test.java -exec grep -q jmri.skipLinkedWarrantTest {} \; -print)
+
+# Error if none found
+if [ -z "$test_files" ]; then
+    echo "ERROR: No tests with jmri.skipLinkedWarrantTest found."
+    exit 2
+fi
+
+for jmri_test in $test_files
     do jmri_test=${jmri_test#java/test/} 
         jmri_test=${jmri_test%\.java}
         date

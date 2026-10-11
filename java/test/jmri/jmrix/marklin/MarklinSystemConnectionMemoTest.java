@@ -3,7 +3,6 @@ package jmri.jmrix.marklin;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,13 +17,14 @@ public class MarklinSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     @Test
     public void testCtorWithoutParameter() {
         MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo();
-        Assert.assertNotNull(c);
+        Assertions.assertNotNull(c);
     }
 
     @Override
     @Test
     public void testProvidesConsistManager() {
-        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+        Assertions.assertFalse(scm.provides(jmri.ConsistManager.class),
+                "Provides ConsistManager");
     }
 
     @Override

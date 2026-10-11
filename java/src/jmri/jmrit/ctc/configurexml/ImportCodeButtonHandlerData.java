@@ -19,7 +19,7 @@ import jmri.jmrit.ctc.CTCFiles;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class ImportCodeButtonHandlerData implements Serializable {
-    private final static int FILE_VERSION = 6;
+    private static final int FILE_VERSION = 6;
     public static final int SWITCH_NOT_SLAVED = -1;
 
     public enum LOCK_IMPLEMENTATION {
@@ -27,7 +27,7 @@ public class ImportCodeButtonHandlerData implements Serializable {
 // gotten by calling "CommonSubs.getButtonSelectedInt".
         GREGS(0), OTHER(1);
         private final int _mRadioGroupValue;
-        private final static HashMap<Integer, LOCK_IMPLEMENTATION> map = new HashMap<>();
+        private static final HashMap<Integer, LOCK_IMPLEMENTATION> map = new HashMap<>();
         private LOCK_IMPLEMENTATION (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (LOCK_IMPLEMENTATION value : LOCK_IMPLEMENTATION.values()) { map.put(value._mRadioGroupValue, value); }}
     }
@@ -37,7 +37,7 @@ public class ImportCodeButtonHandlerData implements Serializable {
 // gotten by calling "CommonSubs.getButtonSelectedInt".
         TURNOUT(0), CROSSOVER(1), DOUBLE_CROSSOVER(2);
         private final int _mRadioGroupValue;
-        private final static HashMap<Integer, TURNOUT_TYPE> map = new HashMap<>();
+        private static final HashMap<Integer, TURNOUT_TYPE> map = new HashMap<>();
         private TURNOUT_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (TURNOUT_TYPE value : TURNOUT_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
     }
@@ -150,13 +150,13 @@ public class ImportCodeButtonHandlerData implements Serializable {
     So if you want to do BOTH, then you need to increase file version by 2, and insure that the
     first increment is processed by this:
 */
-    private final static String FILE_VERSION_STRING = "<string>_mFileVersion</string>"; // NOI18N
-    private final static String LESS_THAN_SIGN = "<";                                   // NOI18N
+    private static final String FILE_VERSION_STRING = "<string>_mFileVersion</string>"; // NOI18N
+    private static final String LESS_THAN_SIGN = "<";                                   // NOI18N
     private static final String TEMPORARY_EXTENSION = ".xmlTMP";                        // NOI18N
 
 //  Regarding "@SuppressFBWarnings": My attitude is that if the input file is screwed up, do nothing!:
     @SuppressFBWarnings(value = "NP_IMMEDIATE_DEREFERENCE_OF_READLINE", justification = "I'm already catching 'NullPointerException', it's ok!")
-    static public void preprocessingUpgradeSelf(String filename) {
+    public static void preprocessingUpgradeSelf(String filename) {
 //  First, get the existing _mFileVersion from the file to see if we need to work on it:
         int fileVersion = -1;       // Indicate none found.
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
@@ -184,7 +184,7 @@ public class ImportCodeButtonHandlerData implements Serializable {
     }
 
     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
-    static private void upgradeVersion4FileTo5(String filename) {
+    private static void upgradeVersion4FileTo5(String filename) {
         String temporaryFilename = CTCFiles.changeExtensionTo(filename, TEMPORARY_EXTENSION);
         (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
         boolean hadAChange = false;
@@ -229,7 +229,7 @@ public class ImportCodeButtonHandlerData implements Serializable {
      * @param filename The .xml file to convert from version 5 format to version 6 format.
      */
     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
-    static private void upgradeVersion5FileTo6(String filename) {
+    private static void upgradeVersion5FileTo6(String filename) {
         String temporaryFilename = CTCFiles.changeExtensionTo(filename, TEMPORARY_EXTENSION);
         (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
         boolean hadAChange = false;
@@ -260,9 +260,9 @@ public class ImportCodeButtonHandlerData implements Serializable {
         or
                 The original aLine passed and NOTHING written, so that other(s) can check it further.
 */
-    private final static String INT_START_STRING = "<int>"; // NOI18N
-    private final static String INT_END_STRING = "</int>";  // NOI18N
-    static private String checkFileVersion(BufferedReader bufferedReader, BufferedWriter bufferedWriter, String aLine, String oldVersion, String newVersion) throws IOException {
+    private static final String INT_START_STRING = "<int>"; // NOI18N
+    private static final String INT_END_STRING = "</int>";  // NOI18N
+    private static String checkFileVersion(BufferedReader bufferedReader, BufferedWriter bufferedWriter, String aLine, String oldVersion, String newVersion) throws IOException {
         if (aLine.contains(FILE_VERSION_STRING)) {
             writeLine(bufferedWriter, aLine);
             writeLine(bufferedWriter, bufferedReader.readLine());   // Ignore <void method="set">
@@ -281,9 +281,9 @@ public class ImportCodeButtonHandlerData implements Serializable {
         return aLine;   // Line wasn't for us!
     }
 
-    private final static String STRING_START_STRING = "<string>";   // NOI18N
-    private final static String STRING_END_STRING = "</string>";    // NOI18N
-    static private String checkForRefactor(BufferedWriter bufferedWriter, String aLine, String oldName, String newName) throws IOException {
+    private static final String STRING_START_STRING = "<string>";   // NOI18N
+    private static final String STRING_END_STRING = "</string>";    // NOI18N
+    private static String checkForRefactor(BufferedWriter bufferedWriter, String aLine, String oldName, String newName) throws IOException {
         int intStart = aLine.indexOf(STRING_START_STRING + oldName + STRING_END_STRING);
         if (intStart >= 0) { // Found, replace:
             writeLine(bufferedWriter, aLine.substring(0, intStart) + STRING_START_STRING + newName + STRING_END_STRING);
@@ -292,7 +292,7 @@ public class ImportCodeButtonHandlerData implements Serializable {
         return aLine;
     }
 
-    static private String checkForMultipleSemiColons(BufferedWriter bufferedWriter, String aLine) throws IOException {
+    private static String checkForMultipleSemiColons(BufferedWriter bufferedWriter, String aLine) throws IOException {
         int intStart = aLine.indexOf(STRING_START_STRING);
         int intEnd = aLine.indexOf(STRING_END_STRING);
         if (intStart >=0 && intEnd >=0 && intStart < intEnd) { // Insure a line we might look at:
@@ -308,7 +308,7 @@ public class ImportCodeButtonHandlerData implements Serializable {
     }
 
 
-    static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
+    private static void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
         bufferedWriter.write(aLine); bufferedWriter.newLine();
     }
 }

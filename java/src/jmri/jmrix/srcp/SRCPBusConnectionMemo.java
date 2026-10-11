@@ -248,6 +248,6 @@ public class SRCPBusConnectionMemo extends DefaultSystemConnectionMemo implement
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPBusConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(SRCPBusConnectionMemo.class);
 
 }

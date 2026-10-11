@@ -93,8 +93,8 @@ public class Subscribe extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return CategoryMqtt.MQTT;
     }
 
     /** {@inheritDoc} */
@@ -174,6 +174,6 @@ public class Subscribe extends AbstractDigitalAction
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Subscribe.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Subscribe.class);
 
 }

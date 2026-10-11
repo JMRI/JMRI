@@ -222,7 +222,7 @@ public class FindBugsCheck {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FindBugsCheck.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FindBugsCheck.class);
 
 */
  // end of commenting out file

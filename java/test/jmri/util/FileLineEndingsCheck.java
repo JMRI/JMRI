@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FileLineEndingsCheck {
 
-    private final static Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
+    private static final Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
 
     public static Iterable<File> data() {
         return getFiles(new File("."),
@@ -118,17 +118,18 @@ public class FileLineEndingsCheck {
     public void lineEndings(File file) {
         try {
             String contents = FileUtils.readFileToString(file, java.nio.charset.Charset.defaultCharset());
-            Assertions.assertFalse(contents.contains("\r\n"), "File " + file.getPath() + " has incorrect line endings.");
+            Assertions.assertFalse(contents.contains("\r\n"), "File \"" + file.getPath()
+                + "\" contains CRLF \\r\\n line endings, please use the Unix form \\n");
         } catch (IOException ex) {
             log.error("Unable to get path for {}", file, ex);
-            Assertions.fail("Unable to get get path " + file.getPath() + " for test");
+            Assertions.fail("Unable to get get path \"" + file.getPath() + "\" for test", ex);
         }
     }
 
     private static boolean setup = false;
 
     @BeforeAll // want to reduce burden
-    static public void setUp() {
+    public static void setUp() {
         if (!setup) {
             JUnitUtil.setUp();
             setup = true;
@@ -136,7 +137,7 @@ public class FileLineEndingsCheck {
     }
 
     @AfterAll // want to reduce burden
-    static public void tearDown() {
+    public static void tearDown() {
         JUnitUtil.tearDown();
     }
 }

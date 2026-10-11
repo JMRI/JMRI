@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   -->
+<!-- for more details.                                                       -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <enumChoice choice="Own value" value="0" >
+        <choice>Own value</choice>
+        <choice xml:lang="cs">Vlastní hodnota</choice>
+    </enumChoice>
+    <enumChoice choice="54 per minute" value="1" >
+        <choice>54 per minute</choice>
+        <choice xml:lang="cs">54 kmitů za minutu</choice>
+    </enumChoice>
+    <enumChoice choice="108 per minute" value="2" >
+        <choice>108 per minute</choice>
+        <choice xml:lang="cs">108 kmitů za minutu</choice>
+    </enumChoice>
+    <enumChoice choice="60 per minute" value="3" >
+        <choice>60 per minute</choice>
+        <choice xml:lang="cs">60 kmitů za minutu</choice>
+    </enumChoice>
+    <enumChoice choice="40 per minute" value="4" >
+        <choice>40 per minute</choice>
+        <choice xml:lang="cs">40 kmitů za minutu</choice>
+    </enumChoice>
+    <enumChoice choice="45 per minute" value="5" >
+        <choice>45 per minute</choice>
+        <choice xml:lang="cs">45 kmitů za minutu</choice>
+    </enumChoice>
+    <enumChoice choice="22.5 per minute" value="6" >
+        <choice>22.5 per minute</choice>
+        <choice xml:lang="cs">22,5 kmitů za minutu</choice>
+    </enumChoice>
+</enumVal>

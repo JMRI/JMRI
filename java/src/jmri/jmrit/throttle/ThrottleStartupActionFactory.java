@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.util.Locale;
+
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;
 import org.openide.util.lookup.ServiceProvider;

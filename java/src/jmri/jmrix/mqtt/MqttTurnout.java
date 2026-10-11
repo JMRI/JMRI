@@ -40,10 +40,10 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         
     MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
         // public for scripting
-        public final static String closedText = "CLOSED";
-        public final static String thrownText = "THROWN";
-        public final static String unknownText = "UNKNOWN";
-        public final static String inconsistentText = "INCONSISTENT";
+        public static final String closedText = "CLOSED";
+        public static final String thrownText = "THROWN";
+        public static final String unknownText = "UNKNOWN";
+        public static final String inconsistentText = "INCONSISTENT";
 
         int stateFromString(String payload) {
             switch (payload) {
@@ -149,6 +149,6 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnout.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnout.class);
 
 }

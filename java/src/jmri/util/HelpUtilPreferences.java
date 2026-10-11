@@ -87,5 +87,5 @@ public final class HelpUtilPreferences extends PreferencesBean implements Instan
     public boolean getOpenHelpOnJMRIWebServer() {
         return _openHelpOnJMRIWebServer;
     }
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HelpUtilPreferences.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HelpUtilPreferences.class);
 }

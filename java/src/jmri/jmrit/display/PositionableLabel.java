@@ -226,7 +226,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public void showHidden() {
         if (!_hidden || _editor.isEditable()) {
-            setVisible(true);
+            showEmptyHidden();
         } else {
             setVisible(false);
         }
@@ -250,6 +250,11 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public boolean isValueEditDisabled() {
         return _valueEditDisabled;
+    }
+
+    public void showEmptyHidden() {
+        boolean visible = !(_emptyHidden && (_unRotatedText == null || (_unRotatedText.trim().isEmpty())));
+        setVisible(visible);
     }
 
     /**
@@ -1173,7 +1178,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     private void doRemove() {
-        if (_editor.removeFromContents(this)) {
+        if ( ThreadingUtil.runOnGUIwithReturn( () -> _editor.removeFromContents(this))) {
             // Modified to support conditional delete for NX sensors
             // remove from persistance by flagging inactive
             active = false;
@@ -1203,7 +1208,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             if (_editor != null && !_editor.isEditable()) {
                 if (isEmptyHidden()) {
                     log.debug("label setText: {} :: {}", text, getNameString());
-                    if (text == null || text.isEmpty()) {
+                    if (text == null || text.trim().isEmpty()) {
                         setVisible(false);
                     } else {
                         setVisible(true);

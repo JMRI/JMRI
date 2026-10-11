@@ -2,8 +2,6 @@ package jmri.jmrix.marklin;
 
 import javax.annotation.Nonnull;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Marklin systems.
@@ -19,7 +17,7 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         tc = memo.getTrafficController();
     }
 
-    MarklinTrafficController tc;
+    private final MarklinTrafficController tc;
 
     /**
      * {@inheritDoc}
@@ -53,8 +51,6 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return true;
     }
 
-    boolean noWarnDelete = false;
-
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinTurnoutManager.class);
 
 }

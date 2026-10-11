@@ -83,5 +83,5 @@ public class JComboBoxUtil {
         return Math.max(minimumHeight, c.getPreferredSize().height);
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JComboBoxUtil.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JComboBoxUtil.class);
 }

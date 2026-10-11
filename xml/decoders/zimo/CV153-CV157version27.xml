@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Pierre Billon - Added French translations -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="153" item="Advanced Group 1 Option 3" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec)">
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>
+    <label xml:lang="fr">Durée de marche maximale après perte du signal</label>
     <label xml:lang="it">Tempo massimo percorrenza dopo perdita segnale</label>
     <label xml:lang="cs">Maximální doba jízdy po ztrátě signálu</label>
   </variable>
@@ -12,16 +14,22 @@
     <enumVal>
       <enumChoice choice="No Special Configuration">
         <choice>No Special Configuration</choice>
+        <choice xml:lang="fr">Aucun réglage particulier</choice>
+        <choice xml:lang="de">keine spezielle Einstellung</choice>
         <choice xml:lang="it">Nessuna configurazione Speciale</choice>
         <choice xml:lang="cs">Bez speciální konfigurace</choice>
       </enumChoice>
       <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
         <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
+        <choice xml:lang="fr">Commande de pantographe (Zimo/Roco BR110)</choice>
+        <choice xml:lang="de">Pantograph (Zimo/Roco BR110)</choice>
         <choice xml:lang="it">Pantografo (Zimo/Roco BR110)(</choice>
         <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)</choice>
       </enumChoice>
     </enumVal>
     <label>Special Output Configuration</label>
+    <label xml:lang="fr">Bits spéciaux divers</label>
+    <label xml:lang="de">Diverse Spezialbits</label>
     <label xml:lang="it">Configurazione Speciale Uscita</label>
     <label xml:lang="cs">Speciální konfigurace výstupu</label>
   </variable>
@@ -29,6 +37,8 @@
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
+        <choice xml:lang="fr">Réglage issu du CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
         <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
@@ -91,6 +101,8 @@
       </enumChoice>
     </enumVal>
     <label>Shunt Function Key Extension</label>
+    <label xml:lang="fr">Désactive l'inertie</label>
+    <label xml:lang="de">ABV deaktivieren</label>
     <label xml:lang="it">Estensione tasto funzione Manovra</label>
     <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
   </variable>
@@ -98,6 +110,8 @@
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
+        <choice xml:lang="fr">Réglage issu du CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
         <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
@@ -160,6 +174,8 @@
       </enumChoice>
     </enumVal>
     <label>Half Speed Key Extension</label>
+    <label xml:lang="fr">Demi-vitesse par la touche</label>
+    <label xml:lang="de">Halbgeschwindigkeit mit Taste</label>
     <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
     <label xml:lang="cs">Rozšíření funkční klávesy poloviční rychlost</label>
   </variable>
@@ -167,6 +183,8 @@
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>
+        <choice xml:lang="fr">Réglage issu du CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
         <choice xml:lang="cs">Nastavení v CV124</choice>
       </enumChoice>
@@ -229,6 +247,8 @@
       </enumChoice>
     </enumVal>
     <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
+    <label xml:lang="fr">Touche MAN (désactive la commande par signal HLU ou ABC)</label>
+    <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
     <label xml:lang="it">Estensione tasto funzione MAN (disabilita controllo segnale HLU o ABC)</label>
     <label xml:lang="cs">Rozšíření funkční klávesy MAN (zakázání řízení signálem HLU nebo ABC)</label>
   </variable>

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-engine-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"engine\"",
@@ -11,6 +11,10 @@
         "rename": {
             "type": "string",
             "description": "Old name of engine if road or number has changed"
+        },
+        "order": {
+            "type": "string",
+            "description": "The engine order"
         },
         "road": {
             "type": "string",
@@ -122,15 +126,15 @@
             ],
             "description": "The timestamp of the last reported sighting of the tag"
         },
-        "carType": {
+        "type": {
             "type": "string",
             "description": "The engine type as displayed in manifests and switch lists"
         },
         "carSubType": {
             "type": [
-            	"string",
-            	"null"
-        	],
+                "string",
+                "null"
+            ],
             "description": "The engine sub type; not displayed in manifests and switch lists"
         },
         "weight": {
@@ -159,7 +163,7 @@
         "outOfService",
         "owner",
         "rfid",
-        "carType",
+        "type",
         "weight",
         "weightTons"
     ]

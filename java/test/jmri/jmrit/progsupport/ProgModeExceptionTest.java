@@ -1,8 +1,9 @@
 package jmri.jmrit.progsupport;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,29 +11,28 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class ProgModeExceptionTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("ProgModeException constructor",new ProgModeException());
-   }
+    @Test
+    public void testProgModeExceptionConstructor(){
+        assertNotNull(new ProgModeException(), "ProgModeException constructor");
+    }
 
-   @Test
-   public void StringConstructorTest(){
-      Assert.assertNotNull("ProgModeException string constructor",new ProgModeException("test exception"));
-   }
+    @Test
+    public void testProgModeExceptionStringConstructor(){
+        assertNotNull(new ProgModeException("test exception"), "ProgModeException string constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

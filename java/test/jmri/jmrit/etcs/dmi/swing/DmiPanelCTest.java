@@ -6,14 +6,14 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for DmiPanelC.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiPanelCTest {
 
     private boolean ackTriggered = false;
@@ -40,7 +40,7 @@ public class DmiPanelCTest {
         jbo.doClick();
         JUnitUtil.waitFor(() -> ackTriggered, "ack change event triggered");
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -58,7 +58,7 @@ public class DmiPanelCTest {
         Assertions.assertFalse(jbo.isEnabled());
 
         // JUnitUtil.waitFor(10000);
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -86,7 +86,7 @@ public class DmiPanelCTest {
         JUnitUtil.waitFor(() -> ackTriggered, "ack change event triggered");
         // JUnitUtil.waitFor(4000);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -100,7 +100,7 @@ public class DmiPanelCTest {
         p.setTunnelStoppingIconVisible(true, false);
         p.setTunnelStoppingDistance(150);
         // JUnitUtil.waitFor(5000);
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -123,7 +123,7 @@ public class DmiPanelCTest {
         checkModeAcknowledge(jfo, DmiPanel.PROP_CHANGE_MODE_LIMITED_SUPERVISION_ACK, DmiPanel.MODE_LIMITED_SUPERVISION, p);
 
         //JUnitUtil.waitFor(4000);
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 

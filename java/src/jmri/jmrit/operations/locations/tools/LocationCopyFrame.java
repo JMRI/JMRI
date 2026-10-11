@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -44,8 +44,8 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     JCheckBox deleteTrackCheckBox = new JCheckBox(Bundle.getMessage("DeleteCopiedTrack"));
 
     // remember state of checkboxes during a session
-    static boolean moveRollingStock = false;
-    static boolean deleteTrack = false;
+    private static boolean moveRollingStock = false;
+    private static boolean deleteTrack = false;
     
     Location _location;
     

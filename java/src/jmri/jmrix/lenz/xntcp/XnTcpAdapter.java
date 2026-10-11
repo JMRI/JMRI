@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz.xntcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,11 +15,13 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.Vector;
+
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,8 +132,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
                 socketConn.setSoTimeout(READ_TIMEOUT);
             } catch (UnknownHostException e) {
                 ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
                 throw (e);
             }
             // get and save input stream
@@ -141,22 +145,22 @@ public class XnTcpAdapter extends XNetNetworkPortController {
             // Connection established.
             opened = true;
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_UP);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_UP);
 
         } // Report possible errors encountered while opening the connection
         catch (SocketException se) {
             log.error("Socket exception while opening TCP connection with {} trace follows", outName, se);
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             throw (se);
         }
         catch (IOException e) {
             log.error("Unexpected exception while opening TCP connection with {} trace follows", outName, e);
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             throw (e);
         }
     }
@@ -245,8 +249,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
         // If the error message was already posted, simply ignore this call
         if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        outName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             // Clear open status, in order to avoid issuing the error
             // message more than than once.
             opened = false;
@@ -259,6 +263,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      * available. We only limit the number of commands queued in TCP/IP stack
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Further investigation is needed to handle this correctly")
     public boolean okToSend() {
         // If a communication error occurred, return always "true" in order to avoid program hang-up while quitting
         if (!opened) {

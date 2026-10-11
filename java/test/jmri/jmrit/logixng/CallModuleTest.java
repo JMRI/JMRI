@@ -7,9 +7,7 @@ import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test call module from JMRI
@@ -69,8 +67,7 @@ public class CallModuleTest {
                 "Turnout did not go thrown: " + turnout.getDisplayName());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException, JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -127,7 +124,7 @@ public class CallModuleTest {
         many.getChild(1).connect(digitalActionManager.registerAction(actionTurnout));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

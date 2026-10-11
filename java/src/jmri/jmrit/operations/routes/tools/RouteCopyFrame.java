@@ -8,6 +8,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.routes.*;
+import jmri.jmrit.operations.routes.gui.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.JmriJOptionPane;
 

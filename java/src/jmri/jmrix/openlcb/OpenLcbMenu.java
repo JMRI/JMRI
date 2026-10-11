@@ -24,6 +24,9 @@ public class OpenLcbMenu extends JMenu {
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
+        // LccPro is a self-contained frame, so it has to be added separately
+        add(new jmri.jmrix.openlcb.swing.lccpro.LccProFrameAction());
+
         for (Item item : panelItems) {
             if (item == null) {
                 add(new javax.swing.JSeparator());
@@ -31,18 +34,22 @@ public class OpenLcbMenu extends JMenu {
                 add(new CanNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
             }
         }
+        
     }
 
     final Item[] panelItems = new Item[]{
-        new Item("MenuItemTrafficMonitor", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"), // NOI18N
-        new Item("MenuItemConfigNodes", "jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"), // NOI18N
         new Item("MenuItemStartHub", "jmri.jmrix.openlcb.swing.hub.HubPane"), // NOI18N
-        new Item("MenuItemFirmwareUpdate", "jmri.jmrix.openlcb.swing.downloader.LoaderPane"), // NOI18N
+        null,
         new Item("MenuItemEventTable", "jmri.jmrix.openlcb.swing.eventtable.EventTablePane"), // NOI18N
-        new Item("MenuItemSendFrame", "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"), // NOI18N
-        new Item("MenuItemMemoryTool", "jmri.jmrix.openlcb.swing.memtool.MemoryToolPane"), // NOI18N
+        new Item("MenuItemConfigNodes", "jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"), // NOI18N
+        new Item("MenuItemFirmwareUpdate", "jmri.jmrix.openlcb.swing.downloader.LoaderPane"), // NOI18N
         new Item("MenuItemIdTool", "jmri.jmrix.openlcb.swing.idtool.IdToolPane"), // NOI18N
+        null,
+        new Item("MenuItemTrafficMonitor", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"), // NOI18N
+        new Item("MenuItemMemoryTool", "jmri.jmrix.openlcb.swing.memtool.MemoryToolPane"), // NOI18N
         new Item("MenuItemSTLEditor", "jmri.jmrix.openlcb.swing.stleditor.StlEditorPane"), // NOI18N
+        new Item("MenuItemSendFrame", "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"), // NOI18N
+
     };
 
     static class Item {

@@ -140,6 +140,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class);
 
 }

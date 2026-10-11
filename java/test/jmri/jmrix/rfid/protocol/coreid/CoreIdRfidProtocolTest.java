@@ -1,8 +1,10 @@
 package jmri.jmrix.rfid.protocol.coreid;
 
-import jmri.jmrix.AbstractMRReply;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.Assert.assertEquals;
+import jmri.jmrix.AbstractMRReply;
 
 import org.junit.jupiter.api.*;
 
@@ -13,10 +15,10 @@ import org.junit.jupiter.api.*;
  */
 public class CoreIdRfidProtocolTest {
 
-    AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\u000204171F04FEF6\r\n\u0003");
-    AbstractMRReply msgConcentrator = new AbstractMRReplyImpl("A04171F04FEF6\r\n>");
-    AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("\u000204171F04FEF7\r\n\u0003");
-    AbstractMRReply msgBadChkSumConcentrator = new AbstractMRReplyImpl("A04171F04FEF7\r\n>");
+    private final AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\u000204171F04FEF6\r\n\u0003");
+    private final AbstractMRReply msgConcentrator = new AbstractMRReplyImpl("A04171F04FEF6\r\n>");
+    private final AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("\u000204171F04FEF7\r\n\u0003");
+    private final AbstractMRReply msgBadChkSumConcentrator = new AbstractMRReplyImpl("A04171F04FEF7\r\n>");
 
     /**
      * Test of getMaxSize method, of class CoreIdRfidProtocol.
@@ -54,7 +56,7 @@ public class CoreIdRfidProtocolTest {
     @Test
     public void testProvidesChecksum() {
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
-        assertEquals(true, instance.providesChecksum());
+        assertTrue( instance.providesChecksum());
     }
 
     /**
@@ -77,12 +79,12 @@ public class CoreIdRfidProtocolTest {
     public void testIsValid() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
-        assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(false, instance.isValid(msgBadChkSumStandalone));
+        assertTrue( instance.isValid(msgStandalone));
+        assertFalse( instance.isValid(msgBadChkSumStandalone));
         // Now as concentrator
         instance = new CoreIdRfidProtocol('A', 'H', 1);
-        assertEquals(true, instance.isValid(msgConcentrator));
-        assertEquals(false, instance.isValid(msgBadChkSumConcentrator));
+        assertTrue( instance.isValid(msgConcentrator));
+        assertFalse( instance.isValid(msgBadChkSumConcentrator));
     }
 
     /**
@@ -92,12 +94,12 @@ public class CoreIdRfidProtocolTest {
     public void testIsCheckSumValid() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
-        assertEquals(true, instance.isCheckSumValid(msgStandalone));
-        assertEquals(false, instance.isCheckSumValid(msgBadChkSumStandalone));
+        assertTrue( instance.isCheckSumValid(msgStandalone));
+        assertFalse( instance.isCheckSumValid(msgBadChkSumStandalone));
         // Now as concentrator
         instance = new CoreIdRfidProtocol('A', 'H', 1);
-        assertEquals(true, instance.isCheckSumValid(msgConcentrator));
-        assertEquals(false, instance.isCheckSumValid(msgBadChkSumConcentrator));
+        assertTrue( instance.isCheckSumValid(msgConcentrator));
+        assertFalse( instance.isCheckSumValid(msgBadChkSumConcentrator));
 
     }
 
@@ -108,10 +110,10 @@ public class CoreIdRfidProtocolTest {
     public void testEndOfMessage() {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
-        assertEquals(true, instance.endOfMessage(msgStandalone));
+        assertTrue( instance.endOfMessage(msgStandalone));
         // Now as concentrator
         instance = new CoreIdRfidProtocol('A', 'H', 1);
-        assertEquals(true, instance.endOfMessage(msgConcentrator));
+        assertTrue( instance.endOfMessage(msgConcentrator));
     }
 
     /**
@@ -144,11 +146,7 @@ public class CoreIdRfidProtocolTest {
         assertEquals(expResult, instance.toMonitorString(msgConcentrator));
     }
 
-    class AbstractMRReplyImpl extends AbstractMRReply {
-
-        AbstractMRReplyImpl() {
-            super();
-        }
+    private static class AbstractMRReplyImpl extends AbstractMRReply {
 
         AbstractMRReplyImpl(String s) {
             super(s);
@@ -162,12 +160,12 @@ public class CoreIdRfidProtocolTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

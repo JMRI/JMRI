@@ -1,12 +1,17 @@
 package jmri.profile;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -28,19 +33,21 @@ public class ProfileTest {
     /**
      * Test of constructor with extension for Profile path.
      *
-     * @throws IOException if unexpected in context of test error occurs
+     * @param folder automatically inserted via JUnit.
+     * @throws IOException if unexpected in context of test error occurs.
      */
     @Test
     public void testProfileWithExtension(@TempDir File folder) throws IOException {
         File profileFolder = new File(folder, "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
-        Assert.assertEquals("Name has no extension", "test", instance.getName());
-        Assert.assertEquals("Path name has extension", "test" + Profile.EXTENSION, instance.getPath().getName());
+        assertEquals( "test", instance.getName(), "Name has no extension");
+        assertEquals( "test" + Profile.EXTENSION, instance.getPath().getName(),
+            "Path name has extension");
     }
 
     /**
      * Test of save method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException on any unanticipated errors setting up test
      */
     @Test
@@ -49,24 +56,25 @@ public class ProfileTest {
         Profile instance = new Profile("test", "test", profileFolder);
         instance.setName("saved");
         instance.save();
-        Assert.assertEquals("saved", (new ProfileProperties(instance.getPath())).get(Profile.NAME, true));
+        assertEquals("saved",
+            new ProfileProperties(instance.getPath()).get(Profile.NAME, true));
     }
 
     /**
      * Test of getName method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testGetName(@TempDir File folder) throws IOException {
         File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
-        Assert.assertEquals("test", instance.getName());
+        assertEquals("test", instance.getName());
     }
 
     /**
      * Test of setName method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -74,25 +82,25 @@ public class ProfileTest {
         File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
         instance.setName("changed");
-        Assert.assertEquals("changed", instance.getName());
+        assertEquals("changed", instance.getName());
     }
 
     /**
      * Test of getId method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testGetId(@TempDir File folder) throws IOException {
         File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
-        String id = (new ProfileProperties(instance.getPath())).get(Profile.ID, true);
-        Assert.assertEquals(id, instance.getId());
+        String id = new ProfileProperties(instance.getPath()).get(Profile.ID, true);
+        assertEquals(id, instance.getId());
     }
 
     /**
      * Test of getPath method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -100,25 +108,25 @@ public class ProfileTest {
         File profileFolder = new File(folder, "test");
         File profileExtFolder = new File(profileFolder.getParentFile(), "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
-        Assert.assertNotEquals(profileFolder, instance.getPath());
-        Assert.assertEquals(profileExtFolder, instance.getPath());
+        assertNotEquals(profileFolder, instance.getPath());
+        assertEquals(profileExtFolder, instance.getPath());
     }
 
     /**
      * Test of toString method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testToString(@TempDir File folder) throws IOException {
         File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
-        Assert.assertEquals(instance.getName(), instance.toString());
+        assertEquals(instance.getName(), instance.toString());
     }
 
     /**
      * Test of hashCode method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -126,17 +134,17 @@ public class ProfileTest {
         File profileFolder = new File(folder, "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
         String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
-        Assert.assertEquals(71 * 7 + id.hashCode(), instance.hashCode());
+        assertEquals(71 * 7 + id.hashCode(), instance.hashCode());
     }
 
     /**
      * Test of equals method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     // tests that equals() does not allow a String to equal a Profile
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"})
     public void testEquals(@TempDir File folder) throws IOException {
         File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test");
@@ -148,27 +156,27 @@ public class ProfileTest {
         instance2.save();
         FileUtil.copy(instance.getPath(), profileFolder3);
         Profile instance3 = new Profile(profileFolder3);
-        Assert.assertNotNull(instance);
-        Assert.assertFalse(instance.equals(""));
-        Assert.assertFalse(instance.equals(instance2));
-        Assert.assertTrue(instance.equals(instance3));
+        assertNotNull(instance);
+        assertFalse(instance.equals(""));
+        assertFalse(instance.equals(instance2));
+        assertTrue(instance.equals(instance3));
     }
 
     /**
      * Test of isComplete method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testIsComplete(@TempDir File folder) throws IOException {
         File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
-        Assert.assertTrue(instance.isComplete());
+        assertTrue(instance.isComplete());
     }
 
     /**
      * Test of getUniqueId method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -177,29 +185,29 @@ public class ProfileTest {
         Profile instance = new Profile("test", "test", profileFolder);
         String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
         id = id.substring(id.lastIndexOf('.') + 1);
-        Assert.assertEquals(id, instance.getUniqueId());
+        assertEquals(id, instance.getUniqueId());
     }
 
     /**
      * Test of containsProfile method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testContainsProfile(@TempDir File folder) throws IOException {
         File rootFolder = new File(folder, Profile.PROFILE);
         File profileFolder = new File(rootFolder, "test");
-        Assertions.assertTrue(profileFolder.mkdirs());
+        assertTrue(profileFolder.mkdirs());
         File rootFolder2 = new File(folder, Profile.PATH);
-        Assertions.assertTrue( new File(rootFolder2, "test2").mkdirs());
-        Assertions.assertNotNull(new Profile("test", "test", profileFolder));
-        Assert.assertTrue(Profile.containsProfile(rootFolder));
-        Assert.assertFalse(Profile.containsProfile(rootFolder2));
+        assertTrue( new File(rootFolder2, "test2").mkdirs());
+        assertNotNull(new Profile("test", "test", profileFolder));
+        assertTrue(Profile.containsProfile(rootFolder));
+        assertFalse(Profile.containsProfile(rootFolder2));
     }
 
     /**
      * Test of inProfile method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -207,34 +215,34 @@ public class ProfileTest {
         File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
         File innerFolder = new File(profileFolder, "test");
-        Assertions.assertTrue(innerFolder.mkdirs());
+        assertTrue(innerFolder.mkdirs());
         File rootFolder2 = new File(folder, Profile.PATH);
-        Assertions.assertTrue(rootFolder2.mkdirs());
-        Assertions.assertNotNull(new Profile("test", "test", profileFolder));
-        Assert.assertTrue(Profile.inProfile(innerFolder));
-        Assert.assertFalse(Profile.inProfile(rootFolder2));
+        assertTrue(rootFolder2.mkdirs());
+        assertNotNull(new Profile("test", "test", profileFolder));
+        assertTrue(Profile.inProfile(innerFolder));
+        assertFalse(Profile.inProfile(rootFolder2));
     }
 
     /**
      * Test of isProfile method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testIsProfile(@TempDir File folder) throws IOException {
         File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
-        Assertions.assertNotNull(new Profile("test", "test", profileFolder));
+        assertNotNull(new Profile("test", "test", profileFolder));
         File innerFolder = new File(profileFolder, "test");
-        Assertions.assertTrue(innerFolder.mkdirs());
-        Assert.assertTrue(Profile.isProfile(profileFolder));
-        Assert.assertFalse(Profile.isProfile(rootFolder));
-        Assert.assertFalse(Profile.isProfile(innerFolder));
+        assertTrue(innerFolder.mkdirs());
+        assertTrue(Profile.isProfile(profileFolder));
+        assertFalse(Profile.isProfile(rootFolder));
+        assertFalse(Profile.isProfile(innerFolder));
     }
 
     /**
      * Test of compareTo method, of class Profile.
-     *
+     * @param folder automatically inserted via JUnit.
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -248,9 +256,9 @@ public class ProfileTest {
         FileUtil.copy(instance.getPath(), profileFolder3);
         Profile instance3 = new Profile(profileFolder3);
         // the contract for .compareTo is to return <= -1, 0, >= 1
-        Assert.assertTrue(-1 >= instance.compareTo(instance2));
-        Assert.assertEquals(0, instance.compareTo(instance3));
-        Assert.assertTrue(1 <= instance2.compareTo(instance));
+        assertTrue(-1 >= instance.compareTo(instance2));
+        assertEquals(0, instance.compareTo(instance3));
+        assertTrue(1 <= instance2.compareTo(instance));
     }
 
 }

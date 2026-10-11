@@ -8,7 +8,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@SuppressFBWarnings(value = {"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", "HSM_HIDING_METHOD"},
+    justification = "Desired pattern is repeated class names with package-level access to members")
 
 @javax.annotation.concurrent.Immutable
 
@@ -23,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.server.Bundle {
 
-    private final static String name = null; // no local resources
+    private static final String name = null; // no local resources
 
     //
     // below here is boilerplate to be copied exactly
@@ -90,7 +91,7 @@ public class Bundle extends jmri.server.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

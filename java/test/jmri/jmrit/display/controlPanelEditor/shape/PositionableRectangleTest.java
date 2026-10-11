@@ -22,6 +22,6 @@ public class PositionableRectangleTest extends PositionableShapeTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PositionableRectangleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PositionableRectangleTest.class);
 
 }

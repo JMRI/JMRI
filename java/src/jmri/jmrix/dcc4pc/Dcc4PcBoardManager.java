@@ -21,8 +21,8 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
         }
     }
     
-    private final static int MINRC = 0;
-    private final static int MAXRC = 4;
+    private static final int MINRC = 0;
+    private static final int MAXRC = 4;
     
     ArrayList<Integer> boardsToDiscover = new ArrayList<>();
 
@@ -133,5 +133,5 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
 
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcBoardManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Dcc4PcBoardManager.class);
 }

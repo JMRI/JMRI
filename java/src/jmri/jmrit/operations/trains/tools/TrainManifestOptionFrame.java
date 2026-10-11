@@ -14,7 +14,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainEditFrame;
+import jmri.jmrit.operations.trains.gui.TrainEditFrame;
 import jmri.util.FileUtil;
 
 /**
@@ -179,5 +179,5 @@ public class TrainManifestOptionFrame extends OperationsFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainManifestOptionFrame.class);
 }

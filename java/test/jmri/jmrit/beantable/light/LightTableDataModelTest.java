@@ -22,7 +22,7 @@ public class LightTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanTa
     
     @Override
     public int getModelColumnCount(){
-        return 9;
+        return 9; // SYSNAMECOL..CONTROLCOL
     }
     
     @BeforeEach

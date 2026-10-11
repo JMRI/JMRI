@@ -1,10 +1,12 @@
 package jmri.jmrix.roco.z21.swing;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,46 +14,45 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class Z21ComponentFactoryTest {
-        
-   private Z21SystemConnectionMemo memo = null;
-   private Z21InterfaceScaffold tc = null; 
 
-   @Test
-   public void MemoConstructorTest(){
-      Assert.assertNotNull("Z21ComponentFactory constructor",new Z21ComponentFactory(memo));
-   }
+    private Z21SystemConnectionMemo memo = null;
+    private Z21InterfaceScaffold tc = null;
 
-   @Test
-   public void getMenu(){
-      Z21ComponentFactory zcf = new Z21ComponentFactory(memo);
-      Assert.assertNotNull("Component Factory getMenu method",zcf.getMenu());
-   }
+    @Test
+    public void memoConstructorZ21ComponentFactoryTest(){
+        assertNotNull( new Z21ComponentFactory(memo), "Z21ComponentFactory constructor");
+    }
 
-   @Test
-   public void getMenuDisabled(){
-      memo.setDisabled(true);
-      Z21ComponentFactory zcf = new Z21ComponentFactory(memo);
-      Assert.assertNull("Disabled Component Factory getMenu method",zcf.getMenu());
-   }
+    @Test
+    public void getMenu(){
+        Z21ComponentFactory zcf = new Z21ComponentFactory(memo);
+        assertNotNull( zcf.getMenu(), "Component Factory getMenu method");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @Test
+    public void getMenuDisabled(){
+        memo.setDisabled(true);
+        Z21ComponentFactory zcf = new Z21ComponentFactory(memo);
+        assertNull( zcf.getMenu(), "Disabled Component Factory getMenu method");
+    }
+
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
-   }
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         memo=null;
         tc.terminateThreads();
         tc=null;
         JUnitUtil.tearDown();
-   }
+    }
 
 }

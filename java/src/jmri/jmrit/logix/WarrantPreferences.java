@@ -602,6 +602,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public static class WarrantPreferencesXml extends XmlFile {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantPreferences.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantPreferences.class);
 
 }

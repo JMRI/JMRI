@@ -6,9 +6,10 @@ import java.util.TreeSet;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.junit.Assume;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Builds the help index page for the JMRI help pages that's accessed as files
@@ -25,7 +26,7 @@ public class BuildHelpFilesTest {
 
 
     // The main() method is used when this class is run directly from ant
-    static public void main(String[] args) throws IOException, JDOMException {
+    public static void main(String[] args) throws IOException, JDOMException {
         boolean enResult = new BuildHelpFilesTest().buildIndex("en");
         boolean frResult = new BuildHelpFilesTest().buildIndex("fr");
         if (enResult && frResult) {
@@ -60,17 +61,17 @@ public class BuildHelpFilesTest {
         _helpKeys = new TreeSet<>();
 
         XmlFile xmlFile = new XmlFile();
-        Assert.assertNotNull(xmlFile);
+        assertNotNull(xmlFile);
         Element e = xmlFile.rootFromName(FileUtil.getProgramPath()
                 + "help/" + _lang + "/JmriHelp_" + _lang + "TOC.xml");
-        Assert.assertNotNull(e);
+        assertNotNull(e);
         parseElement(e);
 
         xmlFile = new XmlFile();
-        Assert.assertNotNull(xmlFile);
+        assertNotNull(xmlFile);
         e = xmlFile.rootFromName(FileUtil.getProgramPath()
                 + "help/" + _lang + "/JmriHelp_" + _lang + "Index.xml");
-        Assert.assertNotNull(e);
+        assertNotNull(e);
         parseElement(e);
 
         // Generate jmri_map.xml
@@ -106,7 +107,7 @@ public class BuildHelpFilesTest {
 
     @Test
     public void testBuildIndex() throws JDOMException, IOException {
-        Assume.assumeFalse("Ignoring BuildHelpFilesTest", Boolean.getBoolean("jmri.skipBuildHelpFilesTest"));
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipBuildHelpFilesTest"), "Ignoring BuildHelpFilesTest");
         buildIndex("en");
         buildIndex("fr");
     }
@@ -122,5 +123,5 @@ public class BuildHelpFilesTest {
         JUnitUtil.tearDown();
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BuildHelpFilesTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BuildHelpFilesTest.class);
 }

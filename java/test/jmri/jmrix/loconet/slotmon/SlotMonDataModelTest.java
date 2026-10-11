@@ -19,7 +19,7 @@ public class SlotMonDataModelTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        SlotMonDataModel t = new SlotMonDataModel(1,19,memo);
+        SlotMonDataModel t = new SlotMonDataModel(1, memo);
         Assert.assertNotNull("exists",t);
         t.dispose();
         slotmanager.dispose();
@@ -37,6 +37,6 @@ public class SlotMonDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SlotMonDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SlotMonDataModelTest.class);
 
 }

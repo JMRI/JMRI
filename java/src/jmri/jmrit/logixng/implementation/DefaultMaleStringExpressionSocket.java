@@ -92,7 +92,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
      */
     @Override
     public void registerListenersForThisClass() {
-        ((StringExpressionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
     
     /**
@@ -100,7 +100,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((StringExpressionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
     
     @Override
@@ -216,6 +216,6 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleStringExpressionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleStringExpressionSocket.class);
 
 }

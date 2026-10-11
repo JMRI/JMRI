@@ -1,13 +1,15 @@
 package jmri.jmrit.display;
 
-import javax.swing.JFrame;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JMenuOperator;
+import java.util.ResourceBundle;
+
+import javax.swing.JFrame;
+
+import jmri.util.JmriJFrame;
+import jmri.util.JUnitUtil;
+
+import org.netbeans.jemmy.operators.*;
 
 
 /**
@@ -17,6 +19,9 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  * @author  Paul Bender Copyright 2017
  */
 public class EditorFrameOperator extends JFrameOperator {
+
+    private static final String LABEL_EDITOR = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").
+        getString("LabelEditor");
 
     public EditorFrameOperator(String title){
        super(title);
@@ -31,15 +36,23 @@ public class EditorFrameOperator extends JFrameOperator {
 
     public void closeFrameWithConfirmations(){
         // if OK to here, close window
-        this.requestClose();
+
+        // dispose of Hidden Switchboard Editor Frames
+        JFrame jf = JmriJFrame.getFrame(getTitle() + " " + LABEL_EDITOR);
+        if (jf != null) {
+            JUnitUtil.dispose(jf);
+        }
 
         dismissClosingDialogs();
+        this.requestClose();
+        JUnitUtil.dispose( getWindow());
+        this.waitClosed();
     }
 
     public void deleteViaFileMenuWithConfirmations(){
         JMenuOperator jmo = new JMenuOperator(this,Bundle.getMessage("MenuFile"));
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuFile") +"/"+ Bundle.getMessage("DeletePanel"), "/");
         dismissClosingDialogs();
+        jmo.pushMenu(Bundle.getMessage("MenuFile") +"/"+ Bundle.getMessage("DeletePanel"), "/");
 
     }
 
@@ -62,7 +75,7 @@ public class EditorFrameOperator extends JFrameOperator {
 
     }
 
-    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION", "DE_MIGHT_IGNORE"},
+    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION"},
         justification = "ok for JDialog not to be present")
     private void triggerPanelHideOperators() {
         try {
@@ -77,7 +90,7 @@ public class EditorFrameOperator extends JFrameOperator {
         }
     }
 
-    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION", "DE_MIGHT_IGNORE"},
+    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION"},
         justification = "ok for JDialog not to be present")
     private void triggerDeleteYesOperators() {
         try {
@@ -97,8 +110,8 @@ public class EditorFrameOperator extends JFrameOperator {
      * to clean up any threads that have been left hanging.
      */
     public static void clearEditorFrameOperatorThreads() {
-        jmri.util.JUnitUtil.removeMatchingThreads(HIDE_THREAD_NAME);
-        jmri.util.JUnitUtil.removeMatchingThreads(DELETE_THREAD_NAME);
+        JUnitUtil.removeMatchingThreads(HIDE_THREAD_NAME);
+        JUnitUtil.removeMatchingThreads(DELETE_THREAD_NAME);
     }
 
 }

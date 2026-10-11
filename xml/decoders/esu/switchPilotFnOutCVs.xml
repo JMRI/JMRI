@@ -356,43 +356,127 @@
             <decVal max="3"/>
         </variable>
     </variables>
-    <variable label="Position A" CV="38" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 1 Position A">
-        <decVal max="63"/>
-        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
-        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
-    </variable>
-    <variable label="Position B" CV="39" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 1 Position B">
-        <decVal max="63"/>
-        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
-        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
-    </variable>
-    <variable label="Position A" CV="41" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 2 Position A">
-        <decVal max="63"/>
-        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
-        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
-    </variable>
-    <variable label="Position B" CV="42" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 2 Position B">
-        <decVal max="63"/>
-        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
-        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
-    </variable>
-    <variables exclude="SwitchPilot,SwitchPilot V2.0">
-        <variable label="Position A" CV="44" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 3 Position A">
+    <variables exclude="SwitchPilot Servo V3.0">
+            <variable label="Position A" CV="38" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 1 Position A" exclude="SwitchPilot Servo V3.0">
+                <decVal max="63"/>
+                <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+                <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+            </variable>
+            <variable label="Position B" CV="39" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 1 Position B" exclude="SwitchPilot Servo V3.0">
+                <decVal max="63"/>
+                <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+                <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+            </variable>
+            <variable label="Position A" CV="41" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 2 Position A" exclude="SwitchPilot Servo V3.0">
+                <decVal max="63"/>
+                <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+                <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+            </variable>
+            <variable label="Position B" CV="42" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 2 Position B" exclude="SwitchPilot Servo V3.0">
+                <decVal max="63"/>
+                <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+                <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+            </variable>
+    </variables>
+    <variables exclude="SwitchPilot,SwitchPilot V2.0,SwitchPilot Servo V3.0">
+        <variable label="Position A" CV="44" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 3 Position A" exclude="SwitchPilot Servo V3.0">
             <decVal max="63"/>
             <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
             <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position B" CV="45" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 3 Position B">
+        <variable label="Position B" CV="45" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 3 Position B" exclude="SwitchPilot Servo V3.0">
             <decVal max="63"/>
             <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
             <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position A" CV="47" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 4 Position A">
+        <variable label="Position A" CV="47" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 4 Position A" exclude="SwitchPilot Servo V3.0">
             <decVal max="63"/>
             <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
             <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position B" CV="48" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 4 Position B">
+        <variable label="Position B" CV="48" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 4 Position B" exclude="SwitchPilot Servo V3.0">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+    </variables>
+    <variables include="SwitchPilot Servo V3.0">
+        <variable label="Position A" CV="113" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 1 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="114" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 1 Position B">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position A" CV="121" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 2 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="122" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 2 Position B">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position A" CV="129" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 3 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="130" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 3 Position B">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position A" CV="137" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 4 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="138" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 4 Position B">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position A" CV="145" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 5 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="146" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 5 Position B">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position A" CV="153" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 6 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="154" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 6 Position B">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position A" CV="161" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 7 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="162" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 7 Position B">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position A" CV="169" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 8 Position A">
+            <decVal max="63"/>
+            <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+            <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
+        </variable>
+        <variable label="Position B" CV="170" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 8 Position B">
             <decVal max="63"/>
             <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
             <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
@@ -440,7 +524,7 @@
             <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
     </variables>
-    <variables exclude="SwitchPilot V2.0,SwitchPilot Servo V2.0">
+    <variables exclude="SwitchPilot V2.0,SwitchPilot Servo V2.0,SwitchPilot Servo V3.0">
         <variable CV="37" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Transit Time">
             <decVal max="63"/>
             <label>Transit time</label>
@@ -473,28 +557,28 @@
         </variables>
     </variables>
     <variables include="SwitchPilot V2.0">
-        <variable CV="109" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Transit Time to A">
+        <variable CV="109" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Transit Time to A" exclude="SwitchPilot Servo V3.0">
             <decVal max="63"/>
             <label>Transit time to A</label>
             <label xml:lang="de">Drehgeschwindigkeit</label>
             <tooltip>Units = 0.25 sec</tooltip>
             <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
         </variable>
-        <variable CV="113" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Transit Time to A">
+        <variable CV="113" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Transit Time to A" exclude="SwitchPilot Servo V3.0">
             <decVal max="63"/>
             <label>Transit time to A</label>
             <label xml:lang="de">Drehgeschwindigkeit</label>
             <tooltip>Units = 0.25 sec</tooltip>
             <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
         </variable>
-        <variable CV="37" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Transit Time to B">
+        <variable CV="37" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Transit Time to B" exclude="SwitchPilot Servo V3.0">
             <decVal max="63"/>
             <label>Transit time to B</label>
             <label xml:lang="de">Drehgeschwindigkeit</label>
             <tooltip>Units = 0.25 sec</tooltip>
             <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
         </variable>
-        <variable CV="40" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Transit Time to B">
+        <variable CV="40" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Transit Time to B" exclude="SwitchPilot Servo V3.0">
             <decVal max="63"/>
             <label>Transit time to B</label>
             <label xml:lang="de">Drehgeschwindigkeit</label>
@@ -560,103 +644,387 @@
             <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
         </variable>
     </variables>
+    <variables include="SwitchPilot Servo V3.0">
+        <variable CV="112" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="120" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="128" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 3 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="136" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 4 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="144" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 5 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="152" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 6 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="160" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 7 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="168" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 8 Transit Time to A">
+            <decVal max="63"/>
+            <label>Transit time to A</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="115" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="123" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="131" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 3 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="139" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 4 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="147" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 5 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="155" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 6 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="163" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 7 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+        <variable CV="171" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 8 Transit Time to B">
+            <decVal max="63"/>
+            <label>Transit time to B</label>
+            <label xml:lang="de">Drehgeschwindigkeit</label>
+            <tooltip>Units = 0.25 sec</tooltip>
+            <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
+        </variable>
+    </variables>
     <variables include="SwitchPilot V2.0,SwitchPilot Servo V2.0">
-        <variable CV="110" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 1 Number of Bounces">
+        <variable CV="110" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 1 Number of Bounces" exclude="SwitchPilot Servo V3.0">
             <decVal max="31"/>
             <label>Number of bounces</label>
         </variable>
-        <variable CV="111" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 1 Max Bouncing Strength">
+        <variable CV="111" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 1 Max Bouncing Strength" exclude="SwitchPilot Servo V3.0">
             <decVal max="31"/>
             <label>Max bouncing strength</label>
         </variable>
-        <variable CV="112" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 1 Bouncing at Position A">
+        <variable CV="112" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 1 Bouncing at Position A" exclude="SwitchPilot Servo V3.0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Bouncing at Position A</label>
         </variable>
-        <variable CV="112" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 1 Bouncing at Position B">
+        <variable CV="112" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 1 Bouncing at Position B" exclude="SwitchPilot Servo V3.0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Bouncing at Position B</label>
         </variable>
-        <variable CV="114" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 2 Number of Bounces">
+        <variable CV="114" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 2 Number of Bounces" exclude="SwitchPilot Servo V3.0">
             <decVal max="31"/>
             <label>Number of bounces</label>
         </variable>
-        <variable CV="115" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 2 Max Bouncing Strength">
+        <variable CV="115" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 2 Max Bouncing Strength" exclude="SwitchPilot Servo V3.0">
             <decVal max="31"/>
             <label>Max bouncing strength</label>
         </variable>
-        <variable CV="116" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 2 Bouncing at Position A">
+        <variable CV="116" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 2 Bouncing at Position A" exclude="SwitchPilot Servo V3.0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Bouncing at Position A</label>
         </variable>
-        <variable CV="116" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 2 Bouncing at Position B">
+        <variable CV="116" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 2 Bouncing at Position B" exclude="SwitchPilot Servo V3.0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Bouncing at Position B</label>
         </variable>
         <variables exclude="SwitchPilot V2.0">
-            <variable CV="112" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 1 Bouncing at Position C">
+            <variable CV="112" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 1 Bouncing at Position C" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position C</label>
             </variable>
-            <variable CV="112" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 1 Bouncing at Position D">
+            <variable CV="112" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 1 Bouncing at Position D" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position D</label>
             </variable>
-            <variable CV="116" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 2 Bouncing at Position C">
+            <variable CV="116" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 2 Bouncing at Position C" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position C</label>
             </variable>
-            <variable CV="116" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 2 Bouncing at Position D">
+            <variable CV="116" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 2 Bouncing at Position D" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position D</label>
             </variable>
-            <variable CV="118" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 3 Number of Bounces">
+            <variable CV="118" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 3 Number of Bounces" exclude="SwitchPilot Servo V3.0">
                 <decVal max="31"/>
                 <label>Number of bounces</label>
             </variable>
-            <variable CV="119" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 3 Max Bouncing Strength">
+            <variable CV="119" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 3 Max Bouncing Strength" exclude="SwitchPilot Servo V3.0">
                 <decVal max="31"/>
                 <label>Max bouncing strength</label>
             </variable>
-            <variable CV="120" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 3 Bouncing at Position A">
+            <variable CV="120" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 3 Bouncing at Position A" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position A</label>
             </variable>
-            <variable CV="120" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 3 Bouncing at Position B">
+            <variable CV="120" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 3 Bouncing at Position B" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position B</label>
             </variable>
-            <variable CV="120" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 3 Bouncing at Position C">
+            <variable CV="120" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 3 Bouncing at Position C" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position C</label>
             </variable>
-            <variable CV="120" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 3 Bouncing at Position D">
+            <variable CV="120" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 3 Bouncing at Position D" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position D</label>
             </variable>
-            <variable CV="122" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 4 Number of Bounces">
+            <variable CV="122" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 4 Number of Bounces" exclude="SwitchPilot Servo V3.0">
                 <decVal max="31"/>
                 <label>Number of bounces</label>
             </variable>
-            <variable CV="123" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 4 Max Bouncing Strength">
+            <variable CV="123" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 4 Max Bouncing Strength" exclude="SwitchPilot Servo V3.0">
                 <decVal max="31"/>
                 <label>Max bouncing strength</label>
             </variable>
-            <variable CV="124" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 4 Bouncing at Position A">
+            <variable CV="124" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 4 Bouncing at Position A" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position A</label>
             </variable>
-            <variable CV="124" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 4 Bouncing at Position B">
+            <variable CV="124" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 4 Bouncing at Position B" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position B</label>
             </variable>
-            <variable CV="124" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 4 Bouncing at Position C">
+            <variable CV="124" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 4 Bouncing at Position C" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position C</label>
             </variable>
-            <variable CV="124" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 4 Bouncing at Position D">
+            <variable CV="124" mask="XXXXVXXX" default="0" item="SwitchPilot Servo 4 Bouncing at Position D" exclude="SwitchPilot Servo V3.0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Bouncing at Position D</label>
+            </variable>
+        </variables>
+        <variables include="SwitchPilot Servo V3.0">
+            <variable CV="116" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 1 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="117" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 1 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="118" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 1 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="118" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 1 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="118" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 1 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
+            </variable>
+            <variable CV="124" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 2 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="125" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 2 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="126" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 2 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="126" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 2 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="126" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 2 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
+            </variable>
+            <variable CV="132" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 3 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="133" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 3 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="134" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 3 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="134" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 3 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="134" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 3 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
+            </variable>
+            <variable CV="140" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 4 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="141" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 4 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="142" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 4 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="142" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 4 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="142" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 4 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
+            </variable>
+            <variable CV="148" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 5 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="149" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 5 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="150" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 5 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="150" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 5 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="150" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 5 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
+            </variable>
+            <variable CV="156" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 6 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="157" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 6 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="158" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 6 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="158" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 6 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="158" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 6 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
+            </variable>
+            <variable CV="164" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 7 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="165" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 7 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="166" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 7 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="166" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 7 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="166" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 7 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
+            </variable>
+            <variable CV="172" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 8 Number of Bounces">
+                <decVal max="31"/>
+                <label>Number of bounces</label>
+            </variable>
+            <variable CV="173" mask="XXXVVVVV" default="0" item="SwitchPilot Servo 8 Max Bouncing Strength">
+                <decVal max="31"/>
+                <label>Max bouncing strength</label>
+            </variable>
+            <variable CV="174" mask="XXXXXXXV" default="0" item="SwitchPilot Servo 8 Bouncing at Position A">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position A</label>
+            </variable>
+            <variable CV="174" mask="XXXXXXVX" default="0" item="SwitchPilot Servo 8 Bouncing at Position B">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Bouncing at Position B</label>
+            </variable>
+            <variable CV="174" mask="XXXXXVXX" default="0" item="SwitchPilot Servo 8 proportional mode">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Proportional mode</label>
+                <tooltip>Servo runs as long as the button is pressed</tooltip>
             </variable>
         </variables>
     </variables>

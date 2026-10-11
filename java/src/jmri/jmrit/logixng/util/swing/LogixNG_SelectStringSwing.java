@@ -36,7 +36,6 @@ public class LogixNG_SelectStringSwing {
     private JPanel _panelTable;
     private JTextField _referenceTextField;
     private BeanSelectPanel<Memory> _memoryPanel;
-    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -108,11 +107,9 @@ public class LogixNG_SelectStringSwing {
         }
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
-        _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -149,7 +146,6 @@ public class LogixNG_SelectStringSwing {
             }
             _referenceTextField.setText(selectStr.getReference());
             _memoryPanel.setDefaultNamedBean(selectStr.getMemory());
-            _listenToMemoryCheckBox.setSelected(selectStr.getListenToMemory());
             _localVariableTextField.setText(selectStr.getLocalVariable());
             _formulaTextField.setText(selectStr.getFormula());
         }
@@ -223,7 +219,6 @@ public class LogixNG_SelectStringSwing {
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
                 selectStr.setAddressing(NamedBeanAddressing.Memory);
                 selectStr.setMemory(_memoryPanel.getNamedBean());
-                selectStr.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectStr.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectStr.setLocalVariable(_localVariableTextField.getText());
@@ -246,5 +241,5 @@ public class LogixNG_SelectStringSwing {
         _selectTableSwing.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectStringSwing.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectStringSwing.class);
 }

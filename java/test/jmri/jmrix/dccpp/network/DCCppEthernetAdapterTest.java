@@ -22,6 +22,15 @@ public class DCCppEthernetAdapterTest {
         Assert.assertNotNull(a);
     }
 
+    @Test
+    public void testReconnectDefaultsOn() {
+        DCCppEthernetAdapter a = new DCCppEthernetAdapter();
+        Assert.assertTrue("automatic reconnect should be enabled by default",
+                a.getAllowConnectionRecovery());
+        Assert.assertEquals("default reconnect attempts should be unlimited",
+                -1, a.getReconnectMaxAttempts());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -2,7 +2,6 @@ package jmri.jmrit.vsdecoder;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ConfigurableSoundTest {
     @Test
     public void testCTor() {
         ConfigurableSound t = new ConfigurableSound("test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class ConfigurableSoundTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConfigurableSoundTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ConfigurableSoundTest.class);
 
 }

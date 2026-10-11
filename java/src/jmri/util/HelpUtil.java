@@ -53,7 +53,10 @@ public class HelpUtil {
 
     public static JMenu makeHelpMenu(String ref, boolean direct) {
         JMenu helpMenu = new JMenu(Bundle.getMessage("ButtonHelp"));
-        helpMenu.add(makeHelpMenuItem(ref));
+        var helpMenuItem = makeHelpMenuItem(ref);
+        if (helpMenuItem != null) {
+            helpMenu.add(helpMenuItem);
+        }
 
         if (direct) {
             ServiceLoader<MenuProvider> providers = ServiceLoader.load(MenuProvider.class);
@@ -69,6 +72,8 @@ public class HelpUtil {
     }
 
     public static JMenuItem makeHelpMenuItem(String ref) {
+        if (ref == null) return null;
+        
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
 
         menuItem.addActionListener((ignore) -> displayHelpRef(ref));

@@ -2,7 +2,10 @@ package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -10,10 +13,9 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.configurexml.XmlAdapter;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides services for configuring NamedBean manager storage.
@@ -25,6 +27,17 @@ import org.slf4j.LoggerFactory;
  * @since 2.3.1
  */
 public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexml.AbstractXmlAdapter {
+
+    static final String STR_SYSTEM_NAME = "systemName";
+    static final String STR_USER_NAME = "userName";
+    static final String STR_COMMENT = "comment";
+
+    static final String STR_VALUE = "value";
+    static final String STR_CLASS = "class";
+
+    static final String STR_KEY = "key";
+    static final String STR_PROPERTY = "property";
+    static final String STR_PROPERTIES = "properties";
 
     public AbstractNamedBeanManagerConfigXML() {
     }
@@ -39,7 +52,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param t    The NamedBean being stored
      * @param elem The JDOM element for storing the NamedBean
      */
-    protected void storeCommon(NamedBean t, Element elem) {
+    protected void storeCommon(@Nonnull NamedBean t, Element elem) {
         storeUserName(t, elem);
         storeComment(t, elem);
         storeProperties(t, elem);
@@ -67,10 +80,10 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param t    The NamedBean being stored
      * @param elem The JDOM element for storing the NamedBean
      */
-    void storeComment(NamedBean t, Element elem) {
+    void storeComment( @Nonnull NamedBean t, @Nonnull Element elem) {
         // add comment, if present
         if (t.getComment() != null) {
-            Element c = new Element("comment");
+            Element c = new Element(STR_COMMENT);
             c.addContent(t.getComment());
             elem.addContent(c);
         }
@@ -87,10 +100,10 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param t    The NamedBean being stored
      * @param elem The JDOM element for storing the NamedBean
      */
-    void storeUserName(NamedBean t, Element elem) {
+    void storeUserName( @Nonnull NamedBean t, @Nonnull Element elem) {
         String uname = t.getUserName();
-        if (uname != null && uname.length() > 0) {
-            elem.addContent(new Element("userName").addContent(uname));
+        if ( uname != null && !uname.isEmpty()) {
+            elem.addContent(new Element(STR_USER_NAME).addContent(uname));
         }
     }
 
@@ -124,11 +137,11 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @return the user name of bean or null
      */
     protected String getUserName(@Nonnull Element elem) {
-        if (elem.getChild("userName") != null) {
-            return elem.getChild("userName").getText();
+        if (elem.getChild(STR_USER_NAME) != null) {
+            return elem.getChild(STR_USER_NAME).getText();
         }
-        if (elem.getAttribute("userName") != null) {
-            return elem.getAttribute("userName").getValue();
+        if (elem.getAttribute(STR_USER_NAME) != null) {
+            return elem.getAttribute(STR_USER_NAME).getValue();
         }
         return null;
     }
@@ -150,11 +163,11 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @return the system name or null if not defined
      */
     protected String getSystemName(@Nonnull Element elem) {
-        if (elem.getChild("systemName") != null) {
-            return elem.getChild("systemName").getText();
+        if (elem.getChild(STR_SYSTEM_NAME) != null) {
+            return elem.getChild(STR_SYSTEM_NAME).getText();
         }
-        if (elem.getAttribute("systemName") != null) {
-            return elem.getAttribute("systemName").getValue();
+        if (elem.getAttribute(STR_SYSTEM_NAME) != null) {
+            return elem.getAttribute(STR_SYSTEM_NAME).getValue();
         }
         return null;
     }
@@ -176,7 +189,8 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param rawUserName   The proposed user name string, before normalization
      * @param manager       The NamedBeanManager that will be storing this
      */
-    <T extends NamedBean> void checkNameNormalization(@Nonnull String rawSystemName, String rawUserName, @Nonnull Manager<T> manager) {
+    <T extends NamedBean> void checkNameNormalization(@Nonnull String rawSystemName,
+        @CheckForNull String rawUserName, @Nonnull Manager<T> manager) {
         // just check and log
         if (rawUserName != null) {
             String normalizedUserName = NamedBean.normalizeUserName(rawUserName);
@@ -209,18 +223,12 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param m    Manager used to check name for validity and existence
      * @return the requested NamedBean or null if name was null
      */
-    public <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
-        if (name == null) {
+    public <T extends NamedBean> T checkedNamedBeanReference(
+        @CheckForNull String name, @Nonnull T type, @Nonnull Manager<T> m) {
+        if ( name == null || name.isEmpty() ) {
             return null;
         }
-        if (name.equals("")) {
-            return null;
-        }
-        T nb = m.getNamedBean(name);
-        if (nb == null) {
-            return null;
-        }
-        return nb;
+        return m.getNamedBean(name);
     }
 
     /**
@@ -237,11 +245,9 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param m    Manager used to check name for validity and existence
      * @return a handle for the requested NamedBean or null
      */
-    public <T extends NamedBean> NamedBeanHandle<T> checkedNamedBeanHandle(String name, @Nonnull T type, @Nonnull Manager<T> m) {
-        if (name == null) {
-            return null;
-        }
-        if (name.equals("")) {
+    public <T extends NamedBean> NamedBeanHandle<T> checkedNamedBeanHandle(
+        @CheckForNull String name, @Nonnull T type, @Nonnull Manager<T> m ) {
+        if ( name == null || name.isEmpty() ) {
             return null;
         }
         T nb = m.getNamedBean(name);
@@ -266,11 +272,8 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param m    Manager used to check name for validity and existence
      * @return name if a matching NamedBean can be found or null
      */
-    public <T extends NamedBean> String checkedNamedBeanName(String name, T type, @Nonnull Manager<T> m) {
-        if (name == null) {
-            return null;
-        }
-        if (name.equals("")) {
+    public <T extends NamedBean> String checkedNamedBeanName(@CheckForNull String name, T type, @Nonnull Manager<T> m) {
+        if ( name == null || name.isEmpty() ) {
             return null;
         }
         NamedBean nb = m.getNamedBean(name);
@@ -299,9 +302,9 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param t    The NamedBean being loaded
      * @param elem The existing Element
      */
-    void loadComment(NamedBean t, Element elem) {
+    void loadComment(NamedBean t, @Nonnull Element elem) {
         // load comment, if present
-        String c = elem.getChildText("comment");
+        String c = elem.getChildText(STR_COMMENT);
         if (c != null) {
             t.setComment(c);
         }
@@ -315,7 +318,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param name name of desired Attribute
      * @return attribute value or null if name is not an attribute of elem
      */
-    String getAttributeString(Element elem, String name) {
+    String getAttributeString( @Nonnull Element elem, String name) {
         Attribute a = elem.getAttribute(name);
         if (a != null) {
             return a.getValue();
@@ -334,14 +337,14 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @return value of attribute name or def if name is not an attribute of
      *         elem
      */
-    boolean getAttributeBool(Element elem, String name, boolean def) {
+    boolean getAttributeBool( @Nonnull Element elem, String name, boolean def) {
         String v = getAttributeString(elem, name);
         if (v == null) {
             return def;
         } else if (def) {
-            return !v.equals("false");
+            return !v.equals(STR_FALSE);
         } else {
-            return v.equals("true");
+            return v.equals(STR_TRUE);
         }
     }
 
@@ -351,21 +354,21 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param t    The NamedBean being loaded
      * @param elem The existing Element
      */
-    void storeProperties(NamedBean t, Element elem) {
+    void storeProperties( @Nonnull NamedBean t, @Nonnull Element elem) {
         java.util.Set<String> s = t.getPropertyKeys();
         if (s.isEmpty()) {
             return;
         }
-        Element ret = new Element("properties");
+        Element ret = new Element(STR_PROPERTIES);
         elem.addContent(ret);
-        s.forEach((key) -> {
+        s.forEach( key -> {
             Object value = t.getProperty(key);
-            Element p = new Element("property");
+            Element p = new Element(STR_PROPERTY);
             ret.addContent(p);
-            p.addContent(new Element("key").setText(key));
+            p.addContent(new Element(STR_KEY).setText(key));
             if (value != null) {
-                p.addContent(new Element("value")
-                        .setAttribute("class", value.getClass().getName())
+                p.addContent(new Element(STR_VALUE)
+                        .setAttribute(STR_CLASS, value.getClass().getName())
                         .setText(value.toString())
                 );
             }
@@ -379,11 +382,11 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param elem The existing Element
      */
     void loadProperties(NamedBean t, Element elem) {
-        Element p = elem.getChild("properties");
+        Element p = elem.getChild(STR_PROPERTIES);
         if (p == null) {
             return;
         }
-        p.getChildren("property").forEach((e) -> {
+        p.getChildren(STR_PROPERTY).forEach( e -> {
             try {
                 Class<?> cl;
                 Constructor<?> ctor;
@@ -394,20 +397,20 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
                 // check for non-String key.  Warn&proceed if found.
                 // Pre-JMRI 4.3, keys in NamedBean parameters could be Objects
                 // constructed from Strings, similar to the value code below.
-                if (!(e.getChild("key").getAttributeValue("class") == null
-                        || e.getChild("key").getAttributeValue("class").equals("")
-                        || e.getChild("key").getAttributeValue("class").equals("java.lang.String"))) {
+                if (!(e.getChild(STR_KEY).getAttributeValue(STR_CLASS) == null
+                        || e.getChild(STR_KEY).getAttributeValue(STR_CLASS).isEmpty()
+                        || e.getChild(STR_KEY).getAttributeValue(STR_CLASS).equals("java.lang.String"))) {
 
                     log.warn("NamedBean {} property key of invalid non-String type {} not supported",
-                            t.getSystemName(), e.getChild("key").getAttributeValue("class"));
+                            t.getSystemName(), e.getChild("key").getAttributeValue(STR_CLASS));
                 }
 
                 // create value object
                 Object value = null;
-                if (e.getChild("value") != null) {
-                    cl = Class.forName(e.getChild("value").getAttributeValue("class"));
+                if (e.getChild(STR_VALUE) != null) {
+                    cl = Class.forName(e.getChild(STR_VALUE).getAttributeValue(STR_CLASS));
                     ctor = cl.getConstructor(String.class);
-                    value = ctor.newInstance(e.getChild("value").getText());
+                    value = ctor.newInstance(e.getChild(STR_VALUE).getText());
                 }
 
                 // store
@@ -433,7 +436,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
         boolean result = true;
         for (Element item : list) {
             // get the class, hence the adapter object to do loading
-            String adapterName = item.getAttribute("class").getValue();
+            String adapterName = item.getAttribute(STR_CLASS).getValue();
             log.debug("load via {}", adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
@@ -449,6 +452,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNamedBeanManagerConfigXML.class);
+    private static final org.slf4j.Logger log =
+        org.slf4j.LoggerFactory.getLogger(AbstractNamedBeanManagerConfigXML.class);
 
 }

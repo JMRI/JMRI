@@ -1,7 +1,10 @@
 package jmri;
 
+import java.util.Locale;
+
 import java.beans.PropertyVetoException;
 import javax.annotation.Nonnull;
+
 import jmri.beans.ConstrainedBean;
 
 /**
@@ -142,9 +145,13 @@ public class Scale extends ConstrainedBean {
         jmri.configurexml.ScaleConfigXML.doStore();
     }
 
+    /**
+     * Return a String representation of the Scale.
+     * @return username and I18N ratio.
+     */
     @Override
     public String toString() {
-        return String.format("%s (%.1f)", getUserName(), getScaleRatio());
+        return String.format(Locale.getDefault(), "%s (%.1f)", getUserName(), getScaleRatio());
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Scale.class);

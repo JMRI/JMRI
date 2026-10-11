@@ -43,7 +43,7 @@ public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
         tcm.setFileName(fileNameTextField.getText());
 
         if (ae.getSource() == testButton) {
-            if (tcm.excelFileExists()) {
+            if (tcm.doesExcelFileExist()) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DirectoryNameFileName",
                         tcm.getDirectoryName(), tcm.getFileName()),
                         Bundle.getMessage("ManifestCreatorFound"), JmriJOptionPane.INFORMATION_MESSAGE);

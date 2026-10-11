@@ -4,16 +4,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JmriNamedPaneAction;
 import jmri.util.swing.SamplePane;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Swing tests for the SDI GUI.
@@ -23,8 +26,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class SdiJfcUnitTest {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testShowAndClose() throws Exception {
+    @DisabledIfHeadless
+    public void testShowAndClose() {
 
         JmriNamedPaneAction a = new JmriNamedPaneAction("Action",
                 new JmriJFrameInterface(),
@@ -33,33 +36,33 @@ public class SdiJfcUnitTest {
         a.actionPerformed(null);
 
         JFrame f1 = jmri.util.JmriJFrame.getFrame("SamplePane 1");
-        Assert.assertTrue("found frame 1", f1 != null);
+        assertNotNull( f1, "found frame 1");
 
         // Find the button that opens another panel
         JButton button = JButtonOperator.findJButton(f1, "Next1", true, true);
-        Assert.assertNotNull(button);
+        assertNotNull(button);
 
         // Click it and check for next frame
         new JButtonOperator(button).doClick();
 
         JFrame f2 = jmri.util.JmriJFrame.getFrame("SamplePane 2");
-        Assert.assertTrue("found frame 2", f2 != null);
+        assertNotNull( f2, "found frame 2");
 
         // Close 2 directly
         new JFrameOperator(f2).dispose();
         new QueueTool().waitEmpty();
-        Assert.assertEquals("one pane disposed", 1, SamplePane.getDisposedList().size());
-        Assert.assertEquals("pane 2 disposed", Integer.valueOf(2), SamplePane.getDisposedList().get(0));
+        assertEquals( 1, SamplePane.getDisposedList().size(), "one pane disposed");
+        assertEquals( Integer.valueOf(2), SamplePane.getDisposedList().get(0), "pane 2 disposed");
         f2 = jmri.util.JmriJFrame.getFrame("SamplePane 2");
-        Assert.assertTrue("frame 2 is no longer visible", f2 == null);
+        assertNull( f2, "frame 2 is no longer visible");
 
         // Close 1 directly
         new JFrameOperator(f1).dispose();
         new QueueTool().waitEmpty();
-        Assert.assertEquals("one pane disposed", 2, SamplePane.getDisposedList().size());
-        Assert.assertEquals("pane 1 disposed", Integer.valueOf(1), SamplePane.getDisposedList().get(1));
+        assertEquals( 2, SamplePane.getDisposedList().size(), "one pane disposed");
+        assertEquals( Integer.valueOf(1), SamplePane.getDisposedList().get(1), "pane 1 disposed");
         f1 = jmri.util.JmriJFrame.getFrame("SamplePane 1");
-        Assert.assertTrue("frame 1 is no longer visible", f1 == null);
+        assertNull( f1, "frame 1 is no longer visible");
 
     }
 

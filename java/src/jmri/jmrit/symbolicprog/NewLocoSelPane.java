@@ -240,6 +240,6 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NewLocoSelPane.class);
+    private static final Logger log = LoggerFactory.getLogger(NewLocoSelPane.class);
 
 }

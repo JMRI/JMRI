@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SignOfLifeTimerPacket extends Packet {
-  public final static byte IDENT = 8;
+  public static final byte IDENT = 8;
   private short interval;
 
   @Override

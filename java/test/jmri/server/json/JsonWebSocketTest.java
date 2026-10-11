@@ -2,7 +2,6 @@ package jmri.server.json;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -17,14 +16,14 @@ public class JsonWebSocketTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
     @Test
     public void testLifecycle() {
         JsonWebSocket instance = new JsonWebSocket();
-        Assert.assertNull(instance.getConnection());
+        Assertions.assertNull(instance.getConnection());
         // until I can figure out how to create a Session, leave rest commented out
         // since onOpen wants the Session to work and Session is abstract, and
         // Eclipse.org is down

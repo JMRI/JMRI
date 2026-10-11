@@ -2,11 +2,6 @@ package jmri.server.json.reporter;
 
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
@@ -31,6 +26,11 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -60,12 +60,11 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         validate(result);
         assertEquals("close", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
         // Request a non-existent reporter
-        try {
-            service.doGet(REPORTER, "IR2", service.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doGet(REPORTER, "IR2", service.getObjectMapper().createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals(404, ex.getCode());
     }
 
     @Test
@@ -94,27 +93,27 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         assertEquals("null", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
         // set new user name
         message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JSON.USERNAME, "TEST REPORTER");
-        assertEquals("expected name", "test reporter", reporter1.getUserName());
+        assertEquals( "test reporter", reporter1.getUserName(), "expected name");
         result = service.doPost(REPORTER, "IR1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-        assertEquals("new name", "TEST REPORTER", reporter1.getUserName());
+        assertEquals( "TEST REPORTER", reporter1.getUserName(), "new name");
         validate(result);
-        assertEquals("new name in JSON", "TEST REPORTER", result.path(JSON.DATA).path(JSON.USERNAME).asText());
+        assertEquals( "TEST REPORTER", result.path(JSON.DATA).path(JSON.USERNAME).asText(),
+            "new name in JSON");
         // set comment
         message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JSON.COMMENT, "a comment");
-        assertNull("null comment", reporter1.getComment());
+        assertNull( reporter1.getComment(), "null comment");
         result = service.doPost(REPORTER, "IR1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-        assertEquals("new comment", "a comment", reporter1.getComment());
+        assertEquals( "a comment", reporter1.getComment(), "new comment");
         validate(result);
-        assertEquals("new comment in JSON", "a comment", result.path(JSON.DATA).path(JSON.COMMENT).asText());
+        assertEquals( "a comment", result.path(JSON.DATA).path(JSON.COMMENT).asText(),
+            "new comment in JSON");
         // post non-existent reporter
-        try {
+        JsonException ex = assertThrows( JsonException.class, () -> {
             // set off
-            message = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
-            result = service.doPost(REPORTER, "JR1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown " + result);
-        } catch (JsonException ex) {
-            assertEquals("Not found thrown", 404, ex.getCode());
-        }
+            JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
+            service.doPost(REPORTER, "JR1", messageEx, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        }, "Expected exception not thrown ");
+        assertEquals( 404, ex.getCode(), "Not found thrown");
     }
 
     @Test
@@ -137,14 +136,13 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
                 return this.newReporter(name, null);
             }
         });
-        message = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
-        try {
-            service.doPut(REPORTER, "JR1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("JR1 should not have been created");
-        } catch (JsonException ex) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for reporter");
-            assertEquals("400 name was invalid", 400, ex.getCode());
-        }
+        JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPut(REPORTER, "JR1", messageEx,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "JR1 should not have been created");
+        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for reporter");
+        assertEquals( 400, ex.getCode(), "400 name was invalid");
     }
 
     @Test
@@ -171,26 +169,23 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         // delete an idTag with a named listener ref
         assertNotNull(manager.getReporter("IR1"));
         message = mapper.createObjectNode().put(JSON.NAME, "IR1");
-        try {
-            service.doDelete(REPORTER, "IR1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals(409, ex.getCode());
-            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
-            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doDelete(REPORTER, "IR1", NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown");
+        assertEquals(409, ex.getCode());
+        assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+        assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+        message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         assertNotNull(manager.getReporter("IR1"));
         // will throw if prior catch failed
         service.doDelete(REPORTER, "IR1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull(manager.getBySystemName("IR1"));
-        try {
-            // deleting again should throw an exception
-            service.doDelete(REPORTER, "IR1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+        ex = assertThrows( JsonException.class, () ->
+            service.doDelete(REPORTER, "IR1", NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "deleting again should throw an exception.");
+        assertEquals(404, ex.getCode());
     }
 
     @Test

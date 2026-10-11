@@ -22,7 +22,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
     private int _cv;
     private LnTrafficController lnTC;
 
-    static public int operationDelay = 50; // public for script acccess
+    public static int operationDelay = 50; // public for script acccess
 
     public Z21XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller) {
         this(pAddress,controller,null);
@@ -222,6 +222,6 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
 
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
 
 }

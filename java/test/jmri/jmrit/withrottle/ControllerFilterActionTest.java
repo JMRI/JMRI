@@ -1,12 +1,9 @@
 package jmri.jmrit.withrottle;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of ControllerFilterAction
@@ -16,10 +13,10 @@ import org.junit.Assume;
 public class ControllerFilterActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControllerFilterAction panel = new ControllerFilterAction();
-        Assert.assertNotNull("exists", panel);
+        Assertions.assertNotNull( panel, "exists");
     }
 
     @BeforeEach
@@ -28,7 +25,7 @@ public class ControllerFilterActionTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

@@ -316,7 +316,7 @@ public class IconDialog extends ItemDialog {
         _parent._cntlDown = false;
         super.dispose();
     }
-    static protected HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {
+    protected static HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = null;
         if (map != null) {
             clone = new HashMap<>();

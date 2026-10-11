@@ -1,16 +1,17 @@
 package jmri.profile;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
-import java.io.IOException;
 
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for {@link jmri.profile.ProfileUtils} methods.
@@ -18,8 +19,6 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood
  */
 public class ProfileUtilsTest {
-
-    private static final Logger log = LoggerFactory.getLogger(ProfileUtilsTest.class);
 
     @BeforeEach
     public void setUp() {
@@ -35,33 +34,25 @@ public class ProfileUtilsTest {
 
     @Test
     public void testCopy(@TempDir File folder) {
-        Profile source;
-        Profile destination;
-        try {
+        // Profile source;
+        Profile source = assertDoesNotThrow( () -> {
             File dir = new File(folder, "source");
-            Assertions.assertTrue(dir.mkdirs());
-            source = new Profile("source", dir.getName(), dir);
-            dir = new File(folder, "dest");
-            destination = new Profile("destination", dir.getName(), dir);
-        } catch (IOException ex) {
-            // skip test if unable to create temporary profiles
-            fail("Unable to create temporary profiles");
-            return;
-        }
-        try {
-            ProfileUtils.copy(source, destination);
-        } catch (IllegalArgumentException ex) {
-            fail("Unable to copy profiles with IllegalArgumentException.");
-            return;
-        } catch (IOException ex) {
-            log.error("Failure copying profiles", ex);
-            fail("Unable to copy profiles with IOException.");
-            return;
-        }
+            assertTrue(dir.mkdirs());
+            return new Profile("source", dir.getName(), dir);
+        }, "Unable to create source profile");
+        Profile destination = assertDoesNotThrow( () -> {
+            File dir = new File(folder, "dest");
+            return new Profile("destination", dir.getName(), dir);
+        }, "Unable to create temporary destination profile");
+
+        assertDoesNotThrow( () ->
+            ProfileUtils.copy(source, destination),
+            "Unable to copy profiles.");
+
         File profile = new File(destination.getPath(), Profile.PROFILE);
         File[] profilePaths = profile.listFiles((File pathname) ->
             pathname.getName().endsWith(source.getUniqueId()));
-        Assertions.assertNotNull(profilePaths);
+        assertNotNull(profilePaths);
         if ( profilePaths.length > 0 ) { 
             fail("Source ID remains in destination profile.");
         }
@@ -69,31 +60,28 @@ public class ProfileUtilsTest {
 
     @Test
     public void testCopyToActive(@TempDir File folder) {
-        Profile source;
-        Profile destination;
-        try {
+        
+        Profile source = assertDoesNotThrow( () -> {
             File dir = new File(folder, "source");
-            Assertions.assertTrue(dir.mkdirs());
-            source = new Profile("source", dir.getName(), dir);
-            dir = new File(folder, "dest");
-            Assertions.assertTrue(dir.mkdirs());
-            destination = new Profile("destination", dir.getName(), dir);
-            // Should cause copy() to throw IllegalArgumentException
-            ProfileManager.getDefault().setActiveProfile(destination);
-        } catch (IOException ex) {
-            // skip test if unable to create temporary profiles
-            fail("Unable to create temporary profiles");
-            return;
-        }
-        try {
-            // Should throw IllegalArgumentException
-            ProfileUtils.copy(source, destination);
-        } catch (IllegalArgumentException ex) {
-            // This exception is expected and throwing it passes the test
-        } catch (IOException ex) {
-            log.error("Failure copying profiles", ex);
-            fail("Unable to copy profiles with IOException.");
-        }
+            assertTrue(dir.mkdirs());
+            return new Profile("source", dir.getName(), dir);
+                    }, "Unable to create temporary source profile");
+        Profile destination = assertDoesNotThrow( () -> {
+            File dir = new File(folder, "dest");
+            assertTrue(dir.mkdirs());
+            return new Profile("destination", dir.getName(), dir);
+        }, "Unable to create temporary dest profile");
+        // Should cause copy() to throw IllegalArgumentException
+        ProfileManager.getDefault().setActiveProfile(destination);
+
+        // Should throw IllegalArgumentException
+        // This exception is expected and throwing it passes the test
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> ProfileUtils.copy(source, destination), "Unable to copy profiles.");
+        assertNotNull(ex);
+
     }
+
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProfileUtilsTest.class);
 
 }

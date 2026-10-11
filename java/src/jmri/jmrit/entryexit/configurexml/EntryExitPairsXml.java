@@ -87,6 +87,14 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             element.addContent(new Element("abssignalmode").addContent("yes"));  // NOI18N
         }
 
+        if (p.isQuietFail()) {
+            element.addContent(new Element("quietfail").addContent("yes"));  // NOI18N
+        }
+
+        if (p.isSkipGuiFix()) {
+            element.addContent(new Element("skipguifix").addContent("yes"));  // NOI18N
+        }
+
         for (int k = 0; k < editors.size(); k++) {
             LayoutEditor panel = editors.get(k);
             List<Object> nxpair = p.getSourceList(panel);
@@ -240,6 +248,14 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             eep.setAbsSignalMode(true);
         }
 
+        if (shared.getChild("quietfail") != null && shared.getChild("quietfail").getText().equals("yes")) {  // NOI18N
+            eep.setQuietFail(true);
+        }
+
+        if (shared.getChild("skipguifix") != null && shared.getChild("skipguifix").getText().equals("yes")) {  // NOI18N
+            eep.setSkipGuiFix(true);
+        }
+
         List<Element> panelList = shared.getChildren("layoutPanel");  // NOI18N
         for (int k = 0; k < panelList.size(); k++) {
             String panelName = panelList.get(k).getAttribute("name").getValue();  // NOI18N
@@ -342,5 +358,5 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return InstanceManager.getDefault(EntryExitPairs.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class);
+    private static final Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class);
 }

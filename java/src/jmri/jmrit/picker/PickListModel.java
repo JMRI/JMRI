@@ -18,6 +18,8 @@ import jmri.jmrit.entryexit.*;
 import jmri.jmrit.logix.*;
 import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
+import jmri.jmrit.logixng.NamedTable;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.swing.RowSorterUtil;
 import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
@@ -63,7 +65,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     static HashMap<String, Integer> _listMap = new HashMap<String, Integer>();
 
-    static public int getNumInstances(@Nonnull String type) {
+    public static int getNumInstances(@Nonnull String type) {
         Integer num = _listMap.get(type.toLowerCase());
         log.debug("getNumInstances of {} num={}", type, num);
         if (num != null) {
@@ -442,6 +444,17 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     }
 
     @Nonnull
+    public static PickListModel<NamedTable> namedTablePickModelInstance() {
+        Integer num = _listMap.get("namedTable");
+        if (num != null) {
+            _listMap.put("namedTable", num + 1);
+        } else {
+            _listMap.put("namedTable", 1);
+        }
+        return new NamedTablePickModel();
+    }
+
+    @Nonnull
     public static PickListModel<Block> blockPickModelInstance() {
         Integer num = _listMap.get("block");
         if (num != null) {
@@ -528,7 +541,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return new AudioPickModel();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PickListModel.class);
+    private static final Logger log = LoggerFactory.getLogger(PickListModel.class);
 
     static class TurnoutPickModel extends PickListModel<Turnout> {
 
@@ -764,6 +777,41 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         /** {@inheritDoc} */
         @Override
         public GlobalVariable addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean canAddBean() {
+            return false;
+        }
+    }
+
+    static class NamedTablePickModel extends PickListModel<NamedTable> {
+
+        NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
+
+        NamedTablePickModel() {
+            _name = rb.getString("TitleLogixNGTableTable");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @Nonnull
+        public Manager<NamedTable> getManager() {
+            manager = InstanceManager.getDefault(NamedTableManager.class);
+            return manager;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public NamedTable addBean(@Nonnull String name) throws IllegalArgumentException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public NamedTable addBean(@Nonnull String sysName, String userName) throws IllegalArgumentException {
             throw new UnsupportedOperationException("Not supported");
         }
 

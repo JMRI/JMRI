@@ -1,5 +1,7 @@
 package jmri.jmrix.secsi;
 
+import jmri.util.StringUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,12 +37,15 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      * @param l response length
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public SerialMessage(byte[] a, int l) {
-        super(String.valueOf(a));
+        // super(String.valueOf(a)); // Spotbug toString on array
+        // requires further development to produce correct values for hardware type.
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
         setResponseLength(l);
         setBinary(true);
     }
@@ -69,7 +74,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
-    static public SerialMessage getPoll(int addr) {
+    public static SerialMessage getPoll(int addr) {
         // eventually this will have to include logic for reading
         // various bytes on the card, but our supported
         // cards don't require that yet
@@ -81,6 +86,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialMessage.class);
 
 }

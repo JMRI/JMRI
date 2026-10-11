@@ -284,6 +284,6 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         return l;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);
 
 }

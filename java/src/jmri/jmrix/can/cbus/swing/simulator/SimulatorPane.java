@@ -181,7 +181,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemNetworkSim"),
@@ -190,5 +190,5 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    // private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    // private static final Logger log = LoggerFactory.getLogger(SimulatorPane.class);
 }

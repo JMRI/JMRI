@@ -217,8 +217,8 @@ public class ExpressionScript extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     private String getTheScript() throws JmriException {
@@ -525,6 +525,6 @@ public class ExpressionScript extends AbstractDigitalExpression
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionScript.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionScript.class);
 
 }

@@ -2,10 +2,10 @@ package jmri.jmrit.logixng.implementation.configurexml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test DefaultMaleStringActionSocketXml
@@ -17,18 +17,18 @@ public class DefaultMaleStringExpressionSocketXmlTest {
     @Test
     public void testCtor() {
         DefaultMaleStringExpressionSocketXml t = new DefaultMaleStringExpressionSocketXml();
-        Assert.assertNotNull("not null", t);
+        Assertions.assertNotNull( t, "not null");
     }
-    
+
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
+
 }

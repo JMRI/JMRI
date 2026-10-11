@@ -2,32 +2,42 @@ package jmri.jmrix.powerline.simulator;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
  * Tests for SimulatorAdapter class.
  *
  * @author Paul Bender Copyright (C) 2016
+ * @author Steve Young Copyright (C) 2025
  **/
-
 public class SimulatorAdapterTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SimulatorAdapter constructor",new SimulatorAdapter());
-   }
+    @Test
+    public void powerlineSimAdapterConstructorTest(){
+        SimulatorAdapter sa = new SimulatorAdapter();
+        Assertions.assertNotNull( sa, "SimulatorAdapter constructor");
+        sa.dispose();
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @Test
+    public void testOpenPowerlineSimAdapterPort() {
+        SimulatorAdapter sa = new SimulatorAdapter();
+        String result = sa.openPort("portName", "appName");
+        Assertions.assertNull(result);
+        Assertions.assertNotNull(sa.getInputStream());
+        Assertions.assertNotNull(sa.getOutputStream());
+        sa.dispose();
+    }
+
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
-
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

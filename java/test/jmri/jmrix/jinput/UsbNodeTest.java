@@ -2,7 +2,6 @@ package jmri.jmrix.jinput;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class UsbNodeTest {
     @Test
     public void testCTor() {
         UsbNode t = new UsbNode("test",null,null);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -28,6 +27,6 @@ public class UsbNodeTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbNodeTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UsbNodeTest.class);
 
 }

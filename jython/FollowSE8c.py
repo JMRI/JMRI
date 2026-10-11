@@ -10,39 +10,48 @@
 # nor does this implementation handle
 # flashing appearances.
 #
-# See the example and test case in
-# jython/test/FollowSE8cTest.py
-#
-# Author: Bob Jacobsen, copyright 2016
+# Author: Bob Jacobsen, copyright 2016, 2025
 # Part of the JMRI distribution
 
 import jmri
 import java
-import java.beans
 
-class FollowSE8c(java.beans.PropertyChangeListener):
-  def set(self, signalHeadName, lowTurnoutName, highTurnoutName) :
+class FollowSE8c(jmri.jmrix.loconet.LocoNetListener):
+  def set(self, signalHeadName, lowTurnoutNumber, highTurnoutNumber) :
     self.signal = signals.getSignalHead(signalHeadName)
-    self.lowTO = turnouts.provideTurnout(lowTurnoutName)
-    self.lowTO.addPropertyChangeListener(self)
-    self.highTO = turnouts.provideTurnout(highTurnoutName)
-    self.highTO.addPropertyChangeListener(self)
+    self.lowTO = lowTurnoutNumber
+    self.highTO = highTurnoutNumber
+    
+    # get the LocoNet connection (the first of potentially several LocoNet connections)
+    myLocoNetConnection = jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(0);
+    myLocoNetConnection.getLnTrafficController().addLocoNetListener(0xFF,self)
     return
-  def propertyChange(self, event):
-    if (event.source == self.lowTO) : 
-       if (event.newValue == CLOSED) :
-          self.signal.setAppearance(GREEN)
-       if (event.newValue == THROWN) :
-          self.signal.setAppearance(RED)
-    if (event.source == self.highTO) : 
-       if (event.newValue == CLOSED) :
-          self.signal.setAppearance(DARK)
-       if (event.newValue == THROWN) :
-          self.signal.setAppearance(YELLOW)
+  
+  def address(self, message) :
+    a1 = message.getElement(1)
+    a2 = message.getElement(2)
+    return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1)
+    
+  def closed(self, message) :
+    a2 = message.getElement(2)
+    return ((a2 & 0x20) != 0)
+    
+  def message(self, message):
+    if (message.getOpCode() == 0xB0) :
+        if (self.address(message) == self.lowTO) : 
+           if (self.closed(message)) :
+              self.signal.setAppearance(GREEN)
+           else :
+              self.signal.setAppearance(RED)
+        if (self.address(message) == self.highTO) : 
+           if (self.closed(message)) :
+              self.signal.setAppearance(DARK)
+           else :
+              self.signal.setAppearance(YELLOW)
     return
 
 # Example of use - add a line like the following 
 # that includes system or user names for the signal head
-# and the two turnouts for the SE8c addresses
-# FollowSE8c().set("CH2001","LT301", "LT302")
+# and the two turnout numbers for the SE8c addresses
+# FollowSE8c().set("CH2001", 301, 302)
  

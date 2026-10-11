@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
@@ -63,7 +65,7 @@ public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable
 
         // Check that GlobalVariable does not already exist
         GlobalVariable x;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             x = getByUserName(userName);
             if (x != null) {
                 return null;
@@ -142,7 +144,7 @@ public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable
     static volatile DefaultGlobalVariableManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultGlobalVariableManager instance() {
+    public static DefaultGlobalVariableManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
@@ -185,17 +187,17 @@ public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable
 
     /** {@inheritDoc} */
     @Override
-//    @OverridingMethodsMustInvokeSuper
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Further investigation is needed to handle this correctly")
     public final void deleteBean(@Nonnull GlobalVariable globalVariable, @Nonnull String property) throws PropertyVetoException {
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, globalVariable);
-        if (property.equals("DoDelete")) { // NOI18N
+        if ( PROPERTY_DO_DELETE.equals(property)) {
             deregister(globalVariable);
             globalVariable.dispose();
         }
     }
 
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariableManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultGlobalVariableManager.class);
 
 }

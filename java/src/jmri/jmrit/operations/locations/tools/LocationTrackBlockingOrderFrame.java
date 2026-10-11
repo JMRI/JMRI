@@ -18,7 +18,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
- * Frame for user edit of location
+ * Frame for user edit of a location's track blocking order.
  *
  * @author Dan Boudreau Copyright (C) 2015
  * 
@@ -141,5 +141,5 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class);
 }

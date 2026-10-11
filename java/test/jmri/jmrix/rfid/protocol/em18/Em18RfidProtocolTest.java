@@ -1,8 +1,10 @@
 package jmri.jmrix.rfid.protocol.em18;
 
-import jmri.jmrix.AbstractMRReply;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.Assert.assertEquals;
+import jmri.jmrix.AbstractMRReply;
 
 import org.junit.jupiter.api.*;
 
@@ -13,8 +15,8 @@ import org.junit.jupiter.api.*;
  */
 public class Em18RfidProtocolTest {
 
-    AbstractMRReply msgStandalone = new AbstractMRReplyImpl("7800656EB6C5");
-    AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("7800656EB6C6");
+    private final AbstractMRReply msgStandalone = new AbstractMRReplyImpl("7800656EB6C5");
+    private final AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("7800656EB6C6");
 
     /**
      * Test of getMaxSize method, of class Em18RfidProtocol.
@@ -48,7 +50,7 @@ public class Em18RfidProtocolTest {
     @Test
     public void testProvidesChecksum() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
-        assertEquals(true, instance.providesChecksum());
+        assertTrue( instance.providesChecksum());
     }
 
     /**
@@ -66,8 +68,8 @@ public class Em18RfidProtocolTest {
     @Test
     public void testIsValid() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
-        assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(false, instance.isValid(msgBadChkSumStandalone));
+        assertTrue( instance.isValid(msgStandalone));
+        assertFalse( instance.isValid(msgBadChkSumStandalone));
     }
 
     /**
@@ -76,8 +78,8 @@ public class Em18RfidProtocolTest {
     @Test
     public void testIsCheckSumValid() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
-        assertEquals(true, instance.isCheckSumValid(msgStandalone));
-        assertEquals(false, instance.isCheckSumValid(msgBadChkSumStandalone));
+        assertTrue( instance.isCheckSumValid(msgStandalone));
+        assertFalse( instance.isCheckSumValid(msgBadChkSumStandalone));
     }
 
     /**
@@ -86,7 +88,7 @@ public class Em18RfidProtocolTest {
     @Test
     public void testEndOfMessage() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
-        assertEquals(true, instance.endOfMessage(msgStandalone));
+        assertTrue( instance.endOfMessage(msgStandalone));
     }
 
     /**
@@ -109,11 +111,7 @@ public class Em18RfidProtocolTest {
         assertEquals(expResult, instance.toMonitorString(msgStandalone));
     }
 
-    class AbstractMRReplyImpl extends AbstractMRReply {
-
-        AbstractMRReplyImpl() {
-            super();
-        }
+    private static class AbstractMRReplyImpl extends AbstractMRReply {
 
         AbstractMRReplyImpl(String s) {
             super(s);
@@ -127,12 +125,12 @@ public class Em18RfidProtocolTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

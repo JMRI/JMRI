@@ -5,19 +5,16 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.MockShutDownManager;
+import jmri.util.*;
 
 /**
  * Base implementation for a test that launches and tests complete JMRI apps
  * from prebuilt profile directories.
+ * All implementing classes are currently disabled, previously replaced by Cucumber tests.
  *
  * @author Bob Jacobsen 2018
  */
@@ -26,19 +23,20 @@ abstract public class LaunchJmriAppBase {
 
     /**
      * Run one application.
+     * @param tempFolder  temp folder
      *
      * @param profileName       Name of the Profile folder to copy from
      *                          java/test/apps/PanelPro/profiles/
      * @param frameName         Application (frame) title
      * @param startMessageStart Start of the "we're up!" message as seen in System Console
      */
-    protected void runOne(File tempFolder, String profileName, String frameName, String startMessageStart) throws IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    protected void runOne(File tempFolder, String profileName, String frameName, String startMessageStart) {
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
             // create a custom profile
             File profileDir = new File(tempFolder.getAbsolutePath() + File.separator + profileName);
-            profileDir.mkdir();
+            Assertions.assertTrue(profileDir.mkdir());
             System.setProperty("jmri.prefsdir", tempFolder.getAbsolutePath());
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/" + profileName), profileDir);
             System.setProperty("org.jmri.profile", profileDir.getAbsolutePath());
@@ -67,7 +65,8 @@ abstract public class LaunchJmriAppBase {
                 // ShutDownManagers other than MockShutDownManager really shutdown
                 sdm.shutdown();
             }
-
+        }  catch (IOException ex) {
+            Assertions.fail(ex);
         } finally {
             // wait for threads, etc
             JUnitUtil.waitFor(40);

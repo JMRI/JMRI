@@ -1,13 +1,17 @@
 package jmri.jmris.simpleserver;
 
+import java.io.IOException;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleSensorServer class
@@ -18,7 +22,8 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
 
     private StringBuilder sb = null;
 
-    @Test public void testConnectionCtor() {
+    @Test
+    public void testConnectionCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -33,7 +38,8 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     }
 
     // test sending a message.
-    @Test public void testSendMessage() {
+    @Test
+    public void testSendMessage() {
         // NOTE: this test uses reflection to test a private method.
         Throwable thrown = catchThrowable( () -> {
             java.lang.reflect.Method sendMessageMethod;
@@ -47,7 +53,8 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     }
 
     // test sending a message.
-    @Test public void testSendMessageWithConnection() {
+    @Test
+    public void testSendMessageWithConnection() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
@@ -72,9 +79,10 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
 
     // test Parsing an ACTIVE status message.
     @Test 
-    public void parseActiveStatus() throws Exception {
+    public void parseActiveStatus() throws JmriException, IOException {
         ss.parseStatus("SENSOR IS1 ACTIVE\n");
         jmri.Sensor sensor = (InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
+        assertNotNull(sensor);
         assertThat(sensor.getState()).withFailMessage("Parse Active Status Check").isEqualTo(Sensor.ACTIVE);
         // parsing the status also causes a message to return to
         // the client.
@@ -83,9 +91,10 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
 
     // test Parsing an INACTIVE status message.
     @Test 
-    public void parseInactiveStatus() throws Exception {
+    public void parseInactiveStatus() throws JmriException, IOException {
          ss.parseStatus("SENSOR IS1 INACTIVE\n");
          jmri.Sensor sensor = (InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
+         assertNotNull(sensor);
          assertThat(sensor.getState()).withFailMessage("Parse Inactive Status Check").isEqualTo(Sensor.INACTIVE);
          // parsing the status also causes a message to return to
          // the client.
@@ -94,7 +103,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
 
     // test Parsing an blank status message.
     @Test
-    public void parseBlankStatus() throws Exception {
+    public void parseBlankStatus() throws JmriException, IOException {
         ss.parseStatus("SENSOR IS1\n");
         // nothing has changed the sensor, so it should be unknown.
         checkSensorUnknownSent();
@@ -104,7 +113,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
 
     // test Parsing an blank status message.
     @Test
-    public void parseBlankStatusWithOutNewLine() throws Exception {
+    public void parseBlankStatusWithOutNewLine() throws JmriException, IOException {
         ss.parseStatus("SENSOR IS1");
         // nothing has changed the sensor, so it should be unknown.
         checkSensorUnknownSent();
@@ -114,7 +123,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
 
     // test Parsing an other status message.
     @Test 
-    public void parseOtherStatus() throws Exception {
+    public void parseOtherStatus() throws JmriException, IOException {
         ss.parseStatus("SENSOR IS1 UNKNOWN\n");
         // this isn't INACTIVE or ACTIVE, so it should be just like blank.
         // nothing has changed the sensor, so it should be unknown.
@@ -170,7 +179,8 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
         ss = new SimpleSensorServer(input, output);
     }
 
-    @AfterEach public void tearDown() {
+    @AfterEach
+    public void tearDown() {
         ss.dispose();
         ss = null;
         sb = null;

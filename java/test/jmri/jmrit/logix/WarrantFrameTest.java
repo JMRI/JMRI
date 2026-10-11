@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.io.File;
+import java.io.IOException;
 
 import jmri.*;
 import jmri.util.*;
@@ -8,6 +9,7 @@ import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -36,7 +38,7 @@ public class WarrantFrameTest {
     public void testCTorWarrant() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -60,7 +62,7 @@ public class WarrantFrameTest {
     public void testJoinWarrantsStop() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -107,7 +109,7 @@ public class WarrantFrameTest {
     public void testJoinWarrantsNoStop() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -150,9 +152,9 @@ public class WarrantFrameTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir));
         JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initWarrantManager();

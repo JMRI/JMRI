@@ -134,13 +134,13 @@ public class MqttThrottleManager extends AbstractThrottleManager {
      * Local method for deciding short/long address
      * (is it?)
      */
-    static protected boolean isLongAddress(int num) {
+    protected static boolean isLongAddress(int num) {
         return (num >= 128);
     }
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface DCC++ supports
+     * possible modes specifed by the DccThrottle interface DCC-EX supports
      * 14,27,28 and 128 speed step modes
      */
     @Override
@@ -189,6 +189,6 @@ public class MqttThrottleManager extends AbstractThrottleManager {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(MqttThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(MqttThrottleManager.class);
 
 }

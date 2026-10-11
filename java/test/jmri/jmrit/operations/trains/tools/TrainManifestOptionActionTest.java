@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainEditFrame;
+import jmri.jmrit.operations.trains.gui.TrainEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
@@ -43,7 +43,7 @@ public class TrainManifestOptionActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(TrainManifestOptionActionTest.class);
 
 }

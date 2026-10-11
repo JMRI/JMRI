@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+import jmri.util.JmriJFrame;
 
 public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -34,20 +35,20 @@ public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAc
 
     apps.gui3.Apps3 app;
 
-    public void setApp(apps.gui3.Apps3 app) {
+    public void setApp(Apps3 app) {
         this.app = app;
     }
 
     public void actionPerformed() {
         // create the frame
         if (f == null) {
-            f = new jmri.util.JmriJFrame("DecoderPro Wizard", false, false);
+            f = new JmriJFrame("DecoderPro Wizard", false, false);
             // Update the GUI Look and Feel
             // This is needed as certain controls are instantiated
             // prior to the setup of the Look and Feel
             SwingUtilities.updateComponentTreeUI(f);
         }
-        FirstTimeStartUpWizard wiz = new FirstTimeStartUpWizard(f, app);
+        FirstTimeStartUpWizard wiz = makeWizard(f, app);
         f.setPreferredSize(new java.awt.Dimension(700, 400));
         f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         f.add(wiz.getPanel());
@@ -65,6 +66,10 @@ public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAc
         f.setVisible(true);
     }
 
+    public FirstTimeStartUpWizard makeWizard(JmriJFrame f, Apps3 app) {
+        return new FirstTimeStartUpWizard(f, app);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();

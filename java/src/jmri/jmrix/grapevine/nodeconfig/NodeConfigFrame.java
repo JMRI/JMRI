@@ -1,5 +1,7 @@
 package jmri.jmrix.grapevine.nodeconfig;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -460,6 +462,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Do the Done action if the window is closed early.
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This calls doneButtonActionPerformed which handles window closing")
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
     }

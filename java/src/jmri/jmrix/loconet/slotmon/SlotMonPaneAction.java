@@ -13,9 +13,13 @@ public class SlotMonPaneAction extends LnNamedPaneAction {
 
     public SlotMonPaneAction() {
         super(Bundle.getMessage("MenuItemSlotMonitor"),
-                new JmriJFrameInterface(),
+                new JmriJFrameInterface() {
+            @Override
+            public boolean multipleInstances() {
+                return false;
+            }
+        },
                 SlotMonPane.class.getName(),
                 InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
     }
-
 }

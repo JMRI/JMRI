@@ -54,7 +54,7 @@ public class DefaultSymbolTable implements SymbolTable {
         _symbols.putAll(prevSymbolTable.getSymbols());
         _stack = new DefaultStack();
         for (Symbol symbol : _symbols.values()) {
-            _stack.setValueAndTypeAtIndex(symbol.getIndex(),
+            _stack.copyValueAndTypeAtIndex(symbol.getIndex(),
                     prevSymbolTable.getValueAndType(symbol.getName()));
 
         }
@@ -273,6 +273,6 @@ public class DefaultSymbolTable implements SymbolTable {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSymbolTable.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSymbolTable.class);
 
 }

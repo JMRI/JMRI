@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
 import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
@@ -19,11 +21,9 @@ public class ProxyIdTagManagerTest extends AbstractProxyManagerTestBase<ProxyIdT
         IdTagManager itm = new DefaultIdTagManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setIdTagManager(itm);
         IdTagManager pl = InstanceManager.getDefault(IdTagManager.class);
-        if ( pl instanceof ProxyIdTagManager ) {
-            l = (ProxyIdTagManager) pl;
-        } else {
-            Assertions.fail("IdTagManager is not a ProxyIdTagManager");
-        }
+        assertInstanceOf( ProxyIdTagManager.class, pl,
+            "IdTagManager is not a ProxyIdTagManager");
+        l = (ProxyIdTagManager) pl;
     }
 
     @AfterEach

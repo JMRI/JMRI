@@ -3,7 +3,6 @@ package apps;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class LicenseActionTest {
     @Test
     public void testCTor() {
         LicenseAction t = new LicenseAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class LicenseActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LicenseActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LicenseActionTest.class);
 
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Petr Sidlo 2026-05-20 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+    <name>Consist</name>
+    <name xml:lang="cs">Soupravy</name>
+    <column>
+        <row>
+            <column>
+                <display item="Consist Address" />
+                <display item="Consist Direction" />
+            </column>
+        </row>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>A non-zero value in the Set Address will turn on the set.</text>
+            <text xml:lang="cs">Nenulová hodnota v Adrese soupravy zapne soupravu.</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <separator/>
+        <label>
+            <text> </text>
+        </label>
+        <row>
+            <column>
+                <display item="Consist Mode Function Status - F1" format="checkbox" />
+                <display item="Consist Mode Function Status - F2" format="checkbox" />
+                <display item="Consist Mode Function Status - F3" format="checkbox" />
+                <display item="Consist Mode Function Status - F4" format="checkbox" />
+                <display item="Consist Mode Function Status - F5" format="checkbox" />
+                <display item="Consist Mode Function Status - F6" format="checkbox" />
+                <display item="Consist Mode Function Status - F7" format="checkbox" />
+                <display item="Consist Mode Function Status - F8" format="checkbox" />
+            </column>
+            <label>
+                <text>&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;</text>
+            </label>
+            <separator/>
+            <label>
+                <text>&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;</text>
+            </label>
+            <column>
+                <display item="Consist Mode Function Status - F0(f)" format="checkbox" />
+                <display item="Consist Mode Function Status - F0(r)" format="checkbox" />
+                <label>
+                    <text> </text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="Consist Mode Function Status - F9" format="checkbox" />
+                <display item="Consist Mode Function Status - F10" format="checkbox" />
+                <display item="Consist Mode Function Status - F11" format="checkbox" />
+                <display item="Consist Mode Function Status - F12" format="checkbox" />
+            </column>
+        </row>
+    </column>
+        
+</pane>

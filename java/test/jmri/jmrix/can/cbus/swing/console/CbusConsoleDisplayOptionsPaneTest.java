@@ -26,7 +26,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class CbusConsoleDisplayOptionsPaneTest  {
 
     @Test
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes sure there isn't an exception.
         CbusConsoleDisplayOptionsPane t = new CbusConsoleDisplayOptionsPane(mainConsolePane);
         assertNotNull(t);
@@ -184,7 +184,7 @@ public class CbusConsoleDisplayOptionsPaneTest  {
 
         JFrameOperator filterJfo = new JFrameOperator( mainConsolePane.getTitle() + " " + Bundle.getMessage("EventFilterTitleX", ""));
         assertNotNull(filterJfo);
-        filterJfo.setVisible(false);
+        ThreadingUtil.runOnGUI(() -> filterJfo.setVisible(false));
         filterJfo.getQueueTool().waitEmpty();
 
         filterButtonOper.doClick();
@@ -192,6 +192,9 @@ public class CbusConsoleDisplayOptionsPaneTest  {
         
         JFrameOperator checkTheSameFilterjfo = new JFrameOperator( mainConsolePane.getTitle() + " " + Bundle.getMessage("EventFilterTitleX", ""));
         assertNotNull(checkTheSameFilterjfo);
+
+        JUnitUtil.dispose(checkTheSameFilterjfo.getWindow());
+        checkTheSameFilterjfo.waitClosed();
 
         JUnitUtil.dispose(f);
         jfo.waitClosed();

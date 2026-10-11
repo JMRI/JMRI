@@ -59,6 +59,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class);
 
 }

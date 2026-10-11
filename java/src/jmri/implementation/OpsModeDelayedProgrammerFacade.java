@@ -164,6 +164,6 @@ public class OpsModeDelayedProgrammerFacade extends AbstractProgrammerFacade imp
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OpsModeDelayedProgrammerFacade.class);
+    private static final Logger log = LoggerFactory.getLogger(OpsModeDelayedProgrammerFacade.class);
 
 }

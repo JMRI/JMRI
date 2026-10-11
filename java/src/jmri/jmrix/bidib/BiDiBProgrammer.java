@@ -25,7 +25,7 @@ import org.bidib.jbidibc.messages.utils.NodeUtils;
  * from programming mode are now handled in the TrafficController code.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2016
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2025
  */
 public class BiDiBProgrammer extends AbstractProgrammer {
 
@@ -161,17 +161,20 @@ public class BiDiBProgrammer extends AbstractProgrammer {
     private void sendBiDiBMessage(BidibCommandMessage message) {
         progNode = tc.getCurrentGlobalProgrammerNode(); //the global programmer progNode may have changed TODO: make the progNode user selectable!
         if (progNode != null) {
+            log.debug(" using programmer node {}, isBoosterOn = {}", progNode, isBoosterOn);
             if (isBoosterOn) {
                 startLongTimer();
                 tc.sendBiDiBMessage(message, progNode);
             }
             else {
                 // if the booster of OFF, return immediately without waiting for the timeout.
+                log.warn("BiDiB Booster is switched off!");
                 progState = NOTPROGRAMMING;
                 notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
             }
         }
         else {
+            log.warn("no prog node available!");
             progState = NOTPROGRAMMING;
             notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
         }
@@ -275,7 +278,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
             @Override
             public void boosterState(byte[] address, int messageNum, BoosterState state, BoosterControl control) {
                 Node node = tc.getNodeByAddr(address);
-                log.info("BOOSTER STATE was signalled: {}, control: {}", state.getType(), control.getType());
+                log.debug("BOOSTER STATE was signalled: {}, control: {}", state, control);
                 if (node != null  &&  node == progNode) {
                     isBoosterOn = ((state.getType() & 0x80) == 0x80);
                 }
@@ -323,6 +326,6 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         notifyProgListenerEnd(temp, value, status);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammer.class);
 
 }

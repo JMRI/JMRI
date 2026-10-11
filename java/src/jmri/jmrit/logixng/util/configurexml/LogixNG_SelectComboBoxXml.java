@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.util.LogixNG_SelectComboBox;
+import jmri.jmrit.logixng.util.LogixNG_SelectComboBox.Item;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -29,7 +30,10 @@ public class LogixNG_SelectComboBoxXml {
         Element comboBoxElement = new Element(tagName);
 
         comboBoxElement.addContent(new Element("addressing").addContent(selectComboBox.getAddressing().name()));
-        comboBoxElement.addContent(new Element("value").addContent(selectComboBox.getValue()));
+        Item value = selectComboBox.getValue();
+        if (value != null) {
+            comboBoxElement.addContent(new Element("value").addContent(value.getKey()));
+        }
         if (selectComboBox.getReference() != null && !selectComboBox.getReference().isEmpty()) {
             comboBoxElement.addContent(new Element("reference").addContent(selectComboBox.getReference()));
         }
@@ -37,7 +41,8 @@ public class LogixNG_SelectComboBoxXml {
         if (memory != null) {
             comboBoxElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        comboBoxElement.addContent(new Element("listenToMemory").addContent(selectComboBox.getListenToMemory() ? "yes" : "no"));
+        // Not used anymore. It's kept to not change old tables and panels files
+        comboBoxElement.addContent(new Element("listenToMemory").addContent("no"));
         if (selectComboBox.getLocalVariable() != null && !selectComboBox.getLocalVariable().isEmpty()) {
             comboBoxElement.addContent(new Element("localVariable").addContent(selectComboBox.getLocalVariable()));
         }
@@ -67,7 +72,7 @@ public class LogixNG_SelectComboBoxXml {
 
                 elem = comboBoxElement.getChild("value");
                 if (elem != null) {
-                    selectComboBox.setValue(selectComboBox.getValue(elem.getTextTrim()));
+                    selectComboBox.setValue(selectComboBox.getValueByKey(elem.getTextTrim()));
                 }
 
                 elem = comboBoxElement.getChild("reference");
@@ -78,11 +83,6 @@ public class LogixNG_SelectComboBoxXml {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectComboBox.setMemory(m);
                     else selectComboBox.removeMemory();
-                }
-
-                Element listenToMemoryElem = comboBoxElement.getChild("listenToMemory");
-                if (listenToMemoryElem != null) {
-                    selectComboBox.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
                 }
 
                 elem = comboBoxElement.getChild("localVariable");

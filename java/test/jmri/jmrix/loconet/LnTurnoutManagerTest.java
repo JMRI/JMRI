@@ -1,15 +1,18 @@
 package jmri.jmrix.loconet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnoutManager class.
@@ -27,8 +30,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     @Override
     public void testMisses() {
         // try to get nonexistant turnouts
-        Assert.assertNull(l.getByUserName("foo"));
-        Assert.assertNull(l.getBySystemName("bar"));
+        assertNull(l.getByUserName("foo"));
+        assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -51,8 +54,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         lnis.sendTestMessage(m2);
 
         // try to get turnouts to see if they exist
-        Assert.assertNotNull(l.getBySystemName("LT21"));
-        Assert.assertNotNull(l.getBySystemName("LT22"));
+        assertNotNull(l.getBySystemName("LT21"));
+        assertNotNull(l.getBySystemName("LT22"));
 
         // check the list
         List<String> testList = new ArrayList<>(2);
@@ -61,48 +64,48 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
         jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
 
-        Assert.assertEquals("2 Turnouts in nambedbeanset",2,l.getNamedBeanSet().size());
-        Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT21")));
-        Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT22")));
+        assertEquals(2, l.getNamedBeanSet().size(), "2 Turnouts in nambedbeanset");
+        assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT21")));
+        assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT22")));
 
     }
 
     @Test
-    public void testCreateFromMessage1 () {
+    public void testCreateFromMessage1() {
         // Turnout LT61 () Switch input is Closed (input off).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3C, 0x70, 0x02});
         lnis.sendTestMessage(m);
-        Assert.assertNotNull(l.getBySystemName("LT61"));
-        Assert.assertEquals(Turnout.CLOSED, l.getBySystemName("LT61").getKnownState());
+        assertNotNull(l.getBySystemName("LT61"));
+        assertEquals(Turnout.CLOSED, l.getBySystemName("LT61").getKnownState());
     }
 
     @Test
-    public void testCreateFromMessage2 () {
+    public void testCreateFromMessage2() {
         // Turnout LT62 () Switch input is Thrown (input on).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3D, 0x60, 0x13});
         lnis.sendTestMessage(m);
-        Assert.assertNotNull(l.getBySystemName("LT62"));
-        Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT62").getKnownState());
+        assertNotNull(l.getBySystemName("LT62"));
+        assertEquals(Turnout.THROWN, l.getBySystemName("LT62").getKnownState());
     }
 
     @Test
-    public void testCreateFromMessage3 () {
+    public void testCreateFromMessage3() {
         // Turnout LT63 () Aux input is Thrown (input ).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3E, 0x40, 0x30});
         lnis.sendTestMessage(m);
-        Assert.assertNotNull(l.getBySystemName("LT63"));
-        Assert.assertEquals("EXACT", l.getBySystemName("LT63").getFeedbackModeName());
-        Assert.assertEquals(Turnout.INCONSISTENT, l.getBySystemName("LT63").getKnownState());
+        assertNotNull(l.getBySystemName("LT63"));
+        assertEquals("EXACT", l.getBySystemName("LT63").getFeedbackModeName());
+        assertEquals(Turnout.INCONSISTENT, l.getBySystemName("LT63").getKnownState());
     }
 
     @Test
-    public void testCreateFromMessage4 () {
+    public void testCreateFromMessage4() {
         // Turnout LT64 () Aux input is Closed (input off).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3F, 0x50, 0x21});
         lnis.sendTestMessage(m);
-        Assert.assertNotNull(l.getBySystemName("LT64"));
-        Assert.assertEquals("EXACT", l.getBySystemName("LT64").getFeedbackModeName());
-        Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT64").getKnownState());
+        assertNotNull(l.getBySystemName("LT64"));
+        assertEquals("EXACT", l.getBySystemName("LT64").getFeedbackModeName());
+        assertEquals(Turnout.THROWN, l.getBySystemName("LT64").getKnownState());
     }
 
     @Test
@@ -111,85 +114,81 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Turnout o = l.newTurnout("LT21", "my name");
 
         log.debug("received turnout value {}", o);
-        Assert.assertNotNull(o);
+        assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
             log.debug("by system name: {}", l.getBySystemName("LT21"));
-        }
-        if (log.isDebugEnabled()) {
             log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
-        Assert.assertNotNull(l.getBySystemName("LT21"));
-        Assert.assertNotNull(l.getByUserName("my name"));
+        assertNotNull(l.getBySystemName("LT21"));
+        assertNotNull(l.getByUserName("my name"));
     }
 
     @Test
     public void testOpcLongAck() {
-        Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
-        ((LnTurnoutManager)l).mTurnoutNoRetry=false;
+        assertEquals(0, lnis.outbound.size(), "Check no outbound messages");
+        ((LnTurnoutManager) l).mTurnoutNoRetry = false;
 
-        Turnout t = ((LnTurnoutManager)l).provideTurnout("LT1");   // createNewTurnout does not register it.
-        LocoNetMessage m = new LocoNetMessage(new int[] {0xb0, 0x00, 0x20, 0x6f});
+        Turnout t = ((LnTurnoutManager) l).provideTurnout("LT1");   // createNewTurnout does not register it.
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xb0, 0x00, 0x20, 0x6f});
         lnis.sendTestMessage(m);
-        Assert.assertEquals("check now closed", Turnout.CLOSED, t.getKnownState());
-        Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
-        Assert.assertNotNull(((LnTurnoutManager)l).lastSWREQ);
-        Assert.assertEquals(LnConstants.OPC_SW_REQ, ((LnTurnoutManager)l).lastSWREQ.getOpCode());
-        Assert.assertEquals(0x00, ((LnTurnoutManager)l).lastSWREQ.getElement(1));
-        Assert.assertEquals(0x20, ((LnTurnoutManager)l).lastSWREQ.getElement(2));
+        assertEquals(Turnout.CLOSED, t.getKnownState(), "check now closed");
+        assertEquals(0, lnis.outbound.size(), "Check no outbound messages");
+        assertNotNull(((LnTurnoutManager) l).lastSWREQ);
+        assertEquals(LnConstants.OPC_SW_REQ, ((LnTurnoutManager) l).lastSWREQ.getOpCode());
+        assertEquals(0x00, ((LnTurnoutManager) l).lastSWREQ.getElement(1));
+        assertEquals(0x20, ((LnTurnoutManager) l).lastSWREQ.getElement(2));
 
-        Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
-        Assert.assertEquals("Check that the turnout message was saved as 'last'",
-                m, ((LnTurnoutManager)l).lastSWREQ);
+        assertEquals(0, lnis.outbound.size(), "Check no outbound messages");
+        assertEquals(m, ((LnTurnoutManager) l).lastSWREQ, "Check that the turnout message was saved as 'last'");
         lnis.sendTestMessage(m);    // command station rejection of turnout command
         m.setOpCode(0xB4);
         m.setElement(1, 0x30);
         m.setElement(2, 0x00);
         m.setElement(3, 0x7b);
-        Assert.assertEquals("check sent message opcode", 0xb4, m.getOpCode());
+        assertEquals(0xb4, m.getOpCode(), "check sent message opcode");
         lnis.sendTestMessage(m);    // command station rejection of turnout command
-        Assert.assertEquals("Check one outbound messages", 1, lnis.outbound.size());
-        Assert.assertEquals("check now closed (2)", Turnout.CLOSED, t.getKnownState());
+        assertEquals(1, lnis.outbound.size(), "Check one outbound messages");
+        assertEquals(Turnout.CLOSED, t.getKnownState(), "check now closed (2)");
 
-        Assert.assertFalse("check turnout manager retry mechanism setting", ((LnTurnoutManager)l).mTurnoutNoRetry);
+        assertFalse(((LnTurnoutManager) l).mTurnoutNoRetry, "check turnout manager retry mechanism setting");
 
-        jmri.util.JUnitUtil.fasterWaitFor(() -> {return 1 < lnis.outbound.size();});
-        Assert.assertEquals("Check an outbound message", 1, lnis.outbound.size());
+        JUnitUtil.fasterWaitFor(() -> !lnis.outbound.isEmpty(), "outbound sent");
+        assertEquals(1, lnis.outbound.size(), "Check an outbound message");
 
-        Assert.assertEquals("Check outbound message opcode", LnConstants.OPC_SW_REQ, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("Check outbound message byte 1", 0x00, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("Check outbound message byte 2", 0x20, lnis.outbound.get(0).getElement(2));
+        assertEquals(LnConstants.OPC_SW_REQ, lnis.outbound.get(0).getOpCode(), "Check outbound message opcode");
+        assertEquals(0x00, lnis.outbound.get(0).getElement(1), "Check outbound message byte 1");
+        assertEquals(0x20, lnis.outbound.get(0).getElement(2), "Check outbound message byte 2");
     }
 
     @Test
     public void testOpcLongAckToEnquiry() {
-        Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
-        ((LnTurnoutManager)l).mTurnoutNoRetry=false;
+        assertEquals(0, lnis.outbound.size(), "Check no outbound messages");
+        ((LnTurnoutManager) l).mTurnoutNoRetry = false;
 
-        ((LnTurnoutManager)l).provideTurnout("LT1018");   // This is effectively an enquiry command
-        LocoNetMessage m = new LocoNetMessage(new int[] {0xb0, 0x79, 0x37, 0x01});
+        ((LnTurnoutManager) l).provideTurnout("LT1018");   // This is effectively an enquiry command
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xb0, 0x79, 0x37, 0x01});
         lnis.sendTestMessage(m);
-        Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
-        Assert.assertNotNull(((LnTurnoutManager)l).lastSWREQ);
-        Assert.assertEquals(LnConstants.OPC_SW_REQ, ((LnTurnoutManager)l).lastSWREQ.getOpCode());
-        Assert.assertEquals(0x79, ((LnTurnoutManager)l).lastSWREQ.getElement(1));
-        Assert.assertEquals(0x37, ((LnTurnoutManager)l).lastSWREQ.getElement(2));
+        assertEquals(0, lnis.outbound.size(), "Check no outbound messages");
+        assertNotNull(((LnTurnoutManager) l).lastSWREQ);
+        assertEquals(LnConstants.OPC_SW_REQ, ((LnTurnoutManager) l).lastSWREQ.getOpCode());
+        assertEquals(0x79, ((LnTurnoutManager) l).lastSWREQ.getElement(1));
+        assertEquals(0x37, ((LnTurnoutManager) l).lastSWREQ.getElement(2));
 
-        Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
-        Assert.assertEquals("Check that the turnout message was saved as 'last'",
-                m, ((LnTurnoutManager)l).lastSWREQ);
+        assertEquals(0, lnis.outbound.size(), "Check no outbound messages");
+        assertEquals(m, ((LnTurnoutManager) l).lastSWREQ, "Check that the turnout message was saved as 'last'");
         lnis.sendTestMessage(m);    // command station rejection of turnout command
         m.setOpCode(0xB4);
         m.setElement(1, 0x30);
         m.setElement(2, 0x00);
         m.setElement(3, 0x7b);
-        Assert.assertEquals("check sent message opcode", 0xb4, m.getOpCode());
+        assertEquals(0xb4, m.getOpCode(), "check sent message opcode");
         lnis.sendTestMessage(m);    // command station rejection of turnout command
-        Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
+        assertEquals(0, lnis.outbound.size(), "Check no outbound messages");
 
-        Assert.assertFalse("check turnout manager retry mechanism setting", ((LnTurnoutManager)l).mTurnoutNoRetry);
+        assertFalse(((LnTurnoutManager) l).mTurnoutNoRetry, "check turnout manager retry mechanism setting");
     }
 
     private LocoNetInterfaceScaffold lnis;
@@ -197,9 +196,9 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     @Override
     @BeforeEach
-    public void setUp(){
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
@@ -217,6 +216,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnTurnoutManagerTest.class);
 
 }

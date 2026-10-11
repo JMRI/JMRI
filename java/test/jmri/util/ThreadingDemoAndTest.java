@@ -2,8 +2,12 @@ package jmri.util;
 
 import java.util.concurrent.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * This class serves as a demonstration of some good
@@ -22,9 +26,9 @@ import org.junit.jupiter.api.*;
  */
 public class ThreadingDemoAndTest {
 
-    volatile boolean flagInterrupted1 = false;
-    volatile boolean flagInterrupted2 = false;
-    volatile boolean flagInterrupted3 = false;
+    private volatile boolean flagInterrupted1 = false;
+    private volatile boolean flagInterrupted2 = false;
+    private volatile boolean flagInterrupted3 = false;
 
     /** 
      * Show the basic life-cycle of a thread
@@ -57,10 +61,10 @@ public class ThreadingDemoAndTest {
         };
         t.setName("testThreadingLifeCycle");
         t.setDaemon(true);
-        
+
         // confirm our understanding of the life cycle
-        Assert.assertTrue(t.getState().equals(Thread.State.NEW));
-        
+        assertEquals( Thread.State.NEW, t.getState());
+
         t.start();
         JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t); }, "Got to wait state");
         
@@ -107,8 +111,8 @@ public class ThreadingDemoAndTest {
         t2.setDaemon(true);
         
         // confirm our understanding of the life cycle
-        Assert.assertTrue(t1.getState().equals(Thread.State.NEW));
-        Assert.assertTrue(t2.getState().equals(Thread.State.NEW));
+        assertEquals( Thread.State.NEW, t1.getState());
+        assertEquals( Thread.State.NEW, t2.getState());
         
         t1.start();
         t2.start();
@@ -163,7 +167,7 @@ public class ThreadingDemoAndTest {
         t1.setDaemon(true);
                 
         // confirm our understanding of the life cycle
-        Assert.assertTrue(t1.getState().equals(Thread.State.NEW));
+        assertEquals( Thread.State.NEW, t1.getState());
         
         t1.start();
         
@@ -226,7 +230,7 @@ public class ThreadingDemoAndTest {
         t1.setDaemon(true);
                 
         // confirm our understanding of the life cycle
-        Assert.assertTrue(t1.getState().equals(Thread.State.NEW));
+        assertEquals( Thread.State.NEW, t1.getState());
         
         t1.start();
         
@@ -239,7 +243,7 @@ public class ThreadingDemoAndTest {
         
         // it ran to the 2nd, but waited there because that consumed the interrupt
         JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t1); }, "at third wait");        
-        Assert.assertTrue(! flagInterrupted3); 
+        assertFalse( flagInterrupted3);
 
         t1.interrupt(); // end 3rd wait
         
@@ -266,7 +270,7 @@ public class ThreadingDemoAndTest {
                     q.put(1);
                     q.put(2);
                 } catch (InterruptedException e) {
-                    Assert.fail("did not expect interrupt");
+                    fail("did not expect interrupt");
                 }
                 flagInterrupted1 = true;
 
@@ -297,33 +301,33 @@ public class ThreadingDemoAndTest {
         t.setDaemon(true);
         
         // confirm our understanding of the life cycle
-        Assert.assertTrue(t.getState().equals(Thread.State.NEW));
+        assertEquals( Thread.State.NEW, t.getState());
         
         t.start();
         JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t); }, "Got to wait state after adding 2");
-        Assert.assertTrue(flagInterrupted1);
-        Assert.assertTrue(q.size() == 2);
-        Assert.assertTrue(! flagInterrupted2);
+        assertTrue(flagInterrupted1);
+        assertEquals( 2, q.size());
+        assertFalse( flagInterrupted2);
 
-        Assert.assertEquals("first", Integer.valueOf(1), q.poll());
+        assertEquals( Integer.valueOf(1), q.poll(), "first");
 
         // should have allowed another
         JUnitUtil.waitFor( ()->{ return q.size() == 2; }, "Third added");
-        Assert.assertTrue(! flagInterrupted2);
-        Assert.assertTrue(! flagInterrupted3);
+        assertFalse( flagInterrupted2);
+        assertFalse( flagInterrupted3);
         JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t); }, "Got to wait state after adding 3");
         JUnitUtil.waitFor( ()->{ return q.size() == 2; }, "Fourth not yet present");
-        
+
         // waiting to add 4, interrupt
         t.interrupt();
         JUnitUtil.waitFor( ()->{ return flagInterrupted3; }, "Interrupt handled in add 4");
 
         // pull contents
-        Assert.assertEquals("second", Integer.valueOf(2), q.poll());
-        Assert.assertEquals("third", Integer.valueOf(3), q.poll());
-        
+        assertEquals( Integer.valueOf(2), q.poll(), "second");
+        assertEquals( Integer.valueOf(3), q.poll(), "third");
+
         JUnitUtil.waitFor( ()->{ return t.getState().equals(Thread.State.TERMINATED); }, "Got to terminated state");        
-        Assert.assertEquals("fifth; fourth cancelled", Integer.valueOf(5), q.poll());
+        assertEquals( Integer.valueOf(5), q.poll(), "fifth; fourth cancelled");
     }
 
     /** 
@@ -342,7 +346,7 @@ public class ThreadingDemoAndTest {
             public void run()  {
                 try {
                     flagInterrupted1 = true;
-                    Assert.fail(" did not expect to complete: "+q.take());
+                    fail(" did not expect to complete: "+q.take());
                 } catch (InterruptedException e) {
                     flagInterrupted2 = true;
                 }
@@ -353,29 +357,29 @@ public class ThreadingDemoAndTest {
         t.setDaemon(true);
         
         // confirm our understanding of the life cycle
-        Assert.assertTrue(t.getState().equals(Thread.State.NEW));
+        assertEquals( Thread.State.NEW, t.getState());
         
         t.start();
         JUnitUtil.waitFor( ()->{ return ThreadingUtil.isThreadWaiting(t); }, "Got to wait input");
-        Assert.assertTrue(flagInterrupted1);
-        Assert.assertTrue(! flagInterrupted2);
-        Assert.assertTrue(! flagInterrupted2);
+        assertTrue(flagInterrupted1);
+        assertFalse( flagInterrupted2);
+        assertFalse( flagInterrupted2);
 
         t.interrupt();
         JUnitUtil.waitFor( ()->{ return flagInterrupted2; }, "Interrupt handled");
 
         JUnitUtil.waitFor( ()->{ return t.getState().equals(Thread.State.TERMINATED); }, "Got to terminated state");        
-        Assert.assertTrue(flagInterrupted3);
+        assertTrue(flagInterrupted3);
 
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

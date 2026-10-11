@@ -69,6 +69,6 @@ public class ComboOffRadioButtonTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ComboOffRadioButtonTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ComboOffRadioButtonTest.class);
 
 }

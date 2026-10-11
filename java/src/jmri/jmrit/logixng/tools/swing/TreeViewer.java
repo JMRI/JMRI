@@ -43,7 +43,7 @@ public class TreeViewer extends JmriJFrame {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         JMenuItem closeWindowItem = new JMenuItem(Bundle.getMessage("CloseWindow"));
         closeWindowItem.addActionListener((ActionEvent e) -> {
-            dispose();
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
         fileMenu.add(closeWindowItem);
         menuBar.add(fileMenu);
@@ -81,6 +81,6 @@ public class TreeViewer extends JmriJFrame {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
 
 }

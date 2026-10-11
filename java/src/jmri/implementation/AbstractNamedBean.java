@@ -1,15 +1,16 @@
 package jmri.implementation;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.beans.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.NamedBean;
 import jmri.beans.BeanUtil;
 
@@ -51,7 +52,9 @@ public abstract class AbstractNamedBean implements NamedBean {
      *                                               normalized
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
-    protected AbstractNamedBean(@Nonnull String sys, @CheckForNull String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+    protected AbstractNamedBean(@Nonnull String sys, @CheckForNull String user)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+
         if (Objects.isNull(sys)) {
             throw new NamedBean.BadSystemNameException();
         }
@@ -66,7 +69,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * {@inheritDoc}
      */
     @Override
-    final public String getComment() {
+    public final String getComment() {
         return this.comment;
     }
 
@@ -74,14 +77,14 @@ public abstract class AbstractNamedBean implements NamedBean {
      * {@inheritDoc}
      */
     @Override
-    final public void setComment(String comment) {
+    public final void setComment(String comment) {
         String old = this.comment;
         if (comment == null || comment.trim().isEmpty()) {
             this.comment = null;
         } else {
             this.comment = comment;
         }
-        firePropertyChange("Comment", old, comment);
+        firePropertyChange(PROPERTY_COMMENT, old, comment);
     }
     private String comment;
 
@@ -91,7 +94,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     @CheckReturnValue
     @Nonnull
-    final public String getDisplayName() {
+    public final String getDisplayName() {
         return NamedBean.super.getDisplayName();
     }
 
@@ -101,7 +104,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     @CheckReturnValue
     @Nonnull
-    final public String getDisplayName(DisplayOptions displayOptions) {
+    public final String getDisplayName(DisplayOptions displayOptions) {
         return NamedBean.super.getDisplayName(displayOptions);
     }
 
@@ -135,7 +138,8 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(@Nonnull String propertyName,
-                                                       @Nonnull PropertyChangeListener l, String beanRef, String listenerRef) {
+            @Nonnull PropertyChangeListener l, String beanRef, String listenerRef) {
+
         pcs.addPropertyChangeListener(propertyName, l);
         if (beanRef != null) {
             register.put(l, beanRef);
@@ -246,7 +250,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    final public String getSystemName() {
+    public final String getSystemName() {
         return mSystemName;
     }
 
@@ -254,7 +258,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     */
     @Nonnull
     @Override
-    final public String toString() {
+    public final String toString() {
         /*
          * Implementation note:  This method is final to ensure that the
          * contract for toString is properly implemented.  See the
@@ -275,7 +279,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /** {@inheritDoc} */
     @Override
-    final public String getUserName() {
+    public final String getUserName() {
         return mUserName;
     }
 
@@ -285,12 +289,17 @@ public abstract class AbstractNamedBean implements NamedBean {
     public void setUserName(String s) throws NamedBean.BadUserNameException {
         String old = mUserName;
         mUserName = NamedBean.normalizeUserName(s);
-        firePropertyChange("UserName", old, mUserName);
+        firePropertyChange(PROPERTY_USERNAME, old, mUserName);
     }
 
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void firePropertyChange(PropertyChangeEvent evt) {
+        pcs.firePropertyChange(evt);
     }
 
     /** {@inheritDoc} */

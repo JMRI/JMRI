@@ -187,8 +187,8 @@ public class ActionScript extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     private String getTheScript() throws JmriException {
@@ -426,6 +426,6 @@ public class ActionScript extends AbstractDigitalAction {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionScript.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionScript.class);
 
 }

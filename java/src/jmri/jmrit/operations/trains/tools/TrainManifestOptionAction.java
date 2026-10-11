@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.trains.TrainEditFrame;
+import jmri.jmrit.operations.trains.gui.TrainEditFrame;
 
 /**
  * Swing action to load the train manifest options frame.
@@ -35,7 +35,7 @@ public class TrainManifestOptionAction extends AbstractAction {
         f.setVisible(true); // this also brings the frame into focus
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(TrainManifestOptionAction.class);
 }
 
 

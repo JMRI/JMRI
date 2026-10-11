@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -16,7 +19,6 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Test WhereUsed
@@ -140,7 +142,7 @@ public class WhereUsedTest {
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
 
@@ -173,7 +175,7 @@ public class WhereUsedTest {
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
 
@@ -206,7 +208,7 @@ public class WhereUsedTest {
 //        expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         expressionSensor.getSelectEnum().setEnum(ExpressionSensor.SensorState.Active);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
 
@@ -243,7 +245,7 @@ public class WhereUsedTest {
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         sensor.setCommandedState(Sensor.ACTIVE);
 
-        if (! module.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( module.setParentForAllChildren(new ArrayList<>()));
 
 
         // Add an item to the clipboard
@@ -255,9 +257,8 @@ public class WhereUsedTest {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensorWithChildren3);
         List<String> errors = new ArrayList<>();
         InstanceManager.getDefault(LogixNG_Manager.class).getClipboard().add(maleSocket, errors);
-        if (!errors.isEmpty()) {
-            throw new RuntimeException(String.join(String.format(", "), errors));
-        }
+        assertEquals( 0, errors.size(),
+            String.join(String.format(", "), errors));
 
         ifThenElse = new IfThenElse("IQDA522", null);
         maleSocket =
@@ -277,7 +278,7 @@ public class WhereUsedTest {
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         sensor.setCommandedState(Sensor.ACTIVE);
 
-        if (! module.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( module.setParentForAllChildren(new ArrayList<>()));
 
 
         // Add another item to the clipboard
@@ -289,9 +290,8 @@ public class WhereUsedTest {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensorWithChildren3);
         errors = new ArrayList<>();
         InstanceManager.getDefault(LogixNG_Manager.class).getClipboard().add(maleSocket, errors);
-        if (!errors.isEmpty()) {
-            throw new RuntimeException(String.join(String.format(", "), errors));
-        }
+        assertEquals( 0, errors.size(),
+            String.join(String.format(", "), errors));
 
         ifThenElse = new IfThenElse("IQDA622", null);
         maleSocket =
@@ -311,7 +311,7 @@ public class WhereUsedTest {
         expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         sensor.setCommandedState(Sensor.ACTIVE);
 
-        if (! module.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( module.setParentForAllChildren(new ArrayList<>()));
     }
 
     @Test
@@ -328,13 +328,13 @@ public class WhereUsedTest {
         Sensor s1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         String result = WhereUsed.whereUsed(s1);
 //        System.out.format("%n%n---------------%nResult:%n%s-----------------------%n%n", result);
-        Assert.assertEquals(EXPECTED_RESULT, result);
+        assertEquals(EXPECTED_RESULT, result);
 
 
         Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("Turnout1");
         result = WhereUsed.whereUsed(t1);
 //        System.out.format("%n%n---------------%nResult:%n%s-----------------------%n%n", result);
-        Assert.assertEquals("", result);    // Turnout Turnout1 is not used so empty string is expected
+        assertEquals("", result);    // Turnout Turnout1 is not used so empty string is expected
     }
 
     // The minimal setup for log4J
@@ -361,7 +361,7 @@ public class WhereUsedTest {
 
         FemaleSocket _socket;
 
-        public ActionSensorWithChildren(String sys, String user) {
+        ActionSensorWithChildren(String sys, String user) {
             super(sys, user);
             _socket = InstanceManager.getDefault(DigitalActionManager.class)
                     .createFemaleSocket(this, this, "E");

@@ -3,8 +3,6 @@ package jmri.jmrit.tracker;
 import jmri.Block;
 import jmri.SignalHead;
 import jmri.Throttle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Stop a train in a block if required.
@@ -36,17 +34,12 @@ public class StoppingBlock {
         block = b;
 
         // set a listener in the block
-        block.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                handleBlockChange(e);
-            }
-        });
+        block.addPropertyChangeListener(this::handleBlockChange);
     }
 
     void handleBlockChange(java.beans.PropertyChangeEvent e) {
         // check for going occupied
-        if (e.getPropertyName().equals("state") && e.getNewValue().equals(Integer.valueOf(Block.OCCUPIED))) {
+        if ( Block.PROPERTY_STATE.equals(e.getPropertyName()) && e.getNewValue().equals(Block.OCCUPIED)) {
             if (sig1 == null) {
                 return;
             }
@@ -81,9 +74,7 @@ public class StoppingBlock {
                 return;  // not interesting
             }
             int val = fastestAppearance();
-            if (log.isDebugEnabled()) {
-                log.debug("Block {} signal change to {}", block.getSystemName(), val);
-            }
+            log.debug("Block {} signal change to {}", block, val);
 
             if (val == SignalHead.YELLOW) {
                 doSlow();
@@ -98,23 +89,13 @@ public class StoppingBlock {
         sig1 = s;
         direction = dir;
 
-        sig1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                handleSignalChange(e);
-            }
-        });
+        sig1.addPropertyChangeListener(this::handleSignalChange);
     }
 
     public void addSignal(SignalHead s1, SignalHead s2, int dir) {
         addSignal(s1, dir);
         sig2 = s2;
-        sig2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                handleSignalChange(e);
-            }
-        });
+        sig2.addPropertyChangeListener(this::handleSignalChange);
     }
 
     int fastestAppearance() {
@@ -133,42 +114,42 @@ public class StoppingBlock {
      * Perform the stop operation
      */
     void doStop() {
-        if (log.isDebugEnabled()) {
-            log.debug("Block {} speed being set to stop", block.getSystemName());
-        }
+        log.debug("Block {} speed being set to stop", block.getDisplayName());
         setSpeed(0.0f, false, false, false);  // bell on
     }
 
     void doSlow() {
-        if (log.isDebugEnabled()) {
-            log.debug("Block {} speed being set to slow", block.getSystemName());
-        }
+        log.debug("Block {} speed being set to slow", block.getDisplayName());
         setSpeed(slow, false, false, false);  // bell off
     }
 
     void doRestart() {
-        if (log.isDebugEnabled()) {
-            log.debug("Block {} speed being set to run", block.getSystemName());
-        }
+        log.debug("Block {} speed being set to run", block.getDisplayName());
         setSpeed(fast, false, false, false);  // bell off
     }
 
     void setSpeed(float speed, boolean f1, boolean f2, boolean f3) {
         Object o = block.getValue();
         if (o == null) {
-            log.error("Block {} contained no Throttle object", block.getSystemName());
+            log.error("Block {} contained no Throttle object", block.getDisplayName());
             return;
         }
-        try {
-            Throttle t = (Throttle) block.getValue();
+        if ( o instanceof Throttle ) {
+            Throttle t = (Throttle) o;
             t.setSpeedSetting(speed);
             t.setFunction(1, f1);
             t.setFunction(2, f2);
-        } catch (ClassCastException e) {
-            log.error("Block {} did not contain object of Throttle type", block.getSystemName(), e);
+        } else {
+            log.error("Block {} did not contain object of Throttle type, was {} , a {}",
+                block.getDisplayName(), o, o.getClass());
         }
     }
 
+    /**
+     * Set speeds.
+     * @param s the slow speed, default 0.3
+     * @param f the fast speed, default 0.6
+     */
     public void setSpeeds(float s, float f) {
         slow = s;
         fast = f;
@@ -179,9 +160,9 @@ public class StoppingBlock {
     SignalHead sig1;
     SignalHead sig2;
     int direction;
-    float slow = 0.3f;
-    float fast = 0.6f;
+    private float slow = 0.3f;
+    private float fast = 0.6f;
 
-    private final static Logger log = LoggerFactory.getLogger(StoppingBlock.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoppingBlock.class);
 
 }

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-light-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"light\"",
@@ -9,11 +9,17 @@
             "description": "System name of the light"
         },
         "userName": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "User name of the light"
         },
         "comment": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Comment for the light"
         },
         "properties": {
@@ -27,20 +33,36 @@
                         "description": "Key by which property is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of property or null"
                     }
                 },
                 "additionalProperties": false,
-                "required": ["name", "value"]
+                "required": [
+                    "name",
+                    "value"
+                ]
             }
         },
         "state": {
             "type": "integer",
             "description": "The state of the light",
-            "enum": [0, 2, 4, 8]
+            "enum": [
+                0,
+                2,
+                4,
+                8
+            ]
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "state"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "state"
+    ]
 }

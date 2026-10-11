@@ -1,14 +1,15 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.progdebugger.ProgDebugger;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the VerifyWriteProgrammerFacade class.
@@ -18,15 +19,15 @@ import org.slf4j.LoggerFactory;
  */
 public class VerifyWriteProgrammerFacadeTest {
 
-    int readValue = -2;
-    int readCount = 0;
-    boolean replied = false;
+    private int readValue = -2;
+    private boolean replied = false;
 
     @Test
     public void testWriteReadDirect() throws jmri.ProgrammerException, InterruptedException {
 
-        readCount = 0;
-        ProgDebugger dp = new ProgDebugger() {
+        
+        var dp = new ProgDebugger() {
+            private int readCount = 0;
             @Override
             public boolean getCanRead(String cv) { return false; }
             @Override
@@ -46,19 +47,19 @@ public class VerifyWriteProgrammerFacadeTest {
 
         p.writeCV("4", 12, l);
         waitReply();
-        Assert.assertEquals("target written", 12, dp.getCvVal(4));
-        Assert.assertEquals("reads", 0, readCount);
-        
+        assertEquals( 12, dp.getCvVal(4), "target written");
+        assertEquals( 0, dp.readCount, "reads");
+
         p.readCV("4", l);
         waitReply();
-        Assert.assertEquals("read back", 12, readValue);
+        assertEquals( 12, readValue, "read back");
     }
 
     @Test
     public void testWriteReadVerify() throws jmri.ProgrammerException, InterruptedException {
 
-        readCount = 0;
-        ProgDebugger dp = new ProgDebugger() {
+        var dp = new ProgDebugger() {
+            private int readCount = 0;
             @Override
             public boolean getCanRead(String cv) { return true; }
             @Override
@@ -78,12 +79,12 @@ public class VerifyWriteProgrammerFacadeTest {
 
         p.writeCV("4", 12, l);
         waitReply();
-        Assert.assertEquals("target written", 12, dp.getCvVal(4));
-        Assert.assertEquals("reads", 1, readCount);
+        assertEquals( 12, dp.getCvVal(4), "target written");
+        assertEquals( 1, dp.readCount, "reads");
 
         p.readCV("4", l);
         waitReply();
-        Assert.assertEquals("read back", 12, readValue);
+        assertEquals( 12, readValue, "read back");
     }
 
     @Test
@@ -94,10 +95,10 @@ public class VerifyWriteProgrammerFacadeTest {
 
         Programmer p = new VerifyWriteProgrammerFacade(dp);
 
-        Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));
-        Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));
-        Assert.assertTrue("CV limit read fail", !p.getCanRead("1025"));
-        Assert.assertTrue("CV limit write fail", !p.getCanWrite("1025"));
+        assertTrue( p.getCanRead("1024"), "CV limit read OK");
+        assertTrue( p.getCanWrite("1024"), "CV limit write OK");
+        assertFalse( p.getCanRead("1025"), "CV limit read fail");
+        assertFalse( p.getCanWrite("1025"), "CV limit write fail");
     }
 
     // from here down is testing infrastructure
@@ -118,6 +119,6 @@ public class VerifyWriteProgrammerFacadeTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VerifyWriteProgrammerFacadeTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VerifyWriteProgrammerFacadeTest.class);
 
 }

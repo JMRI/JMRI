@@ -1,7 +1,6 @@
 package jmri.jmrit.turnoutoperations;
 
-import jmri.Turnout;
-import jmri.TurnoutOperation;
+import jmri.*;
 import jmri.jmrix.can.*;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
@@ -77,7 +76,9 @@ public class TurnoutOperationFrameTest {
 
         JTabbedPaneOperator jtpo = new JTabbedPaneOperator(jdo);
         Assertions.assertEquals(3, jtpo.getTabCount());
-        jtpo.selectPage(new jmri.SensorTurnoutOperation().getName());
+        String sensorTurnoutOperationName =
+                ThreadingUtil.runOnGUIwithReturn( () -> new SensorTurnoutOperation().getName());
+        jtpo.selectPage(sensorTurnoutOperationName);
         jtpo.getQueueTool().waitEmpty();
         jdo.getQueueTool().waitEmpty();
 
@@ -195,6 +196,6 @@ public class TurnoutOperationFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutOperationFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TurnoutOperationFrameTest.class);
 
 }

@@ -7,6 +7,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
+import jmri.InvokeOnAnyThread;
+import jmri.util.ThreadingUtil;
+
 /**
  * JmriJOptionPane provides a set of static methods to display Dialogs and retrieve user input.
  * These can directly replace the javax.swing.JOptionPane static methods.
@@ -19,7 +22,9 @@ import javax.swing.*;
  * If a parentComponent is provided, the Dialogs will be created Modal to
  * ( will block ) the parent Window Frame, other Frames are not blocked.
  * These Dialogs will appear in the centre of the parent Frame.
- *
+ * <p>
+ * Dialog creation and display is performed on the GUI Thread,
+ * regardless of incoming thread.
  * @since 5.5.4
  * @author Steve Young Copyright (C) 2023
  */
@@ -55,6 +60,7 @@ public class JmriJOptionPane {
      * @param message         The message to be displayed in the dialog.
      * @throws HeadlessException if the current environment is headless (no GUI available).
      */
+    @InvokeOnAnyThread
     public static void showMessageDialog(@CheckForNull Component parentComponent,
         Object message) throws HeadlessException {
         showMessageDialog(parentComponent, message, 
@@ -70,6 +76,7 @@ public class JmriJOptionPane {
      * @param messageType     The type of message to be displayed (e.g., {@link #WARNING_MESSAGE}).
      * @throws HeadlessException if the current environment is headless (no GUI available).
      */
+    @InvokeOnAnyThread
     public static void showMessageDialog(@CheckForNull Component parentComponent,
         Object message, String title, int messageType) {
         showOptionDialog(parentComponent, message, title, DEFAULT_OPTION,
@@ -85,26 +92,29 @@ public class JmriJOptionPane {
      * @param callback        Code to run when the Dialog is closed. Can be null.
      * @throws HeadlessException if the current environment is headless (no GUI available).
      */
+    @InvokeOnAnyThread
     public static void showMessageDialogNonModal(@CheckForNull Component parentComponent,
         Object message, String title, int messageType, @CheckForNull final Runnable callback ) {
 
-        JOptionPane pane = new JOptionPane(message, messageType);
-        JDialog dialog = pane.createDialog(parentComponent, title);
-        Window w = findWindowForComponent(parentComponent);
-        if ( w != null ) {
-            JDialogListener pcl = new JDialogListener(dialog);
-            w.addPropertyChangeListener(pcl);
-            pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused ->
-                w.removePropertyChangeListener(pcl));
-        }
-        if ( callback !=null ) {
-            pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused -> callback.run());
-        }
-        setDialogLocation(parentComponent, dialog);
-        dialog.setModal(false);
-        dialog.setAlwaysOnTop(true);
-        dialog.toFront();
-        dialog.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            JOptionPane pane = new JOptionPane(message, messageType);
+            JDialog dialog = pane.createDialog(parentComponent, title);
+            Window w = findWindowForComponent(parentComponent);
+            if ( w != null ) {
+                JDialogListener pcl = new JDialogListener(dialog);
+                w.addPropertyChangeListener(pcl);
+                pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused ->
+                    w.removePropertyChangeListener(pcl));
+            }
+            if ( callback !=null ) {
+                pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused -> callback.run());
+            }
+            setDialogLocation(parentComponent, dialog);
+            dialog.setModal(false);
+            dialog.setAlwaysOnTop(true);
+            dialog.toFront();
+            dialog.setVisible(true);
+        });
     }
 
     /**
@@ -118,6 +128,7 @@ public class JmriJOptionPane {
      * @return An integer representing the user's choice: {@link #YES_OPTION}, {@link #NO_OPTION}, {@link #CANCEL_OPTION}, or {@link #CLOSED_OPTION}.
      * @throws HeadlessException if the current environment is headless (no GUI available).
      */
+    @InvokeOnAnyThread
     public static int showConfirmDialog(@CheckForNull Component parentComponent,
         Object message, String title, int optionType)
         throws HeadlessException {
@@ -136,6 +147,7 @@ public class JmriJOptionPane {
      * @return An integer representing the user's choice: {@link #YES_OPTION}, {@link #NO_OPTION}, {@link #CANCEL_OPTION}, or {@link #CLOSED_OPTION}.
      * @throws HeadlessException if the current environment is headless (no GUI available).
      */
+    @InvokeOnAnyThread
     public static int showConfirmDialog(@CheckForNull Component parentComponent,
         Object message, String title, int optionType, int messageType)
         throws HeadlessException {
@@ -156,33 +168,36 @@ public class JmriJOptionPane {
      * @return An integer representing the index of the selected option, or {@link #CLOSED_OPTION} if the dialog is closed.
      * @throws HeadlessException If the current environment is headless (no GUI available).
      */
+    @InvokeOnAnyThread
     public static int showOptionDialog(@CheckForNull Component parentComponent,
         Object message, String title, int optionType, int messageType,
         Icon icon, Object[] options, Object initialValue)
         throws HeadlessException {
         log.debug("showOptionDialog comp {} ", parentComponent);
 
-        JOptionPane pane = new JOptionPane(message, messageType,
-            optionType, icon, options, initialValue);
-        pane.setInitialValue(initialValue);
-        displayDialog(pane, parentComponent, title);
+        return ThreadingUtil.runOnGUIwithReturn( () -> {
+            JOptionPane pane = new JOptionPane(message, messageType,
+                optionType, icon, options, initialValue);
+            pane.setInitialValue(initialValue);
+            displayDialog(pane, parentComponent, title);
 
-        Object selectedValue = pane.getValue();
-        if ( selectedValue == null ) {
-            return CLOSED_OPTION;
-        }
-        if ( options == null ) {
-            if ( selectedValue instanceof Integer ) {
-                return ((Integer)selectedValue);
+            Object selectedValue = pane.getValue();
+            if ( selectedValue == null ) {
+                return CLOSED_OPTION;
+            }
+            if ( options == null ) {
+                if ( selectedValue instanceof Integer ) {
+                    return ((Integer)selectedValue);
+                }
+                return CLOSED_OPTION;
+            }
+            for(int counter = 0, maxCounter = options.length; counter < maxCounter; counter++ ) {
+                if ( options[counter].equals(selectedValue)) {
+                    return counter;
+                }
             }
             return CLOSED_OPTION;
-        }
-        for(int counter = 0, maxCounter = options.length; counter < maxCounter; counter++ ) {
-            if ( options[counter].equals(selectedValue)) {
-                return counter;
-            }
-        }
-        return CLOSED_OPTION;
+        });
     }
 
     /**
@@ -194,6 +209,7 @@ public class JmriJOptionPane {
      * @throws HeadlessException   if the current environment is headless (no GUI available).
      */
     @CheckForNull
+    @InvokeOnAnyThread
     public static String showInputDialog(@CheckForNull Component parentComponent,
         String message, String initialSelectionValue ){
         return (String)showInputDialog(parentComponent, message,
@@ -212,6 +228,7 @@ public class JmriJOptionPane {
      * @throws HeadlessException   if the current environment is headless (no GUI available).
      */
     @CheckForNull
+    @InvokeOnAnyThread
     public static String showInputDialog(@CheckForNull Component parentComponent,
         String message, String title, int messageType ){
         return (String)showInputDialog(parentComponent, message,
@@ -228,6 +245,7 @@ public class JmriJOptionPane {
      * @throws HeadlessException   if the current environment is headless (no GUI available).
      */
     @CheckForNull
+    @InvokeOnAnyThread
     public static Object showInputDialog(@CheckForNull Component parentComponent,
         String message, Object initialSelectionValue ){
         return showInputDialog(parentComponent, message,
@@ -249,24 +267,27 @@ public class JmriJOptionPane {
      * @throws HeadlessException   if the current environment is headless (no GUI available).
      */
     @CheckForNull
+    @InvokeOnAnyThread
     public static Object showInputDialog(@CheckForNull Component parentComponent,
         Object message, String title, int messageType, Icon icon,
         Object[] selectionValues, Object initialSelectionValue)
         throws HeadlessException {
-        JOptionPane pane = new JOptionPane(message, messageType,
-            OK_CANCEL_OPTION, icon, null, initialSelectionValue);
+        return ThreadingUtil.runOnGUIwithReturn( () -> {
+            JOptionPane pane = new JOptionPane(message, messageType,
+                OK_CANCEL_OPTION, icon, null, initialSelectionValue);
 
-        pane.setWantsInput(true);
-        pane.setSelectionValues(selectionValues);
-        pane.setInitialSelectionValue(initialSelectionValue);
-        pane.selectInitialValue();
-        displayDialog(pane, parentComponent, title);
+            pane.setWantsInput(true);
+            pane.setSelectionValues(selectionValues);
+            pane.setInitialSelectionValue(initialSelectionValue);
+            pane.selectInitialValue();
+            displayDialog(pane, parentComponent, title);
 
-        Object value = pane.getInputValue();
-        if (value == UNINITIALIZED_VALUE) {
-            return null;
-        }
-        return value;
+            Object value = pane.getInputValue();
+            if (value == UNINITIALIZED_VALUE) {
+                return null;
+            }
+            return value;
+        });
     }
 
     private static void displayDialog(JOptionPane pane, Component parentComponent, String title){

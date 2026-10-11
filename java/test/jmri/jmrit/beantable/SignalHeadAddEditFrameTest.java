@@ -16,7 +16,6 @@ import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -24,7 +23,7 @@ import org.netbeans.jemmy.operators.*;
  * Tests for SignalHeadAddEditFrame
  * @author Steve Young Copyright (C) 2023
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
@@ -431,7 +430,8 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
       //  new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
       //      .getLabelFor()).setText("IH123");
-      
+
+        new JTextFieldOperator(jfo, 0).setText("My se8c UserName");
         new JTextFieldOperator(jfo, 1).setText("11");
         new JTextFieldOperator(jfo, 2).setText("12");
         
@@ -445,7 +445,47 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         SignalHead newHead = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName("IH:SE8c:\"IT11\";\"IT12\"");
         Assertions.assertNotNull(newHead);
         Assertions.assertInstanceOf(jmri.implementation.SE8cSignalHead.class, newHead);
+        Assertions.assertEquals( "My se8c UserName", newHead.getUserName());
 
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).push();
+        jfo.waitClosed();
+
+
+        // again but fail to create duplicate
+        frame = new SignalHeadAddEditFrame(null);
+        ThreadingUtil.runOnGUI(() -> {
+            frame.initComponents();
+        });
+
+        jfo = new JFrameOperator( frame.getTitle() );
+        typeOperator = new JComboBoxOperator(jfo, 0);
+        typeOperator.selectItem(Bundle.getMessage("StringSE8c4aspect"));
+        typeOperator.getQueueTool().waitEmpty();
+
+        new JTextFieldOperator(jfo, 0).setText("My se8c UserName 2");
+        JComboBoxOperator it1 = new JComboBoxOperator(jfo, 1);
+        it1.setSelectedIndex(1);
+        it1.getQueueTool().waitEmpty();
+
+        JComboBoxOperator it2 = new JComboBoxOperator(jfo, 2);
+        it2.setSelectedIndex(2);
+        it2.getQueueTool().waitEmpty();
+
+        Thread t = ThreadingUtil.newThread( () -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("WarningTitle"));
+            jdo.requestClose();
+            jdo.waitClosed();
+        }, "Warning Dialog Close Thread");
+        t.start();
+
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
+        jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(() -> !t.isAlive(), "warning dialog closed");
+
+        Assertions.assertEquals(1, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
+        Assertions.assertEquals(2, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
+        JUnitAppender.assertErrorMessage("systemName is already registered: IH:SE8c:\"IT11\";\"IT12\"");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).push();
         jfo.waitClosed();
 

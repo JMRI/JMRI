@@ -180,7 +180,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
-        return true;
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -234,6 +234,6 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSoundSwing.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSoundSwing.class);
 
 }

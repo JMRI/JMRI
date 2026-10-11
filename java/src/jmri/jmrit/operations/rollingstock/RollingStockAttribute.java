@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsPanel;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents an attribute a rolling stock can have. Some attributes are length,
@@ -47,7 +47,7 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
     }
 
     protected String getDefaultNames() {
-        return "Error"; // overridden // NOI18N
+        return Bundle.getMessage("ErrorTitle"); // overridden // NOI18N
     }
 
     public void setNames(String[] names) {
@@ -198,12 +198,18 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
             Attribute a;
             String[] names = new String[l.size()];
             for (int i = 0; i < l.size(); i++) {
-                Element name = l.get(i);
-                if ((a = name.getAttribute(Xml.NAME)) != null) {
-                    names[i] = a.getValue();
+                Element eN = l.get(i);
+                if ((a = eN.getAttribute(Xml.NAME)) != null) {
+                    String name = a.getValue();
+                    if (name.trim().equals(TrainCommon.HYPHEN)) {
+                        log.error("Illegal name ({}) for {}", name, eName);
+                        names[i] = "-Error";
+                    } else {
+                        names[i] = name;
+                    }
                 }
                 // lengths use "VALUE"
-                if ((a = name.getAttribute(Xml.VALUE)) != null) {
+                if ((a = eN.getAttribute(Xml.VALUE)) != null) {
                     names[i] = a.getValue();
                 }
 
@@ -216,6 +222,6 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);
+    private static final Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);
 
 }

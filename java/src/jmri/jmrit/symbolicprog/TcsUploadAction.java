@@ -30,7 +30,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
     }
 
     // will this be enabled if created?
-    static public boolean willBeEnabled() {
+    public static boolean willBeEnabled() {
         // see if there's an openlcb connection
         var cscm = getSystemConnectionMemo();
         if (cscm == null) {
@@ -118,7 +118,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
                         return;
                     }
                     if (e.key.endsWith("Description")) {
-                        String value = frame.getFnLabelPane().getLabel(index+1).getText();
+                        String value = frame.getFnLabelPane().getLabel(index+1);
                         if (value==null) {
                             value = "";
                         }
@@ -126,7 +126,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
                         log.trace("   mapping gives {}", TcsExportAction.intFromFunctionString(
                                         rosterEntry.getFunctionLabel(index+1)) );
                         if (TcsExportAction.intFromFunctionString(
-                                        frame.getFnLabelPane().getLabel(index+1).getText()
+                                        frame.getFnLabelPane().getLabel(index+1)
                                     ) == 0) {
                             e.setValue(value);
                         }
@@ -152,7 +152,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
                     }
                     if (e.key.endsWith(".Momentary")) {
                         long value = 1;
-                        if (frame.getFnLabelPane().getLockable(index+1).isSelected()) {
+                        if (frame.getFnLabelPane().getLockable(index+1)) {
                             value = 0;  // lockable is not Momentary
                         }
                         e.setValue(value);
@@ -172,7 +172,7 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
                     } else if (e.key.endsWith(".Display")) {
                         // do a reverse lookup and store
                         int value = TcsExportAction.intFromFunctionString(
-                                        frame.getFnLabelPane().getLabel(index+1).getText()
+                                        frame.getFnLabelPane().getLabel(index+1)
                                     );
                         e.setValue(value);
                         log.debug(".display found function {} roster description \"{}\"", index, value);
@@ -200,5 +200,5 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
         return -1;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsUploadAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsUploadAction.class);
 }

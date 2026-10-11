@@ -185,5 +185,5 @@ public class PortalIconXml extends PositionableLabelXml {
         loadLogixNG_Data(l, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(PortalIconXml.class);
 }

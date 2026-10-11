@@ -16,7 +16,7 @@ import jmri.util.ThreadingUtil;
 
 /**
  * This is an extension of the DCCppPacketizer to handle the device specific
- * requirements of the DCC++.
+ * requirements of the DCC-EX.
  * <p>
  * In particular, SerialDCCppPacketizer adds functions to add and remove the
  * {@literal "<" and ">"} bytes that appear around any message read in.
@@ -26,7 +26,7 @@ import jmri.util.ThreadingUtil;
  * that later.
  *
  * What is however interface specific is the background refresh of functions.
- * DCC++ sends the DCC commands exactly once. A background thread will
+ * DCC-EX sends the DCC commands exactly once. A background thread will
  * repeat the last seen function commands to compensate for any momentary
  * power loss or to recover from power off / power on events. It only makes
  * sense to do this on the actual serial interface as it will be transparent for

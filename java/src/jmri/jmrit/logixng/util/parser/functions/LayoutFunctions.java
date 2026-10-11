@@ -57,8 +57,15 @@ public class LayoutFunctions implements FunctionFactory {
         constantClasses.add(new Constant(getModule(), "Off", Light.OFF));
         constantClasses.add(new Constant(getModule(), "On", Light.ON));
 
+        constantClasses.add(new Constant(getModule(), "Free", Section.FREE));
+        constantClasses.add(new Constant(getModule(), "Forward", Section.FORWARD));
+        constantClasses.add(new Constant(getModule(), "Reverse", Section.REVERSE));
+
         constantClasses.add(new Constant(getModule(), "Inactive", Sensor.INACTIVE));
         constantClasses.add(new Constant(getModule(), "Active", Sensor.ACTIVE));
+
+        constantClasses.add(new Constant(getModule(), "Assigned", Transit.ASSIGNED));
+        constantClasses.add(new Constant(getModule(), "Idle", Transit.IDLE));
 
         constantClasses.add(new Constant(getModule(), "Closed", Turnout.CLOSED));
         constantClasses.add(new Constant(getModule(), "Thrown", Turnout.THROWN));

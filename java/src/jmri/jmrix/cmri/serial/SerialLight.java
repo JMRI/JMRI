@@ -97,5 +97,5 @@ public class SerialLight extends AbstractLight {
         return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLight.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialLight.class);
 }

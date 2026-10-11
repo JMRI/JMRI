@@ -27,6 +27,6 @@ public class TamsOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsOpsModeProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TamsOpsModeProgrammerTest.class);
 
 }

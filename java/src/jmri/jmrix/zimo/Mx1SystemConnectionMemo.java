@@ -41,9 +41,10 @@ public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo impleme
                 jmri.jmrix.swing.ComponentFactory.class);
     }
 
-    public final static int MX1 = 0x00;
-    public final static int MXULF = 0x01;
-    public final static int MX10 = 0x02;
+    public static final int MX1 = 0x00;
+    public static final int MXULF = 0x01;
+    public static final int MX10 = 0x02;
+    public static final int KLUG = 0x03;
 
     int connectionType = 0x00;
 
@@ -64,8 +65,18 @@ public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         return st;
     }
 
+    /**
+     * TrafficController setter
+     * 
+     * Updates the AdapterMemo of the TC to this (but doesn't overwrite)
+     * 
+     * @param st TrafficController to use
+     */
     public void setMx1TrafficController(Mx1TrafficController st) {
         this.st = st;
+
+        // Update AdapterMemo in TrafficController to this (don't overwrite existing)
+        if (st.adaptermemo == null) st.adaptermemo = this; 
     }
     private Mx1TrafficController st;
 

@@ -36,12 +36,17 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
     }
 
     @Override
-    public void sendLocoNetMessage(LocoNetMessage m) {
-        log.debug("sendLocoNetMessage [{}]", m);
+    public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho) {
+        log.debug("sendLocoNetMessage [{}] and requestIgnore Echo {}", m, requestIgnoreEcho);
         // save a copy
         outbound.addElement(m);
         // we don't return an echo so that the processing before the echo can be
         // separately tested
+    }
+
+    @Override
+    public void sendLocoNetMessage(LocoNetMessage m) {
+        sendLocoNetMessage(m, false);
     }
 
     @Override
@@ -81,6 +86,16 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
         return listeners;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetInterfaceScaffold.class);
+    /**
+     * Resets the outbound message log.
+     * {@inheritDoc }
+     */
+    @Override
+    public void resetStatistics() {
+        outbound.clear();
+        super.resetStatistics();
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(LocoNetInterfaceScaffold.class);
 
 }

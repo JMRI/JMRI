@@ -2,7 +2,6 @@ package jmri.util.usb;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class UsbBrowserActionTest {
     @Test
     public void testCTor() {
         UsbBrowserAction t = new UsbBrowserAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class UsbBrowserActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UsbBrowserActionTest.class);
 
 }

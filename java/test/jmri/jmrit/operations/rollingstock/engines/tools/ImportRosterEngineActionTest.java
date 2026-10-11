@@ -286,6 +286,6 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         jmri.util.JUnitAppender.assertErrorMessage("Roster Id: Bob doesn't have a road name and road number");
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(ImportRosterEngineActionTest.class);
 }

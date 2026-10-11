@@ -3,8 +3,9 @@ package jmri.util;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for the jmri.util.DateUtil class.
@@ -18,8 +19,8 @@ public class DateUtilTest {
         // 2456678 at 16:00 gives us the correct
         // date in the calendar, which is January 20,2014
         GregorianCalendar testCal = DateUtil.calFromJulianDate(2456678);
-        Assert.assertEquals("Year", 2014, testCal.get(Calendar.YEAR));
-        Assert.assertEquals("Day of Year", 20, testCal.get(Calendar.DAY_OF_YEAR));
+        assertEquals( 2014, testCal.get(Calendar.YEAR), "Year");
+        assertEquals( 20, testCal.get(Calendar.DAY_OF_YEAR), "Day of Year");
     }
 
     @Test
@@ -28,8 +29,8 @@ public class DateUtilTest {
         // 2440588 at 12:00 gives us the correct
         // date in the calendar, which is January 1,1970
         GregorianCalendar testCal = DateUtil.calFromJulianDate(2440588);
-        Assert.assertEquals("Year", 1970, testCal.get(Calendar.YEAR));
-        Assert.assertEquals("Day of Year", 1, testCal.get(Calendar.DAY_OF_YEAR));
+        assertEquals( 1970, testCal.get(Calendar.YEAR), "Year");
+        assertEquals( 1, testCal.get(Calendar.DAY_OF_YEAR), "Day of Year");
     }
 
     @Test
@@ -38,7 +39,7 @@ public class DateUtilTest {
         // 2456678 is returned when a calendar set to January 20,2014 is
         // proivded as input to the julianDayFromCalendar method.
         GregorianCalendar testCal = new GregorianCalendar(2014, GregorianCalendar.JANUARY, 20, 12, 0);
-        Assert.assertEquals("Julian Day", 2456678, DateUtil.julianDayFromCalendar(testCal));
+        assertEquals( 2456678, DateUtil.julianDayFromCalendar(testCal), "Julian Day");
     }
 
     @Test
@@ -47,33 +48,33 @@ public class DateUtilTest {
         // 2440588 is returned when a calendar set to January 1,1970 is
         // proivded as input to the julianDayFromCalendar method.
         GregorianCalendar testCal = new GregorianCalendar(1970, GregorianCalendar.JANUARY, 1, 12, 0);
-        Assert.assertEquals("Julian Day", 2440588, DateUtil.julianDayFromCalendar(testCal));
+        assertEquals( 2440588, DateUtil.julianDayFromCalendar(testCal), "Julian Day");
     }
 
     @Test
     public void testUserDurationFromSeconds(){
-        Assertions.assertEquals("- 00:01:01", DateUtil.userDurationFromSeconds(-61));
-        Assertions.assertEquals("00:00:00", DateUtil.userDurationFromSeconds(0));
-        Assertions.assertEquals("00:00:01", DateUtil.userDurationFromSeconds(1));
-        Assertions.assertEquals("00:00:59", DateUtil.userDurationFromSeconds(59));
-        Assertions.assertEquals("00:01:00", DateUtil.userDurationFromSeconds(60));
-        Assertions.assertEquals("00:01:01", DateUtil.userDurationFromSeconds(61));
-        Assertions.assertEquals("00:10:01", DateUtil.userDurationFromSeconds(601));
-        Assertions.assertEquals("01:00:01", DateUtil.userDurationFromSeconds(3601));
-        Assertions.assertEquals("12:34:56", DateUtil.userDurationFromSeconds(45296));
-        Assertions.assertEquals("23:59:59", DateUtil.userDurationFromSeconds(86399));
-        Assertions.assertEquals("1 00:00:00", DateUtil.userDurationFromSeconds(86400));
-        Assertions.assertEquals("12 03:45:01", DateUtil.userDurationFromSeconds(1050301));
-        Assertions.assertEquals("- 12 03:45:01", DateUtil.userDurationFromSeconds(-1050301));
+        assertEquals("- 00:01:01", DateUtil.userDurationFromSeconds(-61));
+        assertEquals("00:00:00", DateUtil.userDurationFromSeconds(0));
+        assertEquals("00:00:01", DateUtil.userDurationFromSeconds(1));
+        assertEquals("00:00:59", DateUtil.userDurationFromSeconds(59));
+        assertEquals("00:01:00", DateUtil.userDurationFromSeconds(60));
+        assertEquals("00:01:01", DateUtil.userDurationFromSeconds(61));
+        assertEquals("00:10:01", DateUtil.userDurationFromSeconds(601));
+        assertEquals("01:00:01", DateUtil.userDurationFromSeconds(3601));
+        assertEquals("12:34:56", DateUtil.userDurationFromSeconds(45296));
+        assertEquals("23:59:59", DateUtil.userDurationFromSeconds(86399));
+        assertEquals("1 00:00:00", DateUtil.userDurationFromSeconds(86400));
+        assertEquals("12 03:45:01", DateUtil.userDurationFromSeconds(1050301));
+        assertEquals("- 12 03:45:01", DateUtil.userDurationFromSeconds(-1050301));
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

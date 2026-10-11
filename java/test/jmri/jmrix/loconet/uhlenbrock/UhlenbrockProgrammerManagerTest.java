@@ -35,6 +35,6 @@ public class UhlenbrockProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockProgrammerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UhlenbrockProgrammerManagerTest.class);
 
 }

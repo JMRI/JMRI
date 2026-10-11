@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
@@ -7,7 +9,6 @@ import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the SE8cSignalHead implementation
@@ -18,25 +19,25 @@ import org.junit.Assert;
 public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
-    public void testCtor1() {
+    public void testSE8cSignalHeadCtor1() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
 
-        Assert.assertEquals("to low before", Turnout.UNKNOWN, it11.getCommandedState());
-        Assert.assertEquals("to high before", Turnout.UNKNOWN, it12.getCommandedState());
+        assertEquals( Turnout.UNKNOWN, it11.getCommandedState(), "to low before");
+        assertEquals( Turnout.UNKNOWN, it12.getCommandedState(), "to high before");
 
         SE8cSignalHead s = new SE8cSignalHead(
                 new NamedBeanHandle<>("11", it11),
                 new NamedBeanHandle<>("12", it12));
 
-        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
+        assertEquals( "IH:SE8c:\"11\";\"12\"", s.getSystemName(), "system name");
 
-        Assert.assertEquals("to low", Turnout.UNKNOWN, it11.getCommandedState());
-        Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
+        assertEquals( Turnout.UNKNOWN, it11.getCommandedState(), "to low");
+        assertEquals( Turnout.CLOSED, it12.getCommandedState(), "to high");  // dark
     }
 
     @Test
-    public void testCtor2() {
+    public void testSE8cSignalHeadCtor2() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         SE8cSignalHead s = new SE8cSignalHead(
@@ -45,28 +46,28 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
                 "user name"
         );
 
-        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
-        Assert.assertEquals("user name", "user name", s.getUserName());
+        assertEquals( "IH:SE8c:\"11\";\"12\"", s.getSystemName(), "system name");
+        assertEquals( "user name", s.getUserName(), "user name");
 
-        Assert.assertEquals("to low", Turnout.UNKNOWN, it11.getCommandedState());
-        Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
+        assertEquals( Turnout.UNKNOWN, it11.getCommandedState(), "to low");
+        assertEquals( Turnout.CLOSED, it12.getCommandedState(), "to high");  // dark
     }
 
     @Test
-    public void testCtor3() {
+    public void testSE8cSignalHeadCtor3() {
         // original ctor from number and user name
         SE8cSignalHead s = new SE8cSignalHead(11, "user name");
 
-        Assert.assertEquals("system name", "LH11", s.getSystemName());
-        Assert.assertEquals("user name", "user name", s.getUserName());
+        assertEquals( "LH11", s.getSystemName(), "system name");
+        assertEquals( "user name", s.getUserName(), "user name");
     }
 
     @Test
-    public void testCtor4() {
+    public void testSE8cSignalHeadCtor4() {
         // original ctor from number only 
         SE8cSignalHead s = new SE8cSignalHead(11);
 
-        Assert.assertEquals("system name", "LH11", s.getSystemName());
+        assertEquals( "LH11", s.getSystemName(), "system name");
     }
 
     @Test
@@ -81,8 +82,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.RED);
 
-        Assert.assertEquals("to low after", Turnout.THROWN, it11.getCommandedState());
-        Assert.assertEquals("to high after", Turnout.CLOSED, it12.getCommandedState());
+        assertEquals( Turnout.THROWN, it11.getCommandedState(), "to low after");
+        assertEquals( Turnout.CLOSED, it12.getCommandedState(), "to high after");
 
     }
 
@@ -98,8 +99,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.YELLOW);
 
-        Assert.assertEquals("to low after", Turnout.UNKNOWN, it11.getCommandedState());
-        Assert.assertEquals("to high after", Turnout.THROWN, it12.getCommandedState());
+        assertEquals( Turnout.UNKNOWN, it11.getCommandedState(), "to low after");
+        assertEquals( Turnout.THROWN, it12.getCommandedState(), "to high after");
 
     }
 
@@ -115,8 +116,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.GREEN);
 
-        Assert.assertEquals("to low after", Turnout.CLOSED, it11.getCommandedState());
-        Assert.assertEquals("to high after", Turnout.CLOSED, it12.getCommandedState());
+        assertEquals( Turnout.CLOSED, it11.getCommandedState(), "to low after");
+        assertEquals( Turnout.CLOSED, it12.getCommandedState(), "to high after");
 
     }
 
@@ -132,8 +133,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.DARK);
 
-        Assert.assertEquals("to low after", Turnout.UNKNOWN, it11.getCommandedState());
-        Assert.assertEquals("to high after", Turnout.CLOSED, it12.getCommandedState());
+        assertEquals( Turnout.UNKNOWN, it11.getCommandedState(), "to low after");
+        assertEquals( Turnout.CLOSED, it12.getCommandedState(), "to high after");
 
     }
 
@@ -152,13 +153,13 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
     // The minimal setup for log4J/JUnit4
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

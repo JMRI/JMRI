@@ -17,6 +17,7 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.WrapLayout;
 
 /**
  * Create a where used report based on the selected bean.  The selection combo box is
@@ -62,6 +63,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         // Build an empty where used listing
         JScrollPane scrollPane;
         buildWhereUsedListing(ItemType.NONE, null);
+        _scrolltext.setLayout(new BoxLayout(_scrolltext, BoxLayout.Y_AXIS));
         scrollPane = new JScrollPane(_scrolltext);
         contentPane.add(scrollPane);
 
@@ -74,6 +76,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
     void buildTopPanel() {
         _topPanel = new JPanel();
+        _topPanel.setLayout(new WrapLayout());
         JLabel itemTypeLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType")));  // NOI18N
         _topPanel.add(itemTypeLabel);
         _itemTypeBox = new JComboBox<>();
@@ -93,7 +96,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             setItemNameBox(_itemType);
         });
 
-        _createButton = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
+        _createButton = new JButton(Bundle.getMessage("ButtonCreateReport"));  // NOI18N
         _createButton.addActionListener((e) -> buildWhereUsedListing(_itemType, _itemBean));
 
         _topPanel.add(_createButton);
@@ -195,7 +198,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
                 _textArea = AudioWhereUsed.getWhereUsed(bean);
                 break;
             default:
-                _textArea = new JTextArea(Bundle.getMessage("TypePrompt", Bundle.getMessage("ButtonCreate")));
+                _textArea = new JTextArea(Bundle.getMessage("TypePrompt", Bundle.getMessage("ButtonCreateReport")));
                 break;
         }
 

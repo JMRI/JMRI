@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
 
 /**
  *
@@ -23,6 +23,6 @@ public class EnableDestinationActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EnableDestinationActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EnableDestinationActionTest.class);
 
 }

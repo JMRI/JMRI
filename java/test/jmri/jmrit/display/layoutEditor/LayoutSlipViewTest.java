@@ -408,5 +408,5 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         super.tearDown();
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipViewTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipViewTest.class);
 }

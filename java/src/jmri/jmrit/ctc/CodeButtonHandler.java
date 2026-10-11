@@ -173,6 +173,27 @@ public class CodeButtonHandler {
 
     private void codeButtonStateChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {
+            
+/*  NO MATTER what else happens, IF the dispatcher has Signals Indicator Normal lit, sets the Signal Direction Lever to Normal,
+    and has pressed the Code Button, we DELETE any active routes allocated to this OS section FIRST, ALWAYS without question!
+            
+Why is this needed?  Many reasons, a few of which are iterated below:
+            
+#1) It is possible for another train to accidentally enter the O.S. section and drop the signals
+    in front of the actual train that was supposed to transit the O.S. section.  Then the "bad" train backs out,
+    and the dispatcher is now unable to clear the route since the signals are already red from that "transgression",
+    and the route is still allocated, "minus" that single transgressed section.
+
+#2) Hardware can "fail".  For instance, if the hardware does not send the "unocciped" message to JMRI,
+    then that route will not be available "forever" due to my not purging that internally allocated sensor.
+            
+#3) On a BUSY JMRI Loconet system (or other system), the hardware sends the message, but the message is permanently
+    lost.  Ditto problem.
+*/
+    if (_mSignalDirectionIndicators.signalsNormal() && getCurrentSignalDirectionLever(false) == CTCConstants.SIGNALSNORMAL) {
+      cancelLockedRoute();
+    }
+            
 //  NOTE: If the primary O.S. section is occupied, you CANT DO ANYTHING via a CTC machine, except:
 //  Preconditioning: IF the O.S. section is occupied, then it is a pre-conditioning request:
             if (isPrimaryOSSectionOccupied()) {
@@ -187,7 +208,7 @@ public class CodeButtonHandler {
             doCodeButtonPress();
         }
     }
-
+    
     private void doCodeButtonPress() {
         if (_mSignalDirectionIndicators.isRunningTime()) return;    // If we are running time, IGNORE all requests from the user:
         possiblyAllowLockChange();                              // MUST unlock first, otherwise if dispatcher wanted to unlock and change switch state, it wouldn't!

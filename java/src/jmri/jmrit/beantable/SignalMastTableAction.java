@@ -56,8 +56,8 @@ public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
     jmri.jmrit.beantable.signalmast.AddSignalMastJFrame addFrame = null;
 
     // has to agree with number in SignalMastDataModel
-    final static int VALUECOL = BeanTableDataModel.VALUECOL;
-    final static int SYSNAMECOL = BeanTableDataModel.SYSNAMECOL;
+    static final int VALUECOL = BeanTableDataModel.VALUECOL;
+    static final int SYSNAMECOL = BeanTableDataModel.SYSNAMECOL;
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -109,6 +109,6 @@ public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
         return Bundle.getMessage("TitleSignalMastTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastTableAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalMastTableAction.class);
 
 }

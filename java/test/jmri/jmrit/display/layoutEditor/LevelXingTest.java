@@ -1,11 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of LevelXing
@@ -15,23 +13,24 @@ import org.junit.Assume;
 public class LevelXingTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         LayoutEditor e = new LayoutEditor();
         LevelXing t = new LevelXing("test", e);  // new Point2D.Double(0.0, 0.0),
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

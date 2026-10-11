@@ -25,13 +25,15 @@ import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.*;
+
 /**
- * Provide access to a simulated DCC++ system.
+ * Provide access to a simulated DCC-EX system.
  *
  * Currently, the DCCppSimulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
  *
- * NOTE: Most DCC++ commands are still unsupported in this implementation.
+ * NOTE: Most DCC-EX commands are still unsupported in this implementation.
  *
  * Normally controlled by the dccpp.DCCppSimulator.DCCppSimulatorFrame class.
  *
@@ -46,10 +48,10 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
-    final static int SENSOR_MSG_RATE = 10;
+    static final int SENSOR_MSG_RATE = 10;
 
     private boolean outputBufferEmpty = true;
-    private final boolean checkBuffer = true;
+    private final boolean checkBuffer = false; // mousewheel on throttle could overrun buffer, ignore it
     private boolean trackPowerState = false;
     // One extra array element so that i can index directly from the
     // CV value, ignoring CVs[0].
@@ -147,9 +149,15 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // If the timer times out, send a request for status
-                    DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
-                    .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    // When the timer times out, send a heartbeat (status request on DCC-EX, max num slots request on DCC-EX
+                    DCCppTrafficController tc = DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
+                    DCCppCommandStation cs = tc.getCommandStation();
+                    if (cs.isMaxNumSlotsMsgSupported()) {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSMaxNumSlotsMsg(), null);
+                    } else {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    }
+
                 }
             };
         } else {
@@ -168,7 +176,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pin;
     }
@@ -180,7 +189,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pout;
     }
@@ -221,7 +231,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
         keepAliveTimer();
 
-        ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(
+                getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             DCCppMessage m = readMessage();
             log.debug("Simulator Thread received message '{}'", m);
@@ -247,7 +258,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             msg = loadChars();
         } catch (java.io.IOException e) {
             // should do something meaningful here.
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
 
         }
         setOutputBufferEmpty(true);
@@ -256,6 +268,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
+    @SuppressFBWarnings( value="FS_BAD_DATE_FORMAT_FLAG_COMBO", justification = "both am/pm and 24hr flags present ok as only used for display output")
     private DCCppReply generateReply(DCCppMessage msg) {
         String s, r = null;
         Pattern p;
@@ -278,7 +291,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         if (!m.matches()) {
                             log.error("Malformed Throttle Command: {}", s);
                             return (null);
-                        }                       
+                        }
                         int locoId = Integer.parseInt(m.group(1));
                         int speed = Integer.parseInt(m.group(2));
                         int dir = Integer.parseInt(m.group(3));
@@ -306,12 +319,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 s = msg.toString();
                 r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.FUNCTION_V4_CMD_REGEX); 
+                    p = Pattern.compile(DCCppConstants.FUNCTION_V4_CMD_REGEX);
                     m = p.matcher(s); //<F locoId func 1|0>
                     if (!m.matches()) {
                         log.error("Malformed FunctionV4 Command: {}", s);
                         return (null);
-                    }                       
+                    }
                     int locoId = Integer.parseInt(m.group(1));
                     int fn = Integer.parseInt(m.group(2));
                     int state = Integer.parseInt(m.group(3));
@@ -450,7 +463,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         // Response: <r CV Value>
                         r = "r " + m.group(1) + " " + m.group(2);
                         CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
-                    }                    
+                    }
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
@@ -619,6 +632,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 reply = DCCppReply.parseDCCppReply("= A MAIN");
                 writeReply(reply);
                 reply = DCCppReply.parseDCCppReply("= B PROG");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= C MAIN");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= D MAIN");
                 break;
 
             case DCCppConstants.LCD_TEXT_CMD:
@@ -642,6 +659,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 generateReadCSStatusReply(); // Handle this special.
                 break;
 
+            case DCCppConstants.THROTTLE_COMMANDS:
+                log.debug("THROTTLE_COMMANDS detected");
+                if (msg.isCurrentMaxesMessage()) {
+                    reply = DCCppReply.parseDCCppReply("jG 4998 4998 4998 4998");
+                } else if (msg.isCurrentValuesMessage()) {
+                    generateCurrentValuesReply(); // Handle this special.
+                } else if (msg.isAutomationIDsMessage()) {
+                    reply = DCCppReply.parseDCCppReply("jA 1 2");
+                } else if (msg.isAutomationIDMessage()) {
+                    reply = generateAutomationIDReply(msg.getAutomationIDInt());
+                }
+                break;
+
             case DCCppConstants.FUNCTION_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
@@ -660,7 +690,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (reply);
     }
 
-    //calc speedByte value matching DCC++EX, then store it, so it can be used in the locoState replies
+    //calc speedByte value matching DCC-EX, then store it, so it can be used in the locoState replies
     private void storeLocoSpeedByte(int locoId, int speed, int dir) {
         if (speed>0) speed++; //add 1 to speed if not zero or estop
         if (speed<0) speed = 1; //eStop is actually 1
@@ -670,19 +700,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (!locoFunctions.containsKey(locoId)) locoFunctions.put(locoId, 0); //init functions if not set
     }
 
-    //stores the calculated value of the functionsByte as used by DCC++EX
+    //stores the calculated value of the functionsByte as used by DCC-EX
     private void storeLocoFunction(int locoId, int function, int state) {
         int functions = 0; //init functions to all off if not stored
-        if (locoFunctions.containsKey(locoId)) 
+        if (locoFunctions.containsKey(locoId))
             functions = locoFunctions.get(locoId); //get stored value, if any
         int mask = 1 << function;
         if (state == 1) {
             functions = functions | mask; //apply ON
         } else {
-            functions = functions & ~mask; //apply OFF            
+            functions = functions & ~mask; //apply OFF
         }
         locoFunctions.put(locoId, functions); //store new value
-        if (!locoSpeedByte.containsKey(locoId)) 
+        if (!locoSpeedByte.containsKey(locoId))
             locoSpeedByte.put(locoId, 0); //init speedByte if not set
     }
 
@@ -695,11 +725,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return s;
     }
 
+    private DCCppReply generateAutomationIDReply(int id) {
+        switch (id) {
+            case 1: return DCCppReply.parseDCCppReply("jA 1 R \"Simulator Route\"");
+            case 2: return DCCppReply.parseDCCppReply("jA 2 A \"Simulator Auto\"");
+            default: return null;
+        }
+    }
+
     /* 's'tatus message gets multiple reply messages */
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p" + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.1 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-5.0.4 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }
@@ -738,8 +776,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         writeReply(r);
         r = new DCCppReply("c VoltageMAIN " + voltageV + " V NoPrefix 0 18.0 0.1 16.0");
         writeReply(r);
-        rs = "a " + (trackPowerState ? Integer.toString((1997/currentmA)*100) : "0");
-        r = DCCppReply.parseDCCppReply(rs);
+    }
+
+    /* 'JI' Current Value List request message returns an array of Current Values */
+    private void generateCurrentValuesReply() {
+        int currentmA_0 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_1 = 0500 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_2 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_3 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        String rs = "jI " + (trackPowerState ? Integer.toString(currentmA_0) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_1) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_2) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_3) : "0");
+        DCCppReply r = new DCCppReply(rs);
         writeReply(r);
     }
 
@@ -766,7 +815,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             }
             outpipe.writeByte((byte) '>');
         } catch (java.io.IOException ex) {
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 
@@ -847,6 +897,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class);
 
 }

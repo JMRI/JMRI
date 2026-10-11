@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
@@ -298,5 +299,76 @@ public class CarsTest extends OperationsTestCase {
         Assert.assertEquals("destination c4", Track.OKAY, c4.setDestination(l2, l2t1));
         Assert.assertEquals("destination c5", Track.OKAY, c5.setDestination(l1, l1t1));
         Assert.assertEquals("destination c6", Track.OKAY, c6.setDestination(l1, l1t2));
+    }
+
+    @Test
+    public void testKernel() {
+
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        ct.addName("Boxcar");
+        ct.addName("Flatcar");
+        ct.addName("Gon");
+
+        Location westford = JUnitOperationsUtil.createOneNormalLocation("Westford");
+        Track spur1 = westford.getTrackByName("Westford Spur 1", null);
+        Track yard1 = westford.getTrackByName("Westford Yard 1", null);
+        Track yard2 = westford.getTrackByName("Westford Yard 2", null);
+
+        CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
+        carLoads.addName("Boxcar", "Nuts");
+        carLoads.addName("Flatcar", "Steel");
+        carLoads.addName("Gon", "Scrap");
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Boxcar", "40", spur1, 10);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Flatcar", "40", spur1, 11);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Gon", "40", spur1, 12);
+
+        // put all three cars in a kernel
+        Kernel k = InstanceManager.getDefault(KernelManager.class).newKernel("K");
+        c1.setKernel(k);
+        c2.setKernel(k);
+        c3.setKernel(k);
+
+        c1.setLoadName("Nuts");
+        c1.setDestination(westford, yard1);
+
+        // try updating the non-lead car, does nothing
+        c2.updateKernel();
+        Assert.assertEquals("Car load", "Nuts", c1.getLoadName());
+        Assert.assertEquals("Car load", "E", c2.getLoadName());
+        Assert.assertEquals("Car load", "E", c3.getLoadName());
+
+        // the update will add a custom load if available to non-lead cars
+        c1.updateKernel();
+        Assert.assertEquals("Car load", "Nuts", c1.getLoadName());
+        Assert.assertEquals("Car load", "Steel", c2.getLoadName());
+        Assert.assertEquals("Car load", "Scrap", c3.getLoadName());
+
+        // disallow steel
+        yard1.setLoadOption(Track.EXCLUDE_LOADS);
+        yard1.addLoadName("Steel");
+        c2.setLoadName("Something");
+
+        c1.updateKernel();
+        Assert.assertEquals("Car load", "Nuts", c1.getLoadName());
+        Assert.assertEquals("Car load", "Something", c2.getLoadName());
+        Assert.assertEquals("Car load", "Scrap", c3.getLoadName());
+
+        // provide a final destination
+        c1.setFinalDestinationTrack(yard2);
+
+        c1.updateKernel();
+        Assert.assertEquals("Car load", "Nuts", c1.getLoadName());
+        Assert.assertEquals("Car load", "Steel", c2.getLoadName());
+        Assert.assertEquals("Car load", "Scrap", c3.getLoadName());
+
+        // allow non-lead car to have the same load name as the lead car
+        carLoads.addName("Flatcar", "Nuts");
+
+        c1.updateKernel();
+        Assert.assertEquals("Car load", "Nuts", c1.getLoadName());
+        Assert.assertEquals("Car load", "Nuts", c2.getLoadName());
+        Assert.assertEquals("Car load", "Scrap", c3.getLoadName());
+
     }
 }

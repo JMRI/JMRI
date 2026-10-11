@@ -1,10 +1,12 @@
 package jmri.profile;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import javax.swing.JList;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,13 +17,13 @@ public class ProfileListCellRendererTest {
     
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
     
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
         JUnitUtil.resetProfileManager();
     }
 
@@ -34,27 +36,27 @@ public class ProfileListCellRendererTest {
         list.setToolTipText(null);
         ProfileListCellRenderer instance = new ProfileListCellRenderer();
         Profile activeProfile = ProfileManager.getDefault().getActiveProfile();
-        Assert.assertNotNull(activeProfile); // this tests a non-null active profile
+        assertNotNull(activeProfile); // this tests a non-null active profile
         String noProfileMessage = Bundle.getMessage("ProfileManagerDialog.profiles.toolTipText");
         String activeProfileMessage = Bundle.getMessage("ProfileTableModel.toolTip", activeProfile.getName(), activeProfile.getPath(), activeProfile.getId(), "");
         // null profile, selected index
         instance.getListCellRendererComponent(list, null, 0, false, false);
-        Assert.assertEquals(noProfileMessage, list.getToolTipText());
+        assertEquals(noProfileMessage, list.getToolTipText());
         // null profile, no selected index
         instance.getListCellRendererComponent(list, null, -1, false, false);
-        Assert.assertEquals(noProfileMessage, list.getToolTipText());
+        assertEquals(noProfileMessage, list.getToolTipText());
         // valid profile, selected index
         instance.getListCellRendererComponent(list, activeProfile, 0, false, false);
-        Assert.assertEquals(activeProfileMessage, list.getToolTipText());
+        assertEquals(activeProfileMessage, list.getToolTipText());
         // valid profile, no selected index
         instance.getListCellRendererComponent(list, activeProfile, -1, false, false);
-        Assert.assertEquals(noProfileMessage, list.getToolTipText());
+        assertEquals(noProfileMessage, list.getToolTipText());
         // invalid profile, selected index
         instance.getListCellRendererComponent(list, ProfileManager.getDefault(), 0, false, false);
-        Assert.assertEquals(noProfileMessage, list.getToolTipText());
+        assertEquals(noProfileMessage, list.getToolTipText());
         // invalid profile, no selected index
         instance.getListCellRendererComponent(list, ProfileManager.getDefault(), -1, false, false);
-        Assert.assertEquals(noProfileMessage, list.getToolTipText());
+        assertEquals(noProfileMessage, list.getToolTipText());
     }
     
 }

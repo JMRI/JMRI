@@ -1,17 +1,17 @@
 package apps.DispatcherPro;
 
 import apps.Apps;
+
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * The JMRI program for creating control panels.
@@ -58,7 +58,7 @@ public class DispatcherPro extends Apps {
 
     @Override
     protected String line2() {
-        return "http://jmri.org/DispatcherPro ";
+        return "https://jmri.org/DispatcherPro";
     }
 
     /**
@@ -107,7 +107,10 @@ public class DispatcherPro extends Apps {
             jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DispatcherPro.index");
         }
     }
-    
+
+// main() method is commented out since it's probably not used anymore
+// See: https://jmri-developers.groups.io/g/jmri/message/12240
+/*
     // Main entry point
     public static void main(String args[]) {
 
@@ -119,7 +122,7 @@ public class DispatcherPro extends Apps {
 
         Apps.setStartupInfo("DispatcherPro");
 
-        setConfigFilename("DispatcherProConfig2.xml", args);
+        setConfigFilename("DispatcherProConfig2.properties", args);
         DispatcherPro dp = new DispatcherPro();
         JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(dp, f);
@@ -127,7 +130,7 @@ public class DispatcherPro extends Apps {
         log.debug("main initialization done");
         splash(false);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(DispatcherPro.class);
+*/
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherPro.class);
 
 }

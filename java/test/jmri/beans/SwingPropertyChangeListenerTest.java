@@ -8,8 +8,8 @@ import java.beans.PropertyChangeListener;
 import javax.swing.SwingUtilities;
 
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
-import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.jupiter.api.*;
 
 /**
@@ -35,7 +35,7 @@ public class SwingPropertyChangeListenerTest {
     public void testPropertyChangeOnEDT() {
         s = new SwingPropertyChangeListener(l, true);
         assertThat(notifiedOnEDT).isFalse();
-        GuiActionRunner.execute(() -> { triggerPropChange(s); } );
+        ThreadingUtil.runOnGUI(() -> triggerPropChange(s));
         assertThat(notifiedOnEDT).isTrue();
     }
 

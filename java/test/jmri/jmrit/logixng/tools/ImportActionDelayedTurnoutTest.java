@@ -1,10 +1,13 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test import of Logix to LogixNG.
@@ -18,32 +21,39 @@ import org.junit.*;
  */
 public class ImportActionDelayedTurnoutTest extends ImportActionTestBase {
 
-    Turnout turnout;
-    ConditionalAction ca;
-    
+    private Turnout turnout = null;
+    private ConditionalAction ca = null;
+
     @Override
     public void setNamedBeanState(boolean on) throws JmriException {
-        if (on) turnout.setState(Turnout.THROWN);
-        else turnout.setState(Turnout.CLOSED);
+        if (on) {
+            turnout.setState(Turnout.THROWN);
+        } else {
+            turnout.setState(Turnout.CLOSED);
+        }
     }
 
     @Override
     public boolean checkNamedBeanState(boolean on) {
-        if (on) return turnout.getState() == Turnout.THROWN;
-        else return turnout.getState() == Turnout.CLOSED;
+        if (on) {
+            return turnout.getState() == Turnout.THROWN;
+        } else {
+            return turnout.getState() == Turnout.CLOSED;
+        }
     }
 
     @Override
     public void setConditionalActionState(State state) {
+        assertNotNull(ca);
         switch (state) {
             case ON:
                 ca.setActionData(Turnout.THROWN);
                 break;
-                
+
             case OFF:
                 ca.setActionData(Turnout.CLOSED);
                 break;
-                
+
             case TOGGLE:
             default:
                 ca.setActionData(Route.TOGGLE);
@@ -65,35 +75,35 @@ public class ImportActionDelayedTurnoutTest extends ImportActionTestBase {
         ca.setDeviceName("IT2");
         return ca;
     }
-    
+
     @Override
     public void doWait(boolean expectSuccess, boolean on) {
         // Check that the action has not executed yet
 //        assertBoolean("Verify", true, checkNamedBeanState(!on));
-        
+
         // Wait for the action to execute
         boolean result = JUnitUtil.waitFor(() -> {return checkNamedBeanState(on);});
-        
+
         // Verify that the action has executed
         assertBoolean("Wait for it", expectSuccess, result);
     }
-    
-    @Ignore("This test is not stable")
+
+    @Disabled("This test is not stable")
     @Test
     @Override
     public void testOn() throws JmriException {
     }
-    
-    @Ignore("This test is not stable")
+
+    @Disabled("This test is not stable")
     @Test
     @Override
     public void testOff() throws JmriException {
     }
-    
-    @Ignore("This test doesn't work yet")
+
+    @Disabled("This test doesn't work yet")
     @Test
     @Override
     public void testToggle() throws JmriException {
     }
-    
+
 }

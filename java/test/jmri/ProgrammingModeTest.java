@@ -1,7 +1,10 @@
 package jmri;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the ProgrammingMode class
@@ -13,8 +16,18 @@ public class ProgrammingModeTest {
     @Test
     public void testStateCtors() {
         // tests that statics exist, are not equal
-        Assert.assertTrue(ProgrammingMode.PAGEMODE.equals(ProgrammingMode.PAGEMODE));
-        Assert.assertTrue(!ProgrammingMode.REGISTERMODE.equals(ProgrammingMode.PAGEMODE));
+        assertTrue(ProgrammingMode.PAGEMODE.equals(ProgrammingMode.PAGEMODE));
+        assertTrue(!ProgrammingMode.REGISTERMODE.equals(ProgrammingMode.PAGEMODE));
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

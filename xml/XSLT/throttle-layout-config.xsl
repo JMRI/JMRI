@@ -29,7 +29,7 @@
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
 
-  <xsl:param name="JmriCopyrightYear" select="concat('1997','-','2024')"/>
+  <xsl:param name="JmriCopyrightYear" select="concat('1997','-','2026')"/>
 
   <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
@@ -85,7 +85,6 @@ This page was produced by <a href="https://www.jmri.org">JMRI</a>.
     <h3>Toolbar Jynstrument</h3>
     <table border="border-width:thin" width="67%">
           <tr><td>Jynstrument Folder</td><td><xsl:value-of select="@JynstrumentFolder"/></td></tr>
-      <!-- Future proofing: ["USBThottle" is only element at current time 2022/03/25] -->
       <xsl:for-each select="./*">
         <tr>
           <td><xsl:value-of select="name()"/></td>

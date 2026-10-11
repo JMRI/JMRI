@@ -1,13 +1,13 @@
 package jmri.jmrix.maple.nodeconfig;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of NodeConfigFrame
@@ -19,15 +19,15 @@ public class NodeConfigFrameTest {
     private MapleSystemConnectionMemo memo = null;
 
     @Test
+    @DisabledIfHeadless
     public void testMemoCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame action = new NodeConfigFrame(memo);
-        Assert.assertNotNull("exists", action);
+        assertNotNull( action, "exists");
     }
 
     @Test
-    public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testInitComponents() {
         NodeConfigFrame t = new NodeConfigFrame(memo);
         // for now, just makes sure there isn't an exception.
         t.initComponents();
@@ -35,18 +35,18 @@ public class NodeConfigFrameTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testGetTitle(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigFrame t = new NodeConfigFrame(memo);
         t.initComponents();
-        Assert.assertEquals("title", "Configure Maple Nodes", t.getTitle());
+        assertEquals( "Configure Maple Nodes", t.getTitle(), "title");
         t.dispose();
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
 
         memo = new MapleSystemConnectionMemo();
     }
@@ -55,6 +55,7 @@ public class NodeConfigFrameTest {
     public void tearDown() {
 
         memo.dispose();
+        memo = null;
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

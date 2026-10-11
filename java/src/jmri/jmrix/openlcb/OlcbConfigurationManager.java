@@ -150,6 +150,11 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setTurnoutManager(
                 getTurnoutManager());
 
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
+
+        InstanceManager.setStringIOManager(
+                getStringIOManager());
+
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
@@ -158,6 +163,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         InstanceManager.setLightManager(
                 getLightManager()
+        );
+
+        InstanceManager.setMeterManager(
+                getMeterManager()
         );
 
         InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
@@ -209,7 +218,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     NodeID nodeID;
     LoaderClient loaderClient;
     OlcbClockControl clockControl;
-
+    OlcbEventNameStore olcbEventNameStore = new OlcbEventNameStore();
+    
     OlcbInterface getInterface() {
         return olcbCanInterface.getInterface();
     }
@@ -239,10 +249,19 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.PowerManager.class)) {
+            return true;
+        }
         if (type.equals(jmri.ReporterManager.class)) {
             return true;
         }
         if (type.equals(jmri.LightManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.MeterManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.StringIOManager.class)) {
             return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
@@ -284,6 +303,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(ClockControl.class)) {
             return clockControl != null;
         }
+        if (type.equals(OlcbEventNameStore.class)) {
+            return true;
+        }
         return false; // nothing, by default
     }
 
@@ -302,8 +324,17 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
+        if (T.equals(jmri.PowerManager.class)) {
+            return (T) getPowerManager();
+        }
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
+        }
+        if (T.equals(jmri.MeterManager.class)) {
+            return (T) getMeterManager();
+        }
+        if (T.equals(jmri.StringIOManager.class)) {
+            return (T) getStringIOManager();
         }
         if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
@@ -350,6 +381,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (T.equals(ClockControl.class)) {
             return (T) clockControl;
         }
+        if (T.equals(OlcbEventNameStore.class)) {
+            return (T) olcbEventNameStore;
+        }
         return null; // nothing, by default
     }
 
@@ -389,6 +423,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return turnoutManager;
     }
 
+    protected OlcbPowerManager powerManager;
+
+    public OlcbPowerManager getPowerManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (powerManager == null) {
+            powerManager = new OlcbPowerManager(adapterMemo);
+        }
+        return powerManager;
+    }
+
     protected OlcbSensorManager sensorManager;
 
     public OlcbSensorManager getSensorManager() {
@@ -399,6 +445,42 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             sensorManager = new OlcbSensorManager(adapterMemo);
         }
         return sensorManager;
+    }
+
+    protected OlcbLightManager lightManager;
+
+    public OlcbLightManager getLightManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (lightManager == null) {
+            lightManager = new OlcbLightManager(adapterMemo);
+        }
+        return lightManager;
+    }
+
+    protected OlcbMeterManager meterManager;
+
+    public OlcbMeterManager getMeterManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (meterManager == null) {
+            meterManager = new OlcbMeterManager(adapterMemo);
+        }
+        return meterManager;
+    }
+
+    protected OlcbStringIOManager stringIOManager;
+
+    public OlcbStringIOManager getStringIOManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (stringIOManager == null) {
+            stringIOManager = new OlcbStringIOManager(adapterMemo);
+        }
+        return stringIOManager;
     }
 
     protected OlcbReporterManager reporterManager;
@@ -447,18 +529,6 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
     }
 
-    protected OlcbLightManager lightManager;
-
-    public OlcbLightManager getLightManager() {
-        if (adapterMemo.getDisabled()) {
-            return null;
-        }
-        if (lightManager == null) {
-            lightManager = new OlcbLightManager(adapterMemo);
-        }
-        return lightManager;
-    }
-
     class SimpleNodeIdentInfoHandler extends MessageDecoder {
         /**
          * Helper function to add a string value to the sequence of bytes to send for SNIP
@@ -485,7 +555,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
             l.add((byte)4); // version byte
             addStringPart("JMRI", l, 40);  // mfg field; 40 char limit in Standard, not counting final null
-            addStringPart("PanelPro", l, 40);  // model
+            addStringPart(jmri.Application.getApplicationName(), l, 40);  // model
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (name != null) {
                 addStringPart(name, l, 20); // hardware version
@@ -558,7 +628,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 return;
             }
     
-            long pid = getProcessId(1);
+            long pid = getProcessId();
             log.trace("Process ID: {}", pid);
     
             // get first network interface internet address
@@ -605,25 +675,15 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     private static final Random RANDOM = new Random();
     
-    protected long getProcessId(final long fallback) {
-        // Note: may fail in some JVM implementations
-        // therefore fallback has to be provided
-
-        // something like '<pid>@<hostname>', at least in SUN / Oracle JVMs
-        final String jvmName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
-        final int index = jvmName.indexOf('@');
-
-        if (index < 1) {
-            // part before '@' empty (index = 0) / '@' not found (index = -1)
-            return fallback;
-        }
-
+    protected long getProcessId() {
         try {
-            return Long.parseLong(jvmName.substring(0, index));
-        } catch (NumberFormatException e) {
-            // ignore
+            // using Java 9's ProcessHandle, this is much simpler and more reliable
+            // than the previous approach of parsing the RuntimeMXBean
+            return ProcessHandle.current().pid();
+        } catch (UnsupportedOperationException e) {
+            // use a random value
+            return RANDOM.nextInt();
         }
-        return fallback;
     }
 
     public static CanInterface createOlcbCanInterface(NodeID nodeID, TrafficController tc) {
@@ -699,5 +759,5 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class);
 }

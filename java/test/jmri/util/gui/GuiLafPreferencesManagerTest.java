@@ -2,7 +2,6 @@ package jmri.util.gui;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class GuiLafPreferencesManagerTest {
     @Test
     public void testCTor() {
         GuiLafPreferencesManager t = new GuiLafPreferencesManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     // The minimal setup for log4J
@@ -28,6 +27,6 @@ public class GuiLafPreferencesManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GuiLafPreferencesManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GuiLafPreferencesManagerTest.class);
 
 }

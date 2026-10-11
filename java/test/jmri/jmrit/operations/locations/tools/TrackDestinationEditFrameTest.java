@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.YardEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -88,6 +89,6 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackDestinationEditFrameTest.class);
 
 }

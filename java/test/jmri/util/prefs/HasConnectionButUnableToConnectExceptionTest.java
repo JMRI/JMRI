@@ -2,7 +2,6 @@ package jmri.util.prefs;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,23 +9,23 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class HasConnectionButUnableToConnectExceptionTest {
 
-   @Test
-   public void testCtor(){
-      Assert.assertNotNull("HasConnectionButUnableToConnectException constructor",new HasConnectionButUnableToConnectException("test exception",null));
-   }
+    @Test
+    public void testCtor(){
+        Assertions.assertNotNull( new HasConnectionButUnableToConnectException("test exception",null),
+            "HasConnectionButUnableToConnectException constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
-   }
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

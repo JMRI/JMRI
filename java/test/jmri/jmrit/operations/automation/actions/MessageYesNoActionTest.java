@@ -151,6 +151,6 @@ public class MessageYesNoActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MessageYesNoActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MessageYesNoActionTest.class);
 
 }

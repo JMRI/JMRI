@@ -20,11 +20,12 @@ import purejavacomm.*;
  */
 public class GcSerialDriverAdapterTest {
 
-    CommPortIdentifier cpi;
+    private CommPortIdentifier cpi;
     private final MyInputStream _inputStream = new MyInputStream();
     private final MyOutputStream _outputStream = new MyOutputStream();
 
-    // @Test - needs to be converted to com.fazecast.jSerialComm
+    @Test
+    @Disabled("needs to be converted to com.fazecast.jSerialComm")
     public void testCTor() throws PortInUseException {
         // Instantiate a MockedStatic in a try-with-resources block
         try (MockedStatic<CommPortIdentifier> mb = Mockito.mockStatic(CommPortIdentifier.class)) {
@@ -324,6 +325,6 @@ public class GcSerialDriverAdapterTest {
     }
 
 
-    // private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GcSerialDriverAdapterTest.class);
 
 }

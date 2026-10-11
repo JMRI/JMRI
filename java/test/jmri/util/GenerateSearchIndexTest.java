@@ -7,8 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Assume;
-
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.junit.jupiter.api.*;
@@ -35,7 +33,7 @@ public class GenerateSearchIndexTest {
 
 
     // The main() method is used when this class is run directly from ant
-    static public void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         new GenerateSearchIndexTest().generateSearchIndex();
     }
 
@@ -310,7 +308,7 @@ public class GenerateSearchIndexTest {
 
     @Test
     public void testGenerateSearchIndex() throws IOException {
-        Assume.assumeFalse("Ignoring GenerateSearchIndexTest", Boolean.getBoolean("jmri.skipBuildHelpFilesTest"));
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipBuildHelpFilesTest"), "Ignoring GenerateSearchIndexTest");
         generateSearchIndex();
     }
 
@@ -324,6 +322,6 @@ public class GenerateSearchIndexTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GenerateSearchIndexTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GenerateSearchIndexTest.class);
 
 }

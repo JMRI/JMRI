@@ -1,14 +1,15 @@
 package jmri.jmrix.lenz;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.*;
-import jmri.jmrix.roco.RocoXNetThrottleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.*;
+import jmri.jmrix.roco.RocoXNetThrottleManager;
 
 /**
  * This class performs Command Station dependent initialization for XpressNet.
@@ -75,6 +76,7 @@ public class XNetInitializationManager {
      * </p>
      * @return this initializer
      */
+    @SuppressWarnings("javadoc")
     public XNetInitializationManager setDefaults(){
         powerManagerClass = XNetPowerManager.class;
         throttleManagerClass = XNetThrottleManager.class;

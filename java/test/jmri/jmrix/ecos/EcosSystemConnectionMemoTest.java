@@ -32,7 +32,7 @@ public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<E
         InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getPreferenceManager().ecosPreferencesShutDownTask);
         
         scm.getLocoAddressManager().terminateThreads();
-        JUnitUtil.waitFor(() -> { return !scm.getLocoAddressManager().threadsRunning(); });
+        JUnitUtil.waitFor(() -> { return !scm.getLocoAddressManager().threadsRunning(); }, "Ecos LocoAddr Mgr Thread");
         InstanceManager.store(scm, EcosSystemConnectionMemo.class);
         InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getLocoAddressManager().ecosLocoShutDownTask);
     }
@@ -44,11 +44,12 @@ public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<E
         if ( em != null ) {
             InstanceManager.getDefault(ShutDownManager.class).deregister(em.ecosLocoShutDownTask);
             em.terminateThreads();
-            JUnitUtil.waitFor(() -> { return !em.threadsRunning(); });
+            JUnitUtil.waitFor(() -> { return !em.threadsRunning(); }, "em threads still running");
         }
         
         scm.getTrafficController().terminateThreads();
         scm.dispose();
+        scm = null;
         JUnitUtil.tearDown();
     }
 

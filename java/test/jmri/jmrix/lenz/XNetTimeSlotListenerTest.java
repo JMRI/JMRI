@@ -1,9 +1,12 @@
 package jmri.jmrix.lenz;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,39 +23,39 @@ public class XNetTimeSlotListenerTest {
 
     @Test
     public void testCtor(){
-       Assert.assertNotNull(tsl);
+        assertNotNull(tsl);
     }
 
     @Test
     public void testMessage(){
-       XNetReply r = new XNetReply("01 05 04"); // timeslot removed
-       tsl.message(r);
-       // after sending the reply, the controller should show okToSend() as false.
-       Assert.assertFalse("ok to send false after timeslot removed",p.okToSend());
-       r = new XNetReply("01 07 06"); // timeslot restored
-       tsl.message(r);
-       // after sending the reply, the controller should show okToSend() as true.
-       Assert.assertTrue("ok to send true after timeslot restored",p.okToSend());
-       r = new XNetReply("01 08 09"); // message sent, no timeslot.
-       tsl.message(r);
-       // after sending the reply, the controller should show okToSend() as false.
-       Assert.assertFalse("ok to send true after message sent without a timeslot restored",p.okToSend());
-       r = new XNetReply("01 04 05"); // OK message.
-       tsl.message(r);
-       // after sending the reply, the controller should show okToSend() as false.
-       Assert.assertFalse("ok to send still false after OK message",p.okToSend());
-       r = new XNetReply("01 07 06"); // timeslot restored
-       tsl.message(r);
-       // after sending the reply, the controller should show okToSend() as true.
-       Assert.assertTrue("ok to send true after timeslot restored",p.okToSend());
-       r = new XNetReply("01 07 06"); // timeslot restored
-       tsl.message(r);
-       // after sending the reply, the controller should show okToSend() as true.
-       Assert.assertTrue("ok to send true after timeslot restored",p.okToSend());
-       r = new XNetReply("01 04 05"); // OK message.
-       tsl.message(r);
-       // after sending the reply, the controller should show okToSend() as true.
-       Assert.assertTrue("ok to send still true after OK message",p.okToSend());
+        XNetReply r = new XNetReply("01 05 04"); // timeslot removed
+        tsl.message(r);
+        // after sending the reply, the controller should show okToSend() as false.
+        assertFalse( p.okToSend(), "ok to send false after timeslot removed");
+        r = new XNetReply("01 07 06"); // timeslot restored
+        tsl.message(r);
+        // after sending the reply, the controller should show okToSend() as true.
+        assertTrue( p.okToSend(), "ok to send true after timeslot restored");
+        r = new XNetReply("01 08 09"); // message sent, no timeslot.
+        tsl.message(r);
+        // after sending the reply, the controller should show okToSend() as false.
+        assertFalse( p.okToSend(), "ok to send true after message sent without a timeslot restored");
+        r = new XNetReply("01 04 05"); // OK message.
+        tsl.message(r);
+        // after sending the reply, the controller should show okToSend() as false.
+        assertFalse( p.okToSend(), "ok to send still false after OK message");
+        r = new XNetReply("01 07 06"); // timeslot restored
+        tsl.message(r);
+        // after sending the reply, the controller should show okToSend() as true.
+        assertTrue( p.okToSend(), "ok to send true after timeslot restored");
+        r = new XNetReply("01 07 06"); // timeslot restored
+        tsl.message(r);
+        // after sending the reply, the controller should show okToSend() as true.
+        assertTrue( p.okToSend(), "ok to send true after timeslot restored");
+        r = new XNetReply("01 04 05"); // OK message.
+        tsl.message(r);
+        // after sending the reply, the controller should show okToSend() as true.
+        assertTrue( p.okToSend(), "ok to send still true after OK message");
     }
 
 

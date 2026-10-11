@@ -28,6 +28,6 @@ public class PowerPanelFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PowerPanelFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PowerPanelFrameTest.class);
 
 }

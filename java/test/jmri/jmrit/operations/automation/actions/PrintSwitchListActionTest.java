@@ -101,6 +101,6 @@ public class PrintSwitchListActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintSwitchListActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintSwitchListActionTest.class);
 
 }

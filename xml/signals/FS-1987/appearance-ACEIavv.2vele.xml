@@ -189,25 +189,29 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
   <aspectMappings>
     
     <aspectMapping>
-      <advancedAspect>Verde</advancedAspect>
-      <ourAspect>Verde</ourAspect>
+      <advancedAspect>Rosso</advancedAspect>
+      <ourAspect>Giallo</ourAspect>
     </aspectMapping>
-
-    <aspectMapping>
-      <advancedAspect>Giallo Lampeggiante</advancedAspect>
-      <ourAspect>Verde</ourAspect>
-    </aspectMapping>
-   
 
     <aspectMapping>
       <advancedAspect>Giallo</advancedAspect>
       <ourAspect>Giallo Lampeggiante</ourAspect>
       <ourAspect>Verde</ourAspect>
+    </aspectMapping> 
+
+    <aspectMapping>
+      <advancedAspect>Giallo Lampeggiante</advancedAspect>
+      <ourAspect>Verde</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
-      <advancedAspect>Rosso</advancedAspect>
-      <ourAspect>Giallo</ourAspect>
+      <advancedAspect>Verde</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+    </aspectMapping> 
+
+    <aspectMapping>
+      <advancedAspect>Giallo-Giallo</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -240,6 +244,20 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
 
     <aspectMapping>
       <advancedAspect>Rosso-Giallo-Verde</advancedAspect>
+     <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Verde Lampeggiante</advancedAspect>
+     <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Verde Lampeggiante Alt.</advancedAspect>
      <ourAspect>Giallo-Verde</ourAspect>
       <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
       <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>

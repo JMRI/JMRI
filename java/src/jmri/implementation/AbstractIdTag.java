@@ -101,6 +101,5 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
-    }
-
+    }    
 }

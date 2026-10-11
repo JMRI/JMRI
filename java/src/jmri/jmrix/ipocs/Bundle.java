@@ -9,7 +9,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@SuppressFBWarnings(value = {"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", "HSM_HIDING_METHOD"},
+    justification = "Desired pattern is repeated class names with package-level access to members")
 @javax.annotation.concurrent.Immutable
 /**
  * @author Bob Jacobsen Copyright (C) 2012
@@ -93,7 +94,7 @@ public class Bundle extends jmri.jmrix.Bundle {
       return getBundle().handleGetMessage(locale, key, subs);
   }
 
-  private final static Bundle b = new Bundle();
+  private static final Bundle b = new Bundle();
 
   @Override
   @CheckForNull

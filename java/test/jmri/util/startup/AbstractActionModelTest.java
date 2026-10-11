@@ -4,24 +4,18 @@ import javax.swing.Action;
 
 import jmri.JmriException;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
  * @author Randall Wood
  */
 public class AbstractActionModelTest {
-    
-    @BeforeEach
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-    }
-    
-    @AfterEach
-    public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
-    }
 
     /**
      * Test of getClassName method, of class AbstractActionModel.
@@ -29,11 +23,11 @@ public class AbstractActionModelTest {
     @Test
     public void testGetClassName() {
         AbstractActionModel instance = new AbstractActionModelImpl();
-        Assert.assertNotNull("Default empty String", instance.getClassName());
-        Assert.assertEquals("Default empty String", "", instance.getClassName());
+        assertNotNull( instance.getClassName(), "Default empty String");
+        assertEquals( "", instance.getClassName(), "Default empty String");
         instance.setClassName("oobleck");
-        Assert.assertNotNull("Set to oobleck", instance.getClassName());
-        Assert.assertEquals("Set to oobleck", "oobleck", instance.getClassName());
+        assertNotNull( instance.getClassName(), "Set to oobleck");
+        assertEquals( "oobleck", instance.getClassName(), "Set to oobleck");
     }
 
     /**
@@ -42,11 +36,11 @@ public class AbstractActionModelTest {
     @Test
     public void testSetClassName() {
         AbstractActionModel instance = new AbstractActionModelImpl();
-        Assert.assertNotNull("Default empty String", instance.getClassName());
-        Assert.assertEquals("Default empty String", "", instance.getClassName());
+        assertNotNull( instance.getClassName(), "Default empty String");
+        assertEquals( "", instance.getClassName(), "Default empty String");
         instance.setClassName("oobleck");
-        Assert.assertNotNull("Set to oobleck", instance.getClassName());
-        Assert.assertEquals("Set to oobleck", "oobleck", instance.getClassName());
+        assertNotNull( instance.getClassName(), "Set to oobleck");
+        assertEquals( "oobleck", instance.getClassName(), "Set to oobleck");
     }
 
     /**
@@ -55,11 +49,11 @@ public class AbstractActionModelTest {
     @Test
     public void testIsValid() {
         AbstractActionModel instance = new AbstractActionModelImpl();
-        Assert.assertFalse("Default is invalid", instance.isValid());
+        assertFalse( instance.isValid(), "Default is invalid");
         instance.setClassName("oobleck");
-        Assert.assertFalse("Invalid class is invalid", instance.isValid());
+        assertFalse( instance.isValid(), "Invalid class is invalid");
         instance.setClassName(this.getClass().getName());
-        Assert.assertTrue("Has class found in classpath", instance.isValid());
+        assertTrue( instance.isValid(), "Has class found in classpath");
     }
 
     private static class AbstractActionModelImpl extends AbstractActionModel {
@@ -69,5 +63,15 @@ public class AbstractActionModelTest {
             // empty method not tested as abstract in class being tested
         }
     }
-    
+
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
 }

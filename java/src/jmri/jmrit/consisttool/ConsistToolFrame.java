@@ -24,8 +24,8 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriJOptionPane;
@@ -42,7 +42,7 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
     // GUI member declarations
     JLabel textAdrLabel = new JLabel();
     DccLocoAddressSelector adrSelector = new DccLocoAddressSelector();
-    ConsistComboBox consistComboBox = new ConsistComboBox();
+    ConsistComboBox consistComboBox;
     JRadioButton isAdvancedConsist = new JRadioButton(Bundle.getMessage("AdvancedConsistButtonText"));
     JRadioButton isCSConsist = new JRadioButton(Bundle.getMessage("CommandStationConsistButtonText"));
     JButton deleteButton = new JButton();
@@ -65,6 +65,7 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
     public ConsistToolFrame() {
         super();
         init();
+        initGUI();
     }
 
     private void init() {
@@ -82,7 +83,9 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
 
         // request an update from the layout.
         consistManager.requestUpdateFromLayout();
+    }
 
+    private void initGUI() {
         // configure items for GUI
         textAdrLabel.setText(Bundle.getMessage("AddressLabelText"));
         textAdrLabel.setVisible(true);
@@ -93,18 +96,31 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
 
         initializeConsistBox();
 
+        consistComboBox = new ConsistComboBox();
         consistComboBox.addActionListener((ActionEvent e) -> consistSelected());
 
-        isAdvancedConsist.setSelected(true);
-        isAdvancedConsist.setVisible(true);
-        isAdvancedConsist.setEnabled(false);
-        isAdvancedConsist.addActionListener((ActionEvent e) -> {
+        if (consistManager.isAdvancedConsistPossible()) {
             isAdvancedConsist.setSelected(true);
+            isAdvancedConsist.setVisible(true);
+            isAdvancedConsist.setEnabled(false);
+            isAdvancedConsist.addActionListener((ActionEvent e) -> {
+                isAdvancedConsist.setSelected(true);
+                isCSConsist.setSelected(false);
+                _Consist_Type = Consist.ADVANCED_CONSIST;
+                adrSelector.setEnabled(true);
+            });
             isCSConsist.setSelected(false);
-            _Consist_Type = Consist.ADVANCED_CONSIST;
-            adrSelector.setEnabled(true);
-        });
-        isCSConsist.setSelected(false);
+        } else {
+            isAdvancedConsist.setSelected(false);
+            isAdvancedConsist.setVisible(false);
+            isCSConsist.setSelected(true);
+            _Consist_Type = Consist.CS_CONSIST;
+            adrSelector.setEnabled((consistManager.csConsistNeedsSeperateAddress()));
+            if (! consistManager.csConsistNeedsSeperateAddress()) {
+                textAdrLabel.setText("");                
+            }
+        }
+
         isCSConsist.setVisible(true);
         isCSConsist.setEnabled(false);
         isCSConsist.addActionListener((ActionEvent e) -> {
@@ -112,6 +128,9 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
             isCSConsist.setSelected(true);
             _Consist_Type = Consist.CS_CONSIST;
             adrSelector.setEnabled((consistManager.csConsistNeedsSeperateAddress()));
+            if (! consistManager.csConsistNeedsSeperateAddress()) {
+                textAdrLabel.setText("");                
+            }            
         });
 
         if (consistManager.isCommandStationConsistPossible()) {
@@ -119,6 +138,11 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
             isCSConsist.setEnabled(true);
         }
 
+        // link the protocol selectors if required by ConsistManager
+        if (consistManager.isSingleFormConsistRequired()) {
+            locoSelector.followAnotherSelector(adrSelector);
+        }
+        
         deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonToolTip"));
@@ -150,8 +174,12 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         locoSelector.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                // if we start typing, set the selected index of the locoRosterbox to nothing.
-                locoRosterBox.setSelectedIndex(0);
+                if ( !consistManager.isSingleFormConsistRequired()) {
+                    // if combo boxes are not locked together, 
+                    // and if user start typing, set the selected index of the locoRosterbox to nothing
+                    // to get the user to make a decision
+                    locoRosterBox.setSelectedIndex(0);
+                }
             }
 
             @Override
@@ -216,11 +244,11 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         JPanel addressPanel = new JPanel();
         addressPanel.setLayout(new FlowLayout());
 
+        addressPanel.add(isAdvancedConsist);
+        addressPanel.add(isCSConsist);
         addressPanel.add(textAdrLabel);
         addressPanel.add(adrSelector.getCombinedJPanel());
         addressPanel.add(consistComboBox);
-        addressPanel.add(isAdvancedConsist);
-        addressPanel.add(isCSConsist);
 
         getContentPane().add(addressPanel);
 
@@ -319,7 +347,7 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
             adrSelector.reset();
             consistManager.delConsist(address);
         } catch (Exception ex) {
-            log.error("Error delting consist {}", address, ex);
+            log.error("Error deleting consist {}", address, ex);
         }        
         adrSelector.setEnabled(true);
         initializeConsistBox();
@@ -335,11 +363,11 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         // make sure any new locomotives are added to the consist.
         addLocoButtonActionPerformed(e);
         // Create a throttle object with the
-        ThrottleFrame tf
+        ThrottleControllerUI tf
                 = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();        
 
         // Notify the throttle of the selected consist address
-        tf.getAddressPanel().setConsistAddress(adrSelector.getAddress());
+        tf.setConsistAddress(adrSelector.getAddress());
         tf.toFront();
     }
 
@@ -462,9 +490,9 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
     }
 
     // Check to see if a consist address is selected, and if it
-    // is, dissable the "add button" if the maximum consist size is reached
+    // is, disable the "add button" if the maximum consist size is reached
     public void canAdd() {
-        // If a consist address is selected, dissable the "add button"
+        // If a consist address is selected, disable the "add button"
         // if the maximum size is reached
         if (adrSelector.getAddress() != null) {
             DccLocoAddress address = adrSelector.getAddress();
@@ -606,6 +634,7 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
     @Override
     public void dispose() {
         super.dispose();
+        consistComboBox.dispose();
         // de-register to be notified if the consist list changes.
         consistManager.removeConsistListListener(this);
     }

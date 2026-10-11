@@ -68,7 +68,7 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
     // this centralizes the isGlobalProgrammerAvailable logic.  It
     // has to be static so it can be called during the construction of
     // an object of this class
-    static private boolean checkGlobalProgrammerAvailable(@Nonnull NceTrafficController tc) {
+    private static boolean checkGlobalProgrammerAvailable(@Nonnull NceTrafficController tc) {
         switch (tc.getUsbSystem()) {
             case NceTrafficController.USB_SYSTEM_NONE: // Serial or Simulator
             case NceTrafficController.USB_SYSTEM_POWERCAB:
@@ -89,18 +89,18 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
      * before returning it.
      */
     @Override
-    public Programmer getGlobalProgrammer() {
+    protected Programmer getConcreteGlobalProgrammer() {
         if (!isGlobalProgrammerAvailable()) {
             return null;
         }
-        return super.getGlobalProgrammer();
+        return super.getConcreteGlobalProgrammer();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new NceOpsModeProgrammer(tc, pAddress, pLongAddress);
     }
 
@@ -108,10 +108,10 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManager.class);
 
 }

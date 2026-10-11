@@ -1,15 +1,17 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ActionTurnoutXml
@@ -23,12 +25,12 @@ public class DigitalActionsXmlTest {
         AbstractNamedBeanManagerConfigXML b;
 
         b = new ActionLightXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new ActionSensorXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
@@ -36,42 +38,42 @@ public class DigitalActionsXmlTest {
         // the ActionSimpleScript. That's why the ActionScriptXml class is
         // still there.
         b = new ActionSimpleScriptXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new ActionThrottleXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new ActionTurnoutXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new DoAnalogActionXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new DoStringActionXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new IfThenElseXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new DigitalManyXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
 
         b = new ShutdownComputerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
     }
@@ -91,8 +93,7 @@ public class DigitalActionsXmlTest {
 //        JUnitAppender.assertErrorMessage("seconds attribute is not an integer");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -103,7 +104,7 @@ public class DigitalActionsXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

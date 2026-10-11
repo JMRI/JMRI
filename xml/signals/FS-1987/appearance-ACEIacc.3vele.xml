@@ -349,8 +349,17 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
   </specificappearances>
 
    <aspectMappings>
+    
+    <aspectMapping>
+      <advancedAspect>Rosso</advancedAspect>
+      <ourAspect>Giallo</ourAspect>
+      <ourAspect>Rosso-Giallo</ourAspect>  
+      <ourAspect>Rosso-Giallo-Giallo</ourAspect>
+    </aspectMapping>
+
     <aspectMapping>
       <advancedAspect>Giallo</advancedAspect>
+      <ourAspect>Giallo Lampeggiante</ourAspect>  
       <ourAspect>Verde</ourAspect>
       <ourAspect>Rosso-Verde</ourAspect>  
       <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
@@ -362,6 +371,9 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <advancedAspect>Giallo Lampeggiante</advancedAspect>
       <ourAspect>Verde</ourAspect>
       <ourAspect>Rosso-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -370,6 +382,16 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <ourAspect>Rosso-Verde</ourAspect>
       <ourAspect>Rosso-Giallo-Verde</ourAspect>
       <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Giallo-Giallo</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -392,7 +414,6 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
     </aspectMapping>
 
-   
     <aspectMapping>
       <advancedAspect>Giallo-Verde Lampeggiante Alt.</advancedAspect>
       <ourAspect>Giallo Lampeggiante</ourAspect> 
@@ -404,16 +425,10 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     </aspectMapping>
 
     <aspectMapping>
-      <advancedAspect>Rosso</advancedAspect>
-      <ourAspect>Giallo</ourAspect>
-      <ourAspect>Rosso-Giallo</ourAspect>  
-      <ourAspect>Rosso-Giallo-Giallo</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
       <advancedAspect>Rosso-Giallo</advancedAspect>
       <ourAspect>Giallo-Verde</ourAspect>
-      <ourAspect>Rosso-Verde</ourAspect>  
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
       <ourAspect>Rosso-Giallo-Verde</ourAspect>
       <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
       <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
@@ -424,11 +439,16 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
       <ourAspect>Giallo-Verde</ourAspect>
       <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
       <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>
     </aspectMapping>   
 
     <aspectMapping>
       <advancedAspect>Rosso-Verde</advancedAspect>
       <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante</ourAspect>
+      <ourAspect>Giallo-Verde Lampeggiante Alt.</ourAspect>
       <ourAspect>Rosso-Giallo-Verde</ourAspect>
       <ourAspect>Rosso-Giallo-Verde Lampeggiante</ourAspect>
       <ourAspect>Rosso-Giallo-Verde Lampeggiante Alt.</ourAspect>

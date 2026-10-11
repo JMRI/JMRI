@@ -1,5 +1,10 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import java.time.LocalDateTime;
@@ -14,7 +19,6 @@ import jmri.util.JUnitUtil;
 import org.jdom2.Element;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the DefaultIdTag class
@@ -26,47 +30,47 @@ public class DefaultIdTagTest {
     @Test
     public void testCreateIdTag() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertNotNull("IdTag not null", r);
+        assertNotNull( r, "IdTag not null");
     }
 
     @Test
     public void testGetIdTagUserName() {
         IdTag r = new DefaultIdTag("ID0413276BC1", "Test Tag");
-        Assert.assertEquals("IdTag user name is 'Test Tag'", "Test Tag", r.getUserName());
+        assertEquals( "Test Tag", r.getUserName(), "IdTag user name is 'Test Tag'");
     }
 
     @Test
     public void testGetIdTagTagID() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertEquals("IdTag TagID is 0413276BC1", "0413276BC1", r.getTagID());
+        assertEquals( "0413276BC1", r.getTagID(), "IdTag TagID is 0413276BC1");
     }
 
     @Test
     public void testIdTagToString() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertEquals("IdTag toString is ID0413276BC1", "ID0413276BC1", r.toString());
+        assertEquals( "ID0413276BC1", r.toString(), "IdTag toString is ID0413276BC1");
     }
 
     @Test
     public void testIdTagToReportString() {
         DefaultIdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertEquals("IdTag toReportString is 0413276BC1", "0413276BC1", r.toReportString());
+        assertEquals( "0413276BC1", r.toReportString(), "IdTag toReportString is 0413276BC1");
 
         r.setUserName("Test Tag");
-        Assert.assertEquals("IdTag toReportString is 'Test Tag'", "Test Tag", r.toReportString());
+        assertEquals( "Test Tag", r.toReportString(), "IdTag toReportString is 'Test Tag'");
     }
 
     @Test
     public void testNotYetSeen() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertNull("At creation, Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("At creation, Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("At creation, IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "At creation, Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "At creation, Date when seen is null");
+        assertEquals( IdTag.UNSEEN, r.getState(), "At creation, IdTag status is UNSEEN");
 
         r.setWhereLastSeen(null);
-        Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "After setWhereLastSeen(null), Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "After setWhereLastSeen(null), Date when seen is null");
+        assertEquals( IdTag.UNSEEN, r.getState(), "After setWhereLastSeen(null), IdTag status is UNSEEN");
     }
 
     @Test
@@ -75,22 +79,22 @@ public class DefaultIdTagTest {
         Reporter rep = new TestIdTagReporter("IR1");
 
         Date timeBefore = Calendar.getInstance().getTime();
-        Thread.sleep(5);
+        JUnitUtil.waitFor(5);
         r.setWhereLastSeen(rep);
-        Thread.sleep(5);
+        JUnitUtil.waitFor(5);
         Date timeAfter = Calendar.getInstance().getTime();
         Date whenLastSeen = r.getWhenLastSeen();
 
-        Assert.assertEquals("Where last seen is 'IR1'", rep, r.getWhereLastSeen());
-        Assert.assertNotNull("When last seen is not null", whenLastSeen);
-        Assert.assertEquals("Status is SEEN", IdTag.SEEN, r.getState());
-        Assert.assertTrue("Time when last seen is later than 'timeBefore'", whenLastSeen.after(timeBefore));
-        Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", whenLastSeen.before(timeAfter));
+        assertEquals( rep, r.getWhereLastSeen(), "Where last seen is 'IR1'");
+        assertNotNull( whenLastSeen, "When last seen is not null");
+        assertEquals( IdTag.SEEN, r.getState(), "Status is SEEN");
+        assertTrue( whenLastSeen.after(timeBefore), "Time when last seen is later than 'timeBefore'");
+        assertTrue( whenLastSeen.before(timeAfter), "Time when last seen is earlier than 'timeAfter'");
 
         r.setWhereLastSeen(null);
-        Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "After setWhereLastSeen(null), Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "After setWhereLastSeen(null), Date when seen is null");
+        assertEquals( IdTag.UNSEEN, r.getState(), "After setWhereLastSeen(null), IdTag status is UNSEEN");
 
     }
 
@@ -100,35 +104,35 @@ public class DefaultIdTagTest {
         Reporter rep = new TestIdTagReporter("IR2");
 
         Element e = r.store(true);
-        Assertions.assertNotNull(e);
-        Assertions.assertEquals("idtag", e.getName());
+        assertNotNull(e);
+        assertEquals("idtag", e.getName());
 
-        Assertions.assertEquals("ID0213276BC5", e.getChildText("systemName"));
-        Assertions.assertNull( e.getChildText("userName"));
-        Assertions.assertNull( e.getChildText("comment"));
-        Assertions.assertNull( e.getChildText("whereLastSeen"));
-        Assertions.assertNull( e.getChildText("whenLastSeen"));
+        assertEquals("ID0213276BC5", e.getChildText("systemName"));
+        assertNull( e.getChildText("userName"));
+        assertNull( e.getChildText("comment"));
+        assertNull( e.getChildText("whereLastSeen"));
+        assertNull( e.getChildText("whenLastSeen"));
 
         r.setUserName("");
         r.setComment("");
         e = r.store(false);
-        Assertions.assertNull( e.getChildText("userName"));
-        Assertions.assertNull( e.getChildText("comment"));
+        assertNull( e.getChildText("userName"));
+        assertNull( e.getChildText("comment"));
 
         r.setUserName("Test UNamE");
         r.setComment("Test CommenT");
         e = r.store(true);
-        Assertions.assertEquals("Test UNamE", e.getChildText("userName"));
-        Assertions.assertEquals("Test CommenT", e.getChildText("comment"));
+        assertEquals("Test UNamE", e.getChildText("userName"));
+        assertEquals("Test CommenT", e.getChildText("comment"));
 
         r.setWhereLastSeen(rep);
         e = r.store(false);
-        Assertions.assertNull( e.getChildText("whereLastSeen"));
-        Assertions.assertNull( e.getChildText("whenLastSeen"));
+        assertNull( e.getChildText("whereLastSeen"));
+        assertNull( e.getChildText("whenLastSeen"));
 
         e = r.store(true);
-        Assertions.assertEquals("IR2", e.getChildText("whereLastSeen"));
-        Assertions.assertNotNull( e.getChildText("whenLastSeen") );
+        assertEquals("IR2", e.getChildText("whereLastSeen"));
+        assertNotNull( e.getChildText("whenLastSeen") );
 
         Timebase tb = jmri.InstanceManager.getDefault(Timebase.class);
         tb.setRun(false);
@@ -139,7 +143,7 @@ public class DefaultIdTagTest {
         InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(true);
         r.setWhereLastSeen(rep);
         e = r.store(true);
-        Assertions.assertEquals(new StdDateFormat().format(now), e.getChildText("whenLastSeen"));
+        assertEquals(new StdDateFormat().format(now), e.getChildText("whenLastSeen"));
 
     }
 
@@ -150,11 +154,11 @@ public class DefaultIdTagTest {
         Element e = new Element("idtag"); // NOI18N
 
         r.load(e);
-        Assertions.assertNull(r.getUserName());
-        Assertions.assertNull(r.getComment());
-        Assertions.assertNull(r.getWhereLastSeen());
-        Assertions.assertNull(r.getWhenLastSeen());
-        Assertions.assertEquals(0, InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet().size());
+        assertNull(r.getUserName());
+        assertNull(r.getComment());
+        assertNull(r.getWhereLastSeen());
+        assertNull(r.getWhenLastSeen());
+        assertEquals(0, InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet().size());
 
         e.addContent(new Element("userName").addContent("loadUname"));
         e.addContent(new Element("comment").addContent("loadComment"));
@@ -166,17 +170,17 @@ public class DefaultIdTagTest {
 
         r.load(e);
 
-        Assertions.assertEquals("loadUname", r.getUserName());
-        Assertions.assertEquals("loadComment", r.getComment());
-        Assertions.assertEquals(1, InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet().size());
-        Assertions.assertNotNull(InstanceManager.getDefault(ReporterManager.class).getBySystemName("IR1234"));
-        Assertions.assertEquals(InstanceManager.getDefault(ReporterManager.class).getBySystemName("IR1234"), r.getWhereLastSeen());
+        assertEquals("loadUname", r.getUserName());
+        assertEquals("loadComment", r.getComment());
+        assertEquals(1, InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet().size());
+        assertNotNull(InstanceManager.getDefault(ReporterManager.class).getBySystemName("IR1234"));
+        assertEquals(InstanceManager.getDefault(ReporterManager.class).getBySystemName("IR1234"), r.getWhereLastSeen());
 
         Date d = r.getWhenLastSeen();
-        Assertions.assertNotNull(d);
-        Assertions.assertEquals(now, d);
+        assertNotNull(d);
+        assertEquals(now, d);
     }
-    
+
     @Test
     public void testLoadPreviousDateFormat(){
 
@@ -188,9 +192,9 @@ public class DefaultIdTagTest {
         r.load(e);
 
         Date d = r.getWhenLastSeen();
-        Assertions.assertNotNull(d);
+        assertNotNull(d);
         LocalDateTime specificDate = LocalDateTime.of(2020, 04, 24, 17, 57, 3);
-        Assertions.assertEquals(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant()), d);
+        assertEquals(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant()), d);
     }
 
     @Test
@@ -220,7 +224,7 @@ public class DefaultIdTagTest {
         JUnitAppender.assertErrorMessage("Not an IdTag element: \"NotAnIdTag\" for Tag \"ID0673474AA7\"");
     }
 
-    static class TestIdTagReporter extends AbstractReporter {
+    private static class TestIdTagReporter extends AbstractReporter {
 
         TestIdTagReporter(String id){
             super(id);
@@ -239,7 +243,7 @@ public class DefaultIdTagTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -249,7 +253,7 @@ public class DefaultIdTagTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

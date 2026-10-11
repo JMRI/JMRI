@@ -28,8 +28,8 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     private JScrollPane scroll;
     private JComboBox<Level> levelSelectionComboBox;
     private JComboBox<String> categoryComboBox;
-    private final static String ROOT_LEVEL_STRING = Bundle.getMessage("DataItemRootLoggingLevel");
-    private final static Level[] SELECTABLE_LEVELS = new Level[]{ Level.TRACE, Level.DEBUG, Level.INFO, Level.WARN, Level.ERROR, Level.OFF};
+    private static final String ROOT_LEVEL_STRING = Bundle.getMessage("DataItemRootLoggingLevel");
+    private static final Level[] SELECTABLE_LEVELS = new Level[]{ Level.TRACE, Level.DEBUG, Level.INFO, Level.WARN, Level.ERROR, Level.OFF};
 
     /**
      * Provide a recommended title for an enclosing frame.
@@ -254,6 +254,6 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Log4JTreePane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Log4JTreePane.class);
 
 }

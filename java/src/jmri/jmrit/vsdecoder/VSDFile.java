@@ -14,8 +14,6 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Open a VSD file and validate the configuration part.
@@ -34,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2025
  */
 public class VSDFile extends ZipFile {
 
@@ -44,28 +43,14 @@ public class VSDFile extends ZipFile {
     }
 
     protected Element root;
-    protected boolean initialized = false;
+    private boolean initialized;
     private String _statusMsg = Bundle.getMessage("ButtonOK"); // File Status = OK
     private String missedFileName;
     private int num_cylinders;
 
-    public VSDFile(File file) throws ZipException, IOException {
-        super(file);
-        initialized = init();
-    }
-
-    public VSDFile(File file, int mode) throws ZipException, IOException {
-        super(file, mode);
-        initialized = init();
-    }
-
     public VSDFile(String name) throws ZipException, IOException {
         super(name);
-        initialized = init();
-    }
-
-    public boolean isInitialized() {
-        return initialized;
+        initialized = false;
     }
 
     public String getStatusMessage() {
@@ -73,8 +58,8 @@ public class VSDFile extends ZipFile {
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="error text in _statusMsg kept for later use")
-    protected boolean init() {
+            justification="error text in _statusMsg kept for later use")
+    final boolean isInitialized() {
         VSDXmlFile xmlfile = new VSDXmlFile();
         initialized = false;
 
@@ -102,11 +87,11 @@ public class VSDFile extends ZipFile {
             return initialized;
 
         } catch (java.io.IOException ioe) {
-            _statusMsg = "IO Error auto-loading VSD File: " + VSDXmlFileName + " " + ioe.toString();
+            _statusMsg = "IO Error auto-loading VSD File: " + VSDXmlFileName + " " + ioe;
             log.error(_statusMsg);
             return false;
         } catch (org.jdom2.JDOMException ex) {
-            _statusMsg = "JDOM Exception loading VSDecoder from path " + VSDXmlFileName + " " + ex.toString();
+            _statusMsg = "JDOM Exception loading VSDecoder from path " + VSDXmlFileName + " " + ex;
             log.error(_statusMsg);
             return false;
         }
@@ -451,7 +436,7 @@ public class VSDFile extends ZipFile {
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="error text in _statusMsg kept for later use")
+            justification="error text in _statusMsg kept for later use")
     protected boolean validateFilesNumbers(Element el, String name, String[] fnames, Boolean required) {
         List<Element> elist = el.getChildren(name);
 
@@ -500,6 +485,6 @@ public class VSDFile extends ZipFile {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDFile.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDFile.class);
 
 }

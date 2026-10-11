@@ -1,10 +1,14 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the Route interface
@@ -15,10 +19,10 @@ public class RouteTest {
 
     @Test
     public void testSetConstants() {
-        Assert.assertTrue("ACTIVE not TOGGLE", Sensor.ACTIVE != Route.TOGGLE);
-        Assert.assertTrue("INACTIVE not TOGGLE", Sensor.INACTIVE != Route.TOGGLE);
-        Assert.assertTrue("CLOSED not TOGGLE", Turnout.THROWN != Route.TOGGLE);
-        Assert.assertTrue("THROWN not TOGGLE", Turnout.CLOSED != Route.TOGGLE);
+        assertNotEquals( Sensor.ACTIVE, Route.TOGGLE, "ACTIVE not TOGGLE");
+        assertNotEquals( Sensor.INACTIVE, Route.TOGGLE, "INACTIVE not TOGGLE");
+        assertNotEquals( Turnout.THROWN, Route.TOGGLE, "CLOSED not TOGGLE");
+        assertNotEquals( Turnout.CLOSED, Route.TOGGLE, "THROWN not TOGGLE");
     }
 
     /**
@@ -27,8 +31,8 @@ public class RouteTest {
     @Test
     @SuppressWarnings("all") // to suppress "Comparing identical expressions"
     public void testRouteAndTurnoutConstants() {
-        Assert.assertTrue("CLOSED is ONCLOSED", Turnout.CLOSED == Route.ONCLOSED);
-        Assert.assertTrue("THROWN is ONTHROWN", Turnout.THROWN == Route.ONTHROWN);
+        assertEquals( Turnout.CLOSED, Route.ONCLOSED, "CLOSED is ONCLOSED");
+        assertEquals( Turnout.THROWN, Route.ONTHROWN, "THROWN is ONTHROWN");
     }
 
     @Test
@@ -40,13 +44,13 @@ public class RouteTest {
             "ONCHANGE"};
 
         // check consistency of test
-        Assert.assertTrue("arrays must be same length", constants.length == names.length);
+        assertEquals( constants.length, names.length, "arrays must be same length");
 
         // check all constants different
         for (int i = 0; i < constants.length - 1; i++) {
             for (int j = i + 1; j < constants.length; j++) {
-                Assert.assertTrue(names[i] + " must be not equal " + names[j],
-                        constants[i] != constants[j]);
+                assertNotEquals( constants[i], constants[j],
+                    names[i] + " must be not equal " + names[j]);
             }
         }
     }
@@ -60,13 +64,13 @@ public class RouteTest {
             "ONCLOSED", "ONTHROWN", "VETOCLOSED", "VETOTHROWN"};
 
         // check consistency of test
-        Assert.assertTrue("arrays must be same length", constants.length == names.length);
+        assertEquals( constants.length, names.length, "arrays must be same length");
 
         // check all constants different
         for (int i = 0; i < constants.length - 1; i++) {
             for (int j = i + 1; j < constants.length; j++) {
-                Assert.assertTrue(names[i] + " must be not equal " + names[j],
-                        constants[i] != constants[j]);
+                assertNotEquals( constants[i], constants[j],
+                    names[i] + " must be not equal " + names[j]);
             }
         }
     }
@@ -75,12 +79,12 @@ public class RouteTest {
     public void testEnable() {
         Route r = new DefaultRoute("test");
         // get default
-        Assert.assertTrue("default enabled", r.getEnabled());
+        assertTrue( r.getEnabled(), "default enabled");
         // check change
         r.setEnabled(false);
-        Assert.assertTrue("set enabled false", !r.getEnabled());
+        assertFalse( r.getEnabled(), "set enabled false");
         r.setEnabled(true);
-        Assert.assertTrue("set enabled true", r.getEnabled());
+        assertTrue( r.getEnabled(), "set enabled true");
     }
 
     @Test
@@ -88,17 +92,17 @@ public class RouteTest {
         DefaultRoute r = new DefaultRoute("test");
         // check disabled
         r.setEnabled(false);
-        Assert.assertTrue("vetoed when disabled", r.isVetoed());
+        assertTrue( r.isVetoed(), "vetoed when disabled");
         // check enabled
         r.setEnabled(true);
-        Assert.assertTrue("not vetoed when enabled", !r.isVetoed());
+        assertFalse( r.isVetoed(), "not vetoed when enabled");
     }
 
     @Test
     public void testTurnoutsAlignedSensor() {
         DefaultRoute r = new DefaultRoute("test");
         r.setTurnoutsAlignedSensor("IS123");
-        Assert.assertEquals("Sensor name stored", "IS123", r.getTurnoutsAlignedSensor());     
+        assertEquals( "IS123", r.getTurnoutsAlignedSensor(), "Sensor name stored");
         r.activateRoute();
         
     }
@@ -107,7 +111,7 @@ public class RouteTest {
     public void testLockControlTurnout() {
         DefaultRoute r = new DefaultRoute("test");
         r.setLockControlTurnout("IT123");
-        Assert.assertEquals("Turnout name stored", "IT123", r.getLockControlTurnout());     
+        assertEquals( "IT123", r.getLockControlTurnout(), "Turnout name stored");
         r.activateRoute();
         
     }
@@ -119,21 +123,21 @@ public class RouteTest {
     @Test
     public void testImplementationConstraint() {
         // check a constraint required by this implementation!
-        Assert.assertTrue("ONACTIVE", Route.ONACTIVE == 0);
-        Assert.assertTrue("ONINACTIVE", Route.ONINACTIVE == 1);
-        Assert.assertTrue("VETOACTIVE", Route.VETOACTIVE == 2);
-        Assert.assertTrue("VETOINACTIVE", Route.VETOINACTIVE == 3);
+        assertEquals( 0, Route.ONACTIVE, "ONACTIVE");
+        assertEquals( 1, Route.ONINACTIVE, "ONINACTIVE");
+        assertEquals( 2, Route.VETOACTIVE, "VETOACTIVE");
+        assertEquals( 3, Route.VETOINACTIVE, "VETOINACTIVE");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
    

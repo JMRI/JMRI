@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Continuous Integration</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI technical code Continuous Integration jenkins">
+  <meta name="keywords" content="JMRI technical code Continuous Integration jenkins test testing ci workflow">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -265,6 +265,14 @@
     <p>The Test classes also undergo an Architecture Test,
     <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/TestArchitectureTest.java"
     >TestArchitectureTest</a>.</p>
+
+
+    <p>Running <pre style="font-family: monospace;">    ant test-single -Dtest.includes=jmri.ArchitectureTest</pre>
+    will fail as no tests are executed.
+    The build file specifies which JUnit Runners are Launched, i.e.
+    <pre style="font-family: monospace;">    --include-engine=junit-jupiter --include-engine=junit-vintage</pre>
+    <br/>Within maven no launchers are specified ( hence all launchers are included ),
+    though the Architecture tests are excluded from standard CI test executions.</p>
 
     <p>These tests can be run with
     <pre style="font-family: monospace;">    mvn -Dtest=jmri.ArchitectureTest,jmri.TestArchitectureTest,jmri.util.FileLineEndingsCheck test</pre>

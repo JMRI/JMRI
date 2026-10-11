@@ -1,15 +1,22 @@
-/**
- *
- * @author Bob Jacobsen
- */
 package jmri;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+/**
+ * Unit tests for NmraPacket.
+ * @author Bob Jacobsen
+ */
 public class NmraPacketTest {
 
     // output values for some of these tests were provided by Bob Scheffler
@@ -18,108 +25,108 @@ public class NmraPacketTest {
     public void testAccDecoderPacket1() {
         // test fixed bits
         byte[] ba = NmraPacket.accDecoderPkt(1, 0, 0);
-        Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xF0, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x71, ba[2] & 0xFF);
+        assertEquals( 0x81, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xF0, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x71, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket2() {
         // test C bit
         byte[] ba = NmraPacket.accDecoderPkt(1, 1, 0);
-        Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xF8, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x79, ba[2] & 0xFF);
+        assertEquals( 0x81, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xF8, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x79, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket3() {
         // test D bits
         byte[] ba = NmraPacket.accDecoderPkt(1, 0, 7);
-        Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xF7, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x76, ba[2] & 0xFF);
+        assertEquals( 0x81, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xF7, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x76, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket4() {
         // test short part of address
         byte[] ba = NmraPacket.accDecoderPkt(3, 0, 0);
-        Assert.assertEquals("first byte ", 0x83, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xF0, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x73, ba[2] & 0xFF);
+        assertEquals( 0x83, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xF0, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x73, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket5() {
         // test top part of address
         byte[] ba = NmraPacket.accDecoderPkt(128, 0, 0);
-        Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xD0, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x50, ba[2] & 0xFF);
+        assertEquals( 0x80, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xD0, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x50, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket6() {
         // "typical packet" test
         byte[] ba = NmraPacket.accDecoderPkt(33, 1, 5);
-        Assert.assertEquals("first byte ", 0xA1, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xFD, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x5C, ba[2] & 0xFF);
+        assertEquals( 0xA1, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xFD, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x5C, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket7() {
         // address 256
         byte[] ba = NmraPacket.accDecoderPkt(256, true);
-        Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xEF, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x6F, ba[2] & 0xFF);
+        assertEquals( 0x80, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xEF, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x6F, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket8() {
         // address 257
         byte[] ba = NmraPacket.accDecoderPkt(257, true);
-        Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xE9, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x68, ba[2] & 0xFF);
+        assertEquals( 0x81, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xE9, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x68, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket9() {
         // address 512
         byte[] ba = NmraPacket.accDecoderPkt(512, true);
-        Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xDF, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x5F, ba[2] & 0xFF);
+        assertEquals( 0x80, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xDF, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x5F, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket10() {
         // address 513
         byte[] ba = NmraPacket.accDecoderPkt(513, true);
-        Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xD9, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x58, ba[2] & 0xFF);
+        assertEquals( 0x81, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xD9, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x58, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket11() {
         // address 1024
         byte[] ba = NmraPacket.accDecoderPkt(1024, true);
-        Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xBF, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x3F, ba[2] & 0xFF);
+        assertEquals( 0x80, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xBF, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x3F, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
     public void testAccDecoderPacket12() {
         // address 1025
         byte[] ba = NmraPacket.accDecoderPkt(1025, true);
-        Assert.assertEquals("first byte ", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xB9, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x38, ba[2] & 0xFF);
+        assertEquals( 0x81, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xB9, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x38, ba[2] & 0xFF, "third byte ");
     }
 
     @Test
@@ -127,468 +134,462 @@ public class NmraPacketTest {
         // invalid address (0)
         int addr = 0;
         // expect this to throw exception
-        boolean threw = false;
-        try {
-            NmraPacket.accDecoderPkt(addr, 0, 0);
-            Assert.fail("Expected IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException ex) {
-            threw = true;
-        } finally {
-            jmri.util.JUnitAppender.assertErrorMessage("invalid address " + addr);
-        }
-        Assert.assertTrue("Expected exception", threw);
+        Exception ex = assertThrows( IllegalArgumentException.class, () ->
+            NmraPacket.accDecoderPkt(addr, 0, 0), "Expected exception");
+        assertNotNull(ex);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid address " + addr);
     }
 
     @Test
     public void testOpsModeLong() {
         // "typical packet" test
         byte[] ba = NmraPacket.opsCvWriteByte(2065, true, 21, 75);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x14, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0x4B, ba[4] & 0xFF);
-        Assert.assertEquals("sixth byte ", 0x6A, ba[5] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xEC, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x14, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0x4B, ba[4] & 0xFF, "fifth byte ");
+        assertEquals( 0x6A, ba[5] & 0xFF, "sixth byte ");
     }
 
     @Test
     public void testOpsModeShort() {
         // "typical packet" test
         byte[] ba = NmraPacket.opsCvWriteByte(65, false, 21, 75);
-        Assert.assertEquals("first byte ", 0x41, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xEC, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x14, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x4B, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xF2, ba[4] & 0xFF);
+        assertEquals( 0x41, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xEC, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x14, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x4B, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xF2, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testAnalog1() {
         // "typical packet" test
         byte[] ba = NmraPacket.analogControl(60, false, 1, 00);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x3D, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x01, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0x3C ^ 0x3D ^ 0x01, ba[4] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x3D, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x01, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x00, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0x3C ^ 0x3D ^ 0x01, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testAnalog2() {
         // "typical packet" test
         byte[] ba = NmraPacket.analogControl(60, false, 1, 12);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x3D, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x01, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x0C, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0x3C ^ 0x3D ^ 0x01 ^ 0x0C, ba[4] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x3D, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x01, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x0C, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0x3C ^ 0x3D ^ 0x01 ^ 0x0C, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testF13F20A() {
         // "typical packet" test, short address
         byte[] ba = NmraPacket.function13Through20Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xDE, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDE ^ 0x55, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xDE, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x55, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0xDE ^ 0x55, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testF13F20B() {
         // "typical packet" test, long address
         byte[] ba = NmraPacket.function13Through20Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xDE, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDE ^ 0x55, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xDE, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x55, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0xDE ^ 0x55, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testF21F28A() {
         // "typical packet" test, short address
         byte[] ba = NmraPacket.function21Through28Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xDF, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDF ^ 0x55, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xDF, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x55, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0xDF ^ 0x55, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testF21F28B() {
         // "typical packet" test, long address
         byte[] ba = NmraPacket.function21Through28Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xDF, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDF ^ 0x55, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xDF, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x55, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0xDF ^ 0x55, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testF29F36A() {
         // "typical packet" test, short address
         byte[] ba = NmraPacket.function29Through36Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xD8, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0xD8 ^ 0x55, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xD8, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x55, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0xD8 ^ 0x55, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testF29F36B() {
         // "typical packet" test, long address
         byte[] ba = NmraPacket.function29Through36Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xD8, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xD8 ^ 0x55, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xD8, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x55, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0xD8 ^ 0x55, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testF37F44A() {
         // "typical packet" test, short address
         byte[] ba = NmraPacket.function37Through44Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xD9, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0xD9 ^ 0x55, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xD9, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x55, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0xD9 ^ 0x55, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testF37F44B() {
         // "typical packet" test, long address
         byte[] ba = NmraPacket.function37Through44Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xD9, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xD9 ^ 0x55, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xD9, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x55, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0xD9 ^ 0x55, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testF45F52A() {
         // "typical packet" test, short address
         byte[] ba = NmraPacket.function45Through52Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xDA, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDA ^ 0x55, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xDA, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x55, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0xDA ^ 0x55, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testF45F52B() {
         // "typical packet" test, long address
         byte[] ba = NmraPacket.function45Through52Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xDA, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDA ^ 0x55, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xDA, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x55, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0xDA ^ 0x55, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testF53F60A() {
         // "typical packet" test, short address
         byte[] ba = NmraPacket.function53Through60Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xDB, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDB ^ 0x55, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xDB, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x55, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0xDB ^ 0x55, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testF53F60B() {
         // "typical packet" test, long address
         byte[] ba = NmraPacket.function53Through60Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xDB, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDB ^ 0x55, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xDB, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x55, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0xDB ^ 0x55, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testF61F68A() {
         // "typical packet" test, short address
         byte[] ba = NmraPacket.function61Through68Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0xDC, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDC ^ 0x55, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0xDC, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x55, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0xDC ^ 0x55, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testF61F68B() {
         // "typical packet" test, long address
         byte[] ba = NmraPacket.function61Through68Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0xDC, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDC ^ 0x55, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0xDC, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x55, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0xDC ^ 0x55, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testConsist1() {
         // "typical packet" test
         byte[] ba = NmraPacket.consistControl(60, false, 1, true);
-        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x12, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x01, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x3C ^ 0x12 ^ 0x01, ba[3] & 0xFF);
+        assertEquals( 0x3C, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x12, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x01, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x3C ^ 0x12 ^ 0x01, ba[3] & 0xFF, "fourth byte ");
     }
 
     @Test
     public void testConsist2() {
         // "typical packet" test
         byte[] ba = NmraPacket.consistControl(2065, true, 12, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x13, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x0C, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0x13 ^ 0x0C, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x13, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x0C, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0x13 ^ 0x0C, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testConsist3() {
         // "typical packet" test
         byte[] ba = NmraPacket.consistControl(2065, true, 0, false);
-        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
-        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
-        Assert.assertEquals("third byte ", 0x13, ba[2] & 0xFF);
-        Assert.assertEquals("fourth byte ", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0x13 ^ 0x00, ba[4] & 0xFF);
+        assertEquals( 0xC8, ba[0] & 0xFF, "first byte ");
+        assertEquals( 0x11, ba[1] & 0xFF, "second byte ");
+        assertEquals( 0x13, ba[2] & 0xFF, "third byte ");
+        assertEquals( 0x00, ba[3] & 0xFF, "fourth byte ");
+        assertEquals( 0xC8 ^ 0x11 ^ 0x13 ^ 0x00, ba[4] & 0xFF, "fifth byte ");
     }
 
     @Test
     public void testIsAccSignalDecoderPktOK() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
-        Assert.assertTrue(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertTrue(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccSignalDecoderPktFalseConsist() {
         byte[] ba = NmraPacket.consistControl(2065, true, 0, false);
-        Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccSignalDecoderPktFalseFunction() {
         byte[] ba = NmraPacket.function21Through28Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccSignalDecoderPktFalseAnalog() {
         byte[] ba = NmraPacket.analogControl(60, false, 1, 12);
-        Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccSignalDecoderPktFalseOpsWrite() {
         byte[] ba = NmraPacket.opsCvWriteByte(65, false, 21, 75);
-        Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccSignalDecoderPktFalseAccDecoder() {
         byte[] ba = NmraPacket.accDecoderPkt(257, true);
-        Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccSignalDecoderPktFalseAccDecoderPktOpsMode() {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(257, 33, 5);
-        Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccSignalDecoderPktFalseAccDecoderPktOpsModeLegacy() {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(1843, 384, 255);
-        Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+        assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeFalseSignalDecoderPkt() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeFalseConsist() {
         byte[] ba = NmraPacket.consistControl(2065, true, 0, false);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeFalseFunction() {
         byte[] ba = NmraPacket.function21Through28Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeFalseAnalog() {
         byte[] ba = NmraPacket.analogControl(60, false, 1, 12);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeFalseOpsWrite() {
         byte[] ba = NmraPacket.opsCvWriteByte(65, false, 21, 75);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeFalseAccDecoder() {
         byte[] ba = NmraPacket.accDecoderPkt(257, true);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeOK() {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(257, 33, 5);
-        Assert.assertTrue(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertTrue(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeFalseAccDecoderPktOpsModeLegacy() {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(1843, 384, 255);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsMode(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyFalseSignalDecoderPkt() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyFalseConsist() {
         byte[] ba = NmraPacket.consistControl(2065, true, 0, false);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyFalseFunction() {
         byte[] ba = NmraPacket.function21Through28Packet(2065, true, true, false, true, false, true, false, true, false);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyFalseAnalog() {
         byte[] ba = NmraPacket.analogControl(60, false, 1, 12);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyFalseOpsWrite() {
         byte[] ba = NmraPacket.opsCvWriteByte(65, false, 21, 75);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyFalseAccDecoder() {
         byte[] ba = NmraPacket.accDecoderPkt(257, true);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyFalseAccDecoderPktOpsMode() {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(257, 33, 5);
-        Assert.assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertFalse(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testIsAccDecoderPktOpsModeLegacyOK() {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(1843, 384, 255);
-        Assert.assertTrue(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
+        assertTrue(NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr1() {
         int addr = 1;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr2() {
         int addr = 2;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr4() {
         int addr = 4;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr8() {
         int addr = 8;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr16() {
         int addr = 16;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr32() {
         int addr = 32;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr64() {
         int addr = 64;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr128() {
         int addr = 128;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr256() {
         int addr = 256;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr512() {
         int addr = 512;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr1024() {
         int addr = 1024;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
     public void testGetAccSignalDecoderPktAddr2044() { // max valid value
         int addr = 2044;
         byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
-        Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+        assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
     }
 
     @Test
@@ -599,16 +600,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x7C, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x1C, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x88, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x69, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x7C, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x1C, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x88, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x69, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", address, NmraPacket.getAccDecPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -619,17 +620,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsMode(address, cv, data);
 
         // the following values based on NCE Power Pro output adjusted for CDDD=0000
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xF0, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x1C, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x88, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x09, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xF0, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x1C, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x88, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x09, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of decoder address", address, NmraPacket.getAccDecPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecPktOpsModeAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -640,16 +641,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x7C, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x28, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x18, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xCE, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x7C, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x28, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x18, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xCE, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", address, NmraPacket.getAccDecPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -660,17 +661,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsMode(address, cv, data);
 
         // the following values based on NCE Power Pro output adjusted for CDDD=0000
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xF0, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x28, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x18, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xAE, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xF0, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x28, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x18, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xAE, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of decoder address", address, NmraPacket.getAccDecPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecPktOpsModeAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -681,12 +682,12 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x0F, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x7B, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x87, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x4D, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x0F, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x7B, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x87, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x4D, ba[4] & 0xFF, "byte 4");
     }
 
     @Test
@@ -697,17 +698,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsMode(address, cv, data);
 
         // the following values based on NCE Power Pro output adjusted for CDDD=0000
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x80, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x7B, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x87, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x2D, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x80, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x7B, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x87, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x2D, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of decoder address", address, NmraPacket.getAccDecPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecPktOpsModeAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -718,16 +719,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x0D, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x12, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xC6, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x66, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x0D, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x12, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xC6, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x66, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", address, NmraPacket.getAccDecPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -738,17 +739,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecPktOpsMode(address, cv, data);
 
         // the following values based on NCE Power Pro output adjusted for CDDD=0000
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x80, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x12, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xC6, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x6, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x80, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xED, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x12, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xC6, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x6, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of decoder address", address, NmraPacket.getAccDecPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecPktOpsModeAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -759,16 +760,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x7D, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x7F, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFF, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x7C, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x7D, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x7F, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFF, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x7C, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -779,17 +780,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xF9, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x15, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xF9, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xED, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x7F, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xFF, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x15, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -800,16 +801,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x7C, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x37, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xCA, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x7C, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x37, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x00, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xCA, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -820,17 +821,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xFF, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x37, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x00, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xA5, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xFF, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x37, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x00, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xA5, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -841,16 +842,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x7C, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x00, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x1E, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xE0, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x7C, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x00, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x1E, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xE0, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -861,17 +862,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xF9, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x1E, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x89, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xF9, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x00, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x1E, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x89, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -882,17 +883,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xFF, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xE6, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xB3, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xFA, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xFF, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xE6, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xB3, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xFA, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -903,17 +904,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xE9, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xF1, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x74, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xE9, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x00, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xF1, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x74, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -924,17 +925,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xEF, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x7F, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xCA, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xEF, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x36, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x7F, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xCA, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -945,17 +946,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0xE9, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x63, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xD1, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0xE9, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x36, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x63, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xD1, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -966,16 +967,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x0E, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x2B, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xAF, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x34, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x0E, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x2B, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xAF, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x34, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -986,17 +987,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x89, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEE, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x2B, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xAF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x5D, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x89, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEE, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x2B, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xAF, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x5D, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -1007,16 +1008,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x0F, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x02, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x66, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xD5, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x0F, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x02, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x66, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xD5, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -1027,17 +1028,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x8F, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x02, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x66, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xBA, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x8F, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x02, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x66, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xBA, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -1048,16 +1049,16 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsModeLegacy(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 5, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x0F, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xFF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x97, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xD8, ba[4] & 0xFF);
+        assertEquals( 5, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x0F, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xFF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x97, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xD8, ba[4] & 0xFF, "byte 4");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsModeLegacy(ba));
-        Assert.assertEquals("reverse lookup of decoder address", decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsModeLegacy(ba), "verify packet type");
+        assertEquals( decAddr(address), NmraPacket.getAccDecoderPktOpsModeLegacyAddress(ba), "reverse lookup of decoder address");
     }
 
     @Test
@@ -1068,17 +1069,17 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x8F, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFF, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x97, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xB7, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x8F, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFF, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x97, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xB7, ba[5] & 0xFF, "byte 5");
 
         // check packet type and reverse address lookup
-        Assert.assertTrue("verify packet type", NmraPacket.isAccDecoderPktOpsMode(ba));
-        Assert.assertEquals("reverse lookup of address", address, NmraPacket.getAccDecoderPktOpsModeAddress(ba));
+        assertTrue( NmraPacket.isAccDecoderPktOpsMode(ba), "verify packet type");
+        assertEquals( address, NmraPacket.getAccDecoderPktOpsModeAddress(ba), "reverse lookup of address");
     }
 
     @Test
@@ -1089,13 +1090,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x9D, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x71, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xED, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x7F, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xFF, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x9D, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1106,13 +1107,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x37, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x00, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x2D, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x77, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x37, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x00, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x2D, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1123,13 +1124,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x1E, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x01, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x71, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x00, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x1E, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x01, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1140,13 +1141,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xE6, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xB3, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x72, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x77, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xE6, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xB3, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x72, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1157,13 +1158,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xF1, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xFC, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x61, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x00, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xF1, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xFC, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1174,13 +1175,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x67, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x7F, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x42, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x67, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x36, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x7F, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x42, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1191,13 +1192,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x63, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x59, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x61, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x36, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x63, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x59, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1208,13 +1209,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x01, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEE, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x2B, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xAF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xD5, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x01, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEE, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x2B, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xAF, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xD5, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1225,13 +1226,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x02, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x66, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x32, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x07, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x02, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x66, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x32, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1242,13 +1243,13 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPktOpsMode(address, cv, data);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFF, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x97, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x3F, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x07, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFF, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x97, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x3F, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1258,11 +1259,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x17, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xE7, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x71, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x17, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xE7, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1272,11 +1273,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x73, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x05, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xF7, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x73, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x05, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xF7, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1286,11 +1287,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x75, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x09, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFD, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x75, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x09, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFD, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1300,11 +1301,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x0B, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFD, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x77, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x0B, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFD, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1314,11 +1315,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x0F, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFC, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x71, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x0F, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFC, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1328,11 +1329,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x73, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x1C, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xED, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x73, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x1C, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xED, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1342,11 +1343,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x75, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x0A, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFD, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x75, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x0A, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFD, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1356,11 +1357,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x0B, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xFE, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x77, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x0B, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xFE, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1370,11 +1371,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x0D, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xC5, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x77, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x0D, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xC5, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1384,11 +1385,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x13, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xF2, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x61, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x13, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xF2, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1398,11 +1399,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x63, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x02, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xE1, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x63, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x02, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xE1, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1412,11 +1413,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x65, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x3, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xE6, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x65, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x3, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xE6, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1426,11 +1427,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x67, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x07, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xE0, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x67, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x07, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xE0, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1440,11 +1441,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x00, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xB8, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x07, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x00, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xB8, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1454,11 +1455,11 @@ public class NmraPacketTest {
         byte[] ba = NmraPacket.accSignalDecoderPkt(address, aspect);
 
         // the following values validated against NCE Power Pro output
-        Assert.assertEquals("length", 4, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0x1F, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xA7, ba[3] & 0xFF);
+        assertEquals( 4, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x07, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0x1F, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xA7, ba[3] & 0xFF, "byte 3");
     }
 
     @Test
@@ -1468,13 +1469,13 @@ public class NmraPacketTest {
         int data = 255;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x9C, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x71, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xED, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x7F, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xFF, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x9C, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1484,12 +1485,12 @@ public class NmraPacketTest {
         int data = 255;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x9A, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x77, ba[1] & 0xFF, "byte 0");
+        assertEquals( 0xED, ba[2] & 0xFF, "byte 1");
+        assertEquals( 0x7F, ba[3] & 0xFF, "byte 2");
+        assertEquals( 0xFF, ba[4] & 0xFF, "byte 3");
+        assertEquals( 0x9A, ba[5] & 0xFF, "byte 4");
     }
 
     @Test
@@ -1499,13 +1500,13 @@ public class NmraPacketTest {
         int data = 255;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xED, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x7F, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xFF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x9D, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x71, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xED, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x7F, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xFF, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x9D, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1515,13 +1516,13 @@ public class NmraPacketTest {
         int data = 0;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x37, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x00, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x2D, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF,"byte 0");
+        assertEquals( 0x77, ba[1] & 0xFF,"byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF,"byte 2");
+        assertEquals( 0x37, ba[3] & 0xFF,"byte 3");
+        assertEquals( 0x00, ba[4] & 0xFF,"byte 4");
+        assertEquals( 0x2D, ba[5] & 0xFF,"byte 5");
     }
 
     @Test
@@ -1531,13 +1532,13 @@ public class NmraPacketTest {
         int data = 30;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x82, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x71, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x1E, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x01, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x82, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x71, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x00, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x1E, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x01, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1547,13 +1548,13 @@ public class NmraPacketTest {
         int data = 179;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBF, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x77, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0xE6, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xB3, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x72, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBF, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x77, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0xE6, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xB3, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x72, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1563,13 +1564,13 @@ public class NmraPacketTest {
         int data = 241;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x00, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xF1, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xFC, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x61, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x00, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xF1, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xFC, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1579,13 +1580,13 @@ public class NmraPacketTest {
         int data = 127;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x80, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x67, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x7F, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x42, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x80, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x67, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x36, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x7F, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x42, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1595,13 +1596,13 @@ public class NmraPacketTest {
         int data = 99;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0x81, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x61, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEC, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x36, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x63, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x59, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0x81, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x61, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEC, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x36, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x63, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x59, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1611,13 +1612,13 @@ public class NmraPacketTest {
         int data = 175;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x01, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEE, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x2B, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0xAF, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0xD5, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x01, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEE, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x2B, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0xAF, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0xD5, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
@@ -1627,176 +1628,176 @@ public class NmraPacketTest {
         int data = 102;
         byte[] ba = NmraPacket.altAccSignalDecoderPktOpsMode(address, cv, data);
 
-        Assert.assertEquals("length", 6, ba.length);
-        Assert.assertEquals("byte 0", 0xBE, ba[0] & 0xFF);
-        Assert.assertEquals("byte 1", 0x07, ba[1] & 0xFF);
-        Assert.assertEquals("byte 2", 0xEF, ba[2] & 0xFF);
-        Assert.assertEquals("byte 3", 0x02, ba[3] & 0xFF);
-        Assert.assertEquals("byte 4", 0x66, ba[4] & 0xFF);
-        Assert.assertEquals("byte 5", 0x32, ba[5] & 0xFF);
+        assertEquals( 6, ba.length, "length");
+        assertEquals( 0xBE, ba[0] & 0xFF, "byte 0");
+        assertEquals( 0x07, ba[1] & 0xFF, "byte 1");
+        assertEquals( 0xEF, ba[2] & 0xFF, "byte 2");
+        assertEquals( 0x02, ba[3] & 0xFF, "byte 3");
+        assertEquals( 0x66, ba[4] & 0xFF, "byte 4");
+        assertEquals( 0x32, ba[5] & 0xFF, "byte 5");
     }
 
     @Test
     public void testExtractAddressTypeAcc() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
-        Assert.assertEquals("Accessory", NmraPacket.DccAddressType.ACCESSORY_ADDRESS, NmraPacket.extractAddressType(ba));
+        assertEquals( NmraPacket.DccAddressType.ACCESSORY_ADDRESS, NmraPacket.extractAddressType(ba), "Accessory");
     }
 
     @Test
     public void testExtractAddressTypeShort() {
         byte[] bs = NmraPacket.function13Through20Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("Short Loco", NmraPacket.DccAddressType.LOCO_SHORT_ADDRESS, NmraPacket.extractAddressType(bs));
+        assertEquals( NmraPacket.DccAddressType.LOCO_SHORT_ADDRESS, NmraPacket.extractAddressType(bs), "Short Loco");
     }
 
     @Test
     public void testExtractAddressTypeLong() {
         byte[] bl = NmraPacket.function13Through20Packet(2060, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("Long Loco", NmraPacket.DccAddressType.LOCO_LONG_ADDRESS, NmraPacket.extractAddressType(bl));
+        assertEquals( NmraPacket.DccAddressType.LOCO_LONG_ADDRESS, NmraPacket.extractAddressType(bl), "Long Loco");
     }
 
     @Test
     public void testExtractAddressNumberAccSignal1() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(1, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(1, NmraPacket.extractAddressNumber(ba));
+        assertEquals(1, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal2() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(2, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(2, NmraPacket.extractAddressNumber(ba));
+        assertEquals(2, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal4() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(4, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(4, NmraPacket.extractAddressNumber(ba));
+        assertEquals(4, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal8() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(8, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(8, NmraPacket.extractAddressNumber(ba));
+        assertEquals(8, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal16() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(16, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(16, NmraPacket.extractAddressNumber(ba));
+        assertEquals(16, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal32() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(32, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(32, NmraPacket.extractAddressNumber(ba));
+        assertEquals(32, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal64() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(64, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(64, NmraPacket.extractAddressNumber(ba));
+        assertEquals(64, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal128() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(128, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(128, NmraPacket.extractAddressNumber(ba));
+        assertEquals(128, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAccSignal256() {
         byte[] ba = NmraPacket.accSignalDecoderPkt(256, 12);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(256, NmraPacket.extractAddressNumber(ba));
+        assertEquals(256, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc1() {
         byte[] ba = NmraPacket.accDecoderPkt(1, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(1, NmraPacket.extractAddressNumber(ba));
+        assertEquals(1, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc2() {
         byte[] ba = NmraPacket.accDecoderPkt(2, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(2, NmraPacket.extractAddressNumber(ba));
+        assertEquals(2, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc4() {
         byte[] ba = NmraPacket.accDecoderPkt(4, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(4, NmraPacket.extractAddressNumber(ba));
+        assertEquals(4, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc8() {
         byte[] ba = NmraPacket.accDecoderPkt(8, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(8, NmraPacket.extractAddressNumber(ba));
+        assertEquals(8, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc16() {
         byte[] ba = NmraPacket.accDecoderPkt(16, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(16, NmraPacket.extractAddressNumber(ba));
+        assertEquals(16, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc32() {
         byte[] ba = NmraPacket.accDecoderPkt(32, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(32, NmraPacket.extractAddressNumber(ba));
+        assertEquals(32, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc64() {
         byte[] ba = NmraPacket.accDecoderPkt(64, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(64, NmraPacket.extractAddressNumber(ba));
+        assertEquals(64, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc128() {
         byte[] ba = NmraPacket.accDecoderPkt(128, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(128, NmraPacket.extractAddressNumber(ba));
+        assertEquals(128, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc256() {
         byte[] ba = NmraPacket.accDecoderPkt(256, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(256, NmraPacket.extractAddressNumber(ba));
+        assertEquals(256, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberAcc512() {
         byte[] ba = NmraPacket.accDecoderPkt(512, true);
         NmraPacket.extractAddressNumber(ba);
-        Assert.assertEquals(512, NmraPacket.extractAddressNumber(ba));
+        assertEquals(512, NmraPacket.extractAddressNumber(ba));
     }
 
     @Test
     public void testExtractAddressNumberShort() {
         byte[] bs = NmraPacket.function13Through20Packet(60, false, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("Short Loco", 60, NmraPacket.extractAddressNumber(bs));
+        assertEquals( 60, NmraPacket.extractAddressNumber(bs), "Short Loco");
     }
 
     @Test
     public void testExtractAddressNumberLong() {
         byte[] bl = NmraPacket.function13Through20Packet(2060, true, true, false, true, false, true, false, true, false);
-        Assert.assertEquals("Long Loco", 2060, NmraPacket.extractAddressNumber(bl));
+        assertEquals( 2060, NmraPacket.extractAddressNumber(bl), "Long Loco");
     }
 
     /**
@@ -1840,13 +1841,13 @@ public class NmraPacketTest {
         };
         for (int speed = 0; speed < 29; speed++) {
             byte[] packet = NmraPacket.speedStep28Packet(address, true, speed, true);
-            Assert.assertNotNull(packet);
-            Assert.assertArrayEquals("Speed step " + speed, speeds[speed], packet);
+            assertNotNull(packet);
+            assertArrayEquals( speeds[speed], packet, "Speed step " + speed);
         }
         // invalid inputs should result in null output
-        Assert.assertNull("Speed step -1", NmraPacket.speedStep28Packet(address, true, -1, true));
+        assertNull( NmraPacket.speedStep28Packet(address, true, -1, true), "Speed step -1");
         JUnitAppender.assertErrorMessage("invalid speed -1");
-        Assert.assertNull("Speed step 29", NmraPacket.speedStep28Packet(address, true, 29, true));
+        assertNull( NmraPacket.speedStep28Packet(address, true, 29, true), "Speed step 29");
         JUnitAppender.assertErrorMessage("invalid speed 29");
     }
 
@@ -1894,8 +1895,8 @@ public class NmraPacketTest {
         };
         for (int speed = 0; speed < 32; speed++) {
             byte[] packet = NmraPacket.speedStep28Packet(true, address, true, speed, true);
-            Assert.assertNotNull(packet);
-            Assert.assertArrayEquals("Speed step " + speed, forward[speed], packet);
+            assertNotNull(packet);
+            assertArrayEquals( forward[speed], packet, "Speed step " + speed);
         }
         // results for speed steps 0-31 when reversed
         byte[][] reverse = {
@@ -1934,13 +1935,13 @@ public class NmraPacketTest {
         };
         for (int speed = 0; speed < 32; speed++) {
             byte[] packet = NmraPacket.speedStep28Packet(true, address, true, speed, false);
-            Assert.assertNotNull(packet);
-            Assert.assertArrayEquals("Speed step " + speed, reverse[speed], packet);
+            assertNotNull(packet);
+            assertArrayEquals( reverse[speed], packet, "Speed step " + speed);
         }
         // invalid inputs should result in null output
-        Assert.assertNull("Speed step -1", NmraPacket.speedStep28Packet(true, address, true, -1, true));
+        assertNull( NmraPacket.speedStep28Packet(true, address, true, -1, true), "Speed step -1");
         JUnitAppender.assertErrorMessage("invalid speed -1");
-        Assert.assertNull("Speed step 32", NmraPacket.speedStep28Packet(true, address, true, 32, true));
+        assertNull( NmraPacket.speedStep28Packet(true, address, true, 32, true), "Speed step 32");
         JUnitAppender.assertErrorMessage("invalid speed 32");
     }
 
@@ -1953,26 +1954,26 @@ public class NmraPacketTest {
             thrown = true;
         }
 
-        Assert.assertTrue(thrown);
+        assertTrue(thrown);
     }
 
     @Test
     public void testToStringShortLocoPacket() {
         // short address function set
         String display = NmraPacket.toString(new byte[]{(byte) 0x3C, (byte) 0xDE, (byte) 0x55, (byte) 00});
-        Assert.assertEquals("LOCO_SHORT_ADDRESS type: 222 to addr 60", display);
+        assertEquals("LOCO_SHORT_ADDRESS type: 222 to addr 60", display);
     }
 
     @Test
     public void testToStringAccessoryPacket1() {
         String display = NmraPacket.toString(NmraPacket.accDecoderPkt(1, true));
-        Assert.assertEquals("ACCESSORY_ADDRESS type: 120 to addr 1", display);
+        assertEquals("ACCESSORY_ADDRESS type: 120 to addr 1", display);
     }
 
     @Test
     public void testToStringAccessoryPacket257() {
         String display = NmraPacket.toString(NmraPacket.accDecoderPkt(257, true));
-        Assert.assertEquals("ACCESSORY_ADDRESS type: 104 to addr 257", display);
+        assertEquals("ACCESSORY_ADDRESS type: 104 to addr 257", display);
     }
 
     @BeforeEach

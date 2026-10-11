@@ -1,9 +1,14 @@
 package jmri;
 
+import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
+import jmri.jmrix.dccpp.DCCppTurnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  *
@@ -14,21 +19,33 @@ public class TurnoutOperationManagerTest {
     @Test
     public void testCTor() {
         TurnoutOperationManager t = new TurnoutOperationManager();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testDefaultObjectCreation() {
         TurnoutOperationManager t = jmri.InstanceManager.getDefault(TurnoutOperationManager.class);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testToolTips() {
         TurnoutOperationManager t = new TurnoutOperationManager();
-        Assertions.assertNull(t.getTooltipForOperator("Not an operator", null));
-        Assertions.assertNull(t.getTooltipForOperator(null, null));
-        Assertions.assertNotNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationOff"), null));
+        assertNull(t.getTooltipForOperator("Not an operator", null));
+        assertNull(t.getTooltipForOperator(null, null));
+        assertNotNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationOff"), null));
+    }
+
+    @Test
+    public void testDefaultTooltipNullWhenNoMatchingOperation() {
+        // CS_VPIN (512) has no matching TurnoutOperation; getTooltipForOperator
+        // must return null rather than NPE when getMatchingOperationAlways returns null
+        TurnoutOperationManager t = new TurnoutOperationManager();
+        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppTurnout turnout = new DCCppTurnout("DCCPP", 42, xnis);
+        turnout.setFeedbackMode(Turnout.CS_VPIN);
+        assertNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationDefault"), turnout));
+        xnis.terminateThreads();
     }
 
     @BeforeEach
@@ -41,6 +58,6 @@ public class TurnoutOperationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TurnoutOperationManagerTest.class);
 
 }

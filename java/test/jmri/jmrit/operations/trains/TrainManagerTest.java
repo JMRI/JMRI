@@ -15,9 +15,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -326,10 +324,12 @@ public class TrainManagerTest extends OperationsTestCase {
             return terminate.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        
+        // two dialog messages should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("TerminateSelectedTip"), Bundle.getMessage("ButtonYes"));
+
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                            new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonYes"));
-        
+                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonYes"));
+
         jmri.util.JUnitUtil.waitFor(() -> {
             return terminate.getState().equals(Thread.State.TERMINATED);
         }, "wait terminate");

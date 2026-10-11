@@ -2,15 +2,11 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
@@ -26,9 +22,9 @@ import jmri.jmrit.operations.setup.Setup;
 public class CarManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
     
     // the directories under operations
-    static final String CAR_ROUTER_REPORTS = "carRouterReports"; // NOI18N
+    protected static final String CAR_ROUTER_REPORTS = "carRouterReports"; // NOI18N
     // sub directory under CAR_ROUTER_REPORTS
-    static final String CAR_ROUTER_REPORTS_RAW = "carRouterReports";
+    protected static final String CAR_ROUTER_REPORTS_RAW = "carRouterReports";
     
     public CarManagerXml() {
     }
@@ -121,7 +117,7 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
     
     public File createCarRouterReportFile(String name) {
-        return createFile(defaultCarRouterReportFileName(name), false); // don't backup
+        return createFile(defaultCarRouterReportFileName(name)); // don't backup
     }
 
     public File getCarRouterReportFile(String name) {
@@ -140,8 +136,8 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     
     public File createRawCarRouterReportFile(String name) {
         // must create 1st level directory first
-        createFile(defaultCarRouterReportFileName(name), false);
-        return createFile(defaultRawCarRouterReportFileName(name), false); // don't backup
+        createFile(defaultCarRouterReportFileName(name));
+        return createFile(defaultRawCarRouterReportFileName(name)); // don't backup
     }
 
     public File getRawCarRouterReportFile(String name) {
@@ -164,7 +160,7 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(CarManagerXml.class);
 
     @Override
     public void initialize() {

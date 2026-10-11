@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-error-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"error\"",
@@ -27,10 +27,18 @@
     "additionalProperties": true,
     "oneOf": [
         {
-            "required": ["code", "message"]
+            "required": [
+                "code",
+                "message"
+            ]
         },
         {
-            "required": ["code", "message", "force-delete", "conflict"]
+            "required": [
+                "code",
+                "message",
+                "force-delete",
+                "conflict"
+            ]
         }
     ]
 }

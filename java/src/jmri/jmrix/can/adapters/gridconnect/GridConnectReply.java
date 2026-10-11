@@ -239,7 +239,7 @@ public class GridConnectReply extends AbstractMRReply {
         return (byte) b;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GridConnectReply.class);
+    private static final Logger log = LoggerFactory.getLogger(GridConnectReply.class);
 }
 
 

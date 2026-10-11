@@ -1,24 +1,21 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SignalGroup - Signal Head Edit Table.
@@ -100,6 +97,7 @@ public class SignalGroupSubTableAction {
      *
      * @param box the comboBox object containing the user choice
      * @return Value for the Appearance (color) set i.e. 0 for DARK
+     * @throws IllegalArgumentException when needed
      */
     int headStateFromBox(JComboBox<String> box) throws IllegalArgumentException {
         SignalHead sig = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(curHeadName);
@@ -835,8 +833,8 @@ public class SignalGroupSubTableAction {
             Bundle.getMessage("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
     private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
-    private final static String SET_TO_CLOSED = InstanceManager.getDefault(TurnoutManager.class).getClosedText();
-    private final static String SET_TO_THROWN = InstanceManager.getDefault(TurnoutManager.class).getThrownText();
+    private static final String SET_TO_CLOSED = InstanceManager.getDefault(TurnoutManager.class).getClosedText();
+    private static final String SET_TO_THROWN = InstanceManager.getDefault(TurnoutManager.class).getThrownText();
 
     private static String[] sensorInputModes = new String[]{Bundle.getMessage("SensorStateActive"), Bundle.getMessage("SensorStateInactive")};
     private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE};
@@ -1022,6 +1020,6 @@ public class SignalGroupSubTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class);
 
 }

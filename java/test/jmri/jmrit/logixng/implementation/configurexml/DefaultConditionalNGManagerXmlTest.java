@@ -1,17 +1,21 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-// import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -22,13 +26,13 @@ public class DefaultConditionalNGManagerXmlTest {
     @Test
     public void testCTor() {
         DefaultConditionalNGManagerXml b = new DefaultConditionalNGManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
     @Test
     public void testLoad() {
         DefaultConditionalNGManagerXml b = new DefaultConditionalNGManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
 
         // Test loading a conditionalng without system name
         Element e = new Element("ConditionalNGs");
@@ -147,7 +151,7 @@ public class DefaultConditionalNGManagerXmlTest {
     @Test
     public void testStore() {
         DefaultConditionalNGManagerXml b = new DefaultConditionalNGManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         // Calling store() with null is OK.
         b.store((Object)null);
     }
@@ -173,28 +177,27 @@ public class DefaultConditionalNGManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_CONDITIONALNGS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(ConditionalNG_Manager.class)
-                        instanceof MyManager);
+        assertInstanceOf( MyManager.class, InstanceManager.getDefault(ConditionalNG_Manager.class),
+            "manager is a MyManager");
 
         // Test replacing the manager
         DefaultConditionalNGManagerXml b = new DefaultConditionalNGManagerXml();
         b.replaceConditionalNGManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(ConditionalNG_Manager.class)
-                        instanceof MyManager);
+        assertFalse( InstanceManager.getDefault(ConditionalNG_Manager.class)
+            instanceof MyManager,
+                "manager is not a MyManager");
 
         // Test replace the manager when where is no manager registered yet
         InstanceManager.deregister(
                 InstanceManager.getDefault(ConditionalNG_Manager.class),
                 ConditionalNG_Manager.class);
 
-        Assert.assertNotNull("manager is not null",
-                InstanceManager.getDefault(ConditionalNG_Manager.class));
+        assertNotNull( InstanceManager.getDefault(ConditionalNG_Manager.class),
+                "manager is not null");
     }
 
-//    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
+//    @Disabled("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
 
@@ -218,21 +221,19 @@ public class DefaultConditionalNGManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_CONDITIONALNGS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(ConditionalNG_Manager.class)
-                        instanceof MyManager);
+        assertInstanceOf( MyManager.class, InstanceManager.getDefault(ConditionalNG_Manager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultConditionalNGManagerXml b = new DefaultConditionalNGManagerXml();
         b.replaceConditionalNGManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(ConditionalNG_Manager.class)
-                        instanceof MyManager);
+        assertFalse( InstanceManager.getDefault(ConditionalNG_Manager.class)
+            instanceof MyManager,
+                "manager is not a MyManager");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -241,7 +242,7 @@ public class DefaultConditionalNGManagerXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -274,7 +275,7 @@ public class DefaultConditionalNGManagerXmlTest {
         }
     }
 */
-    class MyManager extends DefaultConditionalNGManager {
+    static class MyManager extends DefaultConditionalNGManager {
     }
 
 }

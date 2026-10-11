@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class VerticalLabelUITest {
     @Test
     public void testCTor() {
         VerticalLabelUI t = new VerticalLabelUI();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class VerticalLabelUITest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VerticalLabelUITest.class);
+    // private static final Logger log = LoggerFactory.getLogger(VerticalLabelUITest.class);
 
 }

@@ -1,7 +1,6 @@
 package jmri.jmrix.can;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.CheckForNull;
 
 /**
  * Test scaffold to replace the TrafficController
@@ -10,12 +9,14 @@ import org.slf4j.LoggerFactory;
  */
 public class TestTrafficController extends TrafficController {
 
-    public CanMessage rcvMessage = null;
-    public CanReply sndMessage = null;
+    public CanMessage rcvMessage = null; // new code please use #getLastMessage / #resetLastMessage
+    private CanReply sndMessage = null;
+    public final java.util.List<CanMessage> sentMessages = new java.util.ArrayList<>();
 
     @Override
     public void sendCanMessage(CanMessage m, CanListener l) {
         rcvMessage = m;
+        sentMessages.add(m);
         log.debug("Message sent: header {} body {}", Integer.toHexString(m.getHeader()), m);
     }
 
@@ -59,6 +60,25 @@ public class TestTrafficController extends TrafficController {
     public void forwardMessage(jmri.jmrix.AbstractMRListener l, jmri.jmrix.AbstractMRMessage r) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TestTrafficController.class);
+    @CheckForNull
+    public CanMessage getLastMessage() {
+        return rcvMessage;
+    }
+
+    @CheckForNull
+    public CanReply getLastReply() {
+        return sndMessage;
+    }
+
+    public void resetLastMessage() {
+        rcvMessage = null;
+        sentMessages.clear();
+    }
+
+    public void resetLastReply() {
+        sndMessage = null;
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TestTrafficController.class);
 
 }

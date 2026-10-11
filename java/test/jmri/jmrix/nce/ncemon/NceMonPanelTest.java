@@ -1,7 +1,5 @@
 package jmri.jmrix.nce.ncemon;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.nce.NceInterfaceScaffold;
 import jmri.jmrix.nce.NceMessage;
@@ -10,9 +8,8 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,13 +63,13 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     // startup compared to other AbstractMonPane derivatives.
     @Override
     @Test
+    @DisabledIfHeadless
     public void checkAutoScrollCheckBox() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
         assertThat(thrown).withFailMessage("could not load pane: {}",thrown).isNull();
         ThreadingUtil.runOnGUI( () -> {
             f.add(pane);

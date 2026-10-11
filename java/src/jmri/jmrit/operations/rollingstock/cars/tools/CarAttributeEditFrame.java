@@ -10,6 +10,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.tools.AttributeCharacterLengthAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
 import jmri.util.swing.JmriJOptionPane;
@@ -55,6 +56,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarAttributeAction(this));
         toolMenu.add(new CarDeleteAttributeAction(this));
+        toolMenu.add(new AttributeCharacterLengthAction());
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         // add help menu to window

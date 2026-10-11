@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TestTrafficController;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.openlcb.Connection;
@@ -72,6 +73,7 @@ public class OlcbTestInterface {
         });
         s.acquireUninterruptibly();
         flush();
+        clearSentMessages();
     }
 
     public void sendMessage(CanMessage msg) {
@@ -103,6 +105,21 @@ public class OlcbTestInterface {
     }
 
     /**
+     * Asserts that the exact list of messages was sent to the bus in order since the last check/clear.
+     * @param expectedMessages CAN frames in gridconnect format.
+     */
+    public void assertSentMessages(String... expectedMessages) {
+        iface.flushSendQueue();
+        Assert.assertEquals("Sent message count mismatch", expectedMessages.length, tc.sentMessages.size());
+        for (int i = 0; i < expectedMessages.length; i++) {
+            List<CanFrame> l = GridConnect.parse(expectedMessages[i]);
+            Assert.assertEquals(1, l.size());
+            Assert.assertEquals("Message " + i + " mismatch", OlcbConfigurationManager.convertToCan(l.get(0)), tc.sentMessages.get(i));
+        }
+        clearSentMessages();
+    }
+
+    /**
      * Asserts that no message was sent to the bus.
      */
     public void assertNoSentMessages() {
@@ -115,6 +132,7 @@ public class OlcbTestInterface {
      */
     public void clearSentMessages() {
         flush();
+        tc.sentMessages.clear();
         tc.rcvMessage = null;
     }
 
@@ -164,8 +182,11 @@ public class OlcbTestInterface {
     public CanSystemConnectionMemo systemConnectionMemo;
 
     public void dispose(){
-      // terminate the OlcbInterface (and terminate thread)
-      new Thread(iface::dispose,"OLCB Interface dispose thread").start();
+        // terminate the OlcbInterface (and terminate thread)
+        Thread thread = new Thread(iface::dispose,"OLCB Test Interface dispose thread");
+        thread.start();
+        JUnitUtil.waitThreadTerminated(thread);
+        configurationManager.olcbEventNameStore.deregisterShutdownTask();
     }
 
 

@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.ParseException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
@@ -22,11 +25,11 @@ import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
+import jmri.util.IntlUtilities;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for manual operation and debugging of the RPS system.
@@ -36,18 +39,18 @@ import org.slf4j.LoggerFactory;
 public class DebuggerFrame extends jmri.util.JmriJFrame
         implements ReadingListener, MeasurementListener {
 
-    RpsSystemConnectionMemo memo = null;
+    private RpsSystemConnectionMemo memo = null;
 
-    public DebuggerFrame(RpsSystemConnectionMemo _memo) {
+    public DebuggerFrame(RpsSystemConnectionMemo rpsMemo) {
         super();
-        memo = _memo;
+        memo = rpsMemo;
 
         NUMSENSORS = Engine.instance().getMaxReceiverNumber();
 
         setTitle(title());
     }
 
-    protected String title() {
+    protected final String title() {
         return "RPS Debugger";
     }  // product name, not translated
 
@@ -60,28 +63,25 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         super.dispose();
     }
 
-    java.text.NumberFormat nf;
+    private java.text.NumberFormat nf;
 
-    JComboBox<String> mode;
-    JButton doButton;
+    private JComboBox<String> mode;
 
-    JTextField vs = new JTextField(18);
-    JTextField offset = new JTextField(10);
+    private final JTextField x = new JTextField(18);
+    private final JTextField y = new JTextField(18);
+    private final JTextField z = new JTextField(18);
+    private final JLabel code = new JLabel();
 
-    JTextField x = new JTextField(18);
-    JTextField y = new JTextField(18);
-    JTextField z = new JTextField(18);
-    JLabel code = new JLabel();
+    private final JTextField id = new JTextField(5);
 
-    JTextField id = new JTextField(5);
+    private final DebuggerTimePane timep = new DebuggerTimePane();
 
-    DebuggerTimePane timep = new DebuggerTimePane();
-
-    int NUMSENSORS;
+    private final int NUMSENSORS;
 
     @Override
     public void initComponents() {
 
+        // I18N format
         nf = java.text.NumberFormat.getInstance();
         nf.setMinimumFractionDigits(1);
         nf.setMaximumFractionDigits(1);
@@ -90,7 +90,8 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // add panes in the middle
-        JPanel p, p1;
+        JPanel p;
+        JPanel p1;
 
         // Time inputs
         p = new JPanel();
@@ -148,7 +149,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         p.add(mode);
         p.setLayout(new FlowLayout());
 
-        doButton = new JButton("Do Once");
+        JButton doButton = new JButton("Do Once");
         doButton.addActionListener(e -> doOnce());
         p.add(doButton);
         getContentPane().add(p);
@@ -175,7 +176,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     /**
      * Invoked by button to do one cycle
      */
-    void doOnce() {
+    private void doOnce() {
         try {
             switch (mode.getSelectedIndex()) {
                 case 0: // From time fields
@@ -199,7 +200,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         }
     }
 
-    void doLoadReadingFromFile() throws IOException {
+    private void doLoadReadingFromFile() throws IOException {
         if (readingInput == null) {
             readingInput = getParser(readingFileChooser);
         }
@@ -237,7 +238,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         return parser;
     }
 
-    void doLoadMeasurementFromFile() throws IOException {
+    private void doLoadMeasurementFromFile() throws IOException {
         if (measurementInput == null) {
             measurementInput = getParser(measurementFileChooser);
         }
@@ -254,38 +255,40 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
         // item 0 is the ID, not used right now
         Measurement m = new Measurement(null,
-                Double.valueOf(measurementRecord.get(1)),
-                Double.valueOf(measurementRecord.get(2)),
-                Double.valueOf(measurementRecord.get(3)),
+                Double.parseDouble(measurementRecord.get(1)),
+                Double.parseDouble(measurementRecord.get(2)),
+                Double.parseDouble(measurementRecord.get(3)),
                 Engine.instance().getVSound(),
                 0,
                 "Data File"
         );
 
-        lastPoint = m;
         Distributor.instance().submitMeasurement(m);
     }
 
-    Measurement lastPoint = null;
-
-    Reading getReadingFromTimeFields() {
+    private Reading getReadingFromTimeFields() {
 
         double[] values = new double[NUMSENSORS + 1];
 
+        JTextField tmp;
         // parse input
         for (int i = 0; i <= NUMSENSORS; i++) {
             values[i] = 0.;
-            if ((timep.times[i] != null) && !timep.times[i].getText().equals("")) {
-                values[i] = Double.valueOf(timep.times[i].getText());
+            tmp = timep.times[i];
+            if ((tmp != null) && !tmp.getText().isEmpty()) {
+                try {
+                    values[i] = IntlUtilities.doubleValue(tmp.getText());
+                } catch (ParseException ex) {
+                    log.error("Could not create number from {}, {}",tmp.getText(),ex.getMessage());
+                }
             }
         }
 
         // get the id number and make reading
-        Reading r = new Reading(id.getText(), values);
-        return r;
+        return new Reading(id.getText(), values);
     }
 
-    void doReadingFromTimeFields() {
+    private void doReadingFromTimeFields() {
         // get the reading
         Reading r = getReadingFromTimeFields();
 
@@ -305,21 +308,23 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         timep.notify(r);
     }
 
-    void doMeasurementFromPositionFields() {
+    private void doMeasurementFromPositionFields() {
         // contain dummy Reading
         Reading r = new Reading(id.getText(), new double[]{0., 0., 0., 0.});
 
-        Measurement m = new Measurement(r,
-                Double.valueOf(x.getText()),
-                Double.valueOf(y.getText()),
-                Double.valueOf(z.getText()),
+        try {
+            Measurement m = new Measurement(r,
+                IntlUtilities.doubleValue(x.getText()),
+                IntlUtilities.doubleValue(y.getText()),
+                IntlUtilities.doubleValue(z.getText()),
                 Engine.instance().getVSound(),
                 0,
                 "Position Data"
-        );
-
-        lastPoint = m;
-        Distributor.instance().submitMeasurement(m);
+            );
+            Distributor.instance().submitMeasurement(m);
+        } catch (ParseException ex) {
+            log.error("Could not translate a field to Number. {}",ex.getMessage());
+        }
     }
 
     @Override
@@ -334,12 +339,12 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
     }
 
     // to find and remember the input files
-    CSVParser readingInput = null;
+    private CSVParser readingInput = null;
     final JFileChooser readingFileChooser = new jmri.util.swing.JmriJFileChooser("rps/readings.csv");
 
-    CSVParser measurementInput = null;
+    private CSVParser measurementInput = null;
     final JFileChooser measurementFileChooser = new jmri.util.swing.JmriJFileChooser("rps/positions.csv");
 
-    private final static Logger log = LoggerFactory.getLogger(DebuggerFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebuggerFrame.class);
 
 }

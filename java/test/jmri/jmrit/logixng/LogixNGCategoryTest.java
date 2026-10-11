@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test Category
@@ -15,13 +17,12 @@ public class LogixNGCategoryTest {
 
     @Test
     public void testEnum() {
-        Assert.assertTrue("ITEM".equals(Category.ITEM.name()));
-        Assert.assertTrue("COMMON".equals(Category.COMMON.name()));
-        Assert.assertTrue("OTHER".equals(Category.OTHER.name()));
+        assertEquals( "ITEM", LogixNG_Category.ITEM.name());
+        assertEquals( "COMMON", LogixNG_Category.COMMON.name());
+        assertEquals( "OTHER", LogixNG_Category.OTHER.name());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -32,7 +33,7 @@ public class LogixNGCategoryTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

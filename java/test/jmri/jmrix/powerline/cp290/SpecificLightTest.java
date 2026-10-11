@@ -2,7 +2,6 @@ package jmri.jmrix.powerline.cp290;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,21 +9,20 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class SpecificLightTest {
 
    private SpecificTrafficController tc = null;
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SpecificLight constructor",new SpecificLight("PLA2",tc));
-   }
+    @Test
+    public void testCp290SpecificLightConstructor(){
+        Assertions.assertNotNull( new SpecificLight("PLA2",tc), "SpecificLight constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         tc = new SpecificTrafficController(memo);
         memo.setTrafficController(tc);
@@ -32,12 +30,11 @@ public class SpecificLightTest {
         memo.setSerialAddress(new jmri.jmrix.powerline.SerialAddress(memo));
    }
 
-   @AfterEach
-   public void tearDown(){
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
-
+    @AfterEach
+    public void tearDown(){
+        tc.terminateThreads();
         tc = null;
-   }
+        JUnitUtil.tearDown();
+    }
 
 }

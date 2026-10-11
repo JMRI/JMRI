@@ -109,7 +109,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void registerListenersForThisClass() {
-        ((AnalogExpressionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
     
     /**
@@ -117,7 +117,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((AnalogExpressionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
     
     @Override
@@ -232,6 +232,6 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogExpressionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogExpressionSocket.class);
 
 }

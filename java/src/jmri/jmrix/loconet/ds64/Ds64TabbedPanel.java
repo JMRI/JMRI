@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.ds64;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -1955,7 +1953,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     /**
      * Reset the DS64 board
      */
-    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "Functionality not yet confirmed with hardware; may be useful at a future date.")
     private void boardFactoryReset() {
 
         // before proceeding, make sure that the user really wants to go forward

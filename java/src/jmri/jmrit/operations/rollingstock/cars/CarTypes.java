@@ -153,6 +153,6 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarTypes.class);
+    private static final Logger log = LoggerFactory.getLogger(CarTypes.class);
 
 }

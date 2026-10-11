@@ -35,6 +35,6 @@ public class PollTableFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PollTableFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PollTableFrameTest.class);
 
 }

@@ -32,6 +32,6 @@ public class WarrantTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WarrantTableFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(WarrantTableFrameTest.class);
 
 }

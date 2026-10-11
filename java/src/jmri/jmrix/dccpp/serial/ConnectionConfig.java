@@ -3,7 +3,7 @@ package jmri.jmrix.dccpp.serial;
 import jmri.util.SystemType;
 
 /**
- * Handle configuring a DCC++ layout connection via a Serial adaptor.
+ * Handle configuring a DCC-EX layout connection via a Serial adaptor.
  * <p>
  * This uses the {@link DCCppAdapter} class to do the actual connection.
  *
@@ -34,13 +34,13 @@ public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnec
 
     @Override
     public String name() {
-        return "DCC++ Serial Port";
+        return "DCC-EX Serial Port";
     }
 
     @Override
     protected String[] getPortFriendlyNames() {
         if (SystemType.isWindows()) {
-            return new String[]{"DCC++ Serial Port", "DCC++_Serial"};
+            return new String[]{"DCC-EX Serial Port", "DCC-EX_Serial"};
         }
         return new String[]{};
     }

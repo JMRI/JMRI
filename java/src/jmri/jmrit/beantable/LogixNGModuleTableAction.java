@@ -60,6 +60,12 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
+    protected void createModel() {
+        m = new LogixNGModuleTableAction.TableModel();
+        m.setFilter((Module t) -> t.isVisible());
+    }
+
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixNGModuleTable"));
     }
@@ -262,6 +268,6 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         return module.getRootSocket().isConnected();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGModuleTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGModuleTableAction.class);
 
 }

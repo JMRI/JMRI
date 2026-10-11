@@ -2,7 +2,6 @@ package jmri.managers;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class DeferringProgrammerManagerTest {
     @Test
     public void testCTor() {
         DeferringProgrammerManager t = new DeferringProgrammerManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class DeferringProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DeferringProgrammerManagerTest.class);
 
 }

@@ -2,11 +2,14 @@ package jmri.jmrit.logixng;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
+
+import jmri.Category;
 
 /**
  * Manager for StringActionBean
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
@@ -22,7 +25,7 @@ public interface StringActionManager extends BaseManager<MaleStringActionSocket>
      */
     MaleStringActionSocket registerAction(@Nonnull StringActionBean action)
             throws IllegalArgumentException;
-    
+
     /**
      * Create a new system name for an StringActionBean.
      * @return a new system name
@@ -34,7 +37,7 @@ public interface StringActionManager extends BaseManager<MaleStringActionSocket>
 
     /**
      * Get a set of classes that implements the DigitalAction interface.
-     * 
+     *
      * @return a set of entries with category and class
      */
     Map<Category, List<Class<? extends Base>>> getActionClasses();
@@ -63,7 +66,7 @@ public interface StringActionManager extends BaseManager<MaleStringActionSocket>
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The sub system prefix for the StringActionManager is
      * {@link #getSystemNamePrefix() } and "SA";
      */
@@ -79,5 +82,5 @@ public interface StringActionManager extends BaseManager<MaleStringActionSocket>
      * @param x the StringAction to delete
      */
     void deleteStringAction(MaleStringActionSocket x);
-    
+
 }

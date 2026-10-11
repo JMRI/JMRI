@@ -57,6 +57,15 @@
         </dd>
 
         <dt>
+          <a href="../../../html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System</a>
+        </dt>
+
+        <dd>
+          Dispatcher System extends Dispatcher by automatically creating stations and associated dispatcher files
+          allowing trains to be dispatched between the stations and scheduled with timetables.
+        </dd>
+
+        <dt>
           <a href="../Routes.shtml">Routes</a>
         </dt>
 

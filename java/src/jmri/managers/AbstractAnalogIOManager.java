@@ -61,6 +61,6 @@ public abstract class AbstractAnalogIOManager extends AbstractManager<AnalogIO>
         return AnalogIO.class;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(AbstractAnalogIOManager.class);
+//    private static final Logger log = LoggerFactory.getLogger(AbstractAnalogIOManager.class);
 
 }

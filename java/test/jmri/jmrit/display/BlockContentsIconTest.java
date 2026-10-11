@@ -1,5 +1,11 @@
 package jmri.jmrit.display;
 
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import javax.swing.JFrame;
 
 import jmri.BlockManager;
@@ -7,12 +13,14 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.junit.annotations.ToDo;
 
+import org.jdom2.JDOMException;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.QueueTool;
+
 import org.slf4j.event.Level;
 
 /**
@@ -20,7 +28,7 @@ import org.slf4j.event.Level;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
+@DisabledIfHeadless
 public class BlockContentsIconTest extends PositionableLabelTest {
 
     @Test
@@ -29,11 +37,11 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
         BlockContentsIcon bci = new BlockContentsIcon(icon, editor);
         bci.setIcon(icon);
-        Assert.assertNotNull("BlockContentsIcon Constructor", bci);
+        assertNotNull(bci, "BlockContentsIcon Constructor");
     }
 
     @Test
-    public void testShowRosterEntry() throws Exception {
+    public void testShowRosterEntry() throws IOException, JDOMException {
 
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Roster Entry");
@@ -46,19 +54,19 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
         jmri.InstanceManager.getDefault(BlockManager.class).provide("IB1").setValue(re);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
-        Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        new QueueTool().waitEmpty();
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
     }
 
     @Test
-    public void testShowIdTag() throws Exception {
+    public void testShowIdTag() {
 
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Roster Entry");
@@ -71,13 +79,14 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
         jmri.InstanceManager.getDefault(BlockManager.class).provide("IB1").setValue(tag);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
-        Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
-        Assert.assertNotNull("Label with correct text value", jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), tag.getDisplayName()));
+        new QueueTool().waitEmpty();
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
+        assertNotNull(jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), tag.getDisplayName()),
+            "Label with correct text value");
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
@@ -92,9 +101,9 @@ public class BlockContentsIconTest extends PositionableLabelTest {
 
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
         ((BlockContentsIcon) p).setIcon(icon);
-        Assert.assertEquals("Default Scale", 1.0D, p.getScale(), 0.0);
+        assertEquals(1.0D, p.getScale(), 0.0, "Default Scale");
         p.setScale(5.0D);
-        Assert.assertEquals("Scale", 5.0D, p.getScale(), 0.0);
+        assertEquals(5.0D, p.getScale(), 0.0, "Scale");
     }
 
     @Test
@@ -105,7 +114,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
         ((BlockContentsIcon) p).setIcon(icon);
         p.rotate(50);
-        Assert.assertEquals("Degrees", 50, p.getDegrees());
+        assertEquals(50, p.getDegrees(), "Degrees");
     }
 
     @BeforeEach

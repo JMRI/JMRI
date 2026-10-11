@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-hello-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"hello\"",
@@ -29,10 +29,20 @@
             "description": "The current node identity"
         },
         "activeProfile": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The name of the current profile or null if no profile is active"
         }
     },
     "additionalProperties": false,
-    "required": ["JMRI", "json", "heartbeat", "railroad", "node", "activeProfile"]
+    "required": [
+        "JMRI",
+        "json",
+        "heartbeat",
+        "railroad",
+        "node",
+        "activeProfile"
+    ]
 }

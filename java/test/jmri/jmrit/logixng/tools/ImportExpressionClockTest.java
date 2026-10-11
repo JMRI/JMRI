@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.util.Date;
 import java.lang.reflect.Field;
@@ -20,15 +23,15 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
  */
 public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
 
-    Timebase fastClock;
-    ConditionalVariable cv;
+    private Timebase fastClock;
+    private ConditionalVariable cv;
 
-    protected enum ClockEnum {
+    private enum ClockEnum {
         Clock__start10_20__end_13_10(10,20,13,10),
         Clock__start18_15__end_12_25(18,15,12,25);
 
-        private final int _start;
-        private final int _end;
+        final int _start;
+        final int _end;
 
         private ClockEnum(int startHour, int startMin, int endHour, int endMin) {
             this._start = startHour * 60 + startMin;
@@ -37,18 +40,16 @@ public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
     }
 
     @Override
-    protected Enum<ClockEnum>[] getEnums() {
+    protected Enum<?>[] getEnums() {
         return ClockEnum.values();
     }
 
     private boolean isLogixActivated() {
-        try {
+        return assertDoesNotThrow( () -> {
             Field privateStringField = logix.getClass().getDeclaredField("_isActivated");
             privateStringField.setAccessible(true);
             return (Boolean) privateStringField.get(logix);
-        } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
-            throw new RuntimeException("Cannot read field _isActivated", e);
-        }
+        }, "Cannot read field _isActivated");
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
                     case Succeed4:
                         fastClock.setTime(new Date(0,0,0,11,05));   // 11:05
                         break;
-                    default: throw new RuntimeException("Unknown enum: "+ce.name());
+                    default: fail("Unknown enum: "+ce.name());
                 }
                 break;
 
@@ -122,12 +123,12 @@ public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
                     case Succeed4:
                         fastClock.setTime(new Date(0,0,0,11,30));   // 11:30
                         break;
-                    default: throw new RuntimeException("Unknown enum: "+ce.name());
+                    default: fail("Unknown enum: "+ce.name());
                 }
                 break;
 
             default:
-                throw new RuntimeException("Unknown enum: "+e.name());
+                fail("Unknown enum: "+e.name());
         }
         if ((isLogixActivated()) && (conditional != null)) {
             conditional.calculate(true, evt);   // Logix expression Clock doesn't listen on the fast clock

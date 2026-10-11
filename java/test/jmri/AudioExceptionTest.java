@@ -3,36 +3,34 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for AudioException class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class AudioExceptionTest {
 
-   @Test
-   public void testConstructor(){
-      Assert.assertNotNull("AudioException constructor",new AudioException());
-   }
+    @Test
+    public void testConstructor(){
+        assertNotNull( new AudioException(), "AudioException constructor");
+    }
 
-   @Test
-   public void testStringConstructor(){
-      Assert.assertNotNull("AudioException string constructor",new AudioException("test exception"));
-   }
+    @Test
+    public void testStringConstructor(){
+        assertNotNull( new AudioException("test exception"), "AudioException string constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
+    }
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
-
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

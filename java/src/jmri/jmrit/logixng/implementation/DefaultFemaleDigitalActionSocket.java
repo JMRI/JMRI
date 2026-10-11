@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.*;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.MaleSocket;
@@ -25,12 +23,12 @@ public class DefaultFemaleDigitalActionSocket
     public DefaultFemaleDigitalActionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleDigitalActionSocket;
     }
-    
+
     @Override
     public void execute() throws JmriException {
         if (isConnected()) {

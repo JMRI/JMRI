@@ -88,6 +88,6 @@ public class PreviewPanel extends JPanel {
         return panel;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PreviewPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(PreviewPanel.class);
 
 }

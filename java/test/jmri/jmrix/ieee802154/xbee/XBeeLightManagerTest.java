@@ -149,5 +149,5 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         return 7;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XBeeLightManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(XBeeLightManagerTest.class);
 }

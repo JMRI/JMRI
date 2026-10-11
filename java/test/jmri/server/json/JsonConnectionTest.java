@@ -9,8 +9,11 @@ import jmri.InstanceManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -36,7 +39,7 @@ public class JsonConnectionTest {
     @Test
     public void testGetObjectMapper() {
         JsonConnection instance = new JsonConnection((DataOutputStream) null);
-        Assert.assertNotNull("ObjectMapper is created", instance.getObjectMapper());
+        assertNotNull( instance.getObjectMapper(), "ObjectMapper is created");
     }
 
     /**
@@ -58,12 +61,12 @@ public class JsonConnectionTest {
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         // validate valid message
         instance.sendMessage(instance.getObjectMapper().readTree(valid), 0);
-        Assert.assertEquals("Valid message is passed", valid, baos.toString(StandardCharsets.UTF_8.name()));
+        assertEquals( valid, baos.toString(StandardCharsets.UTF_8.name()), "Valid message is passed");
         baos.reset();
         // validate invalid message
         instance.sendMessage(instance.getObjectMapper().readTree(invalid), 0);
-        Assert.assertNotEquals("Invalid message is not passed", invalid, baos.toString(StandardCharsets.UTF_8.name()));
-        Assert.assertEquals("Invalid message is replaced with error", error, baos.toString(StandardCharsets.UTF_8.name()));
+        assertNotEquals( invalid, baos.toString(StandardCharsets.UTF_8.name()), "Invalid message is not passed");
+        assertEquals( error, baos.toString(StandardCharsets.UTF_8.name()), "Invalid message is replaced with error");
         baos.reset();
         // suppress warnings from validating invalid message (there are five)
         JUnitAppender.checkForMessageStartingWith("Errors validating");
@@ -89,11 +92,11 @@ public class JsonConnectionTest {
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(false);
         // pass valid message when not validating
         instance.sendMessage(instance.getObjectMapper().readTree(valid), 0);
-        Assert.assertEquals("Valid message is passed", valid, baos.toString(StandardCharsets.UTF_8.name()));
+        assertEquals( valid, baos.toString(StandardCharsets.UTF_8.name()), "Valid message is passed");
         baos.reset();
         // pass invalid message when not validating
         instance.sendMessage(instance.getObjectMapper().readTree(invalid), 0);
-        Assert.assertEquals("Invalid message is passed", invalid, baos.toString(StandardCharsets.UTF_8.name()));
+        assertEquals( invalid, baos.toString(StandardCharsets.UTF_8.name()), "Invalid message is passed");
         baos.reset();
     }
 }

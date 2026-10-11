@@ -145,6 +145,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(IdentifyLoco.class);
+    private static final Logger log = LoggerFactory.getLogger(IdentifyLoco.class);
 
 }

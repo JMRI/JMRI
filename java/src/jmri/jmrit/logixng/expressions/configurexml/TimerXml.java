@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.Timer;
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -90,5 +90,5 @@ public class TimerXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerXml.class);
 }

@@ -627,6 +627,6 @@ public class SRCPClientVisitorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SRCPClientVisitorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SRCPClientVisitorTest.class);
 
 }

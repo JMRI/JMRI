@@ -98,6 +98,8 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel vTop8Panel = new JPanel(verticalContentLayout);
         vTop8Panel.add(levelXingButton);
         vTop8Panel.add(trackButton);
+        vTop8Panel.add(turntableButton);
+        vTop8Panel.add(traverserButton);
         vTop8Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8Panel.getPreferredSize().height));
         outerBorderPanel.add(vTop8Panel);
 
@@ -196,6 +198,12 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         vTop20Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop20Panel.getPreferredSize().height));
         iconsBorderPanel.add(vTop20Panel);
 
+        JPanel vTop20tPanel = new JPanel(verticalContentLayout);
+        vTop20tPanel.add(turnoutButton);
+        vTop20tPanel.add(turnoutComboBox);
+        vTop20tPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop20tPanel.getPreferredSize().height));
+        iconsBorderPanel.add(vTop20tPanel);
+
         JPanel vTop19Panel = new JPanel(verticalContentLayout);
         vTop19Panel.add(signalMastButton);
         vTop19Panel.add(signalMastComboBox);
@@ -234,5 +242,5 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
     }   //layoutComponents
 
     //initialize logging
-    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorVerticalToolBarPanel.class);
+    //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorVerticalToolBarPanel.class);
 }

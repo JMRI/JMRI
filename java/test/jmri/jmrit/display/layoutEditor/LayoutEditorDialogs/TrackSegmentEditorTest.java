@@ -46,7 +46,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         JLabelOperator styleLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("Style")));
         JComboBoxOperator styleComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) styleLabelOperator.getLabelFor());
+                (JComboBox<?>) styleLabelOperator.getLabelFor());
         styleComboBoxOperator.selectItem(Bundle.getMessage("Dashed"));
 
         // Select mainline
@@ -61,7 +61,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         JLabelOperator blockNameLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("BlockID"));
         JComboBoxOperator blockComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) blockNameLabelOperator.getLabelFor());
+                (JComboBox<?>) blockNameLabelOperator.getLabelFor());
         blockComboBoxOperator.getTextField().setText("Blk 2");
 
         // Set arc angle
@@ -184,5 +184,5 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         super.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentEditorTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentEditorTest.class);
 }

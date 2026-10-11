@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class NoArchiveFileFilterTest {
     @Test
     public void testCTor() {
         NoArchiveFileFilter t = new NoArchiveFileFilter();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -25,6 +24,6 @@ public class NoArchiveFileFilterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NoArchiveFileFilterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NoArchiveFileFilterTest.class);
 
 }

@@ -169,7 +169,7 @@ public class DefaultPermissionManager implements PermissionManager {
                             PermissionValue value = permission.valueOf(permissionElement.getChild("Enabled").getValue());
                             role.setPermissionWithoutCheck(permission, value);
                         } else {
-                            log.error("Permission class {} does not exists", className);
+                            log.warn("Permission class {} does not exists", className);
                         }
                     }
                 }
@@ -572,5 +572,5 @@ public class DefaultPermissionManager implements PermissionManager {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultPermissionManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultPermissionManager.class);
 }

@@ -2,7 +2,6 @@ package jmri.util;
 
 import javax.swing.JMenu;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class MenuScrollerTest {
     @Test
     public void testCTor() {
         MenuScroller t = new MenuScroller(new JMenu());
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class MenuScrollerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MenuScrollerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MenuScrollerTest.class);
 
 }

@@ -21,7 +21,7 @@
       <p>You can do a similar thing with lots of rows and columns in the display, but it would be a
       lot more work, and the display wouldn't be nicely tuned.</p>
 
-      <p>The fnmapping element works by looking for variables with names like "F2 controls output
+      <p>The "fnmapping" element works by looking for variables with names like "F2 controls output
       1". Specifically, it's looking for a name that consists of four (or five) parts:</p>
 
       <ol>
@@ -44,7 +44,7 @@
       <p>After finding all the matching variables in the configuration file, the fnmapping element
       creates a rectangular grid to display them.</p>
 
-      <p>In the context of a fnmapping element, variables have several useful attributes and
+      <p>In the context of a "fnmapping" element, variables have several useful attributes and
       elements:</p>
 
       <ul>
@@ -68,7 +68,7 @@
       ignored and <strong><em>should not</em></strong> be added to a definition file:</p>
 
       <p>Several attributes and elements of the "model" element of the decoder file also affect
-      affect the Function Map display:</p>
+      the Function Map display:</p>
 
       <ul>
         <li>numOuts - the number of physical outputs (wires) on the decoder.</li>

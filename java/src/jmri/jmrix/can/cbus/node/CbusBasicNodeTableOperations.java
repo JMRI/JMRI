@@ -6,9 +6,6 @@ import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Table data model for display of CBUS Nodes
  *
@@ -134,6 +131,23 @@ public class CbusBasicNodeTableOperations extends CbusBasicNodeTable {
             }
         }
         return ("");
+    }
+
+    /**
+     * For a given CAN ID, return the number of nodes with the ID.
+     * The JMRI connection instance CAN ID is also checked.
+     * @param canId the CAN ID to search for.
+     * @return the number of nodes using the CAN ID.
+     */
+    public int getNumberNodesWithCanId(int canId){
+        int count = ( canId == _memo.getTrafficController().getCanid() ? 1 : 0);
+        final var list = _mainArray;
+        for (CbusNode node : list) {
+            if ( node.getNodeCanId() == canId ) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
@@ -263,5 +277,6 @@ public class CbusBasicNodeTableOperations extends CbusBasicNodeTable {
         requestNodeToDisplay = nodeNumber;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusBasicNodeTableOperations.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusBasicNodeTableOperations.class);
+
 }

@@ -1,10 +1,8 @@
 package jmri.jmrit.entryexit.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
@@ -15,19 +13,19 @@ public class EntryExitPairsXmlTest {
     @Test
     public void testCTor() {
         EntryExitPairsXml t = new EntryExitPairsXml();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
-    @BeforeAll
-    static public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @AfterAll
-    static public void tearDown() {
+    @AfterEach
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EntryExitPairsXmlTest.class);
 
 }

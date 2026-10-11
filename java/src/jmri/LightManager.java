@@ -1,8 +1,6 @@
 package jmri;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 /**
  * Interface for obtaining Lights.
@@ -38,6 +36,7 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
      * @param name User name, system name, or address which can be promoted to
      *             system name
      * @return Never null under normal circumstances
+     * @throws IllegalArgumentException when needed
      */
     @Nonnull
     Light provideLight(@Nonnull String name) throws IllegalArgumentException;

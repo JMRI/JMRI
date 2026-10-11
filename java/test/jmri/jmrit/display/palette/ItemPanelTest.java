@@ -1,14 +1,14 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JScrollPane;
 
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,21 +18,23 @@ import org.junit.jupiter.api.*;
 public class ItemPanelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testShowAllTabs() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
-        Assert.assertNotNull("exists", editor);
-        ItemPalette.getDefault("ItemPalette", editor);
+        assertNotNull( editor, "exists");
+        ItemPalette t = ItemPalette.getDefault("ItemPalette", editor);
 
         int count = ItemPalette._tabPane.getComponentCount();
-        Assert.assertEquals("tab count", 17, count);
+        assertEquals( 17, count, "tab count");
         for (int i = count-1; i>=0; i--) {
             ItemPalette._tabPane.setSelectedIndex(i);
             JScrollPane sp = (JScrollPane) ItemPalette._tabPane.getSelectedComponent();
             ItemPanel panel = (ItemPanel) sp.getViewport().getView();
-            Assert.assertNotNull("ItemPanel exists", panel);
+            assertNotNull( panel, "ItemPanel exists");
         }
-        editor.dispose();
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(editor);
     }
 
     @BeforeEach

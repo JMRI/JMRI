@@ -121,6 +121,6 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
         return 256;
     }
 
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(AnymaDMX_UsbLight.class);
 }

@@ -10,6 +10,7 @@ import javax.swing.table.TableColumn;
 import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.SignalMastLogicTableAction;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.XTableColumnModel;
 
@@ -21,16 +22,16 @@ import jmri.util.swing.XTableColumnModel;
  */
 public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMastLogic>{
     
-    static public final int SOURCECOL = 0;
-    static public final int SOURCEAPPCOL = 1;
-    static public final int DESTCOL = 2;
-    static public final int DESTAPPCOL = 3;
-    static public final int COMCOL = 4;
-    static public final int DELCOL = 5;
-    static public final int ENABLECOL = 6;
-    static public final int EDITLOGICCOL = 7;
-    static public final int MAXSPEEDCOL = 8;
-    static public final int COLUMNCOUNT = 9;
+    public static final int SOURCECOL = 0;
+    public static final int SOURCEAPPCOL = 1;
+    public static final int DESTCOL = 2;
+    public static final int DESTAPPCOL = 3;
+    public static final int COMCOL = 4;
+    public static final int DELCOL = 5;
+    public static final int ENABLECOL = 6;
+    public static final int EDITLOGICCOL = 7;
+    public static final int MAXSPEEDCOL = 8;
+    public static final int COLUMNCOUNT = 9;
 
     
     private boolean suppressUpdate = false; // does not update table model changelistener during auto create pairs
@@ -61,7 +62,7 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
     }
 
     private ArrayList<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
-    
+
     @Nonnull
     private List<Hashtable<SignalMastLogic, SignalMast>> getSMLList(){
         if ( signalMastLogicList == null) {
@@ -69,7 +70,7 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
         }
         return signalMastLogicList;
     }
-    
+
     @Override
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
@@ -112,7 +113,9 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
             return;
         }
         // updateNameList();
-        if (e.getPropertyName().equals("length") || e.getPropertyName().equals("updatedDestination") || e.getPropertyName().equals("updatedSource")) {
+        if (SignalMastLogicManager.PROPERTY_LENGTH.equals(e.getPropertyName())
+            || SignalMastLogic.PROPERTY_UPDATED_DESTINATION.equals(e.getPropertyName())
+                || SignalMastLogic.PROPERTY_UPDATED_SOURCE.equals(e.getPropertyName())) {
             updateNameList();
             log.debug("Table changed length to {}", getSMLList().size());
             fireTableDataChanged();
@@ -155,7 +158,13 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
      */
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        return ((e.getPropertyName().contains("Comment")) || (e.getPropertyName().contains("Enable")));
+        switch (e.getPropertyName()) {
+            case SignalMastLogic.PROPERTY_ENABLED:
+            case SignalMastLogic.PROPERTY_UPDATED_DESTINATION:
+                return true;
+            default:
+                return super.matchPropertyName(e);
+        }
     }
 
     @Override
@@ -218,9 +227,7 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
                 rowLogic.setComment((String) value, getDestMastFromRow(row));
                 break;
             case EDITLOGICCOL:
-                SwingUtilities.invokeLater(() -> {
-                    editLogic(row);
-                });
+                ThreadingUtil.runOnGUIEventually( () -> editLogic(row));
                 break;
             case DELCOL:
                 // button fired, delete Bean
@@ -486,6 +493,6 @@ public class SignalMastLogicTableDataModel extends BeanTableDataModel<SignalMast
         }
         return tip;
     }
-    
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastLogicTableDataModel.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastLogicTableDataModel.class);
 }

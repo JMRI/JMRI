@@ -41,7 +41,7 @@ public class ConvertDialogTest {
         ArrayList<Positionable> selections = new ArrayList<>();
         selections.add(pos);
         frame.setSelectionGroup(selections);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         new Thread(() -> {
             // constructor for d will wait until the dialog is visible
@@ -73,5 +73,5 @@ public class ConvertDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConvertDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ConvertDialogTest.class);
 }

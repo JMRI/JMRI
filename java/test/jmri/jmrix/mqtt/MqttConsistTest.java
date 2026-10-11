@@ -1,45 +1,54 @@
 package jmri.jmrix.mqtt;
 
-import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
-import jmri.jmrit.consisttool.ConsistPreferencesManager;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import jmri.Consist;
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
- * NceConsistTest.java
+ * MqttConsistTest.java
  *
- * Test for the jmri.jmrix.nce.NceConsist class
+ * Test for the jmri.jmrix.mqtt.MqttConsist class
  *
  * @author Paul Bender Copyright (C) 2016,2017
  */
-
 public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
     @Test
     @Override
     public void testGetConsistType(){
         // MQTT consists default to CS consists.
-        Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
+        assertEquals( Consist.CS_CONSIST,c.getConsistType(), "default consist type");
     }
 
     @Override
-    @Test public void testSetConsistTypeAdvanced(){
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+    @Test
+    public void testSetConsistTypeAdvanced(){
+        c.setConsistType( Consist.ADVANCED_CONSIST);
         // make sure an error message is generated.
         jmri.util.JUnitAppender.assertErrorMessage("Consist Type Not Supported");
     }
 
     @Override
-    @Test public void testSetConsistTypeCS(){
-        c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
+    @Test
+    public void testSetConsistTypeCS(){
+        c.setConsistType( Consist.CS_CONSIST);
+        assertEquals( Consist.CS_CONSIST,c.getConsistType(), "default consist type");
     }
 
     @Override
@@ -48,9 +57,10 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
     public void checkSizeLimitAdvanced(){
     }
 
-    @Test public void checkSizeLimitCS(){
-        c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("Consist Limit",-1,c.sizeLimit());
+    @Test
+    public void checkSizeLimitCS(){
+        c.setConsistType( Consist.CS_CONSIST);
+        assertEquals( -1, c.sizeLimit(), "Consist Limit");
     }
 
     @Override
@@ -58,22 +68,24 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
     @Disabled("Does not support Advanced consists")
     public void checkContainsAdvanced(){
     }
-    @Test public void checkContainsCS(){
+
+    @Test
+    public void checkContainsCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        DccLocoAddress A = new DccLocoAddress(200,true);
+        DccLocoAddress B = new DccLocoAddress(250,true);
         // nothing added, should be false for all.
-        Assert.assertFalse("Advanced Consist Contains",c.contains(A));
-        Assert.assertFalse("Advanced Consist Contains",c.contains(B));
+        assertFalse( c.contains(A), "Advanced Consist Contains");
+        assertFalse( c.contains(B), "Advanced Consist Contains");
         // add just A
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
-        Assert.assertFalse("Advanced Consist Contains",c.contains(B));
+        assertTrue( c.contains(A), "Advanced Consist Contains");
+        assertFalse( c.contains(B), "Advanced Consist Contains");
         // then add B
         c.restore(B,false);
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
-        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+        assertTrue( c.contains(A), "Advanced Consist Contains");
+        assertTrue( c.contains(B), "Advanced Consist Contains");
     }
 
     @Override
@@ -82,15 +94,16 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
     public void checkGetLocoDirectionAdvanced(){
     }
 
-    @Test public void checkGetLocoDirectionCS(){
+    @Test
+    public void checkGetLocoDirectionCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        DccLocoAddress A = new DccLocoAddress(200,true);
+        DccLocoAddress B = new DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in Advanced Consist",c.getLocoDirection(A));
-        Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));
+        assertTrue( c.getLocoDirection(A), "Direction in Advanced Consist");
+        assertFalse( c.getLocoDirection(B), "Direction in Advanced Consist");
     }
 
     @Override
@@ -99,18 +112,20 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
     public void checkGetSetLocoRosterIDAdvanced(){
     }
 
-    @Test public void checkGetSetLocoRosterIDCS() throws IOException,FileNotFoundException {
+    @Test
+    public void checkGetSetLocoRosterIDCS() throws IOException,FileNotFoundException {
         jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
+        assertNotNull(entry);
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = entry.getDccLocoAddress();
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        DccLocoAddress A = entry.getDccLocoAddress();
+        DccLocoAddress B = new DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
         c.setRosterId(A,"ATSF123");
-        Assert.assertEquals("Roster ID A","ATSF123",c.getRosterId(A));
-        Assert.assertNull("Roster ID B",c.getRosterId(B));
+        assertEquals( "ATSF123", c.getRosterId(A), "Roster ID A");
+        assertNull( c.getRosterId(B), "Roster ID B");
     }
 
     @Override
@@ -119,20 +134,22 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
     public void checkRemoveWithGetRosterIDAdvanced(){
     }
 
-    @Test public void checkRemoveWithGetRosterIDCS() throws IOException,FileNotFoundException {
+    @Test
+    public void checkRemoveWithGetRosterIDCS() throws IOException,FileNotFoundException {
         jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
+        assertNotNull(entry);
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = entry.getDccLocoAddress();
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        DccLocoAddress A = entry.getDccLocoAddress();
+        DccLocoAddress B = new DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
         c.setRosterId(A,"ATSF123");
-        Assert.assertEquals("Roster ID A","ATSF123",c.getRosterId(A));
-        Assert.assertNull("Roster ID B",c.getRosterId(B));
+        assertEquals( "ATSF123", c.getRosterId(A), "Roster ID A");
+        assertNull( c.getRosterId(B), "Roster ID B");
         c.remove(A);
-        Assert.assertFalse("Roster A is no longer in consist",c.contains(A));
+        assertFalse( c.contains(A), "Roster A is no longer in consist");
     }
 
     @Override
@@ -142,80 +159,84 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
     }
 
 
-    @Test public void checkAddRemoveWithRosterUpdateCS() throws IOException,FileNotFoundException {
+    @Test
+    public void checkAddRemoveWithRosterUpdateCS() throws IOException,FileNotFoundException {
         // verify the roster update process is active.
         jmri.InstanceManager.getDefault(jmri.jmrit.consisttool.ConsistPreferencesManager.class).setUpdateCV19(true);
         jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
+        assertNotNull(entry);
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = entry.getDccLocoAddress();
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        DccLocoAddress A = entry.getDccLocoAddress();
+        DccLocoAddress B = new DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
         c.setRosterId(A,"ATSF123");
 
-        Assert.assertEquals("Roster ID A","ATSF123",c.getRosterId(A));
-        Assert.assertNull("Roster ID B",c.getRosterId(B));
+        assertEquals( "ATSF123", c.getRosterId(A), "Roster ID A");
+        assertNull( c.getRosterId(B), "Roster ID B");
         c.remove(A);
-        Assert.assertFalse("Roster A is no longer in consist",c.contains(A));
+        assertFalse( c.contains(A), "Roster A is no longer in consist");
     }
 
 
-    @Test public void testActivateConsist(){
+    @Test
+    public void testActivateConsist(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        DccLocoAddress A = new DccLocoAddress(200,true);
+        DccLocoAddress B = new DccLocoAddress(250,true);
         // nothing added, should be false for all.
-        Assert.assertFalse("Consist Contains",c.contains(A));
-        Assert.assertFalse("Consist Contains",c.contains(B));
+        assertFalse( c.contains(A), "Consist Contains");
+        assertFalse( c.contains(B), "Consist Contains");
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==1; }, "publish triggered");
-        Assert.assertEquals("track/state", a.getLastTopic());
-        Assert.assertEquals("", new String(a.getLastPayload()));
+        assertEquals("track/state", a.getLastTopic());
+        assertEquals("", new String(a.getLastPayload()));
 
         // add just A
         c.add(A,true);
-        Assert.assertTrue("Consist Contains",c.contains(A));
-        Assert.assertFalse("Consist Contains",c.contains(B));
+        assertTrue( c.contains(A), "Consist Contains");
+        assertFalse( c.contains(B), "Consist Contains");
 
         // Activate consist
         ((MqttConsist)c).activate();
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
-        Assert.assertEquals("cab/3/consist", a.getLastTopic());
-        Assert.assertEquals("200", new String(a.getLastPayload()));
+        assertEquals("cab/3/consist", a.getLastTopic());
+        assertEquals("200", new String(a.getLastPayload()));
 
         // then add B
         c.add(B,false);
-        Assert.assertTrue("Consist Contains",c.contains(A));
-        Assert.assertTrue("Consist Contains",c.contains(B));
+        assertTrue( c.contains(A), "Consist Contains");
+        assertTrue( c.contains(B), "Consist Contains");
 
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==3; }, "publish triggered");
-        Assert.assertEquals("cab/3/consist", a.getLastTopic());
-        Assert.assertEquals("200 -250", new String(a.getLastPayload()));
+        assertEquals("cab/3/consist", a.getLastTopic());
+        assertEquals("200 -250", new String(a.getLastPayload()));
 
         c.remove(A);
-        Assert.assertFalse("Consist Contains",c.contains(A));
-        Assert.assertTrue("Consist Contains",c.contains(B));
+        assertFalse( c.contains(A), "Consist Contains");
+        assertTrue( c.contains(B), "Consist Contains");
 
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==4; }, "publish triggered");
-        Assert.assertEquals("cab/3/consist", a.getLastTopic());
-        Assert.assertEquals("-250", new String(a.getLastPayload()));
+        assertEquals("cab/3/consist", a.getLastTopic());
+        assertEquals("-250", new String(a.getLastPayload()));
 
          ((MqttConsist)c).deactivate();
          JUnitUtil.waitFor( ()->{ return a.getPublishCount()==5; }, "publish triggered");
-        Assert.assertEquals("cab/3/consist", a.getLastTopic());
-        Assert.assertEquals("", new String(a.getLastPayload()));
+        assertEquals("cab/3/consist", a.getLastTopic());
+        assertEquals("", new String(a.getLastPayload()));
 
     }
 
-    @Test public void checkGetLocoDirectionController(){
+    @Test
+    public void checkGetLocoDirectionController(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        DccLocoAddress A = new DccLocoAddress(200,true);
+        DccLocoAddress B = new DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
         c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in Advanced Consist",c.getLocoDirection(A));
-        Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));
+        assertTrue( c.getLocoDirection(A), "Direction in Advanced Consist");
+        assertFalse( c.getLocoDirection(B), "Direction in Advanced Consist");
     }
 
 
@@ -243,11 +264,11 @@ public class MqttConsistTest extends jmri.implementation.AbstractConsistTestBase
     public void tearDown() {
         memo.dispose();
         memo = null;
+        a.dispose();
         a = null;
 
         c.dispose();
         c = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

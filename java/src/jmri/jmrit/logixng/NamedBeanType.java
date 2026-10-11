@@ -15,6 +15,21 @@ import jmri.jmrit.logix.WarrantManager;
  */
 public enum NamedBeanType {
 
+    Audio(
+            Bundle.getMessage("BeanNameAudio"),
+            Bundle.getMessage("BeanNameAudios"),
+            Audio.class,
+            "State",
+            () -> InstanceManager.getDefault(AudioManager.class),
+            null,
+            (NamedBean bean, String property) -> {
+                if (!(bean instanceof Audio)) {
+                    throw new IllegalArgumentException("bean is not an Audio");
+                }
+                InstanceManager.getDefault(AudioManager.class)
+                        .deleteBean((Audio)bean, property);
+            }),
+
     Block(
             Bundle.getMessage("BeanNameBlock"),
             Bundle.getMessage("BeanNameBlocks"),
@@ -155,6 +170,21 @@ public enum NamedBeanType {
                         .deleteBean((Reporter)bean, property);
             }),
 
+    Section(
+            Bundle.getMessage("BeanNameSection"),
+            Bundle.getMessage("BeanNameSections"),
+            Section.class,
+            "state",
+            () -> InstanceManager.getDefault(SectionManager.class),
+            null,
+            (NamedBean bean, String property) -> {
+                if (!(bean instanceof Section)) {
+                    throw new IllegalArgumentException("bean is not a Section");
+                }
+                InstanceManager.getDefault(SectionManager.class)
+                        .deleteBean((Section)bean, property);
+            }),
+
     Sensor(
             Bundle.getMessage("BeanNameSensor"),
             Bundle.getMessage("BeanNameSensors"),
@@ -204,6 +234,21 @@ public enum NamedBeanType {
                 }
                 InstanceManager.getDefault(SignalMastManager.class)
                         .deleteBean((SignalMast)bean, property);
+            }),
+
+    Transit(
+            Bundle.getMessage("BeanNameTransit"),
+            Bundle.getMessage("BeanNameTransits"),
+            Transit.class,
+            "state",
+            () -> InstanceManager.getDefault(TransitManager.class),
+            null,
+            (NamedBean bean, String property) -> {
+                if (!(bean instanceof Transit)) {
+                    throw new IllegalArgumentException("bean is not a Transit");
+                }
+                InstanceManager.getDefault(TransitManager.class)
+                        .deleteBean((Transit)bean, property);
             }),
 
     Turnout(

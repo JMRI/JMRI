@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableModel;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableModel;
 
 /**
  *
@@ -19,6 +19,6 @@ public class ResetCheckboxesCarsTableActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ResetCheckboxesCarsTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ResetCheckboxesCarsTableActionTest.class);
 
 }

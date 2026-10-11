@@ -16,14 +16,14 @@ public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizer
     @Override
     @Disabled("Test in superclass hangs with DCCppPacketizer")
     // TODO: correct initialization and remove this overriden test so that parent class test can run or reimplement test so that it works with DCCppPacketizer
-    public void testOutbound() throws Exception {
+    public void testOutbound() {
     }
 
     @Test
     @Override
     @Disabled("Test in superclass generates an exception with DCCppPacketizer")
     // TODO: investigate failure in parent class test and make corrections, either to initialization or to this overriden test
-    public void testInbound() throws Exception {
+    public void testInbound() {
     }
 
     @BeforeEach
@@ -41,6 +41,7 @@ public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizer
     @AfterEach
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

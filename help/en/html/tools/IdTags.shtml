@@ -39,7 +39,7 @@
 
       <p>There are other ways of getting information into the JMRI ID Tag Table, including 
       manually (see below) and via <a href="../hardware/mqtt/index.shtml">MQTT</a>
-      messages and <a href="scripting/index.shtml">scripts.</a>]
+      messages and <a href="scripting/index.shtml">scripts.</a>
       </p>
 
       
@@ -71,7 +71,8 @@
 
       <p>
       There are several ways to display the contents of ID Tags on Layout Editor and Panel Editor Panels.
-      See the references for these editors for details, and <a href="GettingStartedWithRFID.shtml#_Toc135">
+      See the references for these editors for details, 
+      and <a href="../hardware/rfid/GettingStartedWithRFID.shtml#_Toc135">
       Getting Started with RFID</a> for an introduction to this topic (also applicable to other types of 
       ID Tags).
       </p>

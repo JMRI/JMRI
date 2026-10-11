@@ -74,5 +74,5 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
         JUnitUtil.tearDown();
     }
 
-    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemoTest.class);
+    //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemoTest.class);
 }

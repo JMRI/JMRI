@@ -45,7 +45,7 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         JLabelOperator mainTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
         JComboBoxOperator mainTurnoutComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) mainTurnoutLabelOperator.getLabelFor());
+                (JComboBox<?>) mainTurnoutLabelOperator.getLabelFor());
         mainTurnoutComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
         // Enable second turnout and select it
@@ -54,7 +54,7 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         JLabelOperator supportingTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("Supporting", Bundle.getMessage("BeanNameTurnout")));
         JComboBoxOperator supportingTurnoutComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) supportingTurnoutLabelOperator.getLabelFor());
+                (JComboBox<?>) supportingTurnoutLabelOperator.getLabelFor());
         supportingTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         // Enable Invert and Hide
@@ -218,5 +218,5 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         super.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOverEditorTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOverEditorTest.class);
 }

@@ -324,6 +324,6 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         selectTableSwing.dispose();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariableSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariableSwing.class);
 
 }

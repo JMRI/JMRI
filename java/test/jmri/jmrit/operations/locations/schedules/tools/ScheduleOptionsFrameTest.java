@@ -62,5 +62,5 @@ public class ScheduleOptionsFrameTest extends OperationsTestCase {
     }
 
 
-    // private final static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ScheduleOptionsFrameTest.class);
 }

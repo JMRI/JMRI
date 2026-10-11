@@ -2,7 +2,6 @@ package jmri.server.json;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class JsonServerStartupActionFactoryTest {
     @Test
     public void testCTor() {
         JsonServerStartupActionFactory t = new JsonServerStartupActionFactory();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

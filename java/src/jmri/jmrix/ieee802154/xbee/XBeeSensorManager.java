@@ -306,6 +306,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         return Bundle.getMessage("AddEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XBeeSensorManager.class);
 
 }

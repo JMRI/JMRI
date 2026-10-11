@@ -31,6 +31,6 @@ public class SensorTurnoutOperatorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperatorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SensorTurnoutOperatorTest.class);
 
 }

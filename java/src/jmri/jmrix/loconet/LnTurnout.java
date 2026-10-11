@@ -232,8 +232,6 @@ public class LnTurnout extends AbstractTurnout {
         jmri.util.TimerUtil.schedule(consistencyTask, CONSISTENCYTIMER);
     }
 
-    boolean pending = false;
-
     /**
      * Set the turnout DCC C bit to OFF. This is typically used to set a C bit
      * that was set ON to OFF after a timeout.
@@ -448,6 +446,20 @@ public class LnTurnout extends AbstractTurnout {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void requestUpdateFromLayout() {
+        if (_activeFeedbackType == MONITORING || _activeFeedbackType == INDIRECT) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_SW_STATE);
+            l.setElement(1, (_number-1) & 0x7f);
+            l.setElement(2, (_number-1) >> 7);
+            this.controller.sendLocoNetMessage(l);  // send message
+        } else {
+            super.requestUpdateFromLayout();
+        }
+    }
+
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
@@ -506,6 +518,6 @@ public class LnTurnout extends AbstractTurnout {
     int noConsistencyTimersRunning = 0;
     private java.util.TimerTask consistencyTask = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTurnout.class);
 
 }

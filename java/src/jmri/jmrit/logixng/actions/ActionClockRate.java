@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -20,13 +18,12 @@ import jmri.util.ThreadingUtil;
  * @author Dave Sand Copyright 2021
  * @author Daniel Bergqvist Copyright 2022
  */
-public class ActionClockRate extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionClockRate extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<ClockState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockRate, this);
+            new LogixNG_SelectEnum<>(this, ClockState.values(), ClockState.SetClockRate);
     private final LogixNG_SelectDouble _selectSpeed =
-            new LogixNG_SelectDouble(this, 3, this, new DefaultFormatterParserValidator());
+            new LogixNG_SelectDouble(this, 3, new DefaultFormatterParserValidator());
 
 
     public ActionClockRate(String sys, String user)
@@ -56,18 +53,19 @@ public class ActionClockRate extends AbstractDigitalAction
     }
 
     /**
-     * Convert speed to a decimal string.
+     * Convert speed to an I18N decimal string.
+     * @param locale The Locale to use for the String conversion.
      * @param speed The speed
      * @return speed formatted as %1.3f
      */
-    public static String formatSpeed(double speed) {
-        return String.format("%1.3f", speed);
+    public static String formatSpeed(Locale locale, double speed) {
+        return String.format(locale,"%1.3f", speed);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     /** {@inheritDoc} */
@@ -130,7 +128,7 @@ public class ActionClockRate extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String value;
         if (_selectSpeed.isDirectAddressing()) {
-            value = formatSpeed(_selectSpeed.getValue());
+            value = formatSpeed( locale, _selectSpeed.getValue());
         } else {
             value = _selectSpeed.getDescription(locale);
         }
@@ -148,26 +146,6 @@ public class ActionClockRate extends AbstractDigitalAction
     @Override
     public void setup() {
         // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-        _selectEnum.registerListeners();
-        _selectSpeed.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectEnum.unregisterListeners();
-        _selectSpeed.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
@@ -232,6 +210,6 @@ public class ActionClockRate extends AbstractDigitalAction
 
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPower.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPower.class);
 
 }

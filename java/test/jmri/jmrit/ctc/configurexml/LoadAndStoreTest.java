@@ -1,11 +1,13 @@
 package jmri.jmrit.ctc.configurexml;
 
-
 import java.io.File;
 import java.util.stream.Stream;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -24,6 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
+@DisabledIfHeadless
 public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     public static Stream<Arguments> data() {
@@ -32,8 +35,9 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file) throws Exception {
-        super.loadLoadStoreFileCheck(file);
+    public void loadAndStoreTest(File file) {
+        Assertions.assertDoesNotThrow( () ->
+            super.loadLoadStoreFileCheck(file));
     }
 
     @Override
@@ -45,5 +49,13 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     public LoadAndStoreTest() {
         super(SaveType.User, true);
     }
+
+    @AfterEach
+    @Override
+    public void tearDown() {
+        JUnitUtil.resetWindows(false, false);
+        super.tearDown();
+    }
+
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTest.class);
 }

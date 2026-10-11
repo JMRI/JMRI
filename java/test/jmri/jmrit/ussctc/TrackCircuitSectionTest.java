@@ -1,9 +1,12 @@
 package jmri.jmrit.ussctc;
 
-import jmri.util.JUnitUtil;
-import jmri.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Assert;
+import jmri.*;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,16 +19,16 @@ public class TrackCircuitSectionTest {
 
     @Test
     public void testLayoutMonitoring() throws JmriException {
-        Assertions.assertNotNull(sensor);
+        assertNotNull(sensor);
         sensor.setKnownState(Sensor.INACTIVE);
 
         TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
-        Assertions.assertNotNull(t);
+        assertNotNull(t);
 
         sensor.setKnownState(Sensor.ACTIVE);
 
         // initialization sets indicators to follow actual turnout state
-        Assert.assertTrue(requestIndicationStart);
+        assertTrue(requestIndicationStart);
     }
 
     @Test
@@ -35,24 +38,24 @@ public class TrackCircuitSectionTest {
         TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
 
         // check multiple patterns for state -> return value
-        Assertions.assertNotNull(sensor);
+        assertNotNull(sensor);
         sensor.setState(Sensor.INACTIVE);
-        Assert.assertEquals(CodeGroupOneBit.Single0, t.indicationStart());
+        assertEquals(CodeGroupOneBit.Single0, t.indicationStart());
 
         sensor.setState(Sensor.ACTIVE);
-        Assert.assertEquals(CodeGroupOneBit.Single1, t.indicationStart());
+        assertEquals(CodeGroupOneBit.Single1, t.indicationStart());
 
         sensor.setState(Sensor.INACTIVE);
-        Assert.assertEquals(CodeGroupOneBit.Single0, t.indicationStart());
+        assertEquals(CodeGroupOneBit.Single0, t.indicationStart());
 
         sensor.setState(Sensor.UNKNOWN);
-        Assert.assertEquals(CodeGroupOneBit.Single1, t.indicationStart());
+        assertEquals(CodeGroupOneBit.Single1, t.indicationStart());
 
         sensor.setState(Sensor.INACTIVE);
-        Assert.assertEquals(CodeGroupOneBit.Single0, t.indicationStart());
+        assertEquals(CodeGroupOneBit.Single0, t.indicationStart());
 
         sensor.setState(Sensor.INCONSISTENT);
-        Assert.assertEquals(CodeGroupOneBit.Single1, t.indicationStart());
+        assertEquals(CodeGroupOneBit.Single1, t.indicationStart());
     }
 
     @Test
@@ -60,12 +63,12 @@ public class TrackCircuitSectionTest {
 
         TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
 
-        Assertions.assertNotNull(indicator);
+        assertNotNull(indicator);
         indicator.setCommandedState(Turnout.INCONSISTENT);
 
         t.indicationComplete(CodeGroupOneBit.Single0);
 
-        Assert.assertEquals(Turnout.CLOSED, indicator.getKnownState());
+        assertEquals(Turnout.CLOSED, indicator.getKnownState());
     }
 
     @Test
@@ -73,17 +76,17 @@ public class TrackCircuitSectionTest {
 
         TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
 
-        Assertions.assertNotNull(indicator);
+        assertNotNull(indicator);
         indicator.setCommandedState(Turnout.INCONSISTENT);
 
         t.indicationComplete(CodeGroupOneBit.Single1);
 
-        Assert.assertEquals(Turnout.THROWN, indicator.getKnownState());
+        assertEquals(Turnout.THROWN, indicator.getKnownState());
     }
 
-    CodeLine codeline;
-    Station station;
-    boolean requestIndicationStart;
+    private CodeLine codeline;
+    private Station station;
+    private boolean requestIndicationStart;
 
     private Turnout indicator = null;
     private Sensor sensor = null;

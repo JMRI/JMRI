@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.configurexml.*;
 
 import java.io.File;
@@ -12,11 +15,13 @@ import jmri.NamedBeanHandleManager;
 import jmri.SystemConnectionMemo;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.TransitScaffold;
+import jmri.jmrix.can.*;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +44,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
+@DisabledIfHeadless
 public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     public static Stream<Arguments> data() {
@@ -47,8 +53,9 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws Exception {
-        super.loadLoadStoreFileCheck(file);
+    public void loadAndStoreTest(File file, boolean pass) {
+        assertDoesNotThrow( () ->
+            super.loadLoadStoreFileCheck(file));
     }
 
     public LoadAndStoreTest() {
@@ -63,8 +70,9 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         // We do this to test that DestinationPoints are stored in the file
         // as system name, not as user name.
         DestinationPoints dp1 = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP1");
+        assertNotNull(dp1);
         NamedBeanHandleManager nbm = InstanceManager.getDefault(NamedBeanHandleManager.class);
-        NamedBeanHandle nb = nbm.getNamedBeanHandle(dp1.getSystemName(), dp1);
+        NamedBeanHandle<?> nb = nbm.getNamedBeanHandle(dp1.getSystemName(), dp1);
         nb.setName(dp1.getUserName());
     }
 
@@ -76,6 +84,12 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDebugCommandStation();
+
+        CanSystemConnectionMemo cbusMemo = new CanSystemConnectionMemo();
+        TrafficControllerScaffold cbusTrafficController = new TrafficControllerScaffold();
+        cbusMemo.setTrafficController(cbusTrafficController);
+        cbusMemo.setProtocol(ConfigurationManager.MERGCBUS);
+        cbusMemo.configureManagers();
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);
@@ -90,6 +104,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         InstanceManager.setDefault(MqttSystemConnectionMemo.class, mqttMemo);
 
         TransitScaffold.initTransits();
+        NamedBeanType.reset();
     }
 
     @AfterEach

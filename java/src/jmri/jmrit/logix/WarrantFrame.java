@@ -18,7 +18,6 @@ import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -106,6 +105,12 @@ public class WarrantFrame extends WarrantRoute {
         _warrant = new Warrant(w.getSystemName(), w.getUserName());
         setup(_saveWarrant, false);
         init();
+        if ( _saveWarrant instanceof SCWarrant) {
+            _isSCWarrant.setSelected(true);
+            _showRoute.setSelected(true);
+            showCommands(false);
+            //setPanelEnabled(buttonPanel, false);
+        }
     }
 
     /**
@@ -1683,6 +1688,20 @@ public class WarrantFrame extends WarrantRoute {
             }
         }
 
+        if (_saveWarrant != null) {
+            _warrant = _saveWarrant;
+            if ((_saveWarrant instanceof SCWarrant && !_isSCWarrant.isSelected()) ||
+                    (!(_saveWarrant instanceof SCWarrant) && _isSCWarrant.isSelected())) {
+                // _saveWarrant already registered, but is not the correct class.
+                InstanceManager.getDefault(WarrantManager.class).deregister(_saveWarrant);
+                _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                        _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+            }
+        } else {
+            _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                    _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+        }
+
         if (_isSCWarrant.isSelected()) {
             ((SCWarrant) _warrant).setForward(_runForward.isSelected());
             ((SCWarrant) _warrant).setTimeToPlatform((long) _TTPtextField.getValue());
@@ -2141,8 +2160,6 @@ public class WarrantFrame extends WarrantRoute {
         }
 
         @Override
-        @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                justification = "put least likely cases last for efficiency")
         public void setValueAt(Object value, int row, int col) {
             if (row >= _throttleCommands.size()) {
                 return;

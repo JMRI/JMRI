@@ -8,7 +8,7 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.LocationEditFrame;
+import jmri.jmrit.operations.locations.gui.LocationEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
@@ -41,6 +41,6 @@ public class ChangeTracksTypeActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ChangeTracksTypeActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ChangeTracksTypeActionTest.class);
 
 }

@@ -39,5 +39,5 @@ public class SensorTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperationXml.class);
+    private static final Logger log = LoggerFactory.getLogger(SensorTurnoutOperationXml.class);
 }

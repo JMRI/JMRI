@@ -2,9 +2,12 @@ package jmri.util;
 
 import java.io.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the UnzipFileClassTest class
@@ -16,21 +19,21 @@ public class UnzipFileClassTest  {
     // no testCtor as tested class only supplies static methods
 
     @Test
-    public void testFileNotFoundError() throws Exception {
-        Assertions.assertNotNull(tempDir);
+    public void testFileNotFoundError() {
+        assertNotNull(tempDir);
         
-        Exception ex = Assertions.assertThrows(FileNotFoundException.class, () -> {
+        Exception ex = assertThrows(FileNotFoundException.class, () -> {
             UnzipFileClass.unzipFunction(tempDir+"/UnzipFileClass", "noFile.zip"); // noFile.zip should not exist
         });
-        Assertions.assertNotNull(ex);
+        assertNotNull(ex);
     }
 
     @Test
     public void testFNoZipFile() throws FileNotFoundException {
-        Assertions.assertNotNull(tempDir);
+        assertNotNull(tempDir);
 
         UnzipFileClass.unzipFunction(new File(tempDir + "/UnzipFileClass"), new FileInputStream("java/test/jmri/util/UnzipFileClassTest.zip")); // build.xml is not a .zip file
-        Assert.assertTrue(new File(tempDir + "/UnzipFileClass/UnzipFileClass.txt").exists());
+        assertTrue(new File(tempDir + "/UnzipFileClass/UnzipFileClass.txt").exists());
     }
 
     private File tempDir;

@@ -6,31 +6,19 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import java.util.*;
+
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+
+import org.openide.util.lookup.ServiceProvider;
+
 import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JComboBoxUtil;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure Swing GUI LAF defaults
@@ -62,7 +50,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
      *
      * @see GuiLafPreferencesManager#MAX_FONT_SIZE
      */
-    public static final int MAX_DISPLAYED_FONT_SIZE = 20;
+    public static final int MAX_DISPLAYED_FONT_SIZE = 28;
 
     private final JComboBox<String> localeBox = new JComboBox<>(new String[]{
         Locale.getDefault().getDisplayName(),
@@ -200,13 +188,27 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     }
 
     void doLAF(JPanel panel) {
-        // find L&F definitions
+        // find L&F definitions from Swing
         panel.setLayout(new FlowLayout());
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         HashMap<String, String> installedLAFs = new HashMap<>(plafs.length);
         for (UIManager.LookAndFeelInfo plaf : plafs) {
             installedLAFs.put(plaf.getName(), plaf.getClassName());
         }
+        
+        // explicitly add the desired DarkLaf LaFs
+        installedLAFs.put("DarkLAF HC", "com.github.weisj.darklaf.theme.HighContrastDarkTheme");
+        // The LaFs available are
+        //  com/github/weisj/darklaf/theme/DarculaTheme
+        //  com/github/weisj/darklaf/theme/HighContrastDarkTheme
+        //  com/github/weisj/darklaf/theme/HighContrastLightTheme
+        //  com/github/weisj/darklaf/theme/IntelliJTheme
+        //  com/github/weisj/darklaf/theme/OneDarkTheme
+        //  com/github/weisj/darklaf/theme/SolarizedDarkTheme
+        //  com/github/weisj/darklaf/theme/SolarizedLightTheme
+        // But we're only listing a subset to avoid overwhelming the user
+        // See GuiLafPreferencesManager.applyLookAndFeel(..) for matching code
+
         // make the radio buttons
         for (java.util.Map.Entry<String, String> entry : installedLAFs.entrySet()) {
             String name = entry.getKey();
@@ -217,7 +219,10 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             jmi.addActionListener((ActionEvent e) -> {
                 InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(installedLAFs.get(name));
             });
-            if ( entry.getValue().equals(UIManager.getLookAndFeel().getClass().getName())) {
+            if ( entry.getValue().equals(UIManager.getLookAndFeel().getClass().getName())
+                // matching com.github.weisj.darklaf.theme.HighContrastDarkTheme with com.github.weisj.darklaf.DarkLaf
+                || ( entry.getValue().contains("darklaf")
+                    && UIManager.getLookAndFeel().getClass().getName().contains("darklaf") ) ) {
                 jmi.setSelected(true);
             }
         }

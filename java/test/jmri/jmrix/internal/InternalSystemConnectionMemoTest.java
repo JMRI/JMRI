@@ -24,5 +24,5 @@ public class InternalSystemConnectionMemoTest extends SystemConnectionMemoTestBa
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InternalSystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(InternalSystemConnectionMemoTest.class);
 }

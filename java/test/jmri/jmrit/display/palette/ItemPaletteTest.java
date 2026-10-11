@@ -1,9 +1,8 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 
@@ -17,12 +16,13 @@ public class ItemPaletteTest {
     private ItemPalette ip = null;
 
     @Test
+    @DisabledIfHeadless
     public void testShow() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
         ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             ip = ItemPalette.getDefault("Test ItemPalette", editor);
-            assert ip != null;
+            Assertions.assertNotNull(ip);
             ip.pack();
             ip.setVisible(true);
         });

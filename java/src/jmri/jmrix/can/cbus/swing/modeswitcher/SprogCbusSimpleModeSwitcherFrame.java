@@ -8,6 +8,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusConsistManager;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -121,8 +122,10 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
         setHelp();
 
         this.add(panel);
-        pack();
-        setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            pack();
+            setVisible(true);
+        });
     }
 
     private boolean _hideProgWarning = false;

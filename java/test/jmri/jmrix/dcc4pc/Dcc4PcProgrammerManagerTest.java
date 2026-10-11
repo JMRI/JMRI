@@ -28,6 +28,6 @@ public class Dcc4PcProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcProgrammerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Dcc4PcProgrammerManagerTest.class);
 
 }

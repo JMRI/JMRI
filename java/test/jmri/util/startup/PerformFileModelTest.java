@@ -2,7 +2,6 @@ package jmri.util.startup;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class PerformFileModelTest {
     @Test
     public void testCTor() {
         PerformFileModel t = new PerformFileModel();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class PerformFileModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PerformFileModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PerformFileModelTest.class);
 
 }

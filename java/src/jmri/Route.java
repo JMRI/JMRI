@@ -1,5 +1,7 @@
 package jmri;
 
+import javax.annotation.CheckForNull;
+
 /**
  * Routes represent a collection of Turnouts that may be set at the same time.
  * <p>
@@ -51,6 +53,11 @@ public interface Route extends NamedBean {
     int ONTHROWN = 4;  // route fires if turnout goes thrown
     int VETOCLOSED = 8;  // turnout must be closed for route to fire
     int VETOTHROWN = 16;  // turnout must be thrown for route to fire
+
+    /**
+     * String constant for indicating when a Route is Locked / unlocked.
+     */
+    String PROPERTY_ROUTE_LOCKED = "Locked";
 
     /**
      * Set enabled status.
@@ -127,6 +134,7 @@ public interface Route extends NamedBean {
      * @param index the index of the turnout
      * @return the turnout system name or null if no turnout exists at index
      */
+    @CheckForNull
     String getOutputTurnoutByIndex(int index);
 
     /**
@@ -135,6 +143,7 @@ public interface Route extends NamedBean {
      * @param index the index of the turnout
      * @return the turnout or null if no turnout exists at index
      */
+    @CheckForNull
     Turnout getOutputTurnout(int index);
 
     /**
@@ -185,6 +194,7 @@ public interface Route extends NamedBean {
      * @param index the index of the sensor
      * @return the sensor or null if no sensor exists at index
      */
+    @CheckForNull
     String getOutputSensorByIndex(int index);
 
     /**
@@ -193,6 +203,7 @@ public interface Route extends NamedBean {
      * @param index the index of the sensor
      * @return the sensor or null if no sensor exists at index
      */
+    @CheckForNull
     Sensor getOutputSensor(int index);
 
     /**
@@ -215,6 +226,7 @@ public interface Route extends NamedBean {
      *
      * @return script path or null if not defined
      */
+    @CheckForNull
     String getOutputScriptName();
 
     /**
@@ -229,6 +241,7 @@ public interface Route extends NamedBean {
      *
      * @return sound file path or null if not defined
      */
+    @CheckForNull
     String getOutputSoundName();
 
     /**
@@ -237,13 +250,14 @@ public interface Route extends NamedBean {
      * @param sensorSystemName the system name of the sensor; pass null to
      *                         disassociate any sensor from this route
      */
-    void setTurnoutsAlignedSensor(String sensorSystemName);
+    void setTurnoutsAlignedSensor(@CheckForNull String sensorSystemName);
 
     /**
      * Get the system name of the turnouts aligned sensor.
      *
      * @return the name or null if not defined
      */
+    @CheckForNull
     String getTurnoutsAlignedSensor();
 
     /**
@@ -251,6 +265,7 @@ public interface Route extends NamedBean {
      *
      * @return the sensor or null if not defined
      */
+    @CheckForNull
     Sensor getTurnoutsAlgdSensor();
 
     /**
@@ -273,6 +288,7 @@ public interface Route extends NamedBean {
      * @param index The index in the Sensor array of the requested Sensor
      * @return null If there is no Sensor at index
      */
+    @CheckForNull
     String getRouteSensorName(int index);
 
     /**
@@ -281,6 +297,7 @@ public interface Route extends NamedBean {
      * @param index The index in the Sensor array of the requested Sensor
      * @return null If there is no Sensor with at index
      */
+    @CheckForNull
     Sensor getRouteSensor(int index);
 
     /**
@@ -303,6 +320,7 @@ public interface Route extends NamedBean {
      *
      * @return the name of the control turnout or null if not set
      */
+    @CheckForNull
     String getControlTurnout();
 
     /**
@@ -310,6 +328,7 @@ public interface Route extends NamedBean {
      *
      * @return the control turnout or null if not set
      */
+    @CheckForNull
     Turnout getCtlTurnout();
 
     /**
@@ -346,13 +365,14 @@ public interface Route extends NamedBean {
      *
      * @param turnoutSystemName the system name of the turnout
      */
-    void setLockControlTurnout(String turnoutSystemName);
+    void setLockControlTurnout(@CheckForNull String turnoutSystemName);
 
     /**
      * Get the SystemName of the lock control Turnout for this Route.
      *
      * @return the system name or null if not defined
      */
+    @CheckForNull
     String getLockControlTurnout();
 
     /**
@@ -360,6 +380,7 @@ public interface Route extends NamedBean {
      *
      * @return the turnout or null if not defined
      */
+    @CheckForNull
     Turnout getLockCtlTurnout();
 
     /**

@@ -19,6 +19,8 @@
 
   <version author="lbijlsma@pobox.com" version="1" lastUpdated="20230913"/>
   <version author="lbijlsma@pobox.com" version="2" lastUpdated="20240422"/>
+  <version author="lbijlsma@pobox.com" version="3" lastUpdated="20250116"/> <!-- factReset CV8 -->
+
   <decoder>
     <family name="Lokommander 2 v6" mfg="Tehnologistic (train-O-matic)">
       <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="5" highVersionID="6" connector="Wires/NEM651" productID="2010220,2010221,2010222,2010223,2010227">
@@ -101,7 +103,7 @@
     </variables>
 
     <resets>
-      <factReset CV="8" default="78">
+      <factReset CV="8" default="8">
           <label>HARD RESET all CVs reset to default values</label>
           <label xml:lang="cs">HARD RESET všechny CV se resetují na výchozí hodnoty</label>
       </factReset>

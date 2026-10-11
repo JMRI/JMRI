@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -27,9 +28,6 @@ import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriMouseEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display a status of a Sensor.
  *
@@ -38,14 +36,14 @@ import org.slf4j.LoggerFactory;
  */
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    static final public int UNKOWN_FONT_COLOR = 0x03;
-    static final public int UNKOWN_BACKGROUND_COLOR = 0x04;
-    static final public int ACTIVE_FONT_COLOR = 0x05;
-    static final public int ACTIVE_BACKGROUND_COLOR = 0x06;
-    static final public int INACTIVE_FONT_COLOR = 0x07;
-    static final public int INACTIVE_BACKGROUND_COLOR = 0x08;
-    static final public int INCONSISTENT_FONT_COLOR = 0x0A;
-    static final public int INCONSISTENT_BACKGROUND_COLOR = 0x0B;
+    public static final int UNKOWN_FONT_COLOR = 0x03;
+    public static final int UNKOWN_BACKGROUND_COLOR = 0x04;
+    public static final int ACTIVE_FONT_COLOR = 0x05;
+    public static final int ACTIVE_BACKGROUND_COLOR = 0x06;
+    public static final int INACTIVE_FONT_COLOR = 0x07;
+    public static final int INACTIVE_BACKGROUND_COLOR = 0x08;
+    public static final int INCONSISTENT_FONT_COLOR = 0x0A;
+    public static final int INCONSISTENT_BACKGROUND_COLOR = 0x0B;
 
     protected HashMap<String, Integer> _name2stateMap;       // name to state
     protected HashMap<Integer, String> _state2nameMap;       // state to name
@@ -298,8 +296,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         log.debug("property change: {}", e);
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue());
+            Rectangle dirty = getBounds();
             displayState(now);
-            _editor.repaint();
+            dirty.add(getBounds()); // union with the new bounds, in case displayState resized this icon
+            _editor.repaintTargetPanel(dirty);
         }
     }
 
@@ -588,7 +588,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMousePressed(JmriMouseEvent e) {
-        log.debug("doMousePressed buttonLive={}, getMomentary={}", buttonLive(), getMomentary());
+        log.debug("doMousePressed {},{} clicks={}, buttonLive={}, getMomentary={}", 
+            e.getX(), e.getY(), e.getClickCount(),
+            buttonLive(), getMomentary());
+            
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button press
             try {
@@ -602,6 +605,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMouseReleased(JmriMouseEvent e) {
+        log.debug("doMouseReleased {},{} clicks={}, buttonLive={}, getMomentary={}", 
+            e.getX(), e.getY(), e.getClickCount(),
+            buttonLive(), getMomentary());
+        
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button release
             try {
@@ -615,6 +622,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
+        log.debug("doMouseClicked {},{} clicks={}, buttonLive={}, getMomentary={}", 
+            e.getX(), e.getY(), e.getClickCount(),
+            buttonLive(), getMomentary());
+
         if (buttonLive() && !getMomentary()) {
             // this button responds to clicks
             if (!e.isMetaDown() && !e.isAltDown()) {
@@ -1053,6 +1064,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorIcon.class);
 
 }

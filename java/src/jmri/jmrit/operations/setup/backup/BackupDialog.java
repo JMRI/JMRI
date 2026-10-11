@@ -1,0 +1,249 @@
+package jmri.jmrit.operations.setup.backup;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.MessageFormat;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.*;
+
+public class BackupDialog extends JDialog {
+
+    
+
+    private final JPanel contentPanel = new JPanel();
+    private JLabel captionLabel;
+    private JTextField setNameTextField;
+    private JLabel infoLabel1;
+    private JLabel infoLabel2;
+    private JButton backupButton;
+    // private JButton helpButton;
+
+    private DefaultBackup backup;
+
+    /**
+     * Create the dialog.
+     */
+    public BackupDialog() {
+        backup = InstanceManager.getDefault(DefaultBackup.class);
+
+        initComponents();
+    }
+
+    private void initComponents() {
+        setModalityType(ModalityType.DOCUMENT_MODAL);
+        setModal(true);
+        setTitle(Bundle.getMessage("BackupDialog.this.title"));
+        setBounds(100, 100, 395, 199);
+        getContentPane().setLayout(new BorderLayout());
+        {
+            contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+            GridBagLayout gbl = new GridBagLayout();
+            gbl.columnWidths = new int[]{0, 0};
+            gbl.rowHeights = new int[]{0, 0, 0, 0, 0};
+            gbl.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+            gbl.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0,
+                Double.MIN_VALUE};
+            contentPanel.setLayout(gbl);
+            getContentPane().add(contentPanel, BorderLayout.CENTER);
+            {
+                captionLabel = new JLabel(
+                        Bundle.getMessage("BackupDialog.nameLabel.text"));
+                GridBagConstraints gbc_captionLabel = new GridBagConstraints();
+                gbc_captionLabel.anchor = GridBagConstraints.WEST;
+                gbc_captionLabel.insets = new Insets(0, 0, 5, 0);
+                gbc_captionLabel.gridx = 0;
+                gbc_captionLabel.gridy = 0;
+                contentPanel.add(captionLabel, gbc_captionLabel);
+            }
+            {
+                setNameTextField = new JTextField();
+                setNameTextField.setText(backup.suggestBackupSetName());
+
+                setNameTextField.getDocument().addDocumentListener(
+                        new DocumentListener() {
+
+                            // These should probably pass the document to
+                            // enableBackupButton....
+                            @Override
+                            public void removeUpdate(DocumentEvent arg0) {
+                                enableBackupButton();
+                            }
+
+                            @Override
+                            public void insertUpdate(DocumentEvent arg0) {
+                                enableBackupButton();
+                            }
+
+                    @Override
+                    public void changedUpdate(DocumentEvent arg0) {
+                        enableBackupButton();
+                    }
+                });
+
+                GridBagConstraints gbc_setNameTextField = new GridBagConstraints();
+                gbc_setNameTextField.insets = new Insets(0, 0, 5, 0);
+                gbc_setNameTextField.fill = GridBagConstraints.HORIZONTAL;
+                gbc_setNameTextField.gridx = 0;
+                gbc_setNameTextField.gridy = 1;
+                contentPanel.add(setNameTextField, gbc_setNameTextField);
+                setNameTextField.setColumns(10);
+            }
+            {
+                infoLabel1 = new JLabel(Bundle.getMessage("BackupDialog.notesLabel1.text"));
+                GridBagConstraints gbc_infoLabel1 = new GridBagConstraints();
+                gbc_infoLabel1.insets = new Insets(0, 0, 5, 0);
+                gbc_infoLabel1.anchor = GridBagConstraints.NORTHWEST;
+                gbc_infoLabel1.gridx = 0;
+                gbc_infoLabel1.gridy = 2;
+                contentPanel.add(infoLabel1, gbc_infoLabel1);
+            }
+            {
+                infoLabel2 = new JLabel(Bundle.getMessage("BackupDialog.notesLabel2.text"));
+                GridBagConstraints gbc_infoLabel2 = new GridBagConstraints();
+                gbc_infoLabel2.anchor = GridBagConstraints.WEST;
+                gbc_infoLabel2.gridx = 0;
+                gbc_infoLabel2.gridy = 3;
+                contentPanel.add(infoLabel2, gbc_infoLabel2);
+            }
+        }
+        {
+            JPanel buttonPane = new JPanel();
+            FlowLayout fl_buttonPane = new FlowLayout(FlowLayout.CENTER);
+            buttonPane.setLayout(fl_buttonPane);
+            getContentPane().add(buttonPane, BorderLayout.SOUTH);
+            {
+                backupButton = new JButton(Bundle.getMessage("BackupDialog.backupButton.text"));
+                backupButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        do_backupButton_actionPerformed(e);
+                    }
+                });
+                buttonPane.add(backupButton);
+                getRootPane().setDefaultButton(backupButton);
+            }
+            {
+                JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+                cancelButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        do_cancelButton_actionPerformed(arg0);
+                    }
+                });
+                cancelButton.setActionCommand("Cancel"); // NOI18N
+                buttonPane.add(cancelButton);
+            }
+            // Help button isn't used yet
+            //   {
+            //    helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
+            //    helpButton.addActionListener(new ActionListener() {
+            //     public void actionPerformed(ActionEvent e) {
+            //      do_helpButton_actionPerformed(e);
+            //     }
+            //    });
+            //    helpButton.setEnabled(false);
+            //    buttonPane.add(helpButton);
+            //   }
+        }
+    }
+
+    protected void do_backupButton_actionPerformed(ActionEvent e) {
+        // Do the backup of the files...
+        String setName = null;
+
+        try {
+            log.debug("backup button activated");
+
+            setName = setNameTextField.getText();
+
+            if (!OperationsXml.checkFileName(setName)) { // NOI18N
+                log.error("Back up set name must not contain reserved characters");
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + "\n" // NOI18N
+                        + Bundle.getMessage("ReservedChar"), Bundle.getMessage("CanNotUseName"),
+                        JmriJOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // check to see if files are dirty
+            if (OperationsXml.areFilesDirty()) {
+                if (Setup.isAutoSaveEnabled()) {
+                    OperationsXml.save();
+                }
+                else if (JmriJOptionPane
+                        .showConfirmDialog(
+                                this,
+                                Bundle.getMessage("OperationsFilesModified"),
+                                Bundle.getMessage("SaveOperationFiles"),
+                                JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+                    OperationsXml.save();
+                }
+            }
+
+            // check to see if directory already exists
+            if (backup.checkIfBackupSetExists(setName)) {
+                int result = JmriJOptionPane.showConfirmDialog(this, MessageFormat
+                        .format(Bundle.getMessage("DirectoryAreadyExists"),
+                                new Object[]{setName}),
+                        Bundle.getMessage("OverwriteBackupDirectory"),
+                        JmriJOptionPane.OK_CANCEL_OPTION);
+
+                if (result != JmriJOptionPane.OK_OPTION) {
+                    return;
+                }
+            }
+
+            backup.backupFilesToSetName(setName);
+            dispose();
+        } catch (IOException ex) {
+            ExceptionContext context = new ExceptionContext(
+                    ex,
+                    Bundle.getMessage("BackupDialog.BackingUp") + " " + setName,
+                    Bundle.getMessage("BackupDialog.Ensure"));
+            ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
+
+        } catch (RuntimeException ex) {
+            log.error("Doing backup...", ex);
+
+            UnexpectedExceptionContext context = new UnexpectedExceptionContext(
+                    ex, Bundle.getMessage("BackupDialog.BackingUp") + " " + setName);
+
+            ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
+        } catch (Exception ex) {
+            log.error("Doing backup...", ex);
+
+            UnexpectedExceptionContext context = new UnexpectedExceptionContext(
+                    ex, Bundle.getMessage("BackupDialog.BackingUp") + " " + setName);
+
+            ExceptionDisplayFrame.displayExceptionDisplayFrame(this, context);
+        }
+    }
+
+    protected void do_cancelButton_actionPerformed(ActionEvent arg0) {
+        dispose();
+    }
+
+    private void enableBackupButton() {
+        // Enable only if we have something in the text field.
+        // Still need to check for a string of blanks......
+        String s = setNameTextField.getText();
+        backupButton.setEnabled(s.length() > 0);
+    }
+
+    protected void do_helpButton_actionPerformed(ActionEvent e) {
+        // Not implemented yet.
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackupDialog.class);
+
+}

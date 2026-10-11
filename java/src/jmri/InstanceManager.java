@@ -664,7 +664,7 @@ public final class InstanceManager {
      *                      Please don't create any more of these
      * ****************************************************************************/
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default light manager. May not be the only instance.
      */
@@ -673,7 +673,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default memory manager. May not be the only instance.
      */
@@ -682,7 +682,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default sensor manager. May not be the only instance.
      */
@@ -691,7 +691,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default turnout manager. May not be the only instance.
      */
@@ -700,7 +700,7 @@ public final class InstanceManager {
     }
 
     /**
-     * May eventually be deprecated, use @{link #getDefault} directly.
+     * May eventually be deprecated, use {@link #getDefault} directly.
      *
      * @return the default throttle manager. May not be the only instance.
      */
@@ -798,7 +798,7 @@ public final class InstanceManager {
     // management) before this can be deprecated in favor of
     // store(p, MeterManager.class)
     @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
-    static public void setMeterManager(MeterManager p) {
+    public static void setMeterManager(MeterManager p) {
         log.debug(" setMeterManager");
         MeterManager apm = getDefault(MeterManager.class);
         if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
@@ -813,7 +813,7 @@ public final class InstanceManager {
     // management) before this can be deprecated in favor of
     // store(p, TurnoutManager.class)
     @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
-    static public void setAnalogIOManager(AnalogIOManager p) {
+    public static void setAnalogIOManager(AnalogIOManager p) {
         log.debug(" setAnalogIOManager");
         AnalogIOManager apm = getDefault(AnalogIOManager.class);
         if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
@@ -828,7 +828,7 @@ public final class InstanceManager {
     // management) before this can be deprecated in favor of
     // store(p, TurnoutManager.class)
     @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
-    static public void setStringIOManager(StringIOManager p) {
+    public static void setStringIOManager(StringIOManager p) {
         log.debug(" setStringIOManager");
         StringIOManager apm = getDefault(StringIOManager.class);
         if (apm instanceof ProxyManager<?>) { // <?> due to type erasure

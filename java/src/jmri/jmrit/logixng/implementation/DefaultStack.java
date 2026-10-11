@@ -63,8 +63,8 @@ public class DefaultStack implements Stack {
 
     /** {@inheritDoc} */
     @Override
-    public void setValueAndTypeAtIndex(int index, ValueAndType valueAndType) {
-        _stack[index] = valueAndType;
+    public void copyValueAndTypeAtIndex(int index, ValueAndType valueAndType) {
+        _stack[index] = new ValueAndType(valueAndType._type, valueAndType._value);
     }
 
     /** {@inheritDoc} */

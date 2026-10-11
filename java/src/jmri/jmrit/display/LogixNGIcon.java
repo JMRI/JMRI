@@ -238,5 +238,5 @@ public class LogixNGIcon extends PositionableLabel {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGIcon.class);
 }

@@ -1,8 +1,9 @@
 package jmri.jmrit.sound;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.FileUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -32,10 +33,10 @@ public class SoundUtilTest {
         String name = FileUtil.getAbsoluteFilename("program:resources/sounds/Button.wav");
         byte[] results = SoundUtil.bufferFromFile(name,
                 44100.0f, 16, 1, true, false);
-        Assert.assertEquals("length", 89872, results.length);
-        Assert.assertEquals("byte 0", 0x09, 0xFF & results[0]);
-        Assert.assertEquals("byte 1", 0x00, 0xFF & results[1]);
-        Assert.assertEquals("byte 2", 0x0B, 0xFF & results[2]);
-        Assert.assertEquals("byte 3", 0x00, 0xFF & results[3]);
+        assertEquals( 89872, results.length, "length");
+        assertEquals( 0x09, 0xFF & results[0], "byte 0");
+        assertEquals( 0x00, 0xFF & results[1], "byte 1");
+        assertEquals( 0x0B, 0xFF & results[2], "byte 2");
+        assertEquals( 0x00, 0xFF & results[3], "byte 3");
     }
 }

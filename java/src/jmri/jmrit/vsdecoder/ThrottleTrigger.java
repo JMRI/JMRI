@@ -2,8 +2,6 @@ package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Throttle trigger.
@@ -24,8 +22,6 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  */
 class ThrottleTrigger extends Trigger {
-
-    int current_notch, prev_notch;
 
     public ThrottleTrigger(String name) {
         super(name);
@@ -75,6 +71,6 @@ class ThrottleTrigger extends Trigger {
         super.setXml(e);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ThrottleTrigger.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThrottleTrigger.class);
 
 }

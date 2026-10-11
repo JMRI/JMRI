@@ -71,13 +71,13 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
     public Object visit(ASTok node, Object data) {
         log.debug("Ok Response {}", node.jjtGetValue());
         SRCPSystemConnectionMemo memo = (SRCPSystemConnectionMemo) data;
-        if (((String) ((SimpleNode) node).jjtGetValue()).contains("GO")) {
+        if (((String) node.jjtGetValue()).contains("GO")) {
             memo.setMode(jmri.jmrix.srcp.SRCPTrafficController.RUNMODE);
             return data;
         }
         return node.childrenAccept(this, data);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class);
+    private static final Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class);
 
 }

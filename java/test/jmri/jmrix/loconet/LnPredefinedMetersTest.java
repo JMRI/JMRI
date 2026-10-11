@@ -8,9 +8,9 @@ import org.junit.jupiter.api.*;
 
 public class LnPredefinedMetersTest {
 
-    LocoNetInterfaceScaffold lnis;
-    SlotManager slotmanager;
-    LocoNetSystemConnectionMemo memo;
+    private LocoNetInterfaceScaffold lnis;
+    private SlotManager slotmanager;
+    private LocoNetSystemConnectionMemo memo;
 
     @Test
     public void testLnMeter() {
@@ -218,6 +218,15 @@ public class LnPredefinedMetersTest {
             Assert.assertEquals("Number of beans at testSlot() iteration "+String.valueOf(slotNum),
                     numBeans, mm.getNamedBeanSet().size());
         }
+    }
+
+    @Test
+    public void testDispose() {
+        int numInitialListeners = memo.getLnTrafficController().listeners.size();
+        LnPredefinedMeters lm = new LnPredefinedMeters(memo);
+        Assertions.assertEquals(numInitialListeners +1, memo.getLnTrafficController().listeners.size());
+        lm.dispose();
+        Assertions.assertEquals(numInitialListeners, memo.getLnTrafficController().listeners.size());
     }
 
     public double getBeanValue(LnPredefinedMeters lm, String meterName) {

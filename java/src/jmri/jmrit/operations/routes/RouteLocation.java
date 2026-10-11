@@ -15,14 +15,14 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.ColorUtil;
 
 /**
  * Represents a location in a route, a location can appear more than once in a
  * route.
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2013, 2026
  */
 public class RouteLocation extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
@@ -37,15 +37,18 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     protected String _randomControl = DISABLED;
     protected boolean _drops = true; // when true set outs allowed at this location
     protected boolean _pickups = true; // when true pick ups allowed at this location
+    protected boolean _localMoves = true; // when true local moves allowed at this location
     protected int _sequenceNum = 0; // used to determine location order in a route
     protected double _grade = 0; // maximum grade between locations
     protected int _wait = 0; // wait time at this location
-    protected String _departureTime = NONE; // departure time from this location
+    protected String _departureTime = NONE; // hh:mm departure time from this location
+    protected String _departureDay = "0"; // departure day from this location
     protected int _trainIconX = 0; // the x & y coordinates for the train icon
     protected int _trainIconY = 0;
     protected int _blockingOrder = 0;
     protected String _comment = NONE;
     protected Color _commentColor = Color.black;
+    protected boolean _bold = false; // when true bold text
 
     protected int _carMoves = 0; // number of moves at this location
     protected int _trainWeight = 0; // total car weight departing this location
@@ -66,6 +69,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     public static final String DROP_CHANGED_PROPERTY = "dropChange"; // NOI18N
     public static final String PICKUP_CHANGED_PROPERTY = "pickupChange"; // NOI18N
+    public static final String LOCAL_MOVES_CHANGED_PROPERTY = "localMovesChange"; // NOI18N
     public static final String MAX_MOVES_CHANGED_PROPERTY = "maxMovesChange"; // NOI18N
     public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "trainDirectionChange"; // NOI18N
     public static final String DEPARTURE_TIME_CHANGED_PROPERTY = "routeDepartureTimeChange"; // NOI18N
@@ -97,7 +101,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         }
         return DELETED;
     }
-    
+
     public String getSplitName() {
         if (getLocation() != null) {
             return getLocation().getSplitName();
@@ -147,6 +151,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     /**
      * Sets the text color for the route comment
+     * 
      * @param color The color of the text
      */
     public void setCommentColor(Color color) {
@@ -160,9 +165,21 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public Color getCommentColor() {
         return _commentColor;
     }
+    
+    public boolean isCommentBoldEnabled() {
+        return _bold;
+    }
+    
+    public void setCommentBoldEnabled(boolean enabled) {
+        boolean old = _bold;
+        _bold = enabled;
+        if (old != _bold) {
+            setDirtyAndFirePropertyChange("RouteLocationBoldText", old, enabled); // NOI18N
+        }
+    }
 
     public String getCommentWithColor() {
-        return TrainCommon.formatColorString(getComment(), getCommentColor());
+        return TrainCommon.formatColorString(getComment(), getCommentColor(), isCommentBoldEnabled());
     }
 
     public void setCommentTextColor(String color) {
@@ -177,8 +194,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainDir;
         _trainDir = direction;
         if (old != direction) {
-            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer
-                    .toString(direction));
+            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, old, direction);
         }
     }
 
@@ -204,7 +220,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _maxTrainLength;
         _maxTrainLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length)); // NOI18N
+            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, old, length);
         }
     }
 
@@ -214,14 +230,14 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     /**
      * Set the train length departing this location when building a train
+     * 
      * @param length The train's current length.
-     *
      */
     public void setTrainLength(int length) {
         int old = _trainLength;
         _trainLength = length;
         if (old != length) {
-            firePropertyChange("trainLength", Integer.toString(old), Integer.toString(length)); // NOI18N
+            firePropertyChange("trainLength", old, length); // NOI18N
         }
     }
 
@@ -231,14 +247,14 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     /**
      * Set the train weight departing this location when building a train
+     * 
      * @param weight The train's current weight.
-     *
      */
     public void setTrainWeight(int weight) {
         int old = _trainWeight;
         _trainWeight = weight;
         if (old != weight) {
-            firePropertyChange("trainWeight", Integer.toString(old), Integer.toString(weight)); // NOI18N
+            firePropertyChange("trainWeight", old, weight); // NOI18N
         }
     }
 
@@ -250,7 +266,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _maxCarMoves;
         _maxCarMoves = moves;
         if (old != moves) {
-            setDirtyAndFirePropertyChange(MAX_MOVES_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(moves));
+            setDirtyAndFirePropertyChange(MAX_MOVES_CHANGED_PROPERTY, old, moves);
         }
     }
 
@@ -284,7 +300,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         boolean old = _drops;
         _drops = drops;
         if (old != drops) {
-            setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old ? "true" : "false", drops ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old, drops);
         }
     }
 
@@ -301,7 +317,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         boolean old = _pickups;
         _pickups = pickups;
         if (old != pickups) {
-            setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old ? "true" : "false", pickups ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old, pickups);
         }
     }
 
@@ -310,15 +326,32 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     }
 
     /**
-     * Set the number of moves completed when building a train
-     * @param moves An integer representing the amount of moves completed.
+     * When true allow local car moves at this location
      *
+     * @param local when true local moves allowed at this location
+     */
+    public void setLocalMovesAllowed(boolean local) {
+        boolean old = _localMoves;
+        _localMoves = local;
+        if (old != local) {
+            setDirtyAndFirePropertyChange(LOCAL_MOVES_CHANGED_PROPERTY, old, local);
+        }
+    }
+
+    public boolean isLocalMovesAllowed() {
+        return _localMoves;
+    }
+
+    /**
+     * Set the number of moves completed when building a train
+     * 
+     * @param moves An integer representing the amount of moves completed.
      */
     public void setCarMoves(int moves) {
         int old = _carMoves;
         _carMoves = moves;
         if (old != moves) {
-            firePropertyChange("carMoves", Integer.toString(old), Integer.toString(moves)); // NOI18N
+            firePropertyChange("carMoves", old, moves); // NOI18N
         }
     }
 
@@ -330,7 +363,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _wait;
         _wait = time;
         if (old != time) {
-            setDirtyAndFirePropertyChange("waitTime", Integer.toString(old), Integer.toString(time)); // NOI18N
+            setDirtyAndFirePropertyChange("waitTime", old, time); // NOI18N
         }
     }
 
@@ -340,9 +373,10 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     /**
      * Sets the formated departure time from this location
+     * 
      * @param time format hours:minutes
      */
-    public void setDepartureTime(String time) {
+    public void setDepartureTimeHourMinutes(String time) {
         String old = _departureTime;
         _departureTime = time;
         if (!old.equals(time)) {
@@ -350,53 +384,98 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         }
     }
 
-    public void setDepartureTime(String hour, String minute) {
-        String old = _departureTime;
-        int h = Integer.parseInt(hour);
-        if (h < 10) {
-            hour = "0" + h;
-        }
-        int m = Integer.parseInt(minute);
-        if (m < 10) {
-            minute = "0" + m;
-        }
-        String time = hour + ":" + minute;
-        _departureTime = time;
-        if (!old.equals(time)) {
-            setDirtyAndFirePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, time);
-        }
-    }
-
-    public String getDepartureTime() {
+    public String getDepartureTimeHourMinutes() {
         return _departureTime;
+    }
+
+    /**
+     * Sets the departure time from this route location
+     * 
+     * @param time days:hours:minutes or hours:minutes or NONE
+     */
+    public void setDepartureTime(String time) {
+        String[] t = time.split(":");
+        if (t.length > 2) {
+            setDepartureTime(t[0], t[1], t[2]);
+        } else if (t.length > 1) {
+            setDepartureTime("0", t[0], t[1]);
+        } else {
+            setDepartureTimeHourMinutes(NONE);
+        }
+    }
+
+    public void setDepartureTime(String day, String hour, String minute) {
+        setDepartureTimeDay(day);
+        hour = String.format("%02d", Integer.parseInt(hour));
+        minute = String.format("%02d", Integer.parseInt(minute));
+        String time = hour + ":" + minute;
+        setDepartureTimeHourMinutes(time);
+    }
+
+    /**
+     * @return departure time day:hour:minutes
+     */
+    public String getDepartureTime() {
+        return getDepartureTimeDay() + ":" + getDepartureTimeHourMinutes();
+    }
+
+    /**
+     * Sets the departure day from this route location
+     * 
+     * @param day the day where "0" is today, and "1, 2 .." are the following
+     *            days.
+     */
+    public void setDepartureTimeDay(String day) {
+        String old = _departureDay;
+        if (!old.equals(day)) {
+            setDirtyAndFirePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, day);
+        }
+        _departureDay = day;
+    }
+
+    public String getDepartureTimeDay() {
+        return _departureDay;
     }
 
     public String getDepartureTimeHour() {
         String[] time = getDepartureTime().split(":");
-        return time[0];
+        return time[1];
     }
 
     public String getDepartureTimeMinute() {
         String[] time = getDepartureTime().split(":");
-        return time[1];
+        return time[2];
     }
 
+    /**
+     * Gets the formated departure time from this route location. Provides the
+     * day at the start if day is greater than zero. Format days:hours:minutes
+     * or hours:minutes if day = 0. Optional AM or PM 12 hour format.
+     * 
+     * @return days:hours:minutes or hours:minutes. Optional AM/PM
+     */
     public String getFormatedDepartureTime() {
-        if (getDepartureTime().equals(NONE) || !Setup.is12hrFormatEnabled()) {
-            return _departureTime;
+        if (getDepartureTimeHourMinutes().equals(NONE)) {
+            return NONE;
         }
-        String AM_PM = " " + Bundle.getMessage("AM");
-        String[] time = getDepartureTime().split(":");
-        int hour = Integer.parseInt(time[0]);
+        String sDay = "";
+        if (!getDepartureTimeDay().equals("0")) {
+            sDay = getDepartureTimeDay() + ":";
+        }
+        if (!Setup.is12hrFormatEnabled()) {
+            return sDay + getDepartureTimeHourMinutes();
+        }
+        String AM_PM = TrainCommon.SPACE + Bundle.getMessage("AM");
+        int hour = Integer.parseInt(getDepartureTimeHour());
         if (hour >= 12) {
-            AM_PM = " " + Bundle.getMessage("PM");
+            AM_PM = TrainCommon.SPACE + Bundle.getMessage("PM");
             hour = hour - 12;
         }
         if (hour == 0) {
             hour = 12;
         }
-        time[0] = Integer.toString(hour);
-        return time[0] + ":" + time[1] + AM_PM;
+        String shour = Integer.toString(hour);
+        return sDay + shour + ":" + getDepartureTimeMinute() + AM_PM;
     }
 
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
@@ -404,7 +483,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         double old = _grade;
         _grade = grade;
         if (old != grade) {
-            setDirtyAndFirePropertyChange("grade", Double.toString(old), Double.toString(grade)); // NOI18N
+            setDirtyAndFirePropertyChange("grade", old, grade); // NOI18N
         }
     }
 
@@ -416,7 +495,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainIconX;
         _trainIconX = x;
         if (old != x) {
-            setDirtyAndFirePropertyChange("trainIconX", Integer.toString(old), Integer.toString(x)); // NOI18N
+            setDirtyAndFirePropertyChange("trainIconX", old, x); // NOI18N
         }
     }
 
@@ -428,7 +507,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainIconY;
         _trainIconY = y;
         if (old != y) {
-            setDirtyAndFirePropertyChange("trainIconY", Integer.toString(old), Integer.toString(y)); // NOI18N
+            setDirtyAndFirePropertyChange("trainIconY", old, y); // NOI18N
         }
     }
 
@@ -438,6 +517,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     /**
      * Gets the X range for detecting the manual movement of a train icon.
+     * 
      * @return the range for detection
      */
     public int getTrainIconRangeX() {
@@ -446,6 +526,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     /**
      * Gets the Y range for detecting the manual movement of a train icon.
+     * 
      * @return the range for detection
      */
     public int getTrainIconRangeY() {
@@ -532,7 +613,8 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
             try {
                 _maxTrainLength = Integer.parseInt(a.getValue());
             } catch (NumberFormatException ee) {
-                log.error("Route location ({}) maximum train length ({}) isn't a valid number", getName(), a.getValue());
+                log.error("Route location ({}) maximum train length ({}) isn't a valid number", getName(),
+                        a.getValue());
             }
         }
         if ((a = e.getAttribute(Xml.GRADE)) != null) {
@@ -558,12 +640,22 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         if ((a = e.getAttribute(Xml.DROPS)) != null) {
             _drops = a.getValue().equals(Xml.YES);
         }
+        if ((a = e.getAttribute(Xml.LOCAL_MOVES)) != null) {
+            _localMoves = a.getValue().equals(Xml.YES);
+        } else {
+            if (!isPickUpAllowed() || !isDropAllowed()) {
+                _localMoves = false; // disable local moves
+            }
+        }
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
             try {
                 _wait = Integer.parseInt(a.getValue());
             } catch (NumberFormatException ee) {
                 log.error("Route location ({}) wait ({}) isn't a valid number", getName(), a.getValue());
             }
+        }
+        if ((a = e.getAttribute(Xml.DEPART_DAY)) != null) {
+            _departureDay = a.getValue();
         }
         if ((a = e.getAttribute(Xml.DEPART_TIME)) != null) {
             _departureTime = a.getValue();
@@ -599,7 +691,9 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         if ((a = e.getAttribute(Xml.COMMENT_COLOR)) != null) {
             setCommentTextColor(a.getValue());
         }
-
+        if ((a = e.getAttribute(Xml.COMMENT_BOLD)) != null) {
+            _bold = a.getValue().equals(Xml.YES);
+        }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = a.getValue();
         }
@@ -624,14 +718,16 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         e.setAttribute(Xml.RANDOM_CONTROL, getRandomControl());
         e.setAttribute(Xml.PICKUPS, isPickUpAllowed() ? Xml.YES : Xml.NO);
         e.setAttribute(Xml.DROPS, isDropAllowed() ? Xml.YES : Xml.NO);
+        e.setAttribute(Xml.LOCAL_MOVES, isLocalMovesAllowed() ? Xml.YES : Xml.NO);
         e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
-        e.setAttribute(Xml.DEPART_TIME, getDepartureTime());
+        e.setAttribute(Xml.DEPART_DAY, getDepartureTimeDay());
+        e.setAttribute(Xml.DEPART_TIME, getDepartureTimeHourMinutes());
         e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
         e.setAttribute(Xml.TRAIN_ICON_X, Integer.toString(getTrainIconX()));
         e.setAttribute(Xml.TRAIN_ICON_Y, Integer.toString(getTrainIconY()));
         e.setAttribute(Xml.COMMENT_COLOR, getCommentTextColor());
         e.setAttribute(Xml.COMMENT, getComment());
-
+        e.setAttribute(Xml.COMMENT_BOLD, isCommentBoldEnabled() ? Xml.YES : Xml.NO);
         return e;
     }
 
@@ -658,6 +754,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteLocation.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteLocation.class);
 
 }

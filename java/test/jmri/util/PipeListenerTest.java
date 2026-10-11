@@ -5,7 +5,6 @@ import java.io.PipedWriter;
 
 import javax.swing.JTextArea;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,10 +19,9 @@ public class PipeListenerTest {
         JTextArea jta = new JTextArea();
         PipedReader pr = new PipedReader();
         PipeListener t = new PipeListener(pr,jta);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
-    @SuppressWarnings("deprecation")        // Thread.stop()
     @Test
     public void testWrite() throws java.io.IOException {
         JTextArea jta = new JTextArea();
@@ -39,7 +37,10 @@ public class PipeListenerTest {
         JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
 
         JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
-        t.stop();
+
+        // Close streams to force the pipelistener thread to stop
+        wr.close();
+        pr.close();
         try {
             t.join();
         } catch (InterruptedException e) {
@@ -47,7 +48,6 @@ public class PipeListenerTest {
         }
     }
 
-    @SuppressWarnings("deprecation")        // Thread.stop()
     @Test
     public void testWriteGuiThread() throws java.io.IOException {
         JTextArea jta = new JTextArea();
@@ -70,14 +70,18 @@ public class PipeListenerTest {
             }
         });
 
-        if (ref.get() != null) {
-            throw ref.get();
+        var refGet = ref.get();
+        if (refGet != null) {
+            throw refGet;
         }
 
         JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
 
         JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
-        t.stop();
+
+        // Close streams to force the pipelistener thread to stop
+        wr.close();
+        pr.close();
         try {
             t.join();
         } catch (InterruptedException e) {
@@ -95,6 +99,6 @@ public class PipeListenerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PipeListenerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PipeListenerTest.class);
 
 }

@@ -1,13 +1,14 @@
 package jmri.util.zeroconf;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
-import jmri.util.JUnitUtil;
-
 import javax.jmdns.JmDNS;
 
 import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -21,21 +22,21 @@ public class ZeroConfServiceEventTest {
     public void testCTor() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         JmDNS jmdns[] = InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values().toArray(new JmDNS[0]);
-        Assertions.assertNotNull(jmdns);
+        assertNotNull(jmdns);
         ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance, jmdns[0]);
-        Assert.assertNotNull("exists", t);
+        assertNotNull( t, "exists");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        JUnitUtil.resetZeroConfServiceManager();
+    public void tearDown() {
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         
         // wait for dns threads to end
         Thread.getAllStackTraces().keySet().forEach((t) -> 

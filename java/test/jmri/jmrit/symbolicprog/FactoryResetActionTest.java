@@ -40,6 +40,6 @@ public class FactoryResetActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FactoryResetActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(FactoryResetActionTest.class);
 
 }

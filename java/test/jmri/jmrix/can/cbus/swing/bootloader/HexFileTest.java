@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,7 +14,17 @@ public class HexFileTest {
     @Test
     public void testCTor() {
         HexFile f = new HexFile("cbusHexFileTest");
-        Assert.assertNotNull("exists",f);
+        Assertions.assertNotNull( f, "exists");
     }
-    
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

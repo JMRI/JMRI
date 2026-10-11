@@ -60,8 +60,8 @@ public class ConnectionName extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     /** {@inheritDoc} */
@@ -124,5 +124,5 @@ public class ConnectionName extends AbstractDigitalExpression
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionName.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionName.class);
 }

@@ -3,7 +3,6 @@ package jmri.jmrit.decoderdefn;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class DecoderIndexCreateActionTest {
     @Test
     public void testCTor() {
         DecoderIndexCreateAction t = new DecoderIndexCreateAction("Test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -27,6 +26,6 @@ public class DecoderIndexCreateActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexCreateActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DecoderIndexCreateActionTest.class);
 
 }

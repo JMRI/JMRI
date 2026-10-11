@@ -9,8 +9,6 @@ import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractAudio;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation of the AudioSource class.
@@ -844,6 +842,20 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.fading;
     }
 
+    // Probably aught to be abstract, but I don't want to force the non-JOAL Source
+    // types to implement this (yet).  So default to failing.
+    @Override
+    public int attachSourcesToEffects() {
+        return 0;
+    }
+
+    // Probably aught to be abstract, but I don't want to force the non-JOAL Source
+    // types to implement this (yet).  So default to failing.
+    @Override
+    public int detachSourcesToEffects() {
+        return 0;
+    }
+
     @Override
     @Nonnull
     public String getDebugString() {
@@ -855,7 +867,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                                 : "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAudioSource.class);
 
     /**
      * An internal class used to create a new thread to monitor and maintain

@@ -104,5 +104,5 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
         }
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebuggerSymbolTableModel.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebuggerSymbolTableModel.class);
 }

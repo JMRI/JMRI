@@ -239,6 +239,10 @@ public abstract class Action extends PropertyChangeSupport {
         }
         return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId, day});
     }
+    
+    public void reset() {
+        // override if action needs to be reset
+    }
 
     // to be overridden if action needs a ComboBox
     public JComboBox<?> getComboBox() {

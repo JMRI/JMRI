@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 import java.io.File;
 import java.io.IOException;
@@ -265,7 +267,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     static volatile DefaultNamedTableManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultNamedTableManager instance() {
+    public static DefaultNamedTableManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
@@ -310,7 +312,8 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
 
     /** {@inheritDoc} */
     @Override
-//    @OverridingMethodsMustInvokeSuper
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Further investigation is needed to handle this correctly")
     public final void deleteBean(@Nonnull NamedTable namedTable, @Nonnull String property) throws PropertyVetoException {
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, namedTable);
@@ -321,6 +324,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultNamedTableManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultNamedTableManager.class);
 
 }

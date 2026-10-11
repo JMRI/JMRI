@@ -44,7 +44,7 @@ Durant le d&#233;marrage, JMRI obtients des informations suppl&#233;mentaires de
 <li>Les propres <a href="../../setup/profiles.shtml">informations de profiles et de configuration</a> de JMRI.
 </ul>
 
-<a name="linux" id="linux"></a>
+<a id="linux"></a>
 <h2>Linux</h2>
 
 <p>La distributions JMRI  pour Linux contient les scripts shell (bash)
@@ -145,25 +145,25 @@ Ils sont tous structur&#233;s de la m&#234;me fa&#231;on.</p>
 
 </dl>
 
-<a name="macosx"></a>
-<h2> Mac OS X</h2>
-Les Distributions JMRI pour Mac OS X contiennentt des groupements d'applications
+<a id="macosx"></a>
+<h2>macOS</h2>
+Les Distributions JMRI pour macOS contiennentt des groupements d'applications
 pour chacune des applications principales: DecoderPro, PanelPro, etc
 Ceux-ci fournissent des ic&#244;nes d'application famili&#232;res pour l'utilisateur.
 
 <p>
-Pour enregistrer les groupements avec Mac OS X, ils doivent &#234;tre copi&#233;s
+Pour enregistrer les groupements avec macOS, ils doivent &#234;tre copi&#233;s
   depuis l'image disque distribu&#233;e sur le disque de dur de l'utilisateur.</p>
 
 <h3>D&#233;tails des Scripts</h3>
 
-<p>Chaque Groupement a un script shell de d&#233;marrage (Bash) dans le r&#233;pertoire Contents/Mac OS X
+<p>Chaque Groupement a un script shell de d&#233;marrage (Bash) dans le r&#233;pertoire Contents/MacOS
 qui fait le d&#233;marrage actuellement.
 C'est le m&#234;me script que celui utilis&#233; pour Linux,
 voir SVP <a href="#linux">cette section</a>
 pour les d&#233;tails.</p>
 
-<a name="windows"></a>
+<a id="windows"></a>
 <h2>Windows</h2>
 
 <p>Jusqu'&#224; et y compris la version JMRI 2.3.2, le fichiers Windows.bat cr&#233;&#233; juste une commande java
@@ -313,7 +313,7 @@ La structure de cr&#233;ation des Ic&#244;nes du bureau est semblable &#224; cel
     <dd>"C:\Program Files\JMRI\decpro5.ico"</dd>
 </dl>
 
-<a name="old_DecoderPro"></a>
+<a id="old_DecoderPro"></a>
 <h4>R&#233;cup&#233;ration des versions ant&#233;rieures de DecoderPro &#224; 4.0.x</h4>
 
 <p>Le DecoderPro qui existait pr&#233;c&#233;demment &#224; la version 4.0.x a &#233;t&#233; enlev&#233; des paquet de distribution et "DecoderPro 3" a &#233;t&#233; promu pour &#234;tre la seule version DecoderPro disponible.</p>

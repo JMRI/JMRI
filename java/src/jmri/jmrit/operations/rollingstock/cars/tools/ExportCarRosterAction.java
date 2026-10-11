@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 
 /**
  * Starts the ImportCars thread
@@ -26,5 +26,5 @@ public class ExportCarRosterAction extends AbstractAction {
         exportCars.writeOperationsCarFile();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(ExportCarRosterAction.class);
 }

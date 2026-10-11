@@ -249,5 +249,5 @@ public class GcTrafficController extends TrafficController {
 
     private int gcState;
 
-    private final static Logger log = LoggerFactory.getLogger(GcTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(GcTrafficController.class);
 }

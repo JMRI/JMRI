@@ -48,6 +48,13 @@ public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("getCount",2222, m.getCount());
     }
 
+    @Test
+    public void spc200rTest300() {
+        SpeedoReply m  = new SpeedoReply("\u0051\u0010\u0031\u0000\u0003\u0000\u0000");
+        Assert.assertEquals("getSeries",200, m.getSeries());
+        Assert.assertEquals("getCount",300, m.getCount());
+    }
+
     @Override
     @AfterEach
     public void tearDown() {

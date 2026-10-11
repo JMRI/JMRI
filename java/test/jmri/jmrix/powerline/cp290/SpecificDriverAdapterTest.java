@@ -2,7 +2,6 @@ package jmri.jmrix.powerline.cp290;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,24 +9,22 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class SpecificDriverAdapterTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("SpecificDriverAdapter constructor",new SpecificDriverAdapter());
-   }
+    @Test
+    public void testCp290SpecificDriverAdapterConstructor(){
+        Assertions.assertNotNull( new SpecificDriverAdapter(), "SpecificDriverAdapter constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
-
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

@@ -18,8 +18,12 @@ import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -29,56 +33,56 @@ import org.junit.jupiter.api.*;
  */
 public class JsonSignalMastSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Test
-    public void testSignalMastChange() {
-        try {
-            //create a signalmast for testing
-            String sysName = "IF$shsm:basic:one-searchlight(IH2)";
-            String userName = "SM2";
-            InstanceManager.getDefault(SignalHeadManager.class).register(new VirtualSignalHead("IH2"));
-            SignalMast s = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(sysName);
-            s.setUserName(userName);
+    public void testSignalMastChange() throws IOException, JmriException, JsonException {
 
-            JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-            JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
-            JsonSignalMastSocketService service = new JsonSignalMastSocketService(connection);
+        //create a signalmast for testing
+        String sysName = "IF$shsm:basic:one-searchlight(IH2)";
+        String userName = "SM2";
+        InstanceManager.getDefault(SignalHeadManager.class).register(new VirtualSignalHead("IH2"));
+        SignalMast s = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(sysName);
+        s.setUserName(userName);
 
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            // TODO: test that service is listener in SignalMastManager
-            message = connection.getMessage();
-            Assert.assertNotNull("Message is not null", message);
-            Assert.assertEquals(JSON.ASPECT_UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asText());
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
+        JsonSignalMastSocketService service = new JsonSignalMastSocketService(connection);
 
-            //change to Approach, and wait for change to show up
-            s.setAspect("Approach");
-            JUnitUtil.waitFor(() -> {
-                return s.getAspect().equals("Approach");
-            }, "SignalMast is now Approach");
-            message = connection.getMessage();
-            Assert.assertNotNull("Message is not null", message);
-            Assert.assertEquals("Approach", message.path(JSON.DATA).path(JSON.STATE).asText());
+        service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        // TODO: test that service is listener in SignalMastManager
+        message = connection.getMessage();
+        assertNotNull( message, "Message is not null");
+        assertEquals(JSON.ASPECT_UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asText());
 
-            //change to Stop, and wait for change to show up
-            s.setAspect("Stop");
-            JUnitUtil.waitFor(() -> {
-                return s.getAspect().equals("Stop");
-            }, "SignalMast is now Stop");
-            message = connection.getMessage();
-            Assert.assertNotNull("Message is not null", message);
-            Assert.assertEquals("Stop", message.path(JSON.DATA).path(JSON.STATE).asText());
+        //change to Approach, and wait for change to show up
+        s.setAspect("Approach");
+        JUnitUtil.waitFor(() -> {
+            var aspect = s.getAspect();
+            return ( aspect != null && "Approach".equals(aspect));
+        }, "SignalMast is now Approach");
+        message = connection.getMessage();
+        assertNotNull( message, "Message is not null");
+        assertEquals("Approach", message.path(JSON.DATA).path(JSON.STATE).asText());
 
-            service.onClose();
-//            // TODO: test that service is no longer a listener in SignalMastManager
-        } catch (IOException | JmriException | JsonException ex) {
-            Assert.fail(ex.getMessage());
-        }
+        //change to Stop, and wait for change to show up
+        s.setAspect("Stop");
+        JUnitUtil.waitFor(() -> {
+            var aspect = s.getAspect();
+            return ( aspect != null && "Stop".equals(aspect));
+        }, "SignalMast is now Stop");
+        message = connection.getMessage();
+        assertNotNull( message, "Message is not null");
+        assertEquals("Stop", message.path(JSON.DATA).path(JSON.STATE).asText());
+
+        service.onClose();
+        // TODO: test that service is no longer a listener in SignalMastManager
+
     }
 
     @Test
     public void testOnMessageChange() {
-        JsonNode message;
+
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonSignalMastSocketService service = new JsonSignalMastSocketService(connection);
         //create a signalmast for testing
@@ -88,43 +92,30 @@ public class JsonSignalMastSocketServiceTest {
         SignalMast s = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(sysName);
         s.setUserName(userName);
 
-        try {
+        assertDoesNotThrow( () -> {
             // SignalMast Stop
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
+            JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.assertEquals("Stop", s.getAspect()); //aspect should be Stop
-        } catch (IOException | JmriException | JsonException ex) {
-            Assert.fail(ex.getMessage());
-        }
+        });
+        assertEquals("Stop", s.getAspect(), "aspect should be Stop");
 
-        // Try to set SignalMast to Unknown, should throw error, remain at Stop
-        Exception exception = null;
-        try {
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
+        JsonException exception = assertThrows( JsonException.class, () -> {
+            JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.assertEquals("Stop", s.getAspect());
-        } catch (IOException | JmriException | JsonException ex) {
-            exception = ex;
-        }
-        Assert.assertNotNull(exception);
+        },"set SignalMast to Unknown, should throw error, remain at Stop");
+        assertNotNull(exception);
 
-        // set SignalMast no value, should throw error, remain at Stop
-        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
-        exception = null;
-        try {
-            service.onMessage(JsonSignalMast.SIGNAL_MAST, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        } catch (JsonException ex) {
-            exception = ex;
-        } catch (IOException | JmriException ex) {
-            Assert.fail(ex.getMessage());
-        }
-        Assert.assertNull(exception);
-        Assert.assertEquals("Stop", s.getAspect());
+        assertDoesNotThrow( () -> {
+            JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
+            service.onMessage(JsonSignalMast.SIGNAL_MAST, message,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+            }, "set SignalMast no value, should remain at Stop");
+        assertEquals("Stop", s.getAspect());
     }
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultSignalMastManager();
@@ -133,7 +124,7 @@ public class JsonSignalMastSocketServiceTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

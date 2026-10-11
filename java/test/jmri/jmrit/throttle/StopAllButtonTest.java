@@ -1,7 +1,8 @@
 package jmri.jmrit.throttle;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import jmri.jmrit.throttle.buttons.StopAllButton;
 
 /**
  * Test simple functioning of StopAllButton
@@ -13,17 +14,17 @@ public class StopAllButtonTest {
     @Test
     public void testCtor() {
         StopAllButton panel = new StopAllButton();
-        Assert.assertNotNull("exists", panel);
+        Assertions.assertNotNull( panel, "exists");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }

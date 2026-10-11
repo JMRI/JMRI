@@ -21,7 +21,7 @@ public class ConnectionNameFromSystemName {
      *         prefix
      */
     @CheckForNull
-    static public String getConnectionName(@Nonnull String prefix) {
+    public static String getConnectionName(@Nonnull String prefix) {
         SystemConnectionMemo memo = getSystemConnectionMemoFromSystemPrefix(prefix);
         if (memo != null) {
             return memo.getUserName();
@@ -36,7 +36,7 @@ public class ConnectionNameFromSystemName {
      * @return The system prefix or null if no connection has the given name
      */
     @CheckForNull
-    static public String getPrefixFromName(@Nonnull String name) {
+    public static String getPrefixFromName(@Nonnull String name) {
         SystemConnectionMemo memo = getSystemConnectionMemoFromUserName(name);
         if (memo != null) {
             return memo.getSystemPrefix();
@@ -52,7 +52,7 @@ public class ConnectionNameFromSystemName {
      * @return the SystemConnectionMemo or null if no memo exists
      */
     @CheckForNull
-    static public SystemConnectionMemo getSystemConnectionMemoFromSystemPrefix(@Nonnull String systemPrefix) {
+    public static SystemConnectionMemo getSystemConnectionMemoFromSystemPrefix(@Nonnull String systemPrefix) {
         for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
             if (memo.getSystemPrefix().equals(systemPrefix)) {
                 return memo;
@@ -68,7 +68,7 @@ public class ConnectionNameFromSystemName {
      * @return the SystemConnectionMemo or null if no memo exists
      */
     @CheckForNull
-    static public SystemConnectionMemo getSystemConnectionMemoFromUserName(@Nonnull String userName) {
+    public static SystemConnectionMemo getSystemConnectionMemoFromUserName(@Nonnull String userName) {
         for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
             if (memo.getUserName().equals(userName)) {
                 return memo;

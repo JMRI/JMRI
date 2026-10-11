@@ -20,21 +20,21 @@
     
 <!-- CV114 -->
       <variable item="Shunting Speed Active Function" CV="114" default="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
         <label>Shunting Speed Active Function</label>
         <label xml:lang="cs">Posunvací rychlost aktivuje</label>
       </variable>
       
 <!-- CV115 -->
       <variable item="Switch Off Acceleration Deceleration Function" CV="115" default="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
         <label>Switch Off Acceleration Deceleration Function</label>
         <label xml:lang="cs">Zrychlení zpomalení vypne</label>
       </variable>
       
 <!-- CV116 -->
       <variable item="Disable Constant Braking Distance Function" CV="116" default="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
         <label>Disable Constant Braking Distance Function</label>
         <label xml:lang="cs">Konstantní brzdnou dráhu vypne</label>
       </variable>

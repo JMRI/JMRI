@@ -8,7 +8,7 @@ package jmri.jmrix.nce.networkdriver;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
-    public final static String NAME = "Network Interface";
+    public static final String NAME = "Network Interface";
 
     /**
      * Ctor for an object being created during load process; Swing init is

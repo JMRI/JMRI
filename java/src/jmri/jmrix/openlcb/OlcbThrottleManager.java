@@ -14,8 +14,9 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbThrottleManager extends AbstractThrottleManager {
 
+    @Deprecated (since="5.13.3", forRemoval=true)
     public OlcbThrottleManager() {
-        super();
+        this(jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
     }
 
     /**
@@ -103,6 +104,6 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbThrottleManager.class);
 
 }

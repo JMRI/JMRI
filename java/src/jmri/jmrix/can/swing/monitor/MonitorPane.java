@@ -76,7 +76,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("CanMonitorTitle"),
@@ -86,6 +86,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MonitorPane.class);
+    private static final Logger log = LoggerFactory.getLogger(MonitorPane.class);
 
 }

@@ -2,7 +2,6 @@ package jmri.web.servlet.roster;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class RosterServletTest {
     @Test
     public void testCtor() {
         RosterServlet a = new RosterServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

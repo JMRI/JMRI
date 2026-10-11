@@ -194,5 +194,5 @@ public class NceSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemo.class);
 }

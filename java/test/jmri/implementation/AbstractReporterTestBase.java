@@ -1,8 +1,13 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.Reporter;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -32,10 +37,10 @@ abstract public class AbstractReporterTestBase {
     @Test
     public void testCtor() {
         // Check that it is not a null object
-        Assert.assertNotNull("Created Reporter not null", r);
+        assertNotNull(r, "Created Reporter not null");
         // Check that CurrentReport and LastReport return a null object
-        Assert.assertNull("CurrentReport at initialisation is 'null'", r.getCurrentReport());
-        Assert.assertNull("LastReport at initialisation is 'null'", r.getLastReport());
+        assertNull(r.getCurrentReport(), "CurrentReport at initialisation is 'null'");
+        assertNull(r.getLastReport(), "LastReport at initialisation is 'null'");
     }
 
     @Test
@@ -43,21 +48,21 @@ abstract public class AbstractReporterTestBase {
         // Report a String
         r.setReport(generateObjectToReport());
         // Check that both CurrentReport and LastReport are not null
-        Assert.assertNotNull("CurrentReport Object exists", r.getCurrentReport());
-        Assert.assertNotNull("LastReport Object exists", r.getLastReport());
+        assertNotNull(r.getCurrentReport(), "CurrentReport Object exists");
+        assertNotNull(r.getLastReport(), "LastReport Object exists");
         // Check the value of both CurrentReport and LastReport
-        Assert.assertEquals("CurrentReport equals LastReport",r.getLastReport(), r.getCurrentReport());
+        assertEquals(r.getLastReport(), r.getCurrentReport(), "CurrentReport equals LastReport");
 
         // Nothing to report now
         r.setReport(null);
         // Check that CurrentReport returns a null value, but LastReport returns the reported String
-        Assert.assertNull("After null report, CurrentReport is null", r.getCurrentReport());
-        Assert.assertNotNull("After null report, LastReport String is not null",r.getLastReport());
+        assertNull(r.getCurrentReport(), "After null report, CurrentReport is null");
+        assertNotNull(r.getLastReport(), "After null report, LastReport String is not null");
     }
 
     @Test
     public void testGetBeanType(){
-         Assert.assertEquals("bean type",r.getBeanType(),Bundle.getMessage("BeanNameReporter"));
+         assertEquals(Bundle.getMessage("BeanNameReporter"), r.getBeanType(), "bean type");
     }
 
     @Test
@@ -68,26 +73,26 @@ abstract public class AbstractReporterTestBase {
         // Report a String
         r.setReport(generateObjectToReport());
         // Check that both CurrentReport and LastReport were seen
-        Assert.assertTrue("CurrentReport seen", currentReportSeen);
-        Assert.assertTrue("LastReport seen", lastReportSeen);
+        assertTrue(currentReportSeen, "CurrentReport seen");
+        assertTrue(lastReportSeen, "LastReport seen");
 
         // Nothing to report now
         currentReportSeen = false;
         lastReportSeen = false;
         r.setReport(null);
         // Check that CurrentReport was seen
-        Assert.assertTrue("CurrentReport seen after null", currentReportSeen);
+        assertTrue(currentReportSeen, "CurrentReport seen after null");
         // Check that LastReport was not seen (no change on null)
-        Assert.assertFalse("LastReport seen after null", lastReportSeen);
+        assertFalse(lastReportSeen, "LastReport seen after null");
     }
-    
+
     @Test
     public void testAddRemoveListener() {
-        Assert.assertEquals("starts 0 listeners", 0, r.getNumPropertyChangeListeners());
+        int initialListeners = r.getNumPropertyChangeListeners();
         r.addPropertyChangeListener(new TestReporterListener());
-        Assert.assertEquals("controller listener added", 1, r.getNumPropertyChangeListeners());
+        assertEquals(initialListeners+1, r.getNumPropertyChangeListeners(), "controller listener added");
         r.dispose();
-        Assert.assertTrue("controller listeners remaining < 1", r.getNumPropertyChangeListeners() < 1);
+        assertEquals(0, r.getNumPropertyChangeListeners(), "0 listeners after dispose");
     }
 
     protected boolean currentReportSeen = false;

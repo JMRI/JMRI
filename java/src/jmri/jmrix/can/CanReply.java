@@ -223,6 +223,10 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         return monString();
     }
 
+    public void setSourceLetter(String source) {
+        sourceLetter = source;
+    }
+    
     // contents (package access)
     int _header;
     boolean _isExtended;

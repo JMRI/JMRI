@@ -147,6 +147,6 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogOpsModeProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogOpsModeProgrammer.class);
 
 }

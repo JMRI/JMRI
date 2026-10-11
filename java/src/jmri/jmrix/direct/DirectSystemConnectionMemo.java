@@ -103,6 +103,6 @@ public class DirectSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         register();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DirectSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(DirectSystemConnectionMemo.class);
 
 }

@@ -18,6 +18,7 @@
 <!-- Based on decoder manual 0.0.11. With support of Train-O-Matic.         -->
 
   <version author="lbijlsma@pobox.com" version="1" lastUpdated="20231107"/>
+  <version author="lbijlsma@pobox.com" version="2" lastUpdated="20250116"/> <!-- factReset CV8 -->
   <decoder>
     <family name="Function Decoders" mfg="Tehnologistic (train-O-matic)">
       <model model="FD Micro" numOuts="6" numFns="32" lowVersionID="1" highVersionID="7" productID="2010106,2010107,2010108,2010109,2010110,2010111,2010112">
@@ -1543,7 +1544,7 @@
     </variables>
 
     <resets>
-      <factReset CV="8" default="78">
+      <factReset CV="8" default="8">
           <label>HARD RESET all CVs reset to default values</label>
           <label xml:lang="cs">HARD RESET všechny CV se resetují na výchozí hodnoty</label>
       </factReset>

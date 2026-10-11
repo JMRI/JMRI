@@ -27,6 +27,6 @@ public class ChannelStartTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ChannelStartTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ChannelStartTest.class);
 
 }

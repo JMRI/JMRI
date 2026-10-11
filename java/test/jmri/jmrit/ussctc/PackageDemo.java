@@ -16,7 +16,7 @@ public class PackageDemo {
     }
 
     // Main entry point
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -28,8 +28,11 @@ public class PackageDemo {
 
         // load file that defines various NamedBeans and pops a demo panel
         try {
-            InstanceManager.getDefault(ConfigureManager.class)
+            boolean loaded = InstanceManager.getDefault(ConfigureManager.class)
                     .load(new java.io.File("java/test/jmri/jmrit/ussctc/PackageDemo.xml"));
+            if (!loaded){
+                log.error("Could not load PackageDemo.xml");
+            }
             InstanceManager.getDefault(LogixManager.class).activateAllLogixs();
         } catch (Exception e) { System.err.println(e); }
 
@@ -100,5 +103,5 @@ public class PackageDemo {
             });
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PackageDemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PackageDemo.class);
 }

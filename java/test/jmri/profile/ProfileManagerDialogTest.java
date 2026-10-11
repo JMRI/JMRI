@@ -1,9 +1,8 @@
 package jmri.profile;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,11 +13,11 @@ public class ProfileManagerDialogTest {
 
     @Test
     @Disabled("works locally, causes crash on Travis")
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame();
         ProfileManagerDialog t = new ProfileManagerDialog(jf,false);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(jf);
     }
@@ -33,6 +32,6 @@ public class ProfileManagerDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProfileManagerDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProfileManagerDialogTest.class);
 
 }

@@ -1,14 +1,15 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test FemaleSocket
@@ -36,11 +37,10 @@ public class SocketTest {
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG(logixNG, "An empty conditionalNG");
         DefaultFemaleDigitalActionSocket b = new DefaultFemaleDigitalActionSocket(conditionalNG, listener, "A1");
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -51,7 +51,7 @@ public class SocketTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

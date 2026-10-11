@@ -1,16 +1,18 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.util.JUnitAppender;
-
-import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Locale;
 
-import static org.assertj.core.api.ThrowableAssert.catchThrowable;
-import static org.assertj.core.api.Assertions.assertThat;
+import jmri.Manager;
+import jmri.NamedBean;
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2019
@@ -19,12 +21,11 @@ public class Z21RMBusAddressTest {
 
     @Test
     public void testGetBitFromAddress() {
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(Z21RMBusAddress.getBitFromSystemName("ZS150","Z")).isEqualTo(150);
-        softly.assertThat(Z21RMBusAddress.getBitFromSystemName("ZS999","Z")).isEqualTo(-1);
-        softly.assertAll();
+        assertEquals( 150, Z21RMBusAddress.getBitFromSystemName("ZS150","Z"));
+        assertEquals( -1, Z21RMBusAddress.getBitFromSystemName("ZS999","Z"));
         JUnitAppender.assertWarnMessage("Z21 RM Bus hardware address out of range in system name ZS999");
     }
+
     @Test
     public void testValidateSystemNameFormat() {
         Z21TrafficController znis = new Z21InterfaceScaffold();
@@ -32,22 +33,22 @@ public class Z21RMBusAddressTest {
         memo.setTrafficController(znis);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         Z21SensorManager sm = new Z21SensorManager(memo);
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(Z21RMBusAddress.validateSystemNameFormat("ZS1", sm, Locale.ENGLISH)).isEqualTo("ZS1");
-        softly.assertThat(Z21RMBusAddress.validateSystemNameFormat("ZS75", sm, Locale.ENGLISH)).isEqualTo("ZS75");
-        softly.assertThat(Z21RMBusAddress.validateSystemNameFormat("ZS128", sm, Locale.ENGLISH)).isEqualTo("ZS128");
-        softly.assertAll();
 
-        Throwable thrown = catchThrowable(() -> {
+        assertEquals( "ZS1", Z21RMBusAddress.validateSystemNameFormat("ZS1", sm, Locale.ENGLISH));
+        assertEquals( "ZS75", Z21RMBusAddress.validateSystemNameFormat("ZS75", sm, Locale.ENGLISH));
+        assertEquals( "ZS128", Z21RMBusAddress.validateSystemNameFormat("ZS128", sm, Locale.ENGLISH));
+
+
+        Throwable thrown = assertThrows(NamedBean.BadSystemNameException.class, () -> {
             Z21RMBusAddress.validateSystemNameFormat("ZS0a:b", sm, Locale.ENGLISH);
         });
-        assertThat(thrown).isInstanceOf(NamedBean.BadSystemNameException.class);
+        assertNotNull(thrown);
         JUnitAppender.suppressWarnMessage("invalid character in number field of system name: ZS0b:a");
 
-        thrown = catchThrowable(() -> {
+        thrown = assertThrows( NamedBean.BadSystemNameException.class, () -> {
             Z21RMBusAddress.validateSystemNameFormat("ZS999", sm, Locale.ENGLISH);
         });
-        assertThat(thrown).isInstanceOf(NamedBean.BadSystemNameException.class);
+        assertNotNull(thrown);
         JUnitAppender.suppressWarnMessage("Z21 RM Bus hardware address out of range in system name ZS999");
         sm.dispose();
         znis.terminateThreads();
@@ -55,26 +56,25 @@ public class Z21RMBusAddressTest {
 
     @Test
     public void testValidSystemNameFormat() {
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(Z21RMBusAddress.validSystemNameFormat("ZS1",'S',"Z")).isEqualTo(Manager.NameValidity.VALID);
-        softly.assertThat(Z21RMBusAddress.validSystemNameFormat("ZS75",'S',"Z")).isEqualTo(Manager.NameValidity.VALID);
-        softly.assertThat(Z21RMBusAddress.validSystemNameFormat("ZS128",'S',"Z")).isEqualTo(Manager.NameValidity.VALID);
-        softly.assertThat(Z21RMBusAddress.validSystemNameFormat("ZS0b:a",'S',"Z")).isEqualTo(Manager.NameValidity.INVALID);
-        softly.assertThat(Z21RMBusAddress.validSystemNameFormat("ZS999",'S',"Z")).isEqualTo(Manager.NameValidity.INVALID);
-        softly.assertAll();
+
+        assertEquals(Manager.NameValidity.VALID, Z21RMBusAddress.validSystemNameFormat("ZS1",'S',"Z"));
+        assertEquals(Manager.NameValidity.VALID, Z21RMBusAddress.validSystemNameFormat("ZS75",'S',"Z"));
+        assertEquals(Manager.NameValidity.VALID, Z21RMBusAddress.validSystemNameFormat("ZS128",'S',"Z"));
+
+        assertEquals(Manager.NameValidity.INVALID, Z21RMBusAddress.validSystemNameFormat("ZS0b:a",'S',"Z"));
+        JUnitAppender.assertWarnMessage("invalid character in number field of system name: ZS0b:a");
+        assertEquals(Manager.NameValidity.INVALID, Z21RMBusAddress.validSystemNameFormat("ZS999",'S',"Z"));
         JUnitAppender.assertWarnMessage("Z21 RM Bus hardware address out of range in system name ZS999");
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
-
+        JUnitUtil.tearDown();
     }
 
 }

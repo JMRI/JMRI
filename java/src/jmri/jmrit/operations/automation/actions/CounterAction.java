@@ -30,4 +30,9 @@ public class CounterAction extends Action {
     public String getStatus() {
         return Integer.toString(_counter);
     }
+    
+    @Override
+    public void reset() {
+        _counter = 0;
+    }
 }

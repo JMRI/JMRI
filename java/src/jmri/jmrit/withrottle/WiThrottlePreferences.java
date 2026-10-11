@@ -306,7 +306,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         displayFastClock = value;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

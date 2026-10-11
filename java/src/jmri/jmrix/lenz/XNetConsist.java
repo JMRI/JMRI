@@ -19,6 +19,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     private static final int IDLESTATE = 0;
     private static final int ADDREQUESTSENTSTATE = 1;
     private static final int REMOVEREQUESTSENTSTATE = 2;
+    private static final String CONSIST_TYPE_NOT_SUPPORTED = "Consist Type Not Supported";
 
     private int _state = IDLESTATE;
 
@@ -90,7 +91,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 this.consistType = consistType;
                 break;
             default:
-                log.error("Consist Type Not Supported");
+                log.error(CONSIST_TYPE_NOT_SUPPORTED);
                 notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.NotImplemented);
                 break;
         }
@@ -139,7 +140,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
             return (consistList.contains(address));
         } else {
-            log.error("Consist Type Not Supported");
+            log.error(CONSIST_TYPE_NOT_SUPPORTED);
             notifyConsistListeners(address, ConsistListener.NotImplemented);
         }
         return false;
@@ -155,9 +156,11 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
-            return consistDir.get(address);
+            // consistDir.get(address) returns a Boolean, auto-unboxed to
+            // primitive boolean here.
+            return consistDir.getOrDefault(address, false);
         } else {
-            log.error("Consist Type Not Supported");
+            log.error(CONSIST_TYPE_NOT_SUPPORTED);
             notifyConsistListeners(address, ConsistListener.NotImplemented);
         }
         return false;
@@ -226,7 +229,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                         // from the command station
                         _locoAddress = locoAddress;
                         _directionNormal = directionNormal;
-                    } else if (consistList.size() < 1) {
+                    } else if (consistList.isEmpty()) {
                         // we're going to just add this directly, since we
                         // can't form the consist yet.
                         addToConsistList(locoAddress, directionNormal);
@@ -257,7 +260,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 }
                 break;
             default:
-                log.error("Consist Type Not Supported");
+                log.error(CONSIST_TYPE_NOT_SUPPORTED);
                 notifyConsistListeners(locoAddress, ConsistListener.NotImplemented);
                 break;
         }
@@ -282,7 +285,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 addToConsistList(locoAddress, directionNormal);
                 break;
             default:
-                log.error("Consist Type Not Supported");
+                log.error(CONSIST_TYPE_NOT_SUPPORTED);
                 notifyConsistListeners(locoAddress, ConsistListener.NotImplemented);
                 break;
         }
@@ -322,7 +325,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 }
                 break;
             default:
-                log.error("Consist Type Not Supported");
+                log.error(CONSIST_TYPE_NOT_SUPPORTED);
                 notifyConsistListeners(locoAddress, ConsistListener.NotImplemented);
                 break;
         }
@@ -437,6 +440,16 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     @Override
     public synchronized void message(XNetReply l) {
+        // remove() for ADVANCED_CONSIST is fire-and-forget: it sends the
+        // XNet message and returns immediately, with the actual list/state
+        // update happening later in this callback. dispose() does not wait
+        // for those replies before nulling out consistList, so a reply for
+        // an already-disposed consist must be ignored here rather than
+        // acting on torn-down state.
+        if (consistList == null) {
+            log.debug("Ignoring reply for consist {} -- already disposed", consistAddress);
+            return;
+        }
         if (_state != IDLESTATE) {
             // we're waiting for a reply, so examine what we received
             if (l.isOkMessage()) {
@@ -527,6 +540,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
 
     @Override
     public void message(XNetMessage l) {
+        // we don't care about outgoing messages
     }
 
    // Handle a timeout notification

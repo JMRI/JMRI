@@ -22,7 +22,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
     protected WindowInterface wi;
     protected Object context = null;
-    private final static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class);
+    private static final Logger log = LoggerFactory.getLogger(JmriAbstractAction.class);
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
@@ -98,7 +98,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
                 return;
             }
             if (cache == null) {
-                log.error("Unable to make panel");
+                log.info("Not creating panel {}", toString());
                 return;
             }
         }
@@ -126,9 +126,5 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     }
 
     abstract public JmriPanel makePanel();
-    /* {
-        log.error("makePanel must be overridden", new Exception());
-        return null;
-    } */
 
 }

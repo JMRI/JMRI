@@ -25,13 +25,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AccessibilityChecks {
 
-    private final static boolean LOGSYSTEMOUT = Boolean.getBoolean("jmri.util.AccessibilityChecks.logToSystemOut"); // false unless set true
+    private static final boolean LOGSYSTEMOUT = Boolean.getBoolean("jmri.util.AccessibilityChecks.logToSystemOut"); // false unless set true
 
-    private final static boolean WARNISSUES   = Boolean.getBoolean("jmri.util.AccessibilityChecks.warnOnIssue"); // false unless set true
+    private static final boolean WARNISSUES   = Boolean.getBoolean("jmri.util.AccessibilityChecks.warnOnIssue"); // false unless set true
 
-    private final static boolean ASSERTFAIL   = Boolean.getBoolean("jmri.util.AccessibilityChecks.failOnIssue"); // false unless set true
+    private static final boolean ASSERTFAIL   = Boolean.getBoolean("jmri.util.AccessibilityChecks.failOnIssue"); // false unless set true
 
-    private final static boolean INCLUDELAF   = Boolean.getBoolean("jmri.util.AccessibilityChecks.includeLaf"); // false unless set true
+    private static final boolean INCLUDELAF   = Boolean.getBoolean("jmri.util.AccessibilityChecks.includeLaf"); // false unless set true
 
     /**
      * Check a JPanel or Container for Accessibility issues.
@@ -180,6 +180,6 @@ public class AccessibilityChecks {
         ).collect(Collectors.toSet());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AccessibilityChecks.class);
+    private static final Logger log = LoggerFactory.getLogger(AccessibilityChecks.class);
 
 }

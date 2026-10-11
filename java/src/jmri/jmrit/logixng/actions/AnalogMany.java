@@ -105,8 +105,8 @@ public class AnalogMany extends AbstractAnalogAction
     
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /** {@inheritDoc} */
@@ -309,6 +309,6 @@ public class AnalogMany extends AbstractAnalogAction
     }
 
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogMany.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogMany.class);
 
 }

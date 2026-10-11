@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2026</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2026-01-10</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Alt_max_speed_forward" CV="147" default="0">
+		<decVal max="255"/>
+		<label>Alternative maximum speed forward (CV 147)</label>
+		<label xml:lang="de">Alternative Höchstgeschwindigkeit vorwärts (CV 147)</label>
+		<tooltip>0 - 255</tooltip>
+		<tooltip xml:lang="de">0 - 255</tooltip>
+	</variable>
+	<variable item="Alt_max_speed_backward" CV="148" default="0">
+		<decVal max="255"/>
+		<label>Alternative maximum speed backward (CV 148)</label>
+		<label xml:lang="de">Alternative Höchstgeschwindigkeit rückwärts (CV 148)</label>
+		<tooltip>0 - 255</tooltip>
+		<tooltip xml:lang="de">0 - 255</tooltip>
+	</variable>
+	<variable item="Alt_max_speed_fkey" CV="149" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
+		<label>Alternative maximum speed Function Key (CV 149)</label>
+		<label xml:lang="de">Funktionstaste für alternative Höchstgeschwindigkeit (CV 149)</label>
+		<tooltip>(0 - 68) 255 = Off</tooltip>
+		<tooltip xml:lang="de">F1 - F68 / 255 = Aus</tooltip>
+	</variable>
+</variables>

@@ -43,6 +43,9 @@ import org.slf4j.LoggerFactory;
  *   <a href="http://jmri.org/xml/schema/decoder-4-15-2.xsd">xml/schema/decoder-4-15-2.xsd</a>
  *   for validation)
  * </ul>
+ * <p>
+ * Variables track their states, as shown below.<br>
+ * <a href="doc-files/VariableStates.png"><img src="doc-files/VariableStates.png" alt="States for variables and their colors" height="33%" width="33%"></a>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2005, 2013
  * @author Howard G. Penny Copyright (C) 2005
@@ -235,7 +238,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Default implementation for subclasses to tell if a CV meets a common
      * definition of "changed". This implementation will only consider a
      * variable to be changed if the underlying CV(s) state is EDITED, e.g. if
-     * the CV(s) has been manually edited.
+     * the CV(s) has been manually edited, or UNKNOWN.
      *
      * @param c CV to be examined
      * @return true if to be considered changed
@@ -723,6 +726,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public abstract CvValue[] usesCVs();
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(VariableValue.class);
+    private static final Logger log = LoggerFactory.getLogger(VariableValue.class);
 
 }

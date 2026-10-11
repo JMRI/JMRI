@@ -2,9 +2,13 @@ package jmri.jmrit.simpleturnoutctrl;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.InstanceManager;
 import jmri.Turnout;
 
@@ -19,20 +23,20 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     private static final String UNLOCKED = Bundle.getMessage("Normal");
 
     // GUI member declarations
-    javax.swing.JTextField adrTextField = new javax.swing.JTextField(8);
+    private final javax.swing.JTextField adrTextField = new javax.swing.JTextField(8);
 
-    javax.swing.JButton throwButton = new javax.swing.JButton();
-    javax.swing.JButton closeButton = new javax.swing.JButton();
+    private final JButton throwButton = new JButton();
+    private final JButton closeButton = new JButton();
 
-    javax.swing.JLabel nowStateLabel = new javax.swing.JLabel();
+    private final JLabel nowStateLabel = new JLabel();
 
-    javax.swing.JLabel nowFeedbackLabel = new javax.swing.JLabel();
+    private final JLabel nowFeedbackLabel = new JLabel();
 
-    javax.swing.JLabel lockButtonLabel = new javax.swing.JLabel();
-    javax.swing.JButton lockButton = new javax.swing.JButton();
+    private final JLabel lockButtonLabel = new JLabel();
+    private final JButton lockButton = new JButton();
 
-    javax.swing.JLabel lockPushButtonLabel = new javax.swing.JLabel();
-    javax.swing.JButton lockPushButton = new javax.swing.JButton();
+    private final JLabel lockPushButtonLabel = new JLabel();
+    private final JButton lockPushButton = new JButton();
 
     public SimpleTurnoutCtrlFrame() {
         super();
@@ -46,23 +50,13 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         throwButton.setVisible(true);
         throwButton.setToolTipText(Bundle.getMessage("ThrowButtonToolTip",
                 InstanceManager.turnoutManagerInstance().getThrownText()));
-        throwButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                throwButtonActionPerformed(e);
-            }
-        });
+        throwButton.addActionListener(this::throwButtonActionPerformed);
 
         closeButton.setText(InstanceManager.turnoutManagerInstance().getClosedText());
         closeButton.setVisible(true);
         closeButton.setToolTipText(Bundle.getMessage("ThrowButtonToolTip",
                 InstanceManager.turnoutManagerInstance().getClosedText()));
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                closeButtonActionPerformed(e);
-            }
-        });
+        closeButton.addActionListener(this::closeButtonActionPerformed);
 
         nowStateLabel.setText(Bundle.getMessage("BeanStateUnknown"));
         nowStateLabel.setVisible(true);
@@ -77,12 +71,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         lockButton.setVisible(true);
         lockButton.setEnabled(false);
         lockButton.setToolTipText(Bundle.getMessage("LockButtonToolTip"));
-        lockButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                lockButtonActionPerformed(e);
-            }
-        });
+        lockButton.addActionListener(this::lockButtonActionPerformed);
 
         lockPushButtonLabel.setText(Bundle.getMessage("PushButtonLabel"));
         lockPushButtonLabel.setVisible(true);
@@ -91,12 +80,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         lockPushButton.setVisible(true);
         lockPushButton.setEnabled(false);
         lockPushButton.setToolTipText(Bundle.getMessage("PushButtonToolTip"));
-        lockPushButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                lockPushButtonActionPerformed(e);
-            }
-        });
+        lockPushButton.addActionListener(this::lockPushButtonActionPerformed);
         // general GUI config
         setTitle(Bundle.getMessage("FrameTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -280,15 +264,16 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     /**
      * Update state field in GUI as state of turnout changes.
+     * @param e The Event received from the Turnout.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // If the Commanded State changes, show transition state as "<inconsistent>" 
-        if (e.getPropertyName().equals("CommandedState")) { // NOI18N
+        if ( Turnout.PROPERTY_COMMANDED_STATE.equals(e.getPropertyName())) {
             nowStateLabel.setText(Bundle.getMessage("BeanStateInconsistent"));
         }
-        if (e.getPropertyName().equals("KnownState")) { // NOI18N
-            int now = ((Integer) e.getNewValue()).intValue();
+        if ( Turnout.PROPERTY_KNOWN_STATE.equals(e.getPropertyName())) {
+            int now = ((Integer) e.getNewValue());
             switch (now) {
                 case Turnout.UNKNOWN:
                     nowStateLabel.setText(Bundle.getMessage("BeanStateUnknown"));
@@ -304,7 +289,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                     return;
             }
         }
-        if (e.getPropertyName().equals("locked")) { // NOI18N
+        if ( Turnout.PROPERTY_LOCKED.equals(e.getPropertyName())) {
             if (turnout.canLock(Turnout.CABLOCKOUT)) {
                 if (turnout.getLocked(Turnout.CABLOCKOUT)) {
                     lockButton.setText(LOCKED);
@@ -371,19 +356,17 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 return;
             default:
                 nowStateLabel.setText(Bundle.getMessage("BeanStateInconsistent"));
-                return;
         }
     }
 
     void invalidTurnout(String name, Exception ex) {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class)
                 .showErrorMessage(this, Bundle.getMessage("ErrorTitle"),
                         (Bundle.getMessage("ErrorConvertHW", name)),
                         ex.toString(), "", true, false);
     }
 
-    Turnout turnout = null;
-    String newState = "";
+    private Turnout turnout = null;
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleTurnoutCtrlFrame.class);
 

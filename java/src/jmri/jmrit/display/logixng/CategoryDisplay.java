@@ -1,13 +1,13 @@
 package jmri.jmrit.display.logixng;
 
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 
 /**
  * Defines the category Display
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public final class CategoryDisplay extends Category {
+public final class CategoryDisplay extends LogixNG_Category {
 
     /**
      * An item related to panels.
@@ -20,8 +20,8 @@ public final class CategoryDisplay extends Category {
     }
 
     public static void registerCategory() {
-        if (!Category.values().contains(DISPLAY)) {
-            Category.registerCategory(DISPLAY);
+        if (!LogixNG_Category.values().contains(DISPLAY)) {
+            LogixNG_Category.registerCategory(DISPLAY);
         }
     }
 

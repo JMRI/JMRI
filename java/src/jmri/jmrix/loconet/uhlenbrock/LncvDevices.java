@@ -47,7 +47,7 @@ public class LncvDevices {
     }
 
     /**
-     * Get index of device with matching Mfg, ProdID, Num and
+     * Get index in deviceList of the first device matching Mfg, ProdID, Num and
      * Device Address.
      * Where a deviceToBeFound parameter is -1, that parameter is not compared.
      *
@@ -96,6 +96,6 @@ public class LncvDevices {
         return deviceList.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LncvDevices.class);
+    private static final Logger log = LoggerFactory.getLogger(LncvDevices.class);
 
 }

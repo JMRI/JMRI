@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -12,6 +13,8 @@ import java.io.File;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,12 +67,12 @@ public class PortalManagerTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
-    public void testChangeNames() throws Exception {
+    public void testChangeNames() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
@@ -114,13 +117,18 @@ public class PortalManagerTest {
        // OBlock of route
         String[] route1 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
         OBlock block = _OBlockMgr.getOBlock("OB11");
+        assertNotNull(block);
+
+        Sensor s = block.getSensor();
+        assertNotNull(s);
 
         // Run the train, then checks end location
-        assertEquals( block.getSensor().getDisplayName(),
+        assertEquals( s.getDisplayName(),
             NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName(),
             "Fred made it to block OB11");
 
         // passed test - cleanup.
+        warrant.dispose();
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         jfo.waitClosed();
@@ -138,9 +146,11 @@ public class PortalManagerTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File folder) {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
+        assertDoesNotThrow( () ->
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder)));
+
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
@@ -161,6 +171,6 @@ public class PortalManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PortalManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PortalManagerTest.class);
 
 }

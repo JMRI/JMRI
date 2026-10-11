@@ -1,12 +1,13 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the DccSignalHead implementation
@@ -16,11 +17,11 @@ import org.junit.Assert;
 public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
-    public void testCtor1() {
+    public void testDccSignalHeadCtor1() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
-        Assert.assertEquals("system name", "IH$1", s.getSystemName());
-        Assert.assertEquals("Send count", 0, sentPacketCount);
+        assertEquals( "IH$1", s.getSystemName(), "system name");
+        assertEquals( 0, sentPacketCount, "Send count");
     }
 
     @Test
@@ -29,11 +30,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.RED);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x00, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x00, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -44,11 +45,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
         s.setAppearance(SignalHead.RED);  // Default is DARK
         s.setAppearance(SignalHead.DARK);
 
-        Assert.assertEquals("Send count", 2, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x08, lastSentPacket[2] & 0xFF);
+        assertEquals( 2, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x08, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -58,11 +59,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.LUNAR);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x03, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x03, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -72,11 +73,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.YELLOW);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x01, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x01, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -86,11 +87,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.GREEN);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x02, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x02, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -100,11 +101,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.FLASHRED);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x04, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x04, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -114,11 +115,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.FLASHLUNAR);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x07, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x07, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -128,11 +129,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.FLASHYELLOW);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x05, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x05, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -142,11 +143,11 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
         s.setAppearance(SignalHead.FLASHGREEN);
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x06, lastSentPacket[2] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x06, lastSentPacket[2] & 0xFF, "Packet byte 2");
 
     }
 
@@ -158,7 +159,7 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
     }
     
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
 
@@ -184,11 +185,12 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
         lastSentPacket = null;
         sentPacketCount = 0;
     }
-    byte[] lastSentPacket;
-    int sentPacketCount;
+
+    private byte[] lastSentPacket;
+    private int sentPacketCount;
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

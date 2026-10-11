@@ -50,7 +50,21 @@ public class NceCmdStationMemory {
     public int getConsistHeadAddr() {
         return 0xF500;  // start of NCE CS Consist Head memory
     }
+    
+    /*
+     * give size of consist head table
+     */
+    public int getConsistHeadSize() {
+        return 0x0100;  // size of NCE CS Consist Head memory
+    }
 
+    /*
+     * give addr of consist data
+     */
+    public int getConsistAddr() {
+        return getConsistHeadAddr();    // mostly for the page needed by the USB
+    }
+    
     /*
      * give addr consist tail
      */
@@ -59,24 +73,38 @@ public class NceCmdStationMemory {
     }
     
     /*
+     * give size of consist tail table
+     */
+    public int getConsistTailSize() {
+        return 0x0100;  // size of NCE CS Consist Tail memory
+    }
+    
+    /*
      * give addr consist middle
      */
     public int getConsistMidAddr() {
-        return 0xF700;  // start of NCE CS Consist memory
+        return 0xF700;  // start of NCE CS Consist Middle memory
+    }
+
+    /*
+     * give addr consist middle
+     */
+    public int getConsistMidEntries() {
+        return 4;       // how many middle Consist entries/consist
     }
     
     /*
      * give size of consist mid table
      */
     public int getConsistMidSize() {
-        return 0x0600;  // size of NCE CS Consist memory
+        return 0x0400;  // size of NCE CS Consist Middle memory
     }
     
     /*
      * give minimum consist number
      */
     public int getConsistMin() {
-        return 1;
+        return 0;
     }
     
     /*

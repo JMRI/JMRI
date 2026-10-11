@@ -2,10 +2,7 @@ package jmri.jmrit.logixng.tools.swing.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ModuleEditorMaleSocketSwing
@@ -17,16 +14,15 @@ public class ModuleEditorMaleSocketSwingTest {
     @Test
     public void testCtor() {
         ModuleEditorMaleSocketSwing t = new ModuleEditorMaleSocketSwing();
-        Assert.assertNotNull("not null", t);
+        Assertions.assertNotNull( t, "not null");
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

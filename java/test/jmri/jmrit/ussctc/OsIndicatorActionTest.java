@@ -1,15 +1,14 @@
 package jmri.jmrit.ussctc;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.Action;
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -26,23 +25,24 @@ public class OsIndicatorActionTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testActionCreateAndFire() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         new OsIndicatorAction("test").actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOsIndicator"), true, true);
-        Assert.assertNotNull(f);
+        Assertions.assertNotNull(f);
         JUnitUtil.dispose(f);
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRouteManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

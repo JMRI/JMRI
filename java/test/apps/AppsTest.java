@@ -1,12 +1,9 @@
 package apps;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -15,11 +12,11 @@ import org.junit.Assume;
 public class AppsTest {
 
     @Test
+    @DisabledIfHeadless
     @Disabled("Test emits an (unknown) error message on Appveyor")
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Apps t = new Apps();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -32,5 +29,5 @@ public class AppsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AppsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AppsTest.class);
 }

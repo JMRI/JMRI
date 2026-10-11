@@ -65,7 +65,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
 
     /**
      * Set the CBUS Node to be used for NV programming
-     * 
+     *
      * @param n a CBUS node
      */
     public synchronized void setNodeOfInterest(CbusNode n) {
@@ -276,10 +276,27 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     }
 
     @Override
+    public Configurator getConfigurator() {
+        return new CbusDccProgrammerConfigurator();
+    }
+
+    @Override
     public void dispose() {
         removeTc(tc);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccProgrammer.class);
+
+    public class CbusDccProgrammerConfigurator implements Configurator {
+        /**
+         * Set the CBUS Node to be used for NV programming
+         *
+         * @param n a CBUS node
+         */
+        public synchronized void setNodeOfInterest(CbusNode n) {
+            CbusDccProgrammer.this.setNodeOfInterest(n);
+        }
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccProgrammer.class);
 
 }

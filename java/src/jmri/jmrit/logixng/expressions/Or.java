@@ -82,8 +82,8 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /** {@inheritDoc} */
@@ -351,6 +351,6 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Or.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Or.class);
 
 }

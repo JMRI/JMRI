@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?transform-xslt href="http://jmri.org/xml/decoders/Digitrax_0SFX_Series7.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014, 2025 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,11 +16,15 @@
   <!-- Cleanup 9/29/23:
 		PaneDigitraxSoundExtSeries7
 		Plain SDH167 decoder
-		Draft PaneDigitraxFunctionmapSeries7
-						-->
+		Draft PaneDigitraxFunctionmapSeries7 -->
+  <!-- Version4 8/13/25 
+		add SDYH167DST decoder 
+		revise CV usage -->
+					
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="John McMasters" version="1" lastUpdated="20230404"/>
   <version author="John McMasters" version="2" lastUpdated="20230929"/>
+  <version author="John McMasters" version="4" lastUpdated="20250813"/>
    
 <decoder>
     <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="205">
@@ -82,7 +86,7 @@
         <size length="1.28" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
           <functionlabel num="2" lockable="false">Horn / Whistle</functionlabel>
-          <functionlabel num="3" lockable="true">Coupler (Short Horn/Whistle)</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler (Shorter Horn/Whistle)</functionlabel>
           <functionlabel num="4" lockable="true">Dyn Brakes / Open Cylinder Cocks / ( light function (turn on rear light, etc.)</functionlabel>
           <functionlabel num="5" lockable="true">Emergency Lights / Steam BlowOff</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
           <functionlabel num="6" lockable="true">Ditchlights / Injector / Light function</functionlabel>
@@ -186,18 +190,58 @@
           <functionlabel num="28" lockable="true">Notch 8</functionlabel>
         </functionlabels>
       </model>
+	  <model model="SDYH167DST" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDYH167DST" comment="SDXH167ExtS Extended Steam Sound projects v7 by John McMasters">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="false">Horn / Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler (Shorter Horn/Whistle)</functionlabel>
+          <functionlabel num="4" lockable="true">Air feature disable / Steam Blowdown / BR Guards W</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+          <functionlabel num="5" lockable="true">Dyn Brakes / Steam Open Cylinder Cocks</functionlabel>
+          <functionlabel num="6" lockable="true">Light function / Steam Injector / BR User S2</functionlabel>
+          <functionlabel num="7" lockable="true">Alt Grade Crossing / BR User S3</functionlabel>
+          <functionlabel num="8" lockable="true">Mute (full-half-silent)]</functionlabel>
+          <functionlabel num="9" lockable="true">UnCouple - Disconnect (Short Horn/Whistle)</functionlabel>
+          <functionlabel num="10" lockable="true">Independent Brake (Brake to Stop)</functionlabel>   <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="11" lockable="true">Train Brake (Brake to Stop)</functionlabel>
+          <functionlabel num="12" lockable="true">EStop (Brake to Stop) Shutdown [disables motor movement when stopped]</functionlabel>
+          <functionlabel num="13" lockable="true">Quill / Coal or Oil Fill</functionlabel>
+          <functionlabel num="14" lockable="true">Air Pump / Compressor</functionlabel>
+          <functionlabel num="15" lockable="true">Engine Compartment Sounds / OPTION  / Hand Brake</functionlabel>
+          <functionlabel num="16" lockable="true">Water Fill / Traction Blower</functionlabel>
+          <functionlabel num="17" lockable="true">Air Dryer / Shovel Coal, Pump Oil / RESET / ABOUT</functionlabel>
+          <functionlabel num="18" lockable="true">Sander</functionlabel>
+          <functionlabel num="19" lockable="true">Air LetOff / Replace Whistle with Horn</functionlabel> 
+          <functionlabel num="20" lockable="true">High Fan / Coal Grate Shaker</functionlabel>
+          <functionlabel num="21" lockable="true">Notch 1 / Steam Greaser</functionlabel>
+          <functionlabel num="22" lockable="true">Cab Sounds / User Sounds / Steam BLOWER</functionlabel>
+          <functionlabel num="23" lockable="true">Flanges</functionlabel>
+          <functionlabel num="24" lockable="true">Reverser</functionlabel>
+          <functionlabel num="25" lockable="true">AUX generator - HEP / Safety Blowdown</functionlabel>
+          <functionlabel num="26" lockable="true">Notch UP / Wheel Slip on start-up</functionlabel>
+          <functionlabel num="27" lockable="true">Notch down /(Override wheel slip)</functionlabel>
+          <functionlabel num="28" lockable="true">Notch 8 / Heavy Load / De-Sync Articulated</functionlabel>
+        </functionlabels>
+      </model>
      <functionlabels>
         <functionlabel num="0" lockable="true">Lights</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
         <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
-        <functionlabel num="3" lockable="false">Coupler</functionlabel>
+        <functionlabel num="3" lockable="true">Coupler</functionlabel>
         <functionlabel num="4" lockable="true">Air feat disabled</functionlabel>
         <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
         <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
         <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
         <functionlabel num="8" lockable="true">Mute</functionlabel>
-        <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
-        <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
+        <functionlabel num="9" lockable="false">Xing Gate Airhorn</functionlabel>
+		<functionlabel num="10" lockable="true">Independent Brake (Brake to Stop)</functionlabel>   <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+        <functionlabel num="11" lockable="true">Train Brake (Brake to Stop)</functionlabel>
+        <functionlabel num="12" lockable="true">EStop (Brake to Stop) Shutdown [disables motor movement when stopped]</functionlabel>
         <functionlabel num="11" lockable="false">Greaser</functionlabel>
         <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
       </functionlabels>
@@ -214,6 +258,13 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
+      <variable CV="7" item="Decoder Version" readOnly="yes" default="207" include="SDYH167DST">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
       <variable CV="7" item="Decoder Version" readOnly="yes" default="203">
         <decVal/>
         <label>Version ID</label>
@@ -221,12 +272,24 @@
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
       </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="129" include="SDYH167DST">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
         <label>Manufacturer ID</label>
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="253" readOnly="yes" item="Product Number" default="11" include="SDYH167DST">
+        <!-- default 4 is before XF is available, so a read is needed for top of XF pane-->
+        <decVal/>
+        <label>Software Version</label>
       </variable>
       <variable CV="253" readOnly="yes" item="Product Number" default="4">
         <!-- default 4 is before XF is available, so a read is needed for top of XF pane-->
@@ -248,7 +311,226 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
   	 <!-- version 1 - Sound Options  "include"   -->
 	  <xi:include href="http://jmri.org/xml/decoders/digitrax/soundOptions7.xml"/> 
+	  
+      <!-- Sound Options -->
+        <variable CV="60" item="Sound Option 1" include="SDYH167DST">
+        <enumVal>
+          <enumChoice choice="Default Single Scheme">
+            <choice>Single Scheme or Multi-SPJ GP38-2</choice>
+          </enumChoice>
+          <enumChoice choice="Multi-SPJ ATSF 3751" value="10">
+            <choice>ATSF 3751 10</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Locomotive Sound Scheme [Multi SPJ=00,10,20,30,40,50,60,70]</label>
+      </variable>
 
+      <!-- Horn Selector -->
+      <variable CV="150" item="Sound Option 2" include="SDYH167DST">
+        <enumVal>
+          <enumChoice choice="Default Horn 1 / Whistle 1">
+            <choice>Standard Horn1 / Whistle1</choice>
+            <choice xml:lang="it">Tromba Standard</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 2 / Whistle 2">
+            <choice>Horn2 / Whistle2</choice>
+            <choice xml:lang="it">Tromba 2</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 3 / Whistle 3">
+            <choice>Horn3 / Whistle3</choice>
+            <choice xml:lang="it">Tromba 3</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 4 / Whistle 4">
+            <choice>Horn4 / Whistle4</choice>
+            <choice xml:lang="it">Tromba 4</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 5 / Horn 5">
+            <choice>Whistle5 / Horn5</choice>
+            <choice xml:lang="it">Tromba 5</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 1 / Whistle 1" value="128">
+            <choice>Playable Horn1 / Whistle1 128</choice>
+            <choice xml:lang="it">Tromba 128</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 2 / Whistle 2">
+            <choice>Playable Horn2 / Whistle2 129</choice>
+            <choice xml:lang="it">Tromba 129</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 3 / Whistle 3">
+            <choice>Playable Horn3 / Whistle3 130</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 4 / Whistle 4">
+            <choice>Playable Horn4 / Whistle4 131</choice>
+            <choice xml:lang="it">Tromba 131</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 5 / Horn 5">
+            <choice>Playable Whistle5 / Horn5 132</choice>
+            <choice xml:lang="it">Tromba 132</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Horn Selector</label>
+        <label xml:lang="it">Selettore Tromba</label>
+      </variable>
+	  
+      <variable CV="157" item="Sound Option 4" include="SDYH167DST">
+        <enumVal>
+          <enumChoice choice="Default Bell 1">
+            <choice>Standard Bell</choice>
+            <choice xml:lang="it">Campana Standard</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 2">
+            <choice>Bell 2</choice>
+            <choice xml:lang="it">Campana 1</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 3">
+            <choice>Bell 3</choice>
+            <choice xml:lang="it">Campana 3</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 4">
+            <choice>Bell 4</choice>
+            <choice xml:lang="it">Campana 4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Bell Selector</label>
+        <label xml:lang="it">Selettore Campana</label>
+      </variable>
+
+      <variable CV="151" item="Sound Option 5" default="28" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Peak Speed for Auto coupler/brake on dir change</label>
+        <label xml:lang="it">Velocità picco per freni/aggancio automatico per cambio direzione</label>
+      </variable>
+  
+	     <variable CV="155" item="Sound Option 6" default="0" include="SDYH167DST">
+        <enumVal>
+          <enumChoice choice="Automatic">
+            <choice>Automatic</choice>
+            <choice xml:lang="it">Automatico</choice>
+          </enumChoice>
+          <enumChoice choice="Semi-Automatic">
+            <choice>Semi-Automatic</choice>
+            <choice xml:lang="it">Semi automatico</choice>
+          </enumChoice>
+          <enumChoice choice="Manual">
+            <choice>Manual</choice>
+            <choice xml:lang="it">Manuale</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Notching Mode</label>
+        <label xml:lang="it">Modalità Notch</label>
+      </variable>
+
+	   <variable CV="10" item="Sound Option 8" default="0"   include="SDYH167DST">
+        <decVal/>
+		<label>BEMF tachometer voltage gain adjust</label>
+		<label xml:lang="it">BEMF tachometer voltage gain adjust</label>
+		<tooltip>Series7,8 will give about 1 scale mph at speed step 1% on DT6XX with factory default CV10=00, 127 = step 1 will be about 1/2 scale mph  </tooltip>
+	  </variable>
+	  <variable CV="129" item="Sound Option 9" readOnly="no" default="0"  include="SDYH167DST">
+        <enumVal>
+          <enumChoice choice="Std Power Curve" value="0">
+            <choice>Std Power Curve</choice>
+          </enumChoice>
+          <enumChoice choice="On:1" value="1">
+            <choice>On:1</choice>
+          </enumChoice>
+        </enumVal>
+		<label> (1=PW6, 0=PW7)(Selects logic to follow changes in motor speed)</label>
+      </variable>
+	  
+	  <variable CV="11" tooltip="Sound times out after loco is de-selected or idle" item="Sound Option 7" default="6" include="SDYH167DST">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+            <choice xml:lang="it">spento</choice>
+          </enumChoice>
+          <enumChoice choice="On:06" value="06">
+            <choice>On:06</choice>
+          </enumChoice>
+          <enumChoice choice="On:30" value="30">
+            <choice>On:30</choice>
+          </enumChoice>
+          <enumChoice choice="On:60" value="60">
+            <choice>On:60</choice>
+          </enumChoice>
+          <enumChoice choice="On:90" value="90">
+            <choice>On:90</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sound Time Out (seconds)</label>
+        <label xml:lang="it">Durata Suono</label>
+      </variable>
+
+  <variable CV="166" item="Sound Option 10" default="11"   include="SDYH167DST">
+    <decVal max="15"/>
+    <label>Cutoff Speed for wheel slip</label>
+    <label xml:lang="it">Cutoff Speed for wheel slip</label>
+    <tooltip>6-12, Max 15</tooltip>
+  </variable>
+
+  <variable CV="190" item="Sound Option 11" default="3"   include="SDYH167DST">
+    <decVal max="14"/>
+    <label>Cutoff Minimum Speed Slip</label>
+    <label xml:lang="it">Cutoff Minimum Speed SlipSlip</label>
+    <tooltip>Min 3-12, Max 14</tooltip>
+  </variable>
+
+  <variable CV="169" item="Sound Option 12" default="52"    include="SDYH167DST">
+    <decVal max="99"/>
+    <label>Cutoff Speed HIGH</label>
+    <label xml:lang="it">Cutoff Speed HIGH (chuffs, roar)</label>
+    <tooltip>50-60</tooltip>
+  </variable>
+
+  <variable CV="170" item="Sound Option 13" default="9"   include="SDYH167DST">
+    <decVal max="28"/>
+    <label>Cutoff Speed LOW</label>
+    <label xml:lang="it">Cutoff Speed LOW (braking)</label>
+    <tooltip>9-28</tooltip>
+  </variable>
+  
+  <variable CV="192" item="Sound Option 14" default="14"   include="SDYH167DST">
+    <decVal max="15"/>
+    <label>Cutoff Speed Braking</label>
+    <label xml:lang="it">Cutoff Speed Braking</label>
+    <tooltip>Min 12-14, Max 15</tooltip>
+  </variable>
+
+  <variable CV="167" item="Sound Option 15" default="8"   include="SDYH167DST">
+    <decVal max="15"/>
+    <label>Cutoff Speed for Auto Open Cyl</label>
+    <label xml:lang="it">Cutoff Speed for Auto Open Cyl</label>
+    <tooltip>Min 8-12, Max 15</tooltip>
+  </variable>
+
+  <variable CV="184" item="Sound Option 16" default="7"   include="SDYH167DST">
+    <decVal max="28"/>
+    <label>Steam cock blowdown threshold</label>
+    <label xml:lang="it">Velocità di Steam cock threshold</label>
+    <tooltip>Min 8-12, Max 28</tooltip>
+  </variable>
+  
+       <!-- Sound options -->
+      <variable CV="132" item="Sound Option 17" default="128" include="SDYH167DST">
+        <decVal/>
+        <label>Notch Rate</label>
+        <label xml:lang="it">Tasso di Notch</label>
+		<tooltip>also used for steam lt 128 is slower</tooltip>
+     </variable>
+      <variable CV="133" item="Sound Option 18" tooltip="DRIVER dia in.(5/32 to 200/32 ratio (96=3:1))" default="69" include="SDYH167DST">
+        <decVal max="128"/>
+        <label>Steam Chuff/CAM Config</label>
+        <label xml:lang="it">Configura Chuff-CAM</label>
+		<tooltip>bit7=1 means EXTERNAL INPUT_0 generates a special CAM code</tooltip>
+      </variable>
+      <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="23" include="SDYH167DST">
+        <decVal max="196"/>
+        <label>Driver Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+		<tooltip>from 10/32 to 96/32 ratio (96=3:1 chuff rate/per driver rev)</tooltip>
+      </variable>
+
+  	 <!-- version 1 - END Sound Options  "include"   -->
     <!-- Sound options -->
 
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
@@ -261,7 +543,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- Software information - Read-only -->
       <!-- Disabled for Series 6 - not documented in Digitrax Manual 2nd Edition
-      <variable label="Software Version" CV="121" readOnly="yes" default="3">
+      <variable label="Software Version" CV="121" readOnly="yes" default="2">
         <decVal/>
         <label>Software Version</label>
       </variable>
@@ -269,15 +551,15 @@
         <decVal/>
         <label>Product Type</label>
       </variable>
-      <variable label="Hardware Version" CV="123" readOnly="yes" default="17">
+      <variable label="Hardware Version" CV="123" readOnly="yes" default="50">
         <decVal/>
         <label>Hardware Version</label>
       </variable>
-      <variable label="Flash Signature" CV="124" readOnly="yes" default="2">
+      <variable label="Flash Signature" CV="124" readOnly="yes" default="7">
         <decVal/>
         <label>Flash Signature</label>
       </variable>
-      <variable label="16KB free blocks" CV="125" readOnly="yes" default="0">
+      <variable label="16KB free blocks" CV="125" readOnly="yes" default="155">
         <decVal/>
         <label>16KB free blocks</label>
       </variable>
@@ -285,7 +567,7 @@
         <decVal/>
         <label>FAT flags</label>
       </variable>
-      <variable label="Internal Flags" CV="127" readOnly="yes" default="0">
+      <variable label="Internal Flags" CV="127" readOnly="yes" default="67">
         <decVal/>
         <label>Internal Flags</label>
       </variable>
@@ -294,6 +576,11 @@
         <label>IPL counter</label>
       </variable>
       -->
+    <variable CV="152" item="Sound Project Author ID" default="212" readOnly="no" tooltip="0x19(25) = John McMasters" include="SDYH167DST">
+    <decVal/>
+    <label>Sound Project Author ID</label>
+    <label xml:lang="it">ID autore progetto Suono</label>
+    </variable>
     <variable CV="152" item="Sound Project Author ID" default="25" readOnly="no" tooltip="0x19(25) = John McMasters" include="SDH167,SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal/>
     <label>Sound Project Author ID</label>
@@ -312,6 +599,17 @@
         <tooltip>Code Project Identifier</tooltip>
 	  </variable>
 
+      <!-- Read-only variables -->
+      <variable item="Variant ID" CV="160" readOnly="no" default="4" include="SDYH167DST">
+        <decVal/>
+        <label>Variant ID</label>
+      </variable>
+	  <variable item="Sound Project Code Version" CV="160" default="80" readOnly="no" include="SDYH167DST">
+        <decVal/>
+        <label>Sound Project Code Version</label>
+        <label xml:lang="it">Version Suono</label>
+        <tooltip>80= base version 8.0</tooltip>
+      </variable>
 
       <!-- Read-only variables -->
       <variable item="Variant ID" CV="160" readOnly="no" default="4">
@@ -320,8 +618,516 @@
       </variable>
       <!-- Sound Settings -->
 	 <!-- version 1 - Sound Settings  "include"
+                                    John McMasters (2025-08-09)          -->
+ <!-- <xi:include href="http://jmri.org/xml/decoders/digitrax/soundSettings8.xml"/> -->
+  
+      <!-- Sound Settings -->
+       <variable CV="58" item="Sound Setting 1" default="6" tooltip="0-15, use about 4-8" include="SDYH167DST">
+        <decVal max="15"/>
+        <label>Master Volume</label>
+        <label xml:lang="it">Volume Principale</label>
+        <comment>0-15, use about 4-8</comment>
+        <comment xml:lang="it">0-15, usabile circa da 4 a 8</comment>
+      </variable>
+      <variable CV="140" item="Sound Setting 2" default="60"  include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Prime Mover/Chuff Volume</label>
+        <label xml:lang="it">Volume motore principale/Chuff</label>
+         <tooltip>low about =55, high about =62</tooltip>
+      </variable>
+      <variable CV="135" item="Sound Setting 3" default="30" include="SDYH167DST">
+        <decVal/>
+        <label>Volume When Muted</label>
+        <label xml:lang="it">Volume quando silenziato</label>
+        <tooltip>0=no muting, 30-40</tooltip>
+      </variable>
+      <variable CV="193" item="Sound Setting 4" default="58" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Rear Engine Volume</label>
+        <label xml:lang="it">Volume Motore Second</label>
+        <tooltip>4cyl articulated, dual prime mover</tooltip>
+      </variable>
+      <variable CV="141" item="Sound Setting 5" default="60" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Bell Volume</label>
+        <label xml:lang="it">Volume Campana</label>
+      </variable>
+      <variable CV="142" item="Sound Setting 6" default="61" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Horn/Whistle Volume</label>
+        <label xml:lang="it">Volume Tromba</label>
+      </variable>
+      <variable CV="143" item="Sound Setting 7" default="25" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Air Features Volume, brake release</label>
+        <label xml:lang="it">Volume Aria</label>
+      </variable>
+      <variable CV="144" item="Sound Setting 8" default="39" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Engine Independent Brake Volume</label>
+        <label xml:lang="it">Volume frenata</label>
+      </variable>
+      <variable CV="162" item="Sound Setting 9" default="25"   include="SDYH167DST">
+       <decVal max="64"/>
+       <label>Air Letoff / Injector Volume</label>
+       <label xml:lang="it">Injector Volume</label>
+	  </variable>
+	  <variable CV="194" item="Sound Setting 10" default="45"   include="SDYH167DST">
+       <decVal max="64"/>
+       <label>Alarm Volume</label>
+       <label xml:lang="it">Alarm Volume</label>
+       <tooltip>18-63</tooltip>
+      </variable>
+	  <variable CV="182" item="Sound Setting 11" default="21"   include="SDYH167DST">
+       <decVal max="64"/>
+       <label>Air sounds Volume</label>
+       <label xml:lang="it">Air sounds Volume</label>
+       <tooltip>18-63</tooltip>
+      </variable>
+	  
+  <variable CV="191" item="Sound Setting 12" default="45"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Drift Volume</label>
+    <label xml:lang="it">Drift Volume</label>
+    <tooltip>18-62 coasting</tooltip>
+  </variable>
+  <variable CV="171" item="Sound Setting 13" default="24"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>AUX GEN Volume</label>
+    <label xml:lang="it">Volume AUX GEN</label>
+    <tooltip>also for steam gen</tooltip>
+  </variable>
+  <variable CV="172" item="Sound Setting 14" default="23"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Fan Volume</label>
+    <label xml:lang="it">Fan Volume</label>
+    <tooltip>20-52</tooltip>
+  </variable>
+  <variable CV="173" item="Sound Setting 15" default="40"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Safety / Blow-down Volume</label>
+    <label xml:lang="it">Safety Volume</label>
+    <tooltip>28-62</tooltip>
+  </variable>
+  <variable CV="174" item="Sound Setting 16" default="42"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Air Feature Volume</label>
+    <label xml:lang="it">Air Feature Volume</label>
+    <tooltip>28-62, dryer</tooltip>
+  </variable>
+  <variable CV="175" item="Sound Setting 17" default="35"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Compressor Volume</label>
+    <label xml:lang="it">Compressor Volume</label>
+    <tooltip>18-52, air pump</tooltip>
+  </variable>
+  <variable CV="176" item="Sound Setting 18" default="20"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Traction Motor / Rod Driver Volume</label>
+    <label xml:lang="it">Traction Motor / Rod Driver Volume</label>
+    <tooltip>21-63, sound is pitched</tooltip>
+  </variable>
+  <variable CV="177" item="Sound Setting 19" default="20"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Coupler Volume</label>
+    <label xml:lang="it">Coupler Volume</label>
+    <tooltip>18-63, slack takeup</tooltip>
+  </variable>
+  <variable CV="178" item="Sound Setting 20" default="30"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Boiler Volume</label>
+    <label xml:lang="it">Boiler Volume</label>
+    <tooltip>18-63</tooltip>
+  </variable>
+
+  <variable CV="168" item="Sound Setting 21" default="20"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Sander / Stoker Volume</label>
+    <label xml:lang="it">Volume Gener. Stoker/Pompa Olio</label>
+    <tooltip>11-63</tooltip>
+  </variable>
+  
+  <variable CV="179" item="Sound Setting 22" default="29"    include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Dynamic brake / Dynamo Volume</label>
+    <label xml:lang="it">Dynamic Brake / Dynamo Volume</label>
+    <tooltip>18-63</tooltip>
+  </variable>
+  <variable CV="180" item="Sound Setting 23" default="1"   include="SDYH167DST">
+    <decVal max="100"/>
+    <label>Delay brake applyl</label>
+    <label xml:lang="it">Delay brake apply vol</label>
+    <tooltip>1-60, legacy</tooltip>
+  </variable>
+   <variable CV="181" item="Sound Setting 24" default="25"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Reverser Volume</label>
+    <label xml:lang="it">Reverser Volume</label>
+    <tooltip>18-63</tooltip>
+  </variable>
+  <variable CV="183" item="Sound Setting 25" default="20"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Water fill / Coal Fill Volume</label>
+    <tooltip>18-63</tooltip>
+  </variable>
+   <!-- Sound Speaker Balance +++ needs form for placement...-->
+ 
+	<variable CV="200" item="Sound Setting 26" default="61"   include="SDYH167DST">
+    <decVal max="255"/>
+    <label>Front Horn-Ch1</label>
+    <tooltip>0-255</tooltip>
+    </variable>
+	<variable CV="201" item="Sound Setting 27" default="76"   include="SDYH167DST">
+    <decVal max="255"/>
+    <label>Mid-front Reverser-Ch2, Bell -Ch3</label>
+    <tooltip>0-255</tooltip>
+    </variable>
+	<variable CV="202" item="Sound Setting 28" default="204"   include="SDYH167DST">
+    <decVal max="255"/>
+    <label>Center Prime mover-Ch1, Train brake-Ch4, Traction-Ch5</label>
+    <tooltip>0-255</tooltip>
+    </variable>
+	<variable CV="203" item="Sound Setting 29" default="196"   include="SDYH167DST">
+    <decVal max="255"/>
+    <label>Mid-rear Sander-Ch2, Drier-Ch6, Compressor-Ch8</label>
+    <tooltip>0-255</tooltip>
+    </variable>
+	<variable CV="204" item="Sound Setting 30" default="211"   include="SDYH167DST">
+    <decVal max="255"/>
+    <label>Rear Fans/Ch2, AUX gen/Ch4, Dynamics/Ch4 </label>
+    <tooltip>0-255</tooltip>
+    </variable>
+	<variable CV="205" item="Sound Setting 31" default="210"   include="SDYH167DST">
+    <decVal max="255"/>
+    <label>Tender</label>
+    <tooltip>0-255</tooltip>
+    </variable>
+  <!-- Sound Rates -->
+
+      <variable CV="147" item="Sound Setting 32" default="24" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Air Drier Rate</label>
+        <label xml:lang="it">Frequenza Compressore</label>
+        <tooltip>1= approx. 2 sec</tooltip>
+      </variable>
+      <variable CV="148" item="Sound Setting 33" default="25" include="SDYH167DST">
+        <decVal/>
+        <label>Compressor Airpump Start Rate</label>
+        <label xml:lang="it">Frequenza air pump Run</label>
+        <tooltip>Time ms. between Compressor Airpump cycles</tooltip>
+      </variable>
+      <variable CV="149" item="Sound Setting 34" default="36" include="SDYH167DST">
+        <decVal/>
+        <label>Compressor Airpump Run Time</label>
+        <label xml:lang="it">Tempo accensione Compressore</label>
+        <tooltip>sound quits when max air pressure</tooltip>
+      </variable>
+	  
+	  <variable CV="154" item="Sound Setting 35" default="22" include="SDYH167DST">
+        <decVal max="64"/>
+        <label>Steam Blow down Safety Volume</label>
+         <tooltip>blow down vol</tooltip>
+      </variable>
+	  
+      <variable CV="146" item="Sound Setting 36" default="0" include="SDYH167DST">
+        <decVal max="100"/>
+        <label>Bell Ring Rate</label>
+        <label xml:lang="it">Frequenza Campana</label>
+        <comment>24msec counts</comment>
+        <comment xml:lang="it">in passi da 24msec</comment>
+        <tooltip>delay 24msec counts - 1=24 milliseconds</tooltip>
+      </variable>
+	  
+       <variable CV="156" item="Sound Setting 37" default="10" include="SDYH167DST">
+        <decVal max="21"/>
+        <label>Playable Horn/Whistle Delay Rate</label>
+        <label xml:lang="it">Tasso Ritardo Tromba</label>
+        <tooltip>10 or more best</tooltip>
+      </variable>
+ 
+	<variable CV="161" item="Sound Setting 38"  default="23"  include="SDYH167DST">
+     <decVal max="96"/>
+     <label>Coal Stoker run time</label>
+     <tooltip> Coal Stoker Run Time</tooltip>
+	</variable>
+  <variable CV="163" item="Sound Setting 39" default="26"   include="SDYH167DST">
+    <decVal max="96"/>
+    <label>Safety Run Time</label>
+    <label xml:lang="it">Safety Run Time</label>
+  </variable>
+  <variable CV="164" item="Sound Setting 40" default="24"  include="SDYH167DST">
+    <decVal max="96"/>
+    <label>Air Pump Cycle Time</label>
+    <label xml:lang="it">Air Pump Cycle Time</label>
+    <tooltip>Level in the guage 10-64</tooltip>
+  </variable>
+  <variable CV="165" item="Sound Setting 41" default="15"  include="SDYH167DST">
+    <decVal max="96"/>
+    <label>Fuel (Stoker/Pump) Run Time</label>
+    <label xml:lang="it">Stoker/Pump Run Time</label>
+    <tooltip>18-60, add fuel</tooltip>
+  </variable>
+  
+  <variable CV="195" item="Sound Setting 42" default="45"   include="SDYH167DST">
+    <decVal max="64"/>
+    <label>Stoker Volume</label>
+    <label xml:lang="it">Volume Gener. Stoker/Pompa Olio</label>
+    <tooltip>11-63</tooltip>
+  </variable>
+     <!-- SDYH167DST has cv185-189 in Feature Disable: -->
+      <!-- Sound Settings -->
+	 <!-- version 1 - Sound Settings  "include"
                                     John McMasters (2023-04-4)          -->
  <xi:include href="http://jmri.org/xml/decoders/digitrax/soundSettings7.xml"/> 
+  <!-- Disable Feature Settings -->
+  <!--<xi:include href="http://jmri.org/xml/decoders/digitrax/featureSettings8.xml"/> -->
+
+  <!-- Disable Sound Settings -->
+  <variable item="Feature Disable Group 1" CV="185"    include="SDYH167DST">
+    <decVal/>
+    <label>Feature Disable Group 1</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.1</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-1" CV="185" mask="XXXXXXXV"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>HEP diesel / Aux Gen.</label>
+    <tooltip>HEP diesel=0, Aux Gen=1</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-2" CV="185" mask="XXXXXXVX"    include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable hard automatic braking</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-3" CV="185" mask="XXXXXVXX"    include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable start-up sounds</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-4" CV="185" mask="XXXXVXXX"    include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Fans</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-5" CV="185" mask="XXXVXXXX"    include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable toots on direction change</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-6" CV="185" mask="XXVXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable grade crossing random play</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-7" CV="185" mask="XVXXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable bell</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 1-8" CV="185" mask="VXXXXXXX"    include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Startup Sounds Opt</label>
+    <tooltip>Gen1 - Gen2</tooltip>
+  </variable>
+  
+  
+  <variable item="Feature Disable Group 2" CV="186"     include="SDYH167DST">
+    <decVal/>
+    <label>Feature Disable Group 2</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.2</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-1" CV="186" mask="XXXXXXXV"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Enable Diesel Low Idle</label>
+    <tooltip>Disabled =0, Enabled=1</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-2" CV="186" mask="XXXXXXVX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Chain Bells 1-4</label>
+    <tooltip>Disabled =1, Enabled=0 Single Bell =1</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-3" CV="186" mask="XXXXXVXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable STOKER change to SHOVEL</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-4" CV="186" mask="XXXXVXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>BR Option User Sounds</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-5" CV="186" mask="XXXVXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Shaft Driven Compressor</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-6" CV="186" mask="XXVXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Idle Hunt</label>
+    <tooltip>Disabled =0, Enabled=1, builtin with random idle hunt=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 2-7" CV="186" mask="XVXXXXXX"      include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Enable Builtin Idle Hunt</label>
+    <tooltip>Disabled =0, Enabled=1</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-8" CV="186" mask="VXXXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Dual/4cyl Prime Movers</tooltip>
+    <tooltip xml:lang="it">Dual/4cyl Prime Movers</tooltip>
+    <label>Disable Dual/4cyl Prime Movers</label>
+    <label xml:lang="it">Disable Dual/4cyl Prime Movers</label>
+  </variable>
+  
+  
+  <variable item="Feature Disable Group 3" CV="187"     include="SDYH167DST">
+    <decVal/>
+    <label>Feature Disable Group 3</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.3</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-1" CV="187" mask="XXXXXXXV"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Short Opt Horn/whistle</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-2" CV="187" mask="XXXXXXVX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Not Used</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-3" CV="187" mask="XXXXXVXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Bell</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-4" CV="187" mask="XXXXVXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Motor Lock</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-5" CV="187" mask="XXXVXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Startup Muted</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-6" CV="187" mask="XXVXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Dynamic Brakes</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 3-7" CV="187" mask="XVXXXXXX"      include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Inverse Direction - Cab Forward (Toots)</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 3-8" CV="187" mask="VXXXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Auto Wheel Slip</tooltip>
+    <label>Disable Auto Wheel Slip</label>
+  </variable>
+  
+  
+  <variable item="Feature Disable Group 4" CV="188"     include="SDYH167DST">
+    <decVal/>
+    <label>Feature Disable Group 4</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.4</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-1" CV="188" mask="XXXXXXXV"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Traction Motor</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-2" CV="188" mask="XXXXXXVX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable HILO HORN</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-3" CV="188" mask="XXXXXVXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Horn Delay</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-4" CV="188" mask="XXXXVXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable 4cyl DE-SYNC</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-5" CV="188" mask="XXXVXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable 3cyl</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-6" CV="188" mask="XXVXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Rod Clanks</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 4-7" CV="188" mask="XVXXXXXX"      include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Gen1 Transition</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 4-8" CV="188" mask="VXXXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Disable CV Reset ALL</tooltip>
+    <label>Interlock CV Reset ALL</label>
+  </variable>
+  
+  <variable item="Feature Disable Group 5" CV="189"     include="SDYH167DST">
+    <decVal/>
+    <label>Feature Disable Group 5</label>
+    <label xml:lang="it">Funzione Disabilitaz. Gr.5</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 5-1" CV="189" mask="XXXXXXXV"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused1</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 5-2" CV="189" mask="XXXXXXVX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused2</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 5-3" CV="189" mask="XXXXXVXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused3</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 5-4" CV="189" mask="XXXXVXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused4</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 5-5" CV="189" mask="XXXVXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused5</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 5-6" CV="189" mask="XXVXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused6</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 5-7" CV="189" mask="XVXXXXXX"      include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused7</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 5-8" CV="189" mask="VXXXXXXX"     include="SDYH167DST">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable notused8</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <!-- Disable Sound Settings -->
       <!-- Sound Settings -->
   <!-- Disable Feature Settings -->
  <xi:include href="http://jmri.org/xml/decoders/digitrax/featureSettings7.xml"/>	
@@ -352,6 +1158,113 @@
   <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundInfo.xml"/>
        <!-- inline sound levels and disables
  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundExtSeries6.xml"/> -->
+ 
+ 
+  <!-- <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundFeaturesSeries8.xml"/> -->
+<!-- Copyright (C) JMRI 2025 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!--                                                                        -->
+<!-- version 1 -  Created as a separate file from
+                   John McMasters' PaneDigitraxSoundExtSeries7.xml file     -->
+<!--                             for Digitrax Series 8 Sound Decoders       -->
+<!--                                    John McMasters (2025-08-09)      -->
+<!-- <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD"> -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" include="SDYH167DST">
+  <row>
+    <column>
+      <display item="Feature Disable Group 1"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Feature Disable Group 1-1" format="checkbox"/>
+      <display item="Feature Disable Group 1-2" format="checkbox"/>
+      <display item="Feature Disable Group 1-3" format="checkbox"/>
+      <display item="Feature Disable Group 1-4" format="checkbox"/>
+      <display item="Feature Disable Group 1-5" format="checkbox"/>
+      <display item="Feature Disable Group 1-6" format="checkbox"/>
+      <display item="Feature Disable Group 1-7" format="checkbox"/>
+      <display item="Feature Disable Group 1-8" format="checkbox"/>
+    </column>
+    <label>
+      <text>             </text>
+    </label>
+    <column>
+      <display item="Feature Disable Group 2"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Feature Disable Group 2-1" format="checkbox"/>
+      <display item="Feature Disable Group 2-2" format="checkbox"/>
+      <display item="Feature Disable Group 2-3" format="checkbox"/>
+      <display item="Feature Disable Group 2-4" format="checkbox"/>
+      <display item="Feature Disable Group 2-5" format="checkbox"/>
+      <display item="Feature Disable Group 2-6" format="checkbox"/>
+      <display item="Feature Disable Group 2-7" format="checkbox"/>
+      <display item="Feature Disable Group 2-8" format="checkbox"/>
+    </column>
+
+    <column>
+      <display item="Feature Disable Group 3"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Feature Disable Group 3-1" format="checkbox"/>
+      <display item="Feature Disable Group 3-2" format="checkbox"/>
+      <display item="Feature Disable Group 3-3" format="checkbox"/>
+      <display item="Feature Disable Group 3-4" format="checkbox"/>
+      <display item="Feature Disable Group 3-5" format="checkbox"/>
+      <display item="Feature Disable Group 3-6" format="checkbox"/>
+      <display item="Feature Disable Group 3-7" format="checkbox"/>
+      <display item="Feature Disable Group 3-8" format="checkbox"/>
+    </column>
+    <label>
+      <text>             </text>
+    </label>
+    <column>
+      <display item="Feature Disable Group 4"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Feature Disable Group 4-1" format="checkbox"/>
+      <display item="Feature Disable Group 4-2" format="checkbox"/>
+      <display item="Feature Disable Group 4-3" format="checkbox"/>
+      <display item="Feature Disable Group 4-4" format="checkbox"/>
+      <display item="Feature Disable Group 4-5" format="checkbox"/>
+      <display item="Feature Disable Group 4-6" format="checkbox"/>
+      <display item="Feature Disable Group 4-7" format="checkbox"/>
+      <display item="Feature Disable Group 4-8" format="checkbox"/>
+    </column>
+    <label>
+      <text>             </text>
+    </label>
+    <column>
+      <display item="Feature Disable Group 5"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Feature Disable Group 5-1" format="checkbox"/>
+      <display item="Feature Disable Group 5-2" format="checkbox"/>
+      <display item="Feature Disable Group 5-3" format="checkbox"/>
+      <display item="Feature Disable Group 5-4" format="checkbox"/>
+      <display item="Feature Disable Group 5-5" format="checkbox"/>
+      <display item="Feature Disable Group 5-6" format="checkbox"/>
+      <display item="Feature Disable Group 5-7" format="checkbox"/>
+      <display item="Feature Disable Group 5-8" format="checkbox"/>
+    </column>	
+	  </row>
+  <name>Digitrax Sound Series 8 Features</name>
+</pane>
+
  <!-- version 1 - Add new Sound Features  "include"
                  only to show with SDXH167 Extended Series 7 sound projects
                                     John McMasters (2023-04-4)          -->

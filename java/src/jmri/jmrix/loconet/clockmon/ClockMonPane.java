@@ -136,8 +136,8 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     JTextField rate = new JTextField(4);
 
     JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
-    final static JTextField spacer = new JTextField("123");
+    static final JTextField spacer = new JTextField("123");
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClockMonPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClockMonPane.class);
 
 }

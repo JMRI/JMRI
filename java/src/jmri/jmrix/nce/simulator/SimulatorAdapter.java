@@ -447,7 +447,8 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             }
             return reply;
         }
-        if (nceMemoryAddress >= tc.csm.getConsistHeadAddr() && nceMemoryAddress < tc.csm.getConsistHeadAddr() + tc.csm.getConsistMidSize()) {
+        if (nceMemoryAddress >= tc.csm.getConsistHeadAddr() &&
+                nceMemoryAddress < tc.csm.getConsistHeadAddr() + tc.csm.getConsistMidSize()) {
             log.debug("Reading consist memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = nceMemoryAddress - tc.csm.getConsistHeadAddr();
 
@@ -557,6 +558,6 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         return reply;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
 
 }

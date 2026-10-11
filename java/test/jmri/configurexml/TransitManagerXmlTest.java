@@ -1,12 +1,14 @@
 package jmri.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import jmri.*;
 import jmri.managers.DefaultTransitManager;
 import jmri.managers.configurexml.DefaultTransitManagerXml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for TransitManagerXml class.
@@ -17,50 +19,50 @@ import org.junit.Assert;
 
 public class TransitManagerXmlTest {
 
-   @Test
-   public void testCtor(){
-      Assert.assertNotNull("Constructor", new DefaultTransitManagerXml());
-   }
+    @Test
+    public void testCtor(){
+        assertNotNull( new DefaultTransitManagerXml(), "Constructor");
+    }
 
-   @Test
-   public void testNoElementIfEmpty(){
-      var tmx = new DefaultTransitManagerXml();
-      TransitManager tm = new DefaultTransitManager();
-      Assert.assertNull("No elements", tmx.store(tm));
-   }
+    @Test
+    public void testNoElementIfEmpty(){
+        var tmx = new DefaultTransitManagerXml();
+        TransitManager tm = new DefaultTransitManager();
+        assertNull( tmx.store(tm), "No elements");
+    }
 
-   @Test
-   public void testStoreOneTransit() throws Exception {
-      var tmx = new DefaultTransitManagerXml();
-      TransitManager tm = new DefaultTransitManager();
-      Transit t = tm.createNewTransit("TS1", "user");
+    @Test
+    public void testStoreOneTransit() {
+        var tmx = new DefaultTransitManagerXml();
+        TransitManager tm = new DefaultTransitManager();
+        Transit t = tm.createNewTransit("TS1", "user");
 
-      Section s = new jmri.implementation.DefaultSection("SS1");
-      TransitSection ts = new TransitSection(s,0,0,false);
+        Section s = new jmri.implementation.DefaultSection("SS1");
+        TransitSection ts = new TransitSection(s,0,0,false);
 
-      TransitSectionAction ta = new TransitSectionAction(0,0);
-      ts.addAction(ta);
+        TransitSectionAction ta = new TransitSectionAction(0,0);
+        ts.addAction(ta);
 
-      t.addTransitSection(ts);
+        t.addTransitSection(ts);
 
-      org.jdom2.Element e = tmx.store(tm);
-      Assert.assertNotNull("Element(s) returned", e );
+        org.jdom2.Element e = tmx.store(tm);
+        assertNotNull( e, "Element(s) returned" );
 
-      Assert.assertNotNull("Element(s) processed", tmx.load(e, null));
-   }
+        assertNotNull( tmx.load(e, null), "Element(s) processed");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
-   }
+    }
 
 }

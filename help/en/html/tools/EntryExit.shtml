@@ -133,7 +133,7 @@
 
       <p>Removing an Entry/Exit sensor from the Layout Editor panel requires that the Entry/Exit
       pairs that use the sensor are removed from the Entry/Exit list. If any affected Entry/Exit
-      pair is being used in a Logix Conditional, the sensor removal process is stopped.</p>
+      pair is being used in a Logix or LogixNG conditional, the sensor removal process is stopped.</p>
 
       <p>The primary method for deleting an Entry/Exit sensor is to right click on the icon and
       select <strong>Remove</strong>. A dialog box is displayed with 3 buttons.</p>
@@ -337,7 +337,7 @@
       and <a href="logixng/reference/chapter5.shtml#EntryExitActions">Actions</a>.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
-      
+
     </div>
     <!-- closes #mainContent-->
   </div>

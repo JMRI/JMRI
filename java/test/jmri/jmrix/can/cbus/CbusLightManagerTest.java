@@ -347,8 +347,9 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @Test
-    public void testcreateNewLightException() throws Exception {
-        Exception ex = Assert.assertThrows(IllegalArgumentException.class, () -> ((CbusLightManager)l).createNewLight("",null));
+    public void testcreateNewLightException() {
+        Exception ex = Assertions.assertThrows(IllegalArgumentException.class,
+            () -> ((CbusLightManager)l).createNewLight("",null));
         Assertions.assertNotNull(ex);
         JUnitAppender.assertErrorMessageStartsWith("Unable to create CbusLight, System name must start with \"ML\"");
 
@@ -386,5 +387,5 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class);
 }

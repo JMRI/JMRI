@@ -3,14 +3,14 @@ package jmri.jmrit.etcs.dmi.swing;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for DmiPanelA.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiPanelATest {
 
     @Test
@@ -83,7 +83,7 @@ public class DmiPanelATest {
             // JUnitUtil.waitFor(50);
         }
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 

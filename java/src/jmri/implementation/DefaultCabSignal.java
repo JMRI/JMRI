@@ -168,6 +168,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         return _nextBlock;
     }
 
+    @CheckForNull
     private Block nextBlockOnPath(Block current){
         int fromdirection = current.getDirection();
         List<Path> thispaths = current.getPaths();
@@ -190,21 +191,11 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
                 }
             }
         }
-      return null;
+        return null;
     }
 
-    private boolean directionMatch(int fromDirection, int toDirection ) {
-        return
-            (((fromDirection & Path.NORTH) != 0) && ((toDirection & Path.NORTH) != 0)) ||
-            (((fromDirection & Path.SOUTH) != 0) && ((toDirection & Path.SOUTH) != 0)) ||
-            (((fromDirection & Path.EAST) != 0) && ((toDirection & Path.EAST) != 0)) ||
-            (((fromDirection & Path.WEST) != 0) && ((toDirection & Path.WEST) != 0)) ||
-            (((fromDirection & Path.CW) != 0) && ((toDirection & Path.CW) != 0)) ||
-            (((fromDirection & Path.CCW) != 0) && ((toDirection & Path.CCW) != 0)) ||
-            (((fromDirection & Path.LEFT) != 0) && ((toDirection & Path.LEFT) != 0)) ||
-            (((fromDirection & Path.RIGHT) != 0) && ((toDirection & Path.RIGHT) != 0)) ||
-            (((fromDirection & Path.UP) != 0) && ((toDirection & Path.UP) != 0)) ||
-            (((fromDirection & Path.DOWN) != 0) && ((toDirection & Path.DOWN) != 0));
+    private static boolean directionMatch(int fromDirection, int toDirection ) {
+        return (fromDirection & toDirection) != 0;
     }
 
     /**
@@ -410,13 +401,14 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     //PropertyChangeListener interface
     @Override
     public void propertyChange(PropertyChangeEvent event){
-        if(event.getSource() instanceof Block) {
-            if (event.getPropertyName().equals("value")){
+        if(event.getSource() instanceof Block ) {
+            String propName = event.getPropertyName();
+            if ( Block.PROPERTY_VALUE.equals(propName)){
                 setBlock(); // change the block.
             }
 
             // block value is changed before direction is set
-            if ((event.getPropertyName().equals("state")) || (event.getPropertyName().equals("direction"))) {
+            if ( Block.PROPERTY_STATE.equals(propName) || Block.PROPERTY_DIRECTION.equals(propName)) {
                 // update internal state to cascade changes.
                 getNextBlock();
                 forwardCabSignalToLayout();

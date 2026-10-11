@@ -27,6 +27,6 @@ public class EcosLocoTableActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosLocoTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EcosLocoTableActionTest.class);
 
 }

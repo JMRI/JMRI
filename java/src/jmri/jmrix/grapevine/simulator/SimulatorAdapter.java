@@ -1,18 +1,11 @@
 package jmri.jmrix.grapevine.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
 
 import javax.annotation.Nonnull;
 
-import jmri.jmrix.grapevine.SerialMessage;
-import jmri.jmrix.grapevine.SerialPortController; // no special xSimulatorController
-import jmri.jmrix.grapevine.SerialReply;
-import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
-import jmri.jmrix.grapevine.SerialTrafficController;
+// no special xSimulatorController
+import jmri.jmrix.grapevine.*;
 import jmri.util.ImmediatePipedOutputStream;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -37,6 +30,7 @@ import jmri.util.swing.JmriJOptionPane;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
+@SuppressWarnings("javadoc")
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members

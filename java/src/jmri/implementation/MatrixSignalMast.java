@@ -1,15 +1,13 @@
 package jmri.implementation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SignalMast implemented via a Binary Matrix (Truth Table) of Apects x Turnout objects.
@@ -101,7 +99,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
     */
     public synchronized void setBitsForAspect(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
-            if (log.isDebugEnabled()) log.debug("Aspect {} is already defined as {}", aspect, java.util.Arrays.toString(aspectToOutput.get(aspect)));
+            if (log.isDebugEnabled()) {
+                log.debug("Aspect {} is already defined as {}", aspect, java.util.Arrays.toString(aspectToOutput.get(aspect)));
+            }
             aspectToOutput.remove(aspect);
         }
         aspectToOutput.put(aspect, bitArray); // store keypair aspectname - bitArray in hashmap
@@ -473,13 +473,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
-            if (evt.getOldValue() instanceof Turnout) {
-                if (isTurnoutUsed((Turnout) evt.getOldValue())) {
-                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e);
-                }
-            }
+        if (jmri.Manager.PROPERTY_CAN_DELETE.equals(evt.getPropertyName())
+                && (evt.getOldValue() instanceof Turnout) && (isTurnoutUsed((Turnout) evt.getOldValue()))) {
+            var e = new java.beans.PropertyChangeEvent(this, jmri.Manager.PROPERTY_DO_NOT_DELETE, null, null);
+            throw new java.beans.PropertyVetoException(
+                Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e);
         }
     }
 
@@ -489,6 +487,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * @param number int for the number of outputs defined for this mast
      * @see #mastBitNum
      */
+    @SuppressWarnings("javadoc")
     public void setBitNum(int number) {
             mastBitNum = number;
     }
@@ -499,6 +498,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * @param bits char[] for outputs defined for this mast
      * @see #mastBitNum
      */
+    @SuppressWarnings("javadoc")
     public void setBitNum(char[] bits) {
         mastBitNum = bits.length;
     }
@@ -509,7 +509,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     @Override
     public void setAspectDisabled(String aspect) {
-        if (aspect == null || aspect.equals("")) {
+        if (aspect == null || aspect.isEmpty()) {
             return;
         }
         if (!map.checkAspect(aspect)) {
@@ -518,7 +518,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
         if (!disabledAspects.contains(aspect)) {
             disabledAspects.add(aspect);
-            firePropertyChange("aspectDisabled", null, aspect);
+            firePropertyChange(PROPERTY_ASPECT_DISABLED, null, aspect);
         }
     }
 
@@ -546,6 +546,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return mDelay;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatrixSignalMast.class);
 
 }

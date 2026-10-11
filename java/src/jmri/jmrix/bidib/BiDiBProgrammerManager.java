@@ -61,7 +61,7 @@ public class BiDiBProgrammerManager extends DefaultProgrammerManager {
     // this centralizes the isGlobalProgrammerAvailable logic.  It
     // has to be static so it can be called during the construction of
     // an object of this class
-    static private boolean checkGlobalProgrammerAvailable(@Nonnull BiDiBTrafficController tc) {
+    private static boolean checkGlobalProgrammerAvailable(@Nonnull BiDiBTrafficController tc) {
         return (tc.getCurrentGlobalProgrammerNode() != null);
     }
 
@@ -69,18 +69,18 @@ public class BiDiBProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public Programmer getGlobalProgrammer() {
+    protected Programmer getConcreteGlobalProgrammer() {
         if (!isGlobalProgrammerAvailable()) {
             return null;
         }
-        return super.getGlobalProgrammer();
+        return super.getConcreteGlobalProgrammer();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new BiDiBOpsModeProgrammer(pAddress, tc);
     }
 
@@ -88,7 +88,7 @@ public class BiDiBProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null; //what is this??
     }
 
@@ -108,5 +108,5 @@ public class BiDiBProgrammerManager extends DefaultProgrammerManager {
         log.debug("release addressed programmer: {}", p);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammerManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammerManager.class);
 }

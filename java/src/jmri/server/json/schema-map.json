@@ -1,10 +1,10 @@
 [
     {
-        "publicURL": "http://json-schema.org/draft-04/schema#",
-        "localURL": "resource:/jmri/server/json/schema/json-schema.draftv4.json"
+        "publicURL": "https://json-schema.org/draft/2020-12/schema",
+        "localURL": "resource:/jmri/server/json/schema/json-schema.draft2020-12.json"
     },
     {
-        "publicURL": "http://json-schema.org/draft-04/schema",
-        "localURL": "resource:/jmri/server/json/schema/json-schema.draftv4.json"
+        "publicURL": "https://json-schema.org/draft/2020-12/schema#",
+        "localURL": "resource:/jmri/server/json/schema/json-schema.draft2020-12.json"
     }
 ]

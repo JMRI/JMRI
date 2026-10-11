@@ -58,13 +58,16 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
 
-    static int ROW_HEIGHT;
+    private static int ROW_HEIGHT;
     // This group will get runtime updates to system-specific contents at
     // the start of buildModel() above.  This is done to prevent
     // invoking the TurnoutManager at class construction time,
     // when it hasn't been configured yet
+
+    // used in RouteTurnout
     static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
+    // used in RouteTurnout
     static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
     private static String[] turnoutInputModes = new String[]{
@@ -74,7 +77,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
     };
-    private static String[] turnoutFeedbackModes = new String[]{Bundle.getMessage("TurnoutFeedbackKnown"),
+    private static final String[] turnoutFeedbackModes = new String[]{Bundle.getMessage("TurnoutFeedbackKnown"),
                                                                 Bundle.getMessage("TurnoutFeedbackCommanded")};
 
     private static String[] lockTurnoutInputModes = new String[]{
@@ -101,18 +104,18 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
     protected final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
-    ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
-    ArrayList<RouteSensor> _sensorList;        // array of all Sensors
-    RouteTurnoutModel _routeTurnoutModel;
-    JScrollPane _routeTurnoutScrollPane;
-    RouteSensorModel _routeSensorModel;
-    JScrollPane _routeSensorScrollPane;
-    NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
-    NamedBeanComboBox<Sensor> sensor1;
-    NamedBeanComboBox<Sensor> sensor2;
-    NamedBeanComboBox<Sensor> sensor3;
-    NamedBeanComboBox<Turnout> cTurnout;
-    NamedBeanComboBox<Turnout> cLockTurnout;
+    private ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
+    private ArrayList<RouteSensor> _sensorList;        // array of all Sensors
+    private RouteTurnoutModel _routeTurnoutModel;
+    private JScrollPane _routeTurnoutScrollPane;
+    private RouteSensorModel _routeSensorModel;
+    private JScrollPane _routeSensorScrollPane;
+    private NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
+    private NamedBeanComboBox<Sensor> sensor1;
+    private NamedBeanComboBox<Sensor> sensor2;
+    private NamedBeanComboBox<Sensor> sensor3;
+    private NamedBeanComboBox<Turnout> cTurnout;
+    private NamedBeanComboBox<Turnout> cLockTurnout;
     Route curRoute = null;
     boolean editMode = false;
     protected ArrayList<RouteTurnout> _includedTurnoutList;
@@ -123,7 +126,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private boolean showAll = true;   // false indicates show only included Turnouts
     private JFileChooser soundChooser = null;
     private ScriptFileChooser scriptChooser = null;
-    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
+    private boolean checkEnabled = InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     public AbstractRouteAddEditFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
@@ -274,9 +277,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         contentPanel.add(getControlsPanel());
         contentPanel.add(getLockPanel());
         contentPanel.add(getNotesPanel());
-        contentPanel.add(getButtonPanel());
 
         getContentPane().add(new JScrollPane(contentPanel), BorderLayout.CENTER);
+        getContentPane().add(getButtonPanel(), BorderLayout.SOUTH);
 
         pack();
 
@@ -464,7 +467,8 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
         routeTurnoutTable.setRowSorter(rtSorter);
         routeTurnoutTable.setRowSelectionAllowed(false);
-        routeTurnoutTable.setPreferredScrollableViewportSize(new Dimension(480, 80));
+        routeTurnoutTable.setPreferredScrollableViewportSize(
+            new Dimension(400 + (int)cTurnout.getMinimumSize().getWidth(), 80));
 
         setRowHeight(routeTurnoutTable.getRowHeight());
         JComboBox<String> stateTCombo = new JComboBox<>();
@@ -480,13 +484,13 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         TableColumn sNameColumnT = routeTurnoutColumnModel.
                 getColumn(RouteOutputModel.SNAME_COLUMN);
         sNameColumnT.setResizable(true);
-        sNameColumnT.setMinWidth(75);
-        sNameColumnT.setMaxWidth(95);
+        sNameColumnT.setMinWidth(95);
+
         TableColumn uNameColumnT = routeTurnoutColumnModel.
                 getColumn(RouteOutputModel.UNAME_COLUMN);
         uNameColumnT.setResizable(true);
         uNameColumnT.setMinWidth(210);
-        uNameColumnT.setMaxWidth(260);
+
         TableColumn stateColumnT = routeTurnoutColumnModel.
                 getColumn(RouteOutputModel.STATE_COLUMN);
         stateColumnT.setCellEditor(new DefaultCellEditor(stateTCombo));
@@ -522,7 +526,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         RowSorterUtil.setSortOrder(rsSorter, RouteOutputModel.SNAME_COLUMN, SortOrder.ASCENDING);
         routeSensorTable.setRowSorter(rsSorter);
         routeSensorTable.setRowSelectionAllowed(false);
-        routeSensorTable.setPreferredScrollableViewportSize(new Dimension(480, 80));
+        routeSensorTable.setPreferredScrollableViewportSize(
+            new Dimension(400 + (int)sensor1.getMinimumSize().getWidth(), 80));
+
         JComboBox<String> stateSCombo = new JComboBox<>();
         stateSCombo.addItem(SET_TO_ACTIVE);
         stateSCombo.addItem(SET_TO_INACTIVE);
@@ -536,13 +542,13 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         TableColumn sNameColumnS = routeSensorColumnModel.
                 getColumn(RouteOutputModel.SNAME_COLUMN);
         sNameColumnS.setResizable(true);
-        sNameColumnS.setMinWidth(75);
-        sNameColumnS.setMaxWidth(95);
+        sNameColumnS.setMinWidth(95);
+
         TableColumn uNameColumnS = routeSensorColumnModel.
                 getColumn(RouteOutputModel.UNAME_COLUMN);
         uNameColumnS.setResizable(true);
         uNameColumnS.setMinWidth(210);
-        uNameColumnS.setMaxWidth(260);
+
         TableColumn stateColumnS = routeSensorColumnModel.
                 getColumn(RouteOutputModel.STATE_COLUMN);
         stateColumnS.setCellEditor(new DefaultCellEditor(stateSCombo));
@@ -585,9 +591,11 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
     protected void showReminderMessage() {
         // Use the RouteTabelAction class to combine messages in Preferences -> Messages
-        if (checkEnabled) return;
+        if (checkEnabled) {
+            return;
+        }
         InstanceManager.getDefault(UserPreferencesManager.class).
-                showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
+                showInfoMessage(this, Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
                         jmri.jmrit.beantable.RouteTableAction.class.getName(), "remindSaveRoute"); // NOI18N
     }

@@ -121,7 +121,7 @@ public class NceMessageCheck {
         throw new JmriException(txt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class);
+    private static final Logger log = LoggerFactory.getLogger(NceMessageCheck.class);
 }
 
 

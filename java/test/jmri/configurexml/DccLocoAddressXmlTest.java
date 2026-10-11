@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * DccLocoAddressXmlTest.java
@@ -16,7 +15,7 @@ public class DccLocoAddressXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("DccLocoAddressXml constructor",new DccLocoAddressXml());
+      Assertions.assertNotNull(new DccLocoAddressXml(), "DccLocoAddressXml constructor");
     }
 
     @BeforeEach

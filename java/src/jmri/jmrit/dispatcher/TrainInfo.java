@@ -27,6 +27,8 @@ public class TrainInfo {
 
     // instance variables for both manual and automatic operation
     private int version = 1;
+    private boolean dynamicTransit = false;
+    private boolean dynamicTransitCloseLoopIfPossible = false;
     private String transitName = "";
     private String transitId = "";
     private String trainName = "";
@@ -35,6 +37,7 @@ public class TrainInfo {
     private String dccAddress = "3";
     private boolean trainInTransit = false;
     private String startBlockName = "";
+    private String viaBlockName = "";
     private String startBlockId = "";
     private int startBlockSeq = -1;
     private String destinationBlockName = "";
@@ -74,9 +77,11 @@ public class TrainInfo {
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
     private float maxSpeed = 1.0f;
+    // Maximum speed in scale km/h (0.0f means "use throttle % cap")
+    private float maxSpeedScaleKmh = 0.0f;
     private float minReliableOperatingSpeed = 0.0f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
-    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
+    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
     private float maxTrainLength = 100.0f;
@@ -85,11 +90,23 @@ public class TrainInfo {
     private boolean useSpeedProfile = false;
     private boolean stopBySpeedProfile = false;
     private float stopBySpeedProfileAdjust = 1.0f;
+    private int fNumberLight = 0;
+    private int fNumberBell = 1;
+    private int fNumberHorn = 2;
 
-    private float waitTime = 1.0f; //required only by dispatcher system to pause train at beginning of transit (station)
+    private float waitTime = 3.0f; //seconds:  required only by dispatcher system to pause train at beginning of transit (station)
 
     private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
+    
+    private Float stopByDistanceMm = 0.0f;
+    private StopReference stopByDistanceRef = StopReference.HEAD; // default choice
+    
+    // Physics: additional train weight, stored as metric tonnes (t)
+    private float additionalTrainWeightMetricTonnes = 0.0f;
+    
+    private boolean useStopSensor = true;
 
+    public enum StopReference { HEAD, TAIL }
 
     //
     // Access methods for manual and automatic instance variables
@@ -117,6 +134,21 @@ public class TrainInfo {
         return transitId;
     }
 
+    public void setDynamicTransit(boolean b) {
+        dynamicTransit = b;
+    }
+
+    public boolean getDynamicTransit() {
+        return dynamicTransit;
+    }
+
+    public void setDynamicTransitCloseLoopIfPossible(boolean b) {
+        dynamicTransitCloseLoopIfPossible = b;
+    }
+
+    public boolean getDynamicTransitCloseLoopIfPossible() {
+        return dynamicTransitCloseLoopIfPossible;
+    }
     public void setTrainName(String s) {
         trainName = s;
     }
@@ -131,6 +163,14 @@ public class TrainInfo {
 
     public String getRosterId() {
         return rosterID;
+    }
+    
+    public boolean getUseStopSensor() {
+        return useStopSensor;
+    }
+    
+    public void setUseStopSensor(boolean value) {
+        this.useStopSensor = value;
     }
 
     public void setTrainUserName(String s) {
@@ -165,6 +205,14 @@ public class TrainInfo {
         return startBlockName;
     }
 
+    public void setViaBlockName(String s) {
+        viaBlockName = s;
+    }
+
+    public String getViaBlockName() {
+        return viaBlockName;
+    }
+
     public void setStartBlockId(String s) {
         startBlockId = s;
     }
@@ -191,6 +239,22 @@ public class TrainInfo {
 
     public void setDestinationBlockId(String s) {
         destinationBlockId = s;
+    }
+    
+    public void setStopByDistanceMm(float value) {
+        stopByDistanceMm = value;
+    }
+    
+    public void setStopByDistanceRef(StopReference value) {
+        stopByDistanceRef = value;
+    }
+    
+    public float getStopByDistanceMm() {
+        return stopByDistanceMm;
+    }
+    
+    public StopReference getStopByDistanceRef() {
+        return stopByDistanceRef;
     }
 
     public String getDestinationBlockId() {
@@ -547,6 +611,18 @@ public class TrainInfo {
     public Float getMaxSpeed() {
         return maxSpeed;
     }
+    
+    /**
+     * Sets the maximum speed in scale km/h. Use 0.0f to disable and fall back to throttle percent.
+     * @param kmh scale kilometers per hour
+     */
+    public void setMaxSpeedScaleKmh(float kmh) { maxSpeedScaleKmh = kmh; }
+
+    /**
+     * Gets the maximum speed in scale km/h. 0.0f means "disabled".
+     * @return scale km/h
+     */
+    public float getMaxSpeedScaleKmh() { return maxSpeedScaleKmh; }
 
     public void setMinReliableOperatingSpeed(float f) {
         minReliableOperatingSpeed = f;
@@ -619,6 +695,54 @@ public class TrainInfo {
 
     public boolean getSoundDecoder() {
         return soundDecoder;
+    }
+
+    /**
+     * Sets F number for the Light
+     * @param value F Number.
+     */
+    public void setFNumberLight(int value) {
+        fNumberLight = value;
+    }
+
+    /**
+     * returns the F number for the Light
+     * @return F Number
+     */
+    public int getFNumberLight() {
+        return fNumberLight;
+    }
+
+    /**
+     * Sets F number for the Bell
+     * @param value F Number.
+     */
+    public void setFNumberBell(int value) {
+        fNumberBell = value;
+    }
+
+    /**
+     * returns the F number for the Bell
+     * @return F Number
+     */
+    public int getFNumberBell() {
+        return fNumberBell;
+    }
+
+    /**
+     * Sets F number for the Horn
+     * @param value F Number.
+     */
+    public void setFNumberHorn(int value) {
+        fNumberHorn = value;
+    }
+
+    /**
+     * returns the F number for the Horn
+     * @return F Number
+     */
+    public int getFNumberHorn() {
+        return fNumberHorn;
     }
 
     /**
@@ -699,4 +823,25 @@ public class TrainInfo {
 
     public String getBlockName() { return blockName; }
 
+    // --- Physics additional weight (metric tonnes) ---
+    public void setAdditionalTrainWeightMetricTonnes(float value) { additionalTrainWeightMetricTonnes = value; }
+    public float getAdditionalTrainWeightMetricTonnes() { return additionalTrainWeightMetricTonnes; }
+
+     // --- Physics rolling resistance coefficient (dimensionless), defaults ~0.002
+     private float rollingResistanceCoeff = 0.002f;
+     public void setRollingResistanceCoeff(float value) { rollingResistanceCoeff = Math.max(0.0f, value); }
+     public float getRollingResistanceCoeff() { return rollingResistanceCoeff; }
+     
+
+     // --- Physics: driver's applied power/regulator during acceleration (0.0..1.0); default 1.0 (=100%)
+     private float driverPowerPercent = 1.0f;
+     /** Sets the driver's applied power/regulator during acceleration (0.0..1.0). */
+     public void setDriverPowerPercent(float value) {
+         // Clamp 0..1
+         driverPowerPercent = (value < 0.0f) ? 0.0f : ((value > 1.0f) ? 1.0f : value);
+     }
+     /** Gets the driver's applied power/regulator during acceleration (0.0..1.0). */
+     public float getDriverPowerPercent() { return driverPowerPercent; }
 }
+
+

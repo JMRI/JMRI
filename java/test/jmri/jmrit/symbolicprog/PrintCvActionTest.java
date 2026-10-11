@@ -7,9 +7,9 @@ import javax.swing.JLabel;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -18,7 +18,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 public class PrintCvActionTest {
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testCTor() {
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         RosterEntry re = new RosterEntry();
@@ -31,6 +31,8 @@ public class PrintCvActionTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         CvTableModel cvtm = new CvTableModel(new JLabel(), null);
         PrintCvAction t = new PrintCvAction("Test Action", cvtm, pFrame, false, re);
         Assertions.assertNotNull(t, "exists");
@@ -54,6 +56,7 @@ public class PrintCvActionTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test frame"
         JUnitUtil.tearDown();
     }
 

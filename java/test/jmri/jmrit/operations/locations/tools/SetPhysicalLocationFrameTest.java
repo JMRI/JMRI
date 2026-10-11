@@ -23,5 +23,5 @@ public class SetPhysicalLocationFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrameTest.class);
 }

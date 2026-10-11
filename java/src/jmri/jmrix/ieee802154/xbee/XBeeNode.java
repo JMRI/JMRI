@@ -43,7 +43,7 @@ public class XBeeNode extends IEEE802154Node {
     private XBee16BitAddress userAddress = null;
     private XBee64BitAddress globalAddress = null;
 
-    private final static byte[] DefaultPanID = {0x00,0x00};
+    private static final byte[] DefaultPanID = {0x00,0x00};
 
     /**
      * Create a new instance of XBeeNode.
@@ -600,6 +600,6 @@ public class XBeeNode extends IEEE802154Node {
        return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeNode.class);
+    private static final Logger log = LoggerFactory.getLogger(XBeeNode.class);
 
 }

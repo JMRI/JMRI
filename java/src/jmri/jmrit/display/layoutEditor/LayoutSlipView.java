@@ -51,7 +51,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor(layoutEditor);
     }
 
-    final private LayoutSlip slip;
+    private final LayoutSlip slip;
 
     public int currentState = UNKNOWN;
 
@@ -1300,5 +1300,5 @@ public class LayoutSlipView extends LayoutTurnoutView {
     //      and collectContiguousTracksNamesInBlockNamed methods
     //      inherited from LayoutTurnout
     //
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipView.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipView.class);
 }

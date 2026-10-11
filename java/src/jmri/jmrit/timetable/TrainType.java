@@ -80,5 +80,5 @@ public class TrainType {
         return _typeName;
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainType.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainType.class);
 }

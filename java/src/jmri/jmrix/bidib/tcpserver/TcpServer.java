@@ -311,6 +311,6 @@ public class TcpServer {
 //        }
 //    }
 
-    private final static Logger log = LoggerFactory.getLogger(TcpServer.class);
+    private static final Logger log = LoggerFactory.getLogger(TcpServer.class);
 
 }

@@ -1,7 +1,10 @@
 package jmri.util.junit;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Ensure Java's assert() works with JMRI infrastructure
  * 
@@ -34,10 +37,10 @@ public class AssertTest {
             assert false ;
         } catch (AssertionError e) {
             // assert(false) asserts when enabled
-            Assert.assertTrue("don't fail if not enabled", assertsEnabled);
+            assertTrue( assertsEnabled, "don't fail if not enabled");
             return;
         }
-        Assert.assertFalse("fail if enabled", assertsEnabled);
+        assertFalse( assertsEnabled, "fail if enabled");
     }
     
     // assert doesn't evaluate argument if not enabled
@@ -46,11 +49,12 @@ public class AssertTest {
         itRan = false;
         assert isParameterRun();
         if (assertsEnabled) {
-            Assert.assertTrue("Evaluate parameter if asserts enabled", itRan);
+            assertTrue( itRan, "Evaluate parameter if asserts enabled");
         } else {
-            Assert.assertFalse("don't evaluate parameter if asserts disabled", itRan);
+            assertFalse( itRan, "don't evaluate parameter if asserts disabled");
         }
     }
+
     // service routine that notes if it's been run
     public boolean isParameterRun() { 
         itRan = true;

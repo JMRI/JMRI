@@ -28,6 +28,6 @@ public class VSDControlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDControlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(VSDControlTest.class);
 
 }

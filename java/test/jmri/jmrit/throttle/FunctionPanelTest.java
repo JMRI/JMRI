@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import jmri.jmrit.throttle.panels.FunctionButton;
+import jmri.jmrit.throttle.panels.FunctionPanel;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

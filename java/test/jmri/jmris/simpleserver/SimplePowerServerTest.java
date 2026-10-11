@@ -1,6 +1,10 @@
 package jmri.jmris.simpleserver;
 
+import java.io.IOException;
+
+import jmri.JmriException;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,14 +56,14 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
 
     // test sending a status string.
     @Test
-    public void testSendStatusString() throws Exception {
+    public void testSendStatusString() throws IOException {
         ((SimplePowerServer) ps).sendStatus("Hello World\n");
         assertThat(sb.toString()).withFailMessage("send status string").isEqualTo("Hello World\n");
     }
 
     // test sending a status string.
     @Test
-    public void testSendStatusStringWithConnection() throws Exception {
+    public void testSendStatusStringWithConnection() throws IOException {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
             @Override
@@ -75,7 +79,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
 
     // test parsing an ON status message.
     @Test
-    public void testParseOnStatus() throws Exception {
+    public void testParseOnStatus() throws JmriException, IOException {
         ps.parseStatus("POWER ON\n");
         assertThat(jmri.PowerManager.ON).withFailMessage("Parse On Status Check").isEqualTo(jmri.InstanceManager
                 .getDefault(jmri.PowerManager.class).getPower());
@@ -84,7 +88,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
 
     // test parsing an OFF status message.
     @Test
-    public void testParseOffStatus() throws Exception {
+    public void testParseOffStatus() throws JmriException, IOException {
         ps.parseStatus("POWER OFF\n");
         assertThat(jmri.PowerManager.OFF).withFailMessage("Parse OFF Status Check").isEqualTo(jmri.InstanceManager
                 .getDefault(jmri.PowerManager.class).getPower());
@@ -93,7 +97,7 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
 
     @Test
     // test parsing a bad status message.
-    public void testParseBadStatus() throws Exception {
+    public void testParseBadStatus() throws JmriException, IOException {
         // this should just trigger an error message sent to the client.
         ps.parseStatus("POWER FFO\n");
         assertThat(sb.toString()).withFailMessage("error from bad parse").isEqualTo("POWER ERROR\n");

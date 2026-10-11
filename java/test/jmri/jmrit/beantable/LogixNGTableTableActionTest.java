@@ -340,6 +340,6 @@ public class LogixNGTableTableActionTest extends AbstractTableActionBase<NamedTa
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableTableActionTest.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableTableActionTest.class);
 
 }

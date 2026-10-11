@@ -32,7 +32,7 @@
       </p>
 
       <p style="margin-left: 40px;">Opens the <a href="Main_Monitor_Window.shtml">Monitor LocoNet
-      Window(Gerneric Communications Monitor Window)</a> and automatically displays the information
+      Window (Generic Communications Monitor Window)</a> and automatically displays the information
       that is being sent and received on the communications link between your computer and your DCC
       system.</p>
 
@@ -51,7 +51,7 @@
       width="800">
       </p>
 
-      <p style="margin-left: 40px;">The check box at the top allow to select what slots are
+      <p style="margin-left: 40px;">The checkbox at the top allow to select what slots are
       displayed.</p>
 
       <p style="margin-left: 40px;"><input name="checkbox" id="checkbox" type="checkbox">
@@ -152,7 +152,7 @@
       <p><strong><a id="Clock"></a>Monitor Clock</strong>
       </p>
 
-      <p style="margin-left: 40px;">A Digtrax LocoNet can contain it's own fast clock timebase.
+      <p style="margin-left: 40px;">A Digtrax LocoNet can contain its own fast clock timebase.
       This can be driven either by a DCS100/DCS200 command station, or by a separate fast clock
       module such as those made by Logic Rail Technologies. The <span style=
       "font-weight: bold;">Monitor Clock</span> dialog allows you to control this feature.</p>
@@ -236,7 +236,7 @@
 
       <p style="margin-left: 40px;">Type the address of a DS64 board in the text field and click
       <span class="textbutton">Read from DS64</span> . The tool will read
-      back the current state of the various options, and set the check boxes to correspond to their
+      back the current state of the various options, and set the checkboxes to correspond to their
       current values.</p>
 
       <p style="margin-left: 40px;">You can then, if you wish, change the checkboxes and click

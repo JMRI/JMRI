@@ -2,7 +2,6 @@ package jmri.jmrit.jython;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -28,7 +27,7 @@ public class JynstrumentPopupMenuTest {
            }
         };
         JynstrumentPopupMenu t = new JynstrumentPopupMenu(j);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
@@ -41,6 +40,6 @@ public class JynstrumentPopupMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JynstrumentPopupMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JynstrumentPopupMenuTest.class);
 
 }

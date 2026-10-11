@@ -126,17 +126,17 @@ public abstract class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
 
     @Override
     protected final void registerListenersForThisClass() {
-        ((MaleSocket)getObject()).registerListeners();
+        getObject().registerListeners();
     }
 
     @Override
     protected final void unregisterListenersForThisClass() {
-        ((MaleSocket)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
 
     @Override
     protected final void disposeMe() {
-        ((MaleSocket)getObject()).dispose();
+        getObject().dispose();
     }
 
     @Override
@@ -171,18 +171,18 @@ public abstract class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
 
     @Override
     public final String getComment() {
-        return ((MaleSocket)getObject()).getComment();
+        return getObject().getComment();
     }
 
     @Override
     public final void setComment(String comment) {
-        ((MaleSocket)getObject()).setComment(comment);
+        getObject().setComment(comment);
     }
 
     @Override
     public void setParent(Base parent) {
         super.setParent(parent);
-        ((MaleSocket)getObject()).setParent(this);
+        getObject().setParent(this);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDebuggerMaleSocket.class);

@@ -1,8 +1,8 @@
 package jmri.jmrix;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
+
+import javax.annotation.Nonnull;
 
 import jmri.SystemConnectionMemo;
 
@@ -225,7 +225,7 @@ public interface PortAdapter {
      *                                  of SystemConnectionMemo
      * @throws NullPointerException     if connectionMemo is null
      */
-    void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
+    void setSystemConnectionMemo(@Nonnull SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 
     /**
      * This is called when a connection is to be disposed.
@@ -277,5 +277,17 @@ public interface PortAdapter {
      * @return total number of attempts which should be made.
      */
     int getReconnectMaxAttempts();
+
+    /**
+     * Get whether automatic connection recovery is enabled.
+     * @return true if recovery is enabled.
+     */
+    boolean getAllowConnectionRecovery();
+
+    /**
+     * Set whether automatic connection recovery is enabled.
+     * @param allow true to enable recovery.
+     */
+    void setAllowConnectionRecovery(boolean allow);
 
 }

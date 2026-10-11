@@ -28,6 +28,7 @@ public class ClockFunctions implements FunctionFactory {
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
 
+        addCurrentTimeMillisFunction(functionClasses);
         addSystemClockFunction(functionClasses);
         addFastClockFunction(functionClasses);
         addFastClockRateFunction(functionClasses);
@@ -45,6 +46,21 @@ public class ClockFunctions implements FunctionFactory {
     public String getConstantDescription() {
         // This module doesn't define any constants
         return null;
+    }
+
+    private void addCurrentTimeMillisFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "currentTimeMillis", Bundle.getMessage("Clock.currentTimeMillis_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+
+                if (parameterList.isEmpty()) {
+                    return System.currentTimeMillis();
+                } else {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                }
+            }
+        });
     }
 
     private void addSystemClockFunction(Set<Function> functionClasses) {

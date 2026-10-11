@@ -1,8 +1,9 @@
 package jmri.jmrix.mrc;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,29 +11,27 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class MrcMessageExceptionTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("MrcMessageException constructor",new MrcMessageException());
-   }
+    @Test
+    public void testMrcMessageExceptionConstructor(){
+        assertNotNull( new MrcMessageException(), "MrcMessageException constructor");
+    }
 
-   @Test
-   public void StringConstructorTest(){
-      Assert.assertNotNull("MrcMessageException string constructor",new MrcMessageException("test exception"));
-   }
+    @Test
+    public void testMrcMessageExceptionStringConstructor(){
+        assertNotNull( new MrcMessageException("test exception"), "MrcMessageException string constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
-
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

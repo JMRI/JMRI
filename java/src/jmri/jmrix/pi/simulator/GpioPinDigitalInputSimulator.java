@@ -1,286 +1,47 @@
 package jmri.jmrix.pi.simulator;
 
-import com.pi4j.io.gpio.*;
-import com.pi4j.io.gpio.event.GpioPinListener;
-import com.pi4j.io.gpio.trigger.GpioTrigger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
-import java.util.*;
 /**
- * Simulates GpioPinDigitalInput.
+ * Simulates a digital input GPIO pin for the JMRI Raspberry Pi simulator.
+ * Pure JMRI implementation — no Pi4J dependency.
+ * <p>
+ * The initial state is HIGH so that sensors constructed in tests start as
+ * {@code Sensor.ACTIVE}, preserving the behaviour of the former
+ * {@code PiGpioProviderScaffold} which returned {@code PinState.HIGH}.
  *
  * @author Daniel Bergqvist Copyright (C) 2022
  */
-public class GpioPinDigitalInputSimulator implements GpioPinDigitalInput {
+public class GpioPinDigitalInputSimulator {
 
-//    private final Pin pin;
-    private String name;
-//    private final PinPullResistance ppr;
-    private PinState pinState = PinState.LOW;
-    private PinMode pinMode = PinMode.DIGITAL_INPUT;
-    private PinPullResistance pinPullResistance = PinPullResistance.OFF;
+    /** Starts HIGH to match legacy scaffold behaviour in tests. */
+    private boolean high = true;
 
-    private final List<GpioPinListener> listeners = new ArrayList<>();
+    private final List<Consumer<Boolean>> listeners = new ArrayList<>();
 
-    public GpioPinDigitalInputSimulator(Pin pin, String string, PinPullResistance ppr) {
-//        this.pin = pin;
-        this.name = string;
-//        this.ppr = ppr;
-    }
-
-    @Override
-    public boolean hasDebounce(PinState ps) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public int getDebounce(PinState ps) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setDebounce(int i) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setDebounce(int i, PinState... pss) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
     public boolean isHigh() {
-        return pinState.isHigh();
+        return high;
     }
 
-    @Override
-    public boolean isLow() {
-        return pinState.isLow();
-    }
-
-    @Override
-    public PinState getState() {
-        return pinState;
-    }
-
-    @Override
-    public boolean isState(PinState ps) {
-        return pinState == ps;
-    }
-
-    @Override
-    public GpioProvider getProvider() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public Pin getPin() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setName(String string) {
-        name = string;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setTag(Object o) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public Object getTag() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setProperty(String string, String string1) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public boolean hasProperty(String string) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public String getProperty(String string) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public String getProperty(String string, String string1) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public Map<String, String> getProperties() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void removeProperty(String string) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void clearProperties() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void export(PinMode pm) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void export(PinMode pm, PinState ps) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void unexport() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public boolean isExported() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setMode(PinMode pm) {
-        this.pinMode = pm;
-        // We should probably call all the listeners here????
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public PinMode getMode() {
-        return pinMode;
-    }
-
-    @Override
-    public boolean isMode(PinMode pm) {
-        return pinMode == pm;
-    }
-
-    @Override
-    public void setPullResistance(PinPullResistance ppr) {
-        pinPullResistance = ppr;
-    }
-
-    @Override
-    public PinPullResistance getPullResistance() {
-        return pinPullResistance;
-    }
-
-    @Override
-    public boolean isPullResistance(PinPullResistance ppr) {
-        return pinPullResistance == ppr;
-    }
-
-    @Override
-    public Collection<GpioPinListener> getListeners() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void addListener(GpioPinListener... gls) {
-        for (GpioPinListener gl : gls) {
-            listeners.add(gl);
+    /**
+     * Change the simulated pin state and notify all registered listeners.
+     *
+     * @param high {@code true} = HIGH, {@code false} = LOW
+     */
+    public void setState(boolean high) {
+        this.high = high;
+        for (Consumer<Boolean> listener : new ArrayList<>(listeners)) {
+            listener.accept(high);
         }
     }
 
-    @Override
-    public void addListener(List<? extends GpioPinListener> list) {
-        listeners.addAll(list);
+    public void addListener(Consumer<Boolean> listener) {
+        listeners.add(listener);
     }
 
-    @Override
-    public boolean hasListener(GpioPinListener... gls) {
-        throw new UnsupportedOperationException("Not supported");
+    public void removeListener(Consumer<Boolean> listener) {
+        listeners.remove(listener);
     }
-
-    @Override
-    public void removeListener(GpioPinListener... gls) {
-        for (GpioPinListener gl : gls) {
-            listeners.remove(gl);
-        }
-    }
-
-    @Override
-    public void removeListener(List<? extends GpioPinListener> list) {
-        listeners.removeAll(list);
-    }
-
-    @Override
-    public void removeAllListeners() {
-        listeners.clear();
-    }
-
-    @Override
-    public GpioPinShutdown getShutdownOptions() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setShutdownOptions(GpioPinShutdown gps) {
-//        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setShutdownOptions(Boolean bln) {
-//        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setShutdownOptions(Boolean bln, PinState ps) {
-//        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setShutdownOptions(Boolean bln, PinState ps, PinPullResistance ppr) {
-//        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void setShutdownOptions(Boolean bln, PinState ps, PinPullResistance ppr, PinMode pm) {
-//        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public Collection<GpioTrigger> getTriggers() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void addTrigger(GpioTrigger... gts) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void addTrigger(List<? extends GpioTrigger> list) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void removeTrigger(GpioTrigger... gts) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void removeTrigger(List<? extends GpioTrigger> list) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public void removeAllTriggers() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
 }

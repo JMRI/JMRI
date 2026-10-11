@@ -46,7 +46,7 @@ public class SimpleSignalHeadServerTest {
 
     // test sending a message.
     @Test
-    public void testSendMessageWithConnection() throws Exception {
+    public void testSendMessageWithConnection() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -70,7 +70,7 @@ public class SimpleSignalHeadServerTest {
 
     // test sending a message.
     @Test
-    public void testSendMessage() throws Exception {
+    public void testSendMessage() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -94,7 +94,7 @@ public class SimpleSignalHeadServerTest {
 
     // test sending an error message.
     @Test
-    public void testSendErrorStatus() throws Exception {
+    public void testSendErrorStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -112,7 +112,7 @@ public class SimpleSignalHeadServerTest {
 
     // test intializing a SignalHead status message.
     @Test
-    public void testCheckInitSignalHead() throws Exception {
+    public void testCheckInitSignalHead() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -128,7 +128,7 @@ public class SimpleSignalHeadServerTest {
 
     // test sending DARK status message.
     @Test
-    public void testCheckSendDarkStatus() throws Exception {
+    public void testCheckSendDarkStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -145,7 +145,7 @@ public class SimpleSignalHeadServerTest {
 
     // test sending an RED status message.
     @Test
-    public void testCheckSendRedStatus() throws Exception {
+    public void testCheckSendRedStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -162,7 +162,7 @@ public class SimpleSignalHeadServerTest {
 
     // test sending an UNKNOWN status message.
     @Test
-    public void testCheckSendUnkownStatus() throws Exception {
+    public void testCheckSendUnkownStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -179,7 +179,7 @@ public class SimpleSignalHeadServerTest {
 
     // test Parsing an DARK status message.
     @Test
-    public void testParseDarkStatus() throws Exception {
+    public void testParseDarkStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -200,7 +200,7 @@ public class SimpleSignalHeadServerTest {
 
     // test Parsing an RED status message.
     @Test
-    public void testParseRedStatus() throws Exception {
+    public void testParseRedStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -221,7 +221,7 @@ public class SimpleSignalHeadServerTest {
 
     // test Parsing an blank status message.
     @Test
-    public void testParseBlankStatus() throws Exception {
+    public void testParseBlankStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -239,7 +239,7 @@ public class SimpleSignalHeadServerTest {
 
     // test Parsing an other status message.
     @Test
-    public void testParseOtherStatus() throws Exception {
+    public void testParseOtherStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {

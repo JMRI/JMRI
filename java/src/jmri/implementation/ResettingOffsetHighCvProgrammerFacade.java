@@ -210,6 +210,6 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         return Integer.parseInt(addr) <= 1024;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacade.class);
+    private static final Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacade.class);
 
 }
