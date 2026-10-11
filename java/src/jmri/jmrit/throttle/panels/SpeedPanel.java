@@ -138,9 +138,8 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
      * @return a string for displaying speed if available
      */
     private String updateSpeedLabel(boolean useSpeedProfile, float throttleVolume, boolean isForward) {
-        RosterEntry re = addressPanel.getRosterEntry();
-        if (re != null && useSpeedProfile) {
-            return (re.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(throttleVolume, isForward));
+        if (addressPanel != null && addressPanel.getRosterEntry() != null && useSpeedProfile) {
+            return (addressPanel.getRosterEntry().getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(throttleVolume, isForward));
         } else {
             return (Bundle.getMessage("ThrottleSpeedPanelError"));
         }
@@ -152,8 +151,19 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {     
-    }    
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {     
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) { 
+        useSpeedProfile = false;  //posit false
+        if (re != null
+                && re.getSpeedProfile() != null
+                && re.getSpeedProfile().getProfileSize() > 0) {
+            useSpeedProfile = true;
+        }
+        updateSpeedLabel(useSpeedProfile, throttle.getSpeedSetting(), throttle.getIsForward());    
+    }   
 
     @Override
     public void notifyAddressReleased(LocoAddress la) {
@@ -177,16 +187,8 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is {}", Address.toString());
-        }
-
-        useSpeedProfile = false;  //posit false
-        RosterEntry re = addressPanel.getRosterEntry();
-        if (re != null
-                && re.getSpeedProfile() != null
-                && re.getSpeedProfile().getProfileSize() > 0) {
-            useSpeedProfile = true;
-        }
-        updateSpeedLabel(useSpeedProfile, t.getSpeedSetting(), t.getIsForward());
+        }        
+        notifyRosterEntryUpdated(addressPanel.getRosterEntry());
     }
 
     @Override

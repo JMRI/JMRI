@@ -1,6 +1,5 @@
 package jmri.util.iharder.dnd;
 
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -22,7 +21,6 @@ import javax.swing.JComponent;
 import javax.swing.border.Border;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * This class makes it easy to drag and drop files from the operating system to
@@ -261,99 +259,27 @@ public class URIDrop {
 
             @Override
             public void dragOver(DropTargetDragEvent evt) {   // This is called continually as long as the mouse is
-                // over the drag target.
+                //log.debug("URIDrop: dragOver event.");
             }
 
             @SuppressWarnings("unchecked")
             @Override
             public void drop(DropTargetDropEvent evt) {
-                log.debug("URIDrop: drop event.");
-                try {   // Get whatever was dropped
-                    Transferable tr = evt.getTransferable();
-                    boolean handled = false;
-                    // Is it a raw image?
-                    if (!handled && tr.isDataFlavorSupported(DataFlavor.imageFlavor) && listener != null && listener instanceof ListenerExt) {
-                        // Say we'll take it.
-                        evt.acceptDrop(DnDConstants.ACTION_COPY);
-                        log.debug("HTMLDrop: raw image accepted.");
-                        BufferedImage img = (BufferedImage) tr.getTransferData(DataFlavor.imageFlavor);
-                        ((ListenerExt)listener).imageDropped(img);
-                        // Mark that drop is completed.
-                        evt.getDropTargetContext().dropComplete(true);
-                        handled = true;
-                        log.debug("ImageDrop: drop complete as image.");                           
-                    }
-                    // Is it a file path list ?
-                    if (!handled && tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-                        // Say we'll take it.
-                        evt.acceptDrop(DnDConstants.ACTION_COPY);
-                        log.debug("FileDrop: file list accepted.");
-                        // Get a useful list
-                        List<File> fileList = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);
-                        // Alert listener to drop.
-                        if (listener != null) {
-                            listener.URIsDropped(createURIArray(fileList));
-                        }
-                        // Mark that drop is completed.
-                        evt.getDropTargetContext().dropComplete(true);
-                        handled = true;
-                        log.debug("FileDrop: drop complete as files.");
-                    }
-                    // Is it a string?
-                    if (!handled && tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                        // Say we'll take it.
-                        evt.acceptDrop(DnDConstants.ACTION_COPY);
-                        log.debug("URIDrop: string accepted.");
-                        // Get a useful list
-                        String uristr = (String) tr.getTransferData(DataFlavor.stringFlavor);
-                        // Alert listener to drop.
-                        if (listener != null) {
-                            listener.URIsDropped(createURIArray(uristr));
-                        }
-                        // Mark that drop is completed.
-                        evt.getDropTargetContext().dropComplete(true);
-                        handled = true;
-                        log.debug("URIDrop: drop complete as URIs.");
-                    }
-                    // this section will check for a reader flavor.
-                    if (!handled) {
-                        DataFlavor[] flavors = tr.getTransferDataFlavors();
-                        for (DataFlavor flavor : flavors) {
-                            if (flavor.isRepresentationClassReader()) {
-                                // Say we'll take it.
-                                evt.acceptDrop(DnDConstants.ACTION_COPY);
-                                log.debug("URIDrop: reader accepted.");
-                                Reader reader = flavor.getReaderForText(tr);
-                                BufferedReader br = new BufferedReader(reader);
-                                if (listener != null) {
-                                    listener.URIsDropped(createURIArray(br));
-                                }
-                                // Mark that drop is completed.
-                                evt.getDropTargetContext().dropComplete(true);
-                                log.debug("URIDrop: drop complete as {}",flavor.getHumanPresentableName());
-                                handled = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!handled) {
-                        log.debug("URIDrop: not droppable.");
-                        evt.rejectDrop();
-                    }
-                } catch (java.io.IOException io) {
-                    log.error("URIDrop: IOException - abort:", io);
+                log.debug("URIDrop: drop event.");                
+                Transferable tr = evt.getTransferable();
+                if (importExternalTransferable(tr, (ListenerExt) listener)) {
+                    evt.acceptDrop(DnDConstants.ACTION_COPY);
+                    evt.getDropTargetContext().dropComplete(true);
+                } else {
+                    log.debug("URIDrop: not droppable.");
                     evt.rejectDrop();
-                } catch (UnsupportedFlavorException ufe) {
-                    log.error("URIDrop: UnsupportedFlavorException - abort:", ufe);
-                    evt.rejectDrop();
-                } finally {
-                    // If it's a Swing component, reset its border
-                    if (c instanceof JComponent) {
-                        JComponent jc = (JComponent) c;
-                        jc.setBorder(normalBorder);
-                        log.debug("URIDrop: normal border restored.");
-                    }
-                }
+                }               
+                // If it's a Swing component, reset its border
+                if (c instanceof JComponent) {
+                    JComponent jc = (JComponent) c;
+                    jc.setBorder(normalBorder);
+                    log.debug("URIDrop: normal border restored.");
+                }                
             }
 
             @Override
@@ -384,6 +310,61 @@ public class URIDrop {
 
         // Make the component (and possibly children) drop targets
         makeDropTarget(c, recursive);
+    }
+
+    public static boolean importExternalTransferable(Transferable tr, ListenerExt impan ) {
+        if ((impan==null) || (tr==null)) {
+            return false;
+        }
+        try {
+            // Is it a raw image?
+            if (tr.isDataFlavorSupported(DataFlavor.imageFlavor)) {
+                log.debug("importExternalTransferable: raw image accepted.");
+                BufferedImage img = (BufferedImage) tr.getTransferData(DataFlavor.imageFlavor);
+                impan.imageDropped(img);
+                // Mark that drop is completed.
+                log.debug("ImageDrop: drop complete as image.");                           
+                return true;
+            }
+            // Is it a file path list ?
+            if (tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+                log.debug("importExternalTransferable: file list accepted.");
+                // Get a useful list
+                @SuppressWarnings("unchecked")
+                List<File> fileList = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);
+                impan.URIsDropped(URIDrop.createURIArray(fileList));
+                log.debug("FileDrop: drop complete as files.");
+                return true;
+            }
+            // Is it a string?
+            if (tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                log.debug("URIDrop: string accepted.");
+                // Get a useful list
+                String uristr = (String) tr.getTransferData(DataFlavor.stringFlavor);
+                // Alert listener to drop.
+                impan.URIsDropped(URIDrop.createURIArray(uristr));
+                log.debug("URIDrop: drop complete as URIs.");
+                return true;
+            }
+            // this section will check for a reader flavor.                    
+            DataFlavor[] flavors = tr.getTransferDataFlavors();
+            for (DataFlavor flavor : flavors) {
+                if (flavor.isRepresentationClassReader()) {
+                    log.debug("URIDrop: RepresentationClassReader accepted.");
+                    Reader reader = flavor.getReaderForText(tr);
+                    BufferedReader br = new BufferedReader(reader);
+                    impan.URIsDropped(createURIArray(br));
+                    log.debug("URIDrop: drop complete as {}",flavor.getHumanPresentableName());
+                    return true;
+                }
+            }
+        }
+        catch (java.io.IOException io) {
+                    log.error("URIDrop: IOException - abort:", io);
+                } catch (UnsupportedFlavorException ufe) {
+                    log.error("URIDrop: UnsupportedFlavorException - abort:", ufe);
+                }
+        return false;
     }
 
     private static String ZERO_CHAR_STRING = "" + (char) 0;
@@ -494,6 +475,8 @@ public class URIDrop {
             // Is the flavor a file list?
             final DataFlavor curFlavor = flavors[i];
             if (curFlavor.equals(DataFlavor.javaFileListFlavor)
+                    || curFlavor.equals(DataFlavor.imageFlavor)
+                    || curFlavor.equals(DataFlavor.stringFlavor)
                     || curFlavor.isRepresentationClassReader()) {
                 ok = true;
             }
