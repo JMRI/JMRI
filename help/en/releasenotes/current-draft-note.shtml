@@ -26,7 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The CBUS fast clock uses the calendar year rather than the
+                    week-based year, accepts and sends temperatures from -128 to
+                    127 correctly, and stops listening to the JMRI clock when it
+                    is disposed. CBUS consist listeners are no longer shared
+                    between connections.</li>
             </ul>
 
         <h4>C/MRI</h4>
