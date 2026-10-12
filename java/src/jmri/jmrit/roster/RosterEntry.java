@@ -1253,7 +1253,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void setFunctionLabel(int fn, String label) {
         checkAndCreateFunctionEntry(fn);
         String old = functionEntries.get(fn).getLabel();
-        if ((old != null && old.equals(label)) || (old == null && label == null)) {
+        if ((old != null && old.equals(label)) || (old == null && label == null) || functionEntries.get(fn) == null) {
             return;
         }
         functionEntries.get(fn).setLabel(label);
@@ -1283,7 +1283,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void setSoundLabel(int fn, String label) {
         checkAndCreateFunctionEntry(fn);
         String old = (functionEntries.get(fn)!=null) ? functionEntries.get(fn).getSoundLabels() : null;
-        if ((old != null && old.equals(label)) || (old == null && label == null)) {
+        if ((old != null && old.equals(label)) || (old == null && label == null) || functionEntries.get(fn) == null) {
             return;
         }        
         functionEntries.get(fn).setSoundLabels(label);
