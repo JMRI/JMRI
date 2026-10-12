@@ -635,10 +635,29 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         }
 
         if ( opc == CbusConstants.CBUS_PARAN) { // response from node
+            if (hardwareParams == null) {
+                log.debug("Ignoring PARAN reply, no parameters being read");
+                return;
+            }
+            // Only interested in replies from the node being programmed
+            int nn = (r.getElement(1) * 256) + r.getElement(2);
+            if (nn != nodeNumber) {
+                log.debug("Ignoring PARAN reply from node {}, expecting node {}", nn, nodeNumber);
+                return;
+            }
+            int index = r.getElement(3);
+            if (!hardwareParams.isValidIndex(index)) {
+                log.warn("Ignoring PARAN reply from node {} with out of range parameter index {}", nn, index);
+                return;
+            }
+            if (index != nextParam) {
+                log.debug("Ignoring PARAN reply for parameter {}, expecting parameter {}", index, nextParam);
+                return;
+            }
             clearAllParamTimeout();
 
-            hardwareParams.setParam(r.getElement(3), r.getElement(4));
-            if (++nextParam < (hardwareParams.getParam(0) + 1)) {
+            hardwareParams.setParam(index, r.getElement(4));
+            if ((++nextParam < (hardwareParams.getParam(0) + 1)) && hardwareParams.isValidIndex(nextParam)) {
                 // Read next
                 requestParam(nextParam);
             } else {
@@ -776,14 +795,31 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * @param r device ID reply
      */
     void showDevId(CanReply r) {
+        long devId = getDevId(r);
         log.debug("Found device ID Manu: {} Dev: {} Device ID: {}",
                 r.getElement(1),
                 r.getElement(2),
-                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4));
+                devId);
         addToLog(MessageFormat.format(Bundle.getMessage("DevIdCbus"),
                 r.getElement(1),
                 r.getElement(2),
-                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4)));
+                devId));
+    }
+
+
+    /**
+     * Extract the 4-byte device ID from a device ID reply
+     * <p>
+     * Reply data is [CBUS_EXT_DEVID, manufacturer, device, ID3, ID2, ID1, ID0]
+     *
+     * @param r device ID reply
+     * @return the device ID, as an unsigned value
+     */
+    static long getDevId(CanReply r) {
+        return ((long)(r.getElement(3) & 0xFF) << 24)
+                + ((r.getElement(4) & 0xFF) << 16)
+                + ((r.getElement(5) & 0xFF) << 8)
+                + (r.getElement(6) & 0xFF);
     }
     
    

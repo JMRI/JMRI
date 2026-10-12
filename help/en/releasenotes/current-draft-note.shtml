@@ -26,7 +26,9 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The CBUS bootloader only accepts parameter replies from the
+                    module being programmed, for the parameter it asked for, and
+                    the module device ID is shown correctly.</li>
             </ul>
 
         <h4>C/MRI</h4>

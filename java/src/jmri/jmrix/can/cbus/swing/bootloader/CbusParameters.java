@@ -66,12 +66,23 @@ public class CbusParameters {
     public void setParam(int i, int v) {
         paramData[i] = v;
     }
-    
-    
+
+
+    /**
+     * Check if a parameter index can be used with getParam or setParam
+     *
+     * @param i index of the parameter
+     * @return true if the index is within the parameter array
+     */
+    public boolean isValidIndex(int i) {
+        return (i >= 0) && (i < paramData.length);
+    }
+
+
     /**
      * Valid parameter block in a hex file by comparing against one
      * read from hardware (or some other source)
-     * 
+     *
      * @param fp Parameters from hex file
      * @param hp parameters to validate against
      * @return true if parameter blocks match

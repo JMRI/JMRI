@@ -18,6 +18,15 @@ public class CbusParametersTest {
         Assertions.assertEquals( 33, p.paramData.length, "Param Data length");
     }
 
+    @Test
+    public void testIsValidIndex() {
+        CbusParameters p = new CbusParameters();
+        Assertions.assertTrue( p.isValidIndex(0), "index 0");
+        Assertions.assertTrue( p.isValidIndex(32), "index 32");
+        Assertions.assertFalse( p.isValidIndex(33), "index 33");
+        Assertions.assertFalse( p.isValidIndex(-1), "index -1");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
