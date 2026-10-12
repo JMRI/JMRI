@@ -21,6 +21,10 @@ import java.util.Map;
  * been seen in another block and not in this one for {@link #MOVE_MILLIS}.
  * There is no plain timeout: a stopped decoder can go many seconds without a
  * channel 2 reply.
+ * <p>
+ * A loco that is still present and heard again is reported as a
+ * {@link Change#refresh refresh}, at most every {@link #REFRESH_MILLIS}, so
+ * its "last seen" time keeps up without flooding the GUI.
  *
  * @author swalton00 Copyright (C) 2026
  */
@@ -29,10 +33,24 @@ public class Dcc4PcBlockLocos {
     /** How long a loco seen elsewhere keeps its old block, to allow for bridging a gap. */
     public static final long MOVE_MILLIS = 2000;
 
+    /** Shortest time between refreshes for a loco that stays in a block. */
+    public static final long REFRESH_MILLIS = 1000;
+
+    /**
+     * RailCom from a loco on an input proves the input is occupied, whatever
+     * the debounced state says. The debounced state lags the raw one (a block
+     * becomes occupied after 2 packets, and unoccupied only after 300 ms), so
+     * a loco entering a block can be heard before its block reads occupied.
+     * An unoccupied reading therefore only removes locos not heard on that
+     * input for this long, which matches the unoccupied hold in the sensor
+     * manager: a block that has really been empty that long has had no RailCom.
+     */
+    public static final long HEARD_PROVES_OCCUPIED_MILLIS = 300;
+
     /** Added to an address to mark it as a long (14-bit) address. */
     public static final int LONG = 0x10000;
 
-    /** A loco added to or removed from a block. */
+    /** A loco added to or removed from a block, or heard again in it. */
     public static class Change {
 
         /** Input number, from 1. */
@@ -40,25 +58,38 @@ public class Dcc4PcBlockLocos {
         /** Address, with {@link #LONG} added for a long address. */
         public final int address;
         public final boolean added;
+        /** True if the loco was already in the block and has been heard again; {@link #added} is false. */
+        public final boolean refresh;
         /** Why, for the log. */
         public final String how;
 
         Change(int input, int address, boolean added, String how) {
+            this(input, address, added, false, how);
+        }
+
+        private Change(int input, int address, boolean added, boolean refresh, String how) {
             this.input = input;
             this.address = address;
             this.added = added;
+            this.refresh = refresh;
             this.how = how;
+        }
+
+        static Change heard(int input, int address, String how) {
+            return new Change(input, address, false, true, how);
         }
 
         @Override
         public String toString() {
-            return (added ? "+" : "-") + name(address) + " on input " + input + " (" + how + ")";
+            return (refresh ? "=" : added ? "+" : "-") + name(address) + " on input " + input + " (" + how + ")";
         }
     }
 
     private final int[] inputs;
     /** Per enabled input: address -> last time evidence was seen. */
     private final List<Map<Integer, Long>> seen = new ArrayList<>();
+    /** Per enabled input: address -> when it was last added or refreshed. */
+    private final List<Map<Integer, Long>> reported = new ArrayList<>();
     private final Integer[] adrHigh;
 
     /**
@@ -69,6 +100,7 @@ public class Dcc4PcBlockLocos {
         adrHigh = new Integer[inputs.length];
         for (int i = 0; i < inputs.length; i++) {
             seen.add(new LinkedHashMap<>());
+            reported.add(new LinkedHashMap<>());
         }
     }
 
@@ -85,6 +117,9 @@ public class Dcc4PcBlockLocos {
     public void clear() {
         Arrays.fill(adrHigh, null);
         for (Map<Integer, Long> m : seen) {
+            m.clear();
+        }
+        for (Map<Integer, Long> m : reported) {
             m.clear();
         }
     }
@@ -110,9 +145,13 @@ public class Dcc4PcBlockLocos {
         for (int i = 0; i < inputs.length; i++) {
             if (states[i] == Dcc4PcRawDecoder.STATE_UNOCCUPIED) {
                 adrHigh[i] = null;
-                for (Integer a : new ArrayList<>(seen.get(i).keySet())) {
-                    seen.get(i).remove(a);
-                    changes.add(new Change(inputs[i], a, false, "block unoccupied"));
+                for (Map.Entry<Integer, Long> e : new ArrayList<>(seen.get(i).entrySet())) {
+                    if (now - e.getValue() < HEARD_PROVES_OCCUPIED_MILLIS) {
+                        continue; // heard here just now, so the block is occupied
+                    }
+                    seen.get(i).remove(e.getKey());
+                    reported.get(i).remove(e.getKey());
+                    changes.add(new Change(inputs[i], e.getKey(), false, "block unoccupied"));
                 }
             }
         }
@@ -157,12 +196,17 @@ public class Dcc4PcBlockLocos {
 
     private void see(int i, int address, long now, String how, List<Change> changes) {
         if (seen.get(i).put(address, now) == null) {
+            reported.get(i).put(address, now);
             changes.add(new Change(inputs[i], address, true, how));
+        } else if (now - reported.get(i).getOrDefault(address, 0L) >= REFRESH_MILLIS) {
+            reported.get(i).put(address, now);
+            changes.add(Change.heard(inputs[i], address, how));
         }
         for (int j = 0; j < inputs.length; j++) {
             Long last = j == i ? null : seen.get(j).get(address);
             if (last != null && now - last > MOVE_MILLIS) {
                 seen.get(j).remove(address);
+                reported.get(j).remove(address);
                 changes.add(new Change(inputs[j], address, false, "seen on input " + inputs[i]));
             }
         }

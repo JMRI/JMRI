@@ -797,13 +797,17 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             }
             // which locos are in which block, from channel 2 replies and clean channel 1 addresses
             for (Dcc4PcBlockLocos.Change c : blockLocos.apply(p, states, now)) {
-                log.info("Board {}: {}", address, c); // rare: only when a loco enters or leaves a block
+                if (!c.refresh) {
+                    log.info("Board {}: {}", address, c); // rare: only when a loco enters or leaves a block
+                }
                 Dcc4PcReporter rep = getReporterAtIndex(c.input);
                 if (rep == null) {
                     continue;
                 }
                 int a = c.address & ~Dcc4PcBlockLocos.LONG;
-                if (c.added) {
+                if (c.refresh) {
+                    rep.locoHeard(a);
+                } else if (c.added) {
                     rep.locoEntered(a, (c.address & Dcc4PcBlockLocos.LONG) != 0);
                 } else {
                     rep.locoExited(a);

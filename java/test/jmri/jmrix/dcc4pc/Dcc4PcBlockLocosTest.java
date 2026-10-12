@@ -79,11 +79,46 @@ public class Dcc4PcBlockLocosTest {
         Dcc4PcBlockLocos b = new Dcc4PcBlockLocos(INPUTS);
         b.apply(packet(TO_9328, J4_A, j4(TO_9328, 0, 0x9C, 0x47, ACK)), J4_A, 1000);
         b.apply(packet(TO_9333, J4_A, j4(TO_9333, 0, COLLIDED_CH1[0], COLLIDED_CH1[1], ACK)), J4_A, 1010);
-        List<Dcc4PcBlockLocos.Change> c = b.apply(packet(TO_9328, ALL_CLEAR), ALL_CLEAR, 1020);
+        // a real unoccupied reading comes only after the block has been empty for 300 ms
+        long later = 1010 + Dcc4PcBlockLocos.HEARD_PROVES_OCCUPIED_MILLIS;
+        List<Dcc4PcBlockLocos.Change> c = b.apply(packet(TO_9328, ALL_CLEAR), ALL_CLEAR, later);
         assertEquals(2, c.size());
         assertFalse(c.get(0).added);
         assertFalse(c.get(1).added);
         assertTrue(b.locos(4).isEmpty());
+    }
+
+    @Test
+    public void testHeardBeforeBlockReadsOccupied() {
+        // seen on the layout: a loco entering a block was heard before the debounced state
+        // went occupied, and was added, removed ("block unoccupied") and added again
+        Dcc4PcBlockLocos b = new Dcc4PcBlockLocos(INPUTS);
+        List<Dcc4PcBlockLocos.Change> c = b.apply(packet(TO_9328, ALL_CLEAR, j4(TO_9328, 0, 0x9C, 0x47, ACK)), ALL_CLEAR, 1000);
+        assertEquals(1, c.size());
+        assertTrue(c.get(0).added);
+        // the next packets still read unoccupied: the loco stays
+        c = b.apply(packet(TO_9333, ALL_CLEAR), ALL_CLEAR, 1010);
+        assertTrue(c.isEmpty());
+        c = b.apply(packet(TO_9328, J4_A, j4(TO_9328, 0, 0x9C, 0x47, ACK)), J4_A, 1020);
+        assertTrue(c.isEmpty());
+        assertEquals(List.of(L9328), b.locos(4));
+    }
+
+    @Test
+    public void testRefreshWhileInBlock() {
+        Dcc4PcBlockLocos b = new Dcc4PcBlockLocos(INPUTS);
+        b.apply(packet(TO_9328, J4_A, j4(TO_9328, 0, 0x9C, 0x47, ACK)), J4_A, 1000);
+        // heard again within REFRESH_MILLIS: nothing to report
+        assertTrue(b.apply(packet(TO_9328, J4_A, j4(TO_9328, 0, 0x9C, 0x47, ACK)), J4_A, 1500).isEmpty());
+        // heard again after it: a refresh, not an add
+        List<Dcc4PcBlockLocos.Change> c = b.apply(packet(TO_9328, J4_A, j4(TO_9328, 0, 0x9C, 0x47, ACK)), J4_A, 1000 + Dcc4PcBlockLocos.REFRESH_MILLIS);
+        assertEquals(1, c.size());
+        assertTrue(c.get(0).refresh);
+        assertFalse(c.get(0).added);
+        assertEquals(4, c.get(0).input);
+        assertEquals(L9328, c.get(0).address);
+        // and the next one waits another REFRESH_MILLIS
+        assertTrue(b.apply(packet(TO_9328, J4_A, j4(TO_9328, 0, 0x9C, 0x47, ACK)), J4_A, 1100 + Dcc4PcBlockLocos.REFRESH_MILLIS).isEmpty());
     }
 
     @Test
@@ -97,6 +132,7 @@ public class Dcc4PcBlockLocosTest {
         assertEquals(List.of(L9328), b.locos(4));
         // seen on J5 more than MOVE_MILLIS after J4 last saw it: it has moved
         List<Dcc4PcBlockLocos.Change> c = b.apply(packet(TO_9328, j4j5, onJ5), j4j5, 1000 + Dcc4PcBlockLocos.MOVE_MILLIS + 1);
+        c.removeIf(x -> x.refresh); // J5 also refreshes 9328, which is still there
         assertEquals(1, c.size());
         assertEquals(4, c.get(0).input);
         assertFalse(c.get(0).added);

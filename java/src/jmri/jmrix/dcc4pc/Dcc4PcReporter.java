@@ -75,6 +75,20 @@ public class Dcc4PcReporter extends AbstractRailComReporter implements Collectin
     }
 
     /**
+     * A loco already in this block has been heard again: update its "last
+     * seen" time. This doesn't make it the current report, so with several
+     * locos here the report doesn't flip between them.
+     *
+     * @param address loco address
+     */
+    void locoHeard(int address) {
+        RailCom tag = tagFor(address);
+        if (entryOrder.contains(tag)) {
+            tag.setWhereLastSeen(this);
+        }
+    }
+
+    /**
      * A loco has left this block.
      *
      * @param address loco address
