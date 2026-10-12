@@ -55,4 +55,39 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
  
     }
 
+    // A listener which sent the last frame and was then removed must not
+    // receive incoming frames. Only registered listeners get them.
+    @Timeout(10)
+    @Test
+    public void testRemovedSenderReceivesNothing() throws java.io.IOException {
+
+        DummyCanListener monitor = new DummyCanListener((GcTrafficController)tc);
+        DummyCanListener sender = new DummyCanListener((GcTrafficController)tc);
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+
+        AbstractPortControllerScaffold pcs = new AbstractPortControllerScaffold(memo);
+        tc.connectPort(pcs);
+
+        // sender sends a frame, which makes it the last sender, then goes away
+        CanMessage m = new CanMessage(new int[]{0x0D}, 0x7A); // QNN
+        ((GcTrafficController)tc).sendCanMessage(m, sender);
+        JUnitUtil.waitFor(() -> {
+            return !monitor.getMessages().isEmpty();
+        },"frame not sent");
+        sender.dispose();
+
+        pcs.getRedirectedToInputStream().writeBytes(":SB020N9000020002;"); // ACON N2 E2
+
+        JUnitUtil.waitFor(() -> {
+            return !monitor.getReplies().isEmpty();
+        },"reply did not reach the registered listener");
+        JUnitUtil.waitFor(50); // let any delivery to the removed sender happen
+        Assertions.assertEquals(1, monitor.getReplies().size(), "registered listener receives the frame");
+        Assertions.assertTrue(sender.getReplies().isEmpty(), "removed sender receives nothing");
+
+        monitor.dispose();
+        tc.disconnectPort(pcs);
+        pcs.dispose();
+    }
+
 }
