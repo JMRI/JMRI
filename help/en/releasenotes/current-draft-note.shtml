@@ -26,7 +26,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Closing the CBUS bootloader window stops all of its timers,
+                    and the fast write speed choice is now saved.</li>
             </ul>
 
         <h4>C/MRI</h4>
