@@ -26,7 +26,9 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS programming reports a busy command station or a CV
+                    error straight away, instead of waiting for the programming
+                    timeout.</li>
             </ul>
 
         <h4>C/MRI</h4>
