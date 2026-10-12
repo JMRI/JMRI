@@ -124,6 +124,41 @@ public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("num elements", 0, r.getNumDataElements());
     }
 
+    @Test
+    public void testExtendedEightDataBytes() {
+        // longest valid frame, 28 characters including the ';'
+        GridConnectReply g = new GridConnectReply(":X12345678N0102030405060708;");
+        Assertions.assertEquals(28, g.getNumDataElements(), "28 characters");
+        CanReply r = g.createReply();
+        Assertions.assertTrue(r.isExtended(), "extended");
+        Assertions.assertEquals(0x12345678, r.getHeader(), "header");
+        Assertions.assertEquals(8, r.getNumDataElements(), "8 data bytes");
+        for (int i = 0; i < 8; i++) {
+            Assertions.assertEquals(i+1, r.getElement(i), "data byte " + i);
+        }
+        Assertions.assertEquals(28, g.maxSize(), "max size allows the ';' of the longest frame");
+    }
+
+    @Test
+    public void testInvalidDataIsDropped() {
+        String[] invalid = {
+            ":S123N123;", // odd number of hex digits
+            ":S123N12G4;", // not a hex digit
+            ":S123N010203040506070809;", // 9 data bytes
+            ":SB020N910001:SB020N9000;", // two frames merged
+            ":SN12;", // no header digits
+            ":S12345N12;", // 5 header digits in a standard frame
+            ":X123456789N12;", // 9 header digits in an extended frame
+            ":SB0G0N12;", // not a hex digit in the header
+        };
+        for (String s : invalid) {
+            GridConnectReply g = new GridConnectReply(s);
+            CanReply r = g.createReply();
+            Assertions.assertEquals(0, r.getNumDataElements(), s + " dropped");
+            jmri.util.JUnitAppender.assertWarnMessageStartsWith("Invalid GridConnect frame dropped");
+        }
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

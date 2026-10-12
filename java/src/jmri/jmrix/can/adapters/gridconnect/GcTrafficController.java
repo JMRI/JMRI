@@ -226,6 +226,14 @@ public class GcTrafficController extends TrafficController {
                 while (char1 != ':') {
                     char1 = readByteProtected(istream);
                 }
+            } else if (char1 == ':') {
+                // Start of a new frame before the end of the current one,
+                // the end of the current frame ( ';' ) has been lost, eg. a serial overrun.
+                // Discard the partial frame and restart with this ':' so that the
+                // two frames are not merged into one corrupt frame.
+                log.warn("Incomplete frame discarded: {}", msg);
+                msg.flush();
+                i = 0;
             }
             //if (log.isDebugEnabled()) log.debug("char: "+(char1&0xFF)+" i: "+i);
             // if there was a timeout, flush any char received and start over

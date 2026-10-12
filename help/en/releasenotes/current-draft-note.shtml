@@ -26,7 +26,12 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>GridConnect connections (CANUSB, CANUSB4, CANRS and LCC
+                    GridConnect adapters): when the ';' ending a frame is lost,
+                    the next frame is now received instead of both being merged
+                    into one corrupt frame; corrupt frames are dropped instead
+                    of being passed on as events; and the longest extended frame
+                    is no longer cut short.</li>
             </ul>
 
         <h4>C/MRI</h4>
