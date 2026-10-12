@@ -26,7 +26,14 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS throttles: a released throttle is removed from the
+                    session list, so an emergency stop reaches every remaining
+                    throttle instead of failing partway through; after a command
+                    station reset a recovered session is only given back to the
+                    throttle for the same loco; and nothing is sent to the
+                    layout while a throttle has no session, where previously a
+                    speed or function change could go out with an invalid
+                    session.</li>
             </ul>
 
         <h4>C/MRI</h4>
