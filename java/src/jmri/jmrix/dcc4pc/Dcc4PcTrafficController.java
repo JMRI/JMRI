@@ -114,6 +114,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     @Override
     protected void terminate() {
         log.debug("Cleanup Starts");
+        stopJamWatchdog();
         if (ostream == null || port == null) {
             return;    // no connection established
         }
@@ -129,7 +130,99 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         }
         Dcc4PcMessage m = Dcc4PcMessage.busResetSpeeds();
         m.setRetries(0);
-        forwardToPort(m, null);
+        // Don't wait on a write that will never finish: with the USB link jammed,
+        // waiting here would stop JMRI quitting.
+        boolean locked = false;
+        try {
+            locked = !xmtException && portLock.tryLock(1, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        if (!locked) {
+            log.warn("DCC4PC interface not responding; bus speeds not reset at quit");
+            return;
+        }
+        try {
+            forwardToPort(m, null);
+        } finally {
+            portLock.unlock();
+        }
+    }
+
+    /**
+     * Held while writing to the port, by the transmit thread and by the
+     * receive thread (which sends Get Response itself), so the two never
+     * write at once. It's a separate lock, not this object's monitor, because
+     * a write can block for a long time when the interface's USB link jams;
+     * the GUI takes the monitor (to notify listeners and queue messages), and
+     * holding it during the write froze the whole window.
+     */
+    private final java.util.concurrent.locks.ReentrantLock portLock = new java.util.concurrent.locks.ReentrantLock();
+
+    /** When the current write started, or 0 if no write is in progress. */
+    private volatile long writeStartedAt = 0;
+
+    /** A write that hasn't finished after this long means the USB link has jammed. */
+    static final long STUCK_WRITE_MILLIS = 3000;
+
+    private volatile boolean jamReported = false;
+    private java.util.Timer jamWatchdog;
+
+    /**
+     * Watch for a write that never finishes. jSerialComm's write timeout
+     * doesn't always fire: on 2026-10-12 a write stayed blocked for over 10
+     * minutes, until the interface was unplugged. Call with portLock held.
+     */
+    private void startJamWatchdog() {
+        if (jamWatchdog != null) {
+            return;
+        }
+        jamWatchdog = new java.util.Timer("DCC4PC write watchdog", true);
+        jamWatchdog.schedule(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                long started = writeStartedAt;
+                if (started != 0 && System.currentTimeMillis() - started > STUCK_WRITE_MILLIS) {
+                    reportJam("a write to the port has not finished after " + STUCK_WRITE_MILLIS / 1000 + " s");
+                }
+            }
+        }, 1000, 1000);
+    }
+
+    private void stopJamWatchdog() {
+        java.util.Timer t = jamWatchdog;
+        if (t != null) {
+            t.cancel();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void terminateThreads() {
+        stopJamWatchdog();
+        super.terminateThreads();
+    }
+
+    /**
+     * Tell the user, once, that the interface has stopped responding and how
+     * to recover. Killing JMRI while a write is stuck in the USB driver has
+     * crashed Windows (bugcheck 0x1A), so the advice is to unplug first.
+     */
+    private void reportJam(String why) {
+        if (jamReported) {
+            return;
+        }
+        jamReported = true;
+        String text = "The DCC4PC interface has stopped responding (" + why + ").\n"
+                + "Unplug its USB cable, then quit JMRI. Plug it back in before restarting JMRI.\n"
+                + "Don't end JMRI from Task Manager while the interface is still plugged in.";
+        log.error("{}", text.replace('\n', ' '));
+        if (!java.awt.GraphicsEnvironment.isHeadless()) {
+            jmri.util.swing.JmriJOptionPane.showMessageDialogNonModal(null, text,
+                    "DCC4PC interface not responding", jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE, null);
+        }
     }
 
     @Override
@@ -139,32 +232,53 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     Dcc4PcMessage mLastMessage;  //Last message requested with a reply listener ie from external methods
     Dcc4PcMessage mLastSentMessage; //Last message actually sent from within the code, ie getResponse.
 
+    // Not synchronized on this object: see portLock.
     @Override
-    synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("forwardToPort message: [{}]", m);
         }
         if (port == null) {
             return;
         }
-        // remember who sent this
-        mLastSender = reply;
-        mLastMessage = (Dcc4PcMessage) m;
+        portLock.lock();
+        try {
+            // remember who sent this
+            mLastSender = reply;
+            mLastMessage = (Dcc4PcMessage) m;
 
-        // forward the message to the registered recipients,
-        // which includes the communications monitor, except the sender.
-        // Schedule notification via the Swing event queue to ensure order
-        if (!mLastMessage.isGetResponse()) {
-            //Do not forward on the get response packets, saves filling up the monitors with chaff
-            Runnable r = new XmtNotifier(m, mLastSender, this);
-            javax.swing.SwingUtilities.invokeLater(r);
+            // forward the message to the registered recipients,
+            // which includes the communications monitor, except the sender.
+            // Schedule notification via the Swing event queue to ensure order
+            if (!mLastMessage.isGetResponse()) {
+                //Do not forward on the get response packets, saves filling up the monitors with chaff
+                Runnable r = new XmtNotifier(m, mLastSender, this);
+                javax.swing.SwingUtilities.invokeLater(r);
+            }
+            forwardToPort(m);
+        } finally {
+            portLock.unlock();
         }
-        forwardToPort(m);
-
     }
 
     //this forward to port is also used internally for repeating commands.
     private void forwardToPort(AbstractMRMessage m) {
+        portLock.lock();
+        try {
+            writeToPort(m);
+        } finally {
+            portLock.unlock();
+        }
+    }
+
+    // Call with portLock held.
+    private void writeToPort(AbstractMRMessage m) {
+        if (xmtException) {
+            // A write has already failed, and nothing clears that (issue 26), so the
+            // retry loop below would only wait out each message's timeouts.
+            return;
+        }
+        startJamWatchdog();
         mLastSentMessage = (Dcc4PcMessage) m;
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(m)];
@@ -192,7 +306,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         waitForDsrLow(200, false);
                         waitForGap();
                         port.setDTR(true);
-                        ostream.write(msg);
+                        writeStartedAt = System.currentTimeMillis();
+                        try {
+                            ostream.write(msg);
+                        } finally {
+                            writeStartedAt = 0;
+                        }
                         try {
                             Thread.sleep(20);
                         } catch (InterruptedException ex) {
@@ -232,6 +351,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             // must restart JMRI to clear xmtException.
             xmtException = true;
             portWarn(e);
+            reportJam("a write to the port failed: " + e.getMessage());
         }
     }
     /**

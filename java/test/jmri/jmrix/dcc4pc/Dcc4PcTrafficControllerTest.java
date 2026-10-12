@@ -160,6 +160,90 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         Assertions.assertEquals(2, reply.getNumDataElements());
     }
 
+    /** An output stream whose writes block until released, like a write stuck in a jammed USB driver. */
+    private static class BlockingOutputStream extends java.io.OutputStream {
+
+        final java.util.concurrent.CountDownLatch writing = new java.util.concurrent.CountDownLatch(1);
+        final java.util.concurrent.CountDownLatch release = new java.util.concurrent.CountDownLatch(1);
+
+        @Override
+        public void write(int b) throws java.io.IOException {
+            block();
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws java.io.IOException {
+            block();
+        }
+
+        private void block() throws java.io.IOException {
+            writing.countDown();
+            try {
+                release.await();
+            } catch (InterruptedException e) {
+                throw new java.io.InterruptedIOException();
+            }
+        }
+    }
+
+    /** Traffic controller writing to the given stream, with DSR low, without its threads. */
+    private Dcc4PcTrafficController writeController(java.io.OutputStream out) throws java.io.IOException {
+        Dcc4PcPortControllerScaffold p = new Dcc4PcPortControllerScaffold();
+        Dcc4PcTrafficController c = new Dcc4PcTrafficController() {
+            {
+                controller = p;
+                ostream = out;
+            }
+        };
+        c.port = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+        Mockito.when(c.port.isDSR()).thenReturn(false);
+        return c;
+    }
+
+    private Thread startBlockedWrite(Dcc4PcTrafficController c, BlockingOutputStream out) throws Exception {
+        Thread t = new Thread(() -> c.forwardToPort(Dcc4PcMessage.getInfo(), null), "blocked write test");
+        t.setDaemon(true);
+        t.start();
+        Assertions.assertTrue(out.writing.await(2, java.util.concurrent.TimeUnit.SECONDS), "write started");
+        return t;
+    }
+
+    // On 2026-10-12 a write stuck in the USB driver held the controller's monitor, and the
+    // GUI thread, which takes the monitor to notify listeners and queue messages, froze.
+    @Test
+    public void testBlockedWriteDoesNotHoldMonitor() throws Exception {
+        BlockingOutputStream out = new BlockingOutputStream();
+        Dcc4PcTrafficController c = writeController(out);
+        Thread writer = startBlockedWrite(c, out);
+        Thread other = new Thread(() -> {
+            synchronized (c) {
+                // what notifyMessage() and sendMessage() do
+            }
+        }, "monitor test");
+        other.setDaemon(true);
+        other.start();
+        other.join(1000);
+        Assertions.assertFalse(other.isAlive(), "monitor free while a write is blocked");
+        out.release.countDown();
+        writer.join(2000);
+        Assertions.assertFalse(writer.isAlive(), "write finished once released");
+        c.terminateThreads();
+    }
+
+    // A write that never finishes is reported, once, so the user can unplug the interface.
+    @Test
+    public void testStuckWriteIsReported() throws Exception {
+        BlockingOutputStream out = new BlockingOutputStream();
+        Dcc4PcTrafficController c = writeController(out);
+        Thread writer = startBlockedWrite(c, out);
+        JUnitUtil.waitFor(() -> jmri.util.JUnitAppender.checkForMessageStartingWith(
+                "The DCC4PC interface has stopped responding") != null,
+                "stuck write reported");
+        out.release.countDown();
+        writer.join(2000);
+        c.terminateThreads();
+    }
+
     @Test
     public void testListenerScaffold() {
         
