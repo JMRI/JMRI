@@ -26,7 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The CANCMD node variable editor shows and writes the current
+                    limits as the raw values the CANCMD firmware uses, writes
+                    the walkabout timeout from its own control, and opens for
+                    modules whose settings are outside the previous limited
+                    ranges.</li>
             </ul>
 
         <h4>C/MRI</h4>
