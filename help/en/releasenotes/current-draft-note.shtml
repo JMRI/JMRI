@@ -26,7 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>A CBUS reporter set to Classic RFID always decodes 5 byte
+                    tags as Classic RFID, whatever the first tag byte, and an
+                    existing reporter's type is never changed by the frames it
+                    receives. A reporter created by a CANRCOM RailCom report is
+                    still set to the self-describing type automatically.</li>
             </ul>
 
         <h4>C/MRI</h4>
