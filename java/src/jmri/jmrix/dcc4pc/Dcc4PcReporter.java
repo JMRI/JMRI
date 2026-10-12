@@ -1,8 +1,16 @@
 package jmri.jmrix.dcc4pc;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import jmri.CollectingReporter;
+import jmri.DccLocoAddress;
+import jmri.IdTag;
 import jmri.RailCom;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.implementation.AbstractRailComReporter;
 
@@ -16,10 +24,135 @@ import jmri.implementation.AbstractRailComReporter;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class Dcc4PcReporter extends AbstractRailComReporter {
+public class Dcc4PcReporter extends AbstractRailComReporter implements CollectingReporter {
 
     public Dcc4PcReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!
         super(systemName, userName);  // can't use prefix here, as still in construction
+    }
+
+    // The locos in this block, oldest first. Dcc4PcBlockLocos decides who is
+    // present, from channel 2 replies and clean channel 1 addresses, so that
+    // several locos in one block can be told apart.
+    // It's changed on the packet decode thread and read by the GUI (the Reporter
+    // table), so it's a copy-on-write list and readers always see a consistent
+    // snapshot.
+    private final List<IdTag> entryOrder = new CopyOnWriteArrayList<>();
+
+    /** @return the locos in this block, oldest first, as one consistent snapshot */
+    private IdTag[] entrySnapshot() {
+        return entryOrder.toArray(new IdTag[0]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public Collection<Object> getCollection() {
+        return (Collection<Object>) (Collection<?>) Collections.unmodifiableCollection(entryOrder);
+    }
+
+    private static RailCom tagFor(int address) {
+        return (RailCom) jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + address);
+    }
+
+    /**
+     * A loco has been found in this block.
+     *
+     * @param address loco address
+     * @param isLong  true for a long (14-bit) address
+     */
+    void locoEntered(int address, boolean isLong) {
+        RailCom tag = tagFor(address);
+        tag.setDccAddress(new DccLocoAddress(address, isLong));
+        RailCom.Orientation o = orientation();
+        if (o != null) {
+            tag.setOrientation(o);
+        }
+        entryOrder.remove(tag);
+        entryOrder.add(tag);
+        notify(tag);
+    }
+
+    /**
+     * A loco has left this block.
+     *
+     * @param address loco address
+     */
+    void locoExited(int address) {
+        RailCom tag = tagFor(address);
+        if (!entryOrder.remove(tag)) {
+            return;
+        }
+        if (getCurrentReport() == tag) {
+            updateCurrentReportAfterExit();
+        } else {
+            notifyCollectionUpdated();
+        }
+    }
+
+    /**
+     * Report the most recently entered loco still in this block, as
+     * {@link jmri.jmrix.openlcb.OlcbReporter} does.
+     */
+    private void updateCurrentReportAfterExit() {
+        IdTag[] tags = entrySnapshot();
+        if (tags.length == 0) {
+            notify(null);
+            return;
+        }
+        for (int i = tags.length - 1; i >= 0; i--) {
+            IdTag candidate = tags[i];
+            if (candidate.getWhereLastSeen() == this) {
+                notify(candidate);
+                return;
+            }
+        }
+        IdTag fallback = tags[tags.length - 1];
+        setReport(fallback);
+        setState(IdTag.SEEN);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Exits are reported by {@link #locoExited(int)}, so a loco seen elsewhere
+     * stays in the collection until then; only the current report moves on.
+     */
+    @Override
+    public void notifySeenElsewhere(IdTag tag, Reporter newReporter) {
+        if (!this.equals(newReporter) && getCurrentReport() == tag) {
+            IdTag[] tags = entrySnapshot();
+            for (int i = tags.length - 1; i >= 0; i--) {
+                IdTag candidate = tags[i];
+                if (candidate != tag && candidate.getWhereLastSeen() == this) {
+                    notify(candidate);
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * The report text is worked out when a loco is reported; if that loco is
+     * the current report and its data (such as speed) changes later, work it
+     * out again so the Reporter table shows the new value.
+     */
+    private void refreshReport(RailCom tag) {
+        if (getCurrentReport() == tag) {
+            setReport(tag);
+            firePropertyChange("currentReport", null, tag);
+        }
+    }
+
+    /** @return the orientation the input reports, or null if it reports none */
+    private RailCom.Orientation orientation() {
+        if (state == REPRESENTS_RAILCOM_EAST) {
+            return RailCom.Orientation.EAST;
+        } else if (state == REPRESENTS_RAILCOM_WEST) {
+            return RailCom.Orientation.WEST;
+        }
+        return null;
     }
 
     /**
@@ -139,12 +272,15 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             }
             cvNumber = -1;
             cvValues = new Hashtable<>();
+            entryOrder.clear();
             setReport(null);
         } else if (ori == REPRESENTS_RAILCOM_EAST || ori == REPRESENTS_RAILCOM_WEST) {
-            if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
-                var orientation = RailCom.Orientation.EAST;
-                if (ori == REPRESENTS_RAILCOM_WEST) orientation = RailCom.Orientation.WEST;
-                
+            // the reader gives one orientation per input, so it applies to every loco here
+            RailCom.Orientation orientation = orientation();
+            for (IdTag t : entryOrder) {
+                ((RailCom) t).setOrientation(orientation);
+            }
+            if (super.getCurrentReport() instanceof RailCom) {
                 ((RailCom) super.getCurrentReport()).setOrientation(orientation);
             }
             firePropertyChange("currentReport", null, null);
@@ -207,6 +343,17 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             if (super.getCurrentReport() instanceof RailCom) {
                 rcTag = (RailCom) super.getCurrentReport();
             }
+            // Channel 2 data (POM values, DYN) comes from the loco the DCC packet was sent
+            // to, which with several locos here needn't be the current report.
+            // Only that decoder replies on channel 2, so if it isn't one of the locos here,
+            // the data belongs to nobody here; never give it to whichever loco is current.
+            RailCom ch2Tag = null;
+            if (rc.getDccAddress() > 0) {
+                RailCom dest = tagFor(rc.getDccAddress());
+                if (entryOrder.contains(dest)) {
+                    ch2Tag = dest;
+                }
+            }
             int[] packet = rc.getPacket();
             char chbyte;
             char type;
@@ -268,14 +415,13 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
                 switch (type) {
                     case 0:
-                        log.debug("{} CV Value {}{}", this.getDisplayName(), (int) chbyte, rcTag);
+                        log.debug("{} CV Value {}{}", this.getDisplayName(), (int) chbyte, ch2Tag);
                         cvvalue = chbyte;
-                        if (rcTag != null) {
-                            rcTag.setWhereLastSeen(this);
-                            if (rcTag.getExpectedCv() != -1) {
-                                rcTag.setCvValue(chbyte);
+                        if (ch2Tag != null) {
+                            if (ch2Tag.getExpectedCv() != -1) {
+                                ch2Tag.setCvValue(chbyte);
                             } else {
-                                rcTag.setCV(rc.getCvNumber(), chbyte);
+                                ch2Tag.setCV(rc.getCvNumber(), chbyte);
                             }
                         }
                         break;
@@ -344,9 +490,9 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                         } else {
                             break; // other DYN values are not decoded yet
                         }
-                        if (rcTag != null) {
-                            rcTag.setActualSpeed(actual_speed);
-                            rcTag.setWhereLastSeen(this);
+                        if (ch2Tag != null && ch2Tag.getActualSpeed() != actual_speed) {
+                            ch2Tag.setActualSpeed(actual_speed);
+                            refreshReport(ch2Tag);
                         }
                         break;
                     case 8: // XPOM (RCN-217, IDs 8-11); not decoded yet
@@ -405,13 +551,8 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
         address_part_1 = 0;
         address_part_2 = -1;
-        notify(rcTag);
-        // the orientation arrived with the input state, before this tag was reported
-        if (state == REPRESENTS_RAILCOM_EAST) {
-            rcTag.setOrientation(RailCom.Orientation.EAST);
-        } else if (state == REPRESENTS_RAILCOM_WEST) {
-            rcTag.setOrientation(RailCom.Orientation.WEST);
-        }
+        // No notify(rcTag) here: Dcc4PcBlockLocos decides which locos are present
+        // and calls locoEntered(), which also sets the orientation.
         return rcTag;
     }
 

@@ -190,6 +190,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         // DSR high means the interface is still answering the last command.
                         // (It also reads high just after the port opens, so don't wait long.)
                         waitForDsrLow(200, false);
+                        waitForGap();
                         port.setDTR(true);
                         ostream.write(msg);
                         try {
@@ -203,6 +204,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         port.setDTR(false);
                         if (((Dcc4PcMessage) m).isNoDataReply()) {
                             waitForDsrLow(m.getTimeout(), true);
+                            lastTransactionEnd = System.currentTimeMillis();
                         }
                         break;
                     } else if (m.getRetries() >= 0) {
@@ -255,6 +257,28 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 return;
+            }
+        }
+    }
+
+    /**
+     * Quiet time between the end of one transaction and the start of the
+     * next. Sending each Get Response straight after the last reply ended
+     * jammed the interface's USB link after a few minutes of polling with two
+     * locos; our standalone tools always leave about this long, and ran for
+     * minutes without a jam.
+     */
+    static final int MIN_GAP_MS = 20;
+
+    volatile long lastTransactionEnd = 0;
+
+    private void waitForGap() {
+        long wait = lastTransactionEnd + MIN_GAP_MS - System.currentTimeMillis();
+        if (wait > 0) {
+            try {
+                Thread.sleep(wait);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -606,6 +630,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
             }
         }
+        lastTransactionEnd = System.currentTimeMillis();
     }
 
     boolean readingData = false;

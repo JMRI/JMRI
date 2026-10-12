@@ -533,6 +533,57 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 inputs[i] = enabled.get(i);
             }
             decoder = new Dcc4PcRawDecoder(inputs);
+            blockLocos = new Dcc4PcBlockLocos(inputs);
+            shownStates = new int[inputs.length];
+            pendingStates = new int[inputs.length];
+            pendingCounts = new int[inputs.length];
+            pendingSince = new long[inputs.length];
+        }
+
+        Dcc4PcBlockLocos blockLocos = new Dcc4PcBlockLocos(new int[0]);
+
+        /**
+         * A new input state is only shown once it has lasted this many packets
+         * in a row, so a one-packet glitch (seen: orientation B with garbage
+         * data on a block holding a loco without RailCom) doesn't reach the
+         * sensors, reporters or loco tracking. At about 70 packets a second
+         * this adds roughly 15 ms.
+         */
+        static final int STATE_DEBOUNCE_PACKETS = 2;
+
+        /**
+         * Going unoccupied must also last this long. A loco crossing a block
+         * gap or dirty rail drops out for a moment (seen: J5 unoccupied and
+         * back three times in half a second), and each drop would otherwise
+         * remove its RailCom tags from the block.
+         */
+        static final long UNOCCUPIED_HOLD_MS = 300;
+
+        private int[] shownStates = new int[0];
+        private int[] pendingStates = new int[0];
+        private int[] pendingCounts = new int[0];
+        private long[] pendingSince = new long[0];
+
+        /** @return the debounced states for this packet, in the decoder's input order */
+        private int[] debounce(int[] raw, long now) {
+            for (int i = 0; i < raw.length; i++) {
+                if (raw[i] == shownStates[i]) {
+                    pendingCounts[i] = 0;
+                } else if (pendingCounts[i] > 0 && raw[i] == pendingStates[i]) {
+                    pendingCounts[i]++;
+                    boolean held = raw[i] != Dcc4PcRawDecoder.STATE_UNOCCUPIED
+                            || now - pendingSince[i] >= UNOCCUPIED_HOLD_MS;
+                    if (pendingCounts[i] >= STATE_DEBOUNCE_PACKETS && held) {
+                        shownStates[i] = raw[i];
+                        pendingCounts[i] = 0;
+                    }
+                } else {
+                    pendingStates[i] = raw[i];
+                    pendingCounts[i] = 1;
+                    pendingSince[i] = now;
+                }
+            }
+            return shownStates.clone();
         }
 
         boolean isSynced() {
@@ -727,8 +778,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
         private void applyPacket(Dcc4PcRawDecoder.Packet p) {
             int[] inputs = decoder.getInputs();
+            long now = System.currentTimeMillis();
+            int[] states = debounce(p.states, now);
             for (int i = 0; i < inputs.length; i++) {
-                int state = sensorState(p.states[i]);
+                int state = sensorState(states[i]);
                 Integer old = appliedStates.put(inputs[i], state);
                 if (old != null && old == state) {
                     continue;
@@ -740,6 +793,20 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 Dcc4PcReporter rep = getReporterAtIndex(inputs[i]);
                 if (rep != null) {
                     rep.setRailComState(state);
+                }
+            }
+            // which locos are in which block, from channel 2 replies and clean channel 1 addresses
+            for (Dcc4PcBlockLocos.Change c : blockLocos.apply(p, states, now)) {
+                log.info("Board {}: {}", address, c); // rare: only when a loco enters or leaves a block
+                Dcc4PcReporter rep = getReporterAtIndex(c.input);
+                if (rep == null) {
+                    continue;
+                }
+                int a = c.address & ~Dcc4PcBlockLocos.LONG;
+                if (c.added) {
+                    rep.locoEntered(a, (c.address & Dcc4PcBlockLocos.LONG) != 0);
+                } else {
+                    rep.locoExited(a);
                 }
             }
             for (Dcc4PcRawDecoder.InputData d : p.railCom) {
@@ -791,6 +858,9 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             speed = 0;
             addr = 0;
             dcc_addr_type = NO_ADDRESS;
+            if (packet.length < 2) {
+                return; // too short to hold an address and an instruction
+            }
             if (log.isDebugEnabled()) {
 
                 StringBuilder buf = new StringBuilder();
