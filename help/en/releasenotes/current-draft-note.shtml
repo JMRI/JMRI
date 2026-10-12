@@ -26,7 +26,10 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS performance on busy layouts: incoming frames are
+                    dispatched to sensors, turnouts and lights with much less
+                    work and no per-frame garbage, and the Event Table and
+                    Console do far less work for each frame.</li>
             </ul>
 
         <h4>C/MRI</h4>

@@ -51,6 +51,42 @@ public class CbusMessageTest {
     }
 
     @Test
+    public void testOpcRangeToStlNoCopyWhenNotResponse() {
+        // a normal event is not copied, the same instance is returned
+        CanReply r = new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 0x02}, 0x12);
+        CanReply m = CbusMessage.opcRangeToStl(r);
+        assertSame(r, m, "ACON returns the original instance");
+        assertEquals(CbusConstants.CBUS_ACON, r.getElement(0), "original ACON unchanged");
+
+        r = new CanReply(new int[]{CbusConstants.CBUS_ASOF, 0x00, 0x00, 0x00, 0x07}, 0x12);
+        assertSame(r, CbusMessage.opcRangeToStl(r), "ASOF returns the original instance");
+
+        r = new CanReply(new int[]{CbusConstants.CBUS_RTON}, 0x12);
+        assertSame(r, CbusMessage.opcRangeToStl(r), "RTON returns the original instance");
+    }
+
+    @Test
+    public void testOpcRangeToStlCopiesResponse() {
+        CanReply r = new CanReply(new int[]{CbusConstants.CBUS_ARON, 0x00, 0x01, 0x00, 0x02}, 0x12);
+        r.setExtended(false);
+        CanReply m = CbusMessage.opcRangeToStl(r);
+        assertNotSame(r, m, "ARON returns a new instance");
+        assertEquals(CbusConstants.CBUS_ARON, r.getElement(0), "original ARON not modified");
+        assertEquals(CbusConstants.CBUS_ACON, m.getElement(0), "new reply is ACON");
+        assertEquals(5, m.getNumDataElements(), "data length copied");
+        assertEquals(0x12, m.getHeader(), "header copied");
+        for (int i = 1; i < 5; i++) {
+            assertEquals(r.getElement(i), m.getElement(i), "data element " + i + " copied");
+        }
+
+        r = new CanReply(new int[]{CbusConstants.CBUS_ARSOF, 0x00, 0x00, 0x00, 0x07}, 0x12);
+        m = CbusMessage.opcRangeToStl(r);
+        assertNotSame(r, m, "ARSOF returns a new instance");
+        assertEquals(CbusConstants.CBUS_ASOF, m.getElement(0), "new reply is ASOF");
+        assertEquals(0x07, m.getElement(4), "event number copied");
+    }
+
+    @Test
     public void testgetNodeNumberMessage() {
         CanMessage m = new CanMessage(0x12);
         m.setNumDataElements(5);
