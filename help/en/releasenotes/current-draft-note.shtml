@@ -26,7 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS sensor, turnout and light addresses: an unsigned
+                    address such as 100001 is treated the same as +100001, node
+                    numbers of 21475 and above no longer overflow, and an out of
+                    range address is reported as invalid instead of throwing an
+                    exception.</li>
             </ul>
 
         <h4>C/MRI</h4>
