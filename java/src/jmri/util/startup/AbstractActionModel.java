@@ -72,12 +72,37 @@ public abstract class AbstractActionModel implements StartupModel {
         }
     }
 
+    /**
+     * Check if the action needs a system connection.
+     * <p>
+     * This is decided from the action class itself, not from the list of
+     * actions offered by the running connections, so an action belonging to a
+     * connection that is disabled, failed to start or has been removed is
+     * still recognised as a connection action.
+     *
+     * @return true if the action class implements {@link SystemConnectionAction}
+     */
     public boolean isSystemConnectionAction() {
         String name = this.getClassName();
-        if (name != null) {
-            return StartupActionModelUtil.getDefault().isSystemConnectionAction(name);
+        if (name != null && !name.isEmpty()) {
+            try {
+                return SystemConnectionAction.class.isAssignableFrom(Class.forName(name));
+            } catch (ClassNotFoundException | LinkageError ex) {
+                return false;
+            }
         }
         return false;
+    }
+
+    /**
+     * Check if the connection this action needs is available.
+     *
+     * @return true if the action does not need a connection, or its
+     *         connection is currently registered
+     */
+    public boolean isConnectionAvailable() {
+        return !isSystemConnectionAction()
+                || SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(systemPrefix) != null;
     }
 
     @Override
@@ -86,11 +111,8 @@ public abstract class AbstractActionModel implements StartupModel {
             try {
                 // don't need return value, just want to know if exception is triggered
                 Class.forName(className);
-                if (isSystemConnectionAction()) {
-                    return SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForSystemPrefix(systemPrefix) != null;
-                }
-                return true;
-            } catch (ClassNotFoundException ex) {
+                return isConnectionAvailable();
+            } catch (ClassNotFoundException | LinkageError ex) {
                 return false;
             }
         }
@@ -118,6 +140,10 @@ public abstract class AbstractActionModel implements StartupModel {
             }
             return name;
         }
+        if (this.className != null && !this.className.isEmpty() && !this.isConnectionAvailable()) {
+            // action kept for a connection that is not running (disabled, removed, or failed to start)
+            return Bundle.getMessage("AbstractActionModel.ConnectionNotAvailable", this.className, this.systemPrefix); // NOI18N
+        }
         if (this.className != null && this.isValid()) {
             return Bundle.getMessage("AbstractActionModel.UnknownClass", this.className);
         } else if (this.className != null && !this.className.isEmpty()) {
@@ -130,6 +156,13 @@ public abstract class AbstractActionModel implements StartupModel {
     @Override
     public void performAction() throws JmriException {
         log.debug("Invoke Action from {}", className);
+        if (!isConnectionAvailable()) {
+            // Do not create the action: connection actions often look up a default
+            // connection in their constructor, which would either fail or pick
+            // an unrelated connection.
+            log.warn("Connection \"{}\" does not exist and cannot be assigned to action {}\nThis warning can be silenced by configuring the connection associated with the startup action.", this.getSystemPrefix(), className);
+            return;
+        }
         try {
             Action action = (Action) Class.forName(className).getDeclaredConstructor().newInstance();
             if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {

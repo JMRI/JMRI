@@ -145,7 +145,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         Element element = new Element(STARTUP, NAMESPACE);
         actions.stream().forEach((action) -> {
             log.debug("model is {} ({})", action.getName(), action);
-            if (action.getName() != null) {
+            if (action.getName() != null || isKeptAction(action)) {
                 Element e = ConfigXmlManager.elementFromObject(action, true);
                 if (e != null) {
                     element.addContent(e);
@@ -161,6 +161,31 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         } catch (JDOMException ex) {
             log.error("Unable to create create XML", ex);
         }
+    }
+
+    /**
+     * Check if an action without a display name should still be saved.
+     * <p>
+     * An action's display name is only known while a connection or factory
+     * offering it is running. An action for a connection that is disabled,
+     * failed to start, or was removed in this session has no name, but it
+     * still has its class name and connection prefix. It is kept so that it
+     * works again when the connection comes back, rather than being silently
+     * deleted from the user's preferences.
+     *
+     * @param action the action to check
+     * @return true if the action is identified by a class name
+     */
+    private static boolean isKeptAction(StartupModel action) {
+        if (action instanceof AbstractActionModel) {
+            String className = ((AbstractActionModel) action).getClassName();
+            if (className != null && !className.isEmpty()) {
+                log.debug("keeping action {} for connection \"{}\" not currently available",
+                        className, ((AbstractActionModel) action).getSystemPrefix());
+                return true;
+            }
+        }
+        return false;
     }
 
     public StartupModel[] getActions() {
