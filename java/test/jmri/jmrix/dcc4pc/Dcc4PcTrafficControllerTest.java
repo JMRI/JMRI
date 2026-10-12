@@ -4,13 +4,17 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
 /**
  * JUnit tests for the Dcc4PcTrafficController class
@@ -70,6 +74,90 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         c.terminateThreads();
         p.getSystemConnectionMemo().dispose();
 
+    }
+
+    /**
+     * Traffic controller wired to the piped streams and a mock serial port,
+     * without starting the transmit and receive threads.
+     */
+    private Dcc4PcTrafficController loadCharsController(AtomicBoolean dsr) throws java.io.IOException {
+        Dcc4PcPortControllerScaffold p = new Dcc4PcPortControllerScaffold();
+        Dcc4PcTrafficController c = new Dcc4PcTrafficController() {
+            {
+                controller = p;
+            }
+        };
+        c.port = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+        Mockito.when(c.port.isDSR()).thenAnswer(inv -> dsr.get());
+        return c;
+    }
+
+    // Issue 29: waiting for a reply with nothing arriving must not use a whole CPU core.
+    @Test
+    public void testLoadCharsIdleDoesNotSpin() throws Exception {
+        AtomicBoolean dsr = new AtomicBoolean(true);
+        Dcc4PcTrafficController c = loadCharsController(dsr);
+        AtomicBoolean interrupted = new AtomicBoolean(false);
+        Thread t = new Thread(() -> {
+            try {
+                c.loadChars(new Dcc4PcReply(), istream);
+            } catch (java.io.InterruptedIOException e) {
+                interrupted.set(true);
+            } catch (java.io.IOException e) {
+                // test fails below
+            }
+        }, "loadChars idle test");
+        t.setDaemon(true);
+        t.start();
+        ThreadMXBean mx = ManagementFactory.getThreadMXBean();
+        Thread.sleep(100); // DSR high, no data
+        long cpu0 = mx.getThreadCpuTime(t.getId());
+        long wall0 = System.nanoTime();
+        Thread.sleep(400);
+        dsr.set(false); // DSR low, still no data
+        Thread.sleep(400);
+        long cpu = mx.getThreadCpuTime(t.getId()) - cpu0;
+        long wall = System.nanoTime() - wall0;
+        log.info("idle loadChars used {} ms CPU in {} ms", cpu / 1000000, wall / 1000000);
+        t.interrupt();
+        t.join(1000);
+        Assertions.assertTrue(cpu < wall / 5,
+                "idle loadChars used " + (cpu / 1000000) + " ms CPU in " + (wall / 1000000) + " ms");
+        Assertions.assertFalse(t.isAlive(), "loadChars returns when interrupted");
+        Assertions.assertTrue(interrupted.get(), "interrupt ends loadChars with InterruptedIOException");
+    }
+
+    // The end of a reply is still noticed promptly when DSR falls.
+    @Test
+    public void testLoadCharsEndsSoonAfterDsrFalls() throws Exception {
+        AtomicBoolean dsr = new AtomicBoolean(true);
+        Dcc4PcTrafficController c = loadCharsController(dsr);
+        Dcc4PcReply reply = new Dcc4PcReply();
+        tistream.write(0x00);
+        tistream.write(0x05);
+        tistream.flush();
+        AtomicBoolean done = new AtomicBoolean(false);
+        Thread t = new Thread(() -> {
+            try {
+                c.loadChars(reply, istream);
+                done.set(true);
+            } catch (java.io.IOException e) {
+                // test fails below
+            }
+        }, "loadChars DSR test");
+        t.setDaemon(true);
+        t.start();
+        JUnitUtil.waitFor(() -> reply.getNumDataElements() == 2, "both bytes read");
+        Thread.sleep(50);
+        Assertions.assertFalse(done.get(), "reply not complete while DSR is high");
+        long start = System.nanoTime();
+        dsr.set(false);
+        t.join(1000);
+        long ms = (System.nanoTime() - start) / 1000000;
+        log.info("DSR low noticed after {} ms", ms);
+        Assertions.assertTrue(done.get(), "reply complete once DSR is low");
+        Assertions.assertTrue(ms < 50, "DSR low noticed after " + ms + " ms");
+        Assertions.assertEquals(2, reply.getNumDataElements());
     }
 
     @Test
@@ -196,5 +284,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         JUnitUtil.tearDown();
 
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcTrafficControllerTest.class);
 
 }

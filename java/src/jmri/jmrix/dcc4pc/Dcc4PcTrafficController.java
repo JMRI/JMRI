@@ -618,6 +618,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     } else if (!port.isDSR()) {
                         if (i == 0) {
                             waiting = true;
+                            idleWait();
                         } else {
                             log.debug("We have data so will break");
                             waiting = false;
@@ -626,11 +627,34 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     } else {
                         //As we have no data to process we will set the readingData flag false;
                         readingData = false;
+                        idleWait();
                     }
                 }
             }
         }
         lastTransactionEnd = System.currentTimeMillis();
+    }
+
+    /**
+     * Pause briefly while loadChars has no byte to read. Without it the
+     * receive thread polled available() and DSR non-stop, using a whole CPU
+     * core whenever JMRI was idle (issue 29). 1 ms still notices DSR falling
+     * at the end of a reply within a few ms.
+     *
+     * @throws java.io.InterruptedIOException if the thread is interrupted or
+     *                                        asked to stop, which ends the
+     *                                        receive loop
+     */
+    private void idleWait() throws java.io.InterruptedIOException {
+        if (threadStopRequest) {
+            throw new java.io.InterruptedIOException("receive thread stopping");
+        }
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new java.io.InterruptedIOException("receive thread interrupted");
+        }
     }
 
     boolean readingData = false;
