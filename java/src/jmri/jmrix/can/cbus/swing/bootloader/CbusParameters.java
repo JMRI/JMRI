@@ -14,6 +14,13 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusParameters {
 
+    /**
+     * Maximum number of parameters.
+     * paramData holds the parameter count at index 0, then the parameters
+     * at indexes 1 to MAX_PARAMS.
+     */
+    public static final int MAX_PARAMS = 32;
+
     protected int [] paramData = null;
     protected boolean valid = false;
 
@@ -22,7 +29,7 @@ public class CbusParameters {
      * Create blank parameters
      */
     public CbusParameters() {
-        paramData = new int[33];
+        paramData = new int[MAX_PARAMS + 1];
         Arrays.fill(paramData, -1);
     }
     
@@ -35,7 +42,7 @@ public class CbusParameters {
     public CbusParameters(byte [] d) {
         this();
         
-        if (d.length > 32) {
+        if (d.length > MAX_PARAMS) {
             log.error("Too many parameters");
             valid = false;
         } else {
