@@ -26,7 +26,14 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS Node Manager: teaching events now completes on modules
+                    which only accept changes in learn mode (eg. CANSERVO8C,
+                    CANMIO-SVO); an EVLRNI reply no longer throws an exception;
+                    an aborted NV fetch no longer leaves the node permanently
+                    unread; events invalidated after a failed fetch are read
+                    again; enumerating CAN IDs no longer resets an existing
+                    node; a node no longer shows JMRI's own CAN ID; and reading
+                    the events of a node with many events is faster.</li>
             </ul>
 
         <h4>C/MRI</h4>
