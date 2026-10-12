@@ -627,7 +627,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     } else {
                         //As we have no data to process we will set the readingData flag false;
                         readingData = false;
-                        idleWait();
+                        // Only pause before the reply starts. Once its bytes are arriving, read
+                        // each one as soon as it's there: pausing mid-reply read the bytes late,
+                        // and was the likely cause of replies cut short (issue 29).
+                        if (i == 0) {
+                            idleWait();
+                        }
                     }
                 }
             }
@@ -636,10 +641,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * Pause briefly while loadChars has no byte to read. Without it the
-     * receive thread polled available() and DSR non-stop, using a whole CPU
-     * core whenever JMRI was idle (issue 29). 1 ms still notices DSR falling
-     * at the end of a reply within a few ms.
+     * Pause briefly while loadChars is waiting for a reply to start. Without
+     * it the receive thread polled available() and DSR non-stop, using a whole
+     * CPU core whenever JMRI was idle (issue 29). It isn't used once a reply's
+     * bytes are arriving: on Windows a 1 ms sleep can last up to ~15 ms, and
+     * with it the Raw stream misaligned (7 times in one 5-minute run, against
+     * none without it).
      *
      * @throws java.io.InterruptedIOException if the thread is interrupted or
      *                                        asked to stop, which ends the
