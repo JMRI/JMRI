@@ -31,7 +31,23 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         // Finally, create and register a shutdown task to ensure clean exit
         this.pollShutDownTask = this::stopPolling;
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(pollShutDownTask);
+        tc.setReconnectHandler(this::interfaceReconnected);
         startPolling();
+    }
+
+    /**
+     * The interface's port has been reopened after a failure (its USB cable
+     * was unplugged and plugged back in). The interface has restarted at 8
+     * kbps but the boards may not have, so set the bus up as at startup, then
+     * bring each board back to 62.5 kbps and resynchronise it.
+     */
+    void interfaceReconnected() {
+        boardManager.rediscover();
+        for (ActiveBoard board : activeBoards.values()) {
+            if (!board.doNotPoll()) {
+                board.restartAfterReconnect();
+            }
+        }
     }
 
     Dcc4PcReporterManager reportManager;
@@ -616,6 +632,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
         volatile boolean speedChecked = false;
         volatile boolean speedPending = false;
+        /** True after the board stopped answering at all, until a reset succeeds again. */
+        volatile boolean lostContact = false;
         volatile long speedStarted = 0;
         int failedResets = 0;
 
@@ -706,18 +724,30 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("Reset Encoding State failed for board {} ({} in a row)", address, failedResets);
                 if (failedResets >= 3 && !speedPending) {
                     // The board is powered from the track, so a short or power cut restarts
-                    // it at 8 kbps while the interface is still on the faster speed.
-                    log.warn("Board {} not answering, setting the bus speed again from 8 kbps", address);
+                    // it at 8 kbps while the interface is still on the faster speed. Wait at
+                    // 8 kbps until it answers again before trying 62.5 kbps: trying while
+                    // track power was still off failed each time and doubled the retry
+                    // delay, so after a 70 s outage JMRI stayed at 8 kbps for 5 minutes.
+                    if (!lostContact) {
+                        log.warn("Board {} not answering, waiting for it at 8 kbps", address);
+                    }
+                    lostContact = true;
                     failedResets = 0;
                     busSpeed = 0;
                     tc.sendDcc4PcMessage(Dcc4PcMessage.busResetSpeeds(), null);
                     tc.sendDcc4PcMessage(Dcc4PcMessage.busSetSpeed(address, 0), null);
-                    startSpeedChange();
                 }
                 resetPending = false;
                 return;
             }
             failedResets = 0;
+            if (lostContact) {
+                // it's back (track power restored): change speed again straight away
+                lostContact = false;
+                log.info("Board {} is answering again", address);
+                speedRetryDelay = FIRST_SPEED_RETRY;
+                nextSpeedRetry = System.currentTimeMillis();
+            }
             // queued behind any Get Data replies that were already on their way, which are dropped
             packetProcessor.execute(() -> {
                 decoder.reset();
@@ -725,6 +755,19 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 synced = true;
                 log.debug("Board {} synchronised", address);
             });
+        }
+
+        /** Forget the old link state and change speed again from 8 kbps, after the port was reopened. */
+        void restartAfterReconnect() {
+            log.info("Setting up board {} again after the interface reconnected", address);
+            failedResets = 0;
+            resetPending = false;
+            speedPending = false;
+            lostContact = false;
+            busSpeed = 0;
+            nextSpeedRetry = 0;
+            speedRetryDelay = FIRST_SPEED_RETRY;
+            startSpeedChange();
         }
 
         static final long FIRST_SPEED_RETRY = 5000;

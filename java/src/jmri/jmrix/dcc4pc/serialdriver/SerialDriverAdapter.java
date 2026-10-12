@@ -94,6 +94,30 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     }
 
     /**
+     * Close the port after it has failed, so it can be opened again with
+     * {@link #openPort}.
+     */
+    public void closeSerialPort() {
+        opened = false;
+        jmri.jmrix.purejavacomm.SerialPort p = activeSerialPort;
+        if (p != null) {
+            try {
+                p.close();
+            } catch (RuntimeException e) {
+                log.debug("Closing the failed port", e);
+            }
+        }
+    }
+
+    /**
+     * @return true if the operating system lists this connection's port. A
+     *         USB interface's port disappears while it is unplugged.
+     */
+    public boolean isPortPresent() {
+        return getActualPortNames().contains(getCurrentPortName());
+    }
+
+    /**
      * Option 1 controls the connection used for programming.
      * @return array with options for programming.
      */

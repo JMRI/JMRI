@@ -244,6 +244,90 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         c.terminateThreads();
     }
 
+    /** A port that can be unplugged and plugged back in. */
+    private class ReplugPortScaffold extends Dcc4PcPortControllerScaffold {
+
+        volatile boolean present = true;
+        final java.util.concurrent.atomic.AtomicInteger closes = new java.util.concurrent.atomic.AtomicInteger();
+        final java.util.concurrent.atomic.AtomicInteger opens = new java.util.concurrent.atomic.AtomicInteger();
+        final java.io.ByteArrayOutputStream reopened = new java.io.ByteArrayOutputStream();
+        final jmri.jmrix.purejavacomm.SerialPort newPort = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+
+        ReplugPortScaffold() throws java.io.IOException {
+            super();
+            setPort("COM99");
+        }
+
+        @Override
+        public void closeSerialPort() {
+            closes.incrementAndGet();
+        }
+
+        @Override
+        public boolean isPortPresent() {
+            return present;
+        }
+
+        @Override
+        public String openPort(String portName, String appName) {
+            opens.incrementAndGet();
+            return null;
+        }
+
+        @Override
+        public jmri.jmrix.purejavacomm.SerialPort getSerialPort() {
+            return newPort;
+        }
+
+        @Override
+        public DataOutputStream getOutputStream() {
+            return opens.get() == 0 ? super.getOutputStream() : new DataOutputStream(reopened);
+        }
+    }
+
+    // Issue 26: a failed write used to stop all sending until JMRI was restarted.
+    @Test
+    public void testPortReopenedAfterWriteFails() throws Exception {
+        ReplugPortScaffold p = new ReplugPortScaffold();
+        java.io.OutputStream failing = new java.io.OutputStream() {
+            @Override
+            public void write(int b) throws java.io.IOException {
+                throw new java.io.IOException("device not functioning");
+            }
+        };
+        Dcc4PcTrafficController c = new Dcc4PcTrafficController() {
+            {
+                controller = p;
+                ostream = failing;
+            }
+        };
+        c.port = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+        c.recoveryPollMillis = 10;
+        java.util.concurrent.CountDownLatch reconnected = new java.util.concurrent.CountDownLatch(1);
+        c.setReconnectHandler(reconnected::countDown);
+        p.present = false; // unplugged
+
+        c.forwardToPort(Dcc4PcMessage.getInfo(), null);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("sendMessage: Exception");
+        Assertions.assertNotNull(jmri.util.JUnitAppender.checkForMessageStartingWith(
+                "The DCC4PC interface has stopped responding"), "failure reported");
+        Assertions.assertTrue(c.recovering, "recovering after the failed write");
+        JUnitUtil.waitFor(() -> p.closes.get() == 1, "failed port closed");
+
+        Thread.sleep(100);
+        Assertions.assertEquals(0, p.opens.get(), "no reopen while the port is missing");
+
+        p.present = true; // plugged back in
+        Assertions.assertTrue(reconnected.await(5, java.util.concurrent.TimeUnit.SECONDS), "reconnect handler run");
+        Assertions.assertEquals(1, p.opens.get());
+        Assertions.assertFalse(c.recovering);
+        Assertions.assertSame(p.newPort, c.port, "uses the reopened port");
+
+        c.forwardToPort(Dcc4PcMessage.getInfo(), null);
+        Assertions.assertTrue(p.reopened.size() > 0, "sends on the reopened port");
+        c.terminateThreads();
+    }
+
     @Test
     public void testListenerScaffold() {
         

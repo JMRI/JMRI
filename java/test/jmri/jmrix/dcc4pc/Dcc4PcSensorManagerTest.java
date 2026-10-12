@@ -109,6 +109,35 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
     }
 
+    // 2026-10-12: a short cut track power for about 70 s. Each attempt at 62.5 kbps during
+    // the outage failed and doubled the retry delay, so once power was back the board stayed
+    // at 8 kbps (with Get Data failing) for 5 minutes.
+    @Test
+    public void testSpeedRetriedAsSoonAsBoardAnswersAgain() {
+        Dcc4PcSensorManager sm = (Dcc4PcSensorManager) l;
+        sm.addActiveBoard(1, "1", 16, 0);
+        Dcc4PcSensorManager.ActiveBoard board = sm.activeBoards.get(1);
+        board.speedChecked = true;
+        board.busSpeed = Dcc4PcMessage.SPEED_62K5;
+
+        // track power off: the board answers nothing
+        for (int i = 0; i < 9; i++) {
+            board.resetReplied(false);
+        }
+        jmri.util.JUnitAppender.assertWarnMessage("Board 1 not answering, waiting for it at 8 kbps");
+        assertTrue(board.lostContact);
+        assertEquals(0, board.busSpeed, "back at 8 kbps");
+        Assertions.assertFalse(board.speedPending, "no speed change while it can't answer");
+        assertEquals(Dcc4PcSensorManager.ActiveBoard.FIRST_SPEED_RETRY, board.speedRetryDelay, "no backoff");
+
+        // power back: the next reset succeeds
+        long before = System.currentTimeMillis();
+        board.resetReplied(true);
+        Assertions.assertFalse(board.lostContact);
+        assertTrue(board.nextSpeedRetry != 0 && board.nextSpeedRetry <= System.currentTimeMillis()
+                && board.nextSpeedRetry >= before, "62.5 kbps retried straight away");
+    }
+
     private Dcc4PcSystemConnectionMemo memo = null;
 
     @BeforeEach

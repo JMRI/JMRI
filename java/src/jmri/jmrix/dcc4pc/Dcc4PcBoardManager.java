@@ -16,12 +16,31 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
     public Dcc4PcBoardManager(Dcc4PcTrafficController tc, Dcc4PcSensorManager senManager) {
         this.tc = tc;
         this.senManager = senManager;
-        // Start from 8 kbps on both sides: a board that lost power has gone back to
-        // 8 kbps, but the interface may still be at the speed a previous session set.
+        resetBusSpeeds();
+        for (int x = MINRC; x < MAXRC; x++){
+            addBoard(x);
+        }
+    }
+
+    /**
+     * Start from 8 kbps on both sides: a board that lost power has gone back
+     * to 8 kbps, but the interface may still be at the speed a previous
+     * session set, or the other way round.
+     */
+    private void resetBusSpeeds() {
         tc.sendDcc4PcMessage(Dcc4PcMessage.busResetSpeeds(), null);
         for (int x = MINRC; x < MAXRC; x++){
             tc.sendDcc4PcMessage(Dcc4PcMessage.busSetSpeed(x, 0), null);
         }
+    }
+
+    /**
+     * The interface's port has been reopened after a failure. Reset the bus
+     * speeds as at startup, and look again for boards not found yet.
+     */
+    void rediscover() {
+        resetBusSpeeds();
+        boardsToDiscover.clear();
         for (int x = MINRC; x < MAXRC; x++){
             addBoard(x);
         }
