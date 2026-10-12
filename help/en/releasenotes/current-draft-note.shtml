@@ -26,7 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Unplugging a CANUSB4 or other GridConnect USB adapter on
+                    Windows no longer leaves JMRI running a CPU core flat out;
+                    the connection fails and reconnects when the adapter is
+                    plugged back in. Closing a connection no longer replays the
+                    last frame received.</li>
             </ul>
 
         <h4>C/MRI</h4>

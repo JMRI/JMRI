@@ -215,6 +215,9 @@ abstract public class AbstractCanTrafficController
 
         // message exists, now fill it
         loadChars(hmsg, istream);
+        if (threadStopRequest) {
+            return; // connection closing, do not dispatch a partial or replayed frame
+        }
 
         // Decode the message from the hardware into a CanReply
         msg = decodeFromHardware(hmsg);
