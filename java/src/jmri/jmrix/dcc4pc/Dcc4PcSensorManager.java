@@ -938,14 +938,9 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 }
                 return;
             } else {
-                int addr_1;
                 //The way that this determins of there is a two part extended address packet isn't great./
-                if (packet.length > 0) {
-                    addr_1 = packet[i] & 0xFF;
-                    i++;
-                } else {
-                    addr_1 = 0;
-                }
+                int addr_1 = packet[i] & 0xFF; // packets shorter than 2 bytes were dropped above
+                i++;
                 if (addr_1 == 0) {
                     dcc_addr_type = NO_ADDRESS;
                 } else if ((addr_1 >= 1) && (addr_1 <= 127)) { //Short address
