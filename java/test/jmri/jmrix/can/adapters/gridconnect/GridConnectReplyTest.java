@@ -126,9 +126,10 @@ public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Test
     public void testExtendedEightDataBytes() {
-        // longest valid frame, 28 characters including the ';'
-        GridConnectReply g = new GridConnectReply(":X12345678N0102030405060708;");
-        Assertions.assertEquals(28, g.getNumDataElements(), "28 characters");
+        // longest valid frame :X12345678N0102030405060708; is 28 characters,
+        // loadChars() stores the first 27, everything except the ';'
+        GridConnectReply g = new GridConnectReply(":X12345678N0102030405060708");
+        Assertions.assertEquals(27, g.getNumDataElements(), "27 characters stored");
         CanReply r = g.createReply();
         Assertions.assertTrue(r.isExtended(), "extended");
         Assertions.assertEquals(0x12345678, r.getHeader(), "header");
@@ -136,7 +137,7 @@ public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         for (int i = 0; i < 8; i++) {
             Assertions.assertEquals(i+1, r.getElement(i), "data byte " + i);
         }
-        Assertions.assertEquals(28, g.maxSize(), "max size allows the ';' of the longest frame");
+        Assertions.assertEquals(27, g.maxSize(), "max size holds all the data of the longest frame");
     }
 
     @Test

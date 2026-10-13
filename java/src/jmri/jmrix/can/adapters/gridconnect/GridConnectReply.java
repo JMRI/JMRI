@@ -22,9 +22,11 @@ import org.slf4j.LoggerFactory;
  */
 public class GridConnectReply extends AbstractMRReply {
 
-    // Longest valid frame is an extended frame with 8 data bytes, including the ';'
-    // :X12345678N0102030405060708;
-    static final int MAXLEN = 28;
+    // The longest valid frame, an extended frame with 8 data bytes,
+    // :X12345678N0102030405060708; is 28 characters. Its ';' is not stored,
+    // but all of its data is, and the ';' left in the stream is skipped while
+    // looking for the ':' of the next frame.
+    static final int MAXLEN = 27;
 
     // Maximum number of data bytes in a CAN frame
     private static final int MAX_DATA_BYTES = 8;
