@@ -30,6 +30,28 @@
                     dispatched to sensors, turnouts and lights with much less
                     work and no per-frame garbage, and the Event Table and
                     Console do far less work for each frame.</li>
+                <li>The CBUS fast clock uses the calendar year rather than the
+                    week-based year, accepts and sends temperatures from -128 to
+                    127 correctly, and stops listening to the JMRI clock when it
+                    is disposed. CBUS consist listeners are no longer shared
+                    between connections.</li>
+                <li>CBUS throttles: a released throttle is removed from the
+                    session list, so an emergency stop reaches every remaining
+                    throttle instead of failing partway through; after a command
+                    station reset a recovered session is only given back to the
+                    throttle for the same loco; and nothing is sent to the
+                    layout while a throttle has no session, where previously a
+                    speed or function change could go out with an invalid
+                    session.</li>
+                <li>The CBUS bootloader checks a hex file before it can be used.
+                    The Program button stays disabled until the file has been
+                    read without error and its parameters checked; a file with
+                    record types the bootloader does not understand is rejected;
+                    the MERG parameter block checksum is now verified; and a
+                    load address missing from the file stops programming cleanly
+                    instead of throwing an exception. The hex file is closed
+                    after reading instead of being left open and locked, and
+                    short records are padded correctly for the AN247 bootloader.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -129,7 +151,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added a dialog to draw attention to the error
+                    if a firmware update fails.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -443,7 +466,19 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>When the maximum speed of an automatically running train
+                 is entered as a scale speed (scale mph or scale km/h),
+                 that limit is now applied as entered. Previously it could
+                 be reduced by the stored throttle percentage value in the
+                 Physics ramp and in distance-based stopping. The throttle
+                 percentage is now only a fallback for locomotives without
+                 a speed profile, or when the profile does not cover the
+                 direction of travel; a warning is written to the system
+                 console in that case.</li>
+             <li>The scale speed conversions for the maximum speed and the
+                 scale speed shown for the minimum throttle now follow the
+                 "Run in reverse" setting, and the scale km/h entry is no
+                 longer labelled as scale mph.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
