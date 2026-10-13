@@ -104,6 +104,9 @@ public class CbusThrottle extends AbstractThrottle {
      */
     protected void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
         log.debug("Setting throttle initial values");
+        // the command station session state is now known, so the next
+        // speed / direction set by JMRI must always be sent to the layout
+        oldCbusSpeed = -2;
         updateSpeedSetting( speed & 0x7f );
         updateIsForward ( (speed & 0x80) == 0x80 );
         updateFunctionGroup(1,f0f4);
@@ -140,7 +143,25 @@ public class CbusThrottle extends AbstractThrottle {
                 mode = CbusConstants.CBUS_SS_128;
                 break;
         }
-        cs.setSpeedSteps(_handle, mode);
+        if (hasActiveSession()) {
+            cs.setSpeedSteps(_handle, mode);
+        } else {
+            log.debug("no active session, speed step mode {} not sent to layout", stepMode);
+        }
+    }
+
+    /**
+     * Check if this Throttle currently holds a command station session which
+     * can be sent to.
+     * <p>
+     * False when the Throttle has been disposed, or when the session has been
+     * stolen and is awaiting recovery, in which case the handle is -1.
+     * Local Throttle state is still updated in these cases, but nothing is
+     * sent to the layout.
+     * @return true if a valid session handle and command station are present.
+     */
+    private boolean hasActiveSession() {
+        return ( cs != null && _handle >= 0 && !_isStolen );
     }
 
     /**
@@ -226,6 +247,10 @@ public class CbusThrottle extends AbstractThrottle {
     }
     
     protected void sendFunctionGroup(int group) {
+        if (!hasActiveSession()) {
+            log.debug("no active session, function group {} not sent to layout", group);
+            return;
+        }
         int totVal = 0;
         for ( int i=0; i<CbusConstants.MAX_FUNCTIONS; i++ ){
             if (FUNCTION_GROUPS[i]==group && getFunction(i)){
@@ -298,16 +323,22 @@ public class CbusThrottle extends AbstractThrottle {
 
     // following a speed or direction change, sends to layout
     private void sendToLayout() {
-        oldCbusSpeed = getCbusSpeedDirection();
-        
-        log.debug("Sending speed/dir for speed: {}",oldCbusSpeed);
-        // reset timeout
-        mRefreshTimer.stop();
-        mRefreshTimer.setRepeats(true);
-        mRefreshTimer.start();
-        if (cs != null ) {
-            cs.setSpeedDir(_handle, oldCbusSpeed);
+        int newCbusSpeed = getCbusSpeedDirection();
+        if (!hasActiveSession()) {
+            // disposed, or stolen and awaiting session recovery,
+            // local state is updated but nothing is sent
+            log.debug("no active session, speed/dir {} not sent to layout", newCbusSpeed);
+            return;
         }
+        oldCbusSpeed = newCbusSpeed;
+
+        log.debug("Sending speed/dir for speed: {}",oldCbusSpeed);
+        // reset keep-alive timeout, timer may have been removed by a concurrent dispose
+        javax.swing.Timer timer = mRefreshTimer;
+        if ( timer != null ) {
+            timer.restart();
+        }
+        cs.setSpeedDir(_handle, oldCbusSpeed);
     }
 
     /**
@@ -401,8 +432,9 @@ public class CbusThrottle extends AbstractThrottle {
      */
     protected void setStolen(boolean isStolen){
         if (isStolen != _isStolen){
-            firePropertyChange("IsAvailable", isStolen, _isStolen); // PCL is opposite of local boolean
-            _isStolen = isStolen;
+            boolean wasStolen = _isStolen;
+            _isStolen = isStolen; // update state before notifying listeners
+            firePropertyChange("IsAvailable", !wasStolen, !isStolen); // PCL is opposite of local boolean
         }
         if (isStolen){ // stop keep-alive messages
             if ( mRefreshTimer != null ) {
@@ -453,8 +485,10 @@ public class CbusThrottle extends AbstractThrottle {
      * ie. throttle with clean full dispose called from releaseThrottle
      */
     protected void releaseFromCommandStation(){
-        if ( cs != null ) {
+        if ( hasActiveSession() ) {
             cs.releaseSession(_handle);
+        } else {
+            log.debug("no active session to release for {}", this);
         }
     }
 
@@ -493,13 +527,17 @@ public class CbusThrottle extends AbstractThrottle {
      * Internal routine to resend the speed on a timeout
      */
     private synchronized void keepAlive() {
-        if (cs != null) { // cs can be null if in process of terminating?
-            cs.sendKeepAlive(_handle);
+        // cs is null and handle -1 if terminated, handle -1 if stolen
+        if (!hasActiveSession()) {
+            return;
+        }
+        cs.sendKeepAlive(_handle);
 
-            // reset timeout
-            mRefreshTimer.stop();
-            mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
-            mRefreshTimer.start();
+        // reset timeout, refresh until stopped by dispose
+        // timer may have been removed by a concurrent dispose or steal
+        javax.swing.Timer timer = mRefreshTimer;
+        if ( timer != null ) {
+            timer.restart();
         }
     }
 

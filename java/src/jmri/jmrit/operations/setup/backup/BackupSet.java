@@ -3,10 +3,10 @@
  */
 package jmri.jmrit.operations.setup.backup;
 
-import java.io.File;
-import java.util.Date;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.io.File;
+import java.time.*;
 
 /**
  * Represents the set of Operations files that is considered a "Backup" of the
@@ -27,17 +27,17 @@ public class BackupSet {
         return _setName;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return _lastModifiedDate;
     }
 
-    private Date _lastModifiedDate;
+    private LocalDateTime _lastModifiedDate;
     private File _dir;
 
     public BackupSet(File dir) {
         _dir = dir;
         _setName = dir.getName();
-        _lastModifiedDate = new Date(dir.lastModified());
+        _lastModifiedDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dir.lastModified()), ZoneId.systemDefault());
     }
 
     public void delete() {
