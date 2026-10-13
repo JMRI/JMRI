@@ -3,6 +3,8 @@ package jmri.jmrix.dcc4pc;
 import java.util.Arrays;
 import java.util.List;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +16,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author swalton00 Copyright (C) 2026
  */
 public class Dcc4PcRawDecoderTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     /** The worked example in Omnibus spec section 9.3: 16 inputs, all enabled. */
     private static final int[] SPEC_EXAMPLE = {

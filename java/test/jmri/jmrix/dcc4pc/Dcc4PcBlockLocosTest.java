@@ -2,6 +2,8 @@ package jmri.jmrix.dcc4pc;
 
 import java.util.List;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author swalton00 Copyright (C) 2026
  */
 public class Dcc4PcBlockLocosTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     private static final int L9328 = Dcc4PcBlockLocos.LONG | 9328;
     private static final int L9333 = Dcc4PcBlockLocos.LONG | 9333;

@@ -172,7 +172,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     static final long STUCK_WRITE_MILLIS = 3000;
 
     private volatile boolean jamReported = false;
-    private java.util.Timer jamWatchdog;
+    private java.util.TimerTask jamWatchdog;
 
     /**
      * Watch for a write that never finishes. jSerialComm's write timeout
@@ -183,8 +183,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         if (jamWatchdog != null) {
             return;
         }
-        jamWatchdog = new java.util.Timer("DCC4PC write watchdog", true);
-        jamWatchdog.schedule(new java.util.TimerTask() {
+        jamWatchdog = new java.util.TimerTask() {
             @Override
             public void run() {
                 long started = writeStartedAt;
@@ -192,11 +191,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     reportJam("a write to the port has not finished after " + STUCK_WRITE_MILLIS / 1000 + " s");
                 }
             }
-        }, 1000, 1000);
+        };
+        jmri.util.TimerUtil.schedule(jamWatchdog, 1000, 1000);
     }
 
     private void stopJamWatchdog() {
-        java.util.Timer t = jamWatchdog;
+        java.util.TimerTask t = jamWatchdog;
         if (t != null) {
             t.cancel();
         }
