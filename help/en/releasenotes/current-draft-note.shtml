@@ -470,6 +470,14 @@
                  scale speed shown for the minimum throttle now follow the
                  "Run in reverse" setting, and the scale km/h entry is no
                  longer labelled as scale mph.</li>
+             <li>Automatic release of Sections no longer releases a Section
+                 when the next Section has not been entered, or when the
+                 train is stopped, waiting or in manual mode.</li>
+             <li>A "Head Only" train without a Max Train Length (a
+                 dispatched or manual train, or a Max Train Length of 0)
+                 now keeps each Section until the next Section has also
+                 been exited. Previously the Section was released as soon
+                 as the locomotive left it.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
