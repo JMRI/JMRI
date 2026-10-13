@@ -136,6 +136,8 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
+                <li>Change the default events for the STL Editor IQYZ tables from all zeros to
+                    unique zero based events.</li>
             </ul>
 
         <h4>Powerline</h4>
