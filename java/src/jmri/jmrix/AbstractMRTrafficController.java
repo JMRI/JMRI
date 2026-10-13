@@ -448,7 +448,7 @@ public abstract class AbstractMRTrafficController {
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m, l);
                     } else if (mCurrentState == AUTORETRYSTATE) {
-                        log.info("Message added back to queue: {}", m);
+                        log.debug("Message added back to queue: {}", m);
                         msgQueue.addFirst(m);
                         listenerQueue.addFirst(l);
                         synchronized (xmtRunnable) {

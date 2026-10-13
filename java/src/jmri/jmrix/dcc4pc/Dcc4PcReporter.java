@@ -348,6 +348,15 @@ public class Dcc4PcReporter extends AbstractRailComReporter implements Collectin
 
     Hashtable<Integer, Integer> cvValues = new Hashtable<>();
 
+    /**
+     * The first two bytes of a cutout's data are channel 1. Channel 2 is a
+     * separate time slot, so a bad byte in channel 1 (often two decoders'
+     * address broadcasts colliding) mustn't throw away channel 2: on
+     * 2026-10-13 that discarded POM answers that came with channel 1
+     * {@code 95 04}.
+     */
+    static final int CHANNEL_1_LENGTH = 2;
+
     void decodeRailComInfo(RailComPacket rc, int packetTypeCmd) {
 
         synchronized(lock) {
@@ -392,6 +401,10 @@ public class Dcc4PcReporter extends AbstractRailComReporter implements Collectin
                         log.debug("{} Error packet stage 1: {}", this.getDisplayName(), Integer.toHexString(packet[i]));
                     }
                     packetsinerror++;
+                    if (i < CHANNEL_1_LENGTH) {
+                        i = CHANNEL_1_LENGTH; // channel 2 is a separate slot: still decode it
+                        continue;
+                    }
                     return;
                 }
                 i++;
@@ -411,6 +424,10 @@ public class Dcc4PcReporter extends AbstractRailComReporter implements Collectin
                     }
                     i++;
                     packetsinerror++;
+                    if (i <= CHANNEL_1_LENGTH) {
+                        i = CHANNEL_1_LENGTH; // channel 2 is a separate slot: still decode it
+                        continue;
+                    }
                     return;
                 }
 
@@ -431,8 +448,11 @@ public class Dcc4PcReporter extends AbstractRailComReporter implements Collectin
                     case 0:
                         log.debug("{} CV Value {}{}", this.getDisplayName(), (int) chbyte, ch2Tag);
                         cvvalue = chbyte;
-                        if (ch2Tag != null) {
-                            if (ch2Tag.getExpectedCv() != -1) {
+                        if (ch2Tag != null && rc.getCvNumber() > 0) {
+                            // Only the reply to a POM packet for the CV being read or written
+                            // answers it: replies to earlier POM packets, still being repeated,
+                            // arrive too, and were taken as the answer (2026-10-13).
+                            if (ch2Tag.getExpectedCv() == rc.getCvNumber()) {
                                 ch2Tag.setCvValue(chbyte);
                             } else {
                                 ch2Tag.setCV(rc.getCvNumber(), chbyte);
@@ -521,7 +541,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter implements Collectin
                         //len = 4;
                         break;
                     default:
-                        log.info("unknown railcom type packet {}", type);
+                        log.debug("unknown railcom type packet {}", type);
                         break;
                 }
                 i += 1 + extraSymbols;

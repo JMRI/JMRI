@@ -614,11 +614,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
          * @param reason why, for the log
          */
         void requestResync(String reason) {
-            if (synced) {
-                log.info("Resynchronising board {}: {}", address, reason);
-            } else {
-                log.debug("Resynchronising board {}: {}", address, reason);
-            }
+            log.debug("Resynchronising board {}: {}", address, reason); // routine: several a minute with busy RailCom
             synced = false;
             sendReset();
         }
@@ -841,7 +837,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             // which locos are in which block, from channel 2 replies and clean channel 1 addresses
             for (Dcc4PcBlockLocos.Change c : blockLocos.apply(p, states, now)) {
                 if (!c.refresh) {
-                    log.info("Board {}: {}", address, c); // rare: only when a loco enters or leaves a block
+                    log.debug("Board {}: {}", address, c); // each time a loco enters or leaves a block
                 }
                 Dcc4PcReporter rep = getReporterAtIndex(c.input);
                 if (rep == null) {
@@ -898,12 +894,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             if (Arrays.equals(packet, lastDCCPacketSeen)) {
                 return;
             }
-            for (int idx = 0; idx < packet.length; ++idx) {
-                lastDCCPacketSeen = packet.clone();
-            }
-            // lastDCCPacketSeen = packet;
+            lastDCCPacketSeen = packet.clone();
             speed = 0;
             addr = 0;
+            cvNumber = 0; // only a POM packet sets it
             dcc_addr_type = NO_ADDRESS;
             if (packet.length < 2) {
                 return; // too short to hold an address and an instruction
@@ -927,15 +921,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             } else if ((packet[i] & 0xff) == 0xff) {
                 // log.debug("Idle Packet");
                 return;
-            } else if ((packet[i] & 0x80) == 0x80) {
-                // Accessory decoinfoder packet
-                if ((packet[i] & 0x80) == 0x80) {
-                    // i++;  don't increment as the for loop will do this
-                    // basic Accessory Decoder packet one byte to follow
-                } else {
-                    i++;
-                    // TODO extended decoder packet two bytes
-                }
+            } else if ((packet[i] & 0xC0) == 0x80) {
+                // Accessory decoder packet (10aaaaaa). Testing only the top bit also
+                // caught long loco addresses (11aaaaaa), so their POM replies and DYN
+                // data never reached the loco.
                 return;
             } else {
                 //The way that this determins of there is a two part extended address packet isn't great./
@@ -972,8 +961,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if ((dcc_addr_type != NO_ADDRESS)) {
                     log.debug("Current index  {} value {}", i, packet[i] & 0xFF);
                     if ((packet[i] & 0xE0) == 0xE0) {
+                        // 1110CCVV VVVVVVVV: the instruction byte holds the CV number's top two bits
+                        int cvHigh = packet[i] & 0x03;
                         i++;
-                        cvNumber = ((packet[i] & 0xff) + 1);
+                        cvNumber = ((cvHigh << 8) | (packet[i] & 0xff)) + 1;
                         log.debug("CV Access cv:{}", cvNumber);
                         // two byte instruction when 1111
                         // three byte instuction when 1110

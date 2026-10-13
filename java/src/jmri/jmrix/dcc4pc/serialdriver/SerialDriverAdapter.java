@@ -144,6 +144,27 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * The Programmer choices are worked out each time: the list made when
+     * this connection was created can't include connections that start after
+     * it, and LocoNet often does. The saved choice stays in the list even if
+     * that connection isn't running, so opening Preferences doesn't clear it.
+     */
+    @Override
+    public String[] getOptionChoices(String option) {
+        if (!option1Name.equals(option)) {
+            return super.getOptionChoices(option);
+        }
+        List<String> choices = new ArrayList<>(java.util.Arrays.asList(validOption1()));
+        String current = getOptionState(option1Name);
+        if (current != null && !current.isEmpty() && !choices.contains(current)) {
+            choices.add(current);
+        }
+        return choices.toArray(new String[choices.size()]);
+    }
+
+    /**
      * Get a String that says what Option 2 represents May be an empty string,
      * but will not be null
      * @return option to match detected locos to roster.
@@ -226,6 +247,9 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         this.getSystemConnectionMemo().setDcc4PcTrafficController(control);
         control.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
+        // Programming on Main goes out through another connection (by default, the default
+        // command station's); RailCom brings the reply back
+        this.getSystemConnectionMemo().useProgrammerFrom(getOptionState(option1Name));
 
     }
 
