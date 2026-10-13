@@ -2749,6 +2749,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                 } else {
                                     if ((nas.getActiveTrain() != as.getActiveTrain()) || (!nas.getEntered())) {
                                         foundOne = false;
+                                    } else if (at.getTrainDetection() == TrainDetection.TRAINDETECTION_HEADANDTAIL) {
+                                        foundOne = tailHasLeftSection(at, as, nas);
                                     }
                                 }
                                 foundOne = sectionNotRequiredByHeadOnly(foundOne,at,as);
@@ -2804,6 +2806,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     at.getTrainName(), as.getSectionName(), nextExited);
             return nextExited;
         }
+        return isClearByLength(at, aat, as, trainLengthMM);
+    }
+
+    /*
+     * Check, by length, whether a train whose tail is not detected must have
+     * cleared a Section.
+     * Calculate the length of exited sections, subtract the length of section
+     * being released. If the train is moving do not include the length of the occupied section,
+     * if the train is stationary and was stopped by sensor or speed profile include the length
+     * of the occupied section. This is done as we dont know where the train is in the section block.
+     */
+    private static boolean isClearByLength(ActiveTrain at, AutoActiveTrain aat, AllocatedSection as, long trainLengthMM) {
         long allocatedLengthMM = 0;
         for (AllocatedSection tas : at.getAllocatedSectionList()) {
             if (tas.getSection().getOccupancy() == Section.OCCUPIED) {
@@ -2829,6 +2843,39 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         log.debug("[{}]:Release Section [{}] by Length allocated [{}] release [{}] train [{}]",
                 at.getTrainName(), as.getSectionName(), allocatedLengthMM, releaseLengthMM, trainLengthMM);
         return (allocatedLengthMM - releaseLengthMM) >= trainLengthMM;
+    }
+
+    /*
+     * For a "Head and Tail" train, check that the tail has moved on from an
+     * exited Section before it is released.
+     * <p>
+     * The tail is detected, so when it leaves a Section it must appear in the
+     * next Section: that Section is occupied now, or it went unoccupied later
+     * than the Section being released (a short Section the tail has already
+     * passed through). Otherwise the Section has probably cleared because the
+     * tail lost detection, for example dirty wheels on the last vehicle, and
+     * releasing it would also release every empty Section between the tail
+     * and the head.
+     * <p>
+     * In that case an automatic train with a Max Train Length falls back to
+     * the "Head Only" length rule, any other train keeps the Section.
+     */
+    static boolean tailHasLeftSection(ActiveTrain at, AllocatedSection as, AllocatedSection nas) {
+        if (nas.getSection().getOccupancy() == Section.OCCUPIED
+                || nas.getClearedOrder() > as.getClearedOrder()) {
+            return true;
+        }
+        AutoActiveTrain aat = at.getAutoActiveTrain();
+        long trainLengthMM = (aat != null) ? aat.getMaxTrainLengthMM() : 0;
+        if (trainLengthMM > 0) {
+            boolean clear = isClearByLength(at, aat, as, trainLengthMM);
+            log.debug("[{}]:Head and Tail, tail not seen to leave Section [{}], released by length [{}]",
+                    at.getTrainName(), as.getSectionName(), clear);
+            return clear;
+        }
+        log.debug("[{}]:Head and Tail, tail not seen to leave Section [{}], holding it",
+                at.getTrainName(), as.getSectionName());
+        return false;
     }
 
     /*

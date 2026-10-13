@@ -98,6 +98,8 @@ public class AllocatedSection {
     private PropertyChangeListener mSectionListener = null;
     private boolean mEntered = false;
     private boolean mExited = false;
+    private long mClearedOrder = 0;         // order in which this Section last went unoccupied
+    private static final java.util.concurrent.atomic.AtomicLong clearedCounter = new java.util.concurrent.atomic.AtomicLong();
     private int mAllocationNumber = 0;     // used to keep track of allocation order
     private Sensor mForwardStoppingSensor = null;
     private Sensor mReverseStoppingSensor = null;
@@ -202,6 +204,17 @@ public class AllocatedSection {
         return mExited;
     }
 
+    /**
+     * Get the order in which this Section last went unoccupied after being
+     * entered, compared with all other Allocated Sections. A higher number
+     * means it cleared later.
+     *
+     * @return the order, or 0 if it has not cleared since being entered
+     */
+    public long getClearedOrder() {
+        return mClearedOrder;
+    }
+
     public int getAllocationNumber() {
         return mAllocationNumber;
     }
@@ -272,6 +285,7 @@ public class AllocatedSection {
     public void reset() {
         mExited = false;
         mEntered = false;
+        mClearedOrder = 0;
         if (mSection.getOccupancy() == Section.OCCUPIED) {
             mEntered = true;
         }
@@ -286,6 +300,7 @@ public class AllocatedSection {
         } else if (mSection.getOccupancy() == Section.UNOCCUPIED) {
             if (mEntered) {
                 mExited = true;
+                mClearedOrder = clearedCounter.incrementAndGet();
                 // set colour to still allocated.
                 // release will reset the colour to unoccupied.
                 if (InstanceManager.getDefault(DispatcherFrame.class).getExtraColorForAllocated()) {

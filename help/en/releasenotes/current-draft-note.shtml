@@ -478,6 +478,13 @@
                  now keeps each Section until the next Section has also
                  been exited. Previously the Section was released as soon
                  as the locomotive left it.</li>
+             <li>For a "Head and Tail" train a Section is only released
+                 automatically once the tail has been detected moving on
+                 into the next Section. If the tail loses detection, for
+                 example through dirty wheels, Sections are no longer
+                 released all the way up to the head. An automatic train
+                 with a Max Train Length then releases them using its
+                 length, as for a "Head Only" train.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

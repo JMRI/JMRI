@@ -149,6 +149,57 @@ public class DispatcherFrameAutoReleaseTest {
         assertTrue(releaseA());
     }
 
+    private boolean tailHasLeftA() {
+        return DispatcherFrame.tailHasLeftSection(at, allocated.get(0), allocated.get(1));
+    }
+
+    @Test
+    public void testHeadAndTailReleasedWhenTailInNextSection() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        headIn(2);
+        when(sections.get(1).getOccupancy()).thenReturn(Section.OCCUPIED); // tail in B
+        when(allocated.get(1).getClearedOrder()).thenReturn(1L); // head left B earlier
+        when(allocated.get(0).getClearedOrder()).thenReturn(2L); // then tail left A
+        assertTrue(tailHasLeftA());
+    }
+
+    @Test
+    public void testHeadAndTailReleasedWhenTailPassedThroughShortSection() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        headIn(2);
+        when(allocated.get(0).getClearedOrder()).thenReturn(2L); // tail left A
+        when(allocated.get(1).getClearedOrder()).thenReturn(3L); // then tail left B
+        assertTrue(tailHasLeftA());
+    }
+
+    @Test
+    public void testHeadAndTailHeldWhenTailLostDetection() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        headIn(2);
+        when(allocated.get(1).getClearedOrder()).thenReturn(1L); // head left B
+        when(allocated.get(0).getClearedOrder()).thenReturn(2L); // A cleared later, B still clear
+        assertFalse(tailHasLeftA(), "tail lost detection in A");
+        headIn(3);
+        assertFalse(tailHasLeftA(), "still no tail seen, train length unknown");
+    }
+
+    @Test
+    public void testHeadAndTailLostDetectionFallsBackToLength() {
+        buildTransit(500);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        autoTrain(800);
+        when(allocated.get(1).getClearedOrder()).thenReturn(1L);
+        when(allocated.get(0).getClearedOrder()).thenReturn(2L);
+        headIn(2);
+        assertFalse(tailHasLeftA(), "only B (500) beyond A, train is 800");
+        headIn(3);
+        assertTrue(tailHasLeftA(), "B and C (1000) beyond A");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
