@@ -2016,10 +2016,10 @@ public class AutoActiveTrain implements ThrottleListener {
                     getMaxTrainLengthMM(), _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
-        } else if (_activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+        } else if (_activeTrain.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADONLY) {
             log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getActualLength(), getMaxTrainLengthMM());
-            // train will fit in current allocated Section and has resistance wheels
+            // train will fit in current allocated Section and its tail is detected
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
                 if (_previousAllocatedSection != null) {
@@ -2253,12 +2253,69 @@ public class AutoActiveTrain implements ThrottleListener {
     private void setStopByBlockOccupancy(boolean ignoreNotOccupied) {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immediately
+        if (!canStopByBlockOccupancy(_activeTrain.getTrainDetection(), _stoppingBlock,
+                _activeTrain.getAllocatedSectionList())) {
+            log.debug("{}: tail not in stopping block [{}], stop now", _activeTrain.getTrainName(),
+                    _stoppingBlock == null ? "null" : _stoppingBlock.getDisplayName(USERSYS));
+            setStopNow();
+            return;
+        }
         if (_stoppingBlock.getState() == Block.OCCUPIED || ignoreNotOccupied) {
             setDecreasedSpeedBeforeStop();
             _stoppingByBlockOccupancy = true;
         } else {
             setStopNow();
         }
+    }
+
+    /**
+     * Check whether a train can be stopped when a Block goes unoccupied,
+     * which relies on the tail of the train being the last thing to leave it.
+     * <ul>
+     * <li>"Entire Train": always, the whole train is detected.
+     * <li>"Head and Tail": only if the Block holds the tail now, that is it is
+     * the rearmost occupied Block of the train. Otherwise the Block may go
+     * unoccupied when the locomotive leaves it, while the undetected middle of
+     * the train is still behind.
+     * <li>"Head Only": never.
+     * </ul>
+     *
+     * @param detection         the train detection setting
+     * @param stoppingBlock     the Block whose clearing will stop the train
+     * @param allocatedSections the train's allocated Sections, oldest first
+     * @return true if the train can be stopped by the Block going unoccupied
+     */
+    static boolean canStopByBlockOccupancy(TrainDetection detection, Block stoppingBlock,
+            java.util.List<AllocatedSection> allocatedSections) {
+        switch (detection) {
+            case TRAINDETECTION_WHOLETRAIN:
+                return true;
+            case TRAINDETECTION_HEADANDTAIL:
+                return stoppingBlock != null && stoppingBlock == getRearmostOccupiedBlock(allocatedSections);
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Get the rearmost occupied Block of a train, in its direction of travel.
+     *
+     * @param allocatedSections the train's allocated Sections, oldest first
+     * @return the Block, or null if none is occupied
+     */
+    @CheckForNull
+    static Block getRearmostOccupiedBlock(java.util.List<AllocatedSection> allocatedSections) {
+        for (AllocatedSection as : allocatedSections) {
+            java.util.List<Block> blocks = as.getSection().getBlockList();
+            boolean reverse = as.getDirection() == Section.REVERSE;
+            for (int i = 0; i < blocks.size(); i++) {
+                Block b = blocks.get(reverse ? blocks.size() - 1 - i : i);
+                if (b.getState() == Block.OCCUPIED) {
+                    return b;
+                }
+            }
+        }
+        return null;
     }
 
     /**
