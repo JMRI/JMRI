@@ -63,8 +63,8 @@ public class CbusParameters {
     public int getParam(int i) {
         return paramData[i];
     }
-    
-    
+
+
     /**
      * Set a parameter
      * @param i index of the parameter to set
@@ -96,7 +96,7 @@ public class CbusParameters {
      */
     public boolean validate(CbusParameters fp, CbusParameters hp) {
 
-        if (!fp.valid || !hp.valid) {
+        if ((fp == null) || (hp == null) || !fp.valid || !hp.valid) {
             return false;
         }
 
@@ -176,7 +176,9 @@ public class CbusParameters {
             return Bundle.getMessage("ParamsInvalid");
         } else {
             StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < paramData[0]; i++) {
+            // Parameter 0 is the number of parameters that follow
+            int n = Math.min(paramData[0], paramData.length - 1);
+            for (int i = 1; i <= n; i++) {
                 sb.append(paramData[i] + " ");
             }
             return sb.toString();

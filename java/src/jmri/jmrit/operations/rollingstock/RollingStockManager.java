@@ -2,6 +2,7 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -696,7 +697,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @param startTime when the rolling stock was moved
      * @param clone the clone being transported by the train
      */
-    protected void finshCreateClone(RollingStock rs, Track track, Train train, Date startTime, RollingStock clone) {
+    protected void finshCreateClone(RollingStock rs, Track track, Train train, LocalDateTime startTime, RollingStock clone) {
         rs.setMoves(rs.getMoves() + 1); // bump count
         rs.setLocation(track.getLocation(), track, RollingStock.FORCE);
         rs.setLastTrain(train);

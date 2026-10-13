@@ -72,7 +72,7 @@ public class JsonManifest extends TrainCommon {
             // The operationsServlet will need to change this to a usable URL
             root.put(JSON.IMAGE, this.train.getManifestLogoPathName());
         }
-        root.put(JsonOperations.DATE, TrainCommon.getISO8601Date(true)); // Validity
+        root.put(JsonOperations.DATE, TrainCommon.getDate(true)); // Validity
         this.mapper.writeValue(InstanceManager.getDefault(TrainManagerXml.class).createManifestFile(this.train.getName(), JSON.JSON), root);
     }
 
