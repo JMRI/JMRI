@@ -5,8 +5,12 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.awt.*;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -2214,12 +2218,12 @@ public class TrainCommon {
         return (new StdDateFormat()).format(calendar.getTime());
     }
 
-    public static String getDate(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy HH:mm"); // NOI18N
+    public static String getDate(LocalDateTime date) {
+        DateTimeFormatter formater = DateTimeFormatter.ofPattern("M/dd/yyyy HH:mm"); // NOI18N
         if (Setup.is12hrFormatEnabled()) {
-            format = new SimpleDateFormat("M/dd/yyyy hh:mm a"); // NOI18N
+            formater = DateTimeFormatter.ofPattern("M/dd/yyyy hh:mm a"); // NOI18N
         }
-        return format.format(date);
+        return formater.format(date);
     }
 
     public static String getDate(boolean isModelYear) {
@@ -2233,27 +2237,28 @@ public class TrainCommon {
                 return Setup.getYearModeled();
             }
         }
-        return TrainCommon.getDate(calendar.getTime());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(calendar.getTime().toInstant(), ZoneId.systemDefault());
+        return TrainCommon.getDate(localDateTime);
     }
 
-    public static Date convertStringToDate(String date) {
+    public static LocalDateTime convertStringToLocalDateTime(String date) {
         if (!date.isBlank()) {
             // create a date object from the string.
             try {
-                // try MM/dd/yyyy HH:mm:ss.
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
-                return formatter.parse(date);
-            } catch (java.text.ParseException pe1) {
-                // try the old 12 hour format (no seconds).
+                // try MM/dd/yyyy HH:mm:ss
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"); // NOI18N
+                return LocalDateTime.parse(date, formatter);
+            } catch (DateTimeParseException pe1) {
+                // try the old 12 hour format (no seconds)
                 try {
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa"); // NOI18N
-                    return formatter.parse(date);
-                } catch (java.text.ParseException pe2) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"); // NOI18N
+                    return LocalDateTime.parse(date, formatter);
+                } catch (DateTimeParseException pe2) {
                     try {
-                        // try 24hour clock.
-                        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm"); // NOI18N
-                        return formatter.parse(date);
-                    } catch (java.text.ParseException pe3) {
+                        // try 24hour clock (no seconds)
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"); // NOI18N
+                        return LocalDateTime.parse(date, formatter);
+                    } catch (DateTimeParseException pe3) {
                         log.debug("Not able to parse date: {}", date);
                     }
                 }
