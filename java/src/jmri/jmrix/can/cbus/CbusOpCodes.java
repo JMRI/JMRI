@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,7 +43,7 @@ public class CbusOpCodes {
     public static final String fullDecode(AbstractMessage msg) {
         StringBuilder buf = new StringBuilder();
         // split the format string at each comma
-        String[] fields = MAP.getOrDefault(msg.getElement(0),getDefaultOpc()).getDecode().split(",");
+        String[] fields = getOpc(msg.getElement(0)).getDecode().split(",");
 
         int idx = 1;
         for (int i = 0; i < fields.length; i++) {
@@ -361,7 +362,7 @@ public class CbusOpCodes {
      */
     @Nonnull
     public static final String decodeopcNonExtended(AbstractMessage msg) {
-        var mapString = MAP.get(msg.getElement(0));
+        var mapString = getOpcOrNull(msg.getElement(0));
         return ( mapString != null ? mapString.getName() :
             Bundle.getMessage("OPC_RESERVED") + " " +
                 msg.toMonitorString().toUpperCase()); // uppercase to emphasise hex value
@@ -392,7 +393,7 @@ public class CbusOpCodes {
      * @return True if opcode is known
      */
     public static final boolean isKnownOpc(AbstractMessage msg){
-        return ( MAP.get(msg.getElement(0))!=null
+        return ( getOpcOrNull(msg.getElement(0))!=null
                 && ( msg instanceof CanFrame)
                 && (!((CanFrame) msg).extendedOrRtr()));
     }
@@ -411,7 +412,7 @@ public class CbusOpCodes {
      * @return True if opcode represents an event
      */
     public static final boolean isEvent(int opc) {
-        return MAP.getOrDefault(opc,getDefaultOpc()).getFilters().contains(CbusFilterType.CFEVENT);
+        return getOpc(opc).hasFilter(CbusFilterType.CFEVENT);
     }
 
     /**
@@ -427,8 +428,9 @@ public class CbusOpCodes {
      * @return True if opcode represents an event
      */
     public static final boolean isEventNotRequest(int opc) {
-        return (MAP.getOrDefault(opc,getDefaultOpc()).getFilters().contains(CbusFilterType.CFEVENT)
-            && !MAP.getOrDefault(opc,getDefaultOpc()).getFilters().contains(CbusFilterType.CFREQUEST));
+        CbusOpc cbusOpc = getOpc(opc);
+        return ( cbusOpc.hasFilter(CbusFilterType.CFEVENT)
+            && !cbusOpc.hasFilter(CbusFilterType.CFREQUEST));
     }
 
     /**
@@ -443,7 +445,7 @@ public class CbusOpCodes {
      * @return True if opcode represents a dcc command
      */
     public static final boolean isDcc(int opc) {
-        return MAP.getOrDefault(opc,getDefaultOpc()).getFilters().contains(CbusFilterType.CFCS);
+        return getOpc(opc).hasFilter(CbusFilterType.CFCS);
     }
 
     /**
@@ -458,7 +460,7 @@ public class CbusOpCodes {
      * @return True if opcode represents an on event
      */
     public static final boolean isOnEvent(int opc) {
-        return MAP.getOrDefault(opc,getDefaultOpc()).getFilters().contains(CbusFilterType.CFON);
+        return getOpc(opc).hasFilter(CbusFilterType.CFON);
     }
 
     /**
@@ -470,7 +472,7 @@ public class CbusOpCodes {
      * @return True if opcode represents a short event
      */
     public static final boolean isEventRequest(int opc) {
-        return MAP.getOrDefault(opc,getDefaultOpc()).getFilters().contains(CbusFilterType.CFREQUEST);
+        return getOpc(opc).hasFilter(CbusFilterType.CFREQUEST);
     }
 
     /**
@@ -485,18 +487,18 @@ public class CbusOpCodes {
      * @return True if opcode represents a short event
      */
     public static final boolean isShortEvent(int opc) {
-        return MAP.getOrDefault(opc,getDefaultOpc()).getFilters().contains(CbusFilterType.CFSHORT);
+        return getOpc(opc).hasFilter(CbusFilterType.CFSHORT);
     }
 
     /**
      * Get the filters for a CBUS OpCode.
      *
      * @param opc CBUS op code
-     * @return Filter EnumSet
+     * @return Filter EnumSet, a new copy which the caller may modify.
      */
     @Nonnull
     public static final EnumSet<CbusFilterType> getOpcFilters(int opc){
-        return MAP.getOrDefault(opc,getDefaultOpc()).getFilters();
+        return getOpc(opc).getFilters();
     }
 
     /**
@@ -507,8 +509,9 @@ public class CbusOpCodes {
      */
     @Nonnull
     public static final String getOpcName(int opc){
-        if ( MAP.get(opc)!=null){
-            return MAP.get(opc).getName();
+        CbusOpc cbusOpc = getOpcOrNull(opc);
+        if ( cbusOpc!=null){
+            return cbusOpc.getName();
         }
         return "";
     }
@@ -520,10 +523,55 @@ public class CbusOpCodes {
      * @return Minimum Priority
      */
     public static final int getOpcMinPriority(int opc){
-        return MAP.getOrDefault(opc,getDefaultOpc()).getMinPri();
+        return getOpc(opc).getMinPri();
     }
 
     private static final Map<Integer, CbusOpc> MAP = createMainMap();
+
+    /**
+     * Array form of MAP for fast lookup by int OPC without boxing,
+     * used on the incoming frame path by every Sensor, Turnout and Light.
+     */
+    private static final CbusOpc[] OPC_ARRAY = createOpcArray();
+
+    /**
+     * Default OPC returned for unknown OPCs.
+     * Created once, after MAP so that the Bundle is available.
+     */
+    private static final CbusOpc DEFAULT_OPC = createDefaultOpc();
+
+    private static CbusOpc[] createOpcArray() {
+        CbusOpc[] result = new CbusOpc[256];
+        MAP.forEach((key, value) -> {
+            if (key >= 0 && key < result.length) {
+                result[key] = value;
+            }
+        });
+        return result;
+    }
+
+    /**
+     * Get the CbusOpc for an OPC.
+     *
+     * @param opc CBUS op code
+     * @return the CbusOpc, or null if the OPC is unknown or out of range.
+     */
+    @CheckForNull
+    private static CbusOpc getOpcOrNull(int opc) {
+        return (opc >= 0 && opc < OPC_ARRAY.length) ? OPC_ARRAY[opc] : null;
+    }
+
+    /**
+     * Get the CbusOpc for an OPC.
+     *
+     * @param opc CBUS op code
+     * @return the CbusOpc, or the default unknown CbusOpc if OPC is unknown.
+     */
+    @Nonnull
+    private static CbusOpc getOpc(int opc) {
+        CbusOpc cbusOpc = getOpcOrNull(opc);
+        return ( cbusOpc != null ? cbusOpc : DEFAULT_OPC );
+    }
 
     private static Map<Integer, CbusOpc> createMainMap()  {
         Map<Integer, CbusOpc> result = new HashMap<>(150); // 134 as of April 2022
@@ -577,12 +625,12 @@ public class CbusOpCodes {
     }
 
     /**
-     * Get a CBUS OpCode with default unknown values.
+     * Create a CBUS OpCode with default unknown values.
      *
      * @return Default OPC
      */
     @Nonnull
-    private static CbusOpc getDefaultOpc(){
+    private static CbusOpc createDefaultOpc(){
         return new CbusOpc(
             3,Bundle.getMessage("OPC_RESERVED"),"",
             EnumSet.of(CbusFilterType.CFMISC,CbusFilterType.CFUNKNOWN));
@@ -613,8 +661,21 @@ public class CbusOpCodes {
             return _decodeText;
         }
 
+        /**
+         * Get a copy of the Filters for the OPC.
+         * @return new EnumSet copy.
+         */
         private EnumSet<CbusFilterType> getFilters(){
             return EnumSet.copyOf(_filterMap);
+        }
+
+        /**
+         * Test if the OPC has a Filter, without copying the Filter set.
+         * @param filter the Filter to test for.
+         * @return true if the OPC has the Filter, else false.
+         */
+        private boolean hasFilter(CbusFilterType filter){
+            return _filterMap.contains(filter);
         }
     }
 

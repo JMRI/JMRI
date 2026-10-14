@@ -173,6 +173,40 @@ public class CbusCommandStationTest {
     }
     
     
+    // a negative session handle ( disposed or stolen throttle ) must never reach the CAN bus
+    @Test
+    public void testNegativeSessionHandleNotSent() {
+        Assert.assertNotNull(t);
+        Assert.assertNotNull(lnis);
+        int sent = lnis.outbound.size();
+
+        t.setSpeedDir(-1, 0x80);
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid session handle -1 for DSPD, not sent to layout");
+        t.setFunctions(1, -1, 0x10);
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid session handle -1 for DFUN, not sent to layout");
+        t.setSpeedSteps(-1, CbusConstants.CBUS_SS_28);
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid session handle -1 for STMOD, not sent to layout");
+        t.sendKeepAlive(-1);
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid session handle -1 for DKEEP, not sent to layout");
+        t.releaseSession(-1);
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid session handle -1 for KLOC, not sent to layout");
+
+        Assert.assertEquals("nothing sent for handle -1", sent, lnis.outbound.size());
+
+        // valid handles are still sent
+        t.setSpeedDir(5, 0x80);
+        Assert.assertEquals("DSPD sent", "[78] 47 05 80", lnis.outbound.lastElement().toString());
+        t.setFunctions(1, 5, 0x10);
+        Assert.assertEquals("DFUN sent", "[78] 60 05 01 10", lnis.outbound.lastElement().toString());
+        t.setSpeedSteps(5, CbusConstants.CBUS_SS_28);
+        Assert.assertEquals("STMOD sent", "[78] 44 05 03", lnis.outbound.lastElement().toString());
+        t.sendKeepAlive(5);
+        Assert.assertEquals("DKEEP sent", "[78] 23 05", lnis.outbound.lastElement().toString());
+        t.releaseSession(5);
+        Assert.assertEquals("KLOC sent", "[78] 21 05", lnis.outbound.lastElement().toString());
+        Assert.assertEquals("5 frames sent", sent + 5, lnis.outbound.size());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

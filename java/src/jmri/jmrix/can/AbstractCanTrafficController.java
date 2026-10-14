@@ -83,7 +83,7 @@ abstract public class AbstractCanTrafficController
         } else {
             hm = encodeForHardware((CanMessage) m);
         }
-        log.debug("Encoded for hardware: [{}]", hm.toString());
+        log.debug("Encoded for hardware: [{}]", hm); // no eager toString(), called for every frame
 
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(hm)];
