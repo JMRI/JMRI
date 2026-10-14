@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterFunctionEntry;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.swing.EditableResizableImagePanel;
 
@@ -39,6 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FunctionTableModel extends AbstractTableModel implements PropertyChangeListener {
     private RosterEntry rosterEntry;
 
+    public static final String FB_ORDER_ATTR="FnDisplayOrder";
     // to allow easy GUI update
     public static final int COL_FN = 0; // Function number
     public static final int COL_LK = 1; // Lockable
@@ -90,7 +92,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
     }
 
     /**
-     * Update the FunctionTableModel for a COPY of the given RosterEntry,
+     * Update the FunctionTableModel with a COPY of the given RosterEntry,
      * 
      * @param re the RosterEntry on which to base this model. A copy of the RosterEntry is made so that changes to the model do not affect the original RosterEntry.
      */
@@ -101,8 +103,35 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
         fireTableDataChanged();
     }
 
+    /**
+     * Reset the FunctionTableModel from the given inputs
+     * 
+     * @param fnEntries an array of RosterFunctionEntry
+     * @param shuntFn the shunting function string, if any, or null
+     * @param fnDisplayOrder the function display order JSON array, if any, or null
+     * 
+     */
+    public void reset(RosterFunctionEntry[] fnEntries, String shuntFn, String fnDisplayOrder) {        
+        rosterEntry.deleteAttribute(FB_ORDER_ATTR);
+        initRowFn();
+        rosterEntry.setShuntingFunction(shuntFn);        
+        for (int i=0; i<rosterEntry.getMaxFnNumAsInt()+1;i++) {
+            if (fnEntries != null && i<fnEntries.length) {
+                rosterEntry.setFunctionEntry(new RosterFunctionEntry(fnEntries[i]));
+            } else {
+                rosterEntry.setFunctionEntry(new RosterFunctionEntry(i));
+            }
+        }
+        if (fnDisplayOrder != null) {
+            rosterEntry.putAttribute(FB_ORDER_ATTR, fnDisplayOrder);
+            initRowFn();
+        }
+        initImagePanels();
+        fireTableDataChanged();
+    }    
+
     private void initRowFn() {
-        String fnDOAtt = rosterEntry.getAttribute("FnDisplayOrder");
+        String fnDOAtt = rosterEntry.getAttribute(FB_ORDER_ATTR);
         if (fnDOAtt != null) {
             try {
                 rowFn = new ObjectMapper().readValue(fnDOAtt, int[].class );

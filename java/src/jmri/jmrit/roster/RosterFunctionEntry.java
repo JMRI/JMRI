@@ -27,8 +27,8 @@ public class RosterFunctionEntry {
     private boolean lockable;
     private boolean visible;
 
-    RosterFunctionEntry(int fn) {
-        this.fn = fn;
+    public RosterFunctionEntry(int n) {
+        fn = n;
         label = null;
         soundLabels = null;
         image = null;
@@ -37,7 +37,17 @@ public class RosterFunctionEntry {
         visible = true;
     }
 
-    RosterFunctionEntry(RosterFunctionEntry pEntry) {
+    public RosterFunctionEntry(int n, String lab, String slab, String im, String sim, boolean lock, boolean vis) {
+        fn = n;
+        label = lab;
+        soundLabels = slab;
+        image = im;
+        selectedImage = sim;
+        lockable = lock;
+        visible = vis;
+    }
+
+    public RosterFunctionEntry(RosterFunctionEntry pEntry) {
         fn = pEntry.fn;
         label = pEntry.label;
         soundLabels = pEntry.soundLabels;

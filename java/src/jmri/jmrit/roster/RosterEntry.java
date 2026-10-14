@@ -1242,7 +1242,20 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public RosterFunctionEntry getFunctionEntry(int fn) {
         checkAndCreateFunctionEntry(fn);
         return functionEntries.get(fn);
-    } 
+    }
+
+    /**
+     * Get a copy of all the function entries for this RosterEntry
+     *
+     * @return a function entries array
+     */      
+    public RosterFunctionEntry[] getFunctionEntries() {
+        RosterFunctionEntry[] ret  = new RosterFunctionEntry[getMaxFnNumAsInt()+1];
+        for (int n=0; n<getMaxFnNumAsInt()+1; n++) {
+            ret[n] = getFunctionEntry(n);
+        }
+        return ret;
+    }
 
     /**
      * Set the label for a specific function.
