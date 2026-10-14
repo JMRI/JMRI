@@ -29,6 +29,8 @@
                 <li>CBUS programming reports a busy command station or a CV
                     error straight away, instead of waiting for the programming
                     timeout.</li>
+                <li>Closing the CBUS bootloader window stops all of its timers,
+                    and the fast write speed choice is now saved.</li>
                 <li>CBUS performance on busy layouts: incoming frames are
                     dispatched to sensors, turnouts and lights with much less
                     work and no per-frame garbage, and the Event Table and
