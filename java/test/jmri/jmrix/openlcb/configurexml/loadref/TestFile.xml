@@ -118,7 +118,7 @@
         <event>00.00.00.00.00.00.00.0A</event>
       </aspect>
       <aspect defines="Permissive Medium">
-        <event>00.00.00.00.00.00.00.00</event>
+        <event />
       </aspect>
       <disabledAspects>
         <disabledAspect>Medium Clear</disabledAspect>
