@@ -1,8 +1,6 @@
 package jmri.jmrit.dispatcher;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,8 +17,8 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 /**
- * Tests for deciding whether an automatic train can be stopped by watching
- * a Block go unoccupied, {@link AutoActiveTrain#canStopByBlockOccupancy}.
+ * Tests for deciding whether a Block going unoccupied means the tail of the
+ * train has left it, {@link AutoActiveTrain#isTailClearOfBlock}.
  */
 public class AutoActiveTrainStopByBlockTest {
 
@@ -42,57 +40,65 @@ public class AutoActiveTrainStopByBlockTest {
         allocated.add(as);
     }
 
+    /**
+     * Head and Tail train stopping in Z, watching Y, with the tail coming from X
+     * and the undetected middle spanning Y. The Block states are changed in the
+     * order they change on the layout.
+     */
     @Test
-    public void testRearmostOccupiedBlockForward() {
+    public void testHeadAndTailWaitsForTailThroughStoppingBlock() {
+        Block x = block("X", true);    // tail
+        Block y = block("Y", true);    // head passing through
+        Block z = block("Z", false);
+        section(Section.FORWARD, x, y, z);
+        TrainDetection ht = TrainDetection.TRAINDETECTION_HEADANDTAIL;
+
+        when(z.getState()).thenReturn(Block.OCCUPIED);     // head into Z
+        when(y.getState()).thenReturn(Block.UNOCCUPIED);   // head leaves Y, middle not detected
+        assertFalse(AutoActiveTrain.isTailClearOfBlock(ht, y, allocated), "tail still in X");
+
+        when(y.getState()).thenReturn(Block.OCCUPIED);     // tail into Y
+        when(x.getState()).thenReturn(Block.UNOCCUPIED);   // tail leaves X
+        when(y.getState()).thenReturn(Block.UNOCCUPIED);   // tail leaves Y
+        assertTrue(AutoActiveTrain.isTailClearOfBlock(ht, y, allocated), "tail has left Y, stop now");
+    }
+
+    @Test
+    public void testHeadAndTailTailAlreadyInStoppingBlock() {
+        Block x = block("X", false);
+        Block y = block("Y", false);   // whole train already past X, tail leaves Y
+        Block z = block("Z", true);
+        section(Section.FORWARD, x, y, z);
+        assertTrue(AutoActiveTrain.isTailClearOfBlock(TrainDetection.TRAINDETECTION_HEADANDTAIL, y, allocated));
+    }
+
+    @Test
+    public void testHeadAndTailAcrossSectionsAndReverse() {
         Block a1 = block("A1", false);
-        Block a2 = block("A2", true);   // tail
-        Block b1 = block("B1", false);  // undetected middle
+        Block a2 = block("A2", true);   // tail, Section A is run in reverse: A2 then A1
+        Block b1 = block("B1", false);  // stopping block, the head has left it
         Block b2 = block("B2", true);   // head
-        section(Section.FORWARD, a1, a2);
-        section(Section.FORWARD, b1, b2);
-        assertSame(a2, AutoActiveTrain.getRearmostOccupiedBlock(allocated));
-    }
-
-    @Test
-    public void testRearmostOccupiedBlockReverse() {
-        Block a1 = block("A1", true);   // tail, travelling from A2 to A1
-        Block a2 = block("A2", true);
         section(Section.REVERSE, a1, a2);
-        assertSame(a2, AutoActiveTrain.getRearmostOccupiedBlock(allocated));
+        section(Section.FORWARD, b1, b2);
+        TrainDetection ht = TrainDetection.TRAINDETECTION_HEADANDTAIL;
+        assertFalse(AutoActiveTrain.isTailClearOfBlock(ht, b1, allocated), "tail still in A2, behind B1");
+        assertTrue(AutoActiveTrain.hasOccupiedBlockBehind(a1, allocated), "A2 is behind A1 in reverse");
+        assertFalse(AutoActiveTrain.hasOccupiedBlockBehind(a2, allocated), "nothing behind A2");
     }
 
     @Test
-    public void testRearmostOccupiedBlockNone() {
-        section(Section.FORWARD, block("A1", false));
-        assertNull(AutoActiveTrain.getRearmostOccupiedBlock(allocated));
+    public void testEntireTrainUnchanged() {
+        Block x = block("X", true);
+        Block y = block("Y", false);
+        section(Section.FORWARD, x, y);
+        assertTrue(AutoActiveTrain.isTailClearOfBlock(TrainDetection.TRAINDETECTION_WHOLETRAIN, y, allocated));
     }
 
     @Test
-    public void testEntireTrainAlwaysStopsByBlock() {
-        Block a1 = block("A1", false);
-        section(Section.FORWARD, a1);
-        assertTrue(AutoActiveTrain.canStopByBlockOccupancy(TrainDetection.TRAINDETECTION_WHOLETRAIN, a1, allocated));
-    }
-
-    @Test
-    public void testHeadOnlyNeverStopsByBlock() {
-        Block a1 = block("A1", true);
-        section(Section.FORWARD, a1);
-        assertFalse(AutoActiveTrain.canStopByBlockOccupancy(TrainDetection.TRAINDETECTION_HEADONLY, a1, allocated));
-    }
-
-    @Test
-    public void testHeadAndTailStopsOnlyByTailBlock() {
-        Block a1 = block("A1", true);   // tail
-        Block a2 = block("A2", true);   // locomotive just leaving the previous Section
-        Block b1 = block("B1", true);   // head
-        section(Section.FORWARD, a1, a2);
-        section(Section.FORWARD, b1);
-        assertTrue(AutoActiveTrain.canStopByBlockOccupancy(TrainDetection.TRAINDETECTION_HEADANDTAIL, a1, allocated),
-                "tail is in A1");
-        assertFalse(AutoActiveTrain.canStopByBlockOccupancy(TrainDetection.TRAINDETECTION_HEADANDTAIL, a2, allocated),
-                "A2 clears when the locomotive leaves it, the tail is still in A1");
-        assertFalse(AutoActiveTrain.canStopByBlockOccupancy(TrainDetection.TRAINDETECTION_HEADANDTAIL, null, allocated));
+    public void testBlockNotAllocated() {
+        Block x = block("X", true);
+        section(Section.FORWARD, x);
+        assertFalse(AutoActiveTrain.hasOccupiedBlockBehind(block("Other", false), allocated));
     }
 
     @BeforeEach
