@@ -40,13 +40,13 @@ public class OlcbSignalMastXml
         storeCommon(p, e);
 
         Element lit = new Element("lit");
-        lit.addContent(new Element("lit").addContent(p.getLitEventId()));
-        lit.addContent(new Element("notlit").addContent(p.getNotLitEventId()));
+        lit.addContent(new Element("lit").addContent(nullToEmpty(p.getLitEventId())));
+        lit.addContent(new Element("notlit").addContent(nullToEmpty(p.getNotLitEventId())));
         e.addContent(lit);
 
         Element held = new Element("held");
-        held.addContent(new Element("held").addContent(p.getHeldEventId()));
-        held.addContent(new Element("notheld").addContent(p.getNotHeldEventId()));
+        held.addContent(new Element("held").addContent(nullToEmpty(p.getHeldEventId())));
+        held.addContent(new Element("notheld").addContent(nullToEmpty(p.getNotHeldEventId())));
         e.addContent(held);
 
         SignalAppearanceMap appMap = p.getAppearanceMap();
@@ -56,7 +56,7 @@ public class OlcbSignalMastXml
                 String key = aspects.nextElement();
                 Element el = new Element("aspect");
                 el.setAttribute("defines", key);
-                el.addContent(new Element("event").addContent(p.getOutputForAppearance(key)));
+                el.addContent(new Element("event").addContent(nullToEmpty(p.getOutputForAppearance(key))));
                 e.addContent(el);
             }
         }
@@ -73,6 +73,10 @@ public class OlcbSignalMastXml
             }
         }
         return e;
+    }
+
+    private static String nullToEmpty(String value) {
+        return value == null ? "" : value;
     }
 
     @Override
@@ -99,20 +103,20 @@ public class OlcbSignalMastXml
 
         if (element.getChild("lit") != null) {
             Element lit = element.getChild("lit");
-            m.setLitEventId(lit.getChild("lit").getValue());
-            m.setNotLitEventId(lit.getChild("notlit").getValue());
+            m.setLitEventId(childValue(lit, "lit"));
+            m.setNotLitEventId(childValue(lit, "notlit"));
         }
 
         if (element.getChild("held") != null) {
             Element held = element.getChild("held");
-            m.setHeldEventId(held.getChild("held").getValue());
-            m.setNotHeldEventId(held.getChild("notheld").getValue());
+            m.setHeldEventId(childValue(held, "held"));
+            m.setNotHeldEventId(childValue(held, "notheld"));
         }
 
         List<Element> list = element.getChildren("aspect");
         for (Element e : list) {
             String aspect = e.getAttribute("defines").getValue();
-            String event = e.getChild("event").getValue();
+            String event = childValue(e, "event");
             m.setOutputForAppearance(aspect, event);
         }
         Element e = element.getChild("disabledAspects");
@@ -125,6 +129,11 @@ public class OlcbSignalMastXml
 
         return true;
 
+    }
+
+    private static String childValue(Element parent, String childName) {
+        Element child = parent.getChild(childName);
+        return child == null ? "" : child.getValue();
     }
 
     @Override

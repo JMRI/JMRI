@@ -144,6 +144,9 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
+                <li>OpenLCB/LCC Signal Masts now default to blank for 
+                    their defined event IDs, instead of all-zero event IDs.
+                    When the field is blank, no event will be produced.</li>
             </ul>
 
         <h4>Powerline</h4>
