@@ -248,6 +248,57 @@ public class CbusOpCodesTest {
     public void testGetMinPriority() {
         assertEquals(1,CbusOpCodes.getOpcMinPriority(CbusConstants.CBUS_RTON), "Priority Fetched");
         assertEquals(3,CbusOpCodes.getOpcMinPriority(0x0f),"Default priority for unknown"); // unknown OPC
+        assertEquals(3,CbusOpCodes.getOpcMinPriority(256),"Default priority for out of range");
+        assertEquals(3,CbusOpCodes.getOpcMinPriority(-1),"Default priority for negative");
+    }
+
+    @Test
+    public void testUnknownOpcHandling() {
+        int[] unknowns = new int[]{0x0f, 0x18, 256, 257, -1};
+        for (int opc : unknowns) {
+            assertFalse(CbusOpCodes.isEvent(opc), "unknown not event " + opc);
+            assertFalse(CbusOpCodes.isEventNotRequest(opc), "unknown not event not request " + opc);
+            assertFalse(CbusOpCodes.isDcc(opc), "unknown not dcc " + opc);
+            assertFalse(CbusOpCodes.isOnEvent(opc), "unknown not on event " + opc);
+            assertFalse(CbusOpCodes.isEventRequest(opc), "unknown not request " + opc);
+            assertFalse(CbusOpCodes.isShortEvent(opc), "unknown not short " + opc);
+            assertTrue(CbusOpCodes.getOpcName(opc).isEmpty(), "unknown has no name " + opc);
+            java.util.EnumSet<CbusFilterType> filters = CbusOpCodes.getOpcFilters(opc);
+            assertEquals(java.util.EnumSet.of(CbusFilterType.CFMISC, CbusFilterType.CFUNKNOWN),
+                filters, "unknown filters " + opc);
+        }
+    }
+
+    @Test
+    public void testKnownOpcPredicates() {
+        assertTrue(CbusOpCodes.isEvent(CbusConstants.CBUS_ACON), "ACON is event");
+        assertTrue(CbusOpCodes.isEvent(CbusConstants.CBUS_AREQ), "AREQ is event");
+        assertTrue(CbusOpCodes.isEventNotRequest(CbusConstants.CBUS_ACON), "ACON event not request");
+        assertFalse(CbusOpCodes.isEventNotRequest(CbusConstants.CBUS_AREQ), "AREQ is request");
+        assertTrue(CbusOpCodes.isEventRequest(CbusConstants.CBUS_ASRQ), "ASRQ is request");
+        assertTrue(CbusOpCodes.isOnEvent(CbusConstants.CBUS_ARSON3), "ARSON3 is on event");
+        assertFalse(CbusOpCodes.isOnEvent(CbusConstants.CBUS_ACOF), "ACOF not on event");
+        assertTrue(CbusOpCodes.isShortEvent(CbusConstants.CBUS_ASOF2), "ASOF2 is short event");
+        assertFalse(CbusOpCodes.isShortEvent(CbusConstants.CBUS_ACON2), "ACON2 not short event");
+        assertTrue(CbusOpCodes.isDcc(CbusConstants.CBUS_RTON), "RTON is dcc");
+        assertFalse(CbusOpCodes.isDcc(CbusConstants.CBUS_ACON), "ACON not dcc");
+        assertEquals("ACON", CbusOpCodes.getOpcName(CbusConstants.CBUS_ACON), "ACON name");
+    }
+
+    @Test
+    public void testGetOpcFiltersReturnsCopy() {
+        java.util.EnumSet<CbusFilterType> filters = CbusOpCodes.getOpcFilters(CbusConstants.CBUS_ACON);
+        assertTrue(filters.contains(CbusFilterType.CFEVENT), "ACON filters contain event");
+        // modifying the returned set must not affect subsequent lookups
+        filters.clear();
+        assertTrue(CbusOpCodes.isEvent(CbusConstants.CBUS_ACON), "ACON still event after modifying copy");
+        assertTrue(CbusOpCodes.getOpcFilters(CbusConstants.CBUS_ACON).contains(CbusFilterType.CFEVENT),
+            "fresh copy contains event");
+
+        java.util.EnumSet<CbusFilterType> unknown = CbusOpCodes.getOpcFilters(0x0f);
+        unknown.clear();
+        assertTrue(CbusOpCodes.getOpcFilters(0x0f).contains(CbusFilterType.CFUNKNOWN),
+            "default filters unaffected by modifying copy");
     }
 
     @Test
