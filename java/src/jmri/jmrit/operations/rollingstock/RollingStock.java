@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
  * on the layout.
  *
- * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2023
+ * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2023, 2026
  */
 public abstract class RollingStock extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
@@ -1440,9 +1440,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         setTrain(null);
         setDestination(null, null);
         setLocation(null, null);
-        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
+        removePropertyChangeListeners();
         if (getIdTag() != null) {
             getIdTag().removePropertyChangeListener(_tagListener);
         }
@@ -1696,10 +1694,16 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return e;
     }
 
-    private void addPropertyChangeListeners() {
+    protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
+    }
+    
+    protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
     }
 
     // rolling stock listens for changes in a location name or if a location is

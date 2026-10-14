@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base class for rolling stock managers car and engine.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2026
  * @param <T> the type of RollingStock managed by this manager
  */
 public abstract class RollingStockManager<T extends RollingStock> extends PropertyChangeSupport implements PropertyChangeListener {
@@ -685,6 +685,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         // register car before setting location so the car gets logged
         register(clone);
         clone.setLocation(rs.getLocation(), rs.getTrack(), RollingStock.FORCE);
+        clone.addPropertyChangeListeners();
         rs.setCloneOrder(cloneCreationOrder); // for reset
         return clone;
     }
