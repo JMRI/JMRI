@@ -75,10 +75,6 @@ public class OlcbSignalMastXml
         return e;
     }
 
-    private static String nullToEmpty(String value) {
-        return value == null ? "" : value;
-    }
-
     @Override
     public boolean load(@Nonnull Element shared, Element perNode) {
         OlcbSignalMast m;
@@ -129,11 +125,6 @@ public class OlcbSignalMastXml
 
         return true;
 
-    }
-
-    private static String childValue(Element parent, String childName) {
-        Element child = parent.getChild(childName);
-        return child == null ? "" : child.getValue();
     }
 
     @Override
