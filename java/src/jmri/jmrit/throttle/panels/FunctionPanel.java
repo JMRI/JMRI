@@ -8,7 +8,6 @@ import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.*;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -16,6 +15,7 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.swing.functiontable.FunctionTableModel;
 import jmri.jmrit.throttle.interfaces.AddressListener;
 import jmri.jmrit.throttle.interfaces.FunctionListener;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
@@ -50,7 +50,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
     private DccThrottle mThrottle;
 
     private FunctionButton[] functionButtons;
-    private int[] btnIdxFn; // fn button indx to fn map (see function buttons display order)
+    private int[] btnIdxFn; // fn button index to fn map (see function buttons display order)
 
     private boolean withPopupMenuOnFnButtons;
     private boolean fnBtnUpdatedFromRoster = false; // avoid to reinit function button twice (from throttle xml and from roster)
@@ -96,28 +96,6 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
     public FunctionButton[] getFunctionButtons() {
         return Arrays.copyOf(functionButtons, functionButtons.length);
     }
-
-    /**
-     * Resize inner function buttons array
-     *
-     */
-    private void resizeFnButtonsArray(int n) {
-        FunctionButton[] newFunctionButtons = new FunctionButton[n];
-        System.arraycopy(functionButtons, 0, newFunctionButtons, 0, Math.min( functionButtons.length, n));
-        if (n > functionButtons.length) {
-            for (int i=functionButtons.length;i<n;i++) {
-                newFunctionButtons[i] = new FunctionButton(withPopupMenuOnFnButtons);
-                add(newFunctionButtons[i]);
-                resetFnButton(newFunctionButtons[i],i);
-                // Copy mouse and keyboard controls to new components
-                for (MouseWheelListener mwl:getMouseWheelListeners()) {
-                   newFunctionButtons[i].addMouseWheelListener(mwl);
-                }
-            }
-        }
-        functionButtons = newFunctionButtons;
-    }
-
 
     /**
      * Get notification that a function has changed state.
@@ -253,40 +231,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         scrollPane.setViewportBorder( empyBorder );
         scrollPane.setBorder( empyBorder );
         scrollPane.setWheelScrollingEnabled(false); // already used by speed slider
-        scrollPane.getViewport().addChangeListener((e) -> viewPortSizeChanged(e));
-    }
-
-    private void viewPortSizeChanged(ChangeEvent e) {
-        // make sure function button area is laid out consistent with sizing
-        revalidate();
-    }
-    
-    private void setUpDefaultLightFunctionButton() {
-        try {
-            functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
-            functionButtons[0].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
-        } catch (Exception e) {
-            log.debug("Exception loading svg icon : {}", e.getMessage());
-        } finally {
-            if ((functionButtons[0].getIcon() == null) || (functionButtons[0].getSelectedIcon() == null)) {
-                log.debug("Issue loading svg icon, reverting to png");
-                functionButtons[0].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                functionButtons[0].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
-            }
-        }
-    }
-
-    private void initBtnIdxFn(RosterEntry re) {
-        String fnDOAtt = re.getAttribute("FnDisplayOrder");
-        btnIdxFn = null;
-        if (fnDOAtt != null) {
-            try {
-                btnIdxFn = new ObjectMapper().readValue(fnDOAtt, int[].class );
-                return;
-            } catch (JsonProcessingException e) {
-                log.warn("Couldn't parse FnDisplayOrder attribute ",e);
-            } 
-        }
+        scrollPane.getViewport().addChangeListener((e) -> revalidate());
     }
 
     /**
@@ -319,7 +264,15 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         if (rosterEntry != null) {
             fnBtnUpdatedFromRoster = true;
             log.debug("RosterEntry found: {}", rosterEntry.getId());
-            initBtnIdxFn(rosterEntry);
+            String fnDOAtt = rosterEntry.getAttribute(FunctionTableModel.FB_ORDER_ATTR);
+            btnIdxFn = null;
+            if (fnDOAtt != null) {
+                try {
+                    btnIdxFn = new ObjectMapper().readValue(fnDOAtt, int[].class );
+                } catch (JsonProcessingException e) {
+                    log.warn("Couldn't parse FnDisplayOrder attribute ",e);
+                } 
+            }    
         }
         for (int i = 0; i < functionButtons.length; i++) {
             // update from selected throttle setting
@@ -400,7 +353,18 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         fb.setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
         fb.setDisplay(true);
         if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-            setUpDefaultLightFunctionButton();
+            try {
+                functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                functionButtons[0].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+            } catch (Exception e) {
+                log.debug("Exception loading svg icon : {}", e.getMessage());
+            } finally {
+                if ((functionButtons[0].getIcon() == null) || (functionButtons[0].getSelectedIcon() == null)) {
+                    log.debug("Issue loading svg icon, reverting to png");
+                    functionButtons[0].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                    functionButtons[0].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                }
+            } 
         } else {
             fb.setIconPath(null);
             fb.setSelectedIconPath(null);
@@ -562,7 +526,21 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
             numFns = Math.min(numFns, re.getMaxFnNumAsInt()+1);
         }
         log.debug("notifyRosterEntryUpdated number of functions {}", numFns);
-        resizeFnButtonsArray(numFns);
+        // Resize inner function buttons array
+        FunctionButton[] newFunctionButtons = new FunctionButton[numFns];
+        System.arraycopy(functionButtons, 0, newFunctionButtons, 0, Math.min( functionButtons.length, numFns));
+        if (numFns > functionButtons.length) {
+            for (int i=functionButtons.length;i<numFns;i++) {
+                newFunctionButtons[i] = new FunctionButton(withPopupMenuOnFnButtons);
+                add(newFunctionButtons[i]);
+                resetFnButton(newFunctionButtons[i],i);
+                // Copy mouse and keyboard controls to new components
+                for (MouseWheelListener mwl:getMouseWheelListeners()) {
+                   newFunctionButtons[i].addMouseWheelListener(mwl);
+                }
+            }
+        }
+        functionButtons = newFunctionButtons;
         updateFnButtons();
     }
 
