@@ -488,19 +488,35 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         int retVal = hexFileChooser.showOpenDialog(this);
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            hexFile = new CbusPicHexFile(hexFileChooser.getSelectedFile().getPath());
-            log.debug("hex file chosen: {}", hexFile.getName());
-            addToLog(MessageFormat.format(Bundle.getMessage("BootFileChosen"), hexFile.getName()));
+            // Nothing can be programmed until the new file has been read and checked
+            programButton.setEnabled(false);
+            hexForBootloader = false;
+            fileParams = new CbusParameters();
+            // Release any previously loaded file
+            if (hexFile != null) {
+                hexFile.dispose();
+                hexFile = null;
+            }
+
+            CbusPicHexFile newHexFile = new CbusPicHexFile(hexFileChooser.getSelectedFile().getPath());
+            log.debug("hex file chosen: {}", newHexFile.getName());
+            addToLog(MessageFormat.format(Bundle.getMessage("BootFileChosen"), newHexFile.getName()));
             try {
-                hexFile.openRd();
-                hexFile.read();
+                newHexFile.openRd();
+                newHexFile.read();
             } catch (IOException ex) {
-                log.error("Error opening hex file");
+                log.error("Error opening hex file: {}", ex.getMessage());
                 addToLog(Bundle.getMessage("BootHexFileOpenFailed"));
                 return;
+            } finally {
+                // The whole file is held in memory so the file itself can be closed now
+                newHexFile.close();
             }
-            
+
+            // Only use the file once it has been read successfully
+            hexFile = newHexFile;
             fileParams = hexFile.getParams();
+            boolean hardwareParamsValid = (hardwareParams != null) && hardwareParams.areValid();
             if (!moduleCheckBox.isSelected()) {
                 if (fileParams.validate(fileParams, hardwareParams)) {
                     addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
@@ -513,7 +529,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 addToLog(Bundle.getMessage("BootHexFileIgnoringParameters"));
                 programButton.setEnabled(true);
             }
-            if ((hardwareParams.areValid()) && (hardwareParams.getLoadAddress() == 0)) {
+            if (hardwareParamsValid && (hardwareParams.getLoadAddress() == 0)) {
                 // Special case of rewriting the bootloader for Pi-SPROG One
                 addToLog(Bundle.getMessage("BootBoot"));
                 hexForBootloader = true;
@@ -530,6 +546,12 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     private void programButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (hasActiveTimers()){
+            return;
+        }
+        if (hexFile == null) {
+            log.error("No hex file loaded");
+            addToLog(Bundle.getMessage("BootHexFileOpenFailed"));
+            programButton.setEnabled(false);
             return;
         }
         openFileChooserButton.setEnabled(false);
@@ -971,11 +993,12 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
                 tc.sendCanMessage(m, null);
             }
-            if ((bootAddress < CONFIG_START) && (currentRecord.len%8 != 0)) {
+            if ((bootAddress < CONFIG_START) && (currentRecord.len%8 != 0)
+                    && ((currentRecord.len + (8 - currentRecord.len%8)) <= currentRecord.data.length)) {
                 // AN247 bootloader always writes 8 bytes to FLASH so we need to pad the packet and adjust the length
                 int pad = 8 - currentRecord.len%8;
                 for (int i = 0; i < pad; i++) {
-                    currentRecord.data[currentRecord.len + pad] = (byte)0xFF;
+                    currentRecord.data[currentRecord.len + i] = (byte)0xFF;
                 }
                 currentRecord.len += pad;
             }
@@ -1015,6 +1038,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             // Current record is exhausted, Get next ONE
             recordDone = false;
             recordIndex = 0;
+            if (hexFile == null) {
+                log.error("No hex file loaded");
+                endProgramming(BootStatus.ADDRESS_NOT_FOUND);
+                return;
+            }
             currentRecord = hexFile.getNextRecord();
             if (currentRecord.type == HexRecord.END) {
                 // No more data to send so send checksum
@@ -1045,24 +1073,31 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     private void initialise() {
         Optional<HexRecord> hexRecord;
-        
-        if (hardwareParams.areValid()) {
+
+        if (hexFile == null) {
+            log.error("No hex file loaded");
+            endProgramming(BootStatus.ADDRESS_NOT_FOUND);
+            return;
+        }
+
+        if ((hardwareParams != null) && hardwareParams.areValid()) {
             bootAddress = hardwareParams.getLoadAddress();
-        } else if (fileParams.areValid()) {
+        } else if ((fileParams != null) && fileParams.areValid()) {
             bootAddress = fileParams.getLoadAddress();
         } else {
             bootAddress = hexFile.getProgStart();
         }
-        
+
         recordDone = false;
         recordIndex = 0;
-        
+
         hexRecord = hexFile.getRecordForAddress(bootAddress);
         if (hexRecord.isPresent()) {
             currentRecord = hexRecord.get();
         } else {
             log.error("Did not find hex record for load address {}", "0x"+Integer.toHexString(bootAddress));
             endProgramming(BootStatus.ADDRESS_NOT_FOUND);
+            return;
         }
         checksum = 0;
         dataFramesSent = 0;

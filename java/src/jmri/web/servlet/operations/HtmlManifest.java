@@ -1,17 +1,11 @@
 package jmri.web.servlet.operations;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.*;
-import java.util.Map.Entry;
-
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -22,6 +16,10 @@ import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -592,17 +590,17 @@ public class HtmlManifest extends HtmlTrainCommon {
         try {
             if (Setup.isPrintTrainScheduleNameEnabled()) {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "ValidityWithSchedule"),
-                        getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())),
+                        this.getJsonManifest().path(JsonOperations.DATE).textValue(),
                         InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule().getName());
             } else {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "Validity"),
-                        getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())));
+                        this.getJsonManifest().path(JsonOperations.DATE).textValue());
             }
         } catch (NullPointerException ex) {
             log.warn("Manifest for train {} (id {}) does not have any validity.", this.train.getIconName(), this.train
                     .getId());
-        } catch (ParseException ex) {
-            log.error("Date of JSON manifest could not be parsed as a Date.");
+//        } catch (DateTimeParseException ex) {
+//            log.error("Date of JSON manifest could not be parsed as a LocalDateTime.");
         } catch (IOException ex) {
             log.error("JSON manifest could not be read.");
         }

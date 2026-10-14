@@ -50,7 +50,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
      */
     @Override
     public void sendCanMessage(CanMessage m, CanListener reply) {
-        log.debug("TrafficController sendCanMessage() {}", m.toString());
+        log.debug("TrafficController sendCanMessage() {}", m);
         notifyMessage(m, reply);
     }
 
@@ -60,7 +60,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
      */
     @Override
     public void sendCanReply(CanReply r, CanListener reply) {
-        log.debug("TrafficController sendCanReply() {}", r.toString());
+        log.debug("TrafficController sendCanReply() {}", r);
         notifyReply(r, reply);
     }
 
