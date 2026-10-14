@@ -473,18 +473,22 @@
              <li>Automatic release of Sections no longer releases a Section
                  when the next Section has not been entered, or when the
                  train is stopped, waiting or in manual mode.</li>
-             <li>A "Head Only" train without a Max Train Length (a
-                 dispatched or manual train, or a Max Train Length of 0)
-                 now keeps each Section until the next Section has also
-                 been exited. Previously the Section was released as soon
-                 as the locomotive left it.</li>
+             <li>Trains using "Head Only" or "Head and Tail" train
+                 detection must now have a Max Train Length, whether or not
+                 they run automatically. A train without one is refused when
+                 it is added or loaded, with a message saying why. The Max
+                 Train Length field is now shown for these trains even when
+                 they do not run automatically.</li>
+             <li>Sections behind a "Head Only" train are now released using
+                 the train length for every train, not only automatic ones.
+                 Previously a dispatched or manual "Head Only" train had each
+                 Section released as soon as the locomotive left it.</li>
              <li>For a "Head and Tail" train a Section is only released
                  automatically once the tail has been detected moving on
                  into the next Section. If the tail loses detection, for
                  example through dirty wheels, Sections are no longer
-                 released all the way up to the head. An automatic train
-                 with a Max Train Length then releases them using its
-                 length, as for a "Head Only" train.</li>
+                 released all the way up to the head; the train length
+                 decides instead, as for a "Head Only" train.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

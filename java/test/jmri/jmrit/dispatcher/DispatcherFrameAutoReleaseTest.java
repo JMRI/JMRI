@@ -1,6 +1,8 @@
 package jmri.jmrit.dispatcher;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -10,6 +12,7 @@ import java.util.List;
 
 import jmri.Section;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -96,25 +99,62 @@ public class DispatcherFrameAutoReleaseTest {
     }
 
     @Test
-    public void testHeadOnlyDispatchedTrainHeldUntilNextSectionExited() {
+    public void testHeadOnlyDispatchedTrainReleasedByLength() {
         buildTransit(1000);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
         when(at.getAutoActiveTrain()).thenReturn(null);
+        when(at.getMaxTrainLengthMM()).thenReturn(800L);
         headIn(1);
         assertFalse(releaseA(), "head in B, tail may still be in A");
         headIn(2);
-        assertTrue(releaseA(), "head in C, B exited");
+        assertTrue(releaseA(), "B is longer than the train");
     }
 
     @Test
-    public void testHeadOnlyAutoTrainWithoutLengthHeldUntilNextSectionExited() {
+    public void testHeadOnlyDispatchedTrainLongerThanSection() {
+        buildTransit(500);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        when(at.getMaxTrainLengthMM()).thenReturn(800L);
+        headIn(2);
+        assertFalse(releaseA(), "only B (500) exited beyond A, train is 800");
+        headIn(3);
+        assertTrue(releaseA(), "B and C (1000) exited beyond A");
+    }
+
+    @Test
+    public void testHeadOnlyWithoutLengthIsHeld() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        when(at.getMaxTrainLengthMM()).thenReturn(0L);
+        when(at.firstNoLengthWarning()).thenReturn(true, false);
+        headIn(2);
+        assertFalse(releaseA(), "length unknown, keep");
+        headIn(3);
+        assertFalse(releaseA(), "length unknown, still keep");
+        JUnitAppender.assertWarnMessage("Test: has no Max Train Length, Sections behind it will not be released automatically.");
+    }
+
+    @Test
+    public void testHeadOnlyAutoTrainWithoutLengthIsHeld() {
         buildTransit(1000);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
         autoTrain(0);
+        headIn(3);
+        assertFalse(releaseA());
+    }
+
+    @Test
+    public void testScriptAutoTrainUsesAutoActiveTrainLength() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        when(at.getMaxTrainLengthMM()).thenReturn(0L);
+        autoTrain(800);
         headIn(1);
-        assertFalse(releaseA(), "head in B, tail may still be in A");
+        assertFalse(releaseA());
         headIn(2);
-        assertTrue(releaseA(), "head in C, B exited");
+        assertTrue(releaseA());
     }
 
     @Test
@@ -175,7 +215,7 @@ public class DispatcherFrameAutoReleaseTest {
     }
 
     @Test
-    public void testHeadAndTailHeldWhenTailLostDetection() {
+    public void testHeadAndTailHeldWhenTailLostDetectionAndNoLength() {
         buildTransit(1000);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         when(at.getAutoActiveTrain()).thenReturn(null);
@@ -185,6 +225,20 @@ public class DispatcherFrameAutoReleaseTest {
         assertFalse(tailHasLeftA(), "tail lost detection in A");
         headIn(3);
         assertFalse(tailHasLeftA(), "still no tail seen, train length unknown");
+    }
+
+    @Test
+    public void testHeadAndTailDispatchedLostDetectionFallsBackToLength() {
+        buildTransit(500);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        when(at.getMaxTrainLengthMM()).thenReturn(800L);
+        when(allocated.get(1).getClearedOrder()).thenReturn(1L);
+        when(allocated.get(0).getClearedOrder()).thenReturn(2L);
+        headIn(2);
+        assertFalse(tailHasLeftA(), "only B (500) beyond A, train is 800");
+        headIn(3);
+        assertTrue(tailHasLeftA(), "B and C (1000) beyond A");
     }
 
     @Test
@@ -198,6 +252,34 @@ public class DispatcherFrameAutoReleaseTest {
         assertFalse(tailHasLeftA(), "only B (500) beyond A, train is 800");
         headIn(3);
         assertTrue(tailHasLeftA(), "B and C (1000) beyond A");
+    }
+
+    private TrainInfo trainInfo(TrainDetection detection, float lengthScaleMeters) {
+        TrainInfo info = new TrainInfo();
+        info.setTrainName("T1");
+        info.setTrainDetection(detection);
+        info.setMaxTrainLengthScaleMeters(lengthScaleMeters);
+        return info;
+    }
+
+    @Test
+    public void testLengthRequiredWhenTailNotAlwaysDetected() {
+        assertNotNull(DispatcherFrame.checkTrainLength(trainInfo(TrainDetection.TRAINDETECTION_HEADONLY, 0)));
+        assertNotNull(DispatcherFrame.checkTrainLength(trainInfo(TrainDetection.TRAINDETECTION_HEADANDTAIL, 0)));
+        assertNull(DispatcherFrame.checkTrainLength(trainInfo(TrainDetection.TRAINDETECTION_HEADONLY, 20)));
+        assertNull(DispatcherFrame.checkTrainLength(trainInfo(TrainDetection.TRAINDETECTION_HEADANDTAIL, 20)));
+    }
+
+    @Test
+    public void testLengthNotRequiredForEntireTrain() {
+        assertNull(DispatcherFrame.checkTrainLength(trainInfo(TrainDetection.TRAINDETECTION_WHOLETRAIN, 0)));
+    }
+
+    @Test
+    public void testLengthErrorNamesTrainAndDetection() {
+        String msg = DispatcherFrame.checkTrainLength(trainInfo(TrainDetection.TRAINDETECTION_HEADONLY, 0));
+        assertTrue(msg.contains("T1"), msg);
+        assertTrue(msg.contains(Bundle.getMessage("TrainDetectionHeadOnly")), msg);
     }
 
     @BeforeEach
