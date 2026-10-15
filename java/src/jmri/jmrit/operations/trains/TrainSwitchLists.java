@@ -498,7 +498,7 @@ public class TrainSwitchLists extends TrainCommon {
                                                                     .getMaxNameLength()),
                                                     padAndTruncateIfNeeded(trackName,
                                                             locationManager.getMaxTrackNameLength()),
-                                                    padAndTruncateIfNeeded(car.getColor(), InstanceManager
+                                                    padAndTruncateIfNeeded(car.getColorName(), InstanceManager
                                                             .getDefault(CarColors.class).getMaxNameLength())}));
                         }
                     }

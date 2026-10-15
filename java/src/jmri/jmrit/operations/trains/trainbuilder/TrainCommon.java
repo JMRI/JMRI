@@ -1749,7 +1749,7 @@ public class TrainCommon {
                         Control.max_len_string_weight_name) +
                         (Setup.isPrintHeadersEnabled() ? "" : TrainManifestHeaderText.getStringHeader_Weight());
             } else if (attribute.equals(Setup.COLOR)) {
-                return padAndTruncateIfNeeded(rs.getColor(),
+                return padAndTruncateIfNeeded(rs.getColorName(),
                         InstanceManager.getDefault(CarColors.class).getMaxNameLength());
             } else if (((attribute.equals(Setup.LOCATION)) && (isPickup || isLocal)) ||
                     (attribute.equals(Setup.TRACK) && isPickup)) {

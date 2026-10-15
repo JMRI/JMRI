@@ -136,7 +136,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public RollingStock copy(RollingStock rs) {
         rs.setBuilt(getBuilt());
-        rs.setColor(getColor());
+        rs.setColorName(getColorName());
         rs.setLength(getLength());
         rs.setWeightTons(getWeightTons());
         rs.setNumber(getNumber());
@@ -278,7 +278,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return getLengthInteger() + RollingStock.COUPLERS;
     }
 
-    public void setColor(String color) {
+    public void setColorName(String color) {
         String old = _color;
         _color = color;
         if (!old.equals(color)) {
@@ -286,7 +286,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
     }
 
-    public String getColor() {
+    public String getColorName() {
         return _color;
     }
 
@@ -1607,8 +1607,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         e.setAttribute(Xml.ROAD_NUMBER, getNumber());
         e.setAttribute(Xml.TYPE, getTypeName());
         e.setAttribute(Xml.LENGTH, getLength());
-        if (!getColor().equals(NONE)) {
-            e.setAttribute(Xml.COLOR, getColor());
+        if (!getColorName().equals(NONE)) {
+            e.setAttribute(Xml.COLOR, getColorName());
         }
         if (!getWeight().equals(DEFAULT_WEIGHT)) {
             e.setAttribute(Xml.WEIGHT, getWeight());
@@ -1773,10 +1773,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
         }
         if (e.getPropertyName().equals(CarColors.CARCOLORS_NAME_CHANGED_PROPERTY)) {
-            if (e.getOldValue().equals(getColor())) {
+            if (e.getOldValue().equals(getColorName())) {
                 log.debug("Rolling stock ({}) sees color name change from ({}) to ({})", this, e.getOldValue(),
                         e.getNewValue()); // NOI18N
-                setColor((String) e.getNewValue());
+                setColorName((String) e.getNewValue());
             }
         }
     }

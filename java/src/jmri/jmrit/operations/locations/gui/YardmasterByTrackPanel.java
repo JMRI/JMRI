@@ -432,7 +432,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                                             InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
                                     TrainCommon.padAndTruncateIfNeeded(_track.getName(),
                                             InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
-                                    TrainCommon.padAndTruncateIfNeeded(car.getColor(),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getColorName(),
                                             InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
 
                 }
