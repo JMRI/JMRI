@@ -23,12 +23,13 @@ public class TimeTest {
 
         System.out.format("DateTime: %s, %s%n", ldt.getZone().getId(), ldt.format(TimeProvider.LEGACY_XML_DATETIME_FORMAT));
 
-
+/*
         if (1==1) return;
 
         ZonedDateTime zdt = LocalDateTime.MIN.atZone(ZoneId.of("EDT"));
 //        ZonedDateTime zdt2 = LocalDateTime.MIN.atZone(ZoneId.);
         System.out.format("DateTime: %s, %s%n", zdt.getZone().getId(), zdt.format(TimeProvider.LEGACY_XML_DATETIME_FORMAT));
+*/
     }
 
     @BeforeEach
