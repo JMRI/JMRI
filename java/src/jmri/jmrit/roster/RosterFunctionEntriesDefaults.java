@@ -21,8 +21,8 @@ package jmri.jmrit.roster;
 public class RosterFunctionEntriesDefaults {
 
     // NMRA
-    public static final String NMRA_SHUNTING_FN = "";  // no convention on a default shunting (slow) function
-    public static final RosterFunctionEntry[] NMRA_FUNCTION_ENTRIES = {
+    static final String NMRA_SHUNTING_FN = "";  // no convention on a default shunting (slow) function
+    static final RosterFunctionEntry[] NMRA_FUNCTION_ENTRIES = {
         new RosterFunctionEntry(0, Bundle.getMessage("F0NMRA"),null,    // Head lights
                 "resources/icons/functionicons/svg/lightsOff.svg", "resources/icons/functionicons/svg/lightsOn.svg", true, true),
         new RosterFunctionEntry(1, Bundle.getMessage("F1NMRA"), Bundle.getMessage("F1NMRA"),   // Bell
@@ -32,8 +32,8 @@ public class RosterFunctionEntriesDefaults {
     };
 
     // NEM
-    public static final String NEM_SHUNTING_FN = "F5"; 
-    public static final RosterFunctionEntry[] NEM_FUNCTION_ENTRIES = {
+    static final String NEM_SHUNTING_FN = "F5"; 
+    static final RosterFunctionEntry[] NEM_FUNCTION_ENTRIES = {
         new RosterFunctionEntry(0, Bundle.getMessage("F0NEM"),null,  // Head lights
                 "resources/icons/functionicons/svg/lightsOff.svg", "resources/icons/functionicons/svg/lightsOn.svg", true, true),
         new RosterFunctionEntry(1, Bundle.getMessage("F1NEM"),null,  // Back lights

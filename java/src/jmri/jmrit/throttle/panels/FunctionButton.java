@@ -12,6 +12,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.jmrit.throttle.interfaces.FunctionListener;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
@@ -476,6 +477,7 @@ public class FunctionButton extends JToggleButton {
      * @param e The Element for this object.
      */
     public void setXml(Element e) {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class); 
         try {
             this.setIdentity(e.getAttribute("id").getIntValue());
             this.setText(e.getAttribute("text").getValue());
@@ -487,7 +489,7 @@ public class FunctionButton extends JToggleButton {
                 this.setFont(new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()));
             }
             this.setButtonImageSize( (e.getAttribute("buttonImageSize")!=null)?e.getAttribute("buttonImageSize").getIntValue():DEFAULT_IMG_SIZE);
-            if ((e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {
+            if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon() && (e.getAttribute("iconPath") != null) && (e.getAttribute("iconPath").getValue().length() > 0)) {
                 if (checkFile(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue())) {
                     this.setIconPath(FileUtil.getUserResourcePath() + e.getAttribute("iconPath").getValue());
                 } else {

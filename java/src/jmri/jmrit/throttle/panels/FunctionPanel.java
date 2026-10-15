@@ -270,7 +270,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      *    - from roster entry if any
      */
     public void applyFnButtonsLnF() {
-        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         final RosterEntry rosterEntry = (addressPanel != null?addressPanel.getRosterEntry():null);
         btnIdxFn = null;
         // 1 - reset to default xml layout if any
