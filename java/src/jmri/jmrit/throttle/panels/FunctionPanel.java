@@ -222,7 +222,10 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      */
     private void initGUI() {        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        resetFnButtons();
+        // init function buttons
+        resizeFnButons(DEFAULT_FUNCTION_BUTTONS);
+        // update according to throttle and roster (if any)
+        applyFnButtonsLnF();
         JScrollPane scrollPane = new JScrollPane(this);
         scrollPane.getViewport().setOpaque(false); // container already gets this done (for play/edit mode)
         scrollPane.setOpaque(false);
@@ -235,33 +238,45 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
     }
 
     /**
-     * Rebuild function buttons
+     * Resize or build inner function button array
      *
      */
-    private void rebuildFnButons(int n) {
-        removeAll();
-        functionButtons = new FunctionButton[n];
-        for (int i = 0; i < functionButtons.length; i++) {
-            functionButtons[i] = new FunctionButton(withPopupMenuOnFnButtons);
-            resetFnButton(functionButtons[i],i);
-            add(functionButtons[i]);
-            // Copy mouse and keyboard controls to new components
-            for (MouseWheelListener mwl:getMouseWheelListeners()) {
-                functionButtons[i].addMouseWheelListener(mwl);
+    private void resizeFnButons(int numFns) {
+        // Resize inner function buttons array
+        FunctionButton[] newFunctionButtons = new FunctionButton[numFns];
+        int prevl = 0;
+        if (functionButtons != null) {
+            System.arraycopy(functionButtons, 0, newFunctionButtons, 0, Math.min( functionButtons.length, numFns));
+            prevl = functionButtons.length ;
+        }
+        if (numFns > prevl) {
+            for (int i=prevl;i<numFns;i++) {
+                newFunctionButtons[i] = new FunctionButton(withPopupMenuOnFnButtons);
+                add(newFunctionButtons[i]);
+                resetFnButton(newFunctionButtons[i],i);
+                // Copy mouse and keyboard controls to new components
+                for (MouseWheelListener mwl:getMouseWheelListeners()) {
+                   newFunctionButtons[i].addMouseWheelListener(mwl);
+                }
             }
         }
+        functionButtons = newFunctionButtons;
     }
 
     /**
-     * Update function buttons
+     * Update function buttons look'n feel
+     *    - from default layout setting if any
      *    - from selected throttle setting and state
      *    - from roster entry if any
      */
-    private void updateFnButtons() {
+    public void applyFnButtonsLnF() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
         final RosterEntry rosterEntry = (addressPanel != null?addressPanel.getRosterEntry():null);
         btnIdxFn = null;
-        if (rosterEntry != null) {
+        // 1 - reset to default xml layout if any
+        setXml(preferences.getFunctionPanelDefaultXML()); 
+        // retrieve function buttons order from roster entry if any
+        if (rosterEntry != null) { 
             fnBtnUpdatedFromRoster = true;
             log.debug("RosterEntry found: {}", rosterEntry.getId());
             String fnDOAtt = rosterEntry.getAttribute(FunctionTableModel.FB_ORDER_ATTR);
@@ -275,6 +290,9 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
             }    
         }
         for (int i = 0; i < functionButtons.length; i++) {
+            if (preferences.getFunctionPanelDefaultXML() == null) { // we don't have a default xml layout, hard reset each button
+                resetFnButton(functionButtons[i],i );
+            }
             // update from selected throttle setting
             functionButtons[i].setEnabled(true);
             functionButtons[i].setIdentity(i); // full reset of function
@@ -282,7 +300,9 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
             functionButtons[i].setThrottle(mThrottle);
             if (mThrottle != null) {
                 functionButtons[i].setState(mThrottle.getFunction(i)); // reset button state
-                functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
+                if (preferences.getFunctionPanelDefaultXML() == null) { // we don't have a default layout, ask the throttle 
+                    functionButtons[i].setIsLockable(!mThrottle.getFunctionMomentary(i));
+                }
             }                
             // update from roster entry if any
             if (rosterEntry != null) {
@@ -292,16 +312,15 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                 }    
                 functionButtons[i].setIdentity(fn);                
                 functionButtons[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
-                boolean needUpdate = false;
                 String imgButtonSize = rosterEntry.getAttribute("function"+fn+"_ThrottleImageButtonSize");
                 if (imgButtonSize != null) {
                     try {
                         functionButtons[i].setButtonImageSize(Integer.parseInt(imgButtonSize));
-                        needUpdate = true;
                     } catch (NumberFormatException e) {
                         log.debug("setFnButtons(): can't parse button image size attribute ");
                     }
                 }
+                functionButtons[i].setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
                 String text = rosterEntry.getFunctionLabel(fn);
                 if (text != null) {
                     functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(fn));
@@ -314,31 +333,24 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                         functionButtons[i].setSelectedIconPath(null);
                     }
                     functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(fn));
-                    needUpdate = true;
                 } else if (preferences.isUsingExThrottle()
                         && preferences.isHidingUndefinedFuncButt()) {
                     functionButtons[i].setDisplay(false);
-                    needUpdate = true;
                 } else {
                     functionButtons[i].setDisplay(true);
                     functionButtons[i].setButtonLabel( fn<3 ? Bundle.getMessage(Throttle.getFunctionString(fn)) : Throttle.getFunctionString(fn) );
-                    needUpdate = true;
                 }
                 String fontSize = rosterEntry.getAttribute("function"+fn+"_ThrottleFontSize");
                 if (fontSize != null) {
                     try {
                         functionButtons[i].setFont(new Font("Monospaced", Font.PLAIN, Integer.parseInt(fontSize)));
-                        needUpdate = true;
                     } catch (NumberFormatException e) {
                         log.debug("setFnButtons(): can't parse font size attribute ");
                     }
                 }
-                if (needUpdate) {
-                    functionButtons[i].updateLnF();
-                }
+                functionButtons[i].updateLnF();                
             }
-        }
-        
+        }        
     }
 
     private void resetFnButton(FunctionButton fb, int i) {
@@ -354,15 +366,15 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         fb.setDisplay(true);
         if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             try {
-                functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
-                functionButtons[0].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
+                fb.setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
+                fb.setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
             } catch (Exception e) {
                 log.debug("Exception loading svg icon : {}", e.getMessage());
             } finally {
-                if ((functionButtons[0].getIcon() == null) || (functionButtons[0].getSelectedIcon() == null)) {
+                if ((fb.getIcon() == null) || (fb.getSelectedIcon() == null)) {
                     log.debug("Issue loading svg icon, reverting to png");
-                    functionButtons[0].setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
-                    functionButtons[0].setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
+                    fb.setIconPath("resources/icons/functionicons/transparent_background/lights_off.png");
+                    fb.setSelectedIconPath("resources/icons/functionicons/transparent_background/lights_on.png");
                 }
             } 
         } else {
@@ -375,28 +387,6 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         if (i < 3) {
             fb.setVisible(true);
         }
-    }
-
-    /**
-     * Reset function buttons :
-     *    - rebuild function buttons
-     *    - reset their properties to default
-     *    - update according to throttle and roster (if any)
-     *
-     */
-    public void resetFnButtons() {
-        // rebuild function buttons
-        if (mThrottle == null) {
-            rebuildFnButons(DEFAULT_FUNCTION_BUTTONS);
-        } else {
-            rebuildFnButons(mThrottle.getFunctions().length);
-        }
-        // reset their properties to defaults
-        for (int i = 0; i < functionButtons.length; i++) {
-            resetFnButton(functionButtons[i],i);
-        }
-        // update according to throttle and roster (if any)
-        updateFnButtons();
     }
 
     /**
@@ -419,7 +409,8 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
             }
         }
         if (ThrottlesPreferences.prefPopertyName.compareTo(e.getPropertyName()) == 0) {
-            resetFnButtons();
+            applyFnButtonsLnF();
+            setEnabled();
         }        
     }
 
@@ -464,17 +455,21 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      * @param e The Element for this object.
      */
     public void setXml(Element e) {
+        if (e == null) {
+            return;
+        }  
         if (! fnBtnUpdatedFromRoster) {
             java.util.List<Element> buttonElements = e.getChildren("FunctionButton");
 
             if (buttonElements != null && buttonElements.size() > 0) {
                 // just in case
-                rebuildFnButons( buttonElements.size() );
+                resizeFnButons( buttonElements.size() );
                 int i = 0;
                 for (Element buttonElement : buttonElements) {
                     functionButtons[i++].setXml(buttonElement);
-                }
+                }                
             }
+            setEnabled(); // refresh state
         }
     }
 
@@ -500,7 +495,6 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         }
         mThrottle = null;
         fnBtnUpdatedFromRoster = false;
-        resetFnButtons();
         setEnabled(false);
     }
 
@@ -526,22 +520,8 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
             numFns = Math.min(numFns, re.getMaxFnNumAsInt()+1);
         }
         log.debug("notifyRosterEntryUpdated number of functions {}", numFns);
-        // Resize inner function buttons array
-        FunctionButton[] newFunctionButtons = new FunctionButton[numFns];
-        System.arraycopy(functionButtons, 0, newFunctionButtons, 0, Math.min( functionButtons.length, numFns));
-        if (numFns > functionButtons.length) {
-            for (int i=functionButtons.length;i<numFns;i++) {
-                newFunctionButtons[i] = new FunctionButton(withPopupMenuOnFnButtons);
-                add(newFunctionButtons[i]);
-                resetFnButton(newFunctionButtons[i],i);
-                // Copy mouse and keyboard controls to new components
-                for (MouseWheelListener mwl:getMouseWheelListeners()) {
-                   newFunctionButtons[i].addMouseWheelListener(mwl);
-                }
-            }
-        }
-        functionButtons = newFunctionButtons;
-        updateFnButtons();
+        resizeFnButons(numFns);
+        applyFnButtonsLnF();
     }
 
     @Override

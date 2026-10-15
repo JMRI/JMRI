@@ -286,7 +286,7 @@ public class FunctionButton extends JToggleButton {
     }
 
     /**
-     * Update Button Look and Feel !
+     * Update Button Look and Feel :
      *    Hide/show it if necessary
      *    Decide if it should show the label or an image with text as tooltip.
      *    Button UI updated according to above result.
@@ -493,6 +493,8 @@ public class FunctionButton extends JToggleButton {
                 } else {
                     this.setIconPath(e.getAttribute("iconPath").getValue());
                 }
+            } else {
+                this.setIconPath(null);
             }
             if ((e.getAttribute("selectedIconPath") != null) && (e.getAttribute("selectedIconPath").getValue().length() > 0)) {
                 if (checkFile(FileUtil.getUserResourcePath() + e.getAttribute("selectedIconPath").getValue())) {
@@ -500,6 +502,8 @@ public class FunctionButton extends JToggleButton {
                 } else {
                     this.setSelectedIconPath(e.getAttribute("selectedIconPath").getValue());
                 }
+            } else {
+                this.setSelectedIconPath(null);
             }
             updateLnF();
         } catch (org.jdom2.DataConversionException ex) {

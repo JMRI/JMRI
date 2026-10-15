@@ -427,25 +427,6 @@ public class ThrottleUICore implements AddressListener  {
         return conf;
     }
 
-    private boolean isLoadingDefault = false;
-
-    public void loadDefaultThrottle() {
-        if (isLoadingDefault) { // avoid looping on this method
-            return; 
-        }
-        isLoadingDefault = true;
-        String dtf = InstanceManager.getDefault(ThrottlesPreferences.class).getDefaultThrottleFilePath();
-        if (dtf == null || dtf.isEmpty()) {
-            return;
-        }
-        log.debug("Loading default throttle file : {}", dtf);
-        if (myThrottleController!=null) {
-            myThrottleController.loadThrottleFile(dtf);
-        }
-        setLastUsedSaveFile(null);
-        isLoadingDefault = false;
-    }
-
     @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
@@ -483,8 +464,8 @@ public class ThrottleUICore implements AddressListener  {
             return;
         }
         throttle = t;
-        if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())
-                && (InstanceManager.getDefault(ThrottlesPreferences.class).isAutoLoading()) && (addressPanel != null)) {
+        ThrottlesPreferences tp = InstanceManager.getDefault(ThrottlesPreferences.class);
+        if (tp.isUsingExThrottle() && tp.isAutoLoading() && (addressPanel != null)) {
             if ((addressPanel.getRosterEntry() != null)
                     && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml") != 0))) {
                 if (myThrottleController!=null) {
@@ -497,10 +478,6 @@ public class ThrottleUICore implements AddressListener  {
                     myThrottleController.loadThrottleFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
                 }
                 setLastUsedSaveFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
-            }
-        } else {
-            if ((addressPanel != null) && (addressPanel.getRosterEntry() == null)) { // no known roster entry
-                loadDefaultThrottle();
             }
         }
         if (myThrottleController!=null) {
