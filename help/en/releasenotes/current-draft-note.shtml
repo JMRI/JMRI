@@ -62,6 +62,10 @@
                     the next frame is now received instead of both being merged
                     into one corrupt frame; and corrupt frames are dropped
                     instead of being passed on as events.</li>
+                <li>CAN connections: a frame received from the layout is no
+                    longer also delivered to whichever tool sent the last frame,
+                    so a tool window which has been closed stops receiving
+                    traffic.</li>
             </ul>
 
         <h4>C/MRI</h4>
