@@ -8,9 +8,9 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.audio.DefaultAudioSourceManager;
-import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.time.TimeProviderManager;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -59,6 +59,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == ClockControl.class) {
             return new DefaultClockControl();
+        }
+
+        if (type == TimeProviderManager.class) {
+            return new ProxyTimeProviderManager();
         }
 
         if (type == ConditionalManager.class) {
@@ -134,7 +138,8 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         }
 
         if (type == Timebase.class) {
-            Timebase timebase = new SimpleTimebase(memo);
+            Timebase timebase = new jmri.time.implementation.DefaultTimebase(memo);
+//            Timebase timebase = new SimpleTimebase(memo);
             InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
             return timebase;
         }
@@ -166,6 +171,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 AudioManager.class,
                 AudioSourceManager.class,
                 ClockControl.class,
+                TimeProviderManager.class,
                 ConditionalManager.class,
                 IdTagManager.class,
                 LightManager.class,
