@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.io.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -1878,34 +1880,25 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", actonYard1, 40);
         Car c6 = JUnitOperationsUtil.createAndPlaceCar("A", "6", "Boxcar", "40", actonYard1, 50);
 
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date start = cal.getTime();
+        LocalDateTime time = LocalDateTime.of(1956, 7, 2, 8, 0);
+        c1.setLastDate(time); // 4 hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -4);
-        c1.setLastDate(cal.getTime()); // 4 hour ago
+        time = LocalDateTime.of(1956, 7, 2, 10, 0);
+        c2.setLastDate(time); // 2 hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -2);
-        c2.setLastDate(cal.getTime()); // 2 hour ago
+        time = LocalDateTime.of(1956, 7, 2, 9, 0);
+        c3.setLastDate(time); // 3 hours before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -3);
-        c3.setLastDate(cal.getTime()); // 3 hours ago
-
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -2);
-        c4.setLastDate(cal.getTime()); // 2 months ago.
+        time = LocalDateTime.of(1956, 5, 2, 12, 0);
+        c4.setLastDate(time); // 2 months before
 
         // the last car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        c5.setLastDate(cal.getTime()); // 1 hour ago.
+        time = LocalDateTime.of(1956, 7, 2, 11, 0);
+        c5.setLastDate(time); // 1 hour before
 
         // the first car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-        c6.setLastDate(cal.getTime()); // one year ago.
+        time = LocalDateTime.of(1955, 7, 2, 12, 0);
+        c6.setLastDate(time); // one year before
 
         // put Acton yard track into FIFO mode
         actonYard1.setServiceOrder(Track.FIFO);
@@ -2805,9 +2798,9 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // time is to the millisecond, need to wait a bit on a fast machine
         JUnitUtil.waitFor(() -> {
-            return java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate());
+            return LocalDateTime.now().isAfter(c3.getLastMoveDate());
         }, "time after last moved");
-        Assert.assertTrue(java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate()));
+        Assert.assertTrue(LocalDateTime.now().isAfter(c3.getLastMoveDate()));
 
         // now deliver the second set of cars
         new TrainBuilder().build(train1);
@@ -2817,10 +2810,10 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // now cars c4, c5, and c6 have been delivered after c2 and c3
         // note it is possible for c3 to be delivered after c2
-        if (!c3.getLastMoveDate().after(c2.getLastMoveDate())) {
-            Assert.assertTrue("confirm date order", c4.getLastMoveDate().after(c3.getLastMoveDate()));
-            Assert.assertTrue("confirm date order", c5.getLastMoveDate().after(c3.getLastMoveDate()));
-            Assert.assertTrue("confirm date order", c6.getLastMoveDate().after(c3.getLastMoveDate()));
+        if (!c3.getLastMoveDate().isAfter(c2.getLastMoveDate())) {
+            Assert.assertTrue("confirm date order", c4.getLastMoveDate().isAfter(c3.getLastMoveDate()));
+            Assert.assertTrue("confirm date order", c5.getLastMoveDate().isAfter(c3.getLastMoveDate()));
+            Assert.assertTrue("confirm date order", c6.getLastMoveDate().isAfter(c3.getLastMoveDate()));
 
             // c2 has the lowest move count on alternate, cars c2 and c3 have the same last moved time
             // confirm car locations
@@ -2838,15 +2831,15 @@ public class TrainBuilderTest extends OperationsTestCase {
             // c4, c5 and c6 delivered after c3 alternate track in LIFO mode
             Assert.assertEquals("Car destination", null, c3.getDestinationTrack());
             // possible for c5 or c6 to be a millisecond later than c4
-            if (c6.getLastMoveDate().after(c5.getLastMoveDate())) {
+            if (c6.getLastMoveDate().isAfter(c5.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack());
-            } else if (c5.getLastMoveDate().after(c4.getLastMoveDate())) {
+            } else if (c5.getLastMoveDate().isAfter(c4.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c6.getDestinationTrack());
-            } else if (c6.getLastMoveDate().after(c4.getLastMoveDate())) {
+            } else if (c6.getLastMoveDate().isAfter(c4.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack());
@@ -11086,10 +11079,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e1.setModel("GP40");
 
         // note that a car's last moved date gets set after a train reset
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
-        cal.add(java.util.Calendar.HOUR, -2);
-        date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         Car c1 = cmanager.newRS("UP", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
@@ -11105,17 +11095,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setCaboose(true);
         c2.setLastDate(date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c3date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c3date = LocalDateTime.of(1956, 7, 2, 12, 2);
 
         Car c3 = cmanager.newRS("SP", "3");
         c3.setTypeName(carTypes[1]);
         c3.setLength("33");
         c3.setMoves(40);
         c3.setLastDate(c3date);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c4date = cal.getTime();
+        
+        // add 2 more minutes
+        LocalDateTime c4date = LocalDateTime.of(1956, 7, 2, 12, 4);
 
         Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName(carTypes[1]);
@@ -11124,8 +11114,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setFred(true);
         c4.setLastDate(c4date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 6);
 
         Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(carTypes[1]);
@@ -11134,8 +11124,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setFred(true);
         c5.setLastDate(date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c6date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c6date = LocalDateTime.of(1956, 7, 2, 12, 8);
 
         Car c6 = cmanager.newRS("SP", "6");
         c6.setTypeName(carTypes[1]);
@@ -11144,8 +11134,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c6.setFred(true);
         c6.setLastDate(c6date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c7date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c7date = LocalDateTime.of(1956, 7, 2, 12, 10);
 
         Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
@@ -11154,8 +11144,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setFred(true);
         c7.setLastDate(c7date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c8date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c8date = LocalDateTime.of(1956, 7, 2, 12, 12);
 
         Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
@@ -11163,8 +11153,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c8.setMoves(4);
         c8.setLastDate(c8date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c9date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c9date = LocalDateTime.of(1956, 7, 2, 12, 14);
 
         Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
@@ -11360,9 +11350,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.newRS("NH", "1");
         e1.setModel("GP40");
 
-        Calendar cal = java.util.Calendar.getInstance();
-        cal.add(java.util.Calendar.HOUR, -2);
-        Date c1date = cal.getTime();
+        LocalDateTime c1date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // create cars, cabooses and cars with FRED
         // c1 and c11 are regular cars on FIFO / LIFO track
@@ -11372,8 +11360,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setMoves(10);
         c1.setLastDate(c1date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c2date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c2date = LocalDateTime.of(1956, 7, 2, 12, 2);
 
         Car c2 = cmanager.newRS("UP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
@@ -11382,8 +11370,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setCaboose(true);
         c2.setLastDate(c2date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c3date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c3date = LocalDateTime.of(1956, 7, 2, 12, 4);
 
         Car c3 = cmanager.newRS("SP", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
@@ -11392,8 +11380,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setCaboose(true);
         c3.setLastDate(c3date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c4date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c4date = LocalDateTime.of(1956, 7, 2, 12, 6);
 
         Car c4 = cmanager.newRS("NH", "4");
         c4.setTypeName(Bundle.getMessage("Caboose"));
@@ -11402,8 +11390,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setCaboose(true);
         c4.setLastDate(c4date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c5date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c5date = LocalDateTime.of(1956, 7, 2, 12, 8);
 
         Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(Bundle.getMessage("Caboose"));
@@ -11412,8 +11400,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setCaboose(true);
         c5.setLastDate(c5date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c6date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c6date = LocalDateTime.of(1956, 7, 2, 12, 10);
 
         Car c6 = cmanager.newRS("SP", "6");
         c6.setTypeName(carTypes[1]);
@@ -11422,8 +11410,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c6.setFred(true);
         c6.setLastDate(c6date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c7date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c7date = LocalDateTime.of(1956, 7, 2, 12, 12);
 
         Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
@@ -11432,8 +11420,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setFred(true);
         c7.setLastDate(c7date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c8date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c8date = LocalDateTime.of(1956, 7, 2, 12, 14);
 
         Car c8 = cmanager.newRS("NH-1", "8");
         c8.setTypeName(carTypes[1]);
@@ -11442,8 +11430,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c8.setCaboose(true);
         c8.setLastDate(c8date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c9date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c9date = LocalDateTime.of(1956, 7, 2, 12, 18);
 
         Car c9 = cmanager.newRS("NH-2", "9");
         c9.setTypeName(carTypes[1]);
@@ -11452,8 +11440,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c9.setCaboose(true);
         c9.setLastDate(c9date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c10date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c10date = LocalDateTime.of(1956, 7, 2, 12, 20);
 
         Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
@@ -11462,8 +11450,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c10.setCaboose(true);
         c10.setLastDate(c10date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c11date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c11date = LocalDateTime.of(1956, 7, 2, 12, 22);
 
         Car c11 = cmanager.newRS("NH-1", "11");
         c11.setTypeName(carTypes[1]);
@@ -19482,16 +19470,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 30);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, -2);
-        date = cal.getTime();
+        // subtract 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 28);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, -2);
-        date = cal.getTime();
+        // subtract 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 26);
         c3.setLastDate(date); // First in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -19545,16 +19532,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 2);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 4);
         c3.setLastDate(date); // Last in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -19606,16 +19592,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 2);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 4);
         c3.setLastDate(date); // Last in
 
         Location yards = lmanager.newLocation("Test Yard");

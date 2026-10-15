@@ -4,6 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.CheckForNull;
 
@@ -11,6 +13,7 @@ import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -280,6 +283,57 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
+     * Warn once per running direction when a configured scale speed cap cannot
+     * be resolved from the roster speed profile, so the throttle % cap will be
+     * used instead. This happens when the loco has no speed profile, or has a
+     * one-direction profile that does not cover the direction of travel.
+     * <p>
+     * Package-private so tests can drive the warning paths directly.
+     *
+     * @param caller  runtime path attempting to apply the cap, for diagnostics
+     * @param forward true if the train is running forward
+     */
+    void warnScaleCapNotApplicable(String caller, boolean forward) {
+        if (_maxSpeedScaleKmh <= 0.0f) {
+            return;
+        }
+        RosterEntry entry = (re != null) ? re : _activeTrain.getRosterEntry();
+        RosterSpeedProfile sp = (entry != null) ? entry.getSpeedProfile() : null;
+        if (sp != null && sp.getProfileSize() > 0) {
+            boolean dirHasProfile = forward ? sp.hasForwardSpeeds() : sp.hasReverseSpeeds();
+            if (dirHasProfile) {
+                return; // the scale cap can be resolved; no fallback
+            }
+        }
+        String direction = forward ? "forward" : "reverse";
+        if (!_scaleCapFallbackWarned.add(direction)) {
+            return; // already warned for this direction
+        }
+        String trainName = _activeTrain.getTrainName();
+        if (entry == null) {
+            log.warn("Train {}: scale speed cap {} km/h cannot be applied when running {} (called from {}): no roster entry with a speed profile is associated with the train; using throttle % cap {} instead",
+                    trainName, _maxSpeedScaleKmh, direction, caller, _maxSpeed);
+            return;
+        }
+        String rosterId = entry.getId();
+        if (sp == null || sp.getProfileSize() < 1) {
+            log.warn("Train {}: scale speed cap {} km/h cannot be applied when running {} (called from {}): roster entry {} has no speed profile; using throttle % cap {} instead",
+                    trainName, _maxSpeedScaleKmh, direction, caller, rosterId, _maxSpeed);
+        } else {
+            String profileDesc;
+            if (sp.hasForwardSpeeds() && !sp.hasReverseSpeeds()) {
+                profileDesc = "has a forward-only speed profile that does not cover this direction";
+            } else if (sp.hasReverseSpeeds() && !sp.hasForwardSpeeds()) {
+                profileDesc = "has a reverse-only speed profile that does not cover this direction";
+            } else {
+                profileDesc = "has a speed profile without data for this direction";
+            }
+            log.warn("Train {}: scale speed cap {} km/h cannot be applied when running {} (called from {}): roster entry {} {}; using throttle % cap {} instead",
+                    trainName, _maxSpeedScaleKmh, direction, caller, rosterId, profileDesc, _maxSpeed);
+        }
+    }
+
+    /**
      * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse
      * @param set True if entire train is detectable
      */
@@ -415,6 +469,8 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private RosterEntry re = null;
+    // Directions already warned about an unresolvable scale speed cap, to avoid log spam.
+    private final Set<String> _scaleCapFallbackWarned = ConcurrentHashMap.newKeySet();
     boolean useSpeedProfile = false;
 
     /**
@@ -734,6 +790,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
                         re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
                         re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
+                        warnScaleCapNotApplicable("handleBlockStateChange (approach-to-minimum stop)", _autoEngineer.getIsForward());
                         re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed,
                                 _maxSpeedScaleKmh, (float) _dispatcher.getScale().getScaleRatio(),
                                 _autoEngineer.getIsForward());
@@ -743,6 +800,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     // PURE distance stop-to-zero: cancel and plan via RosterSpeedProfile (same semantics)
                     cancelStopInCurrentSection();
+                    warnScaleCapNotApplicable("handleBlockStateChange (distance stop-to-zero)", _autoEngineer.getIsForward());
                     re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
                             (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
                     re.getSpeedProfile().planStopToZeroOverDistance(getThrottle(), mm, _speedFactor);
@@ -1816,6 +1874,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         // Cancel first; then mark that we are in a distance-based stop (suppresses setSpeedBySignal correctly)
                         cancelStopInCurrentSection();
                         _stoppingUsingSpeedProfile = true; // suppress setSpeedBySignal until done
+                        warnScaleCapNotApplicable("stopInCurrentSection (approach-to-minimum stop)", _autoEngineer.getIsForward());
                         re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed,
                                 _maxSpeedScaleKmh, (float) _dispatcher.getScale().getScaleRatio(),
                                 _autoEngineer.getIsForward());
@@ -1890,6 +1949,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _stoppingUsingSpeedProfile = true;
                     cancelStopInCurrentSection();
 
+                    warnScaleCapNotApplicable("stopInCurrentSection (distance stop-to-zero)", _autoEngineer.getIsForward());
                     re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
                             (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
                     // Delegate pure distance stop-to-zero to RosterSpeedProfile
@@ -2734,6 +2794,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 // Run physics planner off the EDT
                 Thread phys = jmri.util.ThreadingUtil.newThread(() -> {
                     // Ensure min/max limits (including optional scale km/h cap) are in the profile
+                    warnScaleCapNotApplicable("setTargetSpeed (physics ramp)", forward);
                     re.getSpeedProfile().setMinMaxLimitsKmh(
                         minReliableOperatingSpeed,
                         maxSpeed,
@@ -2807,6 +2868,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 maxApplied = thrCapPct;
             } else {
                 // Fallback to the existing throttle % cap
+                AutoActiveTrain.this.warnScaleCapNotApplicable("applyMaxThrottleAndFactor (speed command)", forward);
                 maxApplied = maxSpeed;
             }
 
@@ -2850,6 +2912,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
             if (rosterEntry != null) {
                 rosterEntry.getSpeedProfile().setExtraInitialDelay(1500f);
+                warnScaleCapNotApplicable("setTargetSpeed (speed profile stop planner)", getIsForward());
                 rosterEntry.getSpeedProfile().setMinMaxLimitsKmh(minReliableOperatingSpeed, maxSpeed,
                         AutoActiveTrain.this._maxSpeedScaleKmh,
                         (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(), getIsForward());

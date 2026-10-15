@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -11,6 +9,9 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -500,85 +501,22 @@ public class EngineManagerTest extends OperationsTestCase {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date start = cal.getTime(); // save to rest time, to avoid
-        // test probelms if run near
-        // midnight.
-        java.util.Date time = cal.getTime();
-        e1.setLastDate(time); // right now
+        LocalDateTime time = LocalDateTime.of(1956, 7, 2, 12, 0);
+        e1.setLastDate(time);
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        time = cal.getTime();
-        e2.setLastDate(time); // one hour ago
+        time = LocalDateTime.of(1956, 7, 2, 11, 0);
+        e2.setLastDate(time); // one hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, 1);
-        time = cal.getTime();
-        e3.setLastDate(time); // one hour from now
+        time = LocalDateTime.of(1956, 7, 2, 13, 0);
+        e3.setLastDate(time); // one hour later
 
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -1);
-        time = cal.getTime();
-        e4.setLastDate(time); // one day ago.
+        time = LocalDateTime.of(1956, 6, 2, 12, 0);
+        e4.setLastDate(time); // one day before.
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
-        time = cal.getTime();
-        e5.setLastDate(time); // one day in the future now.
+        time = LocalDateTime.of(1956, 8, 2, 12, 0);
+        e5.setLastDate(time); // one day later.
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-        time = cal.getTime();
-        e6.setLastDate(time); // one year ago.
-
-        // now get engines by last move date.
-        List<Engine> engineList = manager.getByLastDateList();
-        Assert.assertEquals("Number of Engines by last move date", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by move date", e6, engineList.get(0));
-        Assert.assertEquals("2nd engine in list by move date", e4, engineList.get(1));
-        Assert.assertEquals("3rd engine in list by move date", e2, engineList.get(2));
-        Assert.assertEquals("4th engine in list by move date", e1, engineList.get(3));
-        Assert.assertEquals("5th engine in list by move date", e3, engineList.get(4));
-        Assert.assertEquals("6th engine in list by move date", e5, engineList.get(5));
-    }
-
-    @Test
-    public void testSortListedEnginesByLastMovedDate() {
-        resetEngineManager();
-
-        EngineManager manager = InstanceManager.getDefault(EngineManager.class);
-
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date start = cal.getTime(); // save to rest time, to avoid
-        // test probelms if run near
-        // midnight.
-        java.util.Date time = cal.getTime();
-        e1.setLastDate(time); // right now
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        time = cal.getTime();
-        e2.setLastDate(time); // one hour ago
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, 1);
-        time = cal.getTime();
-        e3.setLastDate(time); // one hour from now
-
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -1);
-        time = cal.getTime();
-        e4.setLastDate(time); // one day ago.
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
-        time = cal.getTime();
-        e5.setLastDate(time); // one day in the future now.
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-
-        time = cal.getTime();
+        time = LocalDateTime.of(1955, 7, 2, 12, 0);
         e6.setLastDate(time); // one year ago.
 
         // now get engines by last move date.
