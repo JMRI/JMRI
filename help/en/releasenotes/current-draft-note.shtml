@@ -31,6 +31,9 @@
                     timeout.</li>
                 <li>Closing the CBUS bootloader window stops all of its timers,
                     and the fast write speed choice is now saved.</li>
+                <li>The CBUS bootloader only accepts parameter replies from the
+                    module being programmed, for the parameter it asked for, and
+                    the module device ID is shown correctly.</li>
                 <li>CBUS performance on busy layouts: incoming frames are
                     dispatched to sensors, turnouts and lights with much less
                     work and no per-frame garbage, and the Event Table and
@@ -62,9 +65,6 @@
                     the next frame is now received instead of both being merged
                     into one corrupt frame; and corrupt frames are dropped
                     instead of being passed on as events.</li>
-                <li>The CBUS bootloader only accepts parameter replies from the
-                    module being programmed, for the parameter it asked for, and
-                    the module device ID is shown correctly.</li>
             </ul>
 
         <h4>C/MRI</h4>
