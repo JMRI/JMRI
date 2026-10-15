@@ -26,6 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS programming reports a busy command station or a CV
+                    error straight away, instead of waiting for the programming
+                    timeout.</li>
+                <li>Closing the CBUS bootloader window stops all of its timers,
+                    and the fast write speed choice is now saved.</li>
                 <li>CBUS performance on busy layouts: incoming frames are
                     dispatched to sensors, turnouts and lights with much less
                     work and no per-frame garbage, and the Event Table and
@@ -57,6 +62,11 @@
                     the connection fails and reconnects when the adapter is
                     plugged back in. Closing a connection no longer replays the
                     last frame received.</li>
+                <li>GridConnect connections (CANUSB, CANUSB4, CANRS and LCC
+                    GridConnect adapters): when the ';' ending a frame is lost,
+                    the next frame is now received instead of both being merged
+                    into one corrupt frame; and corrupt frames are dropped
+                    instead of being passed on as events.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -158,6 +168,8 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
+                <li>Change the default events for the STL Editor IQYZ tables from all zeros to
+                    unique zero based events.</li>
             </ul>
 
         <h4>Powerline</h4>

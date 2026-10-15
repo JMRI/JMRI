@@ -30,7 +30,24 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         this.boardManager = new Dcc4PcBoardManager(tc, this);
         // Finally, create and register a shutdown task to ensure clean exit
         this.pollShutDownTask = this::stopPolling;
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(pollShutDownTask);
+        tc.setReconnectHandler(this::interfaceReconnected);
         startPolling();
+    }
+
+    /**
+     * The interface's port has been reopened after a failure (its USB cable
+     * was unplugged and plugged back in). The interface has restarted at 8
+     * kbps but the boards may not have, so set the bus up as at startup, then
+     * bring each board back to 62.5 kbps and resynchronise it.
+     */
+    void interfaceReconnected() {
+        boardManager.rediscover();
+        for (ActiveBoard board : activeBoards.values()) {
+            if (!board.doNotPoll()) {
+                board.restartAfterReconnect();
+            }
+        }
     }
 
     Dcc4PcReporterManager reportManager;
@@ -138,11 +155,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     protected void stopPolling() {
         synchronized (this) {
             stopPolling = true;
+            notifyAll(); // don't sit out the rest of a poll wait
         }
         if (pollThread != null) {
             // we want to wait for the polling thread to finish what it is currently working on.
             try {
-                pollThread.join();
+                pollThread.join(5000);
             } catch (InterruptedException e) {
                 // Don't need to worry
             }
@@ -171,6 +189,21 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             log.debug("Reply details sm: {}", r.toHexString());
         }
 
+        if (r.getMessageType() == Dcc4PcMessage.INFO) {
+            // the check that follows a speed change
+            ActiveBoard board = activeBoards.get(r.getBoard());
+            if (board != null) {
+                board.speedCheckDone(!r.isError() && r.getNumDataElements() > 0);
+            }
+            return;
+        }
+        if (r.getMessageType() == Dcc4PcMessage.CHILDRESET) {
+            ActiveBoard board = activeBoards.get(r.getBoard());
+            if (board != null) {
+                board.resetReplied(!r.isError());
+            }
+            return;
+        }
         if (r.getNumDataElements() == 0 && r.getElement(0) == 0x00) {
             //Simple acknowledgement reply, no further action required
             return;
@@ -185,6 +218,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 awaitingReply = false;
                 this.notify();
             }
+            if (r.getMessageType() == Dcc4PcMessage.CHILDPOLL) {
+                // the reader has moved on without us, so the stream is broken
+                ActiveBoard board = activeBoards.get(r.getBoard());
+                if (board != null) {
+                    board.requestResync("Get Data failed");
+                }
+            }
         } else if (!r.isUnsolicited()) {
             synchronized (this) {
                 awaitingReply = false;
@@ -193,136 +233,22 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             if (log.isDebugEnabled()) {
                 log.debug("Get Data inputs {}", r.toHexString());
             }
-            class ProcessPacket implements Runnable {
-
-                Dcc4PcReply reply;
-
-                ProcessPacket(Dcc4PcReply r) {
-                    reply = r;
-                }
-
-                @Override
-                public void run() {
-                    ActiveBoard curBoard = activeBoards.get(r.getBoard());
-                    if (curBoard != null) {
-                        curBoard.processInputPacket(reply);
-                    } else {
-                        log.error("Board disappeared from system {}", r.getBoard());
-                    }
-                }
-            }
-            if (r.getBoard() > -1) {
-                Thread thr = new Thread(new ProcessPacket(r), "Dcc4PCSensor Process Packet for " + r.getBoard());
-                try {
-                    thr.start();
-                } catch (java.lang.IllegalThreadStateException ex) {
-                    log.error("Exception {} {}", thr.getName(), ex.getMessage());
-                }
-            } else {
+            ActiveBoard board = activeBoards.get(r.getBoard());
+            if (board == null) {
                 log.error("Do not know who this board message is for");
+                return;
             }
-
+            // the raw encoding is a stateful stream, so replies are decoded one at a time, in order
+            packetProcessor.execute(() -> board.processRawReply(r));
         }
     }
 
-    // This possibly needs to be handled better
-    void getInputState(int[] longArray, int board) {
-        String sensorPrefix = getSystemPrefix() + typeLetter() + board + ":";
-        String reporterPrefix = getSystemPrefix() + "R" + board + ":";
-        int inputNo = 1; //Maximum number of inputs is 16, but some might not be enabled, so need to handle this some how at a later date
-        for (int i = 0; i < 4; i++) {
-            Dcc4PcSensor s;
-            Dcc4PcReporter r;
-            int state = getInputState(longArray[i], inputNo);
-            s = getSensor(sensorPrefix + (inputNo));
-            if (s != null) {
-                s.setOwnState(state);
-            }
-            r = ((Dcc4PcReporter) reportManager.getReporter(reporterPrefix + (inputNo)));
-            if (r != null) {
-                r.setRailComState(state);
-            }
-            inputNo++;
-
-            state = getInputState(longArray[i], inputNo);
-            s = getSensor(sensorPrefix + (inputNo));
-            if (s != null) {
-                s.setOwnState(state);
-            }
-            r = ((Dcc4PcReporter) reportManager.getReporter(reporterPrefix + (inputNo)));
-            if (r != null) {
-                r.setRailComState(state);
-            }
-            inputNo++;
-
-            state = getInputState(longArray[i], inputNo);
-            s = getSensor(sensorPrefix + (inputNo));
-            if (s != null) {
-                s.setOwnState(state);
-            }
-            r = ((Dcc4PcReporter) reportManager.getReporter(reporterPrefix + (inputNo)));
-            if (r != null) {
-                r.setRailComState(state);
-            }
-            inputNo++;
-
-            state = getInputState(longArray[i], inputNo);
-            s = getSensor(sensorPrefix + (inputNo));
-            if (s != null) {
-                s.setOwnState(state);
-            }
-            r = ((Dcc4PcReporter) reportManager.getReporter(reporterPrefix + (inputNo)));
-            if (r != null) {
-                r.setRailComState(state);
-            }
-            inputNo++;
-        }
-    }
-
-    int getInputState(int value, int input) {
-        int lastbit = 7;
-        switch (input) {
-            case 5:
-            case 9:
-            case 13:
-            case 1:
-                lastbit = 1;
-                break;
-            case 6:
-            case 10:
-            case 14:
-            case 2:
-                lastbit = 3;
-                break;
-            case 7:
-            case 11:
-            case 15:
-            case 3:
-                lastbit = 5;
-                break;
-            case 8:
-            case 12:
-            case 16:
-            case 4:
-                lastbit = 7;
-                break;
-            default:
-                break;
-        }
-        int tempValue = value << (31 - lastbit);
-        switch (tempValue >>> (31 - lastbit + (lastbit - 1))) {
-            case 0:
-                return Sensor.INACTIVE;
-            case 1:
-                return Sensor.ACTIVE;
-            case 2:
-                return Dcc4PcSensor.ORIENTA; //Occupied RailCom Orientation A
-            case 3:
-                return Dcc4PcSensor.ORIENTB; //Occupied RailCom Orientation B
-            default:
-                return Sensor.UNKNOWN;
-        }
-    }
+    private final java.util.concurrent.ExecutorService packetProcessor =
+            java.util.concurrent.Executors.newSingleThreadExecutor(runnable -> {
+                Thread t = new Thread(runnable, "Dcc4PCSensor Process Packet");
+                t.setDaemon(true);
+                return t;
+            });
 
     public static String decodeInputState(int state) {
         String rtr;
@@ -350,54 +276,15 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     public static final int LONG_ADDRESS = 0x04;
     public static final int CONSIST_ADDRESS = 0x08;
 
-    /**
-     * Determine if the Railcom data is duplicated.
-     * If it is then this instructs the Reporter to move things about.
-     * @param value Railcom data
-     * @param seq message sequence number
-     * @param rc Reporter to request action(s) from
-     * @return value calculated locally
-     */
-    int decodeDuplicatePacket(int value, int seq, Dcc4PcReporter rc) {
-        int lastbit = 7;
-        //probably a better way of doing this..
-        while (seq >= 4) {
-            seq = seq - 4;
-        }
-
-        switch (seq) {
-            case 0:
-                lastbit = 1;
-                break;
-            case 1:
-                lastbit = 3;
-                break;
-            case 2:
-                lastbit = 5;
-                break;
-            case 3:
-                lastbit = 7;
-                break;
-            default:
-                break;
-        }
-        int tempValue = value << (31 - lastbit);
-        tempValue = (tempValue >>> (31 - lastbit + (lastbit - 1)));
-        if (tempValue != 0) {
-            rc.duplicatePacket(tempValue);
-        }
-        return tempValue;
-    }
-
     private final int shortCycleInterval = 1; // Time to wait between sending out poll messages
-    private final int pollTimeout = 600;    // in case of lost response
+    private final int pollTimeout = 3500;    // in case of lost response; longer than the Get Data timeout
     private boolean awaitingReply = false;
 
     void pollManager() {
-        for (int boardAddress : activeBoards.keySet()) {
-            Dcc4PcMessage m = Dcc4PcMessage.resetBoardData(boardAddress);
-            m.setTimeout(100);
-            tc.sendDcc4PcMessage(m, null);
+        for (ActiveBoard board : activeBoards.values()) {
+            if (!board.doNotPoll() && board.speedChecked) {
+                board.requestResync("polling started");
+            }
         }
         while (!stopPolling) {
             if (activeBoards.isEmpty()) {
@@ -408,7 +295,21 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 }
             } else {
                 for (int boardAddress : activeBoards.keySet()) {
-                    if (!activeBoards.get(boardAddress).doNotPoll()) {
+                    ActiveBoard board = activeBoards.get(boardAddress);
+                    if (!board.doNotPoll() && !board.isSynced()) {
+                        // Get Data is useless until a Reset Encoding State has been acknowledged
+                        board.checkSpeedTimeout();
+                        board.resendResetIfNeeded();
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    } else if (!board.doNotPoll()) {
+                        board.retrySpeedIfDue();
+                        if (!board.isSynced()) {
+                            continue; // a speed change has just started
+                        }
                         log.debug("Poll board {}", boardAddress);
                         Dcc4PcMessage m = Dcc4PcMessage.pollBoard(boardAddress);
                         log.debug("queueing poll request for board {}", boardAddress);
@@ -423,7 +324,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                         }
                         int delay = shortCycleInterval;
                         synchronized (this) {
-                            if (awaitingReply) {
+                            if (awaitingReply && !stopPolling) { // stopPolling() wakes us early on purpose
                                 log.warn("timeout awaiting poll response for board {}", boardAddress);
                                 delay = pollTimeout;
                             }
@@ -466,6 +367,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         String reporterPrefix = getSystemPrefix() + "R" + boardAddress + ":";
 
         int x = 1;
+        List<Integer> enabled = new ArrayList<>();
         for (int i = 0; i < r.getNumDataElements(); i++) {
 
             for (int j = 0; j < 8; j++) {
@@ -473,8 +375,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 register(s);
                 s.setInput(j + x);
                 activeBoards.get(boardAddress).addSensor(j + x, s);
-                if ((r.getElement(i) & 0x01) == 0x01) {
+                // one bit per input, the first input in bit 0
+                if (((r.getElement(i) >> j) & 0x01) == 0x01) {
                     s.setEnabled(true);
+                    enabled.add(j + x);
                 }
                 Dcc4PcReporter report = (Dcc4PcReporter) reportManager.createNewReporter(reporterPrefix + (j + x), null);
                 activeBoards.get(boardAddress).addReporter(j + x, report);
@@ -482,6 +386,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             }
             x = x + 8;
         }
+        log.info("Board {} has inputs {} enabled", boardAddress, enabled);
+        activeBoards.get(boardAddress).setEnabledInputs(enabled);
         activeBoards.get(boardAddress).setDoNotPoll(false);
         log.debug("     created {} sensors", x);
     }
@@ -489,6 +395,17 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
         log.debug("timeout received to our last message {}", m);
+        ActiveBoard board = activeBoards.get(m.getBoard());
+        if (board != null) {
+            if (m.getMessageType() == Dcc4PcMessage.INFO) {
+                board.speedCheckDone(false);
+            } else if (m.getMessageType() == Dcc4PcMessage.CHILDRESET) {
+                board.resetReplied(false);
+            } else if (m.getMessageType() == Dcc4PcMessage.CHILDPOLL) {
+                // the reply may have been lost part way, so the stream can't be trusted
+                board.requestResync("Get Data timed out");
+            }
+        }
         if (!stopPolling) {
             synchronized (this) {
                 awaitingReply = false;
@@ -564,12 +481,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         boolean doNotPoll = true;
 
         void setDoNotPoll(boolean poll) {
-            if (!poll) {
-                Dcc4PcMessage m = Dcc4PcMessage.resetBoardData(address);
-                m.setTimeout(100);
-                tc.sendDcc4PcMessage(m, null);
-            }
             doNotPoll = poll;
+            if (!poll) {
+                if (speedChecked) {
+                    requestResync("polling enabled");
+                } else {
+                    startSpeedChange();
+                }
+            }
         }
 
         boolean doNotPoll() {
@@ -619,169 +538,349 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             return inputReportersPorts.get(i);
         }
 
-        synchronized void processInputPacket(Dcc4PcReply r) {
-            if (log.isDebugEnabled()) {
-                log.debug("==== Process Packet ====");
-                log.debug("hex = {}", r.toHexString());
+        Dcc4PcRawDecoder decoder = new Dcc4PcRawDecoder(new int[0]);
+        volatile boolean synced = false;
+        volatile boolean resetPending = false;
+        private final HashMap<Integer, Integer> appliedStates = new HashMap<>(16);
+
+        void setEnabledInputs(List<Integer> enabled) {
+            int[] inputs = new int[enabled.size()];
+            for (int i = 0; i < inputs.length; i++) {
+                inputs[i] = enabled.get(i);
             }
-            int packetTypeCmd = 0x00;
-            int currentByteLocation = 0;
-            while (currentByteLocation < r.getNumDataElements()) {
-                log.debug("--- Start {} ---", currentByteLocation);
-                int oldstart = currentByteLocation;
-                if ((r.getElement(currentByteLocation) & 0x80) == 0x80) {
-                    log.debug("Error at head");
-                    packetTypeCmd = 0x03;
-                    ++currentByteLocation;
-                } else if ((r.getElement(currentByteLocation) & 0x40) == 0x40) {
-                    log.debug("Correct Type 2 packet");
-                    currentByteLocation = processPacket(r, 0x02, packetTypeCmd, currentByteLocation);
-                } else {
-                    log.debug("Correct Type 1 packet");
-                    currentByteLocation = processPacket(r, 0x01, packetTypeCmd, currentByteLocation);
-                }
-                if (log.isDebugEnabled()) {
-                    StringBuilder buf = new StringBuilder();
-                    for (int i = oldstart; i < currentByteLocation; i++) {
-                        buf.append(Integer.toHexString(r.getElement(i) & 0xff)).append(",");
-                    }
-                    log.debug("olstart - current hex {}", buf.toString());
-                    log.debug("--- finish packet {} ---", (currentByteLocation - 1));
-                }
-            }
-            log.debug("==== Finish Processing Packet ====");
+            decoder = new Dcc4PcRawDecoder(inputs);
+            blockLocos = new Dcc4PcBlockLocos(inputs);
+            shownStates = new int[inputs.length];
+            pendingStates = new int[inputs.length];
+            pendingCounts = new int[inputs.length];
+            pendingSince = new long[inputs.length];
         }
 
-        public int processPacket(Dcc4PcReply r, int packetType, int packetTypeCmd, int currentByteLocation) {
-            // int packetType;
-            int dccpacketlength;
-            if (packetType == 0x02) {
-                dccpacketlength = (r.getElement(currentByteLocation) - 0x40) + 1;
-            } else {
-                dccpacketlength = (r.getElement(currentByteLocation)) + 1;
-            }
+        Dcc4PcBlockLocos blockLocos = new Dcc4PcBlockLocos(new int[0]);
 
-            ++currentByteLocation;
+        /**
+         * A new input state is only shown once it has lasted this many packets
+         * in a row, so a one-packet glitch (seen: orientation B with garbage
+         * data on a block holding a loco without RailCom) doesn't reach the
+         * sensors, reporters or loco tracking. At about 70 packets a second
+         * this adds roughly 15 ms.
+         */
+        static final int STATE_DEBOUNCE_PACKETS = 2;
 
-            int[] dcc_Data = new int[dccpacketlength];
+        /**
+         * Going unoccupied must also last this long. A loco crossing a block
+         * gap or dirty rail drops out for a moment (seen: J5 unoccupied and
+         * back three times in half a second), and each drop would otherwise
+         * remove its RailCom tags from the block.
+         */
+        static final long UNOCCUPIED_HOLD_MS = 300;
 
-            for (int i = 0; i < dccpacketlength; i++) {
-                dcc_Data[i] = r.getElement(currentByteLocation);
-                ++currentByteLocation;
-            }
-            try {
-                decodeDCCPacket(dcc_Data);
-            } catch (Exception ex) {
-                log.error("decodeDCCPacket Exception", ex);
-            }
+        private int[] shownStates = new int[0];
+        private int[] pendingStates = new int[0];
+        private int[] pendingCounts = new int[0];
+        private long[] pendingSince = new long[0];
 
-            if (packetType == 0x02) {
-                getInputState(Arrays.copyOfRange(r.getDataAsArray(), currentByteLocation, currentByteLocation + 4), address);
-                currentByteLocation = currentByteLocation + 4;
-            }
-
-            ArrayList<Dcc4PcReporter> railCommDataForSensor = new ArrayList<>();
-            for (int i = 1; i < getNumEnabledSensors() + 1; i++) {
-                if (getReporterAtIndex(i).getRailComState() >= Dcc4PcSensor.ORIENTA) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Adding reporter for input {}", getReporterAtIndex(i).getSystemName());
+        /** @return the debounced states for this packet, in the decoder's input order */
+        private int[] debounce(int[] raw, long now) {
+            for (int i = 0; i < raw.length; i++) {
+                if (raw[i] == shownStates[i]) {
+                    pendingCounts[i] = 0;
+                } else if (pendingCounts[i] > 0 && raw[i] == pendingStates[i]) {
+                    pendingCounts[i]++;
+                    boolean held = raw[i] != Dcc4PcRawDecoder.STATE_UNOCCUPIED
+                            || now - pendingSince[i] >= UNOCCUPIED_HOLD_MS;
+                    if (pendingCounts[i] >= STATE_DEBOUNCE_PACKETS && held) {
+                        shownStates[i] = raw[i];
+                        pendingCounts[i] = 0;
                     }
-                    railCommDataForSensor.add(getReporterAtIndex(i));
-                }
-            }
-
-            int railComDupPacket = (int) Math.ceil((railCommDataForSensor.size()) / 4.0f);
-            log.debug("We have {} Byte(s) to read on data", railComDupPacket);
-
-            log.debug("Now to handle the duplicate packet data");
-            int j = 0;
-
-            for (int i = 0; i < railComDupPacket; i++) {
-                int inputNo = 0;
-                int dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
-                if (log.isDebugEnabled()) {
-                    log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
-                }
-                if (dup == 0) {
-                    j++;
                 } else {
-                    railCommDataForSensor.remove(j);
-                }
-
-                inputNo++;
-                if (j < railCommDataForSensor.size()) {
-                    dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
-                    if (log.isDebugEnabled()) {
-                        log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
-                    }
-                    if (dup == 0) {
-                        j++;
-                    } else {
-                        railCommDataForSensor.remove(j);
-                    }
-                    inputNo++;
-                }
-                if (j < railCommDataForSensor.size()) {
-                    dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
-                    if (log.isDebugEnabled()) {
-                        log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
-                    }
-                    if (dup == 0) {
-                        j++;
-                    } else {
-                        railCommDataForSensor.remove(j);
-                    }
-
-                    inputNo++;
-                }
-                if (j < railCommDataForSensor.size()) {
-                    dup = decodeDuplicatePacket(r.getElement(currentByteLocation), inputNo, railCommDataForSensor.get(j));
-                    if (log.isDebugEnabled()) {
-                        log.debug("Input {} - {}", railCommDataForSensor.get(j).getDisplayName(), dup);
-                    }
-                    if (dup == 0) {
-                        j++;
-                    } else {
-                        railCommDataForSensor.remove(j);
-                    }
-                }
-                currentByteLocation++;
-            }
-
-            if (log.isDebugEnabled()) {
-                for (Dcc4PcReporter dcc4PcReporter : railCommDataForSensor) {
-                    log.debug("Data for sensor {}", dcc4PcReporter.getDisplayName());
+                    pendingStates[i] = raw[i];
+                    pendingCounts[i] = 1;
+                    pendingSince[i] = now;
                 }
             }
-            // re-use the variable to gather the size of each railcom input data
-            railComDupPacket = (int) Math.ceil((railCommDataForSensor.size()) / 2.0f);
-            log.debug("We have {} size byte(s) to read on data", railComDupPacket);
+            return shownStates.clone();
+        }
 
-            // This now becomes the length bytes for the rail comm information
-            j = 0;
-            for (int i = 0; i < railComDupPacket; i++) {
-                int tempValue = r.getElement(currentByteLocation) << (31 - 3);
-                tempValue = (tempValue >>> (31 - 3 + (0)));
-                railCommDataForSensor.get(j).setPacketLength(tempValue);
-                j++;
-                if (j < railCommDataForSensor.size()) {
-                    tempValue = r.getElement(currentByteLocation) << (31 - 7);
-                    tempValue = (tempValue >>> (31 - 7 + 4));
-                    railCommDataForSensor.get(j).setPacketLength(tempValue);
-                    j++;
-                }
-                currentByteLocation++;
+        boolean isSynced() {
+            return synced;
+        }
+
+        /**
+         * Stop decoding and ask the reader to start its Raw encoding stream
+         * again. Decoding resumes once the reader acknowledges the Reset
+         * Encoding State.
+         *
+         * @param reason why, for the log
+         */
+        void requestResync(String reason) {
+            log.debug("Resynchronising board {}: {}", address, reason); // routine: several a minute with busy RailCom
+            synced = false;
+            sendReset();
+        }
+
+        /** Send another Reset Encoding State unless one is already waiting for its reply. */
+        void resendResetIfNeeded() {
+            if (!synced && !resetPending && !speedPending) {
+                sendReset();
             }
-            for (int i = 0; i < railCommDataForSensor.size(); i++) {
-                log.debug("railCommDataForSensor {} {}", railCommDataForSensor.get(i).getDisplayName(), railCommDataForSensor.get(i).getPacketLength());
-                int[] arraytemp = new int[railCommDataForSensor.get(i).getPacketLength()];
-                for (j = 0; j < railCommDataForSensor.get(i).getPacketLength(); j++) {
-                    arraytemp[j] = 0xFF & r.getElement(currentByteLocation);
-                    currentByteLocation++;
-                }
-                railCommDataForSensor.get(i).setPacket(arraytemp, dcc_addr_type, addr, cvNumber, speed, packetTypeCmd);
+        }
+
+        volatile boolean speedChecked = false;
+        volatile boolean speedPending = false;
+        /** True after the board stopped answering at all, until a reset succeeds again. */
+        volatile boolean lostContact = false;
+        volatile long speedStarted = 0;
+        int failedResets = 0;
+
+        /** Give up on a speed change that never got an answer, so polling can start at 8 kbps. */
+        void checkSpeedTimeout() {
+            if (speedPending && System.currentTimeMillis() - speedStarted > 10000) {
+                log.warn("No answer to the speed change for board {}", address);
+                speedCheckDone(false);
             }
-            return currentByteLocation;
+        }
+        int busSpeed = 0;
+
+        /**
+         * Move this board to 62.5 kbps: at 8 kbps its buffer overflows between
+         * polls and every Get Data takes over half a second. The board's Set
+         * Speed comes first, then the interface's, then a Get Info to check the
+         * board still answers; polling starts once that is settled.
+         */
+        private void startSpeedChange() {
+            speedPending = true;
+            speedStarted = System.currentTimeMillis();
+            synced = false;
+            log.info("Switching board {} to 62.5 kbps", address);
+            sendWakeUp();
+            tc.sendDcc4PcMessage(Dcc4PcMessage.setBoardSpeed(address, Dcc4PcMessage.SPEED_62K5), null);
+            tc.sendDcc4PcMessage(Dcc4PcMessage.busSetSpeed(address, Dcc4PcMessage.SPEED_62K5), null);
+            Dcc4PcMessage check = Dcc4PcMessage.getInfo(address);
+            check.setTimeout(1000);
+            tc.sendDcc4PcMessage(check, Dcc4PcSensorManager.this);
+        }
+
+        /**
+         * The Get Info that follows a speed change has been answered or has
+         * failed.
+         *
+         * @param ok true if the board answered at the new speed
+         */
+        void speedCheckDone(boolean ok) {
+            if (!speedPending) {
+                return;
+            }
+            if (ok) {
+                busSpeed = Dcc4PcMessage.SPEED_62K5;
+                speedRetryDelay = FIRST_SPEED_RETRY;
+                log.info("Board {} is running at 62.5 kbps", address);
+            } else {
+                busSpeed = 0;
+                // try again later: the board may only have been without track power
+                nextSpeedRetry = System.currentTimeMillis() + speedRetryDelay;
+                log.warn("Board {} did not answer at 62.5 kbps, going back to 8 kbps; trying again in {} s",
+                        address, speedRetryDelay / 1000);
+                speedRetryDelay = Math.min(speedRetryDelay * 2, MAX_SPEED_RETRY);
+                tc.sendDcc4PcMessage(Dcc4PcMessage.busResetSpeeds(), null);
+                tc.sendDcc4PcMessage(Dcc4PcMessage.busSetSpeed(address, 0), null);
+            }
+            speedChecked = true;
+            speedPending = false;
+            requestResync("bus speed set");
+        }
+
+        /**
+         * A board that has just powered up (it runs on track power) ignores
+         * every command except Get Info until it has answered a Get Info, so
+         * send one before anything else. No listener: the reply is not the
+         * speed check.
+         */
+        private void sendWakeUp() {
+            tc.sendDcc4PcMessage(Dcc4PcMessage.getInfo(address), null);
+        }
+
+        private void sendReset() {
+            resetPending = true;
+            sendWakeUp();
+            tc.sendDcc4PcMessage(Dcc4PcMessage.selectRawEncoding(address), null);
+            Dcc4PcMessage m = Dcc4PcMessage.resetBoardData(address);
+            m.setTimeout(2000);
+            tc.sendDcc4PcMessage(m, Dcc4PcSensorManager.this);
+        }
+
+        /**
+         * The reader answered a Reset Encoding State.
+         *
+         * @param ok true if it was accepted
+         */
+        void resetReplied(boolean ok) {
+            if (!ok) {
+                failedResets++;
+                log.debug("Reset Encoding State failed for board {} ({} in a row)", address, failedResets);
+                if (failedResets >= 3 && !speedPending) {
+                    // The board is powered from the track, so a short or power cut restarts
+                    // it at 8 kbps while the interface is still on the faster speed. Wait at
+                    // 8 kbps until it answers again before trying 62.5 kbps: trying while
+                    // track power was still off failed each time and doubled the retry
+                    // delay, so after a 70 s outage JMRI stayed at 8 kbps for 5 minutes.
+                    if (!lostContact) {
+                        log.warn("Board {} not answering, waiting for it at 8 kbps", address);
+                    }
+                    lostContact = true;
+                    failedResets = 0;
+                    busSpeed = 0;
+                    tc.sendDcc4PcMessage(Dcc4PcMessage.busResetSpeeds(), null);
+                    tc.sendDcc4PcMessage(Dcc4PcMessage.busSetSpeed(address, 0), null);
+                }
+                resetPending = false;
+                return;
+            }
+            failedResets = 0;
+            if (lostContact) {
+                // it's back (track power restored): change speed again straight away
+                lostContact = false;
+                log.info("Board {} is answering again", address);
+                speedRetryDelay = FIRST_SPEED_RETRY;
+                nextSpeedRetry = System.currentTimeMillis();
+            }
+            // queued behind any Get Data replies that were already on their way, which are dropped
+            packetProcessor.execute(() -> {
+                decoder.reset();
+                resetPending = false;
+                synced = true;
+                log.debug("Board {} synchronised", address);
+            });
+        }
+
+        /** Forget the old link state and change speed again from 8 kbps, after the port was reopened. */
+        void restartAfterReconnect() {
+            log.info("Setting up board {} again after the interface reconnected", address);
+            failedResets = 0;
+            resetPending = false;
+            speedPending = false;
+            lostContact = false;
+            busSpeed = 0;
+            nextSpeedRetry = 0;
+            speedRetryDelay = FIRST_SPEED_RETRY;
+            startSpeedChange();
+        }
+
+        static final long FIRST_SPEED_RETRY = 5000;
+        static final long MAX_SPEED_RETRY = 300000;
+        long speedRetryDelay = FIRST_SPEED_RETRY;
+        volatile long nextSpeedRetry = 0;
+
+        /**
+         * Called from the poll loop: if a speed change fell back to 8 kbps
+         * (often because track power was still off), try 62.5 kbps again once
+         * the retry time has come.
+         */
+        void retrySpeedIfDue() {
+            if (synced && speedChecked && !speedPending && busSpeed == 0
+                    && nextSpeedRetry != 0 && System.currentTimeMillis() >= nextSpeedRetry) {
+                nextSpeedRetry = 0;
+                startSpeedChange();
+            }
+        }
+
+        /**
+         * Decode one Get Data reply and update the sensors and reporters.
+         * Called on the packet processor thread, in the order the replies
+         * arrived.
+         *
+         * @param r the reply
+         */
+        void processRawReply(Dcc4PcReply r) {
+            if (!synced) {
+                log.debug("Board {} not synchronised, dropping {}", address, r.toHexString());
+                return;
+            }
+            int[] data = new int[r.getNumDataElements()];
+            for (int i = 0; i < data.length; i++) {
+                data[i] = r.getElement(i) & 0xFF;
+            }
+            for (Dcc4PcRawDecoder.Packet p : decoder.decode(data)) {
+                switch (p.kind) {
+                    case OVERFLOW:
+                        log.debug("Board {} buffer overflowed, packets lost", address);
+                        break;
+                    case UNKNOWN_COMMAND:
+                        requestResync("unknown command in Raw encoding stream");
+                        return;
+                    default:
+                        applyPacket(p);
+                        break;
+                }
+            }
+        }
+
+        private void applyPacket(Dcc4PcRawDecoder.Packet p) {
+            int[] inputs = decoder.getInputs();
+            long now = System.currentTimeMillis();
+            int[] states = debounce(p.states, now);
+            for (int i = 0; i < inputs.length; i++) {
+                int state = sensorState(states[i]);
+                Integer old = appliedStates.put(inputs[i], state);
+                if (old != null && old == state) {
+                    continue;
+                }
+                Dcc4PcSensor s = getSensorAtIndex(inputs[i]);
+                if (s != null) {
+                    s.setOwnState(state);
+                }
+                Dcc4PcReporter rep = getReporterAtIndex(inputs[i]);
+                if (rep != null) {
+                    rep.setRailComState(state);
+                }
+            }
+            // which locos are in which block, from channel 2 replies and clean channel 1 addresses
+            for (Dcc4PcBlockLocos.Change c : blockLocos.apply(p, states, now)) {
+                if (!c.refresh) {
+                    log.debug("Board {}: {}", address, c); // each time a loco enters or leaves a block
+                }
+                Dcc4PcReporter rep = getReporterAtIndex(c.input);
+                if (rep == null) {
+                    continue;
+                }
+                int a = c.address & ~Dcc4PcBlockLocos.LONG;
+                if (c.refresh) {
+                    rep.locoHeard(a);
+                } else if (c.added) {
+                    rep.locoEntered(a, (c.address & Dcc4PcBlockLocos.LONG) != 0);
+                } else {
+                    rep.locoExited(a);
+                }
+            }
+            for (Dcc4PcRawDecoder.InputData d : p.railCom) {
+                if (d.data == null || d.sourceDcc == null) {
+                    continue; // a duplicate of data lost to an overflow
+                }
+                Dcc4PcReporter rep = getReporterAtIndex(d.input);
+                if (rep == null) {
+                    continue;
+                }
+                try {
+                    decodeDCCPacket(d.sourceDcc);
+                } catch (RuntimeException ex) {
+                    log.error("decodeDCCPacket Exception", ex);
+                    continue;
+                }
+                rep.setPacket(d.data, dcc_addr_type, addr, cvNumber, speed, 0);
+            }
+        }
+
+        private int sensorState(int rawState) {
+            switch (rawState) {
+                case Dcc4PcRawDecoder.STATE_UNOCCUPIED:
+                    return Sensor.INACTIVE;
+                case Dcc4PcRawDecoder.STATE_OCCUPIED:
+                    return Sensor.ACTIVE;
+                case Dcc4PcRawDecoder.STATE_ORIENTATION_A:
+                    return Dcc4PcSensor.ORIENTA;
+                default:
+                    return Dcc4PcSensor.ORIENTB;
+            }
         }
 
         int addr = 0;
@@ -795,13 +894,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             if (Arrays.equals(packet, lastDCCPacketSeen)) {
                 return;
             }
-            for (int idx = 0; idx < packet.length; ++idx) {
-                lastDCCPacketSeen = packet.clone();
-            }
-            // lastDCCPacketSeen = packet;
+            lastDCCPacketSeen = packet.clone();
             speed = 0;
             addr = 0;
+            cvNumber = 0; // only a POM packet sets it
             dcc_addr_type = NO_ADDRESS;
+            if (packet.length < 2) {
+                return; // too short to hold an address and an instruction
+            }
             if (log.isDebugEnabled()) {
 
                 StringBuilder buf = new StringBuilder();
@@ -821,25 +921,15 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             } else if ((packet[i] & 0xff) == 0xff) {
                 // log.debug("Idle Packet");
                 return;
-            } else if ((packet[i] & 0x80) == 0x80) {
-                // Accessory decoinfoder packet
-                if ((packet[i] & 0x80) == 0x80) {
-                    // i++;  don't increment as the for loop will do this
-                    // basic Accessory Decoder packet one byte to follow
-                } else {
-                    i++;
-                    // TODO extended decoder packet two bytes
-                }
+            } else if ((packet[i] & 0xC0) == 0x80) {
+                // Accessory decoder packet (10aaaaaa). Testing only the top bit also
+                // caught long loco addresses (11aaaaaa), so their POM replies and DYN
+                // data never reached the loco.
                 return;
             } else {
-                int addr_1;
                 //The way that this determins of there is a two part extended address packet isn't great./
-                if (packet.length > 0) {
-                    addr_1 = packet[i] & 0xFF;
-                    i++;
-                } else {
-                    addr_1 = 0;
-                }
+                int addr_1 = packet[i] & 0xFF; // packets shorter than 2 bytes were dropped above
+                i++;
                 if (addr_1 == 0) {
                     dcc_addr_type = NO_ADDRESS;
                 } else if ((addr_1 >= 1) && (addr_1 <= 127)) { //Short address
@@ -871,8 +961,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 if ((dcc_addr_type != NO_ADDRESS)) {
                     log.debug("Current index  {} value {}", i, packet[i] & 0xFF);
                     if ((packet[i] & 0xE0) == 0xE0) {
+                        // 1110CCVV VVVVVVVV: the instruction byte holds the CV number's top two bits
+                        int cvHigh = packet[i] & 0x03;
                         i++;
-                        cvNumber = ((packet[i] & 0xff) + 1);
+                        cvNumber = ((cvHigh << 8) | (packet[i] & 0xff)) + 1;
                         log.debug("CV Access cv:{}", cvNumber);
                         // two byte instruction when 1111
                         // three byte instuction when 1110
@@ -1086,6 +1178,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     @Override
     public void dispose() {
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(pollShutDownTask);
         stopPolling();
         super.dispose();
     }
