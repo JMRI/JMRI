@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 public class FakeTimebase {
 
 
-    public enum ClockInitialRunState { DO_NOTHING, DO_START, DO_STOP };
+    public enum ClockInitialRunState { DO_NOTHING, DO_START, DO_STOP }
 
 
     private ZonedDateTime _time;
@@ -20,9 +20,9 @@ public class FakeTimebase {
     private boolean _isRunning;
     private ClockInitialRunState _clockInitialRunState;
     private boolean _correctHardware;
-    private boolean _updateHardware;
+//    private boolean _updateHardware;
     private boolean _master;
-    private boolean _update;
+//    private boolean _update;
     private String _masterName;
     private boolean _setRateAtStart;
     private double _startRate;
@@ -30,11 +30,11 @@ public class FakeTimebase {
     private boolean _showStopButton;
     private int _startClockOption;
     private boolean _startSetTime;
-    private ZonedDateTime _startSetTimeTime;
+//    private ZonedDateTime _startSetTimeTime;
     private boolean _synchronize;
-    private boolean _synchronizeUpdate;
+//    private boolean _synchronizeUpdate;
     private boolean _12HourDisplayDisplay;
-    private boolean _12HourDisplayUpdate;
+//    private boolean _12HourDisplayUpdate;
 
 
     public ZonedDateTime getTime() {
@@ -67,7 +67,7 @@ public class FakeTimebase {
 
     public void setInternalMaster(boolean master, boolean update) {
         _master = master;
-        _update = update;
+//        _update = update;
     }
 
     public ClockInitialRunState getClockInitialRunState() {
@@ -84,7 +84,7 @@ public class FakeTimebase {
 
     public void setCorrectHardware(boolean correct, boolean update) {
         _correctHardware = correct;
-        _updateHardware = update;
+//        _updateHardware = update;
     }
 
     public String getMasterName() {
@@ -141,7 +141,7 @@ public class FakeTimebase {
 
     public void setStartSetTime(boolean startSetTime, ZonedDateTime startSetTimeTime) {
         _startSetTime = startSetTime;
-        _startSetTimeTime = startSetTimeTime;
+//        _startSetTimeTime = startSetTimeTime;
     }
 
     public boolean getSynchronize() {
@@ -150,7 +150,7 @@ public class FakeTimebase {
 
     public void setSynchronize(boolean synchronize, boolean update) {
         _synchronize = synchronize;
-        _synchronizeUpdate = update;
+//        _synchronizeUpdate = update;
     }
 
     public boolean use12HourDisplay() {
@@ -159,7 +159,7 @@ public class FakeTimebase {
 
     public void set12HourDisplay(boolean display, boolean update) {
         _12HourDisplayDisplay = display;
-        _12HourDisplayUpdate = update;
+//        _12HourDisplayUpdate = update;
     }
 
     public void initializeClock() {

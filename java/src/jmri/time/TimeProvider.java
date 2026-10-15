@@ -43,7 +43,7 @@ public interface TimeProvider extends NamedBean {
 
     /**
      * Property Change sent when the minute value changes.
-     * The values are {@link LocalDateTime}.
+     * The values are {@link ZonedDateTime}.
      */
     String PROPERTY_CHANGE_DATETIME = "datetime";
 
