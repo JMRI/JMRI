@@ -1,17 +1,19 @@
 package jmri.jmrit.operations.setup.backup;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for backing up and restoring Operations working files. Derived
@@ -416,9 +418,9 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
      * Returns the current date formatted for use as part of a Backup Set name.
      */
     private String getDate() {
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");  // NOI18N
-        return simpleDateFormat.format(date);
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy_MM_dd"); // NOI18N
+        return date.format(simpleDateFormat);
     }
 
     /**

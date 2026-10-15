@@ -1229,6 +1229,65 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
+    @Test
+    public void testNothingSentToLayoutWhileStolen() {
+        CbusThrottle t = (CbusThrottle) instance;
+        int sent = tc.outbound.size();
+
+        // session stolen, awaiting recovery
+        t.setStolen(true);
+        t.setHandle(-1);
+
+        t.setSpeedSetting(0.5f);
+        t.setIsForward(false);
+        t.setFunction(3, true);
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        t.releaseFromCommandStation();
+
+        assertEquals(sent, tc.outbound.size(), "nothing sent to layout while stolen " + tc.outbound);
+        assertEquals(0.5f, t.getSpeedSetting(), 0.001f, "local speed updated");
+        assertFalse(t.getIsForward(), "local direction updated");
+        assertTrue(t.getFunction(3), "local function updated");
+        assertEquals(SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode(), "local speed steps updated");
+
+        // session recovered with a new handle, speed 0 forwards from PLOC
+        t.setHandle(101);
+        t.setStolen(false);
+        t.throttleInit(0x80, 0, 0, 0);
+        assertEquals(0f, t.getSpeedSetting(), 0.001f, "speed from PLOC");
+        assertTrue(t.getIsForward(), "direction from PLOC");
+
+        t.setSpeedSetting(0.5f);
+        assertEquals(sent + 1, tc.outbound.size(), "speed sent after recovery");
+        assertEquals(CbusConstants.CBUS_DSPD, tc.outbound.lastElement().getElement(0), "DSPD sent");
+        assertEquals(101, tc.outbound.lastElement().getElement(1), "new session handle used");
+
+        t.setFunction(3, false);
+        assertEquals(sent + 2, tc.outbound.size(), "function sent after recovery");
+        assertEquals("[78] 60 65 01 00", tc.outbound.lastElement().toString(), "DFUN group 1 new handle");
+    }
+
+    @Test
+    public void testNothingSentToLayoutAfterDispose() {
+        CbusThrottle t = (CbusThrottle) instance;
+        t.setSpeedSetting(0.25f);
+        int sent = tc.outbound.size();
+
+        t.throttleDispose();
+        assertEquals(-1, t.getHandle(), "handle cleared on dispose");
+
+        // must not throw ( no keep-alive timer or command station ) and must not send
+        t.setSpeedSetting(0.5f);
+        t.setSpeedSetting(-1f);
+        t.setIsForward(false);
+        t.setFunction(0, true);
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
+        t.releaseFromCommandStation();
+
+        assertEquals(sent, tc.outbound.size(), "nothing sent to layout after dispose " + tc.outbound);
+        assertEquals(-1f, t.getSpeedSetting(), 0.001f, "local speed still updated");
+    }
+
     private static ArrayList<CanMessage> stripKeepAlivesFromList( ArrayList<CanMessage> list ){
         ArrayList<CanMessage> newList = new ArrayList<>(list.size());
         for ( CanMessage msg : list ) {
