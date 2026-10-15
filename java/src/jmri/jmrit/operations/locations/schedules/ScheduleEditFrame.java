@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.tools.*;
+import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -188,8 +189,13 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ScheduleOptionsAction(this));
         toolMenu.add(new ScheduleResetHitsAction(schedule));
         toolMenu.addSeparator();
+        toolMenu.add(new ExportSchedulesAction());
+        toolMenu.addSeparator();
         toolMenu.add(new SchedulesByLoadAction());
         toolMenu.add(new SchedulesAndStagingAction());
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintLocationsAction(false, _location));
+        toolMenu.add(new PrintLocationsAction(true, _location));
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 

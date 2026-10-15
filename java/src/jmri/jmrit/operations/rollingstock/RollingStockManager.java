@@ -2,6 +2,7 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base class for rolling stock managers car and engine.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2026
  * @param <T> the type of RollingStock managed by this manager
  */
 public abstract class RollingStockManager<T extends RollingStock> extends PropertyChangeSupport implements PropertyChangeListener {
@@ -684,6 +685,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         // register car before setting location so the car gets logged
         register(clone);
         clone.setLocation(rs.getLocation(), rs.getTrack(), RollingStock.FORCE);
+        clone.addPropertyChangeListeners();
         rs.setCloneOrder(cloneCreationOrder); // for reset
         return clone;
     }
@@ -696,7 +698,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @param startTime when the rolling stock was moved
      * @param clone the clone being transported by the train
      */
-    protected void finshCreateClone(RollingStock rs, Track track, Train train, Date startTime, RollingStock clone) {
+    protected void finshCreateClone(RollingStock rs, Track track, Train train, LocalDateTime startTime, RollingStock clone) {
         rs.setMoves(rs.getMoves() + 1); // bump count
         rs.setLocation(track.getLocation(), track, RollingStock.FORCE);
         rs.setLastTrain(train);

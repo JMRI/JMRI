@@ -899,6 +899,173 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         assertEquals( 1, tc.outbound.size(), "count is correct");
     }
 
+    /**
+     * ThrottleListener which keeps a reference to the Throttle it is given.
+     */
+    private class CaptureThrottleListen extends CancelRequestThrottleListen {
+
+        private DccThrottle found;
+
+        @Override
+        public void notifyThrottleFound(DccThrottle t){
+            found = t;
+            super.notifyThrottleFound(t);
+        }
+    }
+
+    /**
+     * Request a Throttle and reply with the PLOC session allocation from the command station.
+     * @param addr the loco address
+     * @param session the session handle allocated
+     * @param listen the ThrottleListener to use
+     * @return the CbusThrottle created
+     */
+    private CbusThrottle acquireThrottle(DccLocoAddress addr, int session, CaptureThrottleListen listen) {
+        int intAddr = addr.getNumber() | ( addr.isLongAddress() ? 0xC000 : 0 );
+        tm.requestThrottle(addr, listen, true);
+        CanReply r = new CanReply( new int[]{CbusConstants.CBUS_PLOC, session, intAddr / 256, intAddr & 0xff, 0, 0, 0, 0 }, 0x12 );
+        ((CbusThrottleManager)tm).reply(r);
+        JUnitUtil.waitFor(() -> listen.found != null, "throttle not created for " + addr);
+        assertTrue( listen.found instanceof CbusThrottle);
+        return (CbusThrottle) listen.found;
+    }
+
+    // A KLOC for one session must remove that Throttle from the managed list,
+    // the Throttle must never send anything further to the layout,
+    // and ESTOP / RESTP must still reach the other managed Throttles without throwing.
+    @Test
+    public void testKlocDisposesThrottleAndEstopReachesRemainingThrottles() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        DccLocoAddress addrB = new DccLocoAddress(4321, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        CaptureThrottleListen listenB = new CaptureThrottleListen();
+
+        CbusThrottle throttleA = acquireThrottle(addrA, 1, listenA);
+        CbusThrottle throttleB = acquireThrottle(addrB, 2, listenB);
+        assertEquals( 2, cbtm.getManagedThrottleCount(), "2 throttles managed");
+        assertEquals( 1, throttleA.getHandle(), "A session 1");
+        assertEquals( 2, throttleB.getHandle(), "B session 2");
+
+        java.util.List<java.beans.PropertyChangeEvent> eventsA = new java.util.ArrayList<>();
+        java.beans.PropertyChangeListener pclA = eventsA::add;
+        throttleA.addPropertyChangeListener(pclA);
+
+        // session 1 killed, as echoed back from the traffic controller as an outgoing message
+        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_KLOC, 1 }, 0x12 );
+        cbtm.message(m);
+
+        assertEquals( -1, throttleA.getHandle(), "throttle A disposed");
+        assertEquals( 1, cbtm.getManagedThrottleCount(), "throttle A removed from managed list");
+        assertNull( tm.getThrottleInfo(addrA, Throttle.SPEEDSETTING), "A no longer known to manager");
+        assertTrue( eventsA.stream().anyMatch( e -> Throttle.CONNECTED.equals(e.getPropertyName())
+            && Boolean.FALSE.equals(e.getNewValue())), "A notified of disconnect");
+        assertNotNull( tm.getThrottleInfo(addrB, Throttle.SPEEDSETTING), "B still known to manager");
+        throttleA.removePropertyChangeListener(pclA);
+
+        // a further KLOC for the same handle is harmless
+        cbtm.message(m);
+        assertEquals( 1, cbtm.getManagedThrottleCount(), "still 1 managed throttle");
+
+        // B moving, ESTOP from another CAB must stop it and not throw
+        throttleB.setSpeedSetting(0.5f);
+        assertEquals( 0.5f, throttleB.getSpeedSetting(), 0.001f);
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ESTOP }, 0x12 ) );
+        assertEquals( -1.0f, throttleB.getSpeedSetting(), 0.001f, "B stopped by incoming ESTOP");
+
+        throttleB.setSpeedSetting(0.5f);
+        cbtm.message( new CanMessage( new int[]{CbusConstants.CBUS_RESTP }, 0x12 ) );
+        assertEquals( -1.0f, throttleB.getSpeedSetting(), 0.001f, "B stopped by outgoing RESTP");
+
+        // the disposed Throttle must not send anything to the layout, nor throw
+        int sent = tc.outbound.size();
+        throttleA.setSpeedSetting(0.3f);
+        throttleA.setIsForward(false);
+        throttleA.setFunction(0, true);
+        throttleA.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        assertEquals( sent, tc.outbound.size(), "disposed throttle sends nothing to layout");
+
+        // normal release of B sends a KLOC and removes it from the managed list
+        assertTrue( tm.disposeThrottle(throttleB, listenB), "B disposed");
+        assertEquals( CbusConstants.CBUS_KLOC, tc.outbound.lastElement().getElement(0), "KLOC sent for B");
+        assertEquals( 2, tc.outbound.lastElement().getElement(1), "KLOC for session 2");
+        assertEquals( 0, cbtm.getManagedThrottleCount(), "no managed throttles after release");
+
+        // the KLOC echo for B arrives after the handle has been cleared, must not throw
+        cbtm.message( new CanMessage( new int[]{CbusConstants.CBUS_KLOC, 2 }, 0x12 ) );
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ESTOP }, 0x12 ) );
+        assertEquals( 0, cbtm.getManagedThrottleCount(), "no managed throttles");
+    }
+
+    // After an external steal of 2 sessions, a PLOC session allocation must re-bind
+    // only the stolen Throttle for that loco address, not the first stolen Throttle found.
+    @Test
+    public void testPlocRebindsOnlyStolenThrottleWithMatchingAddress() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        // silent steal so that stolen throttles await session recovery
+        InstanceManager.getDefault(ThrottlesPreferences.class).setSilentSteal(true);
+
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        DccLocoAddress addrB = new DccLocoAddress(4321, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        CaptureThrottleListen listenB = new CaptureThrottleListen();
+
+        CbusThrottle throttleA = acquireThrottle(addrA, 1, listenA);
+        CbusThrottle throttleB = acquireThrottle(addrB, 2, listenB);
+        assertEquals( 2, tc.outbound.size(), "2 RLOC sent");
+
+        // command station cancels session 1, external steal of A
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ERR, 1, 0, CbusConstants.ERR_SESSION_CANCELLED }, 0x12 ) );
+        JUnitAppender.assertWarnMessageStartingWith("External Steal / Cancel for loco 1234(L) Session 1");
+        assertTrue( throttleA.isStolen(), "A stolen");
+        assertEquals( -1, throttleA.getHandle(), "A handle cleared");
+        assertFalse( throttleB.isStolen(), "B not stolen");
+
+        // silent steal request for A goes out after a delay
+        JUnitUtil.waitFor(() -> tc.outbound.size() >= 3, "GLOC steal request sent for A");
+        assertEquals( "[78] 61 C4 D2 01", tc.outbound.lastElement().toString(), "GLOC steal A");
+
+        // command station cancels session 2, external steal of B
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ERR, 2, 0, CbusConstants.ERR_SESSION_CANCELLED }, 0x12 ) );
+        JUnitAppender.assertWarnMessageStartingWith("External Steal / Cancel for loco 4321(L) Session 2");
+        assertTrue( throttleB.isStolen(), "B stolen");
+        assertEquals( -1, throttleB.getHandle(), "B handle cleared");
+
+        JUnitUtil.waitFor(() -> tc.outbound.size() >= 4, "GLOC steal request sent for B");
+        assertEquals( "[78] 61 D0 E1 01", tc.outbound.lastElement().toString(), "GLOC steal B");
+        assertEquals( 2, cbtm.getManagedThrottleCount(), "both throttles still managed while recovering");
+
+        // command station allocates session 3 to loco B, speed 0 forwards
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 3, 0xd0, 0xe1, 0x80, 0, 0, 0 }, 0x12 ) );
+
+        assertFalse( throttleB.isStolen(), "B recovered");
+        assertEquals( 3, throttleB.getHandle(), "B re-bound to session 3");
+        assertTrue( throttleA.isStolen(), "A must not be re-bound by PLOC for B");
+        assertEquals( -1, throttleA.getHandle(), "A still awaiting recovery");
+        assertEquals( 2, cbtm.getManagedThrottleCount(), "both throttles still managed");
+
+        // an incoming speed change for session 3 must reach B only
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_DSPD, 3, 0x50 }, 0x12 ) );
+        assertEquals( 79.0f/126.0f, throttleB.getSpeedSetting(), 0.001f, "B updated from session 3");
+        assertEquals( 0.0f, throttleA.getSpeedSetting(), 0.001f, "A unchanged");
+
+        // B can send to the layout again, using the new session handle
+        int sent = tc.outbound.size();
+        throttleB.setSpeedSetting(0.5f);
+        assertEquals( sent + 1, tc.outbound.size(), "B sent speed to layout");
+        assertEquals( CbusConstants.CBUS_DSPD, tc.outbound.lastElement().getElement(0), "DSPD sent");
+        assertEquals( 3, tc.outbound.lastElement().getElement(1), "DSPD uses session 3");
+
+        // A, still stolen, must not send to the layout
+        sent = tc.outbound.size();
+        throttleA.setSpeedSetting(0.5f);
+        assertEquals( sent, tc.outbound.size(), "stolen throttle sends nothing to layout");
+
+        assertTrue( tm.disposeThrottle(throttleB, listenB), "B disposed");
+        assertTrue( tm.disposeThrottle(throttleA, listenA), "A disposed");
+        assertEquals( 0, cbtm.getManagedThrottleCount(), "no managed throttles");
+    }
+
     private CanSystemConnectionMemo memo;
     private DccThrottle throttle;
     private TrafficControllerScaffold tc;
