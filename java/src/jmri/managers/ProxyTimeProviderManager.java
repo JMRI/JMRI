@@ -5,8 +5,8 @@ import jmri.time.TimeProvider;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.time.MainTimeProviderHandler;
-import jmri.time.TimeProviderManager;
+import jmri.managers.Bundle;
+import jmri.time.*;
 import jmri.time.implementation.InternalDateTime;
 import jmri.time.implementation.SystemDateTime;
 
@@ -77,6 +77,11 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
     @Override
     public final TimeProvider getCurrentTimeProvider() {
         return getMainTimeProviderHandler().getCurrentTimeProvider();
+    }
+
+    @Override
+    public FakeTimebase getFakeTimebase() {
+        return makeInternalManager().getFakeTimebase();
     }
 
     // initialize logging

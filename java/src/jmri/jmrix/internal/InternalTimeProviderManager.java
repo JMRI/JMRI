@@ -2,6 +2,7 @@ package jmri.jmrix.internal;
 
 import jmri.time.implementation.DefaultMainTimeProviderHandler;
 import jmri.managers.AbstractTimeProviderManager;
+import jmri.time.FakeTimebase;
 import jmri.time.MainTimeProviderHandler;
 
 /**
@@ -22,6 +23,11 @@ public class InternalTimeProviderManager extends AbstractTimeProviderManager {
         return _mainClockHandler;
     }
 
+    private final FakeTimebase _fakeTimebase = new FakeTimebase();
+    @Override
+    public FakeTimebase getFakeTimebase() {
+        return _fakeTimebase;
+    }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalClockManager.class);
 

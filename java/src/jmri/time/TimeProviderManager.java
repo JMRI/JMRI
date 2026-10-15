@@ -11,6 +11,8 @@ import jmri.Manager;
  */
 public interface TimeProviderManager extends Manager<TimeProvider> {
 
+    FakeTimebase getFakeTimebase();
+
     /**
      * Get the current time provider.
      * @return the time provider

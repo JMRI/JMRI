@@ -43,10 +43,10 @@ public abstract class AbstractTimeProvider extends AbstractNamedBean implements 
         return NamedBean.UNKNOWN;
     }
 
-    protected void timeIsUpdated(LocalDateTime oldTime) {
-        LocalDateTime newTime = getTime();
-        long oldSeconds = oldTime.toEpochSecond(ZoneOffset.UTC);
-        long newSeconds = newTime.toEpochSecond(ZoneOffset.UTC);
+    protected void timeIsUpdated(ZonedDateTime oldTime) {
+        ZonedDateTime newTime = getTime();
+        long oldSeconds = oldTime.toEpochSecond();
+        long newSeconds = newTime.toEpochSecond();
         if (newSeconds != oldSeconds) {
             long oldMinutes = oldSeconds / 60;
             long newMinutes = newSeconds / 60;

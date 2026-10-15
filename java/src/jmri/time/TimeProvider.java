@@ -1,6 +1,7 @@
 package jmri.time;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import jmri.NamedBean;
 
@@ -10,6 +11,13 @@ import jmri.NamedBean;
  * @author Daniel Bergqvist (C) 2025
  */
 public interface TimeProvider extends NamedBean {
+
+    /**
+     * The format of date and time used in XML files.
+     */
+    public static final DateTimeFormatter LEGACY_XML_DATETIME_FORMAT =
+            DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy");
+//            DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss v yyyy");
 
     /**
      * Property Change sent when the minute value changes.
@@ -45,7 +53,7 @@ public interface TimeProvider extends NamedBean {
      * of date.
      * @return the time and possibly date.
      */
-    LocalDateTime getTime();
+    ZonedDateTime getTime();
 
     /**
      * Get the rate object of this time provider.

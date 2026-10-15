@@ -115,7 +115,7 @@ public class LoadAndStoreTestBase {
         return SchemaTestBase.getDirectories(new File(directory, "load"), recurse, pass);
     }
 
-    public static void checkFile(File inFile1, File inFile2) throws IOException, ParseException {
+    public static void checkFile(File inFile1, File inFile2, boolean checkExactTimebase) throws IOException, ParseException {
 
         try ( // compare files, except for certain special lines
             BufferedReader fileStream1 = new BufferedReader( new InputStreamReader(new FileInputStream(inFile1)));
@@ -197,7 +197,7 @@ public class LoadAndStoreTestBase {
                 // actual time is the same. For example, "Sun May 17 08:12:43 PDT 2020"
                 // is the same time as "Sun May 17 17:12:43 CEST 2020" but in different
                 // timezones.
-                if (line1.startsWith("  <timebase") && line2.startsWith("  <timebase")) {
+                if (line1.startsWith("  <timebase") && line2.startsWith("  <timebase") && !checkExactTimebase) {
                     SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
                     int beginning = "  <timebase ".length();
                     // Remove the beginning and the last four characters   "/ >
@@ -357,6 +357,10 @@ public class LoadAndStoreTestBase {
     }
 
     public void loadLoadStoreFileCheck(File file) throws IOException, JmriException, ParseException {
+        loadLoadStoreFileCheck(file, false);
+    }
+
+    public void loadLoadStoreFileCheck(File file, boolean checkExactTimebase) throws IOException, JmriException, ParseException {
         if (guiOnly) {
             Assumptions.assumeFalse(GraphicsEnvironment.isHeadless(), "GUI Only test");
         }
@@ -389,7 +393,7 @@ public class LoadAndStoreTestBase {
         postLoadProcessing();
 
         File outFile = storeFile(file, this.saveType);
-        checkFile(compFile, outFile);
+        checkFile(compFile, outFile, checkExactTimebase);
 
         JUnitAppender.suppressErrorMessageStartsWith("systemName is already registered: ");
 

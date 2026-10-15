@@ -19,15 +19,15 @@ public class InternalDateTime extends AbstractTimeProvider
     private static final int _100_MILLISECONDS = 100;
 
     // We cannot have _time synchronized with _lock since that could lead to deadlock.
-    // So _time is volatile instead. This works since LocalDateTime is immutable.
-    private volatile LocalDateTime _time = LocalDateTime.now();
+    // So _time is volatile instead. This works since ZonedDateTime is immutable.
+    private volatile ZonedDateTime _time = ZonedDateTime.now();
 
     private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0);
     private boolean _isRunning;
     private boolean _isLockedFromRunning;
     private final TimerTask _timerTask;
-    private LocalDateTime _lastDateTime;
-    private LocalDateTime _lastUpdatedDateTime;
+    private ZonedDateTime _lastDateTime;
+    private ZonedDateTime _lastUpdatedDateTime;
     private int _lastSec;
     private int _lastMin;
     private long _startTimeMillisec;
@@ -112,7 +112,7 @@ public class InternalDateTime extends AbstractTimeProvider
 
     /** {@inheritDoc} */
     @Override
-    public LocalDateTime getTime() {
+    public ZonedDateTime getTime() {
         return _time;
     }
 
@@ -160,7 +160,7 @@ public class InternalDateTime extends AbstractTimeProvider
     public void start() throws UnsupportedOperationException {
         synchronized(_lock) {
             if (!_isTimerTaskStarted && !_isLockedFromRunning) {
-                _time = LocalDateTime.now();
+                _time = ZonedDateTime.now();
                 resetLast();
                 _startTimeMillisec = System.currentTimeMillis();
                 TimerUtil.schedule(_timerTask, _100_MILLISECONDS, _100_MILLISECONDS);
@@ -185,17 +185,17 @@ public class InternalDateTime extends AbstractTimeProvider
     @Override
     public void setTime(LocalTime time) throws UnsupportedOperationException {
         synchronized(_lock) {
-            LocalDateTime oldTime = this._time;
-            _time = LocalDateTime.of(_time.toLocalDate(), time);
+            ZonedDateTime oldTime = this._time;
+            _time = ZonedDateTime.of(_time.toLocalDate(), time, _time.getZone());
             resetLast();
             timeIsUpdated(oldTime);
         }
     }
 
     @Override
-    public void setDateTime(LocalDateTime time) throws UnsupportedOperationException {
+    public void setDateTime(ZonedDateTime time) throws UnsupportedOperationException {
         synchronized(_lock) {
-            LocalDateTime oldTime = this._time;
+            ZonedDateTime oldTime = this._time;
             this._time = time;
             resetLast();
             timeIsUpdated(oldTime);

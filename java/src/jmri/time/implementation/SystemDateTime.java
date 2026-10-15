@@ -1,6 +1,6 @@
 package jmri.time.implementation;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.TimerTask;
 
 import jmri.time.Rate;
@@ -20,7 +20,7 @@ public class SystemDateTime extends AbstractTimeProvider implements DateProvider
     private static final int _100_MILLISECONDS = 100;
 
     private final TimerTask _timerTask;
-    private LocalDateTime _lastDateTime;
+    private ZonedDateTime _lastDateTime;
     private int _lastSec;
     private int _lastMin;
 
@@ -37,7 +37,7 @@ public class SystemDateTime extends AbstractTimeProvider implements DateProvider
         _timerTask = new TimerTask() {
             @Override
             public void run() {
-                var newDateTime = LocalDateTime.now();
+                var newDateTime = ZonedDateTime.now();
                 int sec = newDateTime.getSecond();
                 if (sec != _lastSec) {
                     int min = newDateTime.getMinute();
@@ -55,7 +55,7 @@ public class SystemDateTime extends AbstractTimeProvider implements DateProvider
     }
 
     public SystemDateTime init() {
-        _lastDateTime = LocalDateTime.now();
+        _lastDateTime = ZonedDateTime.now();
         _lastSec = _lastDateTime.getSecond();
         _lastMin = _lastDateTime.getMinute();
         TimerUtil.schedule(_timerTask, _100_MILLISECONDS, _100_MILLISECONDS);
@@ -64,8 +64,8 @@ public class SystemDateTime extends AbstractTimeProvider implements DateProvider
 
     /** {@inheritDoc} */
     @Override
-    public LocalDateTime getTime() {
-        return LocalDateTime.now();
+    public ZonedDateTime getTime() {
+        return ZonedDateTime.now();
     }
 
     /** {@inheritDoc} */

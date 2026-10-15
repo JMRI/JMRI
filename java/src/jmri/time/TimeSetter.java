@@ -1,6 +1,6 @@
 package jmri.time;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.LocalTime;
 
 /**
@@ -22,7 +22,7 @@ public interface TimeSetter {
      * @param time the time
      * @throws UnsupportedOperationException if the date and time couldn't be set
      */
-    void setDateTime(LocalDateTime time) throws UnsupportedOperationException;
+    void setDateTime(ZonedDateTime time) throws UnsupportedOperationException;
 
     /**
      * Can the date and time be set?

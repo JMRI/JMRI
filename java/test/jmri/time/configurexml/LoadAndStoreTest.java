@@ -1,6 +1,5 @@
 package jmri.time.configurexml;
 
-
 import jmri.configurexml.*;
 
 import java.io.File;
@@ -39,7 +38,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file) throws IOException, JmriException, ParseException {
-        super.loadLoadStoreFileCheck(file);
+        super.loadLoadStoreFileCheck(file, true);
     }
 
     public LoadAndStoreTest() {
@@ -49,8 +48,9 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @BeforeEach
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
-        super.setUp(tempDir);
-//        super.setUp(new File("temp"));
+//        super.setUp(tempDir);
+        super.setUp(new File("temp"));
+//        JUnitUtil.initConfigureManager();
     }
 
 }
