@@ -72,18 +72,24 @@ public class HexFile {
 
     /**
      * Close the currently open file.
+     * <p>
+     * Safe to call if the file was never opened, or has already been closed.
+     * The records already read remain available in memory.
      */
     public void close() {
         try {
-            if (read) {
+            if (buffIn != null) {
                 buffIn.close();
+            } else if (in != null) {
                 in.close();
             }
-            name = null;
         } catch (IOException e) {
             log.warn("Exception closing hex file", e);
-            name = null;
         }
+        buffIn = null;
+        in = null;
+        read = false;
+        name = null;
     }
 
 
@@ -92,12 +98,12 @@ public class HexFile {
      * @param r hex record
      */
     protected void checkRecord(HexRecord r) {
-        
+
     }
-    
+
     /**
      * Read one hex record from the file
-     * 
+     *
      * @return the hex record
      * @throws java.io.IOException on read error.
      */
@@ -109,31 +115,44 @@ public class HexFile {
             log.error("Exception reading hex record", e);
             throw new IOException(e);
         }
-        
-        checkRecord(r);
-        
+
         return r;
     }
-    
+
     /**
      * Read a hex file.
      * <p>
      * Read hex records and store TYPE_DATA records in the array.
-     * 
-     * @throws IOException on read error
+     * <p>
+     * Only data, end of file and extended linear address records are
+     * understood. Any other record type causes the file to be rejected.
+     *
+     * @throws IOException on read error, or if the file contains an
+     *                     unsupported record type, or too many records
      */
     public void read() throws IOException {
         HexRecord r;
-        
+
         lineNo = 0;
         endRecord = 0;
-        
+
         do {
+            if (lineNo >= hexRecords.length) {
+                log.error("Too many records in hex file, maximum is {}", hexRecords.length);
+                throw new IOException("Too many records in hex file, maximum is " + hexRecords.length);
+            }
             r = readOneRecord();
+            if ((r.type != HexRecord.TYPE_DATA) && (r.type != HexRecord.END) && (r.type != HexRecord.EXT_ADDR)) {
+                // Segment address, start address or unknown record types are not supported
+                log.error("Unsupported hex record type {} at line {}", r.type, lineNo);
+                throw new IOException("Unsupported hex record type " + r.type + " at line " + lineNo);
+            }
             r.setLineNo(lineNo);
             hexRecords[lineNo] = r;
             if (r.type == HexRecord.EXT_ADDR) {
-                // Extended address record so update the record address
+                // Extended address record so update the record address.
+                // Not kept in the array (lineNo is not incremented) so the
+                // next record overwrites it, only data and end records are stored.
                 address = (r.data[0]& 0xff) * 256 * 65536 + (r.data[1] & 0xff) * 65536;
 //                hexRecords[lineNo].address = address;
                 log.debug("Found extended adress record for address {}", Integer.toHexString(address));
@@ -154,6 +173,8 @@ public class HexFile {
             if (r.type == HexRecord.END) {
                 endRecord = lineNo;
             }
+            // Process the record now that its full address is known
+            checkRecord(r);
             lineNo++;
         } while (r.type != HexRecord.END);
         log.debug("Done reading hex file");
@@ -227,41 +248,52 @@ public class HexFile {
     
     /**
      * Return the next TYPE_DATA record from the file
-     * 
+     * <p>
+     * Once the records read from the file are exhausted, an END record is
+     * returned so that callers stop cleanly.
+     *
      * @return the next hex record
-     * @throws ArrayIndexOutOfBoundsException when needed
      */
-    public HexRecord getNextRecord() throws ArrayIndexOutOfBoundsException {
-        return hexRecords[readIndex++];
+    public HexRecord getNextRecord() {
+        if ((readIndex >= 0) && (readIndex <= endRecord) && (readIndex < hexRecords.length)
+                && (hexRecords[readIndex] != null)) {
+            return hexRecords[readIndex++];
+        }
+        log.warn("No more hex records to read at index {}", readIndex);
+        readIndex = endRecord + 1;
+        return new HexRecord();
     }
 
-    
+
     /**
      * Get the hex record for a given address
-     * 
+     *
      * Expected that the address will be the start address of a record but will
      * return the first record that encompasses the address and increment the
      * index to point at the next record.
+     * <p>
+     * Only the records actually read from the file are searched.
      *
      * @param addr The address
-     * @return the hex record
-     * @throws ArrayIndexOutOfBoundsException when needed
+     * @return the hex record, or empty if no data record contains the address
      */
-    public Optional<HexRecord> getRecordForAddress(int addr) throws ArrayIndexOutOfBoundsException {
-        HexRecord r;
+    public Optional<HexRecord> getRecordForAddress(int addr) {
         readIndex = 0;
-        
-        while (true) { 
-            try {
-                r = hexRecords[readIndex++];
-                if ((r.type == HexRecord.TYPE_DATA)
-                        && (addr >= r.address) && (addr < (r.address + r.len))) {
-                    return Optional.of(r);
-                }
-            } catch (ArrayIndexOutOfBoundsException ex) {
-                return Optional.empty();
+
+        for (int i = 0; (i <= endRecord) && (i < hexRecords.length); i++) {
+            HexRecord r = hexRecords[i];
+            if (r == null) {
+                break;
+            }
+            if ((r.type == HexRecord.TYPE_DATA)
+                    && (addr >= r.address) && (addr < (r.address + r.len))) {
+                readIndex = i + 1;
+                return Optional.of(r);
             }
         }
+        // Not found, leave the index pointing at the END record
+        readIndex = endRecord;
+        return Optional.empty();
     }
     
     

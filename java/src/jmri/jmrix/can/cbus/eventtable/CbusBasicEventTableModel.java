@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.eventtable;
 import java.util.ArrayList;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.jmrix.can.cbus.CbusNameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -245,14 +244,30 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
      */
     @Nonnull
     public CbusTableEvent provideEvent(int nn, int en){
-        if (getEventTableRow(nn,en)>-1){
-            return _mainArray.get(getEventTableRow(nn,en));
+        int row = getEventTableRow(nn,en);
+        if (row>-1){
+            return _mainArray.get(row);
         }
         // not existing so creating new
         CbusTableEvent newtabev = new CbusTableEvent(_memo,nn,en );
         _mainArray.add(newtabev);
-        fireTableDataChanged();
+        int newRow = _mainArray.size() - 1;
+        _rowIndex.put(eventKey(nn, en), newRow);
+        fireTableRowsInserted(newRow, newRow);
         return newtabev;
+    }
+
+    /**
+     * Cache of Node + Event to table row, so that every incoming event frame
+     * does not need a linear search of the table.
+     * <p>
+     * An entry is only used after checking that the row still holds that event,
+     * so the cache self-corrects after rows are removed or the table cleared.
+     */
+    private final java.util.Map<Integer, Integer> _rowIndex = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static int eventKey(int node, int event) {
+        return (node << 16) | (event & 0xFFFF);
     }
 
     /**
@@ -263,7 +278,22 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
      * @return int of row, otherwise -1
      */
     public int getEventTableRow( int node, int event) {
-        return _mainArray.indexOf(new CbusEvent(node,event));
+        int key = eventKey(node, event);
+        Integer cached = _rowIndex.get(key);
+        if (cached != null) {
+            int row = cached;
+            if (row < _mainArray.size() && _mainArray.get(row).matches(node, event)) {
+                return row;
+            }
+            _rowIndex.remove(key); // stale, eg. after a row removal
+        }
+        for (int row = 0; row < _mainArray.size(); row++) {
+            if (_mainArray.get(row).matches(node, event)) {
+                _rowIndex.put(key, row);
+                return row;
+            }
+        }
+        return -1;
     }
 
     /**
