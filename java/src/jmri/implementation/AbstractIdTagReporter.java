@@ -150,6 +150,10 @@ public class AbstractIdTagReporter extends AbstractReporter
         // For now, we assume the current report.
         // IdTag.getTagID() is a system-name-ized version of the loco address. I think.
         // Matcher.group(1) : loco address (I think)
+        if (!(this.getCurrentReport() instanceof IdTag)) {
+            // nothing being reported now
+            return null;
+        }
         IdTag cr = (IdTag) this.getCurrentReport();
         ReporterManager rm = InstanceManager.getDefault(jmri.ReporterManager.class);
         Pattern p = Pattern.compile("" + rm.getSystemPrefix() + rm.typeLetter() + "(\\d+)");
