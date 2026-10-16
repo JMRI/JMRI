@@ -1375,8 +1375,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param fn       function number, starting with 0
      * @param lockable true if function is continuous; false if momentary
      */
-    public void setFunctionLockable(int fn, boolean lockable) {
-        boolean old = functionEntries!=null && functionEntries.get(fn)!=null && functionEntries.get(fn).isLockable();
+    public void setFunctionLockable(int fn, boolean lockable) {        
+        boolean old = functionEntries!=null && functionEntries.get(fn)!=null ? functionEntries.get(fn).isLockable() : !lockable;
         if ((!checkAndCreateFunctionEntry(fn)) || (old == lockable)) {
             return;
         }
@@ -1404,7 +1404,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param visible  true if function button is visible; false to hide
      */
     public void setFunctionVisible(int fn, boolean visible) {
-        boolean old = functionEntries!=null && functionEntries.get(fn)!=null && functionEntries.get(fn).isVisible();
+        boolean old = functionEntries!=null && functionEntries.get(fn)!=null ? functionEntries.get(fn).isVisible() : !visible;
         if  ((!checkAndCreateFunctionEntry(fn)) || (old == visible)) {
             return;
         }        
