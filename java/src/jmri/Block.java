@@ -897,6 +897,89 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
+     * Get the paths through which a train could have entered this Block: those
+     * to an occupied neighbour along a set path. If Block directions are used,
+     * only neighbours whose direction leads into this Block are taken.
+     *
+     * @param pList    the paths of this Block
+     * @param isSet    whether each path is set
+     * @param isActive whether the Block at the end of each path is occupied
+     * @param pDir     the direction of the Block at the end of each path
+     * @param pFromDir the direction from the Block at the end of each path
+     * @return the paths a train could have entered by
+     */
+    private List<Path> possibleEntrancePaths(Path[] pList, boolean[] isSet, boolean[] isActive,
+            int[] pDir, int[] pFromDir) {
+        List<Path> entrants = new ArrayList<>();
+        List<Path> occupied = new ArrayList<>();
+        for (int i = 0; i < pList.length; i++) {
+            if (isSet[i] && isActive[i]) {
+                occupied.add(pList[i]);
+                // bitwise comparison supports combination directions such as "North, West"
+                if ((pDir[i] & pFromDir[i]) > 0) {
+                    entrants.add(pList[i]);
+                }
+            }
+        }
+        // without matching directions, for example when directions are not used, any occupied neighbour
+        return entrants.isEmpty() ? occupied : entrants;
+    }
+
+    /**
+     * Set the value of this Block when a train may have entered from more than
+     * one neighbour.
+     * <p>
+     * If only one neighbour could have entered, its value is taken. Otherwise
+     * every possible entrant is remembered, and the first of them to become
+     * unoccupied is taken to be the train that entered, see
+     * {@link #setAsEntryBlockIfPossible(Block)}. Until then, if all the
+     * entrants holding a value hold the same one, this Block takes it, since
+     * it is the only train known to be there. If none of them holds a value,
+     * this Block's value is cleared, and if they hold different values it is
+     * left as it is.
+     *
+     * @param entrants the paths a train could have entered by
+     */
+    private void takeValueFromPossibleEntrants(List<Path> entrants) {
+        if (entrants.size() == 1) {
+            takeValueFrom(entrants.get(0));
+            return;
+        }
+        Path identified = null;
+        boolean allIdentifiedAgree = true;
+        for (Path p : entrants) {
+            Object value = p.getBlock().getValue();
+            if (value == null) {
+                continue;
+            }
+            if (identified == null) {
+                identified = p;
+            } else if (!value.equals(identified.getBlock().getValue())) {
+                allIdentifiedAgree = false;
+            }
+        }
+        if (identified == null) {
+            // no train is known to be there
+            setValue(null);
+        } else if (allIdentifiedAgree) {
+            takeValueFrom(identified);
+        } else {
+            log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for"
+                + " block {} but maybe it can be determined when another block becomes free",
+                entrants.size(), getDisplayName());
+        }
+        pListOfPossibleEntrancePaths = entrants.toArray(new Path[0]);
+        cntOfPossibleEntrancePaths = pListOfPossibleEntrancePaths.length;
+    }
+
+    private void takeValueFrom(Path from) {
+        setValue(from.getBlock().getValue());
+        setDirection(from.getFromBlockDirection());
+        log.debug("Block {} gets new value '{}' from {}, direction {}",
+                getDisplayName(), getValue(), from.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
+    }
+
+    /**
      * Take the value of a neighbour Block that has just been emptied, if this
      * Block could not decide between its occupied neighbours when it became
      * occupied and that neighbour was one of them. The value is only taken
@@ -914,10 +997,14 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
             Block candidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
             if (candidateBlock == b) {
-                setValue(candidateBlock.getValue());
+                Object value = candidateBlock.getValue();
+                if (!Objects.equals(value, getValue())) {
+                    log.info("Block {} gets LATE new value from {}, direction= {}",
+                        getDisplayName(), candidateBlock.getDisplayName(),
+                        Path.decodeDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection()));
+                }
+                setValue(value);
                 setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
-                log.info("Block {} gets LATE new value from {}, direction= {}",
-                    getDisplayName(), candidateBlock.getDisplayName(), Path.decodeDirection(getDirection()));
                 resetCandidateEntrancePaths();
                 return true;
             }
@@ -1106,78 +1193,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 }
                 break;
             default:
-                // count > 1, check for one with proper direction
-                // this time, count ones with proper direction
+                // More than one occupied neighbour could hold the train that entered
                 log.debug("Block {} has {} active linked blocks, comparing directions", getDisplayName(), count);
-                next = null;
-                count = 0;
-                // true until it's found that some neighbor blocks contain different contents (trains)
-                boolean allNeighborsAgree = true;
-
-                // scan for neighbors without matching direction
-                for (int i = 0; i < currPathCnt; i++) {
-                    if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
-                        log.debug("comparing {} ({}) to {} ({})",
-                                pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
-                                getDisplayName(), Path.decodeDirection(pFromDir[i]));
-                        //use bitwise comparison to support combination directions such as "North, West"
-                        if ((pDir[i] & pFromDir[i]) > 0) {
-                            if (next != null  && next.getBlock() != null ) {
-                                Object value = next.getBlock().getValue();
-                                if ( value != null && !value.equals(pList[i].getBlock().getValue())) {
-                                    allNeighborsAgree = false;
-                                }
-                            }
-                            count++;
-                            next = pList[i];
-                        }
-                    }
-                }
-
-                // If loop above didn't find neighbors with matching direction, scan w/out direction for neighbors
-                // This is used when directions are not being used
-                if (next == null) {
-                    for (int i = 0; i < currPathCnt; i++) {
-                        if (isSet[i] && isActive[i]) {
-                            if (next != null && next.getBlock() != null ) {
-                                Object value = next.getBlock().getValue();
-                                if ( value != null && ! value.equals(pList[i].getBlock().getValue())) {
-                                    allNeighborsAgree = false;
-                                }
-                            }
-                            count++;
-                            next = pList[i];
-                        }
-                    }
-                }
-
-                if (next != null && count == 1) {
-                    // found one block with proper direction, use it
-                    setValue(next.getBlock().getValue());
-                    setDirection(next.getFromBlockDirection());
-                    log.debug("Block {} gets new value '{}' from {}, direction {}",
-                            getDisplayName(), next.getBlock().getValue(),
-                            next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
-                } else {
-                    // handle merging trains: All neighbors with same content (train ID)
-                    if (allNeighborsAgree && next != null) {
-                        setValue(next.getBlock().getValue());
-                        setDirection(next.getFromBlockDirection());
-                    } else {
-                    // don't all agree, so can't determine unique value
-                        log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for"
-                            + " block {} but maybe it can be determined when another block becomes free",
-                            count, getDisplayName());
-                        pListOfPossibleEntrancePaths = new Path[currPathCnt];
-                        cntOfPossibleEntrancePaths = 0;
-                        for (int i = 0; i < currPathCnt; i++) {
-                            if (isSet[i] && isActive[i]) {
-                                pListOfPossibleEntrancePaths[cntOfPossibleEntrancePaths] = pList[i];
-                                cntOfPossibleEntrancePaths++;
-                            }
-                        }
-                    }
-                }
+                takeValueFromPossibleEntrants(possibleEntrancePaths(pList, isSet, isActive, pDir, pFromDir));
                 break;
         }
         setState(OCCUPIED);
