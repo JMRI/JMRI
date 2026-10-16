@@ -1054,6 +1054,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      */
     void setMastAppearance() {
         log.debug("Set source Signal Mast Aspect");
+        if (disposing) {
+            // a delayed check can still run after the logic has been disposed
+            return;
+        }
         if (getSourceMast().getHeld()) {
             log.debug("Signal is at a Held state so will set to the aspect defined for Held or Danger");
 
@@ -2093,131 +2097,63 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             active = false;
             turnoutThrown = false;
             permissiveBlock = false;
-            boolean routeclear = true;
             if ((useLayoutEditor) && (autoTurnouts.isEmpty()) && (autoBlocks.isEmpty()) && (autoMasts.isEmpty())) {
                 return;
             }
 
             calculateSpeed();
 
+            // Each listener is removed before it is added, so that initialising
+            // again (e.g. after one list has been changed) does not add it twice.
             Enumeration<Turnout> keys = autoTurnouts.keys();
             while (keys.hasMoreElements()) {
                 Turnout key = keys.nextElement();
+                key.removePropertyChangeListener(propertyTurnoutListener);
                 key.addPropertyChangeListener(propertyTurnoutListener);
-
-                if (key.getKnownState() != autoTurnouts.get(key)) {
-                    if (key.getState() != autoTurnouts.get(key)) {
-                        if (isTurnoutIncluded(key)) {
-                            if (key.getState() != getTurnoutState(key)) {
-                                routeclear = false;
-                            } else if (key.getState() == Turnout.THROWN) {
-                                turnoutThrown = true;
-                            }
-                        } else {
-                            routeclear = false;
-                        }
-                    }
-                } else if (key.getState() == Turnout.THROWN) {
-                    turnoutThrown = true;
-                }
             }
 
             for (NamedBeanSetting nbh : userSetTurnouts) {
                 Turnout key = (Turnout) nbh.getBean();
+                key.removePropertyChangeListener(propertyTurnoutListener);
                 key.addPropertyChangeListener(propertyTurnoutListener, nbh.getBeanName(),
                     "Signal Mast Logic:" + source.getDisplayName() + " to " + destinationSignalMast.getDisplayName());
-                if (key.getKnownState() != nbh.getSetting()) {
-                    routeclear = false;
-                } else if (key.getState() == Turnout.THROWN) {
-                    turnoutThrown = true;
-                }
             }
 
             Enumeration<SignalMast> mastKeys = autoMasts.keys();
             while (mastKeys.hasMoreElements()) {
                 SignalMast key = mastKeys.nextElement();
                 log.debug("{} auto mast add list {}", destinationSignalMast.getDisplayName(), key.getDisplayName());
+                key.removePropertyChangeListener(propertySignalMastListener);
                 key.addPropertyChangeListener(propertySignalMastListener);
-                String aspect = key.getAspect();
-                if ( aspect != null && !aspect.equals(autoMasts.get(key))) {
-                    if (isSignalMastIncluded(key)) {
-                        if (aspect.equals(getSignalMastState(key))) {
-                            routeclear = false;
-                        }
-                    } else {
-                        routeclear = false;
-                    }
-                }
             }
 
             for (NamedBeanSetting nbh : userSetMasts) {
                 SignalMast key = (SignalMast) nbh.getBean();
+                key.removePropertyChangeListener(propertySignalMastListener);
                 key.addPropertyChangeListener(propertySignalMastListener);
-                String aspect = key.getAspect();
-                log.debug("mast '{}' key aspect '{}'", destinationSignalMast.getDisplayName(), aspect);
-                if ((aspect == null) || (!aspect.equals(nbh.getStringSetting()))) {
-                    routeclear = false;
-                }
             }
             for (NamedBeanSetting nbh : userSetSensors) {
                 Sensor sensor = (Sensor) nbh.getBean();
+                sensor.removePropertyChangeListener(propertySensorListener);
                 sensor.addPropertyChangeListener(propertySensorListener, nbh.getBeanName(),
                     "Signal Mast Logic:" + source.getDisplayName() + " to " + destinationSignalMast.getDisplayName());
-                if (sensor.getKnownState() != nbh.getSetting()) {
-                    routeclear = false;
-                }
             }
 
-            for (Map.Entry<Block, Integer> entry : this.autoBlocks.entrySet()) {
-                log.debug("{} auto block add list {}", destinationSignalMast.getDisplayName(),
-                    entry.getKey().getDisplayName());
-                entry.getKey().addPropertyChangeListener(propertyBlockListener);
-                if (entry.getKey().getState() != entry.getValue()) {
-                    if (isBlockIncluded(entry.getKey())) {
-                        if (entry.getKey().getState() != getBlockState(entry.getKey())) {
-                            if (entry.getKey().getState() == Block.OCCUPIED && entry.getKey().getPermissiveWorking()) {
-                                permissiveBlock = true;
-                            } else {
-                                routeclear = false;
-                            }
-                        }
-                    } else {
-                        if (entry.getKey().getState() == Block.OCCUPIED && entry.getKey().getPermissiveWorking()) {
-                            permissiveBlock = true;
-                        } else if (entry.getKey().getState() == Block.UNDETECTED) {
-                            log.debug("Block {} is UNDETECTED so treat as unoccupied", entry.getKey().getDisplayName());
-                        } else {
-                            routeclear = false;
-                        }
-                    }
-                }
+            for (Block key : autoBlocks.keySet()) {
+                log.debug("{} auto block add list {}", destinationSignalMast.getDisplayName(), key.getDisplayName());
+                key.removePropertyChangeListener(propertyBlockListener);
+                key.addPropertyChangeListener(propertyBlockListener);
             }
 
             for (NamedBeanSetting nbh : userSetBlocks) {
                 Block key = (Block) nbh.getBean();
+                key.removePropertyChangeListener(propertyBlockListener);
                 key.addPropertyChangeListener(propertyBlockListener);
-                if (key.getState() != getBlockState(key)) {
-                    if (key.getState() == Block.OCCUPIED && key.getPermissiveWorking()) {
-                        permissiveBlock = true;
-                    } else {
-                        routeclear = false;
-                    }
-                }
-            }
-            if ( permissiveBlock
-                /* If a block has been found to be permissive, but the source signalmast
-                 does not support a call-on/permissive aspect then the route can not be set */
-                && getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE) == null) {
-                    routeclear = false;
-            }
-            if (routeclear) {
-                active = true;
-                setSignalAppearance();
-            } else {
-                permissiveBlock = false;
-                turnoutThrown = false;
             }
             destMastInit = true;
+
+            // Use the same checks as when one of these beans changes.
+            checkStateDetails();
         }
 
         void useLayoutEditor(boolean boo) throws JmriException {
