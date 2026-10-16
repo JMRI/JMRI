@@ -1542,7 +1542,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                             if ((ro.getDestBlock() == addBlock)
                                     && (ro.getNextBlock() == this.getBlock())) {
                                 adj.removeRouteAdvertisedToNeighbour(ro);
-                                routes.remove(j);
+                                routes.remove(j).dispose();
                             }
                         }
                         RoutingPacket newUpdate = new RoutingPacket(REMOVAL, addBlock, -1, -1, -1, -1, getNextPacketID());
@@ -1658,7 +1658,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     Routes ro = routes.get(j);
                     if ((ro.getDestBlock() == block) && (ro.getNextBlock() == this.getBlock())) {
                         adj.removeRouteAdvertisedToNeighbour(ro);
-                        routes.remove(j);
+                        routes.remove(j).dispose();
                     }
                 }
 
@@ -1667,7 +1667,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         addRouteLog.debug("From {} removed throughpath {} {}",
                             getDisplayName(), throughPaths.get(j).getSourceBlock().getDisplayName(),
                             throughPaths.get(j).getDestinationBlock().getDisplayName());
-                        throughPaths.remove(j);
+                        throughPaths.remove(j).dispose();
                     }
                 }
                 RoutingPacket newUpdate = new RoutingPacket(REMOVAL, block, -1, -1, -1, -1, getNextPacketID());
@@ -1863,7 +1863,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     deleteRouteLog.debug("remove {} to {}",
                         throughPaths.get(i).getSourceBlock().getDisplayName(),
                         throughPaths.get(i).getDestinationBlock().getDisplayName());
-                    throughPaths.remove(i);
+                    throughPaths.remove(i).dispose();
                 }
             } else if (throughPaths.get(i).getDestinationBlock() == removedBlock) {
                 // only mark for removal if the destination isn't in the adjcency table
@@ -1871,7 +1871,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     deleteRouteLog.debug("remove {} to {}",
                         throughPaths.get(i).getSourceBlock().getDisplayName(),
                         throughPaths.get(i).getDestinationBlock().getDisplayName());
-                    throughPaths.remove(i);
+                    throughPaths.remove(i).dispose();
                 }
             }
         }
@@ -1904,10 +1904,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         for (int i = routes.size() - 1; i > -1; i--) {
             Routes ro = routes.get(i);
             if ((ro.getNextBlock() == srcblk) && (ro.getDestBlock() == destblk)) {
-                routesToRemove.add(new Routes(routes.get(i).getDestBlock(), routes.get(i).getNextBlock(), 0, 0, 0, 0));
+                routesToRemove.add(new Routes(routes.get(i).getDestBlock(), routes.get(i).getNextBlock()));
                 deleteRouteLog.debug("{} route to {} from block {} to be removed triggered by propertyChange",
                     msgPrefix, ro.getDestBlock().getDisplayName(), ro.getNextBlock().getDisplayName());
-                routes.remove(i);
+                routes.remove(i).dispose();
                 // We only fire off routing update the once
             }
         }
@@ -1933,7 +1933,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (!tmpBlock.contains(ro)) {
                     tmpBlock.add(ro);
                 }
-                routes.remove(j);
+                routes.remove(j).dispose();
                 // This will need to be removed fromth directly connected
             } else if (ro.getNextBlock() == removedBlock) {
                 deleteRouteLog.debug("From {} route to {} from block {} to be removed"
@@ -1944,7 +1944,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (!tmpBlock.contains(ro)) {
                     tmpBlock.add(ro);
                 }
-                routes.remove(j);
+                routes.remove(j).dispose();
                 // This will also need to be removed from the directly connected list as well.
             }
         }
@@ -1994,7 +1994,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             // Need to also remove all through paths to this neighbour
             for (int i = throughPaths.size() - 1; i > -1; i--) {
                 if (throughPaths.get(i).getDestinationBlock() == neighBlock) {
-                    throughPaths.remove(i);
+                    throughPaths.remove(i).dispose();
                     firePropertyChange(PROPERTY_THROUGH_PATH_REMOVED, null, null);
                 }
             }
@@ -2010,7 +2010,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             for (int i = throughPaths.size() - 1; i > -1; i--) {
                 if (throughPaths.get(i).getSourceBlock() == neighBlock) {
-                    throughPaths.remove(i);
+                    throughPaths.remove(i).dispose();
                     firePropertyChange(PROPERTY_THROUGH_PATH_REMOVED, null, null);
                 }
             }
@@ -2067,13 +2067,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (r.getNextBlock() == this.getBlock()) {
                     deleteRouteLog.debug("{} The destBlock {} is our neighbour",
                         msgPrefix, destBlock.getDisplayName());
-                    validroute.add(new Routes(r.getDestBlock(), r.getNextBlock(), 0, 0, 0, 0));
+                    validroute.add(new Routes(r.getDestBlock(), r.getNextBlock()));
                     stillexist = true;
                 } else {
                     // At this stage do we need to check if the valid route comes from a neighbour?
                     deleteRouteLog.debug("{} we still have a route to {} via {} in our list",
                         msgPrefix, destBlock.getDisplayName(), r.getNextBlock().getDisplayName());
-                    validroute.add(new Routes(destBlock, r.getNextBlock(), 0, 0, 0, 0));
+                    validroute.add(new Routes(destBlock, r.getNextBlock()));
                     stillexist = true;
                 }
             }
@@ -4164,10 +4164,26 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             init();
         }
 
+        /**
+         * A copy holding only the destination and next block, used in
+         * temporary lists. It does not listen to the destination block.
+         */
+        Routes(Block dstBlock, Block nxtBlock) {
+            destBlock = dstBlock;
+            nextBlock = nxtBlock;
+        }
+
         final void init() {
             validCurrentRoute = checkIsRouteOnValidThroughPath(this);
             firePropertyChange(PROPERTY_LENGTH, null, null);
             destBlock.addPropertyChangeListener(this);
+        }
+
+        /**
+         * Stop listening to the destination block once the route is removed.
+         */
+        void dispose() {
+            destBlock.removePropertyChangeListener(this);
         }
 
         @Override
@@ -4309,6 +4325,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return throughPaths.get(i).isPathActive();
     }
 
+    // We keep a track of what paths through this block are active, only so that
+    // we can easily mark which routes are also potentially valid
+    private List<ThroughPaths> activePaths;
+
     private class ThroughPaths implements PropertyChangeListener {
 
         Block sourceBlock;
@@ -4356,8 +4376,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             // If we have no turnouts in this path, then this path is always active
             if (turnouts.isEmpty()) {
                 pathActive = true;
-                setRoutesValid(sourceBlock, true);
-                setRoutesValid(destinationBlock, true);
+                updateActiveThroughPaths(this, true);
                 return;
             }
             _turnouts = new HashMap<>(turnouts.size());
@@ -4382,6 +4401,32 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                 }
             }
+
+            // The turnouts may already be set, in which case no event will tell us
+            boolean allset = !_turnouts.isEmpty();
+            for (Map.Entry<Turnout, Integer> entry : _turnouts.entrySet()) {
+                if (entry.getKey().getKnownState() != entry.getValue()) {
+                    allset = false;
+                    break;
+                }
+            }
+            if (allset != pathActive) {
+                updateActiveThroughPaths(this, allset);
+                pathActive = allset;
+            }
+        }
+
+        /**
+         * Stop listening to the turnouts once the through path is removed.
+         */
+        void dispose() {
+            _turnouts.keySet().forEach( listTurnout -> listTurnout.removePropertyChangeListener(this));
+            if (pathActive) {
+                updateActiveThroughPaths(this, false);
+                pathActive = false;
+            } else if (activePaths != null) {
+                activePaths.remove(this);
+            }
         }
 
         @Override
@@ -4399,7 +4444,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     if (_turnouts.size() > 1) {
                         for (Map.Entry<Turnout, Integer> entry : _turnouts.entrySet()) {
                             if (srcTurnout != entry.getKey()) {
-                                int state = entry.getKey().getState();
+                                int state = entry.getKey().getKnownState();
                                 if (state != entry.getValue()) {
                                     allset = false;
                                     break;
@@ -4413,10 +4458,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
 
-        // We keep a track of what is paths are active, only so that we can easily mark
-        // which routes are also potentially valid
-        private List<ThroughPaths> activePaths;
-
         private void updateActiveThroughPaths(ThroughPaths tp, boolean active) {
             updateRouteLog.debug("We have been notified that a through path has changed state");
 
@@ -4425,7 +4466,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
 
             if (active) {
-                activePaths.add(tp);
+                if (!activePaths.contains(tp)) {
+                    activePaths.add(tp);
+                }
                 setRoutesValid(tp.getSourceBlock(), active);
                 setRoutesValid(tp.getDestinationBlock(), active);
             } else {
