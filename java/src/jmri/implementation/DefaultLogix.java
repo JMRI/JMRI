@@ -157,6 +157,10 @@ public class DefaultLogix extends AbstractNamedBean
      * Set enabled status. Enabled is a bound property All conditionals are set
      * to UNKNOWN state and recalculated when the Logix is enabled, provided the
      * Logix has been previously activated.
+     * <p>
+     * Enabling a Logix that has not been activated (for example one loaded
+     * disabled) activates it, so that a later deActivateLogix() removes its
+     * listeners again.
      */
     @Override
     public void setEnabled(boolean state) {
@@ -164,10 +168,10 @@ public class DefaultLogix extends AbstractNamedBean
         boolean old = mEnabled;
         mEnabled = state;
         if (old != state) {
-            boolean active = _isActivated;
-            deActivateLogix();
-            activateLogix();
-            _isActivated = active;
+            if (_isActivated || state) {
+                deActivateLogix();
+                activateLogix();
+            }
             for (int i = _listeners.size() - 1; i >= 0; i--) {
                 _listeners.get(i).setEnabled(state);
             }

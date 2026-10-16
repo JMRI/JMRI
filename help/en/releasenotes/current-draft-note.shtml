@@ -546,7 +546,10 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>Logix: a Logix that was loaded disabled and enabled later is
+              now fully stopped when it is deleted or edited, instead of
+              carrying on setting turnouts and sensors until JMRI is
+              restarted.</li>
         </ul>
 
     <h3>LogixNG</h3>
