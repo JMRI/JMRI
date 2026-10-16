@@ -402,7 +402,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         co.addName("Owner2");
             
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("NH", "1", Bundle.getMessage("Caboose"), "40", "Owner2", "2009", null, 55);
-        c1.setColor("Red");
+        c1.setColorName("Red");
         c1.setLoadName("L");
         // make sure the ID tags exist before we
         // try to add it to a car.
@@ -415,7 +415,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
 
         Car c2 = cManager.newRS("UP", "22");
         c2.setBuilt("2004");
-        c2.setColor("Blue");
+        c2.setColorName("Blue");
         c2.setLength("50");
         c2.setLoadName("E");
         c2.setMoves(50);
@@ -428,7 +428,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
 
         Car c3 = cManager.newRS("AA", "3");
         c3.setBuilt("2006");
-        c3.setColor("White");
+        c3.setColorName("White");
         c3.setLength("30");
         c3.setLoadName("LA");
         c3.setMoves(40);
@@ -441,7 +441,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
 
         Car c4 = cManager.newRS("SP", "2");
         c4.setBuilt("1990");
-        c4.setColor("Black");
+        c4.setColorName("Black");
         c4.setLength("45");
         c4.setLoadName("EA");
         c4.setMoves(30);
@@ -454,7 +454,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
 
         Car c5 = cManager.newRS("NH", "5");
         c5.setBuilt("1956");
-        c5.setColor("Brown");
+        c5.setColorName("Brown");
         c5.setLength("25");
         c5.setLoadName("LL");
         c5.setMoves(25);

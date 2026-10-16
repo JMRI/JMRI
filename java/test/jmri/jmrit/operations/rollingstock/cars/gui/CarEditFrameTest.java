@@ -410,7 +410,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("Car create", c6);
         Assert.assertEquals("car type", Bundle.getMessage("Caboose"), c6.getTypeName());
         Assert.assertEquals("car length", "38", c6.getLength());
-        Assert.assertEquals("car color", "Black", c6.getColor());
+        Assert.assertEquals("car color", "Black", c6.getColorName());
         Assert.assertEquals("car load", "L", c6.getLoadName());
         Assert.assertEquals("car built", "1999", c6.getBuilt());
         Assert.assertEquals("car owner", "DAB", c6.getOwnerName());
@@ -1219,7 +1219,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = cManager.getByRoadAndNumber("CP", "777");
-        c1.setColor("TEST_COLOR");
+        c1.setColorName("TEST_COLOR");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -1250,7 +1250,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = cManager.getByRoadAndNumber("CP", "777");
-        c1.setColor("TEST_COLOR");
+        c1.setColorName("TEST_COLOR");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();

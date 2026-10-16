@@ -671,7 +671,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         // set properties using the existing property as the default
         rs.setRoadName(data.path(JsonOperations.ROAD).asText(rs.getRoadName()));
         rs.setNumber(data.path(JsonOperations.NUMBER).asText(rs.getNumber()));
-        rs.setColor(data.path(COLOR).asText(rs.getColor()));
+        rs.setColorName(data.path(COLOR).asText(rs.getColorName()));
         rs.setComment(data.path(JsonOperations.COMMENT).asText(rs.getComment()));
         rs.setOwnerName(data.path(JsonOperations.OWNER).asText(rs.getOwnerName()));
         rs.setBuilt(data.path(BUILT).asText(rs.getBuilt()));

@@ -876,7 +876,7 @@ public class ImportCarsTest extends OperationsTestCase {
         Assert.assertEquals("cars", 9, cm.getNumEntries());
 
         Car car = cm.getByRoadAndNumber("CP", "X10001");
-        car.setColor("ABCDEFGHIJKLM");
+        car.setColorName("ABCDEFGHIJKLM");
 
         // export cars to create file
         exportCars();

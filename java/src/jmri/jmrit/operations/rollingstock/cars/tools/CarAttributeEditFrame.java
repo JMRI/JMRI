@@ -190,7 +190,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
                 }
             }
             if (_attribute.equals(COLOR)) {
-                if (car.getColor().equals(item)) {
+                if (car.getColorName().equals(item)) {
                     number++;
                 }
             }

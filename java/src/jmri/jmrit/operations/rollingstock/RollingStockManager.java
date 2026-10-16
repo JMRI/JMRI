@@ -466,7 +466,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
             case BY_TYPE:
                 return (r1, r2) -> (r1.getTypeName().compareToIgnoreCase(r2.getTypeName()));
             case BY_COLOR:
-                return (r1, r2) -> (r1.getColor().compareToIgnoreCase(r2.getColor()));
+                return (r1, r2) -> (r1.getColorName().compareToIgnoreCase(r2.getColorName()));
             case BY_LOCATION:
                 return (r1, r2) -> (r1.getStatus() + r1.getLocationName() + r1.getTrackName())
                         .compareToIgnoreCase(r2.getStatus() + r2.getLocationName() + r2.getTrackName());
