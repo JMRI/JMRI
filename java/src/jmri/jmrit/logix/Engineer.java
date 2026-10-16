@@ -38,6 +38,8 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private boolean _stopPending = false;   // ramp slow down in progress
     private boolean _waitForClear = false;  // waits for signals/occupancy/allocation to clear
     private boolean _waitForSensor = false; // wait for sensor event
+    private boolean _sensorStateReached = false; // wait sensor went to the wanted state
+    private volatile boolean _stopRequested = false; // stopRun() called, end any sensor wait
     private boolean _runOnET = false;   // Execute commands on ET only - do not synch
     private boolean _setRunOnET = false; // Need to delay _runOnET from the block that set it
     protected DccThrottle _throttle;
@@ -857,6 +859,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (abort) {
             _abort =true;
         }
+        _stopRequested = true;
 
         synchronized (_synchLockObject) {
             _synchLockObject.notifyAll();
@@ -997,13 +1000,18 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         } else {
             throw new java.lang.IllegalArgumentException("waitForSensor type " + type + " wrong");
         }
+        synchronized (this) {
+            _sensorStateReached = false;
+        }
+        // listen before reading the state so that a change in between is not missed
+        _waitSensor.addPropertyChangeListener(this);
         int state = _waitSensor.getKnownState();
         if (state == _sensorWaitState) {
             log.info("Engineer: state of event sensor {} already at state {}",
                 _waitSensor.getDisplayName(), type.toString());
+            clearSensor();
             return;
         }
-        _waitSensor.addPropertyChangeListener(this);
         if (log.isDebugEnabled()) {
             log.debug("Listen for propertyChange of {}, wait for State= {}",
                 _waitSensor.getDisplayName(), _sensorWaitState);
@@ -1018,8 +1026,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                             _warrant.getTrainName(), _waitSensor.getDisplayName(), type.toString()));
                     }
                     _warrant.fireRunStatus( PROPERTY_SENSOR_WAIT_COMMAND, type.toString(), _waitSensor.getDisplayName());
-                    wait();
-                    if (!_abort ) {
+                    // other events also notify this thread, so wait until the sensor has reached the state
+                    while (!_sensorStateReached && !_abort && !_stopRequested) {
+                        wait();
+                    }
+                    if (!_abort && !_stopRequested) {
                         String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually'
                         if (Warrant._trace || log.isDebugEnabled()) {
                             log.info("{} : wait Sensor Change", Bundle.getMessage("waitSensorChange",
@@ -1028,7 +1039,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         _warrant.fireRunStatus( PROPERTY_SENSOR_WAIT_COMMAND, null, name);
                     }
                 } catch (InterruptedException ie) {
-                    log.error("Engineer interrupted at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
+                    if (_stopRequested) {
+                        log.debug("Engineer stopped at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
+                    } else {
+                        log.error("Engineer interrupted at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
+                    }
                     _warrant.debugInfo();
                     Thread.currentThread().interrupt();
                 } finally {
@@ -1060,6 +1075,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (( Sensor.PROPERTY_KNOWN_STATE.equals(evt.getPropertyName())
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
             synchronized (this) {
+                    _sensorStateReached = true;
                     notifyAll();  // free sensor wait
             }
         }

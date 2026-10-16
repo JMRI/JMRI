@@ -689,7 +689,12 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Warrants: a "Wait Sensor" command in a warrant script now
+                holds the train until the sensor really reaches the requested
+                state; before, the train could leave early when a signal
+                cleared, a train ahead moved on, or a speed change finished.
+                Pressing Resume no longer skips a sensor wait; Stop still ends
+                it.</li>
         </ul>
 
    <h3>Web Access</h3>
