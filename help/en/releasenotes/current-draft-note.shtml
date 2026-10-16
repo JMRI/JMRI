@@ -649,6 +649,9 @@
             <li>JMRI Desktop Application Throttles  now listen to Roster events, hence, if a roster entry is updated, the throttle will immediately reflect the changes</li>
             <li>Roster functions editor panel is now displayed as a table, the table can be reordered by dragging rows, which will change the order of the displayed functions buttons in the related JMRI throttle window (see <a href="https://github.com/JMRI/JMRI/issues/13700"> #13700 </a>).
                  Only implemented in JMRI Desktop Application Throttles for now, and no impact on keyboard shortcuts (1 or F1 is still F1, whatever the display order)</li>
+            <li>Roster functions editor panel allows to reset function button definitions to NMRA defaults (F0 light, F1 bell, F2 horn (momentary)), or NEM defaults (as per NEM 608), or decoder definition values (see <a href="https://github.com/JMRI/JMRI/issues/15523"> #15523 </a>)</li>
+            <li>Roster functions editor panel now supports drag'n drop of a roster entry (from the roster list), functions definitions from the dropped roster entry will be copied to the edited roster entry</li>
+            <li>Throttles Preferences pane allows to define the default throttle layout for new throttles (NMRA of NEM, see bellow), or custom. NMRA selected as a default. (see <a href="https://github.com/JMRI/JMRI/issues/15523"> #15523 </a>)</li>
         </ul>
 
     <h3>Timetable</h3>
