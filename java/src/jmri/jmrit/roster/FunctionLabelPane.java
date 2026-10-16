@@ -187,9 +187,14 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     /**
      * Reset all function button inputs on the panel to the one defined in the decoder definition, if any
+     * 
+     * @param decre the roster entry in which to look for a decoder definition
      */      
-    public void resetFnBtnDecDef(RosterEntry tmpre) {
-        functionTableModel.reset(tmpre.getFunctionEntries(), "", null);
+    public void resetFnBtnDecDef(RosterEntry decre) {
+        if (decre == null) {
+            return;
+        }
+        functionTableModel.reset(decre.getFunctionEntries(), "", null);
     }
 
     /**
