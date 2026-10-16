@@ -43,6 +43,12 @@
                     127 correctly, and stops listening to the JMRI clock when it
                     is disposed. CBUS consist listeners are no longer shared
                     between connections.</li>
+                <li>CBUS windows: the Node Manager releases all of its tabs when
+                    closed, NV edit windows are no longer bound to the first
+                    node they were opened for, the Console closes its log file
+                    when closed and shows when a log file could not be opened,
+                    and the SPROG 3 Plus CAN disable setting is shown instead of
+                    being greyed out.</li>
                 <li>CBUS throttles: a released throttle is removed from the
                     session list, so an emergency stop reaches every remaining
                     throttle instead of failing partway through; after a command
