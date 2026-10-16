@@ -731,6 +731,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Looking up and renaming items is faster on large layouts,
+                and the memory used by deleted items is now released.</li>
         </ul>
 
