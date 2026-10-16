@@ -162,7 +162,9 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, "ErrorInternal", type), request.id);
         }
         layoutBlock.initializeLayoutBlock();
-        layoutBlock.initializeLayoutBlockRouting();
+        // routing tables are only changed on the layout thread
+        LayoutBlock created = layoutBlock;
+        jmri.util.ThreadingUtil.runOnLayout(created::initializeLayoutBlockRouting);
         return doPost(layoutBlock, data, name, type, request);
     }
 
