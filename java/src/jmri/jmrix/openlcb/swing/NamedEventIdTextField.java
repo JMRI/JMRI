@@ -130,7 +130,7 @@ public class NamedEventIdTextField extends OvertypeTextArea {
         }
     }
 
-    String placeholder = "00.00.00.00.00.00.00.00";
+    String placeholder = "Enter numeric event ID or event name";
 
     public String getPlaceholder() {
         return placeholder;
