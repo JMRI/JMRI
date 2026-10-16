@@ -2058,7 +2058,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         break;
                     }
                 }
-                if (!state) {
+                if (state) {
                     for (NamedBeanSetting nbh : userSetBlocks) {
                         Block key = (Block) nbh.getBean();
                         LayoutBlock lb = lbm.getLayoutBlock(key);
