@@ -4,13 +4,17 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
 /**
  * JUnit tests for the Dcc4PcTrafficController class
@@ -70,6 +74,258 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         c.terminateThreads();
         p.getSystemConnectionMemo().dispose();
 
+    }
+
+    /**
+     * Traffic controller wired to the piped streams and a mock serial port,
+     * without starting the transmit and receive threads.
+     */
+    private Dcc4PcTrafficController loadCharsController(AtomicBoolean dsr) throws java.io.IOException {
+        Dcc4PcPortControllerScaffold p = new Dcc4PcPortControllerScaffold();
+        Dcc4PcTrafficController c = new Dcc4PcTrafficController() {
+            {
+                controller = p;
+            }
+        };
+        c.port = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+        Mockito.when(c.port.isDSR()).thenAnswer(inv -> dsr.get());
+        return c;
+    }
+
+    // Issue 29: waiting for a reply with nothing arriving must not use a whole CPU core.
+    @Test
+    public void testLoadCharsIdleDoesNotSpin() throws Exception {
+        AtomicBoolean dsr = new AtomicBoolean(true);
+        Dcc4PcTrafficController c = loadCharsController(dsr);
+        AtomicBoolean interrupted = new AtomicBoolean(false);
+        Thread t = new Thread(() -> {
+            try {
+                c.loadChars(new Dcc4PcReply(), istream);
+            } catch (java.io.InterruptedIOException e) {
+                interrupted.set(true);
+            } catch (java.io.IOException e) {
+                // test fails below
+            }
+        }, "loadChars idle test");
+        t.setDaemon(true);
+        t.start();
+        ThreadMXBean mx = ManagementFactory.getThreadMXBean();
+        Thread.sleep(100); // DSR high, no data
+        long cpu0 = mx.getThreadCpuTime(t.getId());
+        long wall0 = System.nanoTime();
+        Thread.sleep(400);
+        dsr.set(false); // DSR low, still no data
+        Thread.sleep(400);
+        long cpu = mx.getThreadCpuTime(t.getId()) - cpu0;
+        long wall = System.nanoTime() - wall0;
+        log.info("idle loadChars used {} ms CPU in {} ms", cpu / 1000000, wall / 1000000);
+        t.interrupt();
+        t.join(1000);
+        Assertions.assertTrue(cpu < wall / 5,
+                "idle loadChars used " + (cpu / 1000000) + " ms CPU in " + (wall / 1000000) + " ms");
+        Assertions.assertFalse(t.isAlive(), "loadChars returns when interrupted");
+        Assertions.assertTrue(interrupted.get(), "interrupt ends loadChars with InterruptedIOException");
+    }
+
+    // The end of a reply is still noticed promptly when DSR falls.
+    @Test
+    public void testLoadCharsEndsSoonAfterDsrFalls() throws Exception {
+        AtomicBoolean dsr = new AtomicBoolean(true);
+        Dcc4PcTrafficController c = loadCharsController(dsr);
+        Dcc4PcReply reply = new Dcc4PcReply();
+        tistream.write(0x00);
+        tistream.write(0x05);
+        tistream.flush();
+        AtomicBoolean done = new AtomicBoolean(false);
+        Thread t = new Thread(() -> {
+            try {
+                c.loadChars(reply, istream);
+                done.set(true);
+            } catch (java.io.IOException e) {
+                // test fails below
+            }
+        }, "loadChars DSR test");
+        t.setDaemon(true);
+        t.start();
+        JUnitUtil.waitFor(() -> reply.getNumDataElements() == 2, "both bytes read");
+        Thread.sleep(50);
+        Assertions.assertFalse(done.get(), "reply not complete while DSR is high");
+        long start = System.nanoTime();
+        dsr.set(false);
+        t.join(1000);
+        long ms = (System.nanoTime() - start) / 1000000;
+        log.info("DSR low noticed after {} ms", ms);
+        Assertions.assertTrue(done.get(), "reply complete once DSR is low");
+        Assertions.assertTrue(ms < 50, "DSR low noticed after " + ms + " ms");
+        Assertions.assertEquals(2, reply.getNumDataElements());
+    }
+
+    /** An output stream whose writes block until released, like a write stuck in a jammed USB driver. */
+    private static class BlockingOutputStream extends java.io.OutputStream {
+
+        final java.util.concurrent.CountDownLatch writing = new java.util.concurrent.CountDownLatch(1);
+        final java.util.concurrent.CountDownLatch release = new java.util.concurrent.CountDownLatch(1);
+
+        @Override
+        public void write(int b) throws java.io.IOException {
+            block();
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws java.io.IOException {
+            block();
+        }
+
+        private void block() throws java.io.IOException {
+            writing.countDown();
+            try {
+                release.await();
+            } catch (InterruptedException e) {
+                throw new java.io.InterruptedIOException();
+            }
+        }
+    }
+
+    /** Traffic controller writing to the given stream, with DSR low, without its threads. */
+    private Dcc4PcTrafficController writeController(java.io.OutputStream out) throws java.io.IOException {
+        Dcc4PcPortControllerScaffold p = new Dcc4PcPortControllerScaffold();
+        Dcc4PcTrafficController c = new Dcc4PcTrafficController() {
+            {
+                controller = p;
+                ostream = out;
+            }
+        };
+        c.port = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+        Mockito.when(c.port.isDSR()).thenReturn(false);
+        return c;
+    }
+
+    private Thread startBlockedWrite(Dcc4PcTrafficController c, BlockingOutputStream out) throws Exception {
+        Thread t = new Thread(() -> c.forwardToPort(Dcc4PcMessage.getInfo(), null), "blocked write test");
+        t.setDaemon(true);
+        t.start();
+        Assertions.assertTrue(out.writing.await(2, java.util.concurrent.TimeUnit.SECONDS), "write started");
+        return t;
+    }
+
+    // On 2026-10-12 a write stuck in the USB driver held the controller's monitor, and the
+    // GUI thread, which takes the monitor to notify listeners and queue messages, froze.
+    @Test
+    public void testBlockedWriteDoesNotHoldMonitor() throws Exception {
+        BlockingOutputStream out = new BlockingOutputStream();
+        Dcc4PcTrafficController c = writeController(out);
+        Thread writer = startBlockedWrite(c, out);
+        Thread other = new Thread(() -> {
+            synchronized (c) {
+                // what notifyMessage() and sendMessage() do
+            }
+        }, "monitor test");
+        other.setDaemon(true);
+        other.start();
+        other.join(1000);
+        Assertions.assertFalse(other.isAlive(), "monitor free while a write is blocked");
+        out.release.countDown();
+        writer.join(2000);
+        Assertions.assertFalse(writer.isAlive(), "write finished once released");
+        c.terminateThreads();
+    }
+
+    // A write that never finishes is reported, once, so the user can unplug the interface.
+    @Test
+    public void testStuckWriteIsReported() throws Exception {
+        BlockingOutputStream out = new BlockingOutputStream();
+        Dcc4PcTrafficController c = writeController(out);
+        Thread writer = startBlockedWrite(c, out);
+        JUnitUtil.waitFor(() -> jmri.util.JUnitAppender.checkForMessageStartingWith(
+                "The DCC4PC interface has stopped responding") != null,
+                "stuck write reported");
+        out.release.countDown();
+        writer.join(2000);
+        c.terminateThreads();
+    }
+
+    /** A port that can be unplugged and plugged back in. */
+    private class ReplugPortScaffold extends Dcc4PcPortControllerScaffold {
+
+        volatile boolean present = true;
+        final java.util.concurrent.atomic.AtomicInteger closes = new java.util.concurrent.atomic.AtomicInteger();
+        final java.util.concurrent.atomic.AtomicInteger opens = new java.util.concurrent.atomic.AtomicInteger();
+        final java.io.ByteArrayOutputStream reopened = new java.io.ByteArrayOutputStream();
+        final jmri.jmrix.purejavacomm.SerialPort newPort = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+
+        ReplugPortScaffold() throws java.io.IOException {
+            super();
+            setPort("COM99");
+        }
+
+        @Override
+        public void closeSerialPort() {
+            closes.incrementAndGet();
+        }
+
+        @Override
+        public boolean isPortPresent() {
+            return present;
+        }
+
+        @Override
+        public String openPort(String portName, String appName) {
+            opens.incrementAndGet();
+            return null;
+        }
+
+        @Override
+        public jmri.jmrix.purejavacomm.SerialPort getSerialPort() {
+            return newPort;
+        }
+
+        @Override
+        public DataOutputStream getOutputStream() {
+            return opens.get() == 0 ? super.getOutputStream() : new DataOutputStream(reopened);
+        }
+    }
+
+    // Issue 26: a failed write used to stop all sending until JMRI was restarted.
+    @Test
+    public void testPortReopenedAfterWriteFails() throws Exception {
+        ReplugPortScaffold p = new ReplugPortScaffold();
+        java.io.OutputStream failing = new java.io.OutputStream() {
+            @Override
+            public void write(int b) throws java.io.IOException {
+                throw new java.io.IOException("device not functioning");
+            }
+        };
+        Dcc4PcTrafficController c = new Dcc4PcTrafficController() {
+            {
+                controller = p;
+                ostream = failing;
+            }
+        };
+        c.port = Mockito.mock(jmri.jmrix.purejavacomm.SerialPort.class);
+        c.recoveryPollMillis = 10;
+        java.util.concurrent.CountDownLatch reconnected = new java.util.concurrent.CountDownLatch(1);
+        c.setReconnectHandler(reconnected::countDown);
+        p.present = false; // unplugged
+
+        c.forwardToPort(Dcc4PcMessage.getInfo(), null);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("sendMessage: Exception");
+        Assertions.assertNotNull(jmri.util.JUnitAppender.checkForMessageStartingWith(
+                "The DCC4PC interface has stopped responding"), "failure reported");
+        Assertions.assertTrue(c.recovering, "recovering after the failed write");
+        JUnitUtil.waitFor(() -> p.closes.get() == 1, "failed port closed");
+
+        Thread.sleep(100);
+        Assertions.assertEquals(0, p.opens.get(), "no reopen while the port is missing");
+
+        p.present = true; // plugged back in
+        Assertions.assertTrue(reconnected.await(5, java.util.concurrent.TimeUnit.SECONDS), "reconnect handler run");
+        Assertions.assertEquals(1, p.opens.get());
+        Assertions.assertFalse(c.recovering);
+        Assertions.assertSame(p.newPort, c.port, "uses the reopened port");
+
+        c.forwardToPort(Dcc4PcMessage.getInfo(), null);
+        Assertions.assertTrue(p.reopened.size() > 0, "sends on the reopened port");
+        c.terminateThreads();
     }
 
     @Test
@@ -196,5 +452,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         JUnitUtil.tearDown();
 
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcTrafficControllerTest.class);
 
 }

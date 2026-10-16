@@ -26,6 +26,20 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS programming reports a busy command station or a CV
+                    error straight away, instead of waiting for the programming
+                    timeout.</li>
+                <li>Closing the CBUS bootloader window stops all of its timers,
+                    and the fast write speed choice is now saved.</li>
+                <li>CBUS performance on busy layouts: incoming frames are
+                    dispatched to sensors, turnouts and lights with much less
+                    work and no per-frame garbage, and the Event Table and
+                    Console do far less work for each frame.</li>
+                <li>The CBUS fast clock uses the calendar year rather than the
+                    week-based year, accepts and sends temperatures from -128 to
+                    127 correctly, and stops listening to the JMRI clock when it
+                    is disposed. CBUS consist listeners are no longer shared
+                    between connections.</li>
                 <li>CBUS throttles: a released throttle is removed from the
                     session list, so an emergency stop reaches every remaining
                     throttle instead of failing partway through; after a command
@@ -43,6 +57,15 @@
                     instead of throwing an exception. The hex file is closed
                     after reading instead of being left open and locked, and
                     short records are padded correctly for the AN247 bootloader.</li>
+                <li>GridConnect connections (CANUSB, CANUSB4, CANRS and LCC
+                    GridConnect adapters): when the ';' ending a frame is lost,
+                    the next frame is now received instead of both being merged
+                    into one corrupt frame; and corrupt frames are dropped
+                    instead of being passed on as events.</li>
+                <li>CAN connections: a frame received from the layout is no
+                    longer also delivered to whichever tool sent the last frame,
+                    so a tool window which has been closed stops receiving
+                    traffic.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -147,6 +170,8 @@
                 <li>OpenLCB/LCC Signal Masts now default to blank for 
                     their defined event IDs, instead of all-zero event IDs.
                     When the field is blank, no event will be produced.</li>
+                <li>Change the default events for the STL Editor IQYZ tables from all zeros to
+                    unique zero based events.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -559,7 +584,8 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Protect against an error that can occur while loading
+                the roster if an entry has an unexpectedly missing sound label.</li>
         </ul>
 
     <h3>Routes</h3>
