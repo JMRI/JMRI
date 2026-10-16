@@ -155,6 +155,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * @param block the block to remove.
      */
     public void deleteLayoutBlock(LayoutBlock block) {
+        layoutBlockByBlock.values().remove(block);
         deregister(block);
     }
 
@@ -177,13 +178,29 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return getBySystemName(name);
     }
 
+    // LayoutBlock found for each Block, checked on every use as either may change
+    private final java.util.Map<Block, LayoutBlock> layoutBlockByBlock = new java.util.concurrent.ConcurrentHashMap<>();
+
     @CheckReturnValue
     @CheckForNull
     public LayoutBlock getLayoutBlock(@CheckForNull Block block) {
+        if (block != null) {
+            LayoutBlock found = layoutBlockByBlock.get(block);
+            if ((found != null) && (found.getBlock() == block)
+                    && (getBySystemName(found.getSystemName()) == found)) {
+                return found;
+            }
+        }
         for (LayoutBlock lb : getNamedBeanSet()) {
             if (lb.getBlock() == block) {
+                if (block != null) {
+                    layoutBlockByBlock.put(block, lb);
+                }
                 return lb;
             }
+        }
+        if (block != null) {
+            layoutBlockByBlock.remove(block);
         }
         return null;
     }
