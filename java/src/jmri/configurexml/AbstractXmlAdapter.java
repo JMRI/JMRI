@@ -22,6 +22,27 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public static final String STR_YES = "yes";
     public static final String STR_NO = "no";
 
+    /**
+     * Return the value of a named child element, or an empty string if the
+     * child is missing.
+     * @param parent parent element
+     * @param childName child element name
+     * @return child value, or an empty string
+     */
+    protected String childValue(Element parent, String childName) {
+        Element child = parent.getChild(childName);
+        return child == null ? "" : child.getValue();
+    }
+
+    /**
+     * Return an empty string for a null value.
+     * @param value value to convert
+     * @return value, or an empty string if null
+     */
+    protected String nullToEmpty(String value) {
+        return value == null ? "" : value;
+    }
+
     /** {@inheritDoc} */
     @Override
     public void handleException(

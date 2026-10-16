@@ -1,6 +1,14 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>
+    <li>If you use OpenLCB/LCC native signal masts:  These can no longer 
+        be defined to use the event ID's that start with 00.  
+        The value 00.00.00.00.00.00.00.00 was previously the default 
+        for "this event ID hasn't been configured".
+        The default is now a blank entry field that doesn't
+        produce or consume an event.  If you have 
+        defined any of the signal mast entries to start with 00,
+        they will be migrated to be empty fields that no longer 
+        produce or consume an event.
     </li>
     <li>
     </li>
