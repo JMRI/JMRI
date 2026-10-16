@@ -396,6 +396,16 @@ public abstract class AbstractMRTrafficController {
                     listenerQueue.removeFirst();
                     mCurrentState = WAITMSGREPLYSTATE;
                     log.debug("transmit loop has something to do: {}", m);
+                } else if (mCurrentState != IDLESTATE) {
+                    // Nothing to send. Go IDLE while still holding the lock
+                    // that sendMessage() holds while queueing, so that a
+                    // message queued from now on is guaranteed to see IDLE and
+                    // notify this thread. Setting IDLE after releasing the lock
+                    // overwrote the NOTIFIEDSTATE of a message queued in
+                    // between, and that message then waited out the whole
+                    // poll interval (about 100 ms) before being sent.
+                    log.debug("Setting IDLESTATE, current mode {}", mCurrentMode);
+                    mCurrentState = IDLESTATE;
                 }  // release lock here to proceed in parallel
             }
             // if a message has been extracted, process it
@@ -459,18 +469,19 @@ public abstract class AbstractMRTrafficController {
                     }
                 } // just continue to the next message from here
             } else {
-                // nothing to do
-                if (mCurrentState != IDLESTATE) {
-                    log.debug("Setting IDLESTATE");
-                    log.debug("Current Mode {}", mCurrentMode);
-                    mCurrentState = IDLESTATE;
-                }
+                // nothing to do, IDLESTATE was set above under the queue lock
                 // wait for something to send
                 if (mWaitBeforePoll > waitTimePoll || mCurrentMode == PROGRAMINGMODE) {
                     try {
                         long startTime = Calendar.getInstance().getTimeInMillis();
                         synchronized (xmtRunnable) {
-                            xmtRunnable.wait(mWaitBeforePoll);
+                            // Only wait while still IDLE. If a message was
+                            // queued since the check above, sendMessage() has
+                            // already moved to NOTIFIEDSTATE and sent its
+                            // notify(), which nobody was waiting for.
+                            if (mCurrentState == IDLESTATE) {
+                                xmtRunnable.wait(mWaitBeforePoll);
+                            }
                         }
                         long endTime = Calendar.getInstance().getTimeInMillis();
                         waitTimePoll = waitTimePoll + endTime - startTime;
