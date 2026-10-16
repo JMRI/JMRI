@@ -1299,6 +1299,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
 
         List<NamedBeanSetting> userSetTurnouts = new ArrayList<>(0);
         Hashtable<Turnout, Integer> autoTurnouts = new Hashtable<>(0);
+        // For auto turnouts from the Layout Editor, true if the route uses the diverging leg
+        Hashtable<Turnout, Boolean> autoTurnoutsDiverging = new Hashtable<>(0);
         //Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
         //Hashtable<Turnout, Boolean> autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
 
@@ -1499,6 +1501,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 //minimumBlockSpeed = 0;
             }
             destMastInit = false;
+            autoTurnoutsDiverging = new Hashtable<>(0);
             if (turnouts == null) {
                 this.autoTurnouts = new Hashtable<>(0);
             } else {
@@ -1855,6 +1858,23 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             return -1;
         }
 
+        /**
+         * Check if the route uses the diverging leg of an automatically added
+         * turnout. When the Layout Editor did not provide this, e.g. for a
+         * turntable control turnout, a THROWN state is taken as diverging.
+         *
+         * @param turnout the turnout
+         * @param state   the turnout state to use when not known
+         * @return true if the route is diverging at this turnout
+         */
+        boolean isAutoTurnoutDiverging(Turnout turnout, int state) {
+            Boolean diverging = autoTurnoutsDiverging.get(turnout);
+            if (diverging != null) {
+                return diverging;
+            }
+            return state == Turnout.THROWN;
+        }
+
         String getSignalMastState(SignalMast mast) {
             if (userSetMasts == null) {
                 return null;
@@ -1951,7 +1971,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                             state = false;
                         }
                     }
-                } else if (key.getState() == Turnout.THROWN) {
+                } else if (isAutoTurnoutDiverging(key, key.getState())) {
                     turnoutThrown = true;
                 }
             }
@@ -2401,6 +2421,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             ConnectivityUtil connection;
             List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList;
             Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<>();
+            Hashtable<Turnout, Boolean> divergingSettings = new Hashtable<>();
             LinkedHashMap<Block, Integer> block = new LinkedHashMap<>();
             for (int i = 0; i < lblks.size(); i++) {
                 log.debug("layoutblock {}",lblks.get(i).getDisplayName());
@@ -2434,6 +2455,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                             turnoutSettings.put(ls.getTurnout(), taState);
                             int tbState = ls.getTurnoutBState(slipState);
                             turnoutSettings.put(ls.getTurnoutB(), tbState);
+                            // A-C and B-D are the straight routes through a slip
+                            boolean slipDiverging = (slipState == LayoutTurnout.STATE_AD) || (slipState == LayoutTurnout.STATE_BC);
+                            divergingSettings.put(ls.getTurnout(), slipDiverging);
+                            divergingSettings.put(ls.getTurnoutB(), slipDiverging);
                         } else if ( lt != null ) {
                             String t = lt.getTurnoutName();
                             // temporary = why is this looking up the Turnout instead of using getTurnout()?
@@ -2452,12 +2477,16 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                                     log.debug("D {}", lt.getConnectD());
                                 }
                             }
+                            // the expected state already allows for the continuing sense of the turnout
+                            boolean diverging = turnoutList.get(x).getExpectedState() != lt.getContinuingSense();
                             if (turnout != null ) {
                                 turnoutSettings.put(turnout, turnoutList.get(x).getExpectedState());
+                                divergingSettings.put(turnout, diverging);
                             }
                             Turnout tempT;
                             if ((tempT = lt.getSecondTurnout()) != null) {
                                 turnoutSettings.put(tempT, turnoutList.get(x).getExpectedState());
+                                divergingSettings.put(tempT, diverging);
                             }
                             /* TODO: We could do with a more intelligent way to deal with double crossovers, other than
                                 just looking at the state of the other conflicting blocks, such as looking at Signalmasts
@@ -2587,6 +2616,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             // ----- End Traverser Alignment Check -----
             if (useLayoutEditorTurnouts) {
                 setAutoTurnouts(turnoutSettings);
+                autoTurnoutsDiverging = divergingSettings;
             }
             return block;
         }
@@ -2760,7 +2790,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 Turnout key = keys.nextElement();
                 log.debug("{} turnout {}", destinationSignalMast.getDisplayName(), key.getDisplayName());
                 if (!isTurnoutIncluded(key)) {
-                    if (autoTurnouts.get(key) == Turnout.CLOSED) {
+                    if (!isAutoTurnoutDiverging(key, autoTurnouts.get(key))) {
                         if (((key.getStraightLimit() < minimumBlockSpeed) || (minimumBlockSpeed == 0)) && (key.getStraightLimit() != -1)) {
                             minimumBlockSpeed = key.getStraightLimit();
                             log.debug("{} turnout {} set speed to {}", destinationSignalMast.getDisplayName(), key.getDisplayName(), minimumBlockSpeed);
