@@ -1041,8 +1041,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         log.debug("SignalMastLogicManager started (delay)");
         ThreadingUtil.runOnLayoutDelayed(
                 () -> {
-                    setMastAppearance();
-                    inWait = false;
+                    try {
+                        setMastAppearance();
+                    } finally {
+                        inWait = false;
+                    }
                 },
                 tempDelay
         );
@@ -1058,17 +1061,19 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             log.debug("Signal is at a Held state so will set to the aspect defined for Held or Danger");
 
             String heldAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.HELD);
-            if (heldAspect != null) {
+            if (heldAspect != null && !getSourceMast().isAspectDisabled(heldAspect)) {
                 log.debug("  Setting to HELD value of {}", heldAspect);
-                ThreadingUtil.runOnLayout(() -> {
-                    getSourceMast().setAspect(heldAspect);
-                });
             } else {
-                String dangerAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
-                log.debug("  Setting to DANGER value of {}", dangerAspect);
+                heldAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                log.debug("  Setting to DANGER value of {}", heldAspect);
+            }
+            String aspectSet = heldAspect; // for lambda
+            try {
                 ThreadingUtil.runOnLayout(() -> {
-                    getSourceMast().setAspect(dangerAspect);
+                    getSourceMast().setAspect(aspectSet);
                 });
+            } catch (RuntimeException ex) {
+                log.error("Could not set held aspect {} on {}", aspectSet, getSourceMast().getDisplayName(), ex);
             }
             return;
         }
