@@ -898,7 +898,19 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
          */
         static final long POM_ANSWER_WINDOW = 1000;
 
-        /** Per loco (see {@link #locoKey}): the CV of the last POM packet seen, and when. */
+        /**
+         * How many cutouts to a loco, starting with the one after the first
+         * POM packet for a new CV, may still carry the decoder's previous
+         * answer and so aren't credited. Usually only the first does, but
+         * the decoder can take longer, or the reader can miss a POM packet
+         * (2026-10-16: 1.1.284 was given CV 283's value once with 1).
+         */
+        static final int STALE_CUTOUTS = 2;
+
+        /**
+         * Per loco (see {@link #locoKey}): the CV of the last POM packet seen,
+         * when, and how many more of its cutouts aren't credited.
+         */
         private final HashMap<Integer, long[]> lastPom = new HashMap<>();
 
         /** When the POM packet whose CV {@link #cvNumber} was credited from was seen; -1 if none. */
@@ -939,12 +951,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
          * last POM packet seen for it, if that was within
          * {@link #POM_ANSWER_WINDOW}.
          * <p>
-         * Except the cutout straight after the first POM packet for a new CV:
-         * there the decoder still sends its previous answer, and only answers
-         * the new CV from the next cutout on (2026-10-16, ESU LokSound 5:
-         * exactly one stale cutout in 40 CVs). Crediting it gave every CV the
-         * value of the one read before. After an overflow, any POM packet
-         * counts as new, as a newer one may have been lost.
+         * Except the first {@link #STALE_CUTOUTS} cutouts to the loco from the
+         * first POM packet for a new CV: there the decoder may still send its
+         * previous answer (2026-10-16, ESU LokSound 5: usually exactly one
+         * stale cutout). Crediting them gave every CV the value of the one
+         * read before. After an overflow, any POM packet counts as new, as a
+         * newer one may have been lost.
          *
          * @param packet the DCC packet bytes
          * @param now    the current time in ms
@@ -1023,26 +1035,35 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("DCC address type {} addr {}", addt, addr);
                 if ((dcc_addr_type != NO_ADDRESS)) {
                     long[] pom = lastPom.get(locoKey());
-                    if (pom != null && now - pom[1] <= POM_ANSWER_WINDOW) {
-                        cvNumber = (int) pom[0];
-                        creditedPomTime = pom[1];
+                    boolean isPom = (packet[i] & 0xE0) == 0xE0;
+                    if (!isPom && pom != null && now - pom[1] <= POM_ANSWER_WINDOW) {
+                        if (pom[2] > 0) {
+                            pom[2]--; // may still be the previous CV's answer
+                        } else {
+                            cvNumber = (int) pom[0];
+                            creditedPomTime = pom[1];
+                        }
                     }
                     log.debug("Current index  {} value {}", i, packet[i] & 0xFF);
-                    if ((packet[i] & 0xE0) == 0xE0) {
+                    if (isPom) {
                         // 1110CCVV VVVVVVVV: the instruction byte holds the CV number's top two bits
                         int cvHigh = packet[i] & 0x03;
                         i++;
                         int pomCv = ((cvHigh << 8) | (packet[i] & 0xff)) + 1;
-                        boolean newCv = pom == null || pom[0] != pomCv;
-                        lastPom.put(locoKey(), new long[]{pomCv, now});
                         creditedPomTime = -1;
-                        if (newCv) {
-                            // the decoder answers this cutout before it has acted on the packet
-                            cvNumber = 0;
+                        if (pom == null || pom[0] != pomCv) {
+                            // the decoder answers this cutout, and maybe the next, before it
+                            // has acted on the packet
+                            lastPom.put(locoKey(), new long[]{pomCv, now, STALE_CUTOUTS - 1});
                             log.debug("CV Access cv:{}, first packet; its answer is the previous CV's", pomCv);
                         } else {
-                            cvNumber = pomCv;
-                            log.debug("CV Access cv:{}", cvNumber);
+                            pom[1] = now;
+                            if (pom[2] > 0) {
+                                pom[2]--;
+                            } else {
+                                cvNumber = pomCv;
+                            }
+                            log.debug("CV Access cv:{}", pomCv);
                         }
                         // two byte instruction when 1111
                         // three byte instuction when 1110

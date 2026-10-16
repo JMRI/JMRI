@@ -149,13 +149,15 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x07, 0x00}); // POM verify byte, CV 8
         assertEquals(9328, board.addr, "long address");
         assertEquals(Dcc4PcSensorManager.LONG_ADDRESS, board.dcc_addr_type);
-        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x3F, 0x80, 0x00}); // next packet to 9328
+        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x3F, 0x80, 0x00}); // next packets to 9328
+        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x80, 0x00});
         assertEquals(8, board.cvNumber, "CV");
 
         board.decodeDCCPacket(new int[]{0xE5, 0x07, 0xE4, 0x07, 0x00}); // CV 8 on long address 9479
         assertEquals(9479, board.addr);
         board.decodeDCCPacket(new int[]{0x03, 0xEC, 0x01, 0x05}); // POM write CV 2 on short address 3
         assertEquals(3, board.addr, "short address");
+        board.decodeDCCPacket(new int[]{0x03, 0x3F, 0x80, 0x00});
         board.decodeDCCPacket(new int[]{0x03, 0xEC, 0x01, 0x06}); // write CV 2 again, other value
         assertEquals(2, board.cvNumber);
 
@@ -176,10 +178,12 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xEC, 0x1E, 0x01, 0x00}, 2000); // write 1 to CV 31
         assertEquals(0, board.cvNumber, "first packet for CV 31: the answer is still the old one");
+        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x3F, 0x80, 0x00}, 2100); // speed packet
+        assertEquals(0, board.cvNumber, "the next cutout may be stale too");
 
-        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x3F, 0x80, 0x00}, 2200); // speed packet
-        assertEquals(31, board.cvNumber, "an answer after the speed packet is for CV 31");
-        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x80, 0x00}, 2400); // F0-F4
+        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x80, 0x00}, 2200); // F0-F4
+        assertEquals(31, board.cvNumber, "an answer after a later packet to 9328 is for CV 31");
+        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x3F, 0x80, 0x00}, 2400);
         assertEquals(31, board.cvNumber);
 
         board.decodeDCCPacket(new int[]{0x03, 0x3F, 0x80, 0x00}, 2500); // another loco (short 3)
@@ -190,20 +194,24 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     // 2026-10-16: every CV read the value of the one before. After the first POM packet for a
-    // new CV the decoder sends one cutout with its previous answer (CV 257 got 1, CV 32's
-    // value, then 0 after 24 ms; CV 260 got 64, CV 259's, then 15).
+    // new CV the decoder sends a cutout with its previous answer (CV 257 got 1, CV 32's
+    // value, then 0 after 24 ms; CV 260 got 64, CV 259's, then 15). Usually one, but once
+    // 1.1.284 was given CV 283's value with one skipped, so STALE_CUTOUTS are skipped.
     @Test
-    public void testFirstCutoutAfterNewPomCvNotCredited() {
+    public void testFirstCutoutsAfterNewPomCvNotCredited() {
         Dcc4PcSensorManager sm = (Dcc4PcSensorManager) l;
         sm.addActiveBoard(1, "1", 16, 0);
         Dcc4PcSensorManager.ActiveBoard board = sm.activeBoards.get(1);
         int[] speed = {0xE4, 0x70, 0x3F, 0x80, 0x00};
         int[] f0 = {0xE4, 0x70, 0x80, 0x00};
+        int[] f5 = {0xE4, 0x70, 0xB0, 0x00};
         int[] readCv259 = {0xE4, 0x70, 0xE5, 0x02, 0x00, 0x00};
         int[] readCv260 = {0xE4, 0x70, 0xE5, 0x03, 0x00, 0x00};
+        assertEquals(2, Dcc4PcSensorManager.ActiveBoard.STALE_CUTOUTS, "this test assumes 2");
 
         board.decodeDCCPacket(readCv259, 1000);
         board.decodeDCCPacket(speed, 1050);
+        board.decodeDCCPacket(f0, 1060);
         assertEquals(259, board.cvNumber);
 
         board.decodeDCCPacket(readCv260, 1200);
@@ -211,15 +219,21 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         board.decodeDCCPacket(readCv260, 1201); // the same packet seen on a second input
         assertEquals(0, board.cvNumber);
         board.decodeDCCPacket(f0, 1220);
-        assertEquals(260, board.cvNumber, "from the next packet on, the answer is CV 260's");
-        board.decodeDCCPacket(readCv260, 1240); // a repeat of the POM packet
-        assertEquals(260, board.cvNumber, "a repeat for the same CV is credited at once");
+        assertEquals(0, board.cvNumber, "the second cutout may still answer CV 259");
+        board.decodeDCCPacket(f0, 1221); // a second input doesn't count as another cutout
+        assertEquals(0, board.cvNumber);
+        board.decodeDCCPacket(readCv260, 1240); // a repeat of the POM packet is a cutout too
+        assertEquals(260, board.cvNumber, "from the third cutout on, the answer is CV 260's");
+        board.decodeDCCPacket(f5, 1250);
+        assertEquals(260, board.cvNumber);
 
         board.decodeDCCPacket(speed, 1260);
         board.forgetPomPackets(); // overflow: a newer POM packet may have been lost
         board.decodeDCCPacket(readCv260, 1300);
         assertEquals(0, board.cvNumber, "after an overflow every POM packet counts as new");
         board.decodeDCCPacket(speed, 1320);
+        assertEquals(0, board.cvNumber);
+        board.decodeDCCPacket(f0, 1330);
         assertEquals(260, board.cvNumber);
     }
 
@@ -232,7 +246,8 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x07, 0x00, 0x00}, 1000); // read CV 8
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x01, 0x00, 0x00}, 1300); // read CV 2
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x3F, 0x80, 0x00}, 1400);
-        assertEquals(2, board.cvNumber, "the decoder answers the latest POM packet");
+        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x80, 0x00}, 1410);
+        assertEquals(2, board.cvNumber, "the answer is for the latest POM packet");
     }
 
     // 2026-10-15: when the reader lost the POM packet for CV N+1 in an overflow, the answers
@@ -242,9 +257,11 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Dcc4PcSensorManager sm = (Dcc4PcSensorManager) l;
         sm.addActiveBoard(1, "1", 16, 0);
         Dcc4PcSensorManager.ActiveBoard board = sm.activeBoards.get(1);
+        int[] speed = {0xE4, 0x70, 0x3F, 0x80, 0x00};
+        int[] f0 = {0xE4, 0x70, 0x80, 0x00};
 
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x07, 0x00, 0x00}, 1000); // read CV 8
-        int[] speed = {0xE4, 0x70, 0x3F, 0x80, 0x00};
+        board.decodeDCCPacket(f0, 1050);
         board.decodeDCCPacket(speed, 1100);
         assertEquals(8, board.cvNumber);
 
@@ -252,11 +269,12 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         assertEquals(0, board.cvNumber, "the credit from before the overflow is gone");
         board.decodeDCCPacket(speed, 1200); // the same packet again
         assertEquals(0, board.cvNumber);
-        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x80, 0x00}, 1300); // F0-F4
+        board.decodeDCCPacket(f0, 1300);
         assertEquals(0, board.cvNumber, "no POM packet seen since the overflow");
 
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x08, 0x00, 0x00}, 1400); // read CV 9
         board.decodeDCCPacket(speed, 1500);
+        board.decodeDCCPacket(f0, 1510);
         assertEquals(9, board.cvNumber, "credited again from the next POM packet seen");
     }
 
@@ -265,9 +283,10 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Dcc4PcSensorManager sm = (Dcc4PcSensorManager) l;
         sm.addActiveBoard(1, "1", 16, 0);
         Dcc4PcSensorManager.ActiveBoard board = sm.activeBoards.get(1);
+        int[] speed = {0xE4, 0x70, 0x3F, 0x80, 0x00};
 
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x07, 0x00, 0x00}, 1000); // read CV 8
-        int[] speed = {0xE4, 0x70, 0x3F, 0x80, 0x00};
+        board.decodeDCCPacket(new int[]{0xE4, 0x70, 0x80, 0x00}, 1050);
         board.decodeDCCPacket(speed, 1100);
         assertEquals(8, board.cvNumber);
         board.decodeDCCPacket(speed, 1500); // the same packet again (or seen on a second input)
@@ -277,7 +296,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x07, 0x00, 0x00}, 5000); // POM again
         board.decodeDCCPacket(new int[]{0xE4, 0x70, 0xE4, 0x07, 0x00, 0x00}, 6500); // repeated POM
-        assertEquals(8, board.cvNumber, "a POM packet always carries its own CV");
+        assertEquals(8, board.cvNumber, "a POM packet for the same CV carries its CV");
     }
 
     private Dcc4PcSystemConnectionMemo memo = null;

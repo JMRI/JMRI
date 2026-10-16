@@ -28,7 +28,8 @@ import jmri.ProgrammingMode;
  * Packets are paced: each is handed to the command station only once it has
  * had time to send the last one with its repeats, because a LocoNet command
  * station drops a packet it's given while still busy, without telling
- * sendPacket. A packet with no reply after RETRY_AFTER is sent once more.
+ * sendPacket. A packet with no reply is sent again every RETRY_AFTER, up to
+ * MAX_SENDS times in all.
  * Resending every second instead (2026-10-13) built a backlog the command
  * station was still working through 20 s later.
  * <p>
@@ -56,11 +57,18 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     boolean awaitingValue = false;
 
     /**
-     * Longest a read waits. A decoder answers a POM read in the RailCom
-     * cutout after the packet, so a value normally arrives well within a
-     * second; the rest is for the command station's connection.
+     * Longest a read waits when it goes through the other connection's
+     * programmer (no command station to send the packets ourselves).
      */
     static final int READ_TIMEOUT = 5000;
+
+    /**
+     * Longest a read or write waits when we send the POM packets: time for
+     * the last of the {@link #MAX_SENDS} sends to be answered (answers come
+     * 160-270 ms after a send). With 5 s, the few CVs that got no answer at
+     * all took 40% of a Read All (2026-10-16).
+     */
+    static final int RAILCOM_TIMEOUT = 2600;
 
     /**
      * How many times the command station sends a POM read packet. A decoder
@@ -97,6 +105,9 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
      */
     static final int RETRY_AFTER = 600;
 
+    /** How many times a packet is sent in all while no answer comes, RETRY_AFTER apart. */
+    static final int MAX_SENDS = 4;
+
     /** Earliest time any DCC4PC programmer may hand the command station its next packet. */
     private static long nextSendAllowed = 0;
 
@@ -127,7 +138,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         commandStation = cs;
         this.pAddress = pAddress;
         this.pLongAddress = pLongAddress;
-        LONG_TIMEOUT = READ_TIMEOUT;
+        LONG_TIMEOUT = cs != null ? RAILCOM_TIMEOUT : READ_TIMEOUT;
         rcTag = (RailCom) jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + pAddress);
     }
 
@@ -212,18 +223,27 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
 
     /**
      * Hand the packet to the command station once it has had time to finish
-     * the last one, and once more if no reply has come after RETRY_AFTER.
-     * Must be called while the operation is waiting for its reply.
+     * the last one, and again every RETRY_AFTER while no reply has come, up
+     * to MAX_SENDS sends in all. Must be called while the operation is
+     * waiting for its reply.
      */
     private void send(byte[] packet, int repeats) {
         int op = operation;
         sendPaced(packet, repeats, op);
+        scheduleResend(packet, repeats, op, 2);
+    }
+
+    private void scheduleResend(byte[] packet, int repeats, int op, int sendNumber) {
+        if (sendNumber > MAX_SENDS) {
+            return;
+        }
         jmri.util.TimerUtil.scheduleOnLayoutThread(new java.util.TimerTask() {
             @Override
             public void run() {
                 if (isWaiting(op)) {
-                    log.debug("No reply yet for CV {} of {}; sending once more", cv, pAddress);
+                    log.debug("No reply yet for CV {} of {}; sending again ({} of {})", cv, pAddress, sendNumber, MAX_SENDS);
                     sendPaced(packet, repeats, op);
+                    scheduleResend(packet, repeats, op, sendNumber + 1);
                 }
             }
         }, RETRY_AFTER);
@@ -348,7 +368,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
             log.warn("CV {} of {} still reads {} after writing {}", cv, pAddress, lastWriteReply, writeValue);
             finishRead(lastWriteReply, ProgListener.ConfirmFailed);
         } else {
-            log.debug("No RailCom reply for CV {} within {} ms", cv, READ_TIMEOUT);
+            log.debug("No RailCom reply for CV {} within {} ms", cv, LONG_TIMEOUT);
             finishRead(0, ProgListener.FailedTimeout);
         }
     }
