@@ -29,7 +29,16 @@ public class NamedBeanUserNameComparator<B extends NamedBean> implements java.ut
 
         // if both have user names, compare those
         if (! (s1 == null || s1.isEmpty()) && ! (s2 == null || s2.isEmpty())) {
-            return comparator.compare(s1, s2);
+            int result = comparator.compare(s1, s2);
+            if (result == 0) {
+                // names such as "Siding 7" and "Siding 07" are still different
+                result = Integer.signum(s1.compareTo(s2));
+            }
+            if (result == 0) {
+                // same user name, e.g. on beans of different types
+                result = n1.compareTo(n2);
+            }
+            return result;
         }
 
         // now must have one with and one without
