@@ -46,13 +46,8 @@ public class EntryExitMultiPointRouteTest {
                 sensor.getKnownState() == Sensor.ACTIVE ? Sensor.INACTIVE : Sensor.ACTIVE));
     }
 
-    private static boolean routeSettingInProgress() {
-        for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.isAlive() && ("NX set route thread".equals(t.getName()) || "Entry Exit Set Route".equals(t.getName()))) {
-                return true;
-            }
-        }
-        return false;
+    private boolean routeSettingInProgress() {
+        return eep.isSettingRoutes();
     }
 
     @Test
