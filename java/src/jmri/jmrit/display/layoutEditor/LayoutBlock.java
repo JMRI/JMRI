@@ -2569,7 +2569,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     int getBlockStatus() {
         if (getOccupancy() == OCCUPIED) {
-            useExtraColor = false;
             // Our section of track is occupied
             return OCCUPIED;
         } else if (useExtraColor) {
