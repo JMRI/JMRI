@@ -1,6 +1,6 @@
 package jmri.jmrix.openlcb.swing;
 
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.event.*;
 
@@ -102,6 +102,41 @@ public class NamedEventIdTextField extends OvertypeTextArea {
         this.setComponentPopupMenu(popup);
     }
 
+    // Provide a placeholder display if the content is empty
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Draw the placeholder if the field is empty and not focused
+        if (getText().isEmpty() && !hasFocus()) {
+            Graphics2D g2d = (Graphics2D) g;
+            
+            // Enable anti-aliasing for smooth text rendering
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            
+            // Set the dim text color and match the current font
+            g2d.setColor(Color.LIGHT_GRAY); 
+            g2d.setFont(getFont());
+            
+            // Align placeholder horizontally with standard text padding
+            int padding = getInsets().left; 
+            
+            // Center the placeholder vertically within the text field
+            int textHeight = g2d.getFontMetrics().getAscent();
+            int height = getHeight();
+            int y = (height - textHeight) / 2 + textHeight;
+
+            g2d.drawString(placeholder, padding, y);
+        }
+    }
+
+    String placeholder = "00.00.00.00.00.00.00.00";
+
+    public String getPlaceholder() {
+        return placeholder;
+    }
+    
+    
     final CanSystemConnectionMemo memo;
     
     protected String makeToolTipText(String fieldText) {
