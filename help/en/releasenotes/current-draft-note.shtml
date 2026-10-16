@@ -508,6 +508,10 @@
                  a speed profile, or when the profile does not cover the
                  direction of travel; a warning is written to the system
                  console in that case.</li>
+             <li>Dispatcher: after the furthest allocated Section of a train
+                 is released by hand, the train is allocated that Section again
+                 and carries on, instead of silently getting no further
+                 allocations.</li>
              <li>The scale speed conversions for the maximum speed and the
                  scale speed shown for the minimum throttle now follow the
                  "Run in reverse" setting, and the scale km/h entry is no

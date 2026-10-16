@@ -1894,6 +1894,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocationRequestTableModel.fireTableDataChanged();
     }
 
+    /**
+     * Cancel an allocation request, if it is still queued.
+     *
+     * @param ar the allocation request to cancel
+     */
+    protected void cancelAllocationRequest(AllocationRequest ar) {
+        int index = allocationRequests.indexOf(ar);
+        if (index >= 0) {
+            cancelAllocationRequest(index);
+        }
+    }
+
     private void allocateRequested(int index) {
         AllocationRequest ar = allocationRequests.get(index);
         allocateSection(ar, null);
