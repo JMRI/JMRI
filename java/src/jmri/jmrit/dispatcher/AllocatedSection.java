@@ -132,6 +132,10 @@ public class AllocatedSection {
             }
         }
         else if (mSection.getState() == Section.REVERSE) {
+            if (bStart < 0) {
+                // block not in this section, the train has yet to enter it: all of it remains
+                bStart = mSection.getNumBlocks() - 1;
+            }
             for (int ix =  0 ;ix <= bStart ;ix++) {
                 Block b = (mSection.getBlockBySequenceNumber(ix));
                 if (b != null) {
