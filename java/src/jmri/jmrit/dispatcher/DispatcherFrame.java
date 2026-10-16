@@ -2463,6 +2463,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (ar != null) {
             at = ar.getActiveTrain();
         }
+        List<Block> bls = null;   // the Blocks to check, the same for every allocated section
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 List<Block> blas = as.getSection().getBlockList();
@@ -2478,8 +2479,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 // the blocklist for the section during the initial allocation.
                 //
 
-                List<Block> bls = new ArrayList<>();
-                if (ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0) {
+                if (bls != null) {
+                    // already worked out for an earlier allocated section
+                } else if (ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0) {
+                    bls = new ArrayList<>();
                     int j;
                     if (ar.getSectionDirection() == Section.FORWARD) {
                         j = 0;
