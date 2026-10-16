@@ -677,7 +677,10 @@
    <h3>Tracker</h3>
         <a id="Tr" name="Tr"></a>
         <ul>
-            <li></li>
+            <li>Tracker: when a tracked train passes through a dark
+                (undetected) block, the Tracker now attaches the dark block that
+                actually leads to the block entered, at the correct end of the
+                train.</li>
         </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
