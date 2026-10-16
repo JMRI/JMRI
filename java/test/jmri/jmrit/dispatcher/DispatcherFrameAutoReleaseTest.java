@@ -19,7 +19,7 @@ import org.junit.jupiter.api.*;
 
 /**
  * Tests for the final auto-release check of an exited Section,
- * {@link DispatcherFrame#sectionNotRequiredByHeadOnly}.
+ * {@link DispatcherFrame#sectionNotRequiredByTrainLength}.
  * <p>
  * Each test uses a train running through Sections A, B, C, D in that order.
  */
@@ -76,7 +76,7 @@ public class DispatcherFrameAutoReleaseTest {
     }
 
     private boolean releaseA() {
-        return DispatcherFrame.sectionNotRequiredByHeadOnly(true, at, allocated.get(0));
+        return DispatcherFrame.sectionNotRequiredByTrainLength(true, at, allocated.get(0));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class DispatcherFrameAutoReleaseTest {
         headIn(2);
         for (TrainDetection td : TrainDetection.values()) {
             when(at.getTrainDetection()).thenReturn(td);
-            assertFalse(DispatcherFrame.sectionNotRequiredByHeadOnly(false, at, allocated.get(0)),
+            assertFalse(DispatcherFrame.sectionNotRequiredByTrainLength(false, at, allocated.get(0)),
                     "a Section already held must stay held for " + td);
         }
     }
@@ -189,29 +189,38 @@ public class DispatcherFrameAutoReleaseTest {
         assertTrue(releaseA());
     }
 
-    private boolean tailHasLeftA() {
-        return DispatcherFrame.tailHasLeftSection(at, allocated.get(0), allocated.get(1));
+    /**
+     * Also place the detected tail of the train in a Section behind the head.
+     * @param index Section index (0 = A)
+     */
+    private void tailIn(int index) {
+        when(sections.get(index).getOccupancy()).thenReturn(Section.OCCUPIED);
     }
 
     @Test
-    public void testHeadAndTailReleasedWhenTailInNextSection() {
+    public void testHeadAndTailHeldWhileHeadInNextSectionAndTailUndetected() {
+        // A has cleared, the head is in B, and the tail has lost detection,
+        // so it may still be in A
         buildTransit(1000);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        headIn(2);
-        when(sections.get(1).getOccupancy()).thenReturn(Section.OCCUPIED); // tail in B
-        when(allocated.get(1).getClearedOrder()).thenReturn(1L); // head left B earlier
-        when(allocated.get(0).getClearedOrder()).thenReturn(2L); // then tail left A
-        assertTrue(tailHasLeftA());
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        when(at.getMaxTrainLengthMM()).thenReturn(800L);
+        headIn(1);
+        assertFalse(releaseA(), "head in B, nothing beyond A is known to hold the train");
     }
 
     @Test
-    public void testHeadAndTailReleasedWhenTailPassedThroughShortSection() {
-        buildTransit(1000);
+    public void testHeadAndTailMeasuredToTheHeadNotTheTail() {
+        buildTransit(500);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        when(at.getMaxTrainLengthMM()).thenReturn(800L);
         headIn(2);
-        when(allocated.get(0).getClearedOrder()).thenReturn(2L); // tail left A
-        when(allocated.get(1).getClearedOrder()).thenReturn(3L); // then tail left B
-        assertTrue(tailHasLeftA());
+        tailIn(1);
+        assertFalse(releaseA(), "tail in B, head in C: only B (500) beyond A, train is 800");
+        headIn(3);
+        tailIn(1);
+        assertTrue(releaseA(), "tail in B, head in D: B and C (1000) beyond A");
     }
 
     @Test
@@ -219,39 +228,35 @@ public class DispatcherFrameAutoReleaseTest {
         buildTransit(1000);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         when(at.getAutoActiveTrain()).thenReturn(null);
+        when(at.firstNoLengthWarning()).thenReturn(true, false);
         headIn(2);
-        when(allocated.get(1).getClearedOrder()).thenReturn(1L); // head left B
-        when(allocated.get(0).getClearedOrder()).thenReturn(2L); // A cleared later, B still clear
-        assertFalse(tailHasLeftA(), "tail lost detection in A");
+        assertFalse(releaseA(), "tail lost detection in A");
         headIn(3);
-        assertFalse(tailHasLeftA(), "still no tail seen, train length unknown");
+        assertFalse(releaseA(), "still no tail seen, train length unknown");
+        JUnitAppender.assertWarnMessage("Test: has no Max Train Length, Sections behind it will not be released automatically.");
     }
 
     @Test
-    public void testHeadAndTailDispatchedLostDetectionFallsBackToLength() {
+    public void testHeadAndTailDispatchedLostDetectionReleasedByLength() {
         buildTransit(500);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         when(at.getAutoActiveTrain()).thenReturn(null);
         when(at.getMaxTrainLengthMM()).thenReturn(800L);
-        when(allocated.get(1).getClearedOrder()).thenReturn(1L);
-        when(allocated.get(0).getClearedOrder()).thenReturn(2L);
         headIn(2);
-        assertFalse(tailHasLeftA(), "only B (500) beyond A, train is 800");
+        assertFalse(releaseA(), "only B (500) beyond A, train is 800");
         headIn(3);
-        assertTrue(tailHasLeftA(), "B and C (1000) beyond A");
+        assertTrue(releaseA(), "B and C (1000) beyond A");
     }
 
     @Test
-    public void testHeadAndTailLostDetectionFallsBackToLength() {
+    public void testHeadAndTailAutoLostDetectionReleasedByLength() {
         buildTransit(500);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         autoTrain(800);
-        when(allocated.get(1).getClearedOrder()).thenReturn(1L);
-        when(allocated.get(0).getClearedOrder()).thenReturn(2L);
         headIn(2);
-        assertFalse(tailHasLeftA(), "only B (500) beyond A, train is 800");
+        assertFalse(releaseA(), "only B (500) beyond A, train is 800");
         headIn(3);
-        assertTrue(tailHasLeftA(), "B and C (1000) beyond A");
+        assertTrue(releaseA(), "B and C (1000) beyond A");
     }
 
     private TrainInfo trainInfo(TrainDetection detection, float lengthScaleMeters) {

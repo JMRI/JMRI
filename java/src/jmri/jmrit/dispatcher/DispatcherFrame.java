@@ -276,7 +276,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 info.getStartBlockName(), info.getDestinationBlockName());
         String lengthError = checkTrainLength(info);
         if (lengthError != null) {
-            log.error("{}", lengthError);
+            log.error("Train not loaded: {}", lengthError);
             throw new IllegalArgumentException(lengthError);
         }
         // create a new Active Train
@@ -2750,11 +2750,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                 } else {
                                     if ((nas.getActiveTrain() != as.getActiveTrain()) || (!nas.getEntered())) {
                                         foundOne = false;
-                                    } else if (at.getTrainDetection() == TrainDetection.TRAINDETECTION_HEADANDTAIL) {
-                                        foundOne = tailHasLeftSection(at, as, nas);
                                     }
                                 }
-                                foundOne = sectionNotRequiredByHeadOnly(foundOne,at,as);
+                                foundOne = sectionNotRequiredByTrainLength(foundOne,at,as);
                                 if (foundOne) {
                                     log.debug("{}: releasing section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));
                                     doReleaseAllocatedSection(as, false);
@@ -2779,15 +2777,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * If the earlier checks in checkAutoRelease() have already decided the
      * Section must be kept (foundOne false) that decision stands.
      * <p>
-     * For a "Head Only" train only the head is detected, so the Section can only
-     * be released once the train must have cleared it, worked out from the
-     * train length. See isClearByLength().
+     * For a "Head Only" or "Head and Tail" train the Section can only be
+     * released once the train must have cleared it, worked out from the train
+     * length. Seeing the Section clear is not enough: on a "Head Only" train
+     * the rest of the train is not detected, and on a "Head and Tail" train
+     * the tail may have lost detection while the head is in the next Section.
+     * See isClearByLength().
      */
-    static boolean sectionNotRequiredByHeadOnly(boolean foundOne, ActiveTrain at, AllocatedSection as) {
+    static boolean sectionNotRequiredByTrainLength(boolean foundOne, ActiveTrain at, AllocatedSection as) {
         if (!foundOne) {
             return false;
         }
-        if (at.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADONLY) {
+        if (at.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
             return true;
         }
         return isClearByLength(at, as);
@@ -2826,8 +2827,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Check, by length, whether a train whose tail is not detected must have
-     * cleared a Section.
+     * Check, by length, whether a train whose tail is not always detected must
+     * have cleared a Section.
      * Calculate the length of exited sections, subtract the length of section
      * being released. If the train is moving do not include the length of the occupied section,
      * if the train is stationary and was stopped by sensor or speed profile include the length
@@ -2845,9 +2846,24 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             return false;
         }
         AutoActiveTrain aat = at.getAutoActiveTrain();
+        List<AllocatedSection> trainSections = at.getAllocatedSectionList();
+        // Find the Section holding the head of the train. A "Head Only" train
+        // is only detected at its head, which is in the first occupied Section.
+        // A "Head and Tail" train may also be detected at its tail, in an
+        // earlier Section, so its head is in the last occupied Section.
+        int headIndex = -1;
+        for (int i = 0; i < trainSections.size(); i++) {
+            if (trainSections.get(i).getSection().getOccupancy() == Section.OCCUPIED) {
+                headIndex = i;
+                if (at.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADANDTAIL) {
+                    break;
+                }
+            }
+        }
         long allocatedLengthMM = 0;
-        for (AllocatedSection tas : at.getAllocatedSectionList()) {
-            if (tas.getSection().getOccupancy() == Section.OCCUPIED) {
+        for (int i = 0; i < trainSections.size(); i++) {
+            AllocatedSection tas = trainSections.get(i);
+            if (i == headIndex) {
                 if (aat != null && aat.getAutoEngineer() != null && aat.getAutoEngineer().isStopped() &&
                         (aat.getStopBySpeedProfile() ||
                                 tas.getSection().getForwardStoppingSensor() != null ||
@@ -2870,30 +2886,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         log.debug("[{}]:Release Section [{}] by Length allocated [{}] release [{}] train [{}]",
                 at.getTrainName(), as.getSectionName(), allocatedLengthMM, releaseLengthMM, trainLengthMM);
         return (allocatedLengthMM - releaseLengthMM) >= trainLengthMM;
-    }
-
-    /*
-     * For a "Head and Tail" train, check that the tail has moved on from an
-     * exited Section before it is released.
-     * <p>
-     * The tail is detected, so when it leaves a Section it must appear in the
-     * next Section: that Section is occupied now, or it went unoccupied later
-     * than the Section being released (a short Section the tail has already
-     * passed through). Otherwise the Section has probably cleared because the
-     * tail lost detection, for example dirty wheels on the last vehicle, and
-     * releasing it would also release every empty Section between the tail
-     * and the head. In that case the train length decides, as for a
-     * "Head Only" train.
-     */
-    static boolean tailHasLeftSection(ActiveTrain at, AllocatedSection as, AllocatedSection nas) {
-        if (nas.getSection().getOccupancy() == Section.OCCUPIED
-                || nas.getClearedOrder() > as.getClearedOrder()) {
-            return true;
-        }
-        boolean clear = isClearByLength(at, as);
-        log.debug("[{}]:Head and Tail, tail not seen to leave Section [{}], released by length [{}]",
-                at.getTrainName(), as.getSectionName(), clear);
-        return clear;
     }
 
     /**

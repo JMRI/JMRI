@@ -52,7 +52,7 @@ public class DispatcherTrainLengthRequiredTest {
             info.setTrainDetection(detection);
             info.setMaxTrainLengthScaleMeters(0.0f);
             assertEquals(-1, d.loadTrainFromTrainInfo(info), "refused without a length: " + detection);
-            JUnitAppender.assertErrorMessageStartsWith("Train [" + info.getTrainName() + "] uses");
+            JUnitAppender.assertErrorMessageStartsWith("Train not loaded: Train [" + info.getTrainName() + "] uses");
             assertTrue(d.getActiveTrainsList().isEmpty(), "no train created: " + detection);
             assertTrue(d.getAllocatedSectionsList().isEmpty(), "nothing allocated: " + detection);
         }
