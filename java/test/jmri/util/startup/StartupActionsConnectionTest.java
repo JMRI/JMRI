@@ -3,7 +3,6 @@ package jmri.util.startup;
 import java.io.File;
 import java.io.IOException;
 
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
@@ -82,6 +81,21 @@ public class StartupActionsConnectionTest {
                 .filter(e -> "property".equals(e.getName())).findFirst().orElseThrow();
         assertEquals("systemPrefix", property.getAttributeValue("name"));
         assertEquals("M", property.getAttributeValue("value"), "connection prefix kept");
+    }
+
+    @Test
+    public void testSkippedActionShownWhenAnotherConnectionOfSameTypeRuns() {
+        // M is running and offers the console action, so its name is known,
+        // but the action belongs to M2, which is not running
+        cbusMemo("M", "CBUS");
+        PerformActionModel running = consoleAction("M");
+        PerformActionModel skipped = consoleAction("M2");
+        assertNotNull(skipped.getName(), "name known from the running connection");
+        assertFalse(skipped.isConnectionAvailable());
+        assertTrue(skipped.toString().contains("not available"), skipped.toString());
+        assertTrue(skipped.toString().contains(skipped.getName()), skipped.toString());
+        assertTrue(skipped.toString().contains("M2"), skipped.toString());
+        assertFalse(running.toString().contains("not available"), running.toString());
     }
 
     @Test

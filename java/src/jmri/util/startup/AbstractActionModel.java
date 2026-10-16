@@ -134,15 +134,17 @@ public abstract class AbstractActionModel implements StartupModel {
     @Override
     public String toString() {
         String name = this.getName();
+        if (this.className != null && !this.className.isEmpty() && !this.isConnectionAvailable()) {
+            // action kept for a connection that is not running (disabled, removed, or failed to start).
+            // The name is known if another connection of the same type offers the action.
+            return Bundle.getMessage("AbstractActionModel.ConnectionNotAvailable",
+                    name != null ? name : this.className, this.systemPrefix); // NOI18N
+        }
         if (name != null) {
             if (!this.systemPrefix.isEmpty()) {
                 return Bundle.getMessage("AbstractActionModel.ToolTip", name, ConnectionNameFromSystemName.getConnectionName(this.systemPrefix)); // NOI18N
             }
             return name;
-        }
-        if (this.className != null && !this.className.isEmpty() && !this.isConnectionAvailable()) {
-            // action kept for a connection that is not running (disabled, removed, or failed to start)
-            return Bundle.getMessage("AbstractActionModel.ConnectionNotAvailable", this.className, this.systemPrefix); // NOI18N
         }
         if (this.className != null && this.isValid()) {
             return Bundle.getMessage("AbstractActionModel.UnknownClass", this.className);
