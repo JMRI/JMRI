@@ -83,11 +83,19 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
      * report), so on 2026-10-13 every write sent straight after another was
      * lost. This is an estimate: about one DCC packet per repeat, with room
      * for the command station's own refresh traffic.
+     * <p>
+     * 2026-10-15: 150 ms made no difference to how many sends went
+     * unanswered, so the losses aren't the command station being busy.
      */
     static final long GAP_PER_REPEAT = 60;
 
-    /** If no reply has come after this long, the packet is sent once more, in case it was dropped. */
-    static final int RETRY_AFTER = 1500;
+    /**
+     * If no reply has come after this long, the packet is sent once more, in
+     * case it or its answer was lost. Answers normally come 160-270 ms after
+     * the send (2026-10-15); 1500 ms made each lost one cost far more than
+     * the answer itself.
+     */
+    static final int RETRY_AFTER = 600;
 
     /** Earliest time any DCC4PC programmer may hand the command station its next packet. */
     private static long nextSendAllowed = 0;

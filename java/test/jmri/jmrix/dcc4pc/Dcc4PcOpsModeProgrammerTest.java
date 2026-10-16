@@ -187,8 +187,9 @@ public class Dcc4PcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgr
         Assert.assertEquals("CV 1024: high CV bits in the instruction", (byte) 0xE7, cs.packets.get(0)[1]);
         Assert.assertEquals("read repeats", Dcc4PcOpsModeProgrammer.READ_REPEATS, (int) cs.repeats.get(0));
         JUnitUtil.waitFor(() -> cs.packets.size() == 2, "retried");
-        Assert.assertTrue("retried after RETRY_AFTER",
-                cs.times.get(1) - cs.times.get(0) >= Dcc4PcOpsModeProgrammer.RETRY_AFTER - 50);
+        long retryGap = cs.times.get(1) - cs.times.get(0);
+        Assert.assertTrue("retried after RETRY_AFTER, not " + retryGap + " ms",
+                retryGap >= Dcc4PcOpsModeProgrammer.RETRY_AFTER - 50);
         JUnitUtil.waitFor(Dcc4PcOpsModeProgrammer.RETRY_AFTER + 300);
         Assert.assertEquals("retried only once", 2, cs.packets.size());
         railComReply("3", 42);
