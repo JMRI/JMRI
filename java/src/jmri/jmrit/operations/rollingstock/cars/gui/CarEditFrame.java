@@ -179,14 +179,14 @@ public class CarEditFrame extends RollingStockEditFrame {
         car.addPropertyChangeListener(this);
 
         // only cars have color attribute
-        if (!InstanceManager.getDefault(CarColors.class).containsName(car.getColor())) {
+        if (!InstanceManager.getDefault(CarColors.class).containsName(car.getColorName())) {
             if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("colorNameNotExist",
-                    car.getColor()), Bundle.getMessage("carAddColor"),
+                    car.getColorName()), Bundle.getMessage("carAddColor"),
                     JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
-                InstanceManager.getDefault(CarColors.class).addName(car.getColor());
+                InstanceManager.getDefault(CarColors.class).addName(car.getColorName());
             }
         }
-        colorComboBox.setSelectedItem(car.getColor());
+        colorComboBox.setSelectedItem(car.getColorName());
         groupComboBox.setSelectedItem(car.getKernelName());
     }
 
@@ -301,7 +301,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         Car car = (Car) _rs;
         
         if (colorComboBox.getSelectedItem() != null) {
-            car.setColor((String) colorComboBox.getSelectedItem());
+            car.setColorName((String) colorComboBox.getSelectedItem());
         }
 
         // ask if all cars of this type should be passenger 
@@ -558,7 +558,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarColors.class).updateComboBox(colorComboBox);
             if (_rs != null) {
-                colorComboBox.setSelectedItem(_rs.getColor());
+                colorComboBox.setSelectedItem(_rs.getColorName());
             }
         }
         if (e.getPropertyName().equals(KernelManager.LISTLENGTH_CHANGED_PROPERTY) ||
