@@ -340,7 +340,7 @@ public class JUnitUtil {
      * A bit expensive, so only used when needed.
      */
     public static void clearTurnoutThreads(){
-        removeMatchingThreads("setCommandedStateAtInterval"); // must stay consistent with AbstractTurnout
+        removeMatchingThreads("setCommandedStateAtInterval"); // AbstractTurnout no longer starts these
     }
 
     /**
