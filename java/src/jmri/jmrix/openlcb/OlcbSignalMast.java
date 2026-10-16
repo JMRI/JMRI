@@ -21,9 +21,6 @@ import org.openlcb.ConsumerIdentifiedMessage;
 import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.ProducerIdentifiedMessage;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This class implements a SignalMast that use <B>OpenLCB Events</B>
  * to set aspects.
@@ -483,6 +480,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSignalMast.class);
 
 }

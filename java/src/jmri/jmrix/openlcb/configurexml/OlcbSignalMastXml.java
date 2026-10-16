@@ -5,9 +5,10 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.jmrix.openlcb.OlcbSignalMast;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.openlcb.EventID;
 
 import javax.annotation.Nonnull;
 
@@ -94,25 +95,56 @@ public class OlcbSignalMastXml
         return loadCommonOlcbMast(m, shared);
     }
 
+    /**
+     * If the input string is a zero Event ID, replace it 
+     * with the empty String
+     * @param event an event ID read from an element
+     * @param m the relevant signal mast, used for a warning message
+     * @return the event ID or the empty String
+     */
+    private String convertZeroEvent(String event, OlcbSignalMast m) {
+        if ("".equals(event)) {
+            return "";
+        }
+        if (event == null) {
+            return "";
+        }
+        try {
+            var eventID = new EventID(event);
+            if (eventID.getContents()[0] == 0) {
+                // migrate starting-with-zero event ID to blank
+                log.warn("Migrating zero-initial-value event {} to a blank entry in signal mast \"{}\"", event, m.getDisplayName());
+                return "";
+            } else {
+                // non-zero-starting event ID, normal case
+                return event;
+            }
+        } catch (IllegalArgumentException ex) {
+            // not dotted-hex, assume this is a event name
+            return event;
+        }
+        
+    }
+    
     protected boolean loadCommonOlcbMast(OlcbSignalMast m, Element element) {
         loadCommon(m, element);
-
+        
         if (element.getChild("lit") != null) {
             Element lit = element.getChild("lit");
-            m.setLitEventId(childValue(lit, "lit"));
-            m.setNotLitEventId(childValue(lit, "notlit"));
+            m.setLitEventId(convertZeroEvent(childValue(lit, "lit"), m));
+            m.setNotLitEventId(convertZeroEvent(childValue(lit, "notlit"), m));
         }
 
         if (element.getChild("held") != null) {
             Element held = element.getChild("held");
-            m.setHeldEventId(childValue(held, "held"));
-            m.setNotHeldEventId(childValue(held, "notheld"));
+            m.setHeldEventId(convertZeroEvent(childValue(held, "held"), m));
+            m.setNotHeldEventId(convertZeroEvent(childValue(held, "notheld"), m));
         }
 
         List<Element> list = element.getChildren("aspect");
         for (Element e : list) {
             String aspect = e.getAttribute("defines").getValue();
-            String event = childValue(e, "event");
+            String event = convertZeroEvent(childValue(e, "event"), m);
             m.setOutputForAppearance(aspect, event);
         }
         Element e = element.getChild("disabledAspects");
@@ -132,5 +164,5 @@ public class OlcbSignalMastXml
         log.error("Invalid method called");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OlcbSignalMastXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSignalMastXml.class);
 }
