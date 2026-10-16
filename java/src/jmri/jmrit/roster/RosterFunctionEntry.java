@@ -21,7 +21,6 @@ public class RosterFunctionEntry {
 
     private int fn;
     private String label; 
-    private String soundLabels;
     private String image;
     private String selectedImage;
     private boolean lockable;
@@ -30,17 +29,15 @@ public class RosterFunctionEntry {
     public RosterFunctionEntry(int n) {
         fn = n;
         label = null;
-        soundLabels = null;
         image = null;
         selectedImage = null;
         lockable = true;
         visible = true;
     }
 
-    public RosterFunctionEntry(int n, String lab, String slab, String im, String sim, boolean lock, boolean vis) {
+    public RosterFunctionEntry(int n, String lab, String im, String sim, boolean lock, boolean vis) {
         fn = n;
         label = lab;
-        soundLabels = slab;
         image = im;
         selectedImage = sim;
         lockable = lock;
@@ -50,7 +47,6 @@ public class RosterFunctionEntry {
     public RosterFunctionEntry(RosterFunctionEntry pEntry) {
         fn = pEntry.fn;
         label = pEntry.label;
-        soundLabels = pEntry.soundLabels;
         image = pEntry.image;
         selectedImage = pEntry.selectedImage;
         lockable = pEntry.lockable;
@@ -67,14 +63,6 @@ public class RosterFunctionEntry {
 
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public String getSoundLabels() {
-        return soundLabels; 
-    }
-
-    public void setSoundLabels(String soundLabels) {
-        this.soundLabels = soundLabels;
     }
 
     public String getImage() {
@@ -121,7 +109,6 @@ public class RosterFunctionEntry {
         return (            
             (fn == r.fn) &&
             (label == null ? r.label == null : label.equals(r.label)) &&
-            (soundLabels == null ? r.soundLabels == null : soundLabels.equals(r.soundLabels)) &&
             (image == null ? r.image == null : image.equals(r.image)) &&
             (selectedImage == null ? r.selectedImage == null : selectedImage.equals(r.selectedImage)) &&
             (lockable == r.lockable) &&
@@ -134,7 +121,6 @@ public class RosterFunctionEntry {
         int hash = 7;
         hash = 31 * hash + fn;
         hash = 31 * hash + (label == null ? 0 : label.hashCode());
-        hash = 31 * hash + (soundLabels == null ? 0 : soundLabels.hashCode());
         hash = 31 * hash + (image == null ? 0 : image.hashCode());
         hash = 31 * hash + (selectedImage == null ? 0 : selectedImage.hashCode());
         hash = 31 * hash + (lockable ? 1 : 0);

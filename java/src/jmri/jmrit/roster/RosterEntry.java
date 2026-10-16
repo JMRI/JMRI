@@ -149,6 +149,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _isShuntingOn = "";
     // function entries are stored in a map, keyed by function number (0-XX)
     protected Map<Integer, RosterFunctionEntry> functionEntries;
+    protected Map<Integer, String> soundLabels;
     protected RosterSpeedProfile _sp = null;
     protected final Map<String, String> attributePairs = new HashMap<>();
     // properties unique to that entry, not duplicated when using copy constructor
@@ -160,6 +161,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public RosterEntry() {
         functionEntries = Collections.synchronizedMap(new HashMap<>());
+        soundLabels = Collections.synchronizedMap(new HashMap<>());
     }
 
     /**
@@ -222,6 +224,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
             });
         }
+        if (pEntry.soundLabels != null) {
+            pEntry.soundLabels.forEach((key, value) -> {
+                if (value != null) {
+                    soundLabels.put(key, value);
+                }
+            });
+        }        
         _sp = new RosterSpeedProfile(this, pEntry._sp);
         pEntry.attributePairs.forEach((key, value) -> attributePairs.put(key, value));               
     }
@@ -1210,14 +1219,22 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Check if a function entry exists for a specific function number, and create one if it does not, up to the maximum function number for this roster entry.
      *
      * @param fn    function number, starting with 0
+     * @return true if there is a valid function entry for that number, false else
      */
-    private void checkAndCreateFunctionEntry(int fn) {
+    private boolean checkAndCreateFunctionEntry(int fn) {
         if (functionEntries == null) {
             functionEntries = Collections.synchronizedMap(new HashMap<>());
         }
         if (fn <= getMaxFnNumAsInt() && functionEntries.get(fn) == null) {
-            functionEntries.put(fn, new RosterFunctionEntry(fn));
+            RosterFunctionEntry rfn = new RosterFunctionEntry(fn);
+            functionEntries.put(fn, rfn);
+            return true;
         }
+        if (fn <= getMaxFnNumAsInt()) {
+            return true;
+        }
+        log.debug("Asked for function entry {} whereas max is {} ", fn, getMaxFnNumAsInt());
+        return false;
     }
 
     /**
@@ -1226,8 +1243,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param refn    function definition entry to set
      */    
     public void setFunctionEntry(RosterFunctionEntry refn) {
-        checkAndCreateFunctionEntry(refn.getFunctionNumber());
-        RosterFunctionEntry old = functionEntries.get(refn.getFunctionNumber());
+        if (refn == null) {
+            return;
+        }
+        RosterFunctionEntry old = functionEntries!=null && functionEntries.get(refn.getFunctionNumber()) !=null ? functionEntries.get(refn.getFunctionNumber()) : null;
+        checkAndCreateFunctionEntry(refn.getFunctionNumber());        
         functionEntries.put(refn.getFunctionNumber(), refn);
         firePropertyChange(RosterEntry.FUNCTION_ENTRY + refn.getFunctionNumber(), old, refn);
     }
@@ -1240,8 +1260,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @return the function entry
      */     
     public RosterFunctionEntry getFunctionEntry(int fn) {
-        checkAndCreateFunctionEntry(fn);
-        return functionEntries.get(fn);
+        if (checkAndCreateFunctionEntry(fn)) {
+            return functionEntries.get(fn);
+        }
+        return null;
     }
 
     /**
@@ -1264,9 +1286,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param label the label to use
      */
     public void setFunctionLabel(int fn, String label) {
-        checkAndCreateFunctionEntry(fn);
-        String old = functionEntries.get(fn).getLabel();
-        if ((old != null && old.equals(label)) || (old == null && label == null)) {
+        String old = functionEntries!=null && functionEntries.get(fn) !=null ? functionEntries.get(fn).getLabel() : null;
+        if ( (!checkAndCreateFunctionEntry(fn)) || (old != null && old.equals(label)) || (old == null && label == null)) {
             return;
         }
         functionEntries.get(fn).setLabel(label);
@@ -1294,13 +1315,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param label display label for the sound function
      */
     public void setSoundLabel(int fn, String label) {
-        checkAndCreateFunctionEntry(fn);
-        String old = (functionEntries.get(fn)!=null) ? functionEntries.get(fn).getSoundLabels() : null;
-        if ((old != null && old.equals(label)) || (old == null && label == null)) {
-            return;
-        }        
-        functionEntries.get(fn).setSoundLabels(label);
-        firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, label);
+        if (soundLabels == null) {
+            soundLabels = Collections.synchronizedMap(new HashMap<>());
+        }
+        String old = soundLabels.get(fn);
+        soundLabels.put(fn, label);
+        this.firePropertyChange(RosterEntry.SOUND_LABEL + fn, old, label);
     }
 
     /**
@@ -1311,18 +1331,17 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @return sound label or null
      */
     public String getSoundLabel(int fn) {
-        if (functionEntries == null || functionEntries.get(fn) == null) {
+        if (soundLabels == null) {
             return null;
         }
-        return functionEntries.get(fn).getSoundLabels();
+        return soundLabels.get(fn);
     }
 
     public void setFunctionImage(int fn, String s) {
-        checkAndCreateFunctionEntry(fn);
-        String old = functionEntries.get(fn).getImage();
-        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+        String old = functionEntries!=null && functionEntries.get(fn)!=null ? functionEntries.get(fn).getImage() : null;
+        if ((!checkAndCreateFunctionEntry(fn)) || (old != null && old.equals(s)) || (old == null && s == null)) {
             return;
-        }        
+        }
         functionEntries.get(fn).setImage(s);
         firePropertyChange(RosterEntry.FUNCTION_IMAGE + fn, old, s);
     }
@@ -1335,9 +1354,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public void setFunctionSelectedImage(int fn, String s) {
-        checkAndCreateFunctionEntry(fn);
-        String old = functionEntries.get(fn).getSelectedImage();
-        if ((old != null && old.equals(s)) || (old == null && s == null)) {
+        String old = functionEntries!=null && functionEntries.get(fn)!=null ? functionEntries.get(fn).getSelectedImage() : null;
+        if ((!checkAndCreateFunctionEntry(fn)) || (old != null && old.equals(s)) || (old == null && s == null)) {
             return;
         }
         functionEntries.get(fn).setSelectedImage(s);
@@ -1358,9 +1376,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param lockable true if function is continuous; false if momentary
      */
     public void setFunctionLockable(int fn, boolean lockable) {
-        checkAndCreateFunctionEntry(fn);
-        boolean old = functionEntries.get(fn).isLockable();
-        if (old == lockable) {
+        boolean old = functionEntries!=null && functionEntries.get(fn)!=null && functionEntries.get(fn).isLockable();
+        if ((!checkAndCreateFunctionEntry(fn)) || (old == lockable)) {
             return;
         }
         functionEntries.get(fn).setLockable(lockable);
@@ -1387,9 +1404,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param visible  true if function button is visible; false to hide
      */
     public void setFunctionVisible(int fn, boolean visible) {
-        checkAndCreateFunctionEntry(fn);
-        boolean old = functionEntries.get(fn).isVisible();
-        if (old == visible) {
+        boolean old = functionEntries!=null && functionEntries.get(fn)!=null && functionEntries.get(fn).isVisible();
+        if  ((!checkAndCreateFunctionEntry(fn)) || (old == visible)) {
             return;
         }        
         functionEntries.get(fn).setVisible(visible);
@@ -1592,15 +1608,15 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             e.addContent(s);
         }
 
-        if (functionEntries != null) {
+        if (soundLabels != null) {
             Element s = new Element("soundlabels");
 
             // loop to copy non-null elements
-            functionEntries.forEach((key, value) -> {
-                if (value != null && value.getSoundLabels() != null && !value.getSoundLabels().isEmpty()) {
+            soundLabels.forEach((key, value) -> {
+                if (value != null && !value.isEmpty()) {
                     Element fne = new Element(RosterEntry.SOUND_LABEL);
                     fne.setAttribute("num", "" + key);
-                    fne.addContent(value.getSoundLabels());
+                    fne.addContent(value);
                     s.addContent(fne);
                 }
             });
