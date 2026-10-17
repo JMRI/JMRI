@@ -567,7 +567,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>LogixNG formulas: comparing a decimal value with a whole
+              number now gives the right answer (before, 1.5 == 2 was true and
+              2.5 &lt; 3 was false), and the &amp;&amp; and || operators skip
+              the right-hand side when the left-hand side already decides the
+              result.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
