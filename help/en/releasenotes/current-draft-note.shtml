@@ -527,6 +527,25 @@
                  scale speed shown for the minimum throttle now follow the
                  "Run in reverse" setting, and the scale km/h entry is no
                  longer labelled as scale mph.</li>
+             <li>Automatic release of Sections no longer releases a Section
+                 when the next Section has not been entered, or when the
+                 train is stopped, waiting or in manual mode.</li>
+             <li>Trains using "Head Only" or "Head and Tail" train
+                 detection must now have a Max Train Length, whether or not
+                 they run automatically. A train without one is refused when
+                 it is added or loaded, with a message saying why. The Max
+                 Train Length field is now shown for these trains even when
+                 they do not run automatically.</li>
+             <li>Sections behind a "Head Only" train are now released using
+                 the train length for every train, not only automatic ones.
+                 Previously a dispatched or manual "Head Only" train had each
+                 Section released as soon as the locomotive left it.</li>
+             <li>For a "Head and Tail" train a Section is now released
+                 using the train length, measured to the head, as for a
+                 "Head Only" train. Previously, if the tail lost detection,
+                 for example through dirty wheels, Sections could be released
+                 while the train was still in them, all the way up to the
+                 head.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

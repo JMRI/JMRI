@@ -274,6 +274,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
                 info.getStartBlockName(), info.getDestinationBlockName());
+        String lengthError = checkTrainLength(info);
+        if (lengthError != null) {
+            log.error("Train not loaded: {}", lengthError);
+            throw new IllegalArgumentException(lengthError);
+        }
         // create a new Active Train
 
         //set up defaults from traininfo
@@ -359,6 +364,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
             at.setTrainDetection(info.getTrainDetection());
+            at.setMaxTrainLengthMM((long) (info.getMaxTrainLengthScaleMeters() * 1000.0 * getScale().getScaleFactor()));
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
@@ -2746,7 +2752,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                         foundOne = false;
                                     }
                                 }
-                                foundOne = sectionNotRequiredByHeadOnly(foundOne,at,as);
+                                foundOne = sectionNotRequiredByTrainLength(foundOne,at,as);
                                 if (foundOne) {
                                     log.debug("{}: releasing section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));
                                     doReleaseAllocatedSection(as, false);
@@ -2766,44 +2772,120 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Check whether the section is in use by a "Head Only" train and can be released.
-     * calculate the length of exited sections, subtract the length of section
+     * Final check before an exited Section is auto-released.
+     * <p>
+     * If the earlier checks in checkAutoRelease() have already decided the
+     * Section must be kept (foundOne false) that decision stands.
+     * <p>
+     * For a "Head Only" or "Head and Tail" train the Section can only be
+     * released once the train must have cleared it, worked out from the train
+     * length. Seeing the Section clear is not enough: on a "Head Only" train
+     * the rest of the train is not detected, and on a "Head and Tail" train
+     * the tail may have lost detection while the head is in the next Section.
+     * See isClearByLength().
+     */
+    static boolean sectionNotRequiredByTrainLength(boolean foundOne, ActiveTrain at, AllocatedSection as) {
+        if (!foundOne) {
+            return false;
+        }
+        if (at.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+            return true;
+        }
+        return isClearByLength(at, as);
+    }
+
+    /**
+     * Check whether a train's length is set when its detection setting needs
+     * one. A train whose tail is not always detected ("Head Only" or "Head and
+     * Tail") must have a Max Train Length, so that Sections behind it are not
+     * released while it may still be in them.
+     *
+     * @param info the train
+     * @return an error message, or null if the length is acceptable
+     */
+    static String checkTrainLength(TrainInfo info) {
+        TrainDetection detection = info.getTrainDetection();
+        if (detection == TrainDetection.TRAINDETECTION_WHOLETRAIN || info.getMaxTrainLengthScaleMeters() > 0) {
+            return null;
+        }
+        String detectionName = Bundle.getMessage(detection == TrainDetection.TRAINDETECTION_HEADONLY
+                ? "TrainDetectionHeadOnly" : "TrainDetectionHeadAndTail");
+        return Bundle.getMessage("Error52", info.getTrainName(), detectionName);
+    }
+
+    /*
+     * Get the train length in mm: the length given when the train was
+     * created, or for a train set up directly by a script, its automatic
+     * running length.
+     */
+    static long getTrainLengthMM(ActiveTrain at) {
+        long lengthMM = at.getMaxTrainLengthMM();
+        if (lengthMM <= 0 && at.getAutoActiveTrain() != null) {
+            lengthMM = at.getAutoActiveTrain().getMaxTrainLengthMM();
+        }
+        return lengthMM;
+    }
+
+    /*
+     * Check, by length, whether a train whose tail is not always detected must
+     * have cleared a Section.
+     * Calculate the length of exited sections, subtract the length of section
      * being released. If the train is moving do not include the length of the occupied section,
      * if the train is stationary and was stopped by sensor or speed profile include the length
      * of the occupied section. This is done as we dont know where the train is in the section block.
+     * A train that is not running automatically is always treated as moving.
+     * If the train length is not known the Section is kept.
      */
-    private boolean sectionNotRequiredByHeadOnly(boolean foundOne, ActiveTrain at, AllocatedSection as) {
-        if (at.getAutoActiveTrain() != null && at.getTrainDetection() == TrainDetection.TRAINDETECTION_HEADONLY) {
-            long allocatedLengthMM = 0;
-            for (AllocatedSection tas : at.getAllocatedSectionList()) {
-                if (tas.getSection().getOccupancy() == Section.OCCUPIED) {
-                    if (at.getAutoActiveTrain().getAutoEngineer().isStopped() &&
-                            (at.getAutoActiveTrain().getStopBySpeedProfile() ||
-                                    tas.getSection().getForwardStoppingSensor() != null ||
-                                    tas.getSection().getReverseStoppingSensor() != null)) {
-                        allocatedLengthMM += tas.getSection().getActualLength();
-                        log.debug("{}: sectionNotRequiredByHeadOnly Stopping at Secion [{}] including in length.",
-                                at.getTrainName(),tas.getSection().getDisplayName());
-                        break;
-                    } else {
-                        log.debug("{}: sectionNotRequiredByHeadOnly Stopping at Secion [{}] excluding from length.",
-                                at.getTrainName(),tas.getSection().getDisplayName());
-                        break;
-                    }
-                }
-                if (tas.getExited()) {
-                    allocatedLengthMM += tas.getSection().getActualLength();
-                }
+    private static boolean isClearByLength(ActiveTrain at, AllocatedSection as) {
+        long trainLengthMM = getTrainLengthMM(at);
+        if (trainLengthMM <= 0) {
+            if (at.firstNoLengthWarning()) {
+                log.warn("{}: has no Max Train Length, Sections behind it will not be released automatically.",
+                        at.getTrainName());
             }
-            long trainLengthMM = at.getAutoActiveTrain().getMaxTrainLengthMM();
-            long releaseLengthMM = as.getSection().getActualLength();
-            log.debug("[{}]:Release Section [{}] by Length allocated [{}] release [{}] train [{}]",
-                    at.getTrainName(), as.getSectionName(), allocatedLengthMM, releaseLengthMM, trainLengthMM);
-            if ((allocatedLengthMM - releaseLengthMM) < trainLengthMM) {
-                return (false);
+            return false;
+        }
+        AutoActiveTrain aat = at.getAutoActiveTrain();
+        List<AllocatedSection> trainSections = at.getAllocatedSectionList();
+        // Find the Section holding the head of the train. A "Head Only" train
+        // is only detected at its head, which is in the first occupied Section.
+        // A "Head and Tail" train may also be detected at its tail, in an
+        // earlier Section, so its head is in the last occupied Section.
+        int headIndex = -1;
+        for (int i = 0; i < trainSections.size(); i++) {
+            if (trainSections.get(i).getSection().getOccupancy() == Section.OCCUPIED) {
+                headIndex = i;
+                if (at.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADANDTAIL) {
+                    break;
+                }
             }
         }
-        return (true);
+        long allocatedLengthMM = 0;
+        for (int i = 0; i < trainSections.size(); i++) {
+            AllocatedSection tas = trainSections.get(i);
+            if (i == headIndex) {
+                if (aat != null && aat.getAutoEngineer() != null && aat.getAutoEngineer().isStopped() &&
+                        (aat.getStopBySpeedProfile() ||
+                                tas.getSection().getForwardStoppingSensor() != null ||
+                                tas.getSection().getReverseStoppingSensor() != null)) {
+                    allocatedLengthMM += tas.getSection().getActualLength();
+                    log.debug("{}: isClearByLength Stopping at Secion [{}] including in length.",
+                            at.getTrainName(),tas.getSection().getDisplayName());
+                    break;
+                } else {
+                    log.debug("{}: isClearByLength Stopping at Secion [{}] excluding from length.",
+                            at.getTrainName(),tas.getSection().getDisplayName());
+                    break;
+                }
+            }
+            if (tas.getExited()) {
+                allocatedLengthMM += tas.getSection().getActualLength();
+            }
+        }
+        long releaseLengthMM = as.getSection().getActualLength();
+        log.debug("[{}]:Release Section [{}] by Length allocated [{}] release [{}] train [{}]",
+                at.getTrainName(), as.getSectionName(), allocatedLengthMM, releaseLengthMM, trainLengthMM);
+        return (allocatedLengthMM - releaseLengthMM) >= trainLengthMM;
     }
 
     /**

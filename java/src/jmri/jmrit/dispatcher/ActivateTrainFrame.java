@@ -929,6 +929,21 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionWholeTrain"),TrainDetection.TRAINDETECTION_WHOLETRAIN));
         trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionHeadAndTail"),TrainDetection.TRAINDETECTION_HEADANDTAIL));
         trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionHeadOnly"),TrainDetection.TRAINDETECTION_HEADONLY));
+        trainDetectionComboBox.addActionListener(e -> updateTrainLengthVisibility());
+    }
+
+    /*
+     * A train whose tail is not always detected must have a length, whether
+     * or not it runs automatically, so show the length for it.
+     */
+    private boolean detectionNeedsLength() {
+        Object selected = trainDetectionComboBox.getSelectedItem();
+        return selected instanceof TrainDetectionItem
+                && ((TrainDetectionItem) selected).value != TrainDetection.TRAINDETECTION_WHOLETRAIN;
+    }
+
+    private void updateTrainLengthVisibility() {
+        pa4.setVisible(autoRunBox.isSelected() || detectionNeedsLength());
     }
 
     private void initializeScaleLengthBox() {
@@ -3077,7 +3092,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa2.setVisible(value);
         pa2a.setVisible(value);
         pa3.setVisible(value);
-        pa4.setVisible(value);
+        pa4.setVisible(value || detectionNeedsLength());
         pa5_FNumbers.setVisible(value);
     }
 
