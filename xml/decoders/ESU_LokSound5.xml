@@ -28,6 +28,7 @@
     <!-- ver11 Declare E24 interface on LokSound 5 nano DCC -->
     <!-- ver12 move function output CVs to xsl -->
     <!-- ver13 add function icon/description pane --> 
+    <!-- ver14 re-adds Basic Speed Control pane (fixes bug #15577) -->
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
     <version author="Dave Heap" version="2" lastUpdated="20200410"/>
     <version author="Dave Heap" version="3" lastUpdated="20200726"/>
@@ -41,6 +42,7 @@
     <version author="Pierre Billon" version="11" lastUpdated="20260727"/>
     <version author="Heiko Rosemann" version="12" lastUpdated="20260806"/>
     <version author="Michael Richardson" version="13" lastUpdated="20260816"/>
+    <version author="Heiko Rosemann" version="14" lastUpdated="20261017"/>
 
     <decoder>
         <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
