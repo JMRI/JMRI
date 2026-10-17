@@ -1076,6 +1076,8 @@
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-test-ci"/>
+                <compilerarg value="-Alog4j.graalvm.groupId=jmri"/>
+                <compilerarg value="-Alog4j.graalvm.artifactId=jmri"/>
             </javac-options>
         </ecj-compile>
     </target>
