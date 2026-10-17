@@ -605,7 +605,9 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>When a Route finishes setting its turnouts, its "turnouts
+                aligned" sensor is now set on the layout thread, so Logix,
+                LogixNG and panels watching it get the change safely.</li>
        </ul>
 
     <h3>Scripting</h3>
