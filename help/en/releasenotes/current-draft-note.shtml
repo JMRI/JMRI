@@ -516,13 +516,16 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Start Up actions for a connection that is disabled, could not
-                open its port, or was removed are no longer deleted when
-                Preferences are saved. They are skipped until the connection
-                is available again, instead of being run against no connection
-                or a different one. Removing one of several connections of the
-                same type (for example two CBUS connections) no longer hides
-                the Start Up actions of the others.</li>
+            <li>Start Up actions for a connection that is disabled or could
+                not open its port are no longer deleted when Preferences are
+                saved. They are skipped, and shown in red in the Start Up list,
+                until the connection is available again, instead of being run
+                against no connection or a different one. When a connection is
+                deleted, its Start Up actions are listed so that each one can
+                be moved to another connection of the same type or removed.
+                Removing one of several connections of the same type (for
+                example two CBUS connections) no longer hides the Start Up
+                actions of the others.</li>
         </ul>
 
     <h3>Resources</h3>

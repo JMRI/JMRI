@@ -155,6 +155,73 @@ public class StartupActionsConnectionTest {
     }
 
     @Test
+    public void testActionsForConnection() {
+        cbusMemo("M", "CBUS Sim");
+        PerformActionModel forM = consoleAction("M");
+        PerformActionModel forM2 = consoleAction("M2");
+        PerformActionModel general = new PerformActionModel();
+        general.setClassName("jmri.jmrit.beantable.SensorTableAction");
+        StartupActionsManager manager = new StartupActionsManager();
+        manager.addAction(forM);
+        manager.addAction(general);
+        manager.addAction(forM2);
+
+        assertEquals(java.util.List.of(forM), manager.getActionsForConnection("M"));
+        assertEquals(java.util.List.of(forM2), manager.getActionsForConnection("M2"));
+        assertTrue(manager.getActionsForConnection("L").isEmpty());
+    }
+
+    @Test
+    public void testConnectionsOfferingAction() {
+        CanSystemConnectionMemo sim = cbusMemo("M", "CBUS Sim");
+        CanSystemConnectionMemo hw = cbusMemo("M2", "CBUS hardware");
+        PerformActionModel model = consoleAction("M");
+
+        assertEquals(java.util.List.of(hw), StartupActionsManager.getConnectionsOffering(model, "M"),
+                "the other CBUS connection, not the one being deleted");
+        assertEquals(2, StartupActionsManager.getConnectionsOffering(model, null).size());
+
+        hw.dispose();
+        assertTrue(StartupActionsManager.getConnectionsOffering(model, "M").isEmpty(), "no other CBUS connection");
+        sim.dispose();
+    }
+
+    @Test
+    public void testReassignAction() {
+        cbusMemo("M", "CBUS Sim");
+        cbusMemo("M2", "CBUS hardware");
+        PerformActionModel model = consoleAction("M");
+        StartupActionsManager manager = new StartupActionsManager();
+        manager.addAction(model);
+        manager.savePreferences(profile);
+        assertFalse(manager.isDirty());
+
+        java.util.List<java.beans.PropertyChangeEvent> events = new java.util.ArrayList<>();
+        manager.addPropertyChangeListener(StartupActionsManager.STARTUP, events::add);
+        manager.reassignAction(model, "M2");
+
+        assertEquals("M2", model.getSystemPrefix());
+        assertTrue(manager.isDirty(), "change will be saved");
+        assertEquals(1, events.size(), "table told the row changed");
+        assertEquals(0, ((java.beans.IndexedPropertyChangeEvent) events.get(0)).getIndex());
+        assertEquals(1, manager.getActions().length, "still one action");
+
+        Element perform = savedStartup(manager).getChildren().get(0);
+        Element property = perform.getChildren().stream()
+                .filter(e -> "property".equals(e.getName())).findFirst().orElseThrow();
+        assertEquals("M2", property.getAttributeValue("value"), "saved against the new connection");
+    }
+
+    @Test
+    public void testReassignActionNotInManagerIgnored() {
+        PerformActionModel model = consoleAction("M");
+        StartupActionsManager manager = new StartupActionsManager();
+        manager.reassignAction(model, "M2");
+        assertEquals("M", model.getSystemPrefix(), "unchanged");
+        assertFalse(manager.isDirty());
+    }
+
+    @Test
     public void testActionWithMissingClassStillInvalid() {
         PerformActionModel model = new PerformActionModel();
         model.setClassName("jmri.NoSuchStartupActionClass");
