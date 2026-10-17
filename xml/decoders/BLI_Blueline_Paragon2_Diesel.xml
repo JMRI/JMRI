@@ -30,6 +30,7 @@
         <output name="2" label="rearlight"/>
       </model>
       <functionlabels>
+        <functionlabel num="0" lockable="true">Headlight</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
         <functionlabel num="2" lockable="false">Horn 1</functionlabel>
         <functionlabel num="3" lockable="true">Coupler</functionlabel>

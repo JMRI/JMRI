@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import jmri.jmrit.XmlFile;
@@ -11,6 +12,7 @@ import jmri.util.FileUtil;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +44,14 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     private boolean _isAddressSelectorShowingAllRosterGroup = false;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
-    private String _defaultThrottleFilePath = null;
+    private String _defaultThrottleFilePath = "resources/throttle/NMRA throttle.xml";
+
+    // we store default throttle layout XML elements
+    private Element adressPanelDefXML;
+    private Element controlPanelDefXML;
+    private Element functionPanelDefXML;
+    private Element throttleFrameDefXML;
+
     private ThrottlesPreferencesWindowKeyboardControls _tpwkc = new ThrottlesPreferencesWindowKeyboardControls();
     protected boolean dirty = false;
 
@@ -68,6 +77,8 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         }
         if (root != null) {
             load(root.getChild("throttlesPreferences"));
+        } else { // at least preload default throttle layout
+            preloadDefaultThrottleFile();
         }
     }
 
@@ -382,6 +393,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     public void setDefaultThrottleFilePath(String p) {
         _defaultThrottleFilePath = p;
         this.dirty = true;
+        preloadDefaultThrottleFile();
     }
 
     public String getDefaultThrottleFilePath() {
@@ -419,6 +431,70 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
      */
     public void setThrottlesKeyboardControls(ThrottlesPreferencesWindowKeyboardControls tpwkc) {
         _tpwkc = tpwkc;
+    }
+
+    /**
+     * Get the default throttle address panel XML layout
+     *
+     * @return the default address panel XML layout, null if none
+     */
+    public Element getAdressPanelDefaultXML() {
+        return adressPanelDefXML;
+    }
+
+    /**
+     * Get the default throttle control panel XML layout
+     *
+     * @return the default control panel XML layout, null if none
+     */
+    public Element getControlPanelDefaultXML() {
+        return controlPanelDefXML;
+    }
+
+    /**
+     * Get the default throttle function panel XML layout
+     *
+     * @return the default function panel XML layout, null if none
+     */
+    public Element getFunctionPanelDefaultXML() {
+        return functionPanelDefXML;
+    }
+
+    public Element getThrottleFrameDefaultXML() {
+        return throttleFrameDefXML;
+    }
+
+    /**
+     * Preload the default throttle layout
+     * 
+     */
+    private void preloadDefaultThrottleFile() {        
+        adressPanelDefXML = null;
+        controlPanelDefXML = null;
+        functionPanelDefXML = null;
+        throttleFrameDefXML = null;
+
+        if (getDefaultThrottleFilePath() == null) {
+            return;
+        }
+
+        XmlFile xf = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
+        xf.setValidate(XmlFile.Validate.CheckDtdThenSchema);
+        File f = new File(getDefaultThrottleFilePath());
+        Element root;
+        try {
+            root = xf.rootFromFile(f);
+        } catch ( JDOMException | IOException e) {
+            log.debug("Exception while preloading default throttle file", e);
+            return;
+        }
+        throttleFrameDefXML = root.getChild("ThrottleFrame");
+        if (throttleFrameDefXML == null) {
+            return;
+        }
+        adressPanelDefXML = throttleFrameDefXML.getChild("AddressPanel");
+        controlPanelDefXML = throttleFrameDefXML.getChild("ControlPanel");
+        functionPanelDefXML = throttleFrameDefXML.getChild("FunctionPanel");
     }
 
     /**

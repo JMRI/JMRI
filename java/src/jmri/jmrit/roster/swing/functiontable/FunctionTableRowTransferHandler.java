@@ -2,12 +2,15 @@ package jmri.jmrit.roster.swing.functiontable;
 
 import java.awt.datatransfer.*;
 import java.io.IOException;
+
 import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.EditableResizableImagePanel;
 
@@ -57,7 +60,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
                      support.isDataFlavorSupported(DataFlavor.javaFileListFlavor) ||
                      support.isDataFlavorSupported(DataFlavor.stringFlavor));                        
         }
-        return support.isDrop() && support.isDataFlavorSupported(rowFlavor);
+        return support.isDrop() && ( support.isDataFlavorSupported(rowFlavor) || support.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor));
     }
 
     @Override
@@ -73,12 +76,22 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
             return false;
         }        
         JTable.DropLocation drop = (JTable.DropLocation) support.getDropLocation();      
-        // is if a drop on an imageicon
+        // is if a drop on an imageicon?
         EditableResizableImagePanel impan = FunctionTableMouseListener.getEditableResizableImagePanelAt(table, drop.getDropPoint().x, drop.getDropPoint().y);
         if (impan != null) {
             return URIDrop.importExternalTransferable(support.getTransferable(), impan);
         }
-        // else play with rows
+        // a RosterEntry?
+        if (support.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor)) {
+            try {
+                RosterEntry re = RosterEntrySelection.getRosterEntries(support.getTransferable()).get(0);
+                ((FunctionTableModel)table.getModel()).reset(re.getFunctionEntries(), re.getShuntingFunction(), re.getAttribute(FunctionTableModel.FB_ORDER_ATTR));
+                return true;
+            } catch (UnsupportedFlavorException | IOException | ClassCastException e) {
+                log.error("Could not drag'n drop roster entry.", e);
+            }
+        }
+        // else must be a row
         try {
             int from = (Integer) support.getTransferable().getTransferData(rowFlavor);
             int to = drop.getRow();
