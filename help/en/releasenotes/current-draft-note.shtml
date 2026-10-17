@@ -107,7 +107,23 @@
 
         <h4>DCC4pc</h4>
             <ul>
-                <li></li>
+                <li>DCC4pc RailCom readers work again: the serial port is
+                    saved in the profile, RailCom addresses and orientation
+                    are reported correctly, and two locos in one block are
+                    both identified. The reader is switched to 62.5 kbps for
+                    faster polling, recovers by itself after a loss of track
+                    power or a short, and the bus speed is restored at
+                    quit.</li>
+                <li>If the DCC4pc interface stops responding, unplug it and
+                    plug it back in: JMRI reconnects by itself without a
+                    restart.</li>
+                <li>CVs can be read and written with Programming on Main
+                    through a DCC4pc reader. Set the connection's Programmer
+                    option to the connection that sends the packets (or leave
+                    it blank to use the default command station), and choose
+                    Dcc4Pc as the Ops Mode Programmer in Preferences,
+                    Defaults. Each CV takes about half a second; any left
+                    Unknown can be picked up with Read changes on sheet.</li>
             </ul>
 
         <h4>Direct</h4>
