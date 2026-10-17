@@ -335,12 +335,20 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         if (! eraseOnTimeoutAll && ! eraseOnTimeoutThisReporter) return;
 
         int delay = (_memo==null ? 2000 : ((CbusReporterManager)_memo.get(jmri.ReporterManager.class)).getTimeout() );
+        // a later read restarts the timeout, also when it is the same tag again
+        final int generation = ++timeoutGeneration;
         ThreadingUtil.runOnLayoutDelayed( () -> {
-            if (!disposed && getCurrentReport() == tag) {
+            if (!disposed && generation == timeoutGeneration && getCurrentReport() == tag) {
                 notify(null);
             }
         },delay);
     }
+
+    /**
+     * Counts the reads that started a timeout; only the timeout of the last
+     * read can clear the report. Used on the layout thread.
+     */
+    private int timeoutGeneration = 0;
 
     private boolean disposed = false;
 
