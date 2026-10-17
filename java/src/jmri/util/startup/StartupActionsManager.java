@@ -8,9 +8,12 @@ import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.SystemConnectionMemo;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.configurexml.XmlAdapter;
@@ -145,7 +148,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         Element element = new Element(STARTUP, NAMESPACE);
         actions.stream().forEach((action) -> {
             log.debug("model is {} ({})", action.getName(), action);
-            if (action.getName() != null) {
+            if (action.getName() != null || isKeptAction(action)) {
                 Element e = ConfigXmlManager.elementFromObject(action, true);
                 if (e != null) {
                     element.addContent(e);
@@ -161,6 +164,31 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         } catch (JDOMException ex) {
             log.error("Unable to create create XML", ex);
         }
+    }
+
+    /**
+     * Check if an action without a display name should still be saved.
+     * <p>
+     * An action's display name is only known while a connection or factory
+     * offering it is running. An action for a connection that is disabled,
+     * failed to start, or was removed in this session has no name, but it
+     * still has its class name and connection prefix. It is kept so that it
+     * works again when the connection comes back, rather than being silently
+     * deleted from the user's preferences.
+     *
+     * @param action the action to check
+     * @return true if the action is identified by a class name
+     */
+    private static boolean isKeptAction(StartupModel action) {
+        if (action instanceof AbstractActionModel) {
+            String className = ((AbstractActionModel) action).getClassName();
+            if (className != null && !className.isEmpty()) {
+                log.debug("keeping action {} for connection \"{}\" not currently available",
+                        className, ((AbstractActionModel) action).getSystemPrefix());
+                return true;
+            }
+        }
+        return false;
     }
 
     public StartupModel[] getActions() {
@@ -241,6 +269,74 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         if (fireChange) {
             this.fireIndexedPropertyChange(STARTUP, index, model, null);
         }
+    }
+
+    /**
+     * Get the startup actions that belong to a system connection.
+     *
+     * @param systemPrefix the system prefix of the connection
+     * @return the actions for that connection, in Start Up order; empty if none
+     */
+    @Nonnull
+    public List<AbstractActionModel> getActionsForConnection(@Nonnull String systemPrefix) {
+        ArrayList<AbstractActionModel> result = new ArrayList<>();
+        for (AbstractActionModel model : this.getActions(AbstractActionModel.class)) {
+            if (model.isSystemConnectionAction() && systemPrefix.equals(model.getSystemPrefix())) {
+                result.add(model);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get the running connections that offer the action of a startup action,
+     * so the action could be moved to one of them.
+     *
+     * @param model          the startup action
+     * @param excludedPrefix the system prefix of a connection to leave out,
+     *                       usually the one being deleted; may be null
+     * @return the connections offering the action; empty if none
+     */
+    @Nonnull
+    public static List<SystemConnectionMemo> getConnectionsOffering(@Nonnull AbstractActionModel model,
+            @CheckForNull String excludedPrefix) {
+        ArrayList<SystemConnectionMemo> result = new ArrayList<>();
+        String className = model.getClassName();
+        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+            if (memo.getSystemPrefix().equals(excludedPrefix)) {
+                continue;
+            }
+            StartupActionFactory factory = memo.getActionFactory();
+            if (factory == null) {
+                continue;
+            }
+            for (Class<?> clazz : factory.getActionClasses()) {
+                if (clazz.getName().equals(className)) {
+                    result.add(memo);
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Move a startup action to a different system connection. Triggers an
+     * {@link java.beans.IndexedPropertyChangeEvent} where the index, and the
+     * old value, are the position of the model, and the new value is the
+     * model.
+     *
+     * @param model        the startup action to move
+     * @param systemPrefix the system prefix of the connection to move it to
+     */
+    public void reassignAction(@Nonnull AbstractActionModel model, @Nonnull String systemPrefix) {
+        int index = this.actions.indexOf(model);
+        if (index < 0) {
+            return;
+        }
+        model.setSystemPrefix(systemPrefix);
+        this.setRestartRequired();
+        this.fireIndexedPropertyChange(STARTUP, index, index, model);
     }
 
     public HashMap<Class<? extends StartupModel>, StartupModelFactory> getFactories() {
