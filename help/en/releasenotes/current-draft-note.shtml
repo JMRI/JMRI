@@ -534,7 +534,10 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>NX with signal masts: if a train enters the start block
+                    while the route is still being set, the first block of the
+                    route stays protected. Before, it was dropped and the entry
+                    signal could stay clear behind the train.</li>
             </ul>
 
     <h3>LccPro</h3>
