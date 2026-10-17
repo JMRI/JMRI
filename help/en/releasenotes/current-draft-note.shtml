@@ -74,6 +74,11 @@
                     instead of throwing an exception. The hex file is closed
                     after reading instead of being left open and locked, and
                     short records are padded correctly for the AN247 bootloader.</li>
+                <li>Unplugging a CANUSB4 or other GridConnect USB adapter on
+                    Windows no longer leaves JMRI running a CPU core flat out;
+                    the connection fails and reconnects when the adapter is
+                    plugged back in. Closing a connection no longer replays the
+                    last frame received.</li>
                 <li>GridConnect connections (CANUSB, CANUSB4, CANRS and LCC
                     GridConnect adapters): when the ';' ending a frame is lost,
                     the next frame is now received instead of both being merged
