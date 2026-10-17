@@ -48,7 +48,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected String _road = NONE;
     protected String _type = NONE;
     protected String _length = "0";
-    protected String _color = NONE;
+    protected String _color = "Black";
     protected String _weight = DEFAULT_WEIGHT;
     protected String _weightTons = DEFAULT_WEIGHT;
     protected String _built = NONE;
