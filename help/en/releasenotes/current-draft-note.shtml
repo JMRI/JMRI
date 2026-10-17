@@ -573,7 +573,8 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>A deleted averaging meter no longer keeps reading its source
+                meter in the background.</li>
         </ul>
 
     <h3>OperationsPro</h3>
