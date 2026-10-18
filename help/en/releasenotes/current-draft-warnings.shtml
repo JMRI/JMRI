@@ -1,6 +1,13 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
+        <strong>LogixNG formulas: &amp;&amp; and || no longer always
+        evaluate both sides.</strong>
+        The right-hand side is now skipped when the left-hand side already
+        decides the result. A formula that relies on both sides running, for
+        example to call methods for their side effects, may now behave
+        differently. See the LogixNG section of the release notes for an
+        example and how to change it.
     </li>
     <li>
     </li>

@@ -553,10 +553,21 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>LogixNG formulas: comparing a decimal value with a whole
-              number now gives the right answer (before, 1.5 == 2 was true and
-              2.5 &lt; 3 was false), and the &amp;&amp; and || operators skip
-              the right-hand side when the left-hand side already decides the
-              result.</li>
+              number now gives the right answer. Before, 1.5 == 2 was true and
+              2.5 &lt; 3 was false.</li>
+          <li>LogixNG formulas: the &amp;&amp; and || operators now only
+              evaluate the right-hand side when the left-hand side does not
+              already decide the result, as in most programming languages.
+              This lets a check guard what follows it, for example
+              <code>(x != null) &amp;&amp; (x.y == 1)</code>.
+              A formula that relied on both sides always being evaluated, to
+              call methods for their side effects, must be changed. For
+              example, <code>myArray.add("Hello") || myArray.add(" ") ||
+              myArray.add("World!")</code> now only adds "Hello": add returns
+              true, so || has its answer after the first call and skips the
+              rest. Use <code>myArray.add("Hello") &amp;&amp; myArray.add(" ")
+              &amp;&amp; myArray.add("World!")</code> instead, which carries on
+              while each call returns true.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
