@@ -220,6 +220,9 @@
         <li>Graeme Brown, who helped debug the Mac OS X disk images and startup scripts for 10.4
         and provided updates for NCE decoders</li>
 
+        <li>Keith Bruce, <!-- KeithMerg -->
+         who provided important improvements to MERG CBUS and beyond.</li>
+
         <li>Bob Bucklew, who as an early CTC-builder showed the way to better functionality,
         provided images, and keeps use moving toward better CTC models. See in particular his
         <a href="http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html">online panel
