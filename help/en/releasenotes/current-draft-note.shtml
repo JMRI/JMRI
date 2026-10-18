@@ -199,6 +199,16 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
+                <li>OpenLCB/LCC Signal Masts can no longer 
+                    be defined to use the event ID's that start with 00
+                    as these values are reserved and not to be used.
+                    The value 00.00.00.00.00.00.00.00 was previously the default 
+                    for "this event ID hasn't been configured".
+                    The default is now a blank entry field that doesn't
+                    produce or consume an event.  If you have 
+                    defined any of the signal mast entries to start with 00,
+                    they will be migrated to be empty fields that no longer 
+                    produce or consume an event.</li>
                 <li>Change the default events for the STL Editor IQYZ tables from all zeros to
                     unique zero based events.</li>
             </ul>
