@@ -60,13 +60,18 @@ public class CbusNodeEvent extends CbusBasicNodeEvent implements Comparable<Cbus
             log.error("Event Index needs to be more than 0");
             return;
         }
+        if ( _evVarArr == null || index > _evVarArr.length ) {
+            log.error("Event Variable Index {} out of range, {} has {} Event Variables",
+                index, this, getNumEvVars() );
+            return;
+        }
         if (value > 255 ) {
             log.error("Event Variable value needs to be less than 255 (oxff)");
             return;
         }
         _evVarArr[(index-1)]=value;
         notifyModel();
-        
+
     }
     
     /**
@@ -83,9 +88,14 @@ public class CbusNodeEvent extends CbusBasicNodeEvent implements Comparable<Cbus
      * Returns the value of an event variable
      *
      * @param index of the variable, no array offset needed, 1 is 1
-     * @return the decimal event indexed variable value
+     * @return the decimal event indexed variable value, -1 if unknown or index out of range
      */
     public int getEvVar(int index) {
+        if ( _evVarArr == null || index < 1 || index > _evVarArr.length ) {
+            log.error("Event Variable Index {} out of range, {} has {} Event Variables",
+                index, this, getNumEvVars() );
+            return -1;
+        }
         return _evVarArr[(index-1)];
     }
     
@@ -170,6 +180,9 @@ public class CbusNodeEvent extends CbusBasicNodeEvent implements Comparable<Cbus
      * @return number of event variables
      */      
     public int getNumEvVars() {
+        if ( _evVarArr == null ) {
+            return 0;
+        }
         return _evVarArr.length;
     }
     

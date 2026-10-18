@@ -163,8 +163,8 @@ public class DefaultAverageMeter extends AbstractAnalogIO implements AverageMete
         }
         this._meter = meter;
         if (_meter != null) {
-            _updateTask = new MyTimerTask();
-            TimerUtil.scheduleOnGUIThread(_updateTask, DELAY, DELAY);
+            // keep the task that is actually scheduled, so that it can be cancelled
+            _updateTask = TimerUtil.scheduleOnGUIThread(new MyTimerTask(), DELAY, DELAY);
         }
     }
 
@@ -194,8 +194,12 @@ public class DefaultAverageMeter extends AbstractAnalogIO implements AverageMete
 
         @Override
         public void run() {
+            Meter meter = _meter;
+            if (meter == null) {
+                return; // a run already queued when the meter was removed
+            }
             System.arraycopy(_measurements, 1, _measurements, 0, SIZE-1);
-            _measurements[SIZE-1] = _meter.getKnownAnalogValue();
+            _measurements[SIZE-1] = meter.getKnownAnalogValue();
         }
 
     }

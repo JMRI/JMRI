@@ -94,10 +94,12 @@ public class CbusNodeParameterManager {
             return;
         }
         log.debug("set parameter tot:{} index:{} newval:{}",_parameters.length,index,newval);
-        if ( index <= _parameters.length ) {
+        if ( index >= 0 && index < _parameters.length ) {
 
             _parameters[index] = newval;
             _node.notifyPropertyChangeListener("PARAMETER", null, null);
+        } else {
+            log.debug("Node {} parameter index {} outside of {} parameters, not set", _node, index, _parameters.length - 1 );
         }
     }
 
