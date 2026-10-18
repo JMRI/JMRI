@@ -524,6 +524,12 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>An automatic "Head and Tail" train with no stopping sensor
+                 and no speed profile stopping can now draw fully into a
+                 Section before stopping, by watching the Block holding its
+                 tail go unoccupied, as an "Entire Train" train does.
+                 Previously it stopped as soon as the locomotive entered
+                 the Section.</li>
              <li>When the maximum speed of an automatically running train
                  is entered as a scale speed (scale mph or scale km/h),
                  that limit is now applied as entered. Previously it could
