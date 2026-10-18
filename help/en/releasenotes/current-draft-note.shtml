@@ -703,7 +703,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Editing a turnout's automation settings from the per-turnout edit
+                button now actually saves the change. Previously, if the turnout's
+                automation was set to a named operation (rather than "Default"),
+                the edit landed on a disconnected copy and the turnout kept using
+                its old settings.</li>
         </ul>
 
    <h3>Warrants</h3>
