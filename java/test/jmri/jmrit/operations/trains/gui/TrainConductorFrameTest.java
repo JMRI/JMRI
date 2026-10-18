@@ -69,7 +69,9 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Train train2 = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
         train2.setNumberEngines("2");
 
-        TrainConductorFrame f = new TrainConductorFrame(train2);
+        TrainConductorFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainConductorFrame(train2);
+        });
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         Assert.assertNotNull(p);
         JemmyUtil.waitFor(f);
@@ -154,7 +156,9 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         Assert.assertTrue(train2.build()); // build train
         Assert.assertTrue(train2.isBuilt());
 
-        TrainConductorFrame f = new TrainConductorFrame(train2);
+        TrainConductorFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainConductorFrame(train2);
+        });
         TrainConductorPanel p = (TrainConductorPanel) f.getContentPane();
         boolean enabled = ThreadingUtil.runOnGUIwithReturn(() -> { 
             return p.modifyButton.isEnabled();
