@@ -600,7 +600,11 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>Logix: a deleted Logix now stops running. Before, deleting
+              an enabled Logix left it setting turnouts and sensors until
+              JMRI was restarted. This includes a Logix that was loaded
+              disabled and enabled later, which could not be stopped this way
+              even where the delete did deactivate it.</li>
         </ul>
 
     <h3>LogixNG</h3>
