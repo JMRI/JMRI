@@ -46,14 +46,14 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
 
-        Object leftValue = null;
+        boolean left = false;
         if (_tokenType != TokenType.BOOLEAN_NOT) {
             // Left value must be calculated _before_ right value is calculated.
             // When a value is calculated, a method might be called, and the
             // order of these calls must be correct.
             // For example, if myArray is an array, the formula might be:
             //   myArray.add("Hello") && myArray.add(" ") && myArray.add("World!")
-            leftValue = _leftSide.calculate(symbolTable);
+            Object leftValue = _leftSide.calculate(symbolTable);
             if (leftValue == null) leftValue = false;
 
             if (!(leftValue instanceof Boolean)) {
@@ -65,12 +65,14 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
                 }
             }
 
+            left = (Boolean)leftValue;
+
             // The operators && and || only calculate the right value if
             // the left value doesn't decide the result.
-            if ((_tokenType == TokenType.BOOLEAN_AND) && Boolean.FALSE.equals(leftValue)) {
+            if ((_tokenType == TokenType.BOOLEAN_AND) && !left) {
                 return false;
             }
-            if ((_tokenType == TokenType.BOOLEAN_OR) && Boolean.TRUE.equals(leftValue)) {
+            if ((_tokenType == TokenType.BOOLEAN_OR) && left) {
                 return true;
             }
         }
@@ -91,8 +93,6 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         if (_tokenType == TokenType.BOOLEAN_NOT) {
             return ! right;
         }
-
-        boolean left = Boolean.TRUE.equals(leftValue);
 
         switch (_tokenType) {
             case BOOLEAN_OR:
