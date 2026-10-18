@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterFunctionEntry;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.EditableResizableImagePanel;
@@ -36,7 +37,7 @@ import jmri.util.swing.EditableResizableImagePanel;
 
 public class FunctionTableRowTransferHandler extends TransferHandler {
     private final JTable table;
-    private final DataFlavor rowFlavor = new DataFlavor(Integer.class, "row index");
+    private final DataFlavor rowFlavor = new DataFlavor(MyTransferData.class, "function table row+rosterentry+rosterfunctionentry");
 
     public FunctionTableRowTransferHandler(JTable table) {
         this.table = table;
@@ -44,7 +45,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        return new DataHandler(table.getSelectedRow(), rowFlavor);
+        return new DataHandler(table.getSelectedRow(), ((FunctionTableModel)table.getModel()).getRosterEntry(), ((FunctionTableModel)table.getModel()).getRosterFunctionEntryAtRow(table.getSelectedRow()), rowFlavor);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
             }
             return ( support.isDataFlavorSupported(DataFlavor.imageFlavor) ||
                      support.isDataFlavorSupported(DataFlavor.javaFileListFlavor) ||
-                     support.isDataFlavorSupported(DataFlavor.stringFlavor));                        
+                     support.isDataFlavorSupported(DataFlavor.stringFlavor));
         }
         return support.isDrop() && ( support.isDataFlavorSupported(rowFlavor) || support.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor));
     }
@@ -74,8 +75,8 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
         if ( !canImport(support) || !(support.getDropLocation() instanceof JTable.DropLocation)) {
             log.debug("TransferSupport() can't do import");
             return false;
-        }        
-        JTable.DropLocation drop = (JTable.DropLocation) support.getDropLocation();      
+        }
+        JTable.DropLocation drop = (JTable.DropLocation) support.getDropLocation();
         // is if a drop on an imageicon?
         EditableResizableImagePanel impan = FunctionTableMouseListener.getEditableResizableImagePanelAt(table, drop.getDropPoint().x, drop.getDropPoint().y);
         if (impan != null) {
@@ -93,14 +94,21 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
         }
         // else must be a row
         try {
-            int from = (Integer) support.getTransferable().getTransferData(rowFlavor);
+            MyTransferData data = (MyTransferData) support.getTransferable().getTransferData(rowFlavor);
             int to = drop.getRow();
-            if (to < 0 || from == to || from + 1 == to) {
-                log.debug("TransferSupport() can't do import : same indexes");
-                return false;
+            if ( data.getRosterEntry().getDccLocoAddress().equals( ((FunctionTableModel)table.getModel()).getRosterEntry().getDccLocoAddress() )) { 
+                log.debug("Dropping a row from the same roster entry -> reorder");
+                int from = data.getRow();
+                if (to < 0 || from == to || from + 1 == to) {
+                    log.debug("TransferSupport() can't do import : same indexes");
+                    return false;
+                }
+                ((FunctionTableModel) table.getModel()).moveRow(from, to > from ? to - 1 : to);
+                table.getSelectionModel().setSelectionInterval( to > from ? to - 1 : to, to > from ? to - 1 : to );
+            } else {
+                log.debug("Dropping a row from another roster entry -> copy values");
+                ((FunctionTableModel)table.getModel()).setRosterFunctionEntryAtRow(data.getRosterFunctionEntry(), to);
             }
-            ((FunctionTableModel) table.getModel()).moveRow(from, to > from ? to - 1 : to);
-            table.getSelectionModel().setSelectionInterval( to > from ? to - 1 : to, to > from ? to - 1 : to );
             return true;
         } catch (UnsupportedFlavorException | IOException e) {
             log.debug("importData() Exception : ", e);
@@ -109,11 +117,11 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
     }
 
     private static class DataHandler implements Transferable {
-        private final Integer row;
+        private final MyTransferData transferData;
         private final DataFlavor flavor;
 
-        DataHandler(Integer row, DataFlavor flavor) {
-            this.row = row;
+        DataHandler(Integer row, RosterEntry re, RosterFunctionEntry fe, DataFlavor flavor) {
+            this.transferData = new MyTransferData(row, re, fe);
             this.flavor = flavor;
         }
 
@@ -133,8 +141,32 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
             if (!isDataFlavorSupported(f)) {
                 throw new UnsupportedFlavorException(f);
             }
+            return transferData;
+        }
+    }
+
+    private static class MyTransferData {
+        private final int row;
+        private final RosterEntry rosterEntry;
+        private final RosterFunctionEntry functionEntry;
+        
+        MyTransferData(int r, RosterEntry re, RosterFunctionEntry fe) {
+            row = r;
+            rosterEntry = re;
+            functionEntry = fe;
+        }
+
+        int getRow() {
             return row;
         }
+
+        RosterEntry getRosterEntry() {
+            return rosterEntry;
+        }
+
+        RosterFunctionEntry getRosterFunctionEntry() {
+            return functionEntry;
+        }        
     }
 
     private static final Logger log = LoggerFactory.getLogger(FunctionTableRowTransferHandler.class);

@@ -128,7 +128,26 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
         }
         initImagePanels();
         fireTableDataChanged();
-    }    
+    }
+
+    public RosterFunctionEntry getRosterFunctionEntryAtRow(int row) {
+        int fn = getFnForRow(row);
+        if (fn == -1) {
+            return null;
+        }
+        return rosterEntry.getFunctionEntries()[fn];
+    }
+
+    public void setRosterFunctionEntryAtRow(RosterFunctionEntry rfe, int rowIndex) {
+        int fn = getFnForRow(rowIndex);
+        RosterFunctionEntry newrfe = new RosterFunctionEntry(fn, rfe); // create a copy, keep original function number
+        rosterEntry.setFunctionEntry(newrfe);
+        // force reload of image panels
+        getFunctionImagePanel(fn).setImagePath(newrfe.getImage());
+        getFunctionSelectedImagePanel(fn).setImagePath(newrfe.getImage());
+        // refresh rendering
+        fireTableDataChanged();
+    }
 
     private void initRowFn() {
         String fnDOAtt = rosterEntry.getAttribute(FB_ORDER_ATTR);

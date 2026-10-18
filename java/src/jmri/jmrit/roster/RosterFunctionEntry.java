@@ -45,12 +45,11 @@ public class RosterFunctionEntry {
     }
 
     public RosterFunctionEntry(RosterFunctionEntry pEntry) {
-        fn = pEntry.fn;
-        label = pEntry.label;
-        image = pEntry.image;
-        selectedImage = pEntry.selectedImage;
-        lockable = pEntry.lockable;
-        visible = pEntry.visible;
+        this( pEntry.fn, pEntry.label, pEntry.image, pEntry.selectedImage, pEntry.lockable, pEntry.visible);
+    }
+
+    public RosterFunctionEntry(int fn, RosterFunctionEntry pEntry) {
+        this( fn, pEntry.label, pEntry.image, pEntry.selectedImage, pEntry.lockable, pEntry.visible);
     }
 
     public int getFunctionNumber() {
