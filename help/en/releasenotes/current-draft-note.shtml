@@ -508,7 +508,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed an intermittent exception that occurred when 
+                detaching one of the programming panes.</li>
         </ul>
 
    <h3>Dispatcher</h3>

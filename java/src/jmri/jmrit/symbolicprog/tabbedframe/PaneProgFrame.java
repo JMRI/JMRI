@@ -1224,8 +1224,8 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (root.getChild("programmer").getAttribute("showRosterPane").getValue().equals("no")) {
                 makeInfoPane(r);
             } else {
-                final int i = tabPane.getTabCount();
-                tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeStandinComponent());
+                final Component standin = makeStandinComponent();
+                tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), standin);
                 threadCount.incrementAndGet();
                 new javax.swing.SwingWorker<JComponent, Object>(){
                     @Override
@@ -1236,7 +1236,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     protected void done() {
                         try {
                             var result = get();
-                            tabPane.setComponentAt(i, result);
+                            replaceStandinComponent(standin, result);
                         } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                             log.error("Exception",e);
                         }
@@ -1245,8 +1245,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }.execute();
             }
         } else {
-            final int i = tabPane.getTabCount();
-            tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeStandinComponent());
+            final Component standin = makeStandinComponent();
+            tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), standin);
 
             threadCount.incrementAndGet();
             new javax.swing.SwingWorker<JComponent, Object>(){
@@ -1258,7 +1258,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 protected void done() {
                     try {
                         var result = get();
-                        tabPane.setComponentAt(i, result);
+                        replaceStandinComponent(standin, result);
                     } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                         log.error("Exception",e);
                     }
@@ -1277,8 +1277,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 makePhysicsPane(r);
             } else {
                 _physicsPane = new RosterPhysicsPane(r);
-                final int iPhys = tabPane.getTabCount();
-                tabPane.addTab(RosterPhysicsPane.getTabTitle(), makeStandinComponent());
+                final Component standin = makeStandinComponent();
+                tabPane.addTab(RosterPhysicsPane.getTabTitle(), standin);
                 threadCount.incrementAndGet();
                 new javax.swing.SwingWorker<JComponent, Object>() {
                     @Override
@@ -1290,7 +1290,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     protected void done() {
                         try {
                             var result = get();
-                            tabPane.setComponentAt(iPhys, result);
+                            replaceStandinComponent(standin, result);
                         } catch (
                                 InterruptedException |
                                 java.util.concurrent.ExecutionException e) {
@@ -1307,8 +1307,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 && !suppressFunctionLabels.equals("yes")
             ) {
 
-                final int i = tabPane.getTabCount();
-                tabPane.addTab(Bundle.getMessage("FUNCTION LABELS"), makeStandinComponent());
+                final Component standin = makeStandinComponent();
+                tabPane.addTab(Bundle.getMessage("FUNCTION LABELS"), standin);
 
                 threadCount.incrementAndGet();
                 new javax.swing.SwingWorker<JComponent, Object>(){
@@ -1320,7 +1320,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     protected void done() {
                         try {
                             var result = get();
-                            tabPane.setComponentAt(i, result);
+                            replaceStandinComponent(standin, result);
                         } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                             log.error("Exception",e);
                         }
@@ -1338,8 +1338,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 && !suppressRosterMedia.equals("yes")
             ) {
 
-                final int i = tabPane.getTabCount();
-                tabPane.addTab(Bundle.getMessage("ROSTER MEDIA"), makeStandinComponent());
+                final Component standin = makeStandinComponent();
+                tabPane.addTab(Bundle.getMessage("ROSTER MEDIA"), standin);
 
                 threadCount.incrementAndGet();
                 new javax.swing.SwingWorker<JComponent, Object>(){
@@ -1351,7 +1351,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     protected void done() {
                         try {
                             var result = get();
-                            tabPane.setComponentAt(i, result);
+                            replaceStandinComponent(standin, result);
                         } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                             log.error("Exception",e);
                         }
@@ -1697,8 +1697,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // create place-keeper tab
+        final Component standin = makeStandinComponent();
         ThreadingUtil.runOnGUI(() -> {
-            tabPane.addTab(name, makeStandinComponent());
+            tabPane.addTab(name, standin);
         });
 
         // create a panel to hold columns via separate thread
@@ -1724,24 +1725,33 @@ abstract public class PaneProgFrame extends JmriJFrame
                         log.debug("'{}' pane of 1st type at index {}", name, tabPane.indexOfTab(name));
                         // Was there a race condition here with qualified panes?
                         // QualifiedVarTest attempts to invoke that, but haven't it with the following code
-                        index = tabPane.indexOfTab(name);
-                        tabPane.setComponentAt(tabPane.indexOfTab(name), p);  // always add if not empty
-                        tabPane.setToolTipTextAt(tabPane.indexOfTab(name), p.getToolTipText());
+                        boolean replaced = replaceStandinComponent(standin, p);
+                        index = tabPane.indexOfComponent(p);
+                        if (replaced && index < 0) {
+                            index = 0; // still process pane modifiers while the pane is detached
+                        }
+                        if (index >= 0) {
+                            tabPane.setToolTipTextAt(index, p.getToolTipText());
+                        }
                     } else if (isShowingEmptyPanes()) {
                         log.debug("'{}' pane of 2nd type", name);
                         // here empty, but showing anyway as disabled
-                        index = tabPane.indexOfTab(name);
-                        tabPane.setComponentAt(tabPane.indexOfTab(name), p);
-                        tabPane.setToolTipTextAt(tabPane.indexOfTab(name),
-                                Bundle.getMessage("TipTabEmptyNoCategory"));
-                        tabPane.setEnabledAt(tabPane.indexOfTab(name), true); // need to enable the pane so user can see message
+                        boolean replaced = replaceStandinComponent(standin, p);
+                        index = tabPane.indexOfComponent(p);
+                        if (replaced && index < 0) {
+                            index = 0; // still process pane modifiers while the pane is detached
+                        }
+                        if (index >= 0) {
+                            tabPane.setToolTipTextAt(index, Bundle.getMessage("TipTabEmptyNoCategory"));
+                            tabPane.setEnabledAt(index, true); // need to enable the pane so user can see message
+                        }
                     } else {
                         log.debug("'{}' pane of 3rd type", name);
                         // here not showing tab at all
                         index = -1;
                         log.trace("deleted {} tab here at index {}", name, tabPane.indexOfTab(name));
                         // tabPane.removeTabAt(..) does not work here with DetachableTabbedPane
-                        tabPane.remove(tabPane.indexOfTab(name));
+                        tabPane.remove(standin);
                     }
 
                     // remember it for programming
@@ -1758,6 +1768,23 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }.execute();
 
+    }
+
+    /** Replace a temporary tab component without relying on a tab index that may have changed. */
+    private boolean replaceStandinComponent(Component standin, Component replacement) {
+        if (tabPane instanceof jmri.util.org.mitre.jawb.swing.DetachableTabbedPane) {
+            jmri.util.org.mitre.jawb.swing.DetachableTabbedPane detachablePane =
+                    (jmri.util.org.mitre.jawb.swing.DetachableTabbedPane) tabPane;
+            if (detachablePane.replaceComponent(standin, replacement)) {
+                return true;
+            }
+        }
+        int index = tabPane.indexOfComponent(standin);
+        if (index >= 0) {
+            tabPane.setComponentAt(index, replacement);
+            return true;
+        }
+        return false;
     }
 
     /**
