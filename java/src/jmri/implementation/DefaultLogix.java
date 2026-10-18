@@ -1125,6 +1125,8 @@ public class DefaultLogix extends AbstractNamedBean
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
+        // remove the listeners first, so a deleted Logix stops running
+        deActivateLogix();
         super.dispose();
         for (int i = 0; i < getNumConditionals(); i++) {
             Conditional c = getConditional(getConditionalByNumberOrder(i));

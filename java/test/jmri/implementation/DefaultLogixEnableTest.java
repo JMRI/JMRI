@@ -87,6 +87,37 @@ public class DefaultLogixEnableTest {
         assertEquals(base, in.getNumPropertyChangeListeners(), "deactivated Logix removed its listener");
     }
 
+    @Test
+    public void testDeletedLogixStopsRunning() throws JmriException {
+        int base = in.getNumPropertyChangeListeners();
+        LogixManager lm = InstanceManager.getDefault(LogixManager.class);
+        DefaultLogix x = buildLogix("IX5");
+        lm.register(x);
+        x.activateLogix();
+        assertEquals(base + 1, in.getNumPropertyChangeListeners());
+
+        // as the Delete button in the Logix table does, without deactivating first
+        lm.deleteLogix(x);
+        assertEquals(base, in.getNumPropertyChangeListeners(), "deleted Logix removed its listener");
+        in.setKnownState(Sensor.ACTIVE);
+        assertEquals(Sensor.INACTIVE, out.getKnownState(), "deleted Logix no longer acts");
+    }
+
+    @Test
+    public void testDeletedLogixEnabledAfterLoadingDisabledStopsRunning() throws JmriException {
+        int base = in.getNumPropertyChangeListeners();
+        LogixManager lm = InstanceManager.getDefault(LogixManager.class);
+        DefaultLogix x = buildLogix("IX6");
+        lm.register(x);
+        x.setEnabled(false); // loaded disabled
+        x.setEnabled(true);  // enabled from the Logix table
+
+        lm.deleteLogix(x);
+        assertEquals(base, in.getNumPropertyChangeListeners(), "deleted Logix removed its listener");
+        in.setKnownState(Sensor.ACTIVE);
+        assertEquals(Sensor.INACTIVE, out.getKnownState(), "deleted Logix no longer acts");
+    }
+
     @BeforeEach
     public void setUp() throws JmriException {
         JUnitUtil.setUp();
