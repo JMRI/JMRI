@@ -53,8 +53,8 @@
         <li>Version 4.2 thru 4.25.5 requires Java 8 (except release 311) or Java 11 (recommended).</li>
         <li>Version 4.25.6 thru 4.26 requires Java 8 or Java 11 (recommended).</li>
         <li>Version 4.99.x thru 5.8 requires Java 11.</li>
-        <li>Versions 5.9.1 through 5.14 requires Java 11 or Java 17 (recommended).<li>
-        <li>Versions 5.15.1 onwards requires Java 11 or Java 21 (recommended).
+        <li>Versions 5.9.1 through 5.14 requires Java 11 through 17, Java 17 recommended.<li>
+        <li>Versions 5.15.1 onwards requires Java 11 or later, Java 21 recommended.
         See <a href="https://www.jmri.org/java/index.shtml">our Java instructions</a>
         page on getting Java.</li>
 
