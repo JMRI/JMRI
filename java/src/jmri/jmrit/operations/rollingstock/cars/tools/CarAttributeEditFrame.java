@@ -1,9 +1,10 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -25,7 +26,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
     // incremental attributes for this frame
-    public static final String COLOR = "Color";
     public static final String KERNEL = "Kernel";
 
     public CarAttributeEditFrame(){
@@ -69,9 +69,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (_attribute.equals(TYPE)) {
             InstanceManager.getDefault(CarTypes.class).deleteName(deleteItem);
         }
-        if (_attribute.equals(COLOR)) {
-            InstanceManager.getDefault(CarColors.class).deleteName(deleteItem);
-        }
         if (_attribute.equals(LENGTH)) {
             InstanceManager.getDefault(CarLengths.class).deleteName(deleteItem);
         }
@@ -114,9 +111,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
                 }
             }
         }
-        if (_attribute.equals(COLOR)) {
-            InstanceManager.getDefault(CarColors.class).addName(addItem);
-        }
         if (_attribute.equals(LENGTH)) {
             InstanceManager.getDefault(CarLengths.class).addName(addItem);
             comboBox.setSelectedItem(addItem);
@@ -144,9 +138,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (_attribute.equals(LENGTH)) {
             InstanceManager.getDefault(CarLengths.class).replaceName(oldItem, newItem);
         }
-        if (_attribute.equals(COLOR)) {
-            InstanceManager.getDefault(CarColors.class).replaceName(oldItem, newItem);
-        }
     }
 
     @Override
@@ -155,10 +146,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         if (_attribute.equals(TYPE)) {
             comboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
             InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
-        }
-        if (_attribute.equals(COLOR)) {
-            comboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
-            InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
         }
         if (_attribute.equals(LENGTH)) {
             comboBox = InstanceManager.getDefault(CarLengths.class).getComboBox();
@@ -231,6 +218,15 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
                     }
                 }
             }
+            // need to check if an engine is using the color name
+            if (_attribute.equals(COLOR)) {
+                for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
+                    if (rs.getColorName().equals(item)) {
+                        log.info("Engine ({} {}) is assigned color name ({})", rs.getRoadName(), rs.getNumber(), item); // NOI18N
+                        return;
+                    }
+                }
+            }
             // confirm that attribute is to be deleted
             confirmDelete(item);
         }
@@ -255,9 +251,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         }
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarTypes.class).updateComboBox(comboBox);
-        }
-        if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
-            InstanceManager.getDefault(CarColors.class).updateComboBox(comboBox);
         }
         if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarLengths.class).updateComboBox(comboBox);

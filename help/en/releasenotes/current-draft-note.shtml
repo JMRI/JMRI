@@ -26,6 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS sensor, turnout and light addresses: an unsigned
+                    address such as 100001 is treated the same as +100001, node
+                    numbers of 21475 and above no longer overflow, and an out of
+                    range address is reported as invalid instead of throwing an
+                    exception.</li>
                 <li>CBUS programming reports a busy command station or a CV
                     error straight away, instead of waiting for the programming
                     timeout.</li>
@@ -65,6 +70,11 @@
                     layout while a throttle has no session, where previously a
                     speed or function change could go out with an invalid
                     session.</li>
+                <li>A CBUS reporter set to Classic RFID always decodes 5 byte
+                    tags as Classic RFID, whatever the first tag byte, and an
+                    existing reporter's type is never changed by the frames it
+                    receives. A reporter created by a CANRCOM RailCom report is
+                    still set to the self-describing type automatically.</li>
                 <li>The CBUS bootloader checks a hex file before it can be used.
                     The Program button stays disabled until the file has been
                     read without error and its parameters checked; a file with
@@ -74,6 +84,11 @@
                     instead of throwing an exception. The hex file is closed
                     after reading instead of being left open and locked, and
                     short records are padded correctly for the AN247 bootloader.</li>
+                <li>Unplugging a CANUSB4 or other GridConnect USB adapter on
+                    Windows no longer leaves JMRI running a CPU core flat out;
+                    the connection fails and reconnects when the adapter is
+                    plugged back in. Closing a connection no longer replays the
+                    last frame received.</li>
                 <li>GridConnect connections (CANUSB, CANUSB4, CANRS and LCC
                     GridConnect adapters): when the ';' ending a frame is lost,
                     the next frame is now received instead of both being merged
@@ -83,6 +98,9 @@
                     longer also delivered to whichever tool sent the last frame,
                     so a tool window which has been closed stops receiving
                     traffic.</li>
+                <li>CBUS Reporters with erase-on-timeout: reading the same
+                    tag again restarts the timeout, so a tag still being read is
+                    no longer cleared early.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -97,7 +115,23 @@
 
         <h4>DCC4pc</h4>
             <ul>
-                <li></li>
+                <li>DCC4pc RailCom readers work again: the serial port is
+                    saved in the profile, RailCom addresses and orientation
+                    are reported correctly, and two locos in one block are
+                    both identified. The reader is switched to 62.5 kbps for
+                    faster polling, recovers by itself after a loss of track
+                    power or a short, and the bus speed is restored at
+                    quit.</li>
+                <li>If the DCC4pc interface stops responding, unplug it and
+                    plug it back in: JMRI reconnects by itself without a
+                    restart.</li>
+                <li>CVs can be read and written with Programming on Main
+                    through a DCC4pc reader. Set the connection's Programmer
+                    option to the connection that sends the packets (or leave
+                    it blank to use the default command station), and choose
+                    Dcc4Pc as the Ops Mode Programmer in Preferences,
+                    Defaults. Each CV takes about half a second; any left
+                    Unknown can be picked up with Read changes on sheet.</li>
             </ul>
 
         <h4>Direct</h4>
@@ -184,6 +218,16 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
+                <li>OpenLCB/LCC Signal Masts can no longer 
+                    be defined to use the event ID's that start with 00
+                    as these values are reserved and not to be used.
+                    The value 00.00.00.00.00.00.00.00 was previously the default 
+                    for "this event ID hasn't been configured".
+                    The default is now a blank entry field that doesn't
+                    produce or consume an event.  If you have 
+                    defined any of the signal mast entries to start with 00,
+                    they will be migrated to be empty fields that no longer 
+                    produce or consume an event.</li>
                 <li>Change the default events for the STL Editor IQYZ tables from all zeros to
                     unique zero based events.</li>
             </ul>
@@ -499,6 +543,12 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>An automatic "Head and Tail" train with no stopping sensor
+                 and no speed profile stopping can now draw fully into a
+                 Section before stopping, by watching the Block holding its
+                 tail go unoccupied, as an "Entire Train" train does.
+                 Previously it stopped as soon as the locomotive entered
+                 the Section.</li>
              <li>When the maximum speed of an automatically running train
                  is entered as a scale speed (scale mph or scale km/h),
                  that limit is now applied as entered. Previously it could
@@ -534,7 +584,10 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>NX with signal masts: if a train enters the start block
+                    while the route is still being set, the first block of the
+                    route stays protected. Before, it was dropped and the entry
+                    signal could stay clear behind the train.</li>
             </ul>
 
     <h3>LccPro</h3>
@@ -573,7 +626,8 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>A deleted averaging meter no longer keeps reading its source
+                meter in the background.</li>
         </ul>
 
     <h3>OperationsPro</h3>
@@ -584,6 +638,7 @@
             <li>Conductor and Yardmaster now have "Show Cars" in their tool menu.</li>
             <li>Conductor tool menu now has the YardmasterByTrack tool.</li>
             <li>Additional help for the new "On Time" mode of operations.</li>
+            <li>You can now specify the loco color on Manifests and switch lists</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -620,7 +675,9 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>When a Route finishes setting its turnouts, its "turnouts
+                aligned" sensor is now set on the layout thread, so Logix,
+                LogixNG and panels watching it get the change safely.</li>
        </ul>
 
     <h3>Scripting</h3>
