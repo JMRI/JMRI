@@ -34,7 +34,6 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     private final int _number;
     private final CanSystemConnectionMemo _memo;
 
-    private static final RailComManager railComManager = InstanceManager.getDefault(RailComManager.class);
 
     /**
      * Should all CbusReporters clear themselves after a timeout?
@@ -129,19 +128,25 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         }
 
         if (((m.getElement(1) << 8) + m.getElement(2)) == _number) { // correct reporter number, for us
-            if (m.getOpCode() == CbusConstants.CBUS_DDES && !getCbusReporterType().equals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC)  ) {
+            if (getCbusReporterType().equals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC)) {
+                // Classic 5 byte unique RFID tag on DDES or ACDAT, the tag
+                // bytes are opaque data and must not be inspected for a type.
+                classicRFIDReport(m);
+            } else if (m.getOpCode() == CbusConstants.CBUS_DDES) {
+                // self-describing DDES, CANRC522 or CANRCOM
                 ddesReport(m);
             } else {
-                int least_significant_bit = m.getElement(3) & 1;
-                if ( least_significant_bit == 0 ) {
-                    classicRFIDReport(m);
-                } else {
-                    canRcomReport(m);
-                }
+                // ACDAT is always a 5 byte tag
+                classicRFIDReport(m);
             }
         }
     }
 
+    /**
+     * Process a self-describing DDES from a CANRC522 or CANRCOM.
+     * The least significant bit of the first data byte selects the format.
+     * @param m the DDES frame
+     */
     private void ddesReport(CanReply m) {
         int least_significant_bit = m.getElement(3) & 1;
         if ( least_significant_bit == 0 ) {
@@ -253,7 +258,9 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
                 break;
         }
         
-        var idTag = railComManager.provideIdTag(""+locoAddress.getNumber());
+        // RailComManager looked up when needed, not cached in a static field at class load,
+        // which could refer to a manager no longer registered with the InstanceManager.
+        var idTag = InstanceManager.getDefault(RailComManager.class).provideIdTag(""+locoAddress.getNumber());
         var tag = (RailCom)idTag;
         
         tag.setDccAddress(locoAddress);
