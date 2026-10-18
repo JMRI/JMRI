@@ -200,7 +200,10 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
 
     @Override
     public void setHidden(boolean hide) {
-        _hidden = hide;
+        if (_hidden != hide) {
+            _hidden = hide;
+            showHidden();
+        }
     }
 
     @Override

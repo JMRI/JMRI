@@ -236,7 +236,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 case Sprog3PlusPaneProvider.CAN_DISABLE:
-                    disable.setEnabled(value != 0);
+                    disable.setSelected(value != 0); // show the NV state, not grey out the indicator
                     break;
 
                 case Sprog3PlusPaneProvider.INPUT_VOLTAGE:

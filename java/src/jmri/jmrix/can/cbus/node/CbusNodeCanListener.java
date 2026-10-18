@@ -37,7 +37,7 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
      * We don't know if it's this JMRI instance or something external teaching the node
      * so we monitor them the same
      *
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void message(CanMessage m) {
@@ -52,39 +52,52 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
             case CbusConstants.CBUS_CANID:
             case CbusConstants.CBUS_NNCLR:
                 CanReply r = new CanReply(m);
-                reply(r);
+                processFrame(r, false);
                 break;
             default:
                 break;
         }
     }
-    
+
     /**
-     * Processes all incoming and certain outgoing CAN Frames
+     * Processes all incoming CAN Frames
      *
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
     public void reply(CanReply m) {
+        processFrame(m, true);
+    }
+
+    /**
+     * Processes all incoming and certain outgoing CAN Frames.
+     *
+     * @param m the CAN Frame
+     * @param fromNode true if the Frame has been received from the network, ie. sent by a Node,
+     *                 false if the Frame has been sent by software, ie. this JMRI instance.
+     */
+    private void processFrame(CanReply m, boolean fromNode) {
         if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = CbusMessage.getOpcode(m);
         int nn = ( m.getElement(1) * 256 ) + m.getElement(2);
-        
-        // if the OPC is coming from a Node, update the CAN ID field
-        // if the OPC is coming from software, do NOT update the CAN ID field
-        
-        // if node in learn mode 
+
+        // if node in learn mode
         if ( _node.getNodeInLearnMode() ) {
            processInLearnMode(m);
         }
-        
+
         if (nn != _node.getNodeNumber() ) {
             return;
         }
-        
-        _node.setCanId(CbusMessage.getId(m));
+
+        // if the OPC is coming from a Node, update the CAN ID field
+        // if the OPC is coming from software, do NOT update the CAN ID field
+        // as the Frame CAN ID is that of the software, not the node.
+        if ( fromNode ) {
+            _node.setCanId(CbusMessage.getId(m));
+        }
 
         switch (CbusMessage.getOpcode(m)) {
             case CbusConstants.CBUS_CMDERR:
@@ -119,19 +132,16 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
                 break;
             case CbusConstants.CBUS_NUMEV:
                 // response from node
-                
+
                 int newEventsOnNode = m.getElement(3);
                 _node.getNodeTimerManager().clearNumEvTimeout();
-                _node.getNodeEventManager().resetNodeEventsToZero();
-                if ( _node.getNodeParamManager().getParameter(5)<0 ){
+                int evVarsPerEvent = _node.getNodeParamManager().getParameter(CbusNodeConstants.EV_PER_EN_IDX);
+                if ( evVarsPerEvent < 0 ){
+                    _node.getNodeEventManager().resetNodeEventsToZero();
                     return;
-                }   for (int i = 0; i < newEventsOnNode; i++) {
-                    CbusNodeEvent newev = new CbusNodeEvent(memo,-1, -1, _node.getNodeNumber(), -1,
-                            _node.getNodeParamManager().getParameter(5) );
-                    // (int nn, int en, int thisnode, int index, int maxEvVar);
-                    _node.getNodeEventManager().addNewEvent(newev);
                 }
-                _node.notifyPropertyChangeListener("ALLEVUPDATE",null,null);
+                // all events added in one go, Event Index invalidated once, ALLEVUPDATE sent once.
+                _node.getNodeEventManager().setUnknownEvents( newEventsOnNode, evVarsPerEvent );
                 break;
             case CbusConstants.CBUS_ENRSP:
                 // response from node with a stored event, node + index
@@ -161,10 +171,12 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
                 break;
             case CbusConstants.CBUS_NNLRN:
                 // sent from software
-                // [AC] Ignore setting servo modules into learn mode during NV GUI edit
-                if (((CbusNode)_node).getnvWriteInLearnOnly() == false) {
-                    _node.setNodeInLearnMode(true);
-                }
+                // Always track learn mode, including for modules which only accept NV writes
+                // in learn mode ( eg. CANSERVO8C ), where CbusSend.nVSET wraps the NVSET in
+                // NNLRN / NNULN. The NNULN clears the flag again immediately afterwards.
+                // Not tracking learn mode for these modules meant that Event teaching,
+                // which expects the WRACK to be processed in learn mode, never completed.
+                _node.setNodeInLearnMode(true);
                 break;
             case CbusConstants.CBUS_NNULN:
                 // sent from software
@@ -209,7 +221,9 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
     private void processParam(CanReply m){
         _node.getNodeTimerManager().clearAllParamTimeout();
         if (m.getElement(3)==0) { // param 0 is number of params
-            int [] myarray = new int[(m.getElement(4)+1)]; // +1 to account for index 0 being the parameter count
+            // +1 to account for index 0 being the parameter count,
+            // minimum of 8 parameters as per CBUS Spec so the known values below always fit
+            int [] myarray = new int[Math.max(m.getElement(4), 7) + 1];
             java.util.Arrays.fill(myarray, -1);
             // node may already be aware of some params via the initial PNN or STAT
 
@@ -222,13 +236,9 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
 
                 log.debug("tempSetupParams {}",tempSetupParams);
 
-                myarray[1] = tempSetupParams[0];
-                myarray[2] = tempSetupParams[1];
-                myarray[3] = tempSetupParams[2];
-                myarray[4] = tempSetupParams[3];
-                myarray[5] = tempSetupParams[4];
-                myarray[6] = tempSetupParams[5];
-                myarray[7] = tempSetupParams[6];
+                for (int i = 0; i < Math.min(tempSetupParams.length, 7); i++) {
+                    myarray[i+1] = tempSetupParams[i];
+                }
 
                 // reset NV array
                 if ( myarray[6] > -1 ){
@@ -238,6 +248,8 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
                     myParray[0] = myarray[6];
                     _node.getNodeNvManager().setNVs(myParray);
                 }
+                // setup parameters only apply to the initial parameter fetch
+                tempSetupParams = null;
             }
 
             myarray[0] = m.getElement(4);
@@ -319,9 +331,10 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
                 log.warn("No event with index {} found on node {}",m.getElement(5),toString() );
             } else {
                 // event found with correct index number
+                // EVLRNI Frame is NN NN EN EN EN# EV# EVval
                 toEdit.setNn( ( m.getElement(1) * 256 ) + m.getElement(2) );
                 toEdit.setEn( ( m.getElement(3) * 256 ) + m.getElement(4) );
-                toEdit.setEvVar( ( m.getElement(6) * 256 ), m.getElement(7) );
+                toEdit.setEvVar( m.getElement(6), m.getElement(7) );
             }
         }
     }

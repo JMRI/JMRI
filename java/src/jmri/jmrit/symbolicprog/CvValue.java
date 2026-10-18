@@ -20,6 +20,9 @@ import org.slf4j.LoggerFactory;
  * the operation is complete, and the Value and State are stable. During a read
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
+ * <p>
+ * CVs track their states, as shown below.<br>
+ * <a href="doc-files/VariableStates.png"><img src="doc-files/VariableStates.png" alt="States for variables and their colors" height="33%" width="33%"></a>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2013
  * @author Howard G. Penny Copyright (C) 2005

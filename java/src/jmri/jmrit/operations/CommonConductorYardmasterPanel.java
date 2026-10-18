@@ -33,7 +33,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Common elements for the Conductor and Yardmaster Frames.
  *
- * @author Dan Boudreau Copyright (C) 2013
+ * @author Dan Boudreau Copyright (C) 2013, 2026
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
@@ -814,6 +814,17 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     private Color _color;
     protected Color getStatusColor() {
         return _color;
+    }
+    
+    public String getLocationName() {
+        return textLocationName.getText();
+    }
+    
+    public Location getCurrentLocation() {
+        if (_train != null && _train.getCurrentRouteLocation() != null) {
+            return _train.getCurrentRouteLocation().getLocation();
+        }
+        return null;
     }
 
     protected void removeCarFromList(Car car) {

@@ -18,6 +18,20 @@ public class SerialDriverAdapterTest {
       Assert.assertNotNull("SerialDriverAdapter constructor",new SerialDriverAdapter());
    }
 
+   // A connection that starts after DCC4PC (LocoNet often does) must still be offered as the Programmer.
+   @Test
+   public void testProgrammerChoicesIncludeLaterConnection() {
+      SerialDriverAdapter a = new SerialDriverAdapter();
+      new jmri.jmrix.internal.InternalSystemConnectionMemo("T", "Test Station", false);
+      Assert.assertTrue("later connection offered",
+              java.util.Arrays.asList(a.getOptionChoices("Programmer")).contains("Test Station"));
+
+      // a saved choice whose connection isn't running stays selectable
+      a.configureOption1("Not Running");
+      Assert.assertTrue("saved choice kept",
+              java.util.Arrays.asList(a.getOptionChoices("Programmer")).contains("Not Running"));
+   }
+
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();

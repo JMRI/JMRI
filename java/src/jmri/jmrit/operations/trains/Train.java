@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -102,7 +103,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _serviceStatus = NONE; // status only if train is being built
     protected int _statusCode = CODE_UNKNOWN;
     protected int _oldStatusCode = CODE_UNKNOWN;
-    protected Date _date; // date for last status change for this train
+    protected LocalDateTime _date; // date for last status change for this train
     protected int _statusCarsRequested = 0;
     protected String _tableRowColorName = NONE; // color of row in Trains table
     protected String _tableRowColorResetName = NONE; // color of row in Trains table when reset
@@ -830,7 +831,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         String oldStatus = getStatus();
         int oldCode = getStatusCode();
         _statusCode = code;
-        setDate(Calendar.getInstance().getTime());
+        setDate(LocalDateTime.now());
         if (oldCode != getStatusCode()) {
             setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, getStatus());
         }
@@ -2186,7 +2187,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _statusCarsRequested;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         _date = date;
     }
 
@@ -2194,16 +2195,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (_date == null) {
             return NONE;
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
-        return format.format(_date);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); // NOI18N
+        return _date.format(format);
     }
 
     public String getDate() {
         if (_date == null) {
             return NONE;
         }
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
-        return format.format(_date);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"); // NOI18N
+        return _date.format(format);
     }
 
     /**
@@ -3684,7 +3685,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public String getIconName() {
-        String name = getName();
+        String name = getSplitName();
         if (isBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled()) {
             name += " " + getLeadEngineNumber();
         }
@@ -4262,7 +4263,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _leadEngineId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.TERMINATION_DATE)) != null) {
-            _date = TrainCommon.convertStringToDate(a.getValue());
+            _date = TrainCommon.convertStringToLocalDateTime(a.getValue());
         }
         if ((a = e.getAttribute(Xml.REQUESTED_CARS)) != null) {
             try {

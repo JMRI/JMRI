@@ -130,7 +130,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                         // to this.  If content here is empty, we defer to that;
                         // if there are content here, overrides what Display wrote.
                         if (!value.isEmpty()) {
-                            frame.getFnLabelPane().getLabel(index+1).setText(value);
+                            frame.getFnLabelPane().setLabel(index+1, value);
                             log.trace("Description sets {} {} {}", index, e.getValue(), value);
                         }
                     } else {
@@ -157,7 +157,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                     }
                     if (e.key.endsWith(".Momentary")) {
                         boolean lockable = (e.getValue() == 0);
-                        frame.getFnLabelPane().getLockable(index+1).setSelected(lockable);
+                        frame.getFnLabelPane().setLockable(index+1, lockable);
                     } else if (e.key.endsWith(".Consist Behavior")) {
                         // process consist bit
                         // first, see if function variable exists
@@ -175,7 +175,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
                         // will be overwritten by Description if needed
                         var description = TcsImporter.unpackDescription("", ""+e.getValue());
                         log.trace("Display sets {} {} {}", index, e.getValue(), description);
-                        frame.getFnLabelPane().getLabel(index+1).setText(description);
+                        frame.getFnLabelPane().setLabel(index+1, description);
                     } else {
                         log.warn("Unexpected content \"{}\"", e.key);
                     }

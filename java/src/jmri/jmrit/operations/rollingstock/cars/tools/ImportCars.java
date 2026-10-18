@@ -571,7 +571,7 @@ public class ImportCars extends ImportCommon {
                 car.setTypeName(carType);
                 car.setLength(carLength);
                 car.setWeight(carWeight);
-                car.setColor(carColor);
+                car.setColorName(carColor);
                 car.setOwnerName(carOwner);
                 car.setBuilt(carBuilt);
                 car.setLoadName(carLoadName);

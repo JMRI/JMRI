@@ -518,6 +518,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  Initialization ---------
 
+    /**
+     * Initialize the IQYZ tables with default event ids.
+     * When the actual data is loaded, the default event ids will be replaced with real event ids.
+     */
     private void initalizeLists() {
         // Group List
         for (int i = 0; i < 16; i++) {
@@ -526,22 +530,28 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         // Input List
         for (int i = 0; i < 128; i++) {
-            _inputList.add(new InputRow("", "", ""));
+            var eventTrue = createDefaultEventID('I', i);
+            var eventFalse = createDefaultEventID('i', i);
+            _inputList.add(new InputRow("", eventTrue, eventFalse));
         }
 
         // Output List
         for (int i = 0; i < 128; i++) {
-            _outputList.add(new OutputRow("", "", ""));
+            var eventTrue = createDefaultEventID('Q', i);
+            var eventFalse = createDefaultEventID('q', i);
+            _outputList.add(new OutputRow("", eventTrue, eventFalse));
         }
 
         // Receiver List
         for (int i = 0; i < 16; i++) {
-            _receiverList.add(new ReceiverRow("", ""));
+            var event = createDefaultEventID('Y', i);
+            _receiverList.add(new ReceiverRow("", event));
         }
 
         // Transmitter List
         for (int i = 0; i < 16; i++) {
-            _transmitterList.add(new TransmitterRow("", ""));
+            var event = createDefaultEventID('Z', i);
+            _transmitterList.add(new TransmitterRow("", event));
         }
     }
 
@@ -1813,9 +1823,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     /**
      * The event id will be a dotted-hex or an 'event name'.  Event names need to be converted to
-     * the actual dotted-hex value.  If the name no longer exists in the name store, a zeros
-     * event is created as 00.00.00.00.00.AA.BB.CC.  AA will the hex value of one of IQYZ.  BB and
-     * CC are hex values of the group and item numbers.
+     * the actual dotted-hex value.  If the name no longer exists in the name store, a zeros based
+     * default event is used.
      * @param event The dotted-hex event id or event name
      * @param iqyz The character for the table.
      * @param row The row number.
@@ -1834,10 +1843,28 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             log.error("STL Editor getLoadEventID event failed for event name {}", event);
         }
 
-        // Create zeros event dotted-hex string
+        // Create a default zeros based event
+        var zeroEvent = createDefaultEventID(iqyz, row);
+
+        JmriJOptionPane.showMessageDialog(null,
+                Bundle.getMessage("MessageEvent", event, zeroEvent, iqyz),
+                Bundle.getMessage("TitleEvent"),
+                JmriJOptionPane.ERROR_MESSAGE);
+
+        return zeroEvent;
+    }
+
+    /**
+     * Create a default zeros based event 00.00.00.00.00.AA.BB.CC.  AA will be the hex value of one of IQYZiq.
+     * BB and CC are hex values of the group and item numbers.
+     * @param iqyz The character for the table. The false event uses the lower case I or Q.
+     * @param row The row number.
+     * @return a dotted-hex event id string.
+     */
+    private String createDefaultEventID(char iqyz, int row) {
         var group = row;
         var item = 0;
-        if (iqyz == 'I' || iqyz == 'Q') {
+        if (iqyz == 'I' || iqyz == 'Q' || iqyz == 'i' || iqyz == 'q') {
             group = row / 8;
             item = row % 8;
         }
@@ -1848,14 +1875,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         sb.append(StringUtil.twoHexFromInt(group));
         sb.append(".");
         sb.append(StringUtil.twoHexFromInt(item));
-        var zeroEvent = sb.toString();
-
-        JmriJOptionPane.showMessageDialog(null,
-                Bundle.getMessage("MessageEvent", event, zeroEvent, iqyz),
-                Bundle.getMessage("TitleEvent"),
-                JmriJOptionPane.ERROR_MESSAGE);
-
-        return zeroEvent;
+        return sb.toString();
     }
 
     private void loadBackupInputs(int index, List<String> lines) {

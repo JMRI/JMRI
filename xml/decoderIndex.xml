@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.17.3plus+jake+20260911T2134Z+Rd7f572827aa on Fri Sep 11 17:34:13 EDT 2026-->
-  <decoderIndex version="727">
+  <!--Written by JMRI version 5.17.3plus+jake+20261010T1212Z+R626f7224cd2 on Sat Oct 10 08:12:31 EDT 2026-->
+  <decoderIndex version="729">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -19077,6 +19077,9 @@
       </family>
       <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder." file="PpP_Sem4.xml">
         <model model="PpP-Sem4" />
+      </family>
+      <family name="EL-HO" mfg="Public-domain and DIY" file="Public_Domain_EL-HO.xml">
+        <model model="Rybák" />
       </family>
       <family name="FREDi" mfg="Public-domain and DIY" modes="LOCONETSV2MODE" file="Public_Domain_FREDi_LNSV2.xml">
         <model model="FREDi using LNSV2" productID="11" developerID="1" />

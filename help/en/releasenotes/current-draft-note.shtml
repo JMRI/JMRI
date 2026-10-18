@@ -26,7 +26,78 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS sensor, turnout and light addresses: an unsigned
+                    address such as 100001 is treated the same as +100001, node
+                    numbers of 21475 and above no longer overflow, and an out of
+                    range address is reported as invalid instead of throwing an
+                    exception.</li>
+                <li>CBUS programming reports a busy command station or a CV
+                    error straight away, instead of waiting for the programming
+                    timeout.</li>
+                <li>Closing the CBUS bootloader window stops all of its timers,
+                    and the fast write speed choice is now saved.</li>
+                <li>The CBUS bootloader only accepts parameter replies from the
+                    module being programmed, for the parameter it asked for, and
+                    the module device ID is shown correctly.</li>
+                <li>CBUS performance on busy layouts: incoming frames are
+                    dispatched to sensors, turnouts and lights with much less
+                    work and no per-frame garbage, and the Event Table and
+                    Console do far less work for each frame.</li>
+                <li>CBUS Node Manager: teaching events now completes on modules
+                    which only accept changes in learn mode (eg. CANSERVO8C,
+                    CANMIO-SVO); an EVLRNI reply no longer throws an exception;
+                    an aborted NV fetch no longer leaves the node permanently
+                    unread; events invalidated after a failed fetch are read
+                    again; enumerating CAN IDs no longer resets an existing
+                    node; a node no longer shows JMRI's own CAN ID; and reading
+                    the events of a node with many events is faster.</li>
+                <li>The CBUS fast clock uses the calendar year rather than the
+                    week-based year, accepts and sends temperatures from -128 to
+                    127 correctly, and stops listening to the JMRI clock when it
+                    is disposed. CBUS consist listeners are no longer shared
+                    between connections.</li>
+                <li>CBUS windows: the Node Manager releases all of its tabs when
+                    closed, NV edit windows are no longer bound to the first
+                    node they were opened for, the Console closes its log file
+                    when closed and shows when a log file could not be opened,
+                    and the SPROG 3 Plus CAN disable setting is shown instead of
+                    being greyed out.</li>
+                <li>CBUS throttles: a released throttle is removed from the
+                    session list, so an emergency stop reaches every remaining
+                    throttle instead of failing partway through; after a command
+                    station reset a recovered session is only given back to the
+                    throttle for the same loco; and nothing is sent to the
+                    layout while a throttle has no session, where previously a
+                    speed or function change could go out with an invalid
+                    session.</li>
+                <li>A CBUS reporter set to Classic RFID always decodes 5 byte
+                    tags as Classic RFID, whatever the first tag byte, and an
+                    existing reporter's type is never changed by the frames it
+                    receives. A reporter created by a CANRCOM RailCom report is
+                    still set to the self-describing type automatically.</li>
+                <li>The CBUS bootloader checks a hex file before it can be used.
+                    The Program button stays disabled until the file has been
+                    read without error and its parameters checked; a file with
+                    record types the bootloader does not understand is rejected;
+                    the MERG parameter block checksum is now verified; and a
+                    load address missing from the file stops programming cleanly
+                    instead of throwing an exception. The hex file is closed
+                    after reading instead of being left open and locked, and
+                    short records are padded correctly for the AN247 bootloader.</li>
+                <li>Unplugging a CANUSB4 or other GridConnect USB adapter on
+                    Windows no longer leaves JMRI running a CPU core flat out;
+                    the connection fails and reconnects when the adapter is
+                    plugged back in. Closing a connection no longer replays the
+                    last frame received.</li>
+                <li>GridConnect connections (CANUSB, CANUSB4, CANRS and LCC
+                    GridConnect adapters): when the ';' ending a frame is lost,
+                    the next frame is now received instead of both being merged
+                    into one corrupt frame; and corrupt frames are dropped
+                    instead of being passed on as events.</li>
+                <li>CAN connections: a frame received from the layout is no
+                    longer also delivered to whichever tool sent the last frame,
+                    so a tool window which has been closed stops receiving
+                    traffic.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -36,7 +107,6 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>Correct E-Stop command sent when throttle is in reverse.</li>
                 <li>DCC-EX: turnout commands sent with a Turnout Automation retry policy
                 (e.g. "NoFeedback") were previously sent only once, ignoring the configured
                 retry interval and count. <code>DCCppTurnout</code> now defers to the configured
@@ -86,23 +156,11 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>A throttle waiting for a reply which never arrives now gives up
-                    and resumes sending: after 5 seconds once the connection has
-                    nothing left in hand, 15 seconds otherwise. On a serial XpressNet
-                    connection a broadcast message arriving while a command is in
-                    flight could be taken for that command's reply, leaving the
-                    throttle waiting forever and silently holding back every
-                    command queued afterwards for the rest of the session.</li>
-                <li>Roco and Z21 throttles now stop their timers when they are
-                    disposed of, instead of leaving them running for the rest of
-                    the session.</li>
+                <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Fixed a problem where an Intellibox-II would
-                    have power on/off problems after CV programming.</li>
-                <li>A LocoNet connection now reconnects if the connection goes down and then comes up again.</li>
                 <li></li>
             </ul>
 
@@ -143,20 +201,10 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>The "Make Sensor" and "Make Turnout" buttons in the configuration
-                    panel used to require a non-empty description field to put a
-                    user name on the Sensor/Turnout they'd create. Absent that, they
-                    wouldn't appear. A description is no longer required; if one
-                    is not present, the Sensor or Turnout will be created without
-                    a user name.</li>
-                <li>Updated OpenLCB / LCC Reporters to set the RailCom orientation instead
-                    of direction (WEST/EAST if the appropriate bit is set in
-                    the report).</li>
-                <li>Updated OpenLCB / LCC Reporters to query current occupancy and present
-                    locomotives from layout hardware upon creation and startup, correctly
-                    populating the initial report and collection.</li>
-                <li>Updated the OpenLCB jar library to pick up a fix to the
-                    read/write timeout value calculation.</li>
+                <li>Added a dialog to draw attention to the error
+                    if a firmware update fails.</li>
+                <li>Change the default events for the STL Editor IQYZ tables from all zeros to
+                    unique zero based events.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -351,7 +399,7 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li>Added EL-HO decoder for cars Ryb&aacute;k</li>
+                <li></li>
             </ul>
 
         <h4>QSI</h4>
@@ -442,17 +490,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Memory Input Icons, Global Variable Input Icons and
-                Block Contents Input Icons have for a long time
-                shown a shadow border by default instead of no border
-                by default.  This made it impossible to display them
-                without a border, unlike other editor icons.
-                This has been fixed.  If you want a border on one of these icons
-                and no longer see one, use the contextual menu on the
-                icon to set the border width to a non-zero value.
-            <li>Memory Input Icons, Global Variable Input Icons and
-                Block Contents Input Icons now work properly when the
-                panel has been zoomed larger or smaller.
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -480,7 +518,19 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>When the maximum speed of an automatically running train
+                 is entered as a scale speed (scale mph or scale km/h),
+                 that limit is now applied as entered. Previously it could
+                 be reduced by the stored throttle percentage value in the
+                 Physics ramp and in distance-based stopping. The throttle
+                 percentage is now only a fallback for locomotives without
+                 a speed profile, or when the profile does not cover the
+                 direction of travel; a warning is written to the system
+                 console in that case.</li>
+             <li>The scale speed conversions for the maximum speed and the
+                 scale speed shown for the minimum throttle now follow the
+                 "Run in reverse" setting, and the scale km/h entry is no
+                 longer labelled as scale mph.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -498,26 +548,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Memory Input Icons, Global Variable Input Icons and
-                Block Contents Input Icons have for a long time
-                shown a shadow border by default instead of no border
-                by default.  This made it impossible to display them
-                without a border, unlike other editor icons.
-                This has been fixed.  If you want a border on one of these icons
-                and no longer see one, use the contextual menu on the
-                icon to set the border width to a non-zero value.</li>
-            <li>The popup menu for Memory Input Icons now lets you set the number of
-                columns that the GUI will display. Note that the fixed width
-                interacts with selection:  If you select a wider fixed width,
-                blank areas will display on either side.</li>
-            <li>A bug introduced in JMRI 5.17.3 would cause display problems with
-                layout editor windows that had been zoomed. This has been fixed.</li>
-            <li>Memory Input Icons, Global Variable Input Icons and
-                Block Contents Input Icons now work properly when the
-                panel has been zoomed larger or smaller.</li>
-            <li>Add the input option for LogixNG global variables.</li>
-            <li>Improve the selection process for choosing label icons or input icons
-                for memory variables, block contents and LogixNG global variables.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -552,21 +583,18 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>The program will now allow you to swap the same locomotives on a turn when using quick service.</li>
+            <li>Improvements to YardMasterByTrack tool to display tracks with "similar" names together.</li>
+            <li>Conductor and Yardmaster now have "Show Cars" in their tool menu.</li>
+            <li>Conductor tool menu now has the YardmasterByTrack tool.</li>
+            <li>Additional help for the new "On Time" mode of operations.</li>
+            <li>You can now specify the loco color on Manifests and switch lists</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Memory Input Icons, Global Variable Input Icons and
-                Block Contents Input Icons have for a long time
-                shown a shadow border by default instead of no border
-                by default.  This made it impossible to display them
-                without a border, unlike other editor icons.
-                This has been fixed.  If you want a border on one of these icons
-                and no longer see one, use the contextual menu on the
-                icon to set the border width to a non-zero value.</li>
-                <li>Add the input icon option for the blocks</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -590,7 +618,8 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Protect against an error that can occur while loading
+                the roster if an entry has an unexpectedly missing sound label.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -654,7 +683,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>JMRI Desktop Application Throttles  now listen to Roster events, hence, if a roster entry is updated, the throttle will immediately reflect the changes</li>
+            <li>Roster functions editor panel is now displayed as a table, the table can be reordered by dragging rows, which will change the order of the displayed functions buttons in the related JMRI throttle window (see <a href="https://github.com/JMRI/JMRI/issues/13700"> #13700 </a>).
+                 Only implemented in JMRI Desktop Application Throttles for now, and no impact on keyboard shortcuts (1 or F1 is still F1, whatever the display order)</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -672,8 +703,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>In the Reporters table, the Report column now displays all reported objects
-                concatenated with " + " when the reporter is a <code>CollectingReporter</code>.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -691,23 +721,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Some improvements to how the various input icons are handled on panels:
-                <ul>
-                    <li>The padding on the end of the icon now agrees with what's
-                        on the parent JMRI panel.
-                    <li>The default drop shadow on the web has been dropped to
-                        make the appearance agree with the parent JMRI panel.
-                    <li>The default border now agrees with the border on the
-                        parent JMRI panel.
-                </ul>
-            </li>
-            <li>If an icon is defined in JMRI as having no background,
-                it's shown as transparent on the JMRI screen.  Previously,
-                this was shown as a white background on the web browser screen.
-                This has been corrected so that it now shows on the web browser
-                screen as transparent, giving the same appearance as on
-                the JMRI screen.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -737,8 +751,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The "noverify" option has been removed from the JMRI program
-                launchers so that JMRI can use Java 27 and later.</li>
-            <li>For JMRI developers: CI tests now fails on WARN logging messages.</li>
+            <li></li>
         </ul>
 

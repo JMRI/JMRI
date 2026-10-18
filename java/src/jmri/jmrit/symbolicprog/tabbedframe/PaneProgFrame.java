@@ -107,6 +107,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     // holds a count of incomplete threads launched at ctor time; goes to zero when they're done
     public final java.util.concurrent.atomic.AtomicInteger threadCount = new java.util.concurrent.atomic.AtomicInteger(0);
+    private boolean closeAfterSave;
 
     public RosterEntryPane getRosterPane() { return _rPane;}
     public FunctionLabelPane getFnLabelPane() { return _flPane;}
@@ -1165,9 +1166,12 @@ abstract public class PaneProgFrame extends JmriJFrame
                     Bundle.getMessage("PromptSaveAndClose"));
             if (option == 0) { // array position 0 PromptSaveAndClose
                 // save requested
+                closeAfterSave = true;
                 if (!storeFile()) {
+                    closeAfterSave = false;
                     return;   // don't close if failed
                 }
+                return; // wait until the asynchronous write completes before disposing the models
             } else if (option == 2 || option == JmriJOptionPane.CLOSED_OPTION ) {
                 // cancel requested or Dialog closed
                 return; // without doing anything
@@ -2179,6 +2183,11 @@ abstract public class PaneProgFrame extends JmriJFrame
                             Bundle.getMessage("StateSaveOK"), filename));
                 }
                 threadCount.decrementAndGet();
+                if (closeAfterSave) {
+                    closeAfterSave = false;
+                    windowClosing(new java.awt.event.WindowEvent(PaneProgFrame.this,
+                            java.awt.event.WindowEvent.WINDOW_CLOSING));
+                }
             }
         }.execute();
 

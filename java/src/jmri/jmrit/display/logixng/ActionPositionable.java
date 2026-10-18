@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.util.ReferenceUtil;
@@ -345,6 +346,10 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
                     break;
                 default:
                     throw new RuntimeException("operation has invalid value: "+operation.name());
+            }
+            if (_editor instanceof LayoutEditor) {
+                // Insure that the panel has been updated
+                ((LayoutEditor) _editor).redrawPanel();
             }
         });
     }

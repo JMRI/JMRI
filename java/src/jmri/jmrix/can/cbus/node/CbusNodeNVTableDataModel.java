@@ -219,32 +219,37 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public void setValueAt(Object value, int row, int col) {
         log.debug("set value {} row {} col {}",value,row,col);
-        if ( newNVs.length ==0) {
+        if ( newNVs.length ==0 || row < 0 || row + 1 >= newNVs.length ) {
             return;
         }
+        int newval;
         switch (col) {
             case NV_SELECT_COLUMN:
-                int newval = (int) value;
-                newNVs[(row+1)] = newval;
-                ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
+                newval = (int) value;
                 break;
             case NV_SELECT_HEX_COLUMN:
-                newNVs[(row+1)] = StringUtil.getByte(0, ((String) value).trim());
-                ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
+                newval = StringUtil.getByte(0, ((String) value).trim());
                 break;
             case NV_SELECT_BIT_COLUMN:
                 try {
-                    int newInt = Integer.parseInt(((String) value).replaceAll("\\s+",""), 2);
-                    if (newInt > -1 && newInt < 256) {
-                        newNVs[(row+1)] = newInt;
-                        ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
-                    }
+                    newval = Integer.parseInt(((String) value).replaceAll("\\s+",""), 2);
                 }
-                catch ( NumberFormatException e ){}
+                catch ( NumberFormatException e ){
+                    return;
+                }
+                if (newval < 0 || newval > 255) {
+                    return;
+                }
                 break;
             default:
-                break;
+                return;
         }
+        if ( newNVs[(row+1)] == newval ) {
+            // no change, do not trigger table updates
+            return;
+        }
+        newNVs[(row+1)] = newval;
+        ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
     }
 
     /**

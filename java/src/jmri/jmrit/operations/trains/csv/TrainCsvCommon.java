@@ -157,7 +157,7 @@ public class TrainCsvCommon extends TrainCommon {
                 car.getTypeName(),
                 car.getLength(),
                 car.getLoadName(),
-                car.getColor(),
+                car.getColorName(),
                 car.getLocationName(),
                 car.getTrackName(),
                 car.getDestinationName(),

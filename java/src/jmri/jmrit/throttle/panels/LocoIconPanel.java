@@ -54,13 +54,13 @@ public class LocoIconPanel extends JPanel implements AddressListener {
         add(iconLabel, BorderLayout.CENTER);        
     }
 
-    public void setAddressPanel(AddressPanel addressPanel) {
-        if (this.addressPanel != null) {
-            this.addressPanel.removeAddressListener(this);
+    public void setAddressPanel(AddressPanel ap) {
+        if (addressPanel != null) {
+            addressPanel.removeAddressListener(this);
         }
-        this.addressPanel = addressPanel;
-        if (this.addressPanel != null) {
-            this.addressPanel.addAddressListener(this);
+        addressPanel = ap;
+        if (addressPanel != null) {
+            addressPanel.addAddressListener(this);
         }
         updateLabel();
     }
@@ -109,7 +109,12 @@ public class LocoIconPanel extends JPanel implements AddressListener {
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {
+        updateLabel();
+    }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) { 
         updateLabel();
     }
 

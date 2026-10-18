@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.locations.*;
@@ -25,11 +22,13 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Yardmaster frame by track. Shows work at one location listed by track.
  *
- * @author Dan Boudreau Copyright (C) 2015
- *
+ * @author Dan Boudreau Copyright (C) 2015, 2026
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
@@ -155,7 +154,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         checkBoxes.clear();
         pTrack.removeAll();
         if (_track != null) {
-            pTrackPane.setBorder(BorderFactory.createTitledBorder(_track.getName()));
+            pTrackPane.setBorder(BorderFactory.createTitledBorder(_track.getSplitName()));
             textTrackCommentPane.setText(TrainCommon.getOnlyText(_track.getComment()));
             textTrackCommentPane.setForeground(TrainCommon.getTextColor(_track.getComment()));
             textTrackCommentPane.setVisible(!_track.getComment().equals(Track.NONE));
@@ -164,7 +163,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 pTrain.setLayout(new BoxLayout(pTrain, BoxLayout.Y_AXIS));
                 pTrain.setBorder(BorderFactory
                         .createTitledBorder(MessageFormat.format(TrainSwitchListText.getStringScheduledWork(),
-                                new Object[] { train.getName(), train.getDescription() })));
+                                new Object[]{train.getName(), train.getDescription()})));
                 // Track work comments
                 boolean pickupCar = false;
                 boolean setoutCar = false;
@@ -199,8 +198,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 List<Engine> engList = engManager.getByTrainBlockingList(train);
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Engine engine : engList) {
-                        if (engine.getTrack() == _track) {
-                            JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
+                        if (engine.getSplitTrackName().equals(_track.getSplitName())) {
+                            JLabel header = new JLabel(
+                                    Tab + trainCommon.getPickupEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
                             pPickups.add(header);
                             break;
@@ -208,10 +208,11 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     }
                 }
                 for (Engine engine : engList) {
-                    if (engine.getTrack() == _track) {
+                    if (engine.getSplitTrackName().equals(_track.getSplitName())) {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
-                        JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
+                        JCheckBox checkBox =
+                                new JCheckBox(trainCommon.pickupEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
                         setCheckBoxFont(checkBox, Setup.getPickupEngineColor());
                         pPickups.add(checkBox);
                         pickupEngine = true;
@@ -222,8 +223,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 // now do locomotive set outs
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Engine engine : engList) {
-                        if (engine.getDestinationTrack() == _track) {
-                            JLabel header = new JLabel(Tab + trainCommon.getDropEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
+                        if (engine.getSplitDestinationTrackName().equals(_track.getSplitName())) {
+                            JLabel header =
+                                    new JLabel(Tab + trainCommon.getDropEngineHeader(!TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
                             pSetouts.add(header);
                             break;
@@ -231,10 +233,11 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     }
                 }
                 for (Engine engine : engList) {
-                    if (engine.getDestinationTrack() == _track) {
+                    if (engine.getSplitDestinationTrackName().equals(_track.getSplitName())) {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
-                        JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
+                        JCheckBox checkBox =
+                                new JCheckBox(trainCommon.dropEngine(engine, !TrainCommon.IS_TWO_COLUMN_TRACK));
                         setCheckBoxFont(checkBox, Setup.getDropEngineColor());
                         pSetouts.add(checkBox);
                         setoutEngine = true;
@@ -246,7 +249,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 List<Car> carList = carManager.getByTrainDestinationList(train);
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Car car : carList) {
-                        if (car.getTrack() == _track && car.getRouteDestination() != car.getRouteLocation()) {
+                        if (car.getSplitTrackName().equals(_track.getSplitName()) &&
+                                car.getRouteDestination() != car.getRouteLocation()) {
                             JLabel header = new JLabel(Tab +
                                     trainCommon.getPickupCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
@@ -259,7 +263,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
                 for (RouteLocation rl : routeList) {
                     for (Car car : carList) {
-                        if (car.getTrack() == _track &&
+                        if (car.getSplitTrackName().equals(_track.getSplitName()) &&
                                 car.getRouteDestination() != car.getRouteLocation() &&
                                 car.getRouteDestination() == rl) {
                             car.addPropertyChangeListener(this);
@@ -286,8 +290,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 // now do car set outs
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Car car : carList) {
-                        if (car.getDestinationTrack() == _track &&
-                                car.getRouteDestination() != car.getRouteLocation()) {
+                        if (car.getSplitDestinationTrackName().equals(_track.getSplitName()) &&
+                                (car.getTrack() == null ||
+                                        car.getRouteDestination() != car.getRouteLocation())) {
                             JLabel header = new JLabel(
                                     Tab + trainCommon.getDropCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
                             setLabelFont(header);
@@ -297,7 +302,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     }
                 }
                 for (Car car : carList) {
-                    if (car.getDestinationTrack() == _track && car.getRouteLocation() != car.getRouteDestination()) {
+                    if (car.getSplitDestinationTrackName().equals(_track.getSplitName()) &&
+                            (car.getTrack() == null || car.getRouteLocation() != car.getRouteDestination())) {
                         car.addPropertyChangeListener(this);
                         rollingStock.add(car);
                         String text;
@@ -320,7 +326,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 // now do local car moves
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Car car : carList) {
-                        if ((car.getTrack() == _track || car.getDestinationTrack() == _track) &&
+                        if ((car.getSplitTrackName().equals(_track.getSplitName()) ||
+                                car.getTrack() != null &&
+                                        car.getSplitDestinationTrackName().equals(_track.getSplitName())) &&
                                 car.getRouteDestination() == car.getRouteLocation()) {
                             JLabel header = new JLabel(Tab + trainCommon.getLocalMoveHeader(!IS_MANIFEST));
                             setLabelFont(header);
@@ -330,7 +338,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     }
                 }
                 for (Car car : carList) {
-                    if ((car.getTrack() == _track || car.getDestinationTrack() == _track) &&
+                    if ((car.getSplitTrackName().equals(_track.getSplitName()) ||
+                            car.getTrack() != null &&
+                                    car.getSplitDestinationTrackName().equals(_track.getSplitName())) &&
                             car.getRouteLocation() != null &&
                             car.getRouteLocation() == car.getRouteDestination()) {
                         car.addPropertyChangeListener(this);
@@ -344,10 +354,10 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         } else {
                             text = trainCommon.localMoveCar(car, !IS_MANIFEST);
                         }
-                        if (car.getTrack() == _track) {
+                        if (car.getSplitTrackName().equals(_track.getSplitName())) {
                             pickupCar = true;
                         }
-                        if (car.getDestinationTrack() == _track) {
+                        if (car.getSplitDestinationTrackName().equals(_track.getSplitName())) {
                             setoutCar = true;
                         }
                         JCheckBox checkBox = new JCheckBox(text);
@@ -392,7 +402,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
             List<Car> rsList = carManager.getByTrainList();
             List<Car> carList = new ArrayList<Car>();
             for (Car rs : rsList) {
-                if (rs.getTrack() != _track || rs.getRouteLocation() != null)
+                if (!rs.getSplitTrackName().equals(_track.getSplitName()) || rs.getRouteLocation() != null)
                     continue;
                 carList.add(rs);
             }
@@ -409,7 +419,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     text = TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim();
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                            new Object[] {
+                            new Object[]{
                                     TrainCommon.padAndTruncateIfNeeded(car.getRoadName(),
                                             InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
                                     TrainCommon.padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()),
@@ -422,8 +432,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                                             InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
                                     TrainCommon.padAndTruncateIfNeeded(_track.getName(),
                                             InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
-                                    TrainCommon.padAndTruncateIfNeeded(car.getColor(),
-                                            InstanceManager.getDefault(CarColors.class).getMaxNameLength()) });
+                                    TrainCommon.padAndTruncateIfNeeded(car.getColorName(),
+                                            InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
 
                 }
                 JCheckBox checkBox = new JCheckBox(text);
@@ -455,10 +465,25 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         if (_location != null) {
             _location.updateComboBox(trackComboBox);
         }
+        filterTrackComboBox(trackComboBox);
         if (selectedItem != null) {
             trackComboBox.setSelectedItem(selectedItem);
         }
         trackComboBox.setVisible(true);
+    }
+
+    // remove tracks with "similar" names
+    private void filterTrackComboBox(JComboBox<Track> box) {
+        String trackName = NONE;
+        for (int i = 0; i < box.getItemCount(); i++) {
+            Track track = box.getItemAt(i);
+            if (track != null) {
+                if (track.getSplitName().equals(trackName)) {
+                    box.removeItemAt(i--);
+                }
+                trackName = track.getSplitName();
+            }
+        }
     }
 
     @Override

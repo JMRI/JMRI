@@ -451,8 +451,13 @@ public class ThrottleUICore implements AddressListener  {
     }
 
     @Override
-    public void notifyRosterEntrySelected(RosterEntry re) {     
+    public void notifyNewRosterEntryHighlighted(RosterEntry re) {     
     }
+
+    @Override
+    public void notifyRosterEntryUpdated(RosterEntry re) { 
+        
+    }    
 
     @Override
     public void notifyAddressReleased(LocoAddress la) {

@@ -2,6 +2,8 @@ package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -44,7 +46,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected static final String TIMING = "timing of trains";
 
     private PrintWriter _buildReport; // build report for this train
-    private Date _startTime; // when the build report started
+    private LocalDateTime _startTime; // when the build report started
     private Train _train; // the train being built
     private List<Engine> _engineList; // engines for this train, modified during build
     protected int _engineIndex; // index for engineList
@@ -84,11 +86,11 @@ public class TrainBuilderBase extends TrainCommon {
         _buildReport = printWriter;
     }
     
-    protected Date getStartTime() {
+    protected LocalDateTime getStartTime() {
         return _startTime;
     }
 
-    protected void setStartTime(Date date) {
+    protected void setStartTime(LocalDateTime date) {
         _startTime = date;
     }
 
@@ -1192,12 +1194,12 @@ public class TrainBuilderBase extends TrainCommon {
                     log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackTypeName(), testCar.toString(),
                             testCar.getLastDate()); // NOI18N
                     if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
-                        if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate())) {
+                        if (bestCar.getLastMoveDate().isAfter(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
                     } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
-                        if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate())) {
+                        if (bestCar.getLastMoveDate().isBefore(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
@@ -1996,7 +1998,7 @@ public class TrainBuilderBase extends TrainCommon {
                 departStageTrack.getServiceOrder()));
 
         List<Car> carList = carManager.getAvailableTrainList(getTrain());
-        Date carDepartStageTrackDate = null;
+        LocalDateTime carDepartStageTrackDate = null;
         for (Car car : carList) {
             if (car.getTrack() == departStageTrack) {
                 carDepartStageTrackDate = car.getLastMoveDate();
@@ -2013,7 +2015,7 @@ public class TrainBuilderBase extends TrainCommon {
                 continue;
             }
             // determine dates cars arrived into staging
-            Date carOtherStageTrackDate = null;
+            LocalDateTime carOtherStageTrackDate = null;
 
             for (Car car : carList) {
                 if (car.getTrack() == track) {
@@ -2023,14 +2025,14 @@ public class TrainBuilderBase extends TrainCommon {
             }
             if (carOtherStageTrackDate != null) {
                 if (departStageTrack.getServiceOrder().equals(Track.LIFO)) {
-                    if (carDepartStageTrackDate.before(carOtherStageTrackDate)) {
+                    if (carDepartStageTrackDate.isBefore(carOtherStageTrackDate)) {
                         addLine(SEVEN,
                                 Bundle.getMessage("buildStagingCarsBefore", departStageTrack.getName(),
                                         track.getName()));
                         return false;
                     }
                 } else {
-                    if (carOtherStageTrackDate.before(carDepartStageTrackDate)) {
+                    if (carOtherStageTrackDate.isBefore(carDepartStageTrackDate)) {
                         addLine(SEVEN, Bundle.getMessage("buildStagingCarsBefore", track.getName(),
                                 departStageTrack.getName()));
                         return false;
@@ -3019,7 +3021,8 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(ONE, Bundle.getMessage("buildWarningMsg", getTrain().getName(), _warnings));
         }
         addLine(FIVE,
-                Bundle.getMessage("buildTime", getTrain().getName(), new Date().getTime() - getStartTime().getTime()));
+                Bundle.getMessage("buildTime", getTrain().getName(), LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() -
+                        getStartTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()));
     }
 
     /**

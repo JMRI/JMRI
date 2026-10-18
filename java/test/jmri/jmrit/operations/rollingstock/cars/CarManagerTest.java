@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -12,6 +10,9 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the Operations RollingStock Cars CarManager class Last manually
@@ -144,12 +145,12 @@ public class CarManagerTest extends OperationsTestCase {
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-        c1.setColor("RED");
-        c2.setColor("BLUE");
-        c3.setColor("YELLOW");
-        c4.setColor("BLACK");
-        c5.setColor("ROSE");
-        c6.setColor("TUSCAN");
+        c1.setColorName("RED");
+        c2.setColorName("BLUE");
+        c3.setColorName("YELLOW");
+        c4.setColorName("BLACK");
+        c5.setColorName("ROSE");
+        c6.setColorName("TUSCAN");
         // now get cars by color
         List<Car> carList = manager.getByColorList();
         Assert.assertEquals("Number of Cars by color", 6, carList.size());
@@ -944,85 +945,22 @@ public class CarManagerTest extends OperationsTestCase {
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date start = cal.getTime(); // save to rest time, to avoid
-        // test probelms if run near
-        // midnight.
-        java.util.Date time = cal.getTime();
-        c1.setLastDate(time); // right now
+        LocalDateTime time = LocalDateTime.of(1956, 7, 2, 12, 0);
+        c1.setLastDate(time);
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        time = cal.getTime();
-        c2.setLastDate(time); // one hour ago
+        time = LocalDateTime.of(1956, 7, 2, 11, 0);
+        c2.setLastDate(time); // one hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, 1);
-        time = cal.getTime();
-        c3.setLastDate(time); // one hour from now
+        time = LocalDateTime.of(1956, 7, 2, 13, 0);
+        c3.setLastDate(time); // one hour later
 
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -1);
-        time = cal.getTime();
-        c4.setLastDate(time); // one day ago.
+        time = LocalDateTime.of(1956, 6, 2, 12, 0);
+        c4.setLastDate(time); // one day before.
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
-        time = cal.getTime();
-        c5.setLastDate(time); // one day in the future now.
+        time = LocalDateTime.of(1956, 8, 2, 12, 0);
+        c5.setLastDate(time); // one day later.
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-        time = cal.getTime();
-        c6.setLastDate(time); // one year ago.
-
-        // now get cars by last move date.
-        List<Car> carList = manager.getByLastDateList();
-        Assert.assertEquals("Number of Cars by last move date", 6, carList.size());
-        Assert.assertEquals("1st car in list by move date", c6, carList.get(0));
-        Assert.assertEquals("2nd car in list by move date", c4, carList.get(1));
-        Assert.assertEquals("3rd car in list by move date", c2, carList.get(2));
-        Assert.assertEquals("4th car in list by move date", c1, carList.get(3));
-        Assert.assertEquals("5th car in list by move date", c3, carList.get(4));
-        Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
-    }
-
-    @Test
-    public void testSortListedCarsByLastMovedDate() {
-        initializeTest();
-
-        CarManager manager = InstanceManager.getDefault(CarManager.class);
-
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date start = cal.getTime(); // save to rest time, to avoid
-        // test probelms if run near
-        // midnight.
-        java.util.Date time = cal.getTime();
-        c1.setLastDate(time); // right now
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        time = cal.getTime();
-        c2.setLastDate(time); // one hour ago
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, 1);
-        time = cal.getTime();
-        c3.setLastDate(time); // one hour from now
-
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -1);
-        time = cal.getTime();
-        c4.setLastDate(time); // one day ago.
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
-        time = cal.getTime();
-        c5.setLastDate(time); // one day in the future now.
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-        time = cal.getTime();
+        time = LocalDateTime.of(1955, 7, 2, 12, 0);
         c6.setLastDate(time); // one year ago.
 
         // now get cars by last move date.

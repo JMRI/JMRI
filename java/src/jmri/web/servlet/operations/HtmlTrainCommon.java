@@ -287,7 +287,7 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (attribute.equals(Setup.WEIGHT)) {
             return Integer.toString(rs.getAdjustedWeightTons());
         } else if (attribute.equals(Setup.COLOR)) {
-            return rs.getColor();
+            return rs.getColorName();
         } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal) ||
                 (attribute.equals(Setup.TRACK) && isPickup)) {
             if (rs.getTrack() != null) {

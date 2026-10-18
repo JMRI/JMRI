@@ -1,12 +1,15 @@
 package jmri.jmrix.loconet.slotmon;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -21,6 +24,7 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
+import jmri.jmrix.loconet.SlotManager;
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.MenuScroller;
 import jmri.util.swing.JmriMouseAdapter;
@@ -53,6 +57,13 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     private JTextField dcsType = new JTextField();
     private JLabel dcsSlotsLabel = new JLabel(Bundle.getMessage("SlotMonTotalSlots"));
     private JTextField dcsSlots = new JTextField();
+    private JTextField summaryInUse = new JTextField();
+    private JTextField summaryCommon = new JTextField();
+    private JTextField summaryTotalActive = new JTextField();
+    private TitledBorder summaryBorder = BorderFactory.createTitledBorder(Bundle.getMessage("SlotMonSlotsSummary"));
+    private JLabel summaryInUseLabel = new JLabel(Bundle.getMessage("SlotMonSlotsSummaryInUse") + ":");
+    private JLabel summaryCommonLabel = new JLabel(Bundle.getMessage("SlotMonSlotsSummaryCommon") + ":");
+    private JLabel summaryTotalActiveLabel = new JLabel(Bundle.getMessage("SlotMonSlotsSummaryActive") + ":");
 
     private final JButton estopAllButton = new JButton(Bundle.getMessage("ButtonSlotMonEStopAll"));
 
@@ -63,14 +74,17 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     private final JButton refreshAllButton = new JButton(Bundle.getMessage("ButtonSlotRefresh"));
 
     private JPanel topPanel;  // the panel across the top that holds buttons
+    private JPanel summaryPanel; // single row for assigned totals
 
     private SlotMonDataModel slotModel;
     private JTable slotTable;
     private JScrollPane slotScroll;
     private transient TableRowSorter<SlotMonDataModel> sorter;
+    private boolean hideColumnsF9toF28 = false;
 
     // Options menu
     private JCheckBoxMenuItem optionHideTopPanel = new JCheckBoxMenuItem(Bundle.getMessage("SlotMonHideTopPanel"));
+    private JCheckBoxMenuItem optionHideSummaryPanel = new JCheckBoxMenuItem(Bundle.getMessage("SlotMonHideSummaryPanel"));
 
     // filter menu
     private JCheckBoxMenuItem filterShowIdle = new JCheckBoxMenuItem(Bundle.getMessage("SlotMonShowIdle"));
@@ -89,6 +103,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     private int selectedRow = -1;
 
     private final String slotMonHideTopPanel = this.getClass().getName() + "SlotMonHideTopPanel"; // NOI18N
+    private final String slotMonHideSummaryPanel = this.getClass().getName() + "SlotMonHideSummaryPanel"; // NOI18N
     private final String slotMonShowIdle = this.getClass().getName() + "SlotMonShowIdle"; // NOI18N
     private final String slotMonShowUnused = this.getClass().getName() + "SlotMonShowUnused"; // NOI18N
     private final String slotMonShowSystem = this.getClass().getName() + "SlotMonShowSystem"; // NOI18N
@@ -96,21 +111,55 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     private void restorePreferences() {
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
         optionHideTopPanel.setSelected(pm.getSimplePreferenceState(slotMonHideTopPanel));
+        optionHideSummaryPanel.setSelected(pm.getSimplePreferenceState(slotMonHideSummaryPanel));
         filterShowIdle.setSelected(pm.getSimplePreferenceState(slotMonShowIdle));
         filterShowUnUsed.setSelected(pm.getSimplePreferenceState(slotMonShowUnused));
         filterShowSystem.setSelected(pm.getSimplePreferenceState(slotMonShowSystem));
     }
 
     private void resetColumnLayout() {
-        //slotTable.getColumnModel();
-        slotTable.createDefaultColumnsFromModel();
-        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent( tpm ->
-        tpm.cacheState(slotTable) );
+        //JmriJTablePersistenceManager has issues.
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((tpm) -> {
+            try {
+                tpm.stopPersisting(slotTable);
+                tpm.clearState(slotTable);
+                slotTable.getTableHeader().removeMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
+                XTableColumnModel tcm = (XTableColumnModel) slotTable.getColumnModel();
+
+                for (int i = 0; i < tcm.getColumnCount(false); i++) {
+                    TableColumn tc = tcm.getColumnByModelIndex(i);
+                    tcm.setColumnVisible(tc, true);
+                }
+                // NB do not use the XTable version
+                TableColumnModel slotColModel = slotTable.getColumnModel();
+                int colCount = slotColModel.getColumnCount();
+                // Sort columns based on their original model index
+                // Primative but works.
+                boolean swapped = true;
+                while (swapped) {
+                    swapped = false;
+                    for (int i = 0; i < colCount; i++) {
+                        for (int j = i + 1; j < colCount; j++) {
+                            if (slotColModel.getColumn(i).getModelIndex() > slotColModel.getColumn(j).getModelIndex()) {
+                                slotColModel.moveColumn(i, j);
+                                swapped = true;
+                            }
+                        }
+                    }
+                }
+                tpm.persist(slotTable,true);
+                setColumnsF9toF28(hideColumnsF9toF28);
+                addMouseListenerToHeader(slotTable);
+            } catch (IllegalArgumentException Ex) {
+                log.warn("SlotMon Can only save layout changes for second and subsequent invocations");
+            }
+        });
     }
 
     private void savePreferences() {
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
         pm.setSimplePreferenceState(slotMonHideTopPanel, optionHideTopPanel.isSelected());
+        pm.setSimplePreferenceState(slotMonHideSummaryPanel, optionHideSummaryPanel.isSelected());
         pm.setSimplePreferenceState(slotMonShowIdle, filterShowIdle.isSelected());
         pm.setSimplePreferenceState(slotMonShowUnused, filterShowUnUsed.isSelected());
         pm.setSimplePreferenceState(slotMonShowSystem, filterShowSystem.isSelected());
@@ -128,11 +177,15 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     private boolean runningFilterSystem = false;
     private boolean runningFilterUnUsed = false;
 
+    private SlotManager slotManager;
+
     @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-        boolean hideColumnsF9toF28 = true; //(memo.getSlotManager().getLoconetProtocol() != LnConstants.LOCONETPROTOCOL_TWO);
-        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), memo);
+        slotManager = memo.getSlotManager(); // save for later.
+        hideColumnsF9toF28 = (memo.getSlotManager().getLoconetProtocol() != LnConstants.LOCONETPROTOCOL_TWO);
+
+        slotModel = new SlotMonDataModel(slotManager.getNumSlots(), memo);
         slotTable = new JTable(slotModel);
         slotTable.setColumnModel(new XTableColumnModel());
         slotTable.createDefaultColumnsFromModel();
@@ -186,16 +239,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
             }
         });
 
-        // Hide functions F9 thru F28 if not used.
-        if (hideColumnsF9toF28) {
-            XTableColumnModel tcm = (XTableColumnModel) slotTable.getColumnModel();
-            for (int ixCol = SlotMonDataModel.ColumnNumber.F9COLUMN.ordinal() ;
-                    ixCol <= SlotMonDataModel.ColumnNumber.F28COLUMN.ordinal() ;
-                    ixCol ++ ) {
-                TableColumn tc = tcm.getColumnByModelIndex(ixCol);
-                tcm.setColumnVisible(tc, false);
-            }
-        }
+        setColumnsF9toF28(hideColumnsF9toF28);
 
         ActionListener refreshListener = e -> {
             slotModel.refreshSlots();
@@ -241,10 +285,17 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         };
         filterShowUnUsed.addItemListener(filterShowUnUsedListen);
         showUnusedCheckBox.addItemListener(filterShowUnUsedListen);
+        filterShowIdle.addActionListener((ActionEvent e) -> {
+            filter();
+        });
 
-        // add listener object so stop all button functions
+        // add listener to menu items
         optionHideTopPanel.addActionListener((ActionEvent e) -> {
             topPanel.setVisible(!optionHideTopPanel.getState());
+        });
+
+        optionHideSummaryPanel.addActionListener((ActionEvent e) -> {
+            summaryPanel.setVisible(!optionHideSummaryPanel.getState());
         });
 
         estopAllButton.addActionListener((ActionEvent e) -> {
@@ -321,6 +372,21 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         topPanel.add(new JLabel(Bundle.getMessage("SlotMonUnUseCountLabel")));
         topPanel.add(inUseCount);
 
+        summaryPanel = new JPanel();
+        summaryPanel.setBorder(summaryBorder);
+        FontMetrics summaryMaxHeight = summaryPanel.getFontMetrics(summaryPanel.getFont());
+        summaryPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, summaryMaxHeight.getHeight()*2));
+        summaryPanel.add(summaryTotalActiveLabel);
+        summaryPanel.add(summaryTotalActive);
+        summaryTotalActive.setEditable(false);
+        summaryPanel.add(summaryInUseLabel);
+        summaryPanel.add(summaryInUse);
+        summaryInUse.setEditable(false);
+        summaryPanel.add(summaryCommonLabel);
+        summaryPanel.add(summaryCommon);
+        summaryCommon.setEditable(false);
+
+        add(summaryPanel);
         add(topPanel);
         add(slotScroll);
  
@@ -336,6 +402,20 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
             topPanel.setMaximumSize(topPanel.getPreferredSize());
         }
         topPanel.setVisible(!optionHideTopPanel.getState());
+        summaryPanel.setVisible(!optionHideSummaryPanel.getState());
+    }
+
+    private void setColumnsF9toF28(boolean hideColumnsF9toF28) {
+        // Hide functions F9 thru F28 if not used.
+        if (hideColumnsF9toF28) {
+            XTableColumnModel tcm = (XTableColumnModel) slotTable.getColumnModel();
+            for (int ixCol = SlotMonDataModel.ColumnNumber.F9COLUMN.ordinal() ;
+                    ixCol <= SlotMonDataModel.ColumnNumber.F28COLUMN.ordinal() ;
+                    ixCol ++ ) {
+                TableColumn tc = tcm.getColumnByModelIndex(ixCol);
+                tcm.setColumnVisible(tc, false);
+            }
+        }
     }
 
     void setColumnToHoldButton(JTable slotTable, int column) {
@@ -350,7 +430,6 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
         slotTable.getColumnModel().getColumn(column)
                 .setPreferredWidth(new JButton("  " + slotModel.getValueAt(1, column)).getPreferredSize().width);
     }
-
 
     static class TableRendererToBlankToNA extends DefaultTableCellRenderer {
         @Override
@@ -410,10 +489,16 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
                 // default filter is IN-USE and regular systems slot
                 // the default is whatever the person last closed it with
                 jmri.jmrix.loconet.LocoNetSlot slot =  entry.getModel().getSlot(entry.getIdentifier());
-                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() != LnConstants.LOCO_FREE
+                boolean include = (slot.slotStatus() != LnConstants.LOCO_FREE
+                            && slot.slotStatus() != LnConstants.LOCO_IDLE)
                         && slot.getSlotType() == SlotType.LOCO;
                 if (slot.getSlotType() == SlotType.UNKNOWN) {
                     return false;        // dont ever show unknown
+                }
+                if (!include && filterShowIdle.isSelected()
+                        && slot.slotStatus() == LnConstants.LOCO_IDLE
+                        && !slot.isSystemSlot()) {
+                    include = true;
                 }
                 if (!include && showUnusedCheckBox.isSelected() && !slot.isSystemSlot()) {
                     include = true;
@@ -440,6 +525,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
     private JMenu getOptionsMenu() {
         JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         optionsMenu.add(optionHideTopPanel);
+        optionsMenu.add(optionHideSummaryPanel);
         return optionsMenu;
     }
 
@@ -471,6 +557,13 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
      return fileMenu;
     }
 
+    // update count
+    int inUseSlotCount = 0;
+    int idleSlotCount = 0;
+    int freeSlotCount = 0;
+    int commonSlotCount = 0;
+    int otherSlotCount = 0;
+
     // methods to communicate with SlotManager
     @Override
     public synchronized void notifyChangedSlot(LocoNetSlot s) {
@@ -486,18 +579,57 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
                     topPanel.setMaximumSize(topPanel.getPreferredSize());
                 }
                 topPanel.revalidate();
-
             }
         }
-        
+        if (s.getSlot() == 127) {
+            StringBuilder tString = new StringBuilder(Bundle.getMessage("SlotMonSlotsSummary"));
+            if (slotManager.getCsOpSw(13) != null ) {
+                if (slotManager.getCsOpSw(14)==SlotManager.CsOpSwValue.CLOSED) {
+                    tString.append(" ");
+                    tString.append(Bundle.getMessage("SlotMonPurgeingDisabled"));
+                } else if (slotManager.getCsOpSw(13)==SlotManager.CsOpSwValue.CLOSED) {
+                    tString.append(" ");
+                    tString.append(Bundle.getMessage("SlotMonPurgeingExtended"));
+                }
+                if (slotManager.getCsOpSw(44)==SlotManager.CsOpSwValue.CLOSED) {
+                    tString.append(" ");
+                    tString.append(Bundle.getMessage("SlotMonSlotNumberNotDefault"));
+                }
+            }
+            summaryBorder.setTitle(tString.toString());
+            repaint();
+        }
+
         // update count
-        int inUseSlotCount = 0;
+        inUseSlotCount = 0;
+        idleSlotCount = 0;
+        freeSlotCount = 0;
+        commonSlotCount = 0;
+        otherSlotCount = 0;
         for (var slot : memo.getSlotManager().getSlots()) {
-            if (!slot.isSystemSlot() && slot.slotStatus() == LnConstants.LOCO_IN_USE) {
-                inUseSlotCount++;
+            if (!slot.isSystemSlot()) {
+                switch (slot.slotStatus()) {
+                    case LnConstants.LOCO_IN_USE:
+                        inUseSlotCount++;
+                        break;
+                    case LnConstants.LOCO_IDLE:
+                        idleSlotCount++;
+                        break;
+                    case LnConstants.LOCO_FREE:
+                        freeSlotCount++;
+                        break;
+                    case LnConstants.LOCO_COMMON:
+                         commonSlotCount++;
+                         break;
+                    default:
+                        log.error("Loco Slot[{}] has unknown status.",slot.getSlot());
+                }
             }
         }
         inUseCount.setText(""+inUseSlotCount);
+        summaryCommon.setText(Integer.toString(commonSlotCount));
+        summaryInUse.setText(Integer.toString(inUseSlotCount));
+        summaryTotalActive.setText(Integer.toString(commonSlotCount + inUseSlotCount));
     }
 
     void showHideSlot250Data(boolean b) {
@@ -538,12 +670,13 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
     }
 
+    JmriMouseListener mouseHeaderListener;
     /**
      * Adds the column header pop listener to a JTable using XTableColumnModel
      * @param table The JTable effected.
      */
     protected void addMouseListenerToHeader(JTable table) {
-        JmriMouseListener mouseHeaderListener = new TableHeaderListener(table);
+        mouseHeaderListener = new TableHeaderListener(table);
         table.getTableHeader().addMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
     }
 

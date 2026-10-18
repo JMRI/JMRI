@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jmri.InstanceManager;
@@ -71,7 +71,7 @@ public class TrainBuilder extends TrainBuilderCars {
     }
 
     private void build() throws BuildFailedException {
-        setStartTime(new Date());
+        setStartTime(LocalDateTime.now());
         log.debug("Building train ({})", getTrain().getName());
 
         getTrain().setStatusCode(Train.CODE_BUILDING);
@@ -157,7 +157,7 @@ public class TrainBuilder extends TrainBuilderCars {
                     Integer.toString(stagingTracksTerminate.size())));
             if (stagingTracksTerminate.size() > 1 && Setup.isStagingPromptToEnabled()) {
                 setTerminateStagingTrack(promptToStagingDialog());
-                setStartTime(new Date()); // reset build time since user can take
+                setStartTime(LocalDateTime.now()); // reset build time since user can take
                                           // awhile to pick
             } else {
                 // is this train returning to the same staging in aggressive
@@ -221,7 +221,7 @@ public class TrainBuilder extends TrainBuilderCars {
                     Integer.toString(stagingTracks.size())));
             if (stagingTracks.size() > 1 && Setup.isStagingPromptFromEnabled()) {
                 setDepartureStagingTrack(promptFromStagingDialog());
-                setStartTime(new Date()); // restart build timer
+                setStartTime(LocalDateTime.now()); // restart build timer
                 if (getDepartureStagingTrack() == null) {
                     showTrainRequirements();
                     throw new BuildFailedException(

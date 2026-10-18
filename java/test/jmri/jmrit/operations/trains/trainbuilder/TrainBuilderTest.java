@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.io.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -1878,34 +1880,25 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", actonYard1, 40);
         Car c6 = JUnitOperationsUtil.createAndPlaceCar("A", "6", "Boxcar", "40", actonYard1, 50);
 
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date start = cal.getTime();
+        LocalDateTime time = LocalDateTime.of(1956, 7, 2, 8, 0);
+        c1.setLastDate(time); // 4 hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -4);
-        c1.setLastDate(cal.getTime()); // 4 hour ago
+        time = LocalDateTime.of(1956, 7, 2, 10, 0);
+        c2.setLastDate(time); // 2 hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -2);
-        c2.setLastDate(cal.getTime()); // 2 hour ago
+        time = LocalDateTime.of(1956, 7, 2, 9, 0);
+        c3.setLastDate(time); // 3 hours before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -3);
-        c3.setLastDate(cal.getTime()); // 3 hours ago
-
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -2);
-        c4.setLastDate(cal.getTime()); // 2 months ago.
+        time = LocalDateTime.of(1956, 5, 2, 12, 0);
+        c4.setLastDate(time); // 2 months before
 
         // the last car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        c5.setLastDate(cal.getTime()); // 1 hour ago.
+        time = LocalDateTime.of(1956, 7, 2, 11, 0);
+        c5.setLastDate(time); // 1 hour before
 
         // the first car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-        c6.setLastDate(cal.getTime()); // one year ago.
+        time = LocalDateTime.of(1955, 7, 2, 12, 0);
+        c6.setLastDate(time); // one year before
 
         // put Acton yard track into FIFO mode
         actonYard1.setServiceOrder(Track.FIFO);
@@ -2805,9 +2798,9 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // time is to the millisecond, need to wait a bit on a fast machine
         JUnitUtil.waitFor(() -> {
-            return java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate());
+            return LocalDateTime.now().isAfter(c3.getLastMoveDate());
         }, "time after last moved");
-        Assert.assertTrue(java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate()));
+        Assert.assertTrue(LocalDateTime.now().isAfter(c3.getLastMoveDate()));
 
         // now deliver the second set of cars
         new TrainBuilder().build(train1);
@@ -2817,10 +2810,10 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // now cars c4, c5, and c6 have been delivered after c2 and c3
         // note it is possible for c3 to be delivered after c2
-        if (!c3.getLastMoveDate().after(c2.getLastMoveDate())) {
-            Assert.assertTrue("confirm date order", c4.getLastMoveDate().after(c3.getLastMoveDate()));
-            Assert.assertTrue("confirm date order", c5.getLastMoveDate().after(c3.getLastMoveDate()));
-            Assert.assertTrue("confirm date order", c6.getLastMoveDate().after(c3.getLastMoveDate()));
+        if (!c3.getLastMoveDate().isAfter(c2.getLastMoveDate())) {
+            Assert.assertTrue("confirm date order", c4.getLastMoveDate().isAfter(c3.getLastMoveDate()));
+            Assert.assertTrue("confirm date order", c5.getLastMoveDate().isAfter(c3.getLastMoveDate()));
+            Assert.assertTrue("confirm date order", c6.getLastMoveDate().isAfter(c3.getLastMoveDate()));
 
             // c2 has the lowest move count on alternate, cars c2 and c3 have the same last moved time
             // confirm car locations
@@ -2838,15 +2831,15 @@ public class TrainBuilderTest extends OperationsTestCase {
             // c4, c5 and c6 delivered after c3 alternate track in LIFO mode
             Assert.assertEquals("Car destination", null, c3.getDestinationTrack());
             // possible for c5 or c6 to be a millisecond later than c4
-            if (c6.getLastMoveDate().after(c5.getLastMoveDate())) {
+            if (c6.getLastMoveDate().isAfter(c5.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack());
-            } else if (c5.getLastMoveDate().after(c4.getLastMoveDate())) {
+            } else if (c5.getLastMoveDate().isAfter(c4.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c6.getDestinationTrack());
-            } else if (c6.getLastMoveDate().after(c4.getLastMoveDate())) {
+            } else if (c6.getLastMoveDate().isAfter(c4.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack());
@@ -11086,10 +11079,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e1.setModel("GP40");
 
         // note that a car's last moved date gets set after a train reset
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
-        cal.add(java.util.Calendar.HOUR, -2);
-        date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         Car c1 = cmanager.newRS("UP", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
@@ -11105,17 +11095,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setCaboose(true);
         c2.setLastDate(date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c3date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c3date = LocalDateTime.of(1956, 7, 2, 12, 2);
 
         Car c3 = cmanager.newRS("SP", "3");
         c3.setTypeName(carTypes[1]);
         c3.setLength("33");
         c3.setMoves(40);
         c3.setLastDate(c3date);
-
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c4date = cal.getTime();
+        
+        // add 2 more minutes
+        LocalDateTime c4date = LocalDateTime.of(1956, 7, 2, 12, 4);
 
         Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName(carTypes[1]);
@@ -11124,8 +11114,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setFred(true);
         c4.setLastDate(c4date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 6);
 
         Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(carTypes[1]);
@@ -11134,8 +11124,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setFred(true);
         c5.setLastDate(date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c6date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c6date = LocalDateTime.of(1956, 7, 2, 12, 8);
 
         Car c6 = cmanager.newRS("SP", "6");
         c6.setTypeName(carTypes[1]);
@@ -11144,8 +11134,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c6.setFred(true);
         c6.setLastDate(c6date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c7date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c7date = LocalDateTime.of(1956, 7, 2, 12, 10);
 
         Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
@@ -11154,8 +11144,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setFred(true);
         c7.setLastDate(c7date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c8date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c8date = LocalDateTime.of(1956, 7, 2, 12, 12);
 
         Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
@@ -11163,8 +11153,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c8.setMoves(4);
         c8.setLastDate(c8date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c9date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c9date = LocalDateTime.of(1956, 7, 2, 12, 14);
 
         Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
@@ -11360,9 +11350,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.newRS("NH", "1");
         e1.setModel("GP40");
 
-        Calendar cal = java.util.Calendar.getInstance();
-        cal.add(java.util.Calendar.HOUR, -2);
-        Date c1date = cal.getTime();
+        LocalDateTime c1date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // create cars, cabooses and cars with FRED
         // c1 and c11 are regular cars on FIFO / LIFO track
@@ -11372,8 +11360,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setMoves(10);
         c1.setLastDate(c1date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c2date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c2date = LocalDateTime.of(1956, 7, 2, 12, 2);
 
         Car c2 = cmanager.newRS("UP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
@@ -11382,8 +11370,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setCaboose(true);
         c2.setLastDate(c2date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c3date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c3date = LocalDateTime.of(1956, 7, 2, 12, 4);
 
         Car c3 = cmanager.newRS("SP", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
@@ -11392,8 +11380,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setCaboose(true);
         c3.setLastDate(c3date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c4date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c4date = LocalDateTime.of(1956, 7, 2, 12, 6);
 
         Car c4 = cmanager.newRS("NH", "4");
         c4.setTypeName(Bundle.getMessage("Caboose"));
@@ -11402,8 +11390,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setCaboose(true);
         c4.setLastDate(c4date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c5date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c5date = LocalDateTime.of(1956, 7, 2, 12, 8);
 
         Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(Bundle.getMessage("Caboose"));
@@ -11412,8 +11400,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setCaboose(true);
         c5.setLastDate(c5date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c6date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c6date = LocalDateTime.of(1956, 7, 2, 12, 10);
 
         Car c6 = cmanager.newRS("SP", "6");
         c6.setTypeName(carTypes[1]);
@@ -11422,8 +11410,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c6.setFred(true);
         c6.setLastDate(c6date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c7date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c7date = LocalDateTime.of(1956, 7, 2, 12, 12);
 
         Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
@@ -11432,8 +11420,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setFred(true);
         c7.setLastDate(c7date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c8date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c8date = LocalDateTime.of(1956, 7, 2, 12, 14);
 
         Car c8 = cmanager.newRS("NH-1", "8");
         c8.setTypeName(carTypes[1]);
@@ -11442,8 +11430,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c8.setCaboose(true);
         c8.setLastDate(c8date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c9date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c9date = LocalDateTime.of(1956, 7, 2, 12, 18);
 
         Car c9 = cmanager.newRS("NH-2", "9");
         c9.setTypeName(carTypes[1]);
@@ -11452,8 +11440,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c9.setCaboose(true);
         c9.setLastDate(c9date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c10date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c10date = LocalDateTime.of(1956, 7, 2, 12, 20);
 
         Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
@@ -11462,8 +11450,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c10.setCaboose(true);
         c10.setLastDate(c10date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c11date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c11date = LocalDateTime.of(1956, 7, 2, 12, 22);
 
         Car c11 = cmanager.newRS("NH-1", "11");
         c11.setTypeName(carTypes[1]);
@@ -19482,16 +19470,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 30);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, -2);
-        date = cal.getTime();
+        // subtract 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 28);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, -2);
-        date = cal.getTime();
+        // subtract 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 26);
         c3.setLastDate(date); // First in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -19545,16 +19532,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 2);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 4);
         c3.setLastDate(date); // Last in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -19606,16 +19592,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 2);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 4);
         c3.setLastDate(date); // Last in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -23015,30 +23000,27 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // create 5 locations with tracks
         Location harvard = lmanager.newLocation("Harvard");
-        Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
-        loc1trk1.setLength(1000);
-        Track loc1trk2 = harvard.addTrack("Harvard Yard 2", Track.YARD);
-        loc1trk2.setLength(1000);
+        Track harvardYard = harvard.addTrack("Harvard Yard 1", Track.YARD);
+        harvardYard.setLength(1000);
 
         Location acton = lmanager.newLocation("Acton");
-        Track loc2trk1 = acton.addTrack("Acton Yard", Track.YARD);
-        loc2trk1.setLength(1000);
+        Track actonYard = acton.addTrack("Acton Yard", Track.YARD);
+        actonYard.setLength(1000);
+        actonYard.setQuickServiceEnabled(true);
 
         Location boston = lmanager.newLocation("Boston");
-        Track loc3trk1 = boston.addTrack("Boston Yard 1", Track.YARD);
-        loc3trk1.setLength(1000);
-        Track loc3trk2 = boston.addTrack("Boston Yard 2", Track.YARD);
-        loc3trk2.setLength(1000);
+        Track bostonYard = boston.addTrack("Boston Yard 1", Track.YARD);
+        bostonYard.setLength(1000);
 
         Location chelmsford = lmanager.newLocation("Chelmsford");
-        Track loc4trk1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
-        loc4trk1.setLength(1000);
-        Track loc4trk2 = chelmsford.addTrack("Chelmsford Yard 2", Track.YARD);
-        loc4trk2.setLength(1000);
+        Track chelmsfordYard = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
+        chelmsfordYard.setLength(1000);
+        chelmsfordYard.setQuickServiceEnabled(true);
 
         Location westford = lmanager.newLocation("Westford");
-        Track loc5trk1 = westford.addTrack("Westford Yard", Track.YARD);
-        loc5trk1.setLength(1000);
+        Track westfordYard = westford.addTrack("Westford Yard", Track.YARD);
+        westfordYard.setLength(1000);
+        westfordYard.setQuickServiceEnabled(true);
 
         // create a 2 engine consist for departure
         Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
@@ -23093,17 +23075,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         e9.setMoves(2);
 
         // Place engines
-        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(harvard, loc1trk1));
-        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(harvard, harvardYard));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(harvard, harvardYard));
 
-        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, loc2trk1));
-        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, loc2trk1));
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, actonYard));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard));
 
-        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(chelmsford, loc4trk1));
-        Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(chelmsford, loc4trk1));
-        Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(chelmsford, loc4trk1));
-        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(chelmsford, loc4trk1));
-        Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(chelmsford, loc4trk1));
+        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(chelmsford, chelmsfordYard));
+        Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(chelmsford, chelmsfordYard));
+        Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(chelmsford, chelmsfordYard));
+        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(chelmsford, chelmsfordYard));
+        Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(chelmsford, chelmsfordYard));
 
         Route rte1 = rmanager.newRoute("Route Harvard-Acton-Boston-Chelmsford-Westford");
         rte1.addLocation(harvard);
@@ -23139,55 +23121,187 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train should build", true, train1.isBuilt());
 
         // confirm that the specified engines were assigned to the train
-        Assert.assertEquals("e1 assigned to train", acton, e1.getDestination());
-        Assert.assertEquals("e2 assigned to train", acton, e2.getDestination());
+        Engine e1Clone = emanager.getClone(e1);
+        Assert.assertNotNull(e1Clone);
+        Engine e2Clone = emanager.getClone(e2);
+        Assert.assertNotNull(e2Clone);
+        
+        Engine e4Clone = emanager.getClone(e4);
+        Assert.assertNotNull(e4Clone);
+        
+        Engine e5Clone = emanager.getClone(e5);
+        Assert.assertNotNull(e5Clone);
+        Engine e7Clone = emanager.getClone(e7);
+        Assert.assertNotNull(e7Clone);
+        Engine e8Clone = emanager.getClone(e8);
+        Assert.assertNotNull(e8Clone);
+        
+        Assert.assertEquals("e1 clone assigned to train", acton, e1Clone.getDestination());
+        Assert.assertEquals("e2 assigned to train", acton, e2Clone.getDestination());
 
         Assert.assertEquals("e3 not assigned to train due to road name", null, e3.getDestination());
-        Assert.assertEquals("e4 assigned to train", chelmsford, e4.getDestination());
+        Assert.assertEquals("e4 assigned to train", chelmsford, e4Clone.getDestination());
 
-        Assert.assertEquals("e5 assigned to train", westford, e5.getDestination());
+        Assert.assertEquals("e5 assigned to train", westford, e5Clone.getDestination());
         Assert.assertEquals("e6 not assigned to train due to road name", null, e6.getDestination());
-        Assert.assertEquals("e7 assigned to train", westford, e7.getDestination());
-        Assert.assertEquals("e8 assigned to train", westford, e8.getDestination());
+        Assert.assertEquals("e7 assigned to train", westford, e7Clone.getDestination());
+        Assert.assertEquals("e8 assigned to train", westford, e8Clone.getDestination());
         Assert.assertEquals("e9 not assigned to train due to model type", null, e9.getDestination());
+ 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    @Test
+    public void testEngineQuickServiceTurn() {
 
-        // remove needed engine at Acton
-        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(null, null));
-        Assert.assertFalse(new TrainBuilder().build(train1));
-        Assert.assertEquals("Train should not build", false, train1.isBuilt());
+        et.addName("Diesel");
 
-        // restore engine
-        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, loc2trk1));
-        Assert.assertTrue(new TrainBuilder().build(train1));
-        Assert.assertEquals("Train should build", true, train1.isBuilt());
+        // create 3 locations with tracks
 
-        // remove needed engine at Chelmsford
-        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(null, null));
-        Assert.assertFalse(new TrainBuilder().build(train1));
-        Assert.assertEquals("Train should not build", false, train1.isBuilt());
+        Location acton = lmanager.newLocation("Acton");
+        Track actonYard = acton.addTrack("Acton Yard", Track.YARD);
+        actonYard.setLength(1000);
 
-        // restore engine
-        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(chelmsford, loc4trk1));
-        Assert.assertTrue(new TrainBuilder().build(train1));
-        Assert.assertEquals("Train should build", true, train1.isBuilt());
+        Location boston = lmanager.newLocation("Boston");
+        Track bostonYard = boston.addTrack("Boston Yard", Track.YARD);
+        bostonYard.setLength(1000);
+        bostonYard.setQuickServiceEnabled(true);
 
-        // test swap engines at location at Chelmsford
-        train1.setSecondLegOptions(Train.NO_CABOOSE_OR_FRED); // disable swap
+        Location chelmsford = lmanager.newLocation("Chelmsford");
+        Track chelmsfordYard = chelmsford.addTrack("Chelmsford Yard", Track.YARD);
+        chelmsfordYard.setLength(1000);
 
-        train1.reset();
+        // create a 2 engine consist for departure
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
+
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30");
+        e1.setOwnerName("AT");
+        e1.setBuilt("1957");
+        e1.setConsist(con1);
+        e1.setMoves(5);
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30");
+        e2.setOwnerName("AT");
+        e2.setBuilt("1957");
+        e2.setConsist(con1);
+        e2.setMoves(5);
+
+        // single engines
+        Engine e3 = emanager.newRS("SP", "3");
+        e3.setModel("GP40");
+        e3.setBuilt("1957");
+
+        Engine e4 = emanager.newRS("UP", "40");
+        e4.setModel("GP40");
+        e4.setBuilt("1944");
+        e4.setMoves(1);
+
+        Engine e5 = emanager.newRS("UP", "50");
+        e5.setModel("GP40");
+        e5.setBuilt("1944");
+        e5.setMoves(20);
+
+        Engine e6 = emanager.newRS("UP", "600");
+        e6.setModel("GP40");
+        e6.setBuilt("1944");
+        e6.setMoves(2);
+
+        Engine e9 = emanager.newRS("SP", "900");
+        e9.setModel("GP30");
+        e9.setBuilt("1944");
+        e9.setMoves(2);
+        
+        // 2 engine consist
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
+        
+        Engine e7 = emanager.newRS("SP", "700");
+        e7.setModel("GP40");
+        e7.setBuilt("1944");
+        e7.setMoves(2);
+        e7.setConsist(con2);
+
+        Engine e8 = emanager.newRS("SP", "800");
+        e8.setModel("GP40");
+        e8.setBuilt("1944");
+        e8.setMoves(20);
+        e8.setConsist(con2);
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard));
+        
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(boston, bostonYard));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(boston, bostonYard));
+        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(boston, bostonYard));
+        Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(boston, bostonYard));
+        Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(boston, bostonYard));
+        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(boston, bostonYard));
+        Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(boston, bostonYard));
+
+        // create turn
+        Route rte1 = rmanager.newRoute("Route Acton-Boston-Chelmsford-Boston-Acton");
+        rte1.addLocation(acton);
+        RouteLocation rlBoston1 = rte1.addLocation(boston);
+        rte1.addLocation(chelmsford);
+        RouteLocation rlBoston2 = rte1.addLocation(boston);
+        RouteLocation rlActon2 = rte1.addLocation(acton);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestEngineQuickServiceTurn");
+        train1.setBuildConsistEnabled(true);
+        train1.setRoute(rte1);
+
+        // depart with 2 engines
+        train1.setBuildConsistEnabled(true);
+        train1.setNumberEngines("2");
+        train1.setEngineRoad("UP");
+
+        // change out 2 engines with 3 engine at Boston
+        train1.setSecondLegOptions(Train.CHANGE_ENGINES);
+        train1.setSecondLegNumberEngines("3");
+        train1.setSecondLegStartRouteLocation(rlBoston1);
+        train1.setSecondLegEngineRoad("UP");
+        train1.setSecondLegEngineModel("GP40");
+
+        // change out 3 engines with 2 "UP" engines at Boston
+        train1.setThirdLegOptions(Train.CHANGE_ENGINES);
+        train1.setThirdLegNumberEngines("2");
+        train1.setThirdLegStartRouteLocation(rlBoston2);
+        train1.setThirdLegEngineRoad("UP");
+        train1.setThirdLegEngineModel("GP30");
+
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train should build", true, train1.isBuilt());
 
         // confirm that the specified engines were assigned to the train
-        Assert.assertEquals("e1 assigned to train", chelmsford, e1.getDestination());
-        Assert.assertEquals("e2 assigned to train", chelmsford, e2.getDestination());
-        Assert.assertEquals("e3 assigned to train", null, e3.getDestination());
-        Assert.assertEquals("e4 assigned to train", null, e4.getDestination());
-        Assert.assertEquals("e5 assigned to train", westford, e5.getDestination());
-        Assert.assertEquals("e6 assigned to train", null, e6.getDestination());
-        Assert.assertEquals("e7 assigned to train", westford, e7.getDestination());
-        Assert.assertEquals("e8 assigned to train", westford, e8.getDestination());
-        Assert.assertEquals("e9 assigned to train", null, e9.getDestination());
+        Engine e1Clone = emanager.getClone(e1);
+        Assert.assertNotNull(e1Clone);
+        Engine e2Clone = emanager.getClone(e2);
+        Assert.assertNotNull(e2Clone);
+        
+        Engine e4Clone = emanager.getClone(e4);
+        Assert.assertNotNull(e4Clone);
+        Engine e5Clone = emanager.getClone(e5);
+        Assert.assertNotNull(e5Clone);
+        Engine e6Clone = emanager.getClone(e6);
+        Assert.assertNotNull(e6Clone);
+        
+        Assert.assertEquals("e1 clone assigned to train", rlBoston1, e1Clone.getRouteDestination());
+        Assert.assertEquals("e2 clone assigned to train", rlBoston1, e2Clone.getRouteDestination());
+        
+        Assert.assertEquals("e1 assigned to train", rlActon2, e1.getRouteDestination());
+        Assert.assertEquals("e2 assigned to train", rlActon2, e2.getRouteDestination());
+
+        Assert.assertEquals("e3 not assigned to train due to road name", null, e3.getDestination());
+        
+        Assert.assertEquals("e4 clone assigned to train", rlBoston2, e4Clone.getRouteDestination());
+        Assert.assertEquals("e4 moved to Boston", boston, e4.getLocation());
+        Assert.assertEquals("e5 clone assigned to train", rlBoston2, e5Clone.getRouteDestination());
+        Assert.assertEquals("e5 moved to Boston", boston, e5.getLocation());
+        Assert.assertEquals("e6 clone assigned to train", rlBoston2, e6Clone.getRouteDestination());
+        Assert.assertEquals("e6 moved to Boston", boston, e6.getLocation());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
