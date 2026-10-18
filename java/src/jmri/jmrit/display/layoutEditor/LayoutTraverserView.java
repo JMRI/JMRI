@@ -686,23 +686,14 @@ public class LayoutTraverserView extends LayoutTrackView {
             Point2D center = getCoordsCenter();
             Rectangle2D pit = getBounds();
             double offset = getSlotOffsetValue(orderedIndex);
-            double gap = traverser.getDeckWidth() * 0.2;
-            boolean sideA = !calculateBridgeOrientation(orderedIndex);
+            double gap = traverser.getDeckWidth() * 0.1;
 
             if (getOrientation() == LayoutTraverser.HORIZONTAL) {
                 double y = center.getY() + offset;
-                if (sideA) {
-                    g2.draw(new Line2D.Double(pit.getMinX(), y, pit.getMaxX() - gap, y));
-                } else {
-                    g2.draw(new Line2D.Double(pit.getMinX() + gap, y, pit.getMaxX(), y));
-                }
+                g2.draw(new Line2D.Double(pit.getMinX() + gap, y, pit.getMaxX() - gap, y));
             } else { // VERTICAL
                 double x = center.getX() + offset;
-                if (sideA) {
-                    g2.draw(new Line2D.Double(x, pit.getMinY(), x, pit.getMaxY() - gap));
-                } else {
-                    g2.draw(new Line2D.Double(x, pit.getMinY() + gap, x, pit.getMaxY()));
-                }
+                g2.draw(new Line2D.Double(x, pit.getMinY() + gap, x, pit.getMaxY() - gap));
             }
         }
         if (!layoutEditor.isEditable()) {
@@ -713,74 +704,6 @@ public class LayoutTraverserView extends LayoutTrackView {
         g2.setStroke(originalStroke);
         g2.setColor(originalColor);
     }
-
-    /**
-     * Dynamically determines if the bridge line should snap to Side A (Left/Top)
-     * or Side B (Right/Bottom) based on active layout block routing.
-     * If no automation route is active, it falls back to standard user-toggle behavior.
-     *
-     * @param orderedIndex the current active lane/pair index
-     * @return true for Side A, false for Side B
-     */
-    private boolean calculateBridgeOrientation(int orderedIndex) {
-        LayoutBlock lb = getLayoutBlock();
-
-        // 1. AUTOMATION MODE: Only evaluate if the Dispatcher has actively allocated this block
-        if (lb != null && lb.getUseExtraColor()) {
-            jmri.Block coreBlock = lb.getBlock();
-            if (coreBlock != null) {
-
-                int leftSlotListIndex = orderedIndex * 2;
-                int rightSlotListIndex = (orderedIndex * 2) + 1;
-
-                TrackSegment leftTrack = traverser.getSlotConnectOrdered(leftSlotListIndex);
-                TrackSegment rightTrack = traverser.getSlotConnectOrdered(rightSlotListIndex);
-
-                LayoutBlock leftLBlock = (leftTrack != null) ? leftTrack.getLayoutBlock() : null;
-                LayoutBlock rightLBlock = (rightTrack != null) ? rightTrack.getLayoutBlock() : null;
-
-                jmri.Block leftCoreBlock = (leftLBlock != null) ? leftLBlock.getBlock() : null;
-                jmri.Block rightCoreBlock = (rightLBlock != null) ? rightLBlock.getBlock() : null;
-
-                Object bridgeTrainId = coreBlock.getValue();
-
-                if (bridgeTrainId != null && !bridgeTrainId.toString().isEmpty()) {
-                    Object leftTrainId = (leftCoreBlock != null) ? leftCoreBlock.getValue() : null;
-                    Object rightTrainId = (rightCoreBlock != null) ? rightCoreBlock.getValue() : null;
-
-                    if (bridgeTrainId.equals(leftTrainId) && !bridgeTrainId.equals(rightTrainId)) {
-                        this.lastSideA = true;
-                        return this.lastSideA;
-                    }
-                    else if (bridgeTrainId.equals(rightTrainId) && !bridgeTrainId.equals(leftTrainId)) {
-                        this.lastSideA = false;
-                        return this.lastSideA;
-                    }
-                    else if (bridgeTrainId.equals(leftTrainId) && bridgeTrainId.equals(rightTrainId)) {
-                        if (leftCoreBlock != null && leftCoreBlock.getSensor() != null
-                                && leftCoreBlock.getSensor().getState() == jmri.Sensor.ACTIVE) {
-                            this.lastSideA = true;
-                            return this.lastSideA;
-                        } else if (rightCoreBlock != null && rightCoreBlock.getSensor() != null
-                                && rightCoreBlock.getSensor().getState() == jmri.Sensor.ACTIVE) {
-                            this.lastSideA = false;
-                            return this.lastSideA;
-                        }
-                    }
-                }
-            }
-            // If an automation block is active but no train data is found yet, preserve the last side
-            return this.lastSideA;
-        }
-
-        // 2. MANUAL / TESTING MODE: If no dispatcher route is active on the panel,
-        // fall back to your original working toggle layout rule (even slots are left, odd are right).
-        // This allows manual testing clicks to instantly flip the graphic!
-        this.lastSideA = (orderedIndex % 2 == 0);
-        return this.lastSideA;
-    }
-
-
 
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {

@@ -1021,14 +1021,11 @@ public class LayoutTraverser extends LayoutTrack {
                     if (getTurnout() == null) return;
                     int tState = getTurnout().getKnownState();
                     if (tState == Turnout.THROWN) {
-                        // This slot lane is now active.
-                        int pairBase = (connectionIndex / 2) * 2;
-                        log.warn("lastKnownIndex {} connectionIndex {}", lastKnownIndex, connectionIndex);
-                        // Update the traverser's position indicator.
+                        // Calculate the actual physical lane/pair base (0, 2, 4...)
+                        int targetPhysicalLane = connectionIndex / 2;
+                        int pairBase = targetPhysicalLane * 2;
                         if (lastKnownIndex != connectionIndex) {
-                             lastKnownIndex = connectionIndex;
-//                             models.redrawPanel();
-//                             models.setDirty();
+                            lastKnownIndex = connectionIndex;
                         }
                         // Command all other slot turnouts (other lanes) to CLOSED.
                         for (int i = 0; i < LayoutTraverser.this.slotList.size(); i += 2) {
@@ -1050,11 +1047,10 @@ public class LayoutTraverser extends LayoutTrack {
                             }
                         }
                         if (allClosed && lastKnownIndex != -1) {
-                            lastKnownIndex = -1; // All lanes are closed, blank the bridge
-//                            models.redrawPanel();
-//                            models.setDirty();
+                            lastKnownIndex = -1; // All physical lanes are closed, blank the bridge
                         }
                     }
+
                     // 🎨 Unified redraw: handles THROWN, CLOSED, and cascading changes across all tracks
                     models.redrawPanel();
                     models.setDirty();
