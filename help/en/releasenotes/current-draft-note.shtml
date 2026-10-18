@@ -98,6 +98,9 @@
                     longer also delivered to whichever tool sent the last frame,
                     so a tool window which has been closed stops receiving
                     traffic.</li>
+                <li>CBUS Reporters with erase-on-timeout: reading the same
+                    tag again restarts the timeout, so a tag still being read is
+                    no longer cleared early.</li>
             </ul>
 
         <h4>C/MRI</h4>
