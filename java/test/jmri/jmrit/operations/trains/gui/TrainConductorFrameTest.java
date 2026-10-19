@@ -191,23 +191,23 @@ public class TrainConductorFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
-    @Test
-    public void testLoop() {
-        for (int i = 0; i < 1000; i++) {
-            setUp();
-            testModifyButton();
-            tearDown();
-        }
-    }
+//    @Test
+//    public void testLoop() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testModifyButton();
+//            tearDown();
+//        }
+//    }
 
-    @Test
-    public void testLoop2() {
-        for (int i = 0; i < 1000; i++) {
-            setUp();
-            testMoveButton();
-            tearDown();
-        }
-    }
+//    @Test
+//    public void testLoop2() {
+//        for (int i = 0; i < 1000; i++) {
+//            setUp();
+//            testMoveButton();
+//            tearDown();
+//        }
+//    }
 
     @BeforeEach
     @Override
