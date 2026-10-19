@@ -3,17 +3,15 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.gui.YardEditFrame;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -36,8 +34,7 @@ public class TrackLoadEditActionTest extends OperationsTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location location = lManager.getLocationById("20");
         Track track = location.getTrackById("20s1");
-        YardEditFrame tf = new YardEditFrame();
-        tf.initComponents(location, track);
+        YardEditFrame tf = new YardEditFrame(track);
         
         TrackLoadEditAction a = new TrackLoadEditAction(tf);
         Assert.assertNotNull("exists", a);
