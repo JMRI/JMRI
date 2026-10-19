@@ -16,6 +16,9 @@ package jmri.jmrit.roster;
  *
  * @author Lionel Jeanson Copyright (C) 2026
  * 
+ * For consistence defaults defined here have to be keep in sync
+ * with the one defined as xml throttles layouts in resources/throttle
+ * 
  */
 
 public class RosterFunctionEntriesDefaults {

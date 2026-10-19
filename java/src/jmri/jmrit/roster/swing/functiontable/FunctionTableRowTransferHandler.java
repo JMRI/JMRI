@@ -80,10 +80,14 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
         // is if a drop on an imageicon?
         EditableResizableImagePanel impan = FunctionTableMouseListener.getEditableResizableImagePanelAt(table, drop.getDropPoint().x, drop.getDropPoint().y);
         if (impan != null) {
-            return URIDrop.importExternalTransferable(support.getTransferable(), impan);
+            if ( URIDrop.importExternalTransferable(support.getTransferable(), impan)) {
+                return true;
+            }
+            log.debug("Drop on image, but not importable as image, trying other possibilities");
         }
         // a RosterEntry?
         if (support.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor)) {
+            log.debug("Dropping a roster entry -> copy all functions");
             try {
                 RosterEntry re = RosterEntrySelection.getRosterEntries(support.getTransferable()).get(0);
                 ((FunctionTableModel)table.getModel()).reset(re.getFunctionEntries(), re.getShuntingFunction(), re.getAttribute(FunctionTableModel.FB_ORDER_ATTR));
@@ -106,14 +110,15 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
                 ((FunctionTableModel) table.getModel()).moveRow(from, to > from ? to - 1 : to);
                 table.getSelectionModel().setSelectionInterval( to > from ? to - 1 : to, to > from ? to - 1 : to );
             } else {
-                log.debug("Dropping a row from another roster entry -> copy values");
+                log.debug("Dropping a row from another roster entry -> copy function properties");
                 ((FunctionTableModel)table.getModel()).setRosterFunctionEntryAtRow(data.getRosterFunctionEntry(), to);
             }
             return true;
         } catch (UnsupportedFlavorException | IOException e) {
             log.debug("importData() Exception : ", e);
-            return false;
         }
+        log.debug("Couldn't import.");
+        return false;
     }
 
     private static class DataHandler implements Transferable {
