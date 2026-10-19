@@ -25,9 +25,6 @@ import jmri.util.swing.JmriMouseEvent;
  */
 public class LayoutTraverserView extends LayoutTrackView {
 
-    // defined constants
-    private boolean lastSideA = true;  // to persist the last side orientation
-
     // operational instance variables (not saved between sessions)
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTraverserEditor editor;
 

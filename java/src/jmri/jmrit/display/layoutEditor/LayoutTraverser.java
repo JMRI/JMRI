@@ -66,8 +66,6 @@ public class LayoutTraverser extends LayoutTrack {
 
     public final List<SlotTrack> slotList = new ArrayList<>(); // list of Slot Track objects
 
-    private int lastBridgeOrientation = 0; // 0 = Centered/Unknown, 1 = Left, 2 = Right
-
     /**
      * Get a string that represents this object. This should only be used for
      * debugging.

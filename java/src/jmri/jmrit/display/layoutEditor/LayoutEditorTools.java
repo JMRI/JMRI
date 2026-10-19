@@ -9931,9 +9931,6 @@ public final class LayoutEditorTools {
                 rotation = 270;
             }
 
-            Point2D CentrePoint = p;
-//            int cpx = (int) CentrePoint.getX();
-//            int cpy = (int) CentrePoint.getY();
             int cpx = (int) loc.getX();
             int cpy = (int) loc.getY();
             setIconOnPanel(icon, rotation, cpx + offsetx, cpy + offsety);
