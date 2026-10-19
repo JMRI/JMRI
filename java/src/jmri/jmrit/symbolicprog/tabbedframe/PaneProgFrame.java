@@ -1411,6 +1411,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * Make temporary contents for a pane while loading
+     * @return a temp component
      */
     protected Component makeStandinComponent() {
         var retval = new JPanel(){
@@ -1594,22 +1595,92 @@ abstract public class PaneProgFrame extends JmriJFrame
             //_flPane.setMaximumSize(_flPane.getPreferredSize());
             body.add(_flPane);
 
-            // add the store button
+            // create the buttons
             JButton store = new JButton(Bundle.getMessage("ButtonSave"));
             store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
             store.addActionListener(e -> storeFile());
-
             store.setToolTipText(_rosterEntry.getFileName());
+
+            JButton clear = new JButton(Bundle.getMessage("ButtonResetFnBtn"));
+            clear.addActionListener(e -> _flPane.clearFnBtn());
+            clear.setToolTipText(Bundle.getMessage("ButtonResetFnBtnTooltip"));
+
+            JButton resetNMRA = new JButton(Bundle.getMessage("ButtonFnBtnNMRA"));
+            resetNMRA.addActionListener(e -> _flPane.resetFnBtnNMRA());
+            resetNMRA.setToolTipText(Bundle.getMessage("BButtonFnBtnNMRATooltip"));
+
+            JButton resetNEM = new JButton(Bundle.getMessage("ButtonFnBtnNEM"));
+            resetNEM.addActionListener(e -> _flPane.resetFnBtnNEM());
+            resetNEM.setToolTipText(Bundle.getMessage("ButtonFnBtnNEMTooltip"));
+
+            JButton resetDecDef = new JButton(Bundle.getMessage("ButtonFnBtnDec"));
+            resetDecDef.addActionListener(e -> resetFnButtonFromDecoderFile() );
+            resetDecDef.setToolTipText(Bundle.getMessage("ButtonFnBtnDecTooltip"));
+
+            JButton restoreRosterEntry = new JButton(Bundle.getMessage("ButtonFnBtnRestore"));
+            restoreRosterEntry.addActionListener(e -> _flPane.updateFromEntry( _rosterEntry));
+            restoreRosterEntry.setToolTipText(Bundle.getMessage("ButtonFnBtnRestoreTooltip"));
 
             JPanel buttons = new JPanel();
             buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
-
+            buttons.add(clear);
+            buttons.add(resetNMRA);
+            buttons.add(resetNEM);
+            buttons.add(resetDecDef);
+            buttons.add(restoreRosterEntry);
+            buttons.add(new JSeparator());
             buttons.add(store);
-
             body.add(buttons);
             outer.add(scrollPane);
         });
         return outer;
+    }
+
+    private void resetFnButtonFromDecoderFile() {
+        // reset  data
+        RosterEntry tmpre = new RosterEntry(_rosterEntry, _rosterEntry+"_TMPWIP");
+        // blank all function entries
+        for (int i=0; i<tmpre.getMaxFnNumAsInt()+1;i++) {
+            tmpre.setFunctionEntry(new RosterFunctionEntry(i));            
+        }
+                
+        // load function names from family in rosterentry
+        tmpre.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"), "family");
+        // load sound names from family
+        tmpre.loadSounds(decoderRoot.getChild("decoder").getChild("family").getChild("soundlabels"), "family");
+        
+        // get a DecoderFile from the rosterentry
+        String decoderModel = tmpre.getDecoderModel();
+        String decoderFamily = tmpre.getDecoderFamily();
+        log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
+        // locate a decoder like that.
+        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        log.debug("found {} matches", l.size());
+        if (l.size() == 0) {
+            log.debug("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
+            // fall back to use just the decoder name, not family
+            l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
+            if (log.isDebugEnabled()) {
+                log.debug("found {} matches without family key", l.size());
+            }
+        }
+        if (l.size() > 0) {
+            DecoderFile df = l.get(0);
+            // save the pointer to the model element
+            modelElem = df.getModelElement();
+            // load function names from model
+            tmpre.loadFunctions(modelElem.getChild("functionlabels"), "model");
+            // load sound names from model
+            tmpre.loadSounds(modelElem.getChild("soundlabels"), "model"); 
+        } else {
+            if (decoderModel.equals("")) {
+                log.debug("blank decoderModel requested, so nothing loaded");
+            } else {
+                log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded", decoderModel);
+            }
+        }        
+
+        _flPane.resetFnBtnDecDef(tmpre);
     }
 
     @InvokeOnAnyThread  // transfers some operations to GUI thread

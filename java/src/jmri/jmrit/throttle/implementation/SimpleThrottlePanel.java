@@ -62,7 +62,6 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         throttleManager = tm;
         throuic = new ThrottleUICore(throttleManager, this, false);
         initGUI(isShowingCtrlPanel, isShowingFnPanel, isShowingIconPanel);
-        throuic.loadDefaultThrottle();
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 
@@ -291,14 +290,12 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
             // Don't show error dialog if file is not found
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
-            throuic.loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
             jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
                     null, "parsing file " + sfile,
                     "Parse error", null, null, ex);
-            throuic.loadDefaultThrottle(); // revert to loading default one
         }
     }
 

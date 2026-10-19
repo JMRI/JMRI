@@ -1,20 +1,31 @@
 package jmri.jmrit.throttle.preferences;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction;
 import jmri.jmrit.throttle.implementation.ThrottleUICore;
 import jmri.util.swing.JmriJOptionPane;
-
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
 
 /**
  * A preferences panel to display and edit JMRI throttle preferences
@@ -315,12 +326,26 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         fileChooser.setDialogTitle(Bundle.getMessage("MessageSelectDefaultThrottleFile"));
         
         JButton bScript = new JButton(Bundle.getMessage("ButtonSetDots"));
-        bScript.addActionListener(new ThrottlesPreferencesUISettingsPane.OpenAction(fileChooser, tfDefaultThrottleLocation));        
+        bScript.addActionListener(new ThrottlesPreferencesUISettingsPane.OpenAction(fileChooser, tfDefaultThrottleLocation));
+
+        JButton jbDefaultThrottleNMRA = new JButton(Bundle.getMessage("DefaultThrottleFileUseNMRA"));        
+        JButton jbDefaultThrottleNEM = new JButton(Bundle.getMessage("DefaultThrottleFileUseNEM"));
+        jbDefaultThrottleNMRA.setToolTipText(Bundle.getMessage("DefaultThrottleFileUseNMRAToolTip"));
+        jbDefaultThrottleNEM.setToolTipText(Bundle.getMessage("DefaultThrottleFileUseNEMToolTip"));
+        jbDefaultThrottleNMRA.addActionListener(e -> tfDefaultThrottleLocation.setText("resources/throttle/NMRA throttle.xml") );
+        jbDefaultThrottleNEM.addActionListener(e -> tfDefaultThrottleLocation.setText("resources/throttle/NEM throttle.xml") );
+        
+        JPanel bp = new JPanel();
+        bp.setLayout(new BoxLayout(bp, BoxLayout.X_AXIS));    
+        bp.add(bScript);
+        bp.add(jbDefaultThrottleNMRA); 
+        bp.add(jbDefaultThrottleNEM);         
+
         JPanel p = new JPanel(new BorderLayout());        
         p.add(new JLabel(Bundle.getMessage("DefaultThrottleFile")), BorderLayout.LINE_START);
         p.add(tfDefaultThrottleLocation, BorderLayout.CENTER);
-        p.add(bScript, BorderLayout.LINE_END);        
-        
+        p.add(bp, BorderLayout.LINE_END); 
+
         return p;
     }
 

@@ -26,7 +26,7 @@ import javax.swing.WindowConstants;
 public class ThrottleJInternalFrameSubControl extends JInternalFrame  {
 
     public ThrottleJInternalFrameSubControl(String title, JPanel content, boolean visible) {
-        super(title, true, true, true, true);           
+        super(title, true, true, true, false);           
         setContentPane(content);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
