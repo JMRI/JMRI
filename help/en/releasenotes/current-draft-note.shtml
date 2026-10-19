@@ -544,7 +544,11 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+             <li>With advanced block routing on, when two routes to a
+                 destination are equally good, the same one is now always
+                 chosen: the one with fewer blocks, then by the name of the
+                 next block. Before, the choice could change after an
+                 unrelated edit to the layout.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
