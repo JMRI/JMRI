@@ -124,7 +124,7 @@
     <!-- Autocreate pane for function key icons outputs -->
     <!-- Create grid F0 to F28 (LokSound Select) or F0 to F31 (v5) -->
 
-    <xsl:template match="pane[1]">
+    <xsl:template match="pane[name/text() = '__functionCommonDefs']">
         <!-- Get Decoder Family from calling decoder definition -->
         <xsl:variable name="decoderFamily" select="string(//decoder/family/@name)"/>
       

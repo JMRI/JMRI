@@ -187,13 +187,15 @@ public class Dcc4PcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgr
         Assert.assertEquals("CV 1024: high CV bits in the instruction", (byte) 0xE7, cs.packets.get(0)[1]);
         Assert.assertEquals("read repeats", Dcc4PcOpsModeProgrammer.READ_REPEATS, (int) cs.repeats.get(0));
         JUnitUtil.waitFor(() -> cs.packets.size() == 2, "retried");
-        Assert.assertTrue("retried after RETRY_AFTER",
-                cs.times.get(1) - cs.times.get(0) >= Dcc4PcOpsModeProgrammer.RETRY_AFTER - 50);
-        JUnitUtil.waitFor(Dcc4PcOpsModeProgrammer.RETRY_AFTER + 300);
-        Assert.assertEquals("retried only once", 2, cs.packets.size());
+        long retryGap = cs.times.get(1) - cs.times.get(0);
+        Assert.assertTrue("retried after RETRY_AFTER, not " + retryGap + " ms",
+                retryGap >= Dcc4PcOpsModeProgrammer.RETRY_AFTER - 50);
         railComReply("3", 42);
         JUnitUtil.waitFor(() -> result[2] > 0, "read finished");
         Assert.assertEquals(42, result[0]);
+        int sent = cs.packets.size();
+        JUnitUtil.waitFor(Dcc4PcOpsModeProgrammer.RETRY_AFTER + 200);
+        Assert.assertEquals("no more sends once answered", sent, cs.packets.size());
 
         // a write straight after a read waits for the read's repeats
         p.readCV("1", resultListener);
@@ -204,6 +206,27 @@ public class Dcc4PcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgr
         Assert.assertEquals("write repeats", Dcc4PcOpsModeProgrammer.WRITE_REPEATS, (int) cs.repeats.get(3));
         Assert.assertTrue("write paced after the read",
                 cs.times.get(3) - cs.times.get(2) >= Dcc4PcOpsModeProgrammer.READ_REPEATS * Dcc4PcOpsModeProgrammer.GAP_PER_REPEAT - 15);
+    }
+
+    // 2026-10-16: CVs with no answer at all waited 5 s each, 40% of a Read All. A packet
+    // is now sent up to MAX_SENDS times, and the read gives up after RAILCOM_TIMEOUT.
+    @Test
+    public void testResentUpToMaxSendsThenTimesOut() {
+        PacketRecorder cs = new PacketRecorder();
+        Dcc4PcOpsModeProgrammer p = new Dcc4PcOpsModeProgrammer(false, 3,
+                new CommandStationManager(0, jmri.ProgListener.FailedTimeout), cs);
+        long start = System.currentTimeMillis();
+        try {
+            p.readCV("8", resultListener);
+        } catch (jmri.ProgrammerException e) {
+            Assert.fail(e.getMessage());
+        }
+        JUnitUtil.waitFor(() -> result[2] > 0, "read gave up");
+        long took = System.currentTimeMillis() - start;
+        Assert.assertEquals(jmri.ProgListener.FailedTimeout, result[1]);
+        Assert.assertTrue("gave up after RAILCOM_TIMEOUT, not " + took + " ms",
+                took >= Dcc4PcOpsModeProgrammer.RAILCOM_TIMEOUT - 100 && took < Dcc4PcOpsModeProgrammer.READ_TIMEOUT);
+        Assert.assertEquals("sent MAX_SENDS times", Dcc4PcOpsModeProgrammer.MAX_SENDS, cs.packets.size());
     }
 
     // 2026-10-13: index writes (CV 31, 32) through LocoNet's programmer took ~10 s each,

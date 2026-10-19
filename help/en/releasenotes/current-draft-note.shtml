@@ -98,6 +98,9 @@
                     longer also delivered to whichever tool sent the last frame,
                     so a tool window which has been closed stops receiving
                     traffic.</li>
+                <li>CBUS Reporters with erase-on-timeout: reading the same
+                    tag again restarts the timeout, so a tag still being read is
+                    no longer cleared early.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -116,7 +119,23 @@
 
         <h4>DCC4pc</h4>
             <ul>
-                <li></li>
+                <li>DCC4pc RailCom readers work again: the serial port is
+                    saved in the profile, RailCom addresses and orientation
+                    are reported correctly, and two locos in one block are
+                    both identified. The reader is switched to 62.5 kbps for
+                    faster polling, recovers by itself after a loss of track
+                    power or a short, and the bus speed is restored at
+                    quit.</li>
+                <li>If the DCC4pc interface stops responding, unplug it and
+                    plug it back in: JMRI reconnects by itself without a
+                    restart.</li>
+                <li>CVs can be read and written with Programming on Main
+                    through a DCC4pc reader. Set the connection's Programmer
+                    option to the connection that sends the packets (or leave
+                    it blank to use the default command station), and choose
+                    Dcc4Pc as the Ops Mode Programmer in Preferences,
+                    Defaults. Each CV takes about half a second; any left
+                    Unknown can be picked up with Read changes on sheet.</li>
             </ul>
 
         <h4>Direct</h4>
@@ -203,6 +222,16 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
+                <li>OpenLCB/LCC Signal Masts can no longer 
+                    be defined to use the event ID's that start with 00
+                    as these values are reserved and not to be used.
+                    The value 00.00.00.00.00.00.00.00 was previously the default 
+                    for "this event ID hasn't been configured".
+                    The default is now a blank entry field that doesn't
+                    produce or consume an event.  If you have 
+                    defined any of the signal mast entries to start with 00,
+                    they will be migrated to be empty fields that no longer 
+                    produce or consume an event.</li>
                 <li>Change the default events for the STL Editor IQYZ tables from all zeros to
                     unique zero based events.</li>
             </ul>
@@ -324,7 +353,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>LokSound 5 DCC xxx / LokPilot 5 DCC xxx / LokSound Select xxx: Bring back "Basic Speed Control" pane that was lost in 5.17.3.
+                </li>
             </ul>
 
         <h4>Hattoms</h4>
@@ -518,6 +548,12 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>An automatic "Head and Tail" train with no stopping sensor
+                 and no speed profile stopping can now draw fully into a
+                 Section before stopping, by watching the Block holding its
+                 tail go unoccupied, as an "Entire Train" train does.
+                 Previously it stopped as soon as the locomotive entered
+                 the Section.</li>
              <li>When the maximum speed of an automatically running train
                  is entered as a scale speed (scale mph or scale km/h),
                  that limit is now applied as entered. Previously it could
@@ -553,7 +589,10 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>NX with signal masts: if a train enters the start block
+                    while the route is still being set, the first block of the
+                    route stays protected. Before, it was dropped and the entry
+                    signal could stay clear behind the train.</li>
             </ul>
 
     <h3>LccPro</h3>
@@ -565,7 +604,11 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>Logix: a deleted Logix now stops running. Before, deleting
+              an enabled Logix left it setting turnouts and sensors until
+              JMRI was restarted. This includes a Logix that was loaded
+              disabled and enabled later, which could not be stopped this way
+              even where the delete did deactivate it.</li>
         </ul>
 
     <h3>LogixNG</h3>
@@ -577,7 +620,8 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>A deleted averaging meter no longer keeps reading its source
+                meter in the background.</li>
         </ul>
 
     <h3>OperationsPro</h3>
@@ -606,7 +650,17 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Start Up actions for a connection that is disabled or could
+                not open its port are no longer deleted when Preferences are
+                saved. They are skipped, and shown in red in the Start Up list,
+                until the connection is available again, instead of being run
+                against no connection or a different one. When a connection is
+                deleted, the delete question lists its Start Up actions; each
+                one is removed unless it is kept, or moved to another
+                connection of the same type.
+                Removing one of several connections of the same type (for
+                example two CBUS connections) no longer hides the Start Up
+                actions of the others.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -625,7 +679,9 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>When a Route finishes setting its turnouts, its "turnouts
+                aligned" sensor is now set on the layout thread, so Logix,
+                LogixNG and panels watching it get the change safely.</li>
        </ul>
 
     <h3>Scripting</h3>
@@ -651,7 +707,10 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>A Signal Mast Logic mast now goes to danger as soon as a
+                    block on its route becomes occupied, instead of first
+                    waiting for the signal logic delay; changes back towards
+                    clear are still delayed as before.</li>
             </ul>
 
         <h4>Signal Groups</h4>

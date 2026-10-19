@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
@@ -13,10 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +31,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import jmri.InstanceManager;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
@@ -33,6 +40,8 @@ import jmri.profile.ProfileManager;
 import jmri.swing.ManagingPreferencesPanel;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import jmri.util.startup.AbstractActionModel;
+import jmri.util.startup.StartupActionsManager;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -229,15 +238,8 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         if (i != -1) {
             // only prompt if triggered by action event
-            if (e != null) {
-                int n = JmriJOptionPane.showConfirmDialog(null, MessageFormat.format(
-                        rb.getString("MessageDoDelete"),
-                        new Object[]{this.getTitleAt(i)}),
-                        rb.getString("MessageDeleteConnection"),
-                        JmriJOptionPane.YES_NO_OPTION);
-                if (n != JmriJOptionPane.YES_OPTION) {
-                    return;
-                }
+            if (e != null && !confirmDelete(getSystemPrefix(this.configPanes.get(i)), this.getTitleAt(i))) {
+                return;
             }
 
             log.debug("i = {}, this.getTabCount() = {}, configPanes.size()={}", i, this.getTabCount(), configPanes.size());
@@ -264,6 +266,165 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
             this.addChangeListener(addTabListener);
         }
         activeTab();
+    }
+
+    /**
+     * Get the system prefix of the connection in a pane.
+     *
+     * @param configPane the connection pane
+     * @return the system prefix, or null if the pane has no connection
+     */
+    @CheckForNull
+    static String getSystemPrefix(@CheckForNull JmrixConfigPane configPane) {
+        if (configPane == null) {
+            return null;
+        }
+        ConnectionConfig config = configPane.getCurrentObject();
+        if (config == null || config.getAdapter() == null
+                || config.getAdapter().getSystemConnectionMemo() == null) {
+            return null;
+        }
+        return config.getAdapter().getSystemConnectionMemo().getSystemPrefix();
+    }
+
+    /**
+     * Ask the user to confirm deleting a connection.
+     * <p>
+     * If the connection has Start Up actions, one dialog both confirms the
+     * delete and asks what to do with each action: remove it (the default),
+     * keep it, or move it to another connection that offers the same action
+     * and does not already have it. Otherwise the plain Yes/No question is
+     * asked. Nothing is changed unless the user confirms.
+     *
+     * @param prefix the system prefix of the connection being deleted; may be
+     *               null if it has no connection
+     * @param title  the name of the connection, for the dialog
+     * @return true to carry on deleting the connection, false if cancelled
+     */
+    boolean confirmDelete(@CheckForNull String prefix, String title) {
+        String question = MessageFormat.format(rb.getString("MessageDoDelete"), title);
+        StartupActionsManager manager = InstanceManager.getOptionalDefault(StartupActionsManager.class).orElse(null);
+        List<AbstractActionModel> models = (prefix == null || manager == null)
+                ? new ArrayList<>() : manager.getActionsForConnection(prefix);
+        if (models.isEmpty()) {
+            return JmriJOptionPane.showConfirmDialog(this, question,
+                    rb.getString("MessageDeleteConnection"),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION;
+        }
+
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(2, 2, 2, 2);
+        panel.add(new JLabel(question), c);
+        c.gridy++;
+        c.insets = new Insets(8, 2, 6, 2);
+        panel.add(new JLabel(rb.getString("MessageStartupActionsForConnection")), c);
+        c.gridwidth = 1;
+        c.insets = new Insets(2, 2, 2, 8);
+        List<JComboBox<StartupActionChoice>> boxes = new ArrayList<>();
+        for (AbstractActionModel model : models) {
+            JComboBox<StartupActionChoice> box = new JComboBox<>();
+            for (StartupActionChoice choice : getChoices(manager, model, prefix)) {
+                box.addItem(choice);
+            }
+            boxes.add(box);
+            c.gridy++;
+            c.gridx = 0;
+            panel.add(new JLabel(model.getName()), c);
+            c.gridx = 1;
+            panel.add(box, c);
+        }
+
+        String[] options = {rb.getString("ButtonDeleteConnection"), Bundle.getMessage("ButtonCancel")};
+        int n = JmriJOptionPane.showOptionDialog(this, panel, rb.getString("MessageDeleteConnection"),
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        if (n != 0) {
+            return false;
+        }
+        for (int k = 0; k < models.size(); k++) {
+            applyStartupActionChoice(manager, models.get(k), (StartupActionChoice) boxes.get(k).getSelectedItem());
+        }
+        return true;
+    }
+
+    /**
+     * Get the choices for a Start Up action of a connection being deleted:
+     * remove (first, the default), keep, and a move to each other running
+     * connection that offers the action and does not already have it.
+     *
+     * @param manager the Start Up actions manager
+     * @param model   the action
+     * @param prefix  the system prefix of the connection being deleted
+     * @return the choices, in the order shown
+     */
+    @Nonnull
+    static List<StartupActionChoice> getChoices(@Nonnull StartupActionsManager manager,
+            @Nonnull AbstractActionModel model, @CheckForNull String prefix) {
+        List<StartupActionChoice> choices = new ArrayList<>();
+        choices.add(new StartupActionChoice(StartupActionChoice.Kind.REMOVE, null,
+                rb.getString("StartupActionRemove")));
+        choices.add(new StartupActionChoice(StartupActionChoice.Kind.KEEP, null,
+                rb.getString("StartupActionKeep")));
+        for (SystemConnectionMemo memo : StartupActionsManager.getConnectionsOffering(model, prefix)) {
+            if (!hasAction(manager, model.getClassName(), memo.getSystemPrefix())) {
+                choices.add(new StartupActionChoice(StartupActionChoice.Kind.MOVE, memo.getSystemPrefix(),
+                        MessageFormat.format(rb.getString("StartupActionMoveTo"),
+                                memo.getUserName(), memo.getSystemPrefix())));
+            }
+        }
+        return choices;
+    }
+
+    private static boolean hasAction(StartupActionsManager manager, String className, String systemPrefix) {
+        return manager.getActionsForConnection(systemPrefix).stream()
+                .anyMatch(other -> className.equals(other.getClassName()));
+    }
+
+    /**
+     * Carry out the choice made for a Start Up action of a connection being
+     * deleted.
+     *
+     * @param manager the Start Up actions manager
+     * @param model   the action
+     * @param choice  what to do; null is treated as remove
+     */
+    static void applyStartupActionChoice(@Nonnull StartupActionsManager manager,
+            @Nonnull AbstractActionModel model, @CheckForNull StartupActionChoice choice) {
+        if (choice == null || choice.kind == StartupActionChoice.Kind.REMOVE) {
+            manager.removeAction(model);
+        } else if (choice.kind == StartupActionChoice.Kind.MOVE && choice.systemPrefix != null) {
+            manager.reassignAction(model, choice.systemPrefix);
+        }
+        // KEEP: left as it is; shown in red until moved or removed
+    }
+
+    /**
+     * One choice for a Start Up action of a connection being deleted.
+     */
+    static class StartupActionChoice {
+
+        enum Kind {
+            REMOVE, KEEP, MOVE
+        }
+
+        final Kind kind;
+        final String systemPrefix; // the connection to move to, for MOVE only
+        private final String text;
+
+        StartupActionChoice(@Nonnull Kind kind, @CheckForNull String systemPrefix, @Nonnull String text) {
+            this.kind = kind;
+            this.systemPrefix = systemPrefix;
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
     }
 
     @Override
