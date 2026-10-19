@@ -3,11 +3,6 @@ package jmri.jmrit.operations.locations.gui;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.operators.*;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -19,6 +14,11 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -424,6 +424,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         }, "esf not null");
         JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditStaging", loc.getName()));
         Assert.assertNotNull(tef);
+        JemmyUtil.waitFor(tef);
 
         Track t = loc.getTracksList().get(0);
         Assert.assertNotNull(t);
@@ -604,9 +605,10 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
         Location loc = lManager.getLocationByName("Test Location");
         Assert.assertNotNull(loc);
-
+        
         LocationEditFrame f = new LocationEditFrame(loc);
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
@@ -618,6 +620,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         }, "esf not null");
         JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditSpur", loc.getName()));
         Assert.assertNotNull(tef);
+        JemmyUtil.waitFor(tef);
 
         Track t = loc.getTrackByName("Test Location Spur 2", null);
         Assert.assertNotNull(t);
@@ -804,6 +807,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         }, "esf not null");
         JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditInterchange", loc.getName()));
         Assert.assertNotNull(tef);
+        JemmyUtil.waitFor(tef);
 
         Track t = loc.getTrackByName("Test Location Interchange 2", null);
         Assert.assertNotNull(t);
@@ -939,6 +943,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         }, "esf not null");
         JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("EditYard", loc.getName()));
         Assert.assertNotNull(tef);
+        JemmyUtil.waitFor(tef);
 
         Track t = loc.getTrackByName("Test Location Yard 2", null);
         Assert.assertNotNull(t);
@@ -1000,6 +1005,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         }, "esf not null");
         JmriJFrame tef = JmriJFrame.getFrame("Test Location Spur 2");
         Assert.assertNotNull(tef);
+        JemmyUtil.waitFor(tef);
 
         test.setCommentSetout("");
         Assert.assertEquals("Confirm number of columns", 9, tbl.getColumnCount());

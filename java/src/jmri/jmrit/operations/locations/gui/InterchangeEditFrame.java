@@ -12,10 +12,6 @@ import jmri.jmrit.operations.locations.tools.*;
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2025
  */
 public class InterchangeEditFrame extends TrackEditFrame {
-
-    public InterchangeEditFrame() {
-        super(Bundle.getMessage("AddInterchange"));
-    }
     
     public InterchangeEditFrame(Location location) {
         super(Bundle.getMessage("AddInterchange"));
@@ -23,7 +19,7 @@ public class InterchangeEditFrame extends TrackEditFrame {
     }
     
     public InterchangeEditFrame(Track track) {
-        super(Bundle.getMessage("EditInterchange"));
+        super(Bundle.getMessage("EditInterchange", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 

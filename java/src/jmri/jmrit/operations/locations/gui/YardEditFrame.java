@@ -24,7 +24,7 @@ public class YardEditFrame extends TrackEditFrame {
     }
     
     public YardEditFrame(Track track) {
-        super(Bundle.getMessage("EditYard"));
+        super(Bundle.getMessage("EditYard", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 

@@ -28,10 +28,6 @@ public class StagingEditFrame extends TrackEditFrame {
     JCheckBox blockCarsCheckBox = new JCheckBox(Bundle.getMessage("BlockCars"));
 
     JPanel panelLoad = panelOpt4;
-
-    public StagingEditFrame() {
-        super(Bundle.getMessage("AddStaging"));
-    }
     
     public StagingEditFrame(Location location) {
         super(Bundle.getMessage("AddStaging"));
@@ -39,7 +35,7 @@ public class StagingEditFrame extends TrackEditFrame {
     }
     
     public StagingEditFrame(Track track) {
-        super(Bundle.getMessage("EditStaging"));
+        super(Bundle.getMessage("EditStaging", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 
