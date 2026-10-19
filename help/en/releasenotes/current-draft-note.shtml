@@ -544,7 +544,11 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+             <li>With advanced block routing on, a block now sends a routing
+                 update to its neighbours only when its status (occupied,
+                 reserved, empty or unknown) changes, not on every change to
+                 the block such as a new reporter value. This reduces the
+                 work done on large layouts.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
