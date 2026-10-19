@@ -544,7 +544,10 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+             <li>With advanced block routing on, the shortest route to a
+                 destination is now found when it is the first or only route,
+                 so changes to block lengths are passed on through the
+                 layout.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
