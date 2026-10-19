@@ -544,7 +544,14 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+             <li>A block that is set to allocated, for example by the LogixNG
+                 Block action "Allocate" or by a script, now stays allocated
+                 until it is deallocated. Before, with advanced block routing
+                 on, it was deallocated without notice as soon as the block
+                 became occupied. LogixNG and scripts that allocate blocks
+                 must now also deallocate them, for example when the train
+                 has left. Dispatcher and Entry/Exit are not affected: they
+                 deallocate their own blocks.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
