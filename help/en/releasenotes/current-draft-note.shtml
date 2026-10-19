@@ -544,7 +544,13 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+             <li>With advanced block routing on, through paths whose turnouts
+                 were already set when routing started, for example after the
+                 start-up state query, are now marked active, so routes
+                 through them are found. A route is no longer marked invalid
+                 while another active path in the block still uses it, and
+                 removed routes and through paths stop listening to their
+                 block and turnouts.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
