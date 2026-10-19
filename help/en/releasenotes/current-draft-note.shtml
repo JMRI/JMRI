@@ -544,7 +544,10 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+             <li>Finding the Layout Block for a Block no longer searches
+                 every Layout Block each time. This speeds up advanced block
+                 routing, Signal Mast Logic, Dispatcher and Entry/Exit on
+                 large layouts.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
