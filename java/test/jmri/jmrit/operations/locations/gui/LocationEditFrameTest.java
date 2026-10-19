@@ -171,8 +171,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("DB", "001", "Boxcar", "40", track, 0);
 
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
         
         JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteLocationButton);
         // confirm delete dialog window should appear, try no
@@ -411,8 +414,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Location loc = lManager.getLocationByName("North End Staging");
         Assert.assertNotNull(loc);
 
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
@@ -453,8 +459,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         // turn on id column
         InstanceManager.getDefault(LocationManager.class).setShowIdEnabled(true);
 
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
         f.setSize(1200, f.getHeight()); // need full width
 
         JFrameOperator jfo = new JFrameOperator(f);
@@ -606,7 +615,9 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Location loc = lManager.getLocationByName("Test Location");
         Assert.assertNotNull(loc);
         
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
         JemmyUtil.waitFor(f);
 
@@ -649,8 +660,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         // add a 3rd track for coverage
         Track track3 = loc.addTrack("Test Location Spur 3", Track.SPUR);
 
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
         f.setSize(1500, f.getHeight()); // need full width
 
         JFrameOperator jfo = new JFrameOperator(f);
@@ -791,9 +805,13 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("should be 1 locations", 1, lManager.getLocationsByNameList().size());
         Location loc = lManager.getLocationByName("Test Location");
         Assert.assertNotNull(loc);
+        
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
 
-        LocationEditFrame f = new LocationEditFrame(loc);
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
 
         JemmyUtil.enterClickAndLeave(f.interchangeRadioButton);
 
@@ -833,11 +851,15 @@ public class LocationEditFrameTest extends OperationsTestCase {
         // turn on id column
         InstanceManager.getDefault(LocationManager.class).setShowIdEnabled(true);
 
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
-        JemmyUtil.enterClickAndLeave(f.interchangeRadioButton);
+        JemmyUtil.waitFor(f);
         f.setSize(1200, f.getHeight()); // need full width
-
+        
+        JemmyUtil.enterClickAndLeave(f.interchangeRadioButton);
+        
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
 
@@ -928,8 +950,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Location loc = lManager.getLocationByName("Test Location");
         Assert.assertNotNull(loc);
 
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
 
         JemmyUtil.enterClickAndLeave(f.yardRadioButton);
 
@@ -972,8 +997,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
 
         Track test = loc.addTrack("Test Spur", Track.SPUR);
 
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         Assert.assertNotNull(f);
+        JemmyUtil.waitFor(f);
         f.setSize(1200, f.getHeight()); // need full width
 
         JFrameOperator jfo = new JFrameOperator(f);
@@ -1018,7 +1046,9 @@ public class LocationEditFrameTest extends OperationsTestCase {
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
-        LocationEditFrame f = new LocationEditFrame(loc);
+        LocationEditFrame f = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new LocationEditFrame(loc);
+        });
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 }
