@@ -21,16 +21,18 @@
     </li>
     <li>
         <strong>Layout Editor: an allocated block no longer automatically
-        stops showing its extra color when it becomes occupied.</strong>
-        Before, with advanced block routing on, a block set to allocated,
-        for example by the LogixNG Block action "Allocate" or by a script,
-        was deallocated without notice as soon as it became occupied, so its
-        extra color state changed on its own. It now stays allocated, and
-        keeps its extra color, until it is deallocated. LogixNG and scripts
-        that allocate blocks must now also deallocate them, for example when
-        the train has left. Dispatcher and Entry/Exit are not affected: they
-        deallocate their own blocks. See the Layout Editor section of the
-        release notes.
+        loses its extra color when it becomes occupied.</strong>
+        In a Layout Block, "allocated" means the block is set to use its
+        extra color, for example by the LogixNG Block action "Alternate Color
+        On" or by a script, and it is what the LogixNG Block expression
+        "Is Allocated" tests. Before, with advanced block routing on, a block
+        set this way was switched back to its normal color without notice as
+        soon as it became occupied. It now keeps its extra color until it is
+        turned off, for example by the LogixNG Block action "Alternate Color
+        Off". LogixNG and scripts that set it must now also clear it, for
+        example when the train has left. Dispatcher and Entry/Exit are not
+        affected: they clear their own blocks. See the Layout Editor section
+        of the release notes.
     </li>
     <li>
     </li>
