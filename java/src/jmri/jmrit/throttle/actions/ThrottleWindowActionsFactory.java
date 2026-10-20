@@ -60,28 +60,28 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DccThrottle throttle = tw.getCurentThrottleController().getThrottle();
-                incrementSpeed(throttle, throttle.getSpeedIncrement());
+                if (throttle!=null) incrementSpeed(throttle, throttle.getSpeedIncrement());
             }            
         });
         ret.put("decelerate", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DccThrottle throttle = tw.getCurentThrottleController().getThrottle();
-                incrementSpeed(throttle, -throttle.getSpeedIncrement());
+                if (throttle!=null) incrementSpeed(throttle, -throttle.getSpeedIncrement());
             }            
         });
         ret.put("accelerateMore", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DccThrottle throttle = tw.getCurentThrottleController().getThrottle();
-                incrementSpeed(throttle, throttle.getSpeedIncrement()*tpwkc.getMoreSpeedMultiplier());
+                if (throttle!=null) incrementSpeed(throttle, throttle.getSpeedIncrement()*tpwkc.getMoreSpeedMultiplier());
             }            
         });
         ret.put("decelerateMore", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DccThrottle throttle = tw.getCurentThrottleController().getThrottle();
-                incrementSpeed(throttle, -throttle.getSpeedIncrement()*tpwkc.getMoreSpeedMultiplier());
+                if (throttle!=null) incrementSpeed(throttle, -throttle.getSpeedIncrement()*tpwkc.getMoreSpeedMultiplier());
             }            
         });        
         ret.put("idle", new AbstractAction() {

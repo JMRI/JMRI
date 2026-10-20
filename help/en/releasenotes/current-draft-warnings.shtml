@@ -1,6 +1,23 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
+        <strong>LogixNG formulas: &amp;&amp; and || no longer always
+        evaluate both sides.</strong>
+        The right-hand side is now skipped when the left-hand side already
+        decides the result. A formula that relies on both sides running, for
+        example to call methods for their side effects, may now behave
+        differently. See the LogixNG section of the release notes for an
+        example and how to change it.
+    </li>
+    <li>If you use OpenLCB/LCC native signal masts:  These can no longer 
+        be defined to use the event ID's that start with 00.  
+        The value 00.00.00.00.00.00.00.00 was previously the default 
+        for "this event ID hasn't been configured".
+        The default is now a blank entry field that doesn't
+        produce or consume an event.  If you have 
+        defined any of the signal mast entries to start with 00,
+        they will be migrated to be empty fields that no longer 
+        produce or consume an event.
     </li>
     <li>
     </li>

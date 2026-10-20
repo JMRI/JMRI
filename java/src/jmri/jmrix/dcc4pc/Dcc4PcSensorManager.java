@@ -804,6 +804,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 switch (p.kind) {
                     case OVERFLOW:
                         log.debug("Board {} buffer overflowed, packets lost", address);
+                        forgetPomPackets();
                         break;
                     case UNKNOWN_COMMAND:
                         requestResync("unknown command in Raw encoding stream");
@@ -861,7 +862,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     continue;
                 }
                 try {
-                    decodeDCCPacket(d.sourceDcc);
+                    decodeDCCPacket(d.sourceDcc, now);
                 } catch (RuntimeException ex) {
                     log.error("decodeDCCPacket Exception", ex);
                     continue;
@@ -890,14 +891,88 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
         int[] lastDCCPacketSeen = new int[0];
 
+        /**
+         * How long after a POM packet is seen a POM answer that follows
+         * another packet to the same loco is still credited to that POM
+         * packet's CV. Answers normally come 160-270 ms after the packet.
+         */
+        static final long POM_ANSWER_WINDOW = 1000;
+
+        /**
+         * How many cutouts to a loco, starting with the one after the first
+         * POM packet for a new CV, may still carry the decoder's previous
+         * answer and so aren't credited. Usually only the first does, but
+         * the decoder can take longer, or the reader can miss a POM packet
+         * (2026-10-16: 1.1.284 was given CV 283's value once with 1).
+         */
+        static final int STALE_CUTOUTS = 2;
+
+        /**
+         * Per loco (see {@link #locoKey}): the CV of the last POM packet seen,
+         * when, and how many more of its cutouts aren't credited.
+         */
+        private final HashMap<Integer, long[]> lastPom = new HashMap<>();
+
+        /** When the POM packet whose CV {@link #cvNumber} was credited from was seen; -1 if none. */
+        private long creditedPomTime = -1;
+
+        private int locoKey() {
+            return (dcc_addr_type << 16) | addr;
+        }
+
+        /**
+         * Forget the POM packets seen so far, after packets were lost to an
+         * overflow. A lost packet may have been a newer POM packet, so a
+         * later answer may be for a CV we never saw; crediting it to the
+         * last one seen would give that CV the wrong answer (2026-10-15).
+         * Answers count again from the next POM packet seen.
+         */
+        void forgetPomPackets() {
+            lastPom.clear();
+            if (creditedPomTime >= 0) {
+                cvNumber = 0;
+                creditedPomTime = -1;
+            }
+        }
+
         void decodeDCCPacket(int[] packet) {
+            decodeDCCPacket(packet, System.currentTimeMillis());
+        }
+
+        /**
+         * Decode the DCC packet a RailCom cutout followed: sets
+         * {@link #addr}, {@link #dcc_addr_type} and {@link #cvNumber}.
+         * <p>
+         * A decoder may answer a POM packet in the cutout after a later
+         * packet to it, not the POM packet itself. With only one loco in
+         * the command station's refresh that is nearly always the case
+         * (2026-10-15: the answer to "write CV 31" followed a speed packet).
+         * So after any packet to a loco, {@link #cvNumber} is the CV of the
+         * last POM packet seen for it, if that was within
+         * {@link #POM_ANSWER_WINDOW}.
+         * <p>
+         * Except the first {@link #STALE_CUTOUTS} cutouts to the loco from the
+         * first POM packet for a new CV: there the decoder may still send its
+         * previous answer (2026-10-16, ESU LokSound 5: usually exactly one
+         * stale cutout). Crediting them gave every CV the value of the one
+         * read before. After an overflow, any POM packet counts as new, as a
+         * newer one may have been lost.
+         *
+         * @param packet the DCC packet bytes
+         * @param now    the current time in ms
+         */
+        void decodeDCCPacket(int[] packet, long now) {
             if (Arrays.equals(packet, lastDCCPacketSeen)) {
+                if (creditedPomTime >= 0 && now - creditedPomTime > POM_ANSWER_WINDOW) {
+                    cvNumber = 0; // the same packet again, but too long after the POM packet
+                }
                 return;
             }
             lastDCCPacketSeen = packet.clone();
             speed = 0;
             addr = 0;
-            cvNumber = 0; // only a POM packet sets it
+            cvNumber = 0; // only a POM packet, or a recent one to the same loco, sets it
+            creditedPomTime = -1;
             dcc_addr_type = NO_ADDRESS;
             if (packet.length < 2) {
                 return; // too short to hold an address and an instruction
@@ -959,13 +1034,37 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
                 log.debug("DCC address type {} addr {}", addt, addr);
                 if ((dcc_addr_type != NO_ADDRESS)) {
+                    long[] pom = lastPom.get(locoKey());
+                    boolean isPom = (packet[i] & 0xE0) == 0xE0;
+                    if (!isPom && pom != null && now - pom[1] <= POM_ANSWER_WINDOW) {
+                        if (pom[2] > 0) {
+                            pom[2]--; // may still be the previous CV's answer
+                        } else {
+                            cvNumber = (int) pom[0];
+                            creditedPomTime = pom[1];
+                        }
+                    }
                     log.debug("Current index  {} value {}", i, packet[i] & 0xFF);
-                    if ((packet[i] & 0xE0) == 0xE0) {
+                    if (isPom) {
                         // 1110CCVV VVVVVVVV: the instruction byte holds the CV number's top two bits
                         int cvHigh = packet[i] & 0x03;
                         i++;
-                        cvNumber = ((cvHigh << 8) | (packet[i] & 0xff)) + 1;
-                        log.debug("CV Access cv:{}", cvNumber);
+                        int pomCv = ((cvHigh << 8) | (packet[i] & 0xff)) + 1;
+                        creditedPomTime = -1;
+                        if (pom == null || pom[0] != pomCv) {
+                            // the decoder answers this cutout, and maybe the next, before it
+                            // has acted on the packet
+                            lastPom.put(locoKey(), new long[]{pomCv, now, STALE_CUTOUTS - 1});
+                            log.debug("CV Access cv:{}, first packet; its answer is the previous CV's", pomCv);
+                        } else {
+                            pom[1] = now;
+                            if (pom[2] > 0) {
+                                pom[2]--;
+                            } else {
+                                cvNumber = pomCv;
+                            }
+                            log.debug("CV Access cv:{}", pomCv);
+                        }
                         // two byte instruction when 1111
                         // three byte instuction when 1110
                     } else if ((packet[i] & 0xC0) == 0xC0) {

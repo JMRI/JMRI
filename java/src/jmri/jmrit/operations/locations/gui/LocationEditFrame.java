@@ -406,20 +406,16 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             def = new DivisionEditFrame((Division) divisionComboBox.getSelectedItem());
         }
         if (ae.getSource() == addYardButton) {
-            yef = new YardEditFrame();
-            yef.initComponents(_location, null);
+            yef = new YardEditFrame(_location);
         }
         if (ae.getSource() == addSpurButton) {
-            sef = new SpurEditFrame();
-            sef.initComponents(_location, null);
+            sef = new SpurEditFrame(_location);
         }
         if (ae.getSource() == addInterchangeButton) {
-            ief = new InterchangeEditFrame();
-            ief.initComponents(_location, null);
+            ief = new InterchangeEditFrame(_location);
         }
         if (ae.getSource() == addStagingButton) {
-            stef = new StagingEditFrame();
-            stef.initComponents(_location, null);
+            stef = new StagingEditFrame(_location);
         }
 
         if (ae.getSource() == saveLocationButton) {
