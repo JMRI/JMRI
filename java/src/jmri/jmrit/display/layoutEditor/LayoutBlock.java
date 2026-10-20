@@ -2954,13 +2954,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                 searchRouteLog.debug("valid through path");
 
                                 if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
-                                    if (ro.getMetric() < bestCount) {
+                                    if ((ro.getMetric() < bestCount) || ((ro.getMetric() == bestCount)
+                                            && isPreferredOnTie(ro, bestIndex, routingMethod))) {
                                         bestIndex = i;
                                         bestCount = ro.getMetric();
                                     }
                                 } else /*if (routingMethod==InstanceManager.getDefault(
                                     LayoutBlockManager.class).HOPCOUNT)*/ {
-                                    if (ro.getHopCount() < bestCount) {
+                                    if ((ro.getHopCount() < bestCount) || ((ro.getHopCount() == bestCount)
+                                            && isPreferredOnTie(ro, bestIndex, routingMethod))) {
                                         bestIndex = i;
                                         bestCount = ro.getHopCount();
                                     }
@@ -2979,6 +2981,37 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         searchRouteLog.debug("returning {} best count {}", bestIndex, bestCount);
         return bestIndex;
+    }
+
+    /**
+     * Choose between two routes of equal cost without depending on the order
+     * in which the routes were learnt: prefer fewer hops (or the lower metric
+     * when routing by hop count), then the next block with the lower system
+     * name.
+     *
+     * @param ro            the route being considered
+     * @param bestIndex     index of the best route found so far, or -1
+     * @param routingMethod the cost being compared
+     * @return true if ro should replace the best route found so far
+     */
+    private boolean isPreferredOnTie(Routes ro, int bestIndex, LayoutBlockConnectivityTools.Metric routingMethod) {
+        if (bestIndex == -1) {
+            return true;
+        }
+        Routes best = routes.get(bestIndex);
+        int roSecond;
+        int bestSecond;
+        if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
+            roSecond = ro.getHopCount();
+            bestSecond = best.getHopCount();
+        } else {
+            roSecond = ro.getMetric();
+            bestSecond = best.getMetric();
+        }
+        if (roSecond != bestSecond) {
+            return roSecond < bestSecond;
+        }
+        return ro.getNextBlock().getSystemName().compareTo(best.getNextBlock().getSystemName()) < 0;
     }
 
     @CheckForNull
