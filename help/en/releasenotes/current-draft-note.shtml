@@ -581,7 +581,11 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Layout Editor block routing: the path search now finds
+                routes that exist when the preferred branch has two or more
+                dead-end or occupied sub-branches. Before, NX, Dispatcher ad-hoc
+                routes and Signal Mast Logic could report "no route" in these
+                cases.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
