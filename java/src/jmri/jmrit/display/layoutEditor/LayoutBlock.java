@@ -1626,10 +1626,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     firePropertyChange(PROPERTY_ROUTING, null, update);
                 }
 
-                if (neighRoute.getMetric() != (int) adj.getLength()) {
+                if (!MathUtil.equals(neighRoute.getLength(), adj.getLength())) {
                     addRouteLog.debug("From {} The value of the length we have for this route"
                         + " is not correct {}, stored {} v {}",
-                        getDisplayName(), getBlock().getDisplayName(), neighRoute.getMetric(), adj.getMetric());
+                        getDisplayName(), getBlock().getDisplayName(), neighRoute.getLength(), adj.getLength());
                     neighRoute.setLength(adj.getLength());
                     // This update might need to be more selective
                     RoutingPacket update = new RoutingPacket(UPDATE, adj.getBlock(), -1, -1,
@@ -3498,10 +3498,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         // long bestLength = 999999999;
         int bestIndex = -1;
         List<Routes> destRoutes = getDestRoutes(dest);
-        float bestLength = destRoutes.get(0).getLength();
+        float bestLength = Float.MAX_VALUE;
 
         for (int i = 0; i < destRoutes.size(); i++) {
-            if (destRoutes.get(i).getLength() < bestLength) {
+            if ((bestIndex == -1) || (destRoutes.get(i).getLength() < bestLength)) {
                 bestLength = destRoutes.get(i).getLength();
                 bestIndex = i;
             }
