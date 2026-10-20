@@ -116,6 +116,7 @@ public class FakeTimebase {
     }
 
     public void userSetRate(double rate) {
+        _rate = rate;
         _usertRate = rate;
     }
 
