@@ -247,6 +247,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /* initializeLayoutBlockRouting */
     public void initializeLayoutBlockRouting() {
+        // send the block status again with the next routing update
+        lastRoutingStatus = -1;
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             return;
         }
@@ -299,7 +301,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         useExtraColor = b;
 
         if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            stateUpdate();
+            stateUpdateIfChanged();
         }
         if (getBlock() != null) {
             getBlock().setAllocated(b);
@@ -1017,6 +1019,21 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         redrawLayoutBlockPanels();
 
         if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+            stateUpdateIfChanged();
+        }
+    }
+
+    // the block status last sent to our neighbours in a routing update
+    private int lastRoutingStatus = -1;
+
+    /**
+     * Send a routing update only when the block status we advertise has
+     * changed, not for every Block property change such as a new value.
+     */
+    private void stateUpdateIfChanged() {
+        int status = getBlockStatus();
+        if (status != lastRoutingStatus) {
+            lastRoutingStatus = status;
             stateUpdate();
         }
     }
