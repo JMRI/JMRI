@@ -586,14 +586,16 @@
                 dead-end or occupied sub-branches. Before, NX, Dispatcher ad-hoc
                 routes and Signal Mast Logic could report "no route" in these
                 cases.</li>
-            <li>A block that is set to allocated, for example by the LogixNG
-                Block action "Allocate" or by a script, now stays allocated
-                until it is deallocated. Before, with advanced block routing
-                on, it was deallocated without notice as soon as the block
-                became occupied. LogixNG and scripts that allocate blocks
-                must now also deallocate them, for example when the train
-                has left. Dispatcher and Entry/Exit are not affected: they
-                deallocate their own blocks.</li>
+            <li>An allocated block, that is one set to use its extra color,
+                for example by the LogixNG Block action "Alternate Color On"
+                or by a script, now keeps its extra color until it is turned
+                off, for example by the LogixNG Block action "Alternate Color
+                Off". The LogixNG Block expression "Is Allocated" tests this.
+                Before, with advanced block routing on, the block was switched
+                back to its normal color without notice as soon as it became
+                occupied. LogixNG and scripts that set it must now also clear
+                it, for example when the train has left. Dispatcher and
+                Entry/Exit are not affected: they clear their own blocks.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
