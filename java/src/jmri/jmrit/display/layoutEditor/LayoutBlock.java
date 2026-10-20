@@ -4241,7 +4241,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         public void setLength(float len) {
-            if (len == length) {
+            if (Float.compare(len, length) == 0) {
                 return;
             }
             length = len;
