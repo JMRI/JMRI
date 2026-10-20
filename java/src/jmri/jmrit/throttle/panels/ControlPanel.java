@@ -984,6 +984,8 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
 
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);
+
+        setXml(InstanceManager.getDefault(ThrottlesPreferences.class).getControlPanelDefaultXML());
     }
 
   /**
@@ -1273,10 +1275,12 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
      * <li> Window prefs
      * </ul>
      *
-     *
      * @param e The Element for this object.
      */
     public void setXml(Element e) {
+        if (e == null) {
+            return;
+        }
         internalAdjust = true;
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());

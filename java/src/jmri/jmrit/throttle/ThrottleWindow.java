@@ -1035,7 +1035,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         }
         if (! preferences.isUsingExThrottle()) {        
             setEditMode(true);            
-        } 
+        }
     }
 
     @Override

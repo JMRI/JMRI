@@ -542,7 +542,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed an intermittent exception that occurred when 
+                detaching one of the programming panes.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -614,7 +615,22 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>LogixNG formulas: comparing a decimal value with a whole
+              number now gives the right answer. Before, 1.5 == 2 was true and
+              2.5 &lt; 3 was false.</li>
+          <li>LogixNG formulas: the &amp;&amp; and || operators now only
+              evaluate the right-hand side when the left-hand side does not
+              already decide the result, as in most programming languages.
+              This lets a check guard what follows it, for example
+              <code>(x != null) &amp;&amp; (x.y == 1)</code>.
+              A formula that relied on both sides always being evaluated, to
+              call methods for their side effects, must be changed. For
+              example, <code>myArray.add("Hello") || myArray.add(" ") ||
+              myArray.add("World!")</code> now only adds "Hello": add returns
+              true, so || has its answer after the first call and skips the
+              rest. Use <code>myArray.add("Hello") &amp;&amp; myArray.add(" ")
+              &amp;&amp; myArray.add("World!")</code> instead, which carries on
+              while each call returns true.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -745,6 +761,10 @@
             <li>JMRI Desktop Application Throttles  now listen to Roster events, hence, if a roster entry is updated, the throttle will immediately reflect the changes</li>
             <li>Roster functions editor panel is now displayed as a table, the table can be reordered by dragging rows, which will change the order of the displayed functions buttons in the related JMRI throttle window (see <a href="https://github.com/JMRI/JMRI/issues/13700"> #13700 </a>).
                  Only implemented in JMRI Desktop Application Throttles for now, and no impact on keyboard shortcuts (1 or F1 is still F1, whatever the display order)</li>
+            <li>Roster functions editor panel allows to reset function button definitions to NMRA defaults (F0 light, F1 bell, F2 horn (momentary)), or NEM defaults (as per NEM 608), or decoder definition values (see <a href="https://github.com/JMRI/JMRI/issues/15523"> #15523 </a>)</li>
+            <li>Roster functions editor panel now supports drag'n drop of a roster entry (from the roster list), functions definitions from the dropped roster entry will be copied to the edited roster entry</li>
+            <li>Roster functions editor panel now supports drag'n drop of a roster entry function (from another roster media window, function labels pane), that function properties will be copied to the targetted one</li>
+            <li>Throttles Preferences pane allows to define the default throttle layout for new throttles (NMRA of NEM, see bellow), or custom. NMRA selected as a default. (see <a href="https://github.com/JMRI/JMRI/issues/15523"> #15523 </a>)</li>
         </ul>
 
     <h3>Timetable</h3>
