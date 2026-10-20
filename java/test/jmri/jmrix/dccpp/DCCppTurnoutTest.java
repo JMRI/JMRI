@@ -191,8 +191,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @Test
     public void testSetCommandedStateUsesTurnoutOperator() {
-        // DIRECT is the feedback mode used with the "NoFeedback" turnout
-        // automation reported in JMRI/JMRI#15471
+        // DIRECT is the feedback mode used with NoFeedback automation in issue #15471
         t.setFeedbackMode(Turnout.DIRECT);
         t.setInhibitOperation(false);
         t.setTurnoutOperation(new jmri.NoFeedbackTurnoutOperation("TestRetry", 100, 3));

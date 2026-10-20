@@ -211,8 +211,7 @@ public class TurnoutTableDataModelTest extends jmri.jmrit.beantable.AbstractBean
     @jmri.util.junit.annotations.DisabledIfHeadless
     @Test
     public void testEditTurnoutOperationReattachesPrivateCopy() {
-        // issue #15471 follow-up: editing a turnout's automation via the per-turnout
-        // edit button must reattach the private copy it makes, or edits are lost
+        // issue #15471 follow-up: Edit Auto must reattach its private copy or edits are lost
         Turnout to = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         to.setInhibitOperation(false);
         TurnoutOperation shared = InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("NoFeedback");
