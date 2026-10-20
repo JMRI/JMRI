@@ -73,6 +73,47 @@ public class DefaultSignalMastLogicDivergingTest {
         assertEquals(divSpeed, sml.getMaximumSpeed(div), TOLERANCE, "diverging route speed");
     }
 
+    /**
+     * A simple panel where the continuing route through turnout T1 needs it
+     * THROWN: BT-A to BS-EB is the continuing route, BT-A to BM-EB the
+     * diverging one. The path speed and the aspect of BT-A must follow the
+     * route, not the turnout state.
+     */
+    @Test
+    @DisabledIfHeadless
+    public void testContinuingThrownPanelSpeedsAndAspects() throws Exception {
+        ConfigXmlManager cm = new ConfigXmlManager() {
+        };
+        Assertions.assertTrue(cm.load(new java.io.File("java/test/jmri/implementation/SignalMastLogicContinuingThrown.xml")));
+        InstanceManager.getDefault(LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
+        SignalMast source = smm.getSignalMast("BT-A");
+        SignalMast cont = smm.getSignalMast("BS-EB");
+        SignalMast div = smm.getSignalMast("BM-EB");
+        Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout("T1");
+        assertNotNull(turnout);
+        assertNotEquals(turnout.getStraightLimit(), turnout.getDivergingLimit(), TOLERANCE);
+
+        SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic(source);
+        assertNotNull(sml);
+        JUnitUtil.waitFor(() -> sml.getAutoTurnouts(cont).contains(turnout) && sml.getAutoTurnouts(div).contains(turnout),
+            "routes set up from the Layout Editor");
+        assertEquals(Turnout.THROWN, sml.getAutoTurnoutState(turnout, cont));
+        assertEquals(Turnout.CLOSED, sml.getAutoTurnoutState(turnout, div));
+
+        assertEquals(turnout.getStraightLimit(), sml.getMaximumSpeed(cont), TOLERANCE, "continuing route speed");
+        assertEquals(turnout.getDivergingLimit(), sml.getMaximumSpeed(div), TOLERANCE, "diverging route speed");
+
+        turnout.setCommandedState(Turnout.THROWN);
+        JUnitUtil.waitFor(() -> sml.isActive(cont), "continuing route active");
+        JUnitUtil.waitFor(() -> "Approach".equals(source.getAspect()), "Approach on the continuing route");
+
+        turnout.setCommandedState(Turnout.CLOSED);
+        JUnitUtil.waitFor(() -> sml.isActive(div), "diverging route active");
+        JUnitUtil.waitFor(() -> "Diverging Approach".equals(source.getAspect()), "Diverging Approach on the diverging route");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
