@@ -2827,6 +2827,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
     protected void doReleaseAllocatedSection(AllocatedSection as, boolean terminatingTrain) {
+        if (!allocatedSections.contains(as)) {
+            // Already released, for example by an automatic release that was
+            // queued before this one. Its Section may now be allocated to
+            // another train, so it must not be set free again.
+            log.debug("Section [{}] already released", as.getSectionName());
+            return;
+        }
         // check that section is not occupied if not terminating train
         if (!terminatingTrain && (as.getSection().getOccupancy() == Section.OCCUPIED)) {
             // warn the manual dispatcher that Allocated Section is occupied
