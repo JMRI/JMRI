@@ -96,6 +96,8 @@ public class DispatcherTrainLengthRequiredTest {
         } catch (IOException e) {
             // already gone
         }
+        // do not leave auto allocate on for tests that run after this one
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }
