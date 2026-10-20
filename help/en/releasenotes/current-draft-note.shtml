@@ -564,6 +564,7 @@
                  scale speed shown for the minimum throttle now follow the
                  "Run in reverse" setting, and the scale km/h entry is no
                  longer labelled as scale mph.</li>
+             <li>Fix TSA Go to Manual and Resume from Manual.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
