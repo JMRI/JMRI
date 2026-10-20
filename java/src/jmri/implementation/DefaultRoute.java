@@ -233,7 +233,8 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
         }
     }
-    private boolean busy = false;
+    private volatile boolean busy = false; // set and read on different threads
+    private final Object busyLock = new Object();
     private boolean _enabled = true;
 
     /** {@inheritDoc} */
@@ -799,7 +800,14 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 || (!_outputSensorList.isEmpty())
                 || (soundFilename != null)
                 || (scriptFilename != null)) {
-            if (!busy) {
+            boolean start;
+            synchronized (busyLock) { // check and set together
+                start = !busy;
+                if (start) {
+                    busy = true;
+                }
+            }
+            if (start) {
                 log.debug("Setting route {}", this.getSystemName());
                 setRouteBusy(true);
                 SetRouteThread thread = new SetRouteThread(this);
@@ -1261,8 +1269,9 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             playSound();
             setSensors();
             setTurnouts();
-            // set route not busy
-            r.setRouteBusy(false);
+            // set route not busy on the layout thread, after the commands
+            // queued above, as this sets the turnouts aligned sensor
+            ThreadingUtil.runOnLayoutEventually(() -> r.setRouteBusy(false));
         }
 
         private void runScript() {

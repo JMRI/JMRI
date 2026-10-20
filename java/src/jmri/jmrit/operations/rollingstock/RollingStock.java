@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
  * on the layout.
  *
- * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2023
+ * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2023, 2026
  */
 public abstract class RollingStock extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
@@ -48,7 +48,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected String _road = NONE;
     protected String _type = NONE;
     protected String _length = "0";
-    protected String _color = NONE;
+    protected String _color = "Black";
     protected String _weight = DEFAULT_WEIGHT;
     protected String _weightTons = DEFAULT_WEIGHT;
     protected String _built = NONE;
@@ -136,7 +136,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public RollingStock copy(RollingStock rs) {
         rs.setBuilt(getBuilt());
-        rs.setColor(getColor());
+        rs.setColorName(getColorName());
         rs.setLength(getLength());
         rs.setWeightTons(getWeightTons());
         rs.setNumber(getNumber());
@@ -278,7 +278,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return getLengthInteger() + RollingStock.COUPLERS;
     }
 
-    public void setColor(String color) {
+    public void setColorName(String color) {
         String old = _color;
         _color = color;
         if (!old.equals(color)) {
@@ -286,7 +286,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
     }
 
-    public String getColor() {
+    public String getColorName() {
         return _color;
     }
 
@@ -1440,9 +1440,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         setTrain(null);
         setDestination(null, null);
         setLocation(null, null);
-        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
+        removePropertyChangeListeners();
         if (getIdTag() != null) {
             getIdTag().removePropertyChangeListener(_tagListener);
         }
@@ -1609,8 +1607,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         e.setAttribute(Xml.ROAD_NUMBER, getNumber());
         e.setAttribute(Xml.TYPE, getTypeName());
         e.setAttribute(Xml.LENGTH, getLength());
-        if (!getColor().equals(NONE)) {
-            e.setAttribute(Xml.COLOR, getColor());
+        if (!getColorName().equals(NONE)) {
+            e.setAttribute(Xml.COLOR, getColorName());
         }
         if (!getWeight().equals(DEFAULT_WEIGHT)) {
             e.setAttribute(Xml.WEIGHT, getWeight());
@@ -1696,10 +1694,16 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return e;
     }
 
-    private void addPropertyChangeListeners() {
+    protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
+    }
+    
+    protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
     }
 
     // rolling stock listens for changes in a location name or if a location is
@@ -1769,10 +1773,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
         }
         if (e.getPropertyName().equals(CarColors.CARCOLORS_NAME_CHANGED_PROPERTY)) {
-            if (e.getOldValue().equals(getColor())) {
+            if (e.getOldValue().equals(getColorName())) {
                 log.debug("Rolling stock ({}) sees color name change from ({}) to ({})", this, e.getOldValue(),
                         e.getNewValue()); // NOI18N
-                setColor((String) e.getNewValue());
+                setColorName((String) e.getNewValue());
             }
         }
     }

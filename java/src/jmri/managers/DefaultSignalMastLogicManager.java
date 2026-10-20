@@ -394,12 +394,11 @@ public class DefaultSignalMastLogicManager
     public void generateSection() {
         log.debug("generateSection:");
         SectionManager sm = InstanceManager.getDefault(SectionManager.class);
-        sm.getNamedBeanSet().stream().map( nb -> {
-            if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
+        sm.getNamedBeanSet().stream().filter( nb -> nb.getSectionType() == Section.SIGNALMASTLOGIC)
+            .forEachOrdered( nb -> {
                 nb.removeProperty(PROPERTY_INTERMEDIATE_SECTION);
-            }
-            return nb;
-        }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
+                nb.removeProperty("forwardMast");
+            });
         int x = 0;
         for (SignalMastLogic sml : getSignalMastLogicList()) {
             x++;
@@ -423,7 +422,7 @@ public class DefaultSignalMastLogicManager
                         if (sec != null) {
                             //A Section already exists, lets check that it is one used with the SML, if so carry on using that.
                             if (sec.getSectionType() != Section.SIGNALMASTLOGIC) {
-                                break;
+                                continue;
                             }
                         } else {
                             try {

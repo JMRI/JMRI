@@ -3,15 +3,16 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
-
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.gui.YardEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -32,8 +33,7 @@ public class PoolTrackActionTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location l = new Location("LOC1", "Location One");
         Track t = new Track("ID1", "TestTrack1", Track.YARD, l);
-        YardEditFrame tf = new YardEditFrame();
-        tf.initComponents(t);
+        YardEditFrame tf = new YardEditFrame(t);
         PoolTrackAction a = new PoolTrackAction(tf);
         Assert.assertNotNull("exists", a);
         

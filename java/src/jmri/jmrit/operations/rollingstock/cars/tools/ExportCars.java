@@ -123,7 +123,7 @@ public class ExportCars extends XmlFile {
                         car.getTypeName(),
                         car.getLength(),
                         car.getWeight(),
-                        car.getColor(),
+                        car.getColorName(),
                         car.getOwnerName(),
                         car.getBuilt(),
                         car.getLocationName(),

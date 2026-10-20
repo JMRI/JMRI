@@ -184,11 +184,15 @@ public class CbusNodeNVManager {
      * Expected response from node NVANS
      */
     protected void sendNextNVToFetch(){
-        
+
         if ( _node.getNodeTimerManager().hasActiveTimers() ) {
             return;
         }
-        
+        if ( _nvArray == null ) {
+            log.debug("Node {} NV Array unset, unable to fetch NVs", _node);
+            return;
+        }
+
         for (int i = 0; i < _nvArray.length; i++) {
             if ( _nvArray[i] < 0 ) {
                 // start NV request timer
@@ -224,12 +228,16 @@ public class CbusNodeNVManager {
      * Loop for NV teaching
      */
     protected void sendNextNvToNode() {
-        
+
         if ( _node.getNodeTimerManager().hasActiveTimers() ) {
             return;
         }
-        
-        for (int i = nextNvInLoop; i < _nvArray.length; i++) {
+        if ( _nvArray == null || newNvsToTeach == null ) {
+            log.warn("Node {} NV Array unset, unable to teach NVs", _node);
+            return;
+        }
+
+        for (int i = nextNvInLoop; i < Math.min(_nvArray.length, newNvsToTeach.length); i++) {
             if ( newNvsToTeach[i] != _nvArray[i] ) {
                 _node.getNodeTimerManager().setsendEditNvTimeout();
                 _node.send.nVSET( _node.getNodeNumber() ,i, newNvsToTeach[i] );

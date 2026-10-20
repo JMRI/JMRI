@@ -418,9 +418,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             }
         };
         slowWrite.addActionListener(writeSpeedListener);
-        slowWrite.addActionListener(writeSpeedListener);
-
-        
+        fastWrite.addActionListener(writeSpeedListener);
 
         return menuList;
     }
@@ -657,10 +655,29 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         }
 
         if ( opc == CbusConstants.CBUS_PARAN) { // response from node
+            if (hardwareParams == null) {
+                log.debug("Ignoring PARAN reply, no parameters being read");
+                return;
+            }
+            // Only interested in replies from the node being programmed
+            int nn = (r.getElement(1) * 256) + r.getElement(2);
+            if (nn != nodeNumber) {
+                log.debug("Ignoring PARAN reply from node {}, expecting node {}", nn, nodeNumber);
+                return;
+            }
+            int index = r.getElement(3);
+            if (!hardwareParams.isValidIndex(index)) {
+                log.warn("Ignoring PARAN reply from node {} with out of range parameter index {}", nn, index);
+                return;
+            }
+            if (index != nextParam) {
+                log.debug("Ignoring PARAN reply for parameter {}, expecting parameter {}", index, nextParam);
+                return;
+            }
             clearAllParamTimeout();
 
-            hardwareParams.setParam(r.getElement(3), r.getElement(4));
-            if (++nextParam < (hardwareParams.getParam(0) + 1)) {
+            hardwareParams.setParam(index, r.getElement(4));
+            if ((++nextParam < (hardwareParams.getParam(0) + 1)) && hardwareParams.isValidIndex(nextParam)) {
                 // Read next
                 requestParam(nextParam);
             } else {
@@ -798,14 +815,31 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * @param r device ID reply
      */
     void showDevId(CanReply r) {
+        long devId = getDevId(r);
         log.debug("Found device ID Manu: {} Dev: {} Device ID: {}",
                 r.getElement(1),
                 r.getElement(2),
-                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4));
+                devId);
         addToLog(MessageFormat.format(Bundle.getMessage("DevIdCbus"),
                 r.getElement(1),
                 r.getElement(2),
-                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4)));
+                devId));
+    }
+
+
+    /**
+     * Extract the 4-byte device ID from a device ID reply
+     * <p>
+     * Reply data is [CBUS_EXT_DEVID, manufacturer, device, ID3, ID2, ID1, ID0]
+     *
+     * @param r device ID reply
+     * @return the device ID, as an unsigned value
+     */
+    static long getDevId(CanReply r) {
+        return ((long)(r.getElement(3) & 0xFF) << 24)
+                + ((r.getElement(4) & 0xFF) << 16)
+                + ((r.getElement(5) & 0xFF) << 8)
+                + (r.getElement(6) & 0xFF);
     }
     
    
@@ -1228,6 +1262,26 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     private TimerTask bootIdTask;
     private TimerTask checkTask;
 
+    // Set when the pane is disposed so that timer tasks that fire late, or
+    // are already running, do not act on the disposed pane
+    private volatile boolean disposed = false;
+
+
+    /**
+     * Cancel and forget all timers
+     */
+    private void cancelAllTimers() {
+        clearAllParamTimeout();
+        clearStartBootTimeout();
+        clearCheckBootTimeout();
+        clearDevIdTimeout();
+        clearBootIdTimeout();
+        clearPauseTimeout();
+        clearDataTimeout();
+        clearAckTimeout();
+        clearCheckTimeout();
+    }
+
 
     /**
      * Stop timer for a single parameter fetch
@@ -1242,7 +1296,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
     /**
      * Start timer for a Parameter request
-     * 
+     *
      * On timeout, attempt to find module already in boot mode.
      */
     private void setAllParamTimeout() {
@@ -1251,6 +1305,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 allParamTask = null;
+                if (disposed) {
+                    return;
+                }
                 if (busyDialog != null) {
                     busyDialog.finish();
                     busyDialog = null;
@@ -1289,6 +1346,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 startBootTask = null;
+                if (disposed) {
+                    return;
+                }
                 setCheckBootTimeout();
                 bootState = BootState.CHECK_BOOT_MODE;
                 CanMessage m = CbusMessage.getBootTest(0);
@@ -1319,6 +1379,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 checkBootTask = null;
+                if (disposed) {
+                    return;
+                }
                 log.error("Timeout checking for boot mode");
                 endProgramming(BootStatus.BOOT_TIMEOUT);
             }
@@ -1349,6 +1412,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 devIdTask = null;
+                if (disposed) {
+                    return;
+                }
                 bootProtocol = BootProtocol.AN247;
                 log.debug("Found AN247 bootloader");
                 addToLog(Bundle.getMessage("BootIdAn247"));
@@ -1380,6 +1446,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 bootIdTask = null;
+                if (disposed) {
+                    return;
+                }
                 protocolError();
             }
         };
@@ -1412,6 +1481,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 pauseTask = null;
+                if (disposed) {
+                    return;
+                }
                 hexForBootloader = false;
                 log.debug("Start writing at address {}", Integer.toHexString(bootAddress));
                 addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
@@ -1447,6 +1519,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 dataTask = null;
+                if (disposed) {
+                    return;
+                }
                 writeNextData();
             }
         };
@@ -1476,6 +1551,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 ackTask = null;
+                if (disposed) {
+                    return;
+                }
                 endProgramming(BootStatus.ACK_TIMEOUT);
                 bootAddress -= 8;
                 log.error("Timeout waiting for data write ACK at address {}", Integer.toHexString(bootAddress));
@@ -1505,6 +1583,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 checkTask = null;
+                if (disposed) {
+                    return;
+                }
                 endProgramming(BootStatus.CHECKSUM_TIMEOUT);
                 log.error("Timeout verifying checksum");
             }
@@ -1530,13 +1611,20 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     @Override
     public void dispose() {
+        disposed = true;
+        // stop timers if running
+        cancelAllTimers();
+        if (busyDialog != null) {
+            busyDialog.finish();
+            busyDialog = null;
+        }
         if (hexFile != null) {
             hexFile.dispose();
         }
-        // stop timers if running
-
         bootConsole.dispose();
-        tc.removeCanListener(this);
+        if (tc != null) {
+            tc.removeCanListener(this);
+        }
     }
 
 

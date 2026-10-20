@@ -145,12 +145,12 @@ public class CarManagerTest extends OperationsTestCase {
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-        c1.setColor("RED");
-        c2.setColor("BLUE");
-        c3.setColor("YELLOW");
-        c4.setColor("BLACK");
-        c5.setColor("ROSE");
-        c6.setColor("TUSCAN");
+        c1.setColorName("RED");
+        c2.setColorName("BLUE");
+        c3.setColorName("YELLOW");
+        c4.setColorName("BLACK");
+        c5.setColorName("ROSE");
+        c6.setColorName("TUSCAN");
         // now get cars by color
         List<Car> carList = manager.getByColorList();
         Assert.assertEquals("Number of Cars by color", 6, carList.size());

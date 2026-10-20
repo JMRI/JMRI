@@ -51,6 +51,8 @@ public class CbusAllocateNodeNumberTest {
         assertNotNull(node789);
         // configure dummy node as CANPAN so no parameters are requested for it
         new MergCanpan().configureDummyNode(node789);
+        // and with 0 events, so the number of events is not requested for it either
+        node789.getNodeEventManager().resetNodeEventsToZero();
 
         // create a thread that waits to close the dialog box opened later
         Thread dialog_thread = new Thread(() -> {

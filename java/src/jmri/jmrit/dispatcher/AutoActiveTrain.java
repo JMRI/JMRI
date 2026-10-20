@@ -931,7 +931,25 @@ public class AutoActiveTrain implements ThrottleListener {
             log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
                     as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),
                     _autoEngineer == null ? "" : getTargetSpeed());
-            if (_stoppingByBlockOccupancy && (b == _stoppingBlock)) {
+            boolean stoppingBlockCleared = _stoppingByBlockOccupancy && (b == _stoppingBlock);
+            if (stoppingBlockCleared
+                    && !isTailClearOfBlock(_activeTrain.getTrainDetection(), b, _activeTrain.getAllocatedSectionList())) {
+                // Head and Tail: the locomotive has left the stopping block, the tail is still behind it
+                log.debug("{}: stopping block [{}] unoccupied but tail not yet through it, keep going",
+                        _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
+                stoppingBlockCleared = false;
+            } else if (!stoppingBlockCleared && _stoppingByBlockOccupancy && _stoppingBlock != null
+                    && _activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_HEADANDTAIL
+                    && _stoppingBlock.getState() == Block.UNOCCUPIED
+                    && !hasOccupiedBlockBehind(_stoppingBlock, _activeTrain.getAllocatedSectionList())) {
+                // Head and Tail: the last occupied block behind the stopping block has cleared while
+                // the stopping block is unoccupied - the tail has lost detection. Stop now, short, rather
+                // than wait for a stopping block event that will not come.
+                log.warn("{}: tail lost detection before reaching stopping block [{}], stopping now",
+                        _activeTrain.getTrainName(), _stoppingBlock.getDisplayName(USERSYS));
+                stoppingBlockCleared = true;
+            }
+            if (stoppingBlockCleared) {
                 log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 _stoppingByBlockOccupancy = false;
                 _stoppingBlock = null;
@@ -2016,10 +2034,10 @@ public class AutoActiveTrain implements ThrottleListener {
                     getMaxTrainLengthMM(), _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
-        } else if (_activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+        } else if (_activeTrain.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADONLY) {
             log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getActualLength(), getMaxTrainLengthMM());
-            // train will fit in current allocated Section and has resistance wheels
+            // train will fit in current allocated Section and its tail is detected
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
                 if (_previousAllocatedSection != null) {
@@ -2259,6 +2277,58 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             setStopNow();
         }
+    }
+
+    /**
+     * Check whether a Block going unoccupied means the tail of the train has
+     * left it, so a stop by block occupancy can complete.
+     * <ul>
+     * <li>"Entire Train": always, the whole train is detected.
+     * <li>"Head and Tail": only when no Block behind it, in the train's
+     * direction of travel, is still occupied. The middle of the train is not
+     * detected, so a Block can go unoccupied when the locomotive leaves it while
+     * the tail is still further back; it goes occupied again when the tail
+     * arrives, and unoccupied for the last time when the tail leaves.
+     * </ul>
+     *
+     * @param detection         the train detection setting
+     * @param block             the Block that has gone unoccupied
+     * @param allocatedSections the train's allocated Sections, oldest first
+     * @return true if the tail has left the Block
+     */
+    static boolean isTailClearOfBlock(TrainDetection detection, Block block,
+            java.util.List<AllocatedSection> allocatedSections) {
+        if (detection != TrainDetection.TRAINDETECTION_HEADANDTAIL) {
+            return true;
+        }
+        return !hasOccupiedBlockBehind(block, allocatedSections);
+    }
+
+    /**
+     * Check whether any Block behind a given Block, in the train's direction
+     * of travel through its allocated Sections, is occupied.
+     *
+     * @param block             the Block
+     * @param allocatedSections the train's allocated Sections, oldest first
+     * @return true if a Block behind it is occupied; false if none is, or the
+     *         Block is not in the allocated Sections
+     */
+    static boolean hasOccupiedBlockBehind(Block block, java.util.List<AllocatedSection> allocatedSections) {
+        boolean occupiedBehind = false;
+        for (AllocatedSection as : allocatedSections) {
+            java.util.List<Block> blocks = as.getSection().getBlockList();
+            boolean reverse = as.getDirection() == Section.REVERSE;
+            for (int i = 0; i < blocks.size(); i++) {
+                Block b = blocks.get(reverse ? blocks.size() - 1 - i : i);
+                if (b == block) {
+                    return occupiedBehind;
+                }
+                if (b.getState() == Block.OCCUPIED) {
+                    occupiedBehind = true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

@@ -18,8 +18,17 @@ public class CbusParametersTest {
     public void testCTor() {
         CbusParameters p = new CbusParameters();
         Assertions.assertNotNull( p, "exists");
-        Assertions.assertEquals( 33, p.paramData.length, "Param Data length");
+        Assertions.assertEquals( CbusParameters.MAX_PARAMS + 1, p.paramData.length, "Param Data length");
         Assertions.assertFalse( p.areValid(), "not valid");
+    }
+
+    @Test
+    public void testIsValidIndex() {
+        CbusParameters p = new CbusParameters();
+        Assertions.assertTrue( p.isValidIndex(0), "index 0");
+        Assertions.assertTrue( p.isValidIndex(CbusParameters.MAX_PARAMS), "last parameter index");
+        Assertions.assertFalse( p.isValidIndex(CbusParameters.MAX_PARAMS + 1), "beyond last parameter index");
+        Assertions.assertFalse( p.isValidIndex(-1), "index -1");
     }
 
     @Test

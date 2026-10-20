@@ -194,7 +194,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                     COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
 
     private static final String[] ENGINE_ATTRIBUTES =
-            {ORDER, ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER, TRACK, LOCATION, DESTINATION,
+            {ORDER, ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, COLOR, CONSIST, OWNER, TRACK, LOCATION, DESTINATION,
                     COMMENT, DCC_ADDRESS, LAST_TRAIN, LAST_MOVED, LAST_LOCATION};
     /*
      * The print Manifest and switch list user selectable options are stored in
