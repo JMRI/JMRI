@@ -145,6 +145,8 @@ public class DispatcherFrameAutoReleaseScanTest {
         if (le != null) {
             JUnitUtil.dispose(le);
         }
+        // do not leave auto allocate on for tests that run after this one
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
