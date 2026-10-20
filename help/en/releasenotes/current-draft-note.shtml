@@ -565,6 +565,25 @@
                  "Run in reverse" setting, and the scale km/h entry is no
                  longer labelled as scale mph.</li>
              <li>Fix TSA Go to Manual and Resume from Manual.</li>
+             <li>Automatic release of Sections no longer releases a Section
+                 when the next Section has not been entered, or when the
+                 train is stopped, waiting or in manual mode.</li>
+             <li>Trains using "Head Only" or "Head and Tail" train
+                 detection must now have a Max Train Length, whether or not
+                 they run automatically. A train without one is refused when
+                 it is added or loaded, with a message saying why. The Max
+                 Train Length field is now shown for these trains even when
+                 they do not run automatically.</li>
+             <li>Sections behind a "Head Only" train are now released using
+                 the train length for every train, not only automatic ones.
+                 Previously a dispatched or manual "Head Only" train had each
+                 Section released as soon as the locomotive left it.</li>
+             <li>For a "Head and Tail" train a Section is now released
+                 using the train length, measured to the head, as for a
+                 "Head Only" train. Previously, if the tail lost detection,
+                 for example through dirty wheels, Sections could be released
+                 while the train was still in them, all the way up to the
+                 head.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -582,6 +601,31 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>With advanced block routing on, through paths whose turnouts
+                were already set when routing started, for example after the
+                start-up state query, are now marked active, so routes
+                through them are found. A route is no longer marked invalid
+                while another active path in the block still uses it, and
+                removed routes and through paths stop listening to their
+                block and turnouts.</li>
+            <li>With advanced block routing on, a block now sends a routing
+                update to its neighbours only when its status (occupied,
+                reserved, empty or unknown) changes, not on every change to
+                the block such as a new reporter value. This reduces the
+                work done on large layouts.</li>
+            <li>Finding the Layout Block for a Block no longer searches
+                every Layout Block each time. This speeds up advanced block
+                routing, Signal Mast Logic, Dispatcher and Entry/Exit on
+                large layouts.</li>
+            <li>With advanced block routing on, the shortest route to a
+                destination is now found when it is the first or only route,
+                so changes to block lengths are passed on through the
+                layout.</li>
+            <li>With advanced block routing on, when two routes to a
+                destination are equally good, the same one is now always
+                chosen: the one with fewer blocks, then by the name of the
+                next block. Before, the choice could change after an
+                unrelated edit to the layout.</li>
             <li>Layout Editor block routing: the path search now finds
                 routes that exist when the preferred branch has two or more
                 dead-end or occupied sub-branches. Before, NX, Dispatcher ad-hoc
@@ -728,6 +772,11 @@
                     block on its route becomes occupied, instead of first
                     waiting for the signal logic delay; changes back towards
                     clear are still delayed as before.</li>
+                <li>Generating Signal Mast Logic Sections no longer stops at
+                    the first Source:Destination pair whose Section name is
+                    already used by a user-defined Section: only that pair is
+                    skipped. A user-defined Section also keeps its forward
+                    mast.</li>
             </ul>
 
         <h4>Signal Groups</h4>
