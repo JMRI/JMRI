@@ -6,6 +6,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -1263,14 +1264,22 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      * Hardware masts send a command to the layout every time their aspect is
      * set, so an unchanged aspect is not sent again.
      *
+     * A null aspect, for example a mast whose appearance map has no Danger
+     * aspect, is not passed to the mast.
+     *
      * @param aspect the aspect to show
      */
-    private void setSourceAspect(String aspect) {
-        if (aspect != null && aspect.equals(getSourceMast().getAspect())) {
-            log.debug("Source mast {} already shows {}", getSourceMast().getDisplayName(), aspect);
+    private void setSourceAspect(@CheckForNull String aspect) {
+        SignalMast mast = getSourceMast();
+        if (aspect == null) {
+            log.warn("No aspect to set on source mast {}", mast.getDisplayName());
             return;
         }
-        getSourceMast().setAspect(aspect);
+        if (aspect.equals(mast.getAspect())) {
+            log.debug("Source mast {} already shows {}", mast.getDisplayName(), aspect);
+            return;
+        }
+        mast.setAspect(aspect);
     }
 
     /**
