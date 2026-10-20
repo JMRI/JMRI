@@ -2173,7 +2173,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 setupLayoutEditorDetails();
             } else {
                 destinationBlock = null;
-                facingBlock = null;
+                // the facing block belongs to the source mast, so keep it while
+                // another destination still uses the Layout Editor
+                if (destList.values().stream().noneMatch(DestinationMast::useLayoutEditor)) {
+                    facingBlock = null;
+                }
                 protectingBlock = null;
                 setAutoBlocks(null);
                 setAutoTurnouts(null);
@@ -2205,20 +2209,20 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
             remoteProtectingBlock = null;
-            for (int i = 0; i < layout.size(); i++) {
-                log.debug("{} Layout name {}", destinationSignalMast.getDisplayName(), editor );
+            for (LayoutEditor panel : layout) {
+                log.debug("{} Layout name {}", destinationSignalMast.getDisplayName(), panel.getLayoutName());
                 if (facingBlock == null) {
-                    facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
+                    facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), panel);
                 }
                 if (protectingBlock == null && protectingBlocks.isEmpty()) {
                     //This is wrong
-                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
+                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), panel);
                 }
                 if (destinationBlock == null) {
-                    destinationBlock = lbm.getFacingBlockByNamedBean(destinationSignalMast, editor);
+                    destinationBlock = lbm.getFacingBlockByNamedBean(destinationSignalMast, panel);
                 }
                 if (remoteProtectingBlock == null) {
-                    remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destinationSignalMast, editor);
+                    remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destinationSignalMast, panel);
                 }
             }
             // At this point, if we are not using the Layout Editor turnout or block
