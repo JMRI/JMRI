@@ -3,6 +3,8 @@ package jmri.jmrit.dispatcher;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.SecondaryLoop;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -959,20 +963,41 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Wait for the queue to empty
+     * Wait until every task already queued, including the one being run now,
+     * has been completed.
+     * On the GUI thread, events are still handled while waiting.
      */
     protected void queueWaitForEmpty() {
-        if (_AutoAllocate) {
-            while (!autoAllocate.allRequestsDone()) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException iex) {
-                    // we closing do done
+        Thread allocatorThread = autoAllocateThread;
+        if (!_AutoAllocate || autoAllocate == null || allocatorThread == null
+                || Thread.currentThread() == allocatorThread) {
+            // nothing to wait for, or called by a task: tasks run one at a time
+            return;
+        }
+        CountDownLatch done = new CountDownLatch(1);
+        autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.BARRIER, done::countDown));
+        if (ThreadingUtil.isGUIThread()) {
+            SecondaryLoop loop = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
+            javax.swing.Timer check = new javax.swing.Timer(10, e -> {
+                if (done.getCount() == 0 || !allocatorThread.isAlive()) {
+                    loop.exit();
+                }
+            });
+            check.start();
+            loop.enter();
+            check.stop();
+            return;
+        }
+        try {
+            while (!done.await(100, TimeUnit.MILLISECONDS)) {
+                if (!allocatorThread.isAlive()) {
                     return;
                 }
             }
+        } catch (InterruptedException iex) {
+            // we closing do done
+            Thread.currentThread().interrupt();
         }
-        return;
     }
 
     /*
