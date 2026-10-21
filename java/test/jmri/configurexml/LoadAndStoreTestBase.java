@@ -357,7 +357,8 @@ public class LoadAndStoreTestBase {
     }
 
     public void loadLoadStoreFileCheck(File file) throws IOException, JmriException, ParseException {
-        loadLoadStoreFileCheck(file, false);
+//        loadLoadStoreFileCheck(file, false);
+        loadLoadStoreFileCheck(file, true);
     }
 
     public void loadLoadStoreFileCheck(File file, boolean checkExactTimebase) throws IOException, JmriException, ParseException {
