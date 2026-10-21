@@ -2896,7 +2896,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        public float getTargetSpeed(){
+        public synchronized float getTargetSpeed(){
             return(targetSpeed);
         }
 
