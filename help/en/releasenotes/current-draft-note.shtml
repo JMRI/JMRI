@@ -110,7 +110,11 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCC-EX: turnout commands sent with a Turnout Automation retry policy
+                (e.g. "NoFeedback") were previously sent only once, ignoring the configured
+                retry interval and count. <code>DCCppTurnout</code> now defers to the configured
+                automation like every other connection type
+                (<a href="https://github.com/JMRI/JMRI/issues/15471">issue #15471</a>).</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -795,7 +799,18 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Editing a turnout's automation settings from the "Edit Auto" button
+                in the Turnout Table or the Feedback tab of the Edit Turnout window
+                now actually saves the change.
+                Previously, if the turnout's automation was set to a named operation
+                (rather than "Default"), the edit landed on a disconnected copy and
+                the turnout kept using its old settings. The automation dropdown also
+                now shows the right type (for example "Raw") for a turnout with its
+                own settings, instead of always showing the first one.</li>
+            <li>A turnout with its own custom automation settings now keeps automation
+                turned on after the panel file is reloaded. Previously it came back
+                with automation off, and saving again replaced the custom settings
+                with "Off".</li>
         </ul>
 
    <h3>Warrants</h3>
