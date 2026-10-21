@@ -804,9 +804,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
                             (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
                     re.getSpeedProfile().planStopToZeroOverDistance(getThrottle(), mm, _speedFactor);
-                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(taskPending),
-                            "Wait for stop " + getActiveTrain().getActiveTrainName());
-                    tWait.start();
+                    startWaitForTrainToStop(taskPending);
                 }
             }
             if (b == _nextBlock || _nextBlock == null) {
@@ -1743,6 +1741,13 @@ public class AutoActiveTrain implements ThrottleListener {
         _distanceStopPendingToMin = false;
         _distanceStopPendingMm = 0.0f;
         _distanceStopPendingTask = NO_TASK;
+        // the stop tasks are for this stop only, not for wherever the train next stops
+        WaitForTrainToStop wait = _waitForTrainToStop;
+        _waitForTrainToStop = null;
+        if (wait != null && wait._task != NO_TASK) {
+            log.warn("{}: stop cancelled before the train stopped, task[{}] not run",
+                    _activeTrain.getTrainName(), wait._task);
+        }
         if (re != null && re.getSpeedProfile() != null) {
             try {
                 re.getSpeedProfile().cancelSpeedChange();
@@ -1915,10 +1920,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _stoppingBySensor = true;
                     }
                     // Ensure stop tasks/termination run when the train actually stops.
-                    Runnable __waitForStop = new WaitForTrainToStop(task);
-                    Thread __tWait = jmri.util.ThreadingUtil.newThread(__waitForStop,
-                            "Wait for stop " + getActiveTrain().getActiveTrainName());
-                    __tWait.start();
+                    startWaitForTrainToStop(task);
 
                     return; // combined branch handled
                 }
@@ -1939,10 +1941,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _stoppingBySensor = true;
                 }
                 // Ensure stop tasks/termination run when the train actually stops.
-                Runnable __waitForStop = new WaitForTrainToStop(_distanceStopPendingTask);
-                Thread __tWait = jmri.util.ThreadingUtil.newThread(__waitForStop,
-                        "Wait for stop " + getActiveTrain().getActiveTrainName());
-                __tWait.start();
+                startWaitForTrainToStop(_distanceStopPendingTask);
 
                 return; // wait for entry OCCUPIED to start the approach-to-min plan
             }
@@ -1972,9 +1971,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
                     // Delegate pure distance stop-to-zero to RosterSpeedProfile
                     re.getSpeedProfile().planStopToZeroOverDistance(getThrottle(), remainingMm, _speedFactor);
-                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(task),
-                            "Wait for stop " + getActiveTrain().getActiveTrainName());
-                    tWait.start();
+                    startWaitForTrainToStop(task);
                 }
                 return;
 
@@ -2127,9 +2124,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
         // even if no task is required it must be run
         // as cleanup happens after train stops.
-        Runnable waitForStop = new WaitForTrainToStop(task);
-        Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
-        tWait.start();
+        startWaitForTrainToStop(task);
     }
 
     protected synchronized void executeStopTasks(int task) {
@@ -2596,6 +2591,8 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
         _autoTrainAction.clearRemainingActions();
+        // a terminated train has no stop tasks left to run
+        _waitForTrainToStop = null;
         if (_autoEngineer != null) {
             _autoEngineer.setHalt(true);
             try {
@@ -2622,6 +2619,43 @@ public class AutoActiveTrain implements ThrottleListener {
         _turnoutStateListener = null;
     }
 
+    // the wait for the train to stop whose stop tasks are still to run, null if none
+    private volatile WaitForTrainToStop _waitForTrainToStop = null;
+
+    /**
+     * Run the stop tasks once the train has stopped. A train has one pending
+     * stop: if it is already waiting to stop, that wait carries on, taking
+     * this task unless it already has one. Cancelling the stop, or terminating
+     * the train, drops it.
+     *
+     * @param task the stop task
+     */
+    private synchronized void startWaitForTrainToStop(int task) {
+        if (_waitForTrainToStop != null) {
+            if (_waitForTrainToStop._task == NO_TASK) {
+                _waitForTrainToStop._task = task;
+            } else if (task != NO_TASK && task != _waitForTrainToStop._task) {
+                log.debug("{}: already stopping with task[{}], task[{}] not run",
+                        _activeTrain.getTrainName(), _waitForTrainToStop._task, task);
+            }
+            return;
+        }
+        _waitForTrainToStop = new WaitForTrainToStop(task);
+        Thread tWait = jmri.util.ThreadingUtil.newThread(_waitForTrainToStop,
+                "Wait for stop " + getActiveTrain().getActiveTrainName());
+        tWait.start();
+    }
+
+    private synchronized void runStopTasks(WaitForTrainToStop wait) {
+        if (_waitForTrainToStop != wait) {
+            log.debug("{}: stop cancelled, task[{}] not run", _activeTrain.getTrainName(), wait._task);
+            return;
+        }
+        _waitForTrainToStop = null;
+        log.trace("executing task[{}]", wait._task);
+        executeStopTasks(wait._task);
+    }
+
     // _________________________________________________________________________________________
     // This class waits for train stop in a separate thread
     class WaitForTrainToStop implements Runnable {
@@ -2634,15 +2668,14 @@ public class AutoActiveTrain implements ThrottleListener {
         public void run() {
             boolean waitingOnTrain = true;
             try {
-                while (waitingOnTrain) {
+                while (waitingOnTrain && _waitForTrainToStop == this) {
                     if ((getAutoEngineer() != null) && (getAutoEngineer().isStopped())) {
                         waitingOnTrain = false;
                     } else {
                         Thread.sleep(_delay);
                     }
                 }
-                log.trace("executing task[{}]",_task);
-                executeStopTasks(_task);
+                runStopTasks(this);
             } catch (InterruptedException e) {
                 log.warn("Waiting for train to stop interrupted - stop tasks not executing");
             } catch (Exception e) {
