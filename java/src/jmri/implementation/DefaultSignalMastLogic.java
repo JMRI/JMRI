@@ -2043,30 +2043,20 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     state = false;
             }
 
-            /*This check is purely for use with the dispatcher, it will check to see if any of the blocks are set to "useExtraColor"
-             which is a means to determine if the block is in a section that is occupied and it not ours thus we can set the signal to danger.*/
+            /*This check is purely for use with the dispatcher. A block set to "useExtraColor" has been
+             allocated; if it is allocated to a train other than the one approaching this mast, the
+             signal is set to danger.*/
             if (state && getAssociatedSection() != null
                     && InstanceManager.isInitialized(jmri.jmrit.dispatcher.DispatcherFrame.class)
-                    && InstanceManager.getNullableDefault(LayoutBlockManager.class) != null
-                    && getAssociatedSection().getState() != Section.FORWARD) {
+                    && InstanceManager.getNullableDefault(LayoutBlockManager.class) != null) {
 
                 LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-                for (Block key : autoBlocks.keySet()) {
-                    LayoutBlock lb = lbm.getLayoutBlock(key);
-                    if (lb != null && lb.getUseExtraColor()) {
-                        state = false;
-                        break;
-                    }
+                List<Block> routeBlocks = new ArrayList<>(autoBlocks.keySet());
+                for (NamedBeanSetting nbh : userSetBlocks) {
+                    routeBlocks.add((Block) nbh.getBean());
                 }
-                if (state) {
-                    for (NamedBeanSetting nbh : userSetBlocks) {
-                        Block key = (Block) nbh.getBean();
-                        LayoutBlock lb = lbm.getLayoutBlock(key);
-                        if (lb != null && lb.getUseExtraColor()) {
-                            state = false;
-                            break;
-                        }
-                    }
+                if (isRouteAllocatedToAnotherTrain(routeBlocks, lbm)) {
+                    state = false;
                 }
             }
 
@@ -2808,6 +2798,95 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             }
             /*if(minimumBlockSpeed==-0.1f)
              minimumBlockSpeed==0.0f;*/
+        }
+
+        /**
+         * Check whether a block on this route is allocated by Dispatcher to a
+         * train other than the one approaching the source mast.
+         * <p>
+         * Only blocks marked as allocated (shown in the extra color) are
+         * checked. The approaching train is the one that holds the block the
+         * source mast faces. A marked block not held by that train, held by
+         * another train, or marked when no train holds the facing block, puts
+         * the mast to danger. If the allocations cannot be read, for example
+         * while Dispatcher is changing them, the mast is also put to danger.
+         *
+         * @param routeBlocks the blocks on this route
+         * @param lbm         the layout block manager
+         * @return true if the mast must show danger
+         */
+        private boolean isRouteAllocatedToAnotherTrain(List<Block> routeBlocks, LayoutBlockManager lbm) {
+            List<Block> marked = new ArrayList<>();
+            for (Block b : routeBlocks) {
+                LayoutBlock lb = lbm.getLayoutBlock(b);
+                if (lb != null && lb.getUseExtraColor()) {
+                    marked.add(b);
+                }
+            }
+            if (marked.isEmpty()) {
+                return false;
+            }
+            List<jmri.jmrit.dispatcher.ActiveTrain> trains;
+            try {
+                trains = new ArrayList<>(InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class).getActiveTrainsList());
+            } catch (RuntimeException e) {
+                log.debug("{} could not read the active trains, setting danger", destinationSignalMast.getDisplayName(), e);
+                return true;
+            }
+            LayoutBlock approach = getApproachBlock(lbm);
+            jmri.jmrit.dispatcher.ActiveTrain approaching = (approach == null) ? null
+                    : allocatedTo(approach.getBlock(), trains);
+            for (Block b : marked) {
+                jmri.jmrit.dispatcher.ActiveTrain holder = allocatedTo(b, trains);
+                if (holder == null || holder != approaching) {
+                    log.debug("{} block {} is allocated to {}, approaching train is {}",
+                            destinationSignalMast.getDisplayName(), b.getDisplayName(),
+                            (holder == null ? "no train" : holder.getActiveTrainName()),
+                            (approaching == null ? "none" : approaching.getActiveTrainName()));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /*
+         * The block the source mast faces, where a train approaching the mast is.
+         * Found from the Layout Editor panels when this logic does not use the
+         * Layout Editor, without changing the stored facing block.
+         */
+        private LayoutBlock getApproachBlock(LayoutBlockManager lbm) {
+            if (getFacingBlock() != null) {
+                return getFacingBlock();
+            }
+            for (LayoutEditor editor : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+                LayoutBlock lb = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
+                if (lb != null) {
+                    return lb;
+                }
+            }
+            return null;
+        }
+
+        /*
+         * The train that Dispatcher has allocated a Section containing the block to, or null.
+         */
+        private jmri.jmrit.dispatcher.ActiveTrain allocatedTo(Block b, List<jmri.jmrit.dispatcher.ActiveTrain> trains) {
+            if (b == null) {
+                return null;
+            }
+            for (jmri.jmrit.dispatcher.ActiveTrain at : trains) {
+                try {
+                    for (jmri.jmrit.dispatcher.AllocatedSection as : at.getAllocatedSectionList()) {
+                        if (as.getSection().containsBlock(b)) {
+                            return at;
+                        }
+                    }
+                } catch (RuntimeException e) {
+                    // allocations changed while reading them, treat as not ours
+                    log.debug("could not read allocations of {}", at.getActiveTrainName(), e);
+                }
+            }
+            return null;
         }
 
         protected PropertyChangeListener propertySensorListener = new PropertyChangeListener() {
