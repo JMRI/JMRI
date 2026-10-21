@@ -30,6 +30,8 @@ public class DefaultTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         TimeProvider timeProvider = InstanceManager.getDefault(TimeProviderManager.class).getCurrentTimeProvider();
 
         Element elem = new Element("timebase");
+        if (1==1) return elem;
+
 //        elem.setAttribute("class", this.getClass().getName());
         elem.setAttribute("class", "jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml");
 
