@@ -594,6 +594,12 @@
                     while the route is still being set, the first block of the
                     route stays protected. Before, it was dropped and the entry
                     signal could stay clear behind the train.</li>
+                <li>NX: when a train reaches a block of a route without being
+                    seen in the block before it, that block now keeps the value
+                    it already has, for example from RFID, and is only given the
+                    train's value if it has none. A block that is not part of
+                    the route is no longer changed. Block values further along
+                    a route might therefore differ from earlier versions.</li>
             </ul>
 
     <h3>LccPro</h3>
