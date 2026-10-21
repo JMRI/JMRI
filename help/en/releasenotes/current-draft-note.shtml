@@ -610,7 +610,9 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+          <li>Added a new item to the popup menu on a node line:  Refresh Node Info.
+              This lets you update the info on that line from the node without
+              refreshing the entire table (which can take a while for large networks)</li>
         </ul>
 
     <h3>Logix</h3>
