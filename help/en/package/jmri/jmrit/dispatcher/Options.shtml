@@ -143,10 +143,10 @@
           allocated.</p>
 
           <p>If the panels use Signal Mast Logic, this option also lets a signal mast show its Stop
-          aspect when a Block on its route is allocated to another train. This applies to logic
-          that has a Section, such as one made with <strong>Tools &gt; Generate Sections</strong>
-          in the Signal Mast Logic table. With the option off, Signal Mast Logic does not check
-          which Blocks are allocated.</p>
+          aspect when a Block on its route is allocated to another train. This applies to SML based
+          Sections created by <strong>Tools &gt; Generate Sections</strong> in the Signal Mast Logic
+          table. When using block based Sections, Signal Mast Logic does not check which Blocks are
+          allocated.</p>
         </li>
 
         <li>
