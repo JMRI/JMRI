@@ -210,6 +210,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         log.debug("Number of LayoutShape elements: {}", layoutShapes.size());
 
         //write out formatted document
+        convertNamedColors(panel);
         Document doc = new Document(panel);
         XMLOutputter fmt = new XMLOutputter();
         fmt.setFormat(Format.getPrettyFormat()
