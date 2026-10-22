@@ -110,6 +110,9 @@ public class MessagesFrame extends JmriJFrame {
         add(_messagesPanel);
 
         popup = new JPopupMenu();
+        JMenuItem editItem = new JMenuItem(Bundle.getMessage("EditMessages"));
+        editItem.addActionListener(evt -> ConfigureMessages.editConfigureMessages(null, _messagesPanel));
+        popup.add(editItem);
         JMenuItem clearItem = new JMenuItem(Bundle.getMessage("ClearMessages"));
         clearItem.addActionListener(evt -> _messagesPanel.clearMessages());
         popup.add(clearItem);
