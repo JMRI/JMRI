@@ -1015,16 +1015,17 @@ public class SpeedUtil {
     }
 
     // average with existing entry, if possible
-    private void setSpeedProfile(RosterSpeedProfile profile, float throttle, float measuredSpeed, boolean isForward) {
+    // package access for testing
+    void setSpeedProfile(RosterSpeedProfile profile, float throttle, float measuredSpeed, boolean isForward) {
         int keyIncrement = Math.round(getThrottleSpeedStepIncrement() * 1000);
         TreeMap<Integer, SpeedStep> speeds = profile.getProfileSpeeds();
         int key = Math.round(throttle * 1000);
         Entry<Integer, SpeedStep> entry = speeds.floorEntry(key);
-        if (entry != null && mergeEntry(key, measuredSpeed, entry, keyIncrement, isForward)) {
+        if (entry != null && mergeEntry(profile, key, measuredSpeed, entry, keyIncrement, isForward)) {
             return;
         }
         entry = speeds.ceilingEntry(key);
-        if (entry != null && mergeEntry(key, measuredSpeed, entry, keyIncrement, isForward)) {
+        if (entry != null && mergeEntry(profile, key, measuredSpeed, entry, keyIncrement, isForward)) {
             return;
         }
 
@@ -1042,34 +1043,33 @@ public class SpeedUtil {
             throttle, measuredSpeed, isForward, throttle);
     }
 
-    private boolean mergeEntry(int key, float measuredSpeed, Entry<Integer, SpeedStep> entry, int keyIncrement, boolean isForward) {
+    private boolean mergeEntry(RosterSpeedProfile profile, int key, float measuredSpeed,
+            Entry<Integer, SpeedStep> entry, int keyIncrement, boolean isForward) {
         Integer sKey = entry.getKey();
         if (Math.abs(sKey - key) < keyIncrement) {
             SpeedStep sStep = entry.getValue();
             float sTrackSpeed;
+            // set through the profile so that it records it has speeds for this direction
             if (isForward) {
                 sTrackSpeed = sStep.getForwardSpeed();
                 if (sTrackSpeed > 0) {
-                    if (sTrackSpeed > 0) {
-                        sTrackSpeed = (sTrackSpeed + measuredSpeed) / 2;
-                    } else {
-                        sTrackSpeed = measuredSpeed;
-                    }
-                    sStep.setForwardSpeed(sTrackSpeed);
+                    sTrackSpeed = (sTrackSpeed + measuredSpeed) / 2;
+                } else {
+                    sTrackSpeed = measuredSpeed;
                 }
+                profile.setForwardSpeed(sKey / 1000f, sTrackSpeed);
             } else {
                 sTrackSpeed = sStep.getReverseSpeed();
                 if (sTrackSpeed > 0) {
-                    if (sTrackSpeed > 0) {
-                        sTrackSpeed = (sTrackSpeed + measuredSpeed) / 2;
-                    } else {
-                        sTrackSpeed = measuredSpeed;
-                    }
-                    sStep.setReverseSpeed(sTrackSpeed);
+                    sTrackSpeed = (sTrackSpeed + measuredSpeed) / 2;
+                } else {
+                    sTrackSpeed = measuredSpeed;
                 }
+                profile.setReverseSpeed(sKey / 1000f, sTrackSpeed);
             }
+            return true;
         }
-       return false;
+        return false;
     }
 
     private void clearStats(long exitTime) {
