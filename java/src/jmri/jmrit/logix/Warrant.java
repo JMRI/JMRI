@@ -2370,9 +2370,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                     return;
                 }
-                // we assume this is our train entering block
-                _idxCurrentOrder = activeIdx;
             }
+            // we assume this is our train entering block
+            _idxCurrentOrder = activeIdx;
             // previous blocks were checked as UNDETECTED above
             // Indicate the previous dark block was entered
             OBlock prevBlock = getBlockAt(activeIdx - 1);
