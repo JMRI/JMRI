@@ -8,6 +8,8 @@ import javax.annotation.CheckForNull;
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.PositionableFactory.DoAfter;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -22,6 +24,8 @@ public class ConfigureMessages extends JmriJFrame {
 
     private final Editor editor;
     private final MessagesConfiguration messagesConfiguration;
+    private final MessagesPositionable newPositionable;
+    private final DoAfter doAfter;
 
     private final JComboBox<DCCppConnection> _memoComboBox = new JComboBox<>();
     final JTextField _expiryTextField = new JTextField(5);
@@ -35,9 +39,16 @@ public class ConfigureMessages extends JmriJFrame {
     Color _foreground;
     Color _background;
 
+    public static void createConfigureMessages(Editor editor, DoAfter doAfter) {
+        closeDialog(null);
+        MessagesPositionable pos = new MessagesPositionable(editor);
+        editPositionableFrame = new ConfigureMessages(editor, pos.getMessagesPanel(), pos, doAfter);
+        editPositionableFrame.initComponents();
+    }
+
     public static void editConfigureMessages(@CheckForNull Editor editor, MessagesConfiguration config) {
         closeDialog(null);
-        editPositionableFrame = new ConfigureMessages(editor, config);
+        editPositionableFrame = new ConfigureMessages(editor, config, null, null);
         editPositionableFrame.initComponents();
     }
 
@@ -60,10 +71,13 @@ public class ConfigureMessages extends JmriJFrame {
         }
     }
 
-    private ConfigureMessages(@CheckForNull Editor editor, MessagesConfiguration config) {
-        super(Bundle.getMessage("EditMessages"), false, false);
+    private ConfigureMessages(@CheckForNull Editor editor, MessagesConfiguration config,
+            @CheckForNull MessagesPositionable newPositionable, @CheckForNull DoAfter doAfter) {
+        super(Bundle.getMessage(newPositionable != null ? "AddMessagesPositionable" : "EditMessages"), false, false);
         this.editor = editor;
         this.messagesConfiguration = config;
+        this.newPositionable = newPositionable;
+        this.doAfter = doAfter;
         _foreground = config.getMessageForeground();
         _background = config.getMessageBackground();
     }
@@ -82,6 +96,9 @@ public class ConfigureMessages extends JmriJFrame {
             if (connection == messagesConfiguration.getMemo()) {
                 _memoComboBox.setSelectedItem(c);
             }
+        }
+        if (_memoComboBox.getSelectedIndex() == -1 && _memoComboBox.getItemCount() > 0) {
+            _memoComboBox.setSelectedIndex(0);
         }
         _memoComboBox.setToolTipText(Bundle.getMessage("ConnectionHint"));
 
@@ -139,14 +156,17 @@ public class ConfigureMessages extends JmriJFrame {
         buttons.setLayout(new WrapLayout());
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         buttons.add(cancel);
-        cancel.addActionListener(e -> closeDialog(editor));
+        cancel.addActionListener(e -> cancel());
         cancel.setToolTipText(Bundle.getMessage("CancelButtonHint"));
 
-        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
+        JButton ok = new JButton(Bundle.getMessage(newPositionable != null ? "ButtonCreate" : "ButtonOK"));
         buttons.add(ok);
         ok.addActionListener(e -> {
             try {
                 applyTo(messagesConfiguration);
+                if (newPositionable != null) {
+                    addPositionable();
+                }
                 closeDialog(editor);
             } catch (NumberFormatException ex) {
                 JmriJOptionPane.showMessageDialog(
@@ -161,12 +181,34 @@ public class ConfigureMessages extends JmriJFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                closeDialog(editor);
+                cancel();
             }
         });
 
         pack();
         setVisible(true);
+    }
+
+    private void cancel() {
+        if (newPositionable != null) {
+            newPositionable.dispose();
+        }
+        closeDialog(editor);
+    }
+
+    private void addPositionable() {
+        newPositionable.initComponents();
+        newPositionable.setDisplayLevel(Editor.ICONS);
+        editor.setNextLocation(newPositionable);
+        try {
+            editor.putItem(newPositionable, true);
+        } catch (Positionable.DuplicateIdException e) {
+            // putItem with a null id never throws this
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+        if (doAfter != null) {
+            doAfter.doAfter(newPositionable);
+        }
     }
 
     private void addRow(JPanel p, GridBagConstraints c, String labelKey, JComponent field) {
@@ -253,5 +295,7 @@ public class ConfigureMessages extends JmriJFrame {
             return _memo.getUserName();
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConfigureMessages.class);
 
 }

@@ -1442,6 +1442,45 @@
     </xs:complexType>
 
 
+    <xs:complexType name="EditorDccExMessagesIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a DCC-EX Messages display
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrix.dccpp.swing.messages.configurexml.MessagesPositionableXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="1" maxOccurs="1">
+        <xs:element name="dccex_messages_config" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="systemConnection" type="xs:string" minOccurs="1" maxOccurs="1" />
+              <xs:element name="expirySeconds" type="xs:int" minOccurs="0" maxOccurs="1" />
+              <xs:element name="maxLines" type="xs:int" minOccurs="0" maxOccurs="1" />
+              <xs:element name="raiseOnMessage" type="trueFalseType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="autoOpen" type="trueFalseType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="playSound" type="trueFalseType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="soundFile" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="foreground" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="background" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="numColumns" type="xs:int" minOccurs="0" maxOccurs="1" />
+              <xs:element name="numLines" type="xs:int" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="id" type="xs:string"></xs:attribute>
+      <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="y" type="xs:int" use="required"></xs:attribute>
+
+    </xs:complexType>
+
+
     <xs:simpleType name="LayoutTurnoutType">
       <xs:annotation>
         <xs:documentation>
