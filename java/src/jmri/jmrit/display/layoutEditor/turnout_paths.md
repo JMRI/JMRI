@@ -29,22 +29,22 @@ A ====**==== B        A ====**==== B
 
 ### Wye Turnout
 
-Throat A on the left. Both legs fan out (B up, C down).
+Throat A on the left. Both legs fan out (C up, B down).
 
 ```
    Wye
-        B  (closed / continuing)
+        C  (closed / continuing)
        //
 A ====<
        \\
-        C  (thrown / diverging)
+        B  (thrown / diverging)
 ```
 
 **Valid Routes:**
-- **A-B** (ROUTE_AB) - throat to continuing leg, active when the turnout is closed (continuing route)
-- **A-C** (ROUTE_AC) - throat to diverging leg, active when the turnout is thrown (diverging route)
+- **A-C** (ROUTE_AC) - throat to continuing leg, active when the turnout is closed (continuing route)
+- **A-B** (ROUTE_AB) - throat to diverging leg, active when the turnout is thrown (diverging route)
 
-*Note: On a wye both legs diverge geometrically but the route roles still follow the standard convention - B is the closed/continuing leg and C is the thrown/diverging leg (same as ROUTE_AB/ROUTE_AC for RH and LH turnouts).*
+*Note: On a wye both legs diverge geometrically but the route roles still follow the standard convention. When viewed from A, C to the left is the closed/continuing leg and B to the right is the thrown/diverging leg.*
 
 ### Double Crossover (Double XOver)
 
