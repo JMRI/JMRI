@@ -91,18 +91,6 @@ public interface SignalMastLogic extends NamedBean {
     String PROPERTY_LENGTH = "length";
 
     /**
-     * String constant for a change in whether the route to one destination
-     * mast is active, that is clear for the source mast to show a proceed
-     * aspect towards it. The new value is the destination mast when its route
-     * becomes active, and the old value is the destination mast when its route
-     * stops being active; the other value is null.
-     * <p>
-     * {@link jmri.NamedBean#PROPERTY_STATE} is only fired when the destination
-     * the source mast is showing an aspect for changes.
-     */
-    String PROPERTY_DESTINATION_ACTIVE = "destinationActive";
-
-    /**
      * Query if we are allowing the system to automatically generate a list of
      * conflicting Signal Mast that have a direct effect on our logic.
      *

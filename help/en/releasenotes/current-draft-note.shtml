@@ -683,11 +683,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Signal Mast Logic reports the route to a destination mast
-                becoming active or inactive with a new "destinationActive"
-                property change. The "state" property change is now only
-                fired when the destination the source mast is showing an
-                aspect for changes.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -719,11 +715,6 @@
                     set to reset previous states. A mast whose hardware has
                     lost its aspect, for example after a power cycle, now keeps
                     its old output until the aspect next changes.</li>
-                <li>Scripts: Signal Mast Logic reports the route to a
-                    destination mast becoming active or inactive with a new
-                    "destinationActive" property change. The "state" property
-                    change is now only fired when the destination the source
-                    mast is showing an aspect for changes.</li>
             </ul>
 
         <h4>Signal Groups</h4>

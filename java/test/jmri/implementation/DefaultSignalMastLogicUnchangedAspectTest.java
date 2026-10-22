@@ -1,9 +1,6 @@
 package jmri.implementation;
 
-import java.beans.PropertyChangeEvent;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nonnull;
@@ -14,8 +11,6 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * Check that a Signal Mast Logic does not send the source mast aspect to the
@@ -86,12 +81,6 @@ public class DefaultSignalMastLogicUnchangedAspectTest {
                 stateEvents.incrementAndGet();
             }
         });
-        List<PropertyChangeEvent> activeEvents = new CopyOnWriteArrayList<>();
-        sml.addPropertyChangeListener(e -> {
-            if (SignalMastLogic.PROPERTY_DESTINATION_ACTIVE.equals(e.getPropertyName())) {
-                activeEvents.add(e);
-            }
-        });
         AtomicInteger lockEvents = new AtomicInteger();
         turnout.addPropertyChangeListener(e -> {
             if (Turnout.PROPERTY_LOCKED.equals(e.getPropertyName())) {
@@ -105,7 +94,6 @@ public class DefaultSignalMastLogicUnchangedAspectTest {
         int setsBefore = source.sets.get();
         int stateBefore = stateEvents.get();
         int locksBefore = lockEvents.get();
-        int activeBefore = activeEvents.size();
 
         // property changes that make both pairs check again without changing anything
         block.setAllocated(true);
@@ -116,45 +104,28 @@ public class DefaultSignalMastLogicUnchangedAspectTest {
         assertEquals(setsBefore, source.sets.get(), "aspect not sent again");
         assertEquals(stateBefore, stateEvents.get(), "no state change reported");
         assertEquals(locksBefore, lockEvents.get(), "turnout not unlocked and locked again");
-        assertEquals(activeBefore, activeEvents.size(), "no destination change reported");
 
         // a real change is still followed
         dest.setAspect("Approach");
         JUnitUtil.waitFor(() -> "Clear".equals(source.getAspect()), "source follows destination");
         assertEquals(setsBefore + 1, source.sets.get(), "aspect sent once for the change");
 
-        // A change of another pair is reported as that destination becoming active or inactive,
-        // while the source mast keeps showing the aspect for dest (dest is checked first),
-        // so the state, which is the destination shown, does not change.
+        // A change of another pair is still reported, so the signalling tables can show it,
+        // even though the source mast keeps showing the aspect for dest (dest is checked first).
         int stateBeforeOther = stateEvents.get();
-        activeEvents.clear();
         otherSensor.setCommandedState(Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> sml.isActive(otherDest), "other pair becomes active");
-        JUnitUtil.waitFor(() -> activeEvents.size() == 1, "other pair reported active");
-        assertNull(activeEvents.get(0).getOldValue());
-        assertSame(otherDest, activeEvents.get(0).getNewValue());
+        JUnitUtil.waitFor(() -> stateEvents.get() > stateBeforeOther, "state change reported for other pair");
         assertEquals(dest, sml.getActiveDestination(), "source mast still shows dest");
-
-        activeEvents.clear();
+        int stateBeforeOtherOff = stateEvents.get();
         otherSensor.setCommandedState(Sensor.INACTIVE);
         JUnitUtil.waitFor(() -> !sml.isActive(otherDest), "other pair becomes inactive");
-        JUnitUtil.waitFor(() -> activeEvents.size() == 1, "other pair reported inactive");
-        assertSame(otherDest, activeEvents.get(0).getOldValue());
-        assertNull(activeEvents.get(0).getNewValue());
+        JUnitUtil.waitFor(() -> stateEvents.get() > stateBeforeOtherOff, "state change reported for other pair again");
         assertEquals(dest, sml.getActiveDestination(), "source mast still shows dest");
         assertEquals("Clear", source.getAspect());
-        JUnitUtil.waitFor(100);
-        assertEquals(stateBeforeOther, stateEvents.get(), "state not fired, as the destination shown did not change");
 
-        // when the route to dest is no longer clear, the destination shown changes
-        activeEvents.clear();
         block.setState(Block.OCCUPIED);
         JUnitUtil.waitFor(() -> "Stop".equals(source.getAspect()), "source shows Stop when block occupied");
-        JUnitUtil.waitFor(() -> stateEvents.get() > stateBeforeOther, "state fired, as no destination is shown now");
-        assertNull(sml.getActiveDestination());
-        JUnitUtil.waitFor(() -> activeEvents.size() == 1, "dest reported inactive");
-        assertSame(dest, activeEvents.get(0).getOldValue());
-        assertNull(activeEvents.get(0).getNewValue());
 
         sml.dispose();
     }

@@ -834,7 +834,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     boolean checkStates() {
         SignalMast oldActiveMast = destination;
         SignalMast newActiveMast = null;
-        List<DestinationMast> changedPairs = new ArrayList<>();
+        boolean pairChanged = false;
 
         Enumeration<SignalMast> en = destList.keys();
         log.debug("checkStates enumerates over {} mast(s)", destList.size());
@@ -847,41 +847,39 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
 
             if (dm.active != dm.reportedActive) {
                 dm.reportedActive = dm.active;
-                changedPairs.add(dm);
+                pairChanged = true;
             }
             if (newActiveMast == null && dm.isEnabled() && dm.isActive()) {
                 newActiveMast = key;
             }
         }
+        if (newActiveMast == oldActiveMast) {
+            // no change, so leave the listener, the turnout locks and the state as they are
+            if (pairChanged) {
+                // but let listeners such as the signalling tables show the pair that changed
+                firePropertyChange(PROPERTY_STATE, null, newActiveMast);
+            }
+            return newActiveMast != null;
+        }
 
-        if (newActiveMast != oldActiveMast) {
-            if (oldActiveMast != null) {
-                log.debug("Remove listener from destination");
-                oldActiveMast.removePropertyChangeListener(propertyDestinationMastListener);
-                if (destList.containsKey(oldActiveMast)) {
-                    destList.get(oldActiveMast).clearTurnoutLock();
-                }
-            }
-            destination = newActiveMast;
-            if (newActiveMast != null) {
-                log.debug("      Add listener to destination");
-                newActiveMast.addPropertyChangeListener(propertyDestinationMastListener);
-            }
-            log.debug("      firePropertyChange: \"state\"");
-            firePropertyChange(PROPERTY_STATE, oldActiveMast, newActiveMast);
-            if (newActiveMast != null) {
-                destList.get(newActiveMast).lockTurnouts();
+        if (oldActiveMast != null) {
+            log.debug("Remove listener from destination");
+            oldActiveMast.removePropertyChangeListener(propertyDestinationMastListener);
+            if (destList.containsKey(oldActiveMast)) {
+                destList.get(oldActiveMast).clearTurnoutLock();
             }
         }
-        // otherwise the listener, the turnout locks and the state are left as they are
-
-        for (DestinationMast dm : changedPairs) {
-            SignalMast mast = dm.destinationSignalMast;
-            firePropertyChange(PROPERTY_DESTINATION_ACTIVE,
-                    dm.reportedActive ? null : mast,
-                    dm.reportedActive ? mast : null);
+        destination = newActiveMast;
+        if (newActiveMast == null) {
+            firePropertyChange(PROPERTY_STATE, oldActiveMast, null);
+            return false;
         }
-        return newActiveMast != null;
+        log.debug("      Add listener to destination");
+        newActiveMast.addPropertyChangeListener(propertyDestinationMastListener);
+        log.debug("      firePropertyChange: \"state\"");
+        firePropertyChange(PROPERTY_STATE, oldActiveMast, newActiveMast);
+        destList.get(newActiveMast).lockTurnouts();
+        return true;
     }
 
     /**
@@ -1364,7 +1362,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         List<Block> dblCrossoverAutoBlocks = new ArrayList<>(0);
         SignalMast destinationSignalMast;
         boolean active = false;
-        boolean reportedActive = false; // active state last reported by checkStates, see PROPERTY_DESTINATION_ACTIVE
+        boolean reportedActive = false; // active state last reported by checkStates
         boolean destMastInit = false;
 
         float minimumBlockSpeed = 0.0f;
