@@ -707,6 +707,19 @@
                     block on its route becomes occupied, instead of first
                     waiting for the signal logic delay; changes back towards
                     clear are still delayed as before.</li>
+                <li>Signal Mast Logic now only sends an aspect to its source
+                    mast when the aspect changes. Before, every re-check of the
+                    logic, for example when a block or turnout changed on any
+                    route from the mast, sent the same aspect again, giving
+                    extra traffic on the layout and a brief flicker on masts
+                    set to reset previous states. A mast whose hardware has
+                    lost its aspect, for example after a power cycle, now keeps
+                    its old output until the aspect next changes.</li>
+                <li>Scripts: Signal Mast Logic reports the route to a
+                    destination mast becoming active or inactive with a new
+                    "destinationActive" property change. The "state" property
+                    change is now only fired when the destination the source
+                    mast is showing an aspect for changes.</li>
             </ul>
 
         <h4>Signal Groups</h4>
