@@ -19,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests that a Wait Sensor command in a warrant script only ends when
- * the sensor reaches the requested state.
+ * the sensor reaches the requested state, the operator releases the train,
+ * or the warrant run ends.
  *
  * @author Keith Bruce Copyright (C) 2026
  */
@@ -50,7 +51,8 @@ public class EngineerSensorWaitTest {
         assertNotNull(engineer);
         assertEquals(1, engineer.getCurrentCommandIndex(), "at Wait Sensor command");
 
-        // a resume or the end of a ramp wakes the Engineer, the sensor is still inactive
+        // the end of a speed ramp calls setHalt(false), which wakes the Engineer;
+        // the sensor is still inactive
         engineer.setHalt(false);
         JUnitUtil.waitFor(200);
         assertEquals(Warrant.WAIT_FOR_SENSOR, engineer.getRunState(), "still waiting for the sensor");
@@ -66,6 +68,27 @@ public class EngineerSensorWaitTest {
         ThreadingUtil.runOnLayout(() -> assertDoesNotThrow(() -> waitSensor.setState(Sensor.ACTIVE)));
         JUnitUtil.waitFor(() -> engineer.getCurrentCommandIndex() >= 2, "script continues after sensor");
         assertNotEquals(Warrant.WAIT_FOR_SENSOR, engineer.getRunState(), "no longer waiting for the sensor");
+    }
+
+    @Test
+    public void testResumeReleasesSensorWait() {
+        String msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+        assertNull(msg, "setRunMode - " + msg);
+        JUnitUtil.waitFor(() -> {
+            Engineer e = getEngineer();
+            return e != null && e.getRunState() == Warrant.WAIT_FOR_SENSOR;
+        }, "Engineer waits for sensor");
+        Engineer engineer = getEngineer();
+        assertNotNull(engineer);
+        assertEquals(1, engineer.getCurrentCommandIndex(), "at Wait Sensor command");
+
+        // the operator presses Resume, for example because the sensor has failed
+        assertTrue(warrant.controlRunTrain(Warrant.RESUME), "Resume accepted");
+        JUnitUtil.waitFor(() -> engineer.getCurrentCommandIndex() >= 2, "script continues after Resume");
+        assertNotEquals(Warrant.WAIT_FOR_SENSOR, engineer.getRunState(), "no longer waiting for the sensor");
+        assertEquals(Sensor.INACTIVE, waitSensor.getKnownState(), "sensor did not change");
+        assertFalse(Arrays.asList(waitSensor.getPropertyChangeListeners()).contains(engineer),
+                "Engineer no longer listens to the sensor");
     }
 
     @Test

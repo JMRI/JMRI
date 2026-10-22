@@ -693,8 +693,9 @@
                 holds the train until the sensor really reaches the requested
                 state; before, the train could leave early when a signal
                 cleared, a train ahead moved on, or a speed change finished.
-                Pressing Resume no longer skips a sensor wait; Stop still ends
-                it.</li>
+                Resume, Increase Speed and Move into next block still release
+                a train held at a sensor, so the operator can get past a sensor
+                that has failed.</li>
         </ul>
 
    <h3>Web Access</h3>
