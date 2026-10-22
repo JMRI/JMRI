@@ -3076,6 +3076,19 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param speedType     speed aspect of speed change
      * @param cmdStartIdx   command index of delay
      */
+    /**
+     * Ratio by which scripted times are stretched when the train runs at a
+     * modified speed: the scripted track speed over the actual track speed.
+     * While the script has the train stopped there is nothing to stretch, so
+     * the scripted times are used unchanged (as the Engineer does).
+     */
+    private float getScriptTimeRatio(float scriptSpeed, float trackSpeed) {
+        if (trackSpeed > 0) {
+            return _speedUtil.getTrackSpeed(scriptSpeed) / trackSpeed;
+        }
+        return 1;
+    }
+
     private void makeScriptWait(float availDist, float changeDist, int idxSpeedChange, @Nonnull String speedType, int cmdStartIdx) {
         BlockSpeedInfo info = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1);
         int cmdEndIdx = info.getLastIndex();
@@ -3089,7 +3102,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         float modSetting = speedSetting;      // _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
         float beginTrackSpeed = _speedUtil.getTrackSpeed(modSetting);   // mm/sec track speed at modSetting
         float curTrackSpeed = beginTrackSpeed;
-        float prevTrackSpeed = beginTrackSpeed;
         if (_idxCurrentOrder == 0 && availDist > BUFFER_DISTANCE) {
             changeDist = 0;
         }
@@ -3105,28 +3117,37 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (cmd.equals(Command.NOOP) && beginTrackSpeed > 0) {
             accumTime = (availDist - changeDist) / beginTrackSpeed;
         } else {
-            float timeRatio; // time adjustment for current speed type
-            if (curTrackSpeed > _speedUtil.getRampThrottleIncrement()) {
-                timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / curTrackSpeed;
-            } else {
-                timeRatio = 1;
-            }
+            // time adjustment for current speed type; scripted times are used unchanged while stopped
+            float timeRatio = getScriptTimeRatio(scriptSpeed, curTrackSpeed);
             float bufDist = getEntranceBufferDist(idxSpeedChange);
+            float prevSetting = modSetting;    // throttle setting at the start of each interval
 
+            // Each command runs its time after the previous one, so the train covers the interval
+            // before command i at the setting from the previous speed command.
             for (int i = cmdStartIdx; i <= cmdEndIdx; i++) {
                 ThrottleSetting ts = _commands.get(i);
-                long time =  ts.getTime();
-                accumDist += _speedUtil.getDistanceOfSpeedChange(prevTrackSpeed, curTrackSpeed, (int)(time * timeRatio));
-                accumTime += time * timeRatio;
+                long time = (long)(ts.getTime() * timeRatio);
+                // getDistanceOfSpeedChange takes throttle settings, not track speeds
+                float dist = _speedUtil.getDistanceOfSpeedChange(prevSetting, modSetting, time);
+                prevSetting = modSetting;
+                if (changeDist + accumDist + dist >= availDist) {
+                    // the ramp must start within this interval
+                    float needDist = Math.max(0, availDist - changeDist - accumDist);
+                    if (dist > 0) {
+                        accumTime += time * needDist / dist;
+                    }
+                    break;
+                }
+                accumDist += dist;
+                accumTime += time;
                 cmd = ts.getCommand();
                 if (cmd.equals(Command.SPEED)) {
-                    prevTrackSpeed = curTrackSpeed;
                     CommandValue cmdVal = ts.getValue();
                     scriptSpeed = cmdVal.getFloat();
                     modSetting = _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
                     curTrackSpeed = _speedUtil.getTrackSpeed(modSetting);
                     changeDist = _speedUtil.getRampLengthForEntry(modSetting, endSpeed) + bufDist;
-                    timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / curTrackSpeed;
+                    timeRatio = getScriptTimeRatio(scriptSpeed, curTrackSpeed);
                 }
 
                 if (log.isDebugEnabled()) {
@@ -3134,16 +3155,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             getDisplayName(), i+1, accumTime, accumDist, changeDist, modSetting);
                 }
                 if (changeDist + accumDist >= availDist) {
-                    float remDist = changeDist + accumDist - availDist;
-                    if (curTrackSpeed > 0) {
-                        accumTime -= remDist / curTrackSpeed;
-                    } else {
-                        log.warn("{}: script unfit cmd#{}. Cannot compute wait time for \"{}\" ramp to block \"{}\". trackSpeed= {}", getDisplayName(),
-                                i+1, speedType, getBlockAt(idxSpeedChange).getDisplayName(), curTrackSpeed);
-                        if (prevTrackSpeed > 0) {
-                            accumTime -= remDist / prevTrackSpeed;
-                        }
-                    }
+                    // the ramp from the new speed needs more distance: start it as this command runs
                     break;
                 }
                 if (cmd.equals(Command.NOOP)) {
