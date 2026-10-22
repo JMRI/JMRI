@@ -277,6 +277,11 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
             protected void updateOutput() {
             }
         });
+        shm.register(new DefaultSignalHead("IH05") {
+            @Override
+            protected void updateOutput() {
+            }
+        });
         shm.register(new DefaultSignalHead("IH1") {
             @Override
             protected void updateOutput() {
