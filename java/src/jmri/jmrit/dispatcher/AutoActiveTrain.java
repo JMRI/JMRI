@@ -1262,13 +1262,14 @@ public class AutoActiveTrain implements ThrottleListener {
                 return ep.getFromBlock();
         }
         // this allocated section has multiple blocks _or_ there is no next Section
-        Block blk = as.getSection().getEntryBlock();
-        while (blk != null) {
-            if (b == blk)
-                return as.getSection().getNextBlock();
-            blk = as.getSection().getNextBlock();
+        // look the block up rather than walk the Section, other threads may be walking it too
+        java.util.List<Block> blocks = as.getSection().getBlockList();
+        int ix = blocks.indexOf(b);
+        if (ix < 0) {
+            return null;
         }
-        return null;
+        ix = (as.getSection().getState() == Section.REVERSE) ? ix - 1 : ix + 1;
+        return (ix >= 0 && ix < blocks.size()) ? blocks.get(ix) : null;
     }
 
     private void setNewCurrentSection(AllocatedSection as) {
@@ -2152,7 +2153,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _previousBlock = null;
                 // Set current block to head of train in reverse.
                 _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
-                while (_nextBlock.getState()==Block.OCCUPIED) {
+                while (_nextBlock != null && _nextBlock.getState()==Block.OCCUPIED) {
                     _previousBlock = _currentBlock;
                     _currentBlock = _nextBlock;
                     _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
@@ -2182,7 +2183,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _previousBlock = null;
                         _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                         // get head of train
-                        while (_nextBlock.getState()==Block.OCCUPIED && _currentAllocatedSection.getSection().containsBlock(_nextBlock)) {
+                        while (_nextBlock != null && _nextBlock.getState()==Block.OCCUPIED && _currentAllocatedSection.getSection().containsBlock(_nextBlock)) {
                             _previousBlock = _currentBlock;
                             _currentBlock = _nextBlock;
                             _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
