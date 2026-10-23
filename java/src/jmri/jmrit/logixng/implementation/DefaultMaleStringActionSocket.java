@@ -53,10 +53,10 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
             }
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionSetValue", e.getLocalizedMessage()), e, log);
+        } finally {
+            conditionalNG.getStack().setCount(currentStackPos);
+            conditionalNG.getSymbolTable().removeSymbols(_localVariables);
         }
-        
-        conditionalNG.getStack().setCount(currentStackPos);
-        conditionalNG.getSymbolTable().removeSymbols(_localVariables);
     }
 
     @Override
