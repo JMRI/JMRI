@@ -91,6 +91,7 @@ public class MessagesPanelTest {
         send("m \"one\"");
         send("m \"two\"");
         JUnitAppender.assertWarnMessageStartsWith("Unable to play DCC-EX message sound");
+        JUnitAppender.verifyNoBacklog();
         Assertions.assertEquals(2, panel.getLineCount());
     }
 

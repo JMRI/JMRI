@@ -9,6 +9,7 @@ import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.swing.messages.MessagesPanel;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
 import org.junit.jupiter.api.*;
@@ -19,10 +20,30 @@ public class MessagesConfigurationXmlTest {
     private DCCppInterfaceScaffold tc;
     private DCCppSystemConnectionMemo memo;
 
+    private MessagesPanel blankPanel() {
+        MessagesPanel[] p = new MessagesPanel[1];
+        ThreadingUtil.runOnGUI(() -> p[0] = new MessagesPanel(null, false));
+        return p[0];
+    }
+
     private MessagesPanel newPanel() {
-        MessagesPanel p = new MessagesPanel(null, false);
-        p.setMemo(memo);
+        MessagesPanel p = blankPanel();
+        ThreadingUtil.runOnGUI(() -> p.setMemo(memo));
         return p;
+    }
+
+    private void load(MessagesPanel p, Element config, boolean ignoreMemo) throws JmriConfigureXmlException {
+        JmriConfigureXmlException[] thrown = new JmriConfigureXmlException[1];
+        ThreadingUtil.runOnGUI(() -> {
+            try {
+                MessagesConfigurationXml.load(p, config, ignoreMemo);
+            } catch (JmriConfigureXmlException e) {
+                thrown[0] = e;
+            }
+        });
+        if (thrown[0] != null) {
+            throw thrown[0];
+        }
     }
 
     private Element wrap(Element config) {
@@ -32,21 +53,23 @@ public class MessagesConfigurationXmlTest {
     @Test
     public void testRoundTripAllFields() throws JmriConfigureXmlException {
         MessagesPanel src = newPanel();
-        src.setExpirySeconds(45);
-        src.setMaxLines(4);
-        src.setAutoOpen(false);
-        src.setPlaySound(true);
-        src.setSoundFile("program:resources/sounds/Bell.wav");
-        src.setMessageForeground(Color.RED);
-        src.setMessageBackground(new Color(255, 255, 0));
-        src.setMessagesSize(new Dimension(30, 3));
+        ThreadingUtil.runOnGUI(() -> {
+            src.setExpirySeconds(45);
+            src.setMaxLines(4);
+            src.setAutoOpen(false);
+            src.setPlaySound(true);
+            src.setSoundFile("program:resources/sounds/Bell.wav");
+            src.setMessageForeground(Color.RED);
+            src.setMessageBackground(new Color(255, 255, 0));
+            src.setMessagesSize(new Dimension(30, 3));
+        });
 
         Element stored = MessagesConfigurationXml.store(src);
         Assertions.assertEquals("dccex_messages_config", stored.getName());
         Assertions.assertNull(stored.getChild("raiseOnMessage"));
 
-        MessagesPanel dst = new MessagesPanel(null, false);
-        MessagesConfigurationXml.load(dst, wrap(stored), false);
+        MessagesPanel dst = blankPanel();
+        load(dst, wrap(stored), false);
 
         Assertions.assertSame(memo, dst.getMemo());
         Assertions.assertEquals(45, dst.getExpirySeconds());
@@ -65,8 +88,8 @@ public class MessagesConfigurationXmlTest {
     public void testMissingChildrenKeepDefaults() throws JmriConfigureXmlException {
         Element config = new Element("dccex_messages_config")
                 .addContent(new Element("systemConnection").addContent("D"));
-        MessagesPanel dst = new MessagesPanel(null, false);
-        MessagesConfigurationXml.load(dst, wrap(config), false);
+        MessagesPanel dst = blankPanel();
+        load(dst, wrap(config), false);
         Assertions.assertSame(memo, dst.getMemo());
         Assertions.assertEquals(30, dst.getExpirySeconds());
         Assertions.assertEquals(10, dst.getMaxLines());
@@ -82,10 +105,10 @@ public class MessagesConfigurationXmlTest {
     @Test
     public void testIgnoreMemoLeavesMemoAlone() throws JmriConfigureXmlException {
         MessagesPanel src = newPanel();
-        src.setExpirySeconds(12);
+        ThreadingUtil.runOnGUI(() -> src.setExpirySeconds(12));
         Element stored = MessagesConfigurationXml.store(src);
         MessagesPanel dst = newPanel();
-        MessagesConfigurationXml.load(dst, wrap(stored), true);
+        load(dst, wrap(stored), true);
         Assertions.assertSame(memo, dst.getMemo());
         Assertions.assertEquals(12, dst.getExpirySeconds());
         src.dispose();
@@ -96,9 +119,9 @@ public class MessagesConfigurationXmlTest {
     public void testUnknownConnectionThrows() {
         Element config = new Element("dccex_messages_config")
                 .addContent(new Element("systemConnection").addContent("Q"));
-        MessagesPanel dst = new MessagesPanel(null, false);
+        MessagesPanel dst = blankPanel();
         Assertions.assertThrows(JmriConfigureXmlException.class,
-                () -> MessagesConfigurationXml.load(dst, wrap(config), false));
+                () -> load(dst, wrap(config), false));
     }
 
     @BeforeEach
