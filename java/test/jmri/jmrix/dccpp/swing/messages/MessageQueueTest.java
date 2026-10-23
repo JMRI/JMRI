@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /** Tests for MessageQueue. */
@@ -110,6 +112,7 @@ public class MessageQueueTest {
 
     @BeforeEach
     public void setUp() {
+        JUnitUtil.setUp();
         now = new long[]{0};
         queue = new MessageQueue(() -> now[0]);
     }
@@ -118,6 +121,7 @@ public class MessageQueueTest {
     public void tearDown() {
         queue = null;
         now = null;
+        JUnitUtil.tearDown();
     }
 
 }
