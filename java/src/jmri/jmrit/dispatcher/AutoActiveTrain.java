@@ -1268,8 +1268,11 @@ public class AutoActiveTrain implements ThrottleListener {
 
     @CheckForNull
     private Block getNextBlock(Block b, AllocatedSection as) {
-        if (as.getNextSection() != null) {
-            EntryPoint ep = as.getSection().getExitPointToSection(_nextSection, as.getDirection());
+        // The Section after this one on the route, not _nextSection: that follows the train, and moves on only
+        // when the Section change has been handled, which can be after a Block change in the new Section.
+        Section next = as.getNextSection();
+        if (next != null) {
+            EntryPoint ep = as.getSection().getExitPointToSection(next, as.getDirection());
             if ((ep != null) && (ep.getBlock() == b))
                 // this block is connected to a block in the next section
                 return ep.getFromBlock();
