@@ -727,14 +727,44 @@ Positionable Label <xsl:value-of select="@icon"/><br/>
 <xsl:template match="layoutturnout">
 Layout Turnout ident="<xsl:value-of select="@ident"/>",
 turnoutname="<xsl:value-of select="@turnoutname"/>",
-blockname="<xsl:value-of select="@blockname"/>"<br/>
+blockname="<xsl:value-of select="@blockname"/>"
+<xsl:choose>
+  <xsl:when test="( tracktile )" >
+  tracktile: "<xsl:value-of select="tracktile/@vendor"/>/<xsl:value-of select="tracktile/@family"/>/<xsl:value-of select="tracktile/@partcode"/>"
+  </xsl:when>
+</xsl:choose><br/>
 </xsl:template>
 
 <xsl:template match="tracksegment">
 Track segment ident="<xsl:value-of select="@ident"/>":
 connects to "<xsl:value-of select="@connect1name"/>" (type=<xsl:value-of select="@type1"/>);
 connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select="@type2"/>)
+<xsl:choose>
+  <xsl:when test="( tracktile )" >
+  tracktile: "<xsl:value-of select="tracktile/@vendor"/>/<xsl:value-of select="tracktile/@family"/>/<xsl:value-of select="tracktile/@partcode"/>"
+  </xsl:when>
+</xsl:choose>
 <br/>
+</xsl:template>
+
+<xsl:template match="levelxing">
+Level Xing ident="<xsl:value-of select="@ident"/>",
+blockname="<xsl:value-of select="@blockname"/>"
+<xsl:choose>
+  <xsl:when test="( tracktile )" >
+  tracktile: "<xsl:value-of select="tracktile/@vendor"/>/<xsl:value-of select="tracktile/@family"/>/<xsl:value-of select="tracktile/@partcode"/>"
+  </xsl:when>
+</xsl:choose><br/>
+</xsl:template>
+
+<xsl:template match="layoutSlip">
+Layout Slip ident="<xsl:value-of select="@ident"/>",
+blockname="<xsl:value-of select="@blockname"/>"
+<xsl:choose>
+  <xsl:when test="( tracktile )" >
+  tracktile: "<xsl:value-of select="tracktile/@vendor"/>/<xsl:value-of select="tracktile/@family"/>/<xsl:value-of select="tracktile/@partcode"/>"
+  </xsl:when>
+</xsl:choose><br/>
 </xsl:template>
 
 <xsl:template match="positionablepoint">
