@@ -150,13 +150,18 @@ public class LogixNG_Thread {
                 while (!_stopThread) {
                     try {
                         ThreadEvent event = _eventQueue.take();
+                        if (_eventQueue.isEmpty()) {
+                            // The backlog has cleared, so a later backlog is
+                            // reported again.
+                            _queueSizeWarned = false;
+                        }
                         if (event._lock != null) {
                             synchronized(event._lock) {
                                 try {
                                     if (!_stopThread) event._threadAction.run();
                                 } catch (RuntimeException ex) {
                                     // Log before the waiting caller continues
-                                    log.error("Exception on LogixNG thread {}", _name, ex);
+                                    log.error("Exception on LogixNG thread \"{}\"", _name, ex);
                                 } finally {
                                     event._done = true;
                                     event._lock.notify();
@@ -170,7 +175,7 @@ public class LogixNG_Thread {
                     } catch (RuntimeException ex) {
                         // Keep the thread running, otherwise all LogixNGs
                         // on this thread would stop.
-                        log.error("Exception on LogixNG thread {}", _name, ex);
+                        log.error("Exception on LogixNG thread \"{}\"", _name, ex);
                     }
                 }
                 _threadIsStopped = true;
@@ -310,11 +315,19 @@ public class LogixNG_Thread {
         }
     }
 
+    /**
+     * Add an event to the queue. A warning is logged once each time the queue
+     * grows past {@value #MAX_QUEUE_SIZE_BEFORE_WARNING} events. The warning
+     * is re-armed when the LogixNG thread has emptied the queue, so each
+     * separate backlog is reported, but a long backlog is reported only once.
+     *
+     * @param event the event to add
+     */
     private void addEvent(ThreadEvent event) {
         _eventQueue.add(event);
         if (!_queueSizeWarned && _eventQueue.size() > MAX_QUEUE_SIZE_BEFORE_WARNING) {
             _queueSizeWarned = true;
-            log.warn("The LogixNG thread {} has more than {} events waiting. LogixNG may be too busy or blocked.",
+            log.warn("The LogixNG thread \"{}\" has more than {} events waiting. LogixNG may be too busy or blocked.",
                     _name, MAX_QUEUE_SIZE_BEFORE_WARNING);
         }
     }

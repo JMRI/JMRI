@@ -22,10 +22,11 @@ import org.junit.jupiter.api.Test;
  */
 public class LogixNG_ThreadQueueTest {
 
-    @Test
-    public void testManyEventsWhileBusy() throws InterruptedException {
-        LogixNG_Thread thread = LogixNG_Thread.getThread(LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
-
+    /**
+     * Queue events while the LogixNG thread is busy, then let it run until
+     * all of them have been executed.
+     */
+    private void queueWhileBusy(LogixNG_Thread thread, int numEvents) throws InterruptedException {
         CountDownLatch busy = new CountDownLatch(1);
         CountDownLatch started = new CountDownLatch(1);
         thread.runOnLogixNGEventually(() -> {
@@ -41,7 +42,6 @@ public class LogixNG_ThreadQueueTest {
         // Many sensor changes while the LogixNG thread is busy must not
         // throw an exception into the code that changed the sensor.
         AtomicInteger count = new AtomicInteger();
-        int numEvents = 5000;
         for (int i = 0; i < numEvents; i++) {
             thread.runOnLogixNGEventually(count::incrementAndGet);
         }
@@ -52,8 +52,21 @@ public class LogixNG_ThreadQueueTest {
         // the events queued above.
         thread.runOnLogixNG(() -> {});
         assertEquals(numEvents, count.get(), "all events are executed");
+    }
 
-        // A long queue is reported once
+    @Test
+    public void testManyEventsWhileBusy() throws InterruptedException {
+        LogixNG_Thread thread = LogixNG_Thread.getThread(LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+
+        // A long backlog is reported once
+        queueWhileBusy(thread, 5000);
+        JUnitAppender.assertWarnMessageStartsWith("The LogixNG thread ");
+
+        // A backlog that stays below the limit is not reported
+        queueWhileBusy(thread, 500);
+
+        // A later backlog, after the queue has emptied, is reported again
+        queueWhileBusy(thread, 5000);
         JUnitAppender.assertWarnMessageStartsWith("The LogixNG thread ");
     }
 
