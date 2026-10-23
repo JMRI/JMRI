@@ -10,6 +10,7 @@ import jmri.jmrix.can.cbus.simulator.moduletypes.MergCanpan;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
@@ -163,8 +164,68 @@ public class CbusAllocateNodeNumberTest {
         r.setElement(1, 65432 >> 8);
         r.setElement(2, 65432 & 0xff);
         t.reply(r);
+        flushGuiQueue(); // let the NNACK be processed before dispose
 
         t.dispose();
+
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testFramesQueuedBeforeDisposeAreIgnored() {
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
+
+        CanReply r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(3);
+        r.setElement(0, CbusConstants.CBUS_RQNN); // Node Requests Node Number
+        r.setElement(1, 0x04); // node 1234
+        r.setElement(2, 0xd2); // node 1234
+
+        // on the GUI thread, the RQNN is queued behind this action, so dispose comes first
+        ThreadingUtil.runOnGUI(() -> {
+            t.reply(r);
+            t.dispose();
+        });
+        flushGuiQueue();
+
+        assertEquals(0, tcis.outbound.size(),
+            "no dialogue opened, no parameter request sent " + tcis.getTranslatedOutbound());
+
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testDisposeWhileDialogueOpenSendsNoNodeNumber() {
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
+        t.setTimeout(5); // a Set Node Number timeout would report within the test
+
+        // dispose while the dialogue is open, then press OK
+        DialogueThread dialog_thread = new DialogueThread("CbusAllocateNodeNumber Dispose Dialog Close Thread", () -> {
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NdEntrSlimTitle"));
+            JTextFieldOperator jtfo = new JTextFieldOperator(new JSpinnerOperator(jdo, 0));
+            jtfo.setText("12345");
+            t.dispose();
+            JemmyUtil.pressButton(jdo, "OK");
+            jdo.waitClosed();
+        });
+
+        CanReply r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(3);
+        r.setElement(0, CbusConstants.CBUS_RQNN); // Node Requests Node Number
+        r.setElement(1, 0x00); // node 0, SLiM
+        r.setElement(2, 0x00);
+        t.reply(r);
+
+        dialog_thread.assertCompleted();
+        JUnitUtil.waitFor(50); // well past the timeout
+        flushGuiQueue();
+
+        // only the parameter request sent when the dialogue opened, no Set Node Number
+        assertEquals(1, tcis.outbound.size(), "no SNN sent " + tcis.getTranslatedOutbound());
+        assertEquals("[5f8] 10", tcis.outbound.elementAt(0).toString(), "Request node parameters(RQNP)");
+        // no "No confirmation from node" error, checked by tearDown
 
     }
 
@@ -297,6 +358,13 @@ public class CbusAllocateNodeNumberTest {
                 fail(thread.getName() + " failed", t);
             }
         }
+    }
+
+    /**
+     * Wait until the GUI thread has processed everything queued so far.
+     */
+    private static void flushGuiQueue() {
+        ThreadingUtil.runOnGUI(() -> {});
     }
 
     private CanSystemConnectionMemo memo;
