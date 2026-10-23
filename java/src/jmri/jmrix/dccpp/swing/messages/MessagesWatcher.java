@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.swing.messages;
 
+import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 
 import jmri.jmrix.dccpp.*;
@@ -25,8 +26,11 @@ public class MessagesWatcher implements DCCppListener {
         log.info("DCC-EX message: {}", text);
         if (!GraphicsEnvironment.isHeadless() && MessagesFrame.isAutoOpen(_memo)) {
             ThreadingUtil.runOnGUI(() -> {
-                if (MessagesFrame.findFrame(_memo) == null) {
+                MessagesFrame frame = MessagesFrame.findFrame(_memo);
+                if (frame == null) {
                     MessagesFrame.showFrame(_memo, text);
+                } else if ((frame.getExtendedState() & Frame.ICONIFIED) != 0) {
+                    frame.setExtendedState(Frame.NORMAL);
                 }
             });
         }

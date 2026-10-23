@@ -318,8 +318,8 @@
       <p>Shows messages sent by EXRAIL <code>MESSAGE("...")</code> commands on the
       EX-CommandStation. Each message is shown with the time it arrived, newest on top, and is
       also written to the JMRI log.</p>
-      <p>The window opens by itself when a message arrives. Closing the window dismisses the
-      messages. Right-click the window to clear it or to change its settings:</p>
+      <p>The window opens by itself when a message arrives, or comes back if it was minimized.
+      Closing the window dismisses the messages. Right-click the window to clear it or to change its settings:</p>
       <ul>
         <li><b>Remove messages after</b> - how long each message stays, in seconds. 0 keeps
         them until you clear them. The default is 30.</li>

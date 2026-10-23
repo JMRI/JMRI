@@ -60,6 +60,27 @@ public class MessagesWatcherTest {
 
     @Test
     @DisabledIfHeadless
+    public void testRestoresMinimizedWindow() {
+        MessagesFrame[] frame = new MessagesFrame[1];
+        boolean[] iconified = {false};
+        ThreadingUtil.runOnGUI(() -> {
+            frame[0] = MessagesFrame.showFrame(memo, null);
+            frame[0].addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowIconified(java.awt.event.WindowEvent e) {
+                    iconified[0] = true;
+                }
+            });
+            frame[0].setExtendedState(java.awt.Frame.ICONIFIED);
+        });
+        // the window system must finish minimizing, or it can drop the restore
+        JUnitUtil.waitFor(() -> iconified[0], "window minimized");
+        send("m \"hello\"");
+        JUnitUtil.waitFor(() -> (frame[0].getExtendedState() & java.awt.Frame.ICONIFIED) == 0, "window restored");
+    }
+
+    @Test
+    @DisabledIfHeadless
     public void testBurstOpensOneWindowNoDuplicates() {
         send("m \"1\"");
         send("m \"2\"");
