@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.node;
 
 import java.io.IOException;
 import java.io.File;
+import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.*;
@@ -51,11 +52,9 @@ public class CbusAllocateNodeNumberTest {
         assertNotNull(node789);
         // configure dummy node as CANPAN so no parameters are requested for it
         new MergCanpan().configureDummyNode(node789);
-        // and with 0 events, so the number of events is not requested for it either
-        node789.getNodeEventManager().resetNodeEventsToZero();
 
-        // create a thread that waits to close the dialog box opened later
-        Thread dialog_thread = new Thread(() -> {
+        // operate the dialog box opened later
+        DialogueThread dialog_thread = new DialogueThread("CbusAllocateNodeNumber Dialog Close Thread", () -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NdEntrNumTitle",String.valueOf(1234)));
 
@@ -131,8 +130,6 @@ public class CbusAllocateNodeNumberTest {
             jdo.waitClosed();
 
         });
-        dialog_thread.setName("CbusAllocateNodeNumber Dialog Close Thread");
-        dialog_thread.start();
 
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -151,7 +148,7 @@ public class CbusAllocateNodeNumberTest {
         r.setExtended(false);
         t.reply(r);
 
-        JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
+        dialog_thread.assertCompleted();
 
         JUnitUtil.waitFor(()->{ return( tcis.outbound.size() >2); }, "Outbound did not increase: " + tcis.getTranslatedOutbound());
         assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString(),"3rd message not right "
@@ -226,8 +223,8 @@ public class CbusAllocateNodeNumberTest {
 
         t.setTimeout(5); // default is reduced to speed up test
 
-        // create a thread that waits to close the dialog box opened later
-        Thread dialog_thread = new Thread(() -> {
+        // operate the dialog box opened later
+        DialogueThread dialog_thread = new DialogueThread("CbusAllocateNodeNumber Allocate Timeout Dialog Close Thread", () -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NdEntrSlimTitle"));
 
@@ -241,10 +238,7 @@ public class CbusAllocateNodeNumberTest {
 
         });
 
-        dialog_thread.setName("CbusAllocateNodeNumber Allocate Timeout Dialog Close Thread");
-        dialog_thread.start();
-
-        Thread popup_thread = new Thread(() -> {
+        DialogueThread popup_thread = new DialogueThread("CbusAllocateNodeNumber Allocate Timeout Popup Close Thread", () -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdoo = new JDialogOperator(Bundle.getMessage("WarningTitle"));
 
@@ -252,9 +246,6 @@ public class CbusAllocateNodeNumberTest {
             jdoo.waitClosed();
 
         });
-
-        popup_thread.setName("CbusAllocateNodeNumber Allocate Timeout Popup Close Thread");
-        popup_thread.start();
 
 
         CanReply r = new CanReply();
@@ -268,14 +259,44 @@ public class CbusAllocateNodeNumberTest {
 
         JUnitUtil.waitFor(()->{return tcis.outbound.size()>1;}, "2 outbound sent" + tcis.outbound);
 
-        JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
+        dialog_thread.assertCompleted();
 
-        JUnitUtil.waitFor(()->{return !(popup_thread.isAlive());}, "Cbus Allocate Node Num Timout Dialog finished");
+        popup_thread.assertCompleted();
 
         JUnitAppender.assertErrorMessageStartsWith("No confirmation from node when setting node number 12345");
 
         t.dispose();
 
+    }
+
+    /**
+     * Operates a dialogue on its own thread while the GUI thread shows it.
+     * A failure on that thread, eg. an assertion or a Jemmy timeout, would
+     * otherwise be lost, so it is passed back to the test.
+     */
+    private static class DialogueThread {
+
+        private final Thread thread;
+        private final AtomicReference<Throwable> failure = new AtomicReference<>();
+
+        DialogueThread(String name, Runnable steps) {
+            thread = new Thread(() -> {
+                try {
+                    steps.run();
+                } catch (AssertionError | RuntimeException e) {
+                    failure.set(e);
+                }
+            }, name);
+            thread.start();
+        }
+
+        void assertCompleted() {
+            JUnitUtil.waitFor(() -> !thread.isAlive(), thread.getName() + " finished");
+            Throwable t = failure.get();
+            if (t != null) {
+                fail(thread.getName() + " failed", t);
+            }
+        }
     }
 
     private CanSystemConnectionMemo memo;
@@ -292,6 +313,9 @@ public class CbusAllocateNodeNumberTest {
         tcis = new CbusTrafficControllerScaffold(memo);
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
         memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        // No background fetch, which would send its own requests to nodes
+        // and write node backup files to the profile from a timer thread.
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
         nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
