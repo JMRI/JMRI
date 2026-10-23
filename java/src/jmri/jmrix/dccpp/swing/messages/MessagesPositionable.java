@@ -34,7 +34,6 @@ public class MessagesPositionable extends PositionableJComponent {
         }
         pos.messagesPanel.setExpirySeconds(messagesPanel.getExpirySeconds());
         pos.messagesPanel.setMaxLines(messagesPanel.getMaxLines());
-        pos.messagesPanel.setRaiseOnMessage(messagesPanel.isRaiseOnMessage());
         pos.messagesPanel.setAutoOpen(messagesPanel.isAutoOpen());
         pos.messagesPanel.setPlaySound(messagesPanel.isPlaySound());
         pos.messagesPanel.setSoundFile(messagesPanel.getSoundFile());

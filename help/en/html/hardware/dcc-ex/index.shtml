@@ -318,15 +318,13 @@
       <p>Shows messages sent by EXRAIL <code>MESSAGE("...")</code> commands on the
       EX-CommandStation. Each message is shown with the time it arrived, newest on top, and is
       also written to the JMRI log.</p>
-      <p>The window opens by itself when a message arrives, and comes to the front for each new
-      one. Closing the window dismisses the messages. Right-click the window to clear it or to
-      change its settings:</p>
+      <p>The window opens by itself when a message arrives. Closing the window dismisses the
+      messages. Right-click the window to clear it or to change its settings:</p>
       <ul>
         <li><b>Remove messages after</b> - how long each message stays, in seconds. 0 keeps
         them until you clear them. The default is 30.</li>
         <li><b>Maximum lines</b> - older messages drop off past this many. The default is 10.</li>
-        <li><b>Bring window to front</b> and <b>Open automatically</b> - turn these off if you'd
-        rather the window stay out of the way.</li>
+        <li><b>Open automatically</b> - turn this off if you'd rather open the window yourself.</li>
         <li><b>Play sound</b> - play a sound file when a message arrives. Off by default.</li>
       </ul>
       <p>You can also put a Messages display on a Panel Editor or Layout Editor panel from the

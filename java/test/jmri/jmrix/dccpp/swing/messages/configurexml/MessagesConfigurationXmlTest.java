@@ -34,7 +34,6 @@ public class MessagesConfigurationXmlTest {
         MessagesPanel src = newPanel();
         src.setExpirySeconds(45);
         src.setMaxLines(4);
-        src.setRaiseOnMessage(false);
         src.setAutoOpen(false);
         src.setPlaySound(true);
         src.setSoundFile("program:resources/sounds/Bell.wav");
@@ -44,6 +43,7 @@ public class MessagesConfigurationXmlTest {
 
         Element stored = MessagesConfigurationXml.store(src);
         Assertions.assertEquals("dccex_messages_config", stored.getName());
+        Assertions.assertNull(stored.getChild("raiseOnMessage"));
 
         MessagesPanel dst = new MessagesPanel(null, false);
         MessagesConfigurationXml.load(dst, wrap(stored), false);
@@ -51,7 +51,6 @@ public class MessagesConfigurationXmlTest {
         Assertions.assertSame(memo, dst.getMemo());
         Assertions.assertEquals(45, dst.getExpirySeconds());
         Assertions.assertEquals(4, dst.getMaxLines());
-        Assertions.assertFalse(dst.isRaiseOnMessage());
         Assertions.assertFalse(dst.isAutoOpen());
         Assertions.assertTrue(dst.isPlaySound());
         Assertions.assertEquals("program:resources/sounds/Bell.wav", dst.getSoundFile());
@@ -71,7 +70,6 @@ public class MessagesConfigurationXmlTest {
         Assertions.assertSame(memo, dst.getMemo());
         Assertions.assertEquals(30, dst.getExpirySeconds());
         Assertions.assertEquals(10, dst.getMaxLines());
-        Assertions.assertTrue(dst.isRaiseOnMessage());
         Assertions.assertTrue(dst.isAutoOpen());
         Assertions.assertFalse(dst.isPlaySound());
         Assertions.assertEquals(MessagesPanel.DEFAULT_SOUND_FILE, dst.getSoundFile());

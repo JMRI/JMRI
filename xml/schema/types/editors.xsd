@@ -1459,7 +1459,6 @@
               <xs:element name="systemConnection" type="xs:string" minOccurs="1" maxOccurs="1" />
               <xs:element name="expirySeconds" type="xs:int" minOccurs="0" maxOccurs="1" />
               <xs:element name="maxLines" type="xs:int" minOccurs="0" maxOccurs="1" />
-              <xs:element name="raiseOnMessage" type="trueFalseType" minOccurs="0" maxOccurs="1" />
               <xs:element name="autoOpen" type="trueFalseType" minOccurs="0" maxOccurs="1" />
               <xs:element name="playSound" type="trueFalseType" minOccurs="0" maxOccurs="1" />
               <xs:element name="soundFile" type="xs:string" minOccurs="0" maxOccurs="1" />

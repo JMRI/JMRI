@@ -25,8 +25,6 @@ public class MessagesConfigurationXml {
                 .addContent(Integer.toString(p.getExpirySeconds())));
         element.addContent(new Element("maxLines")
                 .addContent(Integer.toString(p.getMaxLines())));
-        element.addContent(new Element("raiseOnMessage")
-                .addContent(p.isRaiseOnMessage() ? "true" : "false"));
         element.addContent(new Element("autoOpen")
                 .addContent(p.isAutoOpen() ? "true" : "false"));
         element.addContent(new Element("playSound")
@@ -81,10 +79,6 @@ public class MessagesConfigurationXml {
         value = element.getChildTextTrim("maxLines");
         if (value != null) {
             p.setMaxLines(Integer.parseInt(value));
-        }
-        value = element.getChildTextTrim("raiseOnMessage");
-        if (value != null) {
-            p.setRaiseOnMessage("true".equals(value));
         }
         value = element.getChildTextTrim("autoOpen");
         if (value != null) {

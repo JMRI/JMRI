@@ -35,7 +35,6 @@ public class MessagesPositionableTest {
             panel.setMemo(memo);
             panel.setExpirySeconds(45);
             panel.setMaxLines(4);
-            panel.setRaiseOnMessage(false);
             panel.setAutoOpen(false);
             panel.setPlaySound(true);
             panel.setSoundFile("program:resources/sounds/Bell.wav");
@@ -49,7 +48,6 @@ public class MessagesPositionableTest {
         Assertions.assertSame(memo, copy.getMemo());
         Assertions.assertEquals(45, copy.getExpirySeconds());
         Assertions.assertEquals(4, copy.getMaxLines());
-        Assertions.assertFalse(copy.isRaiseOnMessage());
         Assertions.assertFalse(copy.isAutoOpen());
         Assertions.assertTrue(copy.isPlaySound());
         Assertions.assertEquals("program:resources/sounds/Bell.wav", copy.getSoundFile());

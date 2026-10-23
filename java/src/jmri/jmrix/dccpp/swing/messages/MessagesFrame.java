@@ -136,13 +136,6 @@ public class MessagesFrame extends JmriJFrame {
         };
         _messagesPanel.addMouseListener(JmriMouseListener.adapt(popupListener));
 
-        _messagesPanel.setOnNewMessage(() -> {
-            if (_messagesPanel.isRaiseOnMessage()) {
-                setExtendedState(Frame.NORMAL);
-                toFront();
-            }
-        });
-
         pack();
 
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {

@@ -7,7 +7,6 @@
         <systemConnection>D</systemConnection>
         <expirySeconds>45</expirySeconds>
         <maxLines>4</maxLines>
-        <raiseOnMessage>true</raiseOnMessage>
         <autoOpen>true</autoOpen>
         <playSound>true</playSound>
         <soundFile>program:resources/sounds/bell_stroke.wav</soundFile>

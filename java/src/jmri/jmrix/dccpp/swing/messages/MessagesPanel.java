@@ -33,8 +33,6 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
     private DCCppTrafficController _tc;
     private DCCppSystemConnectionMemo _memo;
     private Font _font;
-    private Runnable _onNewMessage;
-    private boolean _raiseOnMessage = true;
     private boolean _autoOpen = true;
     private boolean _playSound = false;
     private String _soundFile = DEFAULT_SOUND_FILE;
@@ -89,9 +87,6 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
             _timer.start();
         }
         playSound();
-        if (_onNewMessage != null) {
-            _onNewMessage.run();
-        }
     }
 
     @InvokeOnGuiThread
@@ -99,11 +94,6 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
         _queue.clear();
         _timer.stop();
         rebuild();
-    }
-
-    /** Called with each new message, after it is shown; the window uses it to raise itself. */
-    public void setOnNewMessage(@CheckForNull Runnable r) {
-        _onNewMessage = r;
     }
 
     @InvokeOnGuiThread
@@ -251,16 +241,6 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
     @Override
     public int getMaxLines() {
         return _queue.getMaxLines();
-    }
-
-    @Override
-    public void setRaiseOnMessage(boolean raise) {
-        _raiseOnMessage = raise;
-    }
-
-    @Override
-    public boolean isRaiseOnMessage() {
-        return _raiseOnMessage;
     }
 
     @Override

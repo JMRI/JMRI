@@ -85,14 +85,6 @@ public class MessagesPanelTest {
     }
 
     @Test
-    public void testOnNewMessageCalled() {
-        int[] count = {0};
-        panel.setOnNewMessage(() -> count[0]++);
-        send("m \"x\"");
-        Assertions.assertEquals(1, count[0]);
-    }
-
-    @Test
     public void testMissingSoundFileWarnsOnce() {
         panel.setPlaySound(true);
         panel.setSoundFile("program:resources/sounds/does-not-exist.wav");
@@ -106,7 +98,6 @@ public class MessagesPanelTest {
     public void testSettingsDefaults() {
         Assertions.assertEquals(30, panel.getExpirySeconds());
         Assertions.assertEquals(10, panel.getMaxLines());
-        Assertions.assertTrue(panel.isRaiseOnMessage());
         Assertions.assertTrue(panel.isAutoOpen());
         Assertions.assertFalse(panel.isPlaySound());
         Assertions.assertEquals(MessagesPanel.DEFAULT_SOUND_FILE, panel.getSoundFile());

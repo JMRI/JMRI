@@ -51,7 +51,6 @@ public class ConfigureMessagesTest {
         ThreadingUtil.runOnGUI(() -> {
             dialog._expiryTextField.setText("45");
             dialog._maxLinesTextField.setText("4");
-            dialog._raiseCheckBox.setSelected(false);
             dialog._autoOpenCheckBox.setSelected(false);
             dialog._playSoundCheckBox.setSelected(true);
             dialog._soundFileTextField.setText("program:resources/sounds/Bell.wav");
@@ -59,7 +58,6 @@ public class ConfigureMessagesTest {
         });
         Assertions.assertEquals(45, panel.getExpirySeconds());
         Assertions.assertEquals(4, panel.getMaxLines());
-        Assertions.assertFalse(panel.isRaiseOnMessage());
         Assertions.assertFalse(panel.isAutoOpen());
         Assertions.assertTrue(panel.isPlaySound());
         Assertions.assertEquals("program:resources/sounds/Bell.wav", panel.getSoundFile());
@@ -89,7 +87,6 @@ public class ConfigureMessagesTest {
         Assertions.assertTrue(hasLabel(dialog.getContentPane(), Bundle.getMessage("ConfigureMessages_Foreground")));
         Assertions.assertTrue(hasLabel(dialog.getContentPane(), Bundle.getMessage("ConfigureMessages_Columns")));
         Assertions.assertFalse(hasLabel(dialog.getContentPane(), Bundle.getMessage("ConfigureMessages_AutoOpen")));
-        Assertions.assertFalse(hasLabel(dialog.getContentPane(), Bundle.getMessage("ConfigureMessages_Raise")));
     }
 
     @Test

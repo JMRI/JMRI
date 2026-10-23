@@ -24,10 +24,6 @@ public interface MessagesConfiguration {
 
     int getMaxLines();
 
-    void setRaiseOnMessage(boolean raise);
-
-    boolean isRaiseOnMessage();
-
     void setAutoOpen(boolean autoOpen);
 
     boolean isAutoOpen();

@@ -30,7 +30,6 @@ public class ConfigureMessages extends JmriJFrame {
     private final JComboBox<DCCppConnection> _memoComboBox = new JComboBox<>();
     final JTextField _expiryTextField = new JTextField(5);
     final JTextField _maxLinesTextField = new JTextField(5);
-    final JCheckBox _raiseCheckBox = new JCheckBox();
     final JCheckBox _autoOpenCheckBox = new JCheckBox();
     final JCheckBox _playSoundCheckBox = new JCheckBox();
     final JTextField _soundFileTextField = new JTextField(25);
@@ -118,8 +117,6 @@ public class ConfigureMessages extends JmriJFrame {
         addRow(p, c, "ConfigureMessages_MaxLines", _maxLinesTextField);
 
         if (editor == null) {
-            _raiseCheckBox.setSelected(messagesConfiguration.isRaiseOnMessage());
-            addRow(p, c, "ConfigureMessages_Raise", _raiseCheckBox);
             _autoOpenCheckBox.setSelected(messagesConfiguration.isAutoOpen());
             addRow(p, c, "ConfigureMessages_AutoOpen", _autoOpenCheckBox);
         }
@@ -272,7 +269,6 @@ public class ConfigureMessages extends JmriJFrame {
         config.setExpirySeconds(expiry);
         config.setMaxLines(maxLines);
         if (editor == null) {
-            config.setRaiseOnMessage(_raiseCheckBox.isSelected());
             config.setAutoOpen(_autoOpenCheckBox.isSelected());
         } else {
             config.setMessageForeground(_foreground);
