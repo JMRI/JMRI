@@ -57,7 +57,10 @@ public class MessagesPositionableXmlTest {
                 loaded = (MessagesPositionable) p;
             }
         }
-        Assertions.assertNotNull(loaded);
+        if (loaded == null) {
+            Assertions.fail("no MessagesPositionable on the panel after load");
+            return;
+        }
         Assertions.assertEquals(40, loaded.getX());
         Assertions.assertEquals(60, loaded.getY());
         MessagesPanel copy = loaded.getMessagesPanel();

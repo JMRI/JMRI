@@ -23,7 +23,6 @@ public class MessagesWatcherTest {
 
     private DCCppInterfaceScaffold tc;
     private DCCppSystemConnectionMemo memo;
-    private MessagesWatcher watcher;
 
     private void send(String reply) {
         ThreadingUtil.runOnGUI(() -> tc.sendTestMessage(DCCppReply.parseDCCppReply(reply)));
@@ -85,7 +84,7 @@ public class MessagesWatcherTest {
         JUnitUtil.initDefaultUserMessagePreferences();
         tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
         memo = new DCCppSystemConnectionMemo(tc);
-        watcher = new MessagesWatcher(memo);
+        Assertions.assertNotNull(new MessagesWatcher(memo));
     }
 
     @AfterEach
@@ -95,7 +94,6 @@ public class MessagesWatcherTest {
         }
         memo.getDCCppTrafficController().terminateThreads();
         memo.dispose();
-        watcher = null;
         memo = null;
         tc = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();

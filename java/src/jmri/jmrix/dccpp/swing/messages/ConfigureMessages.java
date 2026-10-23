@@ -84,6 +84,7 @@ public class ConfigureMessages extends JmriJFrame {
 
     @Override
     public void initComponents() {
+        addHelpMenu("html.hardware.dcc-ex.index_messages", true);
         setLocation(50, 30);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

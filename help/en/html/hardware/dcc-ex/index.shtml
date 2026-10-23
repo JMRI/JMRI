@@ -283,6 +283,8 @@
 
         <li><a href="#lcd">Open DCC-EX Virtual LCD</a></li>
 
+        <li><a href="#messages">Open DCC-EX Messages</a></li>
+
         <li><a href="#exrail">EXRAIL Automations</a></li>
 
         <li><a href="#meter">Voltage / Current Meter</a></li>
@@ -311,6 +313,25 @@
       <p>Mirrors the OLED display(s) on the EX-CommandStation in a JMRI window,
       showing the same status text the physical display shows.</p>
       <img src="images/dcc-ex_VirtualLCD.png" width="370" height="270" alt="DCC-EX Virtual LCD">
+
+      <h3 id="messages">Open DCC-EX Messages</h3>
+      <p>Shows messages sent by EXRAIL <code>MESSAGE("...")</code> commands on the
+      EX-CommandStation. Each message is shown with the time it arrived, newest on top, and is
+      also written to the JMRI log.</p>
+      <p>The window opens by itself when a message arrives, and comes to the front for each new
+      one. Closing the window dismisses the messages. Right-click the window to clear it or to
+      change its settings:</p>
+      <ul>
+        <li><b>Remove messages after</b> - how long each message stays, in seconds. 0 keeps
+        them until you clear them. The default is 30.</li>
+        <li><b>Maximum lines</b> - older messages drop off past this many. The default is 10.</li>
+        <li><b>Bring window to front</b> and <b>Open automatically</b> - turn these off if you'd
+        rather the window stay out of the way.</li>
+        <li><b>Play sound</b> - play a sound file when a message arrives. Off by default.</li>
+      </ul>
+      <p>You can also put a Messages display on a Panel Editor or Layout Editor panel from the
+      editor's Add Items menu. A panel display has its own settings, plus text and background
+      colors and an optional fixed size in columns and lines.</p>
 
       <h3 id="exrail">EXRAIL Automations</h3>
       <p>Lists the Routes and Automations defined on your EX-CommandStation and lets you

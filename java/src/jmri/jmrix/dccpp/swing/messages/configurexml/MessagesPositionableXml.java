@@ -13,12 +13,7 @@ public class MessagesPositionableXml extends PositionableLabelXml {
     public MessagesPositionableXml() {
     }
 
-    /**
-     * Store a MessagesPositionable.
-     *
-     * @param o Object to store, of type MessagesPositionable
-     * @return Element containing the complete info
-     */
+    /** Store a MessagesPositionable as a dccex_messages element. */
     @Override
     public Element store(Object o) {
 
@@ -48,13 +43,7 @@ public class MessagesPositionableXml extends PositionableLabelXml {
         return false;
     }
 
-    /**
-     * Create a MessagesPositionable, then add it to a panel.
-     *
-     * @param element Top level Element to unpack.
-     * @param o       an Editor as an Object
-     * @throws JmriConfigureXmlException when the connection can't be found or the id isn't unique
-     */
+    /** Create a MessagesPositionable from a dccex_messages element and add it to the Editor passed as o. */
     @Override
     public void load(Element element, Object o) throws JmriConfigureXmlException {
         Editor ed = (Editor) o;
