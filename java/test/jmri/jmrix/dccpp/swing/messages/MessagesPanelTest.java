@@ -96,6 +96,32 @@ public class MessagesPanelTest {
     }
 
     @Test
+    public void testSoundFileCheckedOnce() {
+        int[] checks = {0};
+        int[] plays = {0};
+        panel.setSoundHooks(url -> { checks[0]++; return true; }, url -> plays[0]++);
+        panel.setPlaySound(true);
+        send("m \"one\"");
+        send("m \"two\"");
+        Assertions.assertEquals(1, checks[0]);
+        Assertions.assertEquals(2, plays[0]);
+    }
+
+    @Test
+    public void testFailedSoundCheckWarnsOnceAndNeverPlays() {
+        int[] checks = {0};
+        int[] plays = {0};
+        panel.setSoundHooks(url -> { checks[0]++; return false; }, url -> plays[0]++);
+        panel.setPlaySound(true);
+        send("m \"one\"");
+        send("m \"two\"");
+        JUnitAppender.assertWarnMessageStartsWith("Unable to play DCC-EX message sound");
+        JUnitAppender.verifyNoBacklog();
+        Assertions.assertEquals(1, checks[0]);
+        Assertions.assertEquals(0, plays[0]);
+    }
+
+    @Test
     public void testUnplayableSoundFileWarnsOnce(@org.junit.jupiter.api.io.TempDir java.io.File folder)
             throws java.io.IOException {
         java.io.File bad = new java.io.File(folder, "bad.wav");

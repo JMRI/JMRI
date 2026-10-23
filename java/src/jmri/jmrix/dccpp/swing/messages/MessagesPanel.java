@@ -7,10 +7,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.LongSupplier;
+import java.util.function.Predicate;
 
 import javax.annotation.CheckForNull;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
@@ -32,7 +37,9 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
     private final MessageQueue _queue;
     private final javax.swing.Timer _timer;
     private final List<JLabel> _lines = new ArrayList<>();
-    private final Set<String> _warnedSoundFiles = new HashSet<>();
+    private final Map<String, Boolean> _checkedSoundFiles = new HashMap<>();
+    private Predicate<URL> _soundCheck = MessagesPanel::isPlayable;
+    private Consumer<URL> _soundPlayer = url -> new Sound(url).play(true);
     private final DateFormat _timeFormat = new SimpleDateFormat("HH:mm:ss");
     private DCCppTrafficController _tc;
     private DCCppSystemConnectionMemo _memo;
@@ -127,24 +134,35 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
     }
 
     private void playSound() {
-        if (!_playSound || _warnedSoundFiles.contains(_soundFile)) {
+        if (!_playSound) {
             return;
         }
         URL url = FileUtil.findURL(_soundFile);
-        if (url == null || !isPlayable(url)) {
-            _warnedSoundFiles.add(_soundFile);
-            log.warn("Unable to play DCC-EX message sound {}", _soundFile);
-            return;
+        Boolean playable = _checkedSoundFiles.get(_soundFile);
+        if (playable == null) {
+            playable = url != null && _soundCheck.test(url);
+            _checkedSoundFiles.put(_soundFile, playable);
+            if (!playable) {
+                log.warn("Unable to play DCC-EX message sound {}", _soundFile);
+            }
         }
-        new Sound(url).play(true);
+        if (playable) {
+            _soundPlayer.accept(url);
+        }
     }
 
-    // Sound logs its own errors on every play, so check the file once up front
+    // tests swap these to count checks and plays without real audio
+    void setSoundHooks(Predicate<URL> check, Consumer<URL> player) {
+        _soundCheck = check;
+        _soundPlayer = player;
+    }
+
+    // Sound logs its own errors on every play, so check the file and audio line once up front
     private static boolean isPlayable(URL url) {
-        try {
-            AudioSystem.getAudioFileFormat(url);
+        try (AudioInputStream stream = AudioSystem.getAudioInputStream(url); Clip clip = AudioSystem.getClip(null)) {
+            clip.open(stream);
             return true;
-        } catch (UnsupportedAudioFileException | IOException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | IllegalArgumentException e) {
             return false;
         }
     }
