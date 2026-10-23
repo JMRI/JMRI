@@ -244,11 +244,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     return;
                 } else {
                     log.error("Block {} went active but it is not part of our NX path", lBlock.getDisplayName());  // NOI18N
+                    return;
                 }
             }
             if (routeDetails.indexOf(lBlock) != 0) {
                 log.debug("A block has been skipped will set the value of the active block to that of the original one");  // NOI18N
-                lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                // Only give a value to a block that has none, and never clear one
+                if (lastSeenActiveBlockObject != null && lBlock.getBlock().getValue() == null) {
+                    lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                }
                 if (routeDetails.indexOf(lBlock) != -1) {
                     while (routeDetails.indexOf(lBlock) != 0) {
                         LayoutBlock tbr = routeDetails.get(0);
