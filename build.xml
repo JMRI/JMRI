@@ -168,9 +168,9 @@
         <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.22.0.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.22.4.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.22.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.22.0.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.22.4.jar"/>
         <pathelement location="${libdir}/jackson-datatype-jsr310-2.22.0.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
@@ -288,7 +288,7 @@
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
-        <pathelement location="${libdir}/jsoup-1.15.3.jar"/> <!-- used in jmri.util.GenerateSearchIndexTest -->
+        <pathelement location="${libdir}/jsoup-1.23.2.jar"/> <!-- used in jmri.util.GenerateSearchIndexTest -->
         <pathelement location="${libdir}/junit-jupiter-5.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-console-standalone-1.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.13.4.jar"/>
