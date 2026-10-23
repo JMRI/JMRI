@@ -2288,6 +2288,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
 
         s.setState(direction/*ar.getSectionDirection()*/);
+        // record which train holds the Section, cleared when it is set FREE
+        s.setAllocatedTo(at);
         if (getSignalType() == SIGNALMAST) {
             String property = "forwardMast";
             if (s.getState() == Section.REVERSE) {
