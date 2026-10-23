@@ -33,7 +33,7 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
     @Test
     public void testEditTraverserDone() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        
+
         createTurnouts();
 
         LayoutTraverserEditor editor = new LayoutTraverserEditor(layoutEditor);
@@ -79,40 +79,51 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
         // Set Global Masts (Exit and Buffer are global for the traverser)
         // Indices:
         // 0-2: Initial (Orientation, Block, Mainline)
-        // 3-6: Pair 0 (Turnout A, State A, Turnout B, State B)
-        // 7-10: Pair 1 (Turnout A, State A, Turnout B, State B)
-        // 11-14: Approach Masts (Slot 0, 1, 2, 3)
-        JComboBoxOperator exitCbo = new JComboBoxOperator(jFrameOperator, 15);
+        // 3-4: Pair 0 (Turnout, // 7-10: Approach Masts (Slot 0, 1, 2, 3))
+        // 5-6: Approach Masts (Slot 0, 1)
+        // 7-8: Pair 1 (Turnout, State)
+        // 9-10: Approach Masts (Slot 2, 3)
+        JComboBoxOperator exitCbo = new JComboBoxOperator(jFrameOperator, 11);
         selectItemSafe(exitCbo, "Mast SA-Exit");  // instead of exitCbo.selectItem("Mast SA-Exit") as there is a null in the first item
-        // 15: Exit Mast
-        // 16: Buffer Mast
+        // 11: Exit Mast
+        // 12: Buffer Mast
 
-        JComboBoxOperator bufferCbo = new JComboBoxOperator(jFrameOperator, 16);
+        JComboBoxOperator bufferCbo = new JComboBoxOperator(jFrameOperator, 12);
         selectItemSafe(bufferCbo, "Mast SA-Buff");
 
         // Set turnouts and approach masts for active slots
         // Indices are based on the order components are added to the panel.
         // Initial cbos: 0=Orientation, 1=BlockName, 2=Mainline 2=ExitMast, 3=BufferMast
-        // Each slot adds 3 cbos: Turnout, State, Approach
-        // Slot 1A: cbos 3-4. Slot 1B: cbos 5-6. Slot 2A: cbos 7-8. Slot 2B: cbos 9-10.
-        // Mast 1A: 11, Mast 1B: 12, Mast 2A: 13, Mast 2B: 14
+        // Each slot pair adds 2 cbos: Turnout State
+        // Each slot adds 2 more cbs  ApproachA, ApproachB
+        // Slot 1: cbos 3-6 : turnout 3 state 4 Mast 1A: 5, Mast 1B: 6
+        // Slot 2: cbos 7-10: turnout 7 state 8 Mast 2A: 9, Mast 2B: 10
+        // 11: Exit Mast
+        // 12: Buffer Mast
+
+
+        //Slot 1 is defined
+        new JComboBoxOperator(jFrameOperator, 3).selectItem(1); // Turnout (LT2)
+        new JComboBoxOperator(jFrameOperator, 4).selectItem(0); // State (Closed)
+
+        // Slot 1B (second slot of first pair) is inactive so don't need to set up
+        // JComboBoxOperator jFrameOperator1A = new JComboBoxOperator(jFrameOperator, 5);
+        // selectItemSafe(jFrameOperator1A, "Mast App-1A"); // Approach Mast
 
         // Slot 1B (second slot of first pair) is active
-        new JComboBoxOperator(jFrameOperator, 5).selectItem(2); // Turnout (LT2)
-        new JComboBoxOperator(jFrameOperator, 6).selectItem(0); // State (Closed)
-        JComboBoxOperator jFrameOperator1B = new JComboBoxOperator(jFrameOperator, 12);
+        JComboBoxOperator jFrameOperator1B = new JComboBoxOperator(jFrameOperator, 6);
         selectItemSafe(jFrameOperator1B, "Mast App-1B"); // Approach Mast
 
-        // Slot 2A (first slot of second pair) is active
-        new JComboBoxOperator(jFrameOperator, 7).selectItem(3); // Turnout (LT3)
+        //Slot 2 is defined
+        new JComboBoxOperator(jFrameOperator, 7).selectItem(2); // Turnout (LT3)
         new JComboBoxOperator(jFrameOperator, 8).selectItem(1); // State (Thrown)
-        JComboBoxOperator jFrameOperator2A = new JComboBoxOperator(jFrameOperator, 13);
+
+        // Slot 2A (first slot of second pair) is active
+        JComboBoxOperator jFrameOperator2A = new JComboBoxOperator(jFrameOperator, 9);
         selectItemSafe(jFrameOperator2A, "Mast App-2A"); // Approach Mast
 
         // Slot 2B (second slot of second pair) is active
-        new JComboBoxOperator(jFrameOperator, 9).selectItem(4); // Turnout (LT4)
-        new JComboBoxOperator(jFrameOperator, 10).selectItem(0); // State (Closed)
-        JComboBoxOperator jFrameOperator2B = new JComboBoxOperator(jFrameOperator, 14);
+        JComboBoxOperator jFrameOperator2B = new JComboBoxOperator(jFrameOperator, 10);
         selectItemSafe(jFrameOperator2B, "Mast App-2B"); // Approach Mast
 
         // Test invalid width validation on "Done"
@@ -146,20 +157,19 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
 
         // Assert Slot 1B
         LayoutTraverser.SlotTrack slot1B = layoutTraverser.getSlotList().get(1);
-        Assertions.assertEquals("Turnout 102", slot1B.getTurnoutName(), "Slot 1B turnout name");
+        Assertions.assertEquals("Turnout 101", slot1B.getTurnoutName(), "Slot 1B turnout name");
         Assertions.assertEquals(jmri.Turnout.CLOSED, slot1B.getTurnoutState(), "Slot 1B turnout state");
         Assertions.assertEquals("Mast App-1B", slot1B.getApproachMast().getUserName(), "Slot 1B approach mast");
 
         // Assert Slot 2A
         LayoutTraverser.SlotTrack slot2A = layoutTraverser.getSlotList().get(2);
-        Assertions.assertEquals("Turnout 103", slot2A.getTurnoutName(), "Slot 2A turnout name");
+        Assertions.assertEquals("Turnout 102", slot2A.getTurnoutName(), "Slot 2A turnout name");
         Assertions.assertEquals(jmri.Turnout.THROWN, slot2A.getTurnoutState(), "Slot 2A turnout state");
         Assertions.assertEquals("Mast App-2A", slot2A.getApproachMast().getUserName(), "Slot 2A approach mast");
 
         // Assert Slot 2B
         LayoutTraverser.SlotTrack slot2B = layoutTraverser.getSlotList().get(3);
-        Assertions.assertEquals("Turnout 104", slot2B.getTurnoutName(), "Slot 2B turnout name");
-        Assertions.assertEquals(jmri.Turnout.CLOSED, slot2B.getTurnoutState(), "Slot 2B turnout state");
+        Assertions.assertEquals(jmri.Turnout.THROWN, slot2B.getTurnoutState(), "Slot 2B turnout state");
         Assertions.assertEquals("Mast App-2B", slot2B.getApproachMast().getUserName(), "Slot 2B approach mast");
     }
 
@@ -262,6 +272,16 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
 
     private void createSignalHeads() {
         SignalHeadManager shm = jmri.InstanceManager.getDefault(SignalHeadManager.class);
+        shm.register(new DefaultSignalHead("IH0") {
+            @Override
+            protected void updateOutput() {
+            }
+        });
+        shm.register(new DefaultSignalHead("IH05") {
+            @Override
+            protected void updateOutput() {
+            }
+        });
         shm.register(new DefaultSignalHead("IH1") {
             @Override
             protected void updateOutput() {
@@ -316,6 +336,8 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
 
     private void createSignalMasts() {
         SignalMastManager smm = jmri.InstanceManager.getDefault(SignalMastManager.class);
+        jmri.SignalMast mast0 = smm.provideSignalMast("IF$shsm:basic:two-searchlight:IH0:IH05");
+        mast0.setUserName("Mast App-1A");
         jmri.SignalMast mast1 = smm.provideSignalMast("IF$shsm:basic:two-searchlight:IH1:IH10");
         mast1.setUserName("Mast App-1B");
         jmri.SignalMast mast2 = smm.provideSignalMast("IF$shsm:basic:two-searchlight:IH2:IH20");

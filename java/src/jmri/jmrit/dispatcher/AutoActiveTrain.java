@@ -1314,16 +1314,49 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    // Criteria for being able to set or get a speed.
-    protected boolean canSpeedBeSetOrChecked() {
-        if (_pausingActive || getAutoEngineer() == null ||
+    private boolean canSpeedBeSetOrChecked() {
+        // 1. Instantly reject if pausing or if the train hasn't even been ordered to start
+        if (_pausingActive ||
                 ((_activeTrain.getStatus() != ActiveTrain.RUNNING) &&
                         (_activeTrain.getStatus() != ActiveTrain.WAITING)) ||
-                !_activeTrain.getStarted() ||
-                (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
-            log.debug("{}:Train is not currently eligible for settingspeed or checking ghosts",_activeTrain.getActiveTrainName());
+                !_activeTrain.getStarted()) {
             return false;
         }
+
+        // 2. If starting up a single/short branch transit and the system framework hasn't
+        // fully initialized the AutoEngineer or set AUTOMATIC mode yet.
+        if (getAutoEngineer() == null || _activeTrain.getMode() != ActiveTrain.AUTOMATIC) {
+            // Check if this is the initial launch window (train is started, but engineer is missing)
+            if (_activeTrain.getStarted() && getAutoEngineer() == null) {
+                log.debug("SetSpeed requested during single-section initialization before AutoEngineer is bound. Deferring execution.");
+
+                // Queue a separate, delayed worker thread to re-trigger speed calculation once setup finishes
+                new Thread(() -> {
+                    try {
+                        int retryCount = 0;
+                        // Poll for up to 2 seconds (20 * 100ms) for the framework to create the engineer
+                        while (getAutoEngineer() == null && retryCount < 20) {
+                            Thread.sleep(100);
+                            retryCount++;
+                        }
+                        if (getAutoEngineer() != null) {
+                            log.info("DISPATCHER_PATCH: AutoEngineer successfully found after deferred wait. Re-triggering speed logic.");
+                            // Re-invoke the speed calculation now that the objects exist
+                            setSpeedBySignal();
+                        } else {
+                            log.warn("Deferral timed out. AutoEngineer was never instantiated.");
+                        }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }).start();
+            }
+
+            log.info("{} :Train is not currently eligible for settingspeed or checking ghosts",
+                    _activeTrain.getActiveTrainName());
+            return false;
+        }
+
         return true;
     }
 
