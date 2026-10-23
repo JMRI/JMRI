@@ -93,6 +93,23 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     }
 
     @Test
+    public void testShowAllocatedValue() {
+        jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+
+        block.setAllocatedValue("Train A");
+        new QueueTool().waitEmpty();
+        assertEquals("Train A", to.getText(), "the train the Block is allocated to");
+
+        block.setValue("Loco 47");
+        new QueueTool().waitEmpty();
+        assertEquals("Loco 47", to.getText(), "the train in the Block");
+
+        block.setValue(null);
+        new QueueTool().waitEmpty();
+        assertEquals("Train A", to.getText(), "the allocated train again once the Block is empty");
+    }
+
+    @Test
     @Override
     @ToDo("The test in the parent class fails if there is no icon set")
     public void testGetAndSetScale() {

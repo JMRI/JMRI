@@ -2644,6 +2644,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     }
 
     @Override
+    @Deprecated(since="5.17.5", forRemoval=true)
     public void setNameFromActiveBlock(Object value) {
         boolean beenSet = false;
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
@@ -2691,6 +2692,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param set true to suppress the update; false otherwise
      */
     @Override
+    @Deprecated(since="5.17.5", forRemoval=true)
     public void suppressNameUpdate(boolean set) {
         for (Block b : mBlockEntries) {
             String userName = b.getUserName();

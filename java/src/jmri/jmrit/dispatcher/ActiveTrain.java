@@ -894,12 +894,10 @@ public class ActiveTrain implements PropertyChangeProvider {
                 mSecondAllocatedSection = as.getSection();
             }
             if (mDispatcher.getNameInAllocatedBlock()) {
-                if (mDispatcher.getRosterEntryInBlock() && getRosterEntry() != null) {
-                    as.getSection().setNameFromActiveBlock(getRosterEntry());
-                } else {
-                    as.getSection().setNameInBlocks(mTrainName);
+                Object allocatedValue = getAllocatedBlockValue();
+                for (Block b : as.getSection().getBlockList()) {
+                    b.setAllocatedValue(allocatedValue);
                 }
-                as.getSection().suppressNameUpdate(true);
             }
             if (mDispatcher.getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);
@@ -957,24 +955,31 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     /**
+     * Get the value that identifies this train in the Blocks allocated to it:
+     * its roster entry if "Use roster entry" is selected and it has one,
+     * otherwise its name.
+     *
+     * @return the value given to the Blocks allocated to this train
+     */
+    private Object getAllocatedBlockValue() {
+        if (mDispatcher.getRosterEntryInBlock() && getRosterEntry() != null) {
+            return getRosterEntry();
+        }
+        return mTrainName;
+    }
+
+    /**
      * Remove what was shown for this train on a Block that is no longer
-     * allocated: the train name in an unoccupied Block, and the extra colour.
-     * The memory of the Layout Block follows the Block again.
+     * allocated: its allocated value and the extra colour.
      *
      * @param b the Block that is no longer allocated
      */
     private void releaseBlockDisplay(Block b) {
-        boolean nameInBlock = mDispatcher.getNameInAllocatedBlock();
-        if (nameInBlock && b.getState() == Block.UNOCCUPIED) {
-            b.setValue(null);
-        }
+        b.setAllocatedValue(null);
         String userName = b.getUserName();
         if (userName != null) {
             LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
             if (lb != null) {
-                if (nameInBlock) {
-                    lb.setSuppressNameUpdate(false);
-                }
                 lb.setUseExtraColor(false);
             }
         }

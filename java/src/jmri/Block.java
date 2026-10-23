@@ -297,6 +297,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public static final String PROPERTY_ALLOCATED = "allocated";
 
     /**
+     * String constant for property changes to the allocated value.
+     */
+    public static final String PROPERTY_ALLOCATED_VALUE = "allocatedValue";
+
+    /**
      * Set the sensor by name.
      * Fires propertyChange "OccupancySensorChange" when changed.
      * @param pName the name of the Sensor to set
@@ -550,6 +555,53 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     @CheckForNull
     public Object getValue() {
         return _value;
+    }
+
+    private Object _allocatedValue = null;
+
+    /**
+     * Set the value that identifies the train this Block is allocated to, for
+     * example by Dispatcher. Unlike {@link #setValue(Object)}, which records
+     * the train in this Block, this records the train the Block is held for,
+     * which may not have reached it yet or may have left it. Block tracking
+     * does not use it.
+     * <p>
+     * Fires propertyChange "allocatedValue" when changed.
+     *
+     * @param value the train name, roster entry or other value; null when the
+     *              Block is no longer allocated
+     */
+    public void setAllocatedValue(@CheckForNull Object value) {
+        Object old = _allocatedValue;
+        if (Objects.equals(old, value)) {
+            return;
+        }
+        _allocatedValue = value;
+        firePropertyChange(PROPERTY_ALLOCATED_VALUE, old, value);
+    }
+
+    /**
+     * Get the value that identifies the train this Block is allocated to.
+     *
+     * @return the value, or null if the Block is not allocated or no value was
+     *         given
+     * @see #setAllocatedValue(Object)
+     */
+    @CheckForNull
+    public Object getAllocatedValue() {
+        return _allocatedValue;
+    }
+
+    /**
+     * Get the value to show for this Block on a panel: the train in it if
+     * known, otherwise the train it is allocated to.
+     *
+     * @return {@link #getValue()} if not null, else
+     *         {@link #getAllocatedValue()}
+     */
+    @CheckForNull
+    public Object getDisplayValue() {
+        return _value != null ? _value : _allocatedValue;
     }
 
     /**
