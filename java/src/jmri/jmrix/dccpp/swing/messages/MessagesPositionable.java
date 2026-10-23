@@ -72,6 +72,12 @@ public class MessagesPositionable extends PositionableJComponent {
         return messagesPanel.getNameString();
     }
 
+    @Override
+    public void remove() {
+        super.remove();
+        messagesPanel.dispose();
+    }
+
     public void dispose() {
         messagesPanel.dispose();
     }

@@ -37,6 +37,15 @@ public class MessagesPositionableTest {
     }
 
     @Test
+    public void testRemoveStopsListening() {
+        int listenersBefore = tc.numListeners();
+        ThreadingUtil.runOnGUI(() -> pos.getMessagesPanel().setMemo(memo));
+        Assertions.assertEquals(listenersBefore + 1, tc.numListeners());
+        ThreadingUtil.runOnGUI(() -> pos.remove());
+        Assertions.assertEquals(listenersBefore, tc.numListeners());
+    }
+
+    @Test
     public void testDeepCloneCopiesAllSettings() {
         MessagesPanel panel = pos.getMessagesPanel();
         ThreadingUtil.runOnGUI(() -> {
