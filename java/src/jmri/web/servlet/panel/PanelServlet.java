@@ -85,6 +85,7 @@ public class PanelServlet extends AbstractPanelServlet {
                 }
             }
 
+            convertNamedColors(panel);
             Document doc = new Document(panel);
             XMLOutputter out = new XMLOutputter();
             out.setFormat(Format.getPrettyFormat()

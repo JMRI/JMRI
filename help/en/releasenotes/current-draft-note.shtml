@@ -928,7 +928,10 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Previously, some colors would display differently on web clients
+                from their appearance on a native JMRI screen.  This was most
+                noticeable with green, light and dark grey, and orange.  JMRI
+                now sends the exact RGB codes to the web client to ensure colors match.</li>
         </ul>
 
     <h3>Where Used</h3>
