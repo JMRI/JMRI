@@ -26,6 +26,7 @@ public class ConfigureMessages extends JmriJFrame {
     private final MessagesConfiguration messagesConfiguration;
     private final MessagesPositionable newPositionable;
     private final DoAfter doAfter;
+    private final Runnable afterApply;
 
     private final JComboBox<DCCppConnection> _memoComboBox = new JComboBox<>();
     final JTextField _expiryTextField = new JTextField(5);
@@ -41,13 +42,19 @@ public class ConfigureMessages extends JmriJFrame {
     public static void createConfigureMessages(Editor editor, DoAfter doAfter) {
         closeDialog(null);
         MessagesPositionable pos = new MessagesPositionable(editor);
-        editPositionableFrame = new ConfigureMessages(editor, pos.getMessagesPanel(), pos, doAfter);
+        editPositionableFrame = new ConfigureMessages(editor, pos.getMessagesPanel(), pos, doAfter, null);
         editPositionableFrame.initComponents();
     }
 
     public static void editConfigureMessages(@CheckForNull Editor editor, MessagesConfiguration config) {
+        editConfigureMessages(editor, config, null);
+    }
+
+    /** Open the settings dialog; afterApply runs once OK has applied the settings. */
+    public static void editConfigureMessages(@CheckForNull Editor editor, MessagesConfiguration config,
+            @CheckForNull Runnable afterApply) {
         closeDialog(null);
-        editPositionableFrame = new ConfigureMessages(editor, config, null, null);
+        editPositionableFrame = new ConfigureMessages(editor, config, null, null, afterApply);
         editPositionableFrame.initComponents();
     }
 
@@ -71,12 +78,14 @@ public class ConfigureMessages extends JmriJFrame {
     }
 
     private ConfigureMessages(@CheckForNull Editor editor, MessagesConfiguration config,
-            @CheckForNull MessagesPositionable newPositionable, @CheckForNull DoAfter doAfter) {
+            @CheckForNull MessagesPositionable newPositionable, @CheckForNull DoAfter doAfter,
+            @CheckForNull Runnable afterApply) {
         super(Bundle.getMessage(newPositionable != null ? "AddMessagesPositionable" : "EditMessages"), false, false);
         this.editor = editor;
         this.messagesConfiguration = config;
         this.newPositionable = newPositionable;
         this.doAfter = doAfter;
+        this.afterApply = afterApply;
         _foreground = config.getMessageForeground();
         _background = config.getMessageBackground();
     }
@@ -159,21 +168,7 @@ public class ConfigureMessages extends JmriJFrame {
 
         JButton ok = new JButton(Bundle.getMessage(newPositionable != null ? "ButtonCreate" : "ButtonOK"));
         buttons.add(ok);
-        ok.addActionListener(e -> {
-            try {
-                applyTo(messagesConfiguration);
-                if (newPositionable != null) {
-                    addPositionable();
-                }
-                closeDialog(editor);
-            } catch (NumberFormatException ex) {
-                JmriJOptionPane.showMessageDialog(
-                        this,
-                        Bundle.getMessage("ErrorMessagesMustBeInteger"),
-                        Bundle.getMessage("ErrorTitle"),
-                        JmriJOptionPane.ERROR_MESSAGE);
-            }
-        });
+        ok.addActionListener(e -> ok());
         contentPane.add(buttons);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -185,6 +180,25 @@ public class ConfigureMessages extends JmriJFrame {
 
         pack();
         setVisible(true);
+    }
+
+    void ok() {
+        try {
+            applyTo(messagesConfiguration);
+            if (afterApply != null) {
+                afterApply.run();
+            }
+            if (newPositionable != null) {
+                addPositionable();
+            }
+            closeDialog(editor);
+        } catch (NumberFormatException ex) {
+            JmriJOptionPane.showMessageDialog(
+                    this,
+                    Bundle.getMessage("ErrorMessagesMustBeInteger"),
+                    Bundle.getMessage("ErrorTitle"),
+                    JmriJOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void cancel() {

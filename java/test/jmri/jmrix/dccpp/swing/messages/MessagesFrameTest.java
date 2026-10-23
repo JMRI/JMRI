@@ -82,6 +82,23 @@ public class MessagesFrameTest {
     }
 
     @Test
+    public void testEditSavesSettingsWhileOpen() {
+        MessagesFrame f = show(null);
+        ThreadingUtil.runOnGUI(f::editSettings);
+        ConfigureMessages dialog = ConfigureMessages.getOpenDialog();
+        Assertions.assertNotNull(dialog);
+        ThreadingUtil.runOnGUI(() -> {
+            dialog._autoOpenCheckBox.setSelected(false);
+            dialog.ok();
+        });
+        Assertions.assertNotNull(MessagesFrame.findFrame(memo));
+        org.jdom2.Element saved = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .loadElement("dccex_messages_config___D");
+        Assertions.assertNotNull(saved, "settings not saved while the window is open");
+        Assertions.assertEquals("false", saved.getChild("dccex_messages_config").getChildTextTrim("autoOpen"));
+    }
+
+    @Test
     public void testIsAutoOpenDefaultsTrue() {
         Assertions.assertTrue(MessagesFrame.isAutoOpen(memo));
     }

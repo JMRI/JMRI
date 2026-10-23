@@ -93,13 +93,21 @@ public class MessagesFrame extends JmriJFrame {
 
     @Override
     public void dispose() {
+        storeSettings();
+        _messagesPanel.dispose();
+        super.dispose();
+    }
+
+    private void storeSettings() {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
             Element parent = new Element(getElementName(_memo), UserPreferencesManager.GENERIC_NAMESPACE);
             parent.addContent(MessagesConfigurationXml.store(_messagesPanel));
             p.storeElement(parent);
         });
-        _messagesPanel.dispose();
-        super.dispose();
+    }
+
+    void editSettings() {
+        ConfigureMessages.editConfigureMessages(null, _messagesPanel, this::storeSettings);
     }
 
     /** {@inheritDoc} */
@@ -111,7 +119,7 @@ public class MessagesFrame extends JmriJFrame {
 
         popup = new JPopupMenu();
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("EditMessages"));
-        editItem.addActionListener(evt -> ConfigureMessages.editConfigureMessages(null, _messagesPanel));
+        editItem.addActionListener(evt -> editSettings());
         popup.add(editItem);
         JMenuItem clearItem = new JMenuItem(Bundle.getMessage("ClearMessages"));
         clearItem.addActionListener(evt -> _messagesPanel.clearMessages());
