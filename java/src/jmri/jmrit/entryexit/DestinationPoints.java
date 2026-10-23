@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -243,11 +244,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     return;
                 } else {
                     log.error("Block {} went active but it is not part of our NX path", lBlock.getDisplayName());  // NOI18N
+                    return;
                 }
             }
             if (routeDetails.indexOf(lBlock) != 0) {
                 log.debug("A block has been skipped will set the value of the active block to that of the original one");  // NOI18N
-                lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                // Only give a value to a block that has none, and never clear one
+                if (lastSeenActiveBlockObject != null && lBlock.getBlock().getValue() == null) {
+                    lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                }
                 if (routeDetails.indexOf(lBlock) != -1) {
                     while (routeDetails.indexOf(lBlock) != 0) {
                         LayoutBlock tbr = routeDetails.get(0);
@@ -304,11 +309,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
         if (disposed) {
             log.error("Set route called even though interlock has been disposed of");  // NOI18N
+            manager.routeSettingDone(this, false);
             return;
         }
 
         if (routeDetails == null) {
             log.error("No route to set or clear down");  // NOI18N
+            // Nothing is set, but there is nothing left to clear down either
+            manager.routeSettingDone(this, !state);
             setActiveEntryExit(false);
             setRouteTo(false);
             setRouteFrom(false);
@@ -328,12 +336,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     break;
                 case EntryExitPairs.AUTOCANCEL:
                     cancelClearInterlock(EntryExitPairs.CANCELROUTE);
+                    manager.routeSettingDone(this, true);
                     break;
                 case EntryExitPairs.AUTOCLEAR:
                     cancelClearInterlock(EntryExitPairs.CLEARROUTE);
+                    manager.routeSettingDone(this, true);
                     break;
                 case EntryExitPairs.AUTOSTACK:
                     cancelClearInterlock(EntryExitPairs.STACKROUTE);
+                    manager.routeSettingDone(this, false);
                     break;
                 default:
                     cancelClearOptionBox();
@@ -345,6 +356,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if (manager.isRouteStacked(this, false)) {
             manager.cancelStackedRoute(this, false);
         }
+        final AtomicBoolean routeSet = new AtomicBoolean(false);
         /* We put the setting of the route into a seperate thread and put a glass pane in front of the layout editor.
          The swing thread for flashing the icons will carry on without interuption. */
         final List<Color> realColorStd = new ArrayList<>();
@@ -600,6 +612,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                    routeSet.set(true);
                 } catch (RuntimeException ex) {
                     log.error("An error occurred while setting the route", ex);  // NOI18N
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
@@ -625,6 +638,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             log.error("Interuption exception {}", e.toString());  // NOI18N
         }
         log.debug("[setRoute] Done, dp = {}", getUserName());
+        manager.routeSettingDone(this, routeSet.get());
     }
 
     /**
@@ -713,21 +727,25 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.CLEARROUTE);
+                manager.routeSettingDone(this, true);
             });
             jButton_Cancel.addActionListener( e -> {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.CANCELROUTE);
+                manager.routeSettingDone(this, true);
             });
             jButton_Stack.addActionListener( e -> {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.STACKROUTE);
+                manager.routeSettingDone(this, false);
             });
             jButton_Exit.addActionListener( e -> {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.EXITROUTE);
+                manager.routeSettingDone(this, false);
                 firePropertyChange(PROPERTY_NO_CHANGE, null, null);
             });
             src.getPoint().getPanel().setGlassPane(manager.getGlassPane());
@@ -754,6 +772,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     Thread.sleep(NXMESSAGEBOXCLEARTIMEOUT * 1000);
                     cancelClearFrame.setVisible(false);
                     cancelClearInterlock(EntryExitPairs.EXITROUTE);
+                    manager.routeSettingDone(DestinationPoints.this, false);
                 } catch (InterruptedException ex) {
                     log.debug("Flash timer cancelled");  // NOI18N
                 }
@@ -979,6 +998,22 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     synchronized void activeBean(boolean reverseDirection, boolean showMessage) {
+        routeChangeStarted = false;
+        setOrClearRoute(reverseDirection, showMessage);
+        if (!routeChangeStarted) {
+            // The route is neither being set nor cleared down, so a route over several pairs
+            // must not go on to its next pair
+            manager.routeSettingDone(this, false);
+        }
+    }
+
+    /**
+     * True when the route is being set or cleared down. The result is then
+     * reported to the manager when that has finished.
+     */
+    private boolean routeChangeStarted = false;
+
+    private void setOrClearRoute(boolean reverseDirection, boolean showMessage) {
         // Clear any previous memory message
         MemoryManager mgr = InstanceManager.getDefault(MemoryManager.class);
         Memory nxMem = mgr.getMemory(manager.getMemoryOption());
@@ -1001,6 +1036,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             log.debug("{}  We have a valid match on our end point so we can clear down", getUserName());  // NOI18N
             //setRouteTo(false);
             //src.pd.setRouteFrom(false);
+            routeChangeStarted = true;
             setRoute(false);
         } else {
             if (isRouteToPointSet()) {
@@ -1174,6 +1210,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     setActiveEntryExit(true, reverseDirection);
                 }
 
+                routeChangeStarted = true;
                 if (manager.isSkipGuiFix()) {
                     log.debug("[activeBean] Start setRoute without thread, dp = {}", getUserName());
                     setRoute(true);
@@ -1184,6 +1221,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             setRoute(true);
                         } catch (Exception e) {
                             log.error("[activeBean] setRoute thread exception: {}", e.getMessage());
+                            manager.routeSettingDone(this, false);
                         }
                     }, "NX set route thread").start();
                 }

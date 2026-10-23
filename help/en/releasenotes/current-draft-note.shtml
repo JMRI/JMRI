@@ -110,7 +110,11 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCC-EX: turnout commands sent with a Turnout Automation retry policy
+                (e.g. "NoFeedback") were previously sent only once, ignoring the configured
+                retry interval and count. <code>DCCppTurnout</code> now defers to the configured
+                automation like every other connection type
+                (<a href="https://github.com/JMRI/JMRI/issues/15471">issue #15471</a>).</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -631,6 +635,16 @@
                 dead-end or occupied sub-branches. Before, NX, Dispatcher ad-hoc
                 routes and Signal Mast Logic could report "no route" in these
                 cases.</li>
+            <li>An allocated block, that is one set to use its extra color,
+                for example by the LogixNG Block action "Alternate Color On"
+                or by a script, now keeps its extra color until it is turned
+                off, for example by the LogixNG Block action "Alternate Color
+                Off". The LogixNG Block expression "Is Allocated" tests this.
+                Before, with advanced block routing on, the block was switched
+                back to its normal color without notice as soon as it became
+                occupied. LogixNG and scripts that set it must now also clear
+                it, for example when the train has left. Dispatcher and
+                Entry/Exit are not affected: they clear their own blocks.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -639,12 +653,20 @@
                     while the route is still being set, the first block of the
                     route stays protected. Before, it was dropped and the entry
                     signal could stay clear behind the train.</li>
+                <li>NX: when a train reaches a block of a route without being
+                    seen in the block before it, that block now keeps the value
+                    it already has, for example from RFID, and is only given the
+                    train's value if it has none. A block that is not part of
+                    the route is no longer changed. Block values further along
+                    a route might therefore differ from earlier versions.</li>
             </ul>
 
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+          <li>Added a new item to the popup menu on a node line:  Refresh Node Info.
+              This lets you update the info on that line from the node without
+              refreshing the entire table (which can take a while for large networks)</li>
         </ul>
 
     <h3>Logix</h3>
@@ -777,6 +799,14 @@
                     already used by a user-defined Section: only that pair is
                     skipped. A user-defined Section also keeps its forward
                     mast.</li>
+                <li>Signal Mast Logic now only sends an aspect to its source
+                    mast when the aspect changes. Before, every re-check of the
+                    logic, for example when a block or turnout changed on any
+                    route from the mast, sent the same aspect again, giving
+                    extra traffic on the layout and a brief flicker on masts
+                    set to reset previous states. A mast whose hardware has
+                    lost its aspect, for example after a power cycle, now keeps
+                    its old output until the aspect next changes.</li>
             </ul>
 
         <h4>Signal Groups</h4>
@@ -832,7 +862,18 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Editing a turnout's automation settings from the "Edit Auto" button
+                in the Turnout Table or the Feedback tab of the Edit Turnout window
+                now actually saves the change.
+                Previously, if the turnout's automation was set to a named operation
+                (rather than "Default"), the edit landed on a disconnected copy and
+                the turnout kept using its old settings. The automation dropdown also
+                now shows the right type (for example "Raw") for a turnout with its
+                own settings, instead of always showing the first one.</li>
+            <li>A turnout with its own custom automation settings now keeps automation
+                turned on after the panel file is reloaded. Previously it came back
+                with automation off, and saving again replaced the custom settings
+                with "Off".</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -880,6 +921,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Looking up and renaming items is faster on large layouts,
+                and the memory used by deleted items is now released.</li>
         </ul>
 

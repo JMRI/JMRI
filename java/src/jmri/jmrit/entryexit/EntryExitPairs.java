@@ -23,6 +23,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -455,9 +456,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                     if (destUUID.equals(srcUUID)) {
                         log.debug("Found the correct reverse route source: src = {}, dest = {}",
                                 pd.getSensor().getDisplayName(), dp.getDestPoint().getSensor().getDisplayName());
-                        refCounter++;
-                        routesToSet.add(new SourceToDest(src, dp, true, refCounter));
-                        processRoutesToSet();
+                        int ref = nextRef();
+                        addRoutesToSet(Collections.singletonList(new SourceToDest(src, dp, true, ref)));
+                        processRoutesToSet(ref);
                         return;
                     }
                 }
@@ -528,7 +529,8 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                         }
                         List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, null, jmri.Sensor.class);
                         PointDetails fromPoint = fromPd;
-                        refCounter++;
+                        int ref = nextRef();
+                        List<SourceToDest> toSet = new ArrayList<>();
                         if (!beanList.isEmpty()) {
                             if (log.isDebugEnabled()) {
                                 for (NamedBean xnb : beanList) {
@@ -540,7 +542,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                                 PointDetails cur = getPointDetails(nb, fromPd.getPanel());
                                 Source s = nxpair.get(fromPoint);
                                 if (s != null) {
-                                    routesToSet.add(new SourceToDest(s, s.getDestForPoint(cur), false, refCounter));
+                                    toSet.add(new SourceToDest(s, s.getDestForPoint(cur), false, ref));
                                 }
                                 fromPoint = cur;
                             }
@@ -548,11 +550,12 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                         Source s = nxpair.get(fromPoint);
                         if (s != null) {
                             if (s.getDestForPoint(toPd) != null) {
-                                routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
+                                toSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, ref));
                             }
                         }
                         log.debug("[setMultiPointRoute] Invoke processRoutesToSet");
-                        processRoutesToSet();
+                        addRoutesToSet(toSet);
+                        processRoutesToSet(ref);
                         log.debug("[setMultiPointRoute] processRoutesToSet is done");
                         return;
                     }
@@ -574,6 +577,24 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     }
 
     int refCounter = 0;
+
+    /**
+     * Get the reference for a new request to set a route.
+     *
+     * @return the reference
+     */
+    private synchronized int nextRef() {
+        return ++refCounter;
+    }
+
+    /**
+     * Add the SourceToDest sets of a request to routesToSet.
+     *
+     * @param routes the SourceToDest sets, in the order they are to be set
+     */
+    private synchronized void addRoutesToSet(List<SourceToDest> routes) {
+        routesToSet.addAll(routes);
+    }
 
     /**
      * List holding SourceToDest sets of routes between two points.
@@ -607,62 +628,99 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         }
     }
 
-    int currentDealing = 0;
+    /**
+     * The request each destination point is currently setting a route for.
+     */
+    private final Map<DestinationPoints, Integer> routesInProgress = new HashMap<>();
 
     /**
-     * Activate each SourceToDest set in routesToSet
+     * Activate the next SourceToDest set of a request in routesToSet.
+     * <p>
+     * The set is taken from the list under the lock, but it is activated
+     * outside it, as activating it can show a dialog and locks the destination
+     * point.
+     *
+     * @param ref the reference of the request
      */
-    synchronized void processRoutesToSet() {
-        if (log.isDebugEnabled()) {
-            log.debug("[processRoutesToSet] Current routesToSet list");
+    void processRoutesToSet(int ref) {
+        SourceToDest next = null;
+        synchronized (this) {
+            if (log.isDebugEnabled()) {
+                log.debug("[processRoutesToSet] Current routesToSet list");
+                for (SourceToDest sd : routesToSet) {
+                    String dpName = (sd.dp == null) ? "- null -" : sd.dp.getDestPoint().getSensor().getDisplayName();
+                    log.debug("  from = {}, to = {}, ref = {}", sd.s.getPoint().getSensor().getDisplayName(), dpName, sd.ref);
+                }
+            }
+
             for (SourceToDest sd : routesToSet) {
-                String dpName = (sd.dp == null) ? "- null -" : sd.dp.getDestPoint().getSensor().getDisplayName();
-                log.debug("  from = {}, to = {}, ref = {}", sd.s.getPoint().getSensor().getDisplayName(), dpName, sd.ref);
+                if (sd.ref == ref) {
+                    next = sd;
+                    break;
+                }
+            }
+            if (next == null) {
+                return;
+            }
+            routesToSet.remove(next);
+            if (next.dp != null) {
+                routesInProgress.put(next.dp, ref);
             }
         }
-
-        if (routesToSet.isEmpty()) {
+        if (next.dp == null) {
+            removeRemainingRoute(ref);
             return;
         }
-        Source s = routesToSet.get(0).s;
-        DestinationPoints dp = routesToSet.get(0).dp;
-        boolean dir = routesToSet.get(0).direction;
-        currentDealing = routesToSet.get(0).ref;
-        routesToSet.remove(0);
-
-        dp.addPropertyChangeListener(propertyDestinationListener);
-        s.activeBean(dp, dir);
+        next.s.activeBean(next.dp, next.direction);
     }
 
     /**
-     * Remove remaining SourceToDest sets in routesToSet
+     * Remove remaining SourceToDest sets of a request in routesToSet
+     *
+     * @param ref the reference of the request
      */
-    synchronized void removeRemainingRoute() {
+    void removeRemainingRoute(int ref) {
         List<SourceToDest> toRemove = new ArrayList<>();
-        for (SourceToDest rts : routesToSet) {
-            if (rts.ref == currentDealing) {
-                toRemove.add(rts);
+        synchronized (this) {
+            for (SourceToDest rts : routesToSet) {
+                if (rts.ref == ref) {
+                    toRemove.add(rts);
+                }
+            }
+            routesToSet.removeAll(toRemove);
+        }
+        for (SourceToDest rts : toRemove) {
+            if (rts.dp != null) {
                 rts.dp.getDestPoint().setNXButtonState(NXBUTTONINACTIVE);
             }
         }
-        for (SourceToDest rts : toRemove) {
-            routesToSet.remove(rts);
-        }
     }
 
-    protected PropertyChangeListener propertyDestinationListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            ((DestinationPoints) e.getSource()).removePropertyChangeListener(this);
-            if ( DestinationPoints.PROPERTY_ACTIVE.equals(e.getPropertyName())) {
-                processRoutesToSet();
-            } else if ( DestinationPoints.PROPERTY_STACKED.equals(e.getPropertyName())
-                    || DestinationPoints.PROPERTY_FAILED.equals(e.getPropertyName())
-                    || DestinationPoints.PROPERTY_NO_CHANGE.equals(e.getPropertyName())) {
-                removeRemainingRoute();
-            }
+    /**
+     * Called by a destination point when it has finished handling a request
+     * to set or clear down its route. When the route is part of a route over
+     * several NX pairs, the next pair is handled on the layout thread if this
+     * route has been set or cleared down, otherwise the rest of the request is
+     * dropped.
+     *
+     * @param dp      the destination point
+     * @param success true if the route has been set or cleared down
+     */
+    void routeSettingDone(DestinationPoints dp, boolean success) {
+        Integer ref;
+        synchronized (this) {
+            ref = routesInProgress.remove(dp);
         }
-    };
+        if (ref == null) {
+            return;
+        }
+        int request = ref;
+        if (success) {
+            ThreadingUtil.runOnLayoutEventually(() -> processRoutesToSet(request));
+        } else {
+            removeRemainingRoute(request);
+        }
+    }
 
     private List<Object> destinationList = new ArrayList<>();
 

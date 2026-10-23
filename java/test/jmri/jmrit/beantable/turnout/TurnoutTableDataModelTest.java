@@ -5,14 +5,18 @@ import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import jmri.CommonTurnoutOperation;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.TurnoutOperation;
+import jmri.TurnoutOperationManager;
 import jmri.util.JUnitUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.XTableColumnModel;
@@ -21,6 +25,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -201,6 +206,33 @@ public class TurnoutTableDataModelTest extends jmri.jmrit.beantable.AbstractBean
         }
         assertEquals("turnout toggled by clicking the cell", Turnout.THROWN, to.getCommandedState());
         model.dispose();
+    }
+
+    @jmri.util.junit.annotations.DisabledIfHeadless
+    @Test
+    public void testEditTurnoutOperationReattachesPrivateCopy() {
+        // issue #15471 follow-up: Edit Auto must reattach its private copy or edits are lost
+        Turnout to = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        to.setInhibitOperation(false);
+        TurnoutOperation shared = InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("NoFeedback");
+        to.setTurnoutOperation(shared);
+
+        ((TurnoutTableDataModel) t).editTurnoutOperation(to, new JComboBox<>());
+
+        TurnoutOperation attached = to.getTurnoutOperation();
+        assertNotSame("turnout now uses its own private copy, not the shared default", shared, attached);
+        assertTrue("private copy created for editing", attached.isNonce());
+
+        ((CommonTurnoutOperation) attached).setInterval(999);
+        assertEquals("edits land on the copy the turnout actually uses",
+                999, ((CommonTurnoutOperation) to.getTurnoutOperation()).getInterval());
+
+        for (java.awt.Window w : java.awt.Window.getWindows()) {
+            if (w instanceof TurnoutOperationEditorDialog) {
+                w.dispose();
+            }
+        }
+        TurnoutTableDataModel.editingOps.set(false);
     }
 
     @BeforeEach

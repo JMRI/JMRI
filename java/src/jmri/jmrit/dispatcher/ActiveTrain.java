@@ -964,10 +964,30 @@ public class ActiveTrain implements PropertyChangeProvider {
         }
     }
 
+    private boolean allocatingAFresh = false;
+
     /**
      * This resets the state of the ActiveTrain so that it can be reallocated.
+     * A request made while the train is already being reset is ignored.
      */
     public void allocateAFresh() {
+        if (allocatingAFresh) {
+            log.debug("{}: already being reset, request ignored", getTrainName());
+            return;
+        }
+        allocatingAFresh = true;
+        try {
+            doAllocateAFresh();
+        } finally {
+            allocatingAFresh = false;
+        }
+    }
+
+    /*
+     * While this waits for the auto allocator on the GUI thread, other GUI
+     * events, such as another Restart, are handled.
+     */
+    private void doAllocateAFresh() {
         setStatus(WAITING);
         holdAllocation = false;
         setTransitReversed(false);

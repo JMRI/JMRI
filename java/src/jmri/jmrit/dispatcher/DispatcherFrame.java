@@ -3,12 +3,17 @@ package jmri.jmrit.dispatcher;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.SecondaryLoop;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -964,20 +969,41 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Wait for the queue to empty
+     * Wait until every task already queued, including the one being run now,
+     * has been completed.
+     * On the GUI thread, events are still handled while waiting.
      */
     protected void queueWaitForEmpty() {
-        if (_AutoAllocate) {
-            while (!autoAllocate.allRequestsDone()) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException iex) {
-                    // we closing do done
+        Thread allocatorThread = autoAllocateThread;
+        if (!_AutoAllocate || autoAllocate == null || allocatorThread == null
+                || Thread.currentThread() == allocatorThread) {
+            // nothing to wait for, or called by a task: tasks run one at a time
+            return;
+        }
+        CountDownLatch done = new CountDownLatch(1);
+        autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.BARRIER, done::countDown));
+        if (ThreadingUtil.isGUIThread()) {
+            SecondaryLoop loop = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
+            javax.swing.Timer check = new javax.swing.Timer(10, e -> {
+                if (done.getCount() == 0 || !allocatorThread.isAlive()) {
+                    loop.exit();
+                }
+            });
+            check.start();
+            loop.enter();
+            check.stop();
+            return;
+        }
+        try {
+            while (!done.await(100, TimeUnit.MILLISECONDS)) {
+                if (!allocatorThread.isAlive()) {
                     return;
                 }
             }
+        } catch (InterruptedException iex) {
+            // we closing do done
+            Thread.currentThread().interrupt();
         }
-        return;
     }
 
     /*
@@ -2683,27 +2709,29 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             // The next allocated section must be assigned to the same train, and it must have been entered for
             //    the exited Section to be released.
             // Extra allocated sections are not automatically released (allocation number = -1).
+            // Each pass releases at most the first allocated section of each train; passes are
+            // repeated until nothing more is released.
             boolean foundOne = true;
-            while ((allocatedSections.size() > 0) && foundOne) {
+            boolean releasedOne = true;
+            while ((allocatedSections.size() > 0) && releasedOne) {
                 try {
-                    foundOne = false;
-                    AllocatedSection as = null;
-                    for (int i = 0; (i < allocatedSections.size()) && !foundOne; i++) {
-                        as = allocatedSections.get(i);
+                    releasedOne = false;
+                    List<AllocatedSection> sectionsToCheck = new ArrayList<>(allocatedSections);
+                    // for each train, its first allocation number and its number of allocated sections
+                    HashMap<ActiveTrain, Integer> firstAllocationNumber = new HashMap<>();
+                    HashMap<ActiveTrain, Integer> allocatedCounts = new HashMap<>();
+                    for (AllocatedSection asx : sectionsToCheck) {
+                        allocatedCounts.merge(asx.getActiveTrain(), 1, Integer::sum);
+                        if (asx.getAllocationNumber() != -1) {
+                            firstAllocationNumber.merge(asx.getActiveTrain(), asx.getAllocationNumber(), Math::min);
+                        }
+                    }
+                    for (AllocatedSection as : sectionsToCheck) {
+                        foundOne = false;
                         if (as.getExited() && (as.getSection().getOccupancy() != Section.OCCUPIED)
                                 && (as.getAllocationNumber() != -1)) {
                             // possible candidate for deallocation - check order
-                            foundOne = true;
-                            for (int j = 0; (j < allocatedSections.size()) && foundOne; j++) {
-                                if (j != i) {
-                                    AllocatedSection asx = allocatedSections.get(j);
-                                    if ((asx.getActiveTrain() == as.getActiveTrain())
-                                            && (asx.getAllocationNumber() != -1)
-                                            && (asx.getAllocationNumber() < as.getAllocationNumber())) {
-                                        foundOne = false;
-                                    }
-                                }
-                            }
+                            foundOne = (as.getAllocationNumber() == firstAllocationNumber.get(as.getActiveTrain()));
 
                             // The train must have one occupied section.
                             // The train may be sitting in one of its allocated section undetected.
@@ -2715,14 +2743,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
                             if (foundOne) {
                                 // check its not the last allocated section
-                                int allocatedCount = 0;
-                                for (int j = 0; (j < allocatedSections.size()); j++) {
-                                    AllocatedSection asx = allocatedSections.get(j);
-                                    if (asx.getActiveTrain() == as.getActiveTrain()) {
-                                            allocatedCount++ ;
-                                    }
-                                }
-                                if (allocatedCount == 1) {
+                                if (allocatedCounts.get(as.getActiveTrain()) == 1) {
                                     foundOne = false;
                                 }
                             }
@@ -2756,6 +2777,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                 if (foundOne) {
                                     log.debug("{}: releasing section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));
                                     doReleaseAllocatedSection(as, false);
+                                    releasedOne = true;
                                 }
                             }
                         }

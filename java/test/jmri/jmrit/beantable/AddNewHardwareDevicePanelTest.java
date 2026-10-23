@@ -99,7 +99,7 @@ public class AddNewHardwareDevicePanelTest {
         instance.setStatusBarText("<html>foo bar</html>");
         assertEquals("single line html", "<html>foo bar</html>", statusBar.getText());
         instance.setStatusBarText("<html>foo<br>bar</html>");
-        assertEquals("mutli line html", "<html>foo</html>", statusBar.getText());
+        assertEquals("multi line html", "<html>foo<br>bar</html>", statusBar.getText());
     }
 
 }
