@@ -2833,7 +2833,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return(throttle.getIsForward());
         }
 
-        public void setTargetSpeed(float speed) {
+        public synchronized void setTargetSpeed(float speed) {
             stopAllTimers();
             if (speed < 0.0f) {
                 // estop is estop
@@ -2930,7 +2930,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        public float getTargetSpeed(){
+        public synchronized float getTargetSpeed(){
             return(targetSpeed);
         }
 
@@ -2988,7 +2988,7 @@ public class AutoActiveTrain implements ThrottleListener {
          *
          * @param halt true to immediately stop the train; false otherwise
          */
-        public void setHalt(boolean halt) {
+        public synchronized void setHalt(boolean halt) {
             if (halt) {
                 this.setSpeedImmediate(0.0f);
             }
@@ -3008,7 +3008,7 @@ public class AutoActiveTrain implements ThrottleListener {
             this.speedFactor = speedFactor;
         }
 
-        public void setTargetSpeed(float distance, float speed) {
+        public synchronized void setTargetSpeed(float distance, float speed) {
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (speed < 0.0f) {
@@ -3028,7 +3028,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        public void slowToStop(boolean on) {
+        public synchronized void slowToStop(boolean on) {
             stopAllTimers();
             if (on) {
                 log.debug("SlowToStopOn");
@@ -3036,19 +3036,23 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        public void stopAllTimers() {
+        public synchronized void stopAllTimers() {
             if (speedProfileStoppingIsRunning) {
                 re.getSpeedProfile().cancelSpeedChange();
                 speedProfileStoppingIsRunning = false;
             }
+            // a ramp step that is already running waits for this lock, then finds it is stale
+            rampGeneration++;
             if (rampingTimer != null) {
                 rampingTimer.stop();
                 rampingTimer = null;
             }
+            stepQueue = null;
         }
 
         LinkedList<SpeedSetting> stepQueue;
         private javax.swing.Timer rampingTimer;
+        private int rampGeneration = 0; // changed whenever the ramp is stopped
 
         private void rampToTarget() {
             // target already adjusted.
@@ -3091,7 +3095,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
             if (rampingTimer == null) { //If this is the first time round then kick off the speed change
-                setNextStep();
+                setNextStep(rampGeneration);
             }
         }
 
@@ -3104,7 +3108,11 @@ public class AutoActiveTrain implements ThrottleListener {
             stepQueue = null;
         }
 
-        synchronized void setNextStep() {
+        private synchronized void setNextStep(int generation) {
+            if (generation != rampGeneration) {
+                log.trace("Ramp stopped, step ignored");
+                return;
+            }
             if (stepQueue.isEmpty()) {
                 log.trace("Empty");
                 finishChange();
@@ -3121,7 +3129,7 @@ public class AutoActiveTrain implements ThrottleListener {
             throttle.setSpeedSetting(ss.getSpeedStep());
             log.debug("{}: ramp step -> {}", _activeTrain.getTrainName(), ss.getSpeedStep());
             rampingTimer = new javax.swing.Timer(ss.getDuration(), (java.awt.event.ActionEvent e) -> {
-                setNextStep();
+                setNextStep(generation);
             });
             rampingTimer.setRepeats(false);
             rampingTimer.start();
@@ -3181,7 +3189,7 @@ public class AutoActiveTrain implements ThrottleListener {
         /**
          * Flag from user to end run.
          */
-        public void abort() {
+        public synchronized void abort() {
             stopAllTimers();
         }
 
