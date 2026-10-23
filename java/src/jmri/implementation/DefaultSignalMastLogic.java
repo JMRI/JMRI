@@ -6,6 +6,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -832,34 +833,53 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      */
     boolean checkStates() {
         SignalMast oldActiveMast = destination;
-        if (destination != null) {
-            firePropertyChange(PROPERTY_STATE, oldActiveMast, null);
-            log.debug("Remove listener from destination");
-            destination.removePropertyChangeListener(propertyDestinationMastListener);
-            if (destList.containsKey(destination)) {
-                destList.get(destination).clearTurnoutLock();
-            }
-        }
+        SignalMast newActiveMast = null;
+        boolean pairChanged = false;
 
         Enumeration<SignalMast> en = destList.keys();
         log.debug("checkStates enumerates over {} mast(s)", destList.size());
         while (en.hasMoreElements()) {
             SignalMast key = en.nextElement();
+            DestinationMast dm = destList.get(key);
             log.debug("  Destination mast {}", key.getDisplayName());
-            log.debug("    isEnabled: {}", (destList.get(key)).isEnabled());
-            log.debug("    isActive: {}", destList.get(key).isActive());
+            log.debug("    isEnabled: {}", dm.isEnabled());
+            log.debug("    isActive: {}", dm.active);
 
-            if ((destList.get(key)).isEnabled() && (destList.get(key).isActive())) {
-                destination = key;
-                log.debug("      Add listener to destination");
-                destination.addPropertyChangeListener(propertyDestinationMastListener);
-                log.debug("      firePropertyChange: \"state\"");
-                firePropertyChange(PROPERTY_STATE, oldActiveMast, destination);
-                destList.get(key).lockTurnouts();
-                return true;
+            if (dm.active != dm.reportedActive) {
+                dm.reportedActive = dm.active;
+                pairChanged = true;
+            }
+            if (newActiveMast == null && dm.isEnabled() && dm.isActive()) {
+                newActiveMast = key;
             }
         }
-        return false;
+        if (newActiveMast == oldActiveMast) {
+            // no change, so leave the listener, the turnout locks and the state as they are
+            if (pairChanged) {
+                // but let listeners such as the signalling tables show the pair that changed
+                firePropertyChange(PROPERTY_STATE, null, newActiveMast);
+            }
+            return newActiveMast != null;
+        }
+
+        if (oldActiveMast != null) {
+            log.debug("Remove listener from destination");
+            oldActiveMast.removePropertyChangeListener(propertyDestinationMastListener);
+            if (destList.containsKey(oldActiveMast)) {
+                destList.get(oldActiveMast).clearTurnoutLock();
+            }
+        }
+        destination = newActiveMast;
+        if (newActiveMast == null) {
+            firePropertyChange(PROPERTY_STATE, oldActiveMast, null);
+            return false;
+        }
+        log.debug("      Add listener to destination");
+        newActiveMast.addPropertyChangeListener(propertyDestinationMastListener);
+        log.debug("      firePropertyChange: \"state\"");
+        firePropertyChange(PROPERTY_STATE, oldActiveMast, newActiveMast);
+        destList.get(newActiveMast).lockTurnouts();
+        return true;
     }
 
     /**
@@ -1083,7 +1103,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
         if (!checkStates()) {
             log.debug("Advanced routes not clear, set Stop aspect");
-            getSourceMast().setAspect(stopAspect);
+            setSourceAspect(stopAspect);
             return;
         }
         String[] advancedAspect;
@@ -1234,7 +1254,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 String aspectSet = aspect; // for lambda
                 try {
                     ThreadingUtil.runOnLayout(() -> {
-                        getSourceMast().setAspect(aspectSet);
+                        setSourceAspect(aspectSet);
                     });
                 } catch (Exception ex) {
                     log.error("Exception while setting Signal Logic", ex);
@@ -1244,8 +1264,31 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
         log.debug("Aspect returned is not valid, setting stop");
         ThreadingUtil.runOnLayout(() -> {
-            getSourceMast().setAspect(stopAspect);
+            setSourceAspect(stopAspect);
         });
+    }
+
+    /**
+     * Set the aspect of the source mast, unless it already shows that aspect.
+     * Hardware masts send a command to the layout every time their aspect is
+     * set, so an unchanged aspect is not sent again.
+     *
+     * A null aspect, for example a mast whose appearance map has no Danger
+     * aspect, is not passed to the mast.
+     *
+     * @param aspect the aspect to show
+     */
+    private void setSourceAspect(@CheckForNull String aspect) {
+        SignalMast mast = getSourceMast();
+        if (aspect == null) {
+            log.warn("No aspect to set on source mast {}", mast.getDisplayName());
+            return;
+        }
+        if (aspect.equals(mast.getAspect())) {
+            log.debug("Source mast {} already shows {}", mast.getDisplayName(), aspect);
+            return;
+        }
+        mast.setAspect(aspect);
     }
 
     /**
@@ -1328,6 +1371,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         List<Block> dblCrossoverAutoBlocks = new ArrayList<>(0);
         SignalMast destinationSignalMast;
         boolean active = false;
+        boolean reportedActive = false; // active state last reported by checkStates
         boolean destMastInit = false;
 
         float minimumBlockSpeed = 0.0f;
@@ -1940,6 +1984,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             }
             log.debug("From {} to {} internal check state", getSourceMast().getDisplayName(),
                 destinationSignalMast.getDisplayName());
+            boolean wasActive = active;
             active = false;
             if ((useLayoutEditor) && (autoTurnouts.isEmpty()) && (autoBlocks.isEmpty())) {
                 return;
@@ -2085,9 +2130,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             }
 
             active = state;
-            ThreadingUtil.runOnLayout(() -> {
-                setSignalAppearance();
-            });
+            // The source mast only needs setting again if this pair has changed
+            // or it is the pair the source mast is currently showing.
+            if (state != wasActive || destination == destinationSignalMast) {
+                ThreadingUtil.runOnLayout(() -> {
+                    setSignalAppearance();
+                });
+            }
         }
 
         /**
