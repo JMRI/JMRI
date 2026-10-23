@@ -2,6 +2,7 @@ package jmri.jmrix.dccpp.swing.messages;
 
 import java.awt.*;
 import java.io.*;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -9,12 +10,15 @@ import java.util.List;
 import java.util.function.LongSupplier;
 
 import javax.annotation.CheckForNull;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.Sound;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrix.dccpp.*;
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 /** Panel showing EXRAIL MESSAGE() broadcasts from a DCC-EX command station, styled like the Virtual LCD. */
@@ -123,15 +127,25 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
     }
 
     private void playSound() {
-        if (!_playSound) {
+        if (!_playSound || _warnedSoundFiles.contains(_soundFile)) {
             return;
         }
+        URL url = FileUtil.findURL(_soundFile);
+        if (url == null || !isPlayable(url)) {
+            _warnedSoundFiles.add(_soundFile);
+            log.warn("Unable to play DCC-EX message sound {}", _soundFile);
+            return;
+        }
+        new Sound(url).play(true);
+    }
+
+    // Sound logs its own errors on every play, so check the file once up front
+    private static boolean isPlayable(URL url) {
         try {
-            new Sound(_soundFile).play(true);
-        } catch (RuntimeException e) {
-            if (_warnedSoundFiles.add(_soundFile)) {
-                log.warn("Unable to play DCC-EX message sound {}", _soundFile);
-            }
+            AudioSystem.getAudioFileFormat(url);
+            return true;
+        } catch (UnsupportedAudioFileException | IOException e) {
+            return false;
         }
     }
 

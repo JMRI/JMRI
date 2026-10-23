@@ -95,6 +95,20 @@ public class MessagesPanelTest {
     }
 
     @Test
+    public void testUnplayableSoundFileWarnsOnce(@org.junit.jupiter.api.io.TempDir java.io.File folder)
+            throws java.io.IOException {
+        java.io.File bad = new java.io.File(folder, "bad.wav");
+        java.nio.file.Files.writeString(bad.toPath(), "not audio");
+        panel.setPlaySound(true);
+        panel.setSoundFile(bad.getAbsolutePath());
+        send("m \"one\"");
+        send("m \"two\"");
+        JUnitAppender.assertWarnMessageStartsWith("Unable to play DCC-EX message sound");
+        JUnitAppender.verifyNoBacklog();
+        Assertions.assertEquals(2, panel.getLineCount());
+    }
+
+    @Test
     public void testSettingsDefaults() {
         Assertions.assertEquals(30, panel.getExpirySeconds());
         Assertions.assertEquals(10, panel.getMaxLines());
