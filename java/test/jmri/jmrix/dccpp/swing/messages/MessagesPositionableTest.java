@@ -29,6 +29,14 @@ public class MessagesPositionableTest {
     }
 
     @Test
+    public void testLinesAreLaidOutAfterNewMessage() {
+        MessagesPanel panel = pos.getMessagesPanel();
+        ThreadingUtil.runOnGUI(() -> panel.addMessage("hello"));
+        java.awt.Component line = panel.getComponent(0);
+        Assertions.assertTrue(line.getWidth() > 0 && line.getHeight() > 0, "line has no size: " + line.getSize());
+    }
+
+    @Test
     public void testDeepCloneCopiesAllSettings() {
         MessagesPanel panel = pos.getMessagesPanel();
         ThreadingUtil.runOnGUI(() -> {

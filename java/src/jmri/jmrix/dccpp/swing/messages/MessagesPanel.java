@@ -190,6 +190,8 @@ public class MessagesPanel extends JPanel implements DCCppListener, MessagesConf
             var d = this.getPreferredSize();
             this.setSize(d);
             _positionable.setSize(d);
+            // rebuild adds fresh labels and nothing else on a panel lays them out
+            doLayout();
         } else if (_frame != null) {
             _frame.pack();
         } else {
