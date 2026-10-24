@@ -234,6 +234,9 @@
                     produce or consume an event.</li>
                 <li>Change the default events for the STL Editor IQYZ tables from all zeros to
                     unique zero based events.</li>
+                <li>When configuring a node, the Segment and Group levels are now
+                    color coded (blue for invalid value; orange for changed value)
+                    the way the group tabs and individual values have been.
             </ul>
 
         <h4>Powerline</h4>
