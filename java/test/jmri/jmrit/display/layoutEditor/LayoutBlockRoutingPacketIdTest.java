@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Field;
 
@@ -51,15 +52,20 @@ public class LayoutBlockRoutingPacketIdTest {
                 }
             }
         }
-        assertNotNull(owner, "no pair of neighbouring blocks");
-        assertNotNull(neighbour, "no pair of neighbouring blocks");
+        if (owner == null || neighbour == null) {
+            fail("no pair of neighbouring blocks");
+            return;
+        }
         LayoutBlock other = null;
         for (LayoutBlock lb : lbm.getNamedBeanSet()) {
             if (lb != owner && lb != neighbour) {
                 other = lb;
             }
         }
-        assertNotNull(other, "no third block");
+        if (other == null) {
+            fail("no third block");
+            return;
+        }
 
         // the neighbour sends a routing update for each occupancy change
         Field packetRef = Class.forName(LayoutBlock.class.getName() + "$RoutingPacket").getDeclaredField("packetRef");
