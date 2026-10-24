@@ -244,15 +244,14 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
+            // CANCMD current limits are raw A/D values ( 0 - 255 ), the current in mA
+            // is the raw value multiplied by the current multiplier NV, so no scaling here.
             int limit;
-            double fLimit;
             if (index == CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT) {
-                fLimit = mainSpinner.getDoubleValue();
+                limit = mainSpinner.getIntegerValue();
             } else {
-                fLimit = progSpinner.getDoubleValue();
+                limit = progSpinner.getIntegerValue();
             }
-            // Limit to 10mA precision
-            limit = (int)(fLimit*100 + 0.5);
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(limit, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -324,7 +323,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         /** {@inheritDoc} */
         @Override
         public void setNewVal(int index) {
-            int delay = multSpinner.getIntegerValue();
+            int delay = walkaboutSpinner.getIntegerValue();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
             _dataModel.setValueAt(delay, index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
@@ -363,19 +362,19 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             walkaboutSpinner = new TitledSpinner(Bundle.getMessage("WalkaboutTimeout"), CanCmdPaneProvider.WALKABOUT_TIMEOUT, walkaboutUpdateFn);
             walkaboutSpinner.setToolTip(Bundle.getMessage("WalkaboutTimeoutTt"));
-            walkaboutSpinner.init(getSelectValue8(CanCmdPaneProvider.WALKABOUT_TIMEOUT, 1), 1, 60, 255);
+            walkaboutSpinner.init(getSelectValue8(CanCmdPaneProvider.WALKABOUT_TIMEOUT, 1), 1, 255, 1);
             gridPane.add(walkaboutSpinner, c);
             c.gridy++;
             
             multSpinner = new TitledSpinner(Bundle.getMessage("CurrentMultiplier"), CanCmdPaneProvider.CURRENT_MULTIPLIER, multUpdateFn);
             multSpinner.setToolTip(Bundle.getMessage("CurrentMultiplierTt"));
-            multSpinner.init(getSelectValue8(CanCmdPaneProvider.CURRENT_MULTIPLIER, 1), 1, 10, 255);
+            multSpinner.init(getSelectValue8(CanCmdPaneProvider.CURRENT_MULTIPLIER, 1), 1, 255, 1);
             gridPane.add(multSpinner, c);
             c.gridy++;
             
             ackSpinner = new TitledSpinner(Bundle.getMessage("IncCurrentForAck"), CanCmdPaneProvider.INC_CURRENT_FOR_ACK, ackUpdateFn);
             ackSpinner.setToolTip(Bundle.getMessage("IncCurrentForAckTt"));
-            ackSpinner.init(getSelectValue8(CanCmdPaneProvider.INC_CURRENT_FOR_ACK, 1), 1, 3, 255);
+            ackSpinner.init(getSelectValue8(CanCmdPaneProvider.INC_CURRENT_FOR_ACK, 1), 1, 255, 1);
             gridPane.add(ackSpinner, c);
             c.gridy++;
             
@@ -387,15 +386,15 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             
             c.gridwidth = 3;
             
-            mainSpinner = new TitledSpinner(Bundle.getMessage("MainLimit"), CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
-            mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
-            mainSpinner.init(getSelectValue8(CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
+            mainSpinner = new TitledSpinner(Bundle.getMessage("CanCmdMainLimit"), CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
+            mainSpinner.setToolTip(Bundle.getMessage("CanCmdMainLimitTt"));
+            mainSpinner.init(getSelectValue8(CanCmdPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 1), 1, 255, 1);
             gridPane.add(mainSpinner, c);
             c.gridy++;
             
-            progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
-            progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
-            progSpinner.init(getSelectValue8(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
+            progSpinner = new TitledSpinner(Bundle.getMessage("CanCmdProgLimit"), CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
+            progSpinner.setToolTip(Bundle.getMessage("CanCmdProgLimitTt"));
+            progSpinner.init(getSelectValue8(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1), 1, 255, 1);
             gridPane.add(progSpinner, c);
             c.gridy++;
             c.gridx = 0;
