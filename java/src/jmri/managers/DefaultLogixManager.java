@@ -97,8 +97,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         deregister(x);
         x.dispose();
         jmri.ConditionalManager cm = InstanceManager.getNullableDefault(jmri.ConditionalManager.class);
-        if (cm instanceof DefaultConditionalManager) {
-            ((DefaultConditionalManager) cm).forgetParentLogix(x);
+        if (cm != null) {
+            cm.forgetParentLogix(x);
         }
     }
 
