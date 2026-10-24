@@ -27,8 +27,8 @@ public class NamedBeanLeadingZeroCompareTest {
         Sensor s4 = sm.newSensor("IS4", "Platform 01 East");
 
         NamedBeanUserNameComparator<Sensor> c = new NamedBeanUserNameComparator<>();
-        assertTrue(c.compare(s1, s2) > 0, "Siding 7 after Siding 07");
-        assertTrue(c.compare(s2, s1) < 0, "Siding 07 before Siding 7");
+        assertTrue(c.compare(s1, s2) < 0, "Siding 7 (IS1) before Siding 07 (IS2), by system name");
+        assertTrue(c.compare(s2, s1) > 0, "Siding 07 (IS2) after Siding 7 (IS1), by system name");
         assertEquals(0, c.compare(s1, s1), "Siding 7 equals itself");
 
         TreeSet<Sensor> set = new TreeSet<>(c);
@@ -37,10 +37,10 @@ public class NamedBeanLeadingZeroCompareTest {
         set.add(s3);
         set.add(s4);
         assertEquals(4, set.size(), "all four sensors kept in the sorted set");
-        // order is otherwise unchanged: alphanumeric first, leading zero first on a tie
+        // alphanumeric order of user names, system name order on a tie
         StringBuilder order = new StringBuilder();
         set.forEach(s -> order.append(s.getSystemName()).append(' '));
-        assertEquals("IS4 IS3 IS2 IS1 ", order.toString());
+        assertEquals("IS3 IS4 IS1 IS2 ", order.toString());
     }
 
     @Test
