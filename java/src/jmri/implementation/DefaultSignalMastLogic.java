@@ -1037,20 +1037,54 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getMinimumSpeed();
     }
 
+    /**
+     * True from when a job to set the source mast aspect is scheduled until
+     * it, and any repeat of it, has finished.
+     */
     volatile boolean inWait = false;
 
     /**
-     * Before going active or checking that we can go active, wait 500ms
-     * for things to settle down to help prevent a race condition.
+     * True while the scheduled job is working out and setting the aspect.
+     * Guarded by this.
+     */
+    private boolean appearanceJobRunning = false;
+
+    /**
+     * True if a change arrived while the job was running, so the job must run
+     * again to take it into account. Guarded by this.
+     */
+    private boolean appearanceJobRepeat = false;
+
+    /**
+     * Before going active or checking that we can go active, wait half the
+     * signal logic delay for things to settle down to help prevent a race
+     * condition.
+     * <p>
+     * A change that arrives while a job is waiting to start needs nothing
+     * more, as the job will see it. A change that arrives while the job is
+     * running may come after the job has read the state it changed, so the
+     * job then runs again.
      */
     synchronized void setSignalAppearance() {
         log.debug("setMastAppearance (Aspect) called for {}", source.getDisplayName());
         if (inWait) {
-            log.debug("setMastAppearance (Aspect) called with inWait set, returning");
+            if (appearanceJobRunning) {
+                log.debug("setMastAppearance (Aspect) called while the aspect is being set, will run again");
+                appearanceJobRepeat = true;
+            } else {
+                log.debug("setMastAppearance (Aspect) called with inWait set, returning");
+            }
             return;
         }
         inWait = true;
+        scheduleAppearanceJob();
+    }
 
+    /**
+     * Schedule the job that sets the source mast aspect. Called with this
+     * locked.
+     */
+    private void scheduleAppearanceJob() {
         // The next line forces a single initialization of InstanceManager.getDefault(SignalSpeedMap.class)
         // before launching parallel threads
         InstanceManager.getDefault(SignalSpeedMap.class);
@@ -1059,17 +1093,33 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         // before launching delay
         int tempDelay = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalLogicDelay() / 2;
         log.debug("SignalMastLogicManager started (delay)");
-        ThreadingUtil.runOnLayoutDelayed(
-                () -> {
-                    try {
-                        setMastAppearance();
-                    } finally {
-                        inWait = false;
-                    }
-                },
-                tempDelay
-        );
+        ThreadingUtil.runOnLayoutDelayed(this::runAppearanceJob, tempDelay);
+    }
 
+    private void runAppearanceJob() {
+        synchronized (this) {
+            appearanceJobRunning = true;
+            appearanceJobRepeat = false;
+        }
+        try {
+            setMastAppearance();
+        } finally {
+            synchronized (this) {
+                appearanceJobRunning = false;
+                boolean repeat = appearanceJobRepeat && !disposing;
+                appearanceJobRepeat = false;
+                if (repeat) {
+                    try {
+                        scheduleAppearanceJob();
+                    } catch (RuntimeException ex) {
+                        inWait = false;
+                        log.error("Could not set the aspect of {} again", source.getDisplayName(), ex);
+                    }
+                } else {
+                    inWait = false;
+                }
+            }
+        }
     }
 
     /**
@@ -1370,7 +1420,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         List<Block> xingAutoBlocks = new ArrayList<>(0);
         List<Block> dblCrossoverAutoBlocks = new ArrayList<>(0);
         SignalMast destinationSignalMast;
-        boolean active = false;
+        volatile boolean active = false;
         boolean reportedActive = false; // active state last reported by checkStates
         boolean destMastInit = false;
 
@@ -1927,14 +1977,33 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             return autoMasts.get(mast);
         }
 
-        // the following 2 methods are not supplied in the implementation
-        boolean inWait = false;
+        /**
+         * True from when a check of this pair is scheduled until it, and any
+         * repeat of it, has finished.
+         */
+        volatile boolean inWait = false;
+
+        /**
+         * The number of checks of this pair running now: a scheduled one, and
+         * the first one, which {@link #initialise()} runs on its own thread.
+         * Guarded by this.
+         */
+        private int checksRunning = 0;
+
+        /**
+         * True if something on the route changed while a check was running,
+         * so what it found may be out of date and the check must run again.
+         * Guarded by this.
+         */
+        private boolean checkRepeat = false;
 
         /*
          * Before going active or checking that we can go active, wait
          * for things to settle down to help prevent a race condition.
+         * A change that arrives while a check is running may come after the
+         * check has read the item that changed, so the check then runs again.
          */
-        void checkState() {
+        synchronized void checkState() {
             if (disposed) {
                 log.error("checkState called even though this has been disposed of {}",
                     getSourceMast().getDisplayName());
@@ -1944,23 +2013,92 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             if (!enable) {
                 return;
             }
+            if (checksRunning > 0) {
+                checkRepeat = true;
+            }
             if (inWait) {
                 return;
             }
 
             log.debug("check Signal Dest State called");
             inWait = true;
+            scheduleCheck();
+        }
 
+        /**
+         * Schedule the check of this pair. Called with this locked.
+         */
+        private void scheduleCheck() {
             // The next line forces a single initialization of InstanceManager.getDefault(SignalMastLogicManager.class)
             // before launching parallel threads
             int tempDelay = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalLogicDelay();
 
-            ThreadingUtil.runOnLayoutDelayed(
-                    () -> {
-                        checkStateDetails();
+            ThreadingUtil.runOnLayoutDelayed(() -> runCheck(true), tempDelay);
+        }
+
+        /**
+         * Check this pair, as a scheduled check or straight away.
+         *
+         * @param scheduled true for the check scheduled by
+         *                  {@link #checkState()}, which clears
+         *                  {@link #inWait} when it has finished
+         */
+        private void runCheck(boolean scheduled) {
+            synchronized (this) {
+                if (checksRunning == 0) {
+                    checkRepeat = false;
+                }
+                checksRunning++;
+            }
+            try {
+                // a delayed check can still run after this pair has been disposed
+                if (!disposed) {
+                    checkStateDetails();
+                }
+            } finally {
+                synchronized (this) {
+                    checksRunning--;
+                    boolean repeat = false;
+                    if (checksRunning == 0) {
+                        // a scheduled check that has not started yet will see the change anyway
+                        repeat = checkRepeat && !disposed && enable && (scheduled || !inWait);
+                        checkRepeat = false;
+                    }
+                    if (repeat) {
+                        inWait = true;
+                        try {
+                            scheduleCheck();
+                        } catch (RuntimeException ex) {
+                            inWait = false;
+                            log.error("Could not check {} to {} again", getSourceMast().getDisplayName(),
+                                destinationSignalMast.getDisplayName(), ex);
+                        }
+                    } else if (scheduled) {
                         inWait = false;
-                    }, tempDelay
-            );
+                    }
+                }
+            }
+        }
+
+        /**
+         * A bean on the route has changed so that the route is no longer
+         * set: go to danger at once. A check that is running may already have
+         * read that bean, so it must not put back what it found; it runs
+         * again instead. Called by the bean listeners, on whatever thread the
+         * bean reports its change on.
+         */
+        private void routeNoLongerSet() {
+            boolean wasActive;
+            synchronized (this) {
+                if (checksRunning > 0) {
+                    checkRepeat = true;
+                }
+                wasActive = active;
+                active = false;
+            }
+            if (wasActive) {
+                setSignalAppearance();
+            }
         }
 
         /**
@@ -2114,12 +2252,19 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 }
             }
 
-            if (!state) {
-                turnoutThrown = false;
-                permissiveBlock = false;
+            synchronized (this) {
+                if (checkRepeat) {
+                    // something on the route changed while this check ran, so
+                    // what it found may be out of date: stay at danger until
+                    // the check has run again
+                    state = false;
+                }
+                if (!state) {
+                    turnoutThrown = false;
+                    permissiveBlock = false;
+                }
+                active = state;
             }
-
-            active = state;
             // The source mast only needs setting again if this pair has changed
             // or it is the pair the source mast is currently showing.
             if (state != wasActive || destination == destinationSignalMast) {
@@ -2198,7 +2343,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             destMastInit = true;
 
             // Use the same checks as when one of these beans changes.
-            checkStateDetails();
+            runCheck(false);
         }
 
         void useLayoutEditor(boolean boo) throws JmriException {
@@ -2976,10 +3121,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     if (isSensorIncluded(sen) && getSensorState(sen) != now) {
                         log.debug("Sensor {} caused the signalmast to be set to danger", sen.getDisplayName());
                         //getSourceMast().setAspect(stopAspect);
-                        if (active == true) {
-                            active = false;
-                            setSignalAppearance();
-                        }
+                        routeNoLongerSet();
                     } else if (getSensorState(sen) == now) {
                         log.debug("{} sensor {} triggers a calculation of change", destinationSignalMast.getDisplayName(), sen.getDisplayName());
                         checkState();
@@ -3001,10 +3143,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (getTurnoutState(turn) != now) {
                             log.debug("Turnout {} caused the signalmast to be set", turn.getDisplayName());
                             log.debug("From {} to {} Turnout {} caused the signalmast to be set to danger", getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName(), turn.getDisplayName());
-                            if (active == true) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("{} turnout {} triggers a calculation of change", destinationSignalMast.getDisplayName(), turn.getDisplayName());
                             checkState();
@@ -3013,10 +3152,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (getAutoTurnoutState(turn) != now) {
                             log.debug("Turnout {} auto caused the signalmast to be set", turn.getDisplayName());
                             log.debug("From {} to {} Auto Turnout {} auto caused the signalmast to be set to danger", getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName(), turn.getDisplayName());
-                            if (active == true) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("From {} to {} turnout {} triggers a calculation of change", getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName(), turn.getDisplayName());
                             checkState();
@@ -3061,10 +3197,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 if ( Block.PROPERTY_STATE.equals(e.getPropertyName()) && isOccupiedAgainstRoute(block)) {
                     // Going to danger is not delayed, only a change towards clear is.
                     log.debug("Block {} occupied, caused the signalmast to be set to danger", block.getDisplayName());
-                    if (active) {
-                        active = false;
-                        setSignalAppearance();
-                    }
+                    routeNoLongerSet();
                 } else if ( Block.PROPERTY_STATE.equals(e.getPropertyName()) || Block.PROPERTY_ALLOCATED.equals(e.getPropertyName())) {
                     // TODO: what is this?
                     log.debug("Included in user entered block {}", Boolean.toString(isBlockIncluded(block)));
@@ -3101,10 +3234,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (!now.equals(getSignalMastState(mast))) {
                             log.debug("{} in mast list SignalMast {} caused the signalmast to be set", destinationSignalMast.getDisplayName(), mast.getDisplayName());
                             log.debug("SignalMast {} caused the signalmast to be set", mast.getDisplayName());
-                            if (active) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("{} in mast list signalmast change", destinationSignalMast.getDisplayName());
                             checkState();
@@ -3113,10 +3243,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (!now.equals(getAutoSignalMastState(mast))) {
                             log.debug("SignalMast {} caused the signalmast to be set", mast.getDisplayName());
                             log.debug("{} in auto mast list SignalMast {} caused the signalmast to be set", destinationSignalMast.getDisplayName(), mast.getDisplayName());
-                            if (active) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("{} in auto mast list signalmast change", destinationSignalMast.getDisplayName());
                             checkState();
