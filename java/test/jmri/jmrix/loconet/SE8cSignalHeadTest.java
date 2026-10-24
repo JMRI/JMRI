@@ -110,7 +110,9 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("transmit message byte 1", 0x0F, lnis.outbound.get(3).getElement(1));
         Assert.assertEquals("transmit message Byte 2", 0x30, lnis.outbound.get(3).getElement(2));
 
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return lnis.outbound.size() >= 5;},"message received");
+        // the flash timer sends each flash message after DefaultSignalHead.masterDelay (750 ms),
+        // too close to fasterWaitFor's 1 second limit on a busy machine
+        JUnitUtil.waitFor(() -> lnis.outbound.size() >= 5, "flash message 5 received");
 
         Assert.assertEquals("now five transmitted message", 5, lnis.outbound.size());
         Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(4).getElement(1));
@@ -123,7 +125,7 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(5).getElement(1));
         Assert.assertEquals("transmit message Byte 2", 0x30, lnis.outbound.get(5).getElement(2));
 
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return lnis.outbound.size() >= 7;},"message received");
+        JUnitUtil.waitFor(() -> lnis.outbound.size() >= 7, "flash message 7 received");
 
         Assert.assertEquals("now seven transmitted message", 7, lnis.outbound.size());
         Assert.assertEquals("transmit message byte 1", 0x0f, lnis.outbound.get(6).getElement(1));
@@ -136,7 +138,7 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(7).getElement(1));
         Assert.assertEquals("transmit message Byte 2", 0x10, lnis.outbound.get(7).getElement(2));
 
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return lnis.outbound.size() >= 9;},"message received");
+        JUnitUtil.waitFor(() -> lnis.outbound.size() >= 9, "flash message 9 received");
 
         Assert.assertEquals("now nine transmitted message", 9, lnis.outbound.size());
         Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(8).getElement(1));
