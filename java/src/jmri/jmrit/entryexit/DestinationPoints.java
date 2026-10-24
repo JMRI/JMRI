@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.swing.JButton;
@@ -419,7 +418,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         private final List<LayoutBlock> blocks;
         private final ActiveTrain at;
         private final Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<>();
-        private final List<Map.Entry<Turnout, Integer>> turnoutsToSet = new ArrayList<>();
+        private final List<Turnout> turnoutsToSet = new ArrayList<>();
         private final List<Color> realColorStd = new ArrayList<>();
         private final List<Color> realColorXtra = new ArrayList<>();
         private final List<LayoutBlock> routeBlocks = new ArrayList<>();
@@ -525,7 +524,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             turnoutSettings.put(t, tmSml.getAutoTurnoutState(t, (SignalMast) getSignal()));
                         }
                     }
-                    turnoutsToSet.addAll(turnoutSettings.entrySet());
+                    turnoutsToSet.addAll(turnoutSettings.keySet());
                 }
             } catch (RuntimeException ex) {
                 failed(ex);
@@ -550,8 +549,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 return;
             }
             try {
-                Map.Entry<Turnout, Integer> entry = turnoutsToSet.get(index);
-                entry.getKey().setCommandedState(entry.getValue());
+                Turnout turnout = turnoutsToSet.get(index);
+                turnout.setCommandedState(turnoutSettings.get(turnout));
             } catch (RuntimeException ex) {
                 failed(ex);
                 return;
