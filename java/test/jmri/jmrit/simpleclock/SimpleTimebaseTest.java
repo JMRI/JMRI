@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.TimebaseRateException;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
@@ -31,6 +32,21 @@ public class SimpleTimebaseTest {
         SimpleTimebase p = new SimpleTimebase(memo);
         Assert.assertNotNull("exists", p);
         p.dispose();
+    }
+
+    private Sensor clockRunningSensor() {
+        return InstanceManager.sensorManagerInstance().provideSensor(memo.getSystemPrefix() + "SCLOCKRUNNING");
+    }
+
+    @Test
+    public void testDisposeRemovesClockSensorListener() {
+        int before = clockRunningSensor().getPropertyChangeListeners().length;
+        SimpleTimebase p = new SimpleTimebase(memo);
+        Assertions.assertEquals(before + 1, clockRunningSensor().getPropertyChangeListeners().length,
+                "listening to the clock running sensor");
+        p.dispose();
+        Assertions.assertEquals(before, clockRunningSensor().getPropertyChangeListeners().length,
+                "no longer listening after dispose");
     }
 
     // test quick access (should be quite close to zero)
