@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import jmri.util.ThreadingUtil;
 
 /**
  * Timeout decorator implementation for reporters.
@@ -44,14 +47,17 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
     private static final int TIMEOUT = 2000;
 
     /**
-     * Time when something was last reported by this object
+     * Timeout in ms used by this object.
      */
-    private long whenLastReported = 0;
+    private int timeout = TIMEOUT;
 
     /**
-     * Reference to the timeout thread for this object
+     * Counts the reports that started a timeout; only the timeout of the last
+     * report can clear the report.
      */
-    private TimeoutThread timeoutThread = null;
+    private final AtomicInteger timeoutGeneration = new AtomicInteger();
+
+    private volatile boolean disposed = false;
 
     public TimeoutReporter(Reporter reporter) {
         super(reporter);
@@ -81,6 +87,7 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
 
     @Override
     public void dispose() {
+        disposed = true;
         super.dispose();
         reporter.dispose();
     }
@@ -94,6 +101,10 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
     public void notify(IdTag r) {
         if(reporter instanceof IdTagListener ){
             ((IdTagListener)reporter).notify(r);
+        }
+        if (r != null) {
+            // also when the same tag is seen again, which doesn't change the current report
+            restartTimeout();
         }
     }
 
@@ -113,41 +124,33 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
         log.debug("event received {}",evt);
          if(evt.getPropertyName().equals("currentReport") &&
             evt.getNewValue()!=null ){
-                 whenLastReported = System.currentTimeMillis();
-                 if (timeoutThread == null) {
-                     timeoutThread = new TimeoutThread();
-                     timeoutThread.start();
-                 }
+                 restartTimeout();
          }
          // fire off the property change for listeners of this TimeoutReporter.
          firePropertyChange(evt.getPropertyName(),evt.getOldValue(),evt.getNewValue());
     }
 
-    private void cleanUpTimeout() {
-        log.debug("Cleanup timeout thread for {}",getSystemName());
-        timeoutThread = null;
+    /**
+     * Start the timeout again from now. When it ends without a later report,
+     * the report is cleared on the layout thread.
+     */
+    private void restartTimeout() {
+        final int generation = timeoutGeneration.incrementAndGet();
+        ThreadingUtil.runOnLayoutDelayed(() -> {
+            if (!disposed && generation == timeoutGeneration.get()) {
+                log.debug("Timeout-{}", getSystemName());
+                reporter.setReport(null);
+            }
+        }, timeout);
     }
 
-    private class TimeoutThread extends Thread {
-
-        TimeoutThread() {
-            super();
-            this.setName("Timeout-" + getSystemName());
-        }
-
-        @Override
-//        @SuppressWarnings("SleepWhileInLoop")
-        public void run() {
-            while ((whenLastReported + TIMEOUT) > System.currentTimeMillis()) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                }
-            }
-            reporter.setReport(null);
-            log.debug("Timeout-{}", getSystemName());
-            cleanUpTimeout();
-        }
+    /**
+     * Set the timeout, for tests.
+     *
+     * @param ms the timeout in milliseconds
+     */
+    void setTimeout(int ms) {
+        timeout = ms;
     }
 
     private static final Logger log = LoggerFactory.getLogger(TimeoutReporter.class);
