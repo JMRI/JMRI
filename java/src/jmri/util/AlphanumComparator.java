@@ -49,7 +49,8 @@ public class AlphanumComparator implements Comparator<String> {
     }
 
     // Length of string is passed in for improved efficiency (only need to calculate it once)
-    private final String getChunk(String s, int slength, int marker) {
+    // The number of characters consumed is returned in skip[0]
+    private final String getChunk(String s, int slength, int marker, int[] skip) {
         StringBuilder chunk = new StringBuilder();
         int markstart = marker;
         char c = s.charAt(marker);
@@ -81,12 +82,9 @@ public class AlphanumComparator implements Comparator<String> {
             chunk.append(c);
         }
 
-        skip = marker - markstart;
+        skip[0] = marker - markstart;
         return chunk.toString();
     }
-
-    // internal temporary used to efficiently return how many characters were skipped
-    int skip;
 
     @Override
     public int compare(String s1, String s2) {
@@ -95,12 +93,14 @@ public class AlphanumComparator implements Comparator<String> {
         int result = length1 - length2;
 
         int marker1 = 0, marker2 = 0;
+        // local, so that one instance can be shared between threads
+        int[] skip = new int[1];
         while (marker1 < length1 && marker2 < length2) {
-            String chunk1 = getChunk(s1, length1, marker1);
-            marker1 += skip;
+            String chunk1 = getChunk(s1, length1, marker1, skip);
+            marker1 += skip[0];
 
-            String chunk2 = getChunk(s2, length2, marker2);
-            marker2 += skip;
+            String chunk2 = getChunk(s2, length2, marker2, skip);
+            marker2 += skip[0];
 
             // If both chunks contain numeric characters, sort them numerically
             if (isDigit(chunk1.charAt(0)) && isDigit(chunk2.charAt(0))) {
