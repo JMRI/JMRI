@@ -58,7 +58,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         try {
             clockSensor = InstanceManager.sensorManagerInstance().provideSensor(memo.getSystemPrefix()+"SCLOCKRUNNING");
             clockSensor.setKnownState(Sensor.ACTIVE);
-            clockSensor.addPropertyChangeListener(this::clockSensorChanged);
+            clockSensor.addPropertyChangeListener(clockSensorListener);
         } catch (JmriException e) {
             log.warn("Exception setting CLOCKRUNNING sensor ACTIVE", e);
         }
@@ -641,7 +641,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             timer = null;
         }
         if ( clockSensor != null ) {
-            clockSensor.removePropertyChangeListener(this::clockSensorChanged);
+            clockSensor.removePropertyChangeListener(clockSensorListener);
         }
         super.dispose(); // remove standard property change listeners
     }
@@ -662,6 +662,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private Date setTimeValue;
     private Date pauseTime; // null value indicates clock is running
     private Sensor clockSensor = null; // active when clock is running, inactive when stopped
+    // kept so that dispose() removes the same listener that init() added
+    private final PropertyChangeListener clockSensorListener = this::clockSensorChanged;
     private Memory clockMemory = null; // contains current time on each tick
     private Memory factorMemory = null; // contains the rate factor for the fast clock
 
