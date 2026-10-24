@@ -190,6 +190,9 @@ class LayoutBlockRoutingChecker {
         lbm.enableAdvancedRouting(true);
         ThreadingUtil.runOnGUI(() -> lbm.initializeLayoutBlockPaths());
         JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
+        // the stable event is posted to the layout thread; let its listeners
+        // finish before the routing tables are examined
+        ThreadingUtil.runOnLayout(() -> {});
         return lbm;
     }
 
