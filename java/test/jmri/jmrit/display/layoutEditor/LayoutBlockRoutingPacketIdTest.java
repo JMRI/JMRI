@@ -51,18 +51,15 @@ public class LayoutBlockRoutingPacketIdTest {
                 }
             }
         }
-        if (owner == null || neighbour == null) {
-            throw new AssertionError("no pair of neighbouring blocks");
-        }
+        assertNotNull(owner, "no pair of neighbouring blocks");
+        assertNotNull(neighbour, "no pair of neighbouring blocks");
         LayoutBlock other = null;
         for (LayoutBlock lb : lbm.getNamedBeanSet()) {
             if (lb != owner && lb != neighbour) {
                 other = lb;
             }
         }
-        if (other == null) {
-            throw new AssertionError("no third block");
-        }
+        assertNotNull(other, "no third block");
 
         // the neighbour sends a routing update for each occupancy change
         Field packetRef = Class.forName(LayoutBlock.class.getName() + "$RoutingPacket").getDeclaredField("packetRef");
