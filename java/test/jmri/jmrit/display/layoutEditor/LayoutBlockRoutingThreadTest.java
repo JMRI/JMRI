@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.PropertyChangeListener;
@@ -77,14 +76,19 @@ public class LayoutBlockRoutingThreadTest {
         lbm.addPropertyChangeListener(recordThread("manager"));
 
         lbm.setStabilisedDelay(20);
-        runOnNewThread(lbm::setLastRoutingChange);
-        assertFalse(lbm.routingStablised(), "not stable straight after a change");
-        JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
-        JUnitUtil.waitFor(() -> topology.size() == 2, "topology changed and settled");
-        assertEquals(List.of(false, true), topology, "topology events");
 
-        // changes from two threads while the routing keeps settling: the
-        // unstable and stable events must still alternate, ending stable
+        // each change made once the routing has settled is reported as
+        // unstable and then as stable again
+        for (int round = 1; round <= 3; round++) {
+            int events = 2 * round;
+            runOnNewThread(lbm::setLastRoutingChange);
+            JUnitUtil.waitFor(() -> topology.size() == events, "change " + round + " reported and settled");
+        }
+        assertEquals(List.of(false, true, false, true, false, true), topology, "topology events");
+        assertTrue(lbm.routingStablised(), "stable after the changes");
+
+        // changes from two threads while the routing keeps settling: however
+        // they fall, the unstable and stable events must still alternate
         Runnable changes = () -> {
             for (int i = 0; i < 150; i++) {
                 lbm.setLastRoutingChange();
@@ -103,9 +107,11 @@ public class LayoutBlockRoutingThreadTest {
         first.join();
         second.join();
         JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised again");
+        // the events are posted to the layout thread in order, so once those
+        // posted before the routing settled have run, the last one to arrive
+        // is the final stable event
+        ThreadingUtil.runOnLayout(() -> {});
         JUnitUtil.waitFor(() -> topology.get(topology.size() - 1).equals(true), "stable event sent");
-        ThreadingUtil.runOnLayout(() -> {}); // let any posted events run
-        assertTrue(topology.size() > 4, "routing settled more than once: " + topology.size());
         for (int i = 0; i < topology.size(); i++) {
             assertEquals(i % 2 != 0, topology.get(i), "unstable and stable events alternate, event " + i);
         }
