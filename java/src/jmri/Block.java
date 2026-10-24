@@ -896,7 +896,21 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         cntOfPossibleEntrancePaths = 0;
     }
 
+    /**
+     * Take the value of a neighbour Block that has just been emptied, if this
+     * Block could not decide between its occupied neighbours when it became
+     * occupied and that neighbour was one of them. The value is only taken
+     * while this Block is still occupied.
+     *
+     * @param b the neighbour Block that has become unoccupied
+     * @return true if the value of b was taken
+     */
     boolean setAsEntryBlockIfPossible(Block b) {
+        if (getState() != OCCUPIED) {
+            // this Block has been emptied since, the train that entered it has gone
+            resetCandidateEntrancePaths();
+            return false;
+        }
         for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
             Block candidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
             if (candidateBlock == b) {
@@ -974,6 +988,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 b.setAsEntryBlockIfPossible(this);
             }
         }
+        // the train that could not be identified when it entered has left
+        resetCandidateEntrancePaths();
         setValue(null);
         setDirection(Path.NONE);
         setState(UNOCCUPIED);
