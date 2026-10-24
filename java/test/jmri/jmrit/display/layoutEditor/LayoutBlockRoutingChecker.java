@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -258,9 +259,7 @@ class LayoutBlockRoutingChecker {
                 busiest = entry.getKey();
             }
         }
-        if (busiest == null) {
-            throw new AssertionError("no block is used by routes");
-        }
+        assertNotNull(busiest, "no block is used by routes");
         return busiest;
     }
 
