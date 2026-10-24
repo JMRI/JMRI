@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -204,6 +205,104 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public int calculate(final boolean enable, PropertyChangeEvent evt) {
+        CalculateChain chain = CALCULATE_CHAIN.get();
+        int entries = chain.entries.getOrDefault(this, 0);
+        if (entries >= MAX_REENTRIES) {
+            // This Conditional has triggered itself, directly or through
+            // other Conditionals, over and over on this thread: a loop
+            if (!chain.reported) {
+                chain.reported = true;
+                log.error("Logix loop stopped when {} re-triggered itself {} times inside its own calculation: {}",
+                    getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), MAX_REENTRIES, loopNames(chain));  // NOI18N
+            }
+            return _currentState;
+        }
+        boolean outermost = chain.conditionals.isEmpty();
+        chain.conditionals.push(this);
+        chain.entries.put(this, entries + 1);
+        try {
+            return calculateNested(enable, evt);
+        } catch (StackOverflowError e) {
+            if (!outermost) {
+                throw e;
+            }
+            // A loop through more Conditionals than MAX_REENTRIES can catch
+            // before the stack is used up, or a very long chain. Stop here
+            // so that whatever changed the first bean can carry on.
+            log.error("Logix calculations started by {} were stopped by a stack overflow; this is probably a loop of many Logixes",
+                getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));  // NOI18N
+            return _currentState;
+        } finally {
+            chain.conditionals.pop();
+            if (entries == 0) {
+                chain.entries.remove(this);
+            } else {
+                chain.entries.put(this, entries);
+            }
+            if (chain.conditionals.isEmpty()) {
+                chain.reported = false;
+            }
+        }
+    }
+
+    /**
+     * Maximum number of calculations of one Conditional that may be running
+     * on one thread at the same time, that is the outermost calculation and
+     * the calculations nested inside it when its actions re-trigger it,
+     * directly or through other Logixes. The next one is not run. Chains of
+     * Conditionals that are not loops are not stopped by this; a loop or
+     * chain so long that it uses up the stack first is stopped by catching
+     * the StackOverflowError in the outermost calculation.
+     */
+    static final int MAX_REENTRIES = 10;
+
+    /**
+     * Maximum number of distinct Conditionals named when a loop is reported.
+     */
+    static final int MAX_REPORTED_LOOP_NAMES = 10;
+
+    /**
+     * Name the distinct Conditionals in a loop, in calling order, ending with
+     * this one. Only the Conditionals calculated since the previous
+     * calculation of this one are in the loop, and only the last
+     * {@link #MAX_REPORTED_LOOP_NAMES} of them are named.
+     */
+    private String loopNames(CalculateChain chain) {
+        List<String> names = new ArrayList<>();
+        java.util.Set<Conditional> seen = new java.util.HashSet<>();
+        seen.add(this);
+        names.add(getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
+        boolean more = false;
+        for (Conditional c : chain.conditionals) {  // most recent first
+            if (c == this) {
+                break;
+            }
+            if (seen.add(c)) {
+                if (names.size() >= MAX_REPORTED_LOOP_NAMES) {
+                    more = true;
+                    break;
+                }
+                names.add(c.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
+            }
+        }
+        java.util.Collections.reverse(names);
+        return (more ? "... -> " : "") + String.join(" -> ", names);
+    }
+
+    private static class CalculateChain {
+        final ArrayDeque<Conditional> conditionals = new ArrayDeque<>();
+        final java.util.IdentityHashMap<Conditional, Integer> entries = new java.util.IdentityHashMap<>();
+        boolean reported = false;
+    }
+
+    private static final ThreadLocal<CalculateChain> CALCULATE_CHAIN = new ThreadLocal<CalculateChain>() {
+        @Override
+        protected CalculateChain initialValue() {
+            return new CalculateChain();
+        }
+    };
+
+    private int calculateNested(final boolean enable, PropertyChangeEvent evt) {
         log.trace("calculate starts for {}", getSystemName());  // NOI18N
 
         // check if  there are no state variables
