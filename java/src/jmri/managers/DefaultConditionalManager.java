@@ -139,12 +139,12 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     final Map<String, Logix> nonStandardParents = new java.util.concurrent.ConcurrentHashMap<>();
 
     /**
-     * Forget a deleted Logix as the parent of Conditionals with non-standard
-     * system names.
-     *
-     * @param x the deleted Logix
+     * {@inheritDoc}
+     * <p>
+     * Only Conditionals with non-standard system names are remembered here.
      */
-    void forgetParentLogix(Logix x) {
+    @Override
+    public void forgetParentLogix(Logix x) {
         nonStandardParents.values().removeIf(lgx -> lgx == x);
     }
 
