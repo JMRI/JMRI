@@ -206,7 +206,7 @@ public final class InstanceManager {
      */
     public <T> void remove(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
-        List<T> l = getList(type);
+        List<T> l = getInstances(type);
         int index = l.indexOf(item);
         if (index != -1) { // -1 means items was not in list, and therefore, not registered
             l.remove(item);

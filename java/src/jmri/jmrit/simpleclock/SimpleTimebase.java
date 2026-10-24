@@ -27,7 +27,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
  * @author Bob Jacobsen Copyright (C) 2004, 2007 Dave Duchamp - 2007
  *         additions/revisions for handling one hardware clock
  */
-public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
+public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase, Disposable {
 
     public static final double MINIMUM_RATE = 0.1;
     public static final double MAXIMUM_RATE = 100;
