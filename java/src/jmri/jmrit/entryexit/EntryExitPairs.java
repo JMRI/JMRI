@@ -123,7 +123,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     String memoryOption = "";     // Optional memory variable to receive allocation messages
     int memoryClearDelay = 0;     // Delay before clearing memory, 0 for clearing disabled
 
-    static JPanel glassPane = new JPanel();
+    private final JPanel glassPane = new JPanel();
 
     /**
      * Delay between issuing Turnout commands
