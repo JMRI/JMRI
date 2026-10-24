@@ -9,12 +9,14 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
 
 /**
  * Check that a LayoutBlock only sends a routing update to its neighbours
- * when the status it advertises changes.
+ * when the status it advertises changes. Routing updates are sent on the
+ * layout thread.
  *
  * @author Keith Bruce Copyright (C) 2026
  */
@@ -34,30 +36,31 @@ public class LayoutBlockRoutingUpdateTest {
             }
         });
 
-        block.setState(Block.UNOCCUPIED);
+        ThreadingUtil.runOnLayout(() -> block.setState(Block.UNOCCUPIED));
         assertEquals(1, updates.size(), "update when the block becomes empty");
 
         for (int i = 0; i < 10; i++) {
-            block.setValue("Train " + i);
+            String value = "Train " + i;
+            ThreadingUtil.runOnLayout(() -> block.setValue(value));
         }
-        block.setDirection(jmri.Path.EAST);
+        ThreadingUtil.runOnLayout(() -> block.setDirection(jmri.Path.EAST));
         assertEquals(1, updates.size(), "no update for value or direction changes");
 
-        layoutBlock.setUseExtraColor(true);
+        ThreadingUtil.runOnLayout(() -> layoutBlock.setUseExtraColor(true));
         assertEquals(2, updates.size(), "one update when the block is allocated");
 
-        layoutBlock.setUseExtraColor(true);
+        ThreadingUtil.runOnLayout(() -> layoutBlock.setUseExtraColor(true));
         assertEquals(2, updates.size(), "no update when the allocation is unchanged");
 
-        block.setState(Block.OCCUPIED);
+        ThreadingUtil.runOnLayout(() -> block.setState(Block.OCCUPIED));
         assertEquals(3, updates.size(), "update when the block becomes occupied");
 
-        layoutBlock.setUseExtraColor(false);
+        ThreadingUtil.runOnLayout(() -> layoutBlock.setUseExtraColor(false));
         assertEquals(3, updates.size(), "no update, an occupied block is advertised as occupied");
 
         // after routing is set up again the status is sent with the next change
-        layoutBlock.initializeLayoutBlockRouting();
-        block.setValue("Another train");
+        ThreadingUtil.runOnLayout(() -> layoutBlock.initializeLayoutBlockRouting());
+        ThreadingUtil.runOnLayout(() -> block.setValue("Another train"));
         assertEquals(4, updates.size(), "update after routing is set up again");
     }
 
