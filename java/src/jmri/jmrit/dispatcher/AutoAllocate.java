@@ -118,8 +118,21 @@ public class AutoAllocate implements Runnable {
         log.trace("Add request from [{}] for [{}][{}]",
                 task.getTrainName(),task.getAction().name(),
                 task.getAllocationRequest() == null ? "None" : task.getAllocationRequest().getSectionName());
-        taskList.add(task);
+        synchronized (queueLock) {
+            TaskAction action = task.getAction();
+            if (lastQueuedTask != null && lastQueuedTask.getAction() == action
+                    && (action == TaskAction.SCAN_REQUESTS || action == TaskAction.AUTO_RELEASE)) {
+                // the same check is already at the end of the queue and has not
+                // started, so it will see whatever caused this request
+                return;
+            }
+            lastQueuedTask = task;
+            taskList.add(task);
+        }
     }
+
+    private final Object queueLock = new Object();
+    private TaskAllocateRelease lastQueuedTask = null;  // last task queued, while it is still in the queue
 
     /*
      * Main loop processing queue
@@ -129,6 +142,11 @@ public class AutoAllocate implements Runnable {
         while (!abort) {
             try {
                 TaskAllocateRelease task = taskList.take();
+                synchronized (queueLock) {
+                    if (task == lastQueuedTask) {
+                        lastQueuedTask = null;
+                    }
+                }
                 try {
                     switch (task.getAction()) {
                         case AUTO_RELEASE:
@@ -299,14 +317,18 @@ public class AutoAllocate implements Runnable {
                                                 sS.getDisplayName(USERSYS));
                                         areForwardsFree = false;
                                     } else if (_dispatcher.checkBlocksNotInAllocatedSection(sS, ar) != null) {
-                                        log.debug("{}: Forward section [{}] is in conflict with [{}]",
-                                                trainName, sS.getUserName(),
-                                                _dispatcher.checkBlocksNotInAllocatedSection(sS, ar));
+                                        if (log.isDebugEnabled()) {
+                                            log.debug("{}: Forward section [{}] is in conflict with [{}]",
+                                                    trainName, sS.getUserName(),
+                                                    _dispatcher.checkBlocksNotInAllocatedSection(sS, ar));
+                                        }
                                         areForwardsFree = false;
                                     } else if (checkBlocksNotInReservedSection(activeTrain, sS) != null) {
-                                        log.debug("{}: Forward section [{}] is in conflict with [{}]",
-                                                trainName, sS.getDisplayName(),
-                                                checkBlocksNotInReservedSection(activeTrain, sS).getDisplayName());
+                                        if (log.isDebugEnabled()) {
+                                            log.debug("{}: Forward section [{}] is in conflict with [{}]",
+                                                    trainName, sS.getDisplayName(),
+                                                    checkBlocksNotInReservedSection(activeTrain, sS).getDisplayName());
+                                        }
                                         areForwardsFree = false;
 
                                     } else if (reservedSections.get(sS.getSystemName()) != null &&
