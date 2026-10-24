@@ -5,8 +5,11 @@ import jmri.NamedBean;
 /**
  * Comparator for JMRI NamedBeans via their User Names.
  * <p>
- * If the User Names are both non-null and are not equal, uses the {@link AlphanumComparator},
- * otherwise uses the {@link NamedBeanComparator}.
+ * If the User Names are both non-null and the {@link AlphanumComparator} tells
+ * them apart, uses that order, otherwise uses the beans' own
+ * {@link NamedBean#compareTo} order. The {@link AlphanumComparator} treats
+ * names such as "Siding 7" and "Siding 07" as equal, so those also fall back to
+ * the beans' own order.
  *
  * @param <B> supported type of NamedBean
  */
@@ -31,11 +34,8 @@ public class NamedBeanUserNameComparator<B extends NamedBean> implements java.ut
         if (! (s1 == null || s1.isEmpty()) && ! (s2 == null || s2.isEmpty())) {
             int result = comparator.compare(s1, s2);
             if (result == 0) {
-                // names such as "Siding 7" and "Siding 07" are still different
-                result = Integer.signum(s1.compareTo(s2));
-            }
-            if (result == 0) {
-                // same user name, e.g. on beans of different types
+                // the user names don't decide the order, e.g. "Siding 7" and
+                // "Siding 07", or the same user name on beans of different types
                 result = n1.compareTo(n2);
             }
             return result;
