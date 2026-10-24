@@ -939,14 +939,29 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
     }
 
+    /**
+     * Handles Block sensor going UNKNOWN: the value is cleared.
+     * <p>
+     * The time is recorded as for a Block going unoccupied, so that the value
+     * is restored if the sensor goes active again within a short time, for
+     * example after a brief loss of the connection.
+     */
     public void goingUnknown() {
         setValue(null);
         setState(UNKNOWN);
+        _timeLastInactive = Instant.now();
     }
 
+    /**
+     * Handles Block sensor going INCONSISTENT: the value is cleared.
+     * <p>
+     * The time is recorded as for a Block going unoccupied, so that the value
+     * is restored if the sensor goes active again within a short time.
+     */
     public void goingInconsistent() {
         setValue(null);
         setState(INCONSISTENT);
+        _timeLastInactive = Instant.now();
     }
 
     /**
