@@ -137,7 +137,7 @@ public class PositionablePopupUtil {
 
         popup.add(edit);
         
-        // Handle special case of columns in a MemoryInputIcon.
+        // Handle special case of columns in a PositionableJPanelWithColumns.
         // This is done via reflection to avoid passing a parameter
         // through a large number of call layers.
         if (_parent instanceof PositionableJPanelWithColumns) {
