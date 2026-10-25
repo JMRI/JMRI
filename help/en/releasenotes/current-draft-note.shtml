@@ -928,6 +928,10 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
+            <ii>Previously, you had to reload a panel window to pick up
+                any changes to icon graphics settings: background color, font, 
+                border color, etc.  The server and panel code has been updated to automatically
+                do that update when any of those parameters change.
             <li>Previously, some colors would display differently on web clients
                 from their appearance on a native JMRI screen.  This was most
                 noticeable with green, light and dark grey, and orange.  JMRI
