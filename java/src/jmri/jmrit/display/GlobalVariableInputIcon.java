@@ -35,10 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright (C) 2022
  * @since 2.7.2
  */
-public class GlobalVariableInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new PositionableJTextField();
-    int _nCols;
+public class GlobalVariableInputIcon extends PositionableJPanelWithColumns implements java.beans.PropertyChangeListener {
 
     // the associated GlobalVariable object
     private NamedBeanHandle<GlobalVariable> namedGlobalVariable;
@@ -136,11 +133,6 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<GlobalVariable> getNamedGlobalVariable() {
         return namedGlobalVariable;
     }
@@ -150,10 +142,6 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
             return null;
         }
         return namedGlobalVariable.getBean();
-    }
-
-    public int getNumColumns() {
-        return _nCols;
     }
 
     // update icon as state of GlobalVariable changes
