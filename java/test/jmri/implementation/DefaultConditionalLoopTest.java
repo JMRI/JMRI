@@ -3,6 +3,7 @@ package jmri.implementation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -166,12 +167,13 @@ public class DefaultConditionalLoopTest {
 
     /**
      * A ring of 200 Logixes is too long for the re-trigger check to stop
-     * before the stack is used up; the stack overflow is then caught in the
-     * outermost calculation, so the sensor change that started it returns
-     * normally and the sensor's other listeners are still told.
+     * before the stack is used up. The stack overflow is fatal, so it is not
+     * handled: it is logged in the outermost calculation, naming where the
+     * calculations started, and passed on to the sensor change that started
+     * them.
      */
     @Test
-    public void testVeryLongLoopIsStopped() throws JmriException {
+    public void testVeryLongLoopIsLogged() throws JmriException {
         SensorManager sm = InstanceManager.sensorManagerInstance();
         int length = 200;
         for (int i = 0; i < length; i++) {
@@ -186,14 +188,13 @@ public class DefaultConditionalLoopTest {
         }
         makeLogix("IX" + (1999 + length), "IS2000", Sensor.ACTIVE, Sensor.INACTIVE, "IS" + (1999 + length), "IS2999")
                 .activateLogix();
-        int[] seen = new int[1];
-        gate.addPropertyChangeListener(Sensor.PROPERTY_KNOWN_STATE, e -> seen[0]++);
+        assertThrows(StackOverflowError.class, () -> gate.setKnownState(Sensor.ACTIVE),
+                "the stack overflow is passed on");
 
-        gate.setKnownState(Sensor.ACTIVE);   // on master this throws StackOverflowError
-
-        assertEquals(1, seen[0], "a listener added after the Logix is still told about the change");
-        assertNotNull(JUnitAppender.checkForMessageStartingWith("Logix calculations started by"),
-                "the stack overflow is logged");
+        LogEvent error = JUnitAppender.checkForMessageStartingWith("Logix calculations started by");
+        assertNotNull(error, "the stack overflow is logged");
+        assertTrue(error.getMessage().getFormattedMessage().contains("IX2199C1"),
+                "the message names where the calculations started: " + error.getMessage().getFormattedMessage());
         JUnitAppender.suppressErrorMessageStartsWith("Logix loop stopped");
     }
 
