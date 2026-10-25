@@ -187,8 +187,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         } else if (addrClosed.match(f)) {
             int state = (!getInverted() ? CLOSED : THROWN);
@@ -196,8 +195,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         }
     }
@@ -220,8 +218,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         } else if (addrClosed.match(f)) {
             int state = (!getInverted() ? CLOSED : THROWN);
@@ -229,8 +226,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         } else if (addrThrown.matchRequest(f)) {
             sendResponseToQuery();

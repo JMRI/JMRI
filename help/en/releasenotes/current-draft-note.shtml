@@ -909,6 +909,12 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>Turnouts with DELAYED feedback no longer flip back to an
+                earlier position when two commands are given within the feedback
+                delay, including CBUS turnouts changed by events on the bus, and
+                turnout commands spaced by the connection's output interval
+                (Routes, Dispatcher, matrix signal masts) are always sent in the
+                order requested.</li>
             <li>Editing a turnout's automation settings from the "Edit Auto" button
                 in the Turnout Table or the Feedback tab of the Edit Turnout window
                 now actually saves the change.
