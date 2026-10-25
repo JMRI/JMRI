@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -7,8 +9,10 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import jmri.Block;
@@ -24,7 +28,9 @@ import org.junit.jupiter.api.*;
  * Check that LayoutBlock.getNextBestBlock chooses between routes of equal
  * cost by fewer hops and then by the next block system name, rather than by
  * the order in which the routes were learnt. Each choice is checked with the
- * routes held in their learnt order and in reverse order.
+ * routes held in their learnt order and in reverse order. The choices are
+ * made on the layout thread, where the panel's signal mast logic uses the
+ * same routes.
  *
  * @author Keith Bruce Copyright (C) 2026
  */
@@ -74,23 +80,40 @@ public class LayoutBlockRouteTieBreakTest {
         return lb.getRouteNextBlockAtIndex(expected);
     }
 
-    private static void reverseRoutes(LayoutBlock lb) throws ReflectiveOperationException {
-        Field field = LayoutBlock.class.getDeclaredField("routes");
-        field.setAccessible(true);
-        Collections.reverse((List<?>) field.get(lb));
+    /**
+     * One choice made by getNextBestBlock among routes of equal cost.
+     */
+    private static final class TieChoice {
+
+        final String where;
+        final boolean reversed;
+        final Block expected;
+        final Block chosen;
+        final boolean firstHeldIsExpected;
+
+        TieChoice(String where, boolean reversed, Block expected, Block chosen, boolean firstHeldIsExpected) {
+            this.where = where;
+            this.reversed = reversed;
+            this.expected = expected;
+            this.chosen = chosen;
+            this.firstHeldIsExpected = firstHeldIsExpected;
+        }
     }
 
-    @Test
-    public void testEqualCostRoutesChosenByRule() throws Exception {
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
-        File f = new File("java/test/jmri/jmrit/display/layoutEditor/load/Jlang-Panel-4-19-6.xml");
-        assertTrue(cm.load(f), "panel loaded");
-        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-        ThreadingUtil.runOnGUI(() -> lbm.initializeLayoutBlockPaths());
-        JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
-
-        int ties = 0;
-        int firstLearntNotChosen = 0;
+    /**
+     * Find every choice between routes of equal cost and make it with the
+     * routes held in their learnt order and in reverse order. The routes are
+     * read and reordered here, so this must run on the layout thread: the
+     * signal mast logic of the loaded panel searches the same routes there
+     * once routing has stabilised, and getNextBestBlock returns an index into
+     * them.
+     *
+     * @param lbm        the layout block manager
+     * @param routeLists the routes list of each layout block
+     * @return the choices made
+     */
+    private static List<TieChoice> makeTieChoices(LayoutBlockManager lbm, Map<LayoutBlock, List<?>> routeLists) {
+        List<TieChoice> choices = new ArrayList<>();
         for (LayoutBlock lb : lbm.getNamedBeanSet()) {
             Set<Block> destinations = new LinkedHashSet<>();
             Set<Block> neighbours = new LinkedHashSet<>();
@@ -110,7 +133,6 @@ public class LayoutBlockRouteTieBreakTest {
                     if (candidates.size() < 2) {
                         continue;
                     }
-                    ties++;
                     String where = "at " + lb.getDisplayName() + " from " + previous.getDisplayName()
                             + " to " + dest.getDisplayName();
                     Block expected = expectedNextBlock(lb, candidates);
@@ -118,20 +140,47 @@ public class LayoutBlockRouteTieBreakTest {
                     // the choice must be the same whichever route was learnt first
                     for (int order = 0; order < 2; order++) {
                         List<Integer> inOrder = lowestMetricRoutes(lb, previous, dest);
-                        if (lb.getRouteNextBlockAtIndex(inOrder.get(0)) != expected) {
-                            firstLearntNotChosen++;
-                        }
+                        boolean firstHeldIsExpected = lb.getRouteNextBlockAtIndex(inOrder.get(0)) == expected;
                         int chosen = lb.getNextBestBlock(previous, dest, new ArrayList<>(), METRIC);
-                        assertTrue(chosen >= 0, "a route is chosen " + where);
-                        assertSame(expected, lb.getRouteNextBlockAtIndex(chosen),
-                                where + (order == 0 ? "" : " with the routes held in reverse order"));
-                        reverseRoutes(lb);
+                        choices.add(new TieChoice(where, order == 1, expected,
+                                chosen < 0 ? null : lb.getRouteNextBlockAtIndex(chosen), firstHeldIsExpected));
+                        Collections.reverse(routeLists.get(lb));
                     }
                 }
             }
         }
-        assertTrue(ties > 0, "panel has routes of equal cost");
-        assertTrue(firstLearntNotChosen > 0, "some equal cost routes were learnt before the one chosen");
+        return choices;
+    }
+
+    @Test
+    public void testEqualCostRoutesChosenByRule() throws Exception {
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        File f = new File("java/test/jmri/jmrit/display/layoutEditor/load/Jlang-Panel-4-19-6.xml");
+        assertTrue(cm.load(f), "panel loaded");
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        ThreadingUtil.runOnGUI(() -> lbm.initializeLayoutBlockPaths());
+        JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
+
+        Field routesField = LayoutBlock.class.getDeclaredField("routes");
+        routesField.setAccessible(true);
+        Map<LayoutBlock, List<?>> routeLists = new HashMap<>();
+        for (LayoutBlock lb : lbm.getNamedBeanSet()) {
+            routeLists.put(lb, (List<?>) routesField.get(lb));
+        }
+
+        List<TieChoice> choices = ThreadingUtil.runOnGUIwithReturn(() -> makeTieChoices(lbm, routeLists));
+
+        assertNotNull(choices, "choices made on the layout thread");
+        assertFalse(choices.isEmpty(), "panel has routes of equal cost");
+        int firstHeldNotChosen = 0;
+        for (TieChoice c : choices) {
+            assertNotNull(c.chosen, "a route is chosen " + c.where);
+            assertSame(c.expected, c.chosen, c.where + (c.reversed ? " with the routes held in reverse order" : ""));
+            if (!c.firstHeldIsExpected) {
+                firstHeldNotChosen++;
+            }
+        }
+        assertTrue(firstHeldNotChosen > 0, "some equal cost routes were learnt before the one chosen");
     }
 
     @BeforeEach
