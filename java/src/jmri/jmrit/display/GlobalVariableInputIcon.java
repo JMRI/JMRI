@@ -152,6 +152,11 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         return namedGlobalVariable.getBean();
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getGlobalVariable();
+    }
+
     public int getNumColumns() {
         return _nCols;
     }

@@ -84,6 +84,11 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         return light;
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getLight();
+    }
+
     // display icons
     String offLName = "resources/icons/smallschematics/lights/cross-on.png";
     NamedIcon off = new NamedIcon(offLName, offLName);

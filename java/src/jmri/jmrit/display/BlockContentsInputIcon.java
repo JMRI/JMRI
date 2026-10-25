@@ -152,6 +152,11 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         return namedBlock.getBean();
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getBlock();
+    }
+
     public int getNumColumns() {
         return _nCols;
     }

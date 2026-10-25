@@ -148,6 +148,11 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return _portal;
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return null;
+    }
+
     @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="Portals always have userNames")
     public void setPortal(Portal portal) {
         if (portal == null) {

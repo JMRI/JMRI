@@ -151,6 +151,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         return namedMemory.getBean();
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getMemory();
+    }
+
     public int getNumColumns() {
         return _nCols;
     }
