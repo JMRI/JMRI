@@ -17,6 +17,7 @@ public class MarklinMenuTest {
         var memo = new jmri.jmrix.marklin.MarklinSystemConnectionMemo();
         MarklinMenu action = new MarklinMenu(memo);
         Assertions.assertNotNull( action, "exists");
+        Assertions.assertTrue(action.getItemCount() > 0, "Menu has items");
         memo.dispose();
     }
 
