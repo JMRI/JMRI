@@ -979,17 +979,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @param e propChgEvent
      */
     void handleBlockChange(PropertyChangeEvent e) {
-        // Update memory object if there is one
-        Memory m = getMemory();
-        if ((m != null) && (block != null) && !suppressNameUpdate) {
-            // copy block value to memory if there is a value
-            Object val = block.getValue();
-            if (val != null) {
-                if (!(val instanceof RosterEntry) && !(val instanceof Reportable)) {
-                    val = val.toString();
-                }
-            }
-            m.setValue(val);
+        if (!suppressNameUpdate) {
+            updateMemoryFromBlock();
         }
 
         if ( Block.PROPERTY_USERNAME.equals(e.getPropertyName())) {
@@ -1052,12 +1043,35 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Set/reset update of memory name when block goes from occupied to
      * unoccupied or vice versa. If set is true, name update is suppressed. If
-     * set is false, name update works normally.
+     * set is false, name update works normally, and the memory is set from
+     * the block at once, since the block may have changed while updates were
+     * suppressed.
      *
      * @param set true, update suppress. false, update normal
      */
     public void setSuppressNameUpdate(boolean set) {
+        boolean resume = suppressNameUpdate && !set;
         suppressNameUpdate = set;
+        if (resume) {
+            // The block may have changed while updates were suppressed
+            updateMemoryFromBlock();
+        }
+    }
+
+    /**
+     * Copy the block value to the memory, if there is one.
+     */
+    private void updateMemoryFromBlock() {
+        Memory m = getMemory();
+        if ((m != null) && (block != null)) {
+            Object val = block.getValue();
+            if (val != null) {
+                if (!(val instanceof RosterEntry) && !(val instanceof Reportable)) {
+                    val = val.toString();
+                }
+            }
+            m.setValue(val);
+        }
     }
 
 
