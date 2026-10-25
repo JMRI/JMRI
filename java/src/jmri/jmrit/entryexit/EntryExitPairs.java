@@ -98,7 +98,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     boolean allocateToDispatcher = false;
     boolean absSignalMode = false;
     boolean quietFail = false;      // Suppress the dialog when a route allocation fails.
-    boolean skipGuiFix = false;     // Skip the thread for setRoute.  This prevents double-click chaining.
+    boolean skipGuiFix = false;     // Hold back NX button clicks while a route is set.  This keeps double-click chaining.
 
     public static final int PROMPTUSER = 0x00;
     public static final int AUTOCLEAR = 0x01;
@@ -720,6 +720,72 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         } else {
             removeRemainingRoute(request);
         }
+    }
+
+    /**
+     * Number of routes whose turnouts are being set.
+     */
+    private int routesBeingSet = 0;
+
+    /**
+     * NX button clicks held back until no route is being set.
+     */
+    private final List<Runnable> heldButtonClicks = new ArrayList<>();
+
+    /**
+     * Called by a destination point when it starts to set its route.
+     */
+    synchronized void routeSettingStarted() {
+        routesBeingSet++;
+    }
+
+    /**
+     * Called by a destination point when it has finished setting its route,
+     * after the result has been reported with routeSettingDone. When no other
+     * route is being set, the NX button clicks held back are handled on the
+     * layout thread, in the order they happened.
+     */
+    void routeSettingFinished() {
+        List<Runnable> held;
+        synchronized (this) {
+            routesBeingSet--;
+            if (routesBeingSet > 0 || heldButtonClicks.isEmpty()) {
+                return;
+            }
+            held = new ArrayList<>(heldButtonClicks);
+            heldButtonClicks.clear();
+        }
+        ThreadingUtil.runOnLayoutEventually(() -> held.forEach(Runnable::run));
+    }
+
+    /**
+     * With the old GUI behavior, hold back a click on an NX button while a
+     * route is being set. The panel used to wait until the turnouts of a route
+     * were set, so a second click on the destination button was handled after
+     * the route had been set and started the next route instead of cancelling
+     * this one. The turnouts are now set without making the panel wait, so the
+     * click is held back until the route has been set. Held clicks are handled
+     * in the order they happened.
+     *
+     * @param click the handling of the click, run later if it is held back
+     * @return true if the click has been held back
+     */
+    synchronized boolean holdButtonClick(Runnable click) {
+        if (!skipGuiFix || routesBeingSet == 0) {
+            return false;
+        }
+        heldButtonClicks.add(click);
+        return true;
+    }
+
+    /**
+     * Check if a request to set a route is still being handled.
+     *
+     * @return true if a route is being set or a route over several NX pairs
+     *         has pairs left to set
+     */
+    synchronized boolean isSettingRoutes() {
+        return routesBeingSet > 0 || !routesInProgress.isEmpty() || !routesToSet.isEmpty();
     }
 
     private List<Object> destinationList = new ArrayList<>();

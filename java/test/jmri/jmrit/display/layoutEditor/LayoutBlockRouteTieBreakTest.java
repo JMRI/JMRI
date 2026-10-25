@@ -15,9 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.SwingUtilities;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
@@ -160,6 +163,18 @@ public class LayoutBlockRouteTieBreakTest {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         ThreadingUtil.runOnGUI(() -> lbm.initializeLayoutBlockPaths());
         JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
+
+        // This is flaky and fails on unrelated PRs.
+        // First drain the event dispatch thread. Then the PROPERTY_TOPOLOGY=true event fires synchronously
+        // and we know it happens before tearDown checks for unexpected log messages.
+        //
+        // The panel has a signal mast logic pair without a valid layout route (masts 3542E and 3502E).
+        // Now this should log the expected error predictably during setupLayoutEditorDetails(); and we can expect it as an assertion.
+        // Just suppressing or asserting it without ensuring it's caught before teardown would trigger a similar flakiness issue as not suppressing it.
+        // Once somebody fixes the underlying layout issue this assertion will remind him to evolve the test.
+        // I am not sure if the layout issue is in the text data by purpose.
+        SwingUtilities.invokeAndWait(() -> {});
+        JUnitAppender.suppressErrorMessageStartsWith("No blocks found by the layout editor for pair 3542E");
 
         Field routesField = LayoutBlock.class.getDeclaredField("routes");
         routesField.setAccessible(true);

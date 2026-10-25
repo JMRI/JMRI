@@ -115,6 +115,10 @@
                 retry interval and count. <code>DCCppTurnout</code> now defers to the configured
                 automation like every other connection type
                 (<a href="https://github.com/JMRI/JMRI/issues/15471">issue #15471</a>).</li>
+                <li>DCC-EX: messages sent by EXRAIL <code>MESSAGE()</code> commands are now
+                shown in a new DCC-EX Messages window, which opens automatically when one
+                arrives. A Messages display can also be added to Panel Editor and Layout
+                Editor panels.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -700,6 +704,12 @@
               JMRI was restarted. This includes a Logix that was loaded
               disabled and enabled later, which could not be stopped this way
               even where the delete did deactivate it.</li>
+          <li>Logix: Logixes whose actions trigger each other in an endless
+              loop are now stopped, and an error names the Conditionals in
+              the loop. Before, the loop ran until Java's stack overflowed,
+              and other listeners on the sensor or turnout that started it
+              were skipped. A loop through so many Logixes that the stack
+              still overflows first now logs where it started.</li>
         </ul>
 
     <h3>LogixNG</h3>
