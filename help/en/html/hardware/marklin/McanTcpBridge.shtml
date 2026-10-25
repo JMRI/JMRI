@@ -45,9 +45,10 @@ java -jar dist/mcan-tcp-bridge.jar --port /dev/ttyUSB0 # Linux
         <li><strong>Configure JMRI:</strong> Add CS2 Ethernet connection to <code>localhost:15731</code></li>
       </ol>
 
-      <h3>Port Specification Format</h3>
+      <h3>Local Serial Port Specification</h3>
 
-      <p>The <code>--port</code> parameter accepts flexible specifications:</p>
+      <p>The bridge's <code>--port</code> option names one or more local serial devices. It maps each serial device to a TCP listening port.
+        Specify a TCP port after the serial device, otherwise the default port 15731 and following ports are used.</p>
 
       <pre>&lt;serial&gt;[:&lt;bind_addr&gt;][:&lt;tcp_port&gt;][,&lt;serial&gt;[:&lt;bind_addr&gt;][:&lt;tcp_port&gt;],...]</pre>
 
@@ -195,22 +196,32 @@ java -jar mcan-tcp-bridge.jar --port COM3:50000,COM4:50001
       <h3>Command Line Options</h3>
 
       <pre>
-Usage: java -jar mcan-tcp-bridge.jar --port &lt;port_spec&gt; [options]
+Usage: java -jar mcan-tcp-bridge.jar [--port &lt;serial_spec&gt;] [--client-for &lt;target&gt;] [options]
 
-Port Specification (--port / -p):
+Local serial devices (--port / -p):
   &lt;serial&gt;[:&lt;bind_addr&gt;][:&lt;tcp_port&gt;][,&lt;serial&gt;[:&lt;bind_addr&gt;][:&lt;tcp_port&gt;],...]
 
   Windows: COM1, COM3, etc.
   Linux:   /dev/ttyUSB0, /dev/ttyACM0, etc.
   macOS:   /dev/cu.usbserial-*
 
-  - TCP port is embedded in the port specification (no separate --tcp flag)
+  - --port takes serial device names, not a TCP port number
+  - TCP listening port is embedded in each serial device specification
   - First device without explicit TCP port gets 15731; subsequent devices
     get auto-incremented ports (15732, 15733, ...)
   - Bind address defaults to all interfaces (0.0.0.0) when omitted
 
 Options:
-  --port, -p &lt;spec&gt;    Port specification (required, see above)
+  --port, -p &lt;spec&gt;    Local serial device specification (required unless using --client-for)
+  --client-for, -c &lt;target&gt; Connect to a remote CS2/bridge TCP server.
+                       Frames from remote are forwarded to local TCP clients
+                       and serial. Repeat for multiple upstreams.
+                       target forms:
+                         host                  default remote port 15731 for the first local bridge
+                         host:remotePort       custom remote port on the first local bridge
+                         host:COM3,COM4        default remote port connects to two selected local bridges
+                         host:remotePort:COM3,COM4
+                                               custom remote port connects to two selected local bridges
   --baud, -b &lt;rate&gt;    Serial baud rate for all devices (default: 500000)
   --monitor, -m        Enable message monitoring to stdout (decoded MCAN frames)
   --list, -l           List available serial ports and exit
@@ -222,7 +233,43 @@ Examples:
   java -jar mcan-tcp-bridge.jar --port COM3 --monitor
   java -jar mcan-tcp-bridge.jar --port COM3:127.0.0.1:15731
   java -jar mcan-tcp-bridge.jar --port COM2,COM3:49999,COM4:50000
+  java -jar mcan-tcp-bridge.jar --port COM3 --client-for 192.168.1.20
+  java -jar mcan-tcp-bridge.jar --port COM3,COM4 --client-for 192.168.1.20:50000:COM4
       </pre>
+
+      <h2>MCAN Poke Tool</h2>
+
+      <p>The standalone <code>marklin-poke</code> tool sends raw 13-byte MCAN frames to a running
+      bridge and prints frames received while it watches the bus. Build it with
+      <code>ant mcan-poke-jar</code>. In contrast to the bridge's <code>--port</code>, the poke
+      tool's <code>--port</code> is a numeric TCP port.</p>
+
+      <pre>
+java -jar dist/marklin-poke.jar --host localhost --port 15731 --command "AA BB CC DD EE FF 00 11 22 33 44 55 66"
+      </pre>
+
+      <p><code>--host</code> defaults to <code>localhost</code> and <code>--port</code> defaults
+      to <code>15731</code>. Each comma-separated frame in <code>--command</code> must contain
+      exactly 13 bytes of hexadecimal data. Spaces within a frame are ignored. Optional
+      <code>--padding &lt;ms&gt;</code> sets the delay between frames (default 50 ms) and
+      <code>--watch &lt;s&gt;</code> sets the time to collect replies (default 5 seconds).</p>
+
+      <h3>Bridge Relay Integration Test</h3>
+
+      <p><code>scripts/test-mcan-bridge-relay.sh</code> demonstrates the bridge and
+      <code>marklin-poke</code> working together as a local integration test and development aid.
+      After building both JARs run it from the JMRI repository root:</p>
+
+      <pre>
+ant mcan-tcp-bridge-jar mcan-poke-jar
+bash scripts/test-mcan-bridge-relay.sh
+      </pre>
+
+      <p>The script starts two bridges on local TCP ports, connects one to the other with
+      <code>--client-for</code> and uses <code>marklin-poke</code> to send test frames and check
+      that they are relayed in both directions. It does not really use serial devices and performs
+      bridge forwarding without MCAN hardware. The script uses ports <code>50500</code> and
+      <code>50501</code>. Make sure they are available before running it.</p>
 
       <h2>Connecting JMRI to the Bridge</h2>
 
@@ -239,7 +286,7 @@ Examples:
             <li><strong>System connection</strong>: Command Station 2 (CS2)</li>
             <li><strong>Connection</strong>: Network Connection (TCP)</li>
             <li><strong>IP Address/Host Name</strong>: <code>localhost</code> (or IP of bridge computer)</li>
-            <li><strong>Port</strong>: <code>15731</code> (or custom port if specified)</li>
+            <li><strong>Port</strong>: <code>15731</code>(currently hardcoded as CS2/CS3 cannot customize the port in current firmware)</li>
           </ul>
         </li>
         <li>Click <strong>Save</strong> and restart JMRI</li>
@@ -247,7 +294,7 @@ Examples:
 
       <h2>Hot-Plug Support</h2>
 
-      <p>The bridge supports USB hot-plugging without requiring a restart:</p>
+      <p>The bridge supports USB hotplugging without requiring a restart:</p>
 
       <ul>
         <li><strong>Starting without devices</strong>: Bridge can start even if the MCAN adapter is not plugged in or powered off</li>
@@ -272,7 +319,7 @@ java -jar mcan-tcp-bridge.jar --port COM3 --monitor
         <li>Human-readable command name and parameters</li>
         <li>Request or Reply flag</li>
         <li>Target address and protocol (DCC, MM2, MFX, etc.)</li>
-        <li>Raw hex bytes of the 13-byte CAN frame</li>
+        <li>Raw hex bytes of the 13 byte CAN frame</li>
       </ul>
 
       <h2>Running as a Service</h2>
@@ -283,7 +330,7 @@ java -jar mcan-tcp-bridge.jar --port COM3 --monitor
 
       <pre>
 [Unit]
-Description=MCAN Protocol Serial-to-TCP Bridge
+Description=MCAN Protocol Serial to TCP Bridge
 After=network.target
 
 [Service]

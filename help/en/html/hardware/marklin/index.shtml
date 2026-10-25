@@ -94,6 +94,11 @@
       multiple JMRI instances to share a single CC-Schnitte serial adapter over the network. It bridges
       MCAN serial adapters to TCP/IP, enabling remote access and multiple concurrent connections.</p>
 
+      <h4>MCAN Poke Tool</h4>
+      <p>The standalone <code>marklin-poke</code> tool sends raw MCAN frames to a running bridge.
+      See the <a href="McanTcpBridge.shtml">bridge documentation</a> for build instructions and
+      command-line options.</p>
+
       <h4>Monitor Marklin Commands</h4>
       <img src="images/MarklinCommandMonitor.png" width="410" height="88" alt=
       "Command Monitor Tool">

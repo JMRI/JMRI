@@ -103,7 +103,7 @@ long baseAddr = MarklinCanCodec.getBaseAddress(address);
         <tr>
           <td>4</td>
           <td>DLC</td>
-          <td>Data Length Code (0-8 data bytes only, per CAN 2.0B)</td>
+          <td>Data Length Code (0-8 bytes in the CAN payload)</td>
         </tr>
         <tr>
           <td>5-8</td>
@@ -113,7 +113,7 @@ long baseAddr = MarklinCanCodec.getBaseAddress(address);
         <tr>
           <td>9-12</td>
           <td>Data</td>
-          <td>0-4 data bytes</td>
+          <td>Data bytes exposed by <code>DecodedMessage.getDataByte(int)</code></td>
         </tr>
       </table>
 
@@ -236,15 +236,15 @@ private static void appendCommand(MarklinCanCodec.DecodedMessage decoded, String
 
       <h3>MarklinMessageFormatter</h3>
 
-      <p>Formats decoded MCAN messages for display and logging. Used by both JMRI's
+      <p>Formats raw MCAN frames for display and logging. Used by both JMRI's
       <code>MarklinMon</code> monitor pane and the standalone MCAN TCP Bridge monitor mode.</p>
 
       <pre>
-// Format a decoded message with device identification
-String text = MarklinMessageFormatter.format(decoded, rawData, null, true);
+// Format a raw frame with device identification
+String text = MarklinMessageFormatter.formatRaw(rawData, null, true);
 
 // Format directly from raw bytes (standalone, no i18n)
-String text = MarklinMessageFormatter.formatRaw(rawData, null, true);
+String text = MarklinMessageFormatter.formatRaw(rawData, null);
       </pre>
 
       <p>Output example:</p>
@@ -334,8 +334,10 @@ manager.discoverMarklinDevices();
 manager.discoverAllCdBDevices();
 
 // Discover one specific CdB class
-manager.discoverCdBDevice(CdBMessage.CdBDeviceClass.WEICHEN_CHEF_MAGNET);
+manager.discoverCdBDevice(CdBDeviceClass.WEICHEN_CHEF_MAGNET);
       </pre>
+      <p>Here <code>CdBDeviceClass</code> is
+      <code>jmri.jmrix.marklin.mcan.device.CdBDeviceClass</code>.</p>
 
       <h3>CdBMessage</h3>
 
@@ -343,7 +345,7 @@ manager.discoverCdBDevice(CdBMessage.CdBDeviceClass.WEICHEN_CHEF_MAGNET);
       using <code>MarklinCanCodec.builder()</code> without requiring a JMRI runtime.</p>
 
       <pre>
-// Broadcast ping to all CdB devices
+// General CdB ping
 int[] frame = CdBMessage.createPing(hash);
 
 // Class-specific zero-DLC discovery ping
@@ -356,16 +358,21 @@ int[] frame = CdBMessage.createReadParam(0x22, 3, paramIndex, hash);
 int[] frame = CdBMessage.createWriteParam(0x22, 3, paramIndex, value, hash);
       </pre>
 
-      <p>Supported CdB device classes:</p>
+      <p><code>CdBMessage.createClassPing</code> uses the nested
+      <code>CdBMessage.CdBDeviceClass</code> enum. Device discovery uses
+      <code>jmri.jmrix.marklin.mcan.device.CdBDeviceClass</code>:</p>
       <table>
-        <tr><th>Class ID</th><th>Device</th></tr>
-        <tr><td>0x0B</td><td>StromSniffer</td></tr>
-        <tr><td>0x0D</td><td>GleisReporter</td></tr>
-        <tr><td>0x21</td><td>ReporterChef 002</td></tr>
-        <tr><td>0x22</td><td>WeichenChef Magnet M 012 / deLuxe 007</td></tr>
-        <tr><td>0x23</td><td>WeichenChef AC 002</td></tr>
-        <tr><td>0x26</td><td>WeichenChef Basic 002</td></tr>
-        <tr><td>0x27</td><td>WeichenChef Kombi</td></tr>
+        <tr><th>Class ID</th><th>Device</th><th>Protocol</th></tr>
+        <tr><td>0x03</td><td>GleisReporter Jumbo</td><td>NEW</td></tr>
+        <tr><td>0x0B</td><td>StromSniffer</td><td>NEW</td></tr>
+        <tr><td>0x0D</td><td>GleisReporter</td><td>NEW</td></tr>
+        <tr><td>0x21</td><td>ReporterChef 002</td><td>NEW</td></tr>
+        <tr><td>0x22</td><td>WeichenChef Magnet M / deLuxe</td><td>NEW</td></tr>
+        <tr><td>0x23</td><td>WeichenChef AC</td><td>NEW</td></tr>
+        <tr><td>0x26</td><td>WeichenChef Basic</td><td>NEW</td></tr>
+        <tr><td>0x27</td><td>WeichenChef Kombi</td><td>NEW</td></tr>
+        <tr><td>0x2A</td><td>WeichenChef Motor</td><td>NEW</td></tr>
+        <tr><td>0x4A</td><td>LampenChef</td><td>OLD</td></tr>
       </table>
 
       <h2>References</h2>
