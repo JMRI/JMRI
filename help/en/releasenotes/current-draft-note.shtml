@@ -26,6 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS sensor, turnout and light addresses: an unsigned
+                    address such as 100001 is treated the same as +100001, node
+                    numbers of 21475 and above no longer overflow, and an out of
+                    range address is reported as invalid instead of throwing an
+                    exception.</li>
                 <li>CBUS programming reports a busy command station or a CV
                     error straight away, instead of waiting for the programming
                     timeout.</li>
@@ -65,6 +70,11 @@
                     layout while a throttle has no session, where previously a
                     speed or function change could go out with an invalid
                     session.</li>
+                <li>A CBUS reporter set to Classic RFID always decodes 5 byte
+                    tags as Classic RFID, whatever the first tag byte, and an
+                    existing reporter's type is never changed by the frames it
+                    receives. A reporter created by a CANRCOM RailCom report is
+                    still set to the self-describing type automatically.</li>
                 <li>The CBUS bootloader checks a hex file before it can be used.
                     The Program button stays disabled until the file has been
                     read without error and its parameters checked; a file with
@@ -74,6 +84,11 @@
                     instead of throwing an exception. The hex file is closed
                     after reading instead of being left open and locked, and
                     short records are padded correctly for the AN247 bootloader.</li>
+                <li>Unplugging a CANUSB4 or other GridConnect USB adapter on
+                    Windows no longer leaves JMRI running a CPU core flat out;
+                    the connection fails and reconnects when the adapter is
+                    plugged back in. Closing a connection no longer replays the
+                    last frame received.</li>
                 <li>GridConnect connections (CANUSB, CANUSB4, CANRS and LCC
                     GridConnect adapters): when the ';' ending a frame is lost,
                     the next frame is now received instead of both being merged
@@ -83,6 +98,9 @@
                     longer also delivered to whichever tool sent the last frame,
                     so a tool window which has been closed stops receiving
                     traffic.</li>
+                <li>CBUS Reporters with erase-on-timeout: reading the same
+                    tag again restarts the timeout, so a tag still being read is
+                    no longer cleared early.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -92,12 +110,36 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCC-EX: turnout commands sent with a Turnout Automation retry policy
+                (e.g. "NoFeedback") were previously sent only once, ignoring the configured
+                retry interval and count. <code>DCCppTurnout</code> now defers to the configured
+                automation like every other connection type
+                (<a href="https://github.com/JMRI/JMRI/issues/15471">issue #15471</a>).</li>
+                <li>DCC-EX: messages sent by EXRAIL <code>MESSAGE()</code> commands are now
+                shown in a new DCC-EX Messages window, which opens automatically when one
+                arrives. A Messages display can also be added to Panel Editor and Layout
+                Editor panels.</li>
             </ul>
 
         <h4>DCC4pc</h4>
             <ul>
-                <li></li>
+                <li>DCC4pc RailCom readers work again: the serial port is
+                    saved in the profile, RailCom addresses and orientation
+                    are reported correctly, and two locos in one block are
+                    both identified. The reader is switched to 62.5 kbps for
+                    faster polling, recovers by itself after a loss of track
+                    power or a short, and the bus speed is restored at
+                    quit.</li>
+                <li>If the DCC4pc interface stops responding, unplug it and
+                    plug it back in: JMRI reconnects by itself without a
+                    restart.</li>
+                <li>CVs can be read and written with Programming on Main
+                    through a DCC4pc reader. Set the connection's Programmer
+                    option to the connection that sends the packets (or leave
+                    it blank to use the default command station), and choose
+                    Dcc4Pc as the Ops Mode Programmer in Preferences,
+                    Defaults. Each CV takes about half a second; any left
+                    Unknown can be picked up with Read changes on sheet.</li>
             </ul>
 
         <h4>Direct</h4>
@@ -184,6 +226,16 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
+                <li>OpenLCB/LCC Signal Masts can no longer 
+                    be defined to use the event ID's that start with 00
+                    as these values are reserved and not to be used.
+                    The value 00.00.00.00.00.00.00.00 was previously the default 
+                    for "this event ID hasn't been configured".
+                    The default is now a blank entry field that doesn't
+                    produce or consume an event.  If you have 
+                    defined any of the signal mast entries to start with 00,
+                    they will be migrated to be empty fields that no longer 
+                    produce or consume an event.</li>
                 <li>Change the default events for the STL Editor IQYZ tables from all zeros to
                     unique zero based events.</li>
             </ul>
@@ -305,7 +357,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>LokSound 5 DCC xxx / LokPilot 5 DCC xxx / LokSound Select xxx: Bring back "Basic Speed Control" pane that was lost in 5.17.3.
+                </li>
             </ul>
 
         <h4>Hattoms</h4>
@@ -493,12 +546,19 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed an intermittent exception that occurred when 
+                detaching one of the programming panes.</li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>An automatic "Head and Tail" train with no stopping sensor
+                 and no speed profile stopping can now draw fully into a
+                 Section before stopping, by watching the Block holding its
+                 tail go unoccupied, as an "Entire Train" train does.
+                 Previously it stopped as soon as the locomotive entered
+                 the Section.</li>
              <li>When the maximum speed of an automatically running train
                  is entered as a scale speed (scale mph or scale km/h),
                  that limit is now applied as entered. Previously it could
@@ -512,6 +572,44 @@
                  scale speed shown for the minimum throttle now follow the
                  "Run in reverse" setting, and the scale km/h entry is no
                  longer labelled as scale mph.</li>
+             <li>Fix TSA Go to Manual and Resume from Manual.</li>
+             <li>Automatic release of Sections no longer releases a Section
+                 when the next Section has not been entered, or when the
+                 train is stopped, waiting or in manual mode.</li>
+             <li>Trains using "Head Only" or "Head and Tail" train
+                 detection must now have a Max Train Length, whether or not
+                 they run automatically. A train without one is refused when
+                 it is added or loaded, with a message saying why. The Max
+                 Train Length field is now shown for these trains even when
+                 they do not run automatically.</li>
+             <li>Sections behind a "Head Only" train are now released using
+                 the train length for every train, not only automatic ones.
+                 Previously a dispatched or manual "Head Only" train had each
+                 Section released as soon as the locomotive left it.</li>
+             <li>For a "Head and Tail" train a Section is now released
+                 using the train length, measured to the head, as for a
+                 "Head Only" train. Previously, if the tail lost detection,
+                 for example through dirty wheels, Sections could be released
+                 while the train was still in them, all the way up to the
+                 head.</li>
+             <li>An automatic train's speed ramp no longer carries on after
+                 the train is halted, and a new ramp no longer runs alongside
+                 an old one when the speed is changed quickly.</li>
+             <li>An automatic train now always finds the correct next Block
+                 in its Section. Before, block or signal changes at the same
+                 moment could give it the wrong Block or none. Reversing or
+                 resetting a train that fills its Section no longer fails.</li>
+             <li>Restarting a train no longer starts allocating before the
+                 release of its old Sections has finished, and no longer
+                 freezes the screen while it waits. A second Restart of a
+                 train that is already being reset is ignored.</li>
+             <li>Automatic release of Sections is faster when many Sections
+                 are allocated, as each check now goes through the allocated
+                 Sections once. Which Sections are released is unchanged.</li>
+             <li>When an automatic train's stop is cancelled, for example
+                 because the signal clears or an allocation arrives, its end,
+                 reversal or reset action is now dropped too. Before, it could
+                 run later, wherever the train next stopped.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -529,36 +627,111 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>With advanced block routing on, through paths whose turnouts
+                were already set when routing started, for example after the
+                start-up state query, are now marked active, so routes
+                through them are found. A route is no longer marked invalid
+                while another active path in the block still uses it, and
+                removed routes and through paths stop listening to their
+                block and turnouts.</li>
+            <li>With advanced block routing on, a block now sends a routing
+                update to its neighbours only when its status (occupied,
+                reserved, empty or unknown) changes, not on every change to
+                the block such as a new reporter value. This reduces the
+                work done on large layouts.</li>
+            <li>Finding the Layout Block for a Block no longer searches
+                every Layout Block each time. This speeds up advanced block
+                routing, Signal Mast Logic, Dispatcher and Entry/Exit on
+                large layouts.</li>
+            <li>With advanced block routing on, the shortest route to a
+                destination is now found when it is the first or only route,
+                so changes to block lengths are passed on through the
+                layout.</li>
+            <li>With advanced block routing on, when two routes to a
+                destination are equally good, the same one is now always
+                chosen: the one with fewer blocks, then by the name of the
+                next block. Before, the choice could change after an
+                unrelated edit to the layout.</li>
+            <li>Layout Editor block routing: the path search now finds
+                routes that exist when the preferred branch has two or more
+                dead-end or occupied sub-branches. Before, NX, Dispatcher ad-hoc
+                routes and Signal Mast Logic could report "no route" in these
+                cases.</li>
+            <li>An allocated block, that is one set to use its extra color,
+                for example by the LogixNG Block action "Alternate Color On"
+                or by a script, now keeps its extra color until it is turned
+                off, for example by the LogixNG Block action "Alternate Color
+                Off". The LogixNG Block expression "Is Allocated" tests this.
+                Before, with advanced block routing on, the block was switched
+                back to its normal color without notice as soon as it became
+                occupied. LogixNG and scripts that set it must now also clear
+                it, for example when the train has left. Dispatcher and
+                Entry/Exit are not affected: they clear their own blocks.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>NX with signal masts: if a train enters the start block
+                    while the route is still being set, the first block of the
+                    route stays protected. Before, it was dropped and the entry
+                    signal could stay clear behind the train.</li>
+                <li>NX: when a train reaches a block of a route without being
+                    seen in the block before it, that block now keeps the value
+                    it already has, for example from RFID, and is only given the
+                    train's value if it has none. A block that is not part of
+                    the route is no longer changed. Block values further along
+                    a route might therefore differ from earlier versions.</li>
+                <li>NX: a route made up of several Entry/Exit pairs now sets
+                    every pair, one after the other. Before, it could stop after
+                    the first pair unless that pair used full interlocking, and
+                    the remaining pairs were then set by the next, unrelated
+                    request.</li>
             </ul>
 
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+          <li>Added a new item to the popup menu on a node line:  Refresh Node Info.
+              This lets you update the info on that line from the node without
+              refreshing the entire table (which can take a while for large networks)</li>
         </ul>
 
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>Logix: a deleted Logix now stops running. Before, deleting
+              an enabled Logix left it setting turnouts and sensors until
+              JMRI was restarted. This includes a Logix that was loaded
+              disabled and enabled later, which could not be stopped this way
+              even where the delete did deactivate it.</li>
         </ul>
 
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>LogixNG formulas: comparing a decimal value with a whole
+              number now gives the right answer. Before, 1.5 == 2 was true and
+              2.5 &lt; 3 was false.</li>
+          <li>LogixNG formulas: the &amp;&amp; and || operators now only
+              evaluate the right-hand side when the left-hand side does not
+              already decide the result, as in most programming languages.
+              This lets a check guard what follows it, for example
+              <code>(x != null) &amp;&amp; (x.y == 1)</code>.
+              A formula that relied on both sides always being evaluated, to
+              call methods for their side effects, must be changed. For
+              example, <code>myArray.add("Hello") || myArray.add(" ") ||
+              myArray.add("World!")</code> now only adds "Hello": add returns
+              true, so || has its answer after the first call and skips the
+              rest. Use <code>myArray.add("Hello") &amp;&amp; myArray.add(" ")
+              &amp;&amp; myArray.add("World!")</code> instead, which carries on
+              while each call returns true.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>A deleted averaging meter no longer keeps reading its source
+                meter in the background.</li>
         </ul>
 
     <h3>OperationsPro</h3>
@@ -569,6 +742,7 @@
             <li>Conductor and Yardmaster now have "Show Cars" in their tool menu.</li>
             <li>Conductor tool menu now has the YardmasterByTrack tool.</li>
             <li>Additional help for the new "On Time" mode of operations.</li>
+            <li>You can now specify the loco color on Manifests and switch lists</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -586,7 +760,17 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Start Up actions for a connection that is disabled or could
+                not open its port are no longer deleted when Preferences are
+                saved. They are skipped, and shown in red in the Start Up list,
+                until the connection is available again, instead of being run
+                against no connection or a different one. When a connection is
+                deleted, the delete question lists its Start Up actions; each
+                one is removed unless it is kept, or moved to another
+                connection of the same type.
+                Removing one of several connections of the same type (for
+                example two CBUS connections) no longer hides the Start Up
+                actions of the others.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -605,7 +789,9 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>When a Route finishes setting its turnouts, its "turnouts
+                aligned" sensor is now set on the layout thread, so Logix,
+                LogixNG and panels watching it get the change safely.</li>
        </ul>
 
     <h3>Scripting</h3>
@@ -631,7 +817,37 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>A Signal Mast Logic mast now goes to danger as soon as a
+                    block on its route becomes occupied, instead of first
+                    waiting for the signal logic delay; changes back towards
+                    clear are still delayed as before.</li>
+                <li>Generating Signal Mast Logic Sections no longer stops at
+                    the first Source:Destination pair whose Section name is
+                    already used by a user-defined Section: only that pair is
+                    skipped. A user-defined Section also keeps its forward
+                    mast.</li>
+                <li>Signal Mast Logic now only sends an aspect to its source
+                    mast when the aspect changes. Before, every re-check of the
+                    logic, for example when a block or turnout changed on any
+                    route from the mast, sent the same aspect again, giving
+                    extra traffic on the layout and a brief flicker on masts
+                    set to reset previous states. A mast whose hardware has
+                    lost its aspect, for example after a power cycle, now keeps
+                    its old output until the aspect next changes.</li>
+                <li>A Signal Mast Logic mast keeps following its logic if
+                    setting its held aspect fails. Before, it stopped changing
+                    until JMRI was restarted. If the held aspect is disabled for
+                    the mast, the danger aspect is used instead.</li>
+                <li>When Signal Mast Logic starts, it now uses the same route
+                    checks as when a block, turnout or mast changes. Before, a
+                    user-set mast overriding an automatic one was tested the
+                    wrong way round, blocks set to "any state" always failed and
+                    Dispatcher reservations were ignored until the first change.
+                    Starting the logic again no longer adds its listeners
+                    twice.</li>
+                <li>Turning off "Use Layout Editor Paths" for one destination of
+                    a source mast no longer stops Signal Mast Logic Sections
+                    being generated for that mast's other destinations.</li>
             </ul>
 
         <h4>Signal Groups</h4>
@@ -666,6 +882,10 @@
             <li>JMRI Desktop Application Throttles  now listen to Roster events, hence, if a roster entry is updated, the throttle will immediately reflect the changes</li>
             <li>Roster functions editor panel is now displayed as a table, the table can be reordered by dragging rows, which will change the order of the displayed functions buttons in the related JMRI throttle window (see <a href="https://github.com/JMRI/JMRI/issues/13700"> #13700 </a>).
                  Only implemented in JMRI Desktop Application Throttles for now, and no impact on keyboard shortcuts (1 or F1 is still F1, whatever the display order)</li>
+            <li>Roster functions editor panel allows to reset function button definitions to NMRA defaults (F0 light, F1 bell, F2 horn (momentary)), or NEM defaults (as per NEM 608), or decoder definition values (see <a href="https://github.com/JMRI/JMRI/issues/15523"> #15523 </a>)</li>
+            <li>Roster functions editor panel now supports drag'n drop of a roster entry (from the roster list), functions definitions from the dropped roster entry will be copied to the edited roster entry</li>
+            <li>Roster functions editor panel now supports drag'n drop of a roster entry function (from another roster media window, function labels pane), that function properties will be copied to the targetted one</li>
+            <li>Throttles Preferences pane allows to define the default throttle layout for new throttles (NMRA of NEM, see bellow), or custom. NMRA selected as a default. (see <a href="https://github.com/JMRI/JMRI/issues/15523"> #15523 </a>)</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -689,6 +909,18 @@
                 turnout commands spaced by the connection's output interval
                 (Routes, Dispatcher, matrix signal masts) are always sent in the
                 order requested.</li>
+            <li>Editing a turnout's automation settings from the "Edit Auto" button
+                in the Turnout Table or the Feedback tab of the Edit Turnout window
+                now actually saves the change.
+                Previously, if the turnout's automation was set to a named operation
+                (rather than "Default"), the edit landed on a disconnected copy and
+                the turnout kept using its old settings. The automation dropdown also
+                now shows the right type (for example "Raw") for a turnout with its
+                own settings, instead of always showing the first one.</li>
+            <li>A turnout with its own custom automation settings now keeps automation
+                turned on after the panel file is reloaded. Previously it came back
+                with automation off, and saving again replaced the custom settings
+                with "Off".</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -706,7 +938,10 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Previously, some colors would display differently on web clients
+                from their appearance on a native JMRI screen.  This was most
+                noticeable with green, light and dark grey, and orange.  JMRI
+                now sends the exact RGB codes to the web client to ensure colors match.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -736,6 +971,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Looking up and renaming items is faster on large layouts,
+                and the memory used by deleted items is now released.</li>
         </ul>
 

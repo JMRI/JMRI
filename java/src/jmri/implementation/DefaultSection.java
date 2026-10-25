@@ -118,6 +118,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * Operational instance variables (not saved between runs).
      */
     private int mState = FREE;
+    private Object mAllocatedTo = null;
     private int mOccupancy = UNOCCUPIED;
     private boolean mOccupancyInitialized = false;
     private Block mFirstBlock = null;
@@ -155,6 +156,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             int old = mState;
             mState = state;
             firePropertyChange(PROPERTY_STATE, old, mState);
+            if (state == Section.FREE) {
+                setAllocatedTo(null);
+            }
             // update the forward/reverse blocking sensors as needed
             Sensor fbSensor = getForwardBlockingSensor();
             Sensor rbSensor = getReverseBlockingSensor();
@@ -2788,6 +2792,27 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return report;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getAllocatedTo() {
+        return mAllocatedTo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAllocatedTo(Object holder) {
+        Object old = mAllocatedTo;
+        if (old == holder) {
+            return;
+        }
+        mAllocatedTo = holder;
+        firePropertyChange(PROPERTY_ALLOCATED_TO, old, holder);
+    }
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSection.class);
 
 }

@@ -163,8 +163,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                                 Bundle.getMessage("ErrorTitle"),
                                 JmriJOptionPane.ERROR_MESSAGE);
                     } else {
+                        automationBox.removeActionListener(automationSelectionListener);
                         automationBox.addItem(newName);
                         automationBox.setSelectedItem(newName);
+                        automationBox.addActionListener(automationSelectionListener);
                     }
                     bean.setTurnoutOperation(null);
                     bean.setTurnoutOperation(currentOperation);
@@ -183,8 +185,14 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                         bean.setInhibitOperation(false);
                         String autoMode = (String) automationBox.getSelectedItem();
                         if (autoMode != null) {
-                            bean.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
-                                    getOperation((autoMode)));
+                            TurnoutOperation selectedOp = InstanceManager.getDefault(TurnoutOperationManager.class).
+                                    getOperation((autoMode));
+                            if (currentOperation != null && currentOperation.isNonce() && !currentOperation.equivalentTo(selectedOp)) {
+                                // attach the private copy holding the edited values
+                                bean.setTurnoutOperation(currentOperation);
+                            } else {
+                                bean.setTurnoutOperation(selectedOp);
+                            }
                         }
                         break;
                 }
@@ -263,7 +271,11 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
 
         if (currentOperation != null) {
             turnoutOperation.remove(config);
-            if (!currentOperation.isNonce()) {
+            TurnoutOperation existing = bean.getTurnoutOperation();
+            if (existing != null && existing.isNonce() && currentOperation.equals(existing.getDefinitive())) {
+                // keep editing the turnout's own copy so its saved values show
+                currentOperation = existing;
+            } else if (!currentOperation.isNonce()) {
                 currentOperation = currentOperation.makeNonce(bean);
             }
             config = TurnoutOperationConfig.getConfigPanel(currentOperation);

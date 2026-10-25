@@ -46,16 +46,36 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
 
-        Object leftValue = null;
+        boolean left = false;
         if (_tokenType != TokenType.BOOLEAN_NOT) {
             // Left value must be calculated _before_ right value is calculated.
             // When a value is calculated, a method might be called, and the
             // order of these calls must be correct.
             // For example, if myArray is an array, the formula might be:
-            //   myArray.add("Hello") || myArray.add(" ") || myArray.add("World!")
-            leftValue = _leftSide.calculate(symbolTable);
+            //   myArray.add("Hello") && myArray.add(" ") && myArray.add("World!")
+            Object leftValue = _leftSide.calculate(symbolTable);
+            if (leftValue == null) leftValue = false;
+
+            if (!(leftValue instanceof Boolean)) {
+                if (TypeConversionUtil.isIntegerNumber(leftValue)) {
+                    // Convert to true or false
+                    leftValue = ((Number)leftValue).longValue() != 0;
+                } else {
+                    throw new CalculateException(Bundle.getMessage("ArithmeticNotBooleanOrIntegerNumberError", leftValue));
+                }
+            }
+
+            left = (Boolean)leftValue;
+
+            // The operators && and || only calculate the right value if
+            // the left value doesn't decide the result.
+            if ((_tokenType == TokenType.BOOLEAN_AND) && !left) {
+                return false;
+            }
+            if ((_tokenType == TokenType.BOOLEAN_OR) && left) {
+                return true;
+            }
         }
-        if (leftValue == null) leftValue = false;
 
         Object rightValue = _rightSide.calculate(symbolTable);
         if (rightValue == null) rightValue = false;
@@ -73,16 +93,6 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
         if (_tokenType == TokenType.BOOLEAN_NOT) {
             return ! right;
         }
-
-        if (!(leftValue instanceof Boolean)) {
-            if (TypeConversionUtil.isIntegerNumber(leftValue)) {
-                // Convert to true or false
-                leftValue = ((Number)leftValue).longValue() != 0;
-            } else {
-                throw new CalculateException(Bundle.getMessage("ArithmeticNotBooleanOrIntegerNumberError", leftValue));
-            }
-        }
-        boolean left = (Boolean)leftValue;
 
         switch (_tokenType) {
             case BOOLEAN_OR:

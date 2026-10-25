@@ -732,6 +732,12 @@ public class LccProFrame extends TwoPaneTBWindow  {
         });
         popupMenu.add(removeMenu);
         
+        var refreshMenu = new JMenuItem(Bundle.getMessage("FrameRefreshNode"));
+        refreshMenu.addActionListener((ActionEvent evt) -> {
+            refresh(node);
+        });
+        popupMenu.add(refreshMenu);
+        
         var restartMenu = new JMenuItem(Bundle.getMessage("FrameRestartNode"));
         restartMenu.addActionListener((ActionEvent evt) -> {
             restart(node);
@@ -769,6 +775,12 @@ public class LccProFrame extends TwoPaneTBWindow  {
         updateMatchGroupName();
     }
     
+    void refresh(NodeID node) {
+        var srcID = memo.get(org.openlcb.NodeID.class);
+        memo.get(org.openlcb.Connection.class).put(new org.openlcb.ProtocolIdentificationRequestMessage(srcID, node), null);
+        memo.get(org.openlcb.Connection.class).put(new org.openlcb.SimpleNodeIdentInfoRequestMessage(srcID, node), null);
+    }
+
     void restart(NodeID node) {
         memo.get(OlcbInterface.class).getDatagramService()
             .sendData(node, new int[] {0x20, 0xA9});

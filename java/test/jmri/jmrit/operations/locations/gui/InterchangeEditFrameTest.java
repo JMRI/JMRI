@@ -2,11 +2,6 @@ package jmri.jmrit.operations.locations.gui;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -19,6 +14,11 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -38,10 +38,9 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         // improve test coverage by having a through train
         JUnitOperationsUtil.loadTrainServingAllExistingLocations();
         
-        InterchangeEditFrame f = new InterchangeEditFrame();
+        InterchangeEditFrame f = new InterchangeEditFrame(l);
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create one interchange track
         f.trackNameTextField.setText("new interchange track");
@@ -61,10 +60,9 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     @Test
     public void testSetDirectionUsingCheckbox() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InterchangeEditFrame f = new InterchangeEditFrame();
+        InterchangeEditFrame f = new InterchangeEditFrame(l);
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
@@ -89,10 +87,9 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     @Test
     public void testSetAcceptedCarTypes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InterchangeEditFrame f = new InterchangeEditFrame();
+        InterchangeEditFrame f = new InterchangeEditFrame(l);
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
@@ -118,10 +115,9 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     @Test
     public void testAddCloseAndRestore() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        InterchangeEditFrame f = new InterchangeEditFrame();
+        InterchangeEditFrame f = new InterchangeEditFrame(l);
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create two interchange tracks
         f.trackNameTextField.setText("new interchange track");
@@ -160,8 +156,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testTrainDropIds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Drop Ids", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         JemmyUtil.enterClickAndLeave(f.trainDrop);
         JemmyUtil.enterClickAndLeave(f.addDropButton);
@@ -185,8 +180,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testTrainPickupIds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Pickup Ids", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         JemmyUtil.enterClickAndLeave(f.trainPickup);
         // add does nothing, nothing selected
@@ -212,8 +206,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testRouteDropIds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Drop Ids", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         JemmyUtil.enterClickAndLeave(f.routeDrop);
         JemmyUtil.enterClickAndLeave(f.addDropButton);
@@ -237,8 +230,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testRoutePickupIds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Pickup Ids", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         JemmyUtil.enterClickAndLeave(f.routePickup);
         JemmyUtil.enterClickAndLeave(f.addPickupButton);
@@ -263,8 +255,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testRoutePickupError() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Pickup Error", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         // confirm default
         Assert.assertTrue(f.autoPickupCheckBox.isSelected());
@@ -289,8 +280,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testRouteDropError() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Drop Error", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         // confirm default
         Assert.assertTrue(f.autoDropCheckBox.isSelected());
@@ -315,8 +305,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testTrainPickupError() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Pickup Error", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         // confirm default
         Assert.assertTrue(f.autoPickupCheckBox.isSelected());
@@ -345,8 +334,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testTrainDropError() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Drop Error", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         
         // confirm default
         Assert.assertTrue(f.autoDropCheckBox.isSelected());
@@ -375,8 +363,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Close", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
@@ -384,8 +371,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
     public void testQuickService() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Quick Service", Track.INTERCHANGE);
-        InterchangeEditFrame f = new InterchangeEditFrame();
-        f.initComponents(l, t);
+        InterchangeEditFrame f = new InterchangeEditFrame(t);
 
         // confirm default
         Assert.assertFalse(t.isQuickServiceEnabled());

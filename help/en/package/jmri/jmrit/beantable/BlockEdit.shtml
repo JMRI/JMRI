@@ -128,6 +128,20 @@
           'out-of-range' 2 and 3 are then active. With 'Use Current' selected the Block value will
           switch between 1 and 2, whereas with 'Use Current' unselected the Block value will switch
           between 3 and 4.
+          <p>When the Block value is used to track a train from Block to Block, leave 'Use
+          Current' unselected. With 'Use Current' selected, the Block value is cleared whenever
+          the Reporter's current report is cleared, even though the train is still in the Block:</p>
+          <ul>
+            <li>when the Reporter's timeout ends, for Reporters that clear their report a short
+            time after the last tag was seen, such as MERG RFID readers;</li>
+
+            <li>when the same tag is seen by another Reporter, as a tag can only be in one place,
+            so the Block behind loses the value while the rear of a long train is still in it;
+            and</li>
+
+            <li>briefly, between two different tags, on CBUS Reporters.</li>
+          </ul>
+          <p>A cleared value is then passed on to the next Block the train enters.</p>
         </li>
       </ul>
 

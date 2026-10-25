@@ -374,6 +374,40 @@ public class DetachableTabbedPane extends JTabbedPane {
     super.setComponentAt(index, component);
   }
 
+  /**
+   * Replace a component by identity, including when it is currently detached.
+   *
+   * @param oldComponent component currently displayed or detached
+   * @param newComponent replacement component
+   * @return true if the old component was found and replaced
+   */
+  public boolean replaceComponent(Component oldComponent, Component newComponent) {
+    Detachable d = panelToDetMap.get(oldComponent);
+    if (d == null) {
+      return false;
+    }
+
+    if (d.isDetached()) {
+      d.frame.getContentPane().remove(oldComponent);
+      d.component = newComponent;
+      panelToDetMap.remove(oldComponent);
+      panelToDetMap.put(newComponent, d);
+      d.frame.getContentPane().add(newComponent, BorderLayout.CENTER);
+      newComponent.setVisible(true);
+      d.frame.validate();
+    } else {
+      int index = indexOfComponent(oldComponent);
+      if (index < 0) {
+        return false;
+      }
+      panelToDetMap.remove(oldComponent);
+      panelToDetMap.put(newComponent, d);
+      d.component = newComponent;
+      super.setComponentAt(index, newComponent);
+    }
+    return true;
+  }
+
   // just adds logging
   @Override
   public void addTab(String name, Component component) {

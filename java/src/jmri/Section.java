@@ -106,6 +106,12 @@ public interface Section extends NamedBean {
     String PROPERTY_OCCUPANCY = "occupancy";
 
     /**
+     * String constant for the property allocatedTo, fired when the value
+     * returned by {@link #getAllocatedTo()} changes.
+     */
+    String PROPERTY_ALLOCATED_TO = "allocatedTo";
+
+    /**
      * Provide generic access to internal state.
      * <p>
      * This generally shouldn't be used by Java code; use the class-specific
@@ -426,5 +432,26 @@ public interface Section extends NamedBean {
      * @return constant of section type.
      */
     SectionType getSectionType();
+
+    /**
+     * Get who this Section is allocated to, for example the Dispatcher train
+     * holding it. Signal Mast Logic uses this to tell a block reserved for the
+     * train approaching a mast from one reserved for another train.
+     *
+     * @return the holder, or null if the Section is not allocated or the
+     *         holder is not known
+     */
+    default Object getAllocatedTo() {
+        return null;
+    }
+
+    /**
+     * Set who this Section is allocated to. Holders are compared by identity.
+     * The holder is cleared when the Section is set {@link #FREE}.
+     *
+     * @param holder the holder, or null when the Section is released
+     */
+    default void setAllocatedTo(Object holder) {
+    }
 
 }
