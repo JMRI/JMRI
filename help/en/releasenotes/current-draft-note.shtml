@@ -704,6 +704,12 @@
               JMRI was restarted. This includes a Logix that was loaded
               disabled and enabled later, which could not be stopped this way
               even where the delete did deactivate it.</li>
+          <li>Logix: Logixes whose actions trigger each other in an endless
+              loop are now stopped, and an error names the Conditionals in
+              the loop. Before, the loop ran until Java's stack overflowed,
+              and other listeners on the sensor or turnout that started it
+              were skipped. A loop through so many Logixes that the stack
+              still overflows first now logs where it started.</li>
         </ul>
 
     <h3>LogixNG</h3>
