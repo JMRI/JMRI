@@ -223,15 +223,16 @@ public class DefaultConditional extends AbstractNamedBean
         try {
             return calculateNested(enable, evt);
         } catch (StackOverflowError e) {
-            if (!outermost) {
-                throw e;
+            if (outermost) {
+                // A loop through more Conditionals than MAX_REENTRIES can catch
+                // before the stack is used up, or a very long chain. A stack
+                // overflow is fatal, so it is not handled here: it is only
+                // logged, where the stack has unwound enough to do that, and
+                // then passed on.
+                log.error("Logix calculations started by {} ran out of stack; this is probably a loop of many Logixes",
+                    getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));  // NOI18N
             }
-            // A loop through more Conditionals than MAX_REENTRIES can catch
-            // before the stack is used up, or a very long chain. Stop here
-            // so that whatever changed the first bean can carry on.
-            log.error("Logix calculations started by {} were stopped by a stack overflow; this is probably a loop of many Logixes",
-                getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));  // NOI18N
-            return _currentState;
+            throw e;
         } finally {
             chain.conditionals.pop();
             if (entries == 0) {
@@ -250,9 +251,9 @@ public class DefaultConditional extends AbstractNamedBean
      * on one thread at the same time, that is the outermost calculation and
      * the calculations nested inside it when its actions re-trigger it,
      * directly or through other Logixes. The next one is not run. Chains of
-     * Conditionals that are not loops are not stopped by this; a loop or
-     * chain so long that it uses up the stack first is stopped by catching
-     * the StackOverflowError in the outermost calculation.
+     * Conditionals that are not loops are not stopped by this; when a loop or
+     * chain is so long that it uses up the stack first, the StackOverflowError
+     * is logged in the outermost calculation and passed on.
      */
     static final int MAX_REENTRIES = 10;
 
