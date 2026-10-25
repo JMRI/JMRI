@@ -161,6 +161,13 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public void setAction(@Nonnull List<ConditionalAction> arrayList) {
+        // stop the delay timers of actions that are being replaced,
+        // as they can no longer be found to be reset or cancelled
+        for (ConditionalAction action : _actionList) {
+            if (arrayList.stream().noneMatch(a -> a == action)) {
+                action.stopTimer();
+            }
+        }
         _actionList = arrayList;
     }
 
@@ -573,10 +580,10 @@ public class DefaultConditional extends AbstractNamedBean
                         conditionalExecute.setTurnout(action, (Turnout) nb, actionCount, errorList);
                         break;
                     case RESET_DELAYED_TURNOUT:
-                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(i), true, devName);
+                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(action), true, devName);
                         break;
                     case DELAYED_TURNOUT:
-                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(i), false, devName);
+                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(action), false, devName);
                         break;
                     case CANCEL_TURNOUT_TIMERS:
                         conditionalExecute.cancelTurnoutTimers(action, actionCount, errorList, devName);
@@ -607,11 +614,11 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case RESET_DELAYED_SENSOR:
                         conditionalExecute.delayedSensor(action, actionCount,
-                            new TimeSensor(i), getMillisecondValue(action), true, devName);
+                            new TimeSensor(action), getMillisecondValue(action), true, devName);
                         break;
                     case DELAYED_SENSOR:
                         conditionalExecute.delayedSensor(action, actionCount,
-                            new TimeSensor(i), getMillisecondValue(action), false, devName);
+                            new TimeSensor(action), getMillisecondValue(action), false, devName);
                         break;
                     case CANCEL_SENSOR_TIMERS:
                         conditionalExecute.cancelSensorTimers(action, actionCount, errorList, devName);
@@ -1051,16 +1058,16 @@ public class DefaultConditional extends AbstractNamedBean
      */
     class TimeSensor implements java.awt.event.ActionListener {
 
-        TimeSensor(int index) {
-            mIndex = index;
+        TimeSensor(ConditionalAction action) {
+            mAction = action;
         }
 
-        private int mIndex = 0;
+        private final ConditionalAction mAction;
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             // set sensor state
-            ConditionalAction action = _actionList.get(mIndex);
+            ConditionalAction action = mAction;
             if (action.getNamedBean() == null) {
                 log.error("{} Invalid delayed sensor name - {}", getDisplayName(), action.getDeviceName());
             } else {
@@ -1098,16 +1105,16 @@ public class DefaultConditional extends AbstractNamedBean
      */
     class TimeTurnout implements java.awt.event.ActionListener {
 
-        TimeTurnout(int index) {
-            mIndex = index;
+        TimeTurnout(ConditionalAction action) {
+            mAction = action;
         }
 
-        private int mIndex = 0;
+        private final ConditionalAction mAction;
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             // set turnout state
-            ConditionalAction action = _actionList.get(mIndex);
+            ConditionalAction action = mAction;
             var beanHandle = action.getNamedBean();
             if (beanHandle == null) {
                 log.error("{} Invalid delayed turnout name - {}", getDisplayName(), action.getDeviceName());
