@@ -152,6 +152,13 @@
                 <li></li>
             </ul>
 
+        <h4>Grapevine</h4>
+            <ul>
+                <li>Closing the Node Table window now stops its check of the
+                    nodes. Before, polls went on being sent for several
+                    seconds afterwards.</li>
+            </ul>
+
         <h4>Hornby</h4>
             <ul>
                 <li></li>
