@@ -20,6 +20,7 @@ public class DCCppInitializationManager {
     protected DCCppSystemConnectionMemo systemMemo = null;
 
     DCCppPredefinedMeters predefinedMeters;
+    jmri.jmrix.dccpp.swing.messages.MessagesWatcher messagesWatcher;
     
     public DCCppInitializationManager(DCCppSystemConnectionMemo memo) {
 
@@ -47,6 +48,7 @@ public class DCCppInitializationManager {
         log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
         systemMemo.setClockControl(new DCCppClockControl(systemMemo));
         predefinedMeters = new DCCppPredefinedMeters(systemMemo);
+        messagesWatcher = new jmri.jmrix.dccpp.swing.messages.MessagesWatcher(systemMemo);
 
         systemMemo.register();
 
