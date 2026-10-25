@@ -3,7 +3,7 @@ package jmri.jmrit.display;
 import javax.swing.JTextField;
 
 /**
- * Base class for positionable panels that display content in columns.
+ * Base class for positionable panels that have a variable number of columns
  */
 public class PositionableJPanelWithColumns extends PositionableJPanel {
 
