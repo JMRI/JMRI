@@ -25,7 +25,8 @@ public class MarklinTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
         Assertions.assertNotNull(tc);
         MarklinMessage m = tc.getLastMessageSent();
         Assertions.assertNotNull(m);
-        Assertions.assertEquals("00 16 47 11 06 00 00 30 00 00 01 00 00", m.toString());
+        // DCC address 1: wire = DCCACCSTART + 0 = 0x3800, bytes 7-8 = 38 00
+        Assertions.assertEquals("00 16 47 11 06 00 00 38 00 00 01 00 00", m.toString());
     }
 
     @Override
@@ -33,20 +34,43 @@ public class MarklinTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
         Assertions.assertNotNull(tc);
         MarklinMessage m = tc.getLastMessageSent();
         Assertions.assertNotNull(m);
-        Assertions.assertEquals("00 16 47 11 06 00 00 30 00 01 01 00 00", m.toString());
+        // DCC address 1: wire = DCCACCSTART + 0 = 0x3800, bytes 7-8 = 38 00
+        Assertions.assertEquals("00 16 47 11 06 00 00 38 00 01 01 00 00", m.toString());
     }
 
     @Test
     public void testMm2Reply() {
+        // Create an explicit MM turnout to test MM address matching
+        MarklinTurnout mmTurnout = new MarklinTurnout("MCTMM1", "MC", tc);
 
-        ((MarklinTurnout)t).message(MarklinMessage.setLocoSpeedSteps(1, 28)); // nothing happens
+        mmTurnout.message(MarklinMessage.setLocoSpeedSteps(1, 28)); // nothing happens
 
+        mmTurnout.setCommandedState(Turnout.CLOSED);
+        MarklinReply r = new MarklinReply();
+        r.setCommand(MarklinConstants.ACCCOMMANDSTART);
+        mmTurnout.reply(r); // nothing happens, wrong address
+
+        r.setAddress(1 + MarklinConstants.MM1ACCSTART - 1); // MM wire address for address 1
+        r.setElement(9, 0); // thrown
+        mmTurnout.reply(r);
+        Assertions.assertEquals(Turnout.THROWN, mmTurnout.getCommandedState());
+
+        r.setElement(9, 0x01); // closed
+        mmTurnout.reply(r);
+        Assertions.assertEquals(Turnout.CLOSED, mmTurnout.getCommandedState());
+
+        mmTurnout.dispose();
+    }
+
+    @Test
+    public void testDccReply() {
         t.setCommandedState(Turnout.CLOSED);
         MarklinReply r = new MarklinReply();
         r.setCommand(MarklinConstants.ACCCOMMANDSTART);
-        ((MarklinTurnout)t).reply(r); // nothing happens, unknown address
+        r.setAddress(999 + MarklinConstants.DCCACCSTART - 1); // wrong address
+        ((MarklinTurnout)t).reply(r); // nothing happens
 
-        r.setAddress( 1 + MarklinConstants.MM1ACCSTART - 1); // toNum + Constant -1
+        r.setAddress(1 + MarklinConstants.DCCACCSTART - 1); // DCC wire address for address 1
         r.setElement(9, 0); // thrown
         ((MarklinTurnout)t).reply(r);
         Assertions.assertEquals(Turnout.THROWN, t.getCommandedState());
@@ -59,23 +83,35 @@ public class MarklinTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
     }
 
     @Test
-    public void testDccReply() {
+    public void testCanReply() {
+        MarklinTurnout canTurnout = new MarklinTurnout("MCTCAN200", "MC", tc);
 
-        t.setCommandedState(Turnout.CLOSED);
+        canTurnout.setCommandedState(Turnout.CLOSED);
         MarklinReply r = new MarklinReply();
         r.setCommand(MarklinConstants.ACCCOMMANDSTART);
-        ((MarklinTurnout)t).reply(r); // nothing happens, unknown address
+        r.setAddress(201); // wrong address
+        canTurnout.reply(r); // nothing happens
 
-        r.setAddress( 1 + MarklinConstants.DCCACCSTART - 1); // toNum + Constant -1
+        r.setAddress(200); // CAN wire address is verbatim
         r.setElement(9, 0); // thrown
-        ((MarklinTurnout)t).reply(r);
-        Assertions.assertEquals(Turnout.THROWN, t.getCommandedState());
+        canTurnout.reply(r);
+        Assertions.assertEquals(Turnout.THROWN, canTurnout.getCommandedState());
 
         r.setElement(9, 0x01); // closed
-        ((MarklinTurnout)t).reply(r);
-        Assertions.assertEquals(Turnout.CLOSED, t.getCommandedState());
+        canTurnout.reply(r);
+        Assertions.assertEquals(Turnout.CLOSED, canTurnout.getCommandedState());
 
-        t.dispose();
+        canTurnout.dispose();
+    }
+
+    @Test
+    public void testLegacyUnprefixedIsDcc() {
+        // Unprefixed "1" must produce DCC wire address, same as "DCC1"
+        MarklinTurnout legacy = new MarklinTurnout("MCT1", "MC", tc);
+        MarklinTurnout explicit = new MarklinTurnout("MCTDCC1", "MC", tc);
+        Assertions.assertEquals(explicit.getCANAddress(), legacy.getCANAddress());
+        legacy.dispose();
+        explicit.dispose();
     }
 
     @BeforeEach
@@ -84,7 +120,7 @@ public class MarklinTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
         JUnitUtil.setUp();
         tc = new MarklinTrafficControlScaffold();
         memo = new MarklinSystemConnectionMemo(tc);
-        t = new MarklinTurnout(1,"MC", tc);
+        t = new MarklinTurnout("MCTDCC1", "MC", tc);
     }
 
     @AfterEach
