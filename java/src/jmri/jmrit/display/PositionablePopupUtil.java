@@ -36,6 +36,23 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionablePopupUtil {
 
+    private static final ThreadLocal<Integer> WEB_NOTIFICATION_SUPPRESSION = ThreadLocal.withInitial(() -> 0);
+
+    /** Suppress display-option notifications while applying saved style values. */
+    public static void suppressWebPanelDisplayOptionNotifications() {
+        WEB_NOTIFICATION_SUPPRESSION.set(WEB_NOTIFICATION_SUPPRESSION.get() + 1);
+    }
+
+    /** Restore display-option notifications after applying saved style values. */
+    public static void restoreWebPanelDisplayOptionNotifications() {
+        int depth = WEB_NOTIFICATION_SUPPRESSION.get() - 1;
+        if (depth <= 0) {
+            WEB_NOTIFICATION_SUPPRESSION.remove();
+        } else {
+            WEB_NOTIFICATION_SUPPRESSION.set(depth);
+        }
+    }
+
     protected JComponent _textComponent;    // closest ancestor for JLabel and JTextField
     protected int _textType;                // JComponent does not have text, used for casting
     protected Positionable _parent;
@@ -250,6 +267,7 @@ public class PositionablePopupUtil {
             _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         }
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public int getFixedWidth() {
@@ -262,6 +280,7 @@ public class PositionablePopupUtil {
             log.debug("setFixedWidth()={}", getFixedWidth());
         }
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public int getFixedHeight() {
@@ -272,6 +291,7 @@ public class PositionablePopupUtil {
         fixedHeight = h;
         log.debug("setFixedHeight()={}", getFixedHeight());
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public void setFixedSize(int w, int h) {
@@ -279,6 +299,7 @@ public class PositionablePopupUtil {
         fixedHeight = h;
         log.debug("setFixedSize()=({},{})", getFixedWidth(), getFixedHeight());
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public void setBorderSize(int border) {
@@ -290,6 +311,7 @@ public class PositionablePopupUtil {
             //setHorizontalAlignment(CENTRE);
         }
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     private boolean _showBorder = true;
@@ -304,6 +326,7 @@ public class PositionablePopupUtil {
         } else {
             _parent.setBorder(null);
         }
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public int getBorderSize() {
@@ -319,6 +342,7 @@ public class PositionablePopupUtil {
         if (!_suppressRecentColor) {
             JmriColorChooser.addRecentColor(border);
         }
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public Color getBorderColor() {
@@ -334,6 +358,7 @@ public class PositionablePopupUtil {
         if (!_suppressRecentColor) {
             JmriColorChooser.addRecentColor(c);
         }
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public Color getForeground() {
@@ -358,6 +383,7 @@ public class PositionablePopupUtil {
             setMargin(margin);  //This rebuilds margin and sets it colour.
         }
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public void setSuppressRecentColor(boolean b) {
@@ -468,6 +494,7 @@ public class PositionablePopupUtil {
             _textComponent.setFont(newFont);
             _parent.updateSize();
             _parent.getEditor().setAttributes(_self, _parent);
+            notifyWebPanelDisplayOptionsChanged();
         }
     }
 
@@ -479,6 +506,7 @@ public class PositionablePopupUtil {
         _textComponent.setFont(_textComponent.getFont().deriveFont(newSize));
         _parent.updateSize();
         ///_parent.getEditor().setAttributes(_self, _parent);
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public int getFontSize() {
@@ -539,6 +567,7 @@ public class PositionablePopupUtil {
     public void setFontStyle(int style) {
         _textComponent.setFont(_textComponent.getFont().deriveFont(style));
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public void setFontStyle(int addStyle, int dropStyle) {
@@ -554,6 +583,7 @@ public class PositionablePopupUtil {
 
         //setSize(getPreferredSize().width, getPreferredSize().height);
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public int getFontStyle() {
@@ -602,6 +632,14 @@ public class PositionablePopupUtil {
         justification = just;
         setHorizontalAlignment(justification);
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
+        notifyWebPanelDisplayOptionsChanged();
+    }
+
+    private void notifyWebPanelDisplayOptionsChanged() {
+        if (WEB_NOTIFICATION_SUPPRESSION.get() == 0) {
+            _parent.getEditor().notifyWebPanelDisplayOptionsChanged();
+        }
     }
 
     public void setJustification(String just) {
@@ -703,6 +741,7 @@ public class PositionablePopupUtil {
     public void setOrientation(int ori) {
         orientation = ori;
         _parent.updateSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public void setOrientation(String ori) {
