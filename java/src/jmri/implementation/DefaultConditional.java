@@ -386,9 +386,11 @@ public class DefaultConditional extends AbstractNamedBean
         }
         char first = s.charAt(i + 1);
         char second = s.charAt(i + 2);
-        // the same characters Integer.parseInt accepts in a two character string
-        return Character.digit(second, 10) >= 0
-                && (Character.digit(first, 10) >= 0 || first == '+' || first == '-');
+        // the same characters Integer.parseInt accepts in a two character string:
+        // a digit or a sign, followed by a digit
+        boolean firstIsDigitOrSign = (Character.digit(first, 10) >= 0) || (first == '+') || (first == '-');
+        boolean secondIsDigit = Character.digit(second, 10) >= 0;
+        return firstIsDigitOrSign && secondIsDigit;
     }
 
     /**
