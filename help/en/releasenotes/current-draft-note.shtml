@@ -637,7 +637,8 @@
               loop are now stopped, and an error names the Conditionals in
               the loop. Before, the loop ran until Java's stack overflowed,
               and other listeners on the sensor or turnout that started it
-              were skipped.</li>
+              were skipped. A loop through so many Logixes that the stack
+              still overflows first now logs where it started.</li>
         </ul>
 
     <h3>LogixNG</h3>
