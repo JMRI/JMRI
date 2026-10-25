@@ -474,6 +474,33 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
+     * Check whether the two characters after the 'R' at index {@code i} of
+     * {@code s} are read as the variable number, that is whether
+     * {@code Integer.parseInt(s.substring(i + 1, i + 3))} succeeds. If not, the
+     * single character after the 'R' is the variable number.
+     * <p>
+     * This used to be found by trying to parse the two characters and catching
+     * the exception, which for every single digit variable cost far more than
+     * the rest of the calculation.
+     *
+     * @param s the antecedent, from the 'R' onwards at index {@code i}
+     * @param i the index of the 'R'
+     * @return true if the two characters after the 'R' form a number
+     */
+    private static boolean isTwoCharacterIndex(String s, int i) {
+        if (i + 3 > s.length()) {
+            return false;
+        }
+        char first = s.charAt(i + 1);
+        char second = s.charAt(i + 2);
+        // the same characters Integer.parseInt accepts in a two character string:
+        // a digit or a sign, followed by a digit
+        boolean firstIsDigitOrSign = (Character.digit(first, 10) >= 0) || (first == '+') || (first == '-');
+        boolean secondIsDigit = Character.digit(second, 10) >= 0;
+        return firstIsDigitOrSign && secondIsDigit;
+    }
+
+    /**
      * Parses and computes one parenthesis level of a boolean statement.
      * <p>
      * Recursively calls inner parentheses levels. Note that all logic operators
@@ -509,10 +536,10 @@ public class DefaultConditional extends AbstractNamedBean
         } else // cannot be '('.  must be either leftArg or notleftArg
         {
             if (s.charAt(i) == 'R') {  // NOI18N
-                try {
-                    k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                if (isTwoCharacterIndex(s, i)) {
+                    k = Integer.parseInt(s.substring(i + 1, i + 3));
                     i += 2;
-                } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                } else {
                     k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                 }
                 leftArg = variableList.get(k - 1).evaluate();
@@ -531,10 +558,10 @@ public class DefaultConditional extends AbstractNamedBean
                     i += dp.indexCount;
                     argsUsed.or(dp.argsUsed);
                 } else if (s.charAt(i) == 'R') {  // NOI18N
-                    try {
-                        k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                    if (isTwoCharacterIndex(s, i)) {
+                        k = Integer.parseInt(s.substring(i + 1, i + 3));
                         i += 2;
-                    } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                    } else {
                         k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                     }
                     leftArg = variableList.get(k - 1).evaluate();
@@ -574,10 +601,10 @@ public class DefaultConditional extends AbstractNamedBean
                 } else // cannot be '('.  must be either rightArg or notRightArg
                 {
                     if (s.charAt(i) == 'R') {  // NOI18N
-                        try {
-                            k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                        if (isTwoCharacterIndex(s, i)) {
+                            k = Integer.parseInt(s.substring(i + 1, i + 3));
                             i += 2;
-                        } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                        } else {
                             k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                         }
                         rightArg = variableList.get(k - 1).evaluate();
@@ -595,10 +622,10 @@ public class DefaultConditional extends AbstractNamedBean
                             i += dp.indexCount;
                             argsUsed.or(dp.argsUsed);
                         } else if (s.charAt(i) == 'R') {  // NOI18N
-                            try {
-                                k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                            if (isTwoCharacterIndex(s, i)) {
+                                k = Integer.parseInt(s.substring(i + 1, i + 3));
                                 i += 2;
-                            } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                            } else {
                                 k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                             }
                             rightArg = variableList.get(k - 1).evaluate();
