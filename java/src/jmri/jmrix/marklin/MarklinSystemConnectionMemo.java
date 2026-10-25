@@ -84,6 +84,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         store(sensorManager, SensorManager.class);
         jmri.InstanceManager.setSensorManager(sensorManager);
 
+        McanDeviceManager mcanDeviceManager = new McanDeviceManager(this);
+        store(mcanDeviceManager, McanDeviceManager.class);
+        jmri.InstanceManager.store(mcanDeviceManager, McanDeviceManager.class);
+
         register();
     }
 
@@ -115,6 +119,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     public MarklinPowerManager getPowerManager() {
         return (MarklinPowerManager)get(PowerManager.class);
+    }
+
+    public McanDeviceManager getMcanDeviceManager() {
+        return get(McanDeviceManager.class);
     }
 
     @Override
