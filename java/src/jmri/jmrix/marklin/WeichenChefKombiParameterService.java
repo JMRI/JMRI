@@ -150,6 +150,10 @@ public class WeichenChefKombiParameterService {
 
     /**
      * Deselect the currently selected module (if any).
+     * <p>
+     * Cleanup: Cancels any pending delayed property-query and retry tasks for the
+     * current selection cycle via {@link #cancelPendingTasks()}
+     *
      */
     public void deselectModule() {
         if (currentRawId > 0) {
@@ -157,6 +161,36 @@ public class WeichenChefKombiParameterService {
             currentRawId = 0;
         }
         factorySelectSent = false;
+        cancelPendingTasks();
+    }
+
+    /**
+     * Invalidate all pending delayed tasks (staggered property reads and the
+     * ready-mask retry chain) scheduled for the current selection cycle.
+     * <p>
+     * Delayed tasks submitted via {@link ThreadingUtil#runOnGUIDelayed} cannot be
+     * cancelled directly. Each task guards on {@link #selectGeneration}. When bumping
+     * the generation, every outstanding task early-returns.
+     *
+     * Callers of this service (UI panels, tests) should call this or {@link #dispose()} when they are done with it.
+     */
+    public void cancelPendingTasks() {
+        ThreadingUtil.runOnGUI(() -> {
+            selectGeneration++;
+            configReadyFired = true;
+        });
+    }
+
+    /**
+     * Release this service
+     *
+     * Deselect any current module and cancel all pending
+     * delayed tasks.
+     *
+     * Use on UI widget teardown to ensure proper cleanup of resources.
+     */
+    public void dispose() {
+        deselectModule();
     }
 
     /**
