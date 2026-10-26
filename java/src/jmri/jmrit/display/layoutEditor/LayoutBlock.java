@@ -70,11 +70,9 @@ import org.slf4j.MDC;
  */
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 
-    private static final List<Integer> updateReferences = new ArrayList<>(500);
-
-    // might want to use the jmri ordered HashMap, so that we can add at the top
-    // and remove at the bottom.
-    private final List<Integer> actedUponUpdates = new ArrayList<>(500);
+    // identifies routing packets for logging; packets are never dropped by ID
+    private static final java.util.concurrent.atomic.AtomicInteger lastPacketID =
+            new java.util.concurrent.atomic.AtomicInteger();
 
     @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
     public void enableDeleteRouteLog() {
@@ -1022,6 +1020,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * changed, not for every Block property change such as a new value.
      */
     private void stateUpdateIfChanged() {
+        if (!jmri.util.ThreadingUtil.isLayoutThread()) {
+            // routing tables are only used on the layout thread; the status
+            // is read when the update is sent
+            jmri.util.ThreadingUtil.runOnLayoutEventually(this::stateUpdateIfChanged);
+            return;
+        }
         int status = getBlockStatus();
         if (status != lastRoutingStatus) {
             lastRoutingStatus = status;
@@ -1394,6 +1398,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         // What we need to do here, is resend our routing packets with the new metric
         RoutingPacket update = new RoutingPacket(UPDATE, this.getBlock(), -1, metric, -1, -1, getNextPacketID());
         firePropertyChange(PROPERTY_ROUTING, null, update);
+        advertiseAllRouteChanges();
     }
 
     private boolean defaultMetric = true;
@@ -1426,8 +1431,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
         metric = m;
         defaultMetric = false;
+        if (jmri.util.ThreadingUtil.isLayoutThread()) {
+            sendMetricUpdate();
+        } else {
+            // routing tables are only changed on the layout thread
+            jmri.util.ThreadingUtil.runOnLayoutEventually(this::sendMetricUpdate);
+        }
+    }
+
+    private void sendMetricUpdate() {
         RoutingPacket update = new RoutingPacket(UPDATE, this.getBlock(), -1, metric, -1, -1, getNextPacketID());
         firePropertyChange(PROPERTY_ROUTING, null, update);
+        // every route we advertise includes our metric
+        advertiseAllRouteChanges();
     }
 
     /**
@@ -1667,12 +1683,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                             adj.getLength() + block.getLengthMm(), -1, getNextPacketID());
                     firePropertyChange(PROPERTY_ROUTING, null, update);
                 }
-                Routes r = getRouteByDestBlock(block);
-                if (r != null) {
-                    r.setMetric(lBlock.getBlockMetric());
-                } else {
-                    log.warn("No getRouteByDestBlock('{}')", block.getDisplayName());
-                }
+                // the route straight to the neighbour costs the neighbour's metric
+                neighRoute.setMetric(lBlock.getBlockMetric());
+                advertiseRouteChange(block);
             }
 
             addRouteLog.debug("From {} We were not a mutual adjacency with {} but now are",
@@ -1741,11 +1754,26 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     private void informNeighbourOfValidRoutes(Block newblock) {
+        informNeighbourOfValidRoutes(newblock, null);
+    }
+
+    /**
+     * Send a neighbour the routes it can use through this block.
+     *
+     * @param newblock the neighbour
+     * @param onlyVia  if not null, only send the routes leaving this block
+     *                 to this neighbouring block, as when a through path
+     *                 between the two has just been added
+     */
+    private void informNeighbourOfValidRoutes(Block newblock, @CheckForNull Block onlyVia) {
         // java.sql.Timestamp t1 = new java.sql.Timestamp(System.nanoTime());
         List<Block> validFromPath = new ArrayList<>();
         addRouteLog.debug("From {} new block {}", getDisplayName(), newblock.getDisplayName());
 
         for (ThroughPaths tp : throughPaths) {
+            if ((onlyVia != null) && (tp.getSourceBlock() != onlyVia) && (tp.getDestinationBlock() != onlyVia)) {
+                continue;
+            }
             addRouteLog.debug("From {} B through routes {} {}",
                 getDisplayName(), tp.getSourceBlock().getDisplayName(),
                 tp.getDestinationBlock().getDisplayName());
@@ -2240,6 +2268,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         }
                     }
                 }
+                // the best route left may cost more than the one removed
+                advertiseRouteChange(destBlock);
             } else {
                 deleteRouteLog.debug("{} We have no other routes to {} Therefore we will broadast this to our neighbours",
                     msgPrefix, destBlock.getDisplayName());
@@ -2341,6 +2371,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         addRouteLog.debug("Block {}.addThroughPath(src:{}, dst: {})",
             getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
 
+        if ((block != null) && (!panels.isEmpty()) && isThroughPath(srcBlock, dstBlock)) {
+            // nothing to work out for a through path we already have
+            layoutConnectivity = true;
+            return;
+        }
         if ((block != null) && (!panels.isEmpty())) {
             // a block is attached and this LayoutBlock is used
             // initialize connectivity as defined in first Layout Editor panel
@@ -2434,7 +2469,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 log.error("Exception ({}) caught while trying to discover turnout connectivity"
                     + "\nBlock: {}, srcBlock ({}) to dstBlock ({})", ex.getMessage(),
                     block.getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
-                log.error("@ Line # {}", ex.getStackTrace()[1].getLineNumber());
+                if (ex.getStackTrace().length > 1) {
+                    log.error("@ Line # {}", ex.getStackTrace()[1].getLineNumber());
+                }
             }
             return;
         }
@@ -2453,7 +2490,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             addRouteLog.debug("Exception ({}) caught while trying to discover turnout connectivity"
                 + "\nBlock: {}, dstBlock ({}) to  srcBlock ({})", ex.getMessage(),
                 block.getDisplayName(), dstBlock.getDisplayName(), srcBlock.getDisplayName());
-            addRouteLog.debug("@ Line # {}", ex.getStackTrace()[1].getLineNumber());
+            // a frequently thrown exception may have no stack trace
+            if (addRouteLog.isDebugEnabled() && (ex.getStackTrace().length > 1)) {
+                addRouteLog.debug("@ Line # {}", ex.getStackTrace()[1].getLineNumber());
+            }
             return;
         }
 
@@ -2570,9 +2610,22 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         throughPaths.add(path);
         firePropertyChange(PROPERTY_THROUGH_PATH_ADDED, null, null);
 
-        // update our neighbours of the new valid paths;
-        informNeighbourOfValidRoutes(srcBlock);
-        informNeighbourOfValidRoutes(dstBlock);
+        // update our neighbours of the new valid paths; the routes using our
+        // other through paths have already been sent
+        informNeighbourOfValidRoutes(srcBlock, dstBlock);
+        informNeighbourOfValidRoutes(dstBlock, srcBlock);
+
+        // routes via the destination block may now be the best ones for the
+        // source block, even where it already holds a route to the same place
+        Adjacencies srcAdj = getAdjacency(srcBlock);
+        if (srcAdj != null) {
+            for (Routes ro : new ArrayList<>(routes)) {
+                if ((ro.getNextBlock() == dstBlock)
+                        || ((ro.getNextBlock() == getBlock()) && (ro.getDestBlock() == dstBlock))) {
+                    advertiseRouteChange(srcAdj, ro.getDestBlock());
+                }
+            }
+        }
     }
 
     void notifiedNeighbourNoLongerMutual(LayoutBlock srcBlock) {
@@ -2624,41 +2677,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     Integer getNextPacketID() {
-        Integer lastID;
-
-        synchronized (updateReferences) {
-            if (updateReferences.isEmpty()) {
-                lastID = 0;
-            } else {
-                int lastIDPos = updateReferences.size() - 1;
-                lastID = updateReferences.get(lastIDPos) + 1;
-            }
-    
-            if (lastID > 2000) {
-                lastID = 0;
-            }
-            updateReferences.add(lastID);
-        }
-
-        /*As we are originating a packet, we will added to the acted upion list
-         thus making sure if the packet gets back to us we do knowing with it.*/
-        actedUponUpdates.add(lastID);
-
-        synchronized (updateReferences) {
-            if (updateReferences.size() > 500) {
-                // log.info("flush update references");
-                updateReferences.subList(0, 250).clear();
-            }
-        }
-
-        if (actedUponUpdates.size() > 500) {
-            actedUponUpdates.subList(0, 250).clear();
-        }
-        return lastID;
-    }
-
-    boolean updatePacketActedUpon(Integer packetID) {
-        return actedUponUpdates.contains(packetID);
+        return lastPacketID.incrementAndGet() & Integer.MAX_VALUE;
     }
 
     public List<Block> getActiveNextBlocks(Block source) {
@@ -3255,7 +3274,18 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         firePropertyChange(PROPERTY_ROUTING, null, update);
     }
 
-    // This lot might need changing to only forward on the best route details.
+    /**
+     * Act on a routing update from a neighbour.
+     * <p>
+     * The update only says that something has changed. The metric, hop count
+     * and length of our route via the neighbour are taken from what the
+     * neighbour advertises to us now, so an update that arrives late, twice or
+     * out of order cannot leave the route wrong. If the route changes, the
+     * routes we advertise to our own neighbours are brought up to date.
+     *
+     * @param src    the neighbour that sent the update
+     * @param update the routing packet
+     */
     void updateRoutingInfo( @Nonnull LayoutBlock src, @Nonnull RoutingPacket update) {
         updateRouteLog.debug("From {} src: {}, block: {}, hopCount: {}, metric: {}, status: {}, packetID: {}",
             getDisplayName(), src.getDisplayName(), update.getBlock().getDisplayName(),
@@ -3271,20 +3301,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return;
         }
 
-        if (updatePacketActedUpon(update.getPacketId())) {
-            if (adj.updatePacketActedUpon(update.getPacketId())) {
-                updateRouteLog.debug("Reject packet update as we have already acted up on it from this neighbour");
-                return;
-            }
-        }
-
         updateRouteLog.debug("From {} an Update packet from neighbour {}", getDisplayName(), src.getDisplayName());
 
         Block updateBlock = update.getBlock();
 
-        // Block srcblk = src.getBlock();
-        // Need to add in a check to make sure that we have a route registered from the source neighbour
-        // for the block that they are referring too.
         if (updateBlock == this.getBlock()) {
             updateRouteLog.debug("Reject packet update as it is a route advertised by our selves");
             return;
@@ -3301,146 +3321,42 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         if (ro == null) {
-            updateRouteLog.debug("From {} update is from a source that we do not have listed as a route to the destination", getDisplayName());
-            updateRouteLog.debug("From {} update packet is for a block that we do not have route registered for {}", getDisplayName(), updateBlock.getDisplayName());
+            updateRouteLog.debug("From {} update packet is for a block that we do not have route registered for {}",
+                getDisplayName(), updateBlock.getDisplayName());
             // If the packet is for a dest that is not in the routing table
             // Then we will simply reject it.
             return;
         }
-        /*This prevents us from entering into an update loop.
-           We only add it to our list once it has passed through as being a valid
-           packet, otherwise we may get the same packet id back, but from a valid source
-           which would end up be rejected*/
 
-        actedUponUpdates.add(update.getPacketId());
-        adj.addPacketReceivedFromNeighbour(update.getPacketId());
+        if ((update.getHopCount() != -1) || (update.getMetric() != -1) || ((int) update.getLength() != -1)) {
+            if (neighbour) {
+                // the cost of a route straight to the neighbour is the neighbour's own
+                int oldMetric = ro.getMetric();
+                float oldLength = ro.getLength();
+                ro.setMetric(src.getBlockMetric());
+                ro.setLength(srcblk.getLengthMm());
+                if (oldMetric != ro.getMetric()) {
+                    adj.setMetric(ro.getMetric());
+                }
+                if (!MathUtil.equals(oldLength, ro.getLength())) {
+                    adj.setLength(ro.getLength());
+                }
+                if ((oldMetric != ro.getMetric()) || !MathUtil.equals(oldLength, ro.getLength())) {
+                    routeValuesChanged(updateBlock);
+                }
+            } else {
+                RouteCost cost = src.getAdvertisedRoute(this.getBlock(), updateBlock);
+                if (cost == UNREACHABLE) {
+                    // the route only goes round a loop now, so withdraw it
+                    removeRouteFromNeighbour(src, new RoutingPacket(REMOVAL, updateBlock, -1, -1, -1, -1, getNextPacketID()));
+                    return;
+                } else if (cost != null) {
+                    setRouteCost(ro, cost);
+                }
+            }
+        }
 
-        int hopCount = update.getHopCount();
-        int packetmetric = update.getMetric();
         int blockstate = update.getBlockState();
-        float length = update.getLength();
-
-        // Need to add in a check for a block that is directly connected.
-        if (hopCount != -1) {
-            // Was increase hop count before setting it
-            // int oldHop = ro.getHopCount();
-            if (ro.getHopCount() != hopCount) {
-                updateRouteLog.debug("{} Hop counts to {} not the same so will change from {} to {}", getDisplayName(), ro.getDestBlock().getDisplayName(), ro.getHopCount(), hopCount);
-                ro.setHopCount(hopCount);
-                hopCount++;
-            } else {
-                // No point in forwarding on the update if the hopcount hasn't changed
-                hopCount = -1;
-            }
-        }
-
-        // bad to use values as errors, but it's pre-existing code, and code wins
-        if ((int) length != -1) {
-            // Length is added at source
-            float oldLength = ro.getLength();
-            if (!MathUtil.equals(oldLength, length)) {
-                ro.setLength(length);
-                boolean forwardUpdate = true;
-
-                if (ro != getBestRouteByLength(update.getBlock())) {
-                    forwardUpdate = false;
-                }
-
-                updateRouteLog.debug("From {} updating length from {} to {}", getDisplayName(), oldLength, length);
-
-                if (neighbour) {
-                    length = srcblk.getLengthMm();
-                    adj.setLength(length);
-
-                    // ro.setLength(length);
-                    // Also if neighbour we need to update the cost of the routes via it to reflect the new metric 02/20/2011
-                    if (forwardUpdate) {
-                        List<Routes> neighbourRoute = getNextRoutes(srcblk);
-
-                        // neighbourRoutes, contains all the routes that have been advertised by the neighbour
-                        // that will need to have their metric updated to reflect the change.
-                        for (Routes nRo : neighbourRoute) {
-                            // Need to remove old metric to the neigbour, then add the new one on
-                            float updateLength = nRo.getLength();
-                            updateLength = (updateLength - oldLength) + length;
-
-                            updateRouteLog.debug("From {} update metric for route {} from {} to {}",
-                                getDisplayName(), nRo.getDestBlock().getDisplayName(), nRo.getLength(), updateLength);
-                            nRo.setLength(updateLength);
-                            List<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
-                            RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, -1, updateLength + block.getLengthMm(), -1, getNextPacketID());
-                            updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
-                        }
-                    }
-                } else if (forwardUpdate) {
-                    // This can cause a loop, if the layout is in a loop, so we send out the same packetID.
-                    List<Block> messageRecipients = getThroughPathSourceByDestination(srcblk);
-                    RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, -1, -1,
-                            length + block.getLengthMm(), -1, update.getPacketId());
-                    updateRoutesToNeighbours(messageRecipients, ro, newUpdate);
-                }
-                length += metric;
-            } else {
-                length = -1;
-            }
-        }
-
-        if (packetmetric != -1) {
-            // Metric is added at source
-            // Keep a reference of the old metric.
-            int oldmetric = ro.getMetric();
-            if (oldmetric != packetmetric) {
-                ro.setMetric(packetmetric);
-
-                updateRouteLog.debug("From {} updating metric from {} to {}", getDisplayName(), oldmetric, packetmetric);
-                boolean forwardUpdate = true;
-
-                if (ro != getBestRouteByMetric(update.getBlock())) {
-                    forwardUpdate = false;
-                }
-
-                // if the metric update is for a neighbour then we will go directly to the neighbour for the value,
-                // rather than trust what is in the message at this stage.
-                if (neighbour) {
-                    packetmetric = src.getBlockMetric();
-                    adj.setMetric(packetmetric);
-
-                    if (forwardUpdate) {
-                        // ro.setMetric(packetmetric);
-                        // Also if neighbour we need to update the cost of the routes via it to
-                        // reflect the new metric 02/20/2011
-                        List<Routes> neighbourRoute = getNextRoutes(srcblk);
-
-                        // neighbourRoutes, contains all the routes that have been advertised by the neighbour that
-                        // will need to have their metric updated to reflect the change.
-                        for (Routes nRo : neighbourRoute) {
-                            // Need to remove old metric to the neigbour, then add the new one on
-                            int updatemet = nRo.getMetric();
-                            updatemet = (updatemet - oldmetric) + packetmetric;
-
-                            updateRouteLog.debug("From {} update metric for route {} from {} to {}", getDisplayName(), nRo.getDestBlock().getDisplayName(), nRo.getMetric(), updatemet);
-                            nRo.setMetric(updatemet);
-                            List<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
-                            RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), hopCount, updatemet + metric, -1, -1, getNextPacketID());
-                            updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
-                        }
-                    }
-                } else if (forwardUpdate) {
-                    // This can cause a loop, if the layout is in a loop, so we send out the same packetID.
-                    List<Block> messageRecipients = getThroughPathSourceByDestination(srcblk);
-                    RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, hopCount,
-                            packetmetric + metric, -1, -1, update.getPacketId());
-                    updateRoutesToNeighbours(messageRecipients, ro, newUpdate);
-                }
-                packetmetric += metric;
-                // Think we need a list of routes that originate from this source neighbour
-            } else {
-                // No point in forwarding on the update if the metric hasn't changed
-                packetmetric = -1;
-                // Potentially when we do this we need to update all the routes that go via this block, not just this route.
-            }
-        }
-
         if (blockstate != -1) {
             // We will update all the destination blocks with the new state, it
             // saves re-firing off new updates block status
@@ -3459,16 +3375,158 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 firePropertyChange(PROPERTY_ROUTING, null, newUpdate);
             }
         }
+    }
 
-        // We need to expand on this so that any update to routing metric is propergated correctly
-        if ((packetmetric != -1) || (hopCount != -1) || (length != -1)) {
-            // We only want to send the update on to neighbours that we have advertised the route to.
-            List<Block> messageRecipients = getThroughPathSourceByDestination(srcblk);
-            RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, hopCount, packetmetric,
-                    length, blockstate, update.getPacketId());
-            updateRoutesToNeighbours(messageRecipients, ro, newUpdate);
+    /**
+     * The metric, hop count and length of a route as advertised to a
+     * neighbour.
+     */
+    private static final class RouteCost {
+
+        final int metric;
+        final int hopCount;
+        final float length;
+
+        RouteCost(int metric, int hopCount, float length) {
+            this.metric = metric;
+            this.hopCount = hopCount;
+            this.length = length;
         }
-        // Was just pass on hop count
+    }
+
+    // Routes round a reversing loop or a wye can keep each other alive after
+    // the way to the destination has gone, their hop counts rising each time
+    // round. Such a route is withdrawn once it reaches the hop count limit.
+    private static final int MAX_HOP_COUNT = 254;
+    private static final RouteCost UNREACHABLE = new RouteCost(965000, MAX_HOP_COUNT + 1, Float.MAX_VALUE);
+
+    /**
+     * Get the route to a destination that we advertise to a neighbour: the
+     * lowest metric, hop count and length of our routes to the destination
+     * that traffic arriving from the neighbour can take through this block,
+     * each including this block.
+     * <p>
+     * The metric, hop count and length are each the lowest of the usable
+     * routes, so they may come from different routes, as each is used on its
+     * own when choosing a route.
+     *
+     * @param neighbour the neighbouring block the route is advertised to
+     * @param dest      the destination block
+     * @return the advertised route, UNREACHABLE if every usable route has
+     *         reached the hop count limit and should be withdrawn, or null if
+     *         traffic from the
+     *         neighbour can not reach the destination through this block
+     */
+    @CheckForNull
+    private RouteCost getAdvertisedRoute(Block neighbour, Block dest) {
+        int bestMetric = Integer.MAX_VALUE;
+        int bestHopCount = Integer.MAX_VALUE;
+        float bestLength = Float.MAX_VALUE;
+        boolean found = false;
+        boolean tooFar = false;
+        for (Routes ro : routes) {
+            if (ro.getDestBlock() != dest) {
+                continue;
+            }
+            // a route straight to a neighbour has this block as its next block
+            Block exit = (ro.getNextBlock() == getBlock()) ? dest : ro.getNextBlock();
+            if (exit == neighbour || !isThroughPath(neighbour, exit)) {
+                continue;
+            }
+            if (ro.getHopCount() >= MAX_HOP_COUNT) {
+                // only a route going round a loop gets this long
+                tooFar = true;
+                continue;
+            }
+            found = true;
+            bestMetric = Math.min(bestMetric, ro.getMetric());
+            bestHopCount = Math.min(bestHopCount, ro.getHopCount());
+            bestLength = Math.min(bestLength, ro.getLength());
+        }
+        if (!found) {
+            return tooFar ? UNREACHABLE : null;
+        }
+        return new RouteCost(bestMetric + metric, bestHopCount + 1, bestLength + block.getLengthMm());
+    }
+
+    private boolean isThroughPath(Block sourceBlock, Block destinationBlock) {
+        for (ThroughPaths throughPath : throughPaths) {
+            if ((throughPath.getSourceBlock() == sourceBlock) && (throughPath.getDestinationBlock() == destinationBlock)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Set the metric, hop count and length of one of our routes and, if any
+     * changed, bring the routes we advertise to our neighbours up to date.
+     */
+    private void setRouteCost(Routes ro, RouteCost cost) {
+        if ((ro.getMetric() == cost.metric) && (ro.getHopCount() == cost.hopCount)
+                && MathUtil.equals(ro.getLength(), cost.length)) {
+            return;
+        }
+        updateRouteLog.debug("From {} route to {} via {} changed to metric {}, hops {}, length {}",
+            getDisplayName(), ro.getDestBlock().getDisplayName(), ro.getNextBlock().getDisplayName(),
+            cost.metric, cost.hopCount, cost.length);
+        ro.setMetric(cost.metric);
+        ro.setHopCount(cost.hopCount);
+        ro.setLength(cost.length);
+        routeValuesChanged(ro.getDestBlock());
+    }
+
+    private void routeValuesChanged(Block dest) {
+        InstanceManager.getDefault(LayoutBlockManager.class).setLastRoutingChange();
+        advertiseRouteChange(dest);
+    }
+
+    /**
+     * Bring the route to a destination held by each of our neighbours via
+     * this block up to date with what we now advertise to that neighbour.
+     * Only a neighbour whose route changes passes the change on, so this
+     * stops once every table agrees.
+     *
+     * @param dest the destination block
+     */
+    void advertiseRouteChange(Block dest) {
+        for (Adjacencies adj : new ArrayList<>(neighbours)) {
+            advertiseRouteChange(adj, dest);
+        }
+    }
+
+    private void advertiseRouteChange(Adjacencies adj, Block dest) {
+        if (!adj.isMutual()) {
+            return;
+        }
+        LayoutBlock neighbour = adj.getLayoutBlock();
+        if (neighbour == null || dest == adj.getBlock()) {
+            return;
+        }
+        Routes theirs = neighbour.getValidRoute(getBlock(), dest);
+        RouteCost cost = getAdvertisedRoute(adj.getBlock(), dest);
+        if (theirs == null) {
+            return;
+        }
+        if (cost == UNREACHABLE) {
+            // the route only goes round a loop now, so withdraw it
+            adj.removeRouteAdvertisedToNeighbour(dest);
+            neighbour.removeRouteFromNeighbour(this, new RoutingPacket(REMOVAL, dest, -1, -1, -1, -1, getNextPacketID()));
+        } else if (cost != null) {
+            neighbour.setRouteCost(theirs, cost);
+        }
+    }
+
+    /**
+     * Bring every route our neighbours hold via this block up to date, for
+     * example after the metric of this block has changed.
+     */
+    private void advertiseAllRouteChanges() {
+        Set<Block> destinations = new LinkedHashSet<>();
+        for (Routes ro : routes) {
+            destinations.add(ro.getDestBlock());
+        }
+        destinations.forEach(this::advertiseRouteChange);
     }
 
     void updateRoutesToNeighbours(List<Block> messageRecipients, Routes ro, RoutingPacket update) {
@@ -3647,6 +3705,20 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         addRouteLog.debug("From {} We should be adding route {}", getDisplayName(), destBlock.getDisplayName());
 
+        // take the cost from what the neighbour advertises to us now, which is
+        // its best route, rather than from the route this packet was sent for
+        RouteCost cost = src.getAdvertisedRoute(this.getBlock(), destBlock);
+        if (cost == UNREACHABLE) {
+            addRouteLog.debug("From {} route to {} is beyond the hop count limit",
+                getDisplayName(), destBlock.getDisplayName());
+            return;
+        }
+        if (cost != null) {
+            hopCount = cost.hopCount;
+            updatemetric = cost.metric;
+            length = cost.length;
+        }
+
         // We need to propergate out the routes that we have added to our neighbour
         int direction = adj.getDirection();
         Routes route = new Routes(destBlock, srcblk, hopCount, direction, updatemetric, length);
@@ -3654,6 +3726,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         // Need to propergate the route down to our neighbours
         addRouteToNeighbours(route);
+        // and update neighbours that already hold a route to the destination via us
+        advertiseRouteChange(destBlock);
     }
 
     /* this should look after removal of a specific next hop from our neighbour*/
@@ -3831,7 +3905,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         boolean mutualAdjacency = false;
 
         HashMap<Block, Routes> adjDestRoutes = new HashMap<>();
-        List<Integer> actedUponUpdates = new ArrayList<>(501);
 
         Adjacencies(Block block, int dir, int packetFlow) {
             adjBlock = block;
@@ -3964,22 +4037,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 return true;
             }
 
-            if (existingRoute == routeToAdd) {
-                // We return true as the metric might have changed
-                return false;
-            }
+            // A change to the metric, hop count or length of a route that the
+            // neighbour already holds is sent by advertiseRouteChange().
             return false;
-        }
-
-        boolean updatePacketActedUpon(Integer packetID) {
-            return actedUponUpdates.contains(packetID);
-        }
-
-        void addPacketReceivedFromNeighbour(Integer packetID) {
-            actedUponUpdates.add(packetID);
-            if (actedUponUpdates.size() > 500) {
-                actedUponUpdates.subList(0, 250).clear();
-            }
         }
 
         void dispose() {
@@ -3987,7 +4047,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             adjLayoutBlock = null;
             mutualAdjacency = false;
             adjDestRoutes = null;
-            actedUponUpdates = null;
         }
     }
 

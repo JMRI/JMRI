@@ -80,7 +80,9 @@ public class LayoutBlockRouteTieBreakTest {
     private static void reverseRoutes(LayoutBlock lb) throws ReflectiveOperationException {
         Field field = LayoutBlock.class.getDeclaredField("routes");
         field.setAccessible(true);
-        Collections.reverse((List<?>) field.get(lb));
+        List<?> routes = (List<?>) field.get(lb);
+        // routing tables are only changed on the layout thread
+        ThreadingUtil.runOnLayout(() -> Collections.reverse(routes));
     }
 
     @Test
@@ -91,6 +93,10 @@ public class LayoutBlockRouteTieBreakTest {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         ThreadingUtil.runOnGUI(() -> lbm.initializeLayoutBlockPaths());
         JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
+        // the stable event is posted to the layout thread; let its listeners,
+        // such as Signal Mast Logic, finish with the routing tables before
+        // the routes are reordered below
+        ThreadingUtil.runOnLayout(() -> {});
 
         // This is flaky and fails on unrelated PRs.
         // First drain the event dispatch thread. Then the PROPERTY_TOPOLOGY=true event fires synchronously
