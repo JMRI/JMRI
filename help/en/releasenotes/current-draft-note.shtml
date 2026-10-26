@@ -956,7 +956,8 @@
         <a id="Wt" name="Wt"></a>
         <ul>
             <li>A number of bug fixes have been made to Warrants. If this causes problems for you,
-                you can ask for support on <a href="https://groups.io/g/jmriusers/topics">the JMRI users list</a>.</li>
+                you can ask for support on <a href="https://groups.io/g/jmriusers/topics">the JMRI users list</a>.
+                The changes are:</li>
             <li>Warrants: a "Wait Sensor" command in a warrant script now
                 holds the train until the sensor really reaches the requested
                 state; before, the train could leave early when a signal
@@ -964,6 +965,23 @@
                 Resume, Increase Speed and Move into next block still release
                 a train held at a sensor, so the operator can get past a sensor
                 that has failed.</li>
+            <li>A delayed speed change that replaces an earlier one can now be cancelled, and a cancelled
+                one stops at once.</li>
+            <li>A slow-down or stop is no longer sometimes missed. An error while a warrant runs now stops
+                the train and the warrant. Script function commands can use all the functions of the
+                throttle, not only F0 to F28.</li>
+            <li>A warrant no longer moves its train on when a block further ahead becomes occupied while
+                a detected block in between is still empty.</li>
+            <li>A planned slow-down in a script now starts at the right time. Before, it could start late,
+                or at once after a Speed 0 command.</li>
+            <li>Each change of an OBlock is now reported once, not twice, to track icons, Tracker,
+                warrants and the Web Server.</li>
+            <li>The Stop button of the route search now stops the search and shows the routes found so
+                far. Pressing Calculate again cancels the search still running.</li>
+            <li>A signal controlled (SCWarrant) train waiting for its next block no longer adds another
+                listener to that block every few seconds.</li>
+            <li>A speed measured during a warrant run is now merged once into the speed profile. The
+                first measurement for a direction is no longer halved.</li>
         </ul>
 
    <h3>Web Access</h3>
