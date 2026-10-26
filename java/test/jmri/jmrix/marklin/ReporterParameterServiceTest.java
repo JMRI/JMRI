@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -11,6 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 class ReporterParameterServiceTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     private static McanDevice makeDev(int canClass, int moduleId) {
         McanDeviceIdentity.CdB id = McanDeviceIdentity.forCdB(canClass, moduleId);

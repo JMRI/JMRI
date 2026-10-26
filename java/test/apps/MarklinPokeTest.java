@@ -1,4 +1,7 @@
 package apps;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 class MarklinPokeTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     @Test
     void parseFrames_singleFrame_13bytes() {

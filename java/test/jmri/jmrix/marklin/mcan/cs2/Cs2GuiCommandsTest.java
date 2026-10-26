@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.cs2;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import jmri.jmrix.marklin.mcan.classify.*;
 import org.junit.jupiter.api.Test;
@@ -8,6 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * Roundtrip tests for {@link Cs2GuiCommands}.
  */
 public class Cs2GuiCommandsTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     private static Cs2ClassifiedFrame roundtrip(int[] frame) {
         ClassifiedFrame cf = ProtocolClassifier.classify(frame);

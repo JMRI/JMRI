@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.cs2;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import jmri.jmrix.marklin.mcan.classify.*;
 import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
@@ -10,6 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests for {@link Cs2ConfigCommands}.
  */
 public class Cs2ConfigCommandsTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     private static Cs2ClassifiedFrame roundtrip(int[] frame) {
         ClassifiedFrame cf = ProtocolClassifier.classify(frame);

@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.cdb;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
 import jmri.jmrix.marklin.mcan.protocol.CdBDiscoveryPlan;
@@ -11,6 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * {@link CdBReporterCommands}, {@link CdBLampenChefCommands}.
  */
 public class CdBCommandsTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     // =================================================================
     // CdBConfigCommands

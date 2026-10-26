@@ -322,7 +322,10 @@ public class ArchitectureTest {
 
         // all the standard serial access should be confined to here:
         .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPort").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent")
+        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent").and()
+
+        // single wrapper confining direct jSerialComm use for the standalone apps CLI tools
+        .doNotHaveFullyQualifiedName("apps.ExternalDirectJSerialPort")
 
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 

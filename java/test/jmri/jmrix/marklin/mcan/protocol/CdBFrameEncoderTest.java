@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.protocol;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 import java.util.Optional;
@@ -10,6 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 public class CdBFrameEncoderTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     // --- buildPingCanId ---
 

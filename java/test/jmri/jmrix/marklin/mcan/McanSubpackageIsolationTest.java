@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +26,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 public class McanSubpackageIsolationTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     /**
      * Root of the mcan production source tree, relative to the repository root.

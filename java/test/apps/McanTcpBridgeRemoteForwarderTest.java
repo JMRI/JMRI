@@ -1,4 +1,7 @@
 package apps;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 class McanTcpBridgeRemoteForwarderTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     // Creeping delay sequence: 2s, 5s, 20s, 60s, 180s, then 300s indefinitely.
 

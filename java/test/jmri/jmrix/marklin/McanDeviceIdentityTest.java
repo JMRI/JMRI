@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 public class McanDeviceIdentityTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     @Test
     public void testNativeIdentityCreationAndProperties() {

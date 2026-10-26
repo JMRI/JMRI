@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
@@ -15,6 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 class WeichenChefMagnetServiceTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     // ---- helpers -----------------------------------------------------------
 

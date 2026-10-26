@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.protocol;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
@@ -16,6 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 public class CdBDiscoveryPlanTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     // --- forClass: NEW protocol ---
 

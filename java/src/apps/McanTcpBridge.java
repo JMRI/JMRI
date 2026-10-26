@@ -1,6 +1,5 @@
 package apps;
 
-import com.fazecast.jSerialComm.SerialPort;
 import jmri.jmrix.marklin.MarklinMessageFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -521,14 +520,14 @@ public class McanTcpBridge {
         System.out.println("Available serial ports:");
         System.out.println();
 
-        SerialPort[] ports = SerialPort.getCommPorts();
-        if (ports.length == 0) {
+        java.util.List<ExternalDirectJSerialPort.PortInfo> ports = ExternalDirectJSerialPort.list();
+        if (ports.isEmpty()) {
             System.out.println("  (none found)");
         } else {
-            for (SerialPort port : ports) {
-                System.out.println("  " + port.getSystemPortName());
-                System.out.println("    Description: " + port.getPortDescription());
-                System.out.println("    Location: " + port.getPortLocation());
+            for (ExternalDirectJSerialPort.PortInfo port : ports) {
+                System.out.println("  " + port.systemPortName);
+                System.out.println("    Description: " + port.portDescription);
+                System.out.println("    Location: " + port.portLocation);
                 System.out.println();
             }
         }
@@ -546,7 +545,7 @@ public class McanTcpBridge {
         private final String bindAddress; // null means bind to all interfaces
         private final int tcpPort;
         private final int baudRate;
-        private volatile SerialPort serialPort;  // com.fazecast.jSerialComm.SerialPort
+        private volatile ExternalDirectJSerialPort serialPort;
         private volatile boolean serialPortConnected = false;
         private ServerSocket serverSocket;
         private final List<ClientHandler> clients = new CopyOnWriteArrayList<>();
@@ -595,24 +594,20 @@ public class McanTcpBridge {
             try {
                 log.info("[{}:{}] Attempting to open serial port", serialPortName, tcpPort);
 
-                serialPort = SerialPort.getCommPort(serialPortName);
+                serialPort = ExternalDirectJSerialPort.forName(serialPortName);
 
-                if (!serialPort.openPort()) {
+                // 8-N-1 with RTS flow control and a 100 ms blocking read timeout,
+                // asserting DTR/RTS  -  the settings the CAN serial adapters expect.
+                if (!serialPort.open(baudRate, 8,
+                        ExternalDirectJSerialPort.ONE_STOP_BIT,
+                        ExternalDirectJSerialPort.NO_PARITY,
+                        ExternalDirectJSerialPort.FLOW_CONTROL_RTS_ENABLED,
+                        100, true)) {
                     log.warn("[{}:{}] Serial port not available: {}", serialPortName, tcpPort, serialPortName);
                     serialPortConnected = false;
                     serialPort = null;
                     return;
                 }
-
-                // Apply settings after open. See JMRI JSerialPort.activatePort()
-                serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 100, 0);
-                serialPort.setNumDataBits(8);
-                serialPort.setNumStopBits(SerialPort.ONE_STOP_BIT);
-                serialPort.setParity(SerialPort.NO_PARITY);
-                serialPort.setBaudRate(baudRate);
-                serialPort.setFlowControl(SerialPort.FLOW_CONTROL_RTS_ENABLED);
-                serialPort.setDTR();
-                serialPort.setRTS();
 
                 // Drain any stale bytes left in the adapter's RX buffer
                 InputStream serialIn = serialPort.getInputStream();
@@ -641,7 +636,7 @@ public class McanTcpBridge {
 
         private void closeSerialPort() {
             if (serialPort != null && serialPort.isOpen()) {
-                serialPort.closePort();
+                serialPort.close();
                 log.info("[{}:{}] Serial port closed", serialPortName, tcpPort);
             }
             serialPort = null;
@@ -767,8 +762,9 @@ public class McanTcpBridge {
                             log.warn("[{}:{}] Serial port disconnected (EOF)", serialPortName, tcpPort);
                             serialPortConnected = false;
                         }
-                    } catch (com.fazecast.jSerialComm.SerialPortTimeoutException e) {
-                        // 100ms read timeout  -  normal, just loop back
+                    } catch (java.io.InterruptedIOException e) {
+                        // 100ms read timeout (SerialPortTimeoutException is an
+                        // InterruptedIOException)  -  normal, just loop back
                     } catch (IOException e) {
                         if (running.get()) {
                             log.warn("[{}:{}] Serial read error (device may be unplugged): {}",

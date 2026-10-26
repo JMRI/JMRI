@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
@@ -14,6 +17,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de) Copyright (C) 2026
  */
 public class MarklinMessageFormatterTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     // ---------------------------------------------------------------------------
     // CS2 system commands

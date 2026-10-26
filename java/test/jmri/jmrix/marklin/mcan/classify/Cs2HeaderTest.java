@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.classify;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 public class Cs2HeaderTest {
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     // Build a minimal valid CS2 packet: hash=0x0300 (fingerprint bits set), DLC=0
     private static int[] minimalCs2Packet(int priority, int command, boolean response,
