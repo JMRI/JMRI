@@ -728,6 +728,13 @@
           <li>LogixNG formulas: comparing a decimal value with a whole
               number now gives the right answer. Before, 1.5 == 2 was true and
               2.5 &lt; 3 was false.</li>
+          <li>LogixNG Block, Section and Transit expressions now only run
+              their ConditionalNG when a property they can test changes (block
+              state, value and allocation; section state and occupancy;
+              transit state), not on every change of the bean, for example
+              each time a Reporter writes a new value into a Block. A
+              ConditionalNG that relied on running for other changes of these
+              beans will now run less often.</li>
           <li>LogixNG formulas: the &amp;&amp; and || operators now only
               evaluate the right-hand side when the left-hand side does not
               already decide the result, as in most programming languages.
