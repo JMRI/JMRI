@@ -38,6 +38,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private boolean _stopPending = false;   // ramp slow down in progress
     private boolean _waitForClear = false;  // waits for signals/occupancy/allocation to clear
     private boolean _waitForSensor = false; // wait for sensor event
+    private boolean _sensorStateReached = false; // wait sensor went to the wanted state
+    private boolean _releaseSensorWait = false; // operator released the sensor wait
+    private volatile boolean _stopRequested = false; // stopRun() called, end any sensor wait
     private boolean _runOnET = false;   // Execute commands on ET only - do not synch
     private boolean _setRunOnET = false; // Need to delay _runOnET from the block that set it
     protected DccThrottle _throttle;
@@ -873,6 +876,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (abort) {
             _abort =true;
         }
+        _stopRequested = true;
 
         synchronized (_synchLockObject) {
             _synchLockObject.notifyAll();
@@ -1013,13 +1017,19 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         } else {
             throw new java.lang.IllegalArgumentException("waitForSensor type " + type + " wrong");
         }
+        synchronized (this) {
+            _sensorStateReached = false;
+            _releaseSensorWait = false;
+        }
+        // listen before reading the state so that a change in between is not missed
+        _waitSensor.addPropertyChangeListener(this);
         int state = _waitSensor.getKnownState();
         if (state == _sensorWaitState) {
             log.info("Engineer: state of event sensor {} already at state {}",
                 _waitSensor.getDisplayName(), type.toString());
+            clearSensor();
             return;
         }
-        _waitSensor.addPropertyChangeListener(this);
         if (log.isDebugEnabled()) {
             log.debug("Listen for propertyChange of {}, wait for State= {}",
                 _waitSensor.getDisplayName(), _sensorWaitState);
@@ -1034,9 +1044,16 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                             _warrant.getTrainName(), _waitSensor.getDisplayName(), type.toString()));
                     }
                     _warrant.fireRunStatus( PROPERTY_SENSOR_WAIT_COMMAND, type.toString(), _waitSensor.getDisplayName());
-                    wait();
-                    if (!_abort ) {
+                    // Other events, such as the end of a speed ramp, also notify this thread,
+                    // so wait until the sensor has reached the state or the operator releases the train.
+                    while (!_sensorStateReached && !_releaseSensorWait && !_abort && !_stopRequested) {
+                        wait();
+                    }
+                    if (!_abort && !_stopRequested) {
                         String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually'
+                        if (!_sensorStateReached) {
+                            log.info("{}: wait for sensor {} released by the operator", _warrant.getTrainName(), name);
+                        }
                         if (Warrant._trace || log.isDebugEnabled()) {
                             log.info("{} : wait Sensor Change", Bundle.getMessage("waitSensorChange",
                                     _warrant.getTrainName(), name));
@@ -1044,13 +1061,31 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         _warrant.fireRunStatus( PROPERTY_SENSOR_WAIT_COMMAND, null, name);
                     }
                 } catch (InterruptedException ie) {
-                    log.error("Engineer interrupted at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
+                    if (_stopRequested) {
+                        log.debug("Engineer stopped at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
+                    } else {
+                        log.error("Engineer interrupted at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
+                    }
                     _warrant.debugInfo();
                     Thread.currentThread().interrupt();
                 } finally {
                     clearSensor();
                 }
             }
+        }
+    }
+
+    /**
+     * Release a train held by a Wait Sensor command in its script, because
+     * the operator has asked it to run, with Resume, Increase Speed or Move
+     * into next block. This is the way past a sensor that does not change,
+     * for example because it has failed. Other wake-ups of this thread, such
+     * as the end of a speed ramp, do not end a sensor wait.
+     */
+    protected synchronized void releaseSensorWait() {
+        if (_waitForSensor) {
+            _releaseSensorWait = true;
+            notifyAll();
         }
     }
 
@@ -1076,6 +1111,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (( Sensor.PROPERTY_KNOWN_STATE.equals(evt.getPropertyName())
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
             synchronized (this) {
+                    _sensorStateReached = true;
                     notifyAll();  // free sensor wait
             }
         }

@@ -1366,6 +1366,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         block.setValue(_trainName); // indicate position
         block.setState(block.getState());
         _engineer.setHalt(false);
+        _engineer.releaseSensorWait();
         clearWaitFlags(false);
         _overrun = true;    // allows doRestoreRunning to run at an OCCUPY state
         return restoreRunning(_engineer.getSpeedType(false));
@@ -1390,6 +1391,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean bumpSpeed() {
         // OK, will do as it long as you own it, and you are where you think you are.
         _engineer.setHalt(false);
+        _engineer.releaseSensorWait();
         clearWaitFlags(false);
         float speedSetting = _engineer.getSpeedSetting();
         if (speedSetting < 0) { // may have done E-Stop
@@ -1410,6 +1412,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (block.equals(_stoppingBlock)) {
             clearStoppingBlock();
             _engineer.setHalt(false);
+            _engineer.releaseSensorWait();
         }
         goingActive(block);
         return true;
