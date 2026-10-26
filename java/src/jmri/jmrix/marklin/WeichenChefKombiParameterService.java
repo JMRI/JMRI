@@ -267,7 +267,7 @@ public class WeichenChefKombiParameterService {
             frames.add(CdBWeichenChefCommands.buildWriteChSwitchingTime(canClass, currentRawId, ch + 1, config.switchingTimes[ch]));
         }
         for (int ch = 0; ch < 4; ch++) {
-            int flag = config.cdBFlags[ch] ? (moduleType == 2 ? 2 : 1) : 0;
+            int flag = config.cdBFlags[ch] ? (config.moduleType == 2 ? 2 : 1) : 0;
             frames.add(CdBWeichenChefCommands.buildWriteChCdBFlag(canClass, currentRawId, ch + 1, flag));
         }
         for (int ch = 0; ch < 5; ch++) {
@@ -326,26 +326,28 @@ public class WeichenChefKombiParameterService {
         if (frame.classId() != getCanClass()) return;
 
         if (frame.frameType() == CdBFrameType.PING_REPLY) {
-            CdBFrameParser.PingReplyFrame pingReply = (CdBFrameParser.PingReplyFrame) frame;
-            int moduleRawId = pingReply.moduleId();
-            if (pingReply.isOperational()) {
-                final int id = moduleRawId;
-                ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.moduleFound(id)));
-            } else if (pingReply.isFactoryFresh() && !factorySelectSent) {
-                pingReply.challengeBytes().ifPresent(cb -> {
-                    int challenge0 = cb[0];
-                    int challenge1 = cb[1];
-                    int[] selectFrame = CdBConfigCommands.buildFactorySelect(getCanClass(), challenge0, challenge1);
-                    log.info("Factory module ping: challenge=[{}, {}], sending select frame: {}",
-                            String.format("%02X", challenge0), String.format("%02X", challenge1),
-                            formatFrame(selectFrame));
-                    currentRawId = 0;
-                    factoryChallenge0 = challenge0;
-                    factoryChallenge1 = challenge1;
-                    factorySelectSent = true;
-                    sender.sendFrame(selectFrame);
-                    ThreadingUtil.runOnGUI(() -> listeners.forEach(WeichenChefKombiListener::factoryIdModeEntered));
-                });
+            if (frame instanceof CdBFrameParser.PingReplyFrame) {
+                CdBFrameParser.PingReplyFrame pingReply = (CdBFrameParser.PingReplyFrame) frame;
+                int moduleRawId = pingReply.moduleId();
+                if (pingReply.isOperational()) {
+                    final int id = moduleRawId;
+                    ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.moduleFound(id)));
+                } else if (pingReply.isFactoryFresh() && !factorySelectSent) {
+                    pingReply.challengeBytes().ifPresent(cb -> {
+                        int challenge0 = cb[0];
+                        int challenge1 = cb[1];
+                        int[] selectFrame = CdBConfigCommands.buildFactorySelect(getCanClass(), challenge0, challenge1);
+                        log.info("Factory module ping: challenge=[{}, {}], sending select frame: {}",
+                                String.format("%02X", challenge0), String.format("%02X", challenge1),
+                                formatFrame(selectFrame));
+                        currentRawId = 0;
+                        factoryChallenge0 = challenge0;
+                        factoryChallenge1 = challenge1;
+                        factorySelectSent = true;
+                        sender.sendFrame(selectFrame);
+                        ThreadingUtil.runOnGUI(() -> listeners.forEach(WeichenChefKombiListener::factoryIdModeEntered));
+                    });
+                }
             }
             return;
         }
@@ -495,7 +497,7 @@ public class WeichenChefKombiParameterService {
     }
 
     private void handleCdBFlag(MarklinReply raw, int subcmd, int generation) {
-        boolean on = (raw.getElement(8) & 0xFF) > 0;
+        boolean on = (raw.getElement(8) & 0xFF) != 0;
         final int ch = subcmd;
         final boolean flag = on;
         ThreadingUtil.runOnGUI(() -> {

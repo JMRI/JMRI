@@ -257,8 +257,14 @@ public class McanDeviceManager extends AbstractManager<McanDevice> implements Ma
         McanDevice device = provideDevice(identity);
         device.touch();
 
-        // Factory-fresh module: stash challenge bytes so the configure dialog can use them
+        // frameType() == PING_REPLY was verified above; this guard makes the
+        // concrete subtype explicit (and keeps SpotBugs happy about the cast).
+        if (!(frame instanceof CdBFrameParser.PingReplyFrame)) {
+            return;
+        }
         CdBFrameParser.PingReplyFrame pingReply = (CdBFrameParser.PingReplyFrame) frame;
+
+        // Factory-fresh module: stash challenge bytes so the configure dialog can use them
         if (pingReply.isFactoryFresh()) {
             pingReply.challengeBytes().ifPresent(cb ->
                 device.setFactoryChallengeBytes(cb[0], cb[1]));

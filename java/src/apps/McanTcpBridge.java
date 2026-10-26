@@ -618,8 +618,17 @@ public class McanTcpBridge {
                 InputStream serialIn = serialPort.getInputStream();
                 int stale = serialIn.available();
                 if (stale > 0) {
-                    serialIn.skip(stale);
-                    log.debug("[{}:{}] Purged {} stale bytes from serial RX buffer", serialPortName, tcpPort, stale);
+                    // skip() may return fewer bytes than requested; loop until the
+                    // buffer is drained or no further progress is made.
+                    long remaining = stale;
+                    while (remaining > 0) {
+                        long skipped = serialIn.skip(remaining);
+                        if (skipped <= 0) {
+                            break;
+                        }
+                        remaining -= skipped;
+                    }
+                    log.debug("[{}:{}] Purged {} stale bytes from serial RX buffer", serialPortName, tcpPort, stale - remaining);
                 }
                 serialPortConnected = true;
                 log.info("[{}:{}] Serial port opened: {}", serialPortName, tcpPort, serialPort.getDescriptivePortName());

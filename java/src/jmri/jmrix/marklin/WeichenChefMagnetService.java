@@ -191,6 +191,9 @@ public class WeichenChefMagnetService implements McanDeviceService {
             return;
         }
 
+        if (!(frame instanceof CdBFrameParser.ReadReplyFrame)) {
+            return;
+        }
         CdBFrameParser.ReadReplyFrame rrf = (CdBFrameParser.ReadReplyFrame) frame;
         if (rrf.slot() != 0 || rrf.reg() != 1) {
             return;

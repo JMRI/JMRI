@@ -196,11 +196,11 @@ public class McanDevice extends AbstractNamedBean {
     }
 
     /**
-     * Return the stored factory challenge bytes or null if none recorded.
-     * @return two-element array [b0, b1] or null
+     * Return the stored factory challenge bytes or an empty array if none recorded.
+     * @return two-element array [b0, b1], or a zero-length array if none recorded
      */
     public synchronized int[] getFactoryChallengeBytes() {
-        return factoryChallengeBytes != null ? factoryChallengeBytes.clone() : null;
+        return factoryChallengeBytes != null ? factoryChallengeBytes.clone() : new int[0];
     }
 
     /**

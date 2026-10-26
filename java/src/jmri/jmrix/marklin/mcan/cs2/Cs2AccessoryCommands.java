@@ -231,7 +231,6 @@ public final class Cs2AccessoryCommands {
                 return new AccessoryReplyFrame(header, data, parent);
             case MFX_BIND_EX:
                 // request has same layout as reply for MFX bind-ex
-                return new MfxBindExReplyFrame(header, data, parent);
             case MFX_BIND_EX_REPLY:
                 return new MfxBindExReplyFrame(header, data, parent);
             default:

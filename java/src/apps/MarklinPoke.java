@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +77,7 @@ public class MarklinPoke {
      * @param args CLI arguments
      * @return parsed Args
      */
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "standalone CLI tool aborts on invalid arguments")
     public static Args parseArgs(String[] args) {
         String host = "localhost";
         int port = 15731;

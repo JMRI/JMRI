@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -55,6 +56,7 @@ public class MarklinPokeRunner {
      * Connect, send frames, watch, print results.
      * Calls System.exit(1) if the bridge is not reachable.
      */
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "standalone CLI tool aborts when the bridge is unreachable")
     public void run() {
         if (!connect()) {
             System.exit(1);
@@ -109,7 +111,11 @@ public class MarklinPokeRunner {
                 Thread.sleep(args.watchSecs() * 1000L);
             }
         } catch (IOException | InterruptedException e) {
-            err.println("Error during send/watch: " + e.getMessage());
+            err.println("Error during send/watch: " + e);
+            if (e instanceof InterruptedException) {
+                // Restore the interrupt status so callers up the stack can observe it.
+                Thread.currentThread().interrupt();
+            }
         }
 
         receiver.interrupt();

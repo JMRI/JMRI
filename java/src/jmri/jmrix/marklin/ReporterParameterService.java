@@ -246,13 +246,15 @@ public class ReporterParameterService {
         if (frame.classId() != getCanClass()) return;
 
         if (frame.frameType() == CdBFrameType.PING_REPLY) {
-            CdBFrameParser.PingReplyFrame pingReply = (CdBFrameParser.PingReplyFrame) frame;
-            int moduleRawId = pingReply.moduleId();
-            if (pingReply.isOperational()) {
-                final int id = moduleRawId;
-                ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.moduleFound(id)));
-            } else if (pingReply.isFactoryFresh()) {
-                ThreadingUtil.runOnGUI(() -> listeners.forEach(ReporterListener::factoryIdModeEntered));
+            if (frame instanceof CdBFrameParser.PingReplyFrame) {
+                CdBFrameParser.PingReplyFrame pingReply = (CdBFrameParser.PingReplyFrame) frame;
+                int moduleRawId = pingReply.moduleId();
+                if (pingReply.isOperational()) {
+                    final int id = moduleRawId;
+                    ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.moduleFound(id)));
+                } else if (pingReply.isFactoryFresh()) {
+                    ThreadingUtil.runOnGUI(() -> listeners.forEach(ReporterListener::factoryIdModeEntered));
+                }
             }
             return;
         }
