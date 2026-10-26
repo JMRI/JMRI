@@ -35,7 +35,6 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     public MarklinSystemConnectionMemo() {
         super("M", "Marklin-CS2");
-        register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.marklin.swing.MarklinComponentFactory(this),
