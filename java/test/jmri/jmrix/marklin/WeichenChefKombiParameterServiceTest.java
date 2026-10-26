@@ -1,8 +1,11 @@
 package jmri.jmrix.marklin;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.util.JUnitUtil;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -11,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 class WeichenChefKombiParameterServiceTest {
+
+    // Disposed in tearDown to avoid leaking pending delayed property-query/retry tasks into later tests.
+    private WeichenChefKombiParameterService svcUnderTest;
 
     private static McanDevice makeDev(int canClass, int moduleId) {
         McanDeviceIdentity.CdB id = McanDeviceIdentity.forCdB(canClass, moduleId);
@@ -47,6 +53,7 @@ class WeichenChefKombiParameterServiceTest {
         McanDevice dev = makeDev(0x27, 3);
         WeichenChefKombiParameterService svc =
             new WeichenChefKombiParameterService(dev, sent::add);
+        svcUnderTest = svc;
 
         // First select sets module to 3
         svc.selectModule(3);
@@ -70,6 +77,7 @@ class WeichenChefKombiParameterServiceTest {
         McanDevice dev = makeDev(0x27, 2);
         WeichenChefKombiParameterService svc =
             new WeichenChefKombiParameterService(dev, sent::add);
+        svcUnderTest = svc;
 
         svc.selectModule(2);
 
@@ -88,6 +96,7 @@ class WeichenChefKombiParameterServiceTest {
         McanDevice dev = makeDev(0x27, 4);
         WeichenChefKombiParameterService svc =
             new WeichenChefKombiParameterService(dev, sent::add);
+        svcUnderTest = svc;
 
         svc.selectModule(4);
         sent.clear();
@@ -108,5 +117,20 @@ class WeichenChefKombiParameterServiceTest {
         svc.deselectModule(); // no module selected yet
 
         assertTrue(sent.isEmpty(), "deselect with no selected module must not send");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Cancels services on GUI thread before teardown
+        if (svcUnderTest != null) {
+            svcUnderTest.dispose();
+            svcUnderTest = null;
+        }
+        JUnitUtil.tearDown();
     }
 }
