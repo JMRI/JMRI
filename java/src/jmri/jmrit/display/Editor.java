@@ -533,6 +533,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
 
     /** Notify web clients that a display option on this panel has changed. */
     public void notifyWebPanelDisplayOptionsChanged() {
+        // This cast includes LayoutEditor which inherits from PanelEditor
         if (this instanceof jmri.jmrit.display.panelEditor.PanelEditor
                 || this instanceof jmri.jmrit.display.controlPanelEditor.ControlPanelEditor) {
             firePropertyChange("webPanelDisplayOptions", false, true);
@@ -3538,6 +3539,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      *
      */
     public void setAttributes(PositionablePopupUtil newUtil, Positionable p) {
+        // the redisplay will happen once the attributes are loaded
         PositionablePopupUtil.suppressWebPanelDisplayOptionNotifications();
         try {
         p.setPopupUtility(newUtil.clone(p, p.getTextComponent()));

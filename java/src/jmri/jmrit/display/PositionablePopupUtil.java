@@ -633,7 +633,6 @@ public class PositionablePopupUtil {
         setHorizontalAlignment(justification);
         _parent.updateSize();
         notifyWebPanelDisplayOptionsChanged();
-        notifyWebPanelDisplayOptionsChanged();
     }
 
     private void notifyWebPanelDisplayOptionsChanged() {
