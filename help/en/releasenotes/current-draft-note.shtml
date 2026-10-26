@@ -626,6 +626,19 @@
                  because the signal clears or an allocation arrives, its end,
                  reversal or reset action is now dropped too. Before, it could
                  run later, wherever the train next stopped.</li>
+             <li>"Place train name in allocated Blocks" no longer changes the
+                 value of Blocks. The train a Block is allocated to is now
+                 kept as the Block's allocated value, and Block Contents icons
+                 and Layout Block memories show it wherever the Block does not
+                 already show a train, so panels look as before. A Logix,
+                 LogixNG or script that reads the value of an empty allocated
+                 Block now gets nothing; see the
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/BlockTable.shtml#allocatedValue">Block
+                 Table help</a> for how to read the train a Block is allocated
+                 to. <code>Section.setNameFromActiveBlock</code>,
+                 <code>Section.suppressNameUpdate</code> and
+                 <code>LayoutBlock.setSuppressNameUpdate</code> are deprecated
+                 and will be removed.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

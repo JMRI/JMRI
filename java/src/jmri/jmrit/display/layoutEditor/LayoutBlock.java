@@ -1058,6 +1058,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     @Deprecated(since="5.17.5", forRemoval=true)
     public void setSuppressNameUpdate(boolean set) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "LayoutBlock.setSuppressNameUpdate");
         boolean resume = suppressNameUpdate && !set;
         suppressNameUpdate = set;
         if (resume) {

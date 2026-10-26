@@ -59,6 +59,25 @@
           this, it's stored in the Block as a string. There is currently no way to manually add a
           Throttle object to a Block from the table. <a href=
           "../../../../html/tools/tracker/index.shtml">More information on Block tracking</a></p>
+
+          <p id="allocatedValue"><span class="since">since 5.17.5</span>The value is the train in the
+          Block. When Dispatcher's <a href="../dispatcher/Options.shtml">Place train name in
+          allocated Blocks</a> option is on, the train a Block is allocated to is kept separately,
+          as the Block's <em>allocated value</em>. Block Contents icons and Layout Block memories
+          show the value, or the allocated value when the Block has no value, so panels show the
+          train's name in its allocated Blocks as before.</p>
+
+          <p>Before 5.17.5 Dispatcher wrote the train's name into the value of every allocated
+          Block, so a Logix, LogixNG or script reading the value of an empty allocated Block got the
+          train's name. It now gets nothing there. To find the train a Block is allocated to, read
+          its allocated value instead, for example in Jython
+          <code>blocks.getBlock("B1").getAllocatedValue()</code>. To find the train in a Block or,
+          failing that, the one it is allocated to, as a panel shows it, use
+          <code>getDisplayValue()</code>. The Section and Layout Block methods that kept the name on
+          the panel (<code>Section.setNameFromActiveBlock</code>,
+          <code>Section.suppressNameUpdate</code> and <code>LayoutBlock.setSuppressNameUpdate</code>)
+          are no longer needed; they still work, but write a warning to the log the first time they
+          are used, and will be removed.</p>
         </li>
 
         <li>
