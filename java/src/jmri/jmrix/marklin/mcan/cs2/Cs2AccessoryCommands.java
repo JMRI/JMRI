@@ -164,10 +164,10 @@ public final class Cs2AccessoryCommands {
         /** 32-bit accessory address from data bytes 0–3. */
         public long address() { return data().int32At(0); }
 
-        /** Aspect/position value from data byte 4 (present when DLC>=5). Returns 0 for query. */
+        /** Aspect/position value from data byte 4 (present when DLC&gt;=5). Returns 0 for query. */
         public int aspect() { return header().dlc() >= 5 ? data().byteAt(4) : 0; }
 
-        /** Power state from data byte 5 (present when DLC>=6): true=on. */
+        /** Power state from data byte 5 (present when DLC&gt;=6): true=on. */
         public boolean power() { return header().dlc() >= 6 && data().byteAt(5) != 0; }
 
         /**
@@ -190,7 +190,7 @@ public final class Cs2AccessoryCommands {
             return data().int32At(0);
         }
 
-        /** Aspect/position value from data byte 4 (present when DLC>=5). */
+        /** Aspect/position value from data byte 4 (present when DLC&gt;=5). */
         public int aspect() {
             return data().byteAt(4);
         }

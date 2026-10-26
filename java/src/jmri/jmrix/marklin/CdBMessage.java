@@ -90,7 +90,7 @@ public class CdBMessage {
 
         /**
          * Calculate the CdB ping identifier for this device class.
-         * Formula: ping_id = ((C >> 4) << 21) + ((C & 0x0F) << 12) + 0x0A80
+         * Formula: {@code ping_id = ((C >> 4) << 21) + ((C & 0x0F) << 12) + 0x0A80}
          *
          * @return 32-bit CAN identifier for zero-DLC ping
          */
@@ -742,9 +742,9 @@ public class CdBMessage {
     /**
      * Encode an output address for a WeichenChef output channel configured as a solenoid drive
      * (output type 2, as stored in per-channel configuration register 245).
-     * DCC -> raw = 14336 + address - 1
-     * MM  -> raw = 12288 + address - 1
-     * CAN -> raw = address
+     * {@code DCC -> raw = 14336 + address - 1}
+     * {@code MM  -> raw = 12288 + address - 1}
+     * {@code CAN -> raw = address}
      *
      * This is the encoding for the CdB Config protocol.
      * Do not confuse with operational command protocol in MarklinCanCodec.getProtocolFromAddress() which uses different offsets.
@@ -782,8 +782,8 @@ public class CdBMessage {
      * Encode an output address for a WeichenChef output channel configured as a motor drive
      * with end-stop evaluation (output type 3, as stored in per-channel configuration register 245).
      * Motor-drive channels only support DCC addressing in two sub-formats:
-     * DCC     -> raw = 12288 + address - 1
-     * DCC ext -> raw = 12800 + address + 3
+     * {@code DCC     -> raw = 12288 + address - 1}
+     * {@code DCC ext -> raw = 12800 + address + 3}
      * <p>
      * For solenoid-drive channels (type 2), use {@link #encodeAddress(String, int)} instead.
      *

@@ -13,14 +13,14 @@ import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
  * the device class, module ID and frame direction (ping / read / write / reply).
  * <p>
  * CAN ID layout for NEW-protocol CdB frames (29-bit):
- * <pre>
+ * <pre>{@code
  *   pingId  = ((class >> 4) << 21) | ((class & 0xF) << 12) | 0x0A80
  *   readId  = pingId + 0x40000
  *   writeId = pingId + 0x60000
  *
  *   Module ID is encoded in the low byte of the 16-bit hash as (moduleId + 0x80).
  *   A broadcast ping has hash low byte = 0x80 (module ID = 0).
- * </pre>
+ * }</pre>
  */
 public final class CdBProtocolDecoder {
 

@@ -466,7 +466,7 @@ public class ReporterParameterService {
         return (v >= 1 && v <= 6000) ? v : 120;
     }
 
-    /** Returns true if firmware version gates the Sonderfunktion (fw hi >= 8). */
+    /** Returns true if firmware version gates the Sonderfunktion (fw hi &gt;= 8). */
     public static boolean showSonderfunktion(int firmwareHi, int firmwareLo) {
         return firmwareHi >= 8;
     }

@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Implements {@link McanDeviceService} and is attached to an {@link McanDevice} by the
  * classifier layer ({@link McanDeviceManager}) after the initial PING_REPLY is received.
- * <p>
- * <h3>Classification flow</h3>
+ * <h2>Classification flow</h2>
  * WeichenChef Magnet is the only {@link jmri.jmrix.marklin.mcan.device.CdBDeviceClass.HardwareCapability#AMBIGUOUS}
  * device class. Two hardware generations share class ID 0x22 and produce identical ping
  * replies; they can only be distinguished after discovery via a firmware-version probe:
@@ -30,8 +29,7 @@ import org.slf4j.LoggerFactory;
  *       {@link McanDevice#setDeviceState(McanDeviceState) setDeviceState(ONLINE)} so the
  *       device bean becomes visible to the rest of JMRI.
  * </ol>
- * <p>
- * <h3>Generation discrimination</h3>
+ * <h2>Generation discrimination</h2>
  * Gen-001 and gen-002+ are distinguished by firmware major version.
  * TODO: The exact firmware version boundary must be confirmed against real hardware.
  * Current heuristic: {@code firmwareHi >= GEN_002_PLUS_MIN_FW_HI} → {@link WeichenChefMagnetGeneration#GEN_002_PLUS}.

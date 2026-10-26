@@ -6,14 +6,14 @@ import java.util.Optional;
  * Constructs 13-byte CAN frames for NEW-protocol CdB configuration commands.
  * <p>
  * CAN ID layout:
- * <pre>
+ * <pre>{@code
  *   pingId  = ((class >> 4) << 21) | ((class & 0xF) << 12) | 0x0A80
  *   readId  = pingId + 0x40000
  *   writeId = pingId + 0x60000
  *
  *   Module ID encoded in hash low byte as (moduleId + 0x80).
  *   DLC is written into byte[4].  Data bytes follow from byte[5].
- * </pre>
+ * }</pre>
  */
 public final class CdBFrameEncoder {
 
