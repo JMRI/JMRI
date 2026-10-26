@@ -2092,6 +2092,8 @@
             <fileset dir="${target}">
                 <include name="apps/McanTcpBridge.class"/>
                 <include name="apps/McanTcpBridge$*.class"/>
+                <include name="apps/ExternalDirectJSerialPort.class"/>
+                <include name="apps/ExternalDirectJSerialPort$*.class"/>
             </fileset>
             <fileset dir="${target}">
                 <include name="jmri/jmrix/marklin/**/*.class"/>
