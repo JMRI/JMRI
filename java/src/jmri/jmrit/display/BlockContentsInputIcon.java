@@ -12,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -35,10 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Sand Copyright (c) 2026
  * @since 5.15.4
  */
-public class BlockContentsInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new PositionableJTextField();
-    int _nCols;
+public class BlockContentsInputIcon extends PositionableJPanelWithColumns implements java.beans.PropertyChangeListener {
 
     // the associated Block object
     private NamedBeanHandle<Block> namedBlock;
@@ -136,11 +132,6 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<Block> getNamedBlock() {
         return namedBlock;
     }
@@ -150,10 +141,6 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
             return null;
         }
         return namedBlock.getBean();
-    }
-
-    public int getNumColumns() {
-        return _nCols;
     }
 
     // update icon as state of Block changes
