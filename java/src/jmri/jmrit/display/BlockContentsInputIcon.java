@@ -143,6 +143,11 @@ public class BlockContentsInputIcon extends PositionableJPanelWithColumns implem
         return namedBlock.getBean();
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getBlock();
+    }
+
     // update icon as state of Block changes
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {

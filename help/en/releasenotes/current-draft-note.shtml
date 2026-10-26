@@ -958,6 +958,9 @@
                 from their appearance on a native JMRI screen.  This was most
                 noticeable with green, light and dark grey, and orange.  JMRI
                 now sends the exact RGB codes to the web client to ensure colors match.</li>
+            <li>If two icons of different type, e.g. a block and a memory, displayed
+                objects with the same user name, the web display could show the 
+                wrong object in one of the icons.  This is now fixed.<li>
         </ul>
 
     <h3>Where Used</h3>
