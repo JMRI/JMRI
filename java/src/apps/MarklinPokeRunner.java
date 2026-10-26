@@ -119,7 +119,11 @@ public class MarklinPokeRunner {
         }
 
         receiver.interrupt();
-        try { socket.close(); } catch (IOException ignored) {}
+        try {
+            socket.close();
+        } catch (IOException e) {
+            err.println("Error closing socket: " + e);
+        }
         try { receiver.join(500); } catch (InterruptedException ignored) {}
 
         for (ReceivedFrame rf : received) {
