@@ -25,9 +25,9 @@
       <ol>
         <li><strong>Building the shared library version is included in JMRI's build pipeline:</strong>
         </li>
-        <li><strong>Build the standalone version:</strong>
+        <li><strong>Build the standalone JAR</strong> (for deployment on another computer running CC-Schnitte):
           <pre>ant mcan-tcp-bridge-jar</pre>
-          Output: <code>dist/mcan-tcp-bridge.jar</code>
+          Output: <code>dist/mcan-tcp-bridge.jar</code> Copy this single file to the target computer.
         </li>
 
         <li><strong>List available ports:</strong>
@@ -115,7 +115,12 @@ java -jar dist/mcan-tcp-bridge.jar --port /dev/ttyUSB0 # Linux
 
 
       <h3>Build Standalone JAR</h3>
-      For standalone deployment, use ant target "mcan-tcp-bridge-jar":
+
+      <p>The standalone JAR is intended for deployment on a separate computer that has the
+      CC-Schnitte physically connected to it via USB. Build the JAR on a machine that has the
+      JMRI source tree checked out. Then copy it to the target computer. No JMRI installation
+      is required on the target computer.</p>
+
       <p>Using Ant:</p>
       <pre>
 cd /path/to/JMRI
@@ -128,8 +133,22 @@ cd /path/to/JMRI
 mvn antrun:run -Danttarget=mcan-tcp-bridge-jar
       </pre>
 
-      <p>This creates <code>dist/mcan-tcp-bridge.jar</code>, a self-contained JAR with its
-      dependencies embedded.</p>
+      <p>This creates <code>dist/mcan-tcp-bridge.jar</code>, a self-contained JAR with all
+      dependencies embedded. Copy this single file to the target computer:</p>
+
+      <p>Linux / macOS:</p>
+      <pre>
+scp dist/mcan-tcp-bridge.jar user@bridge-host:/opt/mcan-tcp-bridge/
+      </pre>
+
+      <p>Windows (PowerShell):</p>
+      <pre>
+Copy-Item dist\mcan-tcp-bridge.jar \\bridge-host\share\mcan-tcp-bridge\
+      </pre>
+
+      <p>Or use any other file transfer method (USB stick, shared folder, etc.). Once copied,
+      run it on the target computer as described in the <a href="#usage">Using the Bridge</a>
+      section below.</p>
 
       <h3>Run from Development Environment</h3>
 
@@ -139,7 +158,7 @@ ant mcan-tcp-bridge
 
       <p>This runs the bridge using JMRI's full classpath (useful for development and debugging).</p>
 
-      <h2>Using the Bridge</h2>
+      <h2 id="usage">Using the Bridge</h2>
 
       <h3>List Available Serial Ports</h3>
 
