@@ -39,11 +39,12 @@ public abstract class AbstractRailComReporter extends AbstractIdTagReporter {
      */
     @Override
     public LocoAddress getLocoAddress(String rep) {
-        // For now, we assume the current report.
-        // IdTags passed by RailCom reporters are actually jmri.RailCom objects
-        // so we use properties of the RailCom object here.
-        RailCom cr = (RailCom) this.getCurrentReport();
-        return cr.getLocoAddress();
+        Object cr = this.getCurrentReport();
+        if (cr instanceof RailCom) {
+            return ((RailCom) cr).getLocoAddress();
+        }
+        // not a RailCom report, for example an RFID tag on a CBUS Reporter, or no report
+        return super.getLocoAddress(rep);
     }
 
 }

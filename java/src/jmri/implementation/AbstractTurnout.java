@@ -2,7 +2,6 @@ package jmri.implementation;
 
 import java.beans.*;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -150,9 +149,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(s); },
-                         DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(s);
             }
         } else {
             log.debug("myOperator NOT NULL");
@@ -168,9 +165,42 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
 
+    /**
+     * Counts the DELAYED feedback timers started, so that a timer from an
+     * earlier command does not overwrite the state of a later one.
+     */
+    private final java.util.concurrent.atomic.AtomicInteger delayedFeedbackCount
+            = new java.util.concurrent.atomic.AtomicInteger();
+
+    /**
+     * For DELAYED feedback: set the known state to INCONSISTENT now and to
+     * the given state after {@link #DELAYED_FEEDBACK_INTERVAL}, unless
+     * another DELAYED feedback change has been started in the meantime.
+     *
+     * @param s the state the turnout will be in after the delay
+     */
+    protected void newKnownStateDelayed(int s) {
+        int count = delayedFeedbackCount.incrementAndGet();
+        newKnownState(INCONSISTENT);
+        jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+            if (count == delayedFeedbackCount.get()) {
+                newKnownState(s);
+            }
+        }, DELAYED_FEEDBACK_INTERVAL );
+    }
+
+    /**
+     * No longer used: delayed commands from
+     * {@link #setCommandedStateAtInterval(int)} run on the layout thread.
+     */
+    @Deprecated(since="5.17.5", forRemoval=true)
     protected Thread thr;
+    /**
+     * No longer used: delayed commands from
+     * {@link #setCommandedStateAtInterval(int)} run on the layout thread.
+     */
+    @Deprecated(since="5.17.5", forRemoval=true)
     protected Runnable r;
-    private LocalDateTime nextWait;
 
     /** {@inheritDoc}
      * Used in {@link jmri.implementation.DefaultRoute#setRoute()} and
@@ -178,27 +208,22 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setCommandedStateAtInterval(int s) {
-        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
+        // each call gets its own end time, later calls get later times
+        LocalDateTime nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
         // nextWait time is calculated using actual turnoutInterval in TurnoutManager
-        if (nextWait.isAfter(LocalDateTime.now())) { // don't sleep if nextWait =< now()
+        if (nextWait.isAfter(LocalDateTime.now())) { // don't wait if nextWait =< now()
             log.debug("Turnout now() = {}, waitUntil = {}", LocalDateTime.now(), nextWait);
-            // insert wait before sending next output command to the layout
-            r = () -> {
-                // nextWait might have passed in the meantime
-                Long duration = Math.max(0L, LocalDateTime.now().until(nextWait, ChronoUnit.MILLIS));
-                log.debug("go to sleep for {} ms...", duration);
-                try {
-                    Thread.sleep(duration);
-                    log.debug("back from sleep, forward on {}", LocalDateTime.now());
+            // insert wait before sending next output command to the layout;
+            // the delayed commands run on the layout thread at their end
+            // times, so in the order of those times
+            Date runAt = Date.from(nextWait.atZone(java.time.ZoneId.systemDefault()).toInstant());
+            jmri.util.TimerUtil.scheduleOnLayoutThread(new TimerTask() {
+                @Override
+                public void run() {
+                    log.debug("back from wait, forward on {}", LocalDateTime.now());
                     setCommandedState(s);
-                } catch (InterruptedException ex) {
-                    log.debug("setCommandedStateAtInterval(s) interrupted at {}", LocalDateTime.now());
-                    Thread.currentThread().interrupt(); // retain if needed later
                 }
-            };
-            thr = new Thread(r);
-            thr.setName("Turnout "+getDisplayName()+" setCommandedStateAtInterval");
-            thr.start();
+            }, runAt);
         } else {
             log.debug("nextWait has passed");
             setCommandedState(s);
@@ -404,6 +429,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         // unlock turnout if feedback is changed
         setLocked(CABLOCKOUT, false);
         if (oldMode != _activeFeedbackType) {
+            // a pending DELAYED feedback timer must not set the state any more
+            delayedFeedbackCount.incrementAndGet();
             firePropertyChange(PROPERTY_FEEDBACK_MODE, oldMode,
                     _activeFeedbackType);
         }
