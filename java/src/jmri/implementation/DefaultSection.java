@@ -2595,7 +2595,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                 }
             }
         } else if (getState() == REVERSE) {
-            for (Block b : mBlockEntries) {
+            // the train moves towards the first Block, so the Blocks ahead of it come before it in the list
+            for (int i = mBlockEntries.size() - 1; i >= 0; i--) {
+                Block b = mBlockEntries.get(i);
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
