@@ -32,7 +32,13 @@ public class JsonPanelHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonRequest request) {
-        return mapper.createObjectNode();
+    public JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonRequest request) 
+            throws JsonException {
+        if (JsonPanelServiceFactory.PANEL_DISPLAY_OPTIONS.equals(type)) {
+            return mapper.createObjectNode();
+        } else {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+        }
     }
 }
