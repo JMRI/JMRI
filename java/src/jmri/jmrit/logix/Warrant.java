@@ -2575,7 +2575,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 //        long _startTime = 0;
         long _waitTime = 0;
         float _waitSpeed;
-        boolean quit = false;
+        volatile boolean quit = false;
         int _endBlockIdx;
 
         CommandDelay(@Nonnull String speedType, long startWait, float waitSpeed, int endBlockIdx) {
@@ -2602,8 +2602,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 //                _startTime = System.currentTimeMillis();
                 boolean ramping = _engineer.isRamping();
                 if (ramping) {
-                    long time = 0;
-                    while (time <= _waitTime) {
+                    long startTime = System.currentTimeMillis();
+                    while (!quit && System.currentTimeMillis() - startTime <= _waitTime) {
                         if (_engineer.getSpeedSetting() >= _waitSpeed) {
                             break; // stop ramping beyond this speed
                         }
@@ -2615,7 +2615,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                                         _speedType, getDisplayName());
                             }
                         }
-                        time += 50;
                     }
                 } else {
                     try {
@@ -2636,7 +2635,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                 }
             }
-            endDelayCommand();
+            endDelayCommand(this);
         }
     }
 
@@ -2649,8 +2648,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    synchronized private void endDelayCommand() {
-        _delayCommand = null;
+    synchronized private void endDelayCommand(CommandDelay cd) {
+        if (_delayCommand == cd) {  // may have been replaced by a newer one
+            _delayCommand = null;
+        }
     }
 
     private void rampSpeedTo(String speedType, int idx) {
