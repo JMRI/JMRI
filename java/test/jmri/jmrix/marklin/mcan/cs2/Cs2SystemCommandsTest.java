@@ -1,7 +1,6 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
 import jmri.jmrix.marklin.mcan.classify.*;
-import jmri.jmrix.marklin.mcan.cs2.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

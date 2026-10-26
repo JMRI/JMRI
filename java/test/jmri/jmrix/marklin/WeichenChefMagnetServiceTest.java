@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

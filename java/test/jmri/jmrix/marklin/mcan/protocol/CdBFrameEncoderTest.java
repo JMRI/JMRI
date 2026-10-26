@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin.mcan.protocol;
 
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
 import org.junit.jupiter.api.Test;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
