@@ -955,6 +955,8 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
+            <li>A number of bug fixes have been made to Warrants. If this causes problems for you,
+                you can ask for support on <a href="https://groups.io/g/jmriusers/topics">the JMRI users list</a>.</li>
             <li>Warrants: a "Wait Sensor" command in a warrant script now
                 holds the train until the sensor really reaches the requested
                 state; before, the train could leave early when a signal
