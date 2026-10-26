@@ -897,7 +897,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (!engineer.getState().equals(Thread.State.TERMINATED)) {
             Thread curThread = Thread.currentThread();
             if (!curThread.equals(_engineer)) {
-                kill( engineer, abort, functionFlag, curThread);
+                kill( engineer, abort, functionFlag);
             } else {   // can't join yourself if called by _engineer
                 class Killer implements Runnable {
                     Engineer victim;
@@ -910,7 +910,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                     @Override
                     public void run() {
-                        kill(victim, abortFlag, functionFlag, victim);
+                        kill(victim, abortFlag, functionFlag);
                     }
                 }
                 final Runnable killer = new Killer(engineer, abort, functionFlag);
@@ -923,12 +923,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    private void kill(Engineer eng, boolean a, boolean f, Thread monitor) {
+    private void kill(Engineer eng, boolean a, boolean f) {
         long time = 0;
         while (!eng.getState().equals(Thread.State.TERMINATED) && time < 100) {
             try {
                 eng.stopRun(a, f); // releases throttle
-                monitor.join(10);
+                eng.join(10);
             } catch (InterruptedException ex) {
                 log.info("victim.join() interrupted. warrant {}", getDisplayName());
             }
