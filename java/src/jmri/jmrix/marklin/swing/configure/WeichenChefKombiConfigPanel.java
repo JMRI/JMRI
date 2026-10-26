@@ -1,14 +1,11 @@
 package jmri.jmrix.marklin.swing.configure;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import jmri.jmrix.marklin.*;
 import jmri.jmrix.marklin.mcan.address.CdBAddressCodec;
 import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
 import jmri.jmrix.marklin.swing.MarklinPanel;
-import jmri.util.JmriJFrame;
 
 /**
  * Configuration panel for WeichenChef Kombi (CdB class 0x27) modules.

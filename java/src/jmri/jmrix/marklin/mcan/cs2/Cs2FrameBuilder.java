@@ -34,7 +34,7 @@ final class Cs2FrameBuilder {
         long canId = ((long)(priority & 0x0F) << 25)
                    | ((long)(command  & 0xFF) << 17)
                    | ((long)(response ? 1 : 0) << 16)
-                   | ((long)(hash     & 0xFFFF));
+                   | (hash     & 0xFFFF);
 
         int[] frame = new int[13];
         frame[0] = (int)((canId >> 24) & 0x1F);

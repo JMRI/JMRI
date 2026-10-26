@@ -71,7 +71,7 @@ public final class Cs2Header {
         long canId = ((long)(packet[0] & 0xFF) << 24)
                    | ((long)(packet[1] & 0xFF) << 16)
                    | ((long)(packet[2] & 0xFF) <<  8)
-                   | ((long)(packet[3] & 0xFF));
+                   | (packet[3] & 0xFF);
 
         int dlc      = packet[4] & 0x0F;
         int priority = (int)((canId >> 25) & 0x0F);

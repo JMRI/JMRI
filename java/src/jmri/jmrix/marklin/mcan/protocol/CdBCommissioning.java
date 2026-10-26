@@ -13,7 +13,7 @@ import java.util.Optional;
  * (frame bytes[6] and [7]).  These bytes must be echoed in the factory-select frame.
  * <p>
  * Commissioned modules (module ID &gt; 0) reply with DLC=3; their bytes[9..12] carry
- * a hardware fingerprint  -  that is handled separately in {@link CdBDevice}.
+ * a hardware fingerprint  -  that is handled separately in {@link jmri.jmrix.marklin.mcan.device.CdBDevice}.
  */
 public final class CdBCommissioning {
 

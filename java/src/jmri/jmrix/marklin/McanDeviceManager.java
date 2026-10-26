@@ -11,7 +11,6 @@ import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
 import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -10,11 +10,11 @@ import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
  * Second-pass parser for CS2_NATIVE frames.
  * <p>
  * Takes a first-pass {@link ClassifiedFrame} (must be {@link FrameProtocol#CS2_NATIVE}),
- * builds {@link Cs2Data} from the raw bytes, resolves the {@link Cs2Command},
+ * builds {@link Cs2Data} from the raw bytes, resolves the {@link jmri.jmrix.marklin.mcan.classify.Cs2Command},
  * and returns the appropriate typed {@link Cs2ClassifiedFrame} subclass.
  * <p>
  * Unknown commands return a base {@link Cs2ClassifiedFrame} with
- * {@link Cs2Command#UNKNOWN}; check {@link Cs2Header#response()} for direction.
+ * {@link jmri.jmrix.marklin.mcan.classify.Cs2Command#UNKNOWN}; check {@link Cs2Header#response()} for direction.
  */
 public final class Cs2FrameParser {
 

@@ -49,7 +49,7 @@ public final class Cs2Data {
         return ((long)(data[index]     & 0xFF) << 24)
              | ((long)(data[index + 1] & 0xFF) << 16)
              | ((long)(data[index + 2] & 0xFF) <<  8)
-             | ((long)(data[index + 3] & 0xFF));
+             | (data[index + 3] & 0xFF);
     }
 
     /** Returns a defensive copy of all 8 data bytes. */

@@ -1,7 +1,5 @@
 package jmri.jmrix.marklin.mcan.protocol;
 
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
-
 import java.util.Optional;
 
 /**

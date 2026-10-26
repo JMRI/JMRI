@@ -283,7 +283,7 @@ public final class Cs2ConfigCommands {
         long uid = ((long)(raw[5] & 0xFF) << 24)
                  | ((long)(raw[6] & 0xFF) << 16)
                  | ((long)(raw[7] & 0xFF) <<  8)
-                 | ((long)(raw[8] & 0xFF));
+                 | (raw[8] & 0xFF);
         if (uid == NativeDeviceInfo.UID_BROADCAST || uid == NativeDeviceInfo.UID_UNINITIALIZED) {
             return Optional.empty();
         }
