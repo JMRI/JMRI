@@ -140,9 +140,6 @@ public class CbusAllocateNodeNumber implements CanListener {
             JmriJOptionPane.OK_CANCEL_OPTION);
 
         // the dialogue is modal, dispose() may have been called while it was open
-        if (option == JmriJOptionPane.OK_OPTION && disposed) {
-            log.debug("Node Number not sent, node number allocation has been disposed");
-        }
         if (option == JmriJOptionPane.OK_OPTION && !disposed) {
             int newval = (Integer) rqnnSpinner.getValue();
             baseNodeNum = newval;
