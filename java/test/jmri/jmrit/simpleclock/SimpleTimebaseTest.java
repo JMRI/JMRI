@@ -49,6 +49,17 @@ public class SimpleTimebaseTest {
                 "no longer listening after dispose");
     }
 
+    @Test
+    public void testDisposedWhenInstanceManagerCleared() {
+        Sensor sensor = clockRunningSensor();
+        SimpleTimebase p = new SimpleTimebase(memo);
+        InstanceManager.store(p, jmri.Timebase.class);
+        int listening = sensor.getPropertyChangeListeners().length;
+        InstanceManager.getDefault().clearAll();
+        Assertions.assertEquals(listening - 1, sensor.getPropertyChangeListeners().length,
+                "fast clock disposed when the InstanceManager is cleared");
+    }
+
     // test quick access (should be quite close to zero)
     @Test
     public void testNoDelay() {
