@@ -1,7 +1,8 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a race in the shared transmit code used by most connections,
+              which could occasionally delay sending a message by about 100 ms.</li>
         </ul>
 
         <h4>Acela CTI</h4>
