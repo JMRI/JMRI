@@ -1,7 +1,8 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a race in the shared transmit code used by most connections,
+              which could occasionally delay sending a message by about 100 ms.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -34,6 +35,11 @@
                 <li>CBUS programming reports a busy command station or a CV
                     error straight away, instead of waiting for the programming
                     timeout.</li>
+                <li>The CANCMD node variable editor shows and writes the current
+                    limits as the raw values the CANCMD firmware uses, writes
+                    the walkabout timeout from its own control, and opens for
+                    modules whose settings are outside the previous limited
+                    ranges.</li>
                 <li>Closing the CBUS bootloader window stops all of its timers,
                     and the fast write speed choice is now saved.</li>
                 <li>The CBUS bootloader only accepts parameter replies from the
@@ -257,7 +263,10 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>MERG Concentrator and stand-alone RFID readers: a tag
+                    that is still being read no longer disappears from its
+                    Reporter every 2 seconds, and the Reporter is cleared on the
+                    layout thread rather than from a thread of its own.</li>
             </ul>
 
         <h4>Raspberry PI</h4>
@@ -728,6 +737,13 @@
           <li>LogixNG formulas: comparing a decimal value with a whole
               number now gives the right answer. Before, 1.5 == 2 was true and
               2.5 &lt; 3 was false.</li>
+          <li>LogixNG Block, Section and Transit expressions now only run
+              their ConditionalNG when a property they can test changes (block
+              state, value and allocation; section state and occupancy;
+              transit state), not on every change of the bean, for example
+              each time a Reporter writes a new value into a Block. A
+              ConditionalNG that relied on running for other changes of these
+              beans will now run less often.</li>
           <li>LogixNG formulas: the &amp;&amp; and || operators now only
               evaluate the right-hand side when the left-hand side does not
               already decide the result, as in most programming languages.
@@ -942,7 +958,13 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Warrants: a "Wait Sensor" command in a warrant script now
+                holds the train until the sensor really reaches the requested
+                state; before, the train could leave early when a signal
+                cleared, a train ahead moved on, or a speed change finished.
+                Resume, Increase Speed and Move into next block still release
+                a train held at a sensor, so the operator can get past a sensor
+                that has failed.</li>
         </ul>
 
    <h3>Web Access</h3>
