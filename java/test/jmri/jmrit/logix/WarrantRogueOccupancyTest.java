@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
@@ -50,8 +49,9 @@ public class WarrantRogueOccupancyTest {
         // the train passes the dark block B and enters C
         ThreadingUtil.runOnLayout(() -> assertDoesNotThrow(() -> sC.setState(Sensor.ACTIVE)));
         JUnitUtil.waitFor(() -> warrant.getCurrentOrderIndex() == 2, "train found in block C");
-        // D is still occupied, so the warrant plans a stop, but the script has the train standing
-        JUnitAppender.assertWarnMessageStartsWith("RogueWarrant: script unfit cmd#5.");
+        // D is still occupied, so the warrant holds the train in C until D clears
+        JUnitUtil.waitFor(() -> bD.equals(warrant._stoppingBlock), "warrant stops for occupied block D");
+        assertEquals(2, warrant.getCurrentOrderIndex(), "train still in block C");
     }
 
     @BeforeEach
