@@ -151,7 +151,11 @@ public class ExpressionTransit extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
+        // Only execute the ConditionalNG if a property that this expression
+        // checks has changed.
+        if (Transit.PROPERTY_STATE.equals(evt.getPropertyName())) {
+            getConditionalNG().execute();
+        }
     }
 
     /** {@inheritDoc} */

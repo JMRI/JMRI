@@ -760,6 +760,7 @@ public class SCWarrant extends Warrant {
 
                 // Do not include the stopping block in this while loop. It will be handled after the loop.
                 List<BlockOrder> orders = getBlockOrders();
+                OBlock waitBlock = null;    // block listened to while the train is held for it
                 while (_warrant.getCurrentOrderIndex() < orders.size()-1 && _runMode == MODE_RUN) {
                     log.debug("{} runSignalControlledTrain entering while loop. getCurrentOrderIndex()={} _orders.size()={}",_warrant._trainName,getCurrentOrderIndex(),orders.size());
                     if (_throttle == null) {
@@ -770,12 +771,24 @@ public class SCWarrant extends Warrant {
                         allocateBlocksAndSetTurnouts(_warrant.getCurrentOrderIndex());
                     }
                     if (isNextBlockFreeAndAllocated()) {
+                        if (waitBlock != null) {
+                            waitBlock.removePropertyChangeListener(_warrant);
+                            waitBlock = null;
+                        }
                         getAndGetNotifiedFromNextSignal();
                         setSpeedFromNextSignal();
                     } else {
                         try {
                             _throttle.setSpeedSetting(SPEED_STOP);
-                            getBlockOrderAt(getCurrentOrderIndex()+1).getBlock().addPropertyChangeListener(_warrant);
+                            OBlock nextBlock = getBlockOrderAt(getCurrentOrderIndex()+1).getBlock();
+                            if (waitBlock != nextBlock) {
+                                // listen once to the block we are held for, not once per pass of this loop
+                                if (waitBlock != null) {
+                                    waitBlock.removePropertyChangeListener(_warrant);
+                                }
+                                nextBlock.addPropertyChangeListener(_warrant);
+                                waitBlock = nextBlock;
+                            }
                             log.debug("{} runSignalControlledTrain stops train due to block not free: {}",_warrant._trainName,getBlockOrderAt(getCurrentOrderIndex()+1).getBlock().getDisplayName());
                         } catch (Exception e) {
                             emergencyStop();
@@ -793,6 +806,9 @@ public class SCWarrant extends Warrant {
                         log.debug(WAIT_UNEXPECTED_EXCEPTION,_trainName,e,e);
                     }
                     log.debug("{} {} after wait {} getCurrentOrderIndex(): {} orders.size(): {}",_warrant._trainName,_warrant.getDisplayName(),_warrant.getRunningMessage(),_warrant.getCurrentOrderIndex(),orders.size());
+                }
+                if (waitBlock != null) {
+                    waitBlock.removePropertyChangeListener(_warrant);
                 }
                 // We are now in the stop block. Move forward for half a second with half speed until the block before the stop block is free.
                 log.debug("{} runSignalControlledTrain out of while loop, i.e. train entered stop block getCurrentOrderIndex()={}"

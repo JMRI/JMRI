@@ -194,7 +194,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet().forEach(logixNG -> {
             for (int i = 0; i < logixNG.getNumConditionalNGs(); i++) {
                 if (logixNG.getConditionalNG(i) != null) {
-                    logixNG.getConditionalNG(i).setRunDelayed(false);
+                    logixNG.getConditionalNG(i).setRunDelayed(value);
                 }
             }
         });
