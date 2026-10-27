@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.IdTag;
 import jmri.Reporter;
@@ -32,7 +33,7 @@ public class TimeoutReporterTimeoutTest {
 
     @Test
     public void testReportClearedOnLayoutThread() {
-        AtomicBoolean clearedOnLayoutThread = new AtomicBoolean(false);
+        AtomicReference<Boolean> clearedOnLayoutThread = new AtomicReference<>();
         r.addPropertyChangeListener(Reporter.PROPERTY_CURRENT_REPORT, e -> {
             if (e.getNewValue() == null) {
                 clearedOnLayoutThread.set(ThreadingUtil.isLayoutThread());
@@ -40,22 +41,33 @@ public class TimeoutReporterTimeoutTest {
         });
         read(tag);
         assertEquals(tag, r.getCurrentReport(), "tag read");
-        JUnitUtil.waitFor(() -> r.getCurrentReport() == null, "report cleared");
-        assertTrue(clearedOnLayoutThread.get(), "listeners told on the layout thread");
+        // The report is cleared before its listeners are told, so wait for the
+        // listener, not for the report.
+        JUnitUtil.waitFor(() -> clearedOnLayoutThread.get() != null, "listeners told the report was cleared");
+        assertEquals(Boolean.TRUE, clearedOnLayoutThread.get(), "listeners told on the layout thread");
+        assertNull(r.getCurrentReport(), "report cleared");
     }
 
     @Test
     public void testSameTagSeenAgainRestartsTimeout() throws InterruptedException {
-        long start = System.currentTimeMillis();
+        AtomicLong clearedAt = new AtomicLong();
+        r.addPropertyChangeListener(Reporter.PROPERTY_CURRENT_REPORT, e -> {
+            if (e.getNewValue() == null) {
+                clearedAt.compareAndSet(0, System.currentTimeMillis());
+            }
+        });
         read(tag);
-        Thread.sleep(TIMEOUT / 2);
+        // Well inside the first timeout: the second read has TIMEOUT * 3 / 4 to
+        // happen before the first timeout would end.
+        Thread.sleep(TIMEOUT / 4);
+        long secondRead = System.currentTimeMillis();
         read(tag);     // the reader sees the same tag again
-        long wait = start + TIMEOUT + TIMEOUT / 4 - System.currentTimeMillis();
-        if (wait > 0) {
-            Thread.sleep(wait);
-        }
-        assertEquals(tag, r.getCurrentReport(), "tag still reported, its timeout started again");
-        JUnitUtil.waitFor(() -> r.getCurrentReport() == null, "report cleared");
+        JUnitUtil.waitFor(() -> clearedAt.get() != 0, "report cleared");
+        // A timeout never ends early, so a clear before a full timeout after the
+        // second read can only be the first timeout, which the second read
+        // should have replaced.
+        assertTrue(clearedAt.get() - secondRead >= TIMEOUT,
+            "cleared a full timeout after the second read, not when the first timeout ended");
     }
 
     @Test
