@@ -143,6 +143,11 @@ public class GlobalVariableInputIcon extends PositionableJPanelWithColumns imple
         return namedGlobalVariable.getBean();
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getGlobalVariable();
+    }
+
     // update icon as state of GlobalVariable changes
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
