@@ -2961,8 +2961,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 allocatedSections.remove(i - 1);
             }
         }
-        as.getSection().setState(Section.FREE);
-        as.getActiveTrain().removeAllocatedSection(as);
+        as.getActiveTrain().releaseAllocatedSection(as);
         as.dispose();
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();

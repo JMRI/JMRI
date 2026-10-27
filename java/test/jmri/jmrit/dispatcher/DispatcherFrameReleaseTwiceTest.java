@@ -36,8 +36,8 @@ public class DispatcherFrameReleaseTwiceTest {
         // already released: not in the allocated Sections list any more
         d.doReleaseAllocatedSection(as, true);
 
+        verify(train, never()).releaseAllocatedSection(as);
         verify(section, never()).setState(Section.FREE);
-        verify(train, never()).removeAllocatedSection(as);
         verify(as, never()).dispose();
     }
 
@@ -53,8 +53,8 @@ public class DispatcherFrameReleaseTwiceTest {
 
         d.doReleaseAllocatedSection(as, true);
 
-        verify(section).setState(Section.FREE);
-        verify(train).removeAllocatedSection(as);
+        // the train sets its Section free and takes it off its list
+        verify(train).releaseAllocatedSection(as);
         verify(as).dispose();
         Assertions.assertFalse(d.getAllocatedSectionsList().contains(as));
     }

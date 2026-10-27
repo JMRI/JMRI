@@ -965,17 +965,53 @@ public class ActiveTrain implements PropertyChangeProvider {
             log.error("Null AllocatedSection reference in removeAllocatedSection of ActiveTrain");
             return;
         }
-        int index = -1;
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            if (as == mAllocatedSections.get(i)) {
-                index = i;
-            }
+        boolean removed;
+        synchronized (sectionStateLock) {
+            removed = mAllocatedSections.remove(as);
         }
-        if (index < 0) {
+        if (!removed) {
             log.error("Attempt to remove an unallocated Section {}", as.getSection().getDisplayName(USERSYS));
             return;
         }
-        mAllocatedSections.remove(index);
+        afterSectionRemoved(as);
+    }
+
+    /**
+     * Set the Section of an Allocated Section free and take it off this
+     * train, in that order, as a release always has.
+     * <p>
+     * If the train is setting the direction of its Sections at that moment,
+     * reversing or resetting, the release is done once the train has
+     * finished, and the train skips a Section whose release has begun.
+     * Otherwise the train could give the Section a direction after it had
+     * been set free, leaving it allocated to nobody but not free, so that it
+     * could never be allocated again.
+     *
+     * @param as the Allocated Section being released
+     */
+    protected void releaseAllocatedSection(AllocatedSection as) {
+        synchronized (sectionStateLock) {
+            if (settingDirections) {
+                releaseAfterSettingDirections.add(as);
+                return;
+            }
+            releasing.add(as);
+        }
+        doReleaseAllocatedSection(as);
+    }
+
+    private void doReleaseAllocatedSection(AllocatedSection as) {
+        try {
+            as.getSection().setState(Section.FREE);
+            removeAllocatedSection(as);
+        } finally {
+            synchronized (sectionStateLock) {
+                releasing.remove(as);
+            }
+        }
+    }
+
+    private void afterSectionRemoved(AllocatedSection as) {
         for (Block b: as.getSection().getBlockList()) {
             // A Block that is also in another allocated Section keeps its
             // name and colour until that Section is released too.
@@ -1370,28 +1406,61 @@ public class ActiveTrain implements PropertyChangeProvider {
         mNextSectionToAllocate = null;
     }
 
+    // Guards the list of allocated Sections, and orders a release against
+    // the train setting the direction of its Sections. Never held while
+    // listeners are told of a change.
+    private final Object sectionStateLock = new Object();
+    // true while the train sets the direction of its Sections
+    private boolean settingDirections = false;
+    // Sections whose release has begun
+    private final List<AllocatedSection> releasing = new ArrayList<>();
+    // Sections to release once the train has finished setting directions
+    private final List<AllocatedSection> releaseAfterSettingDirections = new ArrayList<>();
+
     protected AllocatedSection reverseAllAllocatedSections() {
-        AllocatedSection aSec = null;
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            aSec = mAllocatedSections.get(i);
-            int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
-            if (dir == Section.FORWARD) {
-                aSec.getSection().setState(Section.REVERSE);
-            } else {
-                aSec.getSection().setState(Section.FORWARD);
-            }
-            aSec.setStoppingSensors();
-        }
-        return aSec;
+        return setDirectionOfAllAllocatedSections(true);
     }
 
     protected void resetAllAllocatedSections() {
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            AllocatedSection aSec = mAllocatedSections.get(i);
-            int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
-            aSec.getSection().setState(dir);
-            aSec.setStoppingSensors();
+        setDirectionOfAllAllocatedSections(false);
+    }
+
+    private AllocatedSection setDirectionOfAllAllocatedSections(boolean reverse) {
+        List<AllocatedSection> sections;
+        synchronized (sectionStateLock) {
+            settingDirections = true;
+            sections = new ArrayList<>(mAllocatedSections);
+            // a Section being released is not the train's any more
+            sections.removeAll(releasing);
         }
+        AllocatedSection aSec = null;
+        try {
+            for (AllocatedSection as : sections) {
+                aSec = as;
+                int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
+                if (reverse) {
+                    dir = (dir == Section.FORWARD) ? Section.REVERSE : Section.FORWARD;
+                }
+                aSec.getSection().setState(dir);
+                aSec.setStoppingSensors();
+            }
+        } finally {
+            List<AllocatedSection> toRelease;
+            synchronized (sectionStateLock) {
+                settingDirections = false;
+                toRelease = new ArrayList<>(releaseAfterSettingDirections);
+                releaseAfterSettingDirections.clear();
+                releasing.addAll(toRelease);
+            }
+            for (AllocatedSection as : toRelease) {
+                doReleaseAllocatedSection(as);
+            }
+            if (!toRelease.isEmpty()) {
+                // the releases were made after the Dispatcher's own release task had finished
+                mDispatcher.queueReleaseOfCompletedAllocations();
+            }
+        }
+        return aSec;
     }
 
     protected void setRestart(int delayType, int restartDelay, Sensor delaySensor, boolean resetSensorAfter) {
