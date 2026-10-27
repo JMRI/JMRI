@@ -544,6 +544,8 @@
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
                         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
                         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
+                        <!-- no sound hardware in CI: tests use the null audio system, as help/en/html/doc/Technical/JUnit.shtml says -->
+                        <jmri.jmrit.audio.DefaultAudioManager.implementation>jmri.jmrit.audio.NullAudioFactory</jmri.jmrit.audio.DefaultAudioManager.implementation>
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>

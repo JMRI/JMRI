@@ -934,6 +934,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="jmri.jmrit.audio.DefaultAudioManager.implementation" value="jmri.jmrit.audio.NullAudioFactory"/><!-- no sound hardware in CI -->
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
@@ -974,6 +975,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="jmri.jmrit.audio.DefaultAudioManager.implementation" value="jmri.jmrit.audio.NullAudioFactory"/><!-- no sound hardware in CI -->
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
             <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
