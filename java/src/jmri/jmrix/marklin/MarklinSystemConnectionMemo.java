@@ -72,6 +72,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         store(turnoutManager, TurnoutManager.class);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);
 
+        LightManager lightManager = new MarklinLightManager(this);
+        store(lightManager, LightManager.class);
+        InstanceManager.setLightManager(lightManager);
+
         ThrottleManager throttleManager = new MarklinThrottleManager(this);
         store(throttleManager, ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(throttleManager);
@@ -99,6 +103,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     public MarklinSensorManager getSensorManager() {
         return (MarklinSensorManager)get(SensorManager.class);
+    }
+
+    public MarklinLightManager getLightManager() {
+        return (MarklinLightManager)get(LightManager.class);
     }
 
     public MarklinThrottleManager getThrottleManager() {
