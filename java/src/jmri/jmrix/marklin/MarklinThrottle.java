@@ -5,7 +5,6 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.marklin.mcan.address.AddressSpace;
-import jmri.jmrix.marklin.mcan.address.AddressTranslator;
 import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
 import org.slf4j.Logger;
@@ -289,7 +288,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             case MOTOROLA:  space = AddressSpace.MM_LOCO;   break;
             default:        space = AddressSpace.DCC_LOCO;  break;
         }
-        return AddressTranslator.locoToCanAddress(space, address.getNumber());
+        return space.toCanOffset(address.getNumber());
     }
 
     // initialize logging

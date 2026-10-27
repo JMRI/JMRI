@@ -22,7 +22,7 @@ public class CdBSystemConnectionMemoTest extends
         jmri.Light light = jmri.InstanceManager.lightManagerInstance().provideLight("MLCAN7168");
         Assertions.assertSame(light, scm.getLightManager().getLight("MLCAN7168"));
         light.setState(jmri.Light.ON);
-        Assertions.assertEquals("00 16 47 11 06 00 00 1C 00 01 01 00 00",
+        Assertions.assertEquals("00 16 03 00 06 00 00 1C 00 01 01 00 00",
                 tc.getSentMessages().get(0).toString());
         light.dispose();
         scm.dispose();

@@ -135,9 +135,9 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("apps.JavaVersionCheckWindow").and()
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
                                 .doNotHaveFullyQualifiedName("apps.jmrit.decoderdefn.DecoderIndexBuilder").and()
-                                .doNotHaveFullyQualifiedName("apps.McanTcpBridge").and() // standalone CLI app
-                                .doNotHaveFullyQualifiedName("apps.MarklinPoke").and() // standalone CLI app
-                                .doNotHaveFullyQualifiedName("apps.MarklinPokeRunner").and() // standalone CLI app
+                                .doNotHaveFullyQualifiedName("external.marklin.McanTcpBridge").and() // standalone CLI app
+                                .doNotHaveFullyQualifiedName("external.marklin.MarklinPoke").and() // standalone CLI app
+                                .doNotHaveFullyQualifiedName("external.marklin.MarklinPokeRunner").and() // standalone CLI app
                                 .doNotHaveFullyQualifiedName("jmri.util.FileUtilSupport").and() // used in log4j init
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
@@ -324,8 +324,8 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPort").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent").and()
 
-        // single wrapper confining direct jSerialComm use for the standalone apps CLI tools
-        .doNotHaveFullyQualifiedName("apps.ExternalDirectJSerialPort")
+        // single wrapper confining direct jSerialComm use for the standalone CLI tools
+        .doNotHaveFullyQualifiedName("external.marklin.ExternalDirectJSerialPort")
 
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 

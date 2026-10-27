@@ -180,5 +180,7 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
     }
 
 
+    static final int METERINTERVAL = 100; // ms between on and off pulse
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinTurnout.class);
 }

@@ -1,4 +1,4 @@
-package apps;
+package external.marklin;
 
 import jmri.jmrix.marklin.MarklinMessageFormatter;
 import org.slf4j.Logger;

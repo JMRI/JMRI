@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 import java.util.Optional;
 import jmri.jmrix.marklin.mcan.address.AddressSpace;
-import jmri.jmrix.marklin.mcan.address.AddressTranslator;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
 import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
@@ -344,7 +343,7 @@ public class MarklinMessageFormatter {
             sb.append(" Broadcast");
             return;
         }
-        Optional<AddressSpace> space = AddressTranslator.detectAddressSpace(addr);
+        Optional<AddressSpace> space = AddressSpace.forCanOffset(addr);
         if (space.isPresent()) {
             int base = baseFor(space.get());
             sb.append(" to ").append(labelFor(space.get())).append(' ').append(addr - base);
@@ -389,41 +388,11 @@ public class MarklinMessageFormatter {
     }
 
     private static int baseFor(AddressSpace space) {
-        switch (space) {
-            case MM_LOCO:             return AddressTranslator.BASE_MM_LOCO;
-            case SX1_LOCO:            return AddressTranslator.BASE_SX1_LOCO;
-            case MM_FUNCTION_DECODER: return AddressTranslator.BASE_MM_FUNCTION_DECODER;
-            case CLUB_RANGE:          return AddressTranslator.BASE_CLUB_RANGE;
-            case VENDOR_RANGE:        return AddressTranslator.BASE_VENDOR_RANGE;
-            case MM_LOCO_20KHZ:       return AddressTranslator.BASE_MM_LOCO_20KHZ;
-            case SX1_ACCESSORY:       return AddressTranslator.BASE_SX1_ACCESSORY;
-            case MM_ACCESSORY:
-            case MARKLIN_ACCESSORY:   return AddressTranslator.BASE_MM_ACCESSORY;
-            case DCC_ACCESSORY:       return AddressTranslator.BASE_DCC_ACCESSORY;
-            case MFX_LOCO:            return AddressTranslator.BASE_MFX_LOCO;
-            case SX2_LOCO:            return AddressTranslator.BASE_SX2_LOCO;
-            case DCC_LOCO:            return AddressTranslator.BASE_DCC_LOCO;
-            default:                  return 0;
-        }
+        return space.base();
     }
 
     private static String labelFor(AddressSpace space) {
-        switch (space) {
-            case MM_LOCO:             return "MM Loco";
-            case SX1_LOCO:            return "SX1 Loco";
-            case MM_FUNCTION_DECODER: return "MM Function Decoder";
-            case CLUB_RANGE:          return "Club Range";
-            case VENDOR_RANGE:        return "Vendor Range";
-            case MM_LOCO_20KHZ:       return "MM Loco (20kHz)";
-            case SX1_ACCESSORY:       return "SX1 Accessory";
-            case MM_ACCESSORY:
-            case MARKLIN_ACCESSORY:   return "MM Accessory";
-            case DCC_ACCESSORY:       return "DCC Accessory";
-            case MFX_LOCO:            return "MFX";
-            case SX2_LOCO:            return "SX2 Loco";
-            case DCC_LOCO:            return "DCC Loco";
-            default:                  return "Unknown";
-        }
+        return space.label();
     }
 
     private static String automationStatusName(int status) {

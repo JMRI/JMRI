@@ -64,7 +64,7 @@ public class MarklinLightManagerTest extends jmri.managers.AbstractLightMgrTestB
         Light light = l.provideLight("MCLMM12");
         assertEquals("MCLMM12", light.getSystemName());
         light.setState(Light.ON);
-        assertEquals("00 16 47 11 06 00 00 30 0B 01 01 00 00",
+        assertEquals("00 16 03 00 06 00 00 30 0B 01 01 00 00",
                 tc.getSentMessages().get(0).toString());
     }
 

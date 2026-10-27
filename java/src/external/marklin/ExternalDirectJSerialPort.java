@@ -1,4 +1,4 @@
-package apps;
+package external.marklin;
 
 import com.fazecast.jSerialComm.SerialPort;
 import java.io.InputStream;
@@ -8,14 +8,14 @@ import java.util.List;
 
 /**
  * Thin wrapper confining all direct {@code com.fazecast.jSerialComm} access for the
- * standalone {@code apps} CLI tools to a single class.
+ * standalone {@code external.marklin} CLI tools to a single class.
  * <p>
  * JMRI's production serial access is abstracted behind
  * {@code jmri.jmrix.jserialcomm.JSerialPort}; the ArchitectureTest rule
  * {@code checkJSerialCommAllowedUses} confines {@code com.fazecast.jSerialComm} to that
  * abstraction. The standalone CLI utilities (e.g. {@link McanTcpBridge}) are deliberately
  * decoupled from the JMRI runtime, so instead of pulling in the full JMRI serial stack they
- * route their raw serial access through this one wrapper, which is the sole {@code apps}
+ * route their raw serial access through this one wrapper, which is the sole {@code external.marklin}
  * class whitelisted for direct jSerialComm use.
  * <p>
  * This is intentionally a minimal pass-through exposing only the operations the CLI tools

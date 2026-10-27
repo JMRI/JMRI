@@ -1,4 +1,4 @@
-package apps;
+package external.marklin;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

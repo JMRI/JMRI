@@ -1397,7 +1397,7 @@
             depends="debug"
             description="build and run MCAN Protocol Serial-to-TCP Bridge">
         <antcall target="-run-jmri-application">
-            <param name="application.classname" value="apps.McanTcpBridge"/>
+            <param name="application.classname" value="external.marklin.McanTcpBridge"/>
         </antcall>
     </target>
 
@@ -2090,10 +2090,10 @@
         <jar jarfile="${dist}/mcan-tcp-bridge.jar"
              compress="true">
             <fileset dir="${target}">
-                <include name="apps/McanTcpBridge.class"/>
-                <include name="apps/McanTcpBridge$*.class"/>
-                <include name="apps/ExternalDirectJSerialPort.class"/>
-                <include name="apps/ExternalDirectJSerialPort$*.class"/>
+                <include name="external/marklin/McanTcpBridge.class"/>
+                <include name="external/marklin/McanTcpBridge$*.class"/>
+                <include name="external/marklin/ExternalDirectJSerialPort.class"/>
+                <include name="external/marklin/ExternalDirectJSerialPort$*.class"/>
             </fileset>
             <fileset dir="${target}">
                 <include name="jmri/jmrix/marklin/**/*.class"/>
@@ -2118,7 +2118,7 @@
                 </fileset>
             </zipfileset>
             <manifest>
-                <attribute name="Main-Class" value="apps.McanTcpBridge"/>
+                <attribute name="Main-Class" value="external.marklin.McanTcpBridge"/>
                 <attribute name="Implementation-Title" value="MCAN Protocol Serial To TCP Multiplexer Bridge"/>
                 <attribute name="Implementation-Version" value="${release}"/>
                 <attribute name="Implementation-Vendor" value="JMRI"/>
@@ -2142,13 +2142,13 @@
         <mkdir dir="${dist}"/>
         <jar jarfile="${dist}/marklin-poke.jar" compress="true">
             <fileset dir="${target}">
-                <include name="apps/MarklinPoke.class"/>
-                <include name="apps/MarklinPoke$*.class"/>
-                <include name="apps/MarklinPokeRunner.class"/>
-                <include name="apps/MarklinPokeRunner$*.class"/>
+                <include name="external/marklin/MarklinPoke.class"/>
+                <include name="external/marklin/MarklinPoke$*.class"/>
+                <include name="external/marklin/MarklinPokeRunner.class"/>
+                <include name="external/marklin/MarklinPokeRunner$*.class"/>
             </fileset>
             <manifest>
-                <attribute name="Main-Class" value="apps.MarklinPoke"/>
+                <attribute name="Main-Class" value="external.marklin.MarklinPoke"/>
                 <attribute name="Implementation-Title" value="marklin-poke CAN Bus Probe Tool"/>
                 <attribute name="Implementation-Version" value="${release}"/>
                 <attribute name="Implementation-Vendor" value="JMRI"/>

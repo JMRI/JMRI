@@ -7,7 +7,7 @@ import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2FeedbackCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
-import jmri.jmrix.marklin.mcan.address.AddressTranslator;
+import jmri.jmrix.marklin.mcan.address.AddressSpace;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,7 +67,7 @@ public class MarklinMessageFormatterTest {
     @Test
     public void testLocoSpeedReplyContainsLocoSpeedAndDcc() {
         // DCC loco at address 3 → CAN address = BASE_DCC_LOCO + 3
-        long canAddr = AddressTranslator.BASE_DCC_LOCO + 3;
+        long canAddr = AddressSpace.DCC_LOCO.base() + 3;
         int[] raw = Cs2DecoderCommands.buildLocoSpeedReply(canAddr, 512);
         String result = MarklinMessageFormatter.formatRaw(raw, null);
         assertTrue(result.contains("Loco Speed"), "Expected 'Loco Speed' in: " + result);
@@ -76,7 +76,7 @@ public class MarklinMessageFormatterTest {
 
     @Test
     public void testLocoSpeedRequestContainsChangeOfSpeed() {
-        long canAddr = AddressTranslator.BASE_DCC_LOCO + 1;
+        long canAddr = AddressSpace.DCC_LOCO.base() + 1;
         int[] raw = Cs2DecoderCommands.buildLocoSpeed(canAddr, 300);
         String result = MarklinMessageFormatter.formatRaw(raw, null);
         assertTrue(result.contains("Change of speed"), "Expected 'Change of speed' in: " + result);
@@ -84,7 +84,7 @@ public class MarklinMessageFormatterTest {
 
     @Test
     public void testLocoFunctionRequestContainsFunction() {
-        long canAddr = AddressTranslator.BASE_DCC_LOCO + 5;
+        long canAddr = AddressSpace.DCC_LOCO.base() + 5;
         int[] raw = Cs2DecoderCommands.buildLocoFunction(canAddr, 0, true);
         String result = MarklinMessageFormatter.formatRaw(raw, null);
         assertTrue(result.contains("Function"), "Expected 'Function' in: " + result);
@@ -141,7 +141,7 @@ public class MarklinMessageFormatterTest {
 
     @Test
     public void testMmLocoAddressDisplayed() {
-        long canAddr = AddressTranslator.BASE_MM_LOCO + 10;
+        long canAddr = AddressSpace.MM_LOCO.base() + 10;
         int[] raw = Cs2DecoderCommands.buildLocoSpeedReply(canAddr, 0);
         String result = MarklinMessageFormatter.formatRaw(raw, null);
         assertTrue(result.contains("MM Loco"), "Expected 'MM Loco' in: " + result);
@@ -149,7 +149,7 @@ public class MarklinMessageFormatterTest {
 
     @Test
     public void testDccAccessoryAddressDisplayed() {
-        int canAddr = AddressTranslator.BASE_DCC_ACCESSORY + 4;
+        int canAddr = AddressSpace.DCC_ACCESSORY.base() + 4;
         // Build a minimal CS2-fingerprinted frame with accessory address in bytes 5-8
         // Easiest to use a loco speed reply (which puts canAddr in bytes 5-8) and check
         int[] raw = Cs2DecoderCommands.buildLocoSpeedReply(canAddr, 0);
