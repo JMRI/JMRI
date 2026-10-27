@@ -1,6 +1,12 @@
 package external.marklin;
 
 import jmri.jmrix.marklin.MarklinMessageFormatter;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory;
+import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -283,10 +289,26 @@ public class McanTcpBridge {
     }
 
     public static void main(String[] args) {
-        // Configure logging to console
-        System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "INFO");
-        System.setProperty("org.slf4j.simpleLogger.showDateTime", "true");
-        System.setProperty("org.slf4j.simpleLogger.dateTimeFormat", "yyyy-MM-dd HH:mm:ss");
+        // Pre-scan args so monitorMode is known before logging is configured.
+        for (String arg : args) {
+            if ("--monitor".equals(arg) || "-m".equals(arg)) {
+                monitorMode = true;
+                break;
+            }
+        }
+
+        // Configure logging before any Logger is first used.
+        // SLF4J SimpleLogger reads these system properties only on first use,
+        // so they must be set before the first log call.
+        if (!checkLog4jConfig()) {
+            if (monitorMode) {
+                setupMinimalLogging();
+            } else {
+                System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "INFO");
+                System.setProperty("org.slf4j.simpleLogger.showDateTime", "true");
+                System.setProperty("org.slf4j.simpleLogger.dateTimeFormat", "yyyy-MM-dd HH:mm:ss");
+            }
+        }
 
         System.out.println("MCAN Protocol Serial To TCP Multiplexer Bridge");
         System.out.println("==============================================");
@@ -450,6 +472,68 @@ public class McanTcpBridge {
         }
 
         log.info("All bridges stopped");
+    }
+
+    /**
+     * Check if a log4j configuration file is present.
+     * @return true if a log4j configuration file is found, false otherwise
+     */
+    private static boolean checkLog4jConfig() {
+        // Check for common log4j configuration file names
+        String[] configFiles = {
+            "log4j.xml",
+            "log4j2.xml",
+            "log4j.properties",
+            "log4j2.properties"
+        };
+
+        // Check current directory and classpath
+        for (String configFile : configFiles) {
+            try {
+                // Check if file exists in current directory
+                java.io.File file = new java.io.File(configFile);
+                if (file.exists()) {
+                    return true;
+                }
+
+                // Check if file exists in classpath
+                java.io.InputStream is = McanTcpBridge.class.getClassLoader().getResourceAsStream(configFile);
+                if (is != null) {
+                    is.close();
+                    return true;
+                }
+            } catch (Exception e) {
+                // Ignore exceptions, just continue checking
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Programmatically configure log4j2 for monitor mode when no config file is present.
+     * Sets up a Console appender with a pattern that shows timestamp, level, and message.
+     */
+    private static void setupMinimalLogging() {
+        ConfigurationBuilder<BuiltConfiguration> builder =
+                ConfigurationBuilderFactory.newConfigurationBuilder();
+
+        builder.setStatusLevel(Level.ERROR);
+
+        AppenderComponentBuilder console = builder
+                .newAppender("Console", "CONSOLE")
+                .addAttribute("target", "SYSTEM_OUT")
+                .add(builder.newLayout("PatternLayout")
+                        .addAttribute("pattern", "%d{HH:mm:ss.SSS} %-5level %msg%n"));
+
+        builder.add(console);
+        builder.add(builder.newRootLogger(Level.INFO).add(builder.newAppenderRef("Console")));
+
+        // initialize() is a no-op if log4j2 already auto-configured (which it does at
+        // class-load time via the static Logger field).  reconfigure() replaces the
+        // active configuration on the running LoggerContext instead.
+        LoggerContext ctx = (LoggerContext) org.apache.logging.log4j.LogManager.getContext(false);
+        ctx.setConfiguration(builder.build());
     }
 
     /**
@@ -642,6 +726,7 @@ public class McanTcpBridge {
             serialPort = null;
             serialPortConnected = false;
         }
+
         private void startReconnectionMonitor() {
             Thread monitorThread = new Thread(() -> {
                 log.info("[{}:{}] Reconnection monitor started", serialPortName, tcpPort);
@@ -848,7 +933,7 @@ public class McanTcpBridge {
                 return;
             }
 
-            // Monitor mode: Log TCP to Serial with device identification
+            // Monitor mode: print TCP to Serial traffic directly to stdout
             if (monitorMode && length >= 13) {
                 int[] rawData = new int[13];
                 for (int i = 0; i < 13; i++) {
@@ -890,7 +975,7 @@ public class McanTcpBridge {
         }
 
         void broadcastToClients(byte[] data, int length, ClientHandler exclude) {
-            // Monitor mode: Log Serial to TCP with device identification
+            // Monitor mode: print Serial to TCP traffic directly to stdout
             if (monitorMode && length >= 13) {
                 int[] rawData = new int[13];
                 for (int i = 0; i < 13; i++) {
