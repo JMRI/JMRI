@@ -85,8 +85,9 @@ public class AbstractTurnoutCommandOrderTest {
             List<Integer> sent = Collections.synchronizedList(new ArrayList<>());
             List<Boolean> onLayoutThread = Collections.synchronizedList(new ArrayList<>());
             t.addPropertyChangeListener(Turnout.PROPERTY_COMMANDED_STATE, e -> {
-                sent.add((Integer) e.getNewValue());
+                // the thread first: the test goes on once both commands are in sent
                 onLayoutThread.add(ThreadingUtil.isLayoutThread());
+                sent.add((Integer) e.getNewValue());
             });
 
             t.setCommandedStateAtInterval(Turnout.THROWN);
