@@ -3356,23 +3356,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
 
-        int blockstate = update.getBlockState();
-        if (blockstate != -1) {
-            // We will update all the destination blocks with the new state, it
-            // saves re-firing off new updates block status
-            boolean stateUpdated = false;
-            List<Routes> rtr = getDestRoutes(updateBlock);
-
-            for (Routes rt : rtr) {
-                if (rt.getState() != blockstate) {
-                    stateUpdated = true;
-                    rt.stateChange();
-                }
-            }
-
-            if (stateUpdated) {
-                RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, -1, -1, -1, blockstate, getNextPacketID());
-                firePropertyChange(PROPERTY_ROUTING, null, newUpdate);
+        if (update.getBlockState() != -1) {
+            // A route reads the status of its destination when asked, so only
+            // the routing table view needs telling. The update is not passed
+            // on: each block sends its own update to its neighbours when its
+            // status changes. By the time an update arrives, the status may
+            // have changed again, and passing on an out of date status would
+            // send it round any loop of blocks without end.
+            for (Routes rt : getDestRoutes(updateBlock)) {
+                rt.stateChange();
             }
         }
     }
