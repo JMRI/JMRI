@@ -629,6 +629,14 @@
                  because the signal clears or an allocation arrives, its end,
                  reversal or reset action is now dropped too. Before, it could
                  run later, wherever the train next stopped.</li>
+             <li>An automatic train's Block changes are now handled one at
+                 a time, in the order they happen. Before, each change was
+                 handled separately, so a train entering two Blocks in quick
+                 succession could be stopped for entering a Block out of
+                 turn, a short Block crossed at speed could be missed, and a
+                 train could be stopped with "No next Block". Every change is
+                 now acted on, including a detector that bounces, so use the
+                 sensor debounce settings for such detectors.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

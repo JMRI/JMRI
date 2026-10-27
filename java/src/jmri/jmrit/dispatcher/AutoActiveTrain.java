@@ -765,11 +765,24 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
+    protected void handleBlockStateChange(AllocatedSection as, Block b) {
+        handleBlockStateChange(as, b, b.getState());
+    }
+
+    /**
+     * Handle a change of state of a Block in one of the train's Allocated
+     * Sections. Called for each change, in the order they happened.
+     *
+     * @param as    the Allocated Section holding the Block
+     * @param b     the Block
+     * @param state the state the Block changed to, which may no longer be its
+     *              current state
+     */
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "OK to not sync here, no conflict expected")
-    protected void handleBlockStateChange(AllocatedSection as, Block b) {
+    protected void handleBlockStateChange(AllocatedSection as, Block b, int state) {
         //Block oldPreviousBlock = _previousBlock;
-        if (b.getState() == Block.OCCUPIED) {
+        if (state == Block.OCCUPIED) {
             // Block changed to OCCUPIED - train has entered this block
             log.debug("{}: handleBlockStateChange to OCCUPIED section {}, block {}, length {}", _activeTrain.getTrainName(),
                     as.getSection().getDisplayName(USERSYS),
@@ -925,7 +938,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 return;
             }
-        } else if (b.getState() == Block.UNOCCUPIED) {
+        } else if (state == Block.UNOCCUPIED) {
             log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
                     as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),
                     _autoEngineer == null ? "" : getTargetSpeed());
@@ -979,7 +992,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
         }
-        _autoTrainAction.handleBlockStateChange(as, b);
+        _autoTrainAction.handleBlockStateChange(as, b, state);
     }
 
     /**
@@ -1255,8 +1268,11 @@ public class AutoActiveTrain implements ThrottleListener {
 
     @CheckForNull
     private Block getNextBlock(Block b, AllocatedSection as) {
-        if (as.getNextSection() != null) {
-            EntryPoint ep = as.getSection().getExitPointToSection(_nextSection, as.getDirection());
+        // The Section after this one on the route, not _nextSection: that follows the train, and moves on only
+        // when the Section change has been handled, which can be after a Block change in the new Section.
+        Section next = as.getNextSection();
+        if (next != null) {
+            EntryPoint ep = as.getSection().getExitPointToSection(next, as.getDirection());
             if ((ep != null) && (ep.getBlock() == b))
                 // this block is connected to a block in the next section
                 return ep.getFromBlock();
