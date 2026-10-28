@@ -520,12 +520,23 @@ public abstract class Editor extends JmriJFrameWithPermissions
             tmp.setBackgroundColor(col);
         }
         JmriColorChooser.addRecentColor(col);
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public void clearBackgroundColor() {
         if (_targetPanel instanceof TargetPane) {
             TargetPane tmp = (TargetPane) _targetPanel;
             tmp.clearBackgroundColor();
+        }
+        notifyWebPanelDisplayOptionsChanged();
+    }
+
+    /** Notify web clients that a display option on this panel has changed. */
+    public void notifyWebPanelDisplayOptionsChanged() {
+        // This cast includes LayoutEditor which inherits from PanelEditor
+        if (this instanceof jmri.jmrit.display.panelEditor.PanelEditor
+                || this instanceof jmri.jmrit.display.controlPanelEditor.ControlPanelEditor) {
+            firePropertyChange("webPanelDisplayOptions", false, true);
         }
     }
 
@@ -3528,6 +3539,9 @@ public abstract class Editor extends JmriJFrameWithPermissions
      *
      */
     public void setAttributes(PositionablePopupUtil newUtil, Positionable p) {
+        // the redisplay will happen once the attributes are loaded
+        PositionablePopupUtil.suppressWebPanelDisplayOptionNotifications();
+        try {
         p.setPopupUtility(newUtil.clone(p, p.getTextComponent()));
         int mar = newUtil.getMargin();
         int bor = newUtil.getBorderSize();
@@ -3567,6 +3581,9 @@ public abstract class Editor extends JmriJFrameWithPermissions
             if (bean != null) {
                 ((PositionableIcon) p).displayState(bean.getState());
             }
+        }
+        } finally {
+            PositionablePopupUtil.restoreWebPanelDisplayOptionNotifications();
         }
     }
 

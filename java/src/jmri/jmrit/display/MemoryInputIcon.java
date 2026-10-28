@@ -12,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -33,10 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2009
  * @since 2.7.2
  */
-public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new PositionableJTextField();
-    int _nCols;
+public class MemoryInputIcon extends PositionableJPanelWithColumns implements java.beans.PropertyChangeListener {
 
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
@@ -135,11 +131,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<Memory> getNamedMemory() {
         return namedMemory;
     }
@@ -151,8 +142,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         return namedMemory.getBean();
     }
 
-    public int getNumColumns() {
-        return _nCols;
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getMemory();
     }
 
     // update icon as state of Memory changes

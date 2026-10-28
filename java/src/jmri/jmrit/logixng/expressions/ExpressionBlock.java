@@ -217,6 +217,21 @@ public class ExpressionBlock extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        // Only execute the ConditionalNG if a property that this expression
+        // checks has changed. For example, a reporter in the block may
+        // change the value of the block often.
+        String propertyName = evt.getPropertyName();
+        if (Block.PROPERTY_VALUE.equals(propertyName)) {
+            if (_selectEnum.isDirectAddressing() && (_selectEnum.getEnum() != BlockState.ValueMatches)) {
+                return;
+            }
+        } else if (Block.PROPERTY_ALLOCATED.equals(propertyName)) {
+            if (_selectEnum.isDirectAddressing() && (_selectEnum.getEnum() != BlockState.Allocated)) {
+                return;
+            }
+        } else if (!Block.PROPERTY_STATE.equals(propertyName)) {
+            return;
+        }
         getConditionalNG().execute();
     }
 

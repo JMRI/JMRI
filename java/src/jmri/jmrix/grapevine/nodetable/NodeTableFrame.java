@@ -57,7 +57,11 @@ public class NodeTableFrame extends JmriJFrame {
      */
     @Override
     public void dispose() {
-        memo.getTrafficController().removeSerialListener(p);
+        if (p != null) {
+            // stop replies reaching the pane before it is disposed of
+            memo.getTrafficController().removeSerialListener(p);
+            p.dispose();
+        }
         super.dispose();
     }
 

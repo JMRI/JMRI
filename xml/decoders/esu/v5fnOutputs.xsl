@@ -768,7 +768,7 @@ w               <decVal max="15"/>
     </xsl:template>
 
     <!-- Autocreate pane for function outputs -->
-    <xsl:template match="pane[1]">
+    <xsl:template match="pane[name/text() = '__functionCommonDefs']">
         <pane include="never">
             <xsl:copy-of select="node()"/>
         </pane>

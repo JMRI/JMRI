@@ -53,12 +53,26 @@ public class DefaultSymbolTable implements SymbolTable {
         _prevSymbolTable = null;
         _symbols.putAll(prevSymbolTable.getSymbols());
         _stack = new DefaultStack();
-        for (Symbol symbol : _symbols.values()) {
-            _stack.copyValueAndTypeAtIndex(symbol.getIndex(),
-                    prevSymbolTable.getValueAndType(symbol.getName()));
 
+        // Push the values in the order of the symbols indexes, so that the
+        // stack count is correct and new symbols are created after the
+        // copied symbols.
+        int count = 0;
+        for (Symbol symbol : _symbols.values()) {
+            count = Math.max(count, symbol.getIndex() + 1);
         }
-        _firstSymbolIndex = _stack.getCount();
+        ValueAndType[] values = new ValueAndType[count];
+        for (Symbol symbol : _symbols.values()) {
+            values[symbol.getIndex()] = prevSymbolTable.getValueAndType(symbol.getName());
+        }
+        for (ValueAndType valueAndType : values) {
+            if (valueAndType != null) {
+                _stack.push(new ValueAndType(valueAndType._type, valueAndType._value));
+            } else {
+                _stack.push(new ValueAndType(InitialValueType.None, null));
+            }
+        }
+        _firstSymbolIndex = 0;
     }
 
     /**

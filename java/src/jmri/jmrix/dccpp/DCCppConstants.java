@@ -297,4 +297,8 @@ public final class DCCppConstants {
     public static final char   LCD_TEXT_REPLY       = '@';
     public static final String LCD_TEXT_REPLY_REGEX = "^\\s*@\\s*(\\d+)\\s+(\\d+)\\s+\\\"(.*)\\\"$"; //<@ 0 3 "message text"> where 0 is display# and 3 is line#  
 
+    //EXRAIL MESSAGE() broadcast
+    public static final char   MESSAGE_REPLY        = 'm';
+    public static final String MESSAGE_REPLY_REGEX  = "^\\s*m\\s*\\\"(.*)\\\"$"; //<m "message text">
+
 }

@@ -123,12 +123,30 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * The 3 route patterns deal with Route Logix names that end with a number,
      * such as Logix RTX123 with Conditional RTX1231T.
      */
-    private static final String[] PATTERNS = {
-        "(.*?)(C\\d+$)",               // Standard IX
-        "(.*?)([1-9]{1}[ALT]$)",       // LRoute/Route, 1-9
-        "(.*?)([0-9]{2}[ALT]$)",       // LRoute/Route, 10-99
-        "(.*?)([0-9]{3}[ALT]$)"        // LRoute/Route, 100-999
+    private static final Pattern[] PATTERNS = {
+        Pattern.compile("(.*?)(C\\d+$)"),               // Standard IX
+        Pattern.compile("(.*?)([1-9]{1}[ALT]$)"),       // LRoute/Route, 1-9
+        Pattern.compile("(.*?)([0-9]{2}[ALT]$)"),       // LRoute/Route, 10-99
+        Pattern.compile("(.*?)([0-9]{3}[ALT]$)")        // LRoute/Route, 100-999
     };
+
+    /**
+     * Parent Logix of Conditionals whose system names do not match the
+     * patterns above, as found by scanning all the Logixes. An entry is
+     * checked each time it is used, since Logixes and their Conditionals can
+     * change without this manager being told. Package-private for testing.
+     */
+    final Map<String, Logix> nonStandardParents = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Only Conditionals with non-standard system names are remembered here.
+     */
+    @Override
+    public void forgetParentLogix(Logix x) {
+        nonStandardParents.values().removeIf(lgx -> lgx == x);
+    }
 
     /**
      * Parses the Conditional system name to get the parent Logix system name,
@@ -147,8 +165,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         }
 
         // Check for standard names
-        for (String pattern : PATTERNS) {
-            Pattern r = Pattern.compile(pattern);
+        for (Pattern r : PATTERNS) {
             Matcher m = r.matcher(name);
             if (m.find()) {
                 Logix lgx = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
@@ -159,17 +176,34 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
             }
         }
 
-        // Now try non-standard names using a brute force scan
+        // Now try non-standard names, first the Logix found last time
         jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
+        Logix found = nonStandardParents.get(name);
+        if (found != null) {
+            if (logixManager.getBySystemName(found.getSystemName()) == found && hasConditional(found, name)) {
+                return found;
+            }
+            nonStandardParents.remove(name);
+        }
+
+        // then using a brute force scan
         for (Logix lgx : logixManager.getNamedBeanSet()) {
-            for (int i = 0; i < lgx.getNumConditionals(); i++) {
-                String cdlName = lgx.getConditionalByNumberOrder(i);
-                if (cdlName.equals(name)) {
-                    return lgx;
-                }
+            if (hasConditional(lgx, name)) {
+                nonStandardParents.put(name, lgx);
+                return lgx;
             }
         }
         return null;
+    }
+
+    private static boolean hasConditional(Logix lgx, String name) {
+        for (int i = 0; i < lgx.getNumConditionals(); i++) {
+            String cdlName = lgx.getConditionalByNumberOrder(i);
+            if (cdlName.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

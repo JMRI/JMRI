@@ -107,33 +107,49 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     protected Runnable r;
 
     /**
+     * Counts the raw state changes, so that a debounce timer started for an
+     * earlier raw state does nothing once the raw state has changed again.
+     */
+    private final java.util.concurrent.atomic.AtomicInteger debounceCount
+            = new java.util.concurrent.atomic.AtomicInteger();
+    private volatile boolean debouncePending = false;
+
+    /**
      * Before going active or inactive or checking that we can go active, we will wait for
      * sensorDebounceGoing(In)Active for things to settle down to help prevent a race condition.
+     * <p>
+     * The known state is set and the change is sent to listeners together on
+     * the layout thread, and only if the raw state has not changed meanwhile.
      */
     protected void sensorDebounce() {
-        final int lastKnownState = _knownState;
-        r = () -> {
-            try {
-                long sensorDebounceTimer = sensorDebounceGoingInActive;
-                if (_rawState == ACTIVE) {
-                    sensorDebounceTimer = sensorDebounceGoingActive;
-                }
-                Thread.sleep(sensorDebounceTimer);
-                restartcount = 0;
-                _knownState = _rawState;
-
-                javax.swing.SwingUtilities.invokeAndWait(
-                        () -> firePropertyChange(PROPERTY_KNOWN_STATE, lastKnownState, _knownState)
-                );
-            } catch (InterruptedException ex) {
-                restartcount++;
-            } catch (java.lang.reflect.InvocationTargetException ex) {
-                log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause().toString());
+        final int count = debounceCount.incrementAndGet();
+        final int newState = _rawState;
+        long sensorDebounceTimer = sensorDebounceGoingInActive;
+        if (newState == ACTIVE) {
+            sensorDebounceTimer = sensorDebounceGoingActive;
+        }
+        debouncePending = true;
+        jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+            if (count != debounceCount.get()) {
+                return; // the raw state has changed again
             }
-        };
+            debouncePending = false;
+            restartcount = 0;
+            int oldState = _knownState;
+            _knownState = newState;
+            firePropertyChange(PROPERTY_KNOWN_STATE, oldState, _knownState);
+        }, (int) sensorDebounceTimer );
+    }
 
-        thr = jmri.util.ThreadingUtil.newThread(r , "Debounce thread " + getDisplayName() );
-        thr.start();
+    /**
+     * Stop a debounce timer that has not yet run.
+     */
+    private void cancelDebounce() {
+        debounceCount.incrementAndGet();
+        if (debouncePending) {
+            debouncePending = false;
+            restartcount++;
+        }
     }
 
     int restartcount = 0;
@@ -200,9 +216,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
                 int oldRawState = _rawState;
                 _rawState = s;
-                if (thr != null) {
-                    thr.interrupt();
-                }
+                cancelDebounce();
 
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
                     log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
@@ -211,11 +225,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 sensorDebounce();
                 return;
             } else {
-                // we shall try to stop the thread as one of the state changes
-                // might start the thread, while the other may not.
-                if (thr != null) {
-                    thr.interrupt();
-                }
+                // we shall stop the debounce timer as one of the state changes
+                // might start the timer, while the other may not.
+                cancelDebounce();
                 _rawState = s;
             }
         }
@@ -342,9 +354,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     @Override
     public void dispose() {
         super.dispose();
-        if (thr != null) { // try to stop the debounce thread 
-            thr.interrupt();
-        }
+        cancelDebounce(); // stop the debounce timer
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSensor.class);

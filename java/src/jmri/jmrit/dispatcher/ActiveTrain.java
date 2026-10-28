@@ -239,8 +239,8 @@ public class ActiveTrain implements PropertyChangeProvider {
     private String mTrainName = "";
     private int mTrainSource = ROSTER;
     private jmri.jmrit.roster.RosterEntry mRoster = null;
-    private int mStatus = WAITING;
-    private int mMode = DISPATCHED;
+    private volatile int mStatus = WAITING;
+    private volatile int mMode = DISPATCHED;
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
     private AutoActiveTrain mAutoActiveTrain = null;
@@ -441,6 +441,39 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public TrainDetection getTrainDetection() {
         return trainDetection;
+    }
+
+    private long maxTrainLengthMM = 0;
+    private boolean noLengthWarningGiven = false;
+
+    /**
+     * Set the train length, used for any train whose tail is not always
+     * detected.
+     *
+     * @param lengthMM length in layout mm, 0 if not known
+     */
+    public void setMaxTrainLengthMM(long lengthMM) {
+        maxTrainLengthMM = Math.max(0, lengthMM);
+    }
+
+    /**
+     * Get the train length.
+     *
+     * @return length in layout mm, 0 if not known
+     */
+    public long getMaxTrainLengthMM() {
+        return maxTrainLengthMM;
+    }
+
+    /**
+     * Report, once only, that this train has no length.
+     *
+     * @return true the first time it is called
+     */
+    boolean firstNoLengthWarning() {
+        boolean first = !noLengthWarningGiven;
+        noLengthWarningGiven = true;
+        return first;
     }
 
     public boolean isTransitReversed() {
@@ -812,6 +845,47 @@ public class ActiveTrain implements PropertyChangeProvider {
         return mAutoActiveTrain;
     }
 
+    // Block state changes in this train's Allocated Sections are handled one at a
+    // time, in the order they happened. The worker thread ends when there is nothing
+    // left to handle, and a new one is started for the next change.
+    private final java.util.concurrent.ThreadPoolExecutor blockChangeExecutor =
+            new java.util.concurrent.ThreadPoolExecutor(0, 1, 0L, java.util.concurrent.TimeUnit.MILLISECONDS,
+                    new java.util.concurrent.LinkedBlockingQueue<>(),
+                    (Runnable r) -> jmri.util.ThreadingUtil.newThread(r, "Allocated Section Block Change for " + getActiveTrainName()));
+    private final java.util.concurrent.atomic.AtomicInteger blockChangesPending = new java.util.concurrent.atomic.AtomicInteger();
+
+    /**
+     * Queue the handling of a Block state change in one of this train's
+     * Allocated Sections. Changes are handled one at a time, off the event
+     * thread, in the order they were queued.
+     *
+     * @param handler the handling of the change
+     */
+    protected void queueBlockStateChange(@Nonnull Runnable handler) {
+        blockChangesPending.incrementAndGet();
+        try {
+            blockChangeExecutor.execute(() -> {
+                try {
+                    handler.run();
+                } finally {
+                    blockChangesPending.decrementAndGet();
+                }
+            });
+        } catch (java.util.concurrent.RejectedExecutionException e) {
+            // the train has been disposed
+            blockChangesPending.decrementAndGet();
+        }
+    }
+
+    /**
+     * Check whether all queued Block state changes have been handled.
+     *
+     * @return true if none is waiting or being handled
+     */
+    protected boolean isBlockStateChangeQueueIdle() {
+        return blockChangesPending.get() == 0;
+    }
+
     public int getRunningDirectionFromSectionAndSeq(Section s, int seqNo) {
         int dir = mTransit.getDirectionFromSectionAndSeq(s, seqNo);
         if (mTransitReversed) {
@@ -902,19 +976,11 @@ public class ActiveTrain implements PropertyChangeProvider {
             return;
         }
         mAllocatedSections.remove(index);
-        if (mDispatcher.getNameInAllocatedBlock()) {
-            as.getSection().clearNameInUnoccupiedBlocks();
-            as.getSection().suppressNameUpdate(false);
-        }
         for (Block b: as.getSection().getBlockList()) {
+            // A Block that is also in another allocated Section keeps its
+            // name and colour until that Section is released too.
             if (!mDispatcher.checkForBlockInAllocatedSection(b, as.getSection())) {
-                String userName = b.getUserName();
-                if (userName != null) {
-                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
-                    if (lb != null) {
-                        lb.setUseExtraColor(false);
-                    }
-                }
+                releaseBlockDisplay(b);
             }
         }
         // notify anyone interested
@@ -956,9 +1022,53 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     /**
+     * Remove what was shown for this train on a Block that is no longer
+     * allocated: the train name in an unoccupied Block, and the extra colour.
+     * The memory of the Layout Block follows the Block again.
+     *
+     * @param b the Block that is no longer allocated
+     */
+    private void releaseBlockDisplay(Block b) {
+        boolean nameInBlock = mDispatcher.getNameInAllocatedBlock();
+        if (nameInBlock && b.getState() == Block.UNOCCUPIED) {
+            b.setValue(null);
+        }
+        String userName = b.getUserName();
+        if (userName != null) {
+            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+            if (lb != null) {
+                if (nameInBlock) {
+                    lb.setSuppressNameUpdate(false);
+                }
+                lb.setUseExtraColor(false);
+            }
+        }
+    }
+
+    private boolean allocatingAFresh = false;
+
+    /**
      * This resets the state of the ActiveTrain so that it can be reallocated.
+     * A request made while the train is already being reset is ignored.
      */
     public void allocateAFresh() {
+        if (allocatingAFresh) {
+            log.debug("{}: already being reset, request ignored", getTrainName());
+            return;
+        }
+        allocatingAFresh = true;
+        try {
+            doAllocateAFresh();
+        } finally {
+            allocatingAFresh = false;
+        }
+    }
+
+    /*
+     * While this waits for the auto allocator on the GUI thread, other GUI
+     * events, such as another Restart, are handled.
+     */
+    private void doAllocateAFresh() {
         setStatus(WAITING);
         holdAllocation = false;
         setTransitReversed(false);
@@ -1411,6 +1521,8 @@ public class ActiveTrain implements PropertyChangeProvider {
         if (getTransit()!=null) {
             getTransit().removeTemporarySections();
         }
+        // changes already queued are still handled
+        blockChangeExecutor.shutdown();
     }
 
     // Property Change Support

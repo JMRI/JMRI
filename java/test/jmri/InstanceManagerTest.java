@@ -302,6 +302,17 @@ public class InstanceManagerTest {
 
     }
 
+    @Test
+    public void testDisposeInClearAll() {
+        OkToDispose d1 = new OkToDispose();
+
+        InstanceManager.store(d1, OkToDispose.class);
+        // clearAll makes a new default InstanceManager before clearing this
+        // one; the items this one holds must still be disposed
+        InstanceManager.getDefault().clearAll();
+        JUnitAppender.assertWarnMessage(OkToDispose.MESSAGE + 1);
+    }
+
     /**
      * Test of types that have defaults, even with no system attached.
      */

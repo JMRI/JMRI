@@ -2,11 +2,6 @@ package jmri.jmrit.operations.rollingstock.cars.gui;
 
 import java.text.MessageFormat;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -16,6 +11,11 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the Operations Cars GUI class
@@ -1225,7 +1225,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
         
         Thread t1 = new Thread(() -> {
-            JemmyUtil.pressDialogButton(f, Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonNo"));
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addColor"), Bundle.getMessage("ButtonNo"));
         });
         t1.setName("click testAddNewCarColorNo Thread");
         t1.start();
@@ -1256,7 +1256,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
         
         Thread t1 = new Thread(() -> {
-            JemmyUtil.pressDialogButton(f, Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonYes"));
+            JemmyUtil.pressDialogButton(f, Bundle.getMessage("addColor"), Bundle.getMessage("ButtonYes"));
         });
         t1.setName("click testAddNewCarColorYes Thread");
         t1.start();

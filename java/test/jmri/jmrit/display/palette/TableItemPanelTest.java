@@ -98,7 +98,8 @@ public class TableItemPanelTest {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(fo, Bundle.getMessage("createNewFamily"));
-            new JTextFieldOperator(jdo, 0).enterText("My Family Name");
+            // set the name without pressing Enter, which would close the dialog before OK is found
+            new JTextFieldOperator(jdo, 0).setText("My Family Name");
             new JButtonOperator(jdo, Bundle.getMessage("ButtonOK")).doClick();
         });
         t.setName("Close New Family Name Dialog Thread");
